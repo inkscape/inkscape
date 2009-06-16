@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-15 19:19+0200\n"
-"PO-Revision-Date: 2009-06-15 19:48+0100\n"
+"POT-Creation-Date: 2009-06-16 20:08+0200\n"
+"PO-Revision-Date: 2009-06-16 20:17+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,8 +58,8 @@ msgstr "Gel mat"
 #: ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:73
 #: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:105
 msgid "Bevels"
 msgstr "Biseaux"
 
@@ -101,9 +101,9 @@ msgstr "Flou cinétique horizontal"
 #: ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:97
-#: ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:170
 msgid "Blurs"
 msgstr "Flous"
 
@@ -134,10 +134,10 @@ msgstr "Découpe"
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:87
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:182
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -160,13 +160,13 @@ msgid "Roughen"
 msgstr "Agitation"
 
 #: ../share/filters/filters.svg.h:11
-#: ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:117
 #: ../share/filters/filters.svg.h:118
-#: ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:125
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:178
 msgid "ABCs"
 msgstr "ABC"
 
@@ -187,9 +187,9 @@ msgstr "Tampon en caoutchouc"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Overlays"
 msgstr "Superpositions"
 
@@ -204,7 +204,7 @@ msgstr "Bavure d'encre"
 #: ../share/filters/filters.svg.h:13
 #: ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:177
 msgid "Protrusions"
 msgstr "Protubérances"
 
@@ -243,10 +243,10 @@ msgstr "Ondulation"
 #: ../share/filters/filters.svg.h:17
 #: ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:113
-#: ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:184
 msgid "Distort"
 msgstr "Déformation"
 
@@ -293,12 +293,12 @@ msgstr "Fourrure de léopard"
 #: ../share/filters/filters.svg.h:82
 #: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:92
-#: ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:165
 msgid "Materials"
 msgstr "Matières"
 
@@ -337,14 +337,13 @@ msgstr "Netteté"
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
 #: ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:103
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:166
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:187
 msgid "Image effects"
 msgstr "Effets d'image"
 
@@ -421,9 +420,9 @@ msgstr "Désaturer"
 #: ../share/filters/filters.svg.h:34
 #: ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:168
 #: ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
@@ -491,19 +490,19 @@ msgstr "Relief organique"
 #: ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:85
 #: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129
 #: ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136
 #: ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:185
 msgid "Textures"
 msgstr "Textures"
 
@@ -585,10 +584,10 @@ msgstr "Effet de peinture brillante pour bitmap"
 
 #: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:186
 msgid "HSL Bumps"
 msgstr "Bosselage TSL"
 
@@ -609,7 +608,7 @@ msgid "HSL bubbles"
 msgstr "Bulles TSL"
 
 #: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
 msgstr "Effet de bulles extrêmement flexible basé sur la saturation de teinte et la luminance"
 
@@ -852,9 +851,9 @@ msgstr "Évidement parallèle"
 #: ../share/filters/filters.svg.h:94
 #: ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:179
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morphologie"
@@ -1056,364 +1055,357 @@ msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "Effet de bosselage classique ou coloré: niveaux de gris, couleur et relief en 3D"
 
 #: ../share/filters/filters.svg.h:100
-msgid "Soft bump"
-msgstr "Bosselage doux"
-
-#: ../share/filters/filters.svg.h:100
-msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr "Bosselage de convolution ; avec un flou, peut donner un effet de bosselage sympa"
-
-#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Solariser"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Classical photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Moonarize"
 msgstr "Lunariser"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "An effect between solarize and invert which often preserves sky and water lights"
 msgstr "Un effet à mi-chemin de solarisation et invertion, qui préserve souvent les lumières du ciel et de l'eau"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Soft focus lens"
 msgstr "Lentille à portrait"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Glowing image content without blurring it"
 msgstr "Donne de l'éclat au contenu d'une image sans le rendre flou"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Stained glass"
 msgstr "Vitrail"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Illuminated stained glass effect"
 msgstr "Effet de vitrail lumineux"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Dark glass"
 msgstr "Verre solaire"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Effet de verre lumineux avec une lumière venant du dessous"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "HSL Bumps, alpha"
 msgstr "Masque de bosselage TSL"
 
+#: ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:167
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:176
 msgid "Mask and transparency effects"
 msgstr "Masques et transparences"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
 msgstr "Identique à Bosselage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bubbles, alpha"
 msgstr "Masque de bulles TSL"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Smooth edges"
 msgstr "Lissage du pourtour"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "Lisse l'extérieur des formes et images sans en altérer le contenu"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Torn edges"
 msgstr "Pourtour déchiré"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "Déplace l'extérieur des formes et images sans en altérer le contenu"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Feather"
 msgstr "Estompage du pourtour"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Masque flou sur les bords sans altération du contenu"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blur content"
 msgstr "Flou interne"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "Rend flou le contenu des objets, mais préserve le contour"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Specular light"
 msgstr "Éclairage spéculaire"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Basic specular bevel to use for building textures"
 msgstr "Biseau spéculaire de base pour la construction de textures"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Roughen inside"
 msgstr "Agitation interne"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Roughen all inside shapes"
 msgstr "Agite toutes les formes intérieures"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Evanescent"
 msgstr "Évanescence"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
 msgstr "Rend flou le contenu des objets, mais préserve le contour et ajoute une transparence progressive aux bords"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Chalk and sponge"
 msgstr "Éponge et craie"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Une agitation légère donne l'aspect d'une éponge et une agitation forte de la craie"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "People"
 msgstr "Foule"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Plaques colorées évoquant une foule de gens"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Scotland"
 msgstr "Montagnes d'Écosse"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized mountain tops out of the fog"
 msgstr "Sommets colorés émergeant du brouillard"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Noise transparency"
 msgstr "Transparence agitée"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Basic noise transparency texture"
 msgstr "Texture en  transparence agitée de base"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise fill"
 msgstr "Remplissage agité"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "Texture de remplissage agité de base ; ajuster la couleur avec Remplissage"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Garden of Delights"
 msgstr "Jardin des délices"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "Volutes agitées et fantasmagoriques, comme <i>Le Jardin des délices</i> de Jérôme Bosch"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Diffuse light"
 msgstr "Éclairage diffus"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Biseau diffus simple pour la construction de textures"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Cutout Glow"
 msgstr "Découpe et flou"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Lueur intérieure et extérieure avec possibilité de décaler et colorer le remplissage"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "HSL Bumps, diffuse"
 msgstr "Bosselage TSL mat"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr "Identique à Bosselage TSL, mais avec une réflection diffuse et non pas spéculaire"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Dark Emboss"
 msgstr "Bosselage sombre"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Effet d'embossage : relief 3D avec lequel le blanc est remplacé par du noir"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Simple blur"
 msgstr "Flou"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Flou gaussien simple, identique au réglage de flou dans la boite de dialogue Remplissage et contour"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "HSL Bubbles, diffuse"
 msgstr "Bulles TSL mates"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr "Identique à Bulles TSL, mais avec une lumière diffuse et non pas spéculaire"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Embosser"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
 msgstr "Effet d'embossage : les couleurs de l'image originale sont préservées ou modifiées par Fondre"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Blotting paper"
 msgstr "Buvard"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot on blotting paper"
 msgstr "Tache d'encre sur un buvard"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Wax print"
 msgstr "Impression à la cire"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Wax print on tissue texture"
 msgstr "Empreinte de cire sur une texture de tissu"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Inkblot"
 msgstr "Tache d'encre"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Inkblot on tissue or rough paper"
 msgstr "Tache d'encre sur du tissu ou du papier à grain"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Burnt edges"
 msgstr "Pourtour brûlé"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Torn edges with a dark inner blur"
 msgstr "Pourtour déchiré avec un flou intérieur foncé"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Color outline, in"
 msgstr "Soulignement du contour, interne"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "Un soulignement du contour interne qu'il est possible de colorer, avec une épaisseur ajustable et un flou"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Liquid"
 msgstr "Liquide"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Colorizable filling with liquid transparency"
 msgstr "Remplissage qu'il est possible de colorer, à la transparence liquide"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Watercolor"
 msgstr "Aquarelle"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Cloudy watercolor effect"
 msgstr "Effet d'aquarelle nuageuse"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Felt"
 msgstr "Feutre"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Texture de feutre avec de la turbulence de couleur et légèrement plus sombre sur les bords"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Ink paint"
 msgstr "Peinture à l'encre"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Peinture à l'encre sur papier avec un déplacement de couleur agité"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Tinted rainbow"
 msgstr "Arc-en-ciel teinté"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Couleurs arc-en-ciel douces, fondues le long des bords, et qu'il est possible de colorer"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Melted rainbow"
 msgstr "Arc-en-ciel fondu"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Couleurs arc-en-ciel douces, légèrement fondues le long des bords"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Flex metal"
 msgstr "Métal souple"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Moulage de métal irrégulier, poli et brillant, qu'il est possible de colorer"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Comics draft"
 msgstr "Ébauche BD"
 
+#: ../share/filters/filters.svg.h:139
 #: ../share/filters/filters.svg.h:140
-#: ../share/filters/filters.svg.h:141
 #: ../share/filters/filters.svg.h:142
-#: ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145
 #: ../share/filters/filters.svg.h:146
 #: ../share/filters/filters.svg.h:147
-#: ../share/filters/filters.svg.h:148
 #: ../share/filters/filters.svg.h:149
-#: ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:151
-#: ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:167
 msgid "Non realistic 3D shaders"
 msgstr "Ombrages 3D non réalistes"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Ombrage d'ébauche de bande dessinée peinte avec un aspect vitrage"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Comics fading"
 msgstr "Décoloration BD"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Peinture style bande dessinée avec de la décoloration sur les bords"
 
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:142
 msgid "Smooth shader NR"
 msgstr "Ombrage doux"
@@ -1422,304 +1414,312 @@ msgstr "Ombrage doux"
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Ombrage doux avec un crayon graphite gris"
 
-#: ../share/filters/filters.svg.h:143
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:144
 msgid "Emboss shader NR"
 msgstr "Bosselage ombré"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144
 msgid "Combination of smooth shading and embossing"
 msgstr "Combinaison d'ombrage doux et de bosselage"
 
-#: ../share/filters/filters.svg.h:144
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr "Ombrage doux, profond"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr "Version sombre de l'ombrage doux non réaliste"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147
 msgid "Comics"
 msgstr "Bande dessinée"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147
 msgid "Imitation of black and white cartoon shading"
 msgstr "Imitation d'ombrage de bande dessinée en noir et blanc"
 
-#: ../share/filters/filters.svg.h:146
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:149
 msgid "Satin NR"
 msgstr "Satin"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:149
 msgid "Silky close to mother of pearl shading"
 msgstr "Soyeux, proche d'un rendu nacré"
 
-#: ../share/filters/filters.svg.h:147
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:151
 msgid "Frosted glass NR"
 msgstr "Opaline"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:151
 msgid "Non realistic frosted glass imitation"
 msgstr "Imitation non réaliste de verre gelé"
 
-#: ../share/filters/filters.svg.h:148
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:153
 msgid "Smooth shader contour NR"
 msgstr "Ombrage doux du contour"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:153
 msgid "Contouring version of smooth shader"
 msgstr "Version de l'ombrage doux appliqué au contour"
 
-#: ../share/filters/filters.svg.h:149
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:155
 msgid "Aluminium NR"
 msgstr "Aluminium"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:155
 msgid "Brushed aluminium shader"
 msgstr "Ombrage aluminium brossé"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:156
 msgid "Comics fluid"
 msgstr "Contour fluide BD"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:156
 msgid "Fluid brushed cartoon drawing"
 msgstr "Dessin de bande dessinée au brossé fluide"
 
-#: ../share/filters/filters.svg.h:151
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:158
 msgid "Chrome NR"
 msgstr "Chrome"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:158
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Ombrage chrome non réaliste avec des spéculaires fortes"
 
-#: ../share/filters/filters.svg.h:152
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:160
 msgid "Chrome dark NR"
 msgstr "Chrome profond"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:160
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Version sombre de l'ombrage chrome avec une simulation de réflexion par le sol"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:161
 msgid "Wavy tartan"
 msgstr "Écossais ondoyant"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:161
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Motif écossais avec des déplacements ondulés et un biseau autour des bords"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:162
 msgid "3D marble"
 msgstr "Marbre en 3D"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped marble texture"
 msgstr "Texture de marbre déformé en 3D"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:163
 msgid "3D wood"
 msgstr "Bois en 3D"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:163
 msgid "3D warped, fibered wood texture"
 msgstr "Texture de bois fibreux et déformé, en 3D"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:164
 msgid "3D mother of pearl"
 msgstr "Nacre en 3D"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:164
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Texture de coquillage perlé, irisé et déformé, en 3D"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:165
 msgid "Tiger fur"
 msgstr "Fourrure de tigre"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:165
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Fourrure de tigre avec des plis et un biseau autour des bords"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:166
 msgid "Shaken liquid"
 msgstr "Liquide agité"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:166
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Remplissage qu'il est possible de colorer, avec une transparence s'écoulant à l'intérieur"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:167
 msgid "Comics cream"
 msgstr "Crème agitée BD"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:167
 msgid "Comics shader with creamy waves transparency"
 msgstr "Ombrage de bande dessinée avec une transparence en ondulations crémeuses"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:168
 msgid "Black Light"
 msgstr "Lumière noire"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:168
 msgid "Light areas turn to black"
 msgstr "Les zones claires sont transformées en noir"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:169
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:169
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "Rend les parties les plus claires de l'objet progressivement transparentes"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:170
 msgid "Noisy blur"
 msgstr "Flou agité"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:170
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Agite et rend flous les bords et le contenu, sur une petite amplitude"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:171
 msgid "Film Grain"
 msgstr "Grain photo"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:171
 msgid "Adds a film grain noise to images and objects"
 msgstr "Ajoute un bruit de type grain photographique aux images et objets"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:172
 msgid "HSL Bumps, transparent"
 msgstr "Bosselage TSL transparent"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:172
 msgid "Highly flexible specular bump with transparency"
 msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:173
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Drawing"
 msgstr "Dessin"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:173
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
 msgstr "Donne un effet crayon gras, chromolithographie, gravure ou d'autres effets aux images et ou objets remplis avec une matière"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:174
 msgid "Velvet bump"
 msgstr "Bosselage velouté"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a smooth bump velvet like"
 msgstr "Donne un bosselage doux semblable à du velours"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:175
 msgid "Alpha draw"
 msgstr "Dessin transparent"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:175
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Donne un effet de dessin transparent aux bitmaps et matières"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:176
 msgid "Alpha draw, color"
 msgstr "Dessin transparent, coloré"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:176
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Donne un effet de remplissage transparent et coloré aux bitmaps et matières"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:177
 msgid "Chewing gum"
 msgstr "Chewing gum"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:177
 msgid "Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings"
 msgstr "Crée des taches qu'il est possible de colorer, avec un écoulement homogène sur les croisements des lignes"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:178
 msgid "Black outline"
 msgstr "Contour noir"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:178
 msgid "Draws a black outline around"
 msgstr "Trace un contour noir"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:179
 msgid "Color outline"
 msgstr "Soulignement du contour, coloré"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:179
 msgid "Draws a coloured outline around"
 msgstr "Trace un contour coloré"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:180
 msgid "Inner shadow"
 msgstr "Ombre interne"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:180
 msgid "Adds a colorizable drop shadow inside"
 msgstr "Ajoute une ombre portée dont l'intérieur peut être coloré"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:181
 msgid "Dark and glow"
 msgstr "Ombre et lumière"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:181
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "Assombrit les bords avec un flou intérieur et ajoute une lueur flexible"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:182
 msgid "Darken edges"
 msgstr "Pourtour assombri"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:182
 msgid "Darken the edges with an inner blur"
 msgstr "Assombrit les bords avec un flou intérieur"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:183
 msgid "Warped rainbow"
 msgstr "Arc-en-ciel déformé"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:183
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Couleurs arc-en-ciel douces déformées le long des bords et qu'il est possible de colorer"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:184
 msgid "Rough and dilate"
 msgstr "Agitation dilatée"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:184
 msgid "Create a turbulent contour around"
 msgstr "Crée un contour agité"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:185
 msgid "Gelatine"
 msgstr "Gélatine"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:185
 msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "Remplissage qu'il est possible de colorer,  avec de la turbulence semblable à de la gélatine et de la transparence"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:186
 msgid "HSL Bubbles, transparent"
 msgstr "Bulles TSL transparentes"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:186
 msgid "Highly flexible specular bubbles with transparency"
 msgstr "Bulles spéculaire extrêmement flexible avec transparence"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:187
 msgid "Old postcard"
 msgstr "Vieille carte postale"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:187
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "Légère postérisation et contours dessinés, comme sur une vieille carte postale imprimée"
 
@@ -13968,8 +13968,7 @@ msgstr "Espace horizontal entre les colonnes (unités px)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
-#: ../share/extensions/restack.inx.h:3
-msgid "Arrange"
+msgid "tileClonesDialog|Arrange"
 msgstr "Organiser"
 
 #: ../src/ui/dialog/tile.cpp:864
@@ -21011,6 +21010,10 @@ msgstr "Type de code-barre :"
 msgid "Arbitrary Angle:"
 msgstr "Angle arbitraire"
 
+#: ../share/extensions/restack.inx.h:3
+msgid "Arrange"
+msgstr "Organiser"
+
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
 msgstr "Bas"
@@ -21599,6 +21602,12 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Soft bump"
+#~ msgstr "Bosselage doux"
+#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
+#~ msgstr ""
+#~ "Bosselage de convolution ; avec un flou, peut donner un effet de "
+#~ "bosselage sympa"
 #~ msgid "Bumps"
 #~ msgstr "Bosselage"
 #~ msgid "Alpha paint"
