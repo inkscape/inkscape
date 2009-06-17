@@ -121,6 +121,11 @@ if [ ! -e "$LIBPREFIX" ]; then
 	exit 1
 fi
 
+if [ ! -e "$LIBPREFIX/share/themes/Clearlooks-Quicksilver" ]; then
+	echo "Missing Clearlooks -- please install gtk2-clearlooks and try again." >&2
+	exit 1
+fi
+
 if [ ! -f "$binary" ]; then
 	echo "Need Inkscape binary" >&2
 	exit 1
@@ -223,6 +228,10 @@ rsync -av "$binary_dir/../share/$binary_name"/* "$package/Contents/Resources/"
 cp "$plist" "$package/Contents/Info.plist"
 rsync -av "$binary_dir/../share/locale"/* "$package/Contents/Resources/locale"
 
+# Copy GTK shared mime information
+mkdir -p "$pkgresources/share"
+cp -rp "$LIBPREFIX/share/mime" "$pkgresources/share/"
+
 # Icons and the rest of the script framework
 rsync -av --exclude ".svn" "$resdir"/Resources/* "$package"/Contents/Resources/
 
@@ -268,7 +277,7 @@ mkdir -p $pkglib/pango/$pango_version/modules
 cp $LIBPREFIX/lib/pango/$pango_version/modules/*.so $pkglib/pango/$pango_version/modules/
 
 gtk_version=`pkg-config --variable=gtk_binary_version gtk+-2.0`
-mkdir -p $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders}
+mkdir -p $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}
 cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 
 mkdir -p $pkglib/gnome-vfs-2.0/modules
@@ -281,7 +290,7 @@ nfiles=0
 endl=true
 while $endl; do
 	echo -e "\033[1mLooking for dependencies.\033[0m Round" $a
-	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/loaders/* $pkglib/gtk-2.0/$gtk_version/immodules/* $pkglib/gtk-2.0/$gtk_version/engines/*.so $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
+	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
 	cp -f $libs $package/Contents/Resources/lib
 	let "a+=1"	
 	nnfiles=`ls $package/Contents/Resources/lib | wc -l`
@@ -312,42 +321,72 @@ fi
 #				Instead we leave them with their original install_names and set
 #				DYLD_LIBRARY_PATH within the app bundle before running Inkscape.
 #
-# fixlib () {
-#		# Fix a given executable or library to be relocatable
-#		if [ ! -d "$1" ]; then
-#			echo $1
-#			libs="`otool -L $1 | fgrep compatibility | cut -d\( -f1`"
-#			for lib in $libs; do
-#				echo "	$lib"
-#				base=`echo $lib | awk -F/ '{print $NF}'`
-#				first=`echo $lib | cut -d/ -f1-3`
-#				to=@executable_path/../lib/$base
-#				if [ $first != /usr/lib -a $first != /usr/X11R6 ]; then
-#					/usr/bin/install_name_tool -change $lib $to $1
-#					if [ "`echo $lib | fgrep libcrypto`" = "" ]; then
-#						/usr/bin/install_name_tool -id $to ../lib/$base
-#						for ll in $libs; do
-#							base=`echo $ll | awk -F/ '{print $NF}'`
-#							first=`echo $ll | cut -d/ -f1-3`
-#							to=@executable_path/../lib/$base
-#							if [ $first != /usr/lib -a $first != /usr/X11R6 -a "`echo $ll | fgrep libcrypto`" = "" ]; then
-#								/usr/bin/install_name_tool -change $ll $to ../lib/$base
-#							fi
-#						done
-#					fi
-#				fi
-#			done
-#		fi
-# }
+fixlib () {
+	libPath="`echo $2 | sed 's/.*Resources//'`"
+	pkgPath="`echo $2 | sed 's/Resources\/.*/Resources/'`"
+	# Fix a given executable or library to be relocatable
+	if [ ! -d "$1" ]; then
+		libs="`otool -L $1 | fgrep compatibility | cut -d\( -f1`"
+		for lib in $libs; do
+			echo "	$lib"
+			base=`echo $lib | awk -F/ '{print $NF}'`
+			first=`echo $lib | cut -d/ -f1-3`
+			relative=`echo $lib | cut -d/ -f4-`
+			to=@executable_path/../$relative
+			if [ $first != /usr/lib -a $first != /usr/X11 -a $first != /System/Library ]; then
+				/usr/bin/install_name_tool -change $lib $to $1
+				if [ "`echo $lib | fgrep libcrypto`" = "" ]; then
+					/usr/bin/install_name_tool -id $to $1
+					for ll in $libs; do
+						base=`echo $ll | awk -F/ '{print $NF}'`
+						first=`echo $ll | cut -d/ -f1-3`
+						relative=`echo $ll | cut -d/ -f4-`
+						to=@executable_path/../$relative
+						if [ $first != /usr/lib -a $first != /usr/X11 -a $first != /System/Library -a "`echo $ll | fgrep libcrypto`" = "" ]; then
+							/usr/bin/install_name_tool -change $ll $to $pkgPath/$relative
+						fi
+					done
+				fi
+			fi
+		done
+	fi
+}
 # 
 # Fix package deps
-#(cd "$package/Contents/MacOS/bin"
+# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/loaders"
+# for file in *.so; do
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
+# done
+# )
+# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/engines"
+# for file in *.so; do
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
+# done
+# )
+# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/immodules"
+# for file in *.so; do
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
+# done
+# )
+# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/printbackends"
+# for file in *.so; do
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
+# done
+# )
+# (cd "$package/Contents/Resources/bin"
 # for file in *; do
-#		 fixlib "$file"
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
 # done
 # cd ../lib
-# for file in *; do
-#		 fixlib "$file"
-# done)
+# for file in *.dylib; do
+# 	echo "Rewriting dylib paths for $file..."
+# 	fixlib "$file" "`pwd`"
+# done
+# )
 
 exit 0
