@@ -1726,5 +1726,11 @@
 <feMorphology id="feMorphology2905" operator="dilate" radius="10" result="result4" />
 <feBlend blend="normal" id="feBlend2899" in="result4" in2="result1" mode="darken" result="result3" />
 </filter>
+<filter inkscape:label="Fuzzy glow" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood" height="1.2" y="-0.1" width="1.2" x="-0.1" id="FuzzyGlo0">
+<feOffset dx="4" dy="4" id="feOffset2969" result="result11" in="SourceGraphic" />
+<feGaussianBlur stdDeviation="4" result="result8" id="feGaussianBlur2971" />
+<feComposite result="result9" in="SourceGraphic" operator="in" in2="result8" id="feComposite2975" k1="0.5" k2="0.5" k3="0" />
+<feBlend in="result9" in2="result8" blend="normal" mode="darken" id="feBlend2977" />
+</filter>
 </defs>
 </svg>
