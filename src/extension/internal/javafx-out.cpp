@@ -86,8 +86,9 @@ static double effective_opacity(const SPStyle *style)
     for (SPObject const *obj = style->object; obj ; obj = obj->parent)
         {
         style = SP_OBJECT_STYLE(obj);
-        if (style)
+        if (style) {
             val *= SP_SCALE24_TO_FLOAT(style->opacity.value);
+        }
         }
     return val;
 }
@@ -192,9 +193,10 @@ static JavaFXOutput::String getStrokeLineJoin(unsigned value) {
  */
 static JavaFXOutput::String sanatize(const JavaFXOutput::String &badstr){
     JavaFXOutput::String good(badstr);
-    for (int pos = 0; pos < badstr.length(); ++pos )
-        if((badstr.at(pos)=='-')||(badstr.at(pos)==' '))
+    for (int pos = 0; pos < static_cast<int>(badstr.length()); ++pos )
+        if ((badstr.at(pos)=='-')||(badstr.at(pos)==' ')) {
             good.replace(pos, 1, "_");
+        }
     return good;
 }
 
@@ -272,7 +274,7 @@ bool JavaFXOutput::doTail()
     // Write the tail of CustomNode
     out("           ] // content\n");
     out("           transform: Translate { x : %s, y : %s }\n",
-	          DSTR((-minx) + border), DSTR((-miny) + border) );
+        DSTR((-minx) + border), DSTR((-miny) + border) );
     out("       } // Group\n");
     out("   } // function create()\n");
     out("} // class %s\n", name.c_str());
@@ -383,8 +385,9 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
  */
 bool JavaFXOutput::doStyle(SPStyle *style)
 {
-    if (!style)
+    if (!style) {
         return true;
+    }
 
     out("            opacity: %s\n", DSTR(effective_opacity(style)));
 
@@ -402,8 +405,9 @@ bool JavaFXOutput::doStyle(SPStyle *style)
         if (fill.value.href && fill.value.href->getURI() ){
             String uri = fill.value.href->getURI()->toString();
             /* trim the anchor '#' from the front */
-            if (uri.size() > 0 && uri[0]=='#')
+            if (uri.size() > 0 && uri[0]=='#') {
                 uri = uri.substr(1);
+            }
             out("            fill: %s()\n", sanatize(uri).c_str());
         }
     }
@@ -437,13 +441,13 @@ bool JavaFXOutput::doStyle(SPStyle *style)
         out("            strokeLineCap: %s\n",    getStrokeLineCap(linecap).c_str());
         out("            strokeLineJoin: %s\n",   getStrokeLineJoin(linejoin).c_str());
         out("            strokeMiterLimit: %s\n", DSTR(style->stroke_miterlimit.value));
-        if(style->stroke_dasharray_set) {
-           if(style->stroke_dashoffset_set) {
+        if (style->stroke_dasharray_set) {
+           if (style->stroke_dashoffset_set) {
                out("            strokeDashOffset: %s\n", DSTR(style->stroke_dash.offset));
            }
            out("            strokeDashArray: [ ");
            for(int i = 0; i < style->stroke_dash.n_dash; i++ ) {
-               if(i > 0) {
+               if (i > 0) {
                    out(", %.2lf", style->stroke_dash.dash[i]);
                }else {
                    out(" %.2lf", style->stroke_dash.dash[i]);
@@ -471,13 +475,15 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     String jfxid = sanatize(id);
 
     //### Get the Shape
-    if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
+    if (!SP_IS_SHAPE(item)) { //Bulia's suggestion.  Allow all shapes
         return true;
+    }
 
     SPShape *shape = SP_SHAPE(item);
     SPCurve *curve = shape->curve;
-    if (curve->is_empty())
+    if (curve->is_empty()) {
         return true;
+    }
 
     nrShapes++;
 
@@ -489,8 +495,9 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     /**
      * Output the style information
      */
-    if (!doStyle(SP_OBJECT_STYLE(shape)))
+    if (!doStyle(SP_OBJECT_STYLE(shape))) {
         return false;
+    }
 
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0);
@@ -501,8 +508,9 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     guint segmentCount = 0;
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
         segmentCount += (*it).size();
-        if (it->closed())
+        if (it->closed()) {
             segmentCount += 1;
+        }
     }
 
     out("            elements: [\n");
@@ -531,7 +539,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
             {
             //### LINE
-            if( dynamic_cast<Geom::LineSegment  const *> (&*cit) ||
+            if ( dynamic_cast<Geom::LineSegment  const *> (&*cit) ||
                 dynamic_cast<Geom::HLineSegment const *> (&*cit) ||
                 dynamic_cast<Geom::VLineSegment const *> (&*cit) )
                 {
@@ -543,7 +551,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
                 nrNodes++;
                 }
             //### BEZIER
-            else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+            else if (Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
                 {
                 std::vector<Geom::Point> points = cubic->points();
                 Geom::Point p1 = points[1];
@@ -581,14 +589,18 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     double cminy = cminmax.min()[Y];
     double cmaxy = cminmax.max()[Y];
 
-    if (cminx < minx)
+    if (cminx < minx) {
         minx = cminx;
-    if (cmaxx > maxx)
+    }
+    if (cmaxx > maxx) {
         maxx = cmaxx;
-    if (cminy < miny)
+    }
+    if (cminy < miny) {
         miny = cminy;
-    if (cmaxy > maxy)
+    }
+    if (cmaxy > maxy) {
         maxy = cmaxy;
+    }
 
     return true;
 }
@@ -606,13 +618,15 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     using Geom::Y;
 
     //### Get the Shape
-    if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
+    if (!SP_IS_SHAPE(item)) { //Bulia's suggestion.  Allow all shapes
         return true;
+    }
 
     SPShape *shape = SP_SHAPE(item);
     SPCurve *curve = shape->curve;
-    if (curve->is_empty())
+    if (curve->is_empty()) {
         return true;
+    }
 
     nrShapes++;
 
@@ -623,38 +637,40 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     /**
      * Output the style information
      */
-    if (!doStyle(SP_OBJECT_STYLE(shape)))
+    if (!doStyle(SP_OBJECT_STYLE(shape))) {
         return false;
+    }
 
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0);
     Geom::Matrix tf = sp_item_i2d_affine(item) * yflip;
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
-    
+
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
     nrNodes = 0;
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
         nrNodes += (*it).size();
-        if (it->closed())
+        if (it->closed()) {
             nrNodes += 1;
+        }
     }
 
     char *dataStr = sp_svg_write_path(pathv);
     out("        content: \"%s\"\n", dataStr);
     free(dataStr);
 
-    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() ); 
+    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );
 
     /**
-     * Get the Min and Max X and Y extends for the Path. 
+     * Get the Min and Max X and Y extends for the Path.
      * ....For all Subpaths in the <path>
-     */	     
+     */
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
         {
         cminmax.expandTo(pit->front().initialPoint());
         /**
          * For all segments in the subpath
-         */		         
+         */
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
             {
             cminmax.expandTo(cit->finalPoint());
@@ -668,14 +684,18 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     double cminy = cminmax.min()[Y];
     double cmaxy = cminmax.max()[Y];
 
-    if (cminx < minx)
+    if (cminx < minx) {
         minx = cminx;
-    if (cmaxx > maxx)
+    }
+    if (cmaxx > maxx) {
         maxx = cmaxx;
-    if (cminy < miny)
+    }
+    if (cminy < miny) {
         miny = cminy;
-    if (cmaxy > maxy)
+    }
+    if (cmaxy > maxy) {
         maxy = cmaxy;
+    }
 
     return true;
 }
@@ -708,24 +728,27 @@ bool JavaFXOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
     if (SP_IS_ITEM(obj))
         {
         SPItem *item = SP_ITEM(obj);
-        if (!doCurve(item, id))
+        if (!doCurve(item, id)) {
             return false;
+        }
         }
     else if (SP_IS_GRADIENT(obj))
         {
         SPGradient *grad = SP_GRADIENT(obj);
-        if (!doGradient(grad, id))
+        if (!doGradient(grad, id)) {
             return false;
+        }
         }
 
     /**
      * Descend into children
-     */	     
+     */
     for (SPObject *child = obj->firstChild() ; child ; child = child->next)
         {
-		if (!doTreeRecursive(doc, child))
-		    return false;
-		}
+            if (!doTreeRecursive(doc, child)) {
+                return false;
+            }
+        }
 
     return true;
 }
@@ -743,8 +766,9 @@ bool JavaFXOutput::doTree(SPDocument *doc)
     miny  =  bignum;
     maxy  = -bignum;
 
-    if (!doTreeRecursive(doc, doc->root))
+    if (!doTreeRecursive(doc, doc->root)) {
         return false;
+    }
 
     return true;
 
@@ -774,15 +798,17 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
         if (SP_IS_SHAPE(item)) {//Bulia's suggestion.  Allow all shapes
             SPShape *shape = SP_SHAPE(item);
             SPCurve *curve = shape->curve;
-            if (!curve->is_empty())
+            if (!curve->is_empty()) {
                 out("               %s(),\n", id.c_str());
+            }
         }
     }
     else if (SP_IS_GRADIENT(obj)) {
         //TODO: what to do with Gradient within body?????
         //SPGradient *grad = SP_GRADIENT(reprobj);
-        //if (!doGradient(grad, id))
+        //if (!doGradient(grad, id)) {
         //    return false;
+        //}
     }
 
     /**
@@ -790,9 +816,10 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
      */
     for (SPObject *child = obj->firstChild() ; child ; child = child->next)
         {
-		if (!doBody(doc, child))
-		    return false;
-		}
+            if (!doBody(doc, child)) {
+                return false;
+            }
+        }
 
     return true;
 }
@@ -830,20 +857,23 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 
     name = Glib::path_get_basename(filename_utf8);
     int pos = name.find('.');
-    if (pos > 0)
+    if (pos > 0) {
         name = name.substr(0, pos);
+    }
 
 
     //###### SAVE IN JAVAFX FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
 
-    if (!doTree(doc))
+    if (!doTree(doc)) {
         return false;
+    }
     String curveBuf = outbuf;
     outbuf.clear();
 
-    if (!doHeader())
+    if (!doHeader()) {
         return false;
+    }
 
     outbuf.append(curveBuf);
 
@@ -858,8 +888,9 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 
     doBody(doc, doc->root);
 
-    if (!doTail())
+    if (!doTail()) {
         return false;
+    }
 
 
 
@@ -875,9 +906,9 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
         {
         fputc(*iter, f);
         }
-        
+
     fclose(f);
-    
+
     return true;
 }
 
@@ -923,8 +954,9 @@ JavaFXOutput::save(Inkscape::Extension::Output */*mod*/,
 bool JavaFXOutput::check (Inkscape::Extension::Extension */*module*/)
 {
     /* We don't need a Key
-    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_JFX))
+    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_JFX)) {
         return FALSE;
+    }
     */
 
     return true;
