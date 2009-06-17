@@ -1591,12 +1591,12 @@
 <feDisplacementMap id="feDisplacementMap3221" numOctaves="2" scale="5" yChannelSelector="G" xChannelSelector="R" result="result3" in="result1" />
 <feComposite id="feComposite2941" operator="atop" />
 </filter>
-<filter id="Filmgrain0" inkscape:label="Film Grain" inkscape:menu="Image effects" inkscape:menu-tooltip="Adds a film grain noise to images and objects">
-<feTurbulence id="feTurbulence3240" type="fractalNoise" numOctaves="3" baseFrequency="1" seed="0" result="result0" />
-<feComposite id="feComposite3242" in="result0" in2="SourceGraphic" operator="arithmetic" k1="0" k2="0.5" k3="0.5" result="result2" />
-<feComposite id="feComposite3244" in="result2" in2="result0" operator="arithmetic" k1="1" k2="1.2" k3="0" k4="0" result="result3" />
-<feBlend id="feBlend3246" blend="normal" mode="lighten" result="result5" in2="result2" />
-<feComposite id="feComposite3248" in2="SourceGraphic" operator="in" in="result5" result="result4" />
+<filter height="1" width="1" y="0" x="0" id="Filmgrain0" inkscape:label="Film grain" inkscape:menu="Image effects" inkscape:menu-tooltip="Render in shades of gray by reducing saturation to zero">
+<feTurbulence id="feTurbulence3782" type="fractalNoise" numOctaves="3" baseFrequency="1" seed="0" result="result0" />
+<feColorMatrix result="result4" values="0" type="saturate" id="feColorMatrix3786" />
+<feComposite id="feComposite3784" in="SourceGraphic" in2="result4" operator="arithmetic" k1="1.25" k2="0.5" k3="0.5" result="result2" />
+<feBlend result="result5" mode="normal" in="result2" in2="SourceGraphic" id="feBlend3788" blend="normal" />
+<feComposite id="feComposite3790" in="result5" in2="SourceGraphic" operator="in" k1="1" k2="1.2" k3="0" k4="0" result="result3" />
 </filter>
 <filter id="Hslbumptr0" inkscape:menu-tooltip="Highly flexible specular bump with transparency" inkscape:menu="HSL Bumps" inkscape:label="HSL Bumps, transparent">
 <feGaussianBlur id="feGaussianBlur2966" result="result0" in="SourceGraphic" stdDeviation="0.5" />
