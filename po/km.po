@@ -1,15 +1,16 @@
-# translation of km.po to Khmer
+# translation of km.po to khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006, 2009.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008, 2009.
 # Eng Vannak <evannak@khmeros.info>, 2008.
+# Piseth AUK <piseth_dv@khmeros.info>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-16 10:10+0700\n"
-"Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
-"Language-Team: Khmer <support@khmeros.info>\n"
+"PO-Revision-Date: 2009-06-17 16:52+0700\n"
+"Last-Translator: \n"
+"Language-Team: khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16538,13 +16539,12 @@ msgid "Remove any path effects from selected objects"
 msgstr "យក​ចេញ​បែបផែន​ផ្លូវ​មួយ​ចំនួន​ពី​វត្ថុ​ដែល​ជ្រើស"
 
 #: ../src/verbs.cpp:2306
-#, fuzzy
 msgid "Remove Filters"
 msgstr "យក​តម្រង​ចេញ"
 
 #: ../src/verbs.cpp:2307
 msgid "Remove any filters from selected objects"
-msgstr "យក​ចេញ​តម្រង​មួយ​ចំនួន​ពី​វត្ថុ​ដែល​ជ្រើស"
+msgstr "យក​តម្រង​ចេញ​ពី​វត្ថុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:2308
 msgid "_Delete"
@@ -16575,23 +16575,22 @@ msgid "Unlin_k Clone"
 msgstr "មិន​តភ្ជាប់​ក្លូន"
 
 #: ../src/verbs.cpp:2315
-#, fuzzy
 msgid ""
 "Cut the selected clones' links to the originals, turning them into "
 "standalone objects"
-msgstr "កាត់​តំណ​របស់​ខ្លូន​ដែល​បាន​ជ្រើស​ទៅ​ដើម​របស់​វា ត្រឡប់​វា​ទៅជា​វត្ថុ​តែឯង"
+msgstr "កាត់​តំណ​ក្លូន​ដែល​បាន​ជ្រើស​ទៅកាន់​តំណ​ដើម ដោយ​ប្ដូរ​ពួកវា​ទៅ​ជា​វត្ថុ​នៅ​តែ​ឯង"
 
 #: ../src/verbs.cpp:2316
 msgid "Relink to Copied"
-msgstr ""
+msgstr "តភ្ជាប់​ទៅកាន់​ច្បាប់​ចម្លង​ឡើងវិញ"
 
 #: ../src/verbs.cpp:2317
 msgid "Relink the selected clones to the object currently on the clipboard"
-msgstr ""
+msgstr "តភ្ជាប់​តំណ​ក្លូន​ដែល​បាន​ជ្រើស​ទោកាន់​វត្ថុ​ដែល​មាន​នៅ​លើ​ក្ដារ​តម្បៀត​ខ្ទាស់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2318
 msgid "Select _Original"
-msgstr "ជ្រើស​​ដើម​"
+msgstr "ជ្រើស​តំណ​​ដើម​"
 
 #: ../src/verbs.cpp:2319
 msgid "Select the object to which the selected clone is linked"
@@ -17045,14 +17044,12 @@ msgid "Lower the current layer"
 msgstr "បន្ទាប​ស្រទាប់​បច្ចុប្បន្ន"
 
 #: ../src/verbs.cpp:2454
-#, fuzzy
 msgid "Duplicate Current Layer..."
-msgstr "លុប​ស្រទាប់​បច្ចុប្បន្ន"
+msgstr "ចម្លង​ស្រទាប់​បច្ចុប្បន្ន..."
 
 #: ../src/verbs.cpp:2455
-#, fuzzy
 msgid "Duplicate an existing layer"
-msgstr "តម្រង​ស្ទួន"
+msgstr "ចម្លង​ស្រទាប់​ដែល​មាន​រួច"
 
 #: ../src/verbs.cpp:2456
 msgid "_Delete Current Layer"
@@ -17063,14 +17060,12 @@ msgid "Delete the current layer"
 msgstr "លុប​ស្រទាប់​បច្ចុប្បន្ន​"
 
 #: ../src/verbs.cpp:2458
-#, fuzzy
 msgid "_Show/hide other layers"
-msgstr "បង្ហាញ ​ឬ​លាក់​បន្ទាត់​ផ្ទាំង​​ក្រណាត់​"
+msgstr "លាក់​/​បង្ហាញ​ស្រទាប់​ផ្សេងទៀត"
 
 #: ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Solo the current layer"
-msgstr "បន្ទាប​ស្រទាប់​បច្ចុប្បន្ន"
+msgstr ""
 
 #. Object
 #: ../src/verbs.cpp:2462
@@ -17261,9 +17256,8 @@ msgid "LPE Edit"
 msgstr "កែ​សម្រួល LPE"
 
 #: ../src/verbs.cpp:2535
-#, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr "កែ​សម្រួល​ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ​បន្ត​ផ្ទាល់"
+msgstr "កែសម្រួល​ប៉ារ៉ាម៉ែត្រ​បែបផែន​ផ្លូវ"
 
 #: ../src/verbs.cpp:2537
 msgid "Erase existing paths"
@@ -17271,7 +17265,7 @@ msgstr "លុប​ផ្លូវ​ដែល​មាន​"
 
 #: ../src/verbs.cpp:2539
 msgid "Do geometric constructions"
-msgstr ""
+msgstr "សង់​ធរណីមាត្រ"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2541
@@ -17419,14 +17413,12 @@ msgid "Open Preferences for the Eraser tool"
 msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ជ័រ​លុប"
 
 #: ../src/verbs.cpp:2577
-#, fuzzy
 msgid "LPE Tool Preferences"
-msgstr "ចំណូល​ចិត្ត​ឧបករណ៍​ថ្នាំង​"
+msgstr "ចំណង់ចំណូលចិត្ត​ឧបករណ៍ LPE"
 
 #: ../src/verbs.cpp:2578
-#, fuzzy
 msgid "Open Preferences for the LPETool tool"
-msgstr "បើក​ចំណូល​ចិត្ត​សម្រាប់​ឧបករណ៍​ពង្រីក​"
+msgstr "បើក​ចំណង់ចំណូលចិត្ត​សម្រាប់​ឧបករណ៍ LPETool"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2581
@@ -17531,11 +17523,11 @@ msgstr "ទាញ​បង្អួច​ឯកសារ​នេះ​ឲ្យ
 
 #: ../src/verbs.cpp:2602
 msgid "Toggle _Focus Mode"
-msgstr ""
+msgstr "បិទ​បើក​របៀប​ផ្ដោត"
 
 #: ../src/verbs.cpp:2602
 msgid "Remove excess toolbars to focus on drawing"
-msgstr ""
+msgstr "យក​របារ​ឧបករណ៍​ដែល​លើស​ចេញ ដើម្បី​ផ្ដោត​លើ​ការ​គូរ"
 
 #: ../src/verbs.cpp:2604
 msgid "Duplic_ate Window"
@@ -17714,21 +17706,19 @@ msgstr "រក​វត្ថុ​ក្នុង​ឯកសារ​"
 
 #: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
-msgstr ""
+msgstr "រក និង​ជំនួស​អត្ថបទ..."
 
 #: ../src/verbs.cpp:2657
-#, fuzzy
 msgid "Find and replace text in document"
-msgstr "រក​វត្ថុ​ក្នុង​ឯកសារ​"
+msgstr "រក និង​ជំនួស​អត្ថបទ​នៅ​ក្នុង​ឯកសារ"
 
 #: ../src/verbs.cpp:2658
 msgid "Check Spellin_g..."
-msgstr ""
+msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ..."
 
 #: ../src/verbs.cpp:2659
-#, fuzzy
 msgid "Check spelling of text in document"
-msgstr "បើក​ឯកសារ​ដែល​មាន​ស្រាប់​មួយ"
+msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ​អត្ថបទ​នៅ​ក្នុង​ឯកសារ"
 
 #: ../src/verbs.cpp:2660
 msgid "_Messages..."
@@ -17809,34 +17799,28 @@ msgid "View Layers"
 msgstr "ស្រទាប់​ទិដ្ឋភាព​"
 
 #: ../src/verbs.cpp:2682
-#, fuzzy
 msgid "Path Effect Editor..."
-msgstr "បែបផែន​ផ្លូវ​"
+msgstr "កម្មវិធី​កែសម្រួល​បែបផែន​ផ្លូវ..."
 
 #: ../src/verbs.cpp:2683
-#, fuzzy
 msgid "Manage, edit, and apply path effects"
-msgstr "បង្កើត និង​អនុវត្ត​បែបផែន​ផ្លូវ"
+msgstr "គ្រប់គ្រង កែសម្រួល និង​អនុវត្ត​បែបផែន​ផ្លូវ"
 
 #: ../src/verbs.cpp:2684
-#, fuzzy
 msgid "Filter Editor..."
-msgstr "បែបផែន​តម្រង..."
+msgstr "កម្មវិធី​កែសម្រួល​តម្រង..."
 
 #: ../src/verbs.cpp:2685
-#, fuzzy
 msgid "Manage, edit, and apply SVG filters"
-msgstr "គ្រប់គ្រង​បែបផែន​តម្រង SVG"
+msgstr "គ្រប់គ្រង កែសម្រួល និង​អនុវត្ត​តម្រង SVG"
 
 #: ../src/verbs.cpp:2686
-#, fuzzy
 msgid "SVG Font Editor..."
-msgstr "កម្មវិធី​និពន្ធ​ XML..."
+msgstr "កម្មវិធី​កែសម្រួល​ពុម្ពអក្សរ SVG..."
 
 #: ../src/verbs.cpp:2687
-#, fuzzy
 msgid "Edit SVG fonts"
-msgstr "គ្រប់គ្រង​បែបផែន​តម្រង SVG"
+msgstr "កែសម្រួល​ពុម្ពអក្សរ SVG"
 
 #. Help
 #: ../src/verbs.cpp:2690
@@ -17976,16 +17960,15 @@ msgstr "មិន​លាក់​ទាំងអស់​ក្នុង​ស
 
 #: ../src/verbs.cpp:2740
 msgid "Link an ICC color profile"
-msgstr ""
+msgstr "តភ្ជាប់​ទម្រង់​ពណ៌ ICC"
 
 #: ../src/verbs.cpp:2741
-#, fuzzy
 msgid "Remove Color Profile"
-msgstr "យក​តម្រង​ចេញ"
+msgstr "យក​ទម្រង់​ពណ៌​ចេញ"
 
 #: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
-msgstr ""
+msgstr "យក​ទម្រង់​ពណ៌ ICC ដែល​បាន​តភ្ជាប់​ចេញ"
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -18030,7 +18013,6 @@ msgid "none"
 msgstr "គ្មាន"
 
 #: ../src/widgets/ege-paint-def.cpp:89
-#, fuzzy
 msgid "remove"
 msgstr "យក​ចេញ"
 
@@ -18058,7 +18040,7 @@ msgstr "គ្រួសារ​ពុម្ពអក្សរ"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:188
 msgid "fontselector|Style"
-msgstr ""
+msgstr "fontselector|Style"
 
 #: ../src/widgets/font-selector.cpp:226
 msgid "Font size:"
@@ -18587,9 +18569,8 @@ msgstr "កំណត់​ឧបករណ៍​សម្គាល់"
 
 #. Stroke width
 #: ../src/widgets/stroke-style.cpp:1077
-#, fuzzy
 msgid "StrokeWidth|Width:"
-msgstr "ទទឹង​ស្នាម​គូស"
+msgstr "StrokeWidth|Width ៖"
 
 #: ../src/widgets/stroke-style.cpp:1091 ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
@@ -18675,11 +18656,11 @@ msgstr "ចាប់ផ្ដើម​ឧបករណ៍​សម្គាល់
 
 #: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
-msgstr ""
+msgstr "ចំណុច​ចាប់ផ្ដើម គឺ​ត្រូវបាន​គូរ​នៅលើ​ថ្នាំង​ដំបូង​នៃ​ផ្លូវ ឬ​រូបរាង"
 
 #: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
-msgstr "ឧបករណ៍​សម្គាល់​ពាក់កណ្ដាល ៖"
+msgstr "ឧបករណ៍​សម្គាល់​ពាក់កណ្ដាល ៖"
 
 #: ../src/widgets/stroke-style.cpp:1243
 msgid ""
@@ -18689,11 +18670,11 @@ msgstr ""
 
 #: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
-msgstr "បញ្ចប់​ឧបករណ៍​សម្គាល់ ៖"
+msgstr "ចំណុច​បញ្ចប់ ៖"
 
 #: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
-msgstr ""
+msgstr "ចំណុច​បញ្ចប់ គឺ​ត្រូវបាន​គូរ​នៅលើ​ថ្នាំង​ចុងក្រោយ​របស់​ផ្លូវ ឬ​រូបរាង"
 
 #: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
@@ -18816,14 +18797,12 @@ msgid "Make selected nodes symmetric"
 msgstr "បង្កើត​ស៊ីមេទ្រី​ថ្នាំង​ដែល​បាន​ជ្រើស"
 
 #: ../src/widgets/toolbox.cpp:1383
-#, fuzzy
 msgid "Node Auto"
-msgstr "កែ​សម្រួល​ថ្នាំង​"
+msgstr "ថ្នាំង​ស្វ័យប្រវត្តិ​"
 
 #: ../src/widgets/toolbox.cpp:1384
-#, fuzzy
 msgid "Make selected nodes auto-smooth"
-msgstr "បង្កើត​ភាព​រលោង​ថ្នាំង​ដែល​បាន​ជ្រើស"
+msgstr "ធ្វើ​ឲ្យ​ថ្នាំង​ដែល​បាន​ជ្រើស​រលោង​ដោយ​ស្វ័យប្រវត្តិ"
 
 #: ../src/widgets/toolbox.cpp:1393
 msgid "Node Line"
@@ -18894,119 +18873,98 @@ msgid "Y coordinate of selected node(s)"
 msgstr "កោអរដោនេ Y របស់​ថ្នាំង​ដែល​បាន​ជ្រើស"
 
 #: ../src/widgets/toolbox.cpp:2028
-#, fuzzy
 msgid "Enable snapping"
-msgstr "បើក​កា​រខ្ទាស់"
+msgstr "អនុញ្ញាត​ការ​ចាប់យក"
 
 #: ../src/widgets/toolbox.cpp:2037
 msgid "Bounding box"
 msgstr "ព្រំ​ដែន​ប្រអប់"
 
 #: ../src/widgets/toolbox.cpp:2037
-#, fuzzy
 msgid "Snap bounding box corners"
-msgstr "ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ចាប់យក​ជ្រុង​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2046
-#, fuzzy
 msgid "Bounding box edges"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "គែម​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2046
-#, fuzzy
 msgid "Snap to edges of a bounding box"
-msgstr "ខ្ទាស់​ទៅ​គែម​ប្រអប់​ព្រំដែន"
+msgstr "ចាប់​យក​គែម​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2055
-#, fuzzy
 msgid "Bounding box corners"
-msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ជ្រុង​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2055
-#, fuzzy
 msgid "Snap to bounding box corners"
-msgstr "ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ចាប់យក​ទៅកាន់​ជ្រុង​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2064
 msgid "BBox Edge Midpoints"
-msgstr ""
+msgstr "ចំណុច​កណ្ដាល​នៃ​គែម BBox"
 
 #: ../src/widgets/toolbox.cpp:2064
-#, fuzzy
 msgid "Snap from and to midpoints of bounding box edges"
-msgstr "ខ្ទាស់​ទៅ​គែម​ប្រអប់​ព្រំដែន"
+msgstr "ចាប់យក​ពី និង​ទៅកាន់​ចំណុច​កណ្ដាល​របស់​គែម​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2074
-#, fuzzy
 msgid "BBox Centers"
-msgstr "កណ្តាល"
+msgstr "ចំណុច​កណ្ដាល​របស់​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2074
-#, fuzzy
 msgid "Snapping from and to centers of bounding boxes"
-msgstr "ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន និង​បន្ទាត់​នាំផ្លូវ​ទៅ​គែម​ប្រអប់​ព្រំដែន"
+msgstr "ចាប់​យក​ពី និង​ខ្ទាស់​ទៅកាន់​ចំណុច​កណ្ដាល​របស់​ប្រអប់​លោត"
 
 #: ../src/widgets/toolbox.cpp:2083
-#, fuzzy
 msgid "Snap nodes or handles"
-msgstr "ប្ដូរ​ចំណុច​ទាញ​ថ្នាំង"
+msgstr "ចាប់យក​ថ្នាំង ឬ​ចំណុច​ទាញ"
 
 #: ../src/widgets/toolbox.cpp:2091
-#, fuzzy
 msgid "Snap to paths"
 msgstr "ខ្ទាស់​ទៅ​ផ្លូវ"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Path intersections"
-msgstr "ប្រសព្វ"
+msgstr "ចំណុច​ប្រសព្វ​ផ្លូវ"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Snap to path intersections"
-msgstr "ខ្ទាស់​ទៅ​ចំណុច​ប្រសព្វ​បន្ទាត់នាំផ្លូវ​ក្រឡាចត្រង្គ"
+msgstr "ខ្ទាស់​ទៅកាន់​ចំណុច​ប្រសព្វ​ផ្លូវ"
 
 #: ../src/widgets/toolbox.cpp:2109
-#, fuzzy
 msgid "To nodes"
-msgstr "ផ្លាស់ទី​ថ្នាំង​"
+msgstr "ទៅកាន់​ថ្នាំង"
 
 #: ../src/widgets/toolbox.cpp:2109
-#, fuzzy
 msgid "Snap to cusp nodes"
-msgstr "ខ្ទាស់​ទៅ​ថ្នាំង"
+msgstr "ខ្ទាស់​ទៅកាន់​ថ្នាំង cusp"
 
 #: ../src/widgets/toolbox.cpp:2118
-#, fuzzy
 msgid "Smooth nodes"
-msgstr "ភាព​រលោង"
+msgstr "ថ្នាំង​រលោង"
 
 #: ../src/widgets/toolbox.cpp:2118
-#, fuzzy
 msgid "Snap to smooth nodes"
-msgstr "ខ្ទាស់​ទៅ​ថ្នាំង"
+msgstr "ខ្ទាស់​ទៅកាន់​ថ្នាំង​រលោង"
 
 #: ../src/widgets/toolbox.cpp:2127
-#, fuzzy
 msgid "Line Midpoints"
-msgstr "ទទឹង​បន្ទាត់"
+msgstr "ចំណុច​កណ្ដាល​បន្ទាត់"
 
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Snap from and to midpoints of line segments"
-msgstr ""
+msgstr "ចាប់​យក​ពី និង​ខ្ទាស់​ទៅកាន់​ចំណុច​កណ្ដាល​នៃ​ចម្រៀក​បន្ទាត់"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Object Centers"
-msgstr "លក្ខណៈសម្បត្តិ​វត្ថុ​"
+msgstr "ចំណុច​កណ្ដាល​វត្ថុ"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Snap from and to centers of objects"
-msgstr "ខ្ទាស់​ថ្នាំង និង​បន្ទាត់​នាំផ្លូវ​ទៅ​ថ្នាំង​វត្ថុ"
+msgstr "ចាប់យក​ពី ឬ​ខ្ទាស់​ទៅកាន់​ចំណុច​កណ្ដាល​របស់​វត្ថុ"
 
 #: ../src/widgets/toolbox.cpp:2145
-#, fuzzy
 msgid "Rotation Centers"
 msgstr "បង្វិល​កណ្ដាល"
 
@@ -19015,24 +18973,20 @@ msgid "Snap from and to an item's rotation center"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Page border"
-msgstr "ពណ៌​ស៊ុម​ទំព័រ"
+msgstr "ស៊ុម​ទំព័រ"
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Snap to the page border"
-msgstr "ខ្ទាស់​ទៅ​ស៊ុម​ទំព័រ"
+msgstr "ខ្ទាស់​ទៅកាន់​ស៊ុម​ទំព័រ"
 
 #: ../src/widgets/toolbox.cpp:2163
-#, fuzzy
 msgid "Snap to grids"
-msgstr "<b>ខ្ទាស់​ទៅ​ក្រឡាចត្រង្គ</b>"
+msgstr "ខ្ទាស់​ទៅ​ក្រឡា​ចត្រង្គ"
 
 #: ../src/widgets/toolbox.cpp:2172
-#, fuzzy
 msgid "Snap to guides"
-msgstr "<b>ខ្ទាស់​ទៅ​បន្ទាត់​នាំផ្លូវ</b>"
+msgstr "ខ្ទាស់ទៅកាន់​បន្ទាត់​ក្រឹត"
 
 #: ../src/widgets/toolbox.cpp:2377
 msgid "Star: Change number of corners"
@@ -19425,36 +19379,32 @@ msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "កាំ​នៃ​ការ​ប្រែប្រួល​ខាង​ក្នុង​បំផុត (ទាក់ទង​នឹង​ទំហំ​គួច)"
 
 #: ../src/widgets/toolbox.cpp:3826
-#, fuzzy
 msgid "Bezier"
-msgstr "Bézier"
+msgstr "Bezier"
 
 #: ../src/widgets/toolbox.cpp:3827
-#, fuzzy
 msgid "Create regular Bezier path"
-msgstr "បង្កើត​ផ្លូវ​ថ្មី"
+msgstr "បង្កើត​ផ្លូវ Bezier ទៀងទាត់​មួយ"
 
 #: ../src/widgets/toolbox.cpp:3833
 msgid "Spiro"
 msgstr "Spiro"
 
 #: ../src/widgets/toolbox.cpp:3834
-#, fuzzy
 msgid "Create Spiro path"
-msgstr "បង្កើត​គួច​"
+msgstr "បង្កើត​ផ្លូវ Spiro"
 
 #: ../src/widgets/toolbox.cpp:3841
 msgid "Zigzag"
-msgstr ""
+msgstr "Zigzag"
 
 #: ../src/widgets/toolbox.cpp:3842
 msgid "Create a sequence of straight line segments"
-msgstr ""
+msgstr "បង្កើតជួរ​របស់​ចម្រៀក​បន្ទាត់​ត្រង់"
 
 #: ../src/widgets/toolbox.cpp:3848
-#, fuzzy
 msgid "Paraxial"
-msgstr "លំអៀង​"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3849
 msgid "Create a sequence of paraxial line segments"
@@ -19466,27 +19416,24 @@ msgid "Mode:"
 msgstr "របៀប ៖"
 
 #: ../src/widgets/toolbox.cpp:3886
-#, fuzzy
 msgid "Triangle in"
-msgstr "ត្រីកោណ"
+msgstr "ត្រីកោណ​ក្នុង"
 
 #: ../src/widgets/toolbox.cpp:3887
-#, fuzzy
 msgid "Triangle out"
-msgstr "ត្រីកោណ"
+msgstr "ត្រីកោណ​ក្រៅ"
 
 #: ../src/widgets/toolbox.cpp:3889
 msgid "From clipboard"
-msgstr ""
+msgstr "ពី​ក្ដារ​តម្បៀត​ខ្ទាស់"
 
 #: ../src/widgets/toolbox.cpp:3914 ../src/widgets/toolbox.cpp:3915
-#, fuzzy
 msgid "Shape:"
-msgstr "រាង​"
+msgstr "រាង​ ៖"
 
 #: ../src/widgets/toolbox.cpp:3999
 msgid "(many nodes, rough)"
-msgstr ""
+msgstr "(ថ្នាំង​ច្រើន គ្រើម)"
 
 #: ../src/widgets/toolbox.cpp:3999 ../src/widgets/toolbox.cpp:4119
 #: ../src/widgets/toolbox.cpp:4136 ../src/widgets/toolbox.cpp:4339
@@ -19496,23 +19443,20 @@ msgid "(default)"
 msgstr "(លំនាំ​ដើម)"
 
 #: ../src/widgets/toolbox.cpp:3999
-#, fuzzy
 msgid "(few nodes, smooth)"
-msgstr "បង្កើត​ភាព​រលោង​ថ្នាំង​ដែល​បាន​ជ្រើស"
+msgstr "(ថ្នាំង​តិច​តួច រលោង)"
 
 #: ../src/widgets/toolbox.cpp:4002
-#, fuzzy
 msgid "Smoothing:"
-msgstr "រលោង"
+msgstr "រលោង ៖"
 
 #: ../src/widgets/toolbox.cpp:4002
-#, fuzzy
 msgid "Smoothing: "
-msgstr "រលោង"
+msgstr "រលោង ៖ "
 
 #: ../src/widgets/toolbox.cpp:4003
 msgid "How much smoothing (simplifying) is applied to the line"
-msgstr ""
+msgstr "រលោង​ប៉ុណ្ណា ដែល​ត្រូវ​អនុវត្ត​ទៅកាន់​បន្ទាត់"
 
 #: ../src/widgets/toolbox.cpp:4026
 #, fuzzy
@@ -19558,62 +19502,52 @@ msgid "The force of the tweak action"
 msgstr "បង្ខំ​សកម្ម​ភាព​កៀប"
 
 #: ../src/widgets/toolbox.cpp:4157
-#, fuzzy
 msgid "Move mode"
-msgstr "ផ្លាស់ទី​ថ្នាំង​"
+msgstr "របៀប​ផ្លាស់ទី​"
 
 #: ../src/widgets/toolbox.cpp:4158
-#, fuzzy
 msgid "Move objects in any direction"
-msgstr "អុហ្វសិត​ក្នុង​ទិស y"
+msgstr "ផ្លាស់ទី​វត្ថុ​តាម​ទិស​ណាមួយ"
 
 #: ../src/widgets/toolbox.cpp:4164
-#, fuzzy
 msgid "Move in/out mode"
-msgstr "ផ្លាស់ទី​ថ្នាំង​"
+msgstr "របៀប​ផ្លាស់ទី​ចេញ/ចូល"
 
 #: ../src/widgets/toolbox.cpp:4165
 msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "ផ្លាស់ទី​វត្ថុ​ទៅកាន់​ទស្សន៍​ទ្រនិច ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​ផ្លាស់ទី​ចេញ​ពី​ទស្សន៍​ទ្រនិច​វិញ"
 
 #: ../src/widgets/toolbox.cpp:4171
-#, fuzzy
 msgid "Move jitter mode"
 msgstr "របៀប​ពណ៌​មិន​ច្បាស់​"
 
 #: ../src/widgets/toolbox.cpp:4172
-#, fuzzy
 msgid "Move objects in random directions"
-msgstr "កត្តា​មាត្រដ្ឋាន​ក្នុង​ទិស x"
+msgstr "ផ្លាស់ទី​វត្ថុ​តាម​ទិស​ចៃដន្យ"
 
 #: ../src/widgets/toolbox.cpp:4178
-#, fuzzy
 msgid "Scale mode"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ថ្នាំង​"
+msgstr "របៀប​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../src/widgets/toolbox.cpp:4179
-#, fuzzy
 msgid "Shrink objects, with Shift enlarge"
-msgstr "កំណត់ចំណង​ជើង​វត្ថុ"
+msgstr "បង្រួម​វត្ថុ បើ​ចង់​ពង្រីក​វិញ​គឺ​ប្រើ ប្ដូរ​(Shift)"
 
 #: ../src/widgets/toolbox.cpp:4185
-#, fuzzy
 msgid "Rotate mode"
-msgstr "បង្វិល​ថ្នាំង​"
+msgstr "របៀប​បង្វិល"
 
 #: ../src/widgets/toolbox.cpp:4186
-#, fuzzy
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "បង្វិល​ជម្រើស ៩០ ដឺក្រេ ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​វត្ថុ ប្រើ ប្ដូរ​(Shift) ដើម្បី​បង្វិល​ច្រាស​ទ្រនិច​នាឡិកា"
 
 #: ../src/widgets/toolbox.cpp:4192
-#, fuzzy
 msgid "Duplicate/delete mode"
-msgstr "ថ្នាំង​ស្ទួន​"
+msgstr "របៀប​ស្ទួន/​លុប"
 
 #: ../src/widgets/toolbox.cpp:4193
 msgid "Duplicate objects, with Shift delete"
-msgstr ""
+msgstr "ចម្លង​វត្ថុ ប្រើ​ប្ដូរ​(Shift) ដើម្បី​លុប"
 
 #: ../src/widgets/toolbox.cpp:4199
 msgid "Push mode"
@@ -19634,14 +19568,12 @@ msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
 msgstr "បង្រួម (ដើម) ផ្នែក​របស់​ផ្លូវ"
 
 #: ../src/widgets/toolbox.cpp:4213
-#, fuzzy
 msgid "Attract/repel mode"
-msgstr "របៀប​ស្រូប"
+msgstr "របៀប​ទាញ​/ច្រាន​ចេញ"
 
 #: ../src/widgets/toolbox.cpp:4214
-#, fuzzy
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr "ផ្នែក​ស្រូប​របស់​ផ្លូវ​ឆ្ពោះ​ទៅ​រក​ទស្សន៍​ទ្រនិច"
+msgstr "ទាញ​យក​ផ្នែក​របស់​ផ្លូវ​ទៅកាន់​ទស្សន៍​ទ្រនិច ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​ទាញយក​ពី​ទស្សន៍​ទ្រនិច"
 
 #: ../src/widgets/toolbox.cpp:4220
 msgid "Roughen mode"
@@ -19668,14 +19600,12 @@ msgid "Jitter the colors of selected objects"
 msgstr "ពណ៌​មិន​ច្បាស់​របស់​វត្ថុ​ដែល​បាន​ជ្រើស​"
 
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Blur mode"
-msgstr "របៀប​លាយ​"
+msgstr "របៀប​ព្រឹល​"
 
 #: ../src/widgets/toolbox.cpp:4242
-#, fuzzy
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​ជ្រើស​ផ្ដេក"
+msgstr "ធ្វើ​ឲ្យ​វត្ថុ​ដែល​បាន​ជ្រើស​ព្រឹល​កាន់​តែ​ព្រឹល ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​​បន្ថយ​ភាព​ព្រឹល​វិញ"
 
 #: ../src/widgets/toolbox.cpp:4269
 msgid "Channels:"
@@ -19753,9 +19683,8 @@ msgid "No preset"
 msgstr "គ្មាន​ការ​កំណត់​ជា​មុន"
 
 #: ../src/widgets/toolbox.cpp:4559
-#, fuzzy
 msgid "Save..."
-msgstr "រក្សា​ទុក​ជា​..."
+msgstr "រក្សា​ទុក..."
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4710 ../src/widgets/toolbox.cpp:5729
@@ -19860,11 +19789,10 @@ msgid "Fixation:"
 msgstr "ការ​ភ្ជាប់​ ៖"
 
 #: ../src/widgets/toolbox.cpp:4765
-#, fuzzy
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = "
 "fixed angle)"
-msgstr "ឥរិយាបថ​មុំ (0 = ចុង​តែងតែ​បញ្ឈរ​ទៅ​​ខ្វាច់ 1 = មុំ​ថេរ)"
+msgstr ""
 
 #. Cap Rounding
 #: ../src/widgets/toolbox.cpp:4777
@@ -20092,25 +20020,23 @@ msgstr "អាសកម្ម​ទាំងអស់"
 
 #: ../src/widgets/toolbox.cpp:5573
 msgid "No geometric tool is active"
-msgstr ""
+msgstr "គ្មាន​ឧបករណ៍​ធរណីមាត្រ​ណា​សកម្ម​ទេ"
 
 #: ../src/widgets/toolbox.cpp:5574
 msgid "draw-geometry-inactive"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5606
-#, fuzzy
 msgid "Show limiting bounding box"
-msgstr "ប្រអប់​ព្រំដែន​ធរណីមាត្រ"
+msgstr "បង្ហាញ​ប្រអប់​លោត​ដោយ​កំណត់​ព្រំដែន"
 
 #: ../src/widgets/toolbox.cpp:5607
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
+msgstr "បង្ហាញ​ប្រអប់​លោត (ប្រើ​ដើម្បី​កាត់​បន្ទាត់​​មិន​ជាក់លាក់)"
 
 #: ../src/widgets/toolbox.cpp:5618
-#, fuzzy
 msgid "Get limiting bounding box from selection"
-msgstr "យក​ផ្លូវ​ច្រិប​ចេញ​ជម្រើស"
+msgstr "យក​ប្រអប់​លោត​ដែល​មាន​កំណត់​​ពី​ជម្រើស"
 
 #: ../src/widgets/toolbox.cpp:5619
 #, fuzzy
@@ -20120,26 +20046,24 @@ msgid ""
 msgstr "ខ្ទាស់​​ជ្រុង​ប្រអប់ព្រំដែន​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន​ផ្សេង​ទៀត"
 
 #: ../src/widgets/toolbox.cpp:5631
-#, fuzzy
 msgid "Choose a line segment type"
-msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ចម្រៀក​"
+msgstr "ជ្រើស​ប្រភេទ​ចម្រៀក​បន្ទាត់"
 
 #: ../src/widgets/toolbox.cpp:5647
-#, fuzzy
 msgid "Display measuring info"
-msgstr "បង្ហាញ​បំណង​បង្ហាញ ៖"
+msgstr "បង្ហាញ​ព័ត៌មាន​នៃ​ការ​វាស់វែង"
 
 #: ../src/widgets/toolbox.cpp:5648
 msgid "Display measuring info for selected items"
-msgstr ""
+msgstr "បង្ហាញ​ព័ត៌មាន​នៃ​ការ​វាស់វែង​សម្រាប់​ធាតុ​ដែល​បាន​ជ្រើស"
 
 #: ../src/widgets/toolbox.cpp:5668
 msgid "Open LPE dialog"
-msgstr ""
+msgstr "បើក​ប្រអប់ LPE"
 
 #: ../src/widgets/toolbox.cpp:5669
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
+msgstr "បើក​ប្រអប់ LPE (ដើម្បី​តម្រូវ​ប៉ារ៉ាម៉ែត្រ​ជា​លេខ)"
 
 #: ../src/widgets/toolbox.cpp:5733
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -20181,9 +20105,7 @@ msgstr "អត្ថបទ ៖ ផ្លាស់ប្ដូរ​ទំហំ
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
-msgstr ""
-"ពុម្ពអក្សរ​នេះ​បច្ចុប្បន្ន​មិន​ត្រូវ​បាន​ដំឡើង​ក្នុង​ប្រព័ន្ធ​របស់អ្នក​ទេ ។ Inkscape នឹង​ប្រើ​ពុម្ពអក្សរ​លំនាំ​ដើម​"
-"ជំនួស​ ។"
+msgstr "ពុម្ពអក្សរ​នេះ​បច្ចុប្បន្ន​មិន​ត្រូវ​បាន​ដំឡើង​ក្នុង​ប្រព័ន្ធ​របស់អ្នក​ទេ ។ Inkscape នឹង​ប្រើ​ពុម្ពអក្សរ​លំនាំ​ដើម​ជំនួស​ ។"
 
 #: ../src/widgets/toolbox.cpp:6689
 msgid "Align left"
@@ -20309,31 +20231,28 @@ msgstr "មិន​អាច​ដំណើរ​ការ​គម្រោង
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
-#, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "ប្រវែង​ជ្រុង a / ភីកសែល"
+msgstr "ប្រវែង​ចំហៀង 'a' / ភីកសែល ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:176
-#, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "ប្រវែង​ជ្រុង b / ភីកសែល"
+msgstr "ប្រវែង​ចំហៀង 'b' / ភីកសែល ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:177
-#, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "ប្រវែង ជ្រុង c / ភីកសែល"
+msgstr "ប្រវែង​ចំហៀង 'c' / ភីកសែល ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians:"
-msgstr ""
+msgstr "មុំ 'A'/រ៉ាដ្យង់ ៖"
 
 #: ../share/extensions/draw_from_triangle.py:179
 msgid "Angle 'B'/radians: "
-msgstr ""
+msgstr "មុំ 'B'/រ៉ាដ្យង់ ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:180
 msgid "Angle 'C'/radians: "
-msgstr ""
+msgstr "មុំ 'C'/រ៉ាដ្យង់ ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:181
 msgid "Semiperimeter/px: "
@@ -20341,25 +20260,19 @@ msgstr ""
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Area /px^2: "
-msgstr ""
+msgstr "ផ្ទៃ /px^2 ៖ "
 
 #: ../share/extensions/dxf_outlines.py:33
-#, fuzzy
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
 msgstr ""
-"បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ឬ numpy.linalg ។ ម៉ូឌុល​ទាំងនេះ​ត្រូវ​បាន​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​"
-"នេះ ។ សូម​ដំឡើង​ពួក​វា និង​ព្យាយាម​ម្ដង​ទៀត ។  នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​"
-"ពាក្យ​បញ្ជា sudo apt-get install python-numpy ។"
 
 #: ../share/extensions/embedimage.py:74
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
-msgstr ""
-"រក​មិន​ឃើញ​គុណ​លក្ខណៈ xlink:href ឬ sodipodi:absref ឬ​ពួក​វា​មិន​បាន​ចង្អុល​ទៅ​ឯកសារ​ដែល​មាន! មិន​"
-"អាច​បង្កប់​រូបភាព ។"
+msgstr "រក​មិន​ឃើញ​គុណ​លក្ខណៈ xlink:href ឬ sodipodi:absref ឬ​ពួក​វា​មិន​បាន​ចង្អុល​ទៅ​ឯកសារ​ដែល​មាន! មិន​អាច​បង្កប់​រូបភាព ។"
 
 #: ../share/extensions/embedimage.py:76
 #, python-format
@@ -20371,17 +20284,13 @@ msgstr "សូម​អភ័យ​ទោស យើង​មិន​អាច�
 msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
 "or image/x-icon"
-msgstr ""
-"%s មិន​មែន​ជា​ប្រភេទ image/png, image/jpeg, image/bmp, image/gif, image/tiff, ឬ "
-"image/x-icon ទេ"
+msgstr "%s មិន​មែន​ជា​ប្រភេទ image/png, image/jpeg, image/bmp, image/gif, image/tiff, ឬ image/x-icon ទេ"
 
 #: ../share/extensions/export_gimp_palette.py:14
 msgid ""
 "The export_gpl.py module requires PyXML.  Please download the latest version "
 "from http://pyxml.sourceforge.net/."
-msgstr ""
-"ម៉ូឌុល export_gpl.py ទាមទារ PyXML ។  សូម​ទាញយក​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://pyxml."
-"sourceforge.net/ ។"
+msgstr "ម៉ូឌុល export_gpl.py ទាមទារ PyXML ។  សូម​ទាញយក​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://pyxml.sourceforge.net/ ។"
 
 #: ../share/extensions/extractimage.py:66
 msgid "Difficulty finding the image data."
@@ -20393,11 +20302,7 @@ msgid ""
 "this extension. Please download and install the latest version from http://"
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
-msgstr ""
-"កម្មវិធី​រុំ lxml ដែល​ប្លែក​អស្ចារ្យ​សម្រាប់ libxml2 ត្រូវ​បាន​ទាមទារ​ដោយ inkex.py និង​ដោយ​ផ្នែក​"
-"បន្ថែម​នេះ ។ សូម​ទាញយក និង​ដំឡើង​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://cheeseshop.python.org/pypi/"
-"lxml/ ឬ​ដំឡើង​វា​តាម​រយៈ​កម្មវិធី​គ្រប់គ្រង​កញ្ចប់​ដោយ​ពាក្យ​បញ្ជា ៖ sudo apt-get install python-"
-"lxml"
+msgstr "កម្មវិធី​រុំ lxml ដែល​ប្លែក​អស្ចារ្យ​សម្រាប់ libxml2 ត្រូវ​បាន​ទាមទារ​ដោយ inkex.py និង​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ទាញយក និង​ដំឡើង​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://cheeseshop.python.org/pypi/lxml/ ឬ​ដំឡើង​វា​តាម​រយៈ​កម្មវិធី​គ្រប់គ្រង​កញ្ចប់​ដោយ​ពាក្យ​បញ្ជា ៖ sudo apt-get install python-lxml"
 
 #: ../share/extensions/inkex.py:213
 #, python-format
@@ -20444,6 +20349,8 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"វត្ថុ​ដែល​បាន​ជ្រើស​ដំបូង​គេ​គឺជា​របស់​ប្រភេទ '%s' ។\n"
+"ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ | វត្ថុ ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:46
@@ -20456,6 +20363,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
+"វត្ថុ​ដែល​បាន​ជ្រើស​ទីពីរ គឺ​ជា​ក្រុម មិនមែន​ជា​ផ្លូវ​ទេ ។\n"
+"ព្យាយាម​ប្រើ​និតិវិធី វត្ថុ | បំបែក​ក្រុម ។"
 
 #: ../share/extensions/perspective.py:89
 #: ../share/extensions/summersnight.py:74
@@ -20463,6 +20372,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"វត្ថុ​ដែល​បាន​ជ្រើស​ទី​ពីរ គឺ​មិនមែន​ជា​ផ្លូវ​ទេ ។\n"
+"ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ | វត្ថុ​ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/perspective.py:92
 #: ../share/extensions/summersnight.py:77
@@ -20470,6 +20381,8 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"វត្ថុ​ដែល​បាន​ជ្រើស​ដំបូង​គេ គឺ​មិនមែន​ជា​ផ្លូវ​ទេ ។\n"
+"ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ | វត្ថុ ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/polyhedron_3d.py:58
 msgid ""
@@ -20477,17 +20390,16 @@ msgid ""
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
-"បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ។ ម៉ូឌុល​នេះ​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា នឹង​ព្យាយាម​"
-"ម្ដង​ទៀត ។  នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​ពាក្យ​បញ្ជា sudo apt-get "
+"បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ។ ម៉ូឌុល​នេះ​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា នឹង​ព្យាយាម​ម្ដង​ទៀត ។ នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​ពាក្យ​បញ្ជា sudo apt-get "
 "install python-numpy ។"
 
 #: ../share/extensions/polyhedron_3d.py:329
 msgid "No face data found in specified file\n"
-msgstr ""
+msgstr "គ្មាន​ទិន្នន័យ​មុខកាត់​ត្រូវ​បាន​រកឃើញ​នៅ​ក្នុង​ឯកសារ​ដែល​បញ្ជាក់​នោះ​ទេ\n"
 
 #: ../share/extensions/polyhedron_3d.py:335
 msgid "No edge data found in specified file\n"
-msgstr ""
+msgstr "គ្មាន​ទិន្នន័យ​គែម​ដែល​បាន​រកឃើញ​នៅ​ក្នុង​ឯកសារ​ដែល​បាន​បញ្ជាក់​ទេ\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
@@ -20498,7 +20410,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "កំហុស​ខាង​ក្នុង ។ គ្មាន​ប្រភេទ​ទិដ្ឋភាព​ដែល​បាន​ជ្រើស​ទេ\n"
 
 #: ../share/extensions/summersnight.py:32
 msgid "The second path must be exactly four nodes long."
@@ -20507,12 +20419,12 @@ msgstr "ផ្លូវ​ទី​ពីរ​ត្រូវ​តែ​មា
 #: ../share/extensions/svg_and_media_zip_output.py:109
 #, python-format
 msgid "Could not locate file: %s"
-msgstr "មិន​អាច​ដាក់​ទីតាំង %s ។"
+msgstr "មិន​អាច​ដាក់​ទីតាំង %s ។"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
 msgid "You must select at least two elements."
-msgstr ""
+msgstr "អ្នក​ត្រូវ​ជ្រើស​ធាតុ​យ៉ាង​ហោចណាស់ ២ ។"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -20733,9 +20645,8 @@ msgid "RGB Barrel"
 msgstr "ធុង​ពណ៌​ក្រហម"
 
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "បម្លែង​ទៅ Braille"
+msgstr "បម្លែង​ទៅ​ជា​សញ្ញា (-)"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -20753,18 +20664,14 @@ msgstr "ការ​បញ្ចូល​របស់ Dia"
 msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
-msgstr ""
-"ដើម្បី​នាំចូល​ឯកសារ Dia  Dia ខ្លួន​វា​ផ្ទាល់​ត្រូវ​តែ​បាន​ដំឡើង ។  អ្នក​អាច​យក​​ Dia នៅt http://live."
-"gnome.org/Dia"
+msgstr "ដើម្បី​នាំចូល​ឯកសារ Dia Dia ខ្លួន​វា​ផ្ទាល់​ត្រូវ​តែ​បាន​ដំឡើង ។  អ្នក​អាច​យក​​ Dia នៅt http://live.gnome.org/Dia"
 
 #: ../share/extensions/dia.inx.h:5
 msgid ""
 "The dia2svg.sh script should be installed with your Inkscape distribution.  "
 "If you do not have it, there is likely to be something wrong with your "
 "Inkscape installation."
-msgstr ""
-"ស្គ្រីប dia2svg.sh គួរ​តែ​ត្រូវ​បាន​ដំឡើង​ជា​មួយ​នឹង​ការ​ចែកចាយ​ Inkscape របស់​អ្នក ។ ប្រសិន​បើ​អ្នក​​"
-"មិនមាន​វា​ទេ ហាក់​បី​ដូច​ជា​មាន​អ្វី​មួយ​ខុស​ជា​មួយ​នឹង​ការ​ដំឡើង Inkscape របស់​អ្នក ។"
+msgstr "ស្គ្រីប dia2svg.sh គួរ​តែ​ត្រូវ​បាន​ដំឡើង​ជា​មួយ​នឹង​ការ​ចែកចាយ​ Inkscape របស់​អ្នក ។ ប្រសិន​បើ​អ្នក​​មិនមាន​វា​ទេ ហាក់​បី​ដូច​ជា​មាន​អ្វី​មួយ​ខុស​ជា​មួយ​នឹង​ការ​ដំឡើង Inkscape របស់​អ្នក ។"
 
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
@@ -20797,19 +20704,16 @@ msgid "Altitudes"
 msgstr "ទំហំ​វិសេសវិសាល"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
-#, fuzzy
 msgid "Angle Bisectors"
-msgstr "ការ​ចែក​មុំ"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
-#, fuzzy
 msgid "Centroid"
-msgstr "កណ្តាល"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "ឯកសារ"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
 #, fuzzy
@@ -20817,9 +20721,8 @@ msgid "Circumcircle"
 msgstr "រង្វង់"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
-#, fuzzy
 msgid "Common Objects"
-msgstr "វត្ថុ​"
+msgstr "វត្ថុ​ទូទៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
 #, fuzzy
@@ -20828,21 +20731,19 @@ msgstr "ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
-msgstr ""
+msgstr "ចំណុច​ផ្ទាល់ខ្លួន​ត្រូវបាន​បញ្ជាក់​ដោយ ៖"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
-#, fuzzy
 msgid "Custom Points and Options"
-msgstr "ជម្រើស​បន្ទាត់​ពាក្យ​បញ្ជា"
+msgstr "ចំណុច​ផ្ទាល់ខ្លួន និង​ជម្រើស"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle About This Point"
-msgstr ""
+msgstr "គូរ​រង្វង់​អំពី​ចំណុច​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
-#, fuzzy
 msgid "Draw From Triangle"
-msgstr "ផ្ទុក​ពី​ឯកសារ"
+msgstr "គូរ​ចេញ​ពី​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
@@ -20920,14 +20821,12 @@ msgid "Point At"
 msgstr "ចំណុច​នៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:29
-#, fuzzy
 msgid "Radius / px"
-msgstr "កាំ"
+msgstr "កាំ / ភីកសែល"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
-#, fuzzy
 msgid "Report this triangle's properties"
-msgstr "កំណត់​លក្ខណៈសម្បត្តិ​បន្ទាត់​នាំផ្លូវ"
+msgstr "រាយការណ៍​លក្ខណៈ​សម្បត្តិ​របស់​ត្រីកោណ​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 #, fuzzy
@@ -20944,14 +20843,12 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid "Triangle Function"
-msgstr "មុខងារ​ពណ៌ខៀវ"
+msgstr "មុខងារ​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "កោអរដោនេ​"
+msgstr "កោអរដោនេ​​លីនេអ៊ែរ​គោលបី"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -20959,9 +20856,8 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "Character Encoding"
-msgstr "ការ​ធ្វើ​ឲ្យ​គម្រប​មូល"
+msgstr "ការ​អ៊ិនកូដ​តួអក្សរ"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
@@ -20973,11 +20869,11 @@ msgstr "នាំចូល​ទ្រង់ទ្រាយ​ផ្លាស់
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "ឬ​ប្រើ​កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដោយដៃ"
 
 #: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
-msgstr ""
+msgstr "ប្រើ​ការ​ធ្វើ​មាត្រដ្ឋាន​ដោយស្វ័យប្រវត្តិ​ទៅ​ទំហំ A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -20989,7 +20885,7 @@ msgstr "គ្រោងកាត់​ផ្ទៃតុ (*.DXF)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
-msgstr ""
+msgstr "លទ្ធផល ROBO-Master"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -21032,13 +20928,12 @@ msgid "Shades"
 msgstr "ស្រមោល​"
 
 #: ../share/extensions/embedimage.inx.h:1
-#, fuzzy
 msgid "Embed Images"
-msgstr "រូបភាព​ដែល​បាន​បង្កប់"
+msgstr "បង្កប់​រូបភាព"
 
 #: ../share/extensions/embedimage.inx.h:2
 msgid "Embed only selected images"
-msgstr "បង្កប់​តែ​រូបភាព​ដែល​បាន​ជ្រើស"
+msgstr "បង្កប់​តែ​រូបភាព​ដែល​បាន​ជ្រើស​ប៉ុណ្ណោះ"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -21077,9 +20972,8 @@ msgid "GIMP Palette (*.gpl)"
 msgstr "ក្ដារលាយ GIMP (*.gpl)"
 
 #: ../share/extensions/extractimage.inx.h:1
-#, fuzzy
 msgid "Extract Image"
-msgstr "ស្រង់​ចេញ​រូបភាព​មួយ​"
+msgstr "ស្រង់​រូបភាព"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Note: The file extension is appended automatically."
