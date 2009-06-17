@@ -8,8 +8,9 @@
  *   Bob Jamison <ishmal@inkscape.org>
  *   Silveira Neto <silveiraneto@gmail.com>
  *   Jim Clarke <Jim.Clarke@sun.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 2008 Authors
+ * Copyright (C) 2008,2009 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -230,7 +231,7 @@ bool JavaFXOutput::doHeader()
     out("### NOTES:\n");
     out("### ============\n");
     out("### JavaFX information can be found at\n");
-    out("### hhttps://openjfx.dev.java.net\n");
+    out("### http://www.javafx.com/\n");
     out("###\n");
     out("### If you have any problems with this output, please see the\n");
     out("### Inkscape project at http://www.inkscape.org, or visit\n");
@@ -247,9 +248,8 @@ bool JavaFXOutput::doHeader()
     out("\n\n");
 
     // import javafx libraries we can need
-    out("import javafx.application.*;\n");
     out("import javafx.scene.*;\n");
-    out("import javafx.scene.geometry.*;\n");
+    out("import javafx.scene.shape.*;\n");
     out("import javafx.scene.transform.*;\n");
     out("import javafx.scene.paint.*;\n");
     out("\n");
@@ -273,26 +273,18 @@ bool JavaFXOutput::doTail()
 
     // Write the tail of CustomNode
     out("           ] // content\n");
-    out("           transform: Translate { x : %s, y : %s }\n",
+    out("           transforms: Translate { x : %s, y : %s }\n",
         DSTR((-minx) + border), DSTR((-miny) + border) );
     out("       } // Group\n");
     out("   } // function create()\n");
     out("} // class %s\n", name.c_str());
     out("\n");
 
-    // Frame
-    out("Frame {\n");
-    out("    title: \"%s\"\n", name.c_str());
-    out("    width: %s\n",  ISTR(maxx-minx + border * 2.0));
-    out("    height: %s\n", ISTR(maxy-miny + border * 2.0));
-    out("    visible: true\n");
-
     // Stage
-    out("    stage: Stage {\n");
-    out("        content: %s{}\n", name.c_str());
-    out("    } // Stage\n");
+//     out("    stage: Stage {\n");
+//     out("        content: %s{}\n", name.c_str());
+//     out("    } // Stage\n");
 
-    out("} // Frame\n");
 
     out("\n");
 
@@ -316,7 +308,7 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
         {
         SPLinearGradient *g = SP_LINEARGRADIENT(grad);
         out("    /* create LinearGradient for %s */\n", jfxid.c_str());
-        out("    private function %s(): LinearGradient {\n",  jfxid.c_str());
+        out("    function %s(): LinearGradient {\n",  jfxid.c_str());
         out("        LinearGradient {\n");
         std::vector<SPGradientStop> stops = g->vector.stops;
         if (stops.size() > 0)
@@ -341,7 +333,7 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
         {
         SPRadialGradient *g = SP_RADIALGRADIENT(grad);
         out("    /* create RadialGradient for %s */\n", jfxid.c_str());
-        out("    private function %s() {\n", jfxid.c_str());
+        out("    function %s() {\n", jfxid.c_str());
         out("        RadialGradient {\n");
         out("            centerX: %s\n", DSTR(g->cx.value));
         out("            centerY: %s\n", DSTR(g->cy.value));
@@ -488,7 +480,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     nrShapes++;
 
     out("    /** path %s */\n", jfxid.c_str());
-    out("    private function %s() : Path {\n",jfxid.c_str());
+    out("    function %s() : Path {\n",jfxid.c_str());
     out("        Path {\n");
     out("            id: \"%s\"\n", jfxid.c_str());
 
@@ -557,7 +549,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
                 Geom::Point p1 = points[1];
                 Geom::Point p2 = points[2];
                 Geom::Point p3 = points[3];
-                out("                CurveTo {\n");
+                out("                CubicCurveTo {\n");
                 out("                    controlX1: %s\n", DSTR(p1[X]));
                 out("                    controlY1: %s\n", DSTR(p1[Y]));
                 out("                    controlX2: %s\n", DSTR(p2[X]));
@@ -877,11 +869,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 
     outbuf.append(curveBuf);
 
-#ifdef JAVAFX_SDK_1_0
     out("   override function create(): Node {\n");
-#else
-    out("   public function create(): Node {\n");
-#endif
     out("       Group {\n");
     out("           content: [\n");
     idindex    = 0;
