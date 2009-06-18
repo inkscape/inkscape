@@ -2936,6 +2936,7 @@ msgstr "ن_ص"
 #: ../src/dialogs/find.cpp:687 ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
 msgstr ""
+"البحث عن الأجسام بمحتوى النص (تطابق كامل أو جزئي)"
 
 #: ../src/dialogs/find.cpp:688 ../src/ui/dialog/find.cpp:61
 msgid "_ID: "
@@ -2944,70 +2945,72 @@ msgstr "_هوية"
 #: ../src/dialogs/find.cpp:688 ../src/ui/dialog/find.cpp:61
 msgid "Find objects by the value of the id attribute (exact or partial match)"
 msgstr ""
+"البحث عن الأجسام بقيمة صفة الهوية (تطابق كامل أو جزئي)"
 
 #: ../src/dialogs/find.cpp:689 ../src/ui/dialog/find.cpp:62
 msgid "_Style: "
-msgstr "_طراز"
+msgstr "_أسلوب"
 
 #: ../src/dialogs/find.cpp:689 ../src/ui/dialog/find.cpp:62
 msgid ""
 "Find objects by the value of the style attribute (exact or partial match)"
 msgstr ""
+"البحث عن الأجسام بقيمة صفة الأسلوب (تطابق كامل أو جزئي)"
 
 #: ../src/dialogs/find.cpp:690 ../src/ui/dialog/find.cpp:63
 msgid "_Attribute: "
-msgstr ""
+msgstr "_صفة"
 
 #: ../src/dialogs/find.cpp:690 ../src/ui/dialog/find.cpp:63
 msgid "Find objects by the name of an attribute (exact or partial match)"
-msgstr ""
+msgstr "البحث عن الأجسام بإسم الصفة (تطابق كامل أو جزئي)"
 
 #: ../src/dialogs/find.cpp:704 ../src/ui/dialog/find.cpp:64
 msgid "Search in s_election"
-msgstr ""
+msgstr "بحث في الإختيار الحالي"
 
 #: ../src/dialogs/find.cpp:708 ../src/ui/dialog/find.cpp:64
 msgid "Limit search to the current selection"
-msgstr ""
+msgstr "حصر البحث في الإختيار الحالي"
 
 #: ../src/dialogs/find.cpp:713 ../src/ui/dialog/find.cpp:65
 msgid "Search in current _layer"
-msgstr ""
+msgstr "بحث في ال_طبقة الحالية"
 
 #: ../src/dialogs/find.cpp:717 ../src/ui/dialog/find.cpp:65
 msgid "Limit search to the current layer"
-msgstr ""
+msgstr "حصر البحث بالطبقة الحالية"
 
 #: ../src/dialogs/find.cpp:722 ../src/ui/dialog/find.cpp:66
 msgid "Include _hidden"
-msgstr ""
+msgstr "شمل الأجسام الم_خفية"
 
 #: ../src/dialogs/find.cpp:726 ../src/ui/dialog/find.cpp:66
 msgid "Include hidden objects in search"
-msgstr ""
+msgstr "شمل الأجسام المخفية في البحث"
 
 #: ../src/dialogs/find.cpp:731 ../src/ui/dialog/find.cpp:67
 msgid "Include l_ocked"
-msgstr ""
+msgstr "شمل الأجسام الم_قفلة"
 
 #: ../src/dialogs/find.cpp:735 ../src/ui/dialog/find.cpp:67
 msgid "Include locked objects in search"
-msgstr ""
+msgstr "شمل الأجسام المقفلة في البحث"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/find.cpp:746 ../src/ui/dialog/debug.cpp:75
 #: ../src/ui/dialog/find.cpp:86 ../src/ui/dialog/messages.cpp:53
 #: ../src/ui/dialog/scriptdialog.cpp:209
 msgid "_Clear"
-msgstr ""
+msgstr "م_حو"
 
 #: ../src/dialogs/find.cpp:746 ../src/ui/dialog/find.cpp:86
 msgid "Clear values"
-msgstr ""
+msgstr "محو القِيَم"
 
 #: ../src/dialogs/find.cpp:747 ../src/ui/dialog/find.cpp:87
 msgid "_Find"
-msgstr ""
+msgstr "_بحث"
 
 #: ../src/dialogs/find.cpp:747 ../src/ui/dialog/find.cpp:87
 msgid "Select objects matching all of the fields you filled in"
@@ -3019,7 +3022,7 @@ msgstr ""
 #: ../src/dialogs/item-properties.cpp:443
 #: ../src/dialogs/item-properties.cpp:450
 msgid "_Id"
-msgstr ""
+msgstr "_هوية"
 
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
@@ -3030,41 +3033,41 @@ msgstr ""
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
 #: ../src/verbs.cpp:2492
 msgid "_Set"
-msgstr ""
+msgstr "ت_حديد"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
 msgid "_Label"
-msgstr ""
+msgstr "م_لصق"
 
 #: ../src/dialogs/item-properties.cpp:161
 msgid "A freeform label for the object"
-msgstr ""
+msgstr "ملصق حرّ للجسم"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
 msgid "_Title"
-msgstr ""
+msgstr "_عنوان"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
 msgid "_Description"
-msgstr ""
+msgstr "_وصف"
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:222
 msgid "_Hide"
-msgstr ""
+msgstr "إ_خفاﺀ"
 
 #: ../src/dialogs/item-properties.cpp:223
 msgid "Check to make the object invisible"
-msgstr ""
+msgstr "إختيار لإخفاﺀ الجسم"
 
 #. Lock
 #. TRANSLATORS: "Lock" is a verb here
 #: ../src/dialogs/item-properties.cpp:232
 msgid "L_ock"
-msgstr ""
+msgstr "_قفل"
 
 #: ../src/dialogs/item-properties.cpp:233
 msgid "Check to make the object insensitive (not selectable by mouse)"
@@ -3073,12 +3076,12 @@ msgstr ""
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:243
 msgid "_Interactivity"
-msgstr ""
+msgstr "تفا_عل"
 
 #: ../src/dialogs/item-properties.cpp:317
 #: ../src/dialogs/item-properties.cpp:324
 msgid "Ref"
-msgstr ""
+msgstr "مرجع"
 
 #: ../src/dialogs/item-properties.cpp:402
 msgid "Lock object"
@@ -3098,35 +3101,35 @@ msgstr "إظهار الجسم"
 
 #: ../src/dialogs/item-properties.cpp:445
 msgid "Id invalid! "
-msgstr ""
+msgstr "الهوية غير مقبولة!"
 
 #: ../src/dialogs/item-properties.cpp:447
 msgid "Id exists! "
-msgstr ""
+msgstr "الهوية موجودة!"
 
 #: ../src/dialogs/item-properties.cpp:454
 msgid "Set object ID"
-msgstr ""
+msgstr "حدد هوية الجسم"
 
 #: ../src/dialogs/item-properties.cpp:469
 msgid "Set object label"
-msgstr ""
+msgstr "حدد علامة الجسم"
 
 #: ../src/dialogs/item-properties.cpp:477
 msgid "Set object title"
-msgstr ""
+msgstr "حدد عنوان الجسم"
 
 #: ../src/dialogs/item-properties.cpp:487
 msgid "Set object description"
-msgstr ""
+msgstr "حدد وصف الجسم"
 
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Href:"
-msgstr ""
+msgstr "وصلة:"
 
 #: ../src/dialogs/object-attributes.cpp:33
 msgid "Target:"
-msgstr ""
+msgstr "هدف:"
 
 #: ../src/dialogs/object-attributes.cpp:34
 msgid "Type:"
@@ -3157,7 +3160,7 @@ msgstr "إظهار:"
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:45
 msgid "Actuate:"
-msgstr ""
+msgstr "شغّل:"
 
 #: ../src/dialogs/object-attributes.cpp:50
 msgid "URL:"
@@ -3167,13 +3170,13 @@ msgstr "عنوان:"
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
-msgstr ""
+msgstr "س:"
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
-msgstr ""
+msgstr "ص:"
 
 #: ../src/dialogs/object-attributes.cpp:53
 #: ../src/dialogs/object-attributes.cpp:61 ../src/widgets/toolbox.cpp:4122
@@ -3189,30 +3192,30 @@ msgstr "إرتفاع:"
 #: ../src/dialogs/object-attributes.cpp:106
 #, c-format
 msgid "%s Properties"
-msgstr ""
+msgstr "%s خصائص"
 
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>إنتهاﺀ</b>, <b>%d</b> كلمة أضيفت للقاموس"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr ""
+msgstr "<b>إنتهاﺀ</b>, من دون شيئ يُذكر"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr ""
+msgstr "ليس في القاموس (%s): <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
 msgid "<i>Checking...</i>"
-msgstr ""
+msgstr "فحص..."
 
 #: ../src/dialogs/spellcheck.cpp:781
 msgid "Fix spelling"
-msgstr ""
+msgstr "تدقيق إملائي"
 
 #: ../src/dialogs/spellcheck.cpp:956
 msgid "Suggestions:"
@@ -3272,24 +3275,24 @@ msgstr "خط"
 
 #: ../src/dialogs/text-edit.cpp:221 ../share/extensions/svgcalendar.inx.h:12
 msgid "Layout"
-msgstr ""
+msgstr "تصميم"
 
 #: ../src/dialogs/text-edit.cpp:235
 msgid "Align lines left"
-msgstr ""
+msgstr "محاذاة الأسطر لليسار"
 
 #. TRANSLATORS: `Center' here is a verb.
 #: ../src/dialogs/text-edit.cpp:250
 msgid "Center lines"
-msgstr ""
+msgstr "محاذاة الأسطر للوسط"
 
 #: ../src/dialogs/text-edit.cpp:264
 msgid "Align lines right"
-msgstr ""
+msgstr "محاذاة الأسطر لليمين"
 
 #: ../src/dialogs/text-edit.cpp:278
 msgid "Justify lines"
-msgstr ""
+msgstr "تساوي الأسطر"
 
 #: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6768
 msgid "Horizontal text"
@@ -3321,19 +3324,19 @@ msgstr "نص"
 
 #: ../src/dialogs/text-edit.cpp:422
 msgid "Set as default"
-msgstr ""
+msgstr "حدد كإفتراضي"
 
 #: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1496
 msgid "Set text style"
-msgstr ""
+msgstr "حدد أسلوب النص"
 
 #: ../src/dialogs/xml-tree.cpp:152
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
-msgstr ""
+msgstr "<b>إضغط</b> لإختيار العقد, <b>جرّ</b> لإعادة الترتيب."
 
 #: ../src/dialogs/xml-tree.cpp:163
 msgid "<b>Click</b> attribute to edit."
-msgstr ""
+msgstr "<b>إضغط</b> على الصفة للتحرير."
 
 #: ../src/dialogs/xml-tree.cpp:167
 #, c-format
@@ -3341,23 +3344,25 @@ msgid ""
 "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to "
 "commit changes."
 msgstr ""
+"الصّفة المختارة <b>%s</b>. إضغط <b>Ctrl+Enter</b> عند إنتهاﺀ التحرير "
+"لإيداع التغييرات."
 
 #: ../src/dialogs/xml-tree.cpp:263
 msgid "Drag to reorder nodes"
-msgstr ""
+msgstr "جرّ لإعادة ترتيب العقد"
 
 #: ../src/dialogs/xml-tree.cpp:283
 msgid "New element node"
-msgstr ""
+msgstr "عقدة عنصر جديدة"
 
 #: ../src/dialogs/xml-tree.cpp:305
 msgid "New text node"
-msgstr ""
+msgstr "عقدة نص جديدة"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
 #: ../src/nodepath.cpp:2237
 msgid "Duplicate node"
-msgstr ""
+msgstr "إستخراج نسخة من العقدة"
 
 #: ../src/dialogs/xml-tree.cpp:347
 msgid "nodeAsInXMLdialogTooltip|Delete node"
@@ -3365,44 +3370,44 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:363 ../src/dialogs/xml-tree.cpp:1571
 msgid "Unindent node"
-msgstr ""
+msgstr "إزالة تهميش العقدة"
 
 #: ../src/dialogs/xml-tree.cpp:378 ../src/dialogs/xml-tree.cpp:1550
 msgid "Indent node"
-msgstr ""
+msgstr "تهميش العقدة"
 
 #: ../src/dialogs/xml-tree.cpp:390 ../src/dialogs/xml-tree.cpp:1503
 msgid "Raise node"
-msgstr ""
+msgstr "رفع العقدة"
 
 #: ../src/dialogs/xml-tree.cpp:402 ../src/dialogs/xml-tree.cpp:1520
 msgid "Lower node"
-msgstr ""
+msgstr "تخفيض العقدة"
 
 #: ../src/dialogs/xml-tree.cpp:447 ../src/dialogs/xml-tree.cpp:1444
 msgid "Delete attribute"
-msgstr ""
+msgstr "إزالة الصّفة"
 
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:492
 msgid "Attribute name"
-msgstr ""
+msgstr "إسم الصّفة"
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:512 ../src/widgets/sp-attribute-widget.cpp:158
 #: ../src/widgets/sp-attribute-widget.cpp:765
 msgid "Set attribute"
-msgstr ""
+msgstr "حدد الصّفة"
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:514
 msgid "Set"
-msgstr ""
+msgstr "حدد"
 
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:537
 msgid "Attribute value"
-msgstr ""
+msgstr "قيمة الصّفة"
 
 #: ../src/dialogs/xml-tree.cpp:874
 msgid "Drag XML subtree"
@@ -3410,11 +3415,11 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:1311
 msgid "New element node..."
-msgstr ""
+msgstr "عقدة عنصر جديدة..."
 
 #: ../src/dialogs/xml-tree.cpp:1333
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاﺀ"
 
 #: ../src/dialogs/xml-tree.cpp:1341
 msgid "Create"
@@ -3422,11 +3427,11 @@ msgstr "إنشاﺀ"
 
 #: ../src/dialogs/xml-tree.cpp:1375
 msgid "Create new element node"
-msgstr ""
+msgstr "إنشاﺀ عقدة عنصر جديدة"
 
 #: ../src/dialogs/xml-tree.cpp:1391
 msgid "Create new text node"
-msgstr ""
+msgstr "إنشاﺀ عقدة نص جديدة"
 
 #: ../src/dialogs/xml-tree.cpp:1426
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
@@ -3434,90 +3439,90 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
-msgstr ""
+msgstr "تغيير الصّفة"
 
 #: ../src/display/canvas-axonomgrid.cpp:396 ../src/display/canvas-grid.cpp:670
 msgid "Grid _units:"
-msgstr ""
+msgstr "و_حدات قياس الشبكة:"
 
 #: ../src/display/canvas-axonomgrid.cpp:398 ../src/display/canvas-grid.cpp:672
 msgid "_Origin X:"
-msgstr ""
+msgstr "ن_قطة المبدأ س"
 
 #: ../src/display/canvas-axonomgrid.cpp:398 ../src/display/canvas-grid.cpp:672
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
 msgid "X coordinate of grid origin"
-msgstr ""
+msgstr "إحداثية-س بالبنسبة لنقطة المبدأ للشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
 msgid "O_rigin Y:"
-msgstr ""
+msgstr "نق_طة المبدأ ص"
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
 msgid "Y coordinate of grid origin"
-msgstr ""
+msgstr "إحداثية-ص بالبنسبة لنقطة المبدأ للشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:402 ../src/display/canvas-grid.cpp:678
 msgid "Spacing _Y:"
-msgstr ""
+msgstr "تباعد _ص:"
 
 #: ../src/display/canvas-axonomgrid.cpp:402
 #: ../src/ui/dialog/inkscape-preferences.cpp:998
 msgid "Base length of z-axis"
-msgstr ""
+msgstr "الطول الأساسي للمحور ز"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
 #: ../src/ui/dialog/inkscape-preferences.cpp:1001
 #: ../src/widgets/toolbox.cpp:3420
 msgid "Angle X:"
-msgstr ""
+msgstr "زاوية س"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
 #: ../src/ui/dialog/inkscape-preferences.cpp:1001
 msgid "Angle of x-axis"
-msgstr ""
+msgstr "زاوية المحور س"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
 #: ../src/ui/dialog/inkscape-preferences.cpp:1002
 #: ../src/widgets/toolbox.cpp:3499
 msgid "Angle Z:"
-msgstr ""
+msgstr "زاوية ز:"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
 #: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Angle of z-axis"
-msgstr ""
+msgstr "زاوية المحور ز"
 
 #: ../src/display/canvas-axonomgrid.cpp:410 ../src/display/canvas-grid.cpp:682
 msgid "Grid line _color:"
-msgstr ""
+msgstr "لو_ن خطوط الشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:410 ../src/display/canvas-grid.cpp:682
 msgid "Grid line color"
-msgstr ""
+msgstr "لون خطوط الشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:410 ../src/display/canvas-grid.cpp:682
 msgid "Color of grid lines"
-msgstr ""
+msgstr "لون خطوط الشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:415 ../src/display/canvas-grid.cpp:687
 msgid "Ma_jor grid line color:"
-msgstr ""
+msgstr "لون الخطوط الأ_ساسية للشبكة:"
 
 #: ../src/display/canvas-axonomgrid.cpp:415 ../src/display/canvas-grid.cpp:687
 msgid "Major grid line color"
-msgstr ""
+msgstr "لون الخطوط الأساسية للشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:416 ../src/display/canvas-grid.cpp:688
 msgid "Color of the major (highlighted) grid lines"
-msgstr ""
+msgstr "لون الخطوط (البارزة) الأساسية للشبكة"
 
 #: ../src/display/canvas-axonomgrid.cpp:420 ../src/display/canvas-grid.cpp:692
 msgid "_Major grid line every:"
-msgstr ""
+msgstr "خطوط الشبكة الرئي_سية كل:"
 
 #: ../src/display/canvas-axonomgrid.cpp:420 ../src/display/canvas-grid.cpp:692
 msgid "lines"
@@ -3564,28 +3569,30 @@ msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
 msgstr ""
+"تحديد إذا كانت الشبكة مرئية أو لا. الأجسام ستظلّ"
+"تُلصق للشبكات المخفية."
 
 #: ../src/display/canvas-grid.cpp:676
 msgid "Spacing _X:"
-msgstr ""
+msgstr "تباعد _س:"
 
 #: ../src/display/canvas-grid.cpp:676
 #: ../src/ui/dialog/inkscape-preferences.cpp:978
 msgid "Distance between vertical grid lines"
-msgstr ""
+msgstr "المسافة بين الخطوط العامودية للشبكة"
 
 #: ../src/display/canvas-grid.cpp:678
 #: ../src/ui/dialog/inkscape-preferences.cpp:979
 msgid "Distance between horizontal grid lines"
-msgstr ""
+msgstr "المسافة بين الخطوط الأفقية للشبكة"
 
 #: ../src/display/canvas-grid.cpp:711
 msgid "_Show dots instead of lines"
-msgstr ""
+msgstr "إ_ظهار نقاط بدل الخطوط"
 
 #: ../src/display/canvas-grid.cpp:712
 msgid "If set, displays dots at gridpoints instead of gridlines"
-msgstr ""
+msgstr "عند الإختيار، سيظهر نقاط عن التقاطعات في الشبكة بدل الخطوط"
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
@@ -3611,11 +3618,11 @@ msgstr "تقاطع المرشد"
 
 #: ../src/display/snap-indicator.cpp:78
 msgid "grid-guide intersection"
-msgstr ""
+msgstr "تقاطع الشبكة والمُرشد"
 
 #: ../src/display/snap-indicator.cpp:81
 msgid "cusp node"
-msgstr ""
+msgstr "نقطة إلتقاﺀ"
 
 #: ../src/display/snap-indicator.cpp:84
 msgid "smooth node"
@@ -3631,15 +3638,15 @@ msgstr "تقاطع المسار"
 
 #: ../src/display/snap-indicator.cpp:93
 msgid "bounding box corner"
-msgstr ""
+msgstr "زاوية علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:96
 msgid "bounding box side"
-msgstr ""
+msgstr "جهة علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:99
 msgid "bounding box"
-msgstr ""
+msgstr "علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:102
 msgid "page border"
@@ -3655,83 +3662,83 @@ msgstr "نقطة الجسم الوسطية"
 
 #: ../src/display/snap-indicator.cpp:111
 msgid "object rotation center"
-msgstr ""
+msgstr "مركز دوران الجسم"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "handle"
-msgstr ""
+msgstr "مقبض"
 
 #: ../src/display/snap-indicator.cpp:117
 msgid "bounding box side midpoint"
-msgstr ""
+msgstr "منتصف جهة علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:120
 msgid "bounding box midpoint"
-msgstr ""
+msgstr "وسط علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:123
 msgid "page corner"
-msgstr ""
+msgstr "زاوية الصفحة"
 
 #: ../src/display/snap-indicator.cpp:126
 msgid "convex hull corner"
-msgstr ""
+msgstr "زاوية الغلاف المحدّب"
 
 #: ../src/display/snap-indicator.cpp:129
 msgid "quadrant point"
-msgstr ""
+msgstr "نقطة القوس"
 
 #: ../src/display/snap-indicator.cpp:132
 msgid "center"
-msgstr ""
+msgstr "مركز"
 
 #: ../src/display/snap-indicator.cpp:135
 msgid "corner"
-msgstr ""
+msgstr "زاوية"
 
 #: ../src/display/snap-indicator.cpp:138
 msgid "text baseline"
-msgstr ""
+msgstr "خط النص الأساسي"
 
 #: ../src/display/snap-indicator.cpp:151
 msgid "Bounding box corner"
-msgstr ""
+msgstr "زاوية علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box midpoint"
-msgstr ""
+msgstr "وسط علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box side midpoint"
-msgstr ""
+msgstr "نقطة الوسط لجهة علبة الإحاطة"
 
 #: ../src/display/snap-indicator.cpp:160
 msgid "Smooth node"
-msgstr ""
+msgstr "عقدة ناعمة"
 
 #: ../src/display/snap-indicator.cpp:163
 msgid "Cusp node"
-msgstr ""
+msgstr "عقدة نقطة الإلتقاﺀ"
 
 #: ../src/display/snap-indicator.cpp:166
 msgid "Line midpoint"
-msgstr ""
+msgstr "منتصف الخط"
 
 #: ../src/display/snap-indicator.cpp:169
 msgid "Object midpoint"
-msgstr ""
+msgstr "منتصف الجسم"
 
 #: ../src/display/snap-indicator.cpp:172
 msgid "Object rotation center"
-msgstr ""
+msgstr "مركز دوران الجسم"
 
 #: ../src/display/snap-indicator.cpp:175
 msgid "Handle"
-msgstr ""
+msgstr "مقبض"
 
 #: ../src/display/snap-indicator.cpp:178
 msgid "Path intersection"
-msgstr ""
+msgstr "تقاطع المسار"
 
 #: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
@@ -3743,11 +3750,11 @@ msgstr "أساس المرشد"
 
 #: ../src/display/snap-indicator.cpp:187
 msgid "Convex hull corner"
-msgstr ""
+msgstr "زاوية الغلاف المحدّب"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Quadrant point"
-msgstr ""
+msgstr "نقطة القوس (الربع دائري)"
 
 #: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6698
 msgid "Center"
@@ -3834,7 +3841,7 @@ msgstr ""
 
 #: ../src/dropper-context.cpp:328
 msgid "Set picked color"
-msgstr ""
+msgstr "حدد اللون المختار"
 
 #: ../src/dyna-draw-context.cpp:615
 msgid ""
@@ -3904,11 +3911,11 @@ msgstr "   سلسلة:"
 
 #: ../src/extension/dependency.cpp:252
 msgid "  description: "
-msgstr ""
+msgstr "   وصف:"
 
 #: ../src/extension/effect.cpp:39
 msgid " (No preferences)"
-msgstr ""
+msgstr " (لا تفضيلات)"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:53
@@ -3961,7 +3968,7 @@ msgstr "عدم تأمين التبعية"
 
 #: ../src/extension/extension.cpp:294
 msgid "Extension \""
-msgstr ""
+msgstr "تمديد \""
 
 #: ../src/extension/extension.cpp:294
 msgid "\" failed to load because "
@@ -3986,15 +3993,15 @@ msgstr "حالة:"
 
 #: ../src/extension/extension.cpp:725
 msgid "Loaded"
-msgstr ""
+msgstr "محمّل"
 
 #: ../src/extension/extension.cpp:725
 msgid "Unloaded"
-msgstr ""
+msgstr "غير محمّل"
 
 #: ../src/extension/extension.cpp:725
 msgid "Deactivated"
-msgstr ""
+msgstr "غير مشغّل"
 
 #: ../src/extension/extension.cpp:756
 msgid ""
@@ -4161,12 +4168,12 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/blur.cpp:46
 msgid "Blur selected bitmap(s)"
-msgstr ""
+msgstr "تغبيش الصور(ة) المختارة"
 
 #: ../src/extension/internal/bitmap/channel.cpp:47
 #: ../src/extension/internal/bitmap/levelChannel.cpp:53
 msgid "Channel"
-msgstr ""
+msgstr "قناة"
 
 #. TODO: find an unused layer number, forming name from _("Layer ") + "%d"
 #: ../src/extension/internal/bitmap/channel.cpp:49
@@ -4264,11 +4271,11 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
 msgid "Despeckle"
-msgstr ""
+msgstr "إزالة الضجيج"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:42
 msgid "Reduce speckle noise of selected bitmap(s)."
-msgstr ""
+msgstr "إزالة الضجيج من الصورة المختارة"
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
@@ -4276,7 +4283,7 @@ msgstr "طرف"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
 msgid "Highlight edges of selected bitmap(s)."
-msgstr ""
+msgstr "تعليم الأطراف من الصور(ة) المختارة"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
@@ -4319,7 +4326,7 @@ msgstr "إنطواﺀ"
 
 #: ../src/extension/internal/bitmap/implode.cpp:44
 msgid "Implode selected bitmap(s)."
-msgstr ""
+msgstr "إنطواﺀ الصور(ة) المختارة"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
@@ -4338,7 +4345,7 @@ msgstr "نقطة بيضاﺀ"
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
 #: ../src/extension/internal/bitmap/level.cpp:44
 msgid "Gamma Correction"
-msgstr ""
+msgstr "تصحيح غاما"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid ""
@@ -4397,6 +4404,7 @@ msgstr "سطوع"
 msgid ""
 "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr ""
+"ضبط مقدار حدّة الألوان، وتدّرجها، وسطوعها في الصور(ة) المختارة"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -4523,11 +4531,11 @@ msgstr ""
 #: ../src/extension/internal/bitmap/threshold.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
 msgid "Threshold"
-msgstr ""
+msgstr "العتبة"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
 msgid "Threshold selected bitmap(s)."
-msgstr ""
+msgstr "عتبة الصور(ة) المختارة"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
@@ -4551,7 +4559,7 @@ msgstr "طول الموجة"
 
 #: ../src/extension/internal/bitmap/wave.cpp:46
 msgid "Alter selected bitmap(s) along sine wave."
-msgstr ""
+msgstr "تلاعب بالصور(ة) على طول موجة الجيب"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
@@ -4777,7 +4785,7 @@ msgstr "حجم الجرف"
 
 #: ../src/extension/internal/filter/snow.h:42
 msgid "Snow has fallen on object"
-msgstr ""
+msgstr "الثلج سقط على الجسم"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
@@ -4843,7 +4851,7 @@ msgstr ""
 
 #: ../src/extension/internal/grid.cpp:204
 msgid "Draw a path which is a grid"
-msgstr ""
+msgstr "رسم على المسار الذي هو شبكة"
 
 #: ../src/extension/internal/javafx-out.cpp:945
 msgid "JavaFX Output"
@@ -4928,62 +4936,63 @@ msgstr "إعدادات الصفحة"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:106
 msgid "Precision of approximating gradient meshes:"
-msgstr ""
+msgstr "دقة المعيار التقريبي للتدرج"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 msgid ""
 "<b>Note</b>: setting the precision too high may result in a large SVG file "
 "and slow performance."
-msgstr ""
+msgstr "<b>ملاحظة</b>: إستعمال دقّة عالية يمكن أن يضّخم حجم الملف "
+"ويبطئ الجهاز."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:393
 msgid "rough"
-msgstr ""
+msgstr "خشن"
 
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:116
 msgid "Text handling:"
-msgstr ""
+msgstr "معالجة النص"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:118
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:119
 msgid "Import text as text"
-msgstr ""
+msgstr "استيراد النص كنص"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "إستبدال خطّ الملف بأقرب خط موجود"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
-msgstr ""
+msgstr "تضمين الصور"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
-msgstr ""
+msgstr "إستيراد الإعدادات"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:248
 msgid "PDF Import Settings"
-msgstr ""
+msgstr "إستيراد إعدادات PDF"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr ""
+msgstr "دخل PDF|وسط"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
-msgstr ""
+msgstr "جيّد"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:398
 msgid "very fine"
-msgstr ""
+msgstr "جيّد جدّا"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:753
 msgid "PDF Input"
-msgstr ""
+msgstr "دخل PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:758
 msgid "Adobe PDF (*.pdf)"
@@ -5360,7 +5369,7 @@ msgstr "مصفوفة"
 
 #: ../src/filter-enums.cpp:64
 msgid "Saturate"
-msgstr "زيادة حدّة الألوا"
+msgstr "زيادة حدّة الألوان"
 
 #: ../src/filter-enums.cpp:65
 msgid "Hue Rotate"
@@ -5368,12 +5377,12 @@ msgstr "تدوير تدرّج الألوان"
 
 #: ../src/filter-enums.cpp:66
 msgid "Luminance to Alpha"
-msgstr ""
+msgstr "سطوع إلى ألفا"
 
 #. File
 #: ../src/filter-enums.cpp:72 ../src/verbs.cpp:2242
 msgid "Default"
-msgstr ""
+msgstr "إفتراضي"
 
 #: ../src/filter-enums.cpp:73
 msgid "Over"
@@ -5381,11 +5390,11 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:74
 msgid "In"
-msgstr ""
+msgstr "مدخل"
 
 #: ../src/filter-enums.cpp:75
 msgid "Out"
-msgstr ""
+msgstr "مخرج"
 
 #: ../src/filter-enums.cpp:76
 msgid "Atop"
@@ -5397,15 +5406,15 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:78
 msgid "Arithmetic"
-msgstr ""
+msgstr "حساب"
 
 #: ../src/filter-enums.cpp:84
 msgid "Identity"
-msgstr ""
+msgstr "مطابقة"
 
 #: ../src/filter-enums.cpp:85
 msgid "Table"
-msgstr ""
+msgstr "لوح"
 
 #: ../src/filter-enums.cpp:86
 msgid "Discrete"
@@ -5413,20 +5422,20 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:87
 msgid "Linear"
-msgstr ""
+msgstr "خطّي"
 
 #: ../src/filter-enums.cpp:88
 msgid "Gamma"
-msgstr ""
+msgstr "غاما"
 
 #: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:316
 #: ../src/widgets/gradient-selector.cpp:139
 msgid "Duplicate"
-msgstr ""
+msgstr "إنتاج نسخة"
 
 #: ../src/filter-enums.cpp:95
 msgid "Wrap"
-msgstr ""
+msgstr "تغليف"
 
 #: ../src/filter-enums.cpp:96 ../src/flood-context.cpp:264
 #: ../src/live_effects/lpe-ruler.cpp:34
@@ -5441,79 +5450,79 @@ msgstr ""
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
 msgid "None"
-msgstr ""
+msgstr "لا شيئ"
 
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:247
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:400
 #: ../src/widgets/sp-color-scales.cpp:401
 msgid "Red"
-msgstr ""
+msgstr "أحمر"
 
 #: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:248
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:403
 #: ../src/widgets/sp-color-scales.cpp:404
 msgid "Green"
-msgstr ""
+msgstr "أخضر"
 
 #: ../src/filter-enums.cpp:104 ../src/flood-context.cpp:249
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:406
 #: ../src/widgets/sp-color-scales.cpp:407
 msgid "Blue"
-msgstr ""
+msgstr "أزرق"
 
 #: ../src/filter-enums.cpp:105 ../src/flood-context.cpp:253
 msgid "Alpha"
-msgstr ""
+msgstr "ألفا"
 
 #: ../src/filter-enums.cpp:111
 msgid "Erode"
-msgstr ""
+msgstr "تآكل"
 
 #: ../src/filter-enums.cpp:112
 msgid "Dilate"
-msgstr ""
+msgstr "تمدد"
 
 #: ../src/filter-enums.cpp:118
 msgid "Fractal Noise"
-msgstr ""
+msgstr "ضجيج كسورييات"
 
 #: ../src/filter-enums.cpp:125
 msgid "Distant Light"
-msgstr ""
+msgstr "ضوﺀ بعيد"
 
 #: ../src/filter-enums.cpp:126
 msgid "Point Light"
-msgstr ""
+msgstr "ضوﺀ نقطي"
 
 #: ../src/filter-enums.cpp:127
 msgid "Spot Light"
-msgstr ""
+msgstr "ضوﺀ موّجه"
 
 #: ../src/flood-context.cpp:246
 msgid "Visible Colors"
-msgstr ""
+msgstr "الألوان المرئية"
 
 #: ../src/flood-context.cpp:252 ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:432
 #: ../src/widgets/sp-color-scales.cpp:433 ../src/widgets/toolbox.cpp:4309
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
-msgstr ""
+msgstr "إضاﺀة"
 
 #: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1068
 msgid "Small"
-msgstr ""
+msgstr "صغير"
 
 #: ../src/flood-context.cpp:266
 msgid "Medium"
-msgstr ""
+msgstr "وسط"
 
 #: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1068
 msgid "Large"
-msgstr ""
+msgstr "كبير"
 
 #: ../src/flood-context.cpp:469
 msgid "<b>Too much inset</b>, the result is empty."
@@ -5537,7 +5546,7 @@ msgstr[1] ""
 
 #: ../src/flood-context.cpp:785 ../src/flood-context.cpp:1099
 msgid "<b>Area is not bounded</b>, cannot fill."
-msgstr ""
+msgstr "<b>المنطقة غير محدودة</b>, لا يمكن الملﺀ."
 
 #: ../src/flood-context.cpp:1104
 msgid ""
@@ -5547,11 +5556,11 @@ msgstr ""
 
 #: ../src/flood-context.cpp:1122 ../src/flood-context.cpp:1282
 msgid "Fill bounded area"
-msgstr ""
+msgstr "ملﺀ المنطقة المحدودة"
 
 #: ../src/flood-context.cpp:1142
 msgid "Set style on object"
-msgstr ""
+msgstr "حدد الطراز على الجسم"
 
 #: ../src/flood-context.cpp:1201
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
@@ -5559,49 +5568,49 @@ msgstr ""
 
 #: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:75
 msgid "Linear gradient <b>start</b>"
-msgstr ""
+msgstr "<b>بداية</b> التدرّج الخطّي"
 
 #. POINT_LG_BEGIN
 #: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:76
 msgid "Linear gradient <b>end</b>"
-msgstr ""
+msgstr "<b>نهاية</b> التدّرج الخطّي"
 
 #: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
 msgid "Linear gradient <b>mid stop</b>"
-msgstr ""
+msgstr "<b>منتصف</b> التدرّج الخطّي"
 
 #: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
 msgid "Radial gradient <b>center</b>"
-msgstr ""
+msgstr "<b>مركز</b> التدّرج الدائري"
 
 #: ../src/gradient-context.cpp:136 ../src/gradient-context.cpp:137
 #: ../src/gradient-drag.cpp:79 ../src/gradient-drag.cpp:80
 msgid "Radial gradient <b>radius</b>"
-msgstr ""
+msgstr "<b>شعاع</b> التدّرج الدائري"
 
 #: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>focus</b>"
-msgstr ""
+msgstr "<b>بؤرة</b> التدّرج الدائري"
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
 #: ../src/gradient-drag.cpp:82 ../src/gradient-drag.cpp:83
 msgid "Radial gradient <b>mid stop</b>"
-msgstr ""
+msgstr "<b>منتصف</b> التدّرج الدائري"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
 #: ../src/gradient-context.cpp:165
 #, c-format
 msgid "%s selected"
-msgstr ""
+msgstr "%s مختارة"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
 #: ../src/gradient-context.cpp:167 ../src/gradient-context.cpp:176
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " من أصل %d مقبض تدرّج"
+msgstr[1] " من أصل %d مقابض متدرّجة"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
 #: ../src/gradient-context.cpp:168 ../src/gradient-context.cpp:177
@@ -5609,8 +5618,8 @@ msgstr[1] ""
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " على %d جسم مختار"
+msgstr[1] " على %d أجسام مختارة"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
@@ -5642,31 +5651,31 @@ msgstr[1] ""
 #: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
 #: ../src/widgets/gradient-vector.cpp:744
 msgid "Add gradient stop"
-msgstr ""
+msgstr "إضافة وقفة للتدرّج"
 
 #: ../src/gradient-context.cpp:457
 msgid "Simplify gradient"
-msgstr ""
+msgstr "تبسيط التدرّج"
 
 #: ../src/gradient-context.cpp:534
 msgid "Create default gradient"
-msgstr ""
+msgstr "إنشاﺀ التدّرج الإفتراضي"
 
 #: ../src/gradient-context.cpp:589
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "<b>رسم حول</b> المقابض لإختيارهم"
 
 #: ../src/gradient-context.cpp:687
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr ""
+msgstr "<b>Ctrl</b>: لصق زاوية التدرّج"
 
 #: ../src/gradient-context.cpp:688
 msgid "<b>Shift</b>: draw gradient around the starting point"
-msgstr ""
+msgstr "<b>Shift</b>: رسم التدرّج حول نقطة البداية"
 
 #: ../src/gradient-context.cpp:808
 msgid "Invert gradient"
-msgstr ""
+msgstr "عكس التدرّج"
 
 #: ../src/gradient-context.cpp:925
 #, c-format
@@ -5677,19 +5686,19 @@ msgstr[1] ""
 
 #: ../src/gradient-context.cpp:929
 msgid "Select <b>objects</b> on which to create gradient."
-msgstr ""
+msgstr "إختيار <b>الأجسام</b> التي على أساسها سيتمّ إنشاﺀ التدرّج."
 
 #: ../src/gradient-drag.cpp:591
 msgid "Merge gradient handles"
-msgstr ""
+msgstr "دمج مقابض التدرّج"
 
 #: ../src/gradient-drag.cpp:912
 msgid "Move gradient handle"
-msgstr ""
+msgstr "تحريك مقبض التدرّج"
 
 #: ../src/gradient-drag.cpp:965 ../src/widgets/gradient-vector.cpp:776
 msgid "Delete gradient stop"
-msgstr ""
+msgstr "إزالة وقفة التدرّج"
 
 #: ../src/gradient-drag.cpp:1129
 #, c-format
@@ -5700,7 +5709,7 @@ msgstr ""
 
 #: ../src/gradient-drag.cpp:1133 ../src/gradient-drag.cpp:1140
 msgid " (stroke)"
-msgstr ""
+msgstr " (ضربة ريشة)"
 
 #: ../src/gradient-drag.cpp:1137
 #, c-format
@@ -5729,154 +5738,154 @@ msgstr[1] ""
 
 #: ../src/gradient-drag.cpp:1823
 msgid "Move gradient handle(s)"
-msgstr ""
+msgstr "حرّك مقبض التدرّج"
 
 #: ../src/gradient-drag.cpp:1859
 msgid "Move gradient mid stop(s)"
-msgstr ""
+msgstr "حرّك مقبض وقفة نصف التدرّج"
 
 #: ../src/gradient-drag.cpp:2147
 msgid "Delete gradient stop(s)"
-msgstr ""
+msgstr "إزالة وقفة التدرّج"
 
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
-msgstr ""
+msgstr "وحدة القياس"
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3154
 #: ../src/widgets/toolbox.cpp:5658 ../src/widgets/toolbox.cpp:7169
 msgid "Units"
-msgstr ""
+msgstr "وحدات القياس"
 
 #: ../src/helper/units.cpp:38
 msgid "Point"
-msgstr ""
+msgstr "نقطة"
 
 #: ../src/helper/units.cpp:38 ../src/ui/widget/selected-style.cpp:293
 msgid "pt"
-msgstr ""
+msgstr "نقطة"
 
 #: ../src/helper/units.cpp:38 ../share/extensions/perfectboundcover.inx.h:15
 msgid "Points"
-msgstr ""
+msgstr "نقاط"
 
 #: ../src/helper/units.cpp:38
 msgid "Pt"
-msgstr ""
+msgstr "نقطة"
 
 #: ../src/helper/units.cpp:39
 msgid "Pica"
-msgstr ""
+msgstr "بيكا"
 
 #: ../src/helper/units.cpp:39
 msgid "pc"
-msgstr ""
+msgstr "بيكا"
 
 #: ../src/helper/units.cpp:39
 msgid "Picas"
-msgstr ""
+msgstr "بيكا"
 
 #: ../src/helper/units.cpp:39
 msgid "Pc"
-msgstr ""
+msgstr "بيكا"
 
 #: ../src/helper/units.cpp:40
 msgid "Pixel"
-msgstr ""
+msgstr "بكسل"
 
 #: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:242
 #: ../src/ui/dialog/inkscape-preferences.cpp:246
 #: ../src/ui/dialog/inkscape-preferences.cpp:249
 #: ../src/ui/widget/selected-style.cpp:289
 msgid "px"
-msgstr ""
+msgstr "بكسل"
 
 #: ../src/helper/units.cpp:40
 msgid "Pixels"
-msgstr ""
+msgstr "بكسلات"
 
 #: ../src/helper/units.cpp:40
 msgid "Px"
-msgstr ""
+msgstr "بكسلات"
 
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:42 ../share/extensions/straightseg.inx.h:3
 msgid "Percent"
-msgstr ""
+msgstr "بالمئة"
 
 #: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:262
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../src/helper/units.cpp:42
 msgid "Percents"
-msgstr ""
+msgstr "بالمئات"
 
 #: ../src/helper/units.cpp:43
 msgid "Millimeter"
-msgstr ""
+msgstr "ملليمتر"
 
 #: ../src/helper/units.cpp:43 ../src/ui/widget/selected-style.cpp:297
 msgid "mm"
-msgstr ""
+msgstr "ملم"
 
 #: ../src/helper/units.cpp:43
 msgid "Millimeters"
-msgstr ""
+msgstr "ملليمترات"
 
 #: ../src/helper/units.cpp:44
 msgid "Centimeter"
-msgstr ""
+msgstr "سنتيمتر"
 
 #: ../src/helper/units.cpp:44
 msgid "cm"
-msgstr ""
+msgstr "سم"
 
 #: ../src/helper/units.cpp:44
 msgid "Centimeters"
-msgstr ""
+msgstr "سنتيمرات"
 
 #: ../src/helper/units.cpp:45
 msgid "Meter"
-msgstr ""
+msgstr "متر"
 
 #: ../src/helper/units.cpp:45
 msgid "m"
-msgstr ""
+msgstr "م"
 
 #: ../src/helper/units.cpp:45
 msgid "Meters"
-msgstr ""
+msgstr "أمتار"
 
 #. no svg_unit
 #: ../src/helper/units.cpp:46
 msgid "Inch"
-msgstr ""
+msgstr "بوصة"
 
 #: ../src/helper/units.cpp:46
 msgid "in"
-msgstr ""
+msgstr "بص"
 
 #: ../src/helper/units.cpp:46
 msgid "Inches"
-msgstr ""
+msgstr "بوصات"
 
 #: ../src/helper/units.cpp:47
 msgid "Foot"
-msgstr ""
+msgstr "قدم"
 
 #: ../src/helper/units.cpp:47
 msgid "ft"
-msgstr ""
+msgstr "قدم"
 
 #: ../src/helper/units.cpp:47
 msgid "Feet"
-msgstr ""
+msgstr "أقدام"
 
 #. Volatiles do not have default, so there are none here
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
@@ -5907,125 +5916,125 @@ msgstr ""
 
 #: ../src/inkscape.cpp:328
 msgid "Autosaving documents..."
-msgstr ""
+msgstr "تحفيظ تلقائي للملفات..."
 
 #: ../src/inkscape.cpp:399
 msgid "Autosave failed! Could not find inkscape extension to save document."
-msgstr ""
+msgstr "فشل التحفيظ التلقائي! لم يتم إيجاد نوع الملف للحفظ."
 
 #: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
-msgstr ""
+msgstr "فشل التحفيظ التلقائي! الملف %s لم يتمّ حفظه."
 
 #: ../src/inkscape.cpp:424
 msgid "Autosave complete."
-msgstr ""
+msgstr "تمّت عملية التحفيظ التلقائي بنجاح."
 
 #: ../src/inkscape.cpp:655
 msgid "Untitled document"
-msgstr ""
+msgstr "ملّف بدون عنوان"
 
 #. Show nice dialog box
 #: ../src/inkscape.cpp:685
 msgid "Inkscape encountered an internal error and will close now.\n"
-msgstr ""
+msgstr "واجه إنكسكايب مشكلة داخيلة وسيتمّ اغلاقه الآن.\n"
 
 #: ../src/inkscape.cpp:686
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr ""
+msgstr "التحفيظ التلقائي الإحتياطي للملّفات الغير محفوظة قد تمّفي هذه الأماكن:\n"
 
 #: ../src/inkscape.cpp:687
 msgid "Automatic backup of the following documents failed:\n"
-msgstr ""
+msgstr "فشل التحفيظ التلقائي الإحطياتي للملفات التالية:\n"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:828
 msgid "Commands Bar"
-msgstr ""
+msgstr "شريط الأوامر"
 
 #: ../src/interface.cpp:828
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ شريط الأوامر (تحت القائمة)"
 
 #: ../src/interface.cpp:830
 msgid "Snap Controls Bar"
-msgstr ""
+msgstr "لصق شريط التحّكم"
 
 #: ../src/interface.cpp:830
 msgid "Show or hide the snapping controls"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ أدوات اللصق"
 
 #: ../src/interface.cpp:832
 msgid "Tool Controls Bar"
-msgstr ""
+msgstr "شريط أدوات التحّكم"
 
 #: ../src/interface.cpp:832
 msgid "Show or hide the Tool Controls bar"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ شريط أدوات التحّكم"
 
 #: ../src/interface.cpp:834
 msgid "_Toolbox"
-msgstr ""
+msgstr "_علبة الأدوات"
 
 #: ../src/interface.cpp:834
 msgid "Show or hide the main toolbox (on the left)"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ علبة الأدوات الرئيسية (على اليسار)"
 
 #: ../src/interface.cpp:840
 msgid "_Palette"
-msgstr ""
+msgstr "_مجموعة الألوان"
 
 #: ../src/interface.cpp:840
 msgid "Show or hide the color palette"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ مجموعة الألوان"
 
 #: ../src/interface.cpp:842
 msgid "_Statusbar"
-msgstr ""
+msgstr "شريط ال_حالة"
 
 #: ../src/interface.cpp:842
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr ""
+msgstr "إظهار أو إخفاﺀ شريط الحالة (في أسفل النافذة) "
 
 #: ../src/interface.cpp:912
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr ""
+msgstr "الفعل \"%s\" مجهول"
 
 #: ../src/interface.cpp:951
 msgid "Open _Recent"
-msgstr ""
+msgstr "فتح مؤ_خرا"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:1052
 #, c-format
 msgid "Enter group #%s"
-msgstr ""
+msgstr "أدخل المجموعة #%s"
 
 #: ../src/interface.cpp:1063
 msgid "Go to parent"
-msgstr ""
+msgstr "إذهب إلى الأهل"
 
 #: ../src/interface.cpp:1154 ../src/interface.cpp:1240
 #: ../src/interface.cpp:1343 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
-msgstr ""
+msgstr "إسقاط اللون"
 
 #: ../src/interface.cpp:1193 ../src/interface.cpp:1303
 msgid "Drop color on gradient"
-msgstr ""
+msgstr "إسقاط اللون على مجموعة الألوان"
 
 #: ../src/interface.cpp:1356
 msgid "Could not parse SVG data"
-msgstr ""
+msgstr "لا يمكن تحليل معلومات الملف"
 
 #: ../src/interface.cpp:1395
 msgid "Drop SVG"
-msgstr ""
+msgstr "إسقاط SVG"
 
 #: ../src/interface.cpp:1451
 msgid "Drop bitmap image"
@@ -6053,17 +6062,17 @@ msgstr ""
 #: ../src/io/sys.cpp:444
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
-msgstr ""
+msgstr "فشل في تغيير مسار الملف '%s' (%s)"
 
 #: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
 #, c-format
 msgid "Failed to execute child process (%s)"
-msgstr ""
+msgstr "فشل في تشغيل البرنامج الإبن (%s)"
 
 #: ../src/io/sys.cpp:623
 #, c-format
 msgid "Invalid program name: %s"
-msgstr ""
+msgstr "إسم البرنامج غير مقبول: %s"
 
 #: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
 #, c-format
@@ -6088,19 +6097,19 @@ msgstr ""
 #: ../src/io/sys.cpp:986
 #, c-format
 msgid "Failed to execute helper program (%s)"
-msgstr ""
+msgstr "فشل في إطلاق البرنامج المساعد (%s)"
 
 #: ../src/knot.cpp:443
 msgid "Node or handle drag canceled."
-msgstr ""
+msgstr "إلغاﺀ عملية جرّ العقدة أو المقبض"
 
 #: ../src/knotholder.cpp:134
 msgid "Change handle"
-msgstr ""
+msgstr "تغيير المقبض"
 
 #: ../src/knotholder.cpp:215
 msgid "Move handle"
-msgstr ""
+msgstr "تحريك المقبض "
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:236
@@ -6125,77 +6134,77 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-bar.c:116
 msgid "Dockbar style"
-msgstr ""
+msgstr "طراز شريط المنصة"
 
 #: ../src/libgdl/gdl-dock-bar.c:117
 msgid "Dockbar style to show items on it"
-msgstr ""
+msgstr "طراز شريط المنصة لإبراز المواد عليه"
 
 #: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:545
 #: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "Floating"
-msgstr ""
+msgstr "عائمة"
 
 #: ../src/libgdl/gdl-dock.c:176
 msgid "Whether the dock is floating in its own window"
-msgstr ""
+msgstr "إذا كانت المنصة عائمة على نافذتها الخاصة"
 
 #: ../src/libgdl/gdl-dock.c:183 ../src/libgdl/gdl-dock-master.c:144
 msgid "Default title"
-msgstr ""
+msgstr "العنوان الإفتراضي"
 
 #: ../src/libgdl/gdl-dock.c:184
 msgid "Default title for the newly created floating docks"
-msgstr ""
+msgstr "العنوان الإفتراضي للمنصّات العائمة الجديدة"
 
 #: ../src/libgdl/gdl-dock.c:191
 msgid "Width for the dock when it's of floating type"
-msgstr ""
+msgstr "عرض المنصة عندما تكون عائمة"
 
 #: ../src/libgdl/gdl-dock.c:199
 msgid "Height for the dock when it's of floating type"
-msgstr ""
+msgstr "إرتفاع المنصة عندما تكون عائمة"
 
 #: ../src/libgdl/gdl-dock.c:206
 msgid "Float X"
-msgstr ""
+msgstr "س عائم"
 
 #: ../src/libgdl/gdl-dock.c:207
 msgid "X coordinate for a floating dock"
-msgstr ""
+msgstr "إحداثيات س للمنصة العائمة"
 
 #: ../src/libgdl/gdl-dock.c:214
 msgid "Float Y"
-msgstr ""
+msgstr "ص عائم"
 
 #: ../src/libgdl/gdl-dock.c:215
 msgid "Y coordinate for a floating dock"
-msgstr ""
+msgstr "إحداثيات ص للمنصة العائمة"
 
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
 msgid "Dock #%d"
-msgstr ""
+msgstr "منصة #%d"
 
 #: ../src/libgdl/gdl-dock-item.c:287
 msgid "Orientation"
-msgstr ""
+msgstr "إتّجاه"
 
 #: ../src/libgdl/gdl-dock-item.c:288
 msgid "Orientation of the docking item"
-msgstr ""
+msgstr "إتّجاه مواد المنصّة"
 
 #: ../src/libgdl/gdl-dock-item.c:303
 msgid "Resizable"
-msgstr ""
+msgstr "يمكن تغيير الحجم"
 
 #: ../src/libgdl/gdl-dock-item.c:304
 msgid "If set, the dock item can be resized when docked in a panel"
-msgstr ""
+msgstr "عند الإختيار، يمكن تغيير حجم المنصّة عند ضمّها إلى لوحة ما"
 
 #: ../src/libgdl/gdl-dock-item.c:311
 msgid "Item behavior"
-msgstr ""
+msgstr "تصرّف المواد"
 
 #: ../src/libgdl/gdl-dock-item.c:312
 msgid ""
@@ -6205,7 +6214,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-item.c:320 ../src/libgdl/gdl-dock-master.c:151
 msgid "Locked"
-msgstr ""
+msgstr "مقفل"
 
 #: ../src/libgdl/gdl-dock-item.c:321
 msgid ""
@@ -6214,19 +6223,19 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-item.c:329
 msgid "Preferred width"
-msgstr ""
+msgstr "العرض المفضّل"
 
 #: ../src/libgdl/gdl-dock-item.c:330
 msgid "Preferred width for the dock item"
-msgstr ""
+msgstr "العرض المفضّل للمادة في المنصّة"
 
 #: ../src/libgdl/gdl-dock-item.c:336
 msgid "Preferred height"
-msgstr ""
+msgstr "الإرتفاع المفضّل"
 
 #: ../src/libgdl/gdl-dock-item.c:337
 msgid "Preferred height for the dock item"
-msgstr ""
+msgstr "الإرتفاع المفضّل للمادة في المنصّة"
 
 #: ../src/libgdl/gdl-dock-item.c:616
 #, c-format
@@ -6250,17 +6259,17 @@ msgstr ""
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
 msgid "UnLock"
-msgstr ""
+msgstr "إزالة القفل"
 
 #. Hide menuitem.
 #: ../src/libgdl/gdl-dock-item.c:1486
 msgid "Hide"
-msgstr ""
+msgstr "إخفاﺀ"
 
 #. Lock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1491
 msgid "Lock"
-msgstr ""
+msgstr "قفل"
 
 #: ../src/libgdl/gdl-dock-item.c:1717
 #, c-format
@@ -6277,11 +6286,11 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
 msgid "Close this dock"
-msgstr ""
+msgstr "إغلاق هذه المنصّة"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
@@ -6348,7 +6357,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 msgid "Name"
-msgstr ""
+msgstr "إسم"
 
 #: ../src/libgdl/gdl-dock-object.c:121
 msgid "Unique name for identifying the dock object"
@@ -6356,7 +6365,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:128
 msgid "Long name"
-msgstr ""
+msgstr "إسم طويل"
 
 #: ../src/libgdl/gdl-dock-object.c:129
 msgid "Human readable name for the dock object"
@@ -6413,7 +6422,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-paned.c:132
 msgid "Position"
-msgstr ""
+msgstr "موقع"
 
 #: ../src/libgdl/gdl-dock-paned.c:133
 msgid "Position of the divider in pixels"
@@ -6421,7 +6430,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:143
 msgid "Sticky"
-msgstr ""
+msgstr "لاصقة"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:144
 msgid ""
@@ -6431,7 +6440,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
 msgid "Host"
-msgstr ""
+msgstr "مضيف"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:152
 msgid "The dock object this placeholder is attached to"
@@ -6465,7 +6474,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
-msgstr ""
+msgstr "إحداتيات س"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
 msgid "X coordinate for dock when floating"
@@ -6473,7 +6482,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
 msgid "Y-Coordinate"
-msgstr ""
+msgstr "إحداثيات ص"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
 msgid "Y coordinate for dock when floating"
@@ -6509,20 +6518,20 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:87
 msgid "Angle bisector"
-msgstr ""
+msgstr "منصف الزاوية"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
 msgid "Boolops"
-msgstr ""
+msgstr "عمليات منطقية"
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
-msgstr ""
+msgstr "دائرة (بالمركز والشعاع)"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "دائرة ب٣ نقاط"
 
 #: ../src/live_effects/effect.cpp:92
 msgid "Dynamic stroke"
@@ -6546,7 +6555,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:98
 msgid "Path length"
-msgstr ""
+msgstr "طول المسار"
 
 #: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
@@ -6558,7 +6567,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
-msgstr ""
+msgstr "دوران النسخات"
 
 #: ../src/live_effects/effect.cpp:102
 msgid "Recursive skeleton"
@@ -6570,16 +6579,16 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:104
 msgid "Text label"
-msgstr ""
+msgstr "ملصق النص"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:107
 msgid "Bend"
-msgstr ""
+msgstr "طوي"
 
 #: ../src/live_effects/effect.cpp:108
 msgid "Gears"
-msgstr ""
+msgstr "دواليب"
 
 #: ../src/live_effects/effect.cpp:109
 msgid "Pattern Along Path"
@@ -6625,7 +6634,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Ruler"
-msgstr ""
+msgstr "مسطرة"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
@@ -6639,7 +6648,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:293
 msgid "No effect"
-msgstr ""
+msgstr "لا تأثير"
 
 #: ../src/live_effects/effect.cpp:340
 #, c-format
@@ -6657,7 +6666,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
-msgstr ""
+msgstr "طوي المسار"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Path along which to bend the original path"
@@ -6665,12 +6674,12 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
-msgstr ""
+msgstr "عرض المسار"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Width in units of length"
-msgstr ""
+msgstr "عرض بوحدات قياس الطول"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
@@ -6686,35 +6695,35 @@ msgstr ""
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
-msgstr ""
+msgstr "حجم س"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "The size of the grid in X direction."
-msgstr ""
+msgstr "حجم الشبكة في إتجاه س"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "Size Y"
-msgstr ""
+msgstr "حجم ص"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "The size of the grid in Y direction."
-msgstr ""
+msgstr "حجم الشبكة في إتجاه ص"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
-msgstr ""
+msgstr "خياطة المسار"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
-msgstr ""
+msgstr "المسار الذي سيتمّ استعماله للخياطة"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths"
-msgstr ""
+msgstr "عدد المسارات"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The number of paths that will be generated."
-msgstr ""
+msgstr "عدد المسارات التي سيتمّ إصارها"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Start edge variance"
