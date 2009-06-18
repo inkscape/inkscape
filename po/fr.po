@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-16 20:08+0200\n"
-"PO-Revision-Date: 2009-06-16 20:17+0100\n"
+"POT-Creation-Date: 2009-06-18 21:04+0200\n"
+"PO-Revision-Date: 2009-06-18 21:08+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,6 +138,7 @@ msgstr "Découpe"
 #: ../share/filters/filters.svg.h:180
 #: ../share/filters/filters.svg.h:181
 #: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:188
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -449,6 +450,7 @@ msgid "Color"
 msgstr "Couleur"
 
 #: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:171
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr "Rendu en teintes de gris par réduction de la saturation à zéro"
 
@@ -1104,6 +1106,8 @@ msgstr "Masque de bosselage TSL"
 #: ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:175
 #: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:190
 msgid "Mask and transparency effects"
 msgstr "Masques et transparences"
 
@@ -1232,6 +1236,7 @@ msgid "Cutout Glow"
 msgstr "Découpe et flou"
 
 #: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:188
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Lueur intérieure et extérieure avec possibilité de décaler et colorer le remplissage"
 
@@ -1586,12 +1591,8 @@ msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Agite et rend flous les bords et le contenu, sur une petite amplitude"
 
 #: ../share/filters/filters.svg.h:171
-msgid "Film Grain"
+msgid "Film grain"
 msgstr "Grain photo"
-
-#: ../share/filters/filters.svg.h:171
-msgid "Adds a film grain noise to images and objects"
-msgstr "Ajoute un bruit de type grain photographique aux images et objets"
 
 #: ../share/filters/filters.svg.h:172
 msgid "HSL Bumps, transparent"
@@ -1722,6 +1723,26 @@ msgstr "Vieille carte postale"
 #: ../share/filters/filters.svg.h:187
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "Légère postérisation et contours dessinés, comme sur une vieille carte postale imprimée"
+
+#: ../share/filters/filters.svg.h:188
+msgid "Fuzzy glow"
+msgstr "Lueur aléatoire"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Dots transparency"
+msgstr "Transparence pointilliste"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Gives a pointillist HSL sensitive transparency"
+msgstr "Donne une transparence sensible TSL, pointilliste"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Canvas transparency"
+msgstr "Transparence toilée"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Gives a canvas like HSL sensitive transparency."
+msgstr "Donne une transparence sensible TSL, façon toile"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4991,15 +5012,15 @@ msgstr "Rendu"
 msgid "Draw a path which is a grid"
 msgstr "Tracer un chemin en forme de grille"
 
-#: ../src/extension/internal/javafx-out.cpp:945
+#: ../src/extension/internal/javafx-out.cpp:965
 msgid "JavaFX Output"
 msgstr "Sortie JavaFX"
 
-#: ../src/extension/internal/javafx-out.cpp:950
+#: ../src/extension/internal/javafx-out.cpp:970
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
-#: ../src/extension/internal/javafx-out.cpp:951
+#: ../src/extension/internal/javafx-out.cpp:971
 msgid "JavaFX Raytracer File"
 msgstr "Fichier JavaFX Raytracer"
 
@@ -21602,6 +21623,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Adds a film grain noise to images and objects"
+#~ msgstr "Ajoute un bruit de type grain photographique aux images et objets"
 #~ msgid "Soft bump"
 #~ msgstr "Bosselage doux"
 #~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
