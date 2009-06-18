@@ -1732,5 +1732,13 @@
 <feComposite result="result9" in="SourceGraphic" operator="in" in2="result8" id="feComposite2975" k1="0.5" k2="0.5" k3="0" />
 <feBlend in="result9" in2="result8" blend="normal" mode="darken" id="feBlend2977" />
 </filter>
+<filter id="DotsTransp0" inkscape:label="Dots transparency" x="0" y="0" width="1" height="1" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives to object a pointillist transparency">
+<feTurbulence id="feTurbulence2884" result="result1" numOctaves="1" baseFrequency="1" type="turbulence" seed="50" />
+<feColorMatrix id="feColorMatrix2886" result="result0" in="SourceGraphic" type="luminanceToAlpha" />
+<feColorMatrix id="feColorMatrix2888" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.7 0 " result="result2" type="matrix" />
+<feComposite id="feComposite2890" in="result1" operator="over" in2="result2" result="result3" />
+<feColorMatrix id="feColorMatrix2892" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -2 " />
+<feComposite id="feComposite2894" operator="out" in="SourceGraphic" result="result4" />
+</filter>
 </defs>
 </svg>
