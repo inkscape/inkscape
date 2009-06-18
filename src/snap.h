@@ -5,6 +5,13 @@
  * \file snap.h
  * \brief SnapManager class.
  *
+ * The SnapManager class handles most (if not all) of the interfacing of the snapping mechanisms with the
+ * other parts of the code base. It stores the references to the various types of snappers for grid, guides
+ * and objects, and it stores most of the snapping preferences. Besides that it provides methods to setup
+ * the snapping environment (e.g. keeps a list of the items to ignore when looking for snap target candidates,
+ * and toggling of the snap indicator), and it provides many different methods for the snapping itself (free
+ * snapping vs. constrained snapping, returning the result by reference or through a return statement, etc.)
+ *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
@@ -13,7 +20,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
- * Copyright (C) 2000-2008 Authors
+ * Copyright (C) 2000-2009 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -23,7 +30,6 @@
 #include "guide-snapper.h"
 #include "object-snapper.h"
 #include "snap-preferences.h"
-//#include "sp-guide.h"
 
 class SPNamedView;
 
@@ -159,12 +165,15 @@ protected:
     SPNamedView const *_named_view;
 
 private:
-    std::vector<SPItem const *> *_items_to_ignore;
-    SPItem const *_item_to_ignore;
-    SPGuide *_guide_to_ignore;
+    std::vector<SPItem const *> *_items_to_ignore; ///< Items that should not be snapped to, for example the items that are currently being dragged. Set using the setup() method
+    SPItem const *_item_to_ignore; ///< Single item that should not be snapped to. If not NULL then this takes precedence over _items_to_ignore. Set using the setup() method
+    SPGuide *_guide_to_ignore; ///< A guide that should not be snapped to, e.g. the guide that is currently being dragged
     SPDesktop const *_desktop;
-    bool _snapindicator;
-    std::vector<std::pair<Geom::Point, int> > *_unselected_nodes;
+    bool _snapindicator; ///< When true, an indicator will be drawn at the position that was being snapped to
+    std::vector<std::pair<Geom::Point, int> > *_unselected_nodes; ///< Nodes of the path that is currently being edited and which have not been selected and which will therefore be stationary. Only these nodes will be considered for snapping to. Of each unselected node both the position (Geom::Point) and the type (Inkscape::SnapTargetType) will be stored
+    //TODO: Make _unselected_nodes type safe; in the line above int is used for Inkscape::SnapTargetType, but if I remember
+    //correctly then in other cases the int is being used for Inkscape::SnapSourceType, or for both. How to make
+    //this type safe?
 
     Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
                                             std::vector<std::pair<Geom::Point, int> > const &points,
