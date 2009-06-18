@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-18 21:04+0200\n"
-"PO-Revision-Date: 2009-06-18 21:08+0100\n"
+"PO-Revision-Date: 2009-06-18 21:11+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1726,7 +1726,7 @@ msgstr "Légère postérisation et contours dessinés, comme sur une vieille car
 
 #: ../share/filters/filters.svg.h:188
 msgid "Fuzzy glow"
-msgstr "Lueur aléatoire"
+msgstr "Lueur trouble"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Dots transparency"
