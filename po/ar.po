@@ -5944,7 +5944,9 @@ msgstr "واجه إنكسكايب مشكلة داخيلة وسيتمّ اغلا�
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr "التحفيظ التلقائي الإحتياطي للملّفات الغير محفوظة قد تمّفي هذه الأماكن:\n"
+msgstr ""
+"التحفيظ التلقائي الإحتياطي للملّفات الغير محفوظة قد تمّ"
+"في هذه الأماكن:\n"
 
 #: ../src/inkscape.cpp:687
 msgid "Automatic backup of the following documents failed:\n"
@@ -6052,7 +6054,7 @@ msgstr ""
 #: ../src/interface.cpp:1550 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
-msgstr ""
+msgstr "تبديل"
 
 #: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
 #, c-format
@@ -6638,7 +6640,7 @@ msgstr "مسطرة"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
-msgstr ""
+msgstr "مرئي؟"
 
 #: ../src/live_effects/effect.cpp:273
 msgid ""
@@ -6858,15 +6860,15 @@ msgstr ""
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
 msgid "Steps"
-msgstr ""
+msgstr "خطوات"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "تحديد عدد الخطوات من بداية المسار إلى نهايته"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "Equidistant spacing"
-msgstr ""
+msgstr "تباعد متساوي المسافة"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid ""
@@ -6910,71 +6912,71 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
-msgstr ""
+msgstr "حجم المُقلِّب"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "إتجاه المؤشر / حجم المُقلِّب"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
-msgstr ""
+msgstr "إشارات التقاطع"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
-msgstr ""
+msgstr "إشارات التقاطع"
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "جرّ لإختيار التقاطع"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
 msgid "Single"
-msgstr ""
+msgstr "مفرد"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Single, stretched"
-msgstr ""
+msgstr "مفرد، ممدود"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:54
 #: ../share/extensions/pathalongpath.inx.h:8
 msgid "Repeated"
-msgstr ""
+msgstr "متكرر"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:55
 #: ../share/extensions/pathalongpath.inx.h:9
 msgid "Repeated, stretched"
-msgstr ""
+msgstr "متكرر، ممدود"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
-msgstr ""
+msgstr "مصدر النمط"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Path to put along the skeleton path"
-msgstr ""
+msgstr "المسار لوضعه إلى جانب هيكل المسار"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "Pattern copies"
-msgstr ""
+msgstr "نسخات النمط"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
-msgstr ""
+msgstr "عدد نسخة النمط لوضعها إلى جانب هيكل المسار"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "Width of the pattern"
-msgstr ""
+msgstr "عرض النمط"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
 msgid "Scale the width of the pattern in units of its length"
-msgstr ""
+msgstr "حجم عرض النمط بوحدات قياس طوله"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
 msgid "Spacing"
-msgstr ""
+msgstr "تباعد"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
@@ -7009,23 +7011,23 @@ msgstr ""
 #: ../share/extensions/pathalongpath.inx.h:7
 #: ../share/extensions/pathscatter.inx.h:9
 msgid "Pattern is vertical"
-msgstr ""
+msgstr "النمط عامودي"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Rotate pattern 90 deg before applying"
-msgstr ""
+msgstr "إدارة النمط ٩٠ درجة قبل التطبيق"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "دمج الأطراف القريبة"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "دمج اذا كانت نهاية الطرفين لا تبعد أكثر من هذا الرقم. صفر يعني عدم الدمج"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
-msgstr ""
+msgstr "عشواية التردد"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
@@ -7033,7 +7035,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth"
-msgstr ""
+msgstr "النمو"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
@@ -7195,71 +7197,71 @@ msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
-msgstr ""
+msgstr "يسار"
 
 #: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
-msgstr ""
+msgstr "يمين"
 
 #: ../src/live_effects/lpe-ruler.cpp:29 ../src/live_effects/lpe-ruler.cpp:37
 msgid "Both"
-msgstr ""
+msgstr "كلاهما"
 
 #: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5166
 msgid "Start"
-msgstr ""
+msgstr "بداية"
 
 #: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
 msgid "End"
-msgstr ""
+msgstr "نهاية"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Mark distance"
-msgstr ""
+msgstr "مسافة العلامة"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Distance between successive ruler marks"
-msgstr ""
+msgstr "المسافة بين العلامات المتتالية للمسطرة"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Major length"
-msgstr ""
+msgstr "الطول الأساسي"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Length of major ruler marks"
-msgstr ""
+msgstr "الطول بين العلامات الأساسية للمسطرة"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Minor length"
-msgstr ""
+msgstr "الطول الثانوي"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Length of minor ruler marks"
-msgstr ""
+msgstr "الطول بين العلامات الثانوية للمسطرة"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Major steps"
-msgstr ""
+msgstr "الخطوات الأساسية"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "رسم علامة أساسية كل ... خطوة"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Shift marks by"
-msgstr ""
+msgstr "إزاحة العلامات بمقدار"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Shift marks by this many steps"
-msgstr ""
+msgstr "إزاحة العلامات بهذا مقدار من الخطوات"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Mark direction"
-msgstr ""
+msgstr "إتجاه العلامات"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr ""
+msgstr "إتجاه العلامات (عند النظر إلى المسار من البداية إلى النهاية)"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset of first mark"
@@ -7267,7 +7269,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Border marks"
-msgstr ""
+msgstr "حدود العلامات"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
@@ -7277,43 +7279,43 @@ msgstr ""
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
-msgstr ""
+msgstr "ضربات الريشة"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr ""
+msgstr "رسم هذا العدد التقريبي من ضربات الريشة"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
-msgstr ""
+msgstr "الطول الأقصى لضربة الريشة"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
-msgstr ""
+msgstr "الطول الأقصى لضربات الريشة التقريبية"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr ""
+msgstr "تغييرات طول ضربة الريشة"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr ""
+msgstr "التغييرات العشوائية لطول ضربات الريشة (بالنسبة للطول الأقصى)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
-msgstr ""
+msgstr "التداخل الأقصى"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr ""
+msgstr "عدد ضربات الريشة المتتالية التي تتداخل (بالنسبة للطول الأقصى)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
-msgstr ""
+msgstr "تغييرات التداخل"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr ""
+msgstr "التغييرات العشوائية للتداخل (بالنسبة للتداخل الأقصى)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
@@ -7343,19 +7345,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
-msgstr ""
+msgstr "تردد الرجفة"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Average number of tremble periods in a stroke"
-msgstr ""
+msgstr "متوسط عدد الرجفات في ضربة الريشة"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
-msgstr ""
+msgstr "خطوط الإنشاﺀ"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "عدد خطوط الإنشاﺀ (التماس) لرسمها"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
 #: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
@@ -7373,19 +7375,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
-msgstr ""
+msgstr "الطول الأقصى"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "الطول الأقصى لخطوط الإنشاﺀ"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
-msgstr ""
+msgstr "تغييرات الطول"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "تغييرات عشوائية لطول خطوط الإنشاﺀ"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "Placement randomness"
@@ -7459,19 +7461,19 @@ msgstr ""
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Max complexity"
-msgstr ""
+msgstr "التعقيد الأقصى"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Disable effect if the output is too complex"
-msgstr ""
+msgstr "عطّل التأثير إذا كانت النتيجة معقّدة كثيرا"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
-msgstr ""
+msgstr "تغيير العامل البولي"
 
 #: ../src/live_effects/parameter/enum.h:50
 msgid "Change enumeration parameter"
-msgstr ""
+msgstr "تغيير العامل التعديدي"
 
 #: ../src/live_effects/parameter/parameter.cpp:138
 msgid "Change scalar parameter"
@@ -7483,39 +7485,39 @@ msgstr ""
 
 #: ../src/live_effects/parameter/path.cpp:168
 msgid "Copy path"
-msgstr ""
+msgstr "نسخ المسار"
 
 #: ../src/live_effects/parameter/path.cpp:178
 msgid "Paste path"
-msgstr ""
+msgstr "لصق المسار"
 
 #: ../src/live_effects/parameter/path.cpp:188
 msgid "Link to path"
-msgstr ""
+msgstr "وصل إلى المسار"
 
 #: ../src/live_effects/parameter/path.cpp:409
 msgid "Paste path parameter"
-msgstr ""
+msgstr "لصق عامل المسار"
 
 #: ../src/live_effects/parameter/path.cpp:441
 msgid "Link path parameter to path"
-msgstr ""
+msgstr "وصل عامل المسار إلى المسار"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
-msgstr ""
+msgstr "تغيير عامل النقطة"
 
 #: ../src/live_effects/parameter/random.cpp:137
 msgid "Change random parameter"
-msgstr ""
+msgstr "تغيير عشوائي للعامل"
 
 #: ../src/live_effects/parameter/text.cpp:101
 msgid "Change text parameter"
-msgstr ""
+msgstr "تغيير عامل النص"
 
 #: ../src/live_effects/parameter/unit.cpp:77
 msgid "Change unit parameter"
-msgstr ""
+msgstr "تغيير عامل وحدة القياس"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -7525,29 +7527,29 @@ msgstr ""
 #: ../src/main-cmdlineact.cpp:61
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr ""
+msgstr "فشل في إيجاد العقدة ذو الهوية:'%s'\n"
 
 #: ../src/main.cpp:264
 msgid "Print the Inkscape version number"
-msgstr ""
+msgstr "طباعة رقم نسخة إنكسكايب"
 
 #: ../src/main.cpp:269
 msgid "Do not use X server (only process files from console)"
-msgstr ""
+msgstr "لا تستعمل خادم إكس (عالج الملفات من خلال لوحة التحكّم)"
 
 #: ../src/main.cpp:274
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr ""
+msgstr "حاول إستعمال خادم إكس (حتى في حالة عدم تحديد $DISPLAY)"
 
 #: ../src/main.cpp:279
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr ""
+msgstr "فتح الملفات المحددة"
 
 #: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
 #: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
 #: ../src/main.cpp:372 ../src/main.cpp:378
 msgid "FILENAME"
-msgstr ""
+msgstr "إسم الملف"
 
 #: ../src/main.cpp:284
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
@@ -7593,27 +7595,27 @@ msgstr ""
 
 #: ../src/main.cpp:319
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
-msgstr ""
+msgstr "عرض الصورة المصدرّة بالبكسل"
 
 #: ../src/main.cpp:320
 msgid "WIDTH"
-msgstr ""
+msgstr "عرض"
 
 #: ../src/main.cpp:324
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr ""
+msgstr "إرتفاع الصورة المصدّرة بالبكسل"
 
 #: ../src/main.cpp:325
 msgid "HEIGHT"
-msgstr ""
+msgstr "إرتفاع"
 
 #: ../src/main.cpp:329
 msgid "The ID of the object to export"
-msgstr ""
+msgstr "هوية الجسم لتصديره"
 
 #: ../src/main.cpp:330 ../src/main.cpp:423
 msgid "ID"
-msgstr ""
+msgstr "هوية"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
@@ -7632,7 +7634,7 @@ msgstr ""
 
 #: ../src/main.cpp:347
 msgid "COLOR"
-msgstr ""
+msgstr "لون"
 
 #: ../src/main.cpp:351
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
@@ -7640,7 +7642,7 @@ msgstr ""
 
 #: ../src/main.cpp:352
 msgid "VALUE"
-msgstr ""
+msgstr "قيمة"
 
 #: ../src/main.cpp:356
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
@@ -7752,51 +7754,51 @@ msgstr ""
 #: ../src/menus-skeleton.h:16 ../src/ui/dialog/debug.cpp:74
 #: ../src/ui/dialog/messages.cpp:52 ../src/ui/dialog/scriptdialog.cpp:208
 msgid "_File"
-msgstr ""
+msgstr "_ملف"
 
 #: ../src/menus-skeleton.h:17
 msgid "_New"
-msgstr ""
+msgstr "_جديد"
 
 #. TODO look at some dynamic option for changing the menu tree:
 #. "       <verb verb-id=\"DialogInput2\" />\n"
 #: ../src/menus-skeleton.h:49 ../src/verbs.cpp:2488 ../src/verbs.cpp:2494
 msgid "_Edit"
-msgstr ""
+msgstr "_تحرير"
 
 #: ../src/menus-skeleton.h:59 ../src/verbs.cpp:2288
 msgid "Paste Si_ze"
-msgstr ""
+msgstr "لصق ال_حجم"
 
 #: ../src/menus-skeleton.h:71
 msgid "Clo_ne"
-msgstr ""
+msgstr "إنشاﺀ نس_خة"
 
 #: ../src/menus-skeleton.h:91
 msgid "_View"
-msgstr ""
+msgstr "_عرض"
 
 #: ../src/menus-skeleton.h:92
 msgid "_Zoom"
-msgstr ""
+msgstr "ت_كبير"
 
 #: ../src/menus-skeleton.h:108
 msgid "_Display mode"
-msgstr ""
+msgstr "_طريقة العرض"
 
 #: ../src/menus-skeleton.h:120
 msgid "Show/Hide"
-msgstr ""
+msgstr "إخفاﺀ/إظهار"
 
 #. Not quite ready to be in the menus.
 #. "       <verb verb-id=\"FocusToggle\" />\n"
 #: ../src/menus-skeleton.h:139
 msgid "_Layer"
-msgstr ""
+msgstr "ط_بقة"
 
 #: ../src/menus-skeleton.h:159
 msgid "_Object"
-msgstr ""
+msgstr "جس_م"
 
 #: ../src/menus-skeleton.h:166
 msgid "Cli_p"
@@ -7804,39 +7806,39 @@ msgstr ""
 
 #: ../src/menus-skeleton.h:170
 msgid "Mas_k"
-msgstr ""
+msgstr "ق_ناع"
 
 #: ../src/menus-skeleton.h:174
 msgid "Patter_n"
-msgstr ""
+msgstr "_نمط"
 
 #: ../src/menus-skeleton.h:198
 msgid "_Path"
-msgstr ""
+msgstr "مسا_ر"
 
 #: ../src/menus-skeleton.h:225
 msgid "_Text"
-msgstr ""
+msgstr "ن_ص"
 
 #: ../src/menus-skeleton.h:244
 msgid "Filter_s"
-msgstr ""
+msgstr "مصا_في"
 
 #: ../src/menus-skeleton.h:250
 msgid "Exte_nsions"
-msgstr ""
+msgstr "تم_ديدات"
 
 #: ../src/menus-skeleton.h:257
 msgid "Whiteboa_rd"
-msgstr ""
+msgstr "اللوح الأب_يض"
 
 #: ../src/menus-skeleton.h:261
 msgid "_Help"
-msgstr ""
+msgstr "_مساعدة"
 
 #: ../src/menus-skeleton.h:265
 msgid "Tutorials"
-msgstr ""
+msgstr "تدريب"
 
 #: ../src/node-context.cpp:223
 msgid ""
@@ -8742,11 +8744,11 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:962
 msgid "Paste style"
-msgstr ""
+msgstr "لصق الطراز"
 
 #: ../src/selection-chemistry.cpp:971
 msgid "Paste live path effect"
-msgstr ""
+msgstr "لصق تأثير المسار الحيّ"
 
 #: ../src/selection-chemistry.cpp:991
 msgid "Select <b>object(s)</b> to remove live path effects from."
@@ -8754,7 +8756,7 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1003
 msgid "Remove live path effect"
-msgstr ""
+msgstr "إزالة تأثير المسار الحيّ"
 
 #: ../src/selection-chemistry.cpp:1014
 msgid "Select <b>object(s)</b> to remove filters from."
@@ -8763,15 +8765,15 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:1024
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1335
 msgid "Remove filter"
-msgstr ""
+msgstr "إزالة المصفاة"
 
 #: ../src/selection-chemistry.cpp:1033
 msgid "Paste size"
-msgstr ""
+msgstr "لصق الحجم"
 
 #: ../src/selection-chemistry.cpp:1041
 msgid "Paste size separately"
-msgstr ""
+msgstr "لصق الحجم مفصولا"
 
 #: ../src/selection-chemistry.cpp:1050
 msgid "Select <b>object(s)</b> to move to the layer above."
@@ -8779,44 +8781,44 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1076
 msgid "Raise to next layer"
-msgstr ""
+msgstr "رفع إلى الطبقة التالية"
 
 #: ../src/selection-chemistry.cpp:1083
 msgid "No more layers above."
-msgstr ""
+msgstr "لا طبقات أعلى."
 
 #: ../src/selection-chemistry.cpp:1095
 msgid "Select <b>object(s)</b> to move to the layer below."
-msgstr ""
+msgstr "إختيار <b>الجسم</b> لنقله إلى الطبقة السابقة."
 
 #: ../src/selection-chemistry.cpp:1121
 msgid "Lower to previous layer"
-msgstr ""
+msgstr "إنزال إلى الطبقة السابقة"
 
 #: ../src/selection-chemistry.cpp:1128
 msgid "No more layers below."
-msgstr ""
+msgstr "لا طبقات أدنى"
 
 #: ../src/selection-chemistry.cpp:1315
 msgid "Remove transform"
-msgstr ""
+msgstr "إزالة التحويل"
 
 #: ../src/selection-chemistry.cpp:1418
 msgid "Rotate 90&#176; CCW"
-msgstr ""
+msgstr "إدارة ٩٠ درجة ععس"
 
 #: ../src/selection-chemistry.cpp:1418
 msgid "Rotate 90&#176; CW"
-msgstr ""
+msgstr "إدارة ٩٠ درجة عس"
 
 #: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
-msgstr ""
+msgstr "إدارة"
 
 #: ../src/selection-chemistry.cpp:1486
 msgid "Rotate by pixels"
-msgstr ""
+msgstr "إدارة بالبكسلات"
 
 #: ../src/selection-chemistry.cpp:1541
 msgid "Scale by whole factor"
@@ -8824,16 +8826,16 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1556
 msgid "Move vertically"
-msgstr ""
+msgstr "تحريك عامودي"
 
 #: ../src/selection-chemistry.cpp:1559
 msgid "Move horizontally"
-msgstr ""
+msgstr "تحريك أفقي"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
 #: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
-msgstr ""
+msgstr "تحريك"
 
 #: ../src/selection-chemistry.cpp:1582
 msgid "Move vertically by pixels"
@@ -9008,14 +9010,14 @@ msgstr ""
 
 #: ../src/selection-describer.cpp:47
 msgid "Circle"
-msgstr ""
+msgstr "دائرة"
 
 #. ellipse
 #: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:76
 #: ../src/ui/dialog/inkscape-preferences.cpp:470 ../src/verbs.cpp:2510
 #: ../src/widgets/toolbox.cpp:3888
 msgid "Ellipse"
-msgstr ""
+msgstr "إهليلج"
 
 #: ../src/selection-describer.cpp:51
 msgid "Flowed text"
@@ -9023,11 +9025,11 @@ msgstr ""
 
 #: ../src/selection-describer.cpp:57
 msgid "Line"
-msgstr ""
+msgstr "خط"
 
 #: ../src/selection-describer.cpp:59
 msgid "Path"
-msgstr ""
+msgstr "مسار"
 
 #: ../src/selection-describer.cpp:61 ../src/widgets/toolbox.cpp:2724
 msgid "Polygon"
@@ -9041,13 +9043,13 @@ msgstr ""
 #: ../src/selection-describer.cpp:65
 #: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2506
 msgid "Rectangle"
-msgstr ""
+msgstr "مستطيل"
 
 #. 3D box
 #: ../src/selection-describer.cpp:67
 #: ../src/ui/dialog/inkscape-preferences.cpp:465 ../src/verbs.cpp:2508
 msgid "3D Box"
-msgstr ""
+msgstr "علبة ثلاثية البعد"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -9064,14 +9066,14 @@ msgstr ""
 #: ../src/selection-describer.cpp:80
 #: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2514
 msgid "Spiral"
-msgstr ""
+msgstr "حلزوني"
 
 #. star
 #: ../src/selection-describer.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2512
 #: ../src/widgets/toolbox.cpp:2731
 msgid "Star"
-msgstr ""
+msgstr "نجمة"
 
 #: ../src/selection-describer.cpp:128
 msgid "Click selection to toggle scale/rotation handles"
@@ -9085,32 +9087,32 @@ msgstr ""
 
 #: ../src/selection-describer.cpp:139
 msgid "root"
-msgstr ""
+msgstr "جذر"
 
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid "layer <b>%s</b>"
-msgstr ""
+msgstr "طبقة <b>%s</b>"
 
 #: ../src/selection-describer.cpp:153
 #, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr ""
+msgstr "طبقة <b><i>%s</i></b>"
 
 #: ../src/selection-describer.cpp:162
 #, c-format
 msgid "<i>%s</i>"
-msgstr ""
+msgstr "<i>%s</i>"
 
 #: ../src/selection-describer.cpp:171
 #, c-format
 msgid " in %s"
-msgstr ""
+msgstr " في %s"
 
 #: ../src/selection-describer.cpp:173
 #, c-format
 msgid " in group %s (%s)"
-msgstr ""
+msgstr " في مجموعة %s (%s)"
 
 #: ../src/selection-describer.cpp:175
 #, c-format
@@ -9123,8 +9125,8 @@ msgstr[1] ""
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "في طبقة"
+msgstr[1] " في <b>%i</b> طبقة"
 
 #: ../src/selection-describer.cpp:188
 msgid "Use <b>Shift+D</b> to look up original"
@@ -9181,7 +9183,7 @@ msgstr[1] ""
 #: ../src/selection-describer.cpp:236
 #, c-format
 msgid "%s%s. %s."
-msgstr ""
+msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
@@ -9189,7 +9191,7 @@ msgstr ""
 
 #: ../src/seltrans.cpp:503
 msgid "Set center"
-msgstr ""
+msgstr "حدد المركز"
 
 #: ../src/seltrans.cpp:600
 msgid ""
@@ -9247,7 +9249,7 @@ msgstr ""
 #: ../src/seltrans.cpp:1325
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr ""
+msgstr "تحريك <b>المركز</b> إلى %s, %s"
 
 #: ../src/seltrans.cpp:1495
 #, c-format
@@ -9275,7 +9277,7 @@ msgstr ""
 
 #: ../src/sp-ellipse.cpp:630
 msgid "<b>Circle</b>"
-msgstr ""
+msgstr "<b>دائرة</b>"
 
 #: ../src/sp-ellipse.cpp:861
 msgid "<b>Segment</b>"
@@ -9283,13 +9285,13 @@ msgstr ""
 
 #: ../src/sp-ellipse.cpp:863
 msgid "<b>Arc</b>"
-msgstr ""
+msgstr "<b>قوس</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:270
 #, c-format
 msgid "Flow region"
-msgstr ""
+msgstr "منطقة الإنسياب"
 
 #. TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
@@ -9298,76 +9300,76 @@ msgstr ""
 #: ../src/sp-flowregion.cpp:487
 #, c-format
 msgid "Flow excluded region"
-msgstr ""
+msgstr "منطقة بدون إنسياب"
 
 #: ../src/sp-flowtext.cpp:376
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>النص المنساب</b> (حرف)"
+msgstr[1] "<b>النص المنساب</b> (%d أحرف)"
 
 #: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>النص الموصول المنساب</b> (حرف)"
+msgstr[1] "<b>النص الموصول المنساب</b> (%d أحرف)"
 
 #: ../src/sp-guide.cpp:287
 msgid "Guides Around Page"
-msgstr ""
+msgstr "مُرشدون حول الصفحة"
 
 #: ../src/sp-guide.cpp:420
 #, c-format
 msgid "vertical, at %s"
-msgstr ""
+msgstr "عامودي, عند %s"
 
 #: ../src/sp-guide.cpp:423
 #, c-format
 msgid "horizontal, at %s"
-msgstr ""
+msgstr "أفقي, عند %s"
 
 #: ../src/sp-guide.cpp:428
 #, c-format
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
-msgstr ""
+msgstr "عند %d درجة, عبر (%s,%s); <b>Ctrl</b>+click للإزالة"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
-msgstr ""
+msgstr "مضمّن"
 
 #: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
-msgstr ""
+msgstr "<b>صورة بمرجع خطأ</b>: %s"
 
 #: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
-msgstr ""
+msgstr "<b>صورة</b> %d &#215; %d: %s"
 
 #: ../src/spiral-context.cpp:303
 msgid "<b>Ctrl</b>: snap angle"
-msgstr ""
+msgstr "<b>Ctrl</b>: لصق الزاوية"
 
 #: ../src/spiral-context.cpp:305
 msgid "<b>Alt</b>: lock spiral radius"
-msgstr ""
+msgstr "<b>Alt</b>: إقفال شعاع الحلزون"
 
 #: ../src/spiral-context.cpp:432
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>شكل حلزوني</b>: شعاع %s, زاوية %5g&#176;; مع <b>Ctrl</b> للصق الزاوية"
 
 #: ../src/spiral-context.cpp:453
 msgid "Create spiral"
-msgstr ""
+msgstr "إنشاﺀ شكل حلزوني"
 
 #: ../src/sp-item.cpp:1035
 msgid "Object"
-msgstr ""
+msgstr "جسم"
 
 #: ../src/sp-item.cpp:1052
 #, c-format
@@ -9377,56 +9379,56 @@ msgstr ""
 #: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
-msgstr ""
+msgstr "%s; <i>مقنّع</i>"
 
 #: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
-msgstr ""
+msgstr "%s; <i>مصّفى (%s)</i>"
 
 #: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
-msgstr ""
+msgstr "%s; <i>مصّفى</i>"
 
 #: ../src/sp-item-group.cpp:742
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>مجموعة</b> من <b>%d</b> جسم"
+msgstr[1] "<b>مجموعة</b> من <b>%d</b> أجسام"
 
 #: ../src/sp-line.cpp:194
 msgid "<b>Line</b>"
-msgstr ""
+msgstr "<b>خط</b>"
 
 #: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
 msgid "Union"
-msgstr ""
+msgstr "جمع"
 
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
-msgstr ""
+msgstr "تقاطع"
 
 #: ../src/splivarot.cpp:84 ../src/splivarot.cpp:90
 msgid "Difference"
-msgstr ""
+msgstr "طرح"
 
 #: ../src/splivarot.cpp:96
 msgid "Exclusion"
-msgstr ""
+msgstr "عزل"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
-msgstr ""
+msgstr "قسمة"
 
 #: ../src/splivarot.cpp:106
 msgid "Cut path"
-msgstr ""
+msgstr "قطع المسار"
 
 #: ../src/splivarot.cpp:121
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
-msgstr ""
+msgstr "إختيار <b>مسارين على الأقل</b> لإجراﺀ عملية منطقية."
 
 #: ../src/splivarot.cpp:125
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
@@ -9454,12 +9456,12 @@ msgstr ""
 
 #: ../src/splivarot.cpp:954
 msgid "Convert stroke to path"
-msgstr ""
+msgstr "تحويل ضربة الريشة إلى مسار"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:957
 msgid "<b>No stroked paths</b> in the selection."
-msgstr ""
+msgstr "<b>لا مسارات ريشة</b> في الإختيار."
 
 #: ../src/splivarot.cpp:1040
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
@@ -9491,29 +9493,29 @@ msgstr ""
 
 #: ../src/splivarot.cpp:1652
 msgid "Simplifying paths (separately):"
-msgstr ""
+msgstr "تبسيط المسارات (منفصلة):"
 
 #: ../src/splivarot.cpp:1654
 msgid "Simplifying paths:"
-msgstr ""
+msgstr "تبسيط المسارات:"
 
 #: ../src/splivarot.cpp:1691
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr ""
+msgstr "%s <b>%d</b> من أصل <b>%d</b> مسار تم تبسيطه..."
 
 #: ../src/splivarot.cpp:1703
 #, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr ""
+msgstr "<b>%d</b> مسار تم تبسيطه."
 
 #: ../src/splivarot.cpp:1717
 msgid "Select <b>path(s)</b> to simplify."
-msgstr ""
+msgstr "إختيار <b>المسارات</b> لتبسيطها."
 
 #: ../src/splivarot.cpp:1731
 msgid "Simplify"
-msgstr ""
+msgstr "تبسيط"
 
 #: ../src/splivarot.cpp:1733
 msgid "<b>No paths</b> to simplify in the selection."
@@ -9594,36 +9596,36 @@ msgstr[1] ""
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>مجموعة شرطية</b> من <b>%d</b> جسم"
+msgstr[1] "<b>مجموعة شرطية</b> من <b>%d</b> أجسام"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
 msgid "&lt;no name found&gt;"
-msgstr ""
+msgstr "&lt;الإسم غير موجود&gt;"
 
 #: ../src/sp-text.cpp:425
 #, c-format
 msgid "<b>Text on path</b> (%s, %s)"
-msgstr ""
+msgstr "<b>نص يتبع المسار</b> (%s, %s)"
 
 #: ../src/sp-text.cpp:426
 #, c-format
 msgid "<b>Text</b> (%s, %s)"
-msgstr ""
+msgstr "<b>نص</b> (%s, %s)"
 
 #: ../src/sp-tref.cpp:368
 #, c-format
 msgid "<b>Cloned character data</b>%s%s"
-msgstr ""
+msgstr "<b>بيانات أحرف مستنسخة</b>%s%s"
 
 #: ../src/sp-tref.cpp:369
 msgid " from "
-msgstr ""
+msgstr "  من"
 
 #: ../src/sp-tref.cpp:374
 msgid "<b>Orphaned cloned character data</b>"
-msgstr ""
+msgstr "<b>بيانات أحرف يتيمة مستنسخة</b>"
 
 #: ../src/sp-tspan.cpp:284
 msgid "<b>Text span</b>"
@@ -9633,39 +9635,39 @@ msgstr ""
 #. * "Clone of: Clone of: ... in Layer 1".
 #: ../src/sp-use.cpp:327
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: ../src/sp-use.cpp:335
 #, c-format
 msgid "<b>Clone</b> of: %s"
-msgstr ""
+msgstr "<b>مستنسخ</b> من: %s"
 
 #: ../src/sp-use.cpp:339
 msgid "<b>Orphaned clone</b>"
-msgstr ""
+msgstr "<b>مستنسخ يتيم</b>"
 
 #: ../src/star-context.cpp:315
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr ""
+msgstr "<b>Ctrl</b>: للصق الزاوية; إبقاﺀ الأشعة دائرية"
 
 #: ../src/star-context.cpp:442
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>مضلّع</b>: شعاع %s, زاوية %5g&#176;; مع <b>Ctrl</b> للصق الزاوية"
 
 #: ../src/star-context.cpp:443
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>نجمة</b>: شعاع %s, زاوية %5g&#176;; مع <b>Ctrl</b> للصق الزاوية"
 
 #: ../src/star-context.cpp:466
 msgid "Create star"
-msgstr ""
+msgstr "إنشاﺀ نجمة"
 
 #: ../src/text-chemistry.cpp:104
 msgid "Select <b>a text and a path</b> to put text on path."
-msgstr ""
+msgstr "إختيار <b>نص ومسار</b> لتركيب النص على المسار."
 
 #: ../src/text-chemistry.cpp:109
 msgid ""
@@ -9679,26 +9681,28 @@ msgid ""
 "You cannot put text on a rectangle in this version. Convert rectangle to "
 "path first."
 msgstr ""
+"لا تستطيع وضع نص على مستطيل في هذه النسخة من البرنامج. حوّل المستطيل"
+"إلى مسار قبل الشروع في هذه العملية"
 
 #: ../src/text-chemistry.cpp:125
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr ""
+msgstr "على النص المنساب أن يكون <b>مرئيا</b> لتمكين وضعه على المسار."
 
 #: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2364
 msgid "Put text on path"
-msgstr ""
+msgstr "وضع نص على مستطيل"
 
 #: ../src/text-chemistry.cpp:204
 msgid "Select <b>a text on path</b> to remove it from path."
-msgstr ""
+msgstr "إختيار <b>نص على مسار</b> لإزالته عن المسار."
 
 #: ../src/text-chemistry.cpp:226
 msgid "<b>No texts-on-paths</b> in the selection."
-msgstr ""
+msgstr "<b>لا نصوص على المسار</b> في هذا الإختيار."
 
 #: ../src/text-chemistry.cpp:229 ../src/verbs.cpp:2366
 msgid "Remove text from path"
-msgstr ""
+msgstr "إزالة النص عن المسار"
 
 #: ../src/text-chemistry.cpp:269 ../src/text-chemistry.cpp:290
 msgid "Select <b>text(s)</b> to remove kerns from."
@@ -9716,31 +9720,31 @@ msgstr ""
 
 #: ../src/text-chemistry.cpp:381
 msgid "Flow text into shape"
-msgstr ""
+msgstr "إنسياب النص على الشكل"
 
 #: ../src/text-chemistry.cpp:403
 msgid "Select <b>a flowed text</b> to unflow it."
-msgstr ""
+msgstr "إختيار <b>نص منساب</b> لإزالة إنسيابيته."
 
 #: ../src/text-chemistry.cpp:477
 msgid "Unflow flowed text"
-msgstr ""
+msgstr "إزالة إنسيايبية النص"
 
 #: ../src/text-chemistry.cpp:489
 msgid "Select <b>flowed text(s)</b> to convert."
-msgstr ""
+msgstr "إختيار <b>النص المنساب</b> لتحويله."
 
 #: ../src/text-chemistry.cpp:507
 msgid "The flowed text(s) must be <b>visible</b> in order to be converted."
-msgstr ""
+msgstr "على النص المنساب أن يكون <b>ظاهرا</b> ليمكن تحويله."
 
 #: ../src/text-chemistry.cpp:535
 msgid "Convert flowed text to text"
-msgstr ""
+msgstr "تحويل النص المنساب إلى نص"
 
 #: ../src/text-chemistry.cpp:540
 msgid "<b>No flowed text(s)</b> to convert in the selection."
-msgstr ""
+msgstr "<b>لا نص منساب</b> في هذا الإختيار لتحويله."
 
 #: ../src/text-context.cpp:444
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -9753,41 +9757,41 @@ msgstr ""
 
 #: ../src/text-context.cpp:501
 msgid "Create text"
-msgstr ""
+msgstr "إنشاﺀ نص"
 
 #: ../src/text-context.cpp:525
 msgid "Non-printable character"
-msgstr ""
+msgstr "حرف لا يمكن طباعته"
 
 #: ../src/text-context.cpp:540
 msgid "Insert Unicode character"
-msgstr ""
+msgstr "أدخل حرف يونيكود"
 
 #: ../src/text-context.cpp:575
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
-msgstr ""
+msgstr "يونيكود (<b>Enter</b> للإنتهاﺀ): %s: %s"
 
 #: ../src/text-context.cpp:577 ../src/text-context.cpp:852
 msgid "Unicode (<b>Enter</b> to finish): "
-msgstr ""
+msgstr "يونيكود (<b>Enter</b> للإنتهاﺀ):"
 
 #: ../src/text-context.cpp:652
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
-msgstr ""
+msgstr "<b>إطار النص المنساب</b>: %s &#215; %s"
 
 #: ../src/text-context.cpp:684
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr ""
+msgstr "أكتب النص; <b>Enter</b> لبداية سطر جديد."
 
 #: ../src/text-context.cpp:697
 msgid "Flowed text is created."
-msgstr ""
+msgstr "تم إنشاﺀ النص المنساب"
 
 #: ../src/text-context.cpp:699
 msgid "Create flowed text"
-msgstr ""
+msgstr "إنشاﺀ النص المنساب"
 
 #: ../src/text-context.cpp:701
 msgid ""
@@ -9805,15 +9809,15 @@ msgstr ""
 
 #: ../src/text-context.cpp:876
 msgid "Make bold"
-msgstr ""
+msgstr "غليظ"
 
 #: ../src/text-context.cpp:894
 msgid "Make italic"
-msgstr ""
+msgstr "مائل"
 
 #: ../src/text-context.cpp:933
 msgid "New line"
-msgstr ""
+msgstr "سطر جديد"
 
 #: ../src/text-context.cpp:967
 msgid "Backspace"
@@ -9837,31 +9841,31 @@ msgstr ""
 
 #: ../src/text-context.cpp:1168
 msgid "Rotate counterclockwise"
-msgstr ""
+msgstr "إدارة عكس عقارب الساعة"
 
 #: ../src/text-context.cpp:1189
 msgid "Rotate clockwise"
-msgstr ""
+msgstr "إدارة مع عقارب الساعة"
 
 #: ../src/text-context.cpp:1206
 msgid "Contract line spacing"
-msgstr ""
+msgstr "تقليص تباعد الأسطر"
 
 #: ../src/text-context.cpp:1214
 msgid "Contract letter spacing"
-msgstr ""
+msgstr "تقليص تباعد الأسطر"
 
 #: ../src/text-context.cpp:1233
 msgid "Expand line spacing"
-msgstr ""
+msgstr "توسيع تباعد الأسطر"
 
 #: ../src/text-context.cpp:1241
 msgid "Expand letter spacing"
-msgstr ""
+msgstr "توسيع تباعد الأسطر"
 
 #: ../src/text-context.cpp:1371
 msgid "Paste text"
-msgstr ""
+msgstr "لصق النص"
 
 #: ../src/text-context.cpp:1605
 #, c-format
@@ -9883,11 +9887,11 @@ msgstr ""
 
 #: ../src/text-context.cpp:1725
 msgid "Type text"
-msgstr ""
+msgstr "أكتب نص"
 
 #: ../src/text-editing.cpp:40
 msgid "You cannot edit <b>cloned character data</b>."
-msgstr ""
+msgstr "لا يمكن تحرير <b>بيانات أحرف مستنسخة</b>."
 
 #: ../src/tools-switch.cpp:130
 msgid ""
@@ -10200,27 +10204,27 @@ msgstr ""
 #. Item dialog
 #: ../src/ui/context-menu.cpp:105
 msgid "Object _Properties"
-msgstr ""
+msgstr "_خصائص الجسم"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:115
 msgid "_Select This"
-msgstr ""
+msgstr "إخ_تيار هذا"
 
 #. Create link
 #: ../src/ui/context-menu.cpp:125
 msgid "_Create Link"
-msgstr ""
+msgstr "إ_نشاﺀ وصلة"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
 msgid "Set Mask"
-msgstr ""
+msgstr "حدد القناع"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
 msgid "Release Mask"
-msgstr ""
+msgstr "أعتق القناع"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
@@ -10244,54 +10248,54 @@ msgstr ""
 #. Link dialog
 #: ../src/ui/context-menu.cpp:346
 msgid "Link _Properties"
-msgstr ""
+msgstr "_خصائص الوصلة"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:352
 msgid "_Follow Link"
-msgstr ""
+msgstr "إتب_ع الوصلة"
 
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:357
 msgid "_Remove Link"
-msgstr ""
+msgstr "إ_زالة الوصلة"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:405
 msgid "Image _Properties"
-msgstr ""
+msgstr "خصائص الصو_رة"
 
 #: ../src/ui/context-menu.cpp:411
 msgid "Edit Externally..."
-msgstr ""
+msgstr "تحرير بواسطة برنامج خارجي..."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
 msgid "_Fill and Stroke"
-msgstr ""
+msgstr "_طلاﺀ و ضربة الريشة"
 
 #. *
 #. * Constructor
 #.
 #: ../src/ui/dialog/aboutbox.cpp:77
 msgid "About Inkscape"
-msgstr ""
+msgstr "عن إنكسكايب"
 
 #: ../src/ui/dialog/aboutbox.cpp:88
 msgid "_Splash"
-msgstr ""
+msgstr "_صورة التعريف"
 
 #: ../src/ui/dialog/aboutbox.cpp:92
 msgid "_Authors"
-msgstr ""
+msgstr "مؤ_لفون"
 
 #: ../src/ui/dialog/aboutbox.cpp:94
 msgid "_Translators"
-msgstr ""
+msgstr "_مترجمون"
 
 #: ../src/ui/dialog/aboutbox.cpp:96
 msgid "_License"
-msgstr ""
+msgstr "_رخصة"
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -10306,13 +10310,15 @@ msgstr ""
 #. should be in UTF-*8..
 #: ../src/ui/dialog/aboutbox.cpp:149
 msgid "about.svg"
-msgstr ""
+msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
+"<banxoo+launchpad@gmail.com> بانزو"
+"M. Bashir Al-Noimi <mhdbnoimi@gmail.com>"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:787
@@ -10322,33 +10328,33 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:397
 #: ../src/ui/dialog/align-and-distribute.cpp:788
 msgid "Distribute"
-msgstr ""
+msgstr "توزيع"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:466
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "الهوة الأفقية الأدنى (بالبكسلات) بين علب الإحاطة"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:470
 msgid "gap|H:"
-msgstr ""
+msgstr "gap|هوة أفقية"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:478
 msgid "Minimum vertical gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "الهوة العامودية الأدنى (بالبكسلات) بين علب الإحاطة"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:480
 msgid "V:"
-msgstr ""
+msgstr "هوة عامودية"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
 #: ../src/widgets/toolbox.cpp:7034
 msgid "Remove overlaps"
-msgstr ""
+msgstr "إزالة التداخل"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
 #: ../src/widgets/toolbox.cpp:6899
