@@ -1750,15 +1750,15 @@
 <feGaussianBlur stdDeviation="0.69999999999999996" id="feGaussianBlur4080" />
 <feColorMatrix id="feColorMatrix4082" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
 </filter>
-<filter inkscape:menu-tooltip="Paint objects with a transparent turbulence which turn around color edges" inkscape:menu="Mask and transparency effects" height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:label="Smear transparency" id="SmearTrans0">
-<feGaussianBlur result="result6" id="feGaussianBlur4018" stdDeviation="2" />
-<feTurbulence type="fractalNoise" baseFrequency="0.20000000000000001 0.40000000000000002" numOctaves="5" result="result1" id="feTurbulence4020" />
-<feDisplacementMap in2="result6" result="result3" in="result1" yChannelSelector="B" xChannelSelector="R" scale="75" id="feDisplacementMap4022" />
-<feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="result0" id="feColorMatrix4024" />
-<feColorMatrix result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.75 0 " id="feColorMatrix4026" type="matrix" />
-<feComposite result="result4" in2="result3" operator="over" in="result2" id="feComposite4028" />
-<feColorMatrix result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" id="feColorMatrix4030" />
-<feComposite in2="result5" in="SourceGraphic" operator="out" id="feComposite4032" result="result7" />
+<filter inkscape:label="Smear transparency" x="-0.1" y="-0.1" width="1.2" height="1.2" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Paint objects with a transparent turbulence which turn around color edges" id="SmearTrans0">
+<feGaussianBlur stdDeviation="3" result="result6" id="feGaussianBlur3132" />
+<feTurbulence result="result1" numOctaves="3" baseFrequency="0.4 0.8" type="fractalNoise" id="feTurbulence3134" />
+<feDisplacementMap scale="60" xChannelSelector="R" yChannelSelector="B" in="result1" result="result3" in2="result6" id="feDisplacementMap3136" />
+<feColorMatrix result="result0" in="result6" type="luminanceToAlpha" id="feColorMatrix3138" />
+<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.75 0 " result="result2" id="feColorMatrix3140" />
+<feComposite in="result2" operator="over" in2="result3" result="result4" id="feComposite3142" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" result="result5" id="feColorMatrix3144" />
+<feComposite result="result7" operator="out" in="SourceGraphic" in2="result5" id="feComposite3146" />
 </filter>
 </defs>
 </svg>
