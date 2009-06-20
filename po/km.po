@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-17 16:52+0700\n"
-"Last-Translator: \n"
-"Language-Team: khmer <en@li.org>\n"
+"PO-Revision-Date: 2009-06-19 16:58+0700\n"
+"Last-Translator: Piseth AUK <piseth_dv@khmeros.info>\n"
+"Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -72,37 +72,32 @@ msgid "Smooth drop-like bevel with metallic finish"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "ផ្លាស់​ទី​​ដោយ​ផ្តេក​"
+msgstr "ចលនា​ព្រិល ផ្ដេក"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Blurs"
 msgstr "ព្រិល"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​ជ្រើស​ផ្ដេក"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid "Motion blur, vertical"
-msgstr "ចលនា​ព្រិល"
+msgstr "ចលនា​ព្រិល បញ្ឈរ"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​បាន​ជ្រើស​បញ្ឈរ"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:8
 msgid "Apparition"
@@ -121,18 +116,16 @@ msgstr "កាត់​ចេញ​"
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
-#, fuzzy
 msgid "Shadows and Glows"
-msgstr "បង្ហាញ​ចំណុច​ទាញ"
+msgstr "ស្រមោល និង​ពន្លឺ​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "ទម្លាក់​ស្រមោល​នៅ​តាម​ក្រោម​ចំណុច​ដាច់​របស់​​រូបរាង"
 
 #: ../share/filters/filters.svg.h:10
-#, fuzzy
 msgid "Jigsaw piece"
-msgstr "JigsawPiece"
+msgstr "បំណែក​ល្បែង​ផ្គុំ​រូប"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Low, sharp bevel"
@@ -147,7 +140,7 @@ msgstr "ធ្វើ​ឲ្យ​គ្រើម"
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
 #: ../share/filters/filters.svg.h:125
 msgid "ABCs"
-msgstr ""
+msgstr "ABCs"
 
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
@@ -18970,7 +18963,7 @@ msgstr "បង្វិល​កណ្ដាល"
 
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Snap from and to an item's rotation center"
-msgstr ""
+msgstr "ចាប់យក​ពី​ និង​ខ្ទាស់​​ទៅកាន់​ចំណុច​កណ្ដាល​បង្វិល​របស់​ធាតុ"
 
 #: ../src/widgets/toolbox.cpp:2154
 msgid "Page border"
@@ -19459,13 +19452,10 @@ msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "រលោង​ប៉ុណ្ណា ដែល​ត្រូវ​អនុវត្ត​ទៅកាន់​បន្ទាត់"
 
 #: ../src/widgets/toolbox.cpp:4026
-#, fuzzy
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
-msgstr ""
-"កំណត់​ប៉ារ៉ាម៉ែត្រ​រូបរាង​ទៅ​លំនាំ​ដើម​ឡើង​វិញ (ប្រើ​​​ចំណូល​ចិត្តរបស់ Inkscape > ឧបករណ៍​ដើម្បី​ផ្លាស់ប្ដូរ​ទៅ​លំនាំ​"
-"ដើម)"
+msgstr "កំណត់​ប៉ារ៉ាម៉ែត្រ​រូបរាង​ទៅ​លំនាំ​ដើម​ឡើង​វិញ (ប្រើ​​​ចំណូល​ចិត្តរបស់ Inkscape > ឧបករណ៍​ដើម្បី​ផ្លាស់ប្ដូរ​ទៅ​លំនាំដើម)"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4119
@@ -19558,9 +19548,8 @@ msgid "Push parts of paths in any direction"
 msgstr "ចុច​ផ្នែក​របស់ផ្លូវ​ក្នុងទិស​ណា​មួយ"
 
 #: ../src/widgets/toolbox.cpp:4206
-#, fuzzy
 msgid "Shrink/grow mode"
-msgstr "របៀប​បង្រួម​"
+msgstr "របៀប​បង្រួម/ពង្រីក"
 
 #: ../src/widgets/toolbox.cpp:4207
 #, fuzzy
@@ -20039,11 +20028,10 @@ msgid "Get limiting bounding box from selection"
 msgstr "យក​ប្រអប់​លោត​ដែល​មាន​កំណត់​​ពី​ជម្រើស"
 
 #: ../src/widgets/toolbox.cpp:5619
-#, fuzzy
 msgid ""
 "Set limiting bounding box (used to cut infinite lines) to the bounding box "
 "of current selection"
-msgstr "ខ្ទាស់​​ជ្រុង​ប្រអប់ព្រំដែន​ទៅ​ជ្រុង​ប្រអប់​ព្រំដែន​ផ្សេង​ទៀត"
+msgstr "កំណត់​​ដែន​កំណត់​ប្រអប់​លោត (ប្រើ​ដើម្បី​កាត់​បន្ទាត់​ឥត​កំណត់) ឲ្យ​ប្រអប់​លោត​នៃ​ជម្រើស​បច្ចុប្បន្ន"
 
 #: ../src/widgets/toolbox.cpp:5631
 msgid "Choose a line segment type"
@@ -20699,9 +20687,8 @@ msgid "Number Nodes"
 msgstr "លេខ​ថ្នាំង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
-#, fuzzy
 msgid "Altitudes"
-msgstr "ទំហំ​វិសេសវិសាល"
+msgstr "រយៈ​កម្ពស់"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
 msgid "Angle Bisectors"
@@ -20755,7 +20742,7 @@ msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
-msgstr ""
+msgstr "គូរ​ចំណុច​សម្គាល់​ត្រង់​ចំណុច​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 #, fuzzy
@@ -20773,9 +20760,8 @@ msgid "Excircles"
 msgstr "រង្វង់​"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
-#, fuzzy
 msgid "Extouch Triangle"
-msgstr "ត្រីកោណ"
+msgstr "ត្រី​កោណ​ប៉ះ​ក្រៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 #, fuzzy
@@ -20788,9 +20774,8 @@ msgid "Incentre"
 msgstr "ចូល​បន្ទាត់​ថ្នាំង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
-#, fuzzy
 msgid "Incircle"
-msgstr "រង្វង់​"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
 #, fuzzy
@@ -21171,9 +21156,8 @@ msgid "Save Guides:"
 msgstr "រក្សា​ទុក​មគ្គុទ្ទេសក៏ ៖"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
-#, fuzzy
 msgid "Border Thickness [px]"
-msgstr "កម្រាស់​ស៊ុម / ភីកសែល"
+msgstr "កម្រាស់​ស៊ុម [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
@@ -21522,18 +21506,16 @@ msgid "Transformation"
 msgstr "ការ​បម្លែង"
 
 #: ../share/extensions/interp_att_g.inx.h:22
-#, fuzzy
 msgid "Translate X"
-msgstr "អ្នក​បកប្រែ​"
+msgstr "បកប្រែ X"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Translate Y"
-msgstr "អ្នក​បកប្រែ​"
+msgstr "បកប្រែ Y"
 
 #: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
-msgstr ""
+msgstr "អនុវត្ត​កន្លែង​ណា ?"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
@@ -21706,9 +21688,8 @@ msgid "Text Outline Input"
 msgstr "ការ​បញ្ចូល​គ្រោង​អត្ថបទ​"
 
 #: ../share/extensions/param_curves.inx.h:2
-#, fuzzy
 msgid "End t-value"
-msgstr "តម្លៃ X ខាង​ចុង"
+msgstr "End t-value"
 
 #: ../share/extensions/param_curves.inx.h:4
 #, fuzzy
@@ -21736,11 +21717,11 @@ msgstr "គំរូ"
 msgid ""
 "Select a rectangle before calling the extension; it will determine X and Y "
 "scales. First derivatives are always determined numerically."
-msgstr ""
+msgstr "ជ្រើស​ចតុកោណ មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម ។ វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ដេរីវ៉េ ដំបូង​គឺ​ត្រូវបាន​កំណត់​ជា​លេខ​ជានិច្ច ។"
 
 #: ../share/extensions/param_curves.inx.h:13
 msgid "Start t-value"
-msgstr "ចាប់ផ្ដើម t-value"
+msgstr "Start t-value"
 
 #: ../share/extensions/param_curves.inx.h:15
 msgid "x-Function"
@@ -21832,9 +21813,7 @@ msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern is the top most object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
-msgstr ""
-"បែបផែន​នេះ​ធ្វើ​ឲ្យ​វត្ថុ​លំនាំ​កោង​តាម​ផ្លូវ \"គ្រោង​\" ដោយ​បង្ខំ ។ លំនាំ​គឺ​នៅ​វត្ថុ​កំពូល​បំផុត​ក្នុង​ជម្រើស ។ "
-"(ក្រុម​របស់​ផ្លូវ /shapes/clones... បាន​អនុញ្ញាត)"
+msgstr "បែបផែន​នេះ​ធ្វើ​ឲ្យ​វត្ថុ​លំនាំ​កោង​តាម​ផ្លូវ \"គ្រោង​\" ដោយ​បង្ខំ ។ លំនាំ​គឺ​នៅ​វត្ថុ​កំពូល​បំផុត​ក្នុង​ជម្រើស ។ (ក្រុម​របស់​ផ្លូវ /shapes/clones... បាន​អនុញ្ញាត)"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22523,7 +22502,7 @@ msgstr "ថ្ងៃ​អាទិត្យ"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options above has no value with the upper checked."
-msgstr ""
+msgstr "ជម្រើស​ខាង​លើ មិនមាន​តម្លៃ​ដែល​មាន​ការ​ពិនិត្យ​លំដាប់​ខ្ពស់ ។"
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -22727,7 +22706,7 @@ msgstr "បណ្ដាញ"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
-msgstr ""
+msgstr "តើ​ត្រូវ​ធ្វើ​ការ​កំណត់​ឲ្យ​រួចរាល់​នៅ​ពេល​ណា ?"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
@@ -22737,7 +22716,7 @@ msgstr "នៅពេល​ធ្វើ​ឲ្យ​សកម្ម"
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
 msgid "on blur"
-msgstr ""
+msgstr "នៅពេល​ព្រិល"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
@@ -22752,33 +22731,32 @@ msgstr "នៅពេល​ដែល​ផ្ទុក​ធាតុ"
 #: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
 msgid "on focus"
-msgstr ""
+msgstr "នៅពេល​ដែល​ផ្ដោត"
 
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse down"
-msgstr ""
+msgstr "នៅពេល​ផ្លាស់ទី​កណ្ដុរ​ចុះក្រោម"
 
 #: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "on mouse move"
-msgstr ""
+msgstr "នៅពេល​ផ្លាស់ទី​កណ្ដុរ"
 
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
-#, fuzzy
 msgid "on mouse out"
-msgstr "ពង្រីក​ ឬ​បង្រួម​"
+msgstr "នៅពេល​ផ្លាស់ទី​កណ្ដុរ​ចេញ​ក្រៅ"
 
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
-msgstr ""
+msgstr "នៅពេល​ដាក់​កណ្ដុរ​នៅ​ពី​លើ"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "on mouse up"
-msgstr ""
+msgstr "នៅពេល​ផ្លាស់ទី​កណ្ដុរ​ឡើង​លើ"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 msgid "All selected ones transmits to the last one"
