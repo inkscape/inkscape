@@ -330,7 +330,6 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
  *  \param p Current position of the snap source; will be overwritten by the position of the snap target if snapping has occurred
  *  \param source_type Detailed description of the source type, will be used by the snap indicator
  *  \param constraint The direction or line along which snapping must occur
- *  \param snap_projection Currently unused
  *  \param first_point If true then this point is the first one from a set of points, all from the same selection and having the same transformation
  *  \param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation
  */
@@ -339,11 +338,10 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
                                              Geom::Point &p,
                                              Inkscape::SnapSourceType const source_type,
                                              Inkscape::Snapper::ConstraintLine const &constraint,
-                                             bool const snap_projection,
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, source_type, constraint, snap_projection, first_point, bbox_to_snap);
+    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, source_type, constraint, first_point, bbox_to_snap);
     s.getPoint(p);
 }
 
@@ -362,7 +360,6 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
  *  \param p Current position of the snap source
  *  \param source_type Detailed description of the source type, will be used by the snap indicator
  *  \param constraint The direction or line along which snapping must occur
- *  \param snap_projection Currently unused
  *  \param first_point If true then this point is the first one from a set of points, all from the same selection and having the same transformation
  *  \param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation
  */
@@ -371,12 +368,9 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     Geom::Point const &p,
                                                     Inkscape::SnapSourceType const &source_type,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
-                                                    bool /*snap_projection*/,
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    //TODO: Get rid of the snap_projection parameter (if it is really not used)
-
     if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
 		g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
 		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
@@ -609,7 +603,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");
             }
-            snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, false, i == points.begin(), bbox);
+            snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, i == points.begin(), bbox);
         } else {
             bool const c1 = fabs(b[Geom::X]) < 1e-6;
             bool const c2 = fabs(b[Geom::Y]) < 1e-6;
@@ -618,7 +612,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // move in that specific direction; therefore it should only snap in that direction, otherwise
                 // we will get snapped points with an invalid transformation
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
-                snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, false, i == points.begin(), bbox);
+                snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, i == points.begin(), bbox);
             } else {
                 snapped_point = freeSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), i == points.begin(), bbox);
             }
