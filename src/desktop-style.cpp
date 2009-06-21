@@ -344,7 +344,7 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, Glib:
     if (prefs->getBool(tool_path + "/usecurrent") && css_current) {
         sp_repr_css_set(repr, css_current, "style");
     } else {
-        SPCSSAttr *css = prefs->getStyle(tool_path + "/style");
+        SPCSSAttr *css = prefs->getInheritedStyle(tool_path + "/style");
         sp_repr_css_set(repr, css, "style");
         sp_repr_css_attr_unref(css);
     }
