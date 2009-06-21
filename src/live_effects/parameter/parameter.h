@@ -74,6 +74,7 @@ public:
     Glib::ustring param_label;
 
     bool oncanvas_editable;
+    bool widget_is_visible;
 
 protected:
     Glib::ustring param_tooltip;

@@ -33,7 +33,8 @@ Parameter::Parameter( const Glib::ustring& label, const Glib::ustring& tip,
       param_label(label),
       oncanvas_editable(false),
       param_tooltip(tip),
-      param_effect(effect)
+      param_effect(effect),
+      widget_is_visible(true)
 {
 }
 

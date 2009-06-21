@@ -278,6 +278,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
       is_ready(false) // is automatically set to false if providesOwnFlashPaths() is not overridden
 {
     registerParameter( dynamic_cast<Parameter *>(&is_visible) );
+    is_visible.widget_is_visible = false;
 }
 
 Effect::~Effect()
@@ -550,13 +551,15 @@ Effect::newWidget(Gtk::Tooltips * tooltips)
 
     std::vector<Parameter *>::iterator it = param_vector.begin();
     while (it != param_vector.end()) {
-        Parameter * param = *it;
-        Gtk::Widget * widg = param->param_newWidget(tooltips);
-        Glib::ustring * tip = param->param_getTooltip();
-        if (widg) {
-           vbox->pack_start(*widg, true, true, 2);
-            if (tip != NULL) {
-                tooltips->set_tip(*widg, *tip);
+        if ((*it)->widget_is_visible) {
+            Parameter * param = *it;
+            Gtk::Widget * widg = param->param_newWidget(tooltips);
+            Glib::ustring * tip = param->param_getTooltip();
+            if (widg) {
+                vbox->pack_start(*widg, true, true, 2);
+                if (tip != NULL) {
+                    tooltips->set_tip(*widg, *tip);
+                }
             }
         }
 
