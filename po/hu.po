@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-06-21 16:38+0200\n"
+"PO-Revision-Date: 2009-06-21 22:04+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -887,7 +887,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:78
 #, fuzzy
 msgid "Smooth outline"
-msgstr "Téglalap-körvonal"
+msgstr ""
+"Téglalap-körvonal"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
@@ -1025,17 +1027,21 @@ msgstr ""
 #: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Inner outline"
-msgstr "A segédvonalak színe"
+msgstr ""
+"A segédvonalak színe"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Draws an outline around"
-msgstr "Rács rajzolása lánc formájában"
+msgstr ""
+"Rács rajzolása lánc formájában"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:95
 #, fuzzy
 msgid "Outline, double"
-msgstr "_Drótváz"
+msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -1062,7 +1068,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:98
 #, fuzzy
 msgid "Outline"
-msgstr "_Drótváz"
+msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
@@ -1130,8 +1136,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:175
 #: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:189
 #: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:191
+#, fuzzy
 msgid "Mask and transparency effects"
-msgstr ""
+msgstr "Maszk"
 
 #: ../share/filters/filters.svg.h:105
 msgid ""
@@ -1167,8 +1174,9 @@ msgid "Feather"
 msgstr "Méter"
 
 #: ../share/filters/filters.svg.h:109
+#, fuzzy
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "Maszk"
 
 #: ../share/filters/filters.svg.h:110
 #, fuzzy
@@ -1176,8 +1184,9 @@ msgid "Blur content"
 msgstr "_Keverési mód:"
 
 #: ../share/filters/filters.svg.h:110
+#, fuzzy
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:111
 #, fuzzy
@@ -1202,10 +1211,11 @@ msgid "Evanescent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:113
+#, fuzzy
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr ""
+msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Chalk and sponge"
@@ -1299,8 +1309,11 @@ msgid "Simple blur"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
+#, fuzzy
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
+"kitöltés"
+"körvonal"
 
 #: ../share/filters/filters.svg.h:125
 msgid "HSL Bubbles, diffuse"
@@ -1358,11 +1371,14 @@ msgstr ""
 #: ../share/filters/filters.svg.h:131
 #, fuzzy
 msgid "Color outline, in"
-msgstr "A segédvonalak színe"
+msgstr ""
+"A segédvonalak színe"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:131
+#, fuzzy
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr ""
+msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Liquid"
@@ -1624,7 +1640,9 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 #, fuzzy
 msgid "Eraser"
-msgstr "Raszter"
+msgstr ""
+"törlés"
+"radír"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Make the lightest parts of the object progressively transparent"
@@ -1704,22 +1722,28 @@ msgstr ""
 #: ../share/filters/filters.svg.h:178
 #, fuzzy
 msgid "Black outline"
-msgstr "Fekete körvonal"
+msgstr "Fekete kontúr"
 
 #: ../share/filters/filters.svg.h:178
 #, fuzzy
 msgid "Draws a black outline around"
-msgstr "Rács rajzolása lánc formájában"
+msgstr ""
+"Rács rajzolása lánc formájában"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:179
 #, fuzzy
 msgid "Color outline"
-msgstr "A segédvonalak színe"
+msgstr ""
+"A segédvonalak színe"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:179
 #, fuzzy
 msgid "Draws a coloured outline around"
-msgstr "Rács rajzolása lánc formájában"
+msgstr ""
+"Rács rajzolása lánc formájában"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:180
 #, fuzzy
@@ -3899,7 +3923,7 @@ msgstr "Csomó_pontokhoz való illesztés"
 #: ../src/display/snap-indicator.cpp:84
 #, fuzzy
 msgid "smooth node"
-msgstr "Simaság"
+msgstr "íves csomópont"
 
 #: ../src/display/snap-indicator.cpp:87
 #, fuzzy
@@ -4006,9 +4030,8 @@ msgid "Bounding box side midpoint"
 msgstr "Határoló téglalap típusa:"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Smooth node"
-msgstr "Simaság"
+msgstr "Íves csomópont"
 
 #: ../src/display/snap-indicator.cpp:163
 #, fuzzy
@@ -4180,14 +4203,12 @@ msgid "Draw calligraphic stroke"
 msgstr "Művészi vonal rajzolása"
 
 #: ../src/eraser-context.cpp:527
-#, fuzzy
 msgid "<b>Drawing</b> an eraser stroke"
-msgstr "Művészi vonal <b>rajzolása</b>"
+msgstr "Radír-körvonal <b>rajzolása</b>"
 
 #: ../src/eraser-context.cpp:830
-#, fuzzy
 msgid "Draw eraser stroke"
-msgstr "Művészi vonal rajzolása"
+msgstr "Radír-körvonal rajzolása"
 
 #: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
@@ -7428,24 +7449,29 @@ msgid "unit of stroke width"
 msgstr "Körvonalszélesség"
 
 #: ../src/live_effects/lpe-knot.cpp:324
+#, fuzzy
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-knot.cpp:325
+#, fuzzy
 msgid "add stroke width to interruption size"
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-knot.cpp:325
+#, fuzzy
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-knot.cpp:326
+#, fuzzy
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-knot.cpp:326
+#, fuzzy
 msgid "Add crossed stroke width to the interruption size."
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 #, fuzzy
@@ -7465,8 +7491,9 @@ msgid "Crossings signs"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:339
+#, fuzzy
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "húzással"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7842,8 +7869,9 @@ msgid "Strokes"
 msgstr "Körvonal:"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
+#, fuzzy
 msgid "Draw that many approximating strokes"
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 #, fuzzy
@@ -7858,7 +7886,9 @@ msgstr "A csúcs maximális hossza (a körvonalszélesség arányában megadva)"
 #: ../src/live_effects/lpe-sketch.cpp:38
 #, fuzzy
 msgid "Stroke length variation"
-msgstr "Kezdőszegély varianciája"
+msgstr ""
+"Kezdőszegély varianciája"
+"körvonal"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 #, fuzzy
@@ -7898,8 +7928,9 @@ msgid "Average offset"
 msgstr "Normál eltolás"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
+#, fuzzy
 msgid "Average distance each stroke is away from the original path"
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
@@ -7915,8 +7946,9 @@ msgid "Tremble frequency"
 msgstr "Alapfrekvencia"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
+#, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr ""
+msgstr "körvonal"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 #, fuzzy
@@ -8001,18 +8033,20 @@ msgid "Generating path"
 msgstr "Új lánc létrehozása"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
+#, fuzzy
 msgid "Path whose segments define the iterated transforms"
-msgstr ""
+msgstr "szakasz"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Use uniform transforms only"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
+#, fuzzy
 msgid ""
 "2 consecutive segments are used to reverse/preserve orientation only "
 "(otherwise, they define a general transform)."
-msgstr ""
+msgstr "szakasz"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Draw all generations"
@@ -8029,8 +8063,9 @@ msgid "Reference segment"
 msgstr "Szakasz törlése"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
+#, fuzzy
 msgid "The reference segment. Defaults to bbox diameter."
-msgstr ""
+msgstr "szakasz"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -8552,7 +8587,7 @@ msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
-"Ki kell jelölni egy láncon <b>két, nem végponti csomópontot</b>, amelyek a "
+"Ki kell jelölni egy láncon <b>két nem végponti csomópontot</b>, amelyek a "
 "törlendő szakaszokat közrefogják."
 
 #: ../src/nodepath.cpp:2760
@@ -8635,9 +8670,8 @@ msgid "smooth"
 msgstr "íves"
 
 #: ../src/nodepath.cpp:4892
-#, fuzzy
 msgid "auto"
-msgstr "Elrendezés"
+msgstr "automatikus"
 
 #: ../src/nodepath.cpp:4894
 msgid "symmetric"
@@ -8967,20 +9001,24 @@ msgstr ""
 "+ húzással</b>."
 
 #: ../src/pen-context.cpp:1273
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
+"szakasz"
 "<b>%s</b>. Szög: %3.2f&#176;. Távolság: %s. Szöghöz való illesztés: <b>Ctrl</"
 "b>; a lánc befejezése: <b>Enter</b>."
 
 #: ../src/pen-context.cpp:1274
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
+"szakasz"
 "<b>%s</b>. Szög: %3.2f&#176;. Távolság: %s. Szöghöz való illesztés: <b>Ctrl</"
 "b>; a lánc befejezése: <b>Enter</b>."
 
@@ -9588,7 +9626,9 @@ msgstr "A kijelölésben nincs alkalmazott lánceffektus."
 #: ../src/selection-chemistry.cpp:1762
 #, fuzzy
 msgid "The selection has no applied mask."
-msgstr "A kijelölésben nincs alkalmazott lánceffektus."
+msgstr ""
+"A kijelölésben nincs alkalmazott lánceffektus."
+"Maszk"
 
 #: ../src/selection-chemistry.cpp:1919
 msgid "action|Clone"
@@ -10665,18 +10705,25 @@ msgid "Paste text"
 msgstr "Szöveg beillesztése"
 
 #: ../src/text-context.cpp:1605
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"Gépelje be a tördelendő szöveget. Új bekezdést az <b>Enter</b> billentyűvel "
+"Gépelje be"
+"szerkesztés"
+" a tördelendő szöveget. Új bekezdést az <b>Enter</b> billentyűvel "
 "lehet kezdeni."
 
 #: ../src/text-context.cpp:1607
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Gépelje be a szöveget. Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
+msgstr ""
+"Gépelje be"
+"szerkesztés"
+" a szöveget. Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:1615 ../src/tools-switch.cpp:190
 msgid ""
@@ -10815,9 +10862,8 @@ msgstr ""
 "aktuális beállításra: <b>Ctrl+kattintással</b>."
 
 #: ../src/tools-switch.cpp:226
-#, fuzzy
 msgid "<b>Drag</b> to erase."
-msgstr "<b>Hivatkozás</b> erre: %s"
+msgstr "Radírozás: <b>húzással</b>."
 
 #: ../src/tools-switch.cpp:232
 msgid "Choose a subtool from the toolbar"
@@ -10879,71 +10925,85 @@ msgstr "<b>Nem történt</b> törlés."
 
 #: ../src/tweak-context.cpp:210
 #, c-format
+#, fuzzy
 msgid "%s. Drag to <b>move</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:215
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:218
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:221
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:224
 #, c-format
+#, fuzzy
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:227
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
-msgstr "kettőzés"
+msgstr ""
+"húzással"
+"kettőzés"
 
 #: ../src/tweak-context.cpp:230
 #, c-format
+#, fuzzy
 msgid "%s. Drag to <b>push paths</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:234
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:242
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:250
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:254
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>paint objects</b> with color."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:257
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>randomize colors</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:261
 #, c-format
+#, fuzzy
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
-msgstr ""
+msgstr "húzással"
 
 #: ../src/tweak-context.cpp:1218
 msgid "<b>Nothing selected!</b> Select objects to tweak."
@@ -11960,7 +12020,9 @@ msgstr "Cél"
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:476
 #, fuzzy
 msgid "Show Preview"
-msgstr "Előnézet"
+msgstr ""
+"Előnézet"
+"megjelenítése"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:612
 #, fuzzy
@@ -12776,8 +12838,9 @@ msgid "Switch tool based on tablet device (requires restart)"
 msgstr "A párbeszédablakok viselkedése (életbelépéshez újraindítás szükséges):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
+#, fuzzy
 msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
-msgstr ""
+msgstr "Radír"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 msgid "Scrolling"
@@ -13202,13 +13265,14 @@ msgstr ""
 "közben"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:414
+#, fuzzy
 msgid "Box outline"
-msgstr "Téglalap-körvonal"
+msgstr "Téglalap-kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr ""
-"Csak az objektumok téglalap-körvonalának megjelenítése áthelyezéskor illetve "
+"Csak az objektumok téglalap-kontúrjának megjelenítése áthelyezéskor illetve "
 "transzformáció közben"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:417
@@ -13245,45 +13309,57 @@ msgstr "Csomópont"
 #: ../src/ui/dialog/inkscape-preferences.cpp:432
 #, fuzzy
 msgid "Path outline:"
-msgstr "Téglalap-körvonal"
+msgstr "kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:433
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 #, fuzzy
 msgid "Path outline color"
-msgstr "Szín beillesztése"
+msgstr ""
+"kontúr"
+"Szín beillesztése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 #, fuzzy
 msgid "Selects the color used for showing the path outline."
-msgstr "A normál rácsvonalakhoz használt szín kiválasztása"
+msgstr ""
+"kontúr"
+"A normál rácsvonalakhoz használt szín kiválasztása"
+"megjelenítése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:435
+#, fuzzy
 msgid "Path outline flash on mouse-over"
-msgstr ""
+msgstr "kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
+#, fuzzy
 msgid "When hovering over a path, briefly flash its outline."
-msgstr ""
+msgstr "kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
+#, fuzzy
 msgid "Suppress path outline flash when one path selected"
-msgstr ""
+msgstr "kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
+#, fuzzy
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "kontúr"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Flash time"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
+#, fuzzy
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds). Specify 0 to have the outline shown until mouse leaves the "
 "path."
 msgstr ""
+"kontúr"
+"megjelenítés"
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:443 ../src/verbs.cpp:2504
@@ -15197,8 +15273,9 @@ msgid "Reset missing-glyph"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
+#, fuzzy
 msgid "Edit glyph name"
-msgstr ""
+msgstr "szerkesztés"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
@@ -15340,6 +15417,8 @@ msgstr "Előnézet"
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
+"Szín: <b>%s</b>. Kitöltés beállítása: <b>kattintással</b>. "
+"Körvonal beállítása: <b>Shift+kattintással</b>."
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:438
@@ -16034,9 +16113,8 @@ msgstr "Lista"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/widget/panel.cpp:136
-#, fuzzy
 msgid "swatches|Size"
-msgstr "közepes"
+msgstr "Méret"
 
 #: ../src/ui/widget/panel.cpp:140
 msgid "tiny"
@@ -16050,7 +16128,6 @@ msgstr "kicsi"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "medium" indicates size of colour swatches
 #: ../src/ui/widget/panel.cpp:145
-#, fuzzy
 msgid "swatchesHeight|medium"
 msgstr "közepes"
 
@@ -16065,44 +16142,38 @@ msgstr "nagyon nagy"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/widget/panel.cpp:171
-#, fuzzy
 msgid "swatches|Width"
-msgstr "közepes"
+msgstr "Szélesség"
 
 #: ../src/ui/widget/panel.cpp:175
-#, fuzzy
 msgid "narrower"
-msgstr "Lejjebb helyezés"
+msgstr "keskenyebb"
 
 #: ../src/ui/widget/panel.cpp:176
 msgid "narrow"
-msgstr ""
+msgstr "keskeny"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "medium" indicates width of colour swatches
 #: ../src/ui/widget/panel.cpp:180
-#, fuzzy
 msgid "swatchesWidth|medium"
 msgstr "közepes"
 
 #: ../src/ui/widget/panel.cpp:181
-#, fuzzy
 msgid "wide"
-msgstr "Elrejtés"
+msgstr "széles"
 
 #: ../src/ui/widget/panel.cpp:182
-#, fuzzy
 msgid "wider"
-msgstr "Elrejtés"
+msgstr "szélesebb"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Wrap" indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:215
-#, fuzzy
 msgid "swatches|Wrap"
-msgstr "közepes"
+msgstr "Többsoros"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -16489,8 +16560,9 @@ msgstr "Körvonalszélesség"
 
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
+#, fuzzy
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr ""
+msgstr "körvonal"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -17169,7 +17241,7 @@ msgstr "Következő lánceffektus-paraméter"
 
 #: ../src/verbs.cpp:2347
 msgid "Show next Path Effect parameter for editing"
-msgstr "A következő lánceffektus-paraméter megjelenítése szerkesztéshez"
+msgstr "A következő útvonaleffektus-paraméter megjelenítése szerkesztéshez"
 
 #. Selection
 #: ../src/verbs.cpp:2350
@@ -17629,7 +17701,9 @@ msgstr ""
 #: ../src/verbs.cpp:2489
 #, fuzzy
 msgid "Edit mask"
-msgstr "Maszk beállítása"
+msgstr ""
+"Maszk beállítása"
+"szerkesztés"
 
 #: ../src/verbs.cpp:2490 ../src/verbs.cpp:2496
 msgid "_Release"
@@ -17646,9 +17720,8 @@ msgstr ""
 "vágóláncként)"
 
 #: ../src/verbs.cpp:2495 ../src/widgets/toolbox.cpp:1446
-#, fuzzy
 msgid "Edit clipping path"
-msgstr "Vágólánc beállítása"
+msgstr "Vágóútvonal szerkesztése"
 
 #: ../src/verbs.cpp:2497
 msgid "Remove clipping path from selection"
@@ -17739,12 +17812,13 @@ msgstr "S_zerkesztés"
 #: ../src/verbs.cpp:2535
 #, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr "Következő lánceffektus-paraméter"
+msgstr ""
+"Következő lánceffektus-paraméter"
+"szerkesztés"
 
 #: ../src/verbs.cpp:2537
-#, fuzzy
 msgid "Erase existing paths"
-msgstr "Vágólánc eltávolítása"
+msgstr "Létező útvonalak törlése"
 
 #: ../src/verbs.cpp:2539
 msgid "Do geometric constructions"
@@ -17888,14 +17962,12 @@ msgid "Open Preferences for the Paint Bucket tool"
 msgstr "A területkitöltési eszköz beállításainak megnyitása"
 
 #: ../src/verbs.cpp:2575
-#, fuzzy
 msgid "Eraser Preferences"
-msgstr "Csillag-beállítások"
+msgstr "Radír-beállítások"
 
 #: ../src/verbs.cpp:2576
-#, fuzzy
 msgid "Open Preferences for the Eraser tool"
-msgstr "A csillageszköz beállításainak megnyitása"
+msgstr "A radíreszköz beállításainak megnyitása"
 
 #: ../src/verbs.cpp:2577
 #, fuzzy
@@ -18327,7 +18399,9 @@ msgstr "Szűrőszerkesztő..."
 #: ../src/verbs.cpp:2685
 #, fuzzy
 msgid "Manage, edit, and apply SVG filters"
-msgstr "SVG-szűrőeffektusok kezelése"
+msgstr ""
+"SVG-szűrőeffektusok kezelése"
+"szerkesztés"
 
 #: ../src/verbs.cpp:2686
 msgid "SVG Font Editor..."
@@ -19117,7 +19191,7 @@ msgstr "Jelölőelemek beállítása"
 #: ../src/widgets/stroke-style.cpp:1079
 #, fuzzy
 msgid "StrokeWidth|Width:"
-msgstr "Körvonalszélesség"
+msgstr "szélesség"
 
 #: ../src/widgets/stroke-style.cpp:1093 ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
@@ -19318,9 +19392,8 @@ msgid "Join selected endnodes with a new segment"
 msgstr "Kijelölt végpontok összekapcsolása egy új szakasszal"
 
 #: ../src/widgets/toolbox.cpp:1344
-#, fuzzy
 msgid "Delete segment between two non-endpoint nodes"
-msgstr "Lánc elvágása szakasztörléssel két, nem végponti csomópont közt"
+msgstr "Szakasz törlése két nem végponti csomópont közt"
 
 #: ../src/widgets/toolbox.cpp:1353
 msgid "Node Cusp"
@@ -19347,14 +19420,12 @@ msgid "Make selected nodes symmetric"
 msgstr "A kijelölt csomópontok szimmetrikussá tétele"
 
 #: ../src/widgets/toolbox.cpp:1383
-#, fuzzy
 msgid "Node Auto"
-msgstr "Csomópontszerkesztés"
+msgstr "Csomópontot auto-ívessé"
 
 #: ../src/widgets/toolbox.cpp:1384
-#, fuzzy
 msgid "Make selected nodes auto-smooth"
-msgstr "A kijelölt csomópontok ívessé tétele"
+msgstr "A kijelölt csomópontok auto-ívessé tétele"
 
 #: ../src/widgets/toolbox.cpp:1393
 msgid "Node Line"
@@ -19381,14 +19452,12 @@ msgid "Show the Bezier handles of selected nodes"
 msgstr "A kijelölt csomópontok Bézier-vezérlőelemeinek megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:1424
-#, fuzzy
 msgid "Show Outline"
-msgstr "_Drótváz"
+msgstr "Kontúr megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:1425
-#, fuzzy
 msgid "Show the outline of the path"
-msgstr "A lánc szélessége"
+msgstr "Az útvonal kontúrjának megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:1435
 #, fuzzy
@@ -19396,23 +19465,20 @@ msgid "Next path effect parameter"
 msgstr "Következő lánceffektus-paraméter"
 
 #: ../src/widgets/toolbox.cpp:1436
-#, fuzzy
 msgid "Show next path effect parameter for editing"
-msgstr "A következő lánceffektus-paraméter megjelenítése szerkesztéshez"
+msgstr "A következő útvonaleffektus-paraméter megjelenítése szerkesztéshez"
 
 #: ../src/widgets/toolbox.cpp:1447
-#, fuzzy
 msgid "Edit the clipping path of the object"
-msgstr "Vágólánc eltávolítása a kijelölésről"
+msgstr "Az objektum vágóútvonalának szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1457
 msgid "Edit mask path"
-msgstr ""
+msgstr "Maszk-útvonal szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1458
-#, fuzzy
 msgid "Edit the mask of the object"
-msgstr "A színátmenet fázisainak szerkesztése"
+msgstr "Az objektum maszkjának szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X coordinate:"
@@ -19537,7 +19603,9 @@ msgstr "Vonalszélesség"
 #: ../src/widgets/toolbox.cpp:2127
 #, fuzzy
 msgid "Snap from and to midpoints of line segments"
-msgstr "illesztés"
+msgstr ""
+"szakasz"
+"illesztés"
 
 #: ../src/widgets/toolbox.cpp:2136
 #, fuzzy
@@ -20013,8 +20081,9 @@ msgid "Zigzag"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3842
+#, fuzzy
 msgid "Create a sequence of straight line segments"
-msgstr ""
+msgstr "szakasz"
 
 #: ../src/widgets/toolbox.cpp:3848
 #, fuzzy
@@ -20022,8 +20091,9 @@ msgid "Paraxial"
 msgstr "részleges"
 
 #: ../src/widgets/toolbox.cpp:3849
+#, fuzzy
 msgid "Create a sequence of paraxial line segments"
-msgstr ""
+msgstr "szakasz"
 
 #: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
 #: ../share/extensions/extrude.inx.h:3
@@ -20725,11 +20795,14 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5606
 #, fuzzy
 msgid "Show limiting bounding box"
-msgstr "Geometriai határoló téglalap"
+msgstr ""
+"Geometriai határoló téglalap"
+"megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:5607
+#, fuzzy
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
+msgstr "megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:5618
 #, fuzzy
@@ -20766,25 +20839,20 @@ msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5733
-#, fuzzy
 msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr ""
-"A manipulálási terület szélessége (a látható rajzvászon-területhez "
-"viszonyítva)"
+msgstr "A radír szélessége (a látható rajzvászon-területhez viszonyítva)"
 
 #: ../src/widgets/toolbox.cpp:5751
 msgid "Delete objects touched by the eraser"
-msgstr ""
+msgstr "A radír által megérintett objektumok eltávolítása"
 
 #: ../src/widgets/toolbox.cpp:5757
-#, fuzzy
 msgid "Cut"
-msgstr "_Kivágás"
+msgstr "Kivágás"
 
 #: ../src/widgets/toolbox.cpp:5758
-#, fuzzy
 msgid "Cut out from objects"
-msgstr "Minta átalakítása objektumokká"
+msgstr "Kivágás az objektumokból"
 
 #: ../src/widgets/toolbox.cpp:6102
 msgid "Text: Change font family"
@@ -20989,10 +21057,11 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/embedimage.py:74
+#, fuzzy
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
-msgstr ""
+msgstr "Létező"
 
 #: ../share/extensions/embedimage.py:76
 #, python-format
@@ -21146,7 +21215,9 @@ msgstr "Maximális szakaszhossz (px)"
 #: ../share/extensions/addnodes.inx.h:3
 #, fuzzy
 msgid "By number of segments"
-msgstr "Fogak száma"
+msgstr ""
+"szakasz"
+"Fogak száma"
 
 #: ../share/extensions/addnodes.inx.h:4
 #, fuzzy
@@ -21174,7 +21245,9 @@ msgstr "Lánc módosítása"
 #: ../share/extensions/addnodes.inx.h:7
 #, fuzzy
 msgid "Number of segments"
-msgstr "Lépések száma"
+msgstr ""
+"szakasz"
+"Lépések száma"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI 8.0 Input"
@@ -22788,21 +22861,27 @@ msgid "Filename:"
 msgstr "Fájlnév beállítása"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
+#, fuzzy
 msgid "Fill Colour (Blue)"
-msgstr ""
+msgstr "kitöltés"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
+#, fuzzy
 msgid "Fill Colour (Green)"
-msgstr ""
+msgstr "kitöltés"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
+#, fuzzy
 msgid "Fill Colour (Red)"
-msgstr ""
+msgstr "kitöltés"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
+#, fuzzy
 msgid "Fill Opacity/ %"
-msgstr "Átlátszatlanság, %"
+msgstr ""
+"kitöltés"
+"Átlátszatlanság, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -23354,8 +23433,9 @@ msgid "Day names"
 msgstr "A réteg neve:"
 
 #: ../share/extensions/svgcalendar.inx.h:10
+#, fuzzy
 msgid "Fill empty day boxes with next month's days"
-msgstr ""
+msgstr "kitöltés"
 
 #: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
