@@ -90,6 +90,10 @@ LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const 
 
     n_major = real_mark_length * n;
     n_minor = real_minor_mark_length * n;
+    if (mark_dir == MARKDIR_BOTH) {
+        n_major = n_major * 0.5;
+        n_minor = n_minor * 0.5;
+    }
 
     Point C, D;
     switch (marktype) {
