@@ -10317,8 +10317,8 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
-"<banxoo+launchpad@gmail.com> بانزو"
-"M. Bashir Al-Noimi <mhdbnoimi@gmail.com>"
+"(banxoo+launchpad@gmail.com) بانزو\n"
+"M. Bashir Al-Noimi (mhdbnoimi@gmail.com)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:787
