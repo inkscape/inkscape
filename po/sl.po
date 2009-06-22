@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-15 19:19+0200\n"
-"PO-Revision-Date: 2009-06-16 15:30+0100\n"
+"POT-Creation-Date: 2009-06-22 19:48+0200\n"
+"PO-Revision-Date: 2009-06-22 20:48+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -41,17 +41,17 @@ msgstr "Moten žele"
 #: ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16
 #: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:50
 #: ../share/filters/filters.svg.h:51
 #: ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:56
-#: ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
-#: ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:103
 msgid "Bevels"
 msgstr "Izbokline"
 
@@ -90,12 +90,12 @@ msgstr "Zabris gibanja, vodoraven"
 #: ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:97
-#: ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:169
 msgid "Blurs"
 msgstr "Zabrisanost"
 
@@ -125,11 +125,12 @@ msgstr "Izrezek"
 
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:87
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -152,13 +153,13 @@ msgid "Roughen"
 msgstr "Ohrapavi"
 
 #: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:108
 #: ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117
 #: ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:125
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:177
 msgid "ABCs"
 msgstr "ABC-ji"
 
@@ -179,9 +180,9 @@ msgstr "Gumijasti žig"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
-#: ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:118
 msgid "Overlays"
 msgstr "Prekrivala"
 
@@ -196,7 +197,7 @@ msgstr "Razlitje črnila"
 #: ../share/filters/filters.svg.h:13
 #: ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Protrusions"
 msgstr "Štrline"
 
@@ -234,11 +235,10 @@ msgstr "Val"
 
 #: ../share/filters/filters.svg.h:17
 #: ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113
-#: ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Distort"
 msgstr "Popači"
 
@@ -275,22 +275,22 @@ msgid "Leopard fur"
 msgstr "Leopardja koža"
 
 #: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61
-#: ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:92
-#: ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:164
 msgid "Materials"
 msgstr "Materiali"
 
@@ -328,15 +328,16 @@ msgstr "Izostri"
 #: ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
-#: ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:103
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:166
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192
 msgid "Image effects"
 msgstr "Slikovni učinki"
 
@@ -411,11 +412,11 @@ msgstr "Naredi nenasičeno"
 #: ../share/filters/filters.svg.h:32
 #: ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34
-#: ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:167
 #: ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
@@ -442,6 +443,7 @@ msgid "Color"
 msgstr "Barve"
 
 #: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:170
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr "Upodobi v sivinskih barvah z zmanjševanjem nasičenosti proti nič"
 
@@ -476,26 +478,28 @@ msgstr "Organsko"
 
 #: ../share/filters/filters.svg.h:36
 #: ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:64
 #: ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130
 #: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194
 msgid "Textures"
 msgstr "Teksture"
 
@@ -568,852 +572,842 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "Učinek slikanja Van Gogha za bitne slike"
 
 #: ../share/filters/filters.svg.h:45
-msgid "Pixel smear, glossy"
-msgstr "Razmazane točke, bleščeče"
-
-#: ../share/filters/filters.svg.h:45
-msgid "Glossy painting effect for bitmaps"
-msgstr "Bleščeči slikarski učinek za bitne slike"
-
-#: ../share/filters/filters.svg.h:46
-#: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:185
 msgid "HSL Bumps"
 msgstr "Izbokline HSL"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Highly flexible specular bump"
 msgstr "Visoko fleksibilna odsevna izboklina"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Cracked glass"
 msgstr "Razbito steklo"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Under a cracked glass"
 msgstr "Pod razbitim steklom"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "HSL bubbles"
 msgstr "Mehurčki HSL"
 
-#: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:105
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
 msgstr "Visoko prilagodljiv učinek mehurčkov glede na barvo, obarvanost, nasičenost in osveljenost"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Glowing bubble"
 msgstr "Žareči mehurček"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:53
 #: ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:66
 #: ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:70
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:71
 msgid "Ridges"
 msgstr "Brazde"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Bubble effect with refraction and glow"
 msgstr "Učinek mehurčka z lomom in žarenjem"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Neon"
 msgstr "Neon"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Neon light effect with glow"
 msgstr "Svetlobni učinek neona z žarenjem"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Molten metal"
 msgstr "Staljena kovina"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Stali dele predmeta skupaj, z bleščečo izbočenostjo in žarenjem"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Pressed steel"
 msgstr "Stiskano jeklo"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Pressed metal with a rolled edge"
 msgstr "Stiskano jeklo z zaobljenim koncem"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Matte Bevel"
 msgstr "Motna izbočenost"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Nežna, pastelno obarvana, nejasna izbočenost"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Thin Membrane"
 msgstr "Tanka membrana"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Thin like a soap membrane"
 msgstr "Tanka membrana kot pri milnem mehurčku"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Soft ridge"
 msgstr "Nežna brazda"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Soft pastel ridge"
 msgstr "Nežna pastelna brazda"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Glowing metal"
 msgstr "Žareča kovina"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Bright and glowing metal texture"
 msgstr "Svetla in žareča kovinska tekstura"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Leaves"
 msgstr "Listje"
 
-#: ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:87
 #: ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "Razprši"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Jesensko listje na tleh ali živo listje"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Translucent"
 msgstr "Prosojno"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "Osvetljen prosojen plastičen ali steklen učinek"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Cross-smooth"
 msgstr "Navzkrižno glajenje"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Blur inner borders and intersections"
 msgstr "Zabriši notranje robove in presečišča"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Iridescent beeswax"
 msgstr "Barve spreminjajoč čebelji vosek"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "Voščena tekstura, ki ohranja svojo mavričnost s spreminjanjem barvnega polnila"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
 msgstr "Razjedena kovina"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "Razžrta kovinska tekstura z brazdami, utori, luknjami in izboklinami"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
 msgstr "Počena lava"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "A volcanic texture, a little like leather"
 msgstr "Vulkanska tekstura, malce podobna usnju"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Bark"
 msgstr "Lubje"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "Tekstura lubja, navpična; uporabite s temnejšimi barvami"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
 msgstr "Kuščarjeva koža"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stylized reptile skin texture"
 msgstr "Stilizirana tekstura kože kuščarja"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stone wall"
 msgstr "Kamnita stena"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stone wall texture to use with dark colors"
 msgstr "Tekstura kamnitega zidu, uporabno za temne barve"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Silk carpet"
 msgstr "Svilnata preproga"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "Tekstura svilnate preproge, vodoravne črte"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Refractive gel A"
 msgstr "Žarke lomljivi gel A"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Gel effect with light refraction"
 msgstr "Učinek gela z manšim lomom svetlobe"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel B"
 msgstr "Žarke lomljivi gel B"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with strong refraction"
 msgstr "Učinek gela z močnim lomom svetlobe"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Metallized paint"
 msgstr "Kovinska barva"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "Kovinski učinek z mehko svetlobo, rahlo prosojen na robovih"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Dragee"
 msgstr "Draže"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Želatinasta brazda z bisernim videzom"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Raised border"
 msgstr "Dvignjen rob"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Strongly raised border around a flat surface"
 msgstr "Močno dvignjen rob okoli ravne ploskve"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Metallized ridge"
 msgstr "Kovinska brazda"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Gel Ridge metallized at its top"
 msgstr "Želatinasta brazda, ki je na vrhu kovinska"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Fat oil"
 msgstr "Mastno olje"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Mastno olje z nekaj prilagodljive turbulence"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Obarvaj"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "Poda barvo razlitja temnim delom slike"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
 msgstr "Vzporedno votlo"
 
+#: ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:75
 #: ../share/filters/filters.svg.h:76
 #: ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:88
 #: ../share/filters/filters.svg.h:89
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:93
 #: ../share/filters/filters.svg.h:94
-#: ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:178
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Oblikoslovje"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "Nerazločna votlina, ki poteka vzdolž roba notranjosti"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Hole"
 msgstr "Luknja"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Opens a smooth hole inside the shape"
 msgstr "Odpre gladko luknjo v liku"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Black hole"
 msgstr "Črna luknja"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Creates a black light inside and outside"
 msgstr "Ustvari črno svetlobo znotraj in zunaj"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Smooth outline"
 msgstr "Gladek oris"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "Orisovanje črt in glajenje njihovih prečkanj"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Cubes"
 msgstr "Kocke"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "Raztresene kocke; prilagodite morfološki primitiv, če želite spremeniti velikost"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Peel off"
 msgstr "Olušči"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Peeling painting on a wall"
 msgstr "Stenska slika, ki se lupi"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Gold splatter"
 msgstr "Zlati brizg"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Razpršena lita kovina, z zlatimi svetlimi toni"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold paste"
 msgstr "Zlata pasta"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Debelo namazana lita kovina, z zlatimi svetlimi toni"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
 msgstr "Nagubana plastika"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Nagubana matirana plastika, s staljenim robom"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Enamel jewelry"
 msgstr "Poslikan nakit"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Slightly cracked enameled texture"
 msgstr "Rahlo počena emajlirana tekstura"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Rough paper"
 msgstr "Hrapav papir"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "Učinek akvarelnega papirja, ki ga lahko uporabljate za slike in predmete"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough and glossy"
 msgstr "Hrapavo in bleščeče"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "Učinek nagubanega bleščečega papirja, ki ga lahko uporabite za slike ali predmete"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "In and Out"
 msgstr "Navznoter in navzven"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "Navznoter obarvana senca, navzven črna senca"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Air spray"
 msgstr "Zračna pršilka"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "Zračna pršilka; prilagodite količino razmestitvene preslikave"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Warm inside"
 msgstr "Znotraj toplo"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, filled inside"
 msgstr "Zabrisana obarvana kontura, znotraj zapolnjena"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Cool outside"
 msgstr "Hladno navzven"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, empty inside"
 msgstr "Zabrisana obarvana kontura, znotraj prazna"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Electronic microscopy"
 msgstr "Elektronska mikroskopija"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "Izbočenost, surova svetloba, razbarvanost in žarenje, kot pri elektronski mikroskopiji"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Tartan"
 msgstr "Škotski karo"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Checkered tartan pattern"
 msgstr "Karo vzorec tartana"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Invert hue"
 msgstr "Preobrni obarvanost"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Invert hue, or rotate it"
 msgstr "Preobrni obarvanost ali jo zasukaj"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Inner outline"
 msgstr "Notranja obroba"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Draws an outline around"
 msgstr "Nariše oris naokoli"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline, double"
 msgstr "Oris, dvojni"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "Nariše gladko notranjo črto, obarvano z barvo, ki jo prekriva"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Fancy blur"
 msgstr "Modna zabrisanost"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "Gladka obarvana kontura, ki omogoča raznasičenje in sukanje obarvanosti"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Glow"
 msgstr "Zažari"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Glow of object's own color at the edges"
 msgstr "Žarenje barve predmeta na robovih"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Outline"
 msgstr "Oris"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Doda žarečo zabrisanost in odstrani obliko"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Color emboss"
 msgstr "Barvni relief"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "Klasični ali obarvani učinek reliefnega okraševanja: sivinski, barvni in tridimenzionalni relief"
 
-#: ../share/filters/filters.svg.h:100
-msgid "Soft bump"
-msgstr "Nežna izboklina"
-
-#: ../share/filters/filters.svg.h:100
-msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr "Konvolucijska izboklina; z zabrisanostjo lahko dosežete lepe učinke reliefa"
-
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:99
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Solariziraj"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:99
 msgid "Classical photographic solarization effect"
 msgstr "Klasični učinek fotografske solarizacije"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:100
 msgid "Moonarize"
 msgstr "Omesečini"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:100
 msgid "An effect between solarize and invert which often preserves sky and water lights"
 msgstr "Učinek med solarizacijo in preobrnitvijo, ki pogosto ohrani svetlobo neba in vode"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:101
 msgid "Soft focus lens"
 msgstr "Objektiv z mehko ostrino"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:101
 msgid "Glowing image content without blurring it"
 msgstr "Žareča vsebina podobe brez zabrisanosti"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:102
 msgid "Stained glass"
 msgstr "Pobarvano steklo"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:102
 msgid "Illuminated stained glass effect"
 msgstr "Učinek osvetljenega barvnega stekla"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:103
 msgid "Dark glass"
 msgstr "Temno steklo"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:103
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Učinek osvetljenega stekla s svetlobo od spodaj"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:104
 msgid "HSL Bumps, alpha"
 msgstr "Izbokline HSL, alfa"
 
-#: ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:190
 msgid "Mask and transparency effects"
 msgstr "Učinki maske in prosojnosti"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:104
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
 msgstr "Enako kot izbokline HSL, vendar z dodano alfo, namenjeno kombinaciji s filtri, ki so odvisni od prosojnosti"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:105
 msgid "HSL Bubbles, alpha"
 msgstr "Mehurčki HSL, alfa"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:106
 msgid "Smooth edges"
 msgstr "Zgladi robove"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:106
 msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "Zgladi zunanjost likov in slik brez spreminjanja njihove vsebine"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
 msgid "Torn edges"
 msgstr "Raztrgani robovi"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "Razmesti zunanjost likov in slik brez spreminjanja njihove vsebine"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:108
 msgid "Feather"
 msgstr "Operjeno"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:108
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Zabrisana maska na robu brez spreminjanja vsebine"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:109
 msgid "Blur content"
 msgstr "Zabriši vsebino"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:109
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "Zabriši vsebino predmetov, ohrani obris"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:110
 msgid "Specular light"
 msgstr "Odbojna svetloba"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:110
 msgid "Basic specular bevel to use for building textures"
 msgstr "Osnovna izbočenost z odsevom, uporabljena pri gradnji tekstur"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:111
 msgid "Roughen inside"
 msgstr "Ogrobi znotraj"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:111
 msgid "Roughen all inside shapes"
 msgstr "Ohrapavi vse notranje like"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:112
 msgid "Evanescent"
 msgstr "Plahneč"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:112
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
 msgstr "Zabriši vsebino predmetov, vendar ohrani oris in dodaj progresivno prosojnost na robovih"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:113
 msgid "Chalk and sponge"
 msgstr "Kreda in spužva"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:113
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Nizka turbulenca daje spužvast videz in visoko turbulenčni pastel"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:114
 msgid "People"
 msgstr "Ljudje"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:114
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Obarvane packe, kot množica ljudi"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:115
 msgid "Scotland"
 msgstr "Škotska"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:115
 msgid "Colorized mountain tops out of the fog"
 msgstr "Obarvani vrhovi gora segajo iz megle"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
 msgid "Noise transparency"
 msgstr "Prosojnost šuma"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
 msgid "Basic noise transparency texture"
 msgstr "Tekstura osnovnega prosojnega šuma"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:117
 msgid "Noise fill"
 msgstr "Polnilo šuma"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:117
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "Osnovna tekstura polnila šuma; prilagodite barvo z Razlij"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:118
 msgid "Garden of Delights"
 msgstr "Vrt naslade"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:118
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "Fantazmagorični vrtinčasti šopi, kot Vrt radosti Hieronymusa Boscha"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:119
 msgid "Diffuse light"
 msgstr "Razpršena svetloba"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:119
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Osnovna razpršena izboklina, uporabna za gradbene teksture"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:120
 msgid "Cutout Glow"
 msgstr "Žarenje izrezka"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:187
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Žarenje navzven in navznoter z možnim zamikom in obarvljivim razlivanjem"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:121
 msgid "HSL Bumps, diffuse"
 msgstr "Izbokline HSL, razpršene"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:121
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr "Enake kot izbokline HSL, vendar z razpršenim odsevom namesto zrcalnega"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:122
 msgid "Dark Emboss"
 msgstr "Temni relief"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:122
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Učinek reliefa: 3D-relief, kjer belo zamenja črna"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:123
 msgid "Simple blur"
 msgstr "Enostavna zabrisanost"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:123
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Enostavna Gaussova zabrisanost, enako kot drsnik zabrisanosti v pogovornem oknu Polnilo in poteza"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:124
 msgid "HSL Bubbles, diffuse"
 msgstr "Mehurčki HSL, razpršeno"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr "Enako kot mehurčki HSL, le z razpršeno svetlobo namesto točkovne"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:125
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Reliefno okrasi"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
 msgstr "Učinek reliefa: Barve izvornih podob se ohranijo ali se spremenijo s stapljanjem"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:126
 msgid "Blotting paper"
 msgstr "Pivnat papir"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:126
 msgid "Inkblot on blotting paper"
 msgstr "Madež črnila na pivnatem papirju"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:127
 msgid "Wax print"
 msgstr "Voščeni tisk"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:127
 msgid "Wax print on tissue texture"
 msgstr "Voščeni tisk na teksturi tkanine"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot"
 msgstr "Madež črnila"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on tissue or rough paper"
 msgstr "Madež črnila na robčku ali grobem papirju"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:129
 msgid "Burnt edges"
 msgstr "Zažgani robovi"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:129
 msgid "Torn edges with a dark inner blur"
 msgstr "Raztrgani robovi s temno notranjo zabrisanostjo"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:130
 msgid "Color outline, in"
 msgstr "Barvna obroba, navznoter"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:130
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "Obarvljiva notranja obroba s prilagodljivo debelino in zabrisanostjo"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:131
 msgid "Liquid"
 msgstr "Tekočina"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:131
 msgid "Colorizable filling with liquid transparency"
 msgstr "Obarvano polnilo s prosojnostjo tekočine"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:132
 msgid "Watercolor"
 msgstr "Akvarel"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:132
 msgid "Cloudy watercolor effect"
 msgstr "Nejasen učinek akvarela"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:133
 msgid "Felt"
 msgstr "Klobučevina"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:133
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Klobučevini podobna tekstura z barvno turbulenco, ki je rahlo temnejša na robovih"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:134
 msgid "Ink paint"
 msgstr "Črnilo"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:134
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Črnilo na papirju z nekaj turbulentnega barvnega zamika"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:135
 msgid "Tinted rainbow"
 msgstr "Rahlo obarvana mavrica"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Enakomerne barve mavrice, stopljene vzdolž robov, mogoče jih je obarvati"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:136
 msgid "Melted rainbow"
 msgstr "Staljena mavrica"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:136
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Enakomerne barve mavrice, rahlo stopljene vzdolž robov"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:137
 msgid "Flex metal"
 msgstr "Upognjena kovina"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:137
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Svetel, poliran neenakomeren kovinski odlitek, obarvljiv"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
 msgid "Comics draft"
 msgstr "Strip, skica"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:139
 #: ../share/filters/filters.svg.h:141
-#: ../share/filters/filters.svg.h:142
 #: ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:144
 #: ../share/filters/filters.svg.h:145
 #: ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147
 #: ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149
 #: ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Non realistic 3D shaders"
 msgstr "Nerealistično 3D-senčenje"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Skicirano striparsko senčenje s steklenim videzom"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139
 msgid "Comics fading"
 msgstr "Strip, bledeče"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Striparski slog slikanja z nekaj bledenja na robovih"
 
-#: ../share/filters/filters.svg.h:142
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:141
 msgid "Smooth shader NR"
 msgstr "Gladki senčilnik (NR)"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Gladko senčenje s sivo barvo grafitnega svinčnika"
 
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:143
 msgid "Emboss shader NR"
 msgstr "Reliefni senčilnik (NR)"
@@ -1422,298 +1416,361 @@ msgstr "Reliefni senčilnik (NR)"
 msgid "Combination of smooth shading and embossing"
 msgstr "Kombinacija gladkega senčenja in reliefnega bočenja"
 
-#: ../share/filters/filters.svg.h:144
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:145
 msgid "Smooth shader dark NR"
 msgstr "Temni gladki senčilnik (NR)"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145
 msgid "Dark version of non realistic smooth shading"
 msgstr "Temna različica nerealističnega gladkega senčenja"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146
 msgid "Comics"
 msgstr "Strip"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146
 msgid "Imitation of black and white cartoon shading"
 msgstr "Oponašanje črno belega striparskega senčenja"
 
-#: ../share/filters/filters.svg.h:146
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "Saten (NR)"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr "Svilnato senčenje, podobno bisernemu"
 
-#: ../share/filters/filters.svg.h:147
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:150
 msgid "Frosted glass NR"
 msgstr "Mlečno steklo (NR)"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:150
 msgid "Non realistic frosted glass imitation"
 msgstr "Nerealistična imitacija mlečnega stekla"
 
-#: ../share/filters/filters.svg.h:148
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:152
 msgid "Smooth shader contour NR"
 msgstr "Orisni gladki senčilnik (NR)"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:152
 msgid "Contouring version of smooth shader"
 msgstr "Orisna različica gladkega senčilnika"
 
-#: ../share/filters/filters.svg.h:149
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:154
 msgid "Aluminium NR"
 msgstr "Aluminij (NR)"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
 msgstr "Senčilnik brušenega aluminija"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
 msgstr "Strip, tekoče"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:155
 msgid "Fluid brushed cartoon drawing"
 msgstr "Striparska risba, z mokrim čopičem"
 
-#: ../share/filters/filters.svg.h:151
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:157
 msgid "Chrome NR"
 msgstr "Krom (NR)"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:157
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Nerealistični kromast senčilnik z močnimi odsevi"
 
-#: ../share/filters/filters.svg.h:152
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:159
 msgid "Chrome dark NR"
 msgstr "Temni krom (NR)"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:159
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Temna različica kormastega senčenja s simulacijo odseva s tal"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:160
 msgid "Wavy tartan"
 msgstr "Valujoči škotski karo"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:160
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Vzorec tartana (škotskega kara) z valujočimi razmestitvami in izbočenostjo ob robovih"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:161
 msgid "3D marble"
 msgstr "3D-mramor"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:161
 msgid "3D warped marble texture"
 msgstr "3D-ukrivljena tekstura marmorja"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:162
 msgid "3D wood"
 msgstr "3D-les"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped, fibered wood texture"
 msgstr "3D-ukrivljena, vlaknasta tekstura lesa"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:163
 msgid "3D mother of pearl"
 msgstr "3D-biser"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:163
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "3D-ukrivljena, barve spreminjajoča tekstura biserovine"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
 msgstr "Tigrova koža"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:164
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Vzorec tigraste kože z gubami in izbočenostjo okoli robov"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
 msgstr "Stresena tekočina"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:165
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Obarvljivo polnilo z notranjim potekom, kot je prosojnost"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Comics cream"
 msgstr "Strip, kremasto"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Comics shader with creamy waves transparency"
 msgstr "Striparsko senčenje s prostojnostjo kremastih valov"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:167
 msgid "Black Light"
 msgstr "Črna svetloba"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:167
 msgid "Light areas turn to black"
 msgstr "Svetla območja se spremenijo v črno"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:168
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Radirka"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:168
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "Svetlejši deli predmeta naj bodo progresivno prosojni"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:169
 msgid "Noisy blur"
 msgstr "Zabrisanost s šumom"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:169
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Rahlo hrapavljenje in zabrisovanje robov in vsebine"
 
-#: ../share/filters/filters.svg.h:163
-msgid "Film Grain"
+#: ../share/filters/filters.svg.h:170
+msgid "Film grain"
 msgstr "Filmska zrnatost"
 
-#: ../share/filters/filters.svg.h:163
-msgid "Adds a film grain noise to images and objects"
-msgstr "Podobam in predmetom doda šum filmskega zrna"
-
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:171
 msgid "HSL Bumps, transparent"
 msgstr "Izbokline HSL, prosojne"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:171
 msgid "Highly flexible specular bump with transparency"
 msgstr "Visoko prilagodljiva odsevna izboklina s prosojnostjo"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Drawing"
 msgstr "Risanje"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:172
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
 msgstr "Dodaj učinek svinčenega svičnika ali kromolitografije ali graviranja ali druge učinke slikam in z materiali zapolnjenim predmetov"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:173
 msgid "Velvet bump"
 msgstr "Žametna izboklina"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:173
 msgid "Gives a smooth bump velvet like"
 msgstr "Naredi gladko izboklino, podobno žametu"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:174
 msgid "Alpha draw"
 msgstr "Alfa-risanje"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Učinek prosojne risbe za bitne slike in materiale"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:175
 msgid "Alpha draw, color"
 msgstr "Alfa-risanje, barvno"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:175
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Učinek prosojnega barvnega polnila za bitne slike in materiale"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Chewing gum"
 msgstr "Žvečilni gumi"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings"
 msgstr "Ustvari barvite packe, ki gladko potekajo prek robov črt na njihovih križanjih"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:177
 msgid "Black outline"
 msgstr "Črn oris"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:177
 msgid "Draws a black outline around"
 msgstr "Nariše črni oris naokoli"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:178
 msgid "Color outline"
 msgstr "Barvna obroba"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:178
 msgid "Draws a coloured outline around"
 msgstr "Nariše barvni oris naokoli"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:179
 msgid "Inner shadow"
 msgstr "Notranja senca"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:179
 msgid "Adds a colorizable drop shadow inside"
 msgstr "Doda obarvljivo navznoter padlo senco"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:180
 msgid "Dark and glow"
 msgstr "Temno in žareče"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:180
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "Potemni rob z notranjo zabrisanostjo in doda prilagodljivo žarenje"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181
 msgid "Darken edges"
 msgstr "Potemni robove"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181
 msgid "Darken the edges with an inner blur"
 msgstr "Potemni robove z notranjo zabrisanostjo"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:182
 msgid "Warped rainbow"
 msgstr "Popačena mavrica"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:182
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Enakomerne barve mavrice, popačene vzdolž robov, mogoče jih je obarvati"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Rough and dilate"
 msgstr "Hrapavo in raztegnjeno"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Create a turbulent contour around"
 msgstr "Ustvari turbulenten oris naokoli"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:184
 msgid "Gelatine"
 msgstr "Želatina"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:184
 msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "Obarvljivo polnilo z želatini podbnima turbulenco in prosojnostjo"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:185
 msgid "HSL Bubbles, transparent"
 msgstr "Mehurčki HSL, prosojni"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:185
 msgid "Highly flexible specular bubbles with transparency"
 msgstr "Visoko prilagodljivi odsevni mehurčki s prosojnostjo"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:186
 msgid "Old postcard"
 msgstr "Stara razglednica"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:186
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "Rahlo posteriziraj in nariši robove, kakršni so na starih tiskanih razglednicah"
+
+#: ../share/filters/filters.svg.h:187
+msgid "Fuzzy glow"
+msgstr "Nerazločno žarenje"
+
+#: ../share/filters/filters.svg.h:188
+msgid "Dots transparency"
+msgstr "Pikčasta prosojnost"
+
+#: ../share/filters/filters.svg.h:188
+msgid "Gives a pointillist HSL sensitive transparency"
+msgstr "Doda poantilistično prosojnost, občutljivo na HSL"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Canvas transparency"
+msgstr "Prosojnost platna"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Gives a canvas like HSL sensitive transparency."
+msgstr "Doda prosojnost platna, občutljivo na HSL"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Smear transparency"
+msgstr "Prosojnost razmazanosti"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Paint objects with a transparent turbulence which turn around color edges"
+msgstr "Riši predmete s prosojno turbulenco, ki se ovija okoli barvnih robov"
+
+#: ../share/filters/filters.svg.h:191
+msgid "Thick paint"
+msgstr "Debela barva"
+
+#: ../share/filters/filters.svg.h:191
+msgid "Thick painting effect with turbulence"
+msgstr "Učinek debelega nanosa barve s turbulenco"
+
+#: ../share/filters/filters.svg.h:192
+msgid "Thick paint, glossy"
+msgstr "Debela barva, bleščeča"
+
+#: ../share/filters/filters.svg.h:192
+msgid "Thick painting effect with turbulence and a glossy varnish"
+msgstr "Učinek debelega nanosa barve s turbulenco in bleščečo glazuro"
+
+#: ../share/filters/filters.svg.h:193
+msgid "Burst"
+msgstr "Razpočenost"
+
+#: ../share/filters/filters.svg.h:193
+msgid "Burst balloon texture crumpled and with holes"
+msgstr "Tekstura eksplodiranega balona, zmečkanega in luknjastega"
+
+#: ../share/filters/filters.svg.h:194
+msgid "Burst, glossy"
+msgstr "Razpočenost, bleščeča"
+
+#: ../share/filters/filters.svg.h:194
+msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr "Tekstura eksplodiranega balona, zmečkanega, luknjastega in bleščečega"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4980,15 +5037,15 @@ msgstr "Upodobi"
 msgid "Draw a path which is a grid"
 msgstr "Nariši pot, ki je mreža"
 
-#: ../src/extension/internal/javafx-out.cpp:945
+#: ../src/extension/internal/javafx-out.cpp:965
 msgid "JavaFX Output"
 msgstr "Izvoz JavaFX"
 
-#: ../src/extension/internal/javafx-out.cpp:950
+#: ../src/extension/internal/javafx-out.cpp:970
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
-#: ../src/extension/internal/javafx-out.cpp:951
+#: ../src/extension/internal/javafx-out.cpp:971
 msgid "JavaFX Raytracer File"
 msgstr "Datoteka Raytracer JavaFX"
 
@@ -6801,21 +6858,21 @@ msgstr "Je vidno?"
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
 msgstr "Če polje ni potrjeno, učinek ostane uveljavljen na predmetu, vendar je trenutno onemogočen na platnu"
 
-#: ../src/live_effects/effect.cpp:293
+#: ../src/live_effects/effect.cpp:294
 msgid "No effect"
 msgstr "Brez učinkov"
 
-#: ../src/live_effects/effect.cpp:340
+#: ../src/live_effects/effect.cpp:341
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Navedite pot parametrov za LPE '%s' z %d kliki miške"
 
-#: ../src/live_effects/effect.cpp:636
+#: ../src/live_effects/effect.cpp:639
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Urejanje parametra <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:644
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Nobenega izmed parametrov uporabljenega učinka poti ni mogoče neposredno urejati na platnu."
 
@@ -7598,7 +7655,7 @@ msgstr "Spremeni logični parameter"
 msgid "Change enumeration parameter"
 msgstr "Spremeni parameter ovrednotenja"
 
-#: ../src/live_effects/parameter/parameter.cpp:138
+#: ../src/live_effects/parameter/parameter.cpp:139
 msgid "Change scalar parameter"
 msgstr "Spremeni parameter skalarja"
 
@@ -8761,7 +8818,7 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "Med izbranimi predmeti <b>ni skupin</b>, ki bi jih lahko razdružili."
 
 #: ../src/selection-chemistry.cpp:598
-#: ../src/sp-item-group.cpp:497
+#: ../src/sp-item-group.cpp:515
 msgid "Ungroup"
 msgstr "Razdruži"
 
@@ -9482,7 +9539,7 @@ msgstr "%s; <i>filtrirano (%s)</i>"
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>filtrirano</i>"
 
-#: ../src/sp-item-group.cpp:742
+#: ../src/sp-item-group.cpp:760
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -14002,9 +14059,8 @@ msgstr "Vodoraven razmik med stolpci (v slik. točkah)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
-#: ../share/extensions/restack.inx.h:3
-msgid "Arrange"
-msgstr "Razporedi"
+msgid "tileClonesDialog|Arrange"
+msgstr "tileClonesDialog|Razpostavi"
 
 #: ../src/ui/dialog/tile.cpp:864
 msgid "Arrange selected objects"
@@ -20232,6 +20288,10 @@ msgstr "Datoteka HP Graphics Language (*.hpgl)"
 msgid "HPGL Output"
 msgstr "Izvoz HPGL"
 
+#: ../share/extensions/hpgl_output.inx.h:4
+msgid "hpgl output flatness"
+msgstr "Ploskost izvoza HPGL"
+
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
 msgstr "Zastavite nam vprašanje"
@@ -21020,6 +21080,10 @@ msgstr "Vrsta črtne kode:"
 msgid "Arbitrary Angle:"
 msgstr "Arbitrarni kot:"
 
+#: ../share/extensions/restack.inx.h:3
+msgid "Arrange"
+msgstr "Razporedi"
+
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
 msgstr "Dno"
@@ -21608,6 +21672,18 @@ msgstr "Uvoz Metadatoteke Windows"
 msgid "XAML Input"
 msgstr "Uvoz XAML"
 
+#~ msgid "Pixel smear, glossy"
+#~ msgstr "Razmazane točke, bleščeče"
+#~ msgid "Glossy painting effect for bitmaps"
+#~ msgstr "Bleščeči slikarski učinek za bitne slike"
+#~ msgid "Soft bump"
+#~ msgstr "Nežna izboklina"
+#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
+#~ msgstr ""
+#~ "Konvolucijska izboklina; z zabrisanostjo lahko dosežete lepe učinke "
+#~ "reliefa"
+#~ msgid "Adds a film grain noise to images and objects"
+#~ msgstr "Podobam in predmetom doda šum filmskega zrna"
 #~ msgid "Bumps"
 #~ msgstr "Izbokline"
 #~ msgid "Alpha paint"
