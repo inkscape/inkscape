@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-06-21 22:04+0200\n"
+"PO-Revision-Date: 2009-06-23 00:07+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -78,7 +78,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:6
 #, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "Vízszintes áthelyezés"
+msgstr ""
+"Elmosás"
+"Vízszintes"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
@@ -94,19 +96,25 @@ msgstr "Elmosás"
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "A kijelölt objektumok vízszintes tükrözése"
+msgstr ""
+"A kijelölt objektumok vízszintes tükrözése"
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
 msgid "Motion blur, vertical"
-msgstr "Függőleges áthelyezés"
+msgstr ""
+"Elmosás"
+"Függőleges áthelyezés"
 
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "A kijelölt objektumok függőleges tükrözése"
+msgstr ""
+"A kijelölt objektumok függőleges tükrözése"
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:8
 #, fuzzy
@@ -133,8 +141,9 @@ msgid "Shadows and Glows"
 msgstr "Vezérlőelemek megjelenítése"
 
 #: ../share/filters/filters.svg.h:9
+#, fuzzy
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "alakzat"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
@@ -147,7 +156,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
 msgid "Roughen"
-msgstr "Durvábbá tevési mód"
+msgstr "Durvábbá tevés"
 
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:117
@@ -159,7 +168,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Lekerekített csúcsok átméretezése"
+msgstr ""
+"Durvábbá tevés"
+"Lekerekített csúcsok átméretezése"
 
 #: ../share/filters/filters.svg.h:12
 #, fuzzy
@@ -501,8 +512,9 @@ msgid "Swiss cheese"
 msgstr "Kapcsolóstílus"
 
 #: ../share/filters/filters.svg.h:38
+#, fuzzy
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../share/filters/filters.svg.h:39
 #, fuzzy
@@ -525,7 +537,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:41
 #, fuzzy
 msgid "Inset"
-msgstr "Zsu_gorítás"
+msgstr "Zsugorítás"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
@@ -537,8 +549,9 @@ msgid "Dripping"
 msgstr "Szkript"
 
 #: ../share/filters/filters.svg.h:42
+#, fuzzy
 msgid "Random paint streaks downwards"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../share/filters/filters.svg.h:43
 #, fuzzy
@@ -647,8 +660,9 @@ msgid "Matte Bevel"
 msgstr "Méret beillesztése"
 
 #: ../share/filters/filters.svg.h:53
+#, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
@@ -712,6 +726,7 @@ msgid "Blur inner borders and intersections"
 msgstr ""
 "Rács-segédvonal-metszéspontokhoz való illesztés"
 "keret"
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
@@ -862,8 +877,9 @@ msgid "Morphology"
 msgstr "Alakítás"
 
 #: ../share/filters/filters.svg.h:75
+#, fuzzy
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "Elmosás"
 
 # Identifies the type of the related resource with an absolute URI
 #: ../share/filters/filters.svg.h:76
@@ -872,8 +888,9 @@ msgid "Hole"
 msgstr "Fajta (role):"
 
 #: ../share/filters/filters.svg.h:76
+#, fuzzy
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "alakzat"
 
 #: ../share/filters/filters.svg.h:77
 #, fuzzy
@@ -892,8 +909,9 @@ msgstr ""
 "kontúr"
 
 #: ../share/filters/filters.svg.h:78
+#, fuzzy
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "Simítás"
 
 #: ../share/filters/filters.svg.h:79
 #, fuzzy
@@ -950,15 +968,16 @@ msgstr ""
 #: ../share/filters/filters.svg.h:85
 #, fuzzy
 msgid "Rough paper"
-msgstr "Durvábbá tevési mód"
+msgstr "Durva"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:86
+#, fuzzy
 msgid "Rough and glossy"
-msgstr ""
+msgstr "Durva"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
@@ -986,8 +1005,9 @@ msgid "Warm inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:89
+#, fuzzy
 msgid "Blurred colorized contour, filled inside"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:90
 #, fuzzy
@@ -995,8 +1015,9 @@ msgid "Cool outside"
 msgstr "Téglalap-körvonal"
 
 #: ../share/filters/filters.svg.h:90
+#, fuzzy
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
@@ -1044,8 +1065,9 @@ msgid "Outline, double"
 msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:95
+#, fuzzy
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "vonal"
 
 #: ../share/filters/filters.svg.h:96
 #, fuzzy
@@ -1071,8 +1093,11 @@ msgid "Outline"
 msgstr "kontúr"
 
 #: ../share/filters/filters.svg.h:98
+#, fuzzy
 msgid "Adds a glowing blur and removes the shape"
 msgstr ""
+"Elmosás"
+"alakzat"
 
 #: ../share/filters/filters.svg.h:99
 #, fuzzy
@@ -1108,8 +1133,9 @@ msgid "Soft focus lens"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:102
+#, fuzzy
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Stained glass"
@@ -1156,8 +1182,9 @@ msgid "Smooth edges"
 msgstr "Simaság"
 
 #: ../share/filters/filters.svg.h:107
+#, fuzzy
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr ""
+msgstr "alakzat"
 
 #: ../share/filters/filters.svg.h:108
 #, fuzzy
@@ -1165,8 +1192,9 @@ msgid "Torn edges"
 msgstr "Csomópontok áthelyezése"
 
 #: ../share/filters/filters.svg.h:108
+#, fuzzy
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "alakzat"
 
 #: ../share/filters/filters.svg.h:109
 #, fuzzy
@@ -1176,17 +1204,21 @@ msgstr "Méter"
 #: ../share/filters/filters.svg.h:109
 #, fuzzy
 msgid "Blurred mask on the edge without altering the contents"
-msgstr "Maszk"
+msgstr ""
+"Elmosás"
+"Maszk"
 
 #: ../share/filters/filters.svg.h:110
 #, fuzzy
 msgid "Blur content"
-msgstr "_Keverési mód:"
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:110
 #, fuzzy
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "kontúr"
+msgstr ""
+"Elmosás"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:111
 #, fuzzy
@@ -1200,11 +1232,14 @@ msgstr ""
 #: ../share/filters/filters.svg.h:112
 #, fuzzy
 msgid "Roughen inside"
-msgstr "Durvábbá tevési mód"
+msgstr "Durvábbá tevés"
 
 #: ../share/filters/filters.svg.h:112
+#, fuzzy
 msgid "Roughen all inside shapes"
 msgstr ""
+"Durvábbá tevés"
+"alakzat"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Evanescent"
@@ -1215,7 +1250,9 @@ msgstr ""
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr "kontúr"
+msgstr ""
+"Elmosás"
+"kontúr"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Chalk and sponge"
@@ -1305,13 +1342,15 @@ msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
+#, fuzzy
 msgid "Simple blur"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:124
 #, fuzzy
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
+"Elmosás"
 "kitöltés"
 "körvonal"
 
@@ -1356,8 +1395,9 @@ msgid "Inkblot"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:129
+#, fuzzy
 msgid "Inkblot on tissue or rough paper"
-msgstr ""
+msgstr "Durva"
 
 #: ../share/filters/filters.svg.h:130
 #, fuzzy
@@ -1365,8 +1405,9 @@ msgid "Burnt edges"
 msgstr "Határoló téglalap típusa:"
 
 #: ../share/filters/filters.svg.h:130
+#, fuzzy
 msgid "Torn edges with a dark inner blur"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:131
 #, fuzzy
@@ -1378,7 +1419,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:131
 #, fuzzy
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr "kontúr"
+msgstr ""
+"kontúr"
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Liquid"
@@ -1473,8 +1516,9 @@ msgid "Smooth shader NR"
 msgstr "Simaság"
 
 #: ../share/filters/filters.svg.h:142
+#, fuzzy
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "Ceruza"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:144
@@ -1638,11 +1682,8 @@ msgstr ""
 #. Eraser
 #: ../share/filters/filters.svg.h:169
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
-#, fuzzy
 msgid "Eraser"
-msgstr ""
-"törlés"
-"radír"
+msgstr "Radír"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Make the lightest parts of the object progressively transparent"
@@ -1656,7 +1697,10 @@ msgstr "Elmosás módosítása"
 #: ../share/filters/filters.svg.h:170
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Lekerekített csúcsok átméretezése"
+msgstr ""
+"Lekerekített csúcsok átméretezése"
+"Durvábbá tevés"
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:171
 #, fuzzy
@@ -1679,10 +1723,11 @@ msgid "Drawing"
 msgstr "Rajz"
 
 #: ../share/filters/filters.svg.h:173
+#, fuzzy
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
-msgstr ""
+msgstr "Ceruza"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Velvet bump"
@@ -1698,16 +1743,18 @@ msgid "Alpha draw"
 msgstr "Alfa"
 
 #: ../share/filters/filters.svg.h:175
+#, fuzzy
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr ""
+msgstr "bitképek"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Alpha draw, color"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:176
+#, fuzzy
 msgid "Gives a transparent color fill effect to bitmaps and materials"
-msgstr ""
+msgstr "bitképek"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Chewing gum"
@@ -1759,8 +1806,9 @@ msgid "Dark and glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:181
+#, fuzzy
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:182
 #, fuzzy
@@ -1768,8 +1816,9 @@ msgid "Darken edges"
 msgstr "Sötétítés"
 
 #: ../share/filters/filters.svg.h:182
+#, fuzzy
 msgid "Darken the edges with an inner blur"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../share/filters/filters.svg.h:183
 #, fuzzy
@@ -1783,7 +1832,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:184
 #, fuzzy
 msgid "Rough and dilate"
-msgstr "Durvábbá tevési mód"
+msgstr "Durvábbá tevés"
 
 #: ../share/filters/filters.svg.h:184
 msgid "Create a turbulent contour around"
@@ -3491,8 +3540,9 @@ msgid "<i>Checking...</i>"
 msgstr ""
 
 #: ../src/dialogs/spellcheck.cpp:781
+#, fuzzy
 msgid "Fix spelling"
-msgstr ""
+msgstr "Helyesírás"
 
 #: ../src/dialogs/spellcheck.cpp:956
 #, fuzzy
@@ -3893,7 +3943,7 @@ msgstr ""
 #: ../src/display/snap-indicator.cpp:66
 #, fuzzy
 msgid "grid line"
-msgstr "Segédvonal"
+msgstr "vonal"
 
 #: ../src/display/snap-indicator.cpp:69
 #, fuzzy
@@ -3918,7 +3968,7 @@ msgstr "Rács-segédvonal-metszéspontokhoz való illesztés"
 #: ../src/display/snap-indicator.cpp:81
 #, fuzzy
 msgid "cusp node"
-msgstr "Csomó_pontokhoz való illesztés"
+msgstr "csúcs-csomópont"
 
 #: ../src/display/snap-indicator.cpp:84
 #, fuzzy
@@ -3958,7 +4008,7 @@ msgstr "lapkeret"
 #: ../src/display/snap-indicator.cpp:105
 #, fuzzy
 msgid "line midpoint"
-msgstr "Vonalszélesség"
+msgstr "Vonal"
 
 #: ../src/display/snap-indicator.cpp:108
 #, fuzzy
@@ -4036,12 +4086,12 @@ msgstr "Íves csomópont"
 #: ../src/display/snap-indicator.cpp:163
 #, fuzzy
 msgid "Cusp node"
-msgstr "Eltolási mód"
+msgstr "csúcs-csomópont"
 
 #: ../src/display/snap-indicator.cpp:166
 #, fuzzy
 msgid "Line midpoint"
-msgstr "Vonalszélesség"
+msgstr "Vonal"
 
 #: ../src/display/snap-indicator.cpp:169
 #, fuzzy
@@ -4604,8 +4654,9 @@ msgid "Adjust"
 msgstr "Árnyalat módosítása"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
+#, fuzzy
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr ""
+msgstr "bitképek"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -5113,7 +5164,9 @@ msgstr "SVG ejtése"
 #: ../src/extension/internal/filter/drop-shadow.h:92
 #, fuzzy
 msgid "Blur radius, px"
-msgstr "r - fogsugár (px)"
+msgstr ""
+"Elmosás"
+"r - fogsugár (px)"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:93
@@ -5145,8 +5198,9 @@ msgid "Filters"
 msgstr "Szűrők"
 
 #: ../src/extension/internal/filter/drop-shadow.h:48
+#, fuzzy
 msgid "Black, blurred drop shadow"
-msgstr ""
+msgstr "Elmosás"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
 #, fuzzy
@@ -5154,8 +5208,9 @@ msgid "Drop Glow"
 msgstr "Szín ejtése"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
+#, fuzzy
 msgid "White, blurred drop glow"
-msgstr ""
+msgstr "Elmosás"
 
 # TODO: ellenőrizni
 #: ../src/extension/internal/filter/filter-file.cpp:32
@@ -5429,7 +5484,9 @@ msgstr "PovRay-kimenet"
 #: ../src/extension/internal/pov-out.cpp:682
 #, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
-msgstr "PovRay (*.pov) (spline-ok exportálása)"
+msgstr ""
+"PovRay (*.pov) (spline-ok exportálása)"
+"alakzat"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
@@ -6371,16 +6428,22 @@ msgstr "Dokumentum mentése..."
 #: ../src/inkscape.cpp:399
 #, fuzzy
 msgid "Autosave failed! Could not find inkscape extension to save document."
-msgstr "kiterjesztés"
+msgstr ""
+"automatikus mentés"
+"kiterjesztés"
 
 #: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "Autosave failed! File %s could not be saved."
-msgstr "Nem sikerült elmenteni a(z) %s fájlt."
+msgstr ""
+"automatikus mentés"
+"Nem sikerült elmenteni a(z) %s fájlt."
 
 #: ../src/inkscape.cpp:424
+#, fuzzy
 msgid "Autosave complete."
-msgstr ""
+msgstr "automatikus mentés"
 
 #: ../src/inkscape.cpp:655
 msgid "Untitled document"
@@ -7144,8 +7207,9 @@ msgid "Interpolate Sub-Paths"
 msgstr "Interpolálás"
 
 #: ../src/live_effects/effect.cpp:118
+#, fuzzy
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "Durva"
 
 #: ../src/live_effects/effect.cpp:119
 #, fuzzy
@@ -7582,8 +7646,9 @@ msgid "Pattern is vertical"
 msgstr "A minta függőleges"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
+#, fuzzy
 msgid "Rotate pattern 90 deg before applying"
-msgstr ""
+msgstr "alkalmazása"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
@@ -7594,8 +7659,9 @@ msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
+#, fuzzy
 msgid "Frequency randomness"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
@@ -7604,11 +7670,12 @@ msgstr ""
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 #, fuzzy
 msgid "Growth"
-msgstr "Nyújtásos manipulálás"
+msgstr "növelés"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
+#, fuzzy
 msgid "Growth of distance between hatches."
-msgstr ""
+msgstr "növel"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
@@ -7657,8 +7724,9 @@ msgid "Magnitude jitter: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
+#, fuzzy
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7668,36 +7736,41 @@ msgid "2nd side"
 msgstr "szélső csomópont"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
+#, fuzzy
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
+#, fuzzy
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
+#, fuzzy
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr ""
+msgstr "véletlenszerű"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
@@ -7893,7 +7966,9 @@ msgstr ""
 #: ../src/live_effects/lpe-sketch.cpp:39
 #, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
+msgstr ""
+"Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
+"véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7909,8 +7984,9 @@ msgid "Overlap variation"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:43
+#, fuzzy
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
@@ -7988,17 +8064,19 @@ msgid "Length variation"
 msgstr "Kisebb telítettség"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
+#, fuzzy
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 #, fuzzy
 msgid "Placement randomness"
-msgstr "nem lekerekített"
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
+#, fuzzy
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
+msgstr "véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 #, fuzzy
@@ -8179,10 +8257,11 @@ msgid "Export document to a PNG file"
 msgstr "A dokumentum exportálása PNG formátumú képbe"
 
 #: ../src/main.cpp:294
+#, fuzzy
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
-msgstr ""
+msgstr "bitképek"
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -9018,7 +9097,7 @@ msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
-"szakasz"
+"vonalszakasz"
 "<b>%s</b>. Szög: %3.2f&#176;. Távolság: %s. Szöghöz való illesztés: <b>Ctrl</"
 "b>; a lánc befejezése: <b>Enter</b>."
 
@@ -9529,7 +9608,9 @@ msgstr "Lánceffektus eltávolítása"
 #: ../src/selection-chemistry.cpp:1014
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove filters from."
-msgstr "Jelöljön ki egy vagy több <b>szöveget</b> az alávágás eltávolításához."
+msgstr ""
+"Jelöljön ki egy vagy több <b>szöveget</b> az alávágás eltávolításához."
+"Szűrő eltávolítása"
 
 #: ../src/selection-chemistry.cpp:1024
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1335
@@ -9643,6 +9724,7 @@ msgstr "Jelölje ki az átkapcsolandó <b>klónokat</b>."
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 "Jelölje ki a klónozandó <b>objektumot</b>."
+"vágólap"
 "átkapcsol"
 
 #: ../src/selection-chemistry.cpp:1966
@@ -9738,7 +9820,7 @@ msgstr "Jelölje ki a bitképbe másolandó <b>objektumo(ka)t</b>."
 #: ../src/selection-chemistry.cpp:2497
 #, fuzzy
 msgid "Rendering bitmap..."
-msgstr "Láncok megfordítása..."
+msgstr "bitkép"
 
 #: ../src/selection-chemistry.cpp:2676
 msgid "Create bitmap"
@@ -10818,6 +10900,7 @@ msgstr ""
 "Lánc létrehozása: <b>kattintással</b> vagy <b>kattintással + húzással</b>. A "
 "kijelölt lánchoz való hozzáfűzés: <b>Shift</b>. Pontok rajzolása: <b>Ctrl"
 "+kattintással</b>."
+"vonal"
 
 #: ../src/tools-switch.cpp:184
 #, fuzzy
@@ -10933,19 +11016,25 @@ msgstr "húzással"
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:218
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"véletlenszerű"
 
 #: ../src/tweak-context.cpp:221
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:224
 #, c-format
@@ -10953,7 +11042,9 @@ msgstr "húzással"
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:227
 #, c-format
@@ -10962,6 +11053,7 @@ msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 "húzással"
 "kettőzés"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:230
 #, c-format
@@ -10973,19 +11065,27 @@ msgstr "húzással"
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
-msgstr "húzással"
+msgstr ""
+"Zsugorítás"
+"húzással"
+"a Shift billentyű lenyomása esetén"
+"nyújtás"
 
 #: ../src/tweak-context.cpp:242
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:250
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"Durvábbá tevés"
 
 #: ../src/tweak-context.cpp:254
 #, c-format
@@ -10997,13 +11097,18 @@ msgstr "húzással"
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>randomize colors</b>."
-msgstr "húzással"
+msgstr ""
+"húzással"
+"véletlenszerű"
 
 #: ../src/tweak-context.cpp:261
 #, c-format
 #, fuzzy
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
-msgstr "húzással"
+msgstr ""
+"Elmosás"
+"húzással"
+"a Shift billentyű lenyomása esetén"
 
 #: ../src/tweak-context.cpp:1218
 msgid "<b>Nothing selected!</b> Select objects to tweak."
@@ -11047,7 +11152,9 @@ msgstr "Eltolásos manipulálás"
 #: ../src/tweak-context.cpp:1282
 #, fuzzy
 msgid "Shrink/grow path tweak"
-msgstr "Zsugorításos manipulálás"
+msgstr ""
+"csökkent növel"
+"manipulálás"
 
 #: ../src/tweak-context.cpp:1286
 #, fuzzy
@@ -11442,12 +11549,16 @@ msgstr "A kijelölt kapocshálózat elrendezése"
 #: ../src/ui/dialog/align-and-distribute.cpp:901
 #, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "A kijelölt csomópontok vízszintes igazítása"
+msgstr ""
+"A kijelölt csomópontok vízszintes igazítása"
+"vonal"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
 #, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "A kijelölt csomópontok függőleges igazítása"
+msgstr ""
+"A kijelölt csomópontok függőleges igazítása"
+"vonal"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Distribute selected nodes horizontally"
@@ -12993,9 +13104,8 @@ msgid ""
 msgstr "illesztés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
-#, fuzzy
 msgid "Snapping"
-msgstr "Illesztési pontok"
+msgstr "Illesztés"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -13552,8 +13662,9 @@ msgid "Opacity when unfocused:"
 msgstr "Átlátszatlanság-csatorna"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:586
+#, fuzzy
 msgid "Time of opacity change animation:"
-msgstr ""
+msgstr "átlátszatlanság"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
 msgid "Miscellaneous:"
@@ -14269,7 +14380,6 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1042
-#, fuzzy
 msgid "SVG output"
 msgstr "SVG-kimenet"
 
@@ -14626,15 +14736,16 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
-#, fuzzy
 msgid "Interface"
-msgstr "Metszéspont"
+msgstr "Felület"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1111
 #, fuzzy
 msgid "Enable autosave (requires restart)"
-msgstr "A párbeszédablakok viselkedése (életbelépéshez újraindítás szükséges):"
+msgstr ""
+"automatikus mentés"
+"A párbeszédablakok viselkedése (életbelépéshez újraindítás szükséges):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1112
 msgid ""
@@ -14647,8 +14758,9 @@ msgid "Interval (in minutes):"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#, fuzzy
 msgid "Interval (in minutes) at which document will be autosaved"
-msgstr ""
+msgstr "automatikus mentés"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -14657,17 +14769,21 @@ msgid "filesystem|Path:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#, fuzzy
 msgid "The directory where autosaves will be written"
-msgstr ""
+msgstr "automatikus mentés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
 #, fuzzy
 msgid "Maximum number of autosaves:"
-msgstr "Legutóbbi dokumentumok maximális száma:"
+msgstr ""
+"automatikus mentés"
+"Legutóbbi dokumentumok maximális száma:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#, fuzzy
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr ""
+msgstr "automatikus mentés"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -14682,9 +14798,8 @@ msgstr ""
 #.
 #. -----------
 #: ../src/ui/dialog/inkscape-preferences.cpp:1136
-#, fuzzy
 msgid "Autosave"
-msgstr "_Szerzők"
+msgstr "Automatikus mentés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
 msgid "2x2"
@@ -14707,8 +14822,9 @@ msgid "Oversample bitmaps:"
 msgstr "Bitképek túlmintavételezése:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#, fuzzy
 msgid "Automatically reload bitmaps"
-msgstr ""
+msgstr "bitképek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "Automatically reload linked images when file is changed on disk"
@@ -14722,25 +14838,27 @@ msgstr ""
 "szerkesztő"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#, fuzzy
 msgid "Resolution for Create Bitmap Copy:"
-msgstr ""
+msgstr "bitkép"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1172
+#, fuzzy
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr ""
+msgstr "bitkép"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1174
-#, fuzzy
 msgid "Bitmaps"
-msgstr "Bitkép"
+msgstr "Bitképek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1226
 msgid "Language:"
 msgstr "Nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#, fuzzy
 msgid "Set the main spell check language"
-msgstr ""
+msgstr "_Helyesírás-ellenőrzés..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1230
 #, fuzzy
@@ -14748,10 +14866,11 @@ msgid "Second language:"
 msgstr "Nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#, fuzzy
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
-msgstr ""
+msgstr "_Helyesírás-ellenőrzés..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
 #, fuzzy
@@ -14759,10 +14878,11 @@ msgid "Third language:"
 msgstr "Nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#, fuzzy
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
-msgstr ""
+msgstr "_Helyesírás-ellenőrzés..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Ignore words with digits"
@@ -14781,9 +14901,8 @@ msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
-#, fuzzy
 msgid "Spellcheck"
-msgstr "Kijelölés"
+msgstr "Helyesírás-ellenőrzés"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1264
 msgid "Add label comments to printing output"
@@ -15749,7 +15868,9 @@ msgid ""
 "created by Peter Selinger\n"
 "\n"
 "http://potrace.sourceforge.net"
-msgstr "Köszönet Peter Selingernek - http://potrace.sourceforge.net"
+msgstr ""
+"bitkép"
+"Köszönet Peter Selingernek - http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -17063,17 +17184,15 @@ msgstr "Lánceffektus el_távolítása"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
-msgstr "Lánceffektusok eltávolítása a kijelölt objektumokról"
+msgstr "Az összes lánceffektus eltávolítása a kijelölt objektumokról"
 
 #: ../src/verbs.cpp:2306
-#, fuzzy
 msgid "Remove Filters"
-msgstr "Szűrő eltávolítása"
+msgstr "Szűrők eltávolítása"
 
 #: ../src/verbs.cpp:2307
-#, fuzzy
 msgid "Remove any filters from selected objects"
-msgstr "Maszk eltávolítása a kijelölésről"
+msgstr "Az összes szűrő eltávolítása a kijelölt objektumokról"
 
 #: ../src/verbs.cpp:2308
 msgid "_Delete"
@@ -18129,7 +18248,7 @@ msgstr "_Drótváz"
 
 #: ../src/verbs.cpp:2614
 msgid "Switch to outline (wireframe) display mode"
-msgstr "Váltás \"vázlat\" üzemmódba (drótvázas megjelenítés)"
+msgstr "Váltás \"kontúr\" üzemmódba (drótvázas megjelenítés)"
 
 #: ../src/verbs.cpp:2615
 msgid "_Toggle"
@@ -18392,16 +18511,12 @@ msgid "Manage, edit, and apply path effects"
 msgstr "Lánceffektusok kezelése, szerkesztése és alkalmazása"
 
 #: ../src/verbs.cpp:2684
-#, fuzzy
 msgid "Filter Editor..."
 msgstr "Szűrőszerkesztő..."
 
 #: ../src/verbs.cpp:2685
-#, fuzzy
 msgid "Manage, edit, and apply SVG filters"
-msgstr ""
-"SVG-szűrőeffektusok kezelése"
-"szerkesztés"
+msgstr "SVG-szűrők kezelése, szerkesztése és alkalmazása"
 
 #: ../src/verbs.cpp:2686
 msgid "SVG Font Editor..."
@@ -18503,24 +18618,20 @@ msgstr "Különböző tippek és trükkök"
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2717
-#, fuzzy
 msgid "Previous Extension"
-msgstr "Információ a _kiterjesztésekről"
+msgstr "Legutóbbi kiterjesztés"
 
 #: ../src/verbs.cpp:2718
-#, fuzzy
 msgid "Repeat the last extension with the same settings"
-msgstr "A legutóbbi effektus megismétlése azonos beállításokkal"
+msgstr "A legutóbbi kiterjesztés megismétlése azonos beállításokkal"
 
 #: ../src/verbs.cpp:2719
-#, fuzzy
 msgid "Previous Extension Settings..."
-msgstr "Előző effektus beállításai..."
+msgstr "Legutóbbi kiterjesztés beállításai..."
 
 #: ../src/verbs.cpp:2720
-#, fuzzy
 msgid "Repeat the last extension with new settings"
-msgstr "A legutóbbi effektus megismétlése új beállításokkal"
+msgstr "A legutóbbi kiterjesztés megismétlése új beállításokkal"
 
 #: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
@@ -19276,26 +19387,29 @@ msgid "Start Markers:"
 msgstr "Kezdet jelölése:"
 
 #: ../src/widgets/stroke-style.cpp:1234
+#, fuzzy
 msgid "Start Markers are drawn on the first node of a path or shape"
-msgstr ""
+msgstr "alakzat"
 
 #: ../src/widgets/stroke-style.cpp:1243
 msgid "Mid Markers:"
 msgstr "Közép jelölése:"
 
 #: ../src/widgets/stroke-style.cpp:1245
+#, fuzzy
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
-msgstr ""
+msgstr "alakzat"
 
 #: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers:"
 msgstr "Vég jelölése:"
 
 #: ../src/widgets/stroke-style.cpp:1256
+#, fuzzy
 msgid "End Markers are drawn on the last node of a path or shape"
-msgstr ""
+msgstr "alakzat"
 
 #: ../src/widgets/stroke-style.cpp:1605 ../src/widgets/stroke-style.cpp:1701
 msgid "Set stroke style"
@@ -19497,9 +19611,8 @@ msgid "Y coordinate of selected node(s)"
 msgstr "A kijelölt csomópont(ok) Y-koordinátája"
 
 #: ../src/widgets/toolbox.cpp:2028
-#, fuzzy
 msgid "Enable snapping"
-msgstr "Illesztés _bekapcsolása"
+msgstr "Illesztés bekapcsolása"
 
 #: ../src/widgets/toolbox.cpp:2037
 #, fuzzy
@@ -19507,9 +19620,8 @@ msgid "Bounding box"
 msgstr "Határoló téglalap típusa:"
 
 #: ../src/widgets/toolbox.cpp:2037
-#, fuzzy
 msgid "Snap bounding box corners"
-msgstr "Határoló téglalapok sa_rkaihoz való illesztés"
+msgstr "Határoló téglalap sarkainak illesztése"
 
 #: ../src/widgets/toolbox.cpp:2046
 #, fuzzy
@@ -19517,9 +19629,8 @@ msgid "Bounding box edges"
 msgstr "Határoló téglalap típusa:"
 
 #: ../src/widgets/toolbox.cpp:2046
-#, fuzzy
 msgid "Snap to edges of a bounding box"
-msgstr "Határoló téglalapok s_zéleihez való illesztés"
+msgstr "Határoló téglalap széleihez való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2055
 #, fuzzy
@@ -19527,9 +19638,8 @@ msgid "Bounding box corners"
 msgstr "Határoló téglalap s_arkai"
 
 #: ../src/widgets/toolbox.cpp:2055
-#, fuzzy
 msgid "Snap to bounding box corners"
-msgstr "Határoló téglalapok sa_rkaihoz való illesztés"
+msgstr "Határoló téglalap sarkaihoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2064
 msgid "BBox Edge Midpoints"
@@ -19554,16 +19664,12 @@ msgstr ""
 
 # TODO: ellenőrizni
 #: ../src/widgets/toolbox.cpp:2083
-#, fuzzy
 msgid "Snap nodes or handles"
-msgstr ""
-"Csomópont-vezérlőelemek elmozdítása"
-"illesztés"
+msgstr "Csomópontok vagy vezérlőelemek illesztése"
 
 #: ../src/widgets/toolbox.cpp:2091
-#, fuzzy
 msgid "Snap to paths"
-msgstr "_Láncokhoz való illesztés"
+msgstr "Útvonalakhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2100
 #, fuzzy
@@ -19571,9 +19677,8 @@ msgid "Path intersections"
 msgstr "Metszet"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Snap to path intersections"
-msgstr "Rács-segédvonal-metszéspontokhoz való illesztés"
+msgstr "Útvonal-metszéspontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2109
 #, fuzzy
@@ -19581,30 +19686,28 @@ msgid "To nodes"
 msgstr "Csomópontok áthelyezése"
 
 #: ../src/widgets/toolbox.cpp:2109
-#, fuzzy
 msgid "Snap to cusp nodes"
-msgstr "Csomó_pontokhoz való illesztés"
+msgstr "Csúcs-csomópontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2118
 #, fuzzy
 msgid "Smooth nodes"
-msgstr "Simaság"
+msgstr "íves csomópontok"
 
 #: ../src/widgets/toolbox.cpp:2118
-#, fuzzy
 msgid "Snap to smooth nodes"
-msgstr "Csomó_pontokhoz való illesztés"
+msgstr "Íves csomópontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2127
 #, fuzzy
 msgid "Line Midpoints"
-msgstr "Vonalszélesség"
+msgstr "Vonal"
 
 #: ../src/widgets/toolbox.cpp:2127
 #, fuzzy
 msgid "Snap from and to midpoints of line segments"
 msgstr ""
-"szakasz"
+"vonalszakasz"
 "illesztés"
 
 #: ../src/widgets/toolbox.cpp:2136
@@ -19635,21 +19738,16 @@ msgid "Page border"
 msgstr "Lapkeret"
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Snap to the page border"
-msgstr ""
-"Lap_keret megjelenítése"
-"illesztés"
+msgstr "Lapkerethez való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2163
-#, fuzzy
 msgid "Snap to grids"
-msgstr "<b>Rácsokhoz való illesztés</b>"
+msgstr "Rácsokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2172
-#, fuzzy
 msgid "Snap to guides"
-msgstr "<b>Segédvonalakhoz való illesztés</b>"
+msgstr "Segédvonalakhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2377
 msgid "Star: Change number of corners"
@@ -20058,13 +20156,13 @@ msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "A legbelső fordulat sugara (a spirál méretéhez viszonyítva)"
 
 #: ../src/widgets/toolbox.cpp:3826
+#, fuzzy
 msgid "Bezier"
-msgstr ""
+msgstr "Bézier"
 
 #: ../src/widgets/toolbox.cpp:3827
-#, fuzzy
 msgid "Create regular Bezier path"
-msgstr "Új lánc létrehozása"
+msgstr "Normál Bézier-útvonal létrehozása"
 
 #: ../src/widgets/toolbox.cpp:3833
 #, fuzzy
@@ -20072,28 +20170,24 @@ msgid "Spiro"
 msgstr "Spirál"
 
 #: ../src/widgets/toolbox.cpp:3834
-#, fuzzy
 msgid "Create Spiro path"
-msgstr "Spirál létrehozása"
+msgstr "Spiro-útvonal létrehozása"
 
 #: ../src/widgets/toolbox.cpp:3841
 msgid "Zigzag"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3842
-#, fuzzy
 msgid "Create a sequence of straight line segments"
-msgstr "szakasz"
+msgstr "Egyenes vonalszakaszok sorozatának létrehozása"
 
 #: ../src/widgets/toolbox.cpp:3848
-#, fuzzy
 msgid "Paraxial"
-msgstr "részleges"
+msgstr "Tengelymenti"
 
 #: ../src/widgets/toolbox.cpp:3849
-#, fuzzy
 msgid "Create a sequence of paraxial line segments"
-msgstr "szakasz"
+msgstr "Tengelymenti vonalszakaszok sorozatának létrehozása"
 
 #: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
 #: ../share/extensions/extrude.inx.h:3
@@ -20102,35 +20196,31 @@ msgstr "Mód:"
 
 #: ../src/widgets/toolbox.cpp:3857
 msgid "Mode of new lines drawn by this tool"
-msgstr ""
+msgstr "Az ezen eszközzel rajzolt új vonalak módja"
 
 #: ../src/widgets/toolbox.cpp:3886
-#, fuzzy
 msgid "Triangle in"
-msgstr "Egyszeres"
+msgstr "Háromszög, befelé"
 
 #: ../src/widgets/toolbox.cpp:3887
-#, fuzzy
 msgid "Triangle out"
-msgstr "Egyszeres"
+msgstr "Háromszög, kifelé"
 
 #: ../src/widgets/toolbox.cpp:3889
 msgid "From clipboard"
-msgstr ""
+msgstr "A vágólapról"
 
 #: ../src/widgets/toolbox.cpp:3914 ../src/widgets/toolbox.cpp:3915
-#, fuzzy
 msgid "Shape:"
-msgstr "Alak"
+msgstr "Alak:"
 
 #: ../src/widgets/toolbox.cpp:3914
-#, fuzzy
 msgid "Shape of new paths drawn by this tool"
-msgstr "A ceruzával létrehozott új láncok stílusa"
+msgstr "Az ezen eszközzel rajzolt új útvonalak alakja"
 
 #: ../src/widgets/toolbox.cpp:3999
 msgid "(many nodes, rough)"
-msgstr ""
+msgstr "(sok csomópont, durva)"
 
 #: ../src/widgets/toolbox.cpp:3999 ../src/widgets/toolbox.cpp:4119
 #: ../src/widgets/toolbox.cpp:4136 ../src/widgets/toolbox.cpp:4339
@@ -20140,31 +20230,27 @@ msgid "(default)"
 msgstr "(alapértelmezett)"
 
 #: ../src/widgets/toolbox.cpp:3999
-#, fuzzy
 msgid "(few nodes, smooth)"
-msgstr "A kijelölt csomópontok ívessé tétele"
+msgstr "(néhány csomópont, simított)"
 
 #: ../src/widgets/toolbox.cpp:4002
-#, fuzzy
 msgid "Smoothing:"
-msgstr "Simítás"
+msgstr "Simítás:"
 
 #: ../src/widgets/toolbox.cpp:4002
-#, fuzzy
 msgid "Smoothing: "
-msgstr "Simítás"
+msgstr "Simítás: "
 
 #: ../src/widgets/toolbox.cpp:4003
 msgid "How much smoothing (simplifying) is applied to the line"
-msgstr ""
+msgstr "Mekkora simítás (egyszerűsítés) van alkalmazva a vonalra"
 
 #: ../src/widgets/toolbox.cpp:4026
-#, fuzzy
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
-"Az alakzat paramétereinek visszaállítása az alapértelmezett értékekre (az "
+"A ceruza paramétereinek visszaállítása az alapértelmezett értékekre (az "
 "alapértelmezések módosítása az Inkscape-beállítások > Eszközök funkcióval "
 "lehetséges)"
 
@@ -20210,9 +20296,8 @@ msgid "Move mode"
 msgstr "Csomópontok áthelyezése"
 
 #: ../src/widgets/toolbox.cpp:4158
-#, fuzzy
 msgid "Move objects in any direction"
-msgstr "X iránybeli szög"
+msgstr "Objektumok elmozdítása bármely irányban"
 
 #: ../src/widgets/toolbox.cpp:4164
 #, fuzzy
@@ -20222,6 +20307,8 @@ msgstr "Csomópontok áthelyezése"
 #: ../src/widgets/toolbox.cpp:4165
 msgid "Move objects towards cursor; with Shift from cursor"
 msgstr ""
+"Objektumok elmozdítása a kurzor felé; a Shift billentyű lenyomása esetén "
+"a kurzor felől"
 
 #: ../src/widgets/toolbox.cpp:4171
 #, fuzzy
@@ -20229,9 +20316,8 @@ msgid "Move jitter mode"
 msgstr "Színmódosítási mód"
 
 #: ../src/widgets/toolbox.cpp:4172
-#, fuzzy
 msgid "Move objects in random directions"
-msgstr "Az X irányú távlatpont állapota"
+msgstr "Objektumok elmozdítása véletlenszerű irányokban"
 
 #: ../src/widgets/toolbox.cpp:4178
 #, fuzzy
@@ -20239,9 +20325,8 @@ msgid "Scale mode"
 msgstr "Csomópontok átméretezése"
 
 #: ../src/widgets/toolbox.cpp:4179
-#, fuzzy
 msgid "Shrink objects, with Shift enlarge"
-msgstr "Objektumcím beállítása"
+msgstr "Objektumok csökkentése; a Shift billentyű lenyomása esetén növelés"
 
 #: ../src/widgets/toolbox.cpp:4185
 #, fuzzy
@@ -20249,9 +20334,10 @@ msgid "Rotate mode"
 msgstr "Csomópontok elforgatása"
 
 #: ../src/widgets/toolbox.cpp:4186
-#, fuzzy
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "A kijelölés elforgatása az óramutató járásával ellentétes irányban 90 fokkal"
+msgstr ""
+"Objektumok elforgatása; a Shift billentyű lenyomása esetén az óramutató "
+"járásával ellentétes irányban"
 
 #: ../src/widgets/toolbox.cpp:4192
 #, fuzzy
@@ -20259,9 +20345,10 @@ msgid "Duplicate/delete mode"
 msgstr "Csomópont kettőzése"
 
 #: ../src/widgets/toolbox.cpp:4193
-#, fuzzy
 msgid "Duplicate objects, with Shift delete"
-msgstr "kettőzése"
+msgstr ""
+"Objektumok kettőzése; a Shift billentyű lenyomása esetén "
+"törlés"
 
 #: ../src/widgets/toolbox.cpp:4199
 msgid "Push mode"
@@ -20274,12 +20361,15 @@ msgstr "Láncok részeinek eltolása bármely irányba"
 #: ../src/widgets/toolbox.cpp:4206
 #, fuzzy
 msgid "Shrink/grow mode"
-msgstr "Zsugorítási mód"
+msgstr ""
+"csökkent növel"
+"mód"
 
 #: ../src/widgets/toolbox.cpp:4207
-#, fuzzy
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "Láncok részeinek zsugorítása (összehúzása)"
+msgstr ""
+"Láncok részeinek csökkentése (zsugorítása); a Shift billentyű lenyomása esetén "
+"növelés (nyújtás)"
 
 #: ../src/widgets/toolbox.cpp:4213
 #, fuzzy
@@ -20287,9 +20377,10 @@ msgid "Attract/repel mode"
 msgstr "Vonzási mód"
 
 #: ../src/widgets/toolbox.cpp:4214
-#, fuzzy
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr "Láncok részeinek vonzása a kurzor felé"
+msgstr ""
+"Láncok részeinek vonzása a kurzor felé; a Shift billentyű lenyomása esetén "
+"taszítás a kurzor felől"
 
 #: ../src/widgets/toolbox.cpp:4220
 msgid "Roughen mode"
@@ -20318,12 +20409,15 @@ msgstr "A kijelölt objektumok színeinek véletlenszerű módosítása"
 #: ../src/widgets/toolbox.cpp:4241
 #, fuzzy
 msgid "Blur mode"
-msgstr "_Keverési mód:"
+msgstr ""
+"Elmosás"
+"_Keverési mód:"
 
 #: ../src/widgets/toolbox.cpp:4242
-#, fuzzy
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "A kijelölt objektumok vízszintes tükrözése"
+msgstr ""
+"A kijelölt objektumok elmosásának növelése; a Shift billentyű lenyomása esetén "
+"az elmosás csökkentése"
 
 #: ../src/widgets/toolbox.cpp:4269
 msgid "Channels:"
@@ -20403,14 +20497,12 @@ msgstr ""
 "változtatásához"
 
 #: ../src/widgets/toolbox.cpp:4541
-#, fuzzy
 msgid "No preset"
-msgstr "Nincs előnézet"
+msgstr "Nincs előbeállítás"
 
 #: ../src/widgets/toolbox.cpp:4559
-#, fuzzy
 msgid "Save..."
-msgstr "Mentés más_ként..."
+msgstr "Mentés..."
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4710 ../src/widgets/toolbox.cpp:5729
@@ -20518,12 +20610,11 @@ msgid "Fixation:"
 msgstr "Rögzítettség:"
 
 #: ../src/widgets/toolbox.cpp:4765
-#, fuzzy
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = "
 "fixed angle)"
 msgstr ""
-"A szög viselkedése (0: a tollhegy mindig merőleges a vonalhúzás irányára, 1: "
+"A szög viselkedése (0: a tollhegy mindig merőleges a vonalhúzás irányára, 100: "
 "rögzített szög)"
 
 #. Cap Rounding
@@ -20670,9 +20761,8 @@ msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "A beviteli eszköz dőlésének használata a tollhegy szögének változtatásához"
 
 #: ../src/widgets/toolbox.cpp:4888
-#, fuzzy
 msgid "Choose a preset"
-msgstr "Nincs előnézet"
+msgstr "Válasszon előbeállítást"
 
 #: ../src/widgets/toolbox.cpp:4976
 msgid "Arc: Change start/end"
@@ -20723,14 +20813,12 @@ msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Az alakzat teljes ellipszissé tétele (hogy ne ív illetve cikk legyen)"
 
 #: ../src/widgets/toolbox.cpp:5297
-#, fuzzy
 msgid "Opacity:"
-msgstr "Átlátszatlanság"
+msgstr "Átlátszatlanság:"
 
 #: ../src/widgets/toolbox.cpp:5304
-#, fuzzy
 msgid "Pick opacity"
-msgstr "Alfa leolvasása"
+msgstr "Átlátszatlanság leolvasása"
 
 #: ../src/widgets/toolbox.cpp:5305
 msgid ""
@@ -20741,14 +20829,12 @@ msgstr ""
 "állapot esetén: csak a látható szín leolvasása az alfával előszorozva."
 
 #: ../src/widgets/toolbox.cpp:5308
-#, fuzzy
 msgid "Pick"
-msgstr "Pica"
+msgstr "Leolvasás"
 
 #: ../src/widgets/toolbox.cpp:5317
-#, fuzzy
 msgid "Assign opacity"
-msgstr "Átlátszatlanság módosítása"
+msgstr "Átlátszatlanság alkalmazása"
 
 #: ../src/widgets/toolbox.cpp:5318
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
@@ -20757,9 +20843,8 @@ msgstr ""
 "kitöltés- vagy körvonal-átlátszóságként"
 
 #: ../src/widgets/toolbox.cpp:5321
-#, fuzzy
 msgid "Assign"
-msgstr "Igazítás"
+msgstr "Alkalmazás"
 
 #: ../src/widgets/toolbox.cpp:5507
 #, fuzzy
@@ -20819,7 +20904,9 @@ msgstr "A határoló téglalapok sarkainak illesztése más határoló téglalap
 #: ../src/widgets/toolbox.cpp:5631
 #, fuzzy
 msgid "Choose a line segment type"
-msgstr "Szakasztípus módosítása"
+msgstr ""
+"vonal"
+"Szakasztípus módosítása"
 
 #: ../src/widgets/toolbox.cpp:5647
 #, fuzzy
@@ -21118,8 +21205,9 @@ msgstr "A kijelölt láncok uniójának létrehozása"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
+#, fuzzy
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr ""
+msgstr "Objektumok"
 
 #: ../share/extensions/perspective.py:29
 msgid ""
@@ -21528,7 +21616,7 @@ msgstr "Objektumok"
 #: ../share/extensions/draw_from_triangle.inx.h:7
 #, fuzzy
 msgid "Contact Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -21546,7 +21634,7 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:11
 #, fuzzy
 msgid "Draw From Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
@@ -21563,7 +21651,7 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:15
 #, fuzzy
 msgid "Excentral Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
 #, fuzzy
@@ -21578,7 +21666,7 @@ msgstr "kör"
 #: ../share/extensions/draw_from_triangle.inx.h:18
 #, fuzzy
 msgid "Extouch Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 #, fuzzy
@@ -21611,7 +21699,7 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:26
 #, fuzzy
 msgid "Orthic Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:27
 #, fuzzy
@@ -21631,12 +21719,14 @@ msgstr "Sugár"
 #: ../share/extensions/draw_from_triangle.inx.h:31
 #, fuzzy
 msgid "Report this triangle's properties"
-msgstr "Segédvonal-tulajdonságok beállítása"
+msgstr ""
+"háromszög"
+"Segédvonal-tulajdonságok beállítása"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 #, fuzzy
 msgid "Symmedial Triangle"
-msgstr "Egyszeres"
+msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
 #, fuzzy
@@ -21650,7 +21740,9 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:35
 #, fuzzy
 msgid "Triangle Function"
-msgstr "Kék-függvény"
+msgstr ""
+"háromszög"
+"Kék-függvény"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
 #, fuzzy
@@ -22109,8 +22201,9 @@ msgid "Centre Dot Diameter [px]"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:4
+#, fuzzy
 msgid "Circumferential Label Outset [px]"
-msgstr ""
+msgstr "nyújtás"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
@@ -22228,9 +22321,8 @@ msgstr ""
 "Segédvonal"
 
 #: ../share/extensions/guides_creator.inx.h:16
-#, fuzzy
 msgid "Preset"
-msgstr "Visszaállítás"
+msgstr "Előbeállítás"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
@@ -22384,8 +22476,9 @@ msgid "Translate Y"
 msgstr "_Fordítók"
 
 #: ../share/extensions/interp_att_g.inx.h:25
+#, fuzzy
 msgid "Where to apply?"
-msgstr ""
+msgstr "alkalmazása"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
@@ -22456,13 +22549,14 @@ msgid "Step length (px)"
 msgstr "Lépéshossz (px)"
 
 #: ../share/extensions/lindenmayer.inx.h:15
+#, fuzzy
 msgid ""
 "The path is generated by applying the substitutions of Rules to the Axiom, "
 "Order times. The following commands are recognized in Axiom and Rules: Any "
 "of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left "
 "-: turn right |: turn 180 degrees [: remember point ]: return to remembered "
 "point"
-msgstr ""
+msgstr "alkalmazása"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -22911,8 +23005,9 @@ msgid "Light z-Position"
 msgstr "Pozíció"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
+#, fuzzy
 msgid "Line Thickness / px"
-msgstr ""
+msgstr "vonal"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
@@ -22985,9 +23080,12 @@ msgid "Snub Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy, no-c-format
+#, no-c-format
+#, fuzzy
 msgid "Stroke Opacity/ %"
-msgstr "Körv_onalrajzolat"
+msgstr ""
+"Körv_onalrajzolat"
+"átlátszatlanság"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
@@ -23639,7 +23737,7 @@ msgstr "Lépéshossz (px)"
 #: ../share/extensions/triangle.inx.h:14
 #, fuzzy
 msgid "Triangle"
-msgstr "Egyszeres"
+msgstr "Háromszög"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
