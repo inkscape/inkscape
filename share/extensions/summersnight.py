@@ -22,6 +22,12 @@ from ffgeom import *
 import gettext
 _ = gettext.gettext
 
+try:
+    from subprocess import Popen, PIPE
+    bsubprocess = True
+except:
+    bsubprocess = False
+
 class Project(inkex.Effect):
     def __init__(self):
             inkex.Effect.__init__(self)
@@ -58,10 +64,16 @@ class Project(inkex.Effect):
                 file = self.args[-1]
                 id = self.options.ids[0]
                 for query in self.q.keys():
-                    f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
-                    self.q[query] = float(f.read())
-                    f.close()
-                    err.close()
+                    if bsubprocess:
+                        p = Popen('inkscape --query-%s --query-id=%s "%s"' % (query,id,file), shell=True, stdout=PIPE, stderr=PIPE)
+                        rc = p.wait()
+                        self.q[query] = float(p.stdout.read())
+                        err = p.stderr.read()
+                    else:
+                        f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
+                        self.q[query] = float(f.read())
+                        f.close()
+                        err.close()
 
                 if obj.tag == inkex.addNS("path",'svg'):
                     self.process_path(obj)

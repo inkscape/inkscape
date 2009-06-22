@@ -23,6 +23,12 @@ THE SOFTWARE.
 """
 import inkex, os, csv, math
 
+try:
+    from subprocess import Popen, PIPE
+    bsubprocess = True
+except:
+    bsubprocess = False
+
 class Restack(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
@@ -50,7 +56,13 @@ class Restack(inkex.Effect):
             file = self.args[ -1 ]
             #get all bounding boxes in file by calling inkscape again with the --querry-all command line option
             #it returns a comma seperated list structured id,x,y,w,h
-            _,f,err = os.popen3( "inkscape --query-all %s" % ( file ) )
+            if bsubprocess:
+                p = Popen('inkscape --query-all "%s"' % (file), shell=True, stdout=PIPE, stderr=PIPE)
+                rc = p.wait()
+                f = p.stdout
+                err = p.stderr
+            else:
+                _,f,err = os.popen3( "inkscape --query-all %s" % ( file ) )
             reader=csv.reader( f.readlines() )
             f.close()
             err.close()

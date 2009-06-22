@@ -29,6 +29,12 @@ except:
     inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
     exit()
 
+try:
+    from subprocess import Popen, PIPE
+    bsubprocess = True
+except:
+    bsubprocess = False
+
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def unittouu(string):
     unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
@@ -77,10 +83,16 @@ class Project(inkex.Effect):
                 file = self.args[-1]
                 id = self.options.ids[0]
                 for query in q.keys():
-                    f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
-                    q[query] = float(f.read())
-                    f.close()
-                    err.close()
+                    if bsubprocess:
+                        p = Popen('inkscape --query-%s --query-id=%s "%s"' % (query,id,file), shell=True, stdout=PIPE, stderr=PIPE)
+                        rc = p.wait()
+                        q[query] = float(p.stdout.read())
+                        err = p.stderr.read()
+                    else:
+                        f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
+                        q[query] = float(f.read())
+                        f.close()
+                        err.close()
                 sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
             else:
                 if envelope.tag == inkex.addNS('g','svg'):
