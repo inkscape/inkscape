@@ -35,6 +35,7 @@ Polygn newPoly(int size)
 {
     Polygn newpoly;
 
+    newpoly.id = 0;
     newpoly.pn = size;
     newpoly.ps = (Point *) calloc(size, sizeof(Point));
     if (!newpoly.ps)
