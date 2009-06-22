@@ -237,6 +237,9 @@ enum SPGuideDragType {
 static Geom::Point drag_origin;
 static SPGuideDragType drag_type = SP_DRAG_NONE;
 
+// Min distance from anchor to initiate rotation, measured in screenpixels
+#define tol 40.0 
+
 gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 {
     static bool moved = false;
@@ -257,7 +260,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
-                if (event->button.state & GDK_CONTROL_MASK) {
+                if (event->button.state & GDK_CONTROL_MASK && !(event->button.state & GDK_SHIFT_MASK)) {
                     SPDocument *doc = SP_OBJECT_DOCUMENT(guide);
                     sp_guide_remove(guide);
                     sp_document_done(doc, SP_VERB_NONE, _("Delete guide"));
@@ -266,7 +269,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 }
 
                 sp_event_context_snap_window_open(desktop->event_context);
-                double tol = 40.0; // Measured in screenpixels
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
@@ -329,6 +331,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     case SP_DRAG_ROTATE:
                     {
                         double angle = angle_between(drag_origin - guide->point_on_line, motion_dt - guide->point_on_line);
+                        if  (event->motion.state & GDK_CONTROL_MASK) {
+                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                            unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
+                            if (snaps) {
+                                double sections = floor(angle * snaps / M_PI + .5);
+                                angle = (M_PI / snaps) * sections;
+                            }
+                        }
                         sp_guide_set_normal(*guide, guide->normal_to_line * Geom::Rotate(angle), false);
                         break;
                     }
@@ -385,6 +395,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             case SP_DRAG_ROTATE:
                             {
                                 double angle = angle_between(drag_origin - guide->point_on_line, event_dt - guide->point_on_line);
+                                if  (event->motion.state & GDK_CONTROL_MASK) {
+                                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                                    unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
+                                    if (snaps) {
+                                        double sections = floor(angle * snaps / M_PI + .5);
+                                        angle = (M_PI / snaps) * sections;
+                                    }
+                                }
                                 sp_guide_set_normal(*guide, guide->normal_to_line * Geom::Rotate(angle), true);
                                 break;
                             }
@@ -420,6 +438,19 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     {
             sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
 
+            // set move or rotate cursor
+            Geom::Point const event_w(event->crossing.x, event->crossing.y);
+            Geom::Point const event_dt(desktop->w2d(event_w));
+
+            GdkCursor *guide_cursor; 
+            if (Geom::L2(guide->point_on_line - event_dt) < tol/desktop->current_zoom() || !(event->crossing.state & GDK_SHIFT_MASK)) {
+                // the click was on the guide 'anchor'
+                guide_cursor = gdk_cursor_new (GDK_FLEUR);
+            } else {
+                guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
+            }
+            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
+
             char *guide_description = sp_guide_description(guide);
             desktop->guidesMessageContext()->setF(Inkscape::NORMAL_MESSAGE, _("<b>Guideline</b>: %s"), guide_description);
             g_free(guide_description);
@@ -427,6 +458,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     }
     case GDK_LEAVE_NOTIFY:
             sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
+
+            // restore event context's cursor
+            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, desktop->event_context->cursor);
+
             desktop->guidesMessageContext()->clear();
             break;
     default:
