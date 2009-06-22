@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-19 16:58+0700\n"
+"PO-Revision-Date: 2009-06-22 15:23+0700\n"
 "Last-Translator: Piseth AUK <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -4620,15 +4620,13 @@ msgstr "ភាព​ស្រអាប់ %"
 
 #: ../src/extension/internal/filter/drop-shadow.h:39
 #: ../src/extension/internal/filter/drop-shadow.h:94
-#, fuzzy
 msgid "Horizontal offset, px"
-msgstr "អុហ្វសិត​ផ្តេក​"
+msgstr "អុហ្វសិត​ផ្តេក​ គិតជា​ភីកសែល"
 
 #: ../src/extension/internal/filter/drop-shadow.h:40
 #: ../src/extension/internal/filter/drop-shadow.h:95
-#, fuzzy
 msgid "Vertical offset, px"
-msgstr "អុហ្វសិត​បញ្ឈរ​"
+msgstr "អុហ្វសិត​បញ្ឈរ​ គិតជាភីកសែល"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
@@ -4641,16 +4639,15 @@ msgstr "តម្រង​"
 
 #: ../src/extension/internal/filter/drop-shadow.h:48
 msgid "Black, blurred drop shadow"
-msgstr ""
+msgstr "ស្រមោល​ទម្លាក់​ព្រិល ពណ៌​ខ្មៅ"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
-#, fuzzy
 msgid "Drop Glow"
-msgstr "ទម្លាក់​ពណ៌​"
+msgstr "ទម្លាក់​ពន្លឺ"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
 msgid "White, blurred drop glow"
-msgstr ""
+msgstr "ពន្លឺ​ទម្លាក់​ព្រិល ពណ៌​ស"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
 msgid "Bundled"
@@ -4665,23 +4662,21 @@ msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "ឈ្មោះ​ថត​ម៉ូឌុល​ខាង​ក្រៅ​ទទេ ។  តម្រង​នឹង​មិន​ត្រូវ​បាន​ផ្ទុក​ទេ ។"
 
 #: ../src/extension/internal/filter/snow.h:32
-#, fuzzy
 msgid "Snow crest"
-msgstr "គ្មាន​ការ​កំណត់​ជា​មុន"
+msgstr ""
 
 #: ../src/extension/internal/filter/snow.h:34
 msgid "Drift Size"
 msgstr "ទំហំ​រអិល"
 
 #: ../src/extension/internal/filter/snow.h:42
-#, fuzzy
 msgid "Snow has fallen on object"
-msgstr "កំណត់​រចនាប័ទ្ម​លើ​វត្ថុ​"
+msgstr "ព្រឹល​ធ្លាក់​លើ​វត្ថុ"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
-msgstr "ការ​បញ្ចូល %s GDK pixbuf"
+msgstr "ព័ត៌មាន​បញ្ចូល %s GDK pixbuf"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -4745,18 +4740,16 @@ msgid "Draw a path which is a grid"
 msgstr "គូរ​ផ្លូវ​ជា​ក្រឡា​ចក្រត្រង្គ"
 
 #: ../src/extension/internal/javafx-out.cpp:945
-#, fuzzy
 msgid "JavaFX Output"
-msgstr "លទ្ធផល​ LaTeX"
+msgstr "លទ្ធផល JavaFX"
 
 #: ../src/extension/internal/javafx-out.cpp:950
 msgid "JavaFX (*.fx)"
-msgstr ""
+msgstr "JavaFX (*.fx)"
 
 #: ../src/extension/internal/javafx-out.cpp:951
-#, fuzzy
 msgid "JavaFX Raytracer File"
-msgstr "ឯកសារ PovRay Raytracer"
+msgstr "ឯកសារ JavaFX Raytracer"
 
 #: ../src/extension/internal/latex-pstricks.cpp:337
 msgid "LaTeX Print"
@@ -4858,7 +4851,7 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
-msgstr "រូបភាព​ដែល​បាន​បង្កប់"
+msgstr "បង្កប់​រូបភាព"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
@@ -4909,9 +4902,8 @@ msgid "PovRay Output"
 msgstr "លទ្ធផល PovRay"
 
 #: ../src/extension/internal/pov-out.cpp:682
-#, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
-msgstr "PovRay (*.pov) (export splines)"
+msgstr "PovRay (*.pov) (តែ​ផ្លូវ និង​រូបរាង​ប៉ុណ្ណោះ)"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
@@ -5004,14 +4996,12 @@ msgid "Vector graphics format used by Corel WordPerfect"
 msgstr "ទ្រង់ទ្រាយ​ក្រាហ្វិក​វ៉ិចទ័រ​បានប្រើ​ដោយ Corel WordPerfect"
 
 #: ../src/extension/prefdialog.cpp:236
-#, fuzzy
 msgid "Live preview"
-msgstr "មើល​ជា​មុន​បន្តផ្ទាល់"
+msgstr "ការ​មើលឡើងវិញ​ផ្ទាល់"
 
 #: ../src/extension/prefdialog.cpp:236
-#, fuzzy
 msgid "Is the effect previewed live on canvas?"
-msgstr "ពិនិត្យ​ថាតើ​កា​រកំណត់​បែបផែន​ត្រូ​វបាន​បង្ហាញ​បន្តផ្ទាល់​លើ​ផ្ទាំង​ក្រណាត់"
+msgstr "តើ​បែបផែន​ដែល​បាន​មើល​ជាមុន​មាន​ផ្ទាល់​នៅ​លើ​ផ្ទាំង​កំណត់​ទេ ?"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -5074,9 +5064,7 @@ msgstr "គ្មាន​កា​រកំណត់​បាន​ប្រើ
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr ""
-"រក​មិន​ឃើញ​ផ្នែក​បន្ថែម​របស់ Inkscape ដើម្បី​រក្សាទុក​ឯកសារ (%s) ។  វា​អាច​បណ្ដាល​​មក​ពី​មិន​ស្គាល់​​ផ្នែក​"
-"បន្ថែម​ឈ្មោះ​ឯកសារ​ ។"
+msgstr "រក​មិន​ឃើញ​ផ្នែក​បន្ថែម​របស់ Inkscape ដើម្បី​រក្សាទុក​ឯកសារ (%s) ។  វា​អាច​បណ្ដាល​​មក​ពី​មិន​ស្គាល់​​ផ្នែក​បន្ថែម​ឈ្មោះ​ឯកសារ​ ។"
 
 #: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 msgid "Document not saved."
@@ -5089,7 +5077,7 @@ msgstr "ឯកសារ %s មិន​អាច​ត្រូវ​បាន�
 
 #: ../src/file.cpp:609
 msgid "Document saved."
-msgstr "បាន​រក្សាទុក​ឯកសារ ។ុក​ ។"
+msgstr "បាន​រក្សាទុក​ឯកសារ ។"
 
 #: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
@@ -5144,10 +5132,7 @@ msgid ""
 "Error exporting the document. Verify if the server name, username and "
 "password are correct, if the server has support for webdav and verify if you "
 "didn't forget to choose a license."
-msgstr ""
-"កំហុស​ក្នុង​ការ​នាំ​ឯកសារ​ចេញ ។ ផ្ទៀងផ្ទាត់​ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីន​បម្រើ ឈ្មោះ​អ្នក​ប្រើ និង​ពាក្យ​សម្ងាត់​"
-"ត្រឹមត្រូវ ។ ប្រសិន​បើ​ម៉ាស៊ី​ន​បម្រើ​គាំទ្រ webdav និង​ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​អ្នក​មិន​បានភ្លេច​ ជ្រើស​អាជ្ញាបណ្ណ​"
-"ដែរ ។"
+msgstr "កំហុស​ក្នុង​ការ​នាំ​ឯកសារ​ចេញ ។ ផ្ទៀងផ្ទាត់​ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីន​បម្រើ ឈ្មោះ​អ្នក​ប្រើ និង​ពាក្យ​សម្ងាត់​ត្រឹមត្រូវ ។ ប្រសិន​បើ​ម៉ាស៊ី​ន​បម្រើ​គាំទ្រ webdav និង​ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​អ្នក​មិន​បានភ្លេច​ ជ្រើស​អាជ្ញាបណ្ណ​ដែរ ។"
 
 #: ../src/file.cpp:1395
 msgid "Document exported..."
@@ -5847,14 +5832,12 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "បង្ហាញ ឬលាក់​របារ​ពាក្យ​បញ្ជា (ក្រោម​ម៉ឺនុយ)"
 
 #: ../src/interface.cpp:825
-#, fuzzy
 msgid "Snap Controls Bar"
-msgstr "របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
+msgstr "របារ​គ្រប់គ្រង​ការ​ចាប់យក"
 
 #: ../src/interface.cpp:825
-#, fuzzy
 msgid "Show or hide the snapping controls"
-msgstr "បង្ហាញ ឬ​លាក់​របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
+msgstr "បង្ហាញ ឬ​លាក់​ការ​គ្រប់គ្រង​ការ​ចាប់យក"
 
 #: ../src/interface.cpp:827
 msgid "Tool Controls Bar"
@@ -5936,8 +5919,7 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">មាន​ឯកសារ​​ដែល​មាន​ឈ្មោះ \"%s\" រួច​ហើយ ។ តើ​អ្នក​"
-"ពីត​ជា​ចង់​ជំនួស​វា​ឬ ?</span>\n"
+"<span weight=\"bold\" size=\"larger\">មាន​ឯកសារ​​ដែល​មាន​ឈ្មោះ \"%s\" រួច​ហើយ ។ តើ​អ្នក​ពីត​ជា​ចង់​ជំនួស​វា​ឬ ?</span>\n"
 "\n"
 "ឯកសារ​មាន​នៅ​ក្នុង \"%s\" រួច​ហើយ ។ ការ​ជំនួស​វា​នឹង​សរសរ​ជាន់​លើ​មាតិកា​របស់​វា ។"
 
@@ -6512,9 +6494,8 @@ msgid "Rotate copies"
 msgstr "បង្វិល​ច្បាប់​ចម្លង​"
 
 #: ../src/live_effects/effect.cpp:102
-#, fuzzy
 msgid "Recursive skeleton"
-msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស"
+msgstr "គ្រោង​ហៅ​ខ្លួន​ឯង"
 
 #: ../src/live_effects/effect.cpp:103
 msgid "Ruler"
@@ -6886,22 +6867,20 @@ msgid "Maximal stroke width"
 msgstr "ទទឹង​ស្នាម​គូស​ធំបំផុត"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
-#, fuzzy
 msgid "Pen roundness"
-msgstr "មិន​បាន​ធ្វើ​ឲ្យ​មូល​"
+msgstr "ភាព​មូល​របស់​ប៊ិក"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
 msgid "Min/Max width ratio"
-msgstr ""
+msgstr "សមាមាត្រ​ទទឹង​អតិ./​អប្ប."
 
 #: ../src/live_effects/lpe-dynastroke.cpp:78
-#, fuzzy
 msgid "angle"
 msgstr "មុំ"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:78
 msgid "direction of thickest strokes (opposite = thinest)"
-msgstr ""
+msgstr "ទិស​នៃ​ការ​គូសវាស​ក្រាស់​បំផុត (ផ្ទុយ = ស្ដើង​បំផុត)"
 
 #. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
 #: ../src/live_effects/lpe-dynastroke.cpp:80
@@ -6929,7 +6908,7 @@ msgstr "របៀប​ពង្រីក​"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Make the stroke thiner near it's start"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​គំនូសវាស​កាន់​តែ​ស្ដើង​ទៅ​ពេល​ចាប់ផ្ដើម​របស់​វា"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Fade for"
@@ -6937,7 +6916,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Make the stroke thiner near it's end"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​គំនូសវាស​កាន់តែ​ស្ដើង​ទៅកាន់​ចុង​បញ្ចប់​របស់​វា"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
 #, fuzzy
@@ -14040,18 +14019,16 @@ msgid "Path:"
 msgstr "ផ្លូវ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
-#, fuzzy
 msgid "The directory where autosaves will be written"
-msgstr "កំណត់​ថត​ដែល​ការ​រក្សា​ទុក​ស្វ័យ​ប្រវត្តិ​នឹង​ត្រូវ​បាន​រក្សា​ទុក"
+msgstr "ថត ដែល​ការ​រក្សាទុក​ស្វ័យប្រវត្តិ​នឹង​ត្រូវបាន​រក្សាទុក"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
-#, fuzzy
 msgid "Maximum number of autosaves:"
-msgstr "ចំនួន​រក្សា​ទុក​ស្វ័យ​ប្រវត្តិ​អតិបរមា"
+msgstr "ចំនួន​ការ​រក្សាទុក​ដោយស្វ័យប្រវត្តិ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr ""
+msgstr "ចំនួន​​ឯកសារ​ដែលបាន​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​អតិបរមា ។ ប្រើ​វា​ដើម្បី​កំណត់​ទំហំ​ឧបករណ៍​ផ្ទុក​ដែល​បាន​ប្រើ"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -14066,9 +14043,8 @@ msgstr ""
 #.
 #. -----------
 #: ../src/ui/dialog/inkscape-preferences.cpp:1134
-#, fuzzy
 msgid "Autosave"
-msgstr "អ្នកនិពន្ធ"
+msgstr "ការ​រក្សាទុក​ស្វ័យប្រវត្តិ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1140
 msgid "2x2"
@@ -14095,9 +14071,8 @@ msgid "Automatically reload bitmaps"
 msgstr "ផ្ទុក​រូបភាព​ឡើង​វិញ​ស្វ័យ​ប្រវត្តិ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
-#, fuzzy
 msgid "Automatically reload linked images when file is changed on disk"
-msgstr "អនុញ្ញាត​ការ​ផ្ទុក​រូបភាព​ដែល​តភ្ជាប់​ស្វ័យ​ប្រវត្តិ ពេល​ផ្លាស់ប្ដូរ​លើ​ថាស ។"
+msgstr "ផ្ទុក​រូបភាព​ដែល​បាន​តភ្ជាប់​ឡើងវិញ​ដោយ​ស្វ័យប្រវត្តិ នៅពេល​ដែល​ផ្លាស់ប្ដូរ​ឯកសារ​នៅ​លើ​ថាស"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "Bitmap editor:"
@@ -14105,67 +14080,63 @@ msgstr "កម្មវិធី​និពន្ធ​រូបភាព ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1169
 msgid "Resolution for Create Bitmap Copy:"
-msgstr ""
+msgstr "គុណភាព​បង្ហាញ​សម្រាប់​បង្កើត​ច្បាប់​ចម្លង​ផែនទី​រូបភាព ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr ""
+msgstr "គុណភាព​បង្ហាញ​ដែល​បាន​ប្រើ​ដោយ​ពាក្យ​បញ្ជា បង្កើត​ច្បាប់​ចម្លង​ផែនទី​រូបភាព"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1172
-#, fuzzy
 msgid "Bitmaps"
-msgstr "រូបភាព"
+msgstr "ផែនទី​រូបភាព"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1224
-#, fuzzy
 msgid "Language:"
-msgstr "ភាសា"
+msgstr "ភាសា ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1225
 msgid "Set the main spell check language"
-msgstr ""
+msgstr "កំណត់​ភាសា​ពិនិត្យ​អក្ខរាវិរុទ្ធ​ចម្បង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1228
 msgid "Second language:"
-msgstr ""
+msgstr "ភាសា​ទី ២ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
-msgstr ""
+msgstr "កំណត់​ភាសា​ពិនិត្យ​អក្ខរាវិរុទ្ធ​ទីពីរ ។ ការ​ពិនិត្យ​នេះ នឹង​ឈប់​នៅ​ត្រង់​ពាក្យ​ណា​ដែល​មិន​ស្គាល់​នៅ​ក្នុង​ភាសា​ដែល​បាន​ជ្រើស​ទាំងអស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1232
-#, fuzzy
 msgid "Third language:"
-msgstr "ភាសា"
+msgstr "ភាសា​ទី ៣ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
-msgstr ""
+msgstr "កំណត់​​ភាសា​ពិនិត្យ​អក្ខរាវិរុទ្ធ​ទីបី ។ ការ​ពិនិត្យ​នេះ នឹង​ឈប់​នៅ​ត្រង់​ពាក្យ​ដែល​មិន​ស្គាល់​នៅ​ក្នុង​ភាសា​ដែល​បាន​ជ្រើស​ទាំងអស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Ignore words with digits"
-msgstr ""
+msgstr "មិន​អើពើ​នឹង​ពាក្យ​ដែល​មាន​តួលេខ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Ignore words containing digits, such as \"R2D2\""
-msgstr ""
+msgstr "មិនអើ​ពើ​នឹង​ពាក្យ​ដែល​មាន​តួលេខ ឧទាហរណ៍​ដូចជា \"R2D2\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Ignore words in ALL CAPITALS"
-msgstr ""
+msgstr "មិន​អើពើ​នឹង​ពាក្យ​ដែល​សរសេរជា​អក្សរ​ពុម្ព​ទាំងអស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words in all capitals, such as \"IUPAC\""
-msgstr ""
+msgstr "មិនអើពើ​នឹង​ពាក្យ​ដែល​សរសេរ​ជា​អក្សរ​ពុម្ព​ទាំងអស់ ដូចជា \"IUPAC\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
-#, fuzzy
 msgid "Spellcheck"
-msgstr "ជ្រើស"
+msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1262
 msgid "Add label comments to printing output"
@@ -14175,9 +14146,7 @@ msgstr "បន្ថែម​សេចក្ដី​អធិប្បាយ​
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
-msgstr ""
-"នៅ​ពេល​បើក សេចក្ដី​អធិប្បាយ​នឹង​ត្រូវ​បានបន្ថែម​ទៅ​លទ្ធផល​បោះពុម្ព​ដើម ដោយ​សម្គាល់​លទ្ធផល​ដែល​បាន​បង្ហាញ​"
-"សម្រាប់​វត្ថុ​ដែល​​មាន​ស្លាក​របស់​វា"
+msgstr "នៅ​ពេល​បើក សេចក្ដី​អធិប្បាយ​នឹង​ត្រូវ​បានបន្ថែម​ទៅ​លទ្ធផល​បោះពុម្ព​ដើម ដោយ​សម្គាល់​លទ្ធផល​ដែល​បាន​បង្ហាញ​សម្រាប់​វត្ថុ​ដែល​​មាន​ស្លាក​របស់​វា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Prevent sharing of gradient definitions"
@@ -14188,10 +14157,7 @@ msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
-msgstr ""
-"នៅ​ពេល​ដែល​បើក ការ​កំណត់​ជម្រាល​ដែល​បាន​ចែក​រំលែក​ត្រូវ​បានប្រើ​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ពេល​ផ្លាស់ប្ដូរ មិនគូស​ធីក​"
-"ដើម្បី​អនុញ្ញាត​កា​រចែករំលែក​របស់​ការកំណត់​ជម្រាល ដូច្នេះ​កែសម្រួល​វត្ថុ​មួយ​អាច​ប៉ះពាល់​ដល់​វត្ថុ​ផ្សេង​ ដោយ​ប្រើ​"
-"ជម្រាល​ដូច​គ្នា"
+msgstr "នៅ​ពេល​ដែល​បើក ការ​កំណត់​ជម្រាល​ដែល​បាន​ចែក​រំលែក​ត្រូវ​បានប្រើ​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ពេល​ផ្លាស់ប្ដូរ មិនគូស​ធីក​ដើម្បី​អនុញ្ញាត​កា​រចែករំលែក​របស់​ការកំណត់​ជម្រាល ដូច្នេះ​កែសម្រួល​វត្ថុ​មួយ​អាច​ប៉ះពាល់​ដល់​វត្ថុ​ផ្សេង​ ដោយ​ប្រើ​ជម្រាល​ដូច​គ្នា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1271
 msgid "Simplification threshold:"
@@ -14202,18 +14168,15 @@ msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
 "invoking it again after a pause restores the default threshold."
-msgstr ""
-"តើ​ការ​ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​សាមញ្ញខ្លាំង​ប៉ុនណា​តាមលំនាំដើម ។ ប្រសិន​បើ​អ្នក​ហៅពាក្យ​បញ្ជា​នេះ​ច្រើន​ដងក្នុង​"
-"លំដាប់លឿន វា​នឹង​ធ្វើការ​បំពាន​កាន់​តែ​ច្រើនការ​ហៅវា​ម្ដង​ទៀត​បន្ទាប់​ពី​ផ្អាក​កា​រស្ដារ​កម្រិត​ពណ៌​លំនាំដើម ។"
+msgstr "តើ​ការ​ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​សាមញ្ញខ្លាំង​ប៉ុនណា​តាមលំនាំដើម ។ ប្រសិន​បើ​អ្នក​ហៅពាក្យ​បញ្ជា​នេះ​ច្រើន​ដងក្នុង​លំដាប់លឿន វា​នឹង​ធ្វើការ​បំពាន​កាន់​តែ​ច្រើនការ​ហៅវា​ម្ដង​ទៀត​បន្ទាប់​ពី​ផ្អាក​កា​រស្ដារ​កម្រិត​ពណ៌​លំនាំដើម ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid "Latency skew:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1275
-#, fuzzy
 msgid "(requires restart)"
-msgstr "ឥរិយាបថ​ប្រអប់ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុំព្យូទ័រ​ឡើង​វិញ) ៖"
+msgstr "(តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុំព្យូទ័រ​ឡើង​វិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1276
 msgid ""
@@ -14223,64 +14186,58 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid "Pre-render named icons"
-msgstr ""
+msgstr "បង្ហាញ​រូបតំណាង​ដែល​មាន​ឈ្មោះ​ជាមុន"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
-msgstr ""
+msgstr "នៅពេល​ដែល​បើក រូបតំណាង​ដែល​មាន​ឈ្មោះ នឹង​ត្រូវបាន​បង្ហាញ​នៅមុន​ការ​បង្ហាញ​ចំណុចប្រទាក់​អ្នកប្រើ (ui) ។ វា​សម្រាប់​ធ្វើការ​លើ​កំហុស​នៅ​ក្នុង​ការ​ជូន​ដំណឹង​រូបតំណាង​ដែល​មានឈ្មោះ​របស់ GTK+"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "User config: "
-msgstr ""
+msgstr "ការ​កំណត់​រចនា​សម្ព័ន្ធ​អ្នកប្រើ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1290
-#, fuzzy
 msgid "User data: "
-msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖"
+msgstr "ទិន្នន័យ​អ្នកប្រើ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1294
-#, fuzzy
 msgid "User cache: "
-msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖"
+msgstr "ឃ្លាំង​របស់​អ្នកប្រើ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "System config: "
-msgstr ""
+msgstr "ការ​កំណត់​រចនា​សម្ព័ន្ធ​ប្រព័ន្ធ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
-#, fuzzy
 msgid "System data: "
-msgstr "កំណត់​​ជា​​លំនាំដើម​"
+msgstr "ទិន្នន័យ​របស់​ប្រព័ន្ធ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "PIXMAP: "
-msgstr ""
+msgstr "PIXMAP ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1308
 msgid "DATA: "
-msgstr ""
+msgstr "ទិន្នន័យ ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1312
-#, fuzzy
 msgid "UI: "
-msgstr "លេខ​សម្គាល់​​ ៖"
+msgstr "UI ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1321
 msgid "Icon theme: "
-msgstr ""
+msgstr "ស្បែក​រូបតំណាង ៖ "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#, fuzzy
 msgid "System info"
-msgstr "ប្រព័ន្ធ"
+msgstr "ព័ត៌មាន​អំពី​ប្រព័ន្ធ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#, fuzzy
 msgid "General system information"
-msgstr "ព័ត៌មាន​សារ"
+msgstr "ព័ត៌មាន​អំពី​ប្រព័ន្ធ​ទូទៅ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
 msgid "Misc"
@@ -14356,12 +14313,10 @@ msgid "Unlock layer"
 msgstr "មិន​ចាក់សោ​ស្រទាប់"
 
 #: ../src/ui/dialog/layers.cpp:645
-#, fuzzy
 msgid "Layers"
 msgstr "​ស្រទាប់"
 
 #: ../src/ui/dialog/layers.cpp:654
-#, fuzzy
 msgid "New"
 msgstr "ថ្មី"
 
@@ -14371,21 +14326,19 @@ msgstr "កំពូល"
 
 #: ../src/ui/dialog/layers.cpp:665
 msgid "Up"
-msgstr ""
+msgstr "លើ"
 
 #: ../src/ui/dialog/layers.cpp:671
 msgid "Dn"
-msgstr ""
+msgstr "ក្រោម"
 
 #: ../src/ui/dialog/layers.cpp:677
-#, fuzzy
 msgid "Bot"
 msgstr "បាត"
 
 #: ../src/ui/dialog/layers.cpp:687
-#, fuzzy
 msgid "X"
-msgstr "X ៖"
+msgstr "X"
 
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
@@ -14437,14 +14390,12 @@ msgid "Move path effect down"
 msgstr "យក​បែបផែន​ផ្លូវ​ចេញ"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:462
-#, fuzzy
 msgid "Activate path effect"
-msgstr "បិទភ្ជាប់​បែបផែន​ផ្លូវ​បន្តផ្ទាល់​"
+msgstr "ធ្វើ​ឲ្យ​បែបផែន​ផ្លូវ​សកម្ម​"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:462
-#, fuzzy
 msgid "Deactivate path effect"
-msgstr "បិទភ្ជាប់​បែបផែន​ផ្លូវ​បន្តផ្ទាល់​"
+msgstr "ធ្វើ​ឲ្យ​បែបផែន​ផ្លូវ​អសកម្ម"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -14485,9 +14436,7 @@ msgstr "រួចរាល់ ។"
 msgid ""
 "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in "
 "preferences.xml"
-msgstr ""
-"អនុញ្ញាត​ការ​បង្ហាញ​កំណត់​ហេតុ​ដោយ​កំណត់​​គុណលក្ខណៈ dialogs.debug 'ផ្ដូរទិស' ទៅ ១ នៅ​ក្នុង "
-"preferences.xml"
+msgstr "អនុញ្ញាត​ការ​បង្ហាញ​កំណត់​ហេតុ​ដោយ​កំណត់​​គុណលក្ខណៈ dialogs.debug 'ផ្ដូរទិស' ទៅ ១ នៅ​ក្នុង preferences.xml"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:78
 msgid "File"
@@ -14509,9 +14458,7 @@ msgstr "កំហុស​ខណៈពេល​អាន​មតិព័ត៌
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
-msgstr ""
-"បរាជ័យ​ក្នុង​ការ​ទទួល បើក​មតិ​ព័ត៌មាន​បណ្ណាល័យ​បន្ទប់​រូបភាព RSS ។ ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីនបម្រើ​"
-"ត្រឹមត្រូវ​នៅ​ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ->ផ្សេងៗ (ឧ. ៖ openclipart.org)"
+msgstr "បរាជ័យ​ក្នុង​ការ​ទទួល បើក​មតិ​ព័ត៌មាន​បណ្ណាល័យ​បន្ទប់​រូបភាព RSS ។ ផ្ទៀងផ្ទាត់ ប្រសិន​បើ​ឈ្មោះ​ម៉ាស៊ីនបម្រើ​ត្រឹមត្រូវ​នៅ​ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ->ផ្សេងៗ (ឧ. ៖ openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
@@ -14519,7 +14466,7 @@ msgstr "ម៉ាស៊ីន​បម្រើ​បាន​ផ្ដល់​
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 msgid "Search for:"
-msgstr "ស្វែងរក ៖"
+msgstr "ស្វែងរក ៖"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:549
 msgid "No files matched your search"
@@ -14543,7 +14490,7 @@ msgstr "មិន​អាច​រៀបចំ​ឯកសារ"
 
 #: ../src/ui/dialog/print.cpp:121
 msgid "Failed to set CairoRenderContext"
-msgstr "បាន​បរាជ័យ​ក្នុង​កា​រកំណត់​មតិ​បបទ​បង្ហាញ Cairo"
+msgstr "បរាជ័យ​ក្នុង​ការ​កំណត់ CairoRenderContext"
 
 #. set up dialog title, based on document name
 #: ../src/ui/dialog/print.cpp:161
@@ -14645,29 +14592,24 @@ msgid "Open session file"
 msgstr "បើក​ឯកសារ​សម័យ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
-#, fuzzy
 msgid "Set SVG Font attribute"
-msgstr "កំណត់​​គុណលក្ខណៈ​"
+msgstr "កំណត់​គុណលក្ខណៈ​ពុម្ពអក្សរ SVG"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
-#, fuzzy
 msgid "Adjust kerning value"
-msgstr "លៃ​តម្រូវ​ភាពលាំៗ​នៃពណ៌"
+msgstr "លៃ​តម្រូវ​តម្លៃ kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
-#, fuzzy
 msgid "Family Name:"
-msgstr "ឈ្មោះ​ឯកសារ"
+msgstr "ឈ្មោះ​គ្រួសារ ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
-#, fuzzy
 msgid "Set width:"
-msgstr "ទទឹង​មាត្រដ្ឋាន"
+msgstr "កំណត់​ទទឹង ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
-#, fuzzy
 msgid "glyph"
-msgstr "អាល់ហ្វា"
+msgstr ""
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:465
