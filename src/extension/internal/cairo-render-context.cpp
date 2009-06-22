@@ -1314,7 +1314,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
 
     bool no_fill = style->fill.isNone() || style->fill_opacity.value == 0;
     bool no_stroke = style->stroke.isNone() || style->stroke_width.computed < 1e-9 || 
-                    style->fill_opacity.value == 0;
+                    style->stroke_opacity.value == 0;
 
     if (no_fill && no_stroke)
         return true;
