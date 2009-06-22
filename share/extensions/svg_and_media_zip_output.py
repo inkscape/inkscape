@@ -33,7 +33,7 @@ TODO
 - maybe add better extention
 """
 
-import inkex, os.path
+import inkex, os.path, urlparse, urllib
 import os
 import string
 import zipfile
@@ -94,9 +94,14 @@ class SVG_and_Media_ZIP_Output(inkex.Effect):
     def collectAndZipImages(self, node, docname, z):
         xlink = node.get(inkex.addNS('href',u'xlink'))
         if (xlink[:4]!='data'):
-            absref = node.get(inkex.addNS('absref',u'sodipodi'))
-            if absref is None:
-              absref = node.get(inkex.addNS('href',u'xlink'))
+            absref=node.get(inkex.addNS('absref','sodipodi'))
+            url=urlparse.urlparse(xlink)
+            href=urllib.unquote(url.path)
+            if os.name == 'nt' and href[0] == '/':
+                href = href[1:]
+            if (href != None):
+                absref=os.path.realpath(href)
+
             if (os.path.isfile(absref)):
                 shutil.copy(absref, self.tmp_dir)
                 z.write(absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
