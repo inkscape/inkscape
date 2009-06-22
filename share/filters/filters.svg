@@ -1025,7 +1025,7 @@
 <feGaussianBlur id="feGaussianBlur3040" stdDeviation="5" result="result1" />
 <feComposite id="feComposite3042" operator="arithmetic" k2="2" k1="0" k3="0" in="result1" />
 </filter>
-<filter id="filter3956" inkscape:label="Glow" inkscape:menu="Blurs" inkscape:menu-tooltip="Glow of object's own color at the edges">
+<filter id="filter3956" inkscape:label="Glow" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Glow of object's own color at the edges">
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3958" />
 <feComposite in="SourceGraphic" operator="over" id="feComposite3960" />
 </filter>
