@@ -165,6 +165,10 @@ RFE</a>).</p>
 <title>Guides, grids, snapping</title>
 <mouse><key><left-drag/></key> <action>drag off a ruler to create guide</action></mouse>
 <note>Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</note>
+<mouse><key><left-drag/></key> <action>drag a ruler to move it</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>drag a ruler (not near anchor) to rotate it</action></mouse>
+<mouse><key><ctrl/><shift/><left-drag/></key> <action>rotate ruler with angle snapping</action></mouse>
+<mouse><key><ctrl/><left-click/></key> <action>delete ruler</action></mouse>
 <keys><key>|</key> <key><shift/>\</key> <action>toggle guides and snapping to guides</action></keys>
 <note>If you want to see the guides but not snap to them, use the global snapping toggle (% key).</note>
 <note>When you create a new guide by dragging off the ruler, guide visibility and snapping are turned on.</note>
