@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-22 15:23+0700\n"
+"PO-Revision-Date: 2009-06-23 16:37+0700\n"
 "Last-Translator: Piseth AUK <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -7021,7 +7021,7 @@ msgstr "ជំហាន"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "កំណត់​ចំនួន​ជំហាន​ពី​ដើម​ផ្លូវ រហូត​ដល់​ចុង ។"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 #, fuzzy
@@ -7037,9 +7037,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Interruption width"
-msgstr "វិធីសាស្ត្រ​កែខៃ​"
+msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
@@ -14609,56 +14608,51 @@ msgstr "កំណត់​ទទឹង ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
 msgid "glyph"
-msgstr ""
+msgstr "ចម្លាក់​ខូង"
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:465
-#, fuzzy
 msgid "Add glyph"
-msgstr "បន្ថែម​​ស្រទាប់"
+msgstr "បន្ថែម​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:481
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:525
-#, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "ជ្រើស <b>ផ្លូវ</b> ត្រូវ​ភ្ជាប់/ដើម​ដំបូង ។"
+msgstr "ជ្រើស​​<b>ផ្លូវ</b> ដើម្បី​កំណត់​ខ្សែកោង​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:489
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:533
-#, fuzzy
 msgid "The selected object does not have a <b>path</b> description."
-msgstr "វត្ថុ​ដែល​បាន​ជ្រើស​មិន​មែន <b>ជា​ផ្លូវ​ទេ</b> មិន​អាច​ភ្ជាប់/ដើម​ដំបូង ។"
+msgstr "វត្ថុ​ដែលបាន​ជ្រើស​មិនមាន​សេចក្ដី​ពិពណ៌នា​<b>ផ្លូវ</b>​ទេ ។"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
-msgstr ""
+msgstr "គ្មាន​ចម្លាក់​ខូង​ដែលបាន​ជ្រើស​នៅ​ក្នុង​ប្រអប់ SVGFonts ។"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
 msgid "Set glyph curves"
-msgstr ""
+msgstr "កំណត់​ខ្សែកោង​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
 msgid "Reset missing-glyph"
-msgstr ""
+msgstr "កំណត់​ចម្លាក់​ខូង​​ដែល​បាត់"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
-msgstr ""
+msgstr "កែសម្រួល​ឈ្មោះ​ចម្លាក់ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
-msgstr ""
+msgstr "កំណត់​យូនីកូដ​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
-#, fuzzy
 msgid "Remove font"
-msgstr "យក​តម្រង​ចេញ"
+msgstr "យក​ពុម្ពអក្សរ​ចេញ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
-#, fuzzy
 msgid "Remove glyph"
-msgstr "យក​ការ​បំពេញ​ចេញ​ទាំង​អស់"
+msgstr "យក​ចម្លាក់​ខូង​ចេញ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 #, fuzzy
@@ -14667,12 +14661,11 @@ msgstr "យក​បន្ទាត់​នាំ​ផ្លូវ​ដែល
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
-msgstr ""
+msgstr "ចម្លាក់ខូង​ដែល​បាត់ ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
-#, fuzzy
 msgid "From selection..."
-msgstr "យក​ពី​ជម្រើស​"
+msgstr "ពី​ជម្រើស..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:654
 #: ../src/ui/widget/preferences-widget.cpp:590
@@ -14680,23 +14673,20 @@ msgid "Reset"
 msgstr "កំណត់​ឡើង​វិញ​"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:665
-#, fuzzy
 msgid "Glyph name"
-msgstr "ឈ្មោះស្រទាប់ ៖"
+msgstr "ឈ្មោះ​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 msgid "Matching string"
-msgstr ""
+msgstr "ខ្សែ​អក្សរ​ដែល​ដូច"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
-#, fuzzy
 msgid "Add Glyph"
-msgstr "បន្ថែម​​ស្រទាប់"
+msgstr "បន្ថែម​ចម្លាក់​ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:676
-#, fuzzy
 msgid "Get curves from selection..."
-msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស"
+msgstr "យក​ខ្សែកោង​ពី​ជម្រើស..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
@@ -14710,60 +14700,52 @@ msgstr "សម្រួល​ចន្លោះ​តួ​អក្សរ​ឡ
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
-msgstr ""
+msgstr "ចម្លាក់​ខូង​ទី ១ ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
-msgstr ""
+msgstr "ចម្លាក់ខូង​ទី ២ ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
-#, fuzzy
 msgid "Add pair"
-msgstr "បន្ថែម​​ស្រទាប់"
+msgstr "បន្ថែម​គូ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
-#, fuzzy
 msgid "First Unicode range"
-msgstr "បញ្ចូល​តួ​អក្សរ​យូនីកូដ"
+msgstr "ជួរ​យូនីកូដ​ទី ១"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
-msgstr ""
+msgstr "ជួរ​យូនីកូដ​ទី ២"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
-#, fuzzy
 msgid "Kerning value:"
-msgstr "ជម្រះ​តម្លៃ​"
+msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
-#, fuzzy
 msgid "Set font family"
-msgstr "គ្រួសារ​ពុម្ពអក្សរ"
+msgstr "កំណត់​គ្រួសារ​ពុម្ពអក្សរ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:828
-#, fuzzy
 msgid "font"
 msgstr "ពុម្ព​អក្សរ"
 
 #. select_font(font);
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:842
-#, fuzzy
 msgid "Add font"
-msgstr "បន្ថែម​តម្រង"
+msgstr "បន្ថែម​ពុម្ពអក្សរ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:862
-#, fuzzy
 msgid "_Font"
 msgstr "ពុម្ព​អក្សរ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:870
-#, fuzzy
 msgid "_Global Settings"
-msgstr "ការ​កំណត់​ទំព័រ"
+msgstr "ការ​កំណត់​សកល"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
-msgstr ""
+msgstr "ចម្លាក់ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 #, fuzzy
@@ -14772,14 +14754,12 @@ msgstr "គំនូរ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
-#, fuzzy
 msgid "Sample Text"
-msgstr "មាត្រដ្ឋាន x"
+msgstr "អត្ថបទ​គំរូ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:884
-#, fuzzy
 msgid "Preview Text:"
-msgstr "មើល​ជា​មុន"
+msgstr "អត្ថបទ​មើល​ជាមុន ៖"
 
 #: ../src/ui/dialog/swatches.cpp:329
 #, c-format
@@ -14802,33 +14782,28 @@ msgid "Edit..."
 msgstr "កែសម្រួល..."
 
 #: ../src/ui/dialog/swatches.cpp:483
-#, fuzzy
 msgid "Convert"
-msgstr "គម្រប​"
+msgstr "បម្លែង​"
 
 #: ../src/ui/dialog/swatches.cpp:645
 msgid "Change color definition"
 msgstr "ផ្លាស់ប្ដូរ​ការ​កំណត់​ពណ៌"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove stroke color"
-msgstr "យក​ស្នាម​គូស​ចេញ "
+msgstr "យក​ពណ៌​គូសវាស​ចេញ"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove fill color"
-msgstr "យក​ការ​បំពេញ​ចេញ​ទាំង​អស់"
+msgstr "យក​ពណ៌​បំពេញ​ចេញ"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "កំណត់​ពណ៌​ស្នាម​គូស"
+msgstr "កំណត់​ពណ៌​គូសវាស​ទៅ​គ្មាន"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "កំណត់​ពណ៌​បំពេញ"
+msgstr "កំណត់​ពណ៌​បំពេញ​ទៅ​គ្មាន"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set stroke color from swatch"
@@ -14841,7 +14816,7 @@ msgstr "កំណត់​ពណ៌​បំពេញ​ពីគំរូ"
 #: ../src/ui/dialog/swatches.cpp:1192
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
-msgstr "ថត​ក្ដារលាយ (%s) មិន​អាច​ប្រើ​បាន​ទេ ។"
+msgstr "ថត​ក្ដារលាយ (%s) មិន​អាច​ប្រើ​បាន​ទេ ។"
 
 #: ../src/ui/dialog/tile.cpp:346
 msgid "Arrange in a grid"
@@ -14849,7 +14824,7 @@ msgstr "រៀបចំ​ក្នុង​ក្រឡាចត្រង្គ
 
 #: ../src/ui/dialog/tile.cpp:652
 msgid "Rows:"
-msgstr "ជួរ​ដេក ៖"
+msgstr "ជួរ​ដេក ៖"
 
 #: ../src/ui/dialog/tile.cpp:660
 msgid "Number of rows"
@@ -14867,12 +14842,12 @@ msgstr "ប្រសិន​បើ​មិន​បាន​កំណត់ �
 #. #### Radio buttons to control horizontal alignment ####
 #: ../src/ui/dialog/tile.cpp:680 ../src/ui/dialog/tile.cpp:750
 msgid "Align:"
-msgstr "តម្រឹម ៖"
+msgstr "តម្រឹម ៖"
 
 #. #### Number of columns ####
 #: ../src/ui/dialog/tile.cpp:722
 msgid "Columns:"
-msgstr "ជួឈរ ៖"
+msgstr "ជួឈរ ៖"
 
 #: ../src/ui/dialog/tile.cpp:730
 msgid "Number of columns"
@@ -14893,7 +14868,7 @@ msgstr "សម​នឹង​ប្រអប់​ជម្រើស"
 
 #: ../src/ui/dialog/tile.cpp:795
 msgid "Set spacing:"
-msgstr "កំណត់​​ចន្លោះ ៖"
+msgstr "កំណត់​​ចន្លោះ ៖"
 
 #: ../src/ui/dialog/tile.cpp:815
 msgid "Vertical spacing between rows (px units)"
@@ -15425,13 +15400,12 @@ msgid "Cursor coordinates"
 msgstr "កូអរដោនេ​​ទស្សន៍​ទ្រនិច​"
 
 #: ../src/ui/view/edit-widget.cpp:1089
-#, fuzzy
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
-"<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​សេរី​ដើម្បី​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) "
-"ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
+"<b>ស្វាគមន៍​មកកាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​គូរ​ដើម្បី​បង្កើត​វត្ថុ ។ "
+"ប្រើ​ឧបករណ៍​ជ្រើ (ព្រួញ) ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
 
 #: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
@@ -15441,8 +15415,7 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">រក្សាទុក​កា​រផ្លាស់ប្ដូរ​ទោ​ឯកសារ \"%s\" មុន​ពេល​បិទ?"
-"</span>\n"
+"<span weight=\"bold\" size=\"larger\">រក្សាទុក​កា​រផ្លាស់ប្ដូរ​ទោ​ឯកសារ \"%s\" មុន​ពេល​បិទ?</span>\n"
 "\n"
 "ប្រសិន​បើ​​បិទ​ដោយ​មិន​រក្សាទុក ការ​ផ្លាស់ប្ដូរ​របស់អ្នក​នឹង​ត្រូវ​បាន​បដិសេធ ។"
 
@@ -16138,18 +16111,16 @@ msgstr "មិន​អាច​ផ្លាស់ទី​ស្រទាប់
 #: ../src/verbs.cpp:1237 ../src/verbs.cpp:1255
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s ច្បាប់ចម្លង"
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Duplicate layer"
-msgstr "តម្រង​ស្ទួន"
+msgstr "ចម្លង​ស្រទាប់"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
 #: ../src/verbs.cpp:1266
-#, fuzzy
 msgid "Duplicated layer."
-msgstr "តម្រង​ស្ទួន"
+msgstr "ស្រទាប់​ដែល​បាន​ចម្លង ។"
 
 #: ../src/verbs.cpp:1295
 msgid "Delete layer"
