@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-22 19:48+0200\n"
+"POT-Creation-Date: 2009-06-23 21:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,9 +76,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:112
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
 msgid "Blurs"
 msgstr ""
 
@@ -111,9 +110,10 @@ msgid "Cutout"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:120
-#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -154,8 +154,10 @@ msgstr ""
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:164
 msgid "Overlays"
 msgstr ""
 
@@ -247,10 +249,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:79 ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:160 ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
 #: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:164
 msgid "Materials"
 msgstr ""
 
@@ -283,12 +283,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:170
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:186
 msgid "Image effects"
 msgstr ""
 
@@ -420,17 +417,19 @@ msgid "Organic"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:193 ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194
 msgid "Textures"
 msgstr ""
 
@@ -502,10 +501,16 @@ msgstr ""
 msgid "Van Gogh painting effect for bitmaps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:171 ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:45
 msgid "HSL Bumps"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192
+msgid "Bumps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:45
@@ -1025,7 +1030,7 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-msgid "HSL Bubbles, alpha"
+msgid "HSL bubbles, alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:106
@@ -1179,7 +1184,7 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL Bubbles, diffuse"
+msgid "HSL bubbles, diffuse"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
@@ -1623,7 +1628,7 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
-msgid "HSL Bubbles, transparent"
+msgid "HSL bubbles, transparent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
@@ -1970,16 +1975,16 @@ msgstr ""
 msgid "Create guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:263 ../src/desktop-events.cpp:408
+#: ../src/desktop-events.cpp:266 ../src/desktop-events.cpp:426
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:401
+#: ../src/desktop-events.cpp:419
 msgid "Move guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:455
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr ""
@@ -9351,19 +9356,24 @@ msgstr[1] ""
 msgid "Guides Around Page"
 msgstr ""
 
-#: ../src/sp-guide.cpp:420
-#, c-format
-msgid "vertical, at %s"
+#: ../src/sp-guide.cpp:418
+msgid ""
+"<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
 msgstr ""
 
-#: ../src/sp-guide.cpp:423
+#: ../src/sp-guide.cpp:422
 #, c-format
-msgid "horizontal, at %s"
+msgid "vertical, at %s; %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:428
+#: ../src/sp-guide.cpp:425
 #, c-format
-msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
+msgid "horizontal, at %s; %s"
+msgstr ""
+
+#: ../src/sp-guide.cpp:430
+#, c-format
+msgid "at %d degrees, through (%s,%s); %s"
 msgstr ""
 
 #: ../src/sp-image.cpp:1128
@@ -19396,8 +19406,8 @@ msgstr ""
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
-#: ../share/extensions/perspective.py:55
-#: ../share/extensions/summersnight.py:30
+#: ../share/extensions/perspective.py:61
+#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr ""
 
@@ -19414,36 +19424,36 @@ msgid ""
 "numpy."
 msgstr ""
 
-#: ../share/extensions/perspective.py:62
-#: ../share/extensions/summersnight.py:39
+#: ../share/extensions/perspective.py:68
+#: ../share/extensions/summersnight.py:45
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:46
+#: ../share/extensions/perspective.py:74
+#: ../share/extensions/summersnight.py:52
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 
-#: ../share/extensions/perspective.py:87
-#: ../share/extensions/summersnight.py:72
+#: ../share/extensions/perspective.py:99
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
 
-#: ../share/extensions/perspective.py:89
-#: ../share/extensions/summersnight.py:74
+#: ../share/extensions/perspective.py:101
+#: ../share/extensions/summersnight.py:86
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:92
-#: ../share/extensions/summersnight.py:77
+#: ../share/extensions/perspective.py:104
+#: ../share/extensions/summersnight.py:89
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -19475,11 +19485,11 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr ""
 
-#: ../share/extensions/summersnight.py:32
+#: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
 msgstr ""
 
-#: ../share/extensions/svg_and_media_zip_output.py:109
+#: ../share/extensions/svg_and_media_zip_output.py:113
 #, python-format
 msgid "Could not locate file: %s"
 msgstr ""
