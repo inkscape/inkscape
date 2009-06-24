@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-23 21:32+0200\n"
+"POT-Creation-Date: 2009-06-24 20:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
 #: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
 msgid "Bumps"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgid "Thin like a soap membrane"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft ridge"
+msgid "Matte ridge"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:54
@@ -1702,6 +1702,22 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid "Embossed leather"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid "Combine a bump with a leathery texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+msgid "Carnaval"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
