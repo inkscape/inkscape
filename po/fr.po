@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-23 21:32+0200\n"
-"PO-Revision-Date: 2009-06-23 22:13+0100\n"
+"POT-Creation-Date: 2009-06-24 20:18+0200\n"
+"PO-Revision-Date: 2009-06-24 20:27+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -194,6 +194,7 @@ msgstr "Tampon en caoutchouc"
 #: ../share/filters/filters.svg.h:118
 #: ../share/filters/filters.svg.h:160
 #: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr "Superpositions"
 
@@ -589,6 +590,7 @@ msgstr "Bosselage TSL"
 #: ../share/filters/filters.svg.h:173
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:195
 msgid "Bumps"
 msgstr "Bosselage"
 
@@ -672,7 +674,7 @@ msgid "Thin like a soap membrane"
 msgstr "Fin comme une couche de savon"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft ridge"
+msgid "Matte ridge"
 msgstr "Arête mate"
 
 #: ../share/filters/filters.svg.h:54
@@ -1783,6 +1785,22 @@ msgstr "Éclaté brillant"
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
 msgstr "Texture de ballon de baudruche éclaté et chiffonné, avec des trous des de la brillance"
+
+#: ../share/filters/filters.svg.h:195
+msgid "Embossed leather"
+msgstr "Cuir repoussé"
+
+#: ../share/filters/filters.svg.h:195
+msgid "Combine a bump with a leathery texture"
+msgstr "Combine une texture de cuir et un bosselage"
+
+#: ../share/filters/filters.svg.h:196
+msgid "Carnaval"
+msgstr "Carnaval"
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
+msgstr "Taches blanches évoquant des masques de carnaval"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
