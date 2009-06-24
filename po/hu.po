@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-06-23 23:06+0200\n"
+"PO-Revision-Date: 2009-06-24 23:50+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -454,8 +454,9 @@ msgid "Color"
 msgstr "Szín"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:171
+#, fuzzy
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "Megjelenítés"
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
@@ -474,7 +475,9 @@ msgstr "Spirál"
 #: ../share/filters/filters.svg.h:34
 #, fuzzy
 msgid "Render in warm sepia tones"
-msgstr "Az X irányú távlatpont állapota"
+msgstr ""
+"Megjelenítés"
+"Az X irányú távlatpont állapota"
 
 #: ../share/filters/filters.svg.h:35
 #, fuzzy
@@ -737,8 +740,9 @@ msgstr "íves"
 msgid "Blur inner borders and intersections"
 msgstr ""
 "Rács-segédvonal-metszéspontokhoz való illesztés"
-"keret"
-"Elmosás"
+"keret "
+"metszet"
+"Elmosás "
 
 #: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
@@ -1178,13 +1182,16 @@ msgstr ""
 #: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:191
 #, fuzzy
 msgid "Mask and transparency effects"
-msgstr "Maszk"
+msgstr ""
+"Maszk"
+"átlátszóság"
 
 #: ../share/filters/filters.svg.h:105
+#, fuzzy
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bubbles, alpha"
@@ -1269,6 +1276,7 @@ msgstr ""
 "objektum"
 "Elmosás"
 "kontúr"
+"átlátszóság"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Chalk and sponge"
@@ -1299,11 +1307,12 @@ msgstr ""
 #: ../share/filters/filters.svg.h:117
 #, fuzzy
 msgid "Noise transparency"
-msgstr "0 (átlátszó)"
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:117
+#, fuzzy
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:118
 #, fuzzy
@@ -1367,8 +1376,10 @@ msgstr "Elmosás"
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 "Elmosás"
+"csúszka"
 "kitöltés"
 "körvonal"
+"párbeszédablak"
 
 #: ../share/filters/filters.svg.h:125
 msgid "HSL Bubbles, diffuse"
@@ -1444,8 +1455,9 @@ msgid "Liquid"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:132
+#, fuzzy
 msgid "Colorizable filling with liquid transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:133
 #, fuzzy
@@ -1675,16 +1687,18 @@ msgid "Shaken liquid"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:166
+#, fuzzy
 msgid "Colorizable filling with flow inside like transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Comics cream"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
+#, fuzzy
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
@@ -1730,8 +1744,9 @@ msgid "HSL Bumps, transparent"
 msgstr "0 (átlátszó)"
 
 #: ../share/filters/filters.svg.h:172
+#, fuzzy
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:173
 #: ../src/ui/dialog/align-and-distribute.cpp:920
@@ -1863,8 +1878,9 @@ msgid "Gelatine"
 msgstr "Kapcsolat"
 
 #: ../share/filters/filters.svg.h:185
+#, fuzzy
 msgid "Colorizable filling with gelatin like turbulence and transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:186
 #, fuzzy
@@ -1872,8 +1888,9 @@ msgid "HSL Bubbles, transparent"
 msgstr "0 (átlátszó)"
 
 #: ../share/filters/filters.svg.h:186
+#, fuzzy
 msgid "Highly flexible specular bubbles with transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Old postcard"
@@ -1890,25 +1907,27 @@ msgstr ""
 #: ../share/filters/filters.svg.h:189
 #, fuzzy
 msgid "Dots transparency"
-msgstr "0 (átlátszó)"
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:189
+#, fuzzy
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Canvas transparency"
-msgstr "0 (átlátszó)"
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:190
+#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
 msgid "Smear transparency"
-msgstr "0 (átlátszó)"
+msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
@@ -3009,9 +3028,8 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #: ../src/dialogs/export.cpp:318
-#, fuzzy
 msgid "Wid_th:"
-msgstr "Szélesség:"
+msgstr "S_zélesség:"
 
 #: ../src/dialogs/export.cpp:324
 msgid "_y0:"
@@ -3022,9 +3040,8 @@ msgid "y_1:"
 msgstr "_y1:"
 
 #: ../src/dialogs/export.cpp:334
-#, fuzzy
 msgid "Hei_ght:"
-msgstr "Magasság:"
+msgstr "M_agasság:"
 
 #: ../src/dialogs/export.cpp:466
 msgid "<big><b>Bitmap size</b></big>"
@@ -3074,7 +3091,6 @@ msgstr ""
 "nélküli felülírást végez."
 
 #: ../src/dialogs/export.cpp:627
-#, fuzzy
 msgid "Hide all except selected"
 msgstr "Minden elrejtése a kijelöltek kivételével"
 
@@ -3240,7 +3256,6 @@ msgstr "Keresés klónokra"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Clones" is a noun indicating type of object to find
 #: ../src/dialogs/find.cpp:612 ../src/ui/dialog/find.cpp:82
-#, fuzzy
 msgid "find|Clones"
 msgstr "Klónok"
 
@@ -3383,15 +3398,13 @@ msgstr "Az objektum címkéje; kötetlen formátumú"
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-#, fuzzy
 msgid "_Title"
-msgstr "Cím"
+msgstr "Cí_m"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
-#, fuzzy
 msgid "_Description"
-msgstr "Leírás"
+msgstr "_Leírás"
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:222
@@ -3416,9 +3429,8 @@ msgstr ""
 
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:243
-#, fuzzy
 msgid "_Interactivity"
-msgstr "_Metszet"
+msgstr "_Interaktivitás"
 
 #: ../src/dialogs/item-properties.cpp:317
 #: ../src/dialogs/item-properties.cpp:324
@@ -3718,9 +3730,8 @@ msgid "Duplicate node"
 msgstr "Csomópont kettőzése"
 
 #: ../src/dialogs/xml-tree.cpp:347
-#, fuzzy
 msgid "nodeAsInXMLdialogTooltip|Delete node"
-msgstr "Csomópont"
+msgstr "Csomópont törlése"
 
 #: ../src/dialogs/xml-tree.cpp:363 ../src/dialogs/xml-tree.cpp:1571
 msgid "Unindent node"
@@ -3911,14 +3922,19 @@ msgstr ""
 #: ../src/display/canvas-grid.cpp:329
 #, fuzzy
 msgid "Snap to visible _grid lines only"
-msgstr "illesztés"
+msgstr ""
+"illesztés "
+"rácsvonal"
 
 #: ../src/display/canvas-grid.cpp:330
 #, fuzzy
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
-msgstr "illesztés"
+msgstr ""
+"kicsinyítés"
+"rácsvonal"
+"illesztés"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3960,78 +3976,63 @@ msgstr ""
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
 #: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
 msgid "UNDEFINED"
-msgstr ""
+msgstr "DEFINIÁLATLAN"
 
 #: ../src/display/snap-indicator.cpp:66
-#, fuzzy
 msgid "grid line"
-msgstr "vonal"
+msgstr "rácsvonal"
 
 #: ../src/display/snap-indicator.cpp:69
-#, fuzzy
 msgid "grid intersection"
-msgstr "Rács-segédvonal-metszéspontokhoz való illesztés"
+msgstr "rács-metszet"
 
 #: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr "segédvonal"
 
 #: ../src/display/snap-indicator.cpp:75
-#, fuzzy
 msgid "guide intersection"
-msgstr "Rács-segédvonal-metszéspontokhoz való illesztés"
+msgstr "segédvonal-metszet"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "grid-guide intersection"
-msgstr "Rács-segédvonal-metszéspontokhoz való illesztés"
+msgstr "rács-segédvonal-metszet"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "cusp node"
 msgstr "csúcs-csomópont"
 
 #: ../src/display/snap-indicator.cpp:84
-#, fuzzy
 msgid "smooth node"
 msgstr "íves csomópont"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "path"
-msgstr "Lánc"
+msgstr "útvonal"
 
 #: ../src/display/snap-indicator.cpp:90
-#, fuzzy
 msgid "path intersection"
-msgstr "Metszet"
+msgstr "útvonal-metszet"
 
 #: ../src/display/snap-indicator.cpp:93
-#, fuzzy
 msgid "bounding box corner"
-msgstr "Határoló téglalap sarkai"
+msgstr "határoló téglalap sarka"
 
 #: ../src/display/snap-indicator.cpp:96
-#, fuzzy
 msgid "bounding box side"
-msgstr "Határoló téglalap típusa:"
+msgstr "határoló téglalap oldala"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box"
-msgstr "Határoló téglalap típusa:"
+msgstr "határoló téglalap"
 
 #: ../src/display/snap-indicator.cpp:102
-#, fuzzy
 msgid "page border"
 msgstr "lapkeret"
 
 #: ../src/display/snap-indicator.cpp:105
-#, fuzzy
 msgid "line midpoint"
-msgstr ""
-"Vonal"
-"középpont"
+msgstr "vonal-középpont"
 
 #: ../src/display/snap-indicator.cpp:108
 msgid "object midpoint"
@@ -4050,11 +4051,8 @@ msgid "handle"
 msgstr "Árnyékolás"
 
 #: ../src/display/snap-indicator.cpp:117
-#, fuzzy
 msgid "bounding box side midpoint"
-msgstr ""
-"Határoló téglalap típusa:"
-"középpont"
+msgstr "határoló téglalap oldalának középpontja"
 
 #: ../src/display/snap-indicator.cpp:120
 #, fuzzy
@@ -4098,7 +4096,6 @@ msgid "text baseline"
 msgstr "Szöveg-alapvonalak igazítása"
 
 #: ../src/display/snap-indicator.cpp:151
-#, fuzzy
 msgid "Bounding box corner"
 msgstr "Határoló téglalap sarka"
 
@@ -4110,20 +4107,16 @@ msgstr ""
 "középpont"
 
 #: ../src/display/snap-indicator.cpp:157
-#, fuzzy
 msgid "Bounding box side midpoint"
-msgstr ""
-"Határoló téglalap típusa:"
-"középpont"
+msgstr "Határoló téglalap oldalának középpontja"
 
 #: ../src/display/snap-indicator.cpp:160
 msgid "Smooth node"
 msgstr "Íves csomópont"
 
 #: ../src/display/snap-indicator.cpp:163
-#, fuzzy
 msgid "Cusp node"
-msgstr "csúcs-csomópont"
+msgstr "Csúcs-csomópont"
 
 #: ../src/display/snap-indicator.cpp:166
 #, fuzzy
@@ -4149,9 +4142,8 @@ msgid "Handle"
 msgstr "Szög"
 
 #: ../src/display/snap-indicator.cpp:178
-#, fuzzy
 msgid "Path intersection"
-msgstr "Metszet"
+msgstr "Útvonal-metszet"
 
 #: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
@@ -5522,11 +5514,8 @@ msgid "PovRay Output"
 msgstr "PovRay-kimenet"
 
 #: ../src/extension/internal/pov-out.cpp:682
-#, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
-msgstr ""
-"PovRay (*.pov) (spline-ok exportálása)"
-"alakzat"
+msgstr "PovRay (*.pov) (csak útvonalak és alakzatok)"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
@@ -7267,7 +7256,7 @@ msgstr "Vázlat"
 #: ../src/live_effects/effect.cpp:120
 #, fuzzy
 msgid "Ruler"
-msgstr "_Vonalzók"
+msgstr "Vonalzó"
 
 #: ../src/live_effects/effect.cpp:273
 #, fuzzy
@@ -7933,7 +7922,9 @@ msgstr "Illesztési tá_volság"
 #: ../src/live_effects/lpe-ruler.cpp:44
 #, fuzzy
 msgid "Distance between successive ruler marks"
-msgstr "A függőleges rácsvonalak közti távolság"
+msgstr ""
+"A függőleges rácsvonalak közti távolság"
+"Vonalzó"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 #, fuzzy
@@ -7941,8 +7932,9 @@ msgid "Major length"
 msgstr "Hullámhossz"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
+#, fuzzy
 msgid "Length of major ruler marks"
-msgstr ""
+msgstr "Vonalzó"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 #, fuzzy
@@ -7950,8 +7942,9 @@ msgid "Minor length"
 msgstr "Hullámhossz"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
+#, fuzzy
 msgid "Length of minor ruler marks"
-msgstr ""
+msgstr "Vonalzó"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Major steps"
@@ -8449,7 +8442,9 @@ msgstr "Szövegobjektum átalakítása láncokká az exportálás közben (EPS)"
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
-msgstr "objektum"
+msgstr ""
+"objektum"
+"Megjelenítés"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:394
@@ -9889,7 +9884,9 @@ msgstr "Jelölje ki a bitképbe másolandó <b>objektumo(ka)t</b>."
 #: ../src/selection-chemistry.cpp:2497
 #, fuzzy
 msgid "Rendering bitmap..."
-msgstr "bitkép"
+msgstr ""
+"bitkép"
+"Megjelenítés"
 
 #: ../src/selection-chemistry.cpp:2676
 msgid "Create bitmap"
@@ -11650,14 +11647,12 @@ msgid "First selected"
 msgstr "Először kijelölt"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:917
-#, fuzzy
 msgid "Biggest object"
-msgstr "Objektum elrejtése"
+msgstr "Legnagyobb objektum"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#, fuzzy
 msgid "Smallest object"
-msgstr "Objektum-azonosító beállítása"
+msgstr "Legkisebb objektum"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
@@ -12092,16 +12087,14 @@ msgstr "Az összes kép"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:199
-#, fuzzy
 msgid "All Vectors"
-msgstr "Vektoros"
+msgstr "Az összes vektoros dokumentum"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:200
-#, fuzzy
 msgid "All Bitmaps"
-msgstr "Bitkép"
+msgstr "Az összes bitkép"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
@@ -13140,7 +13133,7 @@ msgstr "Csak a mutatóhoz legközelebbi csomópont illesztése"
 msgid "Only try to snap the node that is initialy closest to the mouse pointer"
 msgstr ""
 "Csak az a csomópont legyen illesztve, amelyik kezdetben a legközelebb "
-"van az egérmutatóhoz."
+"van az egérmutatóhoz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
 msgid "Weight factor:"
@@ -13695,22 +13688,19 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Dialog Transparency:"
-msgstr ""
+msgstr "Párbeszédablak-átlátszóság:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
-#, fuzzy
 msgid "Opacity when focused:"
-msgstr "Átlátszatlanság-csatorna"
+msgstr "Átlátszatlanság, amikor rajta van a fókusz:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:584
-#, fuzzy
 msgid "Opacity when unfocused:"
-msgstr "Átlátszatlanság-csatorna"
+msgstr "Átlátszatlanság, amikor nem rajta van a fókusz:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:586
-#, fuzzy
 msgid "Time of opacity change animation:"
-msgstr "átlátszatlanság"
+msgstr "Átlátszatlanság-változtatási animáció időtartama:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
 msgid "Miscellaneous:"
@@ -14506,21 +14496,20 @@ msgid "Greek (el)"
 msgstr "Zöld-csatorna"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "English (en)"
-msgstr "A toll szöge"
+msgstr "Angol (en)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "English/Australia (en_AU)"
-msgstr ""
+msgstr "Angol/Ausztrália (en_AU)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "English/Canada (en_CA)"
-msgstr ""
+msgstr "Angol/Kanada (en_CA)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "English/Great Britain (en_GB)"
-msgstr ""
+msgstr "Angol/Nagy-Britannia (en_GB)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Pig Latin (en_US@piglatin)"
@@ -14557,7 +14546,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Hungarian (hu)"
-msgstr ""
+msgstr "Magyar (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Indonesian (id)"
@@ -14684,81 +14673,83 @@ msgstr "Nyelv (életbelépéshez újraindítás szükséges):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1066
 msgid "Set the language for menus and number formats"
-msgstr ""
+msgstr "Menük és számformátumok nyelvének beállítása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1068
-#, fuzzy
 msgid "Smaller"
-msgstr "Kicsi"
+msgstr "Kisebb"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#, fuzzy
 msgid "Toolbox icon size"
-msgstr "A fő eszköztár ikonjai kisebbek legyenek"
+msgstr "Eszköztár-ikonok mérete"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1073
-#, fuzzy
 msgid "Set the size for the tool icons (requires restart)"
-msgstr "A fő eszköztár a másodlagos eszköztár-méretet használja (életbelépéshez újraindítás szükséges)"
+msgstr "Az eszközikonok méretének beállítása (életbelépéshez újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1076
-#, fuzzy
 msgid "Control bar icon size"
-msgstr "Eszközvezérlő-sáv"
+msgstr "Eszközvezérlő-sáv ikonjainak mérete"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
-#, fuzzy
 msgid "Set the size for the icons in tools' control bars to use (requires restart)"
-msgstr "A fő eszköztár a másodlagos eszköztár-méretet használja (életbelépéshez újraindítás szükséges)"
+msgstr ""
+"Az eszközvezérlő-sávokon használandó ikonméret beállítása "
+"(életbelépéshez újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
-#, fuzzy
 msgid "Secondary toolbar icon size"
-msgstr "A fő eszköztár ikonjai kisebbek legyenek"
+msgstr "Másodlagos eszköztár ikonjainak mérete"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-#, fuzzy
 msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
-msgstr "A fő eszköztár a másodlagos eszköztár-méretet használja (életbelépéshez újraindítás szükséges)"
+msgstr ""
+"A másodlagos eszköztárakon használandó ikonméret beállítása "
+"(életbelépéshez újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Work-around color sliders not drawing."
-msgstr ""
+msgstr "Kerülő megoldás a \"színcsúszkák nem jelennek meg\" problémára"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1086
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders."
 msgstr ""
+"Ha be van kapcsolva, akkor az Inkscape megpróbálja kikerülni "
+"azon (bizonyos GTK-témákban jelen levő) hibákat, amelyek miatt "
+"a színcsúszkák kirajzolása esetleg nem működik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1092
-#, fuzzy
 msgid "Clear list"
-msgstr "Az értékek törlése"
+msgstr "Lista törlése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1097
-#, fuzzy
 msgid "Maximum documents in Open Recent:"
 msgstr "Legutóbbi dokumentumok maximális száma:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-#, fuzzy
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
-msgstr "A Fájl menüben megjelenő \"Legutóbbi megnyitása\" lista maximális hossza"
+msgstr ""
+"A Fájl menüben megjelenő \"Legutóbbi megnyitása\" lista maximális hosszának "
+"beállítása, vagy a lista kiürítése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Zoom correction factor (in %):"
-msgstr ""
+msgstr "Nagyítás-korrekciós tényező (%-ban):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
-#, fuzzy
 msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
 "display objects in their true sizes"
-msgstr "objektum"
+msgstr ""
+"Állítsa be a csúszkát úgy, hogy a képernyőn jelzett vonalzóhossz "
+"egyezzen meg a tényleges hosszal. Ez az információ ahhoz "
+"szükséges, hogy 1:1, 1:2 stb. nagyításnál az objektumok "
+"a valódi méretükkel legyenek megjelenítve."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
 msgid "Interface"
@@ -14872,49 +14863,50 @@ msgid "Language:"
 msgstr "Nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1227
-#, fuzzy
 msgid "Set the main spell check language"
-msgstr "_Helyesírás-ellenőrzés..."
+msgstr "A helyesírás-ellenőrzés fő nyelvének beállítása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1230
-#, fuzzy
 msgid "Second language:"
-msgstr "Nyelv:"
+msgstr "Másodlagos nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1231
-#, fuzzy
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
-msgstr "_Helyesírás-ellenőrzés..."
+msgstr ""
+"A helyesírás-ellenőrzés másodlagos nyelvének beállítása. Az "
+"ellenőrzés csak olyan szavakon fog megállni, amelyek az összes "
+"kiválasztott nyelvben ismeretlenek."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
-#, fuzzy
 msgid "Third language:"
-msgstr "Nyelv:"
+msgstr "Harmadlagos nyelv:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
-#, fuzzy
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
-msgstr "_Helyesírás-ellenőrzés..."
+msgstr ""
+"A helyesírás-ellenőrzés harmadlagos nyelvének beállítása. Az "
+"ellenőrzés csak olyan szavakon fog megállni, amelyek az összes "
+"kiválasztott nyelvben ismeretlenek."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Ignore words with digits"
-msgstr ""
+msgstr "Számjegyeket tartalmazó szavak figyelmen kívül hagyása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Ignore words containing digits, such as \"R2D2\""
-msgstr ""
+msgstr "A számjegyeket tartalmazó szavak - mint például \"R2D2\" - átugrása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words in ALL CAPITALS"
-msgstr ""
+msgstr "CSUPA NAGYBETŰS szavak figyelmen kívül hagyása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words in all capitals, such as \"IUPAC\""
-msgstr ""
+msgstr "A csupa nagybetűs szavak - mint például \"IUPAC\" - átugrása"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Spellcheck"
@@ -14965,79 +14957,77 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
-msgstr ""
+msgstr "Késleltetési tényező:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
-#, fuzzy
 msgid "(requires restart)"
-msgstr "A párbeszédablakok viselkedése (életbelépéshez újraindítás szükséges):"
+msgstr "(életbelépéshez újraindítás szükséges)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
+"Az a tényező, amennyivel az eseményóra eltér a tényleges időtől "
+"(bizonyos rendszereken ez 0,9766)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Pre-render named icons"
-msgstr ""
+msgstr "Nevesített ikonok előzetes megjelenítése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
+"Ha be van kapcsolva, akkor a nevesített ikonok a felhasználói felület "
+"megjelenítése előtt meg lesznek jelenítve. Ezzel kikerülhetők a GTK+ "
+"bizonyos, a nevesített ikonokkal kapcsolatos értesítési problémái."
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
 msgid "User config: "
-msgstr ""
+msgstr "Felhasználói beállítások: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1292
-#, fuzzy
 msgid "User data: "
-msgstr "Felhasználónév:"
+msgstr "Felhasználói adatok: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1296
-#, fuzzy
 msgid "User cache: "
-msgstr "Felhasználónév:"
+msgstr "Felhasználói gyorsítótár: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1300
 msgid "System config: "
-msgstr ""
+msgstr "Rendszerbeállítások: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1303
-#, fuzzy
 msgid "System data: "
-msgstr "Beállítás alapértelmezésnek"
+msgstr "Rendszeradatok: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1306
 msgid "PIXMAP: "
-msgstr ""
+msgstr "Bitkép: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "DATA: "
-msgstr ""
+msgstr "Adat: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1314
-#, fuzzy
 msgid "UI: "
-msgstr "_Azonosító: "
+msgstr "Felhasználói felület: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "Icon theme: "
-msgstr ""
+msgstr "Ikontéma: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#, fuzzy
 msgid "System info"
-msgstr "Rendszer"
+msgstr "Rendszerinformáció"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#, fuzzy
 msgid "General system information"
-msgstr "Információ a memóriahasználatról"
+msgstr "Általános rendszerinformáció"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1340
 msgid "Misc"
@@ -15113,9 +15103,8 @@ msgid "Unlock layer"
 msgstr "Réteg feloldása"
 
 #: ../src/ui/dialog/layers.cpp:645
-#, fuzzy
 msgid "Layers"
-msgstr "Réteg"
+msgstr "Rétegek"
 
 #: ../src/ui/dialog/layers.cpp:654
 msgid "New"
@@ -15396,7 +15385,9 @@ msgstr ""
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 #, fuzzy
 msgid "No glyph selected in the SVGFonts dialog."
-msgstr "Betűtípus"
+msgstr ""
+"Betűtípus"
+"párbeszédablak"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
@@ -18473,7 +18464,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2668
 msgid "_Object Properties..."
-msgstr "_Objektum-tulajdonságok..."
+msgstr "_Objektumtulajdonságok..."
 
 #: ../src/verbs.cpp:2669
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -19677,8 +19668,8 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2064
 msgid "Snap from and to midpoints of bounding box edges"
 msgstr ""
-"Határoló téglalap széleinek középpontjaitól, illetve középpontjaihoz "
-"való illesztés"
+"Határoló téglalap széleinek középpontjainak illesztése, továbbá ezen "
+"középpontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2074
 #, fuzzy
@@ -19690,8 +19681,8 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2074
 msgid "Snapping from and to centers of bounding boxes"
 msgstr ""
-"Határoló téglalapok középpontjaitól, illetve középpontjaihoz "
-"való illesztés"
+"Határoló téglalapok középpontjainak illesztése, továbbá ezen "
+"középpontokhoz való illesztés"
 
 # TODO: ellenőrizni
 #: ../src/widgets/toolbox.cpp:2083
@@ -19703,13 +19694,12 @@ msgid "Snap to paths"
 msgstr "Útvonalakhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Path intersections"
-msgstr "Metszet"
+msgstr "Útvonal-metszetek"
 
 #: ../src/widgets/toolbox.cpp:2100
 msgid "Snap to path intersections"
-msgstr "Útvonal-metszéspontokhoz való illesztés"
+msgstr "Útvonal-metszetekhez való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2109
 #, fuzzy
@@ -19739,21 +19729,19 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Snap from and to midpoints of line segments"
 msgstr ""
-"Vonalszakaszok középpontjaitól, illetve középpontjaihoz "
-"való illesztés"
+"Vonalszakaszok középpontjainak illesztése, továbbá ezen "
+"középpontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2136
 #, fuzzy
 msgid "Object Centers"
-msgstr ""
-"Objekt_um-tulajdonságok"
-"középpont"
+msgstr "Objektum-középpont"
 
 #: ../src/widgets/toolbox.cpp:2136
 msgid "Snap from and to centers of objects"
 msgstr ""
-"Objektumok középpontjaitól, illetve középpontjaihoz "
-"való illesztés"
+"Objektumok középpontjainak illesztése, továbbá ezen "
+"középpontokhoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2145
 #, fuzzy
@@ -19763,8 +19751,8 @@ msgstr "El_forgatási középpont"
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Snap from and to an item's rotation center"
 msgstr ""
-"Elem elforgatási középpontjától, illetve elforgatási középpontjához "
-"való illesztés"
+"Elem elforgatási középpontjának illesztése, továbbá ezen "
+"középponthoz való illesztés"
 
 #: ../src/widgets/toolbox.cpp:2154
 #, fuzzy
@@ -20955,12 +20943,14 @@ msgid "Display measuring info for selected items"
 msgstr "elem"
 
 #: ../src/widgets/toolbox.cpp:5668
+#, fuzzy
 msgid "Open LPE dialog"
-msgstr ""
+msgstr "párbeszédablak"
 
 #: ../src/widgets/toolbox.cpp:5669
+#, fuzzy
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
+msgstr "párbeszédablak"
 
 #: ../src/widgets/toolbox.cpp:5733
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -21424,7 +21414,7 @@ msgstr "A felesleg eltávolítása az Adobe Illustrator-féle SVG-kből a megnyi
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
-msgstr ""
+msgstr "Corel DRAW-féle tömörített fájlok (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
@@ -22940,7 +22930,7 @@ msgstr ""
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
 msgid "AutoCAD Plot drawing files (*.plt)"
-msgstr ""
+msgstr "AutoCAD-plot-rajzfájlok (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
 #, fuzzy
@@ -23431,18 +23421,18 @@ msgid "Strength (%):"
 msgstr "Erősség (%):"
 
 #: ../share/extensions/sk1_input.inx.h:1
-#, fuzzy
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Inkscape - vektorgrafikai szerkesztő"
+msgstr "Az sK1 vektorgrafikai szerkesztővel elmentett fájlok megnyitása"
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr ""
+msgstr "sK1 vektorgrafikai fájlok (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
+#, fuzzy
 msgid "sK1 vector graphics files input"
-msgstr ""
+msgstr "vektorgrafikai fájlok"
 
 #: ../share/extensions/sk1_output.inx.h:1
 #, fuzzy
@@ -23450,8 +23440,9 @@ msgid "File format for use in sK1 vector graphics editor"
 msgstr "Inkscape - vektorgrafikai szerkesztő"
 
 #: ../share/extensions/sk1_output.inx.h:3
+#, fuzzy
 msgid "sK1 vector graphics files output"
-msgstr ""
+msgstr "vektorgrafikai fájlok"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
