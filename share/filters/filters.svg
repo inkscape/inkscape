@@ -1797,19 +1797,22 @@
 <feComposite id="feComposite3274" in2="result7" operator="arithmetic" k2="1.5" k1="0.5" k3="1" result="result13" />
 <feBlend id="feBlend3276" blend="normal" in2="result2" mode="normal" />
 </filter>
-<filter id="EmbLeath0" y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Embossed leather" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a bump with a leathery texture">
-<feTurbulence result="result5" id="feTurbulence3129-8" numOctaves="10" baseFrequency="0.001 0.002" seed="25" type="turbulence" />
-<feDisplacementMap yChannelSelector="G" in2="SourceGraphic" result="result8" in="result5" xChannelSelector="R" scale="25" id="feDisplacementMap3131-1" />
-<feComposite k2="0.5" k1="0.5" id="feComposite3133-0" in2="result5" operator="arithmetic" result="result10" in="result8" />
-<feSpecularLighting id="feSpecularLighting3135-3" result="result2" surfaceScale="15" specularConstant="1" specularExponent="15">
-<feDistantLight id="feDistantLight3137-0" azimuth="225" elevation="90" />
+<filter inkscape:menu-tooltip="Combine a HSL edges detection bump with a leathery or woody and colorizable texture" inkscape:menu="Bumps" inkscape:label="Embossed leather" height="1.4" width="1.4" x="-0.2" y="-0.2" id="LeathEmb0">
+<feGaussianBlur result="result14" id="feGaussianBlur3253" stdDeviation="1.5" />
+<feFlood result="result12" flood-color="rgb(146,94,26)" id="feFlood3255" in="SourceGraphic" />
+<feTurbulence type="turbulence" seed="25" baseFrequency="0.001 0.002" numOctaves="5" result="result5" id="feTurbulence3257" />
+<feDisplacementMap scale="100" xChannelSelector="R" in="result5" result="result8" in2="result14" yChannelSelector="G" id="feDisplacementMap3259" />
+<feComposite in="result8" result="result10" operator="arithmetic" in2="result5" k1="0.5" k2="0.5" id="feComposite3261" />
+<feSpecularLighting specularExponent="15" specularConstant="1" surfaceScale="-15" result="result2" id="feSpecularLighting3263">
+<feDistantLight elevation="90" azimuth="225" id="feDistantLight3265" />
 </feSpecularLighting>
-<feDiffuseLighting in="result2" diffuseConstant="0.6" id="feDiffuseLighting3139-4" result="result1" surfaceScale="12">
-<feDistantLight id="feDistantLight3243" azimuth="225" elevation="10" />
+<feGaussianBlur result="result13" id="feGaussianBlur3267" stdDeviation="0.40000000000000002" />
+<feDiffuseLighting surfaceScale="-20" result="result1" diffuseConstant="0.6" in="result13" id="feDiffuseLighting3269">
+<feDistantLight elevation="10" azimuth="225" id="feDistantLight3271" />
 </feDiffuseLighting>
-<feComposite k3="0.6" k2="1" id="feComposite3143-4" operator="arithmetic" in="SourceGraphic" result="result4" k1="0" />
-<feComposite id="feComposite3145-4" operator="in" in2="SourceGraphic" result="result11" />
-<feBlend blend="normal" id="feBlend3239" mode="normal" result="result9" in2="SourceGraphic" in="result11" />
+<feComposite k1="0" result="result4" in="SourceGraphic" operator="arithmetic" k2="1" k3="0.59999999999999998" id="feComposite3273" />
+<feComposite result="result11" in2="SourceGraphic" operator="in" id="feComposite3275" />
+<feBlend in2="result11" in="result11" result="result9" mode="normal" blend="normal" id="feBlend3277" />
 </filter>
 <filter id="carnaval0" inkscape:label="Carnaval" inkscape:menu="Overlays" inkscape:menu-tooltip="White splotches evocating carnaval masks">
 <feGaussianBlur id="feGaussianBlur2842" stdDeviation="0.01" result="result8" />
