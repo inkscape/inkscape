@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-23 16:37+0700\n"
+"PO-Revision-Date: 2009-06-24 16:20+0700\n"
 "Last-Translator: Piseth AUK <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -148,9 +148,8 @@ msgid "Small-scale roughening to edges and content"
 msgstr "ធ្វើ​មាត្រដ្ឋាន​ជ្រុង​មូល"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Rubber stamp"
-msgstr "ត្រា​ជ័រ​លុប"
+msgstr "តែម​​ជ័រ​លុប"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
@@ -158,25 +157,21 @@ msgstr "ត្រា​ជ័រ​លុប"
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "Overlays"
-msgstr "លើ"
+msgstr "គ្រប​ពី​លើ"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "ទីតាំង​ចៃដន្យ​"
+msgstr "ពណ៌​ស​បញ្ចេញ​ពន្លឺ​ចៃដន្យ​ពី​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:13
-#, fuzzy
 msgid "Ink bleed"
-msgstr "ទឹក​ថ្នាំ​ខ្មៅ"
+msgstr "តំណក់​ទឹក​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Protrusions"
-msgstr "ទីតាំង"
+msgstr "លយចេញ​ពី​ក្រៅ"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
@@ -188,7 +183,7 @@ msgstr "ភ្លើង"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Edges of object are on fire"
-msgstr ""
+msgstr "គែម​វត្ថុ​គឺ​ឆេះ​ភ្លើង"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Bloom"
@@ -199,13 +194,12 @@ msgid "Soft, cushion-like bevel with matte highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:16
-#, fuzzy
 msgid "Ridged border"
-msgstr "ស៊ុម​ដែល​មាន​ចង្អូរ"
+msgstr "ស៊ុម​មាន​កំពូល"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "ស៊ុម​មាន​កំពូល​ដែល​មាន​ជ្រុង​ទេ​ខាងក្នុង"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Ripple"
@@ -214,14 +208,12 @@ msgstr "ជ្រួញ"
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
-#, fuzzy
 msgid "Distort"
-msgstr "តួចែក"
+msgstr "បង្ខូច​ទ្រង់ទ្រាយ"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "កាំ​ផ្ដេក​របស់​ជ្រុង​មូល"
+msgstr "រួញ​អង្កាញ់​របស់​គែម"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Speckle"
@@ -232,9 +224,8 @@ msgid "Fill object with sparse translucent specks"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:19
-#, fuzzy
 msgid "Oil slick"
-msgstr "រអិល​ប្រេង"
+msgstr "ទឹក​មាន​ដំណក់​ប្រេង"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Rainbow-colored semitransparent oily splotches"
@@ -506,9 +497,8 @@ msgid "Shadowy outer bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Dripping"
-msgstr "ស្គ្រីប"
+msgstr "ស្រក់"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Random paint streaks downwards"
@@ -524,9 +514,8 @@ msgid "Glossy clumpy jam spread"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:44
-#, fuzzy
 msgid "Pixel smear"
-msgstr "ភីកសែល​"
+msgstr "ស្នាម​ប្រឡាក់​ជា​ភីកសែល​"
 
 #: ../share/filters/filters.svg.h:44
 #, fuzzy
@@ -535,42 +524,37 @@ msgstr "បម្លែង​បែបផែន​ព្រិលៗ​ទៅ​
 
 #: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
-msgstr ""
+msgstr "ស្នាម​ប្រឡាក់​ជា​ភីកសែល រលោង"
 
 #: ../share/filters/filters.svg.h:45
-#, fuzzy
 msgid "Glossy painting effect for bitmaps"
-msgstr "បម្លែង​បែបផែន​ព្រិលៗ​ទៅ​រូបភាព"
+msgstr "បែបផែន​គំនូរ​រលោង​សម្រាប់​ផែនទី​រូបភាព"
 
 #: ../share/filters/filters.svg.h:46
-#, fuzzy
 msgid "HSL Bumps"
-msgstr "រូបភាព"
+msgstr "ដុំ​ពក HSL"
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Bumps"
-msgstr "រូបភាព"
+msgstr "ដុំ​ពក"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
-#, fuzzy
 msgid "Cracked glass"
-msgstr "កែវ​មាន​គែម"
+msgstr "កែវ​ប្រេះ"
 
 #: ../share/filters/filters.svg.h:47
-#, fuzzy
 msgid "Under a cracked glass"
-msgstr "កែវ​មាន​គែម"
+msgstr "នៅ​ក្រោម​កែវប្រេះ"
 
 #: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
-msgstr ""
+msgstr "ពពុះ HSL"
 
 #: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
@@ -580,51 +564,46 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
-msgstr ""
+msgstr "ពពុះ​មាន​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
 #: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
 #: ../share/filters/filters.svg.h:72
-#, fuzzy
 msgid "Ridges"
-msgstr "គែម"
+msgstr "កំពូល"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "បែបផែន​ពពុះ​ដែល​មាន​កាំរស្មី និង​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Neon"
-msgstr "គ្មាន"
+msgstr "ណេអុង"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
-msgstr ""
+msgstr "បែបផែន​ណេអុង​មាន​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Melt and glow"
-msgstr "មុំ​ខាង​ឆ្វេង​"
+msgstr "រលាយ​បាត់ និង​ពន្លឺ​"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Badge"
-msgstr "គែម"
+msgstr "គ្រឿង​សម្គាល់"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
-msgstr ""
+msgstr "ជ្រុង​ទេរ​គ្រឿង​សម្គាល់​ប្លាស្ទិក និង​លោហៈ"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Pastel Bevel"
-msgstr "ទំហំ​បិទភ្ជាប់​"
+msgstr "ជ្រុង​ទេរ​ពណ៌​ព្រឿងៗ​"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
@@ -632,34 +611,31 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
-msgstr ""
+msgstr "ភ្នាស​ស្ដើង"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
-msgstr ""
+msgstr "ស្ដើង​ដូច​ភ្នាស​សាប៊ូ​ដុំ"
 
 #: ../share/filters/filters.svg.h:55
-#, fuzzy
 msgid "Soft ridge"
-msgstr "ពន្លឺអុចៗ​​"
+msgstr "កំពូល​ទន់​​"
 
 #: ../share/filters/filters.svg.h:55
-#, fuzzy
 msgid "Soft pastel ridge"
-msgstr "កំណត់​ទំហំ​ទំព័រ"
+msgstr "កំពូល​ពណ៌​ព្រឿងៗ​ទន់"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
-msgstr ""
+msgstr "លោហៈ​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
-msgstr ""
+msgstr "វាយនភាព​ពន្លឺ និង​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Leaves"
-msgstr "កម្រិត"
+msgstr "ស្លឹក​ឈើ"
 
 #: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
@@ -668,12 +644,11 @@ msgstr "ពង្រាយ"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr ""
+msgstr "ស្លឹកឈើ​នៅ​លើ​ដី នារដូវ​ស្លឹកឈើជ្រុះ"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Translucent"
-msgstr "ត្រីកោណ"
+msgstr "ល្អក់"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
