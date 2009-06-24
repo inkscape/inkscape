@@ -1797,5 +1797,31 @@
 <feComposite id="feComposite3274" in2="result7" operator="arithmetic" k2="1.5" k1="0.5" k3="1" result="result13" />
 <feBlend id="feBlend3276" blend="normal" in2="result2" mode="normal" />
 </filter>
+<filter id="EmbLeath0" y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Embossed leather" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a bump with a leathery texture">
+<feTurbulence result="result5" id="feTurbulence3129-8" numOctaves="10" baseFrequency="0.001 0.002" seed="25" type="turbulence" />
+<feDisplacementMap yChannelSelector="G" in2="SourceGraphic" result="result8" in="result5" xChannelSelector="R" scale="25" id="feDisplacementMap3131-1" />
+<feComposite k2="0.5" k1="0.5" id="feComposite3133-0" in2="result5" operator="arithmetic" result="result10" in="result8" />
+<feSpecularLighting id="feSpecularLighting3135-3" result="result2" surfaceScale="15" specularConstant="1" specularExponent="15">
+<feDistantLight id="feDistantLight3137-0" azimuth="225" elevation="90" />
+</feSpecularLighting>
+<feDiffuseLighting in="result2" diffuseConstant="0.6" id="feDiffuseLighting3139-4" result="result1" surfaceScale="12">
+<feDistantLight id="feDistantLight3243" azimuth="225" elevation="10" />
+</feDiffuseLighting>
+<feComposite k3="0.6" k2="1" id="feComposite3143-4" operator="arithmetic" in="SourceGraphic" result="result4" k1="0" />
+<feComposite id="feComposite3145-4" operator="in" in2="SourceGraphic" result="result11" />
+<feBlend blend="normal" id="feBlend3239" mode="normal" result="result9" in2="SourceGraphic" in="result11" />
+</filter>
+<filter id="Carnaval0" inkscape:label="Carnaval" inkscape:menu="Overlays" inkscape:menu-tooltip="White splotches evocating carnaval masks">
+<feGaussianBlur stdDeviation="0.01" id="feGaussianBlur4624" result="result8" />
+<feTurbulence baseFrequency="0.050000000000000003 0.057000000000000002" numOctaves="5" type="turbulence" id="feTurbulence4413" result="result7" seed="0" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -2.4 " id="feColorMatrix4415" result="result5" />
+<feComposite in2="result7" operator="in" id="feComposite4417" in="result8" result="result6" />
+<feDisplacementMap in2="result6" result="result4" scale="20" yChannelSelector="A" xChannelSelector="R" id="feDisplacementMap4419" in="result5" />
+<feFlood flood-color="rgb(255,255,255)" flood-opacity="1" id="feFlood4421" result="result10" />
+<feComposite in2="result4" operator="in" result="result2" id="feComposite4423" />
+<feComposite in2="result8" operator="in" in="result2" id="feComposite4425" result="result9" />
+<feBlend mode="normal" id="feBlend4427" blend="normal" in2="result8" />
+<feBlend blend="normal" id="feBlend4709" mode="multiply" />
+</filter>
 </defs>
 </svg>
