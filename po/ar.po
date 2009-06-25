@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-22 19:48+0200\n"
+"POT-Creation-Date: 2009-06-25 20:41+0200\n"
 "PO-Revision-Date: 2009-06-15 13:07+0200\n"
 "Last-Translator: Banzoo <banxoo+launchpad@gmail.com>\n"
 "Language-Team: Arabic\n"
@@ -77,9 +77,8 @@ msgstr "غشاوة الحركة الأفقية"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:112
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
 msgid "Blurs"
 msgstr "غشاوة"
 
@@ -116,9 +115,10 @@ msgid "Cutout"
 msgstr "إنقطاع"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:120
-#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -159,8 +159,10 @@ msgstr "طابع مطاطي"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr "طبقات"
 
@@ -252,10 +254,8 @@ msgstr "فرو النمر المرقط"
 #: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:79 ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:160 ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
 #: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:164
 msgid "Materials"
 msgstr "مواد"
 
@@ -288,12 +288,9 @@ msgstr "إشحذ"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:170
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:186
 msgid "Image effects"
 msgstr "مؤثرات الصورة"
 
@@ -425,17 +422,19 @@ msgid "Organic"
 msgstr "عضوي"
 
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:193 ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194
 msgid "Textures"
 msgstr "كساﺀات"
 
@@ -507,11 +506,17 @@ msgstr "تمشيح البكسل"
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "تأثير الرسم على طراز لوحات فان غوغ للصور"
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:171 ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:45
 msgid "HSL Bumps"
 msgstr "نتوﺀ حسب الألوان"
+
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
+msgid "Bumps"
+msgstr "نتوﺀ"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Highly flexible specular bump"
@@ -591,7 +596,8 @@ msgid "Thin like a soap membrane"
 msgstr "غشاﺀ رقيق كسطح فقاعة الصابون"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft ridge"
+#, fuzzy
+msgid "Matte ridge"
 msgstr "تلال ناعمة"
 
 #: ../share/filters/filters.svg.h:54
@@ -1030,7 +1036,8 @@ msgid ""
 msgstr "كما نتوﺀ مع تدرّج وحدّة الألوان وقتامتها ولكن مع قناة للشفافية"
 
 #: ../share/filters/filters.svg.h:105
-msgid "HSL Bubbles, alpha"
+#, fuzzy
+msgid "HSL bubbles, alpha"
 msgstr "فقاعات مع تدرّج وحدّة الألوان وقتامتها بالإضافة إلى الشفافية"
 
 #: ../share/filters/filters.svg.h:106
@@ -1185,8 +1192,9 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL Bubbles, diffuse"
-msgstr ""
+#, fuzzy
+msgid "HSL bubbles, diffuse"
+msgstr "فقاعات حسب الألوان"
 
 #: ../share/filters/filters.svg.h:124
 msgid ""
@@ -1630,8 +1638,9 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
-msgid "HSL Bubbles, transparent"
-msgstr ""
+#, fuzzy
+msgid "HSL bubbles, transparent"
+msgstr "فقاعات مع تدرّج وحدّة الألوان وقتامتها بالإضافة إلى الشفافية"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Highly flexible specular bubbles with transparency"
@@ -1710,6 +1719,25 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid "Embossed leather"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid ""
+"Combine a HSL edges detection bump with a leathery or woody and colorizable "
+"texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Carnaval"
+msgstr "فحم"
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -1983,16 +2011,16 @@ msgstr "لا تكبير تالي"
 msgid "Create guide"
 msgstr "إنشاﺀ الدليل"
 
-#: ../src/desktop-events.cpp:263 ../src/desktop-events.cpp:408
+#: ../src/desktop-events.cpp:266 ../src/desktop-events.cpp:426
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "إزالة الدليل"
 
-#: ../src/desktop-events.cpp:401
+#: ../src/desktop-events.cpp:419
 msgid "Move guide"
 msgstr "نقل الدليل"
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:455
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>خطوط الدليل</b>: %s"
@@ -3260,7 +3288,7 @@ msgstr "<b>إنتهاﺀ</b>, <b>%d</b> كلمة أضيفت للقاموس"
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr "<b>إنتهاﺀ</b>, من دون شيئ يُذكر"
+msgstr "<b>إنتهاﺀ</b>, من دون شيﺀ يُذكر"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
@@ -3600,7 +3628,7 @@ msgstr "إنشاﺀ شبكة جديدة"
 
 #: ../src/display/canvas-grid.cpp:324
 msgid "_Enabled"
-msgstr ""
+msgstr "م_شغّلة"
 
 #: ../src/display/canvas-grid.cpp:325
 msgid ""
@@ -3610,7 +3638,7 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "جذب إلى خطوط الشبكة الظاهرة فقط"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
@@ -5503,7 +5531,7 @@ msgstr "تغليف"
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
 msgid "None"
-msgstr "لا شيئ"
+msgstr "لا شيﺀ"
 
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:247
 #: ../src/widgets/sp-color-icc-selector.cpp:234
@@ -9372,19 +9400,24 @@ msgstr[1] "<b>النص الموصول المنساب</b> (%d أحرف)"
 msgid "Guides Around Page"
 msgstr "مُرشدون حول الصفحة"
 
-#: ../src/sp-guide.cpp:420
-#, c-format
-msgid "vertical, at %s"
+#: ../src/sp-guide.cpp:418
+msgid ""
+"<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
+msgstr ""
+
+#: ../src/sp-guide.cpp:422
+#, fuzzy, c-format
+msgid "vertical, at %s; %s"
 msgstr "عامودي, عند %s"
 
-#: ../src/sp-guide.cpp:423
-#, c-format
-msgid "horizontal, at %s"
+#: ../src/sp-guide.cpp:425
+#, fuzzy, c-format
+msgid "horizontal, at %s; %s"
 msgstr "أفقي, عند %s"
 
-#: ../src/sp-guide.cpp:428
-#, c-format
-msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
+#: ../src/sp-guide.cpp:430
+#, fuzzy, c-format
+msgid "at %d degrees, through (%s,%s); %s"
 msgstr "عند %d درجة, عبر (%s,%s); <b>Ctrl</b>+click للإزالة"
 
 #: ../src/sp-image.cpp:1128
@@ -10031,30 +10064,30 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
-msgstr ""
+msgstr "<b>جرّ</b> للإزالة."
 
 #: ../src/tools-switch.cpp:232
 msgid "Choose a subtool from the toolbar"
-msgstr ""
+msgstr "إختيار أداة فرعية من شريط الأدوات"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:524
 #: ../src/trace/potrace/inkscape-potrace.cpp:598
 #, c-format
 msgid "Trace: %d.  %ld nodes"
-msgstr ""
+msgstr "تخطيط: %d.  %ld عقد"
 
 #: ../src/trace/trace.cpp:71 ../src/trace/trace.cpp:136
 #: ../src/trace/trace.cpp:144 ../src/trace/trace.cpp:243
 msgid "Select an <b>image</b> to trace"
-msgstr ""
+msgstr "إختيار <b>صورة</b> لتخطيطها"
 
 #: ../src/trace/trace.cpp:106
 msgid "Select only one <b>image</b> to trace"
-msgstr ""
+msgstr "إختيار <b>صورة</b> واحدة فقط لتخطيطها"
 
 #: ../src/trace/trace.cpp:124
 msgid "Select one image and one or more shapes above it"
-msgstr ""
+msgstr "إختيار صورة واحدة وشكل أو أكثر فوقها"
 
 #: ../src/trace/trace.cpp:234
 msgid "Trace: No active desktop"
@@ -10074,7 +10107,7 @@ msgstr ""
 
 #: ../src/trace/trace.cpp:469
 msgid "Trace: Starting trace..."
-msgstr ""
+msgstr "تخطيط: بدﺀ التخطيط..."
 
 #. ## inform the document, so we can undo
 #: ../src/trace/trace.cpp:571
@@ -10370,7 +10403,8 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
-"(banxoo+launchpad@gmail.com) بانزوM. Bashir Al-Noimi (mhdbnoimi@gmail.com)"
+"(banxoo+launchpad@gmail.com) بانزو \n"
+" M. Bashir Al-Noimi (mhdbnoimi@gmail.com)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:787
@@ -10411,7 +10445,7 @@ msgstr "إزالة التداخل"
 #: ../src/ui/dialog/align-and-distribute.cpp:540
 #: ../src/widgets/toolbox.cpp:6904
 msgid "Arrange connector network"
-msgstr ""
+msgstr "ترتيب شبكة الموصلات"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:571
 msgid "Unclump"
@@ -10427,11 +10461,11 @@ msgstr "توزيع قواعد أسطر النصوص"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:759
 msgid "Align text baselines"
-msgstr ""
+msgstr "تراصف أسطر النصوص"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:790
 msgid "Connector network layout"
-msgstr ""
+msgstr "هيئة شبكة الموصلات"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:791
 #: ../src/widgets/toolbox.cpp:2083
@@ -10440,103 +10474,103 @@ msgstr "عُقد"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:797
 msgid "Relative to: "
-msgstr ""
+msgstr "بالنسبة إلى:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
 msgid "Treat selection as group: "
-msgstr ""
+msgstr "معاملة الإختيار كمجموعة:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr ""
+msgstr "تراصف الأطراف اليمنى للأجسام على الطرف الأيسر من المثبت"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:807
 msgid "Align left edges"
-msgstr ""
+msgstr "تراصف الأطراف اليسرى"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:810
 msgid "Center objects horizontally"
-msgstr ""
+msgstr "توسط الأجسام أفقيا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
 msgid "Align right sides"
-msgstr ""
+msgstr "تراصف الجوانب إلى اليمين"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr ""
+msgstr "تراصف الأطراف اليسرى للأجسام على الطرف الأيمن للمثبت"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr ""
+msgstr "تراصف الأطراف السفلى للأجسام على الطرف الأعلى للمثبت"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:822
 msgid "Align top edges"
-msgstr ""
+msgstr "تراصف الأطراف العليا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:825
 msgid "Center on horizontal axis"
-msgstr ""
+msgstr "توسط على المحور الأفقي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:828
 msgid "Align bottom edges"
-msgstr ""
+msgstr "تراصف الأطراف السفلى"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr ""
+msgstr "تراصف الأطراف العليا للأجسام على الطرف السفلي للمثبت"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:836
 msgid "Align baseline anchors of texts horizontally"
-msgstr ""
+msgstr "تراصف مثبتات أسطر النصوص أفقيا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:839
 msgid "Align baselines of texts"
-msgstr ""
+msgstr "تراصف أسطر النصوص"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:844
 msgid "Make horizontal gaps between objects equal"
-msgstr ""
+msgstr "جعل الفراغ الأفقي بين الأجسام متساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:848
 msgid "Distribute left edges equidistantly"
-msgstr ""
+msgstr "توزيع متساوي للأطراف اليسرى"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Distribute centers equidistantly horizontally"
-msgstr ""
+msgstr "توزيع المراكز أفقيا بالتساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:854
 msgid "Distribute right edges equidistantly"
-msgstr ""
+msgstr "توزيع الأطراف اليمنى بالتساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:858
 msgid "Make vertical gaps between objects equal"
-msgstr ""
+msgstr "جعل الفراغ العامودي بين الأجسام متساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:862
 msgid "Distribute top edges equidistantly"
-msgstr ""
+msgstr "توزيع الأطراف العليا بالتساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:865
 msgid "Distribute centers equidistantly vertically"
-msgstr ""
+msgstr "توزيع المراكز عاموديا بالتساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Distribute bottom edges equidistantly"
-msgstr ""
+msgstr "توزيع المراكز أفقيا بالتساوي"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:873
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr ""
+msgstr "توزيع مثبتات أسطر النصوص أفقيا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:876
 msgid "Distribute baselines of texts vertically"
-msgstr ""
+msgstr "توزيع أسطر النصوص عاموديا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 msgid "Randomize centers in both dimensions"
-msgstr ""
+msgstr "توزيع المراكز عشوائيا"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:884
 msgid "Unclump objects: try to equalize edge-to-edge distances"
@@ -10546,20 +10580,20 @@ msgstr ""
 msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
-msgstr ""
+msgstr "تحريك الأجسام قليلا لتجنّب تداخل علبالإحاطة"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
 #: ../src/widgets/toolbox.cpp:7004
 msgid "Nicely arrange selected connector network"
-msgstr ""
+msgstr "ترتيب شبكة الموصلات المختارة"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:901
 msgid "Align selected nodes to a common horizontal line"
-msgstr ""
+msgstr "تراصف العقد المختارة على خط أفقي مشترك"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
 msgid "Align selected nodes to a common vertical line"
-msgstr ""
+msgstr "تراصف العقد المختارة على خط عامودي مشترك"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Distribute selected nodes horizontally"
@@ -10704,6 +10738,9 @@ msgid ""
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
 "part of the guide near the cursor will snap)"
 msgstr ""
+"عند جرّ خط إرشاد، جذب إلى عقد الجسم أو زوايا علبة الإحاطة(يجب تشغيل 'جذب إلى "
+"العقد' أو 'جذب إلى زوايا علب الإحاطة'؛جزﺀ صغير فقط من خط الإرشاد القريب إلى "
+"المؤشر سيجذب"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -11110,6 +11147,10 @@ msgid ""
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
 msgstr ""
+"هذه المصفوفة تحدد التحولات الخطية لفضاﺀ الألوان. كل سطر يؤثرفي عنصر من عناصر "
+"الألوان. كل عامود يؤثر في كميّة عنصر اللون منالصورة على النتيجة. العامود "
+"الأخير لا علاقة له بألوان الصورة الأصلية،يمكن إستخامه لضبط قيمة العناصر "
+"الثابتة"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
@@ -11193,6 +11234,8 @@ msgid ""
 "light source and the point to which it is pointing at) and the spot light "
 "cone. No light is projected outside this cone."
 msgstr ""
+"هذه الزاوية بين محاور الضوﺀ الموّجه (يعني المحور بين مصدر الضوﺀ والنقطةالموّجه "
+"إليها) ومخروط الضوﺀ الموّجه. لا صدور للضوﺀ من خارج هذا المخروط"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1028
 msgid "New light source"
@@ -11371,7 +11414,7 @@ msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
-"إحداثيات س لنقطة الهدف في المصفوفة الإلتفافية. الإلتفاف يتمّتطبيقه على كل "
+"إحداثيات س لنقطة الهدف في المصفوفة الإلتفافية. الإلتفاف يتمّ تطبيقه على كل "
 "بكسل حول هذه النقطة"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
@@ -11379,7 +11422,7 @@ msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
-"إحداثيات ص لنقطة الهدف في المصفوفة الإلتفافية. الإلتفاف يتمّتطبيقه على كل "
+"إحداثيات ص لنقطة الهدف في المصفوفة الإلتفافية. الإلتفاف يتمّ تطبيقه على كل "
 "بكسل حول هذه النقطة"
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
@@ -11396,6 +11439,10 @@ msgid ""
 "the matrix diagonal) while a matrix filled with a constant non-zero value "
 "would lead to a common blur effect."
 msgstr ""
+"هذه المصفوفة تحدد العملية الإلتفافية التي يتم تطبيقها على الصورة المعطاة "
+"ليمكن حساب ألوان البكسل في النتيجة. التلاعب في القيم في هذه المصفوفة ينتج "
+"عنه مؤثرات بصرية مختلفة. مصفوفة الهوية تؤدي إلى تأثير غباش الحركة(متوازي لخط "
+"المصفوفة) بينما مصفوفة مملوؤة بقيم غير الصفر سينتج غباشا عاديا"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "Divisor"
@@ -11408,6 +11455,9 @@ msgid ""
 "divisor that is the sum of all the matrix values tends to have an evening "
 "effect on the overall color intensity of the result."
 msgstr ""
+"بعد تطبيق هذه مصفوفة النواة إلى الصورة المعطاة ينتج رقما، تيمّ قسمةهذا الرقم "
+"على القاسم  للحصول على قيمة لون النتيجة النهائية. اذا كان القاسم قريب من "
+"مجموع كل قيم المصفوفة فإنه يعطي تأثير متساوي لقوّة اللون في النتيجة"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Bias"
@@ -11418,6 +11468,8 @@ msgid ""
 "This value is added to each component. This is useful to define a constant "
 "value as the zero response of the filter."
 msgstr ""
+"يتمّ إضافة هذه القيمة إلى كل مكوّن. وهي مفيدة لتعريف قيمةثابتة كجواب صفر على "
+"المصفاة."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Edge Mode"
@@ -11429,6 +11481,8 @@ msgid ""
 "that the matrix operations can be applied when the kernel is positioned at "
 "or near the edge of the input image."
 msgstr ""
+"تحديد كيفية توسيع الصورة المعطاة بقيم الألوان لإمكان تطبيق عمليات المصفوفة "
+"عندما تكون النواة متموضعة عند أو قربالطرف من الصورة"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Preserve Alpha"
@@ -11436,7 +11490,7 @@ msgstr "المحافظة على ألفا"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "If set, the alpha channel won't be altered by this filter primitive."
-msgstr ""
+msgstr "عند الإختيار، قناة ألفا لن تتأثر بهذه المصفاة البدائية."
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2200
@@ -11446,7 +11500,7 @@ msgstr "نشر اللون"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2233
 msgid "Defines the color of the light source"
-msgstr ""
+msgstr "تحديد لون مصدر الضوﺀ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -11458,7 +11512,7 @@ msgstr "مقياس السطح"
 msgid ""
 "This value amplifies the heights of the bump map defined by the input alpha "
 "channel"
-msgstr ""
+msgstr "هذه القيمة تقوّي إرتفاع خريطة النتوﺀ المعرّفة من قناةألفا للصورة المعطاة"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -11585,6 +11639,8 @@ msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
+"المصفاة البدائية <b>feBlend</b> توفّر أربعة وسائل لخلط الصورة: الشاشة، "
+"مضاعفة، تغميق وتفتيح."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2281
 msgid ""
@@ -11592,6 +11648,9 @@ msgid ""
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
+"المصفاة البدائية <b>feColorMatrix</b> تطبّق عمليات تحويل المصفوفة على لون كلّ "
+"بكسل مصيّر. مما يسمح بتأثير مثل تحويل الجسم إلى الأبيض والأسود أو تغيير حدّة "
+"الألوان أو تدرّجها."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2285
 msgid ""
@@ -11600,6 +11659,9 @@ msgid ""
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
 msgstr ""
+"المصفاة البدائية <b>feComponentTransfer</b> تتلاعب بمكوّنات ألوان الصورة "
+"(أحمر، أخضر، أزرق وألفا) حسب دالّات تحويل خاصة مما يسمح بعمليات كالتفتيح وضبط "
+"التباين بالإضافة إلى توازن الألوان والعتبة."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid ""
@@ -11608,6 +11670,9 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
+"المصفاة البدائية <b>feComposite</b> تكوّن صورتين بواسطة أساليب الخلط بورتر "
+"داف أو الأساليب الحسابية المعرّفة في معيار SVG القياسي. أساليب بورتر داف "
+"للخلط هي عبارة عن عمليات منطقية بين قيم البكسلات في الصور."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid ""
@@ -11617,6 +11682,10 @@ msgid ""
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
 msgstr ""
+"يسمح <b>feConvolveMatrix</b> ب تحديد إلتفاف ليُطبّق على الصورة. التأثيرات "
+"الشائعة التي تتّم بواسطة مصفوفات الإلتفاف هو التغبيش، التوضيح، النتوﺀ وكشف "
+"الحدود، التغبيش الغوسي يمكّن انشائه بواسطة هذه المصفاة لكن تبقى مصفاة التغبيش "
+"الغوسية الخاصة أسرع وغير مرتبطة بالدقّة."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2297
 msgid ""
@@ -12584,7 +12653,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:665
 msgid "Store transformation:"
-msgstr ""
+msgstr "تخزين التحويلات:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:667
 msgid ""
@@ -12598,38 +12667,38 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:671
 msgid "Transforms"
-msgstr ""
+msgstr "تحويل"
 
 #. blur quality
 #. filter quality
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
 #: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid "Best quality (slowest)"
-msgstr ""
+msgstr "النوعية الأفضل (الأبطأ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:679
 #: ../src/ui/dialog/inkscape-preferences.cpp:703
 msgid "Better quality (slower)"
-msgstr ""
+msgstr "نوعية جيّدة (بطيئة)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
 #: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Average quality"
-msgstr ""
+msgstr "نوعيّة عادية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
 #: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Lower quality (faster)"
-msgstr ""
+msgstr "نوعية متدنّية (أسرع)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:685
 #: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid "Lowest quality (fastest)"
-msgstr ""
+msgstr "النوعية الأكثر تدنيّا (الأسرع)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:688
 msgid "Gaussian blur quality for display:"
-msgstr ""
+msgstr "نوعية عرض التغبيش الغوسي:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:690
 #: ../src/ui/dialog/inkscape-preferences.cpp:714
@@ -12637,35 +12706,37 @@ msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
+"النوعية الأفضل، لكن العرض سيكون بطيئا جدّا عن التكبير الكثير (تصدير الصور "
+"النقطية يستعمل دائما النوعية الأفضل)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:692
 #: ../src/ui/dialog/inkscape-preferences.cpp:716
 msgid "Better quality, but slower display"
-msgstr ""
+msgstr "نوعية جيّدة، لك عرض بطيﺀ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:694
 #: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid "Average quality, acceptable display speed"
-msgstr ""
+msgstr "نوعية عادية، سرعة عرض مقبولة"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
 #: ../src/ui/dialog/inkscape-preferences.cpp:720
 msgid "Lower quality (some artifacts), but display is faster"
-msgstr ""
+msgstr "نوعية متدنية (بعض التشوهات)، لكن العرض أسرع"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
 #: ../src/ui/dialog/inkscape-preferences.cpp:722
 msgid "Lowest quality (considerable artifacts), but display is fastest"
-msgstr ""
+msgstr "النوعية الأسوأ (تشوّهات ملحوظة) لكن العرض هو الأسرع"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:712
 msgid "Filter effects quality for display:"
-msgstr ""
+msgstr "نوعية عرض مؤثرات المصفاة:"
 
 #. show infobox
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
 msgid "Show filter primitives infobox"
-msgstr ""
+msgstr "إظهار علبة المعلومات للمصافي البدائية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:727
 msgid ""
@@ -12747,7 +12818,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Open Clip Art Library Server Name:"
-msgstr ""
+msgstr "إسم الخادم لمكتبة الرسمات الفنية المفتوحة:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid ""
@@ -12757,23 +12828,23 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:770
 msgid "Open Clip Art Library Username:"
-msgstr ""
+msgstr "إسم المستخدم لمكتبة الرسمات الفنية المفتوحة:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:771
 msgid "The username used to log into Open Clip Art Library."
-msgstr ""
+msgstr "إسم المستخدم المستعمل للدخول إلى مكتبة الرسمات الفنية المفتوحة."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:773
 msgid "Open Clip Art Library Password:"
-msgstr ""
+msgstr "كلمة السر إلى مكتبة الرسمات الفنية المفتوحة:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:774
 msgid "The password used to log into Open Clip Art Library."
-msgstr ""
+msgstr "كلمة السر المستعملة للدخول إلى مكتبة الرسمات الفنية المفتوحة."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:776
 msgid "Import/Export"
-msgstr ""
+msgstr "إستيراد/تصدير"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
 #: ../src/ui/dialog/inkscape-preferences.cpp:826
@@ -12858,7 +12929,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:879
 msgid "Device profile:"
-msgstr ""
+msgstr "ملف تعريف الجهاز:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "The ICC profile to use to simulate device output."
@@ -12878,7 +12949,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid "Preserve black"
-msgstr ""
+msgstr "الحفاظ على الأسود"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "(LittleCMS 1.15 or later required)"
@@ -12890,7 +12961,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:910
 msgid "<none>"
-msgstr ""
+msgstr "<لا شيﺀ>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:955
 msgid "Color management"
@@ -12898,11 +12969,11 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:960
 msgid "Major grid line emphasizing"
-msgstr ""
+msgstr "تعليم خطوط الشبكة الرئيسية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:962
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr ""
+msgstr "إزالة تعليم خطوط الشبكة الرئيسية عند التصغير"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:963
 msgid ""
@@ -12912,72 +12983,72 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:965
 msgid "Default grid settings"
-msgstr ""
+msgstr "الإعدادات الإفتراضية للشبكة"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:971
 #: ../src/ui/dialog/inkscape-preferences.cpp:992
 msgid "Grid units:"
-msgstr ""
+msgstr "وحدات قياس الشبكة:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
 msgid "Origin X:"
-msgstr ""
+msgstr "مركز س:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
 msgid "Origin Y:"
-msgstr ""
+msgstr "مركز ص:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:978
 msgid "Spacing X:"
-msgstr ""
+msgstr "تباعد س:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:979
 #: ../src/ui/dialog/inkscape-preferences.cpp:998
 msgid "Spacing Y:"
-msgstr ""
+msgstr "تباعد ص:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:981
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1003
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
 msgid "Grid line color:"
-msgstr ""
+msgstr "لون خطوط الشبكة"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
 msgid "Color used for normal grid lines"
-msgstr ""
+msgstr "اللون المستخدم لخطوط الشبكة العادية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:983
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
 msgid "Major grid line color:"
-msgstr ""
+msgstr "لون خطوط الشبكة الرئيسية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
 msgid "Color used for major (highlighted) grid lines"
-msgstr ""
+msgstr "اللون المستخدم لخطوط الشبكة الرئيسية (المعلّمة)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:986
 #: ../src/ui/dialog/inkscape-preferences.cpp:1008
 msgid "Major grid line every:"
-msgstr ""
+msgstr "خط شبكة رئيسي كلّ:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:987
 msgid "Show dots instead of lines"
-msgstr ""
+msgstr "إظهار نقاط بدل الخطوط"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:988
 msgid "If set, display dots at gridpoints instead of gridlines"
-msgstr ""
+msgstr "عند التحديد إظهار نقاط عند إلتقاﺀ الخطوط بدل إظهار خطوط الشبكة"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1015
 msgid "Use named colors"
-msgstr ""
+msgstr "إستعمال الألوان ذو الأسماﺀ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1016
 msgid ""
@@ -12991,7 +13062,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1020
 msgid "Inline attributes"
-msgstr ""
+msgstr "الصفات السطرية"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Put attributes on the same line as the element tag"
@@ -12999,7 +13070,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid "Indent, spaces:"
-msgstr ""
+msgstr "الفراغات:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid ""
@@ -13009,7 +13080,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1026
 msgid "Path data"
-msgstr ""
+msgstr "بيانات المسار"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1028
 msgid "Allow relative coordinates"
@@ -13021,7 +13092,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1031
 msgid "Force repeat commands"
-msgstr ""
+msgstr "إجبار أوامر التكرار"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid ""
@@ -13463,7 +13534,7 @@ msgstr "16x16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "Oversample bitmaps:"
-msgstr ""
+msgstr "الصور النقطية المبالغ بدقتها:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid "Automatically reload bitmaps"
@@ -15498,27 +15569,27 @@ msgstr ""
 
 #: ../src/verbs.cpp:2259
 msgid "Print Previe_w"
-msgstr ""
+msgstr "عرض مسبق للط_باعة"
 
 #: ../src/verbs.cpp:2260
 msgid "Preview document printout"
-msgstr ""
+msgstr "عرض مسبق لطباعة المستند"
 
 #: ../src/verbs.cpp:2261
 msgid "_Import..."
-msgstr ""
+msgstr "إس_تيراد..."
 
 #: ../src/verbs.cpp:2262
 msgid "Import a bitmap or SVG image into this document"
-msgstr ""
+msgstr "إستيراد صورة نقطية أو SVG إلى هذا المستند "
 
 #: ../src/verbs.cpp:2263
 msgid "_Export Bitmap..."
-msgstr ""
+msgstr "ت_صدير..."
 
 #: ../src/verbs.cpp:2264
 msgid "Export this document or a selection as a bitmap image"
-msgstr ""
+msgstr "تصدير هذا المستند أو الإختيار إلى صورة نقطية"
 
 #: ../src/verbs.cpp:2265
 msgid "Import a document from Open Clip Art Library"
@@ -15534,205 +15605,205 @@ msgstr ""
 
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
-msgstr ""
+msgstr "النافذة التا_لية"
 
 #: ../src/verbs.cpp:2268
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "إنتقال إلى نافذة المستند التالية"
 
 #: ../src/verbs.cpp:2269
 msgid "P_revious Window"
-msgstr ""
+msgstr "النافذة الساب_قة"
 
 #: ../src/verbs.cpp:2270
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "إنتقال إلى نافذة المستند السابقة"
 
 #: ../src/verbs.cpp:2271
 msgid "_Close"
-msgstr ""
+msgstr "إ_غلاق"
 
 #: ../src/verbs.cpp:2272
 msgid "Close this document window"
-msgstr ""
+msgstr "إغلاق نافذة هذا المستند"
 
 #: ../src/verbs.cpp:2273
 msgid "_Quit"
-msgstr ""
+msgstr "_خروج"
 
 #: ../src/verbs.cpp:2273
 msgid "Quit Inkscape"
-msgstr ""
+msgstr "خروج من إنكسكايب"
 
 #: ../src/verbs.cpp:2276
 msgid "Undo last action"
-msgstr ""
+msgstr "تراجع عن آخر عملية"
 
 #: ../src/verbs.cpp:2279
 msgid "Do again the last undone action"
-msgstr ""
+msgstr "إعادة العملية التي تمّ التراجع عنها"
 
 #: ../src/verbs.cpp:2280
 msgid "Cu_t"
-msgstr ""
+msgstr "ق_ص"
 
 #: ../src/verbs.cpp:2281
 msgid "Cut selection to clipboard"
-msgstr ""
+msgstr "قص الإختيار إلى الحافظة"
 
 #: ../src/verbs.cpp:2282
 msgid "_Copy"
-msgstr ""
+msgstr "_نسخ"
 
 #: ../src/verbs.cpp:2283
 msgid "Copy selection to clipboard"
-msgstr ""
+msgstr "نسخ الإختيار إلى الحافظة"
 
 #: ../src/verbs.cpp:2284
 msgid "_Paste"
-msgstr ""
+msgstr "_لصق"
 
 #: ../src/verbs.cpp:2285
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr ""
+msgstr "لصق الأجسام من الحافظة إلى مكان وجود الفأرة، أو لصق النص"
 
 #: ../src/verbs.cpp:2286
 msgid "Paste _Style"
-msgstr ""
+msgstr "لصق الأسل_وب"
 
 #: ../src/verbs.cpp:2287
 msgid "Apply the style of the copied object to selection"
-msgstr ""
+msgstr "تطبيق الأسلوب من الجسم المنسوخ إلى الإختيار"
 
 #: ../src/verbs.cpp:2289
 msgid "Scale selection to match the size of the copied object"
-msgstr ""
+msgstr "ثغيير حجم الإختيار ليناسب حجم الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2290
 msgid "Paste _Width"
-msgstr ""
+msgstr "لصق ال_عرض"
 
 #: ../src/verbs.cpp:2291
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr ""
+msgstr "تغيير حجم الإخيتار أفقيا ليناسب عرض الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2292
 msgid "Paste _Height"
-msgstr ""
+msgstr "لصق الإرتفاع"
 
 #: ../src/verbs.cpp:2293
 msgid "Scale selection vertically to match the height of the copied object"
-msgstr ""
+msgstr "تغيير حجم الإخيتار عاموديا ليناسب عرض الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2294
 msgid "Paste Size Separately"
-msgstr ""
+msgstr "لصق الحجم على حدة"
 
 #: ../src/verbs.cpp:2295
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
+msgstr "تغيير حجم كل جسم مختار ليناسب حجم الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2296
 msgid "Paste Width Separately"
-msgstr ""
+msgstr "لصق العرض على حدة"
 
 #: ../src/verbs.cpp:2297
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
-msgstr ""
+msgstr "تغيير حجم كل جسم أفقيا مختار ليناسب حجم الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2298
 msgid "Paste Height Separately"
-msgstr ""
+msgstr "لصق الإرتفاع على حدة"
 
 #: ../src/verbs.cpp:2299
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
-msgstr ""
+msgstr "تغيير حجم كل جسم عاموديا مختار ليناسب حجم الجسم المنسوخ"
 
 #: ../src/verbs.cpp:2300
 msgid "Paste _In Place"
-msgstr ""
+msgstr "لصق _في المكان"
 
 #: ../src/verbs.cpp:2301
 msgid "Paste objects from clipboard to the original location"
-msgstr ""
+msgstr "لصق الأجسام من الحافظة إلى موقعهم الأصلي"
 
 #: ../src/verbs.cpp:2302
 msgid "Paste Path _Effect"
-msgstr ""
+msgstr "لصق تأ_ثير المسار"
 
 #: ../src/verbs.cpp:2303
 msgid "Apply the path effect of the copied object to selection"
-msgstr ""
+msgstr "تطبيق تأثير المسار للجسم المنسوخ على الإختيار"
 
 #: ../src/verbs.cpp:2304
 msgid "Remove Path _Effect"
-msgstr ""
+msgstr "إزالة تأثي_ر المسار"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
-msgstr ""
+msgstr "إزالة تأثيرات المسار من الأجسام المختارة"
 
 #: ../src/verbs.cpp:2306
 msgid "Remove Filters"
-msgstr ""
+msgstr "إزالة المصافي"
 
 #: ../src/verbs.cpp:2307
 msgid "Remove any filters from selected objects"
-msgstr ""
+msgstr "إزالة أي مصفاة من الأجسام المختارة"
 
 #: ../src/verbs.cpp:2308
 msgid "_Delete"
-msgstr ""
+msgstr "_إزالة"
 
 #: ../src/verbs.cpp:2309
 msgid "Delete selection"
-msgstr ""
+msgstr "إزالة الإختيار"
 
 #: ../src/verbs.cpp:2310
 msgid "Duplic_ate"
-msgstr ""
+msgstr "إستنسا_خ"
 
 #: ../src/verbs.cpp:2311
 msgid "Duplicate selected objects"
-msgstr ""
+msgstr "إستنساخ الأجسام المختارة"
 
 #: ../src/verbs.cpp:2312
 msgid "Create Clo_ne"
-msgstr ""
+msgstr "إنشاﺀ مستنسخ"
 
 #: ../src/verbs.cpp:2313
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr ""
+msgstr "إنشاﺀ مستنسخ (نسخة مربوطة إلى الأصلي) للجسم المختار"
 
 #: ../src/verbs.cpp:2314
 msgid "Unlin_k Clone"
-msgstr ""
+msgstr "فكّ إرتباط المستنسخ"
 
 #: ../src/verbs.cpp:2315
 msgid ""
 "Cut the selected clones' links to the originals, turning them into "
 "standalone objects"
-msgstr ""
+msgstr "مكّ إرتباط المستنسخات المختارة من الأصلية، ليصبحواأجساما عادية"
 
 #: ../src/verbs.cpp:2316
 msgid "Relink to Copied"
-msgstr ""
+msgstr "إعادة ربط إلى المنسوخ"
 
 #: ../src/verbs.cpp:2317
 msgid "Relink the selected clones to the object currently on the clipboard"
-msgstr ""
+msgstr "إعادة ربط المستنسخات المختارة إلى الأجسام الحالية في الحافظة"
 
 #: ../src/verbs.cpp:2318
 msgid "Select _Original"
-msgstr ""
+msgstr "إختيار الأصل_ي"
 
 #: ../src/verbs.cpp:2319
 msgid "Select the object to which the selected clone is linked"
-msgstr ""
+msgstr "إختيار الجسم الذي يربط المستنسخ المختار"
 
 #: ../src/verbs.cpp:2320
 msgid "Objects to _Marker"
@@ -15744,7 +15815,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2322
 msgid "Objects to Gu_ides"
-msgstr ""
+msgstr "أجسام إلى خطوط إر_شاد"
 
 #: ../src/verbs.cpp:2323
 msgid ""
@@ -15754,47 +15825,47 @@ msgstr ""
 
 #: ../src/verbs.cpp:2324
 msgid "Objects to Patter_n"
-msgstr ""
+msgstr "أجسام إلى نم_ط"
 
 #: ../src/verbs.cpp:2325
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr ""
+msgstr "تحويل الإختيار إلى مستطيل مملوﺀ بنمط البلاط"
 
 #: ../src/verbs.cpp:2326
 msgid "Pattern to _Objects"
-msgstr ""
+msgstr "نمط إلى أ_جسام"
 
 #: ../src/verbs.cpp:2327
 msgid "Extract objects from a tiled pattern fill"
-msgstr ""
+msgstr "إستخلاص الأجسام من نمط البلاط المملوﺀ"
 
 #: ../src/verbs.cpp:2328
 msgid "Clea_r All"
-msgstr ""
+msgstr "إنجلاﺀ ال_كل"
 
 #: ../src/verbs.cpp:2329
 msgid "Delete all objects from document"
-msgstr ""
+msgstr "إزالة كل الأجسام من المستند"
 
 #: ../src/verbs.cpp:2330
 msgid "Select Al_l"
-msgstr ""
+msgstr "إختيار ا_لكل"
 
 #: ../src/verbs.cpp:2331
 msgid "Select all objects or all nodes"
-msgstr ""
+msgstr "إختيار كل الأجسام أو العقد"
 
 #: ../src/verbs.cpp:2332
 msgid "Select All in All La_yers"
-msgstr ""
+msgstr "إختيار الكل في كل الطبقات"
 
 #: ../src/verbs.cpp:2333
 msgid "Select all objects in all visible and unlocked layers"
-msgstr ""
+msgstr "إختيار كل الأجسام في كل الطبقات المرئية والغير مقفلة"
 
 #: ../src/verbs.cpp:2334
 msgid "In_vert Selection"
-msgstr ""
+msgstr "_عكس الإختيار"
 
 #: ../src/verbs.cpp:2335
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -15802,7 +15873,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2336
 msgid "Invert in All Layers"
-msgstr ""
+msgstr "عكس في كل الطبقات"
 
 #: ../src/verbs.cpp:2337
 msgid "Invert selection in all visible and unlocked layers"
@@ -15810,19 +15881,19 @@ msgstr ""
 
 #: ../src/verbs.cpp:2338
 msgid "Select Next"
-msgstr ""
+msgstr "إختيار التالي"
 
 #: ../src/verbs.cpp:2339
 msgid "Select next object or node"
-msgstr ""
+msgstr "إختيار الجسم التالي أو العقدة"
 
 #: ../src/verbs.cpp:2340
 msgid "Select Previous"
-msgstr ""
+msgstr "إختيار سابق"
 
 #: ../src/verbs.cpp:2341
 msgid "Select previous object or node"
-msgstr ""
+msgstr "إختيار الجسم السابق أو العقدة"
 
 #: ../src/verbs.cpp:2342
 msgid "D_eselect"
@@ -19464,8 +19535,8 @@ msgstr ""
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
-#: ../share/extensions/perspective.py:55
-#: ../share/extensions/summersnight.py:30
+#: ../share/extensions/perspective.py:61
+#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr ""
 
@@ -19482,36 +19553,36 @@ msgid ""
 "numpy."
 msgstr ""
 
-#: ../share/extensions/perspective.py:62
-#: ../share/extensions/summersnight.py:39
+#: ../share/extensions/perspective.py:68
+#: ../share/extensions/summersnight.py:45
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:46
+#: ../share/extensions/perspective.py:74
+#: ../share/extensions/summersnight.py:52
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 
-#: ../share/extensions/perspective.py:87
-#: ../share/extensions/summersnight.py:72
+#: ../share/extensions/perspective.py:99
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
 
-#: ../share/extensions/perspective.py:89
-#: ../share/extensions/summersnight.py:74
+#: ../share/extensions/perspective.py:101
+#: ../share/extensions/summersnight.py:86
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:92
-#: ../share/extensions/summersnight.py:77
+#: ../share/extensions/perspective.py:104
+#: ../share/extensions/summersnight.py:89
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -19543,11 +19614,11 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr ""
 
-#: ../share/extensions/summersnight.py:32
+#: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
 msgstr ""
 
-#: ../share/extensions/svg_and_media_zip_output.py:109
+#: ../share/extensions/svg_and_media_zip_output.py:113
 #, python-format
 msgid "Could not locate file: %s"
 msgstr ""
@@ -21072,140 +21143,140 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
-msgstr ""
+msgstr "عشريني الوجوه"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 msgid "Light x-Position"
-msgstr ""
+msgstr "إحداثيات س للضوﺀ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 msgid "Light y-Position"
-msgstr ""
+msgstr "إحداثيات ص للضوﺀ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
 msgid "Light z-Position"
-msgstr ""
+msgstr "إحداثيات ز للضوﺀ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
-msgstr ""
+msgstr "سماكة الخط / بكسلات"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
-msgstr ""
+msgstr "تحميل من ملف"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Maximum"
-msgstr ""
+msgstr "الأقصى"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Mean"
-msgstr ""
+msgstr "معدّل"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
 msgid "Minimum"
-msgstr ""
+msgstr "الأدنى"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Model File"
-msgstr ""
+msgstr "ملف النموذج"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object Type"
-msgstr ""
+msgstr "نوع الجسم"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "Object:"
-msgstr ""
+msgstr "جسم:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 msgid "Octahedron"
-msgstr ""
+msgstr "ثماني الوجوه"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
 msgid "Rotate Around:"
-msgstr ""
+msgstr "إدارة حول:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Rotation / Degrees"
-msgstr ""
+msgstr "إدارة / درجات"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Scaling Factor"
-msgstr ""
+msgstr "عامل الحجم"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Shading"
-msgstr ""
+msgstr "تظليل"
 
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "عشريني الوجوه المسنن"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
-msgstr ""
+msgstr "مكّعب مبتور جزئيا"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "إثنعشري الوجوه مبتور جزئيا"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr ""
+msgstr "شفافية الريشة / %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
-msgstr ""
+msgstr "رباعيّ الوجوه"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
-msgstr ""
+msgstr "عندها إدارة حول:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
-msgstr ""
+msgstr "مكعّب مبتور"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "الإثنعشري الوجوه المبتور"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "العشريني الوجوه المبتور"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
-msgstr ""
+msgstr "ثماني الوجوه المبتور"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "رباعي الوجوه المبتور"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
-msgstr ""
+msgstr "القمم"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
-msgstr ""
+msgstr "عرض"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
-msgstr ""
+msgstr "محور س"
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
-msgstr ""
+msgstr "محور ص"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
-msgstr ""
+msgstr "محور ز"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "ترتيب الأوجه حسب العمق"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -21217,7 +21288,7 @@ msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:3
 msgid "Bottom:"
-msgstr ""
+msgstr "الأسفل:"
 
 #: ../share/extensions/printing-marks.inx.h:4
 msgid "Canvas"
@@ -21233,15 +21304,15 @@ msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:7
 msgid "Left:"
-msgstr ""
+msgstr "اليسار:"
 
 #: ../share/extensions/printing-marks.inx.h:8
 msgid "Marks"
-msgstr ""
+msgstr "العلامات"
 
 #: ../share/extensions/printing-marks.inx.h:10
 msgid "Page Information"
-msgstr ""
+msgstr "معلومات الصفحة"
 
 #: ../share/extensions/printing-marks.inx.h:11
 msgid "Positioning"
@@ -21257,7 +21328,7 @@ msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:15
 msgid "Right:"
-msgstr ""
+msgstr "اليمين:"
 
 #: ../share/extensions/printing-marks.inx.h:17
 msgid "Set crop marks to"
@@ -21265,11 +21336,11 @@ msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:18
 msgid "Star Target"
-msgstr ""
+msgstr "نجمة الهدف"
 
 #: ../share/extensions/printing-marks.inx.h:19
 msgid "Top:"
-msgstr ""
+msgstr "الأعلى:"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "PostScript Input"
@@ -21289,49 +21360,50 @@ msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
-msgstr ""
+msgstr "إزاحة مقابض العقد"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Shift nodes"
-msgstr ""
+msgstr "إزاحة العقد"
 
 #: ../share/extensions/radiusrand.inx.h:7
 msgid ""
 "This effect randomly shifts the nodes (and optionally node handles) of the "
 "selected path."
 msgstr ""
+"هذا التأثير يقوم بإزاحة العقد عشوائيا (وإختياريا مقابض العقد)للمسار المختار"
 
 #: ../share/extensions/radiusrand.inx.h:8
 msgid "Use normal distribution"
-msgstr ""
+msgstr "إستعمال التوزيع الطبيعي"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "شورباﺀ الأبجدية"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
-msgstr ""
+msgstr "بذرة عشوائية"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
-msgstr ""
+msgstr "طول الخط"
 
 #: ../share/extensions/render_barcode.inx.h:2
 msgid "Barcode"
-msgstr ""
+msgstr "الشيفرة الخطية"
 
 #: ../share/extensions/render_barcode.inx.h:3
 msgid "Barcode Data:"
-msgstr ""
+msgstr "بيانات الشيفرة الخطية:"
 
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
-msgstr ""
+msgstr "نوع الشيفرة الخطية:"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle:"
-msgstr ""
+msgstr "زاوية عشوائية:"
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Arrange"
@@ -21339,23 +21411,23 @@ msgstr "ترتيب"
 
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
-msgstr ""
+msgstr "الأسفل"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr ""
+msgstr "الأسفل لأعلى (90)"
 
 #: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
-msgstr ""
+msgstr "النقطة الأفقية:"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr ""
+msgstr "اليسار لليمين (0)"
 
 #: ../share/extensions/restack.inx.h:9
 msgid "Middle"
-msgstr ""
+msgstr "وسط"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
@@ -21367,49 +21439,49 @@ msgstr ""
 
 #: ../share/extensions/restack.inx.h:12
 msgid "Restack"
-msgstr ""
+msgstr "اعادة تكديس"
 
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
-msgstr ""
+msgstr "إتجاه إعادة التكديس:"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
-msgstr ""
+msgstr "يمين لليسار (180)"
 
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
-msgstr ""
+msgstr "الأعلى لأسفل (270)"
 
 #: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
-msgstr ""
+msgstr "النقطة العامودية:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
-msgstr ""
+msgstr "حجم البداية"
 
 #: ../share/extensions/rtree.inx.h:2
 msgid "Minimum size"
-msgstr ""
+msgstr "الحجم الأدنى"
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Random Tree"
-msgstr ""
+msgstr "شجرة عشوائية"
 
 #: ../share/extensions/rubberstretch.inx.h:2
 #, no-c-format
 msgid "Curve (%):"
-msgstr ""
+msgstr "إنحناﺀة (%):"
 
 #: ../share/extensions/rubberstretch.inx.h:4
 msgid "Rubber Stretch"
-msgstr ""
+msgstr "قوّة المطّاط"
 
 #: ../share/extensions/rubberstretch.inx.h:6
 #, no-c-format
 msgid "Strength (%):"
-msgstr ""
+msgstr "القوّة (%):"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -21446,51 +21518,51 @@ msgstr ""
 
 #: ../share/extensions/spirograph.inx.h:1
 msgid "Gear Placement"
-msgstr ""
+msgstr "موقع الدولاب"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "من الداخل"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "من الخارج"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
-msgstr ""
+msgstr "النوعية (إفتراضية = 16)"
 
 #: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
-msgstr ""
+msgstr "ح - شعاع الحلقة (بكسلات)"
 
 #: ../share/extensions/spirograph.inx.h:7
 msgid "Rotation (deg)"
-msgstr ""
+msgstr "إدارة (درجات)"
 
 #: ../share/extensions/spirograph.inx.h:8
 msgid "Spirograph"
-msgstr ""
+msgstr "رسم مدولب"
 
 #: ../share/extensions/spirograph.inx.h:9
 msgid "d - Pen Radius (px)"
-msgstr ""
+msgstr "ق - شعاع القلم (بكسلات)"
 
 #: ../share/extensions/spirograph.inx.h:10
 msgid "r - Gear Radius (px)"
-msgstr ""
+msgstr "ش - شعاع الدولاب (بكسلات)"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
-msgstr ""
+msgstr "التصرّف"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Straighten Segments"
-msgstr ""
+msgstr "إستقامة الأضلاع"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
-msgstr ""
+msgstr "غلاف"
 
 #: ../share/extensions/svg2xaml.inx.h:1 ../share/extensions/xaml2svg.inx.h:1
 msgid "Microsoft XAML (*.xaml)"
@@ -21498,7 +21570,7 @@ msgstr ""
 
 #: ../share/extensions/svg2xaml.inx.h:2 ../share/extensions/xaml2svg.inx.h:2
 msgid "Microsoft's GUI definition format"
-msgstr ""
+msgstr "نمط تعريفات مايكروسوفت لواجهة المستخدم"
 
 #: ../share/extensions/svg2xaml.inx.h:3
 msgid "XAML Output"
@@ -21526,125 +21598,127 @@ msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
-msgstr ""
+msgstr "(لائحة أسماﺀ الأيام تبدأ من الأحد)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
 msgid "Automatically set size and position"
-msgstr ""
+msgstr "تحديد تلقائي للحجم والموقع"
 
 #: ../share/extensions/svgcalendar.inx.h:4
 msgid "Calendar"
-msgstr ""
+msgstr "رزنامة"
 
 #: ../share/extensions/svgcalendar.inx.h:5
 msgid "Char Encoding"
-msgstr ""
+msgstr "ترميز الحرف"
 
 #: ../share/extensions/svgcalendar.inx.h:7
 msgid "Configuration"
-msgstr ""
+msgstr "إعدادات"
 
 #: ../share/extensions/svgcalendar.inx.h:8
 msgid "Day color"
-msgstr ""
+msgstr "ألوان الأيام"
 
 #: ../share/extensions/svgcalendar.inx.h:9
 msgid "Day names"
-msgstr ""
+msgstr "أسماﺀ الأيام"
 
 #: ../share/extensions/svgcalendar.inx.h:10
 msgid "Fill empty day boxes with next month's days"
-msgstr ""
+msgstr "ملﺀ خانات الأيام الفارغة بأيام الشهر القادم"
 
 #: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
 "January February March April May June July August September October November "
 "December"
 msgstr ""
+"كانون الثاني شباط آذار نيسان أيّار حزيران تمّوز آب أيلول تشرين الأوّل تشرين "
+"الثانيكانون الأوّل"
 
 #: ../share/extensions/svgcalendar.inx.h:13
 msgid "Localization"
-msgstr ""
+msgstr "الأقلمة"
 
 #: ../share/extensions/svgcalendar.inx.h:14
 msgid "Monday"
-msgstr ""
+msgstr "الإثنين"
 
 #: ../share/extensions/svgcalendar.inx.h:15
 msgid "Month (0 for all)"
-msgstr ""
+msgstr "شهر (0 للكل)"
 
 #: ../share/extensions/svgcalendar.inx.h:16
 msgid "Month Margin"
-msgstr ""
+msgstr "هامش الشهر"
 
 #: ../share/extensions/svgcalendar.inx.h:17
 msgid "Month Width"
-msgstr ""
+msgstr "عرض الشهر"
 
 #: ../share/extensions/svgcalendar.inx.h:18
 msgid "Month color"
-msgstr ""
+msgstr "لون الشهر"
 
 #: ../share/extensions/svgcalendar.inx.h:19
 msgid "Month names"
-msgstr ""
+msgstr "أسماﺀ الأشهر"
 
 #: ../share/extensions/svgcalendar.inx.h:20
 msgid "Months per line"
-msgstr ""
+msgstr "أشهر بالسطر"
 
 #: ../share/extensions/svgcalendar.inx.h:21
 msgid "Next month day color"
-msgstr ""
+msgstr "لون يوم الشهر القادم"
 
 #: ../share/extensions/svgcalendar.inx.h:23
 msgid "Saturday"
-msgstr ""
+msgstr "السبت"
 
 #: ../share/extensions/svgcalendar.inx.h:24
 msgid "Saturday and Sunday"
-msgstr ""
+msgstr "سبت وأحد"
 
 #: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
-msgstr ""
+msgstr "أحد إثنين ثلاثاﺀ أربعاﺀ خميس جمعة سبت"
 
 #: ../share/extensions/svgcalendar.inx.h:26
 msgid "Sunday"
-msgstr ""
+msgstr "الأحد"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options below have no influence when the above is checked."
-msgstr ""
+msgstr "الخيارات أدناه ليس لها تأثير عند إخيار أعلاه"
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
-msgstr ""
+msgstr "يوم بداية الأسبوع"
 
 #: ../share/extensions/svgcalendar.inx.h:29
 msgid "Weekday name color "
-msgstr ""
+msgstr "لون أسماﺀ أيام الأسبوع"
 
 #: ../share/extensions/svgcalendar.inx.h:30
 msgid "Weekend"
-msgstr ""
+msgstr "نهاية الأسبوع"
 
 #: ../share/extensions/svgcalendar.inx.h:31
 msgid "Weekend day color"
-msgstr ""
+msgstr "لون أيام نهاية الأسبوع"
 
 #: ../share/extensions/svgcalendar.inx.h:32
 msgid "Year (0 for current)"
-msgstr ""
+msgstr "سنة (صفر حتى الحالية)"
 
 #: ../share/extensions/svgcalendar.inx.h:33
 msgid "Year color"
-msgstr ""
+msgstr "لون السنة"
 
 #: ../share/extensions/svgcalendar.inx.h:34
 msgid "You may change the names for other languages:"
-msgstr ""
+msgstr "يمكن تغيير الأسماﺀ لللغات الأخرى"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -21664,15 +21738,15 @@ msgstr ""
 
 #: ../share/extensions/text_replace.inx.h:1
 msgid "By:"
-msgstr ""
+msgstr "بواسطة:"
 
 #: ../share/extensions/text_replace.inx.h:2
 msgid "Replace text"
-msgstr ""
+msgstr "تغيير النص"
 
 #: ../share/extensions/text_replace.inx.h:3
 msgid "Replace:"
-msgstr ""
+msgstr "تغيير:"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
@@ -21688,59 +21762,59 @@ msgstr ""
 
 #: ../share/extensions/triangle.inx.h:1
 msgid "Angle a / deg"
-msgstr ""
+msgstr "زاوية أ / درجة"
 
 #: ../share/extensions/triangle.inx.h:2
 msgid "Angle b / deg"
-msgstr ""
+msgstr "زاوية ج / درجة"
 
 #: ../share/extensions/triangle.inx.h:3
 msgid "Angle c / deg"
-msgstr ""
+msgstr "زاوية ج / درجة"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
-msgstr ""
+msgstr "من جهة أ وزوايا أ، ب"
 
 #: ../share/extensions/triangle.inx.h:5
 msgid "From Side c and Angles a, b"
-msgstr ""
+msgstr "من جهة ج وزوايا أ، ب"
 
 #: ../share/extensions/triangle.inx.h:6
 msgid "From Sides a, b and Angle a"
-msgstr ""
+msgstr "من الجهات أ، ب د وزاوية أ"
 
 #: ../share/extensions/triangle.inx.h:7
 msgid "From Sides a, b and Angle c"
-msgstr ""
+msgstr "من جهات أ، ب وزاوية ج"
 
 #: ../share/extensions/triangle.inx.h:8
 msgid "From Three Sides"
-msgstr ""
+msgstr "من الجهات الثلاثة"
 
 #: ../share/extensions/triangle.inx.h:11
 msgid "Side Length a / px"
-msgstr ""
+msgstr "طول الجانب أ / بكسلات"
 
 #: ../share/extensions/triangle.inx.h:12
 msgid "Side Length b / px"
-msgstr ""
+msgstr "طول الجانب ب / بكسلات"
 
 #: ../share/extensions/triangle.inx.h:13
 msgid "Side Length c / px"
-msgstr ""
+msgstr "طول الجانب ج / بكسلات"
 
 #: ../share/extensions/triangle.inx.h:14
 msgid "Triangle"
-msgstr ""
+msgstr "مثلث"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
-msgstr ""
+msgstr "نص أسكي"
 
 #: ../share/extensions/txt2svg.inx.h:2
 msgid "Text File (*.txt)"
-msgstr ""
+msgstr "ملّف النص (*.txt)"
 
 #: ../share/extensions/txt2svg.inx.h:3
 msgid "Text Input"
@@ -21768,12 +21842,12 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Run it after"
-msgstr ""
+msgstr "تنفيذها لاحقا"
 
 #: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Run it before"
-msgstr ""
+msgstr "تنفيذها مسبقا"
 
 #: ../share/extensions/web-set-att.inx.h:8
 msgid "Set Attributes"
@@ -21811,12 +21885,12 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
-msgstr ""
+msgstr "القيمة لتحديدها"
 
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
-msgstr ""
+msgstr "وب"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
@@ -21888,7 +21962,7 @@ msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
-msgstr ""
+msgstr "مصدر ووجهة البثّ"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
 msgid "The first selected transmits to all others"
@@ -21910,15 +21984,15 @@ msgstr ""
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
-msgstr ""
+msgstr "كميّة اللف"
 
 #: ../share/extensions/whirl.inx.h:3
 msgid "Rotation is clockwise"
-msgstr ""
+msgstr "الإدارة هي مع عقارب الساعة"
 
 #: ../share/extensions/whirl.inx.h:4
 msgid "Whirl"
-msgstr ""
+msgstr "دوّامة"
 
 #: ../share/extensions/wmf_input.inx.h:1
 #: ../share/extensions/wmf_output.inx.h:1
@@ -21944,9 +22018,6 @@ msgstr ""
 
 #~ msgid "Glossy painting effect for bitmaps"
 #~ msgstr "طلاﺀ لامع للصور"
-
-#~ msgid "Bumps"
-#~ msgstr "نتوﺀ"
 
 #~ msgid "Soft bump"
 #~ msgstr "نتوﺀ ناعم"
