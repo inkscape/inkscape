@@ -389,11 +389,11 @@ the resolution that were used for that object last time when it was exported fro
 
 Same, but use the default 90 dpi resolution, specify the filename, 
 and snap the exported area outwards to the nearest whole SVG user unit values 
-(to preserve pixel-alignment of objects and thus minimize antialiasing):
+(to preserve pixel-alignment of objects and thus minimize aliasing):
 
     inkscape filename.svg --export-id=text1555 --export-png=text.png --export-snap-area
 
-Convert an Inkscape SVG document to plain SVG:  
+Convert an Inkscape SVG document to plain SVG:
 
     inkscape filename1.svg --export-plain-svg=filename2.svg
 
@@ -472,7 +472,7 @@ To learn Inkscape's GUI operation, read the tutorials in Help > Tutorials.
 
 Apart from SVG, Inkscape can import (File > Import) most bitmap formats 
 (PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
-and AI format (AI version 9.0 or newer). 
+and AI format (AI version 9.0 or newer).
 
 Inkscape exports 32-bit PNG images (File > Export) as well as AI, PS, EPS, PDF, DXF, 
 and several other formats via File > Save as.
@@ -484,7 +484,7 @@ Inkscape includes a GUI front-end to the Potrace bitmap tracing engine
 (http://potrace.sf.net) which is embedded into Inkscape.
 
 Inkscape can use external scripts (stdin-to-stdout filters) that are represented by
-commands in the Effects menu. A script can have a GUI dialog for setting various
+commands in the Extensions menu. A script can have a GUI dialog for setting various
 parameters and can get the IDs of the selected objects on which to act via the command
 line. Inkscape comes with an assortment of effects written in Python.
 
@@ -516,7 +516,7 @@ The codebase that would become Inkscape began life in 1999 as the
 program Gill, the GNOME Illustrator application, created by Raph
 Levien.  The stated objective for Gill was to eventually support all of
 SVG.  Raph implemented the PostScript bezier imaging model, including
-stroking and filling, line cap style, line join style, text, etc.  
+stroking and filling, line cap style, line join style, text, etc.
 Raph's Gill page is at http://www.levien.com/svg/.  Work on Gill appears
 to have slowed or ceased in 2000.
 
@@ -556,10 +556,10 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
-B<Copyright (C)> 1999-2008 by Authors.  
+B<Copyright (C)> 1999-2008 by Authors.
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
-under the terms of the GPL.  
+under the terms of the GPL.
 
 
 =for comment

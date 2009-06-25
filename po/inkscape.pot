@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-24 20:18+0200\n"
+"POT-Creation-Date: 2009-06-25 17:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1709,7 +1709,9 @@ msgid "Embossed leather"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:195
-msgid "Combine a bump with a leathery texture"
+msgid ""
+"Combine a HSL edges detection bump with a leathery or woody and colorizable "
+"texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196

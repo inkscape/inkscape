@@ -78,7 +78,7 @@ si môže ovládanie rozhrania rýchlo osvojiť.
 
 B<SVG> je štandardný W3C XML formát pre dvojrozmernú vektorovú grafiku.
 Umožňuje definíciu objektov kresby pomocou bodov, ciest a primitívnych
-tvarov. Farby, fonty, šírka ťahu atď sa pri týchto objektoch uvádzajú ako
+tvarov. Farby, písma, šírka ťahu atď sa pri týchto objektoch uvádzajú ako
 atribúty „štýlu“. Zámer je taký, že keďže SVG je štandard a jeho súbory sú
 text/xml, bude možné použiť SVG súbory vo veľkom počte programov v širokom
 spektre aplikácií.
@@ -109,9 +109,9 @@ exportuje celé kresliace plátno dokumentu. Bod (0,0) je spodný dolný roh.
 =item B<-C>, B<--export-area-canvas>
 
 Pri exporte NG, PDF, PS a EPS je exportovaná oblasť celé kresliace plátno dokumentu
-(stránka). Toto je šandardné nastavenie pre PNG, PDF a PS, takže ju nemusíte uvádzať
+(stránka). Toto je štandardné nastavenie pre PNG, PDF a PS, takže ju nemusíte uvádzať
 ak nepoužívate --export-id na exportovanie konkrétneho objektu. Pri exporte EPS to
-však nie je šandardné nastavenie. Naviac pri EPS neumožňuje špecifikácia formátu aby
+však nie je štandardné nastavenie. Naviac pri EPS neumožňuje špecifikácia formátu aby
 bolo ohraničenie väčšie ako obsah dokumentu. To znamená, že ak pri exporte EPS použijete
 --export-area-canvas, ohraničenie plátna sa oreže dnu na ohraničenie objektu ak je menšie.
 
@@ -126,9 +126,9 @@ je možné použiť túto voľbu v kombinácii s --export-use-hints.
 =item B<--export-area-snap>
 
 Pri exporte png prichytí oblasť exportu smerom von na najbližšiu celočíselnú používateľskú jednotku SVG (px).
-Ak používate štandardné rozlíšenie na export 90 dpi a vaša grafika je zarovnaná na pixely aby sa minimalizoval
+Ak používate štandardné rozlíšenie na export 90 dpi a vaša grafika je zarovnaná na pixle aby sa minimalizoval
 antialiasing, tento prepínač vám umožní zachovať toto zarovnanie aj ak exportujete ohraničenie nejakého
-objektu (pmocou --export-id alebo --export-area-drawing), ktoré samotné nie je zarovnané na pixely.
+objektu (pmocou --export-id alebo --export-area-drawing), ktoré samotné nie je zarovnané na pixle.
 
 =item B<-b> I<FARBA>, B<--export-background>=I<FARBA>
 
@@ -154,7 +154,7 @@ Ak už existuje, bude prepísaní bez pýtania sa.
 =item B<-f> I<NÁZOVSÚBORU>, B<--file>=I<NÁZOVSÚBORU>
 
 Otvorí zadané dokumenty.
-Je možné vynechať reťazec voľby, t.j. možete uviesť zoznam súborov bez -f.
+Je možné vynechať reťazec voľby, t.j. môžete uviesť zoznam súborov bez -f.
 
 =item B<-g>, B<--with-gui>
 
@@ -162,12 +162,12 @@ Pokúsiť sa použiť GUI (na unixových systémoch, použiť X server aj keď n
 
 =item B<-h> I<VÝŠKA>, B<--export-height>=I<VÝŠKA>
 
-Výška generovaných bitmáp v pixeloch. Táto hodnota má precedenciu pred
+Výška generovaných bitmáp v pixloch. Táto hodnota má precedenciu pred
 nastavením --export-dpi (alebo odporúčaním DPI pri použití s prepínačom --export-use-hints). 
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-Pri exporte PNG, PS, EPS a PDF hodnota atrihútu id objektu, ktorý chcete
+Pri exporte PNG, PS, EPS a PDF hodnota atribútu id objektu, ktorý chcete
 exportovať z dokumentu. Žiadne iné objekty sa neexportujú. Štandardne sa
 exportuje ohraničenie objektu. To môžete zmeniť použitím voľby
 --export-area (iba pri PNG) alebo --export-area-canvas.
@@ -175,7 +175,7 @@ exportuje ohraničenie objektu. To môžete zmeniť použitím voľby
 =item B<-j>, B<--export-id-only>
 
 Exportovať do PNG iba objekt s id zadaným v --export-id. Všetky ostatné objekty sa skryjú a
-nezobrazia sa v exporte ani keď prekrúvajú exportovaný objekt. Ak nie je uvedené --export-id,
+nezobrazia sa v exporte ani keď prekrývajú exportovaný objekt. Ak nie je uvedené --export-id,
 táto voľba sa ignoruje. Pri exporte PDF je toto štandardná voľba, takže jej uvedenie nemá žiadny vplyv.
 
 =item B<-l>, B<--export-plain-svg>=I<NÁZOVSÚBORU>
@@ -184,7 +184,7 @@ Exportovať dokumenty do formátu čisté SVG, bez menných priestorov sodipodi:
 
 =item B<-x>, B<--extension-directory>
 
-Vypíše aktuálny adresár rozšírení, ktorý bol nastavený pre inkscape a potom
+Vypíše aktuálny adresár rozšírení, ktorý bol nastavený pre Inkscape a potom
 skončí. Využívajú to externé rozšírenia aby použili rovnakú konfiguráciu ako
 pôvodná inštalácia Inkscape.
 
@@ -273,7 +273,7 @@ Konvertovať pri exporte textové objekty na cesty kde sa dá (pri exporte PS, E
 
 =item B<--export-ignore-filters>
 
-Exportovať objekty s filtrami (napr. tie s rozostrenám) ako vektorovú grafiku a ignorovať filtre (pri exporte PS, EPS a PDF). 
+Exportovať objekty s filtrami (napr. s rozostrením) ako vektorovú grafiku a ignorovať filtre (pri exporte PS, EPS a PDF). 
 Štandardne sa všetky objekty s filtrami rasterizujú s rozlíšením --export-dpi (štandardne 90 dpi) čím sa zachová ich vzhľad.
 
 =item B<-I>, B<--query-id>
@@ -304,150 +304,150 @@ súradnicou x,y, šírkou a výškou vo formáte s hodnotami oddelenom čiarkami
 
 =item B<--shell>
 
-With this parameter, Inkscape will enter an interactive command line shell mode. In this
-mode, you type in commands at the prompt and Inkscape executes them, without you having
-to run a new copy of Inkscape for each command. This feature is mostly useful for
-scripting and server uses: it adds no new capabilities but allows you to improve the
-speed and memory requirements of any script that repeatedly calls Inkscape to perform
-command line tasks (such as export or conversions). Each command in shell mode must be a
-complete valid Inkscape command line but without the Inkscape program name, for example
-"file.svg --export-pdf=file.pdf".
+Ak je zadaný tento parameter, Inkscape vstúpi do interaktívneho režimu príkazového riadka.
+V tomto režime píšete príkazy na príkazovom riadku a Inkscape ich vykonáva bez toho aby
+ste museli pri každom príkaze spúšťať novú inštanciu Inkscape. Táto vlastnosť je
+najužitočnejšia v skriptoch a pri použití na serveri: nepridáva nové schopnosti, ale umožňuje
+vám zlepšovať nároky na rýchlosť a pamäť akéhokoľvek skriptu, ktorý opakovane volá Inkscape
+aby vykonal úlohy z príkazového riadka (ako export alebo konverzie). Každý príkaz v režime shellu
+musí byť úplný platný príkaz Inkscape ale bez názvu programu Inkscape, napr.
+„subor.svg --export-pdf=subor.pdf“.
 
 =item B<--vacuum-defs>
 
-Remove all unused items from the <lt>defs<gt> section of the SVG file.  If this
-option is invoked in conjunction with --export-plain-svg, only the exported file
-will be affected.  If it is used alone, the specified file will be modified in place.
+Odstráni všetky nepoužité položky zo sekcie <lt>defs<gt> SVG súboru. Ak túto voľbu
+zadáte spolu s --export-plain-svg, bude mať vplyv iba na exportovaný súbor.
+Ak ju použijete samostatne, zmení sa existujúci súbor.
 
 =item B<-z>, B<--without-gui>
 
-Do not open the GUI (on Unix, do not use X server); only process the files from console.
-This is assumed for -p, -e, -l, and --vacuum-defs options. 
+Neotvírať grafické rozhranie (na unixových systémoch nepoužívať X server), iba spracovať súbory z konzoly.
+Táto voľba sa predpokladá pri voľbách -p, -e, -l a --vacuum-defs.
 
 =item B<--g-fatal-warnings>
 
-This standard GTK option forces any warnings, usually harmless, to cause Inkscape to
-abort (useful for debugging).
+Táto štandardná voľba GTK vynucuje, že akékoľvek upozornenia, ktoré sú zvyčajne
+neškodné, spôsobia ukončenie Inkscape (čo je užitočné pri ladení).
 
 =item B<--usage>
 
-Display a brief usage message.
+Zobrazí stručnú správu o tom ako používať Inkscape.
 
 =back
 
 =head1 KONFIGURÁCIA
 
-The main configuration file is located in ~/.config/Inkscape/preferences.xml; it stores
-a variety of customization settings that you can change in Inkscape (mostly in the
-Inkscape Preferences dialog).  Also in the subdirectories there, you can place your own:
+Hlavný konfiguračný súboor je ~/.config/Inkscape/preferences.xml. Ukladá rozličné
+nastavenia, ktoré môžete zmeniť v Inkscape (prevažne v dialógu Nastavenia Inkscape).
+Do podadresárov tohto adresára tiež môžete umiestniť vlastné:
 
-B<$HOME>/.config/Inkscape/extensions/ - extension effects.
+B<$HOME>/.config/Inkscape/extensions/ - rozširujúce efekty.
 
-B<$HOME>/.config/Inkscape/icons/ - icons.
+B<$HOME>/.config/Inkscape/icons/ - ikony.
 
-B<$HOME>/.config/Inkscape/keys/ - keyboard maps.
+B<$HOME>/.config/Inkscape/keys/ - mapy kláves.
 
-B<$HOME>/.config/Inkscape/templates/ - new file templates.
+B<$HOME>/.config/Inkscape/templates/ - šablóny nových súborov.
 
 =head1 DIAGNOSTIKA
 
-The program returns zero on success or non-zero on failure.
+Program vráti nulovú hodnotu pri úspešnom a nenulovú pri neúspešnom ukončení.
 
-A variety of error messages and warnings may be printed to STDERR or
-STDOUT.  If the program behaves erratically with a particular SVG file
-or crashes, it is useful to look at this output for clues.
+Na štandardný chybový výstup alebo štandardný výstup môže vypísať rozličné chybové
+hlásenia alebo upozornenia. Ak sa program správa chybne alebo havaruje v súvislosti
+s konkrétnym SVG súborom, prehliadnutie tohto výstupu pomôže zistiť dôvod zlyhania.
 
 =head1 PRÍKLADY
 
-While obviously B<Inkscape> is primarily intended as a GUI application,
-it can be used for doing SVG processing on the commandline as well.
+Hoci je B<Inkscape> zjavne v prvom rade aplikácia s grafickým používateľským
+rozhraním, tiež ho možno použiť na spracovanie SVG z príkazového riadka.
 
-Open an SVG file in the GUI:
+Otvorenie SVG súboru v grafickom rozhraní:
 
-    inkscape filename.svg
+    inkscape subor.svg
 
-Print an SVG file from the command line:
+Vytlačenie SVG súboru z príkazového riadka:
 
-    inkscape filename.svg -p '| lpr'
+    inkscape subor.svg -p '| lpr'
 
-Export an SVG file into PNG with the default resolution of 90dpi (one SVG user unit translates to one bitmap pixel):
+Export SVG súboru do PNG v predvolenom rozlíšení 90 dpi (jedna používateľská jednotka SVG zodpovedá jednému pixlu bitmapy):
 
-    inkscape filename.svg --export-png=filename.png
+    inkscape subor.svg --export-png=subor.png
 
-Same, but force the PNG file to be 600x400 pixels:
+To isté, ale veľkosť súboru PNG je vynútená na 600x400 pixlov:
 
-    inkscape filename.svg --export-png=filename.png -w600 -h400
+    inkscape subor.svg --export-png=subor.png -w600 -h400
 
-Same, but export the drawing (bounding box of all objects), not the page:
+To isté, ale exportuje kresbu (ohraničenie všetkých objektov), nie stránku:
 
-    inkscape filename.svg --export-png=filename.png --export-area-drawing
+    inkscape subor.svg --export-png=subor.png --export-area-drawing
 
-Export to PNG the object with id="text1555", using the output filename and 
-the resolution that were used for that object last time when it was exported from the GUI:
+Exportuje do PNG objekt s id="text1555" s použitím názvu súboru a rozlíšenia,
+ktoré boli použité pri poslednom exporte objektu z grafického rozhrania:
 
-    inkscape filename.svg --export-id=text1555 --export-use-hints
+    inkscape subor.svg --export-id=text1555 --export-use-hints
 
-Same, but use the default 90dpi resolution, specify the filename, 
-and snap the exported area outwards to the nearest whole SVG user unit values 
-(to preserve pixel-alignment of objects and thus minimize antialiasing):
+To isté, ale použiť rozlíšenie 90 dpi, určiť názov súboru a prichytiť
+exportovanú oblasť smerom von k najbližšej celej hodnte používateľskej jednotky
+SVG (aby sa zachovalo zarovnanie objektov na pixle a tak minimalizoval aliasing):
 
-    inkscape filename.svg --export-id=text1555 --export-png=text.png --export-snap-area
+    inkscape subor.svg --export-id=text1555 --export-png=text.png --export-snap-area
 
-Convert an Inkscape SVG document to plain SVG:  
+Previesť Inkscape SVG na čistý SVG dokument:
 
-    inkscape filename1.svg --export-plain-svg=filename2.svg
+    inkscape subor1.svg --export-plain-svg=subor2.svg
 
-Convert an SVG document to EPS, converting all texts to paths:
+Previesť SVG dokument na EPS, pričom prevedie všetky texty na cesty:
 
-    inkscape filename.svg --export-eps=filename.eps --export-text-to-path
+    inkscape subor.svg --export-eps=subor.eps --export-text-to-path
 
-Query the width of the object with id="text1555":
+Zistiť šírku objektu s id="text1555":
 
-    inkscape filename.svg --query-width --query-id text1555
+    inkscape subor.svg --query-width --query-id text1555
 
-Duplicate the object with id="path1555", rotate the duplicate 90 degrees, save SVG, and quit:
+Duplikovať objekt s id="path1555", otočiť duplikát o 90 stupňov, uložiť SVG a skončiť:
 
-    inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose
+    inkscape subor.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose
 
 
 =head1 PROSTREDIE
 
-B<DISPLAY> to get the default host and display number.
+B<DISPLAY> zistenie predvoleného hostiteľa a čísla displeja.
 
-B<TMPDIR> to set the default path of the directory to use for temporary
-files.  The directory must exist.
+B<TMPDIR> nastavenie predvoleného adresára pre dočasné súbory.
+Adresár musí existovať.
 
 =head1 TÉMY
 
-To load different icons sets instead of the default
-B<$PREFIX>/share/inkscape/icons/icons.svg file, the directory
-B<$HOME>/.inkscape/icons/ is used.  Icons are loaded by name
-(e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If the
-icon is not loaded from either of those locations, it falls back to the
-default system location.
+Ak chcete načítať odlišnú sadu ikon ako predvolený súbor
+B<$PREFIX>/share/inkscape/icons/icons.svg, použije sa adresár
+B<$HOME>/.inkscape/icons/. Ikony sa načítavajú podľa názvu
+(napr. I<fill_none.svg>) alebo ak nie sú nájdené z I<icons.svg>.
+Ak sa ikona nenačíta ani z jedného z týchto miest, použije sa
+predvolené umiestnenie systému.
 
-The needed icons are loaded from SVG files by searching for the SVG id with
-the matching icon name.  (For example, to load the "fill_none" icon from
-a file, the bounding box seen for SVG id "fill_none" is rendered as the
-icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
+Potrebné ikony sa načítavajú zo SVG súborov hľadaním SVG id so
+zodpovedajúcim názvom ikony. (Napr. pri načítaní ikony „fill_none“ zo súboru
+sa ako ikona vykreslí ohraničenie „fill_none“, či už pochádza zo
+súboru I<fill_none.svg> alebo I<icons.svg>.)
 
 
 
 =head1 ĎALŠIE INFORMÁCIE
 
-The canonical place to find B<Inkscape> info is at
-http://www.inkscape.org/.  The website has news, documentation,
-tutorials, examples, mailing list archives, the latest released
-version of the program, bugs and feature requests databases, forums,
-and more.
+Umiestnenie kanonickej dokumentácie k B<Inkscape> je na
+http://www.inkscape.org/. Webová stránka obsahuje novinky,
+dokumentáciu, návody, príklady, archívy konferencií, poslednú
+vydanú verziu programu, databázy chýb a žiadostí o nové funkcie,
+fóra a ďalšie.
 
 =head1 POZRI AJ
 
 potrace, cairo, rsvg(1), batik, ghostscript, pstoedit.
 
-SVG compliance test suite:  http://www.w3.org/Graphics/SVG/Test/
+Testovací balík konformnosti so štandardom SVG:  http://www.w3.org/Graphics/SVG/Test/
 
-SVG validator:  http://jiggles.w3.org/svgvalidator/
+Nástroj na testovanie platnosti SVG:  http://jiggles.w3.org/svgvalidator/
 
 I<Scalable Vector Graphics (SVG) 1.1 Specification>
 I<W3C Recommendation 14 January 2003>
@@ -468,98 +468,98 @@ L<http://www.w3.org/TR/DOM-Level-2-Core/>
 
 =head1 POZNÁMKY KU GRAFICKÉMU ROZHRANIU
 
-To learn Inkscape's GUI operation, read the tutorials in Help > Tutorials.
+Ak sa chcete naučiť pracovať s grafickým rozhraním Inkscape Pomocník > Návody.
 
-Apart from SVG, Inkscape can import (File > Import) most bitmap formats 
-(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
-and AI format (AI version 9.0 or newer). 
+Okrem SVG dokáže Inkscape importovať (Súbor > Importovať) väčšinu bitmapových formátov
+(PNG, BMP, JPG, XPM, GIF atď.), čistý text (vyžaduje Perl), PS a EPS (vyžaduje Ghostscript),
+formáty PDF a AI (AI verzie 9.0 alebo novšia).
 
-Inkscape exports 32-bit PNG images (File > Export) as well as AI, PS, EPS, PDF, DXF, 
-and several other formats via File > Save as.
+Inkscape exportuje 32-bitové PNG obrázky (Súbor > Exportovať) a tiež AI, PS, EPS, PDF, DXF, 
+a niekoľko ďalších formátov pomocou Súbor > Uložiť ako.
 
-Inkscape can use the pressure and tilt of a graphic tablet pen for width, angle,
-and force of action of several tools, including the Calligraphic pen.
+Inkscape dokáže cyužiť informáciu o tlaku a sklone grafického tabletu na
+nastavenie šírky, uhla a sily niektorých nástrojov vrátane kaligrafického pera.
 
-Inkscape includes a GUI front-end to the Potrace bitmap tracing engine
-(http://potrace.sf.net) which is embedded into Inkscape.
+Inkscape obsahuje grafické rozhranie k jadru na vektorizáciu bitmáp Potrace
+(http://potrace.sf.net), ktoré je súčasťou Inkscape.
 
-Inkscape can use external scripts (stdin-to-stdout filters) that are represented by
-commands in the Effects menu. A script can have a GUI dialog for setting various
-parameters and can get the IDs of the selected objects on which to act via the command
-line. Inkscape comes with an assortment of effects written in Python.
+Inkscape dokáže využívať externé skripty (filtre štandardného vstupu/výstupu), ktoré predstavujú
+príkazy v menu Efekty. Skript môže mať grafický dialóg na nastavenie parametrov a dokáže
+zistiť ID vybraných objektov na ktoré sa bude aplikovať prostredníctvom  príkazového riadka.
+Inkscape obsahuje sadu efektov napísaných v jazyku Python.
 
 =head1 KLÁVESOVÉ VÄZBY
 
-To get a complete list of keyboard and mouse shortcuts, view doc/keys.html, or use the Keys and Mouse command in Help menu.
+Úplný zoznam skratiek klávesnice a myši nájdete v súbore doc/keys.html alebo pomocou príkazu Použitie klávesnice a myši v menu Pomocník.
 
 =head1 CHYBY
 
-Many bugs are known; please refer to the website (inkscape.org) for reviewing the reported ones and to
-report newly found issues.  See also the Known Issues section in the Release Notes for
-your version (file `NEWS').
+Je známych množstvo chýb. Existujúce chyby kontrolujte a nové hláste na
+webstránke inkscape.org. Tiež si prečítajte sekciu Známe problémy v Poznámkach
+k vydaniu vašej verzie (súbor „NEWS“).
 
 =head1 AUTORI
 
-This codebase owes its existance to a large number of contributors
-throughout its various incarnations.  The following list is certainly
-incomplete, but serves to recognize the many shoulders on which this
-application sits:
+Kód vďačí za svoju existenciu množstvu prispievateľov do jeho
+rozličných foriem. Nasledovný zoznam je určite neúplný, ale slúži
+na uznanie mnohých ramien, na ktorých táto aplikácia stojí:
+
 
 [% INCLUDE "AUTHORS" %]
 
-This man page was put together by Bryce Harrington
+Túto manuálovú stránku zostavil Bryce Harrington
 E<lt>brycehar@bryceharrington.comE<gt>.
 
 =head1 HISTÓRIA
 
-The codebase that would become Inkscape began life in 1999 as the
-program Gill, the GNOME Illustrator application, created by Raph
-Levien.  The stated objective for Gill was to eventually support all of
-SVG.  Raph implemented the PostScript bezier imaging model, including
-stroking and filling, line cap style, line join style, text, etc.  
-Raph's Gill page is at http://www.levien.com/svg/.  Work on Gill appears
-to have slowed or ceased in 2000.
+Kód, ktorý sa neskôr stal kódom Inkscape začal svoj život v roku 1999 ako
+program Gill, aplikácia GNOME Illustrator, ktorú vytvoril Raph Levien.
+Cieľom, ktorý si Gill kládol bolo nakoniec podporovať kompletný štandard SVG.
+Raph implementoval bézierový PostScriptový obrazový model vrátane výplne
+a ťahu, štýlov zakončenia a spojenia čiar, textu atď.
+Raphhova stránka o Gill je http://www.levien.com/svg/. Práca na Gill
+sa spomalila alebo zastavila v roku 2000.
 
-The next incarnation of the codebase was to become the highly popular
-program Sodipodi, led by Lauris Kaplinski.  The codebase was turned
-into a powerful illustration program over the course of several
-year's work, adding several new features, multi-lingual support, porting
-to Windows and other operating systems, and eliminating dependencies.
+Ďalším stelesnením kódu sa stal veľmi populárny program Sodipodi, ktorý
+viedol Lauris Kaplinski. Kód sa zmenil na veľmi mocný ilustračný nástroj
+počas niekoľkých rokov práce na ňom po pridaní niekoľkých nových vlasntostí,
+podpory jazykov, portovania na Windows a iné operačné systémy a odstránení
+závislostí.
 
-Inkscape was formed in 2003 by four active Sodipodi developers, Bryce
-Harrington, MenTaLguY, Nathan Hurst, and Ted Gould, wanting to take a
-different direction with the codebase in terms of focus on
-SVG compliance, interface look-and-feel, and a desire to open
-development opportunities to more participants.  The project progressed
-rapidly, gaining a number of very active contributors and features.
+Inkscape vytvorili v roku 2003 štyria aktívni vývojári Sodipodi - Bryce
+Harrington, MenTaLguY, Nathan Hurst a Ted Gould, ktorí chceli kód posunúť
+novým smerom so zameraním na konformnosť s SVG, vzľad a správanie rozhrania
+a túžbou otvoriť príležitosť vývoja viacerým prispievateľom. Projekt
+postupoval rýchlo a získal si množstvo veľmi aktívnych prispievateľov a
+vlastností.
 
-Much work in the early days of the project focused on code stablization
-and internationalization.  The original renderer inherited from Sodipodi
-was laced with a number of mathematical corner cases which led to
-unexpected crashes when the program was pushed beyond routine uses; this
-renderer was replaced with Livarot which, while not perfect either, was
-significantly less error prone.  The project also adopted a practice of
-committing code frequently, and encouraging users to run developmental
-snapshots of the program; this helped identify new bugs swiftly, and
-ensure it was easy for users to verify the fixes.  As a result, Inkscape
-releases have generally earned a reputation for being robust and
-reliable.
+Mnoho práce v raných dňoch projektu sa zameriavalo na stabilizáciu kódu
+a internacionalizáciu. Pôvodné vykresľovacie jadro zdedené zo Sodipodi
+bolo spojené s mnohými matematickými hraničnými prípadmi, ktoré viedli
+k neočakávaným haváriám pri použití programu na iné ako rutinné úlohy.
+Toto vykresľovacie jadro nahradil Livarot, ktorý hoci tiež nie je dokonalý,
+bol výrazne menej náchylný na chyby. Projekt tiež praktikoval časté
+začleňovanie kódu a posmeľoval používateľov v používaní vývojových
+verzií programu. To pomohlo s ranou identifikáciou chýb a zabezpečilo
+jednoduchý spôsob ako používatelia mohli overiť funkčnosť opráv.
+V dôsledku Inkscape si Inkscape zaslúžil všeobecnú reputáciu robustnosti
+a spoľahlivosti.
 
-Similarly, efforts were taken to internationalize and localize the
-interface, which has helped the program gain contributors worldwide.
+Tiež sa rozvinuli snahy o internacionalizáciu a lokalizáciu rozhrania,
+ktoré pomohli programu získať prispievateľov z celého sveta.
 
-Inkscape has had a beneficial impact on the visual attractiveness of
-Open Source in general, by providing a tool for creating and sharing
-icons, splash screens, website art, and so on.  In a way, despite being
-"just an drawing program", Inkscape has played an important role in
-making Open Source more visually stimulating to larger audiences.
+Inkscape mal prínosný vplyv na vizuálnu atraktivitu open source
+vo všeobecnosti, pretože poskytol nástroj na tvorbu a zdieľanie ikon,
+štartovacích obrazoviek, grafiky webových stránok atď. Istým spôsobom
+okrem toho, že je to len „program na kreslenie“ hral Inkscape dôležitú
+úlohu pri vylepšení vizuálnej stránky open source širokému publiku.
 
 =head1 AUTORSKÉ PRÁVA A LICENCIA
 
-B<Copyright (C)> 1999-2008 by Authors.  
+B<Copyright (C)> 1999-2008 Autori.
 
-B<Inkscape> is free software; you can redistribute it and/or modify it
-under the terms of the GPL.  
+B<Inkscape> je slobodný softvér; môžete ho používať a šíriť za podmienok
+licencie GPL.
 
 
 =for comment
