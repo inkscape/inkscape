@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-15 19:19+0200\n"
-"PO-Revision-Date: 2009-06-16 03:53+0800\n"
+"POT-Creation-Date: 2009-06-25 17:08+0200\n"
+"PO-Revision-Date: 2009-06-26 12:42+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -40,17 +40,17 @@ msgstr "霧面果凍"
 #: ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16
 #: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:50
 #: ../share/filters/filters.svg.h:51
 #: ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:56
-#: ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
-#: ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:103
 msgid "Bevels"
 msgstr "斜角"
 
@@ -68,7 +68,7 @@ msgstr "凸出、光滑果凍表面"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
-msgstr "光滑果凍，背光"
+msgstr "光滑果凍, 背光"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
@@ -84,17 +84,16 @@ msgstr "平滑類似下落斜角，帶有金屬光澤"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, horizontal"
-msgstr "動態模糊，水平"
+msgstr "動態模糊, 水平"
 
 #: ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8
-#: ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:97
-#: ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:169
 msgid "Blurs"
 msgstr "模糊"
 
@@ -104,7 +103,7 @@ msgstr "彷彿物件在水平飛行的模糊；調整標準差以改變作用力
 
 #: ../share/filters/filters.svg.h:7
 msgid "Motion blur, vertical"
-msgstr "動態模糊，垂直"
+msgstr "動態模糊, 垂直"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Blur as if the object flies vertically; adjust Standard Deviation to vary force"
@@ -124,11 +123,13 @@ msgstr "挖剪圖畫"
 
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:87
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -144,20 +145,20 @@ msgstr "斷片"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Low, sharp bevel"
-msgstr "低的、銳利斜角"
+msgstr "低且銳利的斜角"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Roughen"
 msgstr "粗糙化"
 
 #: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:108
 #: ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117
 #: ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:125
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:177
 msgid "ABCs"
 msgstr "ABCs"
 
@@ -178,9 +179,13 @@ msgstr "橡皮章"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
-#: ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr "覆蓋"
 
@@ -195,7 +200,7 @@ msgstr "墨水暈開"
 #: ../share/filters/filters.svg.h:13
 #: ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Protrusions"
 msgstr "突出"
 
@@ -233,11 +238,10 @@ msgstr "波紋"
 
 #: ../share/filters/filters.svg.h:17
 #: ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113
-#: ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Distort"
 msgstr "扭曲"
 
@@ -274,22 +278,19 @@ msgid "Leopard fur"
 msgstr "豹紋"
 
 #: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61
-#: ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:92
-#: ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:163
 msgid "Materials"
 msgstr "材質"
 
@@ -327,15 +328,10 @@ msgstr "銳利化"
 #: ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
-#: ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:103
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:166
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:186
 msgid "Image effects"
 msgstr "圖像特效"
 
@@ -410,11 +406,11 @@ msgstr "去飽和"
 #: ../share/filters/filters.svg.h:32
 #: ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34
-#: ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:167
 #: ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
@@ -441,6 +437,7 @@ msgid "Color"
 msgstr "顏色"
 
 #: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:170
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr "憑藉減少飽和度為零用灰色的明暗來演算"
 
@@ -475,26 +472,31 @@ msgstr "有機"
 
 #: ../share/filters/filters.svg.h:36
 #: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:64
 #: ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130
 #: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194
 msgid "Textures"
 msgstr "紋理"
 
@@ -548,7 +550,7 @@ msgstr "淋濕"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Random paint streaks downwards"
-msgstr "隨機向下塗抹條紋"
+msgstr "隨機向下塗繪條紋"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Jam spread"
@@ -567,852 +569,850 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "點陣圖的梵谷風格效果"
 
 #: ../share/filters/filters.svg.h:45
-msgid "Pixel smear, glossy"
-msgstr "像素塗抹，光滑"
-
-#: ../share/filters/filters.svg.h:45
-msgid "Glossy painting effect for bitmaps"
-msgstr "點陣圖的光滑筆觸效果"
-
-#: ../share/filters/filters.svg.h:46
-#: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:178
 msgid "HSL Bumps"
 msgstr "HSL 凹凸"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:195
+msgid "Bumps"
+msgstr "凹凸"
+
+#: ../share/filters/filters.svg.h:45
 msgid "Highly flexible specular bump"
 msgstr "高度彎曲的鏡面凹凸"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Cracked glass"
 msgstr "碎裂玻璃"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Under a cracked glass"
 msgstr "在碎裂玻璃底下"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "HSL bubbles"
 msgstr "HSL 氣泡"
 
-#: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:105
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
 msgstr "高度彎曲氣泡效果，根據顏色的色相、飽和度和明度"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Glowing bubble"
 msgstr "發光氣泡"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:53
 #: ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:66
 #: ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:70
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:71
 msgid "Ridges"
 msgstr "脊形"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Bubble effect with refraction and glow"
 msgstr "伴隨折射和光暈的氣泡效果"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Neon"
 msgstr "霓紅燈"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Neon light effect with glow"
 msgstr "發光的霓紅燈光效果"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Molten metal"
 msgstr "熔化金屬"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "物件的一部份一起熔化，帶有光滑斜角和光暈"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Pressed steel"
 msgstr "壓製鋼鐵"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Pressed metal with a rolled edge"
 msgstr "帶有捲邊的被壓縮金屬"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Matte Bevel"
 msgstr "霧面斜角"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "柔和、粉色、模糊的斜角"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Thin Membrane"
 msgstr "薄膜"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Thin like a soap membrane"
 msgstr "像肥皂膜一樣薄"
 
-#: ../share/filters/filters.svg.h:55
-msgid "Soft ridge"
-msgstr "柔和脊形"
+#: ../share/filters/filters.svg.h:54
+msgid "Matte ridge"
+msgstr "霧面脊形"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Soft pastel ridge"
 msgstr "柔和粉蠟脊形"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Glowing metal"
 msgstr "發光金屬"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Bright and glowing metal texture"
 msgstr "明亮且發光的金屬紋理"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Leaves"
 msgstr "樹葉"
 
-#: ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:87
 #: ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "散佈"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "秋季地上的落葉，或生活中的葉子"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Translucent"
 msgstr "半透明"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "被照亮的半透明塑膠或玻璃效果"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Cross-smooth"
 msgstr "交叉點平滑"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Blur inner borders and intersections"
 msgstr "模糊內部邊框和交叉點"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Iridescent beeswax"
 msgstr "虹彩蜂蠟"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "蠟質紋理通過改變填色來保持它的彩虹色"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
 msgstr "腐蝕金屬"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "帶有脊形、溝、孔洞和凹凸的腐蝕金屬紋理"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
 msgstr "破裂火山岩"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "A volcanic texture, a little like leather"
 msgstr "火山岩紋理，有點像皮革"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Bark"
 msgstr "樹皮"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "樹皮紋理，垂直；伴隨深色使用"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
 msgstr "蜥蜴表皮"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stylized reptile skin texture"
 msgstr "爬蟲類表皮紋理風格"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stone wall"
 msgstr "石牆"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stone wall texture to use with dark colors"
 msgstr "石牆紋理伴隨暗色來使用"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Silk carpet"
 msgstr "絲織地毯"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "絲織地毯紋理，水平條紋"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Refractive gel A"
 msgstr "折射凝膠 A"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Gel effect with light refraction"
 msgstr "有光線折射的凝膠效果"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel B"
 msgstr "折射凝膠 B"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with strong refraction"
 msgstr "有強烈折射的凝膠效果"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Metallized paint"
 msgstr "金屬筆觸"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "柔和照明的金屬處理效果，邊緣呈現輕微的半透明"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Dragee"
 msgstr "糖衣"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Gel Ridge with a pearlescent look"
 msgstr "有珍珠般光澤外觀的凝膠脊形"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Raised border"
 msgstr "邊框隆起"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Strongly raised border around a flat surface"
 msgstr "一個平坦表面周圍邊界強烈隆起"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Metallized ridge"
 msgstr "金屬化脊形"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Gel Ridge metallized at its top"
 msgstr "於凝膠脊形上做金屬噴鍍"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Fat oil"
 msgstr "脂肪油"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Fat oil with some adjustable turbulence"
 msgstr "一些可調整性紊亂的脂肪油"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "著色"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "將顏色填入至圖像的暗色部份"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
 msgstr "平行空心"
 
+#: ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:75
 #: ../share/filters/filters.svg.h:76
 #: ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:88
 #: ../share/filters/filters.svg.h:89
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:93
 #: ../share/filters/filters.svg.h:94
-#: ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:178
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "形態"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "一個平行於內部邊緣的模糊空心"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Hole"
 msgstr "洞"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Opens a smooth hole inside the shape"
 msgstr "於形狀內部打開一個平滑的洞"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Black hole"
 msgstr "黑洞"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Creates a black light inside and outside"
 msgstr "於內部和外部建立黑色光線"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Smooth outline"
 msgstr "平滑輪廓"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "描繪線條的輪廓並且平滑它們的交叉點"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Cubes"
 msgstr "立方體"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "散佈的立方體；調整形態基元為不同尺寸"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Peel off"
 msgstr "脫落"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Peeling painting on a wall"
 msgstr "一道牆上剝落油漆"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Gold splatter"
 msgstr "黃金潑濺"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Splattered cast metal, with golden highlights"
 msgstr "潑濺的金屬鑄造，附帶黃金光澤"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold paste"
 msgstr "金箔黏貼"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "貼滿鑄造金屬，帶有黃金亮光"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
 msgstr "壓皺的塑膠"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "壓皺的霧面塑膠，附帶融化的邊緣"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Enamel jewelry"
 msgstr "瓷釉珠寶"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Slightly cracked enameled texture"
 msgstr "輕微碎裂的瓷釉紋理"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Rough paper"
 msgstr "草稿紙"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "水彩畫紙效果，可用於圖片 (將物件作為圖片)"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough and glossy"
 msgstr "粗糙和光滑"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "揉皺的銅版紙效果，可用於圖片 (將物件作為圖片)"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "In and Out"
 msgstr "內外陰影"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "內部彩色陰影，外部黑色陰影"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Air spray"
 msgstr "空氣噴灑"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "空氣噴灑；調整位移圖的量"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Warm inside"
 msgstr "內部溫暖"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, filled inside"
 msgstr "模糊、著上色彩的輪廓，內部填滿"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Cool outside"
 msgstr "外部涼爽"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, empty inside"
 msgstr "模糊、著上彩色的輪廓，內部清空"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Electronic microscopy"
 msgstr "電子顯微鏡"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "斜角、天然光線、變色和發光就像在電子顯微鏡裡"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Tartan"
 msgstr "格紋"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Checkered tartan pattern"
 msgstr "方格花紋圖樣"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Invert hue"
 msgstr "反相"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Invert hue, or rotate it"
 msgstr "反相，或旋轉"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Inner outline"
 msgstr "內部外框"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Draws an outline around"
 msgstr "沿著周圍繪製外框"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline, double"
-msgstr "外框，雙倍"
+msgstr "外框, 雙倍"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "於內部繪製一個平滑線條以覆蓋的顏色著上色彩"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Fancy blur"
 msgstr "動感模糊"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "平滑、著上色彩的輪廓，允許去飽和和色相旋轉"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Glow"
 msgstr "光暈"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Glow of object's own color at the edges"
 msgstr "於邊緣加上物件顏色的光暈"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Outline"
 msgstr "外框"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Adds a glowing blur and removes the shape"
 msgstr "加入光暈狀模糊且移動形狀"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Color emboss"
 msgstr "彩色浮雕"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "標準或著上彩色的浮雕效果：灰階、彩色和立體浮雕"
 
-#: ../share/filters/filters.svg.h:100
-msgid "Soft bump"
-msgstr "柔和凹凸"
-
-#: ../share/filters/filters.svg.h:100
-msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr "卷積凹凸；搭配模糊可以產生好的凸起效果"
-
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:99
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "曝光"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:99
 msgid "Classical photographic solarization effect"
 msgstr "標準過度曝光的攝影效果"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:100
 msgid "Moonarize"
 msgstr "月出"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:100
 msgid "An effect between solarize and invert which often preserves sky and water lights"
 msgstr "一個介於曝光和反相之間的特效，往往保留天空和水波光線"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:101
 msgid "Soft focus lens"
 msgstr "柔焦鏡頭"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:101
 msgid "Glowing image content without blurring it"
 msgstr "讓圖像內容不模糊化的覆上光暈"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:102
 msgid "Stained glass"
 msgstr "彩色玻璃"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:102
 msgid "Illuminated stained glass effect"
 msgstr "被照亮的彩色玻璃效果"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:103
 msgid "Dark glass"
 msgstr "暗色玻璃"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:103
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "光源來自下方，被照亮的玻璃效果"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:104
 msgid "HSL Bumps, alpha"
-msgstr "HSL 凹凸，透明"
+msgstr "HSL 凹凸, 透明"
 
-#: ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:190
 msgid "Mask and transparency effects"
 msgstr "遮罩和透明效果"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:104
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
 msgstr "同於 HSL 凹凸，但結合透明度相關濾鏡加入透明"
 
-#: ../share/filters/filters.svg.h:107
-msgid "HSL Bubbles, alpha"
-msgstr "HSL 氣泡，透明"
+#: ../share/filters/filters.svg.h:105
+msgid "HSL bubbles, alpha"
+msgstr "HSL 氣泡, 透明"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:106
 msgid "Smooth edges"
 msgstr "平滑邊緣"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:106
 msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "平滑形狀和圖片的外邊，不改變內容"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
 msgid "Torn edges"
 msgstr "撕裂邊緣"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:107
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "移置形狀和圖片的外邊，不改變內容"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:108
 msgid "Feather"
 msgstr "羽毛"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:108
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "邊緣上的模糊遮罩，不改變內容"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:109
 msgid "Blur content"
 msgstr "模糊內容"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:109
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "模糊物件的內容，保留輪廓"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:110
 msgid "Specular light"
 msgstr "反射光"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:110
 msgid "Basic specular bevel to use for building textures"
 msgstr "基本的鏡面斜角用於建築物紋理"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:111
 msgid "Roughen inside"
 msgstr "粗糙內部"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:111
 msgid "Roughen all inside shapes"
 msgstr "粗糙所有內部的形狀"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:112
 msgid "Evanescent"
 msgstr "逐漸消失"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:112
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
 msgstr "模糊物件的內容，保留輪廓並且於邊緣漸進地加上透明"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:113
 msgid "Chalk and sponge"
 msgstr "粉筆和海綿"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:113
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "低紊亂產生海綿外觀而高紊亂為粉筆"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:114
 msgid "People"
 msgstr "群眾"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:114
 msgid "Colorized blotches, like a crowd of people"
 msgstr "彩色斑點，像一群人"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:115
 msgid "Scotland"
 msgstr "蘇格蘭"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:115
 msgid "Colorized mountain tops out of the fog"
 msgstr "穿出霧氣的彩色山峰群"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
 msgid "Noise transparency"
 msgstr "雜訊透明度"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:116
 msgid "Basic noise transparency texture"
 msgstr "基本的雜訊透明紋理"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:117
 msgid "Noise fill"
 msgstr "填入雜訊"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:117
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "基本雜訊填塗紋理；用油漆桶調整顏色"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:118
 msgid "Garden of Delights"
 msgstr "享樂花園"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:118
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "變幻無常的紛亂幽光，像希羅尼穆斯‧波希的享樂花園"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:119
 msgid "Diffuse light"
 msgstr "擴散光"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:119
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "基本的擴散斜角用於建築物紋理"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:120
 msgid "Cutout Glow"
 msgstr "挖剪光暈"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:187
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "帶有合理的位移和著色填塗的內外光暈"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:121
 msgid "HSL Bumps, diffuse"
-msgstr "HSL 凹凸，擴散"
+msgstr "HSL 凹凸, 擴散"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:121
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr "同於 HSL 凹凸，但用漫反射而非鏡面"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:122
 msgid "Dark Emboss"
 msgstr "暗色浮雕"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:122
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "浮雕效果：立體浮雕，黑色取代白色"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:123
 msgid "Simple blur"
 msgstr "簡單模糊"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:123
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "簡單的高斯模糊，同於在填色與邊框對話窗裡的模糊滑動拉桿"
 
-#: ../share/filters/filters.svg.h:126
-msgid "HSL Bubbles, diffuse"
-msgstr "HSL 碰撞，擴散"
+#: ../share/filters/filters.svg.h:124
+msgid "HSL bubbles, diffuse"
+msgstr "HSL 氣泡, 擴散"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr "同於 HSL 氣泡，但為擴散光線而非鏡面"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:125
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "浮雕"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
 msgstr "浮雕效果；保留原本圖像的顏色或藉由混合來修改"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:126
 msgid "Blotting paper"
 msgstr "吸墨紙"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:126
 msgid "Inkblot on blotting paper"
 msgstr "吸墨紙上的墨跡"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:127
 msgid "Wax print"
 msgstr "蠟染"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:127
 msgid "Wax print on tissue texture"
 msgstr "棉紙上蠟染的紋理"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot"
 msgstr "墨跡"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on tissue or rough paper"
 msgstr "棉紙或草稿紙上的墨跡"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:129
 msgid "Burnt edges"
 msgstr "燒焦邊緣"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:129
 msgid "Torn edges with a dark inner blur"
 msgstr "暗色且內部模糊的撕裂邊緣"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:130
 msgid "Color outline, in"
-msgstr "彩色外框，內部"
+msgstr "彩色外框, 內部"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:130
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "一個可調整寬度和模糊的可著色內部外框"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:131
 msgid "Liquid"
 msgstr "液體"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:131
 msgid "Colorizable filling with liquid transparency"
 msgstr "液態透明物的可著色填塗"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:132
 msgid "Watercolor"
 msgstr "水彩"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:132
 msgid "Cloudy watercolor effect"
 msgstr "多雲水彩效果"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:133
 msgid "Felt"
 msgstr "毛氈"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:133
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "帶有顏色紛亂和邊緣輕微變暗的類似毛氈紋理"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:134
 msgid "Ink paint"
 msgstr "墨水筆觸"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:134
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "紙張上帶有一些顏色移動的墨水筆觸"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:135
 msgid "Tinted rainbow"
 msgstr "染色彩虹"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "沿著邊緣和可著色的平滑彩虹色熔化"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:136
 msgid "Melted rainbow"
 msgstr "熔化彩虹"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:136
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "沿著邊緣的平滑彩虹色輕微熔化"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:137
 msgid "Flex metal"
 msgstr "彎曲金屬"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:137
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "明亮、可著色、拋光的不均勻金屬鑄造"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
 msgid "Comics draft"
 msgstr "漫畫式草圖"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:139
 #: ../share/filters/filters.svg.h:141
-#: ../share/filters/filters.svg.h:142
 #: ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:144
 #: ../share/filters/filters.svg.h:145
 #: ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147
 #: ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149
 #: ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Non realistic 3D shaders"
 msgstr "非逼真立體材質"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:138
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "以光滑外觀的卡通明暗法繪製草圖"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139
 msgid "Comics fading"
 msgstr "漫畫式褪色"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "邊緣些許褪色的卡通繪畫風格"
 
-#: ../share/filters/filters.svg.h:142
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:141
 msgid "Smooth shader NR"
 msgstr "平滑材質 (非逼真)"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "帶有炭筆灰的平滑材質"
 
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:143
 msgid "Emboss shader NR"
 msgstr "浮雕材質 (非逼真)"
@@ -1421,298 +1421,377 @@ msgstr "浮雕材質 (非逼真)"
 msgid "Combination of smooth shading and embossing"
 msgstr "平滑材質和浮雕的結合"
 
-#: ../share/filters/filters.svg.h:144
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:145
 msgid "Smooth shader dark NR"
 msgstr "暗色平滑材質 (非逼真)"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145
 msgid "Dark version of non realistic smooth shading"
 msgstr "非逼真平滑材質的暗色版本"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146
 msgid "Comics"
 msgstr "漫畫"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146
 msgid "Imitation of black and white cartoon shading"
 msgstr "模擬黑白漫畫的明暗法"
 
-#: ../share/filters/filters.svg.h:146
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "綢緞 (非逼真)"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr "絲綢近似於珍珠母材質"
 
-#: ../share/filters/filters.svg.h:147
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:150
 msgid "Frosted glass NR"
 msgstr "毛玻璃 (非逼真)"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:150
 msgid "Non realistic frosted glass imitation"
 msgstr "模擬非逼真的毛玻璃"
 
-#: ../share/filters/filters.svg.h:148
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:152
 msgid "Smooth shader contour NR"
 msgstr "平滑材質輪廓 (非逼真)"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:152
 msgid "Contouring version of smooth shader"
 msgstr "平滑材質的輪廓版本"
 
-#: ../share/filters/filters.svg.h:149
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:154
 msgid "Aluminium NR"
 msgstr "鋁 (非逼真)"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
 msgstr "筆繪的鋁材質"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
 msgstr "漫畫式流體"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:155
 msgid "Fluid brushed cartoon drawing"
 msgstr "流體筆刷的卡通繪畫"
 
-#: ../share/filters/filters.svg.h:151
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:157
 msgid "Chrome NR"
 msgstr "鉻 (非逼真)"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:157
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "帶有強烈斑點的非逼真鉻材質"
 
-#: ../share/filters/filters.svg.h:152
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:159
 msgid "Chrome dark NR"
 msgstr "暗色鉻 (非逼真)"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:159
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "地面反射模擬的鉻材質暗色版本"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:160
 msgid "Wavy tartan"
 msgstr "波狀格紋"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:160
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "邊緣周圍產生波浪狀位移的格紋圖樣和斜角"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:161
 msgid "3D marble"
 msgstr "立體大理石"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:161
 msgid "3D warped marble texture"
 msgstr "立體、彎曲的大理石紋理"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:162
 msgid "3D wood"
 msgstr "立體木頭"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped, fibered wood texture"
 msgstr "立體、彎曲的、纖維狀的木材紋理"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:163
 msgid "3D mother of pearl"
 msgstr "立體珍珠母"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:163
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "立體、彎曲的、彩虹色的珍珠殼紋理"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
 msgstr "虎皮"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:164
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "邊緣周圍有折疊和斜角的虎皮圖樣"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
 msgstr "晃動液體"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:165
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "內部像透明物流動的可著色填塗"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Comics cream"
 msgstr "漫畫式奶油"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:166
 msgid "Comics shader with creamy waves transparency"
 msgstr "奶油狀波浪透明物的漫畫材質"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:167
 msgid "Black Light"
 msgstr "黑光"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:167
 msgid "Light areas turn to black"
 msgstr "光亮區域變為黑色"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:168
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "橡皮擦"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:168
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "使物件最亮的部份變成逐漸透明"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:169
 msgid "Noisy blur"
 msgstr "雜訊模糊"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:169
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "邊緣和內容套用小比例的粗糙和模糊"
 
-#: ../share/filters/filters.svg.h:163
-msgid "Film Grain"
+#: ../share/filters/filters.svg.h:170
+msgid "Film grain"
 msgstr "膠片顆粒"
 
-#: ../share/filters/filters.svg.h:163
-msgid "Adds a film grain noise to images and objects"
-msgstr "加入膠片粒狀雜訊到圖像或物件"
-
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:171
 msgid "HSL Bumps, transparent"
-msgstr "HSL 凹凸，透明"
+msgstr "HSL 凹凸, 透明"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:171
 msgid "Highly flexible specular bump with transparency"
 msgstr "帶透明度的高度彎曲凹凸"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Drawing"
 msgstr "繪圖"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:172
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
 msgstr "使圖像和材料填充物件產生鉛筆、彩色平版印刷、版畫或其他效果"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:173
 msgid "Velvet bump"
 msgstr "柔軟凹凸"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:173
 msgid "Gives a smooth bump velvet like"
 msgstr "產生像天鵝絨般柔軟的平滑凹凸"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:174
 msgid "Alpha draw"
 msgstr "透明繪製"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生透明繪畫效果"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:175
 msgid "Alpha draw, color"
-msgstr "透明繪製，彩色"
+msgstr "透明繪製, 彩色"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:175
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生透明色彩填塗效果"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Chewing gum"
 msgstr "口香糖"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:176
 msgid "Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings"
 msgstr "於線條的交叉點上製作柔順流過其邊緣的彩色斑點"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:177
 msgid "Black outline"
 msgstr "黑色外框"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:177
 msgid "Draws a black outline around"
 msgstr "於周圍繪製黑色外框"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:178
 msgid "Color outline"
 msgstr "彩色外框"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:178
 msgid "Draws a coloured outline around"
 msgstr "於周圍繪製彩色外框"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:179
 msgid "Inner shadow"
 msgstr "內陰影"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:179
 msgid "Adds a colorizable drop shadow inside"
 msgstr "於內部加入可著色的下落式陰影"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:180
 msgid "Dark and glow"
 msgstr "暗與光"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:180
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "內部模糊且帶有柔和光暈的加深邊緣"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181
 msgid "Darken edges"
 msgstr "加深邊緣"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181
 msgid "Darken the edges with an inner blur"
 msgstr "內部模糊的加深邊緣"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:182
 msgid "Warped rainbow"
 msgstr "纏繞著彩虹"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:182
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "沿著邊緣纏繞的平滑彩虹色"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Rough and dilate"
 msgstr "粗糙和擴大"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:183
 msgid "Create a turbulent contour around"
 msgstr "於周圍製作混亂的輪廓"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:184
 msgid "Gelatine"
 msgstr "凝膠"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:184
 msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "像紊亂且透明的凝膠的可著色填塗"
 
-#: ../share/filters/filters.svg.h:178
-msgid "HSL Bubbles, transparent"
-msgstr "HSL 氣泡，透明"
+#: ../share/filters/filters.svg.h:185
+msgid "HSL bubbles, transparent"
+msgstr "HSL 氣泡, 透明"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:185
 msgid "Highly flexible specular bubbles with transparency"
 msgstr "帶有透明度且靈活性高的鏡面氣泡"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:186
 msgid "Old postcard"
 msgstr "舊明信片"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:186
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "輕微色調分離並繪製邊框就像舊式印刷的明信片一樣"
+
+#: ../share/filters/filters.svg.h:187
+msgid "Fuzzy glow"
+msgstr "模糊光暈"
+
+#: ../share/filters/filters.svg.h:188
+msgid "Dots transparency"
+msgstr "圓點 (透明)"
+
+#: ../share/filters/filters.svg.h:188
+msgid "Gives a pointillist HSL sensitive transparency"
+msgstr "產生像 HSL 感光透明的點描畫"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Canvas transparency"
+msgstr "畫布 (透明)"
+
+#: ../share/filters/filters.svg.h:189
+msgid "Gives a canvas like HSL sensitive transparency."
+msgstr "產生像 HSL 感光透明的畫布。"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Smear transparency"
+msgstr "塗抹 (透明)"
+
+#: ../share/filters/filters.svg.h:190
+msgid "Paint objects with a transparent turbulence which turn around color edges"
+msgstr "用透明的紊亂來塗繪物件，扭轉彩色邊緣"
+
+#: ../share/filters/filters.svg.h:191
+msgid "Thick paint"
+msgstr "厚塗料"
+
+#: ../share/filters/filters.svg.h:191
+msgid "Thick painting effect with turbulence"
+msgstr "伴隨紊亂的厚顏料塗繪效果"
+
+#: ../share/filters/filters.svg.h:192
+msgid "Thick paint, glossy"
+msgstr "厚塗料, 光滑"
+
+#: ../share/filters/filters.svg.h:192
+msgid "Thick painting effect with turbulence and a glossy varnish"
+msgstr "伴隨紊亂和光滑外表的厚顏料繪效果"
+
+#: ../share/filters/filters.svg.h:193
+msgid "Burst"
+msgstr "脹破"
+
+#: ../share/filters/filters.svg.h:193
+msgid "Burst balloon texture crumpled and with holes"
+msgstr "氣球脹破紋理，被揉皺且帶有破洞"
+
+#: ../share/filters/filters.svg.h:194
+msgid "Burst, glossy"
+msgstr "脹破, 光滑"
+
+#: ../share/filters/filters.svg.h:194
+msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr "氣球脹破紋理，被揉皺且帶有破洞及光滑"
+
+#: ../share/filters/filters.svg.h:195
+msgid "Embossed leather"
+msgstr "壓紋皮革"
+
+#: ../share/filters/filters.svg.h:195
+msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
+msgstr "皮革或木頭結合 HSL 邊緣偵測凹凸效果之可著色紋理"
+
+#: ../share/filters/filters.svg.h:196
+msgid "Carnaval"
+msgstr "狂歡節"
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
+msgstr "白色斑點喚起狂歡節面具"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -1720,7 +1799,7 @@ msgstr "條紋 1:1"
 
 #: ../share/patterns/patterns.svg.h:3
 msgid "Stripes 1:1 white"
-msgstr "條紋 1:1 白色"
+msgstr "條紋 1:1 (白色)"
 
 #: ../share/patterns/patterns.svg.h:4
 msgid "Stripes 1:1.5"
@@ -1728,7 +1807,7 @@ msgstr "條紋 1:1.5"
 
 #: ../share/patterns/patterns.svg.h:5
 msgid "Stripes 1:1.5 white"
-msgstr "條紋 1:1.5 白色"
+msgstr "條紋 1:1.5 (白色)"
 
 #: ../share/patterns/patterns.svg.h:6
 msgid "Stripes 1:2"
@@ -1736,7 +1815,7 @@ msgstr "條紋 1:2"
 
 #: ../share/patterns/patterns.svg.h:7
 msgid "Stripes 1:2 white"
-msgstr "條紋 1:2 白色"
+msgstr "條紋 1:2 (白色)"
 
 #: ../share/patterns/patterns.svg.h:8
 msgid "Stripes 1:3"
@@ -1744,7 +1823,7 @@ msgstr "條紋 1:3"
 
 #: ../share/patterns/patterns.svg.h:9
 msgid "Stripes 1:3 white"
-msgstr "條紋 1:3 白色"
+msgstr "條紋 1:3 (白色)"
 
 #: ../share/patterns/patterns.svg.h:10
 msgid "Stripes 1:4"
@@ -1752,7 +1831,7 @@ msgstr "條紋 1:4"
 
 #: ../share/patterns/patterns.svg.h:11
 msgid "Stripes 1:4 white"
-msgstr "條紋 1:4 白色"
+msgstr "條紋 1:4 (白色)"
 
 #: ../share/patterns/patterns.svg.h:12
 msgid "Stripes 1:5"
@@ -1760,7 +1839,7 @@ msgstr "條紋 1:5"
 
 #: ../share/patterns/patterns.svg.h:13
 msgid "Stripes 1:5 white"
-msgstr "條紋 1:5 白色"
+msgstr "條紋 1:5 (白色)"
 
 #: ../share/patterns/patterns.svg.h:14
 msgid "Stripes 1:8"
@@ -1768,7 +1847,7 @@ msgstr "條紋 1:8"
 
 #: ../share/patterns/patterns.svg.h:15
 msgid "Stripes 1:8 white"
-msgstr "條紋 1:8  白色"
+msgstr "條紋 1:8 (白色)"
 
 #: ../share/patterns/patterns.svg.h:16
 msgid "Stripes 1:10"
@@ -1776,7 +1855,7 @@ msgstr "條紋 1:10"
 
 #: ../share/patterns/patterns.svg.h:17
 msgid "Stripes 1:10 white"
-msgstr "條紋 1:10  白色"
+msgstr "條紋 1:10 (白色)"
 
 #: ../share/patterns/patterns.svg.h:18
 msgid "Stripes 1:16"
@@ -1784,7 +1863,7 @@ msgstr "條紋 1:16"
 
 #: ../share/patterns/patterns.svg.h:19
 msgid "Stripes 1:16 white"
-msgstr "條紋 1:16  白色"
+msgstr "條紋 1:16 (白色)"
 
 #: ../share/patterns/patterns.svg.h:20
 msgid "Stripes 1:32"
@@ -1792,7 +1871,7 @@ msgstr "條紋 1:32"
 
 #: ../share/patterns/patterns.svg.h:21
 msgid "Stripes 1:32 white"
-msgstr "條紋 1:32  白色"
+msgstr "條紋 1:32 (白色)"
 
 #: ../share/patterns/patterns.svg.h:22
 msgid "Stripes 1:64"
@@ -1804,7 +1883,7 @@ msgstr "條紋 2:1"
 
 #: ../share/patterns/patterns.svg.h:24
 msgid "Stripes 2:1 white"
-msgstr "條紋 2:1  白色"
+msgstr "條紋 2:1 (白色)"
 
 #: ../share/patterns/patterns.svg.h:25
 msgid "Stripes 4:1"
@@ -1812,7 +1891,7 @@ msgstr "條紋 4:1"
 
 #: ../share/patterns/patterns.svg.h:26
 msgid "Stripes 4:1 white"
-msgstr "條紋 4:1  白色"
+msgstr "條紋 4:1 (白色)"
 
 #: ../share/patterns/patterns.svg.h:27
 msgid "Checkerboard"
@@ -1820,7 +1899,7 @@ msgstr "棋盤格紋"
 
 #: ../share/patterns/patterns.svg.h:28
 msgid "Checkerboard white"
-msgstr "棋盤格紋  白色"
+msgstr "棋盤格紋 (白色)"
 
 #: ../share/patterns/patterns.svg.h:29
 msgid "Packed circles"
@@ -1832,7 +1911,7 @@ msgstr "圓點, 小"
 
 #: ../share/patterns/patterns.svg.h:31
 msgid "Polka dots, small white"
-msgstr "圓點, 小  白色"
+msgstr "圓點, 小 (白色)"
 
 #: ../share/patterns/patterns.svg.h:32
 msgid "Polka dots, medium"
@@ -1840,7 +1919,7 @@ msgstr "圓點, 中"
 
 #: ../share/patterns/patterns.svg.h:33
 msgid "Polka dots, medium white"
-msgstr "圓點, 中  白色"
+msgstr "圓點, 中 (白色)"
 
 #: ../share/patterns/patterns.svg.h:34
 msgid "Polka dots, large"
@@ -1848,7 +1927,7 @@ msgstr "圓點, 大"
 
 #: ../share/patterns/patterns.svg.h:35
 msgid "Polka dots, large white"
-msgstr "圓點, 大  白色"
+msgstr "圓點, 大 (白色)"
 
 #: ../share/patterns/patterns.svg.h:36
 msgid "Wavy"
@@ -1856,7 +1935,7 @@ msgstr "波浪"
 
 #: ../share/patterns/patterns.svg.h:37
 msgid "Wavy white"
-msgstr "波浪  白色"
+msgstr "波浪 (白色)"
 
 #: ../share/patterns/patterns.svg.h:38
 msgid "Camouflage"
@@ -1880,7 +1959,7 @@ msgstr "老舊油漆 (點陣圖)"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr "<b>Ctrl</b>：製作正圓形或等比例縮放的橢圓形，擷取弧形或線段的角度"
+msgstr "<b>Ctrl</b>：製作正圓形或等比例縮放的橢圓形，捉取弧形或線段的角度"
 
 #: ../src/arc-context.cpp:304
 #: ../src/rect-context.cpp:345
@@ -1988,17 +2067,17 @@ msgstr "無下一個畫面縮放。"
 msgid "Create guide"
 msgstr "建立參考線"
 
-#: ../src/desktop-events.cpp:263
-#: ../src/desktop-events.cpp:408
+#: ../src/desktop-events.cpp:266
+#: ../src/desktop-events.cpp:426
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "刪除參考線"
 
-#: ../src/desktop-events.cpp:401
+#: ../src/desktop-events.cpp:419
 msgid "Move guide"
 msgstr "移動參考線"
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:455
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>參考線</b>：%s"
@@ -2014,27 +2093,27 @@ msgstr "<small>超過一個物件被選取。</small>"
 #: ../src/dialogs/clonetiler.cpp:168
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
-msgstr "<small>物件有 <b>%d</b> 個並排仿製物件。</small>"
+msgstr "<small>物件有 <b>%d</b> 個鋪排仿製物件。</small>"
 
 #: ../src/dialogs/clonetiler.cpp:173
 msgid "<small>Object has no tiled clones.</small>"
-msgstr "<small>物件沒有並排仿製物件。</small>"
+msgstr "<small>物件沒有鋪排仿製物件。</small>"
 
 #: ../src/dialogs/clonetiler.cpp:976
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "選擇<b>一個物件</b>以拆解其並排的仿製物件。"
+msgstr "選擇<b>一個物件</b>以拆解其鋪排的仿製物件。"
 
 #: ../src/dialogs/clonetiler.cpp:998
 msgid "Unclump tiled clones"
-msgstr "解散的並排仿製物件"
+msgstr "解散的鋪排仿製物件"
 
 #: ../src/dialogs/clonetiler.cpp:1028
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "選擇<b>一個物件</b>以移除其並排的仿製物件。"
+msgstr "選擇<b>一個物件</b>以移除其鋪排的仿製物件。"
 
 #: ../src/dialogs/clonetiler.cpp:1051
 msgid "Delete tiled clones"
-msgstr "刪除並排的仿製物件"
+msgstr "刪除鋪排的仿製物件"
 
 #: ../src/dialogs/clonetiler.cpp:1097
 #: ../src/selection-chemistry.cpp:1883
@@ -2047,11 +2126,11 @@ msgstr "如果想要仿製多個物件，<b>群組</b>它們並<b>仿製該群�
 
 #: ../src/dialogs/clonetiler.cpp:1112
 msgid "<small>Creating tiled clones...</small>"
-msgstr "<small>正在建立並排仿製物件...</small>"
+msgstr "<small>正在建立鋪排仿製物件...</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1515
 msgid "Create tiled clones"
-msgstr "建立並排的仿製物件"
+msgstr "建立鋪排的仿製物件"
 
 #: ../src/dialogs/clonetiler.cpp:1706
 msgid "<small>Per row:</small>"
@@ -2076,7 +2155,7 @@ msgstr "對稱 (_S)"
 #.
 #: ../src/dialogs/clonetiler.cpp:1896
 msgid "Select one of the 17 symmetry groups for the tiling"
-msgstr "選擇並排的十七種對稱群組之一"
+msgstr "選擇鋪排的十七種對稱群組之一"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
 #: ../src/dialogs/clonetiler.cpp:1907
@@ -2162,12 +2241,12 @@ msgstr "<b>位移 X：</b>"
 #: ../src/dialogs/clonetiler.cpp:1971
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
-msgstr "依照各列的水平位移 (以並排寬度的百分比計算)"
+msgstr "依照各列的水平位移 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:1979
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
-msgstr "依照各行的水平位移 (以並排寬度的百分比計算)"
+msgstr "依照各行的水平位移 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:1986
 msgid "Randomize the horizontal shift by this percentage"
@@ -2182,12 +2261,12 @@ msgstr "<b>位移 Y：</b>"
 #: ../src/dialogs/clonetiler.cpp:2004
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
-msgstr "依照各列的垂直位移 (以並排寬度的百分比計算)"
+msgstr "依照各列的垂直位移 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2012
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
-msgstr "依照各行的垂直位移 (以並排寬度的百分比計算)"
+msgstr "依照各行的垂直位移 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2019
 msgid "Randomize the vertical shift by this percentage"
@@ -2242,15 +2321,15 @@ msgstr "變更每行的平移記號"
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2085
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>排除並排：</small>"
+msgstr "<small>排除鋪排：</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2091
 msgid "Exclude tile height in shift"
-msgstr "在平移時排除的並排高度"
+msgstr "在平移時排除的鋪排高度"
 
 #: ../src/dialogs/clonetiler.cpp:2096
 msgid "Exclude tile width in shift"
-msgstr "在平移時排除的並排寬度"
+msgstr "在平移時排除的鋪排寬度"
 
 #: ../src/dialogs/clonetiler.cpp:2105
 msgid "Sc_ale"
@@ -2263,12 +2342,12 @@ msgstr "<b>縮放 X：</b>"
 #: ../src/dialogs/clonetiler.cpp:2121
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
-msgstr "依照各列的水平縮放 (以並排寬度的百分比計算)"
+msgstr "依照各列的水平縮放 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2129
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
-msgstr "依照各行的水平縮放 (以並排寬度的百分比計算)"
+msgstr "依照各行的水平縮放 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2136
 msgid "Randomize the horizontal scale by this percentage"
@@ -2281,12 +2360,12 @@ msgstr "<b>縮放 Y：</b>"
 #: ../src/dialogs/clonetiler.cpp:2152
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
-msgstr "依照各列的垂直縮放 (以並排高度的百分比計算)"
+msgstr "依照各列的垂直縮放 (以鋪排高度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2160
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr "依照各行的垂直縮放 (以並排寬度的百分比計算)"
+msgstr "依照各行的垂直縮放 (以鋪排寬度的百分比計算)"
 
 #: ../src/dialogs/clonetiler.cpp:2167
 msgid "Randomize the vertical scale by this percentage"
@@ -2336,12 +2415,12 @@ msgstr "<b>角度：</b>"
 #: ../src/dialogs/clonetiler.cpp:2273
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr "以此角度旋轉每列的並排圖形"
+msgstr "以此角度旋轉每列的鋪排圖形"
 
 #: ../src/dialogs/clonetiler.cpp:2281
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr "以此角度旋轉每行的並排圖形"
+msgstr "以此角度旋轉每行的鋪排圖形"
 
 #: ../src/dialogs/clonetiler.cpp:2288
 msgid "Randomize the rotation angle by this percentage"
@@ -2373,15 +2452,15 @@ msgstr "<b>模糊：</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2350
 msgid "Blur tiles by this percentage for each row"
-msgstr "每列依此百分比模糊並排"
+msgstr "每列按照這個百分比來模糊鋪排"
 
 #: ../src/dialogs/clonetiler.cpp:2357
 msgid "Blur tiles by this percentage for each column"
-msgstr "每欄依此百分比模糊並排"
+msgstr "每欄按照這個百分比來模糊鋪排"
 
 #: ../src/dialogs/clonetiler.cpp:2364
 msgid "Randomize the tile blur by this percentage"
-msgstr "依此百分比隨機模糊並排"
+msgstr "按照這個百分比隨機鋪排模糊"
 
 #: ../src/dialogs/clonetiler.cpp:2378
 msgid "Alternate the sign of blur change for each row"
@@ -2393,19 +2472,19 @@ msgstr "交替每欄模糊變更的符號"
 
 #: ../src/dialogs/clonetiler.cpp:2392
 msgid "<b>Fade out:</b>"
-msgstr "<b>暗淡：</b>"
+msgstr "<b>淡出：</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2399
 msgid "Decrease tile opacity by this percentage for each row"
-msgstr "以此百分比減少每列的並排圖形不透明度度"
+msgstr "以此百分比減少每列的鋪排圖形不透明度度"
 
 #: ../src/dialogs/clonetiler.cpp:2406
 msgid "Decrease tile opacity by this percentage for each column"
-msgstr "以此百分比減少每行的並排圖形不透明度"
+msgstr "以此百分比減少每行的鋪排圖形不透明度"
 
 #: ../src/dialogs/clonetiler.cpp:2413
 msgid "Randomize the tile opacity by this percentage"
-msgstr "以此百分比隨機計算並排圖形不透明度"
+msgstr "以此百分比隨機計算鋪排圖形不透明度"
 
 #: ../src/dialogs/clonetiler.cpp:2427
 msgid "Alternate the sign of opacity change for each row"
@@ -2421,11 +2500,11 @@ msgstr "顏色 (_L)"
 
 #: ../src/dialogs/clonetiler.cpp:2445
 msgid "Initial color: "
-msgstr "起始顏色："
+msgstr "初始顏色："
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid "Initial color of tiled clones"
-msgstr "並排仿製物件的初始顏色"
+msgstr "鋪排仿製物件的初始顏色"
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
@@ -2437,15 +2516,15 @@ msgstr "<b>色相：</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2471
 msgid "Change the tile hue by this percentage for each row"
-msgstr "以此百分比改變每列的並排色相"
+msgstr "按照這個百分比改變每列的鋪排色相"
 
 #: ../src/dialogs/clonetiler.cpp:2478
 msgid "Change the tile hue by this percentage for each column"
-msgstr "以此百分比改變每行的並排色相"
+msgstr "按照這個百分比改變每行的鋪排色相"
 
 #: ../src/dialogs/clonetiler.cpp:2485
 msgid "Randomize the tile hue by this percentage"
-msgstr "以此百分比隨機改變並排色相"
+msgstr "按照這個百分比隨機改變鋪排色相"
 
 #: ../src/dialogs/clonetiler.cpp:2494
 msgid "<b>S:</b>"
@@ -2493,7 +2572,7 @@ msgstr "描繪 (_T)"
 
 #: ../src/dialogs/clonetiler.cpp:2578
 msgid "Trace the drawing under the tiles"
-msgstr "依照並排之底下的描繪"
+msgstr "描繪在鋪排下面的圖畫"
 
 #: ../src/dialogs/clonetiler.cpp:2582
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
@@ -2634,11 +2713,11 @@ msgstr "每個仿製物件的不透明度是由該點點取的數值所決定"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
-msgstr "並排圖形中有多少列"
+msgstr "鋪排圖形中有多少列"
 
 #: ../src/dialogs/clonetiler.cpp:2814
 msgid "How many columns in the tiling"
-msgstr "並排圖形中有多少行"
+msgstr "鋪排圖形中有多少行"
 
 #: ../src/dialogs/clonetiler.cpp:2844
 msgid "Width of the rectangle to be filled"
@@ -2662,15 +2741,15 @@ msgstr "寬度，高度："
 
 #: ../src/dialogs/clonetiler.cpp:2895
 msgid "Fill the specified width and height with the tiling"
-msgstr "以並排圖形來填充指定的寬度與高度"
+msgstr "以鋪排圖形來填充指定的寬度與高度"
 
 #: ../src/dialogs/clonetiler.cpp:2911
 msgid "Use saved size and position of the tile"
-msgstr "使用並排圖形已儲存的大小和位置"
+msgstr "使用已儲存的鋪排圖形大小和位置"
 
 #: ../src/dialogs/clonetiler.cpp:2914
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
-msgstr "假定並排圖形的大小與位置跟上一次並排它 (如果有的話) 時相同，而非使用目前的大小"
+msgstr "假定鋪排圖形的大小與位置跟上一次並排它 (如果有的話) 時相同，而非使用目前的大小"
 
 #: ../src/dialogs/clonetiler.cpp:2938
 msgid " <b>_Create</b> "
@@ -2678,7 +2757,7 @@ msgstr "<b>建立 (_C)</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2940
 msgid "Create and tile the clones of the selection"
-msgstr "建立及並排所選取的仿製物件"
+msgstr "建立及鋪排所選取的仿製物件"
 
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
@@ -2699,7 +2778,7 @@ msgstr "移除 (_M)"
 
 #: ../src/dialogs/clonetiler.cpp:2963
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr "移除選取物件現有的並排仿製物件 (只有同源成員)"
+msgstr "移除選取物件現有的鋪排仿製物件 (只有同源成員)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
@@ -4975,15 +5054,15 @@ msgstr "演算"
 msgid "Draw a path which is a grid"
 msgstr "繪製格線路徑"
 
-#: ../src/extension/internal/javafx-out.cpp:945
+#: ../src/extension/internal/javafx-out.cpp:965
 msgid "JavaFX Output"
 msgstr "JavaFX 輸出"
 
-#: ../src/extension/internal/javafx-out.cpp:950
+#: ../src/extension/internal/javafx-out.cpp:970
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
-#: ../src/extension/internal/javafx-out.cpp:951
+#: ../src/extension/internal/javafx-out.cpp:971
 msgid "JavaFX Raytracer File"
 msgstr "JavaFX Raytracer 檔案"
 
@@ -5430,7 +5509,7 @@ msgstr "反射光"
 
 #: ../src/filter-enums.cpp:34
 msgid "Tile"
-msgstr "並排"
+msgstr "鋪排"
 
 #: ../src/filter-enums.cpp:35
 #: ../src/filter-enums.cpp:119
@@ -5807,7 +5886,7 @@ msgstr "<b>拖曳控制點周圍</b>來選取它們"
 
 #: ../src/gradient-context.cpp:687
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b>Ctrl</b>：擷取漸層角度"
+msgstr "<b>Ctrl</b>：捉取漸層角度"
 
 #: ../src/gradient-context.cpp:688
 msgid "<b>Shift</b>: draw gradient around the starting point"
@@ -5821,8 +5900,8 @@ msgstr "反轉漸層"
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] "%d個物件<b>漸層</b>；按著 <b>Ctrl</b> 以擷取角度"
-msgstr[1] "%d個物件<b>漸層</b>；按著 <b>Ctrl</b> 以擷取角度"
+msgstr[0] "%d個物件<b>漸層</b>；按著 <b>Ctrl</b> 以捉取角度"
+msgstr[1] "%d個物件<b>漸層</b>；按著 <b>Ctrl</b> 以捉取角度"
 
 #: ../src/gradient-context.cpp:929
 msgid "Select <b>objects</b> on which to create gradient."
@@ -5844,7 +5923,7 @@ msgstr "刪除漸層停止點"
 #: ../src/gradient-drag.cpp:1129
 #, c-format
 msgid "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl+Alt</b> to delete stop"
-msgstr "%s %d 用於：%s%s; 按著 <b>Ctrl</b> 並拖曳以擷取偏移量；按著 <b>Ctrl+Alt</b> 並點擊來刪除停止點"
+msgstr "%s %d 用於：%s%s; 按著 <b>Ctrl</b> 並拖曳以捉取偏移量；按著 <b>Ctrl+Alt</b> 並點擊來刪除停止點"
 
 #: ../src/gradient-drag.cpp:1133
 #: ../src/gradient-drag.cpp:1140
@@ -5854,7 +5933,7 @@ msgstr " (邊框)"
 #: ../src/gradient-drag.cpp:1137
 #, c-format
 msgid "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr "%s 用於：%s%s; 按著 <b>Ctrl</b> 並拖曳以擷取角度，按著 <b>Ctrl+Alt</b> 來保留角度，按著 <b>Ctrl+Shift</b> 於中心周圍縮放"
+msgstr "%s 用於：%s%s; 按著 <b>Ctrl</b> 並拖曳以捉取角度，按著 <b>Ctrl+Alt</b> 來保留角度，按著 <b>Ctrl+Shift</b> 於中心周圍縮放"
 
 #: ../src/gradient-drag.cpp:1145
 #, c-format
@@ -6273,7 +6352,7 @@ msgstr "單一型式地<b>縮放</b>填充圖樣"
 
 #: ../src/knotholder.cpp:242
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>旋轉</b>填充圖樣；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>旋轉</b>填充圖樣；按著 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/libgdl/gdl-dock-bar.c:108
 msgid "Master"
@@ -6546,7 +6625,7 @@ msgstr "在一個工具欄物件 %p (物件類型為 %s) 呼叫 圖形設備介�
 #: ../src/libgdl/gdl-dock-object.c:563
 #, c-format
 msgid "Dock operation requested in a non-bound object %p. The application might crash"
-msgstr "一個非約束物件 %p 請求工具欄運算。此應用程式可能崩潰"
+msgstr "一個非約束物件 %p 請求工具欄運算。此應用程式可能會不正常關閉"
 
 #: ../src/libgdl/gdl-dock-object.c:570
 #, c-format
@@ -6642,7 +6721,7 @@ msgstr "工具欄項目「擁有」這個分頁標籤"
 
 #: ../src/libnrtype/FontFactory.cpp:780
 msgid "Ignoring font without family that will crash Pango"
-msgstr "進行忽略將會崩潰 Pango 的無字族字型"
+msgstr "忽略會造成 Pango 不正常關閉的沒有字族之字型"
 
 #: ../src/live_effects/effect.cpp:86
 msgid "doEffect stack test"
@@ -6776,21 +6855,21 @@ msgstr "是否可見？"
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
 msgstr "如果取消勾選，此特效仍套用到物件但在畫布上暫時停用"
 
-#: ../src/live_effects/effect.cpp:293
+#: ../src/live_effects/effect.cpp:294
 msgid "No effect"
 msgstr "無特效"
 
-#: ../src/live_effects/effect.cpp:340
+#: ../src/live_effects/effect.cpp:341
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "請指定此即時路徑特效「%s」的參數路徑 (利用  %d 滑鼠點擊)"
 
-#: ../src/live_effects/effect.cpp:636
+#: ../src/live_effects/effect.cpp:639
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "正在編輯參數 <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:644
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "沒有已套用路徑特效的參數可在畫布上編輯。"
 
@@ -7573,7 +7652,7 @@ msgstr "變更邏輯參數"
 msgid "Change enumeration parameter"
 msgstr "改變計算參數"
 
-#: ../src/live_effects/parameter/parameter.cpp:138
+#: ../src/live_effects/parameter/parameter.cpp:139
 msgid "Change scalar parameter"
 msgstr "變更參數純量"
 
@@ -7689,7 +7768,7 @@ msgstr "匯出區域是整個畫布"
 
 #: ../src/main.cpp:314
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
-msgstr "擷取點陣圖匯出範圍時，外插至最近的整數值 (依 SVG 使用者單位)"
+msgstr "捉取點陣圖匯出區域時，外插至最近的整數值 (依 SVG 使用者單位)"
 
 #: ../src/main.cpp:319
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -7939,11 +8018,11 @@ msgstr "指導手冊"
 
 #: ../src/node-context.cpp:223
 msgid "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b>Ctrl</b>：切換節點類型﹑擷取控柄角度﹑水平/垂直移動；<b>Ctrl+Alt</b>：沿著控柄移動"
+msgstr "<b>Ctrl</b>：切換節點類型﹑捉取控柄角度﹑水平/垂直移動；<b>Ctrl+Alt</b>：沿著控柄移動"
 
 #: ../src/node-context.cpp:224
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
-msgstr "<b>Shift</b>：切換節點選擇﹑停用擷取﹑旋轉兩個控柄"
+msgstr "<b>Shift</b>：切換節點選擇﹑停用捉取﹑旋轉兩個控柄"
 
 #: ../src/node-context.cpp:225
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
@@ -7973,7 +8052,7 @@ msgstr "移動節點"
 
 #: ../src/nodepath.cpp:1742
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>節點控柄</b>：拖曳來形成曲線；按著 <b>Ctrl</b> 來擷取角度；按著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
+msgstr "<b>節點控柄</b>：拖曳來形成曲線；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
 #: ../src/nodepath.cpp:1912
 msgid "Align nodes"
@@ -8066,7 +8145,7 @@ msgstr "移動節點控柄"
 #: ../src/nodepath.cpp:4101
 #, c-format
 msgid "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s; 按著 <b>Ctrl</b> 來擷取角度；按著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
+msgstr "<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s; 按著 <b>Ctrl</b> 來捉取角度；按著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
 #: ../src/nodepath.cpp:4295
 msgid "Rotate nodes"
@@ -8086,7 +8165,7 @@ msgstr "翻轉節點"
 
 #: ../src/nodepath.cpp:4649
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr "<b>節點</b>：拖曳以編輯路徑；按著 <b>Ctrl</b> 來擷取水平/垂直；按著 <b>Ctrl+Alt</b> 來擷取控柄的方向"
+msgstr "<b>節點</b>：拖曳以編輯路徑；按著 <b>Ctrl</b> 來捉取水平/垂直；按著 <b>Ctrl+Alt</b> 來捉取控柄的方向"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4882
@@ -8210,11 +8289,11 @@ msgstr "調整橢圓形<b>高度</b>，按著 <b>Ctrl</b> 以製作圓形"
 
 #: ../src/object-edit.cpp:933
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr "設定弧形或線段的<b>起點</b>位置；按著 <b>Ctrl</b> 鍵來擷取角度；拖曳橢圓形的<b>內部</b>可成為弧形，<b>外部</b>可成為扇形"
+msgstr "設定弧形或線段的<b>起點</b>位置；按著 <b>Ctrl</b> 鍵來捉取角度；拖曳橢圓形的<b>內部</b>可成為弧形，<b>外部</b>可成為扇形"
 
 #: ../src/object-edit.cpp:937
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr "設定弧形或線段的<b>終點</b>位置；按著 <b>Ctrl</b> 鍵來擷取角度；拖曳橢圓形的<b>內部</b>可成為弧形，<b>外部</b>可成為扇形。"
+msgstr "設定弧形或線段的<b>終點</b>位置；按著 <b>Ctrl</b> 鍵來捉取角度；拖曳橢圓形的<b>內部</b>可成為弧形，<b>外部</b>可成為扇形。"
 
 #: ../src/object-edit.cpp:1076
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
@@ -8226,11 +8305,11 @@ msgstr "調整星形的<b>基本半徑</b>；按著 <b>Ctrl</b> 以保持星形�
 
 #: ../src/object-edit.cpp:1266
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr "從<b>內部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來擷取角度；按 <b>Alt</b> 來收斂/發散"
+msgstr "從<b>內部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來捉取角度；按 <b>Alt</b> 來收斂/發散"
 
 #: ../src/object-edit.cpp:1269
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr "從<b>外部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來擷取角度；按 <b>Shift</b> 來縮放/旋轉"
+msgstr "從<b>外部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來捉取角度；按 <b>Shift</b> 來縮放/旋轉"
 
 #: ../src/object-edit.cpp:1313
 msgid "Adjust the <b>offset distance</b>"
@@ -8360,27 +8439,27 @@ msgstr "<b>點選</b>或<b>拖曳</b>以自此點起繼續路徑。"
 #: ../src/pen-context.cpp:1273
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來擷取角度，<b>Enter</b> 來結束路徑"
+msgstr "<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來捉取角度，<b>Enter</b> 來結束路徑"
 
 #: ../src/pen-context.cpp:1274
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來擷取角度，<b>Enter</b> 來結束路徑"
+msgstr "<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來捉取角度，<b>Enter</b> 來結束路徑"
 
 #: ../src/pen-context.cpp:1292
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/pen-context.cpp:1314
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>曲線控制點，對稱的</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來擷取角度， 按著 <b>Shift</b> 來只移動這個控制點"
+msgstr "<b>曲線控制點，對稱的</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來捉取角度， 按著 <b>Shift</b> 來只移動這個控制點"
 
 #: ../src/pen-context.cpp:1315
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來擷取角度， 按著 <b>Shift</b> 來只移動這個控制點"
+msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來捉取角度， 按著 <b>Shift</b> 來只移動這個控制點"
 
 #: ../src/pen-context.cpp:1362
 msgid "Drawing finished"
@@ -8728,7 +8807,7 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "選取區中<b>沒有群組</b>可以解散。"
 
 #: ../src/selection-chemistry.cpp:598
-#: ../src/sp-item-group.cpp:497
+#: ../src/sp-item-group.cpp:515
 msgid "Ungroup"
 msgstr "解散群組"
 
@@ -9258,11 +9337,11 @@ msgstr "<b>縮放</b>選擇區；按著 <b>Ctrl</b> 來均勻地縮放；按著 
 
 #: ../src/seltrans.cpp:632
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr "<b>傾斜</b>選擇區；按著 <b>Ctrl</b> 來擷取角度；按著 <b>Shift</b> 來繞著相對面傾斜"
+msgstr "<b>傾斜</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 來繞著相對面傾斜"
 
 #: ../src/seltrans.cpp:633
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr "<b>旋轉</b>選擇區；按著 <b>Ctrl</b> 來擷取角度；按著 <b>Shift</b> 繞著相對面旋轉"
+msgstr "<b>旋轉</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 繞著相對面旋轉"
 
 #: ../src/seltrans.cpp:767
 msgid "Reset center"
@@ -9279,14 +9358,14 @@ msgstr "<b>縮放</b>：%0.2f%% x %0.2f%%; 按著 <b>Ctrl</b> 來鎖定長寬比
 #: ../src/seltrans.cpp:1223
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>傾斜</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>傾斜</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1283
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>旋轉</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>旋轉</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/seltrans.cpp:1325
 #, c-format
@@ -9361,20 +9440,24 @@ msgstr[1] "<b>連結的流動文字</b> (%d 個字元)"
 msgid "Guides Around Page"
 msgstr "頁面周圍參考線"
 
-#: ../src/sp-guide.cpp:420
-#, c-format
-msgid "vertical, at %s"
-msgstr "垂直, 位於 %s"
+#: ../src/sp-guide.cpp:418
+msgid "<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
+msgstr "<b>拖曳</b>能移動，<b>Shift+拖曳</b>能旋轉，<b>Ctrl</b>+點擊能刪除"
 
-#: ../src/sp-guide.cpp:423
+#: ../src/sp-guide.cpp:422
 #, c-format
-msgid "horizontal, at %s"
-msgstr "水平, 位於 %s"
+msgid "vertical, at %s; %s"
+msgstr "垂直, 位於 %s; %s"
 
-#: ../src/sp-guide.cpp:428
+#: ../src/sp-guide.cpp:425
 #, c-format
-msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
-msgstr "在 %d 度，通過 (%s,%s)；<b>Ctrl</b>+點擊來刪除"
+msgid "horizontal, at %s; %s"
+msgstr "水平, 位於 %s; %s"
+
+#: ../src/sp-guide.cpp:430
+#, c-format
+msgid "at %d degrees, through (%s,%s); %s"
+msgstr "於 %d 度，通過 (%s,%s); %s"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
@@ -9392,7 +9475,7 @@ msgstr "<b>圖片</b> %d &#215; %d: %s"
 
 #: ../src/spiral-context.cpp:303
 msgid "<b>Ctrl</b>: snap angle"
-msgstr "<b>Ctrl</b>：擷取角度"
+msgstr "<b>Ctrl</b>：捉取角度"
 
 #: ../src/spiral-context.cpp:305
 msgid "<b>Alt</b>: lock spiral radius"
@@ -9401,7 +9484,7 @@ msgstr "<b>Alt</b>：鎖定放射半徑"
 #: ../src/spiral-context.cpp:432
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>旋轉</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>旋轉</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/spiral-context.cpp:453
 msgid "Create spiral"
@@ -9431,7 +9514,7 @@ msgstr "%s; <i>已套用濾鏡 (%s)</i>"
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>已套用濾鏡</i>"
 
-#: ../src/sp-item-group.cpp:742
+#: ../src/sp-item-group.cpp:760
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -9691,17 +9774,17 @@ msgstr "<b>被遺棄的仿製物件</b>"
 
 #: ../src/star-context.cpp:315
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr "<b>Ctrl</b>：擷取角度；保持輻射線放射狀"
+msgstr "<b>Ctrl</b>：捉取角度；保持輻射線放射狀"
 
 #: ../src/star-context.cpp:442
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>多邊形</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>多邊形</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/star-context.cpp:443
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>星形</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來擷取角度"
+msgstr "<b>星形</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #: ../src/star-context.cpp:466
 msgid "Create star"
@@ -9979,7 +10062,7 @@ msgstr "在形狀之間<b>點擊與拖曳</b>以建立連接器。"
 
 #: ../src/tools-switch.cpp:220
 msgid "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."
-msgstr "<b>點擊</b> 來塗抹一個封閉區域, <b>Shift+點擊</b> 合併新填塗到目前的選取區, <b>Ctrl+點擊</b> 來改變被點擊物件的填塗和邊框到當前設定。"
+msgstr "<b>點擊</b> 來塗繪一個封閉區域, <b>Shift+點擊</b> 合併新填塗到目前的選取區, <b>Ctrl+點擊</b> 來改變被點擊物件的填塗和邊框到當前設定。"
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
@@ -10098,7 +10181,7 @@ msgstr "%s。 拖曳或點擊來<b>使路徑變粗糙</b>。"
 #: ../src/tweak-context.cpp:254
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
-msgstr "%s。 拖曳或點擊來用顏色<b>塗抹物件</b>。"
+msgstr "%s。 拖曳或點擊來用顏色<b>塗繪物件</b>。"
 
 #: ../src/tweak-context.cpp:257
 #, c-format
@@ -10156,7 +10239,7 @@ msgstr "粗糙路徑微調"
 
 #: ../src/tweak-context.cpp:1294
 msgid "Color paint tweak"
-msgstr "顏色塗抹微調"
+msgstr "顏色塗繪微調"
 
 #: ../src/tweak-context.cpp:1298
 msgid "Color jitter tweak"
@@ -10505,7 +10588,7 @@ msgstr "移動物件盡可能小，以便邊界不重疊"
 #: ../src/ui/dialog/align-and-distribute.cpp:893
 #: ../src/widgets/toolbox.cpp:7004
 msgid "Nicely arrange selected connector network"
-msgstr "最佳化排列選擇的連線器網路"
+msgstr "精確地排列選取的連線器網路"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:901
 msgid "Align selected nodes to a common horizontal line"
@@ -11538,7 +11621,7 @@ msgstr "此擴散光和<b>反射光</b>濾鏡基元用來製作\"浮凸的\"明�
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2333
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr "此<b>並排</b>基元用輸入的圖形來並排成一個區域"
+msgstr "此<b>鋪排</b>基元用輸入的圖形來並排成一個區域"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2337
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
@@ -11617,7 +11700,7 @@ msgstr "像素"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:172
 msgid "How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"
-msgstr "在螢幕上需要離某個物件多近，以便能夠用滑鼠來擷取它 (以螢幕像素為單位)"
+msgstr "在螢幕上需要離某個物件多近才能用滑鼠來抓住物件 (以螢幕像素為單位)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:174
 msgid "Click/drag threshold:"
@@ -11717,11 +11800,11 @@ msgstr "開啟時，滑鼠滾輪沒有按著 Ctrl 可縮放畫面而按著 Ctrl 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:217
 msgid "Enable snap indicator"
-msgstr "啟用擷取指標"
+msgstr "啟用捉取指標"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "After snapping, a symbol is drawn at the point that has snapped"
-msgstr "擷取後，在擷取的點上繪製一個記號"
+msgstr "捉取後，在捉取的點上繪製一個記號"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
 msgid "Delay (in ms):"
@@ -11729,15 +11812,15 @@ msgstr "延遲 (毫秒)："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"
-msgstr "只要滑鼠移動時就延後擷取，且額外等待若干分之一秒。在這裡指定這個額外的延遲。設定為零或一個很小的數時，將會立刻擷取"
+msgstr "只要滑鼠移動時就延後捉取，且額外等待若干分之一秒。在這裡指定這個額外的延遲。設定為零或一個很小的數時，將會立刻捉取"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:225
 msgid "Only snap the node closest to the pointer"
-msgstr "只有極為靠近游標時才擷取節點"
+msgstr "只有極為靠近游標時才捉取節點"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
 msgid "Only try to snap the node that is initialy closest to the mouse pointer"
-msgstr "只有極為靠近滑鼠游標才試著擷取節點"
+msgstr "只有極為靠近滑鼠游標才試著捉取節點"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
 msgid "Weight factor:"
@@ -11745,11 +11828,11 @@ msgstr "權重係數："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:231
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
-msgstr "當發現多個擷取結果時，Inkscape 以最靠近的變換優先 (設定為 0 時)，或者以最靠近游標的節點優先 (設定為 1 時)"
+msgstr "當發現多個捉取結果時，Inkscape 以最靠近的變換優先 (設定為 0 時)，或者以最靠近游標的節點優先 (設定為 1 時)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snapping"
-msgstr "擷取"
+msgstr "捉取"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -11787,7 +11870,7 @@ msgstr "開啟時，會顯示角度 0 於北方﹑0 到 360 的範圍﹑順時�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 msgid "Rotation snaps every:"
-msgstr "每次旋轉擷取幾度："
+msgstr "每次旋轉捉取幾度："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 msgid "degrees"
@@ -11795,7 +11878,7 @@ msgstr "度"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:260
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
-msgstr "旋轉中按著 Ctrl 每次擷取這麼多角度；同時，按下 [ 或 ] 會以這個量來旋轉"
+msgstr "旋轉中按著 Ctrl 每次捉取這麼多角度；同時，按下 [ 或 ] 會以這個量來旋轉"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:262
 msgid "Zoom in/out by:"
@@ -13137,7 +13220,7 @@ msgstr "啟用自動儲存 (需要重新啟動)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1112
 msgid "Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"
-msgstr "經過給定的時間間隔時自動儲存文件，從而將程式崩潰時的損失降到最低"
+msgstr "經過給定的時間間隔時自動儲存文件，從而將程式不正常關閉時的損失降到最低"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Interval (in minutes):"
@@ -13941,13 +14024,12 @@ msgstr "各欄之間的水平間距 (像素單位)"
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
-#: ../share/extensions/restack.inx.h:3
-msgid "Arrange"
+msgid "tileClonesDialog|Arrange"
 msgstr "排列"
 
 #: ../src/ui/dialog/tile.cpp:864
 msgid "Arrange selected objects"
-msgstr "排列選擇的物件"
+msgstr "排列選取的物件"
 
 #. #### begin left panel
 #. ### begin notebook
@@ -15799,7 +15881,7 @@ msgstr "列行排列..."
 
 #: ../src/verbs.cpp:2432
 msgid "Arrange selected objects in a table"
-msgstr "把已選物件排列到一個表"
+msgstr "把選取物件排列到一個表"
 
 #. Layer
 #: ../src/verbs.cpp:2434
@@ -16032,7 +16114,7 @@ msgstr "由節點編輯路徑"
 
 #: ../src/verbs.cpp:2505
 msgid "Tweak objects by sculpting or painting"
-msgstr "用雕刻或塗抹來微調物件"
+msgstr "用雕刻或塗繪來微調物件"
 
 #: ../src/verbs.cpp:2507
 msgid "Create rectangles and squares"
@@ -16557,7 +16639,7 @@ msgstr "檢查拼寫 (_G)..."
 
 #: ../src/verbs.cpp:2659
 msgid "Check spelling of text in document"
-msgstr "檢查文件中文字拼寫"
+msgstr "檢查文件中的文字拼寫"
 
 #: ../src/verbs.cpp:2660
 msgid "_Messages..."
@@ -16585,7 +16667,7 @@ msgstr "顯示或隱藏所有開啟的對話方塊"
 
 #: ../src/verbs.cpp:2666
 msgid "Create Tiled Clones..."
-msgstr "建立並排仿製物件..."
+msgstr "建立鋪排仿製物件..."
 
 #: ../src/verbs.cpp:2667
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
@@ -18414,7 +18496,7 @@ msgstr "顏色填塗模式"
 
 #: ../src/widgets/toolbox.cpp:4228
 msgid "Paint the tool's color upon selected objects"
-msgstr "在所選的物件上塗抹工具的顏色"
+msgstr "在所選的物件上塗繪工具的顏色"
 
 #: ../src/widgets/toolbox.cpp:4234
 msgid "Color jitter mode"
@@ -19129,8 +19211,8 @@ msgstr "無法找到標記的位置：%s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
-#: ../share/extensions/perspective.py:55
-#: ../share/extensions/summersnight.py:30
+#: ../share/extensions/perspective.py:61
+#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "這個擴充功能需要兩個已選的路徑。"
 
@@ -19143,8 +19225,8 @@ msgstr "請先將物件轉為路徑！  (取得 [%s]。)"
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
 msgstr "無法匯入 numpy 或 numpy.linalg 模組。這個擴充功能需要這些模組。請安裝這些模組後再試一次。在 Debian-like 系統上可以執行 sudo apt-get install python-numpy 來安裝模組。"
 
-#: ../share/extensions/perspective.py:62
-#: ../share/extensions/summersnight.py:39
+#: ../share/extensions/perspective.py:68
+#: ../share/extensions/summersnight.py:45
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -19153,13 +19235,13 @@ msgstr ""
 "第一個選取的物件為「%s」類型。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"
 
-#: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:46
+#: ../share/extensions/perspective.py:74
+#: ../share/extensions/summersnight.py:52
 msgid "This extension requires that the second selected path be four nodes long."
 msgstr "這個擴充功能需要第二個所選取的路徑為四個節點長。"
 
-#: ../share/extensions/perspective.py:87
-#: ../share/extensions/summersnight.py:72
+#: ../share/extensions/perspective.py:99
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
@@ -19167,8 +19249,8 @@ msgstr ""
 "第二個選取的物件是一個群組，而不是一個路徑。\n"
 "試著實行「物件 | 解散群組」的這道手續。"
 
-#: ../share/extensions/perspective.py:89
-#: ../share/extensions/summersnight.py:74
+#: ../share/extensions/perspective.py:101
+#: ../share/extensions/summersnight.py:86
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -19176,8 +19258,8 @@ msgstr ""
 "第二個選取的物件不是一個路徑。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"
 
-#: ../share/extensions/perspective.py:92
-#: ../share/extensions/summersnight.py:77
+#: ../share/extensions/perspective.py:104
+#: ../share/extensions/summersnight.py:89
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -19206,11 +19288,11 @@ msgstr "沒有發現面資料。確保這個檔案包含面資料，並檢查在
 msgid "Internal Error. No view type selected\n"
 msgstr "內部錯誤。沒有選擇檢視類型\n"
 
-#: ../share/extensions/summersnight.py:32
+#: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
 msgstr "第二個路徑必須恰好是四個節點長。"
 
-#: ../share/extensions/svg_and_media_zip_output.py:109
+#: ../share/extensions/svg_and_media_zip_output.py:113
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "無法找出檔案： %s"
@@ -19778,11 +19860,11 @@ msgstr "XFIG 輸入"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatness"
-msgstr "平滑"
+msgstr "平坦度"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Beziers"
-msgstr "平滑貝茲曲線"
+msgstr "弄平貝茲曲線"
 
 #: ../share/extensions/foldablebox.inx.h:1
 msgid "Add Guide Lines"
@@ -20164,6 +20246,10 @@ msgstr "惠普圖形語言檔案 (*.hpgl)"
 #: ../share/extensions/hpgl_output.inx.h:3
 msgid "HPGL Output"
 msgstr "HPGL 輸出"
+
+#: ../share/extensions/hpgl_output.inx.h:4
+msgid "hpgl output flatness"
+msgstr "HP 圖形語言輸出平坦度"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -20953,6 +21039,10 @@ msgstr "條碼類型："
 msgid "Arbitrary Angle:"
 msgstr "任意角度："
 
+#: ../share/extensions/restack.inx.h:3
+msgid "Arrange"
+msgstr "排列"
+
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
 msgstr "底部"
@@ -21541,8 +21631,16 @@ msgstr "Windows 後設檔案輸入"
 msgid "XAML Input"
 msgstr "XAML 輸入"
 
-#~ msgid "Bumps"
-#~ msgstr "凹凸"
+#~ msgid "Pixel smear, glossy"
+#~ msgstr "像素塗抹，光滑"
+#~ msgid "Glossy painting effect for bitmaps"
+#~ msgstr "點陣圖的光滑筆觸效果"
+#~ msgid "Soft bump"
+#~ msgstr "柔和凹凸"
+#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
+#~ msgstr "卷積凹凸；搭配模糊可以產生好的凸起效果"
+#~ msgid "Adds a film grain noise to images and objects"
+#~ msgstr "加入膠片粒狀雜訊到圖像或物件"
 #~ msgid "Alpha paint"
 #~ msgstr "透明塗抹"
 #~ msgid "Previous Effect"
