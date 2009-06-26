@@ -8360,11 +8360,11 @@ msgstr "_Xén"
 
 #: ../src/menus-skeleton.h:170
 msgid "Mas_k"
-msgstr "Mặt _nạ"
+msgstr "_Mặt nạ"
 
 #: ../src/menus-skeleton.h:174
 msgid "Patter_n"
-msgstr "_Mẫu"
+msgstr "Hình mẫ_u"
 
 #: ../src/menus-skeleton.h:198
 msgid "_Path"
@@ -16135,15 +16135,15 @@ msgstr "Dán đối tượng trong bảng nháp vào vị trí gốc"
 
 #: ../src/verbs.cpp:2302
 msgid "Paste Path _Effect"
-msgstr "Dán h_iệu ứng đường nét"
+msgstr "_Dán hiệu ứng đường nét"
 
 #: ../src/verbs.cpp:2303
 msgid "Apply the path effect of the copied object to selection"
-msgstr "Áp dụng vào vùng chọn kiểu dáng của đối tượng đã sao chép"
+msgstr "Áp dụng kiểu dáng của đối tượng vừa được sao chép vào trong vùng chọn"
 
 #: ../src/verbs.cpp:2304
 msgid "Remove Path _Effect"
-msgstr "_Bỏ hiệu ứng đường nét"
+msgstr "_Xóa bỏ hiệu ứng đường nét"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
@@ -16207,11 +16207,11 @@ msgstr "Chọn đối tượng gốc của bản sao liên kết"
 
 #: ../src/verbs.cpp:2320
 msgid "Objects to _Marker"
-msgstr "Đối tượng sang _hình nút"
+msgstr "Đố_i tượng thành hình nút"
 
 #: ../src/verbs.cpp:2321
 msgid "Convert selection to a line marker"
-msgstr "Chuyển vùng chọn thành hình nút"
+msgstr "Chuyển đối tượng được chọn thành hình nút"
 
 #: ../src/verbs.cpp:2322
 msgid "Objects to Gu_ides"
@@ -16320,7 +16320,7 @@ msgstr "Hiển thị tham số Hiệu ứng Đường nét kế tiếp để s�
 #. Selection
 #: ../src/verbs.cpp:2350
 msgid "Raise to _Top"
-msgstr "Lên _trên cùng"
+msgstr "Lên trên _cùng"
 
 #: ../src/verbs.cpp:2351
 msgid "Raise selection to top"
@@ -16328,7 +16328,7 @@ msgstr "Nâng vùng chọn lên trên cùng"
 
 #: ../src/verbs.cpp:2352
 msgid "Lower to _Bottom"
-msgstr "Xuống _dưới cùng"
+msgstr "Xuốn_g dưới cùng"
 
 #: ../src/verbs.cpp:2353
 msgid "Lower selection to bottom"
@@ -16336,19 +16336,19 @@ msgstr "Hạ thấp vùng chọn xuống dưới cùng"
 
 #: ../src/verbs.cpp:2354
 msgid "_Raise"
-msgstr "Nâng _lên"
+msgstr "Nâng _lên trên"
 
 #: ../src/verbs.cpp:2355
 msgid "Raise selection one step"
-msgstr "Nâng vùng chọn lên một bước"
+msgstr "Nâng vùng chọn lên một mức"
 
 #: ../src/verbs.cpp:2356
 msgid "_Lower"
-msgstr "_Hạ thấp"
+msgstr "Hạ xuống _dưới"
 
 #: ../src/verbs.cpp:2357
 msgid "Lower selection one step"
-msgstr "Hạ thấp vùng chọn xuống một bước"
+msgstr "Hạ thấp vùng chọn xuống một mức"
 
 # Động từ.
 #: ../src/verbs.cpp:2358
@@ -16391,7 +16391,7 @@ msgstr "Tạo hợp từ các đường nét đã chọn"
 
 #: ../src/verbs.cpp:2374
 msgid "_Intersection"
-msgstr "G_iao"
+msgstr "_Giao"
 
 #: ../src/verbs.cpp:2375
 msgid "Create intersection of selected paths"
@@ -16399,7 +16399,7 @@ msgstr "Tạo giao từ các đường nét đã chọn"
 
 #: ../src/verbs.cpp:2376
 msgid "_Difference"
-msgstr "_Hiệu"
+msgstr "Hiệ_u"
 
 #: ../src/verbs.cpp:2377
 msgid "Create difference of selected paths (bottom minus top)"
@@ -16415,7 +16415,7 @@ msgstr "Tạo hàm XOR (hoặc kiểu loại trừ) từ các đường nét đ�
 
 #: ../src/verbs.cpp:2380
 msgid "Di_vision"
-msgstr "Chi_a"
+msgstr "Ch_ia"
 
 #: ../src/verbs.cpp:2381
 msgid "Cut the bottom path into pieces"
@@ -16425,7 +16425,7 @@ msgstr "Cắt đường nét bên dưới ra nhiều phần riêng"
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2384
 msgid "Cut _Path"
-msgstr "Cắt đường _nét"
+msgstr "_Cắt đường nét"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
@@ -16436,11 +16436,11 @@ msgstr "Cắt nét của đường nét bên dưới ra nhiều phần riêng, x
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2389
 msgid "Outs_et"
-msgstr "Dời _ra"
+msgstr "Dời nét ra ng_oài"
 
 #: ../src/verbs.cpp:2390
 msgid "Outset selected paths"
-msgstr "Dời đường nét được chọn ra ngoài."
+msgstr "Dời đường nét được chọn ra phía ngoài"
 
 #: ../src/verbs.cpp:2392
 msgid "O_utset Path by 1 px"
@@ -16463,11 +16463,11 @@ msgstr "Mở rộng đường nét đã chọn ra ngoài 10 điểm ảnh"
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2400
 msgid "I_nset"
-msgstr "Dời _nét vào"
+msgstr "Dời nét _vào trong"
 
 #: ../src/verbs.cpp:2401
 msgid "Inset selected paths"
-msgstr "Co rút các đường nét đã chọn"
+msgstr "Dời các đường nét đã chọn vào phía trong"
 
 #: ../src/verbs.cpp:2403
 msgid "I_nset Path by 1 px"
@@ -16491,7 +16491,7 @@ msgstr "Dời _hình động"
 
 #: ../src/verbs.cpp:2409
 msgid "Create a dynamic offset object"
-msgstr "Tạo một đối tượng điều chỉnh được mức co rút/mở rộng"
+msgstr "Tạo một đối tượng có mức co rút/mở rộng điều chỉnh được"
 
 #: ../src/verbs.cpp:2411
 msgid "_Linked Offset"
@@ -16511,7 +16511,7 @@ msgstr "Chuyển nét viền thành các đường nét"
 
 #: ../src/verbs.cpp:2416
 msgid "Si_mplify"
-msgstr "Đơn _giản hoá"
+msgstr "Đơn giản hó_a"
 
 #: ../src/verbs.cpp:2417
 msgid "Simplify selected paths (remove extra nodes)"
@@ -16519,16 +16519,16 @@ msgstr "Đơn giản hoá các đường nét đã chọn (gỡ bỏ nút thêm)
 
 #: ../src/verbs.cpp:2418
 msgid "_Reverse"
-msgstr "Đả_o"
+msgstr "Qua_y ngược chiều đường nét"
 
 #: ../src/verbs.cpp:2419
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr "Đảo ngược hướng của các đường nét đã chọn (để lật hình nút)"
+msgstr "Quay ngược hướng của các đường nét đã chọn (để lật hình nút)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2421
 msgid "_Trace Bitmap..."
-msgstr "Đồ _lại ảnh bitmap..."
+msgstr "Đồ lại ảnh _bitmap..."
 
 #: ../src/verbs.cpp:2422
 msgid "Create one or more paths from a bitmap by tracing it"
@@ -16554,11 +16554,11 @@ msgstr "Kết hợp vài đường nét thành một"
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2429
 msgid "Break _Apart"
-msgstr "Ngắt r_a"
+msgstr "Tách _rời đường nét"
 
 #: ../src/verbs.cpp:2430
 msgid "Break selected paths into subpaths"
-msgstr "Ngắt các đường nét thành nhiều đường nét thành phần"
+msgstr "Tách đường nét rời ra thành nhiều đường nét thành phần"
 
 #: ../src/verbs.cpp:2431
 msgid "Rows and Columns..."
@@ -16678,7 +16678,7 @@ msgstr "Xoá lớp hiện tại"
 #. Object
 #: ../src/verbs.cpp:2462
 msgid "Rotate _90&#176; CW"
-msgstr "Xoay _90º xuôi chiều"
+msgstr "Xoay phải _90&#176;"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
@@ -16688,7 +16688,7 @@ msgstr "Xoay vùng chọn 90° thuận chiều kim đồng hồ"
 
 #: ../src/verbs.cpp:2466
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Xoay 9_0&#176; sang trái"
+msgstr "Xoay trái 9_0&#176;"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
@@ -16706,7 +16706,7 @@ msgstr "Xoá các phép biến đổi đã áp dụng lên đối tượng"
 
 #: ../src/verbs.cpp:2472
 msgid "_Object to Path"
-msgstr "Đối tượng s_ang đường nét"
+msgstr "Đối _tượng sang đường nét"
 
 #: ../src/verbs.cpp:2473
 msgid "Convert selected object to path"
@@ -16738,7 +16738,7 @@ msgstr "Xóa bỏ khung giới hạn văn bản, nhưng giữ nguyên trật t�
 
 #: ../src/verbs.cpp:2481
 msgid "Flip _Horizontal"
-msgstr "Lật _ngang"
+msgstr "Lật ng_ang"
 
 #: ../src/verbs.cpp:2481
 msgid "Flip selected objects horizontally"
@@ -16746,7 +16746,7 @@ msgstr "Lật các đối tượng đã chọn theo chiều ngang"
 
 #: ../src/verbs.cpp:2484
 msgid "Flip _Vertical"
-msgstr "Lật _dọc"
+msgstr "Lậ_t dọc"
 
 #: ../src/verbs.cpp:2484
 msgid "Flip selected objects vertically"
@@ -17254,11 +17254,11 @@ msgstr "Chỉnh sửa siêu dữ liệu về tài liệu này (để được l�
 
 #: ../src/verbs.cpp:2639
 msgid "_Fill and Stroke..."
-msgstr "_Tô và Nét..."
+msgstr "Tô _và Nét viền..."
 
 #: ../src/verbs.cpp:2640
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr "Chỉnh sửa màu sắc, chuyển sắc, chiều rộng nét, đầu mũi tên, mẫu gạch gạch v.v. của đối tượng"
+msgstr "Chỉnh sửa màu sắc, chuyển sắc, chiều rộng nét, hình nút, kiểu đường viền v.v. của đối tượng"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2642
@@ -17271,11 +17271,11 @@ msgstr "Chọn màu trong bảng màu mẫu"
 
 #: ../src/verbs.cpp:2644
 msgid "Transfor_m..."
-msgstr "Chuyển _dạng..."
+msgstr "_Hộp thoại chuyển dạng"
 
 #: ../src/verbs.cpp:2645
 msgid "Precisely control objects' transformations"
-msgstr "Điều khiển chính xác cách chuyển dạng đối tượng"
+msgstr "Điều khiển chính xác các phép xoay, lật, xô nghiêng áp dụng lên đối tượng"
 
 #: ../src/verbs.cpp:2646
 msgid "_Align and Distribute..."
@@ -17283,7 +17283,7 @@ msgstr "_Sắp hàng và Phân phối..."
 
 #: ../src/verbs.cpp:2647
 msgid "Align and distribute objects"
-msgstr "Sắp hàng và phân phối các đối tượng"
+msgstr "Sắp xếp các đối tượng theo hàng, hoặc giãn cách chúng"
 
 #: ../src/verbs.cpp:2648
 msgid "Undo _History..."
@@ -17371,7 +17371,7 @@ msgstr "Tạo nhiều bản sao liên kết tới đối tượng đã chọn, s
 
 #: ../src/verbs.cpp:2668
 msgid "_Object Properties..."
-msgstr "Th_uộc tính đối tượng..."
+msgstr "T_huộc tính đối tượng..."
 
 #: ../src/verbs.cpp:2669
 msgid "Edit the ID, locked and visible status, and other object properties"
