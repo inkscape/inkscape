@@ -2,14 +2,13 @@
 # Auk Piseth <piseth_dv@khmeros.info>, 2006, 2009.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008, 2009.
 # Eng Vannak <evannak@khmeros.info>, 2008.
-# Piseth AUK <piseth_dv@khmeros.info>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-24 16:20+0700\n"
-"Last-Translator: Piseth AUK <piseth_dv@khmeros.info>\n"
+"PO-Revision-Date: 2009-06-26 15:28+0700\n"
+"Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -11047,14 +11046,12 @@ msgid "First selected"
 msgstr "បាន​ជ្រើស​ដំបូង​​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:915
-#, fuzzy
 msgid "Biggest object"
-msgstr "លាក់​វត្ថុ"
+msgstr "វត្ថុ​ដែល​ធំ​បំផុត"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
-#, fuzzy
 msgid "Smallest object"
-msgstr "កំណត់​លេខសម្គាល់​វត្ថុ"
+msgstr "វត្ថុ​ដែល​តូច​បំផុត"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
 #: ../src/widgets/desktop-widget.cpp:1562
@@ -11240,12 +11237,10 @@ msgid "Snap"
 msgstr "ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:120
-#, fuzzy
 msgid "Color Management"
 msgstr "ការ​គ្រប់គ្រង​ពណ៌"
 
 #: ../src/ui/dialog/document-properties.cpp:121
-#, fuzzy
 msgid "Scripting"
 msgstr "ស្គ្រីប"
 
@@ -11353,72 +11348,62 @@ msgstr "<b>ខ្ទាស់​ទៅ​បន្ទាត់​ក្រឹត
 
 #: ../src/ui/dialog/document-properties.cpp:321
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(ខ្សែ​អក្សរ UTF-8 មិន​ត្រឹមត្រូវ)"
 
 #: ../src/ui/dialog/document-properties.cpp:347
-#, fuzzy, c-format
+#, c-format
 msgid "Color profiles directory (%s) is unavailable."
-msgstr "ថត​ក្ដារលាយ (%s) មិន​អាច​ប្រើ​បាន​ទេ ។"
+msgstr "ថត​ទម្រង់​ពណ៌ (%s) គឺ​មិនមាន ។"
 
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
 #: ../src/ui/dialog/document-properties.cpp:414 ../src/verbs.cpp:2739
-#, fuzzy
 msgid "Link Color Profile"
-msgstr "ជ្រើស​ពណ៌​ពី​រូបភាព"
+msgstr "ទម្រង់​ពណ៌​តំណ"
 
 #: ../src/ui/dialog/document-properties.cpp:487
-#, fuzzy
 msgid "Remove linked color profile"
-msgstr "យក​តម្រង​មុន​ចេញ"
+msgstr "យក​ទម្រង់​ពណ៌​ដែលបាន​ត"
 
 #: ../src/ui/dialog/document-properties.cpp:501
-#, fuzzy
 msgid "<b>Linked Color Profiles:</b>"
-msgstr "<b>ក្រឡាចត្រង្គ​ដែល​បាន​កំណត់</b>"
+msgstr "<b>ទម្រង់​ពណ៌​ដែល​បាន​ត ៖</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:503
 msgid "<b>Available Color Profiles:</b>"
-msgstr ""
+msgstr "<b>ទម្រង់​ពណ៌​ដែល​មាន ៖</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:505
-#, fuzzy
 msgid "Link Profile"
-msgstr "លក្ខណៈសម្បត្តិ​តំណ​"
+msgstr "ទម្រង់​តំណ"
 
 #: ../src/ui/dialog/document-properties.cpp:536
-#, fuzzy
 msgid "Profile Name"
-msgstr "ឈ្មោះ​ទម្រង់ ៖"
+msgstr "ឈ្មោះ​ទម្រង់"
 
 #: ../src/ui/dialog/document-properties.cpp:567
-#, fuzzy
 msgid "<b>External script files:</b>"
-msgstr "<b>ខ្ទាស់​ទៅ​បន្ទាត់​នាំផ្លូវ</b>"
+msgstr "<b>ឯកសារ​ស្គ្រីប​ខាងក្រៅ ៖</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:569
 #: ../src/ui/dialog/swatches.cpp:458
-#, fuzzy
 msgid "Add"
 msgstr "បន្ថែម​"
 
 #: ../src/ui/dialog/document-properties.cpp:592
-#, fuzzy
 msgid "Filename"
 msgstr "ឈ្មោះ​ឯកសារ"
 
 #. inform the document, so we can undo
 #: ../src/ui/dialog/document-properties.cpp:632
-#, fuzzy
 msgid "Add external script..."
-msgstr "កែ​សម្រួល​ខាង​ក្រៅ..."
+msgstr "បន្ថែម​ស្គ្រីប​ខាងក្រៅ..."
 
 #: ../src/ui/dialog/document-properties.cpp:656
-#, fuzzy
 msgid "Remove external script"
-msgstr "យក​អត្ថបទ​ចេញ​ពី​ផ្លូវ"
+msgstr "យក​ស្គ្រីប​ខាងក្រៅ​ចេញ"
 
 #: ../src/ui/dialog/document-properties.cpp:733
 msgid "<b>Creation</b>"
@@ -11477,15 +11462,13 @@ msgstr "រូបភាព​ទាំងអស់"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
-#, fuzzy
 msgid "All Vectors"
-msgstr "វ៉ិចទ័រ"
+msgstr "វ៉ិចទ័រ​ទាំងអស់"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
-#, fuzzy
 msgid "All Bitmaps"
-msgstr "រូបភាព"
+msgstr "ផែន​ទី​រូបភាព​ទាំងអស់"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
@@ -11597,8 +11580,7 @@ msgid ""
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
 msgstr ""
-"ម៉ាទ្រីស​នេះ​កំណត់​ការ​ប្លែង​លីនេអ៊ែរ​នៅ​លើ​ចន្លោះ​ពណ៌ ។ បែបផែន​បន្ទាត់​នីមួយៗ​នៃ​សមាសភាគ​ពណ៌​មួយ​ក្នុង​ចំណោម​ពណ៌​"
-"ទាំងអស់ ។ ជួរឈរ​នីមួយៗ​កំណត់​ថាតើ​​សមាសភាគ​ពណ៌​នីមួយៗ​មាន​ទំហំប៉ុន្មាន​ពី​ការ​បញ្ចូល​ត្រូវ​បាន​ចម្លង​ទៅ​លទ្ធផល ។ "
+"ម៉ាទ្រីស​នេះ​កំណត់​ការ​ប្លែង​លីនេអ៊ែរ​នៅ​លើ​ចន្លោះ​ពណ៌ ។ បែបផែន​បន្ទាត់​នីមួយៗ​នៃ​សមាសភាគ​ពណ៌​មួយ​ក្នុង​ចំណោម​ពណ៌​ទាំងអស់ ។ ជួរឈរ​នីមួយៗ​កំណត់​ថាតើ​​សមាសភាគ​ពណ៌​នីមួយៗ​មាន​ទំហំប៉ុន្មាន​ពី​ការ​បញ្ចូល​ត្រូវ​បាន​ចម្លង​ទៅ​លទ្ធផល ។ "
 "ជួរឈរ​ចុងក្រោយ​មិន​អាស្រ័យយ​លើ​ពណ៌​បញ្ចូល​ទេ ដូច្នេះ​អាច​ត្រូវ​បានប្រើ​ដើម្បី​លៃតម្រូវ​តម្លៃ​សមាភាគ​ថេរ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
@@ -12125,11 +12107,6 @@ msgid ""
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
 msgstr ""
-"The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
-"the image. Common effects created using convolution matrices are blur, "
-"sharpening, embossing and edge detection. Note that while gaussian blur can "
-"be created using this filter primitive, the special gaussian blur primitive "
-"is faster and resolution-independent."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2297
 msgid ""
@@ -12137,10 +12114,7 @@ msgid ""
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr ""
-"តម្រង <b>feDiffuseLighting</b> និង feSpecularLighting ជា​ដំបូង​បង្កើត​ស្រមោល \"ក្រឡោត"
-"\"  ។ ឆានែល​អាល់ហ្វា​របស់​ការ​បញ្ចូល​ត្រូវ​បាន​ប្រើ​ដើម្បី​ផ្ដល់​ព័ត៌មាន​ជម្រៅ ៖ ផ្ទៃ​ស្រអាប់​ខ្ពស់​ត្រូវ​បាន​លើក​"
-"ឡើង​នៅ​ក្នុង​កម្មវិធី​មើល និង​ផ្ទៃ​ស្រអាប់​ទាប​យក​ចេញពីកម្មវិធី​មើល ។"
+msgstr "តម្រង <b>feDiffuseLighting</b> និង feSpecularLighting ជា​ដំបូង​បង្កើត​ស្រមោល \"ក្រឡោត\"  ។ ឆានែល​អាល់ហ្វា​របស់​ការ​បញ្ចូល​ត្រូវ​បាន​ប្រើ​ដើម្បី​ផ្ដល់​ព័ត៌មាន​ជម្រៅ ៖ ផ្ទៃ​ស្រអាប់​ខ្ពស់​ត្រូវ​បាន​លើក​ឡើង​នៅ​ក្នុង​កម្មវិធី​មើល និង​ផ្ទៃ​ស្រអាប់​ទាប​យក​ចេញពីកម្មវិធី​មើល ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2301
 msgid ""
@@ -12148,26 +12122,20 @@ msgid ""
 "first input using the second input as a displacement map, that shows from "
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
-msgstr ""
-"តម្រង <b>feDisplacementMap</b> ជា​ដំបូង​ជំនួស​ភីកសែល​នៅ​ក្នុង​ការ​បញ្ចូល​ជា​ដំបូង​ដោយ​ប្រើ​កា​របញ្ចូល​ទី ២ "
-"ជា​ផែន​ទី​ជំនួស ដែល​បង្ហាញ​ពី​ចម្ងាយ​ភីកសែល​ដែល​បាន​មក ។ ឧទាហរណ៍​ដ៏​បុរាណ​មួយ​គឺ ៖ បែបផែន​គួច និង​កៀប ។"
+msgstr "តម្រង <b>feDisplacementMap</b> ជា​ដំបូង​ជំនួស​ភីកសែល​នៅ​ក្នុង​ការ​បញ្ចូល​ជា​ដំបូង​ដោយ​ប្រើ​កា​របញ្ចូល​ទី ២ ជា​ផែន​ទី​ជំនួស ដែល​បង្ហាញ​ពី​ចម្ងាយ​ភីកសែល​ដែល​បាន​មក ។ ឧទាហរណ៍​ដ៏​បុរាណ​មួយ​គឺ ៖ បែបផែន​គួច និង​កៀប ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2305
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
-msgstr ""
-"តម្រង <b>feFlood</b> ជា​ដំបូង​បំពេញ​តំបន់​ដោយ​ពណ៌​ និង​ភាព​ស្រអាប់​ដែល​បាន​ផ្ដល់ ។ វា​តាមធម្មតា​ត្រូវ​បាន​"
-"ប្រើ​ជា​កា​របញ្ចូល​ទៅ​តម្រង​ផ្សេង​ដើម្បី​អនុវត្ត​ពណ៌​ទៅ​ក្រាហ្វិក ។"
+msgstr "តម្រង <b>feFlood</b> ជា​ដំបូង​បំពេញ​តំបន់​ដោយ​ពណ៌​ និង​ភាព​ស្រអាប់​ដែល​បាន​ផ្ដល់ ។ វា​តាមធម្មតា​ត្រូវ​បាន​ប្រើ​ជា​កា​របញ្ចូល​ទៅ​តម្រង​ផ្សេង​ដើម្បី​អនុវត្ត​ពណ៌​ទៅ​ក្រាហ្វិក ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2309
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
-msgstr ""
-"តម្រង <b>feGaussianBlur</b> ជា​បំបូង​ធ្វើ​ឲ្យ​ពណ៌​ព្រាលៗ​ដូច​គ្នា​នឹង​កា​របញ្ចូល​របស់​វា ។ តាមធម្មតា​វា​"
-"ប្រើ​រួមគ្នា​ជា​ feOffset ដើម្បី​បង្កើត​បែបផែន​ស្រមោល​ទម្លាក់ ។"
+msgstr "តម្រង <b>feGaussianBlur</b> ជា​បំបូង​ធ្វើ​ឲ្យ​ពណ៌​ព្រាលៗ​ដូច​គ្នា​នឹង​កា​របញ្ចូល​របស់​វា ។ តាមធម្មតា​វា​ប្រើ​រួមគ្នា​ជា​ feOffset ដើម្បី​បង្កើត​បែបផែន​ស្រមោល​ទម្លាក់ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2313
 msgid ""
@@ -12181,28 +12149,21 @@ msgid ""
 "inside the filter primitive to a single image. It uses normal alpha "
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
-msgstr ""
-"តម្រង <b>feMerge</b> ជា​ដំបូង​ផ្សំ​រូបភាព​បណ្ដោះអាសន្ន​ជា​ច្រើន​នៅ​ក្នុង​តម្រង​ជា​ដំបូង​ទៅ​រូបភាព​​តែមួយ ។ "
-"វា​ប្រើ​កា​រផ្សំ​អាល់ហ្វា​ធម្មតា​សម្រាប់​វា ។ វា​ប្រហាក់ប្រហែលទៅ​នឹង​ការ​ប្រើ​ feBlend ជា​ច្រើន​នៅ​ក្នុង​"
-"របៀប 'ធម្មតា' ឬ feComposite ជា​ច្រើន​នៅ​ក្នុង​បៀប​ 'លើ' ។"
+msgstr "តម្រង <b>feMerge</b> ជា​ដំបូង​ផ្សំ​រូបភាព​បណ្ដោះអាសន្ន​ជា​ច្រើន​នៅ​ក្នុង​តម្រង​ជា​ដំបូង​ទៅ​រូបភាព​​តែមួយ ។ វា​ប្រើ​កា​រផ្សំ​អាល់ហ្វា​ធម្មតា​សម្រាប់​វា ។ វា​ប្រហាក់ប្រហែលទៅ​នឹង​ការ​ប្រើ​ feBlend ជា​ច្រើន​នៅ​ក្នុង​របៀប 'ធម្មតា' ឬ feComposite ជា​ច្រើន​នៅ​ក្នុង​បៀប​ 'លើ' ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2321
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
-msgstr ""
-"តម្រង​<b>feMorphology</b> ជា​ដំបូង​ផ្ដល់​នូវបែបផែន​​សំណឹក និងពង្រីក ។ សម្រាប់​សំណឹក​វត្ថុ​តែ​មួយ​​ធ្វើ​ឲ្យ​វត្ថុ​"
-"ស្ដើង និង​ពង្រីក​ធ្វើ​ឲ្យ​វត្ថុ​ក្រាស់ ។"
+msgstr "តម្រង​<b>feMorphology</b> ជា​ដំបូង​ផ្ដល់​នូវបែបផែន​​សំណឹក និងពង្រីក ។ សម្រាប់​សំណឹក​វត្ថុ​តែ​មួយ​​ធ្វើ​ឲ្យ​វត្ថុ​ស្ដើង និង​ពង្រីក​ធ្វើ​ឲ្យ​វត្ថុ​ក្រាស់ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2325
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
-msgstr ""
-"តម្រង <b>feOffset</b> ជា​ដំបូង​អុហ្វសិត​រូបភាព​តាម​ចំនួន​ដែល​កំណត់​ដោយ​អ្នក​ប្រើ ។ ឧទាហរណ៍ វា​មាន​"
-"ប្រយោជន៍​សម្រាប់​ស្រមោល​ទម្លាក់ ដែល​ស្រមោល​គឺ​ខុសគ្នា​បន្តិចបន្តួច​ពី​ទីតាំង​របស់​វត្ថុ​ពិត​ប្រាកដ ។"
+msgstr "តម្រង <b>feOffset</b> ជា​ដំបូង​អុហ្វសិត​រូបភាព​តាម​ចំនួន​ដែល​កំណត់​ដោយ​អ្នក​ប្រើ ។ ឧទាហរណ៍ វា​មាន​ប្រយោជន៍​សម្រាប់​ស្រមោល​ទម្លាក់ ដែល​ស្រមោល​គឺ​ខុសគ្នា​បន្តិចបន្តួច​ពី​ទីតាំង​របស់​វត្ថុ​ពិត​ប្រាកដ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2329
 msgid ""
@@ -12210,10 +12171,7 @@ msgid ""
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
-msgstr ""
-"តម្រង feDiffuseLighting និង​<b>feSpecularLighting</b> ជា​ដំបូង​បង្កើត​ការ​ដាក់សម្រោល "
-"\"ក្រឡោត\" ។ ឆានែល​អាល់ហ្វា​របស់​ការ​បញ្ចូល​ត្រូវ​បាន​ប្រើ​ដើម្បី​ផ្ដល់​ព័ត៌មាន​ជម្រៅ ៖ ផ្ទៃស្រអាប់​ខ្ពស់​​ត្រូវ​"
-"បានលើក​ឡើង​នៅ​ក្នុង​កម្មវិធី​មើល និង​ផ្ទៃស្រទាប់​ទាប​យក​ចេញ​ពី​កម្មវិធី​មើល ។"
+msgstr "តម្រង feDiffuseLighting និង​<b>feSpecularLighting</b> ជា​ដំបូង​បង្កើត​ការ​ដាក់សម្រោល \"ក្រឡោត\" ។ ឆានែល​អាល់ហ្វា​របស់​ការ​បញ្ចូល​ត្រូវ​បាន​ប្រើ​ដើម្បី​ផ្ដល់​ព័ត៌មាន​ជម្រៅ ៖ ផ្ទៃស្រអាប់​ខ្ពស់​​ត្រូវ​បានលើក​ឡើង​នៅ​ក្នុង​កម្មវិធី​មើល និង​ផ្ទៃស្រទាប់​ទាប​យក​ចេញ​ពី​កម្មវិធី​មើល ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2333
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
@@ -12224,10 +12182,7 @@ msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
-msgstr ""
-"តម្រង <b>feTurbulence</b> ជា​ដំបូង​បង្ហាញ​ការ​រំខាន Perlin ។ ការ​រំខាន​ប្រភេទ​នេះ​មានប្រយោជន៍​"
-"ក្នុង​កា​រក្លែង​បាតុភូត​ធម្មជាតិ​ជា​ច្រើន​ដូច​ជា ពពក ភ្លើង និង​ផ្សេង និង​ក្នុងកា​របង្កើត​វាយនភាព​ស្មុគស្មាញ​ដូច​"
-"ជា​ថ្មម៉ាប ឬ​​​ក្រានីត ។"
+msgstr "តម្រង <b>feTurbulence</b> ជា​ដំបូង​បង្ហាញ​ការ​រំខាន Perlin ។ ការ​រំខាន​ប្រភេទ​នេះ​មានប្រយោជន៍​ក្នុង​កា​រក្លែង​បាតុភូត​ធម្មជាតិ​ជា​ច្រើន​ដូច​ជា ពពក ភ្លើង និង​ផ្សេង និង​ក្នុងកា​របង្កើត​វាយនភាព​ស្មុគស្មាញ​ដូច​ជា​ថ្មម៉ាប ឬ​​​ក្រានីត ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2356
 msgid "Duplicate filter primitive"
@@ -12238,19 +12193,16 @@ msgid "Set filter primitive attribute"
 msgstr "កំណត់​គុណលក្ខណៈ​តម្រង​មុន"
 
 #: ../src/ui/dialog/guides.cpp:42
-#, fuzzy
 msgid "Unit:"
-msgstr "ឯកត្តា ៖"
+msgstr "ឯកត្តា ៖"
 
 #: ../src/ui/dialog/guides.cpp:45
-#, fuzzy
 msgid "Angle (degrees):"
-msgstr "មុំ a / ដឺក្រេ ៖"
+msgstr "មុំ (ដឺក្រេ) ៖"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "Rela_tive change"
-msgstr "ផ្លាស់ទី​អ្វី​ដែល​ប្រែប្រួល"
+msgstr "ការ​ផ្លាស់ប្ដូរ​ដែល​ទាក់ទង"
 
 #: ../src/ui/dialog/guides.cpp:46
 msgid "Move and/or rotate the guide relative to current settings"
@@ -12277,16 +12229,15 @@ msgstr "បច្ចុប្បន្ន ៖ %s"
 #: ../src/ui/dialog/icon-preview.cpp:130
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:180
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "ជ្រើស​តែ​នៅ​ក្នុង​ស្រទាប់​បច្ចុប្បន្ន​ប៉ុណ្ណោះ​"
+msgstr "តែ​ជម្រើស ឬ​ឯកសារ​ទាំង​មូល"
 
 #: ../src/ui/dialog/icon-preview.cpp:188
 msgid "Refresh the icons"
-msgstr ""
+msgstr "ធ្វើឲ្យ​រូបតំណាង​ស្រស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -12294,7 +12245,7 @@ msgstr "កណ្ដុរ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:171
 msgid "Grab sensitivity:"
-msgstr "យក"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:171
 #: ../src/ui/dialog/inkscape-preferences.cpp:174
@@ -12385,9 +12336,7 @@ msgstr "ល្បឿន ៖"
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
-msgstr ""
-"តើ​ផ្ទាំង​កំណាត់​រមូរ​ដោយ​ស្វ័យប្រវត្តិ​យ៉ាងលឿន​ ដូចម្តេច​​ពេល​អ្នក​អូស​វា​ផុត​ពី​គែម​នៃ​ផ្ទាំង​កំណាត់​(០ ដើម្បី​បិទ​ប្រឡប់​"
-"រមូរ​ស្វ័យប្រវត្តិ)"
+msgstr "តើ​ផ្ទាំង​កំណាត់​រមូរ​ដោយ​ស្វ័យប្រវត្តិ​យ៉ាងលឿន​ ដូចម្តេច​​ពេល​អ្នក​អូស​វា​ផុត​ពី​គែម​នៃ​ផ្ទាំង​កំណាត់​(០ ដើម្បី​បិទ​ប្រឡប់​រមូរ​ស្វ័យប្រវត្តិ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
@@ -12399,9 +12348,7 @@ msgstr "កម្រិត​ពន្លឺ​ ៖"
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
-msgstr ""
-"តើ​ចម្ងាយ​ប៉ុន្មាន (គិតជា​ភីកសែល​អេក្រង់) ដែល​អ្នក​ត្រូវការ​ឲ្យ​បាន​ពី​គែម​ត្រួតត្រា ដើម្បី​កេះ​រមូរ​ដោយ​ស្វ័យ​"
-"ប្រវត្តិ វិជ្ជមាន​នៅ​ខាង​ក្រៅ តំបន់​ត្រួតត្រា អវិជ្ជមាន​នៅ​ក្នុង​តំបន់​ត្រួតត្រា"
+msgstr "តើ​ចម្ងាយ​ប៉ុន្មាន (គិតជា​ភីកសែល​អេក្រង់) ដែល​អ្នក​ត្រូវការ​ឲ្យ​បាន​ពី​គែម​ត្រួតត្រា ដើម្បី​កេះ​រមូរ​ដោយ​ស្វ័យ​ប្រវត្តិ វិជ្ជមាន​នៅ​ខាង​ក្រៅ តំបន់​ត្រួតត្រា អវិជ្ជមាន​នៅ​ក្នុង​តំបន់​ត្រួតត្រា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:206
 msgid "Left mouse button pans when Space is pressed"
@@ -12412,10 +12359,7 @@ msgid ""
 "When on, pressing and holding Space and dragging with left mouse button pans "
 "canvas (as in Adobe Illustrator). When off, Space temporarily switches to "
 "Selector tool (default)."
-msgstr ""
-"នៅ​ពេល​ដែល​បាន​បើក ចុច និង​សង្កត់​ចន្លោះ​មិន​ឃើញ ហើយ​អូស​ដោយ​​ការ​ចុច​ផ្ទាំង​ក្រណាត់​ប៊ូតុង​កណ្ដុរ​ឆ្វេង (ដូច​នៅ​"
-"ក្នុង Adobe Illustrator) ។ នៅ​ពេល​ដែល​បិទ ចន្លោះ​មិនឃើញ​ប្ដូរ​ជា​បណ្ដោះ​អាសន្ន​ទៅ​ជា​ឧបករណ៍​កម្មវិធី​"
-"ជ្រើស (លំនាំដើម) ។"
+msgstr "នៅ​ពេល​ដែល​បាន​បើក ចុច និង​សង្កត់​ចន្លោះ​មិន​ឃើញ ហើយ​អូស​ដោយ​​ការ​ចុច​ផ្ទាំង​ក្រណាត់​ប៊ូតុង​កណ្ដុរ​ឆ្វេង (ដូច​នៅ​ក្នុង Adobe Illustrator) ។ នៅ​ពេល​ដែល​បិទ ចន្លោះ​មិនឃើញ​ប្ដូរ​ជា​បណ្ដោះ​អាសន្ន​ទៅ​ជា​ឧបករណ៍​កម្មវិធី​ជ្រើស (លំនាំដើម) ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:209
 msgid "Mouse wheel zooms by default"
@@ -12425,21 +12369,17 @@ msgstr "កង់ណ្ដុរ​ពង្រីក​តាម​លំនា
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl."
-msgstr ""
-"នៅ​ពេល​បាន​បើក កង់កណ្ដុរ​ពង្រីក​ដោយ​មិន​ប្រើ​បញ្ជា (Ctrl) និង​រមូរ​ផ្ទាំង​ក្រណាត់​ដោយ​ប្រើ​បញ្ជា(Ctrl) នៅ​"
-"ពេល​បាន​បិទ វា​ពង្រីក​ដោយ​ប្រើបញ្ជា(Ctrl) និង​រមូរ​ដោយ​មិន​ប្រើ​បញ្ជា(Ctrl) ។"
+msgstr "នៅ​ពេល​បាន​បើក កង់កណ្ដុរ​ពង្រីក​ដោយ​មិន​ប្រើ​បញ្ជា (Ctrl) និង​រមូរ​ផ្ទាំង​ក្រណាត់​ដោយ​ប្រើ​បញ្ជា(Ctrl) នៅ​ពេល​បាន​បិទ វា​ពង្រីក​ដោយ​ប្រើបញ្ជា(Ctrl) និង​រមូរ​ដោយ​មិន​ប្រើ​បញ្ជា(Ctrl) ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:217
-#, fuzzy
 msgid "Enable snap indicator"
-msgstr "អនុញ្ញាត​ទ្រនិច​បង្ហាញ​ខ្ទាស់"
+msgstr "បើក​ទ្រនិច​បង្ហាញ​ការ​ចាប់យក"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr "បន្ទាប់​ពី​ខ្ទាស់ និមិត្ត​សញ្ញា​ត្រូវ​បាន​គូស​នៅ​ចំណុច​ដែល​បាន​ខ្ទាស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
-#, fuzzy
 msgid "Delay (in msec):"
 msgstr "ពន្យារ (មិល្លីវិនាទី) ៖"
 
@@ -12452,16 +12392,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:225
 msgid "Only snap the node closest to the pointer"
-msgstr ""
+msgstr "ចាប់យក​តែ​ថ្នាំង​ដែល​នៅ​ជិត​នឹង​ទ្រនិច​បំផុត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
 msgid "Only try to snap the node that is initialy closest to the mouse pointer"
-msgstr ""
+msgstr "ព្យាយាមចាប់យក​តែ​ថ្នាំង​ដែល​នៅ​ជិត​នឹង​ទ្រនិច​កណ្ដុរ​​ជាង​គេ​បំផុត​ប៉ុណ្ណោះ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
-#, fuzzy
 msgid "Weight factor:"
-msgstr "កម្ពស់​ក្រដាស"
+msgstr "កត្តា​ទំហំ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:231
 msgid ""
@@ -12471,9 +12410,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
-#, fuzzy
 msgid "Snapping"
-msgstr "ចំណុច​ខ្ទាស់"
+msgstr "ការ​ចាប់យក"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -12676,9 +12614,8 @@ msgid ""
 msgstr "ចាត់​ទុក​ក្រុម​ជា​វត្ថុ​តែ​មួយ​កំឡុង​ពេល​សន្ទនា​ជាមួយ​មគ្គុទ្ទេសក៏ ជា​ជាង​បម្លែង​កូន​នីមួយៗ​ដោយ​ឡែក​ពី​គ្នា ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
-#, fuzzy
 msgid "Average all sketches"
-msgstr "គុណភាព​មធ្យម"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Width is in absolute units"
@@ -12794,9 +12731,8 @@ msgid "Tweak"
 msgstr "លៃតម្រូវ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
-#, fuzzy
 msgid "Paint objects with:"
-msgstr "បង្កើត​វត្ថុ​មួយ​ដោយ ៖"
+msgstr "គូរ​វត្ថុ​ជាមួយ​នឹង ៖"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
@@ -12812,9 +12748,8 @@ msgid "Shapes"
 msgstr "រាង​"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
-#, fuzzy
 msgid "Sketch mode"
-msgstr "គំនូស​វាស"
+msgstr "របៀប​គូសវាស"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid ""
@@ -12825,7 +12760,7 @@ msgstr ""
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:491 ../src/verbs.cpp:2518
 msgid "Pen"
-msgstr "ប៊ិច​"
+msgstr "ប៊ិក"
 
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:497 ../src/verbs.cpp:2520
@@ -12836,15 +12771,13 @@ msgstr "អក្សរ​វិចិត្រ​សាស្ត្រ​"
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
-msgstr ""
-"ប្រសិន​បើ​បើក ទទឹង​ប៊ិក​ស្ថិត​ក្នុង​ឯកតា​ដាច់​ខាត (ភីកសែល) ពង្រីក​ដោយ​ឯករាជ្យ បើ​មិន​ដូច្នេះ​ទេ ទទឹង​ប៊ិក​អាស្រ័យ​"
-"លើ​ពេល​ពង្រីក ដូច្នេះ​វា​មើល​ទៅ ដូចគ្នា​នឹង​ការ​ពង្រីក​ផ្សេង​ទៀត​ដែរ ។"
+msgstr "ប្រសិន​បើ​បើក ទទឹង​ប៊ិក​ស្ថិត​ក្នុង​ឯកតា​ដាច់​ខាត (ភីកសែល) ពង្រីក​ដោយ​ឯករាជ្យ បើ​មិន​ដូច្នេះ​ទេ ទទឹង​ប៊ិក​អាស្រ័យ​លើ​ពេល​ពង្រីក ដូច្នេះ​វា​មើល​ទៅ ដូចគ្នា​នឹង​ការ​ពង្រីក​ផ្សេង​ទៀត​ដែរ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:503
 msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
-msgstr "ប្រសិនបើ​បើក វត្ថុ​ដែលបានបង្កើត​ថ្មីៗ​នីមួយៗ​នឹង​ត្រូវ​បានជ្រើស (មិន​ជ្រើស​ជម្រើស​មុន)"
+msgstr "ប្រសិន​បើ​បើក វត្ថុ​ដែល​បាន​បង្កើត​ថ្មីៗ​នីមួយ​ៗ​នឹង​ត្រូវ​បាន​ជ្រើស (មិន​ជ្រើស​ជម្រើស​មុន)"
 
 #. Paint Bucket
 #: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
@@ -12853,9 +12786,8 @@ msgstr "ធុង​គំនូរ​"
 
 #. LPETool
 #: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2538
-#, fuzzy
 msgid "LPE Tool"
-msgstr "ឧបករណ៍"
+msgstr "ឧបករណ៍​ LPE"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:524 ../src/verbs.cpp:2524
@@ -12955,21 +12887,19 @@ msgstr "ដូច​ធម្មតា ប៉ុន្តែ​អាច​ធ�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Dialog Transparency:"
-msgstr ""
+msgstr "ភាព​ថ្លា​ប្រអប់ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
-#, fuzzy
 msgid "Opacity when focused:"
-msgstr "ឆានែល​ភាព​ស្រអាប់"
+msgstr "ភាព​ស្រអាប់​នៅពេល​ផ្ដោត ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:584
-#, fuzzy
 msgid "Opacity when unfocused:"
-msgstr "ឆានែល​ភាព​ស្រអាប់"
+msgstr "ភាព​ស្រអាប់​នៅពេល​មិន​ផ្ដោត ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Time of opacity change animation:"
-msgstr ""
+msgstr "ពេលវេលា​​ចលនា​ផ្លាស់ប្ដូរ​ភាព​ស្រអាប់ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
 msgid "Miscellaneous:"
@@ -12984,9 +12914,7 @@ msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
 "above the right scrollbar)"
-msgstr ""
-"ពង្រីក​គនូរ​​ពេល​បង្អួច​ឯកសារ​ត្រូវ​បាន​ប្តូរ​ទំហំ​ ដើម្បី​រក្សា​តំបន់​ដូច​គ្នា​ដែល​អាច​មើល​ឃើញ​ នេះ​ជា​លំនាំដើម​ដែល​ត្រូវ​"
-"បាន​ផ្លាស់ប្តូរ​ក្នុង​បង្អួច​ដោយ​ប្រើ​ប៊ូតុង​របារមូរស្តាំ​ខាងលើ)"
+msgstr "ពង្រីក​គនូរ​​ពេល​បង្អួច​ឯកសារ​ត្រូវ​បាន​ប្តូរ​ទំហំ​ ដើម្បី​រក្សា​តំបន់​ដូច​គ្នា​ដែល​អាច​មើល​ឃើញ​ នេះ​ជា​លំនាំដើម​ដែល​ត្រូវ​បាន​ផ្លាស់ប្តូរ​ក្នុង​បង្អួច​ដោយ​ប្រើ​ប៊ូតុង​របារមូរស្តាំ​ខាងលើ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
 msgid "Whether dialog windows have a close button (requires restart)"
@@ -13054,9 +12982,8 @@ msgid "When duplicating original+clones:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
-#, fuzzy
 msgid "Relink duplicated clones"
-msgstr "លុប​ក្លូន​ជា​ក្រឡា​ក្បឿង"
+msgstr "តភ្ជាប់​ទៅ​ក្លូន​ដែល​បាន​ចម្លង​ឡើងវិញ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid ""
@@ -13214,9 +13141,8 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "គុណភាព​ទាប​បំផុត (កា​ររំខាន​ដែល​អាច​ពិចារណា​បាន) ប៉ុន្តែ​ការ​បង្ហាញ​លឿន​បំផុត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:712
-#, fuzzy
 msgid "Filter effects quality for display:"
-msgstr "គុណភាព​ព្រិល​របស់​ហ្គោសៀន​សម្រាប់​ការ​បង្ហាញ ៖"
+msgstr "គុណភាព​បែបផែន​តម្រង​សម្រាប់​ការ​បង្ហាញ ៖"
 
 #. show infobox
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
@@ -13309,9 +13235,7 @@ msgstr "បើក​ឈ្មោះ​ម៉ាស៊ីន​បម្រើ​
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
-msgstr ""
-"ឈ្មោះ​ម៉ាស៊ីន​បម្រើ​នៃ​ម៉ាស៊ីនបម្រើ​បណ្ដាញ​ល័យ​បើក​បន្ទប់​រូបភាព webdav ។ វា​ត្រូវ​បាន​ប្រើ​ដោយ​កា​រនាំចេញ និង​"
-"នាំចូល​ទៅ​អនុគមន៍ OCAL ។"
+msgstr "ឈ្មោះ​ម៉ាស៊ីន​បម្រើ​នៃ​ម៉ាស៊ីនបម្រើ​បណ្ដាញ​ល័យ​បើក​បន្ទប់​រូបភាព webdav ។ វា​ត្រូវ​បាន​ប្រើ​ដោយ​កា​រនាំចេញ និង​នាំចូល​ទៅ​អនុគមន៍ OCAL ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:770
 msgid "Open Clip Art Library Username:"
@@ -13476,75 +13400,64 @@ msgstr "កា​រកំណត់​ក្រឡាចត្រង្គ​ល
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:971
 #: ../src/ui/dialog/inkscape-preferences.cpp:992
-#, fuzzy
 msgid "Grid units:"
-msgstr "ឯកត្តា​ក្រឡាចត្រង ៖"
+msgstr "ឯកតា​ក្រឡាចត្រង្គ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
-#, fuzzy
 msgid "Origin X:"
-msgstr "X ដើម ៖"
+msgstr "X ដើម ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
-#, fuzzy
 msgid "Origin Y:"
-msgstr "Y ដើម ៖"
+msgstr "Y ដើម ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:978
-#, fuzzy
 msgid "Spacing X:"
-msgstr "ចន្លោះ X ៖"
+msgstr "ចន្លោះ X ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:979
 #: ../src/ui/dialog/inkscape-preferences.cpp:998
-#, fuzzy
 msgid "Spacing Y:"
-msgstr "ចន្លោះ Y ៖"
+msgstr "ចន្លោះ Y ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:981
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1003
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
-#, fuzzy
 msgid "Grid line color:"
-msgstr "ពណ៌​បន្ទាត់​ក្រឡាចត្រង្គ ៖"
+msgstr "ពណ៌​បន្ទាត់​ក្រឡាចត្រង្គ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
-#, fuzzy
 msgid "Color used for normal grid lines"
-msgstr "ជ្រើស​ពណ៌​ដែល​​បាន​ប្រើ​​សម្រាប់​បន្ទាត់​ក្រឡាចត្រង្គ​ធម្មតា"
+msgstr "ពណ៌​ដែល​បាន​ប្រើ​សម្រាប់​បន្ទាត់​ក្រឡា​ចត្រង្គ​ធម្មតា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:983
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
-#, fuzzy
 msgid "Major grid line color:"
-msgstr "មាន​ពណ៌​ជាច្រើន​លើ​បន្ទាត់ណែនាំផ្លូវ​"
+msgstr "ពណ៌​បន្ទាត់​ក្រឡា​ចត្រង្គ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
-#, fuzzy
 msgid "Color used for major (highlighted) grid lines"
-msgstr "ពណ៌​របស់​បន្ទាត់​ក្រឡាចត្រង្គ​រង្វើល (បាន​បន្លិច)"
+msgstr "ពណ៌​ដែល​បាន​ប្រើ​សម្រាប់​បន្ទាត់​ក្រឡា​ចត្រង្គ​មេ (បាន​បន្លិច)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:986
 #: ../src/ui/dialog/inkscape-preferences.cpp:1008
-#, fuzzy
 msgid "Major grid line every:"
-msgstr "បន្ទាត់​ក្រឡាចត្រង្គ​រង្វើល​រៀងរាល់ ៖"
+msgstr "បន្ទាត់​ក្រឡាចត្រង្គ​មេ​រៀងរាល់ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:987
 msgid "Show dots instead of lines"
 msgstr "បង្ហាញ​ចំណុច​ជំនួស​ឲ្យ​បន្ទាត់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:988
-#, fuzzy
 msgid "If set, display dots at gridpoints instead of gridlines"
-msgstr "ប្រសិន​បើ​បានកំណត់ បង្ហាញ​ចំណុច​នៅ​ចំណុច​ក្រឡាចត្រង្គ​ជំនួស​ឲ្យ​បន្ទាត់​ក្រឡាចត្រង្គ"
+msgstr "ប្រសិន​បើ​បាន​កំណត់ វា​នឹង​បង្ហាញ​ចំណុច នៅ​ចំណុច​ក្រឡាចត្រង្គ​ជំនួស​ឲ្យ​បន្ទាត់​ក្រិត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1015
 msgid "Use named colors"
@@ -13558,9 +13471,8 @@ msgid ""
 msgstr "បើ​កំណត់ សរសេរ​ឈ្មោះ CSS របស់​ពណ៌​ជំនួស​ឲ្យ​តម្លៃ​ជា​លេខ​របស់​វា ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
-#, fuzzy
 msgid "XML formatting"
-msgstr "ព័ត៌មាន"
+msgstr "ទ្រង់ទ្រាយ XML"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1020
 msgid "Inline attributes"
@@ -13568,24 +13480,21 @@ msgstr "​គុណលក្ខណៈ​​ក្នុង​តួ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Put attributes on the same line as the element tag"
-msgstr ""
+msgstr "ដាក់​គុណលក្ខណៈ​នៅលើ​បន្ទាត់​តែ​មួយ ជា​ស្លាក​ធាតុ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid "Indent, spaces:"
-msgstr "ចន្លោះ​ចូល​បន្ទាត់"
+msgstr "ចូល​បន្ទាត់ ដកឃ្លា ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
-msgstr "ចំនួន​ចន្លោះ​ដែល​ត្រូវ​បង្កើត​សម្រាប់​ចុះ​បន្ទាត់ ។"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1026
-#, fuzzy
 msgid "Path data"
-msgstr "បិទភ្ជាប់​ផ្លូវ​"
+msgstr "ទិន្នន័យ​ផ្លូវ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1028
 msgid "Allow relative coordinates"
@@ -13609,23 +13518,20 @@ msgstr ""
 "3,4') ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1034
-#, fuzzy
 msgid "Numbers"
-msgstr "លេខ​ថ្នាំង"
+msgstr "ចំនួល"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
-#, fuzzy
 msgid "Numeric precision:"
-msgstr "ចំនួន​ខ្ទង់​លេខ"
+msgstr "ចំនួន​ខ្ទង់ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "How many digits to write after the decimal dot"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
-#, fuzzy
 msgid "Minimum exponent:"
-msgstr "និទស្សន្ត​អប្បបរមា"
+msgstr "និទស្សន្ត​អតិបរមា ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 #, fuzzy
@@ -13688,7 +13594,7 @@ msgstr "កាតាឡាន (ca)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Valencian Catalan (ca@valencia)"
-msgstr ""
+msgstr "វ៉ាឡិនសៀ កាតាឡាន (ca@valencia)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Chinese/China (zh_CN)"
@@ -14146,7 +14052,7 @@ msgstr "តើ​ការ​ធ្វើ​ឲ្យ​ពាក្យ​បញ
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid "Latency skew:"
-msgstr ""
+msgstr "ឆៀង​មើល​មិនឃើញ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid "(requires restart)"
@@ -14219,7 +14125,7 @@ msgstr "ផ្សេងៗ"
 
 #: ../src/ui/dialog/layer-properties.cpp:41
 msgid "Layer name:"
-msgstr "ឈ្មោះស្រទាប់ ៖"
+msgstr "ឈ្មោះស្រទាប់ ៖"
 
 #: ../src/ui/dialog/layer-properties.cpp:109
 msgid "Add layer"
@@ -14239,7 +14145,7 @@ msgstr "ជាស្រទាប់​រង​របស់​​បច្ចុ
 
 #: ../src/ui/dialog/layer-properties.cpp:158
 msgid "Position:"
-msgstr "ទីតាំង ៖"
+msgstr "ទីតាំង ៖"
 
 #: ../src/ui/dialog/layer-properties.cpp:176
 msgid "Rename Layer"
@@ -14630,9 +14536,8 @@ msgid "Remove glyph"
 msgstr "យក​ចម្លាក់​ខូង​ចេញ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "យក​បន្ទាត់​នាំ​ផ្លូវ​ដែល​មាន​ស្រាប់​ចេញ​"
+msgstr "យក​គូ kerning ចេញ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
@@ -14665,13 +14570,12 @@ msgstr "យក​ខ្សែកោង​ពី​ជម្រើស..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
-msgstr ""
+msgstr "បន្ថែម​គូ kerning"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:734
-#, fuzzy
 msgid "Kerning Setup:"
-msgstr "សម្រួល​ចន្លោះ​តួ​អក្សរ​ឡើង​លើ"
+msgstr "រៀបចំ Kerning ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
@@ -14695,7 +14599,7 @@ msgstr "ជួរ​យូនីកូដ​ទី ២"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
-msgstr ""
+msgstr "តម្លៃ Kerning ៖"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
@@ -14723,9 +14627,8 @@ msgid "_Glyphs"
 msgstr "ចម្លាក់ខូង"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "_Kerning"
-msgstr "គំនូរ"
+msgstr "Kerning"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
@@ -15048,14 +14951,13 @@ msgstr "ជម្រើស"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:627
-#, fuzzy
 msgid ""
 "Inkscape bitmap tracing\n"
 "is based on Potrace,\n"
 "created by Peter Selinger\n"
 "\n"
 "http://potrace.sourceforge.net"
-msgstr "សូម​អរគុណ​ចំពោះ​ Peter Selinger, http://potrace.sourceforge.net"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -16107,9 +16009,8 @@ msgid "Deleted layer."
 msgstr "ស្រទាប់​ដែល​បាន​លុប ។"
 
 #: ../src/verbs.cpp:1309
-#, fuzzy
 msgid "Toggle layer solo"
-msgstr "បិទ/បើក​ភាព​មើល​ឃើញ​របស់​ស្រទាប់"
+msgstr "បិទបើក​ការ​ធ្វើ​ស្រទាប់"
 
 #: ../src/verbs.cpp:1389
 msgid "Flip horizontally"
@@ -16946,7 +16847,7 @@ msgstr "លាក់​/​បង្ហាញ​ស្រទាប់​ផ្�
 
 #: ../src/verbs.cpp:2459
 msgid "Solo the current layer"
-msgstr ""
+msgstr "ធ្វើ​ស្រទាប់​បច្ចុប្បន្ន"
 
 #. Object
 #: ../src/verbs.cpp:2462
@@ -19901,7 +19802,7 @@ msgstr "គ្មាន​ឧបករណ៍​ធរណីមាត្រ​ណ
 
 #: ../src/widgets/toolbox.cpp:5574
 msgid "draw-geometry-inactive"
-msgstr ""
+msgstr "គំនូរ​ធរណីមាត្រ​អសកម្ម"
 
 #: ../src/widgets/toolbox.cpp:5606
 msgid "Show limiting bounding box"
@@ -20600,9 +20501,8 @@ msgid "Common Objects"
 msgstr "វត្ថុ​ទូទៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "ត្រីកោណ"
+msgstr "ត្រីកោណ​ប៉ះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -20643,9 +20543,8 @@ msgid "Excentres"
 msgstr "ហូត​"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
-#, fuzzy
 msgid "Excircles"
-msgstr "រង្វង់​"
+msgstr "រង្វង់​ខាងក្រៅ​"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 msgid "Extouch Triangle"
@@ -20663,12 +20562,11 @@ msgstr "ចូល​បន្ទាត់​ថ្នាំង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
 msgid "Incircle"
-msgstr ""
+msgstr "រង្វង់​ក្នុង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
-#, fuzzy
 msgid "Nagel Point"
-msgstr "ចំណុច​ខ្មៅ"
+msgstr "ចំណុច​ប្រសព្វ​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Nine-Point Centre"
@@ -20679,17 +20577,14 @@ msgid "Nine-Point Circle"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
-#, fuzzy
 msgid "Orthic Triangle"
-msgstr "ត្រីកោណ"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:27
-#, fuzzy
 msgid "Orthocentre"
-msgstr "ផ្សេងៗ"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
-#, fuzzy
 msgid "Point At"
 msgstr "ចំណុច​នៅ"
 
@@ -20702,9 +20597,8 @@ msgid "Report this triangle's properties"
 msgstr "រាយការណ៍​លក្ខណៈ​សម្បត្តិ​របស់​ត្រីកោណ​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
-#, fuzzy
 msgid "Symmedial Triangle"
-msgstr "ត្រីកោណ"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
 #, fuzzy
@@ -20948,7 +20842,7 @@ msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (
 
 #: ../share/extensions/funcplot.inx.h:9
 msgid "Multiply X range by 2*pi"
-msgstr "គុណ​ជួរ x ដោយ 2*pi"
+msgstr "គុណ​ជួរ x នឹង 2*pi"
 
 #: ../share/extensions/funcplot.inx.h:10
 msgid "Number of samples"
@@ -20970,10 +20864,7 @@ msgid ""
 "range in radians. X scale is set so that left and right edges of rectangle "
 "are at +/-1. Isotropic scaling is disabled. First derivative is always "
 "determined numerically."
-msgstr ""
-"ជ្រើស​ចតុកោណ​កែង​មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ជាមួយ​កូអរដោនេ​នៃ​ប៉ូល ៖ តម្លៃ​"
-"ចាប់ផ្ដើម និង​បញ្ចប់ X កំណត់​ជួរ​មុំ​គិត​ជា​រ៉ាដ្យង់ ។ មាត្រដ្ឋាន X ត្រូវ​បាន​កំណត់ ហេតុ​ដូចនេះ​គែម​នៃ​ចតុកោណ​ខាង​"
-"ឆ្វេង និង​ខាង​ស្ដាំ​គឺ +/-1 ។ មាត្រដ្ឋាន​សមទិស​ត្រូវ​បាន​បិទ ។ ដេរីវ៉េ​ដំបូង​ត្រូវ​តែ​បាន​កំណត់​ជា​លេខ ។"
+msgstr "ជ្រើស​ចតុកោណ​កែង​មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ជាមួយ​កូអរដោនេ​នៃ​ប៉ូល ៖ តម្លៃ​ចាប់ផ្ដើម និង​បញ្ចប់ X កំណត់​ជួរ​មុំ​គិត​ជា​រ៉ាដ្យង់ ។ មាត្រដ្ឋាន X ត្រូវ​បាន​កំណត់ ហេតុ​ដូចនេះ​គែម​នៃ​ចតុកោណ​ខាង​ឆ្វេង និង​ខាង​ស្ដាំ​គឺ +/-1 ។ មាត្រដ្ឋាន​សមទិស​ត្រូវ​បាន​បិទ ។ ដេរីវ៉េ​ដំបូង​ត្រូវ​តែ​បាន​កំណត់​ជា​លេខ ។"
 
 #: ../share/extensions/funcplot.inx.h:15
 #: ../share/extensions/param_curves.inx.h:12
@@ -21101,7 +20992,6 @@ msgid "Minor X Division Thickness [px]"
 msgstr "កម្រាស់​ការ​ចែក X តូច / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness [px]"
 msgstr "កម្រាស់​ការ​ចែក Y តូច / ភីកសែល"
 
@@ -21124,9 +21014,8 @@ msgid "Subminor Y Division Thickness [px]"
 msgstr "កម្រាស់​ការ​ចែក Y តូច​រង / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
-#, fuzzy
 msgid "Subsubdivs. per X Subdivision"
-msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​រង Y"
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​រង X"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
@@ -21257,9 +21146,8 @@ msgid "Golden ratio"
 msgstr "សមាមាត្រ Golden"
 
 #: ../share/extensions/guides_creator.inx.h:13
-#, fuzzy
 msgid "Guides creator"
-msgstr "ពណ៌​បន្ទាត់​នាំផ្លូវ ៖"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:14
 #, fuzzy
@@ -21347,7 +21235,7 @@ msgstr "​ចំនួន​ទសភាគ"
 msgid ""
 "If you select \"Other\", you must know the SVG attributes to identify here "
 "this \"other\":"
-msgstr ""
+msgstr "ប្រសិន​បើ​អ្នក​ជ្រើស \"ផ្សេងទៀត\" អ្នក​ត្រូវតែ​ដឹង​អំពី​គុណលក្ខណៈ SVG ដើម្បី​កំណត់​អត្តសញ្ញាណ \"ផ្សេងទៀត\" នេះ ៖"
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
@@ -21585,9 +21473,8 @@ msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូច​បំផុត​នៃ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "គុណ​ជួរ x ដោយ 2*pi"
+msgstr "គុណ t-range នឹង 2*pi"
 
 #: ../share/extensions/param_curves.inx.h:6
 msgid "Parametric Curves"
@@ -21979,9 +21866,8 @@ msgid "Z-Sort Faces By:"
 msgstr "មុខ​តម្រៀប Z តាម ៖"
 
 #: ../share/extensions/printing-marks.inx.h:1
-#, fuzzy
 msgid "Bleed Margin"
-msgstr "សម្រក់​ឈាម (ក្នុង)"
+msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:2
 msgid "Bleed Marks"
