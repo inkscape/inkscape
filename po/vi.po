@@ -718,28 +718,27 @@ msgstr "Giao khi đính lưới/nết dẫn"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Iridescent beeswax"
-msgstr ""
+msgstr "Sáp ong"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr ""
+msgstr "Sáp ong, với nhiều mảng óng ánh, thay đổi theo màu ban đầu"
 
 #: ../share/filters/filters.svg.h:60
-#, fuzzy
 msgid "Eroded metal"
-msgstr "Dây kim"
+msgstr "Kim loại bị ăn mòn"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Bề mặt kim loại bị ăn mòn, có nhiều lằn, vết rạn, thô ráp"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
-msgstr ""
+msgstr "Dung nham nứt nẻ"
 
 #: ../share/filters/filters.svg.h:61
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "Mô phỏng các vết nứt trên bề mặt dung nham đã khô; gần giống mặt da"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Bark"
@@ -750,13 +749,12 @@ msgid "Bark texture, vertical; use with deep colors"
 msgstr "Văn hoa trông như vỏ cây, nhiều vết trải theo chiều dọc; dùng với các màu sẫm"
 
 #: ../share/filters/filters.svg.h:63
-#, fuzzy
 msgid "Lizard skin"
-msgstr "Sắc màu da thật"
+msgstr "Da cá sấu"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Stylized reptile skin texture"
-msgstr ""
+msgstr "Mô phỏng các lằn, rãnh giống như da rắn, da cá sấu"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Stone wall"
@@ -795,13 +793,12 @@ msgid "Gel effect with strong refraction"
 msgstr "Hiệu ứng ánh sáng khúc xạ mạnh"
 
 #: ../share/filters/filters.svg.h:68
-#, fuzzy
 msgid "Metallized paint"
-msgstr "Sơn dầu"
+msgstr "Kim loại"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "Bề mặt được phủ kim loại, phản quang nhẹ, thêm một chút trong suốt ở ngoài viền"
 
 #: ../share/filters/filters.svg.h:69
 #, fuzzy
@@ -907,31 +904,29 @@ msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:79
-#, fuzzy
+#. TODO: Không rõ đây là vỏ hoa quả được gọt ra, hay là phoi bào khi bào gỗ?
 msgid "Peel off"
-msgstr "    bó thư bị tắt"
+msgstr "Phoi bào"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "Những sợi mảnh với nhiều hình thù, sắp xếp ngẫu nhiên"
 
 #: ../share/filters/filters.svg.h:80
-#, fuzzy
 msgid "Gold splatter"
-msgstr "Đồng Frăng Vàng"
+msgstr "Vẩy vàng"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "Vẩy kim loại, được tô điểm bằng vàng"
 
 #: ../share/filters/filters.svg.h:81
-#, fuzzy
 msgid "Gold paste"
-msgstr "&Dán\tCtrl+V"
+msgstr "Bột vàng"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr ""
+msgstr "Bề mặt được phủ một lớp kim loại, tô điểm thêm bằng bột vàng"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
@@ -942,12 +937,14 @@ msgid "Crumpled matte plastic, with melted edge"
 msgstr "Chất dẻo màu xỉn, bị ép vỡ, với các cạnh tan chảy"
 
 #: ../share/filters/filters.svg.h:83
+#, fuzzy
 msgid "Enamel jewelry"
-msgstr ""
+msgstr "Trang sức tráng men"
 
 #: ../share/filters/filters.svg.h:83
+#, fuzzy
 msgid "Slightly cracked enameled texture"
-msgstr ""
+msgstr "Lớp men được tráng lên trên kim hoàn, với một số lằn tự nhiên"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Rough paper"
@@ -1010,14 +1007,12 @@ msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "Làm bạc màu gốc, ánh sáng mờ, giống như hình ảnh trong kính hiển vi điện tử"
 
 #: ../share/filters/filters.svg.h:91
-#, fuzzy
 msgid "Tartan"
-msgstr "Đích"
+msgstr "Vải sọc"
 
 #: ../share/filters/filters.svg.h:91
-#, fuzzy
 msgid "Checkered tartan pattern"
-msgstr "Không tìm thấy mẫu tìm kiếm"
+msgstr "Vải sọc ngang và dọc"
 
 #: ../share/filters/filters.svg.h:92
 #, fuzzy
@@ -1143,12 +1138,11 @@ msgstr "Mặt nạ và Độ trong suốt"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
-msgstr "Làm nổi bằng cách điều chỉnh các giá trị độ màu, độ bão hòa và độ sáng, cùng với độ trong suốt"
+msgstr "Làm nổi bằng cách điều chỉnh các giá trị độ màu, độ bão hòa và độ sáng, kết hợp với hiệu ứng trong suốt"
 
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "HSL bubbles, alpha"
-msgstr "Anfa đường lề"
+msgstr "Tạo bọt, kênh trong suốt"
 
 #: ../share/filters/filters.svg.h:106
 #, fuzzy
@@ -1302,9 +1296,8 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Làm nhòe bằng thuật toán Gaussian, giống như trong hộp thoại Tô và Nét"
 
 #: ../share/filters/filters.svg.h:124
-#, fuzzy
 msgid "HSL bubbles, diffuse"
-msgstr "Bộ khí hóa với bong bóng"
+msgstr "Tạo bọt, sáng mờ"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
@@ -1410,13 +1403,12 @@ msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Những sắc cầu vồng hòa trộn dọc theo đường viền"
 
 #: ../share/filters/filters.svg.h:137
-#, fuzzy
 msgid "Flex metal"
-msgstr "Dây kim"
+msgstr "Kim loại mềm"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
+msgstr "Bề mặt kim loại sáng bóng, gồm nhiều mảng màu"
 
 #: ../share/filters/filters.svg.h:138
 #, fuzzy
@@ -1563,49 +1555,44 @@ msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:160
-#, fuzzy
 msgid "Wavy tartan"
-msgstr "Trắng lăn tăn"
+msgstr "Vải sọc, uốn lượn"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
+msgstr "Vải sọc, với các đường lượn ngang và dọc, nổi bật với nét viền được vát nghiêng"
 
 #: ../share/filters/filters.svg.h:161
-#, fuzzy
 msgid "3D marble"
-msgstr "Thả bí"
+msgstr "Đá cẩm thạch"
 
 #: ../share/filters/filters.svg.h:161
 msgid "3D warped marble texture"
-msgstr ""
+msgstr "Mô phỏng vân đá cẩm thạch"
 
 #: ../share/filters/filters.svg.h:162
-#, fuzzy
 msgid "3D wood"
-msgstr "Gỗ ô"
+msgstr "Gỗ"
 
 #: ../share/filters/filters.svg.h:162
 msgid "3D warped, fibered wood texture"
-msgstr ""
+msgstr "Mô phỏng vân gỗ"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "3D mother of pearl"
-msgstr "Xoay 3D chung quanh..."
+msgstr "Khảm trai"
 
 #: ../share/filters/filters.svg.h:163
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "Mô phỏng vân khảm trai"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Tiger fur"
-msgstr "Lông Vũ trụ"
+msgstr "Lông hổ"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "Mô phỏng các vằn vện có trên lông hổ, đồng thời vát viền để làm nổi đối tượng"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
@@ -1785,9 +1772,8 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "HSL bubbles, transparent"
-msgstr "Mặc định là trong suốt"
+msgstr "Tạo bọt, trong suốt"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Highly flexible specular bubbles with transparency"
