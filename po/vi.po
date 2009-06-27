@@ -296,7 +296,7 @@ msgstr "Chất liệu"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
-msgstr "Da báo (làm mất màu gốc của đối tượng)"
+msgstr "Các đốm đen trên lông báo (che kín màu gốc)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
@@ -722,11 +722,11 @@ msgstr "Sáp ong"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr "Sáp ong, với nhiều mảng óng ánh, thay đổi theo màu ban đầu"
+msgstr "Sáp ong có nhiều mảng óng ánh, phủ lên màu ban đầu"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
-msgstr "Kim loại bị ăn mòn"
+msgstr "Kim loại han gỉ"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
@@ -734,11 +734,11 @@ msgstr "Bề mặt kim loại bị ăn mòn, có nhiều lằn, vết rạn, th�
 
 #: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
-msgstr "Dung nham nứt nẻ"
+msgstr "Dung nham khô cằn"
 
 #: ../share/filters/filters.svg.h:61
 msgid "A volcanic texture, a little like leather"
-msgstr "Mô phỏng các vết nứt trên bề mặt dung nham đã khô; gần giống mặt da"
+msgstr "Mô phỏng bề mặt đá dung nham khi đã khô, với nhiều vết rạn nứt ngẫu nhiên"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Bark"
@@ -798,7 +798,7 @@ msgstr "Kim loại"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "Bề mặt được phủ kim loại, phản quang nhẹ, thêm một chút trong suốt ở ngoài viền"
+msgstr "Bề mặt được phủ kim loại, phản quang nhẹ, một chút trong suốt ở ngoài viền"
 
 #: ../share/filters/filters.svg.h:69
 #, fuzzy
@@ -922,11 +922,11 @@ msgstr "Vẩy kim loại, được tô điểm bằng vàng"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Gold paste"
-msgstr "Bột vàng"
+msgstr "Xi vàng"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr "Bề mặt được phủ một lớp kim loại, tô điểm thêm bằng bột vàng"
+msgstr "Những vẩy vàng nằm rải rác bên trên một lớp kim loại mỏng"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
@@ -937,14 +937,12 @@ msgid "Crumpled matte plastic, with melted edge"
 msgstr "Chất dẻo màu xỉn, bị ép vỡ, với các cạnh tan chảy"
 
 #: ../share/filters/filters.svg.h:83
-#, fuzzy
 msgid "Enamel jewelry"
 msgstr "Trang sức tráng men"
 
 #: ../share/filters/filters.svg.h:83
-#, fuzzy
 msgid "Slightly cracked enameled texture"
-msgstr "Lớp men được tráng lên trên kim hoàn, với một số lằn tự nhiên"
+msgstr "Lớp men thủy tinh được tráng lên trên kim hoàn, nhiều đường nét tự nhiên"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Rough paper"
@@ -1012,7 +1010,7 @@ msgstr "Vải sọc"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Checkered tartan pattern"
-msgstr "Vải sọc ngang và dọc"
+msgstr "Vải kẻ ô với các đường ngang và dọc"
 
 #: ../share/filters/filters.svg.h:92
 #, fuzzy
@@ -1404,7 +1402,7 @@ msgstr "Những sắc cầu vồng hòa trộn dọc theo đường viền"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Flex metal"
-msgstr "Kim loại mềm"
+msgstr "Kim loại dẻo"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -1572,7 +1570,7 @@ msgstr "Mô phỏng vân đá cẩm thạch"
 
 #: ../share/filters/filters.svg.h:162
 msgid "3D wood"
-msgstr "Gỗ"
+msgstr "Vân gỗ"
 
 #: ../share/filters/filters.svg.h:162
 msgid "3D warped, fibered wood texture"
@@ -1584,7 +1582,7 @@ msgstr "Khảm trai"
 
 #: ../share/filters/filters.svg.h:163
 msgid "3D warped, iridescent pearly shell texture"
-msgstr "Mô phỏng vân khảm trai"
+msgstr "Hoa văn sáng óng ánh, nhiều màu nhẹ, mô phỏng khảm trai"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
