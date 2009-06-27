@@ -648,7 +648,7 @@ msgid "Matte Bevel"
 msgstr "Vát mờ"
 
 #: ../share/filters/filters.svg.h:52
-#| TODO : I wonder what pastel means? Is it a kind of material for drawing?
+#. TODO : I wonder what pastel means? Is it a kind of material for drawing?
 #, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Nét vát mềm, mờ, hơi nhòe, giống như màu phấn"
