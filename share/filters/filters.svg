@@ -1183,7 +1183,7 @@
 <feComposite in2="result5" operator="in" id="feComposite2912" in="SourceGraphic" result="result6" />
 <feTurbulence baseFrequency="0.029999999999999999 0.10000000000000001" numOctaves="5" id="feTurbulence2916" type="fractalNoise" />
 <feDisplacementMap result="result4" scale="4" yChannelSelector="A" xChannelSelector="R" id="feDisplacementMap2918" in="result6" />
-<feComposite in2="result4" operator="in" result="result2" id="feComposite2922" in="result7" />
+<feComposite in2="result4" operator="in" result="result2" id="feComposite2922" in="result4" />
 <feComposite in2="result2" operator="over" in="result2" id="feComposite2924" />
 <feBlend blend="normal" id="feBlend3357" mode="multiply" />
 </filter>
