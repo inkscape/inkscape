@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-22 19:48+0200\n"
-"PO-Revision-Date: 2009-06-24 00:08+0700\n"
+"POT-Creation-Date: 2009-06-25 17:08+0200\n"
+"PO-Revision-Date: 2009-06-28 01:02+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,6 @@ msgstr "Nhòe do chuyển động ngang"
 #: ../share/filters/filters.svg.h:8
 #: ../share/filters/filters.svg.h:58
 #: ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:112
 #: ../share/filters/filters.svg.h:169
@@ -124,6 +123,7 @@ msgstr "Cắt rời hình"
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:179
 #: ../share/filters/filters.svg.h:180
@@ -179,9 +179,13 @@ msgstr "Đóng bằng con dấu cao su"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr "Che phủ bề mặt"
 
@@ -283,13 +287,10 @@ msgstr "Lông báo"
 #: ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:160
 #: ../share/filters/filters.svg.h:161
 #: ../share/filters/filters.svg.h:162
 #: ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:164
 msgid "Materials"
 msgstr "Chất liệu"
 
@@ -327,16 +328,10 @@ msgstr "Làm sắc"
 #: ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
-#: ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:170
 #: ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:173
 #: ../share/filters/filters.svg.h:186
-#: ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192
 msgid "Image effects"
 msgstr "Hiệu ứng dành cho ảnh"
 
@@ -478,12 +473,14 @@ msgstr "Tế bào"
 #: ../share/filters/filters.svg.h:36
 #: ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:47
 #: ../share/filters/filters.svg.h:62
 #: ../share/filters/filters.svg.h:64
 #: ../share/filters/filters.svg.h:65
 #: ../share/filters/filters.svg.h:82
 #: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:124
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:128
@@ -497,6 +494,7 @@ msgstr "Tế bào"
 #: ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182
 #: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:185
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:194
 msgid "Textures"
@@ -572,17 +570,25 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "Vẽ lại đối tượng bằng nét cọ của Van Gogh"
 
 #: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:185
 msgid "HSL Bumps"
-msgstr "Rối loạn sắc độ, bão hòa và sáng"
+msgstr "Làm nổi, sáng mạnh"
+
+#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:195
+msgid "Bumps"
+msgstr "Tạo bọt và Làm nổi"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Highly flexible specular bump"
-msgstr "Rối loạn ảnh phản chiếu mềm"
+msgstr "Làm nổi dựa vào các giá trị độ màu, độ bão hòa và độ sáng; chiếu sáng mạnh"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Cracked glass"
@@ -594,12 +600,12 @@ msgstr "Đối tượng nằm dưới một mảng kính bị nứt"
 
 #: ../share/filters/filters.svg.h:47
 msgid "HSL bubbles"
-msgstr "Bọt bão hòa, sáng và sắc độ"
+msgstr "Tạo bọt, sáng mạnh"
 
 #: ../share/filters/filters.svg.h:47
 #: ../share/filters/filters.svg.h:105
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
-msgstr "Tạo các bong bóng dựa trên sắc độ, độ sáng và độ bão hòa"
+msgstr "Tạo các bọt nhỏ dựa trên sắc độ, độ sáng và độ bão hòa"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Glowing bubble"
@@ -648,7 +654,6 @@ msgid "Matte Bevel"
 msgstr "Vát mờ"
 
 #: ../share/filters/filters.svg.h:52
-#. TODO : I wonder what pastel means? Is it a kind of material for drawing?
 #, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Nét vát mềm, mờ, hơi nhòe, giống như màu phấn"
@@ -662,8 +667,9 @@ msgid "Thin like a soap membrane"
 msgstr "Mỏng như màng xà phòng"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft ridge"
-msgstr "Lằn nhẹ"
+#, fuzzy
+msgid "Matte ridge"
+msgstr "Chóp xanh da trời"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Soft pastel ridge"
@@ -1121,9 +1127,8 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Tạo hiệu quả như khi ánh sáng từ mặt dưới chiếu qua lớp kính đen"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "HSL Bumps, alpha"
-msgstr "Anfa đường lề"
+msgstr "Làm nổi, màu và độ trong suốt"
 
 #: ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:105
@@ -1133,17 +1138,16 @@ msgstr "Anfa đường lề"
 #: ../share/filters/filters.svg.h:188
 #: ../share/filters/filters.svg.h:189
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Mask and transparency effects"
-msgstr "<b>Báo động và hiệu ứng âm thanh</b>"
+msgstr "Mặt nạ và Độ trong suốt"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
-msgstr ""
+msgstr "Làm nổi bằng cách điều chỉnh các giá trị độ màu, độ bão hòa và độ sáng, cùng với độ trong suốt"
 
 #: ../share/filters/filters.svg.h:105
 #, fuzzy
-msgid "HSL Bubbles, alpha"
+msgid "HSL bubbles, alpha"
 msgstr "Anfa đường lề"
 
 #: ../share/filters/filters.svg.h:106
@@ -1273,13 +1277,12 @@ msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "HSL Bumps, diffuse"
-msgstr "Mẫu màu _HSL"
+msgstr "Làm nổi, sáng mờ"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr ""
+msgstr "Làm nổi dựa vào các giá trị độ màu, độ bão hòa và độ sáng; chiếu sáng mờ"
 
 #: ../share/filters/filters.svg.h:122
 #, fuzzy
@@ -1300,12 +1303,12 @@ msgstr "Làm nhòe bằng thuật toán Gaussian, giống như trong hộp tho�
 
 #: ../share/filters/filters.svg.h:124
 #, fuzzy
-msgid "HSL Bubbles, diffuse"
+msgid "HSL bubbles, diffuse"
 msgstr "Bộ khí hóa với bong bóng"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Tạo các bọt nhỏ dựa theo giá trị độ màu, độ bão hòa và độ sáng; chiếu sáng mờ"
 
 #: ../share/filters/filters.svg.h:125
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1658,13 +1661,12 @@ msgid "Film grain"
 msgstr "Hạt mảng thuốc"
 
 #: ../share/filters/filters.svg.h:171
-#, fuzzy
 msgid "HSL Bumps, transparent"
-msgstr "Mặc định là trong suốt"
+msgstr "Làm nổi, trong suốt"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "Làm nổi dựa vào các giá trị độ màu, độ bão hòa và độ sáng; trong suốt"
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
@@ -1784,13 +1786,12 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:185
 #, fuzzy
-msgid "HSL Bubbles, transparent"
+msgid "HSL bubbles, transparent"
 msgstr "Mặc định là trong suốt"
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "Highly flexible specular bubbles with transparency"
-msgstr "Rối loạn ảnh phản chiếu mềm"
+msgstr "Tạo các bọt nhỏ dựa theo giá trị độ màu, độ bão hòa và độ sáng; trong suốt"
 
 #: ../share/filters/filters.svg.h:186
 #, fuzzy
@@ -1867,6 +1868,24 @@ msgstr "Mành bóng loáng"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+#, fuzzy
+msgid "Embossed leather"
+msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+
+#: ../share/filters/filters.svg.h:195
+msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Carnaval"
+msgstr "Vùng vẽ"
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -2174,17 +2193,17 @@ msgstr "Không có hệ số thu phóng kế tiếp."
 msgid "Create guide"
 msgstr "Tạo đường gióng"
 
-#: ../src/desktop-events.cpp:263
-#: ../src/desktop-events.cpp:408
+#: ../src/desktop-events.cpp:266
+#: ../src/desktop-events.cpp:426
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Xoá đường gióng"
 
-#: ../src/desktop-events.cpp:401
+#: ../src/desktop-events.cpp:419
 msgid "Move guide"
 msgstr "Chuyển đường gióng"
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:455
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Đường gióng</b>: %s"
@@ -9825,20 +9844,24 @@ msgstr[0] "<b>văn bản trong khung đã liên kết</b> (%d ký tự)"
 msgid "Guides Around Page"
 msgstr "Dựng đường gióng bao quanh trang"
 
-#: ../src/sp-guide.cpp:420
-#, c-format
-msgid "vertical, at %s"
-msgstr "thẳng đứng, tại %s"
-
-#: ../src/sp-guide.cpp:423
-#, c-format
-msgid "horizontal, at %s"
-msgstr "nằm ngang, tại %s"
-
-#: ../src/sp-guide.cpp:428
-#, c-format
-msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
+#: ../src/sp-guide.cpp:418
+msgid "<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
 msgstr ""
+
+#: ../src/sp-guide.cpp:422
+#, fuzzy, c-format
+msgid "vertical, at %s; %s"
+msgstr "  %s siêu khối tại "
+
+#: ../src/sp-guide.cpp:425
+#, fuzzy, c-format
+msgid "horizontal, at %s; %s"
+msgstr "  %s siêu khối tại "
+
+#: ../src/sp-guide.cpp:430
+#, fuzzy, c-format
+msgid "at %d degrees, through (%s,%s); %s"
+msgstr "Xuất bằng XSLT"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
@@ -17425,7 +17448,7 @@ msgstr "Quản lý, sửa và áp dụng các hiệu ứng đường nét"
 #: ../src/verbs.cpp:2684
 #, fuzzy
 msgid "Filter Editor..."
-msgstr "Quản lý các bộ lọc..."
+msgstr "&Cấu hình bộ soạn thảo..."
 
 #: ../src/verbs.cpp:2685
 msgid "Manage, edit, and apply SVG filters"
@@ -20035,8 +20058,8 @@ msgstr "Không thể định vị hình nút: %s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
-#: ../share/extensions/perspective.py:55
-#: ../share/extensions/summersnight.py:30
+#: ../share/extensions/perspective.py:61
+#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Hãy chọn hai đường nét trước khi sử dụng phần mở rộng này."
 
@@ -20049,21 +20072,21 @@ msgstr "Xin hãy chuyển đối tượng thành đường nét trước đã!  
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
 msgstr "Phần mở rộng này cần sử dụng mô-đun numpy hoặc numpy.linalg. Hãy cài đặt mô-đun còn thiếu trước rồi thử lại. Trên Debian Linux, bạn có thể dùng lệnh sudo apt-get install python-numpy để cài đặt thư viện này."
 
-#: ../share/extensions/perspective.py:62
-#: ../share/extensions/summersnight.py:39
+#: ../share/extensions/perspective.py:68
+#: ../share/extensions/summersnight.py:45
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:46
+#: ../share/extensions/perspective.py:74
+#: ../share/extensions/summersnight.py:52
 msgid "This extension requires that the second selected path be four nodes long."
 msgstr "Phần mở rộng này yêu cầu đường nét thứ hai mà bạn chọn phải có ít nhất 4 nút."
 
-#: ../share/extensions/perspective.py:87
-#: ../share/extensions/summersnight.py:72
+#: ../share/extensions/perspective.py:99
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
@@ -20071,8 +20094,8 @@ msgstr ""
 "Đối tượng thứ hai bạn chọn là một nhóm, không phải là một đường nét.\n"
 "Hãy chạy lệnh Đối tượng | Rã nhóm rồi thử lại."
 
-#: ../share/extensions/perspective.py:89
-#: ../share/extensions/summersnight.py:74
+#: ../share/extensions/perspective.py:101
+#: ../share/extensions/summersnight.py:86
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -20080,8 +20103,8 @@ msgstr ""
 "Đối tượng thứ hai mà bạn chọn không phải là một đường nét.\n"
 "Hãy chạy lệnh Đường nét | Đối tượng sang đường nét, rồi thử lại."
 
-#: ../share/extensions/perspective.py:92
-#: ../share/extensions/summersnight.py:77
+#: ../share/extensions/perspective.py:104
+#: ../share/extensions/summersnight.py:89
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
@@ -20112,11 +20135,11 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr ""
 
-#: ../share/extensions/summersnight.py:32
+#: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
 msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút."
 
-#: ../share/extensions/svg_and_media_zip_output.py:109
+#: ../share/extensions/svg_and_media_zip_output.py:113
 #, fuzzy, python-format
 msgid "Could not locate file: %s"
 msgstr "Không thể mở tập tin %s"
@@ -21122,7 +21145,7 @@ msgstr "Tạo nhiều đường gióng"
 #: ../share/extensions/guides_creator.inx.h:14
 #, fuzzy
 msgid "Horizontal guide each"
-msgstr "Mỗi đường gióng nằm ngang"
+msgstr "Thêm nét dẫn nằm ngang"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
@@ -21131,17 +21154,17 @@ msgstr "Thiết lập sẵn"
 #: ../share/extensions/guides_creator.inx.h:18
 #, fuzzy
 msgid "Rule-of-third"
-msgstr "Luật một phần ba"
+msgstr "Phần ba rộng"
 
 #: ../share/extensions/guides_creator.inx.h:19
 #, fuzzy
 msgid "Start from edges"
-msgstr "Bắt đầu từ viền"
+msgstr "từ %(start)s đến %(end)s"
 
 #: ../share/extensions/guides_creator.inx.h:20
 #, fuzzy
 msgid "Vertical guide each"
-msgstr "Mỗi đường gióng nằm dọc"
+msgstr "Thêm nét dẫn nằm dọc"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -22682,8 +22705,6 @@ msgstr "Nhập XAML"
 #~ msgstr "Làm bẩn điểm ảnh, bóng"
 #~ msgid "Glossy painting effect for bitmaps"
 #~ msgstr "Hiệu ứng tô màu bóng cho ảnh"
-#~ msgid "Bumps"
-#~ msgstr "Rối loạn"
 #~ msgid "Melt and glow"
 #~ msgstr "Kim loại nóng chảy"
 #~ msgid "Badge"
