@@ -1054,6 +1054,26 @@ sp_file_import(Gtk::Window &parentWindow)
     if (!doc)
         return;
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    if(import_path.empty())
+    {
+        Glib::ustring attr = prefs->getString("/dialogs/import/path");
+        if (!attr.empty()) import_path = attr;
+    }
+
+    //# Test if the import_path directory exists
+    if (!Inkscape::IO::file_test(import_path.c_str(),
+              (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+        import_path = "";
+
+    //# If no open path, default to our home directory
+    if (import_path.empty())
+    {
+        import_path = g_get_home_dir();
+        import_path.append(G_DIR_SEPARATOR_S);
+    }
+
     // Create new dialog (don't use an old one, because parentWindow has probably changed)
     Inkscape::UI::Dialog::FileOpenDialog *importDialogInstance =
              Inkscape::UI::Dialog::FileOpenDialog::create(
@@ -1084,10 +1104,9 @@ sp_file_import(Gtk::Window &parentWindow)
         else
             g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
 
-
-        import_path = fileName;
-        if (import_path.size()>0)
-            import_path.append(G_DIR_SEPARATOR_S);
+        import_path = Glib::path_get_dirname (fileName);
+        import_path.append(G_DIR_SEPARATOR_S);
+        prefs->setString("/dialogs/import/path", import_path);
 
         file_import(doc, fileName, selection);
     }
