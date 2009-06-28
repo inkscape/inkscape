@@ -185,6 +185,7 @@ static char const preferences_skeleton[] =
 "    </group>\n"
 "    <group id=\"save_as\" default=\"\" append_extension=\"1\" enable_preview=\"1\" path=\"\"/>\n"
 "    <group id=\"open\" enable_preview=\"1\" path=\"\"/>\n"
+"    <group id=\"import\" enable_preview=\"1\" path=\"\"/>\n"
 "    <group id=\"debug\" redirect=\"0\"/>\n"
 "    <group id=\"clonetiler\" />\n"
 "    <group id=\"gridtiler\" />\n"
