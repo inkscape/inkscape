@@ -108,13 +108,12 @@ msgstr "Làm nhòe như khi vật thể dịch chuyển theo phương thẳng đ
 
 # Hiệu ứng này khiến người xem cảm giác như đối tượng vừa xuất hiện ra từ hư không. Chưa biết dùng từ gì.
 #: ../share/filters/filters.svg.h:8
-#, fuzzy
 msgid "Apparition"
-msgstr "Ảnh ảo"
+msgstr "Làm nhòe bên ngoài"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Edges are partly feathered out"
-msgstr "Các cạnh được làm mờ dần ra ngoài"
+msgstr "Đường viền bo quanh bị làm nhòe một chút, giống khi đối tượng đột nhiên xuất hiện"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Cutout"
@@ -275,7 +274,7 @@ msgstr "Rải những bông tuyết trắng lên bề mặt đối tượng"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard fur"
-msgstr "Lông báo"
+msgstr "Da báo"
 
 #: ../share/filters/filters.svg.h:21
 #: ../share/filters/filters.svg.h:59
@@ -296,7 +295,7 @@ msgstr "Chất liệu"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
-msgstr "Các đốm đen trên lông báo (che kín màu gốc)"
+msgstr "Các đốm đen trên da báo (che kín màu gốc)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
@@ -562,12 +561,13 @@ msgid "Glossy clumpy jam spread"
 msgstr "Hoa văn bóng, ráp, giống như khăn lụa bị vò nhàu"
 
 #: ../share/filters/filters.svg.h:44
+#. A wipe technique created when an image is stretched non-proportionally to create long thin lines based on the original pixels.
 msgid "Pixel smear"
-msgstr "Làm bẩn điểm ảnh"
+msgstr "Rê điểm ảnh"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Van Gogh painting effect for bitmaps"
-msgstr "Vẽ lại đối tượng bằng nét cọ của Van Gogh"
+msgstr "Thay điểm ảnh bằng một vệt dài, mỏng, bất đối xứng; mô phỏng những nét cọ của Van Gogh"
 
 #: ../share/filters/filters.svg.h:45
 msgid "HSL Bumps"
@@ -707,14 +707,12 @@ msgid "Illuminated translucent plastic or glass effect"
 msgstr "Sáng trắng chiếu lên đối tượng, khiến bề mặt giống bề mặt nhựa cứng"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "Điều khiển mịn"
+msgstr "Nhòe phần giao"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "Giao khi đính lưới/nết dẫn"
+msgstr "Làm nhòe vùng bên trong đường viền và phần các nét giữa hai vùng khác màu"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Iridescent beeswax"
@@ -750,11 +748,11 @@ msgstr "Văn hoa trông như vỏ cây, nhiều vết trải theo chiều dọc;
 
 #: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
-msgstr "Da cá sấu"
+msgstr "Da thằn lằn"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Stylized reptile skin texture"
-msgstr "Mô phỏng các lằn, rãnh giống như da rắn, da cá sấu"
+msgstr "Mô phỏng các lằn, rãnh giống như da của loài bò sát"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Stone wall"
@@ -914,19 +912,19 @@ msgstr "Những sợi mảnh với nhiều hình thù, sắp xếp ngẫu nhiên
 
 #: ../share/filters/filters.svg.h:80
 msgid "Gold splatter"
-msgstr "Vẩy vàng"
+msgstr "Vàng thô"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Splattered cast metal, with golden highlights"
-msgstr "Vẩy kim loại, được tô điểm bằng vàng"
+msgstr "Bề mặt khối vàng khi chưa được tinh chế"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Gold paste"
-msgstr "Xi vàng"
+msgstr "Bột vàng"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr "Những vẩy vàng nằm rải rác bên trên một lớp kim loại mỏng"
+msgstr "Phủ lên đối tượng một lớp bột vàng không đều"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
@@ -938,11 +936,11 @@ msgstr "Chất dẻo màu xỉn, bị ép vỡ, với các cạnh tan chảy"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Enamel jewelry"
-msgstr "Trang sức tráng men"
+msgstr "Tráng men"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Slightly cracked enameled texture"
-msgstr "Lớp men thủy tinh được tráng lên trên kim hoàn, nhiều đường nét tự nhiên"
+msgstr "Lớp men thủy tinh với nhiều nét rạn tự nhiên"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Rough paper"
@@ -1041,22 +1039,20 @@ msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:95
-#, fuzzy
 msgid "Fancy blur"
-msgstr "Làm mờ ảnh"
+msgstr "Nhòe trang trí"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "Làm nhòe dựa trên các đường đồng mức, cho phép giảm độ bão hòa và thay đổi độ màu các vùng thuộc đối tượng"
 
 #: ../share/filters/filters.svg.h:96
-#, fuzzy
 msgid "Glow"
-msgstr "Ánh sáng tàn"
+msgstr "Nhòe phát sáng"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Glow of object's own color at the edges"
-msgstr ""
+msgstr "Làm nhòe đường viền ra phía ngoài, tạo cảm giác như khi đối tượng đang phát sáng"
 
 #: ../share/filters/filters.svg.h:97
 #, fuzzy
@@ -1152,13 +1148,12 @@ msgid "Smooth the outside of shapes and pictures without altering their contents
 msgstr ""
 
 #: ../share/filters/filters.svg.h:107
-#, fuzzy
 msgid "Torn edges"
-msgstr "Tìm cạnh"
+msgstr "Làm rách viền"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "Chuyển vị trí thành phần bên ngoài của hình dạng hoặc ảnh, giữ nguyên phần bên trong"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Feather"
@@ -1170,11 +1165,11 @@ msgstr "Làm mờ dần dần các nét viền của đối tượng, không tha
 
 #: ../share/filters/filters.svg.h:109
 msgid "Blur content"
-msgstr "Làm mờ bên trong"
+msgstr "Nhòe bên trong"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "Làm mờ phần bên trong của đối tượng, giữ nguyên nét viền ở ngoài"
+msgstr "Giữ nguyên vùng xung quanh đường viền, và làm nhòe toàn bộ phần bên trong"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Specular light"
@@ -1185,29 +1180,30 @@ msgid "Basic specular bevel to use for building textures"
 msgstr "Nét vát có độ phản chiếu mạnh, dùng khi tạo hoa văn"
 
 #: ../share/filters/filters.svg.h:111
-#, fuzzy
+#. TODO: Need a nicer word for this filter
 msgid "Roughen inside"
-msgstr "Đang để %s bên trong %s"
+msgstr "Gồ ghề bên trong"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Roughen all inside shapes"
-msgstr "Tạo hình dạng sần sùi cho tất cả các hình dáng bên trong"
+msgstr "Làm sần sùi phần bên trong của đối tượng"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Evanescent"
-msgstr ""
+msgstr "Nhòe dần ra ngoài"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
-msgstr ""
+msgstr "Giảm dần độ nhòe từ trong ra ngoài, nên chỉ làm nhòe phần giữa và giữ nguyên đường viền bên ngoài"
 
 #: ../share/filters/filters.svg.h:113
+#. TODO: Need review for this effect...
 msgid "Chalk and sponge"
-msgstr "Phấn và xốp"
+msgstr "Vỡ vụn"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr "Nhiễu nhỏ, trông như các hạt xốp và nhiễu lớn giống như phấn"
+msgstr "Khiến đối tượng bị vỡ vụn thành các hạt nhỏ, lộn xộn"
 
 #: ../share/filters/filters.svg.h:114
 msgid "People"
@@ -1586,11 +1582,11 @@ msgstr "Hoa văn sáng óng ánh, nhiều màu nhẹ, mô phỏng khảm trai"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
-msgstr "Lông hổ"
+msgstr "Da hổ"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr "Mô phỏng các vằn vện có trên lông hổ, đồng thời vát viền để làm nổi đối tượng"
+msgstr "Mô phỏng các vằn vện có trên da hổ, đồng thời vát viền để làm nổi đối tượng"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
@@ -1631,14 +1627,12 @@ msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Noisy blur"
-msgstr "Làm mờ ảnh"
+msgstr "Nhòe rung"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Co giãn góc tròn"
+msgstr "Làm đối tượng sần sùi rồi mới làm mờ toàn bộ đối tượng, khiến nó vừa bị nhòe, vừa bị rung"
 
 #: ../share/filters/filters.svg.h:170
 #, fuzzy
@@ -1753,13 +1747,13 @@ msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Những mảng màu cầu vồng, uốn lượn theo các cạnh và phủ lên trên màu gốc"
 
 #: ../share/filters/filters.svg.h:183
-#, fuzzy
+#. TODO: Need more explaination for this effect
 msgid "Rough and dilate"
-msgstr "Ănh-thí-gua và Ba-bu-đa"
+msgstr "Tạo viền mờ"
 
 #: ../share/filters/filters.svg.h:183
 msgid "Create a turbulent contour around"
-msgstr ""
+msgstr "Tạo thêm một đường viền mờ, bo quanh đối tượng"
 
 #: ../share/filters/filters.svg.h:184
 msgid "Gelatine"
@@ -5526,14 +5520,13 @@ msgid "Vector graphics format used by Corel WordPerfect"
 msgstr "Định dạng ảnh véc-tơ dùng bởi Corel WordPerfect"
 
 #: ../src/extension/prefdialog.cpp:236
-#, fuzzy
+#. TODO: suggest : ngắm ảnh sống, một chức năng của camera số. Dùng trong ngữ cảnh này có đúng không? Hay chỉ dùng đơn giản là xem thử?
 msgid "Live preview"
-msgstr "Xem thử động"
+msgstr "Xem thử trực tiếp"
 
 #: ../src/extension/prefdialog.cpp:236
-#, fuzzy
 msgid "Is the effect previewed live on canvas?"
-msgstr "Điều khiển có nên vẽ thiết lập hiệu ứng một cách động trên vùng vẽ, hay không"
+msgstr "Cập nhật lại kết quả trên vùng vẽ mỗi khi thay đổi tham số"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -5541,7 +5534,7 @@ msgstr "Điều khiển có nên vẽ thiết lập hiệu ứng một cách đ�
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
 #: ../src/extension/system.cpp:104
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr "Lỗi tự động phát hiện định dạng nên đang mở tập tin dạng SVG."
+msgstr "Không nhận dạng được định dạng của tập tin. Đang mở dưới dạng SVG."
 
 #. TRANSLATORS: default.svg is localizable - this is the name of the default document
 #. template. This way you can localize the default pagesize, translate the name of
@@ -5549,7 +5542,7 @@ msgstr "Lỗi tự động phát hiện định dạng nên đang mở tập tin
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:157
 msgid "default.svg"
-msgstr "hình.svg"
+msgstr "default.svg"
 
 #: ../src/file.cpp:249
 #: ../src/file.cpp:1036
@@ -9954,7 +9947,7 @@ msgstr "Chọn <b>ít nhất 2 đường nét</b> chao thao tác tính hiệu, X
 #: ../src/splivarot.cpp:147
 #: ../src/splivarot.cpp:162
 msgid "Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."
-msgstr "Không thể quyết định <b>thứ tự z</b> của những đối tượng được chọn cho thao tác tính hiệu, XOR, chia hay cắt đường nét."
+msgstr "Không xác định được <b>cao độ</b> của những đối tượng được chọn cho thao tác tính hiệu, XOR, chia hay cắt đường nét."
 
 #: ../src/splivarot.cpp:192
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
@@ -17538,22 +17531,18 @@ msgstr "Các lời gợi ý linh tinh"
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2717
-#, fuzzy
 msgid "Previous Extension"
-msgstr "Phần mở rộng sai"
+msgstr "Lặp lại"
 
 #: ../src/verbs.cpp:2718
-#, fuzzy
 msgid "Repeat the last extension with the same settings"
-msgstr "Lặp lại hiệu ứng cuối cùng với cùng một thiết lập"
+msgstr "Lặp lại phần mở rộng vừa chạy, không thay đổi thiết lập"
 
 #: ../src/verbs.cpp:2719
-#, fuzzy
 msgid "Previous Extension Settings..."
-msgstr "_Sử dụng các thiết lập trước"
+msgstr "Lặp lại với thiết lập khác"
 
 #: ../src/verbs.cpp:2720
-#, fuzzy
 msgid "Repeat the last extension with new settings"
 msgstr "Lặp lại hiệu ứng cuối cùng với thiết lập mới"
 
@@ -20371,9 +20360,8 @@ msgid "RGB Barrel"
 msgstr "Thùng tròn RGB"
 
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "_Chuyển đổi sang CID"
+msgstr "Chuyển thành nét gạch"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21230,31 +21218,24 @@ msgid "Integer Number"
 msgstr "Số là số nguyên"
 
 #: ../share/extensions/interp_att_g.inx.h:9
-#, fuzzy
 msgid "Interpolate Attribute in a group"
-msgstr "Người dùng không có trong nhóm"
+msgstr "Nội suy thuộc tính trong nhóm"
 
 #: ../share/extensions/interp_att_g.inx.h:11
-#, fuzzy
 msgid "No Unit"
-msgstr ""
-"đơn vị: rãnh ghi\n"
-"\n"
+msgstr "Không có đơn vị"
 
 #: ../share/extensions/interp_att_g.inx.h:14
-#, fuzzy
 msgid "Other Attribute"
-msgstr "athuộc tính đã mở rộng"
+msgstr "Thuộc tính tự chọn"
 
 #: ../share/extensions/interp_att_g.inx.h:15
-#, fuzzy
 msgid "Other Attribute type"
-msgstr "Kiểu máy &in khác"
+msgstr "Kiểu thuộc tính"
 
 #: ../share/extensions/interp_att_g.inx.h:17
-#, fuzzy
 msgid "Start Value"
-msgstr "Giá trị x đầu"
+msgstr "Giá trị đầu"
 
 #: ../share/extensions/interp_att_g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
@@ -21262,33 +21243,28 @@ msgid "Style"
 msgstr "Kiểu dáng"
 
 #: ../share/extensions/interp_att_g.inx.h:19
-#, fuzzy
 msgid "Tag"
 msgstr "Thẻ"
 
 #: ../share/extensions/interp_att_g.inx.h:20
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection"
-msgstr ""
+msgstr "Hiệu ứng này gán giá trị cho một thuộc tính nội suy được của tất cả các đối tượng thuộc nhóm đã chọn, hoặc tất cả đối tượng được chọn"
 
 #: ../share/extensions/interp_att_g.inx.h:21
-#, fuzzy
 msgid "Transformation"
 msgstr "Chuyển dạng"
 
 #: ../share/extensions/interp_att_g.inx.h:22
-#, fuzzy
 msgid "Translate X"
-msgstr "Dịch"
+msgstr "Dịch X"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Translate Y"
-msgstr "Dịch"
+msgstr "Dịch Y"
 
 #: ../share/extensions/interp_att_g.inx.h:25
-#, fuzzy
 msgid "Where to apply?"
-msgstr "Áp dụng cho &tập tin"
+msgstr "Áp dụng cho:"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
@@ -21305,9 +21281,8 @@ msgid "Interpolate"
 msgstr "Nội suy"
 
 #: ../share/extensions/interp.inx.h:5
-#, fuzzy
 msgid "Interpolate style"
-msgstr "Nội suy kiểu dáng (thực nghiệm)"
+msgstr "Nội suy kiểu dáng"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -21322,17 +21297,16 @@ msgid "Axiom"
 msgstr "Tiên đề"
 
 #: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
 msgid "Axiom and rules"
-msgstr "Miêu tả và luật lệ của dự án."
+msgstr "Tiên đề và quy luật"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "L-system"
-msgstr "Hệ thống L"
+msgstr "Hệ hàm Lindenmayer (L-system)"
 
 #: ../share/extensions/lindenmayer.inx.h:5
 msgid "Left angle"
-msgstr "Góc bên trái"
+msgstr "Góc xoay trái"
 
 #: ../share/extensions/lindenmayer.inx.h:8
 #, no-c-format
@@ -21342,15 +21316,15 @@ msgstr "Ngẫu nhiên hóa góc (%)"
 #: ../share/extensions/lindenmayer.inx.h:10
 #, no-c-format
 msgid "Randomize step (%)"
-msgstr "Ngẫu nhiên hóa bước (%)"
+msgstr "Ngẫu nhiên hóa mỗi bước (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Right angle"
-msgstr "Góc bên phải"
+msgstr "Góc xoay phải"
 
 #: ../share/extensions/lindenmayer.inx.h:13
 msgid "Rules"
-msgstr "Quy tắc"
+msgstr "Quy luật"
 
 #: ../share/extensions/lindenmayer.inx.h:14
 msgid "Step length (px)"
@@ -21358,7 +21332,7 @@ msgstr "Chiều dài bước (px)"
 
 #: ../share/extensions/lindenmayer.inx.h:15
 msgid "The path is generated by applying the substitutions of Rules to the Axiom, Order times. The following commands are recognized in Axiom and Rules: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember point ]: return to remembered point"
-msgstr ""
+msgstr "Tạo đường nét bằng cách áp dụng Quy luật lên Tiên đề nhiều lần. Các lệnh sau được dùng trong biểu thức Tiên đề và Quy luật: A,B,C,D,E hoặc F: vẽ tiến lên; G,H,I,J,K hoặc L: dịch tiến lên; +: xoay trái; -: xoay phải; |: xoay 180 độ; [: đánh dấu; ]: lùi về điểm đã đánh dấu"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -22011,13 +21985,13 @@ msgid "Use normal distribution"
 msgstr "Dùng phân phối chuẩn"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
+#. Alphabet Soup randomly mashes glyph-elements together to make exotic looking text. 
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Chữ ấn tượng"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
-#, fuzzy
 msgid "Random Seed"
-msgstr "Hạt ngẫu nhiên"
+msgstr "Hệ số ngẫu nhiên"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
@@ -22040,26 +22014,24 @@ msgid "Arbitrary Angle:"
 msgstr "Góc bất kỳ:"
 
 #: ../share/extensions/restack.inx.h:3
-#, fuzzy
 msgid "Arrange"
 msgstr "Sắp xếp"
 
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
-msgstr "Dưới đáy"
+msgstr "Đáy"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr "Dưới lên trên (90)"
+msgstr "Dưới - trên (90)"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal Point:"
-msgstr "Point Fortin"
+msgstr "So sánh ngang"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr "Trái sang phải (0)"
+msgstr "Trái - phải (0)"
 
 #: ../share/extensions/restack.inx.h:9
 msgid "Middle"
@@ -22067,36 +22039,32 @@ msgstr "Giữa"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
-msgstr "Xoay tròn vào trong"
+msgstr "Xoay tròn, sâu vào trong"
 
 #: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
-msgstr "Xoay tròn ra ngoài"
+msgstr "Xoay tròn, lồi ra ngoài"
 
 #: ../share/extensions/restack.inx.h:12
-#, fuzzy
+
 msgid "Restack"
-msgstr " Đặt _lại "
+msgstr "Sắp xếp lại độ cao"
 
 #: ../share/extensions/restack.inx.h:13
-#, fuzzy
 msgid "Restack Direction:"
-msgstr "<Hướng không rõ>"
+msgstr "Hướng sắp xếp:"
 
 #: ../share/extensions/restack.inx.h:15
-#, fuzzy
 msgid "Right to Left (180)"
-msgstr "Bên Phải qua Trái ngôn ngữ A Rập"
+msgstr "Phải - trái (180)"
 
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "Top to Bottom (270)"
-msgstr "Điền (dưới lên trên)"
+msgstr "Trên - Dưới (270)"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "Point Fortin"
+msgstr "So sánh dọc:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -22116,14 +22084,13 @@ msgid "Curve (%):"
 msgstr "Độ Cong (%):"
 
 #: ../share/extensions/rubberstretch.inx.h:4
-#, fuzzy
 msgid "Rubber Stretch"
-msgstr "Độ dãn phông"
+msgstr "Căng dây cao su"
 
 #: ../share/extensions/rubberstretch.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Strength (%):"
-msgstr "<b>Độ mạnh:</b>"
+msgstr "Độ mạnh (%):"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -22139,14 +22106,12 @@ msgid "sK1 vector graphics files input"
 msgstr "nhập tập tin sK1 vector graphics"
 
 #: ../share/extensions/sk1_output.inx.h:1
-#, fuzzy
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "Mở các tập tin được tạo bởi trình xử lý ảnh vector sK1"
+msgstr "Định dạng dành cho trình xử lý ảnh vector sK1"
 
 #: ../share/extensions/sk1_output.inx.h:3
-#, fuzzy
 msgid "sK1 vector graphics files output"
-msgstr "Ảnh vector sK1 (.sk1)"
+msgstr "Xuất ảnh vector sK1 (.sk1)"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -22165,14 +22130,13 @@ msgid "Gear Placement"
 msgstr "Cách đặt bánh răng"
 
 #: ../share/extensions/spirograph.inx.h:2
-#, fuzzy
+#. (Hypotrochoid) = nội trocoit
 msgid "Inside (Hypotrochoid)"
-msgstr "Đang để %s bên trong %s"
+msgstr "Vào trong (Hypotrochoid)"
 
 #: ../share/extensions/spirograph.inx.h:3
-#, fuzzy
 msgid "Outside (Epitrochoid)"
-msgstr "Chữ bên ngoài"
+msgstr "Ra ngoài (Epitrochoid)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
@@ -22222,7 +22186,7 @@ msgstr "Định dạng xác định giao diện người dùng đồ họa của
 
 #: ../share/extensions/svg2xaml.inx.h:3
 msgid "XAML Output"
-msgstr "Kết xuất XAML"
+msgstr "Xuất XAML"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
 msgid "Compressed Inkscape SVG with media (*.zip)"
@@ -22234,52 +22198,45 @@ msgstr "Định dạng gốc trong Inkscape, được nén vào tập tin Zip v�
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
 msgid "ZIP Output"
-msgstr "Kết xuất ZIP"
+msgstr "Xuất ZIP"
 
 #: ../share/extensions/svgcalendar.inx.h:1
 msgid "(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)"
-msgstr ""
+msgstr "(Chọn bảng mã cho phông chữ. Xem thêm: http://docs.python.org/library/codecs.html#standard-encodings)"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
 msgstr "(Tên ngày trong danh sách phải bắt đầu từ Chủ nhật)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
-#, fuzzy
 msgid "Automatically set size and position"
-msgstr "tính kích cỡ và vị trí mới của %1"
+msgstr "Tự căn chỉnh kích thước và vị trí"
 
 #: ../share/extensions/svgcalendar.inx.h:4
-#, fuzzy
 msgid "Calendar"
-msgstr "Lịch"
+msgstr "Tờ lịch"
 
 #: ../share/extensions/svgcalendar.inx.h:5
-#, fuzzy
 msgid "Char Encoding"
-msgstr "Bảng mã sai"
+msgstr "Bảng mã"
 
 #: ../share/extensions/svgcalendar.inx.h:7
-#, fuzzy
 msgid "Configuration"
 msgstr "Cấu hình"
 
 #: ../share/extensions/svgcalendar.inx.h:8
-#, fuzzy
 msgid "Day color"
-msgstr "Chọn màu"
+msgstr "Màu in ngày"
 
 #: ../share/extensions/svgcalendar.inx.h:9
-#, fuzzy
 msgid "Day names"
-msgstr "Hiện tên ngày"
+msgstr "Tên các ngày"
 
 #: ../share/extensions/svgcalendar.inx.h:10
 msgid "Fill empty day boxes with next month's days"
-msgstr "Ghi tiếp ngày trong tháng tới vào các ô trống trong tháng"
+msgstr "Ghi tiếp ngày trong tháng tới vào các ô còn trống"
 
 #: ../share/extensions/svgcalendar.inx.h:11
-#, fuzzy
 msgid "January February March April May June July August September October November December"
 msgstr "January February March April May June July August September October November December"
 
@@ -22313,7 +22270,7 @@ msgstr "Tên tháng"
 
 #: ../share/extensions/svgcalendar.inx.h:20
 msgid "Months per line"
-msgstr "Số tháng đặt trong một hàng"
+msgstr "Số tháng in ra trong mỗi hàng"
 
 #: ../share/extensions/svgcalendar.inx.h:21
 msgid "Next month day color"
@@ -22336,9 +22293,8 @@ msgid "Sunday"
 msgstr "Chủ nhật"
 
 #: ../share/extensions/svgcalendar.inx.h:27
-#, fuzzy
 msgid "The options below have no influence when the above is checked."
-msgstr "Tùy chọn bên dưới sẽ không được áp dụng nếu bạn đánh dấu hộp kiểm ở trên."
+msgstr "Tùy chọn dưới đây sẽ không dùng khi chọn hộp kiểm trên."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -22469,18 +22425,15 @@ msgid "Text Input"
 msgstr "Văn bản đầu vào"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr "Mỗi đối tượng được chọn có một dấu hình thoi ở góc trên, bên trái"
+msgstr "Mọi đối tượng đã chọn sẽ đặt một thuộc tính cho đối tượng cuối cùng"
 
 #: ../share/extensions/web-set-att.inx.h:2
-#, fuzzy
 msgid "Attribute to set"
-msgstr "Đặt giới hạn thành '%d' - '%d'"
+msgstr "Thuộc tính cần đặt"
 
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
-#, fuzzy
 msgid "Compatibility with previews code to this event"
 msgstr "Tính tương thích với các mã xem trước của sự kiện này"
 
@@ -22490,168 +22443,138 @@ msgstr "Nếu cần gán nhiều thuộc tính, hãy dùng dấu cách để ph�
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
-#, fuzzy
 msgid "Run it after"
-msgstr "« %c%s » cần gì đó theo nó"
+msgstr "Chạy sau"
 
 #: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
-#, fuzzy
 msgid "Run it before"
-msgstr "Tự động gợi ý trước khi làm mành"
+msgstr "Chạy trước"
 
 #: ../share/extensions/web-set-att.inx.h:8
-#, fuzzy
 msgid "Set Attributes"
-msgstr "Xoá các thuộc tính"
+msgstr "Đặt các thuộc tính"
 
 #: ../share/extensions/web-set-att.inx.h:9
-#, fuzzy
 msgid "Source and destination of setting"
-msgstr "Tập tin cả nguồn lẫn đích đều là trùng."
+msgstr "Nguồn và đích"
 
 #: ../share/extensions/web-set-att.inx.h:10
-#, fuzzy
 msgid "The first selected set an attribute in all others"
-msgstr "Mục được chọn đầu tiên sẽ đặt một thuộc tính cho tất cả những cái khác"
+msgstr "Đối tượng được chọn đầu tiên sẽ đặt một thuộc tính cho các đối tượng khác"
 
 #: ../share/extensions/web-set-att.inx.h:11
-#, fuzzy
 msgid "The list of values must have the same size of the attributes list."
-msgstr "Số giá trị được chỉ định phải đúng bằng số thuộc tính."
+msgstr "Số giá trị nhập vào phải bằng số thuộc tính."
 
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
-#, fuzzy
 msgid "The next parameter is useful when you select more than two elements"
-msgstr "Tham số kế tiếp sẽ hữu ích khi bạn chọn nhiều hơn 2 đối tượng"
+msgstr "Tham số sau chỉ hữu ích nếu có ít nhất 3 đối tượng được chọn"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
-#, fuzzy
 msgid "This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox)."
-msgstr "Hiệu ứng này sẽ chỉ hoạt động hiệu quả trên các trình duyệt hỗ trợ SVG (như Firefox)."
+msgstr "Hiệu ứng này chỉ hoạt động với các trình duyệt hỗ trợ SVG (như Firefox)."
 
 #: ../share/extensions/web-set-att.inx.h:14
-#, fuzzy
 msgid "This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element."
 msgstr "Hiệu ứng này đặt một hoặc nhiều thuộc tính cho đối tượng thứ hai được chọn, khi một sự kiện đã định nghĩa xảy ra trên đối tượng thứ nhất."
 
 #: ../share/extensions/web-set-att.inx.h:15
-#, fuzzy
 msgid "Value to set"
-msgstr "Lập %s thành giá trị (%d): "
+msgstr "Giá trị sẽ gán"
 
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
-#, fuzzy
 msgid "Web"
-msgstr "Bộ tạo kho nén Mạng"
+msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
-#, fuzzy
 msgid "When the set must be done?"
-msgstr "%(path)s phải là set-gid"
+msgstr "Khi nào sẽ thực hiện việc gán thuộc tính?"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
-#, fuzzy
 msgid "on activate"
-msgstr "Kích hoạt ID..."
+msgstr "on active"
 
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
-#, fuzzy
 msgid "on blur"
-msgstr "Làm mờ ảnh"
+msgstr "on blur"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
-#, fuzzy
 msgid "on click"
-msgstr "T&hực thi khi nhấn chuột:"
+msgstr "on click"
 
 #: ../share/extensions/web-set-att.inx.h:21
 #: ../share/extensions/web-transmit-att.inx.h:19
-#, fuzzy
 msgid "on element loaded"
-msgstr "Không có thuộc tính \"%s\" cho mục <%s>"
+msgstr "on element loaded"
 
 #: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
-#, fuzzy
 msgid "on focus"
-msgstr "Tiêu điểm theo nhắp"
+msgstr "on focus"
 
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
-#, fuzzy
 msgid "on mouse down"
-msgstr "Sáng lên khi &chuột đi qua"
+msgstr "on mouse down"
 
 #: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
-#, fuzzy
 msgid "on mouse move"
-msgstr "Có thể di chuyển con chuột."
+msgstr "on mouse move"
 
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
-#, fuzzy
 msgid "on mouse out"
-msgstr "Thu nhỏ trên một phạm vi"
+msgstr "on mouse out"
 
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
-#, fuzzy
 msgid "on mouse over"
-msgstr "Sáng lên khi &chuột đi qua"
+msgstr "on mouse over"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
-#, fuzzy
 msgid "on mouse up"
-msgstr "Sáng lên khi &chuột đi qua"
+msgstr "on mouse up"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "Nhiều đối tượng được chọn có cùng một nét"
+msgstr "Tất cả đối tượng đã chọn gửi cho đối tượng cuối cùng"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
-#, fuzzy
 msgid "Attribute to transmit"
-msgstr "<b>Nhấn</b> vào thuộc tính để sửa."
+msgstr "Thuộc tính sẽ gửi"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
-#, fuzzy
 msgid "If you want to transmit more than one attribute, you should separate this with a space, and only with a space."
 msgstr "Nếu bạn muốn truyền nhiều hơn một thuộc tính, hãy dùng dấu cách để phân biệt chúng."
 
 #: ../share/extensions/web-transmit-att.inx.h:8
-#, fuzzy
 msgid "Source and destination of transmitting"
-msgstr "Tập tin cả nguồn lẫn đích đều là trùng."
+msgstr "Nguồn và đích"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
-#, fuzzy
 msgid "The first selected transmits to all others"
 msgstr "Mục đầu tiên được chọn sẽ gửi cho tất cả các mục khác"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid "This effect transmits one or more attributes from the first selected element to the second when a event occurs."
 msgstr "Hiệu ứng này truyền một hoặc nhiều thuộc tính từ đối tượng thứ nhất sang đối tượng thứ hai được chọn khi xảy ra một sự kiện."
 
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "Transmit Attributes"
-msgstr "Xoá các thuộc tính"
+msgstr "Các thuộc tính sẽ truyền"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
-#, fuzzy
 msgid "When to transmit"
-msgstr "Khi xếp nhóm cửa sổ"
+msgstr "Khi nào sẽ truyền"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
@@ -22686,9 +22609,9 @@ msgstr "Nhập XAML"
 
 #, fuzzy
 #~ msgid "Pixel smear, glossy"
-#~ msgstr "Làm bẩn điểm ảnh, bóng"
+#~ msgstr "Rê điểm ảnh, sáng bóng"
 #~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "Hiệu ứng tô màu bóng cho ảnh"
+#~ msgstr "Thay điểm ảnh bằng một vệt dài, mỏng, bất đối xứng; chiếu sáng mạnh"
 #~ msgid "Melt and glow"
 #~ msgstr "Kim loại nóng chảy"
 #~ msgid "Badge"
