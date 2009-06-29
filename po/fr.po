@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-24 20:18+0200\n"
-"PO-Revision-Date: 2009-06-24 20:27+0100\n"
+"POT-Creation-Date: 2009-06-29 20:49+0200\n"
+"PO-Revision-Date: 2009-06-29 20:53+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1791,8 +1791,8 @@ msgid "Embossed leather"
 msgstr "Cuir repoussé"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Combine a bump with a leathery texture"
-msgstr "Combine une texture de cuir et un bosselage"
+msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
+msgstr "Combine un bosselage de type détection de contours TSL avec une texture de cuir ou de bois qu'il est possible de colorer"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Carnaval"
@@ -5415,8 +5415,8 @@ msgid "Document saved."
 msgstr "Document enregistré."
 
 #: ../src/file.cpp:750
-#: ../src/file.cpp:1161
-#: ../src/file.cpp:1281
+#: ../src/file.cpp:1180
+#: ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr "dessin%s"
@@ -5446,34 +5446,34 @@ msgstr "Enregistrement du document..."
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../src/file.cpp:1182
-#: ../src/file.cpp:1296
+#: ../src/file.cpp:1201
+#: ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr "Sélectionner un fichier vers lequel exporter"
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "La sauvegarde de la copie temporaire a échoué"
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
 msgstr "Utilisateur Open Clip Art"
 
-#: ../src/file.cpp:1374
+#: ../src/file.cpp:1393
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Erreur lors de l'exportation du document. Vérifiez que le nom du serveur, le nom d'utilisateur et le mot de passe soient corrects, que le serveur ait des fonctionnalités webdav et que vous n'ayez pas oublié de choisir une licence."
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr "Document exporté..."
 
-#: ../src/file.cpp:1423
+#: ../src/file.cpp:1442
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importer depuis la bibliothèque Open Clip Art"
@@ -19346,7 +19346,7 @@ msgstr "Erreur interne. Aucun type de vue n'est sélectionné\n"
 msgid "The second path must be exactly four nodes long."
 msgstr "Le second chemin doit contenir exactement quatre nœuds."
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "Impossible de localiser le fichier %s"
