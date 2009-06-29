@@ -23,7 +23,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-Version 0.3
+Version 0.4 (Nicolas Dufour, nicoduf@yahoo.fr)
+  fix a coding bug: now use UTF-8 to save filenames in the archive.
+  fix xlink href parsing (now a real URL in 0.47).
+  fix Win32 stdout \r\r\n bug (stdout now set to bin mode).
+  fix a double .svg extension bug (added svg and svgz in the docstripped extensions).
 
 TODO
 - fix bug: not saving existing .zip after a Collect for Output is run
@@ -33,8 +37,10 @@ TODO
 - maybe add better extention
 """
 
-import inkex, os.path, urlparse, urllib
-import os
+import inkex
+import urlparse
+import urllib
+import os, os.path
 import string
 import zipfile
 import shutil
@@ -48,7 +54,13 @@ class SVG_and_Media_ZIP_Output(inkex.Effect):
         inkex.Effect.__init__(self)
 
     def output(self):
-        out = open(self.zip_file,'r')
+        out = open(self.zip_file,'rb')
+        if os.name == 'nt':
+            try:
+                import msvcrt
+                msvcrt.setmode(1, os.O_BINARY)
+            except:
+                pass
         sys.stdout.write(out.read())
         out.close()
         self.clear_tmp()
