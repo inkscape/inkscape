@@ -120,10 +120,14 @@ ImageMagickDocCache::readImage(const char *xlink, Magick::Image *image)
 		image->read(blob);
 	}
 	else {
-		if (!strncmp(xlink, "file://", 7) && strlen(xlink) > 7)
-			image->read(xlink + 7);
-		else
-			image->read(xlink);
+		const gchar *path = xlink;
+    if (strncmp (xlink,"file:", 5) == 0) {
+      path = g_filename_from_uri(xlink, NULL, NULL);
+		}
+
+		try {
+			image->read(path);
+		} catch (...) {}
 	}
 }
 
