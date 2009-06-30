@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-26 15:28+0700\n"
+"PO-Revision-Date: 2009-06-29 15:00+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,9 @@ msgstr ""
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "បង្កើត និង​កែសម្រួល​​​រូបភាព​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន​​"
+msgstr ""
+"បង្កើត និង​កែសម្រួល​​​រូបភាព​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន"
+"​​"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
@@ -43,28 +45,27 @@ msgstr "Bevels"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr ""
+msgstr "ចំណោល​មូល គម្រប​ទន់​គ្រើម"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Glossy jelly"
-msgstr ""
+msgstr "ទន់​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Bulging, glossy jelly covering"
-msgstr ""
+msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
-msgstr ""
+msgstr "ទន់​ភ្លឺ ពន្លឺ​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
-msgstr ""
+msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ ។ មាន​ប្រភព​ពន្លឺ​ពីរ"
 
 #: ../share/filters/filters.svg.h:5
-#, fuzzy
 msgid "Metal casting"
-msgstr "បើក​កា​រខ្ទាស់"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
@@ -10437,7 +10438,7 @@ msgstr "​<b>ចុច</b> ឬ​<b>ចុច ហើយ​អូស</b> ដើ�
 msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide "
 "path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr ""
+msgstr "<b>អូស</b> ដើម្បី​គូរ​គូសវាស​ដោយ​ដៃ ។ ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​អូស​តាម​ផ្លូវ​ណែនាំ ។ <b>គ្រាប់ចុច​ព្រួញ</b> សម្រាប់​លៃតម្រូវទទឹង (ឆ្វេង​/ស្ដាំ) និងមុំ (ឡើងលើ/​ចុះក្រោម) ។"
 
 #: ../src/tools-switch.cpp:196
 msgid ""
@@ -10598,14 +10599,12 @@ msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>គ្មាន​អ្វី​បានជ្រើស !</b> ជ្រើស​វត្ថុ​ត្រូវ​លៃតម្រូវ ។"
 
 #: ../src/tweak-context.cpp:1254
-#, fuzzy
 msgid "Move tweak"
-msgstr "ពង្រីក​ការ​លៃតម្រូវ"
+msgstr ""
 
 #: ../src/tweak-context.cpp:1258
-#, fuzzy
 msgid "Move in/out tweak"
-msgstr "ការ​គូពណ៌​ការ​លៃតម្រូវ"
+msgstr ""
 
 #: ../src/tweak-context.cpp:1262
 #, fuzzy
@@ -10716,27 +10715,23 @@ msgstr "បង្កើត​តំណ​"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
-#, fuzzy
 msgid "Set Mask"
-msgstr "កំណត់​របាំង​"
+msgstr "កំណត់​របាំង"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
-#, fuzzy
 msgid "Release Mask"
 msgstr "លែង​របាំង​"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
-#, fuzzy
 msgid "Set Clip"
-msgstr "កំណត់​ការ​បំពេញ"
+msgstr "កំណត់​ឈុត"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
-#, fuzzy
 msgid "Release Clip"
-msgstr "ចេញ​ផ្សាយ​"
+msgstr "លែង​ឈុត"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -10893,111 +10888,96 @@ msgid "Relative to: "
 msgstr "ទាក់ទង​ទៅ​នឹង ៖"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:796
-#, fuzzy
 msgid "Treat selection as group: "
-msgstr "ជម្រើស​មិនបាន​អនុវត្ត​របាំង ។"
+msgstr "ដាក់​ជម្រើស​ជា​ក្រុម ៖ "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:802
-#, fuzzy
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "តម្រឹម​ផ្នែក​ខាង​ស្ដាំ​របស់​វត្ថុ​ទៅ​ផ្នែក​ខាង​ឆ្វេង​របស់​យុថ្កា"
+msgstr "តម្រឹម​គែម​ខាង​ស្ដាំ​របស់​វត្ថុ​ទៅ​គែម​ខាង​ឆ្វេង​របស់​យុថ្កា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:805
-#, fuzzy
 msgid "Align left edges"
-msgstr "តម្រឹម​ផ្នែក​ខាង​ឆ្វេង​"
+msgstr "តម្រឹម​គែម​ខាង​ឆ្វេង"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:808
-#, fuzzy
 msgid "Center objects horizontally"
-msgstr "ត្រឡប់​វត្ថុ​ដែល​ជ្រើស​ផ្ដេក"
+msgstr "ដាក់​វត្ថុ​កណ្ដាល​ផ្ដេក"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:811
 msgid "Align right sides"
-msgstr "តម្រឹម​ផ្នែក​ខាង​ស្ដាំាងស្តាំ​"
+msgstr "តម្រឹម​ផ្នែក​ខាង​ស្ដាំ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:814
-#, fuzzy
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr "តម្រឹម​ផ្នែក​ខាង​ឆ្វេង​របស់​វត្ថុ​ទៅ​នឹង​ផ្នែក​ខាង​ស្ដាំ​របស់​យុថ្កា"
+msgstr "តម្រឹម​គែម​ខាង​ឆ្វេង​របស់​វត្ថុ​ទៅ​គែម​ខាង​ស្ដាំ​របស់​យុថ្កា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:817
-#, fuzzy
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr "តម្រឹម​បាត​របស់​វត្ថុ​ទៅ​នឹង​កំពូល​របស់​យុថ្កា"
+msgstr "តម្រឹម​គែម​បាត​របស់​វត្ថុ​ទៅ​គែម​កំពូល​របស់​យុថ្កា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:820
-#, fuzzy
 msgid "Align top edges"
-msgstr "តម្រឹម​កំពូល​"
+msgstr "តម្រឹម​គែម​កំពូល​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:823
 msgid "Center on horizontal axis"
 msgstr "ដាក់​កណ្ដាល​លើ​​​អ័ក្ស​ផ្ដេក"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:826
-#, fuzzy
 msgid "Align bottom edges"
-msgstr "តម្រឹម​បាត​"
+msgstr "តម្រឹម​គែម​បាត"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:829
-#, fuzzy
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr "តម្រឹម​កំពូល​របស់​វត្ថុ​ទៅ​នឹង​បាត​​របស់​យុថ្កា"
+msgstr "តម្រឹម​គែម​កំពូល​របស់​វត្ថុ​ទៅ​គែម​បាត​របស់​យុថ្កា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Align baseline anchors of texts horizontally"
 msgstr "តម្រឹម​យុថ្កា​បន្ទាត់​មូលដ្ឋាន​របស់​អត្ថបទ​ផ្ដេក"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:837
-#, fuzzy
 msgid "Align baselines of texts"
-msgstr "តម្រឹម​យុថ្កា​បន្ទាត់​មូលដ្ឋាន​របស់អត្ថបទ​បញ្ឈរ"
+msgstr "តម្រឹម​បន្ទាត់​គោល​របស់​អត្ថបទ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:842
 msgid "Make horizontal gaps between objects equal"
 msgstr "បង្កើត​ចន្លោះ​ផ្ដេក​រវាង​វត្ថុ​ស្មើគ្នាៗ​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:846
-#, fuzzy
 msgid "Distribute left edges equidistantly"
-msgstr "ចែកចាយ​ផ្នែក​ខាង​ឆ្វេង​ស្មើគ្នាៗ​"
+msgstr "ចែក​គែម​ខាង​ឆ្វេង​ស្មើៗ​គ្នា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:849
 msgid "Distribute centers equidistantly horizontally"
-msgstr "ចែកចាយ​ចំណុច​កណ្ដាល​ស្មើគ្នាៗ​ដោយ​ផ្ដេក​"
+msgstr "ចែកចំណុច​កណ្ដាល​ស្មើគ្នាៗ​ដោយ​ផ្ដេក​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:852
-#, fuzzy
 msgid "Distribute right edges equidistantly"
-msgstr "ចែកចាយ​ផ្នែក​ខាង​ស្ដាំ​ស្មើគ្នាៗ​"
+msgstr "ចែក​គែម​ខាង​ស្ដាំ​ស្មើៗ​គ្នា"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:856
 msgid "Make vertical gaps between objects equal"
 msgstr "បង្កើត​ចន្លោះ​បញ្ឈរ​រវាង​វត្ថុ​ស្មើគ្នាៗ​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:860
-#, fuzzy
 msgid "Distribute top edges equidistantly"
-msgstr "ចែកចាយ​កំពូលៗ​ស្មើគ្នាៗ​"
+msgstr "ចែកគែម​​កំពូល​ស្មើគ្នាៗ​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:863
 msgid "Distribute centers equidistantly vertically"
 msgstr "ចែកចាយ​ចំណុច​កណ្ដាល​ស្មើគ្នាៗ​ដោយ​បញ្ឈរ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:866
-#, fuzzy
 msgid "Distribute bottom edges equidistantly"
-msgstr "ចែកចាយ​បាត​ស្មើគ្នាៗ"
+msgstr "ចែក​គែម​​បាត​ស្មើគ្នាៗ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:871
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "ចែកចាយ​យុថ្កា​បន្ទាត់​មូលដ្ឋាន​របស់​អត្ថបទ​​ដោយ​ផ្ដេក"
+msgstr "ចែក​យុថ្កា​បន្ទាត់​គោល​របស់​អត្ថបទ​​ដោយ​ផ្ដេក"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#, fuzzy
 msgid "Distribute baselines of texts vertically"
-msgstr "ចែកចាយ​យុថ្កា​បន្ទាត់​មូលដ្ឋាន​របស់​អត្ថបទ​ដោយ​បញ្ឈរ"
+msgstr "ចែក​បន្ទាត់​គោល​របស់​អត្ថបទ​បញ្ឈរ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:879
 msgid "Randomize centers in both dimensions"
@@ -11019,14 +10999,12 @@ msgid "Nicely arrange selected connector network"
 msgstr "រៀបចំ​បណ្ដាញ​បន្ទាត់​តភ្ជាប់ដែល​បានជ្រើស​យ៉ាង​ស្អាត​"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "តម្រឹម​ថ្នាំង​ដែល​បាន​ជ្រើស​ផ្ដេក​"
+msgstr "តម្រឹម​ថ្នាំង​ដែល​បាន​ជ្រើស​ទៅ​បន្ទាត់​ផ្ដេក​ទូទៅ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:902
-#, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "តម្រឹម​ថ្នាំង​ដែល​បាន​ជ្រើស​បញ្ឈរ​"
+msgstr "តម្រឹម​ថ្នាំង​ដែល​បាន​ជ្រើស​ទៅ​បន្ទាត់​បញ្ឈរ​ទូទៅ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:905
 msgid "Distribute selected nodes horizontally"
@@ -12450,9 +12428,7 @@ msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
 "counterclockwise"
-msgstr ""
-"នៅ​ពេ​លបើក មុំ​ត្រូវ​បាន​បង្ហាញ​ដោយ ០ នៅ​ខាង​ជើង ជួរ ០ ទៅ ៣៦០ ស្រប​ទិស​ទ្រនិច​នាឡិកា បើ​ពុំ​ដូច្នេះ​ទេ​ដោយ "
-"០ យ៉ាង​ហោច​ណាស់​ជួរ -១៨០ ទៅ ១៨០ ច្រាស​​ទិស​ទ្រនិច​នាឡិកា"
+msgstr "នៅ​ពេ​លបើក មុំ​ត្រូវ​បាន​បង្ហាញ​ដោយ ០ នៅ​ខាង​ជើង ជួរ ០ ទៅ ៣៦០ ស្រប​ទិស​ទ្រនិច​នាឡិកា បើ​ពុំ​ដូច្នេះ​ទេ​ដោយ ០ យ៉ាង​ហោច​ណាស់​ជួរ -១៨០ ទៅ ១៨០ ច្រាស​​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 msgid "Rotation snaps every:"
@@ -12502,9 +12478,7 @@ msgstr "បម្លែង​ទៅ​បន្ទាត់​នាំផ្ល
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box."
-msgstr ""
-"បម្លែង​វត្ថុ​ទៅ​កន្លែង​បន្ទាត់​នាំផ្លូវ​ទាំងនេះ​តាម​គែម​ពិត​ប្រាកដ​របស់​វត្ថុ(ចម្លង​តាម​ទ្រង់ទ្រាយ​របស់​វត្ថុ) មិន​"
-"តាម​ប្រអប់​ព្រំដែន​ទេ ។"
+msgstr "បម្លែង​វត្ថុ​ទៅ​កន្លែង​បន្ទាត់​នាំផ្លូវ​ទាំងនេះ​តាម​គែម​ពិត​ប្រាកដ​របស់​វត្ថុ(ចម្លង​តាម​ទ្រង់ទ្រាយ​របស់​វត្ថុ) មិន​តាម​ប្រអប់​ព្រំដែន​ទេ ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:290
 msgid "Ctrl+click dot size:"
@@ -12548,9 +12522,7 @@ msgstr "រចនាប័ទ្ម​ផ្ទាល់​របស់​ឧប
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
-msgstr ""
-"ឧបករណ៍​នីមួយៗ​អាច​ផ្ទុក​រចនាប័ទ្ម​ផ្ទាល់​របស់​វា​ ដើម្បី​អនុវត្ត​ទៅ​វត្ថុ​ដែល​បាន​បង្កើត​ថ្មី ។ ប្រើ​ប៊ូតុង​ខាង​ក្រោម "
-"ដើម្បី​កំណត់​វា ។"
+msgstr "ឧបករណ៍​នីមួយៗ​អាច​ផ្ទុក​រចនាប័ទ្ម​ផ្ទាល់​របស់​វា​ ដើម្បី​អនុវត្ត​ទៅ​វត្ថុ​ដែល​បាន​បង្កើត​ថ្មី ។ ប្រើ​ប៊ូតុង​ខាង​ក្រោម ដើម្បី​កំណត់​វា ។"
 
 #. style swatch
 #: ../src/ui/dialog/inkscape-preferences.cpp:365
@@ -12615,7 +12587,7 @@ msgstr "ចាត់​ទុក​ក្រុម​ជា​វត្ថុ​
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Average all sketches"
-msgstr ""
+msgstr "រកមធ្យមភាគ​គំនូស​វាស​ទាំងអស់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Width is in absolute units"
@@ -12755,7 +12727,7 @@ msgstr "របៀប​គូសវាស"
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch."
-msgstr ""
+msgstr "ប្រសិន​បើ​បាន​បើក លទ្ធផល​គំនូសវាស​នឹង​ជា​មធ្យម​ភាគ​ធម្មតា​របស់​គំនូសវាស​ទាំងអស់​ដែល​បាន​គូរ ដោយ​ជំនួស​ឲ្យ​ការ​រក​មធ្យមភាគ​លទ្ធផល​ចាស់ជាមួយ​នឹង​ការ​គូសវាស​ថ្មី ។"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:491 ../src/verbs.cpp:2518
@@ -12979,7 +12951,7 @@ msgstr "ក្លូន​កំព្រា​ត្រូវ​បានលុ
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "When duplicating original+clones:"
-msgstr ""
+msgstr "នៅ​ពេល​ដែល​ចម្លង ដើម+ក្លូន ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Relink duplicated clones"
@@ -12991,6 +12963,8 @@ msgid ""
 "(possibly in groups), relink the duplicated clone to the duplicated original "
 "instead of the old original"
 msgstr ""
+"នៅពេល​ដែល​ចម្លង​ជម្រើស​ដែល​មានទាំង​ក្លូន និង​ដើម "
+"(អាច​នៅ​ក្នុង​ក្រុម) គឺ​តភ្ជាប់​ក្លូន​ដែល​បាន​ចម្លង​ទៅកាន់​ដើម​ដែល​បាន​ចម្លង ជំនួស​ឲ្យ​ដើម​ចាស់"
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
 #: ../src/ui/dialog/inkscape-preferences.cpp:634
@@ -13279,11 +13253,13 @@ msgid "Display adjustment"
 msgstr "បង្ហាញ​ការ​លៃតម្រូវ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
-msgstr "ទម្រង់ ICC ត្រូវ​ប្រើ​ដើម្បី​ក្រិត​លទ្ធផល​បង្ហាញ ។"
+msgstr ""
+"ទម្រង់ ICC គឺ​ប្រើ​ដើម្បី​ក្រិត​ខ្នាត​លទ្ធផល​ការ​បង្ហាញ ។\n"
+"ថត​ដែល​បាន​រក ៖%s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:845
 msgid "Display profile:"
@@ -13464,11 +13440,10 @@ msgid "Use named colors"
 msgstr "ប្រើ​ពណ៌​ដែល​មាន​ឈ្មោះ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1016
-#, fuzzy
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
-msgstr "បើ​កំណត់ សរសេរ​ឈ្មោះ CSS របស់​ពណ៌​ជំនួស​ឲ្យ​តម្លៃ​ជា​លេខ​របស់​វា ។"
+msgstr "នៅពេល​ដែល​បាន​កំណត់ គឺ​អាច​សរសេរ​ឈ្មោះ CSS របស់​ពណ៌​បាន នៅពេល​ដែលមាន (ឧ. 'red' ឬ 'magenta') ជំនួស​ឲ្យ​សរសេរ​តម្លៃ​ជា​លេខ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
 msgid "XML formatting"
@@ -13490,7 +13465,7 @@ msgstr "ចូល​បន្ទាត់ ដកឃ្លា ៖"
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
-msgstr ""
+msgstr "ចំនួន​ដកឃ្លា​ដែល​ត្រូវប្រើ​សម្រាប់​ការ​ចូល​បន្ទាត់ ។ កំណត់​ទៅ ០ គឺ​មិន​ចូល​បន្ទាត់"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1026
 msgid "Path data"
@@ -13527,18 +13502,17 @@ msgstr "ចំនួន​ខ្ទង់ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "How many digits to write after the decimal dot"
-msgstr ""
+msgstr "ចំនួន​តួលេខ​ដែលត្រូវ​សរសេរ​បន្ទាប់​ពី​ចំណុច​ចំនួន​ទសភាគ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "Minimum exponent:"
 msgstr "និទស្សន្ត​អតិបរមា ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
-#, fuzzy
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero."
-msgstr "ទំហំ​អប្បបរមា​នៃ​ចំនួន (10 ទៅ​ស្វ័យគុណ​នៃ​និទស្សន្ត​នេះ) ចំនួន​តូច​ជាង​នឹង​ត្រូវ​បាន​សរសេរ​ជា សូន្យ ។"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1042
 msgid "SVG output"
