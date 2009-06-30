@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-06-26 12:42+0800\n"
+"PO-Revision-Date: 2009-06-26 22:27+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -5326,7 +5326,7 @@ msgstr "是否在畫布上即時預覽此特效？"
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
 #: ../src/extension/system.cpp:104
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr "自動偵測格式失敗。此檔案將以 SVG 格式來開啟。"
+msgstr "格式自動偵測失敗。此檔案將視為 SVG 來開啟。"
 
 #. TRANSLATORS: default.svg is localizable - this is the name of the default document
 #. template. This way you can localize the default pagesize, translate the name of
@@ -5334,7 +5334,7 @@ msgstr "自動偵測格式失敗。此檔案將以 SVG 格式來開啟。"
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:157
 msgid "default.svg"
-msgstr "default.svg"
+msgstr "default.zh_TW.svg"
 
 #: ../src/file.cpp:249
 #: ../src/file.cpp:1036
