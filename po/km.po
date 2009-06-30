@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-29 15:00+0700\n"
+"PO-Revision-Date: 2009-06-30 16:23+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -20530,9 +20530,8 @@ msgid "Gergonne Point"
 msgstr "ខ្វាច់​គំនូរ​"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "ចូល​បន្ទាត់​ថ្នាំង"
+msgstr "កណ្ដាល​ក្នុង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
 msgid "Incircle"
@@ -20575,13 +20574,12 @@ msgid "Symmedial Triangle"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
-#, fuzzy
 msgid "Symmedian Point"
-msgstr "ចំណុច​​បញ្ឈរ​ ៖"
+msgstr "ចំណុច​បន្ទាត់​ភ្ជាប់​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
-msgstr ""
+msgstr "បន្ទាត់​ភ្ជាប់ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
 msgid "Triangle Function"
@@ -20758,7 +20756,7 @@ msgstr "ជម្រៅ"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr ""
+msgstr "ប្រអប់​ដែល​អាច​បត់​បាន"
 
 #: ../share/extensions/foldablebox.inx.h:5
 msgid "Paper Thickness"
@@ -20933,41 +20931,36 @@ msgid "Logarithmic Y Subdiv. (Base given by entry above)"
 msgstr "ការ​ចែក​រង Y លោការីត (គោល​ត្រូវ​បាន​ផ្ដល់​ដោយ​ធាតុ​ខាង​លើ)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
-#, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr "ទំហំ​ការ​ចែក X ធំ / ភីកសែល"
+msgstr "ចន្លោះ​ការ​ចែក X ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក X ធំ / ភីកសែក"
+msgstr "កម្រាស់​ការ​ចែក X ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divisions"
 msgstr "ការ​ចែក X ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing [px]"
-msgstr "ទំហំ​ការ​ចែក X ធំ / ភីកសែល"
+msgstr "ចន្លោះ​ការ​ចែក Y ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក Y ធំ / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក Y ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 msgid "Major Y Divisions"
 msgstr "ការ​ចែក Y ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក X តូច / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក X តូច [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
 msgid "Minor Y Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក Y តូច / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក Y តូច [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
@@ -20978,14 +20971,12 @@ msgid "Subdivisions per Major Y Division"
 msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក Y ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
-#, fuzzy
 msgid "Subminor X Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក X តូច​រង / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក X តូច​រង [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
-#, fuzzy
 msgid "Subminor Y Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក Y តូច​រង / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក Y តូច​រង [ភីកសែល]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
@@ -21004,19 +20995,16 @@ msgid "Angle Divisions at Centre"
 msgstr "ការ​ចែក​មុំ​នៅ​កណ្ដាល"
 
 #: ../share/extensions/grid_polar.inx.h:3
-#, fuzzy
 msgid "Centre Dot Diameter [px]"
-msgstr "ដ្យាម៉ែត្រ​ចំណុច​កណ្ដាល / ភីកសែល"
+msgstr "ដ្យាម៉ែត្រ​ចំណុច​កណ្ដាល [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:4
-#, fuzzy
 msgid "Circumferential Label Outset [px]"
-msgstr "ខាង​ក្រៅ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល / ភីកសែល"
+msgstr "ខាង​ក្រៅ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:5
-#, fuzzy
 msgid "Circumferential Label Size [px]"
-msgstr "ទំហំ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល / ភីកសែល"
+msgstr "ទំហំ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
@@ -21027,19 +21015,16 @@ msgid "Logarithmic Subdiv. (Base given by entry above)"
 msgstr "ការ​ចែក​រង​លោការីត (គោល​ដែល​បាន​ផ្ដល់​ដោយ​ធាតុ​ខាង​លើ)"
 
 #: ../share/extensions/grid_polar.inx.h:9
-#, fuzzy
 msgid "Major Angular Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក​មុំ​ធំ / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក​មុំ​ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:10
-#, fuzzy
 msgid "Major Circular Division Spacing [px]"
-msgstr "ទំហំ​ការ​ចែក​រង្វង់​ធំ / ភីកសែល"
+msgstr "ចន្លោះ​ការ​ចែក​រង្វង់​ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:11
-#, fuzzy
 msgid "Major Circular Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក​រង្វង់​ធំ / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក​រង្វង់​ធំ [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
@@ -21050,14 +21035,12 @@ msgid "Minor Angle Division End 'n' Divs. Before Centre"
 msgstr "ចុង​ការ​ចែក​មុំ​តូច 'n' ចំណុច​កណ្ដាល​មុន​ការ​ចែក"
 
 #: ../share/extensions/grid_polar.inx.h:14
-#, fuzzy
 msgid "Minor Angular Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក​មុំ​តូច / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក​មុំ​តូច [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:15
-#, fuzzy
 msgid "Minor Circular Division Thickness [px]"
-msgstr "កម្រាស់​ការ​ចែក​រង្វង់​តូច / ភីកសែល"
+msgstr "កម្រាស់​ការ​ចែក​រង្វង់​តូច [ភីកសែល]"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -21124,9 +21107,8 @@ msgid "Guides creator"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:14
-#, fuzzy
 msgid "Horizontal guide each"
-msgstr "អត្ថបទ​​ផ្តេក​"
+msgstr "បន្ទាត់​ក្រឹត​ផ្ដេក​នីមួយៗ"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
@@ -21141,9 +21123,8 @@ msgid "Start from edges"
 msgstr "ចាប់ផ្ដើម​ពី​គែម"
 
 #: ../share/extensions/guides_creator.inx.h:20
-#, fuzzy
 msgid "Vertical guide each"
-msgstr "ចន្លោះ​បញ្ឈរ​"
+msgstr "បន្ទាត់​ក្រឹត​បញ្ឈរ​នីមួយ"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -21913,11 +21894,11 @@ msgstr "ថ្នាំង​មិនល្អ​"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Maximum displacement in X, px"
-msgstr "ការ​ផ្លាស់​កន្លែង​អតិបរមា​ក្នុង X, px"
+msgstr "ការ​ផ្លាស់​កន្លែង​អតិបរមា​ក្នុង X ភីកសែល"
 
 #: ../share/extensions/radiusrand.inx.h:3
 msgid "Maximum displacement in Y, px"
-msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង Y px"
+msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង Y ភីកសែល"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
@@ -21939,7 +21920,7 @@ msgstr "ប្រើ​ការ​ចែកចាយ​ធម្មតា​"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr "Alphabet Soup"
+msgstr ""
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
