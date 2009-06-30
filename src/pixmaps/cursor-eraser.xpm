@@ -1,5 +1,5 @@
 /* XPM */
-static char * cursor_eraser_xpm[] = {
+static const char * cursor_eraser_xpm[] = {
 "32 32 3 1",
 " 	c None",
 ".	c #FFFFFF",
