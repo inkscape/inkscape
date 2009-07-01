@@ -165,10 +165,10 @@ RFE</a>).</p>
 <title>Guides, grids, snapping</title>
 <mouse><key><left-drag/></key> <action>drag off a ruler to create guide</action></mouse>
 <note>Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</note>
-<mouse><key><left-drag/></key> <action>drag a ruler to move it</action></mouse>
-<mouse><key><shift/><left-drag/></key> <action>drag a ruler (not near anchor) to rotate it</action></mouse>
-<mouse><key><ctrl/><shift/><left-drag/></key> <action>rotate ruler with angle snapping</action></mouse>
-<mouse><key><ctrl/><left-click/></key> <action>delete ruler</action></mouse>
+<mouse><key><left-drag/></key> <action>drag a guide to move it</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>drag a guide (not near anchor) to rotate it</action></mouse>
+<mouse><key><ctrl/><shift/><left-drag/></key> <action>rotate guide with angle snapping</action></mouse>
+<mouse><key><ctrl/><left-click/></key> <action>delete guide</action></mouse>
 <keys><key>|</key> <key><shift/>\</key> <action>toggle guides and snapping to guides</action></keys>
 <note>If you want to see the guides but not snap to them, use the global snapping toggle (% key).</note>
 <note>When you create a new guide by dragging off the ruler, guide visibility and snapping are turned on.</note>
@@ -190,7 +190,7 @@ RFE</a>).</p>
 <note>These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</note>
 <mouse><key><left-click/></key> <action>set fill color on selection</action></mouse>
 <mouse><key><shift/><left-click/></key> <action>set stroke color on selection</action></mouse>
-<mouse><key><right-click/></key> <action>set stroke color on selection</action></mouse>
+<mouse><key><right-click/></key> <action>open pop-up menu</action></mouse>
 <mouse><key><left-drag/></key> <action>drag fill color to objects</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>drag stroke color to objects</action></mouse>
 <note>To change fill/stroke of an object by dragging color on it, that object need not be selected.</note>
@@ -1097,6 +1097,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <note>If a path is selected, Shift+dragging anywhere creates a new subpath instead of a new independent path.</note>
 <mouse><key><shift/><left-drag/></key> <action>temporarily disable snapping</action></mouse>
 <note>Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</note>
+<mouse><key><alt/><left-drag/></key> <action>averaging draw (sketch mode)</action></mouse>
 </group>
 </section>
 
