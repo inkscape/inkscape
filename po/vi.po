@@ -20747,17 +20747,15 @@ msgstr "Chiều sâu"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr "Hộp gấp lại được"
+msgstr "Vỏ hộp"
 
 #: ../share/extensions/foldablebox.inx.h:5
-#, fuzzy
 msgid "Paper Thickness"
-msgstr "Đo độ dày tờ giấy"
+msgstr "Độ dày của giấy"
 
 #: ../share/extensions/foldablebox.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "Thanh Ta_b"
+msgstr "Tỷ lệ dùng làm mép hộp"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
