@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-  <_name>HPGL Output</_name>
-  <id>org.ekips.output.hpgl</id>
-  <dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
-  <dependency type="executable" location="extensions">hpgl_output.py</dependency>
-  <dependency type="executable" location="extensions">inkex.py</dependency>
-  <param name="flat" type="float" min="0.001" max="1000" _gui-text="hpgl output flatness">10</param>
-  <output>
-    <extension>.hpgl</extension>
-    <mimetype>image/hpgl</mimetype>
-    <_filetypename>HP Graphics Language file (*.hpgl)</_filetypename>
-    <_filetypetooltip>Export to an HP Graphics Language file</_filetypetooltip>
-    <dataloss>true</dataloss>
-  </output>
-  <script>
-    <command reldir="extensions" interpreter="python">hpgl_output.py</command>
-    <helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
-  </script>
+	<_name>HPGL Output</_name>
+	<id>org.ekips.output.hpgl</id>
+	<dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+	<dependency type="executable" location="extensions">hpgl_output.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="flat" type="float" min="0.001" max="1000" _gui-text="hpgl output flatness">0.2</param>
+	<param name="mirror" type="boolean" _gui-text="Mirror Y-axis">FALSE</param>
+	<param name="xOrigin" type="float" min="-100000" max="100000" _gui-text="X-origin (px)">0.0</param>
+	<param name="yOrigin" type="float" min="-100000" max="100000" _gui-text="Y-origin (px)">0.0</param>
+	<param name="plotInvisibleLayers" type="boolean" _gui-text="Plot invisible layers">FALSE</param>
+	<output>
+		<extension>.hpgl</extension>
+		<mimetype>image/hpgl</mimetype>
+		<_filetypename>HP Graphics Language file (*.hpgl)</_filetypename>
+		<_filetypetooltip>Export to an HP Graphics Language file</_filetypetooltip>
+		<dataloss>true</dataloss>
+	</output>
+	<script>
+		<command reldir="extensions" interpreter="python">hpgl_output.py</command>
+		<helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
+	</script>
 </inkscape-extension>

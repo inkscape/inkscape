@@ -16,34 +16,69 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, cubicsuperpath, simplepath, cspsubdiv
+import inkex, cubicsuperpath, simplepath, simplestyle, cspsubdiv
 
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-f", "--flatness",
                         action="store", type="float", 
-                        dest="flat", default=10.0,
+                        dest="flat", default=0.2,
                         help="Minimum flatness of the subdivided curves")
+        self.OptionParser.add_option("-m", "--mirror",
+                        action="store", type="inkbool", 
+                        dest="mirror", default="FALSE",
+                        help="Mirror Y-Axis")
+        self.OptionParser.add_option("-x", "--xOrigin",
+                        action="store", type="float", 
+                        dest="xOrigin", default=0.0,
+                        help="X Origin (pixels)")
+        self.OptionParser.add_option("-y", "--yOrigin",
+                        action="store", type="float", 
+                        dest="yOrigin", default=0.0,
+                        help="Y Origin (pixels)")
+        self.OptionParser.add_option("-p", "--plotInvisibleLayers",
+                        action="store", type="inkbool", 
+                        dest="plotInvisibleLayers", default="FALSE",
+                        help="Plot invisible layers")
+
         self.hpgl = ['IN;SP1;']
     def output(self):
         print ''.join(self.hpgl)
     def effect(self):
-        path = '//svg:path'
-        for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
-            d = node.get('d')
-            if len(simplepath.parsePath(d)):
-                p = cubicsuperpath.parsePath(d)
-                cspsubdiv.cspsubdiv(p, self.options.flat)
-                for sp in p:
-                    first = True
-                    for csp in sp:
-                        cmd = 'PD'
-                        if first:
-                            cmd = 'PU'
-                        first = False
-                        self.hpgl.append('%s%s,%s;' % (cmd,csp[1][0],csp[1][1]))
+        mirror = 1.0
+        if self.options.mirror:
+            mirror = -1.0
+        x0 = self.options.xOrigin
+        y0 = self.options.yOrigin
+        scale = 1016.0/90
+        i = 0
+        layerPath = '//svg:g[@inkscape:groupmode="layer"]'
+        for layer in self.document.getroot().xpath(layerPath, namespaces=inkex.NSS):
+            i += 1
+            style = layer.get('style')
+            if style:
+                style = simplestyle.parseStyle(style)
+                if style['display']=='none':
+                    if not self.options.plotInvisibleLayers:
+                        continue
+            nodePath = ('//svg:g[@inkscape:groupmode="layer"][%d]/descendant::svg:path') % i
+            for node in self.document.getroot().xpath(nodePath, namespaces=inkex.NSS):
+                d = node.get('d')
+                if len(simplepath.parsePath(d)):
+                    p = cubicsuperpath.parsePath(d)
+                    cspsubdiv.cspsubdiv(p, self.options.flat)
+                    for sp in p:
+                        first = True
+                        for csp in sp:
+                            cmd = 'PD'
+                            if first:
+                                cmd = 'PU'
+                            first = False
+                            self.hpgl.append('%s%d,%d;' % (cmd,(csp[1][0] - x0)*scale,(csp[1][1] - y0)*scale*mirror))
 
 if __name__ == '__main__':   #pragma: no cover
     e = MyEffect()
     e.affect()
+
+# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
