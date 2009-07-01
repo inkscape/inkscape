@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-30 16:23+0700\n"
+"PO-Revision-Date: 2009-07-01 15:04+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ 
 
 #: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
-msgstr ""
+msgstr "ការ​ចាក់​ពុម្ព​លោហៈ"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
@@ -87,7 +87,7 @@ msgstr "ព្រិល"
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr ""
+msgstr "ព្រឹល​នៅពេល​ដែល​វត្ថុ​ហោះ​អណ្ដែត​ផ្ដេក ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Motion blur, vertical"
@@ -97,7 +97,7 @@ msgstr "ចលនា​ព្រិល បញ្ឈរ"
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr ""
+msgstr "ព្រឹល​នៅពេល​​វត្ថុ​ហោះ​អណ្ដែត​បញ្ឈរ ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Apparition"
@@ -221,7 +221,7 @@ msgstr "ចំណុច​អុចៗ"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Fill object with sparse translucent specks"
-msgstr ""
+msgstr "បំពេញ​វត្ថុ​ដោយ​ចំណុច​ស្រអាប់​តូចៗ"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Oil slick"
@@ -240,7 +240,6 @@ msgid "Flake-like white splotches"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:21
-#, fuzzy
 msgid "Leopard fur"
 msgstr "រោម​ខ្លា​ដំបង"
 
@@ -253,9 +252,8 @@ msgstr "រោម​ខ្លា​ដំបង"
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
 #: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Materials"
-msgstr "ម៉ាទ្រីស​"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
@@ -263,7 +261,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
-msgstr ""
+msgstr "សេះ​បង្កង់"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Irregular vertical dark stripes (loses object's own color)"
@@ -291,60 +289,52 @@ msgstr "ធ្វើ​ឲ្យ​ច្បាស់"
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Image effects"
-msgstr "គ្រប់គ្រង​បែបផែន​ផ្លូវ"
+msgstr "បែបផែន​រូបភាព"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:25
-#, fuzzy
 msgid "Sharpen more"
-msgstr "ធ្វើ​ឲ្យ​ច្បាស់"
+msgstr "កាន់​តែ​ធ្វើ​ឲ្យ​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen edges and boundaries within the object, force=0.3"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Oil painting"
-msgstr "គំនូ​ប្រេង"
+msgstr "គំនូរ​ប្រេង"
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Simulate oil painting style"
-msgstr "ក្លែង​ធ្វើ​លទ្ធផល​លើ​អេក្រង់"
+msgstr "ក្លែង​ធ្វើ​តាម​រចនាប័ទ្ម​គំនូរ​ប្រេង"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Edge detect"
 msgstr "រក​ឃើញ​គែម​"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "រកឃើញ​គែម​ពណ៌​នៅ​ក្នុង​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Horizontal edge detect"
-msgstr "អត្ថបទ​​ផ្តេក​"
+msgstr "រកឃើញ​គែម​ផ្ដេក"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "កូអរដោនេ​ផ្ដេក​របស់​ជម្រើស"
+msgstr "រកឃើញ​គែម​ពណ៌​ផ្ដេក​នៅ​ក្នុង​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:29
-#, fuzzy
 msgid "Vertical edge detect"
-msgstr "អត្ថបទ​​បញ្ឈរ​"
+msgstr "រកឃើញ​គែម​បញ្ឈរ"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "រកឃើញ​គែម​​ពណ៌​បញ្ឈរ​នៅ​ក្នុង​វត្ថុ"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
@@ -354,16 +344,15 @@ msgstr "ខ្មៅដៃ​"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "រកឃើញ​គែម​ពណ៌ ហើយ​គូរ​ពួកវា​ជា​មាត្រដ្ឋាន​ប្រផេះ"
 
 #: ../share/filters/filters.svg.h:31
-#, fuzzy
 msgid "Blueprint"
-msgstr "ទទឹង​ព្រិល"
+msgstr "គំនូរ​ក្រដាស​ពណ៌​ខៀវ"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "រកឃើញ​គែម​ពណ៌ ហើយ​​គូរ​តាម​ពួកវា​ជា​ពណ៌​ខៀវ"
 
 #: ../share/filters/filters.svg.h:32
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -400,16 +389,15 @@ msgstr "ពណ៌"
 
 #: ../share/filters/filters.svg.h:32
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "បង្ហាញ​ជា​ស្រមោល​ពណ៌​ប្រផេះ ដោយ​កាត់បន្ថយ​តិត្ថិភាព​ទៅ​សូន្យ"
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "ដាក់​បញ្ច្រាស"
 
 #: ../share/filters/filters.svg.h:33
-#, fuzzy
 msgid "Invert colors"
-msgstr "ពណ៌​មិន​ច្បាស់​របស់​វត្ថុ​ដែល​បាន​ជ្រើស​"
+msgstr "ច្រាស​ពណ៌"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Sepia"
