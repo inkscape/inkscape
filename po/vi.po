@@ -1153,7 +1153,7 @@ msgstr "Làm rách viền"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr "Chuyển vị trí thành phần bên ngoài của hình dạng hoặc ảnh, giữ nguyên phần bên trong"
+msgstr "Chuyển vị trí phần bên ngoài của hình dạng hoặc ảnh, giữ nguyên phần bên trong"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Feather"
@@ -1405,9 +1405,8 @@ msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Bề mặt kim loại sáng bóng, gồm nhiều mảng màu"
 
 #: ../share/filters/filters.svg.h:138
-#, fuzzy
 msgid "Comics draft"
-msgstr "Nháp 2 màu"
+msgstr "Phong cách truyện tranh"
 
 #: ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:139
@@ -1423,130 +1422,117 @@ msgstr "Nháp 2 màu"
 #: ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:159
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Non realistic 3D shaders"
-msgstr "nhóm %s không tồn tại"
+msgstr "Đổ bóng ảo"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "Đổ bóng theo phong cách truyện tranh"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Comics fading"
-msgstr "Đang tăng dần âm lượng"
+msgstr "Truyện tranh, viền mờ"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "Đổ bóng theo phong cách truyện tranh; phần viền bị làm mờ nhẹ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:141
-#, fuzzy
 msgid "Smooth shader NR"
-msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+msgstr "Đổ bóng uyển chuyển"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "Đổ bóng uyển chuyển, nhịp nhàng, với bút chì than màu xám"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:143
-#, fuzzy
 msgid "Emboss shader NR"
-msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+msgstr "Đổ bóng chạm nổi"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "Kết hợp giữa những nét được chạm nổi với phong cách đổ bóng uyển chuyển"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:145
 msgid "Smooth shader dark NR"
-msgstr ""
+msgstr "Đổ bóng uyển chuyển, đậm màu"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "Đổ bóng uyển chuyển, nhịp nhàng; màu đậm hơn"
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Comics"
-msgstr "Kết hợp"
+msgstr "Phong cách truyện tranh"
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Imitation of black and white cartoon shading"
-msgstr "Đảo ngược vùng màu đen và màu trắng"
+msgstr "Mô phỏng cách tô bóng đen trắng trong truyện tranh"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Satin NR"
-msgstr "  [Nr] Tên\n"
+msgstr "Vải Satin"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "Đổ bóng giống như trên mặt tấm vải satin, mềm và nhiều uốn lượn"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:150
-#, fuzzy
 msgid "Frosted glass NR"
-msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+msgstr "Mặt kính mờ sương"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Non realistic frosted glass imitation"
-msgstr ""
+msgstr "Mô phỏng bề mặt tấm kính lúc trời ẩm, bị lớp sương mờ che phủ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:152
 msgid "Smooth shader contour NR"
-msgstr ""
+msgstr "Đổ bóng uyển chuyển ngoài viền"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "Đổ bóng uyển chuyển, nhưng chỉ tập trung ở lớp viền bao quanh đối tượng"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:154
-#, fuzzy
 msgid "Aluminium NR"
-msgstr "  [Nr] Tên\n"
+msgstr "Nhôm sáng bóng"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "Giả lập bề mặt nhôm được đánh bóng"
 
 #: ../share/filters/filters.svg.h:155
-#, fuzzy
-msgid "Comics fluid"
-msgstr "Tập tin Fluid FLTK"
+msgid "Comics fluid"	
+msgstr "Truyện tranh, màu nước"
 
 #: ../share/filters/filters.svg.h:155
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "Vừa trang khít bản vẽ"
+msgstr "Đổ bóng theo phong cách truyện tranh, với bút nước"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:157
-#, fuzzy
 msgid "Chrome NR"
-msgstr "  [Nr] Tên\n"
+msgstr "Crôm"
 
 #: ../share/filters/filters.svg.h:157
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "Bề mặt crôm, có bóng và ánh sáng phản chiếu mạnh"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Chrome dark NR"
-msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+msgstr "Crôm, màu tối"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "Đổ bóng lên bề mặt crôm, màu sậm lại, có ánh phản chiếu từ phía dưới"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Wavy tartan"
@@ -1618,13 +1604,12 @@ msgstr ""
 #: ../share/filters/filters.svg.h:168
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
-#, fuzzy
 msgid "Eraser"
-msgstr "Xoa"
+msgstr "Tẩy bớt màu sáng"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "Tăng độ trong suốt cho những mảng màu sáng của đối tượng"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Noisy blur"
@@ -1667,22 +1652,20 @@ msgid "Gives a smooth bump velvet like"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Alpha draw"
-msgstr "Công cụ vẽ"
+msgstr "Nét vẽ trong suốt"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr ""
+msgstr "Tạo nét vẽ trong suốt, làm trong suốt những mảng màu và ảnh"
 
 #: ../share/filters/filters.svg.h:175
-#, fuzzy
 msgid "Alpha draw, color"
-msgstr "Màu tới Alpha"
+msgstr "Nét màu, trong suốt"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Gives a transparent color fill effect to bitmaps and materials"
-msgstr ""
+msgstr "Tạo nét vẽ trong suốt, giữ màu nét vẽ, làm trong suốt những mảng màu và ảnh"
 
 #: ../share/filters/filters.svg.h:176
 #, fuzzy
@@ -1868,197 +1851,167 @@ msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
-msgstr ""
+msgstr "Sọc thẳng 1:1"
 
 #: ../share/patterns/patterns.svg.h:3
-#, fuzzy
 msgid "Stripes 1:1 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:1, trắng"
 
 #: ../share/patterns/patterns.svg.h:4
 msgid "Stripes 1:1.5"
-msgstr ""
+msgstr "Sọc thẳng 1:1.5"
 
 #: ../share/patterns/patterns.svg.h:5
-#, fuzzy
 msgid "Stripes 1:1.5 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:1.5, trắng"
 
 #: ../share/patterns/patterns.svg.h:6
 msgid "Stripes 1:2"
-msgstr ""
+msgstr "Sọc thẳng 1:2"
 
 #: ../share/patterns/patterns.svg.h:7
-#, fuzzy
 msgid "Stripes 1:2 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:2, trắng"
 
 #: ../share/patterns/patterns.svg.h:8
 msgid "Stripes 1:3"
-msgstr ""
+msgstr "Sọc thẳng 1:3"
 
 #: ../share/patterns/patterns.svg.h:9
-#, fuzzy
 msgid "Stripes 1:3 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:3, trắng"
 
 #: ../share/patterns/patterns.svg.h:10
 msgid "Stripes 1:4"
-msgstr ""
+msgstr "Sọc thẳng 1:4"
 
 #: ../share/patterns/patterns.svg.h:11
-#, fuzzy
 msgid "Stripes 1:4 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:4, trắng"
 
 #: ../share/patterns/patterns.svg.h:12
 msgid "Stripes 1:5"
-msgstr ""
+msgstr "Sọc thẳng 1:5"
 
 #: ../share/patterns/patterns.svg.h:13
-#, fuzzy
 msgid "Stripes 1:5 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:5, trắng"
 
 #: ../share/patterns/patterns.svg.h:14
 msgid "Stripes 1:8"
-msgstr ""
+msgstr "Sọc thẳng 1:8"
 
 #: ../share/patterns/patterns.svg.h:15
-#, fuzzy
 msgid "Stripes 1:8 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 1:8, trắng"
 
 #: ../share/patterns/patterns.svg.h:16
-#, fuzzy
 msgid "Stripes 1:10"
-msgstr "Praha 10"
+msgstr "Sọc thẳng 1:10"
 
 #: ../share/patterns/patterns.svg.h:17
-#, fuzzy
 msgid "Stripes 1:10 white"
-msgstr "Hiện khoảng trắng"
+msgstr "Sọc thẳng 1:10, trắng"
 
 #: ../share/patterns/patterns.svg.h:18
-#, fuzzy
 msgid "Stripes 1:16"
-msgstr "16 bit"
+msgstr "Sọc thẳng 1:16"
 
 #: ../share/patterns/patterns.svg.h:19
-#, fuzzy
 msgid "Stripes 1:16 white"
-msgstr "Hiện khoảng trắng"
+msgstr "Sọc thẳng 1:16, trắng"
 
 #: ../share/patterns/patterns.svg.h:20
-#, fuzzy
 msgid "Stripes 1:32"
-msgstr "32 bit"
+msgstr "Sọc thẳng 1:32"
 
 #: ../share/patterns/patterns.svg.h:21
-#, fuzzy
 msgid "Stripes 1:32 white"
-msgstr "Hiện khoảng trắng"
+msgstr "Sọc thẳng 1:32, trắng"
 
 #: ../share/patterns/patterns.svg.h:22
-#, fuzzy
 msgid "Stripes 1:64"
-msgstr "Số nguyên 64-bit"
+msgstr "Sọc thẳng 1:64"
 
 #: ../share/patterns/patterns.svg.h:23
 msgid "Stripes 2:1"
-msgstr ""
+msgstr "Sọc thẳng 2:1"
 
 #: ../share/patterns/patterns.svg.h:24
-#, fuzzy
 msgid "Stripes 2:1 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 2:1, trắng"
 
 #: ../share/patterns/patterns.svg.h:25
 msgid "Stripes 4:1"
-msgstr ""
+msgstr "Sọc thẳng 4:1"
 
 #: ../share/patterns/patterns.svg.h:26
-#, fuzzy
 msgid "Stripes 4:1 white"
-msgstr "Đầu kẹp trắng"
+msgstr "Sọc thẳng 4:1, trắng"
 
 #: ../share/patterns/patterns.svg.h:27
-#, fuzzy
 msgid "Checkerboard"
-msgstr "Cờ trên bảng"
+msgstr "Kẻ ô bàn cờ"
 
 #: ../share/patterns/patterns.svg.h:28
-#, fuzzy
 msgid "Checkerboard white"
-msgstr "Đầu kẹp trắng"
+msgstr "Kẻ ô bàn cờ, trắng"
 
 #: ../share/patterns/patterns.svg.h:29
-#, fuzzy
 msgid "Packed circles"
-msgstr "Dùng hình tròn"
+msgstr "Hình tròn kề nhau"
 
 #: ../share/patterns/patterns.svg.h:30
-#, fuzzy
 msgid "Polka dots, small"
-msgstr "<i><b><span size=\"small\">v.d., %s</span></b></i>"
+msgstr "Chấm tròn nhỏ"
 
 #: ../share/patterns/patterns.svg.h:31
 msgid "Polka dots, small white"
-msgstr ""
+msgstr "Chấm tròn nhỏ, trắng"
 
 #: ../share/patterns/patterns.svg.h:32
-#, fuzzy
 msgid "Polka dots, medium"
-msgstr "Vừa cao"
+msgstr "Chấm tròn vừa"
 
 #: ../share/patterns/patterns.svg.h:33
 msgid "Polka dots, medium white"
-msgstr ""
+msgstr "Chấm tròn vừa, trắng"
 
 #: ../share/patterns/patterns.svg.h:34
-#, fuzzy
 msgid "Polka dots, large"
-msgstr "Bảng mã quá lớn"
+msgstr "Chấm tròn lớn"
 
 #: ../share/patterns/patterns.svg.h:35
-#, fuzzy
 msgid "Polka dots, large white"
-msgstr "Con trỏ trắng lớn — hiện thời"
+msgstr "Chấm tròn lớn, trắng"
 
 #: ../share/patterns/patterns.svg.h:36
-#, fuzzy
 msgid "Wavy"
-msgstr "Trắng lăn tăn"
+msgstr "Sọc uốn lượn"
 
 #: ../share/patterns/patterns.svg.h:37
-#, fuzzy
 msgid "Wavy white"
-msgstr "Trắng lăn tăn"
+msgstr "Sọc uốn lượn, trắng"
 
 #: ../share/patterns/patterns.svg.h:38
-#, fuzzy
 msgid "Camouflage"
-msgstr "Ngụy trang"
+msgstr "Vải ngụy trang"
 
 #: ../share/patterns/patterns.svg.h:39
-#, fuzzy
 msgid "Ermine"
-msgstr "Kết hợp"
+msgstr "Chân chồn"
 
 #: ../share/patterns/patterns.svg.h:40
-#, fuzzy
 msgid "Sand (bitmap)"
-msgstr "mảng ảnh khối"
+msgstr "Cát (ảnh bitmap)"
 
 #: ../share/patterns/patterns.svg.h:41
-#, fuzzy
 msgid "Cloth (bitmap)"
-msgstr "mảng ảnh khối"
+msgstr "Vải (ảnh bitmap)"
 
 #: ../share/patterns/patterns.svg.h:42
-#, fuzzy
 msgid "Old paint (bitmap)"
-msgstr " Mảng ảnh khối tại "
+msgstr "Nước sơn cũ (ảnh bitmap)"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -2089,9 +2042,8 @@ msgstr "Tạo hình elip"
 #: ../src/box3d-context.cpp:434
 #: ../src/box3d-context.cpp:441
 #: ../src/box3d-context.cpp:448
-#, fuzzy
 msgid "Change perspective (angle of PLs)"
-msgstr "Đổi hình phối (góc ở đỉnh)"
+msgstr "Đổi hình phối (góc của các đường chiếu phối cảnh)"
 
 #. status text
 #: ../src/box3d-context.cpp:606
@@ -4014,9 +3966,8 @@ msgid "object rotation center"
 msgstr "Chuẩn/Lệch tâm"
 
 #: ../src/display/snap-indicator.cpp:114
-#, fuzzy
 msgid "handle"
-msgstr "Tên _hiệu :"
+msgstr "chốt"
 
 #: ../src/display/snap-indicator.cpp:117
 #, fuzzy
@@ -4099,9 +4050,8 @@ msgid "Object rotation center"
 msgstr "Chuẩn/Lệch tâm"
 
 #: ../src/display/snap-indicator.cpp:175
-#, fuzzy
 msgid "Handle"
-msgstr "Tên _hiệu :"
+msgstr "Chốt"
 
 #: ../src/display/snap-indicator.cpp:178
 #, fuzzy
@@ -4109,9 +4059,8 @@ msgid "Path intersection"
 msgstr "Chọn (giao)"
 
 #: ../src/display/snap-indicator.cpp:181
-#, fuzzy
 msgid "Guide"
-msgstr "Dẫn"
+msgstr "Đường gióng"
 
 #: ../src/display/snap-indicator.cpp:184
 #, fuzzy
@@ -4623,7 +4572,6 @@ msgid "Contrast"
 msgstr "Tương phản"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:41
-#, fuzzy
 msgid "Adjust"
 msgstr "Điều chỉnh"
 
@@ -4658,12 +4606,10 @@ msgid "Edge"
 msgstr "Cạnh"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
 msgstr "Tô sáng các cạnh của (các) ảnh bitmap đã chọn."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr "Chạm nổi của (các) ảnh bitmap đã chọn — tô sáng cạnh bằng hiệu ứng ba chiều."
 
@@ -4738,19 +4684,16 @@ msgid "Level selected bitmap(s) by scaling values falling between the given rang
 msgstr "Chỉnh mức (các) ảnh bitmap đã chọn, bằng cách giãn vùng màu trong phạm vi đã chọn thành toàn bộ vùng màu."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "Trung vị"
+msgstr "Màu trung bình"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid "Replace each pixel component with the median color in a circular neighborhood."
-msgstr "Lọc (các) ảnh bitmap đã chọn bằng cách thay thế màu của mỗi điểm ảnh bằng màu tổng hợp lại từ các điểm lân cận."
+msgstr "Thay màu của mỗi điểm ảnh bằng màu tổng hợp lại từ các điểm lân cận."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
-#, fuzzy
 msgid "HSB Adjust"
-msgstr "Điều chỉnh độ nhạy"
+msgstr "Điều chỉnh màu (HSL)"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250
@@ -4761,7 +4704,7 @@ msgstr "Điều chỉnh độ nhạy"
 #: ../src/widgets/toolbox.cpp:4279
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
-msgstr "Sắc màu"
+msgstr "Độ màu"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 #: ../src/flood-context.cpp:251
@@ -4780,7 +4723,6 @@ msgid "Brightness"
 msgstr "Độ sáng"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-#, fuzzy
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr "Điều biến phần trăm sắc màu, độ bão hoà và độ sáng của (các) ảnh bitmap đã chọn."
 
@@ -6032,40 +5974,40 @@ msgstr "Đã chọn %s"
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
 #: ../src/gradient-context.cpp:167
 #: ../src/gradient-context.cpp:176
-#, fuzzy, c-format
+#, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
-msgstr[0] " của %d chốt chuyển sắc"
+msgstr[0] " trong số %d chốt chuyển sắc"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
 #: ../src/gradient-context.cpp:168
 #: ../src/gradient-context.cpp:177
 #: ../src/gradient-context.cpp:184
-#, fuzzy, c-format
+#, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
 msgstr[0] " trong %d đối tượng vừa chọn"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
-#, fuzzy, c-format
+#, c-format
 msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
-msgstr[0] "Một chốt kéo đang trộn với nhau %d pha (kéo với <b>Shift</b> phân cách) được chọn trên %d chốt kéo chuyển sắc trên %d đối tượng đã chọn"
+msgstr[0] "Một chốt kéo đang trộn với nhau %d pha (kéo với <b>Shift</b> phân cách) được chọn"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
 #: ../src/gradient-context.cpp:182
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
-msgstr[0] "Chuyển các tập tin được chọn khỏi sọt rác"
+msgstr[0] "Chọn <b>%d</b> chốt chuyển sắc trong số %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
 #: ../src/gradient-context.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
-msgstr[0] "<b>Không có</b> chốt kéo chuyển sắc được chọn trên %d trên %d đối tượng đã chọn"
+msgstr[0] "<b>Không có</b> chốt kéo chuyển sắc nào được chọn trong %d của %d đối tượng đang chọn"
 
 #: ../src/gradient-context.cpp:389
 #: ../src/gradient-context.cpp:482
@@ -6381,14 +6323,12 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Hiển thị hay ẩn thanh Lệnh (bên dưới trình đơn)"
 
 #: ../src/interface.cpp:830
-#, fuzzy
 msgid "Snap Controls Bar"
-msgstr "Thanh Điều khiển Công cụ"
+msgstr "Thanh Điều khiển bám dính"
 
 #: ../src/interface.cpp:830
-#, fuzzy
 msgid "Show or hide the snapping controls"
-msgstr "Hiển thị hay ẩn thanh Điều khiển Công cụ"
+msgstr "Hiển thị hay ẩn thanh Điều khiển bám dính"
 
 #: ../src/interface.cpp:832
 msgid "Tool Controls Bar"
@@ -6408,7 +6348,7 @@ msgstr "Hiển thị hay ẩn hộp công cụ chính (bên trái)"
 
 #: ../src/interface.cpp:840
 msgid "_Palette"
-msgstr "Bảng _chọn"
+msgstr "Bảng _chọn màu"
 
 #: ../src/interface.cpp:840
 msgid "Show or hide the color palette"
@@ -6484,50 +6424,50 @@ msgstr "Thay thế"
 
 #: ../src/io/sys.cpp:412
 #: ../src/io/sys.cpp:420
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "Không đọc được từ pipe con (%s)"
 
 #: ../src/io/sys.cpp:444
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to change to directory '%s' (%s)"
-msgstr "Không thay đổi được thư mục '%s' (%s)"
+msgstr "Không di chuyển được sang thư mục '%s' (%s)"
 
 #: ../src/io/sys.cpp:450
 #: ../src/io/sys.cpp:676
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Không thực thi được tiến trình con (%s)"
 
 #: ../src/io/sys.cpp:623
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid program name: %s"
 msgstr "Tên chương trình không hợp lệ: %s"
 
 #: ../src/io/sys.cpp:633
 #: ../src/io/sys.cpp:922
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "Gặp chuỗi không hợp lệ trong véc-tơ đối số tại %d: %s"
 
 #: ../src/io/sys.cpp:644
 #: ../src/io/sys.cpp:937
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid string in environment: %s"
 msgstr "Gặp chuỗi không hợp lệ trong môi trường: %s"
 
 #: ../src/io/sys.cpp:705
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Không tạo được pipe để liên lạc với tiến trình con (%s)"
 
 #: ../src/io/sys.cpp:918
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid working directory: %s"
 msgstr "Thư mục làm việc không hợp lệ: %s"
 
 #: ../src/io/sys.cpp:986
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Lỗi thực thi chương trình bổ trợ (%s)"
 
@@ -8841,21 +8781,16 @@ msgid "Drawing finished"
 msgstr "Bản vẽ hoàn tất"
 
 #: ../src/persp3d.cpp:335
-#, fuzzy
 msgid "Toggle vanishing point"
-msgstr "Trinity Palmetto Point"
+msgstr "Bật/tắt các điểm tụ"
 
 #: ../src/persp3d.cpp:346
-#, fuzzy
 msgid "Toggle multiple vanishing points"
-msgstr "Đang tạo điểm đơn"
+msgstr "Bật/tắt nhiều điểm tụ"
 
 #: ../src/preferences.cpp:101
-#, fuzzy
 msgid "Inkscape will run with default settings, and new settings will not be saved. "
-msgstr ""
-"Trình Inkscape sẽ chạy với thiết lập mặc định.\n"
-"Thiết lập mới sẽ không được lưu."
+msgstr "Trình Inkscape sẽ chạy với thiết lập mặc định, và các lập mới sẽ không được lưu lại."
 
 #. the creation failed
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
@@ -15716,24 +15651,22 @@ msgid "Opacity: %.3g"
 msgstr "Độ mờ đục: %.3g"
 
 #: ../src/vanishing-point.cpp:123
-#, fuzzy
 msgid "Split vanishing points"
-msgstr "Đạng tìm các điểm thay thế..."
+msgstr "Tách các điểm tụ"
 
 #: ../src/vanishing-point.cpp:168
-#, fuzzy
 msgid "Merge vanishing points"
-msgstr "Đạng tìm các điểm thay thế..."
+msgstr "Gộp các điểm tụ"
 
 #: ../src/vanishing-point.cpp:224
 msgid "3D box: Move vanishing point"
-msgstr ""
+msgstr "Lập phương: Di chuyển điểm tụ"
 
 #: ../src/vanishing-point.cpp:305
 #, c-format
 msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "Điểm tụ <b>thấy được</b> của <b>%d</b> khối lập phương"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -15741,13 +15674,13 @@ msgstr[0] ""
 #, c-format
 msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "Điểm tụ <b>không thấy được</b> (ở xa vô cùng) của <b>%d</b> khối lập phương"
 
 #: ../src/vanishing-point.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] "Điểm chung của <b>%d</b> chuyển sắc; kéo với <b>Shift</b> để phân cách"
+msgstr[0] "của <b>%d</b> khối lập phương; giữ <b>Shift</b> và kéo để tách rời khối đã chọn"
 
 #: ../src/verbs.cpp:1140
 msgid "Switch to next layer"
@@ -15814,20 +15747,18 @@ msgstr "Không thể di chuyển lớp thêm nữa."
 
 #: ../src/verbs.cpp:1237
 #: ../src/verbs.cpp:1255
-#, fuzzy, c-format
+#, c-format
 msgid "%s copy"
-msgstr "bản sao %s"
+msgstr " %s bản sao"
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Duplicate layer"
-msgstr "Xoá lớp"
+msgstr "Nhân đôi lớp"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
 #: ../src/verbs.cpp:1266
-#, fuzzy
 msgid "Duplicated layer."
-msgstr "Xoá lớp"
+msgstr "Đã nhân đôi lớp."
 
 #: ../src/verbs.cpp:1295
 msgid "Delete layer"
@@ -15836,12 +15767,11 @@ msgstr "Xoá lớp"
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1298
 msgid "Deleted layer."
-msgstr "Lớp bị xoá."
+msgstr "Đã xóa lớp."
 
 #: ../src/verbs.cpp:1309
-#, fuzzy
 msgid "Toggle layer solo"
-msgstr "Hiện/ẩn lớp hiện tại"
+msgstr "Hiện/ẩn duy nhất lớp này"
 
 #: ../src/verbs.cpp:1389
 msgid "Flip horizontally"
@@ -16562,11 +16492,11 @@ msgstr "Tách đường nét rời ra thành nhiều đường nét thành phầ
 
 #: ../src/verbs.cpp:2431
 msgid "Rows and Columns..."
-msgstr "Hàng và Cột..."
+msgstr "Đưa vào bảng..."
 
 #: ../src/verbs.cpp:2432
 msgid "Arrange selected objects in a table"
-msgstr "Đưa đối tượng đã chọn vào trong 1 bảng"
+msgstr "Sắp xếp lại các đối tượng đã chọn thành các hàng và cột trong 1 bảng"
 
 #. Layer
 #: ../src/verbs.cpp:2434
@@ -16666,14 +16596,12 @@ msgid "Delete the current layer"
 msgstr "Xoá lớp hiện tại"
 
 #: ../src/verbs.cpp:2458
-#, fuzzy
 msgid "_Show/hide other layers"
-msgstr "Hiện/ẩn khung lề"
+msgstr "Ẩn/_hiện các lớp còn lại"
 
 #: ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Solo the current layer"
-msgstr "Xoá lớp hiện tại"
+msgstr "Chỉ xem duy nhất lớp hiện tại"
 
 #. Object
 #: ../src/verbs.cpp:2462
@@ -16864,18 +16792,16 @@ msgid "LPE Edit"
 msgstr "Sửa LPE"
 
 #: ../src/verbs.cpp:2535
-#, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr "Tham số hiệu ứng đường nét kế"
+msgstr "Sửa các tham số hiệu ứng đường nét"
 
 #: ../src/verbs.cpp:2537
 msgid "Erase existing paths"
 msgstr "Xoá các đường nét đang có"
 
 #: ../src/verbs.cpp:2539
-#, fuzzy
 msgid "Do geometric constructions"
-msgstr "Hộp giới hạn dạng hình"
+msgstr "Thực hiện dựng hình lượng giác"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2541
@@ -17023,14 +16949,12 @@ msgid "Open Preferences for the Eraser tool"
 msgstr "Mở Tùy thích cho công cụ Cục Tẩy"
 
 #: ../src/verbs.cpp:2577
-#, fuzzy
 msgid "LPE Tool Preferences"
-msgstr "Tùy thích công cụ Nút"
+msgstr "Tùy thích cho Hiệu ứng đường nét động"
 
 #: ../src/verbs.cpp:2578
-#, fuzzy
 msgid "Open Preferences for the LPETool tool"
-msgstr "Mở Tùy thích cho công cụ Thư pháp"
+msgstr "Mở Tùy thích cho công cụ Hiệu ứng đường nét động"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2581
@@ -18362,27 +18286,24 @@ msgid "Join"
 msgstr "Nối"
 
 #: ../src/widgets/toolbox.cpp:1322
-#, fuzzy
 msgid "Break nodes"
-msgstr "Xoá các nút"
+msgstr "Ngắt tại nút"
 
 #: ../src/widgets/toolbox.cpp:1323
 msgid "Break path at selected nodes"
-msgstr "Ngắt đường nét tại mỗi nút đã chọn"
+msgstr "Ngắt đường nét tại các nút đã chọn"
 
 #: ../src/widgets/toolbox.cpp:1333
-#, fuzzy
 msgid "Join with segment"
-msgstr "Nối lại các nút theo đoạn"
+msgstr "Nối giữa các nút"
 
 #: ../src/widgets/toolbox.cpp:1334
 msgid "Join selected endnodes with a new segment"
 msgstr "Nối lại các nút cuối đã chọn với một đoạn mới"
 
 #: ../src/widgets/toolbox.cpp:1344
-#, fuzzy
 msgid "Delete segment between two non-endpoint nodes"
-msgstr "Chia tách đường nét giữa hai nút khác điểm cuối"
+msgstr "Xóa đoạn nằm giữa hai nút khác nút cuối"
 
 #: ../src/widgets/toolbox.cpp:1353
 msgid "Node Cusp"
@@ -18406,17 +18327,15 @@ msgstr "Nút đối xứng"
 
 #: ../src/widgets/toolbox.cpp:1374
 msgid "Make selected nodes symmetric"
-msgstr "Làm cho mỗi nút đã chọn là đối xứng"
+msgstr "Nút có hai tay đòn đối xứng"
 
 #: ../src/widgets/toolbox.cpp:1383
-#, fuzzy
 msgid "Node Auto"
-msgstr "Auto Duck"
+msgstr "Nút thông minh"
 
 #: ../src/widgets/toolbox.cpp:1384
-#, fuzzy
 msgid "Make selected nodes auto-smooth"
-msgstr "Làm cho mỗi nút đã chọn là mịn"
+msgstr "Nút tự điều chỉnh để làm mịn đường nét"
 
 #: ../src/widgets/toolbox.cpp:1393
 msgid "Node Line"
@@ -18883,36 +18802,30 @@ msgstr "Làm cho góc sắc"
 
 #. TODO: use the correct axis here, too
 #: ../src/widgets/toolbox.cpp:3350
-#, fuzzy
 msgid "3D Box: Change perspective (angle of infinite axis)"
-msgstr "Hộp 3D: đổi phối cảnh"
+msgstr "Hộp 3D: đổi phối cảnh (góc của trục có điểm tụ ở vô cùng)"
 
 #: ../src/widgets/toolbox.cpp:3420
-#, fuzzy
 msgid "Angle in X direction"
-msgstr "Độ phân giải màn hình theo chiều ngang."
+msgstr "Góc theo trục X"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3422
-#, fuzzy
 msgid "Angle of PLs in X direction"
-msgstr "Đổi hình phối (góc ở đỉnh)"
+msgstr "Góc của các đường chiếu phối cảnh theo trục X"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3444
-#, fuzzy
 msgid "State of VP in X direction"
-msgstr "Gói ở tình trạng không ổn địng"
+msgstr "Trạng thái của điểm tụ theo trục X"
 
 #: ../src/widgets/toolbox.cpp:3445
-#, fuzzy
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Bật/tắt VP về hướng X giữa « hữu hạn » và « vô hạn » (=song song)"
+msgstr "Chuyển qua lại điểm tụ ở trục X thành 'thấy được' và 'không thấy được' (ở xa vô cùng)"
 
 #: ../src/widgets/toolbox.cpp:3460
-#, fuzzy
 msgid "Angle in Y direction"
-msgstr "Độ phân giải màn hình theo chiều ngang."
+msgstr "Góc theo trục Y"
 
 #: ../src/widgets/toolbox.cpp:3460
 msgid "Angle Y:"
@@ -18920,42 +18833,35 @@ msgstr "Góc Y:"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3462
-#, fuzzy
 msgid "Angle of PLs in Y direction"
-msgstr "Đổi hình phối (góc ở đỉnh)"
+msgstr "Góc của các đường chiếu phối cảnh theo phương Y"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3483
-#, fuzzy
 msgid "State of VP in Y direction"
-msgstr "Gói ở tình trạng không ổn địng"
+msgstr "Trạng thái của điểm tụ theo trục Y"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Bật/tắt VP về hướng Y giữa « hữu hạn » và « vô hạn » (=song song)"
+msgstr "Chuyển qua lại điểm tụ theo phương Y thành 'thấy được' hoặc 'không thấy được' (ở xa vô cùng)"
 
 #: ../src/widgets/toolbox.cpp:3499
-#, fuzzy
 msgid "Angle in Z direction"
-msgstr "Độ phân giải màn hình theo chiều ngang."
+msgstr "Góc theo trục Z"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3501
-#, fuzzy
 msgid "Angle of PLs in Z direction"
-msgstr "Đổi hình phối (góc ở đỉnh)"
+msgstr "Góc của các đường chiếu phối cảnh theo phương Z"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3522
-#, fuzzy
 msgid "State of VP in Z direction"
-msgstr "Gói ở tình trạng không ổn địng"
+msgstr "Trạng thái của điểm tụ ở trục Z"
 
 #: ../src/widgets/toolbox.cpp:3523
-#, fuzzy
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Bật/tắt VP về hướng Z giữa « hữu hạn » và « vô hạn » (=song song)"
+msgstr "Chuyển qua lại điểm tụ theo phương Z thành 'thấy được' hoặc 'không thấy được' (ở xa vô cùng)"
 
 #: ../src/widgets/toolbox.cpp:3581
 msgid "Change spiral"
@@ -19766,18 +19672,16 @@ msgid "Display measuring info for selected items"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5668
-#, fuzzy
 msgid "Open LPE dialog"
-msgstr "Mở hộp thoại Tìm kiếm"
+msgstr "Mở hộp thoại Hiệu ứng đường nét động"
 
 #: ../src/widgets/toolbox.cpp:5669
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
+msgstr "Mở hộp thoại Hiệu ứng đường nét động (để chọn các tham số)"
 
 #: ../src/widgets/toolbox.cpp:5733
-#, fuzzy
 msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr "Chiều rộng của bút thư pháp (so với vùng vẽ hiển thị)"
+msgstr "Chiều rộng của bút tẩy (so với vùng vẽ hiển thị)"
 
 #: ../src/widgets/toolbox.cpp:5751
 msgid "Delete objects touched by the eraser"
