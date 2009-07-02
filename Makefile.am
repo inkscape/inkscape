@@ -173,6 +173,7 @@ EXTRA_DIST = \
 	packaging/win32/slovak.nsh	\
 	packaging/win32/slovenian.nsh	\
 	packaging/win32/spanish.nsh	\
+	packaging/win32/tradchinese.nsh	\
 	packaging/win32/header.bmp	\
 	packaging/win32/AdvUninstLog.nsh	\
 	packaging/win32/AdvUninstLog.txt	\
