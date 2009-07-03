@@ -1826,5 +1826,18 @@
 <feBlend id="feBlend2858" mode="normal" blend="normal" in2="result8" result="result11" />
 <feBlend id="feBlend2860" blend="normal" mode="multiply" in2="result11" />
 </filter>
+<filter y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Plastify" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a HSL edges detection bump with a wavy reflective surface effect" id="Plastif0">
+<feGaussianBlur stdDeviation="2" result="result14" id="feGaussianBlur3330" />
+<feTurbulence result="result5" numOctaves="10" baseFrequency="0.0040000000000000001 0.0080000000000000002" seed="25" type="fractalNoise" id="feTurbulence3332" in="result14" />
+<feDisplacementMap yChannelSelector="G" in2="result14" result="result8" in="result5" xChannelSelector="R" scale="100" id="feDisplacementMap3334" />
+<feComposite k2="0.5" k1="0.5" in2="result8" operator="over" result="result10" in="result8" id="feComposite3336" />
+<feGaussianBlur stdDeviation="1" result="result13" id="feGaussianBlur3342" />
+<feSpecularLighting lighting-color="rgb(255,255,255)" result="result2" surfaceScale="-10" specularConstant="1" specularExponent="100" id="feSpecularLighting3338">
+<feDistantLight azimuth="225" elevation="85" id="feDistantLight3340" />
+</feSpecularLighting>
+<feComposite k3="0.59999999999999998" k2="1" operator="in" in="result2" result="result4" k1="0" id="feComposite3344" in2="SourceGraphic" />
+<feComposite operator="arithmetic" in2="SourceGraphic" result="result11" id="feComposite3346" in="result4" k1="1" k2="0.5" k3="0" />
+<feBlend blend="normal" mode="screen" result="result9" in2="result14" id="feBlend3348" in="result11" />
+</filter>
 </defs>
 </svg>
