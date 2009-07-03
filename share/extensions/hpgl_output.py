@@ -46,12 +46,14 @@ class MyEffect(inkex.Effect):
     def output(self):
         print ''.join(self.hpgl)
     def effect(self):
-        mirror = 1.0
-        if self.options.mirror:
-            mirror = -1.0
         x0 = self.options.xOrigin
         y0 = self.options.yOrigin
         scale = 1016.0/90
+        mirror = 1.0
+        if self.options.mirror:
+            mirror = -1.0
+            if self.document.getroot().get('height'):
+                y0 -= float(self.document.getroot().get('height'))
         i = 0
         layerPath = '//svg:g[@inkscape:groupmode="layer"]'
         for layer in self.document.getroot().xpath(layerPath, namespaces=inkex.NSS):
@@ -75,7 +77,7 @@ class MyEffect(inkex.Effect):
                             if first:
                                 cmd = 'PU'
                             first = False
-                            self.hpgl.append('%s%d,%d;' % (cmd,(csp[1][0] - x0)*scale,(csp[1][1] - y0)*scale*mirror))
+                            self.hpgl.append('%s%d,%d;' % (cmd,(csp[1][0] - x0)*scale,(csp[1][1]*mirror - y0)*scale))
 
 if __name__ == '__main__':   #pragma: no cover
     e = MyEffect()
