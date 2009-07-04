@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-06-28 01:02+0700\n"
+"PO-Revision-Date: 2009-07-05 00:08+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -560,8 +560,8 @@ msgstr "Khăn lụa nhàu"
 msgid "Glossy clumpy jam spread"
 msgstr "Hoa văn bóng, ráp, giống như khăn lụa bị vò nhàu"
 
-#: ../share/filters/filters.svg.h:44
 #. A wipe technique created when an image is stretched non-proportionally to create long thin lines based on the original pixels.
+#: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
 msgstr "Rê điểm ảnh"
 
@@ -901,8 +901,8 @@ msgstr "Lập phương"
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:79
 #. TODO: Không rõ đây là vỏ hoa quả được gọt ra, hay là phoi bào khi bào gỗ?
+#: ../share/filters/filters.svg.h:79
 msgid "Peel off"
 msgstr "Phoi bào"
 
@@ -1179,8 +1179,8 @@ msgstr "Sáng long lanh"
 msgid "Basic specular bevel to use for building textures"
 msgstr "Nét vát có độ phản chiếu mạnh, dùng khi tạo hoa văn"
 
-#: ../share/filters/filters.svg.h:111
 #. TODO: Need a nicer word for this filter
+#: ../share/filters/filters.svg.h:111
 msgid "Roughen inside"
 msgstr "Gồ ghề bên trong"
 
@@ -1196,8 +1196,8 @@ msgstr "Nhòe dần ra ngoài"
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
 msgstr "Giảm dần độ nhòe từ trong ra ngoài, nên chỉ làm nhòe phần giữa và giữ nguyên đường viền bên ngoài"
 
-#: ../share/filters/filters.svg.h:113
 #. TODO: Need review for this effect...
+#: ../share/filters/filters.svg.h:113
 msgid "Chalk and sponge"
 msgstr "Vỡ vụn"
 
@@ -1214,9 +1214,8 @@ msgid "Colorized blotches, like a crowd of people"
 msgstr "Các vệt màu giống như một đám người"
 
 #: ../share/filters/filters.svg.h:115
-#, fuzzy
 msgid "Scotland"
-msgstr "Ê-cốt"
+msgstr "Núi cao và mây mù"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Colorized mountain tops out of the fog"
@@ -1509,7 +1508,7 @@ msgid "Brushed aluminium shader"
 msgstr "Giả lập bề mặt nhôm được đánh bóng"
 
 #: ../share/filters/filters.svg.h:155
-msgid "Comics fluid"	
+msgid "Comics fluid"
 msgstr "Truyện tranh, màu nước"
 
 #: ../share/filters/filters.svg.h:155
@@ -1583,13 +1582,12 @@ msgid "Colorizable filling with flow inside like transparency"
 msgstr "Văn hoa giống như các gợn sóng trên mặt nước bị rung mạnh, phủ lên màu gốc"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Comics cream"
-msgstr "Viên bí kem"
+msgstr "Truyện tranh, trong suốt"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "Tạo bóng theo phong cách truyện tranh, với các mảng trong suốt uốn lượn"
 
 #: ../share/filters/filters.svg.h:167
 #, fuzzy
@@ -1729,8 +1727,8 @@ msgstr "Cầu vồng, bẻ cong"
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Những mảng màu cầu vồng, uốn lượn theo các cạnh và phủ lên trên màu gốc"
 
-#: ../share/filters/filters.svg.h:183
 #. TODO: Need more explaination for this effect
+#: ../share/filters/filters.svg.h:183
 msgid "Rough and dilate"
 msgstr "Tạo viền mờ"
 
@@ -1755,13 +1753,12 @@ msgid "Highly flexible specular bubbles with transparency"
 msgstr "Tạo các bọt nhỏ dựa theo giá trị độ màu, độ bão hòa và độ sáng; trong suốt"
 
 #: ../share/filters/filters.svg.h:186
-#, fuzzy
 msgid "Old postcard"
-msgstr "Bưu thiếp đôi"
+msgstr "Bưu ảnh cũ"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "Giới hạn số màu và tô đậm các cạnh, giống như trên tấm bưu ảnh cũ"
 
 #: ../share/filters/filters.svg.h:187
 #, fuzzy
@@ -1769,22 +1766,20 @@ msgid "Fuzzy glow"
 msgstr "Ánh sáng tàn"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid "Dots transparency"
-msgstr "Dùng trong suốt"
+msgstr "Chấm tròn trong suốt"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Tạo các chấm tròn nhỏ, trong suốt, phụ thuộc vào giá trị màu"
 
 #: ../share/filters/filters.svg.h:189
-#, fuzzy
 msgid "Canvas transparency"
-msgstr "Dùng trong suốt"
+msgstr "Vải bạt trong suốt"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "Tạo một tấm bạt trong suốt, phụ thuộc vào giá trị màu"
 
 #: ../share/filters/filters.svg.h:190
 #, fuzzy
@@ -1841,13 +1836,12 @@ msgid "Combine a HSL edges detection bump with a leathery or woody and colorizab
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Carnaval"
-msgstr "Vùng vẽ"
+msgstr "Mặt nạ Carnaval"
 
 #: ../share/filters/filters.svg.h:196
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "Các đốm trắng giống như trên chiếc mặt nạ Carnaval"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4780,14 +4774,12 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr "Giảm nhiễu trong (các) ảnh bitmap đã chọn, dùng bộ lọc loại từ cao điểm nhiễu."
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Resample"
-msgstr "Đổi tốc độ lấy mẫu"
+msgstr "Độ phân giải mới"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-#, fuzzy
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "Sửa đổi độ phân giải của ảnh đã chọn, bằng cách thay đổi kích cỡ theo các chiều đã cho."
+msgstr "Chỉnh lại độ phân giải của ảnh bằng cách co giãn ảnh sang kích thước mới"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -4820,14 +4812,12 @@ msgid "Solarize selected bitmap(s), like overexposing photographic film."
 msgstr "Làm hỏng vì phơi quá (các) ảnh bitmap đã chọn, giống như phơi phim quá lâu lúc rửa ảnh."
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Dither"
-msgstr "Nhiễu sửa sai lượng tử hoá"
+msgstr "Nhiễu hòa sắc"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
-msgstr "Trải ra ngẫu nhiên các điểm ảnh trong (các) ảnh bitmap đã chọn, bên trong bán kính « số lượng »."
+msgstr "Thêm các điểm ảnh, có vị trí ngẫu nhiên dao động trong một bán kính tự chọn so với vị trí gốc trên (các) ảnh bitmap đã chọn"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -5461,8 +5451,8 @@ msgstr "Đồ họa WordPerfect (*.wpg)"
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr "Định dạng ảnh véc-tơ dùng bởi Corel WordPerfect"
 
-#: ../src/extension/prefdialog.cpp:236
 #. TODO: suggest : ngắm ảnh sống, một chức năng của camera số. Dùng trong ngữ cảnh này có đúng không? Hay chỉ dùng đơn giản là xem thử?
+#: ../src/extension/prefdialog.cpp:236
 msgid "Live preview"
 msgstr "Xem thử trực tiếp"
 
@@ -6748,7 +6738,7 @@ msgstr "Trình điều khiển cư trú mới %p được tự động. Chỉ c�
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
 #: ../src/widgets/desktop-widget.cpp:1559
 msgid "Page"
-msgstr "Trang"
+msgstr "Trang giấy"
 
 #: ../src/libgdl/gdl-dock-notebook.c:135
 msgid "The index of the current page"
@@ -9434,17 +9424,17 @@ msgstr "Chọn (các) <b>đối tượng</b> vào đó cần vừa vùng vẽ."
 #: ../src/selection-chemistry.cpp:2944
 #: ../src/verbs.cpp:2723
 msgid "Fit Page to Selection"
-msgstr "Vừa trang khít vùng chọn"
+msgstr "Trang vừa khít vùng chọn"
 
 #: ../src/selection-chemistry.cpp:2969
 #: ../src/verbs.cpp:2725
 msgid "Fit Page to Drawing"
-msgstr "Vừa trang khít bản vẽ"
+msgstr "Trang vừa khít bản vẽ"
 
 #: ../src/selection-chemistry.cpp:2985
 #: ../src/verbs.cpp:2727
 msgid "Fit Page to Selection or Drawing"
-msgstr "Vừa trang khít vùng chọn hay bản vẽ"
+msgstr "Trang vừa khít vùng chọn hay bản vẽ"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -10968,14 +10958,12 @@ msgid "First selected"
 msgstr "Chọn đầu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:917
-#, fuzzy
 msgid "Biggest object"
-msgstr "Hàm đối tượng"
+msgstr "Đối tượng lớn nhất"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#, fuzzy
 msgid "Smallest object"
-msgstr "Hàm đối tượng"
+msgstr "Đối tượng nhỏ nhất"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
@@ -11026,11 +11014,11 @@ msgstr "<b>Giấy phép</b>"
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:90
 msgid "Show page _border"
-msgstr "Hiện _viền trang"
+msgstr "Hiện _viền trang giấy"
 
 #: ../src/ui/dialog/document-properties.cpp:90
 msgid "If set, rectangular page border is shown"
-msgstr "Bật tùy chọn này thì hiển thị viền trang hình chữ nhất."
+msgstr "Bật tùy chọn này thì hiển thị viền trang giấy hình chữ nhất."
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "Border on _top of drawing"
@@ -11046,7 +11034,7 @@ msgstr "Hiện _bóng viền"
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "If set, page border shows a shadow on its right and lower side"
-msgstr "Bật tùy chọn này thì viền của trang hiển thị bóng bên phải và bên dưới"
+msgstr "Bật tùy chọn này thì viền của trang giấy được đổ chéo xuống dưới"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
@@ -11058,7 +11046,7 @@ msgstr "Màu nền"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Color and transparency of the page background (also used for bitmap export)"
-msgstr "Màu và hệ số trong xuất của nền trang (cũng được dùng khi xuất ảnh bitmap)"
+msgstr "Màu và hệ số trong suốt của nền trang (cũng được dùng khi xuất ảnh bitmap)"
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border _color:"
@@ -13171,11 +13159,11 @@ msgstr "Màu đường lưới chính"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:962
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr ""
+msgstr "Không làm nổi các đường gióng khi thu nhỏ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:963
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color."
-msgstr ""
+msgstr "Nếu chọn và thu nhỏ bản vẽ, các đường gióng sẽ có màu bình thường thay vì màu đường gióng chính."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:965
 msgid "Default grid settings"
@@ -13260,7 +13248,7 @@ msgstr "&Sử dụng màu tự chọn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1016
 msgid "If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"
-msgstr ""
+msgstr "Nếu chọn, viết tên CSS của màu nếu có (v.d, 'red' hay 'magenta') thay vì giá trị số hexa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
 #, fuzzy
@@ -13274,7 +13262,7 @@ msgstr "Xoá các thuộc tính"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Put attributes on the same line as the element tag"
-msgstr ""
+msgstr "Đặt thuộc tính vào cùng dòng với thẻ tương ứng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
 #, fuzzy
@@ -13298,7 +13286,7 @@ msgstr "Nói t_oạ độ ô"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1029
 msgid "If set, relative coordinates may be used in path data"
-msgstr ""
+msgstr "Nếu chọn, hệ tọa độ tương đối sẽ được dùng trong dữ liệu đường nét"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1031
 #, fuzzy
@@ -14223,7 +14211,7 @@ msgstr "Mật khẩu :"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:404
 msgid "Error while reading the Open Clip Art RSS feed"
-msgstr ""
+msgstr "Lỗi khi đọc thông tin Open Clip Art"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:443
 #, fuzzy
@@ -14232,7 +14220,7 @@ msgstr "Không nhận được nguồn tin tức RSS của Open Clip Art Library
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
-msgstr ""
+msgstr "Máy chủ trả về thông tin Clip Art không đúng"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 #, fuzzy
@@ -14254,7 +14242,7 @@ msgstr "Tìm thấy tập tin trao đổi (swap):"
 
 #: ../src/ui/dialog/print.cpp:92
 msgid "Could not open temporary PNG for bitmap printing"
-msgstr ""
+msgstr "Không mở được tập tin PNG nháp dùng để in ảnh bitmap"
 
 #: ../src/ui/dialog/print.cpp:117
 #, fuzzy
@@ -15237,18 +15225,16 @@ msgstr "rộng hơn"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Wrap" indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:215
-#, fuzzy
 msgid "swatches|Wrap"
-msgstr "Ngắt từ"
+msgstr "Đường bo"
 
 #: ../src/ui/widget/random.cpp:123
 msgid "Reseed the random number generator; this creates a different sequence of random numbers."
-msgstr ""
+msgstr "Khởi tạo lại bộ tạo số ngẫu nhiên; lệnh này tạo ra một chùm số ngẫu nhiên khác."
 
 #: ../src/ui/widget/rendering-options.cpp:39
-#, fuzzy
 msgid "Backend"
-msgstr "Hậu phương"
+msgstr "Nền"
 
 #: ../src/ui/widget/rendering-options.cpp:40
 msgid "Vector"
@@ -15603,7 +15589,7 @@ msgstr "Đổi chiều rộng nét"
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr ""
+msgstr "Điều chỉnh <b>độ rộng nét</b>: từ %.3g thành <b>%.3g</b> (khác %.3g)"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -16149,7 +16135,7 @@ msgstr "Đối tượng thành đường gióng"
 
 #: ../src/verbs.cpp:2323
 msgid "Convert selected objects to a collection of guidelines aligned with their edges"
-msgstr ""
+msgstr "Chuyển các đối tượng đang chọn thành các đường gióng, sắp xếp theo các cạnh của đối tượng"
 
 #: ../src/verbs.cpp:2324
 msgid "Objects to Patter_n"
@@ -17058,13 +17044,12 @@ msgid "Stretch this document window to full screen"
 msgstr "Căng ra tài liệu này để chiếm toàn màn hình"
 
 #: ../src/verbs.cpp:2602
-#, fuzzy
 msgid "Toggle _Focus Mode"
-msgstr "Chế độ tiêu điểm tự động"
+msgstr "_Bỏ bớt các thanh công cụ thừa"
 
 #: ../src/verbs.cpp:2602
 msgid "Remove excess toolbars to focus on drawing"
-msgstr ""
+msgstr "Bỏ bớt các thanh công cụ chưa dùng, để dễ quan sát bản vẽ hơn"
 
 #: ../src/verbs.cpp:2604
 msgid "Duplic_ate Window"
@@ -17347,9 +17332,8 @@ msgid "Manage, edit, and apply path effects"
 msgstr "Quản lý, sửa và áp dụng các hiệu ứng đường nét"
 
 #: ../src/verbs.cpp:2684
-#, fuzzy
 msgid "Filter Editor..."
-msgstr "&Cấu hình bộ soạn thảo..."
+msgstr "Quản lý bộ lọc..."
 
 #: ../src/verbs.cpp:2685
 msgid "Manage, edit, and apply SVG filters"
@@ -18414,147 +18398,120 @@ msgid "Y coordinate of selected node(s)"
 msgstr "Toạ độ Y của (các) nút đã chọn"
 
 #: ../src/widgets/toolbox.cpp:2028
-#, fuzzy
 msgid "Enable snapping"
-msgstr "Cho phép gõ tắt"
+msgstr "Bám"
 
 #: ../src/widgets/toolbox.cpp:2037
-#, fuzzy
 msgid "Bounding box"
 msgstr "Hộp biên"
 
 #: ../src/widgets/toolbox.cpp:2037
-#, fuzzy
 msgid "Snap bounding box corners"
-msgstr "Đính các góc hộp giới hạn tới các góc hộp giới hạn khác"
+msgstr "Bám vào các góc của hộp giới hạn"
 
 #: ../src/widgets/toolbox.cpp:2046
-#, fuzzy
 msgid "Bounding box edges"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "Bám vào cạnh hộp"
 
 #: ../src/widgets/toolbox.cpp:2046
-#, fuzzy
 msgid "Snap to edges of a bounding box"
-msgstr "Đính các góc hộp giới hạn tới các góc hộp giới hạn khác"
+msgstr "Bám vào các cạnh của hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2055
-#, fuzzy
 msgid "Bounding box corners"
-msgstr "_Góc hộp giới hạn"
+msgstr "Bám vào góc giới hạn"
 
 #: ../src/widgets/toolbox.cpp:2055
-#, fuzzy
 msgid "Snap to bounding box corners"
-msgstr "Đính các góc hộp giới hạn tới các góc hộp giới hạn khác"
+msgstr "Bám vào góc của hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2064
-#, fuzzy
 msgid "BBox Edge Midpoints"
-msgstr "_Lề cạnh:"
+msgstr "Trung điểm của cạnh hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2064
-#, fuzzy
 msgid "Snap from and to midpoints of bounding box edges"
-msgstr "Đính các cạnh hộp giới hạn và đường gióng tới các cạnh hộp giới hạn khác"
+msgstr "Bám vào trung điểm của cạnh hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2074
-#, fuzzy
 msgid "BBox Centers"
-msgstr "Phân phối các tâm điểm đều theo chiều ngang"
+msgstr "Tâm hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2074
-#, fuzzy
 msgid "Snapping from and to centers of bounding boxes"
-msgstr "Đính các cạnh hộp giới hạn và đường gióng tới các cạnh hộp giới hạn khác"
+msgstr "Bám vào tâm của hộp bao"
 
 #: ../src/widgets/toolbox.cpp:2083
-#, fuzzy
 msgid "Snap nodes or handles"
-msgstr "Hiện các chốt Bezier của các nút đã chọn"
+msgstr "Bám vào nút hoặc chốt"
 
 #: ../src/widgets/toolbox.cpp:2091
-#, fuzzy
 msgid "Snap to paths"
-msgstr "Đính nút tới đường nét đối tượng"
+msgstr "Bám vào đường nét"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Path intersections"
-msgstr "_Tìm giao"
+msgstr "Phần giao đường nét"
 
 #: ../src/widgets/toolbox.cpp:2100
-#, fuzzy
 msgid "Snap to path intersections"
-msgstr "Giao khi đính lưới/nết dẫn"
+msgstr "Bám vào phần giao các đường nét"
 
 #: ../src/widgets/toolbox.cpp:2109
-#, fuzzy
 msgid "To nodes"
-msgstr "Kéo để sắp xếp lại các nút"
+msgstr "Vào nút"
 
 #: ../src/widgets/toolbox.cpp:2109
-#, fuzzy
 msgid "Snap to cusp nodes"
-msgstr "Đính nút tới đường nét đối tượng"
+msgstr "Bám vào nút đỉnh"
 
 #: ../src/widgets/toolbox.cpp:2118
-#, fuzzy
 msgid "Smooth nodes"
-msgstr "Làm cho mỗi nút đã chọn là mịn"
+msgstr "Nút mịn"
 
 #: ../src/widgets/toolbox.cpp:2118
-#, fuzzy
 msgid "Snap to smooth nodes"
-msgstr "Đính nút tới đường nét đối tượng"
+msgstr "Bám vào nút mịn"
 
 #: ../src/widgets/toolbox.cpp:2127
-#, fuzzy
 msgid "Line Midpoints"
-msgstr "Quần Đảo Line"
+msgstr "Trung điểm của đoạn"
 
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Snap from and to midpoints of line segments"
-msgstr ""
+msgstr "Bám vào trung điểm của một đoạn thẳng"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Object Centers"
-msgstr "Hàm đối tượng"
+msgstr "Tâm đối tượng"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Snap from and to centers of objects"
-msgstr "Đính các nút với đường gióng tới các nút đối tượng"
+msgstr "Bám vào tâm của đối tượng"
 
 #: ../src/widgets/toolbox.cpp:2145
-#, fuzzy
 msgid "Rotation Centers"
-msgstr "Góc xoay"
+msgstr "Tâm xoay"
 
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Snap from and to an item's rotation center"
-msgstr ""
+msgstr "Bám vào tâm xoay của đối tượng"
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Page border"
-msgstr "Màu của viền trang."
+msgstr "Viền trang."
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Snap to the page border"
-msgstr "Quay trở về trang trước"
+msgstr "Bám vào viền của trang giấy"
 
 #: ../src/widgets/toolbox.cpp:2163
-#, fuzzy
 msgid "Snap to grids"
-msgstr "<b>Đính lưới</b>"
+msgstr "Bám vào lưới"
 
 #: ../src/widgets/toolbox.cpp:2172
-#, fuzzy
 msgid "Snap to guides"
-msgstr "<b>Đính đường gióng</b>"
+msgstr "Bám vào đường gióng"
 
 #: ../src/widgets/toolbox.cpp:2377
 msgid "Star: Change number of corners"
@@ -19136,7 +19093,7 @@ msgstr "chế độ cập nhật không hợp lệ"
 
 #: ../src/widgets/toolbox.cpp:4193
 msgid "Duplicate objects, with Shift delete"
-msgstr ""
+msgstr "Nhân đôi đối tượng, giữ Shift để xóa"
 
 #: ../src/widgets/toolbox.cpp:4199
 msgid "Push mode"
@@ -19669,7 +19626,7 @@ msgstr "  -V, --version       hiển thị thông tin _phiên bản_\n"
 
 #: ../src/widgets/toolbox.cpp:5648
 msgid "Display measuring info for selected items"
-msgstr ""
+msgstr "Hiển thị kích thước của mục đang chọn"
 
 #: ../src/widgets/toolbox.cpp:5668
 msgid "Open LPE dialog"
@@ -19719,7 +19676,7 @@ msgstr "Văn bản: đổi kích cỡ phông"
 
 #: ../src/widgets/toolbox.cpp:6623
 msgid "Select font family (Alt+X to access)"
-msgstr ""
+msgstr "Chọn họ phông chữ (Alt+X để truy cập)"
 
 #: ../src/widgets/toolbox.cpp:6660
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
@@ -20010,7 +19967,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "Gặp lỗi nội tại. Chưa chọn kiểu xem\n"
 
 #: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
@@ -20169,11 +20126,11 @@ msgstr "Bộ lọc xuất CGM: Siêu tập tin đồ họa máy tính"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
-msgstr ""
+msgstr "Tập tin Corel DRAW Presentation Exchange (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "Nhập tập tin Corel DRAW Presentation Exchange"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
@@ -20651,7 +20608,7 @@ msgstr "Chiều sâu"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr "Vỏ hộp"
+msgstr "Vỏ hộp chữ nhật"
 
 #: ../share/extensions/foldablebox.inx.h:5
 msgid "Paper Thickness"
@@ -20791,214 +20748,222 @@ msgid "Save Guides:"
 msgstr "Lưu đường gióng:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
-#, fuzzy
 msgid "Border Thickness [px]"
-msgstr "Bước răng hình tròn, điểm ảnh"
+msgstr "Độ dày đường viền [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
-#, fuzzy
 msgid "Cartesian Grid"
-msgstr "Vừa lưới"
+msgstr "Lưới vuông"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
+#, fuzzy
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Chia đôi khoảng ngang cấp 2. Tần suất sau 'n' khoảng cấp 1. (logarit)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
+#, fuzzy
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Chia đôi khoảng dọc cấp 2. Tần suất sau 'n' khoảng cấp 1. (logarit)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
+#, fuzzy
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Dùng thang chia logarith cho chiều ngang (Gốc được quy định bởi các tham số trên)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
+#, fuzzy
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Dùng thang chia logarith cho chiều dọc (Gốc được cho bởi các tham số trên)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 #, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm ảnh: px)"
+msgstr "Khoảng cách giữa các đường lưới ngang cấp 1 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
 #, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm ảnh: px)"
+msgstr "Độ dày đường lưới ngang cấp 1 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 #, fuzzy
 msgid "Major X Divisions"
-msgstr "Chia thời gian"
+msgstr "Số đường lưới ngang cấp 1"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
 #, fuzzy
 msgid "Major Y Division Spacing [px]"
-msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm ảnh: px)"
+msgstr "Khoảng cách giữa các đường lưới dọc cấp 1 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
 #, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "Chia thời gian"
+msgstr "Độ dày đường lưới dọc cấp 1 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 #, fuzzy
 msgid "Major Y Divisions"
-msgstr "Chia thời gian"
+msgstr "Số đường lưới dọc cấp 1"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 #, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm ảnh: px)"
+msgstr "Độ dày đường lưới ngang cấp 2 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
 #, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "Chia thời gian"
+msgstr "Độ dày đường lưới dọc cấp 2 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 #, fuzzy
 msgid "Subdivisions per Major X Division"
-msgstr "Đường trên mỗi đường chính"
+msgstr "Số khoảng giữa hai đường ngang cấp 1"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 #, fuzzy
 msgid "Subdivisions per Major Y Division"
-msgstr "Đường trên mỗi đường chính"
+msgstr "Số khoảng giữa hai đường dọc cấp 1"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
+#, fuzzy
 msgid "Subminor X Division Thickness [px]"
-msgstr ""
+msgstr "Độ dày đường lưới ngang cấp 2 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
+#, fuzzy
 msgid "Subminor Y Division Thickness [px]"
-msgstr ""
+msgstr "Độ dày đường lưới dọc cấp 2 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 #, fuzzy
 msgid "Subsubdivs. per X Subdivision"
-msgstr "%u nút thông tin trên mỗi nhóm\n"
+msgstr "Số khoảng giữa hai đường ngang cấp 2"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 #, fuzzy
 msgid "Subsubdivs. per Y Subdivision"
-msgstr "%u nút thông tin trên mỗi nhóm\n"
+msgstr "Số khoảng giữa hai đường dọc cấp 2"
 
 #: ../share/extensions/grid_polar.inx.h:1
 #, fuzzy
 msgid "Angle Divisions"
-msgstr "Chia thời gian"
+msgstr "Số góc"
 
 #: ../share/extensions/grid_polar.inx.h:2
 #, fuzzy
 msgid "Angle Divisions at Centre"
-msgstr "Góc xoay nhãn đó."
+msgstr "Số góc ở tâm"
 
 #: ../share/extensions/grid_polar.inx.h:3
+#, fuzzy
 msgid "Centre Dot Diameter [px]"
-msgstr ""
+msgstr "Đường kính tâm điểm [px]"
 
 #: ../share/extensions/grid_polar.inx.h:4
 #, fuzzy
 msgid "Circumferential Label Outset [px]"
-msgstr "Mở rộng các đường nét đã chọn ra ngoài 1 điểm ảnh"
+msgstr "Khoảng cách giữa thang chia và đường viền [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
 #, fuzzy
 msgid "Circumferential Label Size [px]"
-msgstr "Dùng cỡ trong nhãn"
+msgstr "Kích cỡ chữ ghi thang chia độ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 #, fuzzy
 msgid "Circumferential Labels"
-msgstr "&Sửa nhãn"
+msgstr "Thang chia độ"
 
 #: ../share/extensions/grid_polar.inx.h:8
+#, fuzzy
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Dùng thang chia Logarith cho khoảng cấp 1 (gốc dựa trên tham số ở trên)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 #, fuzzy
 msgid "Major Angular Division Thickness [px]"
-msgstr "lệch %02i phút"
+msgstr "Độ dày của đường đơn vị cấp 1 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:10
 #, fuzzy
 msgid "Major Circular Division Spacing [px]"
-msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm ảnh: px)"
+msgstr "Khoảng cách giữa các đường phân cách cấp 1 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:11
 #, fuzzy
 msgid "Major Circular Division Thickness [px]"
-msgstr "lệch %02i phút"
+msgstr "Độ dày đường phân cách cấp 1 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
 #, fuzzy
 msgid "Major Circular Divisions"
-msgstr "lệch %02i phút"
+msgstr "Số đường phân cách cấp 1"
 
 #: ../share/extensions/grid_polar.inx.h:13
+#, fuzzy
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "Khoảng đồng tâm chứa góc chia cấp 2, tính từ tâm"
 
 #: ../share/extensions/grid_polar.inx.h:14
+#, fuzzy
 msgid "Minor Angular Division Thickness [px]"
-msgstr ""
+msgstr "Độ dày đường chia góc phụ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:15
 #, fuzzy
 msgid "Minor Circular Division Thickness [px]"
-msgstr "lệch %02i phút"
+msgstr "Độ dày đường phân tách đồng tâm cấp 2 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:17
-#, fuzzy
 msgid "Polar Grid"
-msgstr "Khoảng giữa bán kính lưới cực"
+msgstr "Lưới tròn"
 
 #: ../share/extensions/grid_polar.inx.h:19
+#, fuzzy
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "Số khoảng chia có trong mỗi khoảng góc chính"
 
 #: ../share/extensions/grid_polar.inx.h:20
+#, fuzzy
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "Số khoảng chia có trong mỗi khoảng đồng tâm chính"
 
 #: ../share/extensions/guides_creator.inx.h:1
-#, fuzzy
 msgid "1/10"
-msgstr "8 × 10"
+msgstr "10"
 
 #: ../share/extensions/guides_creator.inx.h:2
 msgid "1/2"
-msgstr "1/2"
+msgstr "2"
 
 #: ../share/extensions/guides_creator.inx.h:3
 msgid "1/3"
-msgstr "1/3"
+msgstr "3"
 
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "1/4"
-msgstr "1/4"
+msgstr "4"
 
 #: ../share/extensions/guides_creator.inx.h:5
 msgid "1/5"
-msgstr "1/5"
+msgstr "5"
 
 #: ../share/extensions/guides_creator.inx.h:6
 msgid "1/6"
-msgstr "1/6"
+msgstr "6"
 
 #: ../share/extensions/guides_creator.inx.h:7
 msgid "1/7"
-msgstr "1/7"
+msgstr "7"
 
 #: ../share/extensions/guides_creator.inx.h:8
 msgid "1/8"
-msgstr "1/8"
+msgstr "8"
 
 #: ../share/extensions/guides_creator.inx.h:9
 msgid "1/9"
-msgstr "1/9"
+msgstr "9"
 
 #: ../share/extensions/guides_creator.inx.h:10
 msgid "Custom..."
@@ -21010,35 +20975,31 @@ msgstr "Bỏ các đường gióng đã có"
 
 #: ../share/extensions/guides_creator.inx.h:12
 msgid "Golden ratio"
-msgstr "Tỷ lệ vàng (xấp xỉ 1/3)"
+msgstr "Tỷ lệ vàng"
 
 #: ../share/extensions/guides_creator.inx.h:13
 msgid "Guides creator"
 msgstr "Tạo nhiều đường gióng"
 
 #: ../share/extensions/guides_creator.inx.h:14
-#, fuzzy
 msgid "Horizontal guide each"
-msgstr "Thêm nét dẫn nằm ngang"
+msgstr "Số đường gióng ngang"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
 msgstr "Thiết lập sẵn"
 
 #: ../share/extensions/guides_creator.inx.h:18
-#, fuzzy
 msgid "Rule-of-third"
-msgstr "Phần ba rộng"
+msgstr "Quy tắc chia ba"
 
 #: ../share/extensions/guides_creator.inx.h:19
-#, fuzzy
 msgid "Start from edges"
-msgstr "từ %(start)s đến %(end)s"
+msgstr "Thêm các đường gióng theo cạnh trang giấy"
 
 #: ../share/extensions/guides_creator.inx.h:20
-#, fuzzy
 msgid "Vertical guide each"
-msgstr "Thêm nét dẫn nằm dọc"
+msgstr "Số đường gióng dọc"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -21886,8 +21847,8 @@ msgstr "HIệu ứng này di chuyển ngẫu nhiên vị trí các nút (hoặc 
 msgid "Use normal distribution"
 msgstr "Dùng phân phối chuẩn"
 
+#. Alphabet Soup randomly mashes glyph-elements together to make exotic looking text.
 #: ../share/extensions/render_alphabetsoup.inx.h:1
-#. Alphabet Soup randomly mashes glyph-elements together to make exotic looking text. 
 msgid "Alphabet Soup"
 msgstr "Chữ ấn tượng"
 
@@ -21948,7 +21909,6 @@ msgid "Radial Outward"
 msgstr "Xoay tròn, lồi ra ngoài"
 
 #: ../share/extensions/restack.inx.h:12
-
 msgid "Restack"
 msgstr "Sắp xếp lại độ cao"
 
@@ -22031,8 +21991,8 @@ msgstr "Dữ liệu nhập Sketch"
 msgid "Gear Placement"
 msgstr "Cách đặt bánh răng"
 
-#: ../share/extensions/spirograph.inx.h:2
 #. (Hypotrochoid) = nội trocoit
+#: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
 msgstr "Vào trong (Hypotrochoid)"
 
