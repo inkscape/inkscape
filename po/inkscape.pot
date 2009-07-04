@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-25 17:08+0200\n"
+"POT-Creation-Date: 2009-07-04 09:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -510,6 +510,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
 #: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
 msgid "Bumps"
 msgstr ""
 
@@ -1722,6 +1723,15 @@ msgstr ""
 msgid "White splotches evocating carnaval masks"
 msgstr ""
 
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:197
+msgid ""
+"Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr ""
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr ""
@@ -1886,30 +1896,30 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 
-#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:305 ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr ""
 
@@ -5258,7 +5268,7 @@ msgstr ""
 msgid "Document saved."
 msgstr ""
 
-#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
+#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr ""
@@ -5288,24 +5298,24 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr ""
 
-#: ../src/file.cpp:1182 ../src/file.cpp:1296
+#: ../src/file.cpp:1201 ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr ""
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr ""
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
 msgstr ""
 
-#: ../src/file.cpp:1374
+#: ../src/file.cpp:1393
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5313,11 +5323,11 @@ msgid ""
 "didn't forget to choose a license."
 msgstr ""
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr ""
 
-#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -19507,7 +19517,7 @@ msgstr ""
 msgid "The second path must be exactly four nodes long."
 msgstr ""
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr ""
@@ -20474,6 +20484,22 @@ msgid "HPGL Output"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr ""
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr ""
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr ""
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr ""
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr ""
 
