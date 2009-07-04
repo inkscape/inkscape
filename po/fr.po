@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-29 20:49+0200\n"
-"PO-Revision-Date: 2009-06-29 20:53+0100\n"
+"POT-Creation-Date: 2009-07-04 09:03+0200\n"
+"PO-Revision-Date: 2009-07-04 20:51+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -591,6 +591,7 @@ msgstr "Bosselage TSL"
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
 msgid "Bumps"
 msgstr "Bosselage"
 
@@ -1802,6 +1803,14 @@ msgstr "Carnaval"
 msgid "White splotches evocating carnaval masks"
 msgstr "Taches blanches évoquant des masques de carnaval"
 
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr "Plastifier"
+
+#: ../share/filters/filters.svg.h:197
+msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr "Combine un bosselage de type détection de contours TSL avec un effet de surface ondulant et réflectif."
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Rayures 1:1"
@@ -1966,26 +1975,26 @@ msgstr "Textile (bitmap)"
 msgid "Old paint (bitmap)"
 msgstr "Peinture vieillie (bitmap)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b> : dessiner des cercles ou des ellipses de ratio entier, forcer la modification des angles des arcs/camemberts par incréments"
 
-#: ../src/arc-context.cpp:304
+#: ../src/arc-context.cpp:305
 #: ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Maj</b> : dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellipse</b> : %s &#215; %s; (contrainte de ratio %d:%d); <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellipse</b> : %s &#215; %s; <b>Ctrl</b> pour dessiner des cercles ou des ellipses de ratio entier, <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr "Créer une ellipse"
 
@@ -11149,11 +11158,11 @@ msgstr "Aucun fichier sélectionné"
 #: ../src/ui/dialog/fill-and-stroke.cpp:48
 #: ../share/extensions/interp_att_g.inx.h:4
 msgid "Fill"
-msgstr "Remplissage"
+msgstr "Fond"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:49
 msgid "Stroke _paint"
-msgstr "Rem_plissage du contour"
+msgstr "Contour"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:50
 msgid "Stroke st_yle"
@@ -17602,7 +17611,7 @@ msgstr "Pointillés :"
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 #: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers:"
-msgstr "Marqueurs de début :"
+msgstr "Marqueurs initiaux :"
 
 #: ../src/widgets/stroke-style.cpp:1234
 msgid "Start Markers are drawn on the first node of a path or shape"
@@ -17610,7 +17619,7 @@ msgstr "Les marqueurs de début sont dessinés sur le premier nœud d'un chemin 
 
 #: ../src/widgets/stroke-style.cpp:1243
 msgid "Mid Markers:"
-msgstr "Marqueurs intermédiaires :"
+msgstr "intermédiaires :"
 
 #: ../src/widgets/stroke-style.cpp:1245
 msgid "Mid Markers are drawn on every node of a path or shape except the first and last nodes"
@@ -17618,7 +17627,7 @@ msgstr "Les marqueurs intermédiaires sont dessinés sur chaque nœud d'un chemi
 
 #: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers:"
-msgstr "Marqueurs de fin :"
+msgstr "terminaux :"
 
 #: ../src/widgets/stroke-style.cpp:1256
 msgid "End Markers are drawn on the last node of a path or shape"
@@ -20304,6 +20313,22 @@ msgid "HPGL Output"
 msgstr "Sortie HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr "Refléter sur l'axe Y"
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr "Tracer les calques invisibles"
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr "Origine de l'axe X (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr "Origine de l'axe Y (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr "Planéité de la sortie HPGL"
 
