@@ -201,7 +201,7 @@ msgstr "Loang mực"
 #: ../share/filters/filters.svg.h:42
 #: ../share/filters/filters.svg.h:176
 msgid "Protrusions"
-msgstr "Nhô ra"
+msgstr "Biến đổi cạnh"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
@@ -209,11 +209,11 @@ msgstr "Khiến đối tượng trông như bị nhòe mực lúc vẽ"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Fire"
-msgstr "Lửa"
+msgstr "Bốc lửa"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Edges of object are on fire"
-msgstr "Làm các cạnh của đối tượng giống như đang bốc cháy"
+msgstr "Lửa cháy rực trên các cạnh của đối tượng"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Bloom"
@@ -893,13 +893,12 @@ msgid "Outlining the lines and smoothing their crossings"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:78
-#, fuzzy
 msgid "Cubes"
-msgstr "Lập phương"
+msgstr "Khối vuông"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr ""
+msgstr "Các khối vuông sắp xếp lẫn lộn; điều chỉnh tham số Chuyển dạng để thay đổi kích thước"
 
 #. TODO: Không rõ đây là vỏ hoa quả được gọt ra, hay là phoi bào khi bào gỗ?
 #: ../share/filters/filters.svg.h:79
@@ -968,13 +967,12 @@ msgid "Inner colorized shadow, outer black shadow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:87
-#, fuzzy
 msgid "Air spray"
-msgstr "Máy làm khô phun"
+msgstr "Sơn phun"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Air Spray; adjust the Displacement Map amount"
-msgstr ""
+msgstr "Sơn phun; điều chỉnh Bản đồ chuyển vị"
 
 #: ../share/filters/filters.svg.h:88
 #, fuzzy
@@ -1075,20 +1073,19 @@ msgstr ""
 #: ../share/filters/filters.svg.h:99
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
-msgstr "Làm hỏng vì phơi quá"
+msgstr "Tạo ảnh bán âm"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "Hòa trộn dương bản và âm bản; các mảng sáng sẽ bị nghịch đảo thành đen"
 
 #: ../share/filters/filters.svg.h:100
-#, fuzzy
 msgid "Moonarize"
-msgstr "Tô màu"
+msgstr "Tạo ảnh bán âm, đảo màu"
 
 #: ../share/filters/filters.svg.h:100
 msgid "An effect between solarize and invert which often preserves sky and water lights"
-msgstr ""
+msgstr "Hiệu ứng kết hợp giữa Hỏng do phơi lâu với Đảo màu, thường giữ lại màu da trời và màu mặt nước"
 
 #: ../share/filters/filters.svg.h:101
 #, fuzzy
@@ -1590,24 +1587,23 @@ msgid "Comics shader with creamy waves transparency"
 msgstr "Tạo bóng theo phong cách truyện tranh, với các mảng trong suốt uốn lượn"
 
 #: ../share/filters/filters.svg.h:167
-#, fuzzy
 msgid "Black Light"
-msgstr "Đen trên vàng nhạt"
+msgstr "Tô đen vùng sáng"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Light areas turn to black"
-msgstr ""
+msgstr "Những vùng càng sáng càng bị sẫm đen lại nhiều hơn."
 
 #. Eraser
 #: ../share/filters/filters.svg.h:168
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
 msgid "Eraser"
-msgstr "Tẩy bớt màu sáng"
+msgstr "Làm vùng sáng trong suốt"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr "Tăng độ trong suốt cho những mảng màu sáng của đối tượng"
+msgstr "Những mảng màu càng sáng, độ trong suốt càng cao"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Noisy blur"
@@ -1666,13 +1662,12 @@ msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Tạo nét vẽ trong suốt, giữ màu nét vẽ, làm trong suốt những mảng màu và ảnh"
 
 #: ../share/filters/filters.svg.h:176
-#, fuzzy
 msgid "Chewing gum"
-msgstr "Kẹo cao su bong bóng"
+msgstr "Kẹo cao su"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings"
-msgstr ""
+msgstr "Tạo bề mặt trơn, nhẵn, phủ lên phần trong của đối tượng để làm nổi phần cạnh"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Black outline"
@@ -4895,7 +4890,6 @@ msgstr "Tạo ra từ Đường nét"
 # Name: don't translate / Tên: đừng dịch
 #: ../src/extension/internal/cairo-ps-out.cpp:274
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "PostScript"
 msgstr "PostScript"
 
@@ -4912,19 +4906,17 @@ msgstr "PostScript cấp 3"
 #: ../src/extension/internal/cairo-ps-out.cpp:279
 #: ../src/extension/internal/cairo-ps-out.cpp:316
 msgid "PostScript level 2"
-msgstr "Mức 2 PostScript"
+msgstr "PostScript cấp 2"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-#, fuzzy
 msgid "Export area is whole canvas"
 msgstr "Vùng được xuất là toàn vùng vẽ"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:283
 #: ../src/extension/internal/cairo-ps-out.cpp:320
-#, fuzzy
 msgid "Export area is the drawing"
-msgstr "Vùng chứa đường vẽ bằng tay không"
+msgstr "Vùng được xuất là vùng chứa nội dung"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
@@ -4964,20 +4956,17 @@ msgstr "Tập tin PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:311
 #: ../share/extensions/eps_input.inx.h:2
-#, fuzzy
 msgid "Encapsulated PostScript"
-msgstr "PostScript bao bọc"
+msgstr "Encapsulated PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../share/extensions/eps_input.inx.h:3
-#, fuzzy
 msgid "Encapsulated PostScript (*.eps)"
-msgstr "PostScript bao bọc (*.eps)"
+msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
-#, fuzzy
 msgid "Encapsulated PostScript File"
-msgstr "Tập tin PostScript bao bọc"
+msgstr "Tập tin Encapsulated PostScript"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
@@ -5100,19 +5089,16 @@ msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "Gặp tên thư mục mô-đun bên ngoài rỗng nên các mô-đun sẽ không được tải."
 
 #: ../src/extension/internal/filter/snow.h:32
-#, fuzzy
 msgid "Snow crest"
-msgstr "Lướt sóng và Tuyết"
+msgstr "Tuyết phủ"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size"
-msgstr "Kích cỡ không khớp được"
+msgstr "Độ lệch"
 
 #: ../src/extension/internal/filter/snow.h:42
-#, fuzzy
 msgid "Snow has fallen on object"
-msgstr "Đặt kiểu dáng cho đối tượng"
+msgstr "Tuyết phủ trắng lên các cạnh của đối tượng"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
@@ -11181,17 +11167,16 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:272
 #: ../src/ui/dialog/document-properties.cpp:278
 #: ../src/ui/dialog/document-properties.cpp:284
-#, fuzzy
 msgid "Always snap"
-msgstr "Dính tới"
+msgstr "Luôn bật bám dính"
 
 #: ../src/ui/dialog/document-properties.cpp:273
 msgid "Snapping distance, in screen pixels, for snapping to objects"
-msgstr "Khoảng cách đính, theo điểm ảnh trên màn hình, để đính đối tượng"
+msgstr "Khoảng cách tối thiểu (bằng điểm ảnh trên màn hình) sẽ kích hoạt bám dính đối tượng"
 
 #: ../src/ui/dialog/document-properties.cpp:273
 msgid "Always snap to objects, regardless of their distance"
-msgstr ""
+msgstr "Luôn bám dính tới đối tượng, bất kể khoảng cách"
 
 #: ../src/ui/dialog/document-properties.cpp:274
 msgid "If set, objects only snap to another object when it's within the range specified below"
@@ -11199,13 +11184,12 @@ msgstr "Bật tùy chọn này thì đối tượng chỉ đính đối tượng
 
 #. Options for snapping to grids
 #: ../src/ui/dialog/document-properties.cpp:278
-#, fuzzy
 msgid "Snap d_istance"
-msgstr "Dính tới"
+msgstr "Khoảng cách _bám dính"
 
 #: ../src/ui/dialog/document-properties.cpp:278
 msgid "Snap only when c_loser than:"
-msgstr ""
+msgstr "Chỉ bắt đầu bám dính khi _gần hơn:"
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Snapping distance, in screen pixels, for snapping to grid"
@@ -11213,7 +11197,7 @@ msgstr "Khoảng cách đính, theo điểm ảnh trên màn hình, để đính
 
 #: ../src/ui/dialog/document-properties.cpp:279
 msgid "Always snap to grids, regardless of the distance"
-msgstr ""
+msgstr "Luôn bám dính vào lưới, bất kể khoảng cách"
 
 #: ../src/ui/dialog/document-properties.cpp:280
 msgid "If set, objects only snap to a grid line when it's within the range specified below"
@@ -11222,19 +11206,19 @@ msgstr "Bật tùy chọn này thì đối tượng chỉ đính đường lư�
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap dist_ance"
-msgstr "Khoản_g đĩnh"
+msgstr "Khoản_g cách bám dính"
 
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap only when close_r than:"
-msgstr ""
+msgstr "Chỉ bám dính khi _gần hơn:"
 
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "Snapping distance, in screen pixels, for snapping to guides"
-msgstr "Khoảng cách đính, theo điểm ảnh trên màn hình, để đính đường gióng"
+msgstr "Khoảng cách đính, theo điểm ảnh trên màn hình, để bám dính vào đường gióng"
 
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "Always snap to guides, regardless of the distance"
-msgstr ""
+msgstr "Luôn bám dính vào đường gióng, bất kể khoảng cách"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid "If set, objects only snap to a guide when it's within the range specified below"
@@ -11242,25 +11226,24 @@ msgstr "Bật tùy chọn này thì đối tượng chỉ đính đường gión
 
 #: ../src/ui/dialog/document-properties.cpp:290
 msgid "<b>Snap to objects</b>"
-msgstr "<b>Đính đối tượng</b>"
+msgstr "<b>Bám dính vào đối tượng</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "<b>Snap to grids</b>"
-msgstr "<b>Đính lưới</b>"
+msgstr "<b>Bám dính vào lưới</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:294
 msgid "<b>Snap to guides</b>"
-msgstr "<b>Đính đường gióng</b>"
+msgstr "<b>Bám dính vào đường gióng</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:323
-#, fuzzy
 msgid "(invalid UTF-8 string)"
-msgstr "(chuỗi UTF-8 sai)"
+msgstr "(chuỗi UTF-8 không hợp lệ)"
 
 #: ../src/ui/dialog/document-properties.cpp:349
-#, fuzzy, c-format
+#, c-format
 msgid "Color profiles directory (%s) is unavailable."
-msgstr "Thư mục bảng màu (%s) không sẵn sàng."
+msgstr "Không sử dụng được Thư mục hồ sơ màu (%s)."
 
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
@@ -11268,39 +11251,32 @@ msgstr "Thư mục bảng màu (%s) không sẵn sàng."
 #. Color Management
 #: ../src/ui/dialog/document-properties.cpp:416
 #: ../src/verbs.cpp:2739
-#, fuzzy
 msgid "Link Color Profile"
-msgstr "Hồ sơ màu nhúng:"
+msgstr "Hồ sơ màu liên kết"
 
 #: ../src/ui/dialog/document-properties.cpp:489
-#, fuzzy
 msgid "Remove linked color profile"
-msgstr "Hồ sơ màu của vùng làm việc hiện có :"
+msgstr "Xóa các Hồ sơ màu liên kết"
 
 #: ../src/ui/dialog/document-properties.cpp:503
-#, fuzzy
 msgid "<b>Linked Color Profiles:</b>"
-msgstr "Thư mục hồ sơ màu"
+msgstr "<b>Hồ sơ màu liên kết</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:505
-#, fuzzy
 msgid "<b>Available Color Profiles:</b>"
-msgstr "Thư mục hồ sơ màu"
+msgstr "<b>Các hồ sơ màu sử dụng được:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:507
-#, fuzzy
 msgid "Link Profile"
-msgstr "URL lý lịch"
+msgstr "Hồ sơ màu liên kết"
 
 #: ../src/ui/dialog/document-properties.cpp:538
-#, fuzzy
 msgid "Profile Name"
 msgstr "Tên hồ sơ"
 
 #: ../src/ui/dialog/document-properties.cpp:569
-#, fuzzy
 msgid "<b>External script files:</b>"
-msgstr "đang dùng văn lệnh liên kết bên ngoài:"
+msgstr "<b>Văn lệnh ngoài chương trình:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:571
 #: ../src/ui/dialog/swatches.cpp:458
@@ -11314,11 +11290,11 @@ msgstr "Tên tập tin"
 #. inform the document, so we can undo
 #: ../src/ui/dialog/document-properties.cpp:634
 msgid "Add external script..."
-msgstr "Chạy một văn lệnh ngoài hệ thống..."
+msgstr "Chạy một văn lệnh ngoài chương trình..."
 
 #: ../src/ui/dialog/document-properties.cpp:658
 msgid "Remove external script"
-msgstr "Xóa văn lệnh ngoài hệ thống"
+msgstr "Xóa văn lệnh ngoài chương trình"
 
 #: ../src/ui/dialog/document-properties.cpp:735
 msgid "<b>Creation</b>"
@@ -11330,7 +11306,7 @@ msgstr "<b>Lưới đã xác định</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:946
 msgid "Remove grid"
-msgstr "Bỏ lưới"
+msgstr "Xóa bỏ lưới"
 
 #: ../src/ui/dialog/extension-editor.cpp:80
 msgid "Information"
@@ -11402,14 +11378,12 @@ msgid "Guess from extension"
 msgstr "Dựa vào phần mở rộng của tập tin"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
-#, fuzzy
 msgid "Left edge of source"
-msgstr "(cạnh bên trái ở trên)"
+msgstr "Cạnh trái của nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
-#, fuzzy
 msgid "Top edge of source"
-msgstr "Bảng điều khiển cạnh đỉnh"
+msgstr "Cạnh trên của nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
 #, fuzzy
@@ -12180,44 +12154,40 @@ msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; whe
 msgstr "Bật tùy chọn này thì bánh xe chuột không ấn Ctrl — thu phóng, ấn giữ Ctrl — cuộn vùng vẽ; Không thì không ấn Ctrl — cuộn vùng vẽ, ấn giữ Ctrl — thu phóng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:217
-#, fuzzy
 msgid "Enable snap indicator"
-msgstr "Dùng chỉ thị c&hú ý"
+msgstr "Hiển thị điểm bám dính"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "After snapping, a symbol is drawn at the point that has snapped"
-msgstr ""
+msgstr "Sau khi bám dính, một ký hiệu sẽ xuất hiện tại điểm bám dính"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
-#, fuzzy
 msgid "Delay (in ms):"
-msgstr " D - Khoảng đợi xuống dòng (mili-giây) :"
+msgstr "Thời gian chờ (ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"
-msgstr ""
+msgstr "Chờ một khoảng thời gian trước khi bám dính, kể từ khi chuột ngừng di chuyển. Thời gian chờ được thiết lập ở đây. Nếu đặt là không hoặc một giá trị rất nhỏ, con trỏ sẽ bị bám dính ngay lập tức"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:225
 msgid "Only snap the node closest to the pointer"
-msgstr ""
+msgstr "Chỉ bám dính vào nút gần con trỏ nhất"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
 msgid "Only try to snap the node that is initialy closest to the mouse pointer"
-msgstr ""
+msgstr "Chỉ thử bám dính vào đối tượng gần con trỏ chuột nhất ngay lúc đó"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
-#, fuzzy
 msgid "Weight factor:"
-msgstr "Hệ số suy hao:"
+msgstr "Hệ số ưu tiên:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:231
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
-msgstr ""
+msgstr "Khi có nhiều vị trí có thể bám vào, Inkscape sẽ ưu tiên hình gần con trỏ nhất (khi đặt là 0) hoặc nút con trỏ gần nhất (khi đặt là 1)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
-#, fuzzy
 msgid "Snapping"
-msgstr "<b>Đính</b>"
+msgstr "Bám dính"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -13040,21 +13010,20 @@ msgid "Absolute Colorimetric"
 msgstr "Sắc kế tuyệt đối"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:830
-#, fuzzy
 msgid "(Note: Color management has been disabled in this build)"
-msgstr "(Ghi chú : chức năng « Quản lý màu » bị tắt trong bản xây dựng này)"
+msgstr "(Ghi chú : chức năng Quản lý màu bị tắt trong bản xây dựng này)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:834
-#, fuzzy
 msgid "Display adjustment"
-msgstr "Điều chỉnh sắc độ"
+msgstr "Điều chỉnh hiển thị"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:844
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
-msgstr "Hồ sơ ICC cần dùng để định chuẩn kết xuất màn hình."
+msgstr "Hồ sơ ICC cần dùng để định chuẩn kết xuất màn hình.\n"
+"Các thư mục sẽ tìm kiếm:%s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:845
 msgid "Display profile:"
@@ -13122,9 +13091,8 @@ msgid "Device rendering intent:"
 msgstr "Ý định vẽ thiết bị:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:886
-#, fuzzy
 msgid "Black point compensation"
-msgstr "_Bù điểm đen"
+msgstr "Bù điểm đen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Enables black point compensation."
@@ -13139,7 +13107,6 @@ msgid "(LittleCMS 1.15 or later required)"
 msgstr "(Cần LittleCMS 1.15 hay sau)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:897
-#, fuzzy
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Bảo tồn kênh K khi chuyển dạng CMYK -> CMYK"
 
@@ -13148,18 +13115,16 @@ msgid "<none>"
 msgstr "<không có>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:955
-#, fuzzy
 msgid "Color management"
 msgstr "Quản lý màu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:960
-#, fuzzy
 msgid "Major grid line emphasizing"
-msgstr "Màu đường lưới chính"
+msgstr "Làm nổi các đường lưới chính"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:962
 msgid "Don't emphasize gridlines when zoomed out"
-msgstr "Không làm nổi các đường gióng khi thu nhỏ"
+msgstr "Không làm nổi các đường lưới khi thu nhỏ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:963
 msgid "If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color."
@@ -13171,118 +13136,100 @@ msgstr "Thiết lập lưới mặc định"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:971
 #: ../src/ui/dialog/inkscape-preferences.cpp:992
-#, fuzzy
 msgid "Grid units:"
-msgstr "Đơn _vị lưới:"
+msgstr "Đơn vị lưới:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
-#, fuzzy
 msgid "Origin X:"
-msgstr "Gốc"
+msgstr "Gốc ngang"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
-#, fuzzy
 msgid "Origin Y:"
-msgstr "Gốc"
+msgstr "Gốc dọc"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:978
-#, fuzzy
 msgid "Spacing X:"
-msgstr "Khoảng cách"
+msgstr "Khoảng cách ngang:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:979
 #: ../src/ui/dialog/inkscape-preferences.cpp:998
-#, fuzzy
 msgid "Spacing Y:"
-msgstr "Khoảng cách"
+msgstr "Khoảng cách dọc:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:981
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1003
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
-#, fuzzy
 msgid "Grid line color:"
-msgstr "_Màu đường lưới:"
+msgstr "Màu đường lưới:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:982
 #: ../src/ui/dialog/inkscape-preferences.cpp:1004
-#, fuzzy
 msgid "Color used for normal grid lines"
-msgstr "Chọn màu dùng cho các đường lưới chuẩn."
+msgstr "Chọn màu dùng cho các đường lưới chuẩn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:983
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
-#, fuzzy
 msgid "Major grid line color:"
-msgstr "Màu đường lưới chính"
+msgstr "Màu đường lưới chính:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/dialog/inkscape-preferences.cpp:1006
-#, fuzzy
 msgid "Color used for major (highlighted) grid lines"
 msgstr "Chọn màu dùng cho các đường lưới chính (đã tô sáng)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:986
 #: ../src/ui/dialog/inkscape-preferences.cpp:1008
-#, fuzzy
 msgid "Major grid line every:"
-msgstr "Đường lưới chính mỗi"
+msgstr "Khoảng đường lưới chính:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:987
 msgid "Show dots instead of lines"
-msgstr "Hiện chấm thay cho đường"
+msgstr "Hiện chấm thay cho đường lưới"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:988
-#, fuzzy
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr "Bật tùy chọn này thì hiển thị chấm ở điểm lưới, thay cho đường lưới."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1015
-#, fuzzy
 msgid "Use named colors"
-msgstr "&Sử dụng màu tự chọn"
+msgstr "Dùng tên màu thay cho mã màu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1016
 msgid "If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"
 msgstr "Nếu chọn, viết tên CSS của màu nếu có (v.d, 'red' hay 'magenta') thay vì giá trị số hexa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
-#, fuzzy
 msgid "XML formatting"
-msgstr "Phần tử Định dạng"
+msgstr "Định dạng XML"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1020
-#, fuzzy
 msgid "Inline attributes"
-msgstr "Xoá các thuộc tính"
+msgstr "Đặt thuộc tính trên cùng dòng với thẻ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Put attributes on the same line as the element tag"
 msgstr "Đặt thuộc tính vào cùng dòng với thẻ tương ứng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid "Indent, spaces:"
-msgstr "Vẽ dấu cách"
+msgstr "Thụt lề bằng dấu cách:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1024
-#, fuzzy
 msgid "The number of spaces to use for indenting nested elements; set to 0 for no indentation"
-msgstr "Số dấu cách của mỗi bước thụt lề"
+msgstr "Số dấu cách của mỗi bước thụt lề; đặt là 0 để bỏ các cấp thụt lề"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1026
-#, fuzzy
 msgid "Path data"
-msgstr "cat (dữ liệu)"
+msgstr "Dữ liệu đường nét"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1028
-#, fuzzy
 msgid "Allow relative coordinates"
-msgstr "Nói t_oạ độ ô"
+msgstr "Cho phép dùng hệ tọa độ tương đối"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1029
 msgid "If set, relative coordinates may be used in path data"
@@ -13298,7 +13245,6 @@ msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' inst
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1034
-#, fuzzy
 msgid "Numbers"
 msgstr "Số"
 
@@ -13309,7 +13255,7 @@ msgstr "Đặt độ chính xác"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "How many digits to write after the decimal dot"
-msgstr ""
+msgstr "Số chữ số đặt sau dấu phẩy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 #, fuzzy
@@ -13641,105 +13587,89 @@ msgid "Ukrainian (uk)"
 msgstr "A-M|Tiếng Anh (quốc Anh)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
-#, fuzzy
 msgid "Vietnamese (vi)"
-msgstr "Phím Vi"
+msgstr "Tiếng Việt (vi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1065
-#, fuzzy
 msgid "Language (requires restart):"
-msgstr "Ứng xử hộp thoại (cần khởi chạy lại):"
+msgstr "Ngôn ngữ (cần khởi chạy lại):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1066
 msgid "Set the language for menus and number formats"
 msgstr "Đặt ngôn ngữ dùng cho trình đơn và biểu diễn số"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1068
-#, fuzzy
 msgid "Smaller"
 msgstr "Nhỏ hơn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#, fuzzy
 msgid "Toolbox icon size"
-msgstr "Cỡ biểu tượng thanh công cụ"
+msgstr "Kích thước biểu tượng trên hộp công cụ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1073
-#, fuzzy
 msgid "Set the size for the tool icons (requires restart)"
-msgstr "Khiến thanh công cụ chính dùng kích cỡ thanh công cụ « phụ » (cần khởi chạy lại)"
+msgstr "Kích cỡ biểu tượng các công cụ (cần khởi chạy lại)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1076
-#, fuzzy
 msgid "Control bar icon size"
-msgstr "Kích cỡ của biểu tượng cần dùng."
+msgstr "Kích cỡ biểu tượng trên thanh điều khiển"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
-#, fuzzy
 msgid "Set the size for the icons in tools' control bars to use (requires restart)"
-msgstr "Khiến thanh công cụ chính dùng kích cỡ thanh công cụ « phụ » (cần khởi chạy lại)"
+msgstr "Kích thước các biểu tượng nằm trên thanh điều khiển (cần khởi chạy lại)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
-#, fuzzy
 msgid "Secondary toolbar icon size"
-msgstr "Kích cỡ của biểu tượng cần dùng."
+msgstr "Kích cỡ biểu tượng trên thanh công cụ phụ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-#, fuzzy
 msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
-msgstr "Khiến thanh công cụ chính dùng kích cỡ thanh công cụ « phụ » (cần khởi chạy lại)"
+msgstr "Kích cỡ biểu tượng nằm trên thanh công cụ phụ (cần khởi chạy lại)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Work-around color sliders not drawing."
-msgstr ""
+msgstr "Sửa lỗi không hiển thị thanh trượt màu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1086
 msgid "When on, will attempt to work around bugs in certain GTK themes drawing color sliders."
-msgstr ""
+msgstr "Bật chế độ sửa lỗi cho một số sắc thái giao diện GTK nếu bị lỗi không hiển thị được thanh trượt màu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1092
-#, fuzzy
 msgid "Clear list"
-msgstr "Gột danh sách"
+msgstr "Xóa danh sách"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1097
-#, fuzzy
 msgid "Maximum documents in Open Recent:"
-msgstr "Số tối đa các tài liệu vừa mở :"
+msgstr "Số mục có trong danh sách Mở gần đây:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-#, fuzzy
 msgid "Set the maximum length of the Open Recent list in the File menu, or clear the list"
-msgstr "Chiều dài tối đa của danh sách Mở Gần Đây trong trình đơn Tập Tin."
+msgstr "Số mục sẽ được lưu lại trong lệnh Mở Gần Đây (trình đơn Tập Tin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
-#, fuzzy
 msgid "Zoom correction factor (in %):"
-msgstr "Phóng to trên một điểm"
+msgstr "Sửa hệ số thu phóng (%):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
-msgstr ""
+msgstr "Điều chỉnh thanh trượt đến khi chiều dài của thước trên màn hình khớp với chiều dài thực. Thông tin này được sử dụng khi thu phóng đến tỉ lệ 1:1, 1:2... để hiển thị bản vẽ ở kích thước thật"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
-#, fuzzy
 msgid "Interface"
 msgstr "Giao diện"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1111
-#, fuzzy
 msgid "Enable autosave (requires restart)"
-msgstr "Ứng xử hộp thoại (cần khởi chạy lại):"
+msgstr "Bật chế độ sao lưu tự động (cần khởi chạy lại):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1112
 msgid "Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"
 msgstr "Tự động lưu (các) tài liệu đang mở sau một chu kỳ để tránh mất dữ liệu trong trường hợp Inkscape bị treo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
-#, fuzzy
 msgid "Interval (in minutes):"
-msgstr "Khoảng chờ tối thiểu (mili giây)"
+msgstr "Chu kỳ tự động lưu (phút)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Interval (in minutes) at which document will be autosaved"
@@ -13748,19 +13678,16 @@ msgstr "Chu kỳ (tính bằng phút) thực hiện việc tự động lưu tà
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
-#, fuzzy
 msgid "filesystem|Path:"
-msgstr "Đường dẫn tới hệ thống tập tin của dự án"
+msgstr "Đường dẫn:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
-#, fuzzy
 msgid "The directory where autosaves will be written"
-msgstr "Thư mục sẽ chứa tập tin co sở dữ liệu"
+msgstr "Thư mục sẽ chứa tập tin tự động sao lưu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
-#, fuzzy
 msgid "Maximum number of autosaves:"
-msgstr "Số mục lớn nhất"
+msgstr "Số tập tin sao lưu lớn nhất:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
@@ -13779,9 +13706,8 @@ msgstr "Số tập tin tối đa sẽ được tự động lưu; dùng thiết 
 #.
 #. -----------
 #: ../src/ui/dialog/inkscape-preferences.cpp:1136
-#, fuzzy
 msgid "Autosave"
-msgstr "Dấu nhắc tự động lưu"
+msgstr "Tự động sao lưu"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
@@ -13808,20 +13734,16 @@ msgid "Oversample bitmaps:"
 msgstr "Quá lấy mẫu ảnh bitmap:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
-#, fuzzy
 msgid "Automatically reload bitmaps"
-msgstr ""
-"\n"
-"%s: %s: gặp lỗi khi đọc mảng ảnh: %s\n"
+msgstr "Tự động nạp lại các ảnh bitmap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "Tự động nạp lại các ảnh được liên kết mỗi khi chúng thay đổi"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1165
-#, fuzzy
 msgid "Bitmap editor:"
-msgstr "&Cấu hình bộ soạn thảo..."
+msgstr "Trình xử lý ảnh bitmap:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Resolution for Create Bitmap Copy:"
@@ -13832,12 +13754,10 @@ msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Độ phân giải được lệnh Tạo bản sao dạng ảnh sử dụng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1174
-#, fuzzy
 msgid "Bitmaps"
-msgstr "So sánh _mảng ảnh"
+msgstr "Ảnh bitmap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1226
-#, fuzzy
 msgid "Language:"
 msgstr "Ngôn ngữ:"
 
@@ -13846,43 +13766,38 @@ msgid "Set the main spell check language"
 msgstr "Đặt ngôn ngữ chính sẽ kiểm tra chính tả"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1230
-#, fuzzy
 msgid "Second language:"
-msgstr "Ngôn ngữ sai"
+msgstr "Ngôn ngữ thứ hai:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Đặt ngôn ngữ thứ hai sẽ kiểm tra chính tả; quá trình kiểm tra sẽ tìm ra một từ KHÔNG CÓ trong TẤT CẢ các ngôn ngữ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
-#, fuzzy
 msgid "Third language:"
-msgstr "Ngôn ngữ sai"
+msgstr "Ngôn ngữ thứ ba:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Đặt ngôn ngữ thứ ba sẽ kiểm tra chính tả; quá trình kiểm tra sẽ tìm ra một từ KHÔNG CÓ trong TẤT CẢ các ngôn ngữ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
-#, fuzzy
 msgid "Ignore words with digits"
-msgstr "Từ chứa số"
+msgstr "Bỏ qua các từ chứa số"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Bỏ qua các từ có chứa chữ số, ví dụ như \"R2D2\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1241
-#, fuzzy
 msgid "Ignore words in ALL CAPITALS"
-msgstr "Bỏ qua mọi từ này trong tài liệu"
+msgstr "Bỏ qua các từ VIẾT HOA"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Bỏ qua các từ viết hoa toàn bộ, ví dụ như \"IUPAC\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
-#, fuzzy
 msgid "Spellcheck"
 msgstr "Kiểm tra chính tả"
 
@@ -13911,14 +13826,12 @@ msgid "How strong is the Simplify command by default. If you invoke this command
 msgstr "Độ mạnh mặc định của câu lệnh « Đơn giản hoá ». Nếu bạn gọi câu lệnh này vài lần một cách liên tiếp nhanh, nó sẽ hoạt động mỗi lần một năng nổ thêm; còn việc gọi lại sau khi tạm dừng sẽ phục hồi ngưỡng mặc định."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
-#, fuzzy
 msgid "Latency skew:"
-msgstr "Góc lệch"
+msgstr "Độ xô nghiêng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
-#, fuzzy
 msgid "(requires restart)"
-msgstr "Ứng xử hộp thoại (cần khởi chạy lại):"
+msgstr "(cần khởi chạy lại)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid "Factor by which the event clock is skewed from the actual time (0.9766 on some systems)."
