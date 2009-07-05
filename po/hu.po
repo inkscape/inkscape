@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-06-28 22:24+0200\n"
+"PO-Revision-Date: 2009-07-05 23:07+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -346,7 +346,7 @@ msgstr "Élesítés"
 #: ../share/filters/filters.svg.h:193
 #, fuzzy
 msgid "Image effects"
-msgstr "Lánceffektusok kezelése"
+msgstr "Útvonaleffektusok kezelése"
 
 #: ../share/filters/filters.svg.h:24
 #, fuzzy
@@ -7266,8 +7266,9 @@ msgstr "Nincs effektus"
 
 #: ../src/live_effects/effect.cpp:340
 #, c-format
+#, fuzzy
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "Élő útvonaleffektus"
 
 #: ../src/live_effects/effect.cpp:636
 #, c-format
@@ -7277,7 +7278,7 @@ msgstr "<b>%s</b> paraméter szerkesztése."
 #: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
-"Az alkalmazott lánceffektus egyetlen paramétere sem szerkeszthető a "
+"Az alkalmazott útvonaleffektus egyetlen paramétere sem szerkeszthető a "
 "rajzvásznon."
 
 # node-ok és szakaszok száma nem változik
@@ -9752,18 +9753,18 @@ msgstr "Vízszintes elmozdítás képpontokkal"
 
 #: ../src/selection-chemistry.cpp:1713
 msgid "The selection has no applied path effect."
-msgstr "A kijelölésben nincs alkalmazott lánceffektus."
+msgstr "A kijelölésben nincs alkalmazott útvonaleffektus."
 
 #: ../src/selection-chemistry.cpp:1760
 #, fuzzy
 msgid "The selection has no applied clip path."
-msgstr "A kijelölésben nincs alkalmazott lánceffektus."
+msgstr "A kijelölésben nincs alkalmazott útvonaleffektus."
 
 #: ../src/selection-chemistry.cpp:1762
 #, fuzzy
 msgid "The selection has no applied mask."
 msgstr ""
-"A kijelölésben nincs alkalmazott lánceffektus."
+"A kijelölésben nincs alkalmazott útvonaleffektus."
 "Maszk"
 
 #: ../src/selection-chemistry.cpp:1919
@@ -9779,6 +9780,7 @@ msgstr "Jelölje ki az átkapcsolandó <b>klónokat</b>."
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 "Jelölje ki a klónozandó <b>objektumot</b>."
+"másol"
 "vágólap"
 "átkapcsol"
 
@@ -10479,7 +10481,7 @@ msgstr "A kijelölésben <b>nincs egyszerűsíthető lánc</b>."
 
 #: ../src/sp-lpe-item.cpp:346
 msgid "An exception occurred during execution of the Path Effect."
-msgstr "Kivétel (hiba) történt a lánceffektus végrehajtása közben."
+msgstr "Kivétel (hiba) történt az útvonaleffektus végrehajtása közben."
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:426
@@ -10505,8 +10507,8 @@ msgstr "<b>Dinamikus perem</b>; %s %f ponttal (pt)"
 #, fuzzy, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Lánc</b> (%i csomópont, lánceffektus)"
-msgstr[1] "<b>Lánc</b> (%i csomópont, lánceffektus)"
+msgstr[0] "<b>Lánc</b> (%i csomópont, útvonaleffektus)"
+msgstr[1] "<b>Lánc</b> (%i csomópont, útvonaleffektus)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -11005,8 +11007,9 @@ msgid "<b>Drag</b> to erase."
 msgstr "Radírozás: <b>húzással</b>."
 
 #: ../src/tools-switch.cpp:232
+#, fuzzy
 msgid "Choose a subtool from the toolbar"
-msgstr ""
+msgstr "eszköztár"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:524
 #: ../src/trace/potrace/inkscape-potrace.cpp:598
@@ -15114,9 +15117,8 @@ msgid "No effect applied"
 msgstr "Nincs alkalmazva effektus"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:276
-#, fuzzy
 msgid "Item is not a path or shape"
-msgstr "Az elem nem alakzat és nem lánc"
+msgstr "Az elem nem útvonal és nem alakzat"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:280
 msgid "Only one item can be selected"
@@ -15128,7 +15130,7 @@ msgstr "Üres kijelölés"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
-msgstr "Lánceffektus létrehozása és alkalmazása"
+msgstr "Útvonaleffektus létrehozása és alkalmazása"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:391
 msgid "Remove path effect"
@@ -15525,14 +15527,12 @@ msgid "Change color definition"
 msgstr "Színdefiníció módosítása"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove stroke color"
-msgstr "Körvonal eltávolítása"
+msgstr "Körvonalszín eltávolítása"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove fill color"
-msgstr "Kitöltés eltávolítása"
+msgstr "Kitöltési szín eltávolítása"
 
 #: ../src/ui/dialog/swatches.cpp:851
 msgid "Set stroke color to none"
@@ -15622,7 +15622,7 @@ msgstr "Vízszintes helykihagyás az oszlopok közt (képpontban (px) mérve)"
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
 msgid "tileClonesDialog|Arrange"
-msgstr ""
+msgstr "Elrendezés"
 
 #: ../src/ui/dialog/tile.cpp:864
 msgid "Arrange selected objects"
@@ -16053,13 +16053,12 @@ msgid "Cursor coordinates"
 msgstr "Kurzorkoordináták"
 
 #: ../src/ui/view/edit-widget.cpp:1089
-#, fuzzy
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 "<b>Üdvözli az Inkscape.</b> Objektum-létrehozáshoz használja az "
-"alakzateszközöket és a szabadkézi eszközöket, áthelyezéshez/módosításhoz "
+"alakzateszközöket és a rajzolóeszközöket, áthelyezéshez/módosításhoz "
 "pedig a kijelölőeszközt (nyilat)."
 
 #: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
@@ -16636,22 +16635,22 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:1400
 #: ../src/ui/widget/selected-style.cpp:1414
-#, fuzzy
 msgid "Adjust stroke width"
-msgstr "Körvonalszélesség"
+msgstr "Körvonalszélesség módosítása"
 
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
-#, fuzzy
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr "körvonal"
+msgstr ""
+"<b>Körvonalszélesség</b> módosítása. Előzőleg %.3g, jelenleg <b>%.3g</b> "
+"(eltérés: %.3g)."
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Link" means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:120
 msgid "sliders|Link"
-msgstr ""
+msgstr "Kapcsolás"
 
 #: ../src/ui/widget/style-swatch.cpp:269
 msgid "L Gradient"
@@ -16802,7 +16801,7 @@ msgstr "A réteg nem mozdítható tovább."
 #: ../src/verbs.cpp:1237 ../src/verbs.cpp:1255
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s másolata"
 
 #: ../src/verbs.cpp:1263
 msgid "Duplicate layer"
@@ -16810,9 +16809,8 @@ msgstr "Réteg kettőzése"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
 #: ../src/verbs.cpp:1266
-#, fuzzy
 msgid "Duplicated layer."
-msgstr "Réteg kettőzése"
+msgstr "A réteg kettőzve."
 
 #: ../src/verbs.cpp:1295
 msgid "Delete layer"
@@ -17131,19 +17129,19 @@ msgstr "Objektumok beillesztése a vágólapról azok eredeti helyére"
 
 #: ../src/verbs.cpp:2302
 msgid "Paste Path _Effect"
-msgstr "Lánce_ffektus beillesztése"
+msgstr "Útvonale_ffektus beillesztése"
 
 #: ../src/verbs.cpp:2303
 msgid "Apply the path effect of the copied object to selection"
-msgstr "A kimásolt objektum lánceffektusának alkalmazása a kijelölésre"
+msgstr "A kimásolt objektum útvonaleffektusának alkalmazása a kijelölésre"
 
 #: ../src/verbs.cpp:2304
 msgid "Remove Path _Effect"
-msgstr "Lánceffektus el_távolítása"
+msgstr "Útvonaleffektus el_távolítása"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
-msgstr "Az összes lánceffektus eltávolítása a kijelölt objektumokról"
+msgstr "Az összes útvonaleffektus eltávolítása a kijelölt objektumokról"
 
 #: ../src/verbs.cpp:2306
 msgid "Remove Filters"
@@ -17315,7 +17313,7 @@ msgstr "Négy segédvonal létrehozása a lapkerethez igazítva"
 
 #: ../src/verbs.cpp:2346
 msgid "Next Path Effect Parameter"
-msgstr "Következő lánceffektus-paraméter"
+msgstr "Következő útvonaleffektus-paraméter"
 
 #: ../src/verbs.cpp:2347
 msgid "Show next Path Effect parameter for editing"
@@ -17775,11 +17773,8 @@ msgstr ""
 "maszkként)"
 
 #: ../src/verbs.cpp:2489
-#, fuzzy
 msgid "Edit mask"
-msgstr ""
-"Maszk beállítása"
-"szerkesztés"
+msgstr "Maszk szerkesztése"
 
 #: ../src/verbs.cpp:2490 ../src/verbs.cpp:2496
 msgid "_Release"
@@ -17881,16 +17876,12 @@ msgid "Fill bounded areas"
 msgstr "Körülhatárolt területek kitöltése"
 
 #: ../src/verbs.cpp:2534
-#, fuzzy
 msgid "LPE Edit"
-msgstr "S_zerkesztés"
+msgstr "Élő útvonaleffektus szerkesztése"
 
 #: ../src/verbs.cpp:2535
-#, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr ""
-"Következő lánceffektus-paraméter"
-"szerkesztés"
+msgstr "Útvonaleffektus-paraméterek szerkesztése"
 
 #: ../src/verbs.cpp:2537
 msgid "Erase existing paths"
@@ -17898,7 +17889,7 @@ msgstr "Létező útvonalak törlése"
 
 #: ../src/verbs.cpp:2539
 msgid "Do geometric constructions"
-msgstr ""
+msgstr "Geometriai szerkesztés"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2541
@@ -18046,14 +18037,12 @@ msgid "Open Preferences for the Eraser tool"
 msgstr "A radíreszköz beállításainak megnyitása"
 
 #: ../src/verbs.cpp:2577
-#, fuzzy
 msgid "LPE Tool Preferences"
-msgstr "Csomóponteszköz-beállítások"
+msgstr "\"Élő útvonaleffektus\" eszköz beállításai"
 
 #: ../src/verbs.cpp:2578
-#, fuzzy
 msgid "Open Preferences for the LPETool tool"
-msgstr "A nagyítóeszköz beállításainak megnyitása"
+msgstr "Az \"élő útvonaleffektus\" eszköz beállításainak megnyitása"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2581
@@ -18160,11 +18149,11 @@ msgstr "A dokumentumablak teljes képernyősre való méretezése"
 
 #: ../src/verbs.cpp:2602
 msgid "Toggle _Focus Mode"
-msgstr ""
+msgstr "_Fókusz-üzemmód átkapcsolása"
 
 #: ../src/verbs.cpp:2602
 msgid "Remove excess toolbars to focus on drawing"
-msgstr ""
+msgstr "Felesleges eszköztárak eltávolítása, hogy a rajzra lehessen koncentrálni"
 
 #: ../src/verbs.cpp:2604
 msgid "Duplic_ate Window"
@@ -18361,12 +18350,11 @@ msgstr "Objektumok keresése a dokumentumban"
 
 #: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
-msgstr ""
+msgstr "Szöveg keresése és _cseréje..."
 
 #: ../src/verbs.cpp:2657
-#, fuzzy
 msgid "Find and replace text in document"
-msgstr "Objektumok keresése a dokumentumban"
+msgstr "Szöveg keresése és cseréje a dokumentumban"
 
 #: ../src/verbs.cpp:2658
 msgid "Check Spellin_g..."
@@ -18439,9 +18427,8 @@ msgid "Configure extended input devices, such as a graphics tablet"
 msgstr "Kiterjesztett beviteli eszközök (mint például rajztáblák) beállítása"
 
 #: ../src/verbs.cpp:2676
-#, fuzzy
 msgid "_Input Devices (new)..."
-msgstr "Beviteli eszkö_zök..."
+msgstr "Beviteli eszkö_zök (új)..."
 
 #: ../src/verbs.cpp:2678
 msgid "_Extensions..."
@@ -18461,11 +18448,11 @@ msgstr "Rétegek megjelenítése"
 
 #: ../src/verbs.cpp:2682
 msgid "Path Effect Editor..."
-msgstr "Lánceffektus-szerkesztő..."
+msgstr "Útvonaleffektus-szerkesztő..."
 
 #: ../src/verbs.cpp:2683
 msgid "Manage, edit, and apply path effects"
-msgstr "Lánceffektusok kezelése, szerkesztése és alkalmazása"
+msgstr "Útvonaleffektusok kezelése, szerkesztése és alkalmazása"
 
 #: ../src/verbs.cpp:2684
 msgid "Filter Editor..."
@@ -18622,21 +18609,16 @@ msgid "Unhide All in All Layers"
 msgstr "Minden objektum rejtettségének megszüntetése az összes rétegben"
 
 #: ../src/verbs.cpp:2740
-#, fuzzy
 msgid "Link an ICC color profile"
-msgstr "Színprofil"
+msgstr "ICC-színprofil kapcsolása"
 
 #: ../src/verbs.cpp:2741
-#, fuzzy
 msgid "Remove Color Profile"
 msgstr "Színprofil eltávolítása"
 
 #: ../src/verbs.cpp:2742
-#, fuzzy
 msgid "Remove a linked ICC color profile"
-msgstr ""
-"kapcsolt"
-"Színprofil"
+msgstr "Kapcsolt ICC-színprofil eltávolítása"
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -18712,7 +18694,7 @@ msgstr "Betűtípus-család"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:190
 msgid "fontselector|Style"
-msgstr ""
+msgstr "Stílus"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
@@ -19071,7 +19053,6 @@ msgstr "Hatás:"
 msgid "Scale rounded corners"
 msgstr "Lekerekített csúcsok átméretezése"
 
-# TODO: ellenőrizni
 #: ../src/widgets/select-toolbar.cpp:566
 msgid "Move gradients"
 msgstr "Színátmenetek áthelyezése"
@@ -19451,9 +19432,8 @@ msgid "Join"
 msgstr "Összekapcsolás"
 
 #: ../src/widgets/toolbox.cpp:1322
-#, fuzzy
 msgid "Break nodes"
-msgstr "Csomópontok áthelyezése"
+msgstr "Csomópontok szétbontása"
 
 #: ../src/widgets/toolbox.cpp:1323
 msgid "Break path at selected nodes"
@@ -20121,7 +20101,6 @@ msgid "Create Spiro path"
 msgstr "Spiro-útvonal létrehozása"
 
 #: ../src/widgets/toolbox.cpp:3841
-#, fuzzy
 msgid "Zigzag"
 msgstr "Cikcakk"
 
@@ -20858,12 +20837,16 @@ msgstr "elem"
 #: ../src/widgets/toolbox.cpp:5668
 #, fuzzy
 msgid "Open LPE dialog"
-msgstr "párbeszédablak"
+msgstr ""
+"Élő útvonaleffektus"
+"párbeszédablak"
 
 #: ../src/widgets/toolbox.cpp:5669
 #, fuzzy
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr "párbeszédablak"
+msgstr ""
+"Élő útvonaleffektus"
+"párbeszédablak"
 
 #: ../src/widgets/toolbox.cpp:5733
 msgid "The width of the eraser pen (relative to the visible canvas area)"
