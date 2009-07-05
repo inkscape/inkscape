@@ -147,7 +147,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
     {
 
          NRPixBlock B;
-        g_warning("sp_generate_internal_bitmap: nr_pixblock_setup_extern.");
+         //g_warning("sp_generate_internal_bitmap: nr_pixblock_setup_extern.");
          nr_pixblock_setup_extern( &B, NR_PIXBLOCK_MODE_R8G8B8A8N,
                                    final_bbox.x0, final_bbox.y0, final_bbox.x1, final_bbox.y1,
                                    px, 4 * width, FALSE, FALSE );
