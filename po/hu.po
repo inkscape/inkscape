@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-07-05 23:07+0200\n"
+"PO-Revision-Date: 2009-07-06 23:20+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -371,7 +371,9 @@ msgstr "Olajfestés"
 #: ../share/filters/filters.svg.h:26
 #, fuzzy
 msgid "Simulate oil painting style"
-msgstr "Kimenet szimulálása a képernyőn"
+msgstr ""
+"Kimenet szimulálása a képernyőn "
+"stílus"
 
 #: ../share/filters/filters.svg.h:27
 #, fuzzy
@@ -1545,8 +1547,9 @@ msgid "Comics fading"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:140
+#, fuzzy
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "stílus"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:142
@@ -2308,9 +2311,8 @@ msgstr ""
 "b>, majd <b>klónozza a csoportot</b>."
 
 #: ../src/dialogs/clonetiler.cpp:1112
-#, fuzzy
 msgid "<small>Creating tiled clones...</small>"
-msgstr "<small>Az objektumnak nincs csempézett klónja.</small>"
+msgstr "<small>Csempézett klónok létrehozása...</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1515
 msgid "Create tiled clones"
@@ -3560,7 +3562,7 @@ msgstr "%s tulajdonságai"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "Az ellenőrzés <b>befejeződött</b>, <b>%d</b> szó fel lett véve a szótárba"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
@@ -3570,16 +3572,15 @@ msgstr "Az ellenőrzés <b>befejeződött</b>, nem talált hibát"
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr ""
+msgstr "Nincs a szótárban (%s): <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
 msgid "<i>Checking...</i>"
-msgstr ""
+msgstr "<i>Ellenőrzés...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
-#, fuzzy
 msgid "Fix spelling"
-msgstr "Helyesírás"
+msgstr "Helyesírás javítása"
 
 #: ../src/dialogs/spellcheck.cpp:956
 msgid "Suggestions:"
@@ -3590,7 +3591,6 @@ msgid "_Accept"
 msgstr "_Elfogadás"
 
 #: ../src/dialogs/spellcheck.cpp:968
-#, fuzzy
 msgid "Accept the chosen suggestion"
 msgstr "A kiválasztott javaslat elfogadása"
 
@@ -3600,7 +3600,7 @@ msgstr "Figyelmen kívül hagyás e_gyszer"
 
 #: ../src/dialogs/spellcheck.cpp:970
 msgid "Ignore this word only once"
-msgstr ""
+msgstr "Ezen szó figyelmen kívül hagyása, de csak egyszer"
 
 #: ../src/dialogs/spellcheck.cpp:972
 msgid "_Ignore"
@@ -3608,7 +3608,7 @@ msgstr "Az összes _figyelmen kívül hagyása"
 
 #: ../src/dialogs/spellcheck.cpp:972
 msgid "Ignore this word in this session"
-msgstr ""
+msgstr "Ezen szó figyelmen kívül hagyása az egész munkamenetben"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "A_dd to dictionary:"
@@ -3616,7 +3616,7 @@ msgstr "_Hozzáadás ehhez a szótárhoz:"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "Add this word to the chosen dictionary"
-msgstr ""
+msgstr "Ezen szó felvétele a kiválasztott szótárba"
 
 #: ../src/dialogs/spellcheck.cpp:1012
 msgid "_Stop"
@@ -3624,7 +3624,7 @@ msgstr "_Leállítás"
 
 #: ../src/dialogs/spellcheck.cpp:1012
 msgid "Stop the check"
-msgstr ""
+msgstr "Az ellenőrzés leállítása"
 
 #: ../src/dialogs/spellcheck.cpp:1014
 msgid "_Start"
@@ -3632,7 +3632,7 @@ msgstr "_Indítás"
 
 #: ../src/dialogs/spellcheck.cpp:1014
 msgid "Start the check"
-msgstr ""
+msgstr "Az ellenőrzés elindítása"
 
 #: ../src/dialogs/text-edit.cpp:198
 msgid "Font"
@@ -3800,9 +3800,8 @@ msgid "Create new text node"
 msgstr "Új szövegcsomópont létrehozása"
 
 #: ../src/dialogs/xml-tree.cpp:1426
-#, fuzzy
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
-msgstr "Csomópont"
+msgstr "Csomópont törlése"
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
@@ -4035,11 +4034,8 @@ msgid "object midpoint"
 msgstr "objektum-középpont"
 
 #: ../src/display/snap-indicator.cpp:111
-#, fuzzy
 msgid "object rotation center"
-msgstr ""
-"Objektumok keresése a dokumentumban"
-"középpont"
+msgstr "objektum forgatási középpontja"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "handle"
@@ -4050,18 +4046,12 @@ msgid "bounding box side midpoint"
 msgstr "határoló téglalap oldalának középpontja"
 
 #: ../src/display/snap-indicator.cpp:120
-#, fuzzy
 msgid "bounding box midpoint"
-msgstr ""
-"Határoló téglalap s_arkai"
-"középpont"
+msgstr "határoló téglalap középpontja"
 
 #: ../src/display/snap-indicator.cpp:123
-#, fuzzy
 msgid "page corner"
-msgstr ""
-"A lap keretének színe"
-"sarka"
+msgstr "lapsarok"
 
 #: ../src/display/snap-indicator.cpp:126
 #, fuzzy
@@ -4074,32 +4064,24 @@ msgid "quadrant point"
 msgstr "Sortávolság növelése"
 
 #: ../src/display/snap-indicator.cpp:132
-#, fuzzy
 msgid "center"
-msgstr ""
-"középpont"
-"Középre igazítás"
+msgstr "középpont"
 
 #: ../src/display/snap-indicator.cpp:135
-#, fuzzy
 msgid "corner"
 msgstr "sarok"
 
 #: ../src/display/snap-indicator.cpp:138
-#, fuzzy
 msgid "text baseline"
-msgstr "Szöveg-alapvonalak igazítása"
+msgstr "szöveg-alapvonal"
 
 #: ../src/display/snap-indicator.cpp:151
 msgid "Bounding box corner"
 msgstr "Határoló téglalap sarka"
 
 #: ../src/display/snap-indicator.cpp:154
-#, fuzzy
 msgid "Bounding box midpoint"
-msgstr ""
-"Határoló téglalap s_arkai"
-"középpont"
+msgstr "Határoló téglalap középpontja"
 
 #: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box side midpoint"
@@ -4114,22 +4096,16 @@ msgid "Cusp node"
 msgstr "Csúcs-csomópont"
 
 #: ../src/display/snap-indicator.cpp:166
-#, fuzzy
 msgid "Line midpoint"
-msgstr ""
-"Vonal"
-"középpont"
+msgstr "Vonal-középpont"
 
 #: ../src/display/snap-indicator.cpp:169
 msgid "Object midpoint"
 msgstr "Objektum-középpont"
 
 #: ../src/display/snap-indicator.cpp:172
-#, fuzzy
 msgid "Object rotation center"
-msgstr ""
-"Objektumok átalakítása mintává"
-"középpont"
+msgstr "Objektum forgatási középpontja"
 
 #: ../src/display/snap-indicator.cpp:175
 msgid "Handle"
@@ -4162,14 +4138,12 @@ msgid "Center"
 msgstr "Középre igazítás"
 
 #: ../src/display/snap-indicator.cpp:196
-#, fuzzy
 msgid "Corner"
-msgstr "sarok"
+msgstr "Sarok"
 
 #: ../src/display/snap-indicator.cpp:199
-#, fuzzy
 msgid "Text baseline"
-msgstr "Szöveg-alapvonalak igazítása"
+msgstr "Szöveg-alapvonal"
 
 #: ../src/display/snap-indicator.cpp:238
 msgid " to "
@@ -5746,7 +5720,7 @@ msgid "Open Clip Art Login"
 msgstr "Open Clip Art - bejelentkezés"
 
 #: ../src/file.cpp:1374
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
 "password are correct, if the server has support for webdav and verify if you "
@@ -6448,29 +6422,23 @@ msgid "Ex squares"
 msgstr "Ex-négyzet"
 
 #: ../src/inkscape.cpp:328
-#, fuzzy
 msgid "Autosaving documents..."
-msgstr "Dokumentum mentése..."
+msgstr "Dokumentumok automatikus mentése..."
 
 #: ../src/inkscape.cpp:399
-#, fuzzy
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
-"automatikus mentés"
-"kiterjesztés"
+"Nem sikerült az automatikus mentés. Nem található a dokumentum mentésére "
+"használható Inkscape-kiterjesztés."
 
 #: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
 #, c-format
-#, fuzzy
 msgid "Autosave failed! File %s could not be saved."
-msgstr ""
-"automatikus mentés"
-"Nem sikerült elmenteni a(z) %s fájlt."
+msgstr "Nem sikerült az automatikus mentés. Nem sikerült elmenteni a(z) %s fájlt."
 
 #: ../src/inkscape.cpp:424
-#, fuzzy
 msgid "Autosave complete."
-msgstr "automatikus mentés"
+msgstr "Az automatikus mentés befejeződött."
 
 #: ../src/inkscape.cpp:655
 msgid "Untitled document"
@@ -6602,57 +6570,48 @@ msgstr "Lecserélés"
 
 #: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
 #, c-format
-#, fuzzy
 msgid "Failed to read from child pipe (%s)"
-msgstr "gyerek"
+msgstr "Nem sikerült olvasni a gyerek-csővezetékből (child pipe) (%s)"
 
 #: ../src/io/sys.cpp:444
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to change to directory '%s' (%s)"
-msgstr ""
-"Nem sikerült létrehozni %s nevű könyvtárt.\n"
-"%s"
+msgstr "Nem sikerült belépni a(z) \"%s\" könyvtárba (%s)"
 
 #: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
 #, c-format
-#, fuzzy
 msgid "Failed to execute child process (%s)"
-msgstr ""
-"gyerek"
-"Nem sikerült betölteni a kért fájlt (%s)"
+msgstr "Nem sikerült létrehozni gyerekfolyamatot (%s)"
 
 #: ../src/io/sys.cpp:623
 #, c-format
 msgid "Invalid program name: %s"
-msgstr ""
+msgstr "Érvénytelen programnév: %s"
 
 #: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
-msgstr ""
+msgstr "Érvénytelen szöveg az argumentumok között itt: %d: %s"
 
 #: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
 #, c-format
 msgid "Invalid string in environment: %s"
-msgstr ""
+msgstr "Érvénytelen szöveg a környezetben: %s"
 
 #: ../src/io/sys.cpp:705
 #, c-format
-#, fuzzy
 msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr "gyerek"
+msgstr "Nem sikerült létrehozni csővezetéket a gyerekfolyamattal való kommunikációhoz (%s)"
 
 #: ../src/io/sys.cpp:918
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid working directory: %s"
-msgstr ""
-"A(z) %s nem egy érvényes könyvtár.\n"
-"%s"
+msgstr "Érvénytelen munkakönyvtár: %s"
 
 #: ../src/io/sys.cpp:986
 #, c-format
 msgid "Failed to execute helper program (%s)"
-msgstr ""
+msgstr "Nem sikerült végrehajtani egy segédprogramot (%s)"
 
 #: ../src/knot.cpp:443
 msgid "Node or handle drag canceled."
@@ -6757,7 +6716,6 @@ msgid "Resizable"
 msgstr "Átméretezhető"
 
 #: ../src/libgdl/gdl-dock-item.c:304
-#, fuzzy
 msgid "If set, the dock item can be resized when docked in a panel"
 msgstr ""
 "Ha az opció be van jelölve, akkor a dokkolóelemet át lehet méretezni, amikor "
@@ -7064,7 +7022,6 @@ msgid "X-Coordinate"
 msgstr "X-koordináta"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
-#, fuzzy
 msgid "X coordinate for dock when floating"
 msgstr "A dokkolóelem X-koordinátája, amikor lebeg"
 
@@ -7073,7 +7030,6 @@ msgid "Y-Coordinate"
 msgstr "Y-koordináta"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
-#, fuzzy
 msgid "Y coordinate for dock when floating"
 msgstr "A dokkolóelem Y-koordinátája, amikor lebeg"
 
@@ -7763,7 +7719,9 @@ msgstr ""
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 #, fuzzy
 msgid "Magnitude jitter: 1st side"
-msgstr "oldal"
+msgstr ""
+"véletlenszerű"
+"oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 #, fuzzy
@@ -7785,7 +7743,9 @@ msgstr "véletlenszerű"
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 #, fuzzy
 msgid "Parallelism jitter: 1st side"
-msgstr "oldal"
+msgstr ""
+"véletlenszerű"
+"oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 #, fuzzy
@@ -7834,8 +7794,9 @@ msgid "Bend hatches"
 msgstr "Lánc hajlítása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
+#, fuzzy
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "globális"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 #, fuzzy
@@ -7883,14 +7844,16 @@ msgstr ""
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
+#, fuzzy
 msgid "Global bending"
-msgstr ""
+msgstr "globális"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
+#, fuzzy
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
-msgstr ""
+msgstr "globális"
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 #, fuzzy
@@ -9014,9 +8977,8 @@ msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "A <b>tördelt szöveg keretének</b> átméretezése húzással lehetséges."
 
 #: ../src/path-chemistry.cpp:49
-#, fuzzy
 msgid "Select <b>object(s)</b> to combine."
-msgstr "Jelölje ki a feljebb helyezendő <b>objektumo(ka)t</b>."
+msgstr "Jelölje ki az összevonandó <b>objektumo(ka)t</b>."
 
 #: ../src/path-chemistry.cpp:53
 msgid "Combining paths..."
@@ -9027,9 +8989,8 @@ msgid "Combine"
 msgstr "Összevonás"
 
 #: ../src/path-chemistry.cpp:168
-#, fuzzy
 msgid "<b>No path(s)</b> to combine in the selection."
-msgstr "A kijelölésben <b>nincs egyszerűsíthető lánc</b>."
+msgstr "A kijelölésben <b>nincs összevonható útvonal</b>."
 
 #: ../src/path-chemistry.cpp:180
 msgid "Select <b>path(s)</b> to break apart."
@@ -9196,11 +9157,10 @@ msgid "Toggle multiple vanishing points"
 msgstr "Több távlatpont átkapcsolása"
 
 #: ../src/preferences.cpp:101
-#, fuzzy
 msgid "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
-"Az Inkscape az alapértelmezett beállításokat fogja használni.\n"
-"Az új beállítások nem kerülnek mentésre."
+"Az Inkscape az alapértelmezett beállításokat fogja használni. Az új beállítások "
+"nem kerülnek mentésre."
 
 #. the creation failed
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
@@ -9758,14 +9718,12 @@ msgstr "A kijelölésben nincs alkalmazott útvonaleffektus."
 #: ../src/selection-chemistry.cpp:1760
 #, fuzzy
 msgid "The selection has no applied clip path."
-msgstr "A kijelölésben nincs alkalmazott útvonaleffektus."
+msgstr "A kijelölésben nincs alkalmazott vágóútvonal."
 
 #: ../src/selection-chemistry.cpp:1762
 #, fuzzy
 msgid "The selection has no applied mask."
-msgstr ""
-"A kijelölésben nincs alkalmazott útvonaleffektus."
-"Maszk"
+msgstr "A kijelölésben nincs alkalmazott maszk."
 
 #: ../src/selection-chemistry.cpp:1919
 msgid "action|Clone"
@@ -9785,11 +9743,8 @@ msgstr ""
 "átkapcsol"
 
 #: ../src/selection-chemistry.cpp:1966
-#, fuzzy
 msgid "<b>No clones to relink</b> in the selection."
-msgstr ""
-"A kijelölésben <b>nincs lekapcsolható klón</b>."
-"átkapcsol"
+msgstr "A kijelölésben <b>nincs átkapcsolható klón</b>."
 
 #: ../src/selection-chemistry.cpp:1969
 msgid "Relink clone"
@@ -9888,18 +9843,18 @@ msgstr "Bitkép létrehozása"
 #: ../src/selection-chemistry.cpp:2708
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
-"Jelölje ki a vágólánc illetve a maszk létrehozásához használandó <b>objektumo"
-"(ka)t</b>."
+"Jelölje ki a vágóútvonal illetve a maszk létrehozásához használandó "
+"<b>objektumo(ka)t</b>."
 
 #: ../src/selection-chemistry.cpp:2711
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Jelölje ki a maszkobjektumot és azon <b>objektumo(ka)t</b>, amely(ek)re a "
-"vágólánc illetve a maszk alkalmazandó."
+"vágóútvonal illetve a maszk alkalmazandó."
 
 #: ../src/selection-chemistry.cpp:2818
 msgid "Set clipping path"
-msgstr "Vágólánc beállítása"
+msgstr "Vágóútvonal beállítása"
 
 #: ../src/selection-chemistry.cpp:2820
 msgid "Set mask"
@@ -9908,12 +9863,12 @@ msgstr "Maszk beállítása"
 #: ../src/selection-chemistry.cpp:2833
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
-"Jelölje ki azon <b>objektumo(ka)t</b>, amely(ek)ről eltávolítandó a vágólánc "
+"Jelölje ki azon <b>objektumo(ka)t</b>, amely(ek)ről eltávolítandó a vágóútvonal "
 "illetve a maszk."
 
 #: ../src/selection-chemistry.cpp:2906
 msgid "Release clipping path"
-msgstr "Vágólánc eltávolítása"
+msgstr "Vágóútvonal eltávolítása"
 
 #: ../src/selection-chemistry.cpp:2908
 msgid "Release mask"
@@ -10847,24 +10802,19 @@ msgstr "Szöveg beillesztése"
 
 #: ../src/text-context.cpp:1605
 #, c-format
-#, fuzzy
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"Gépelje be"
-"szerkesztés"
-" a tördelendő szöveget. Új bekezdést az <b>Enter</b> billentyűvel "
-"lehet kezdeni."
+"Gépelje be vagy módosítsa a tördelendő szöveget (%d karakter). "
+"Új bekezdést az <b>Enter</b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:1607
 #, c-format
-#, fuzzy
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
 msgstr ""
-"Gépelje be"
-"szerkesztés"
-" a szöveget. Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
+"Gépelje be vagy módosítsa a szöveget (%d karakter). "
+"Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:1615 ../src/tools-switch.cpp:190
 msgid ""
@@ -11061,9 +11011,10 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "Vektorizálás: kész. %ld csomópont létrehozva."
 
 #: ../src/tweak-context.cpp:204
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "<b>Nothing</b> selected"
-msgstr "<b>Nem történt</b> törlés."
+msgstr "<b>Semmi</b> nincs kijelölve"
 
 #: ../src/tweak-context.cpp:210
 #, c-format
@@ -11137,6 +11088,7 @@ msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 "húzással"
 "a Shift billentyű lenyomása esetén"
+"Vonzási/taszítási üzemmód"
 
 #: ../src/tweak-context.cpp:250
 #, c-format
@@ -11176,56 +11128,44 @@ msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Semmi nincs kijelölve.</b> Jelölje ki a manipulálandó objektumokat."
 
 #: ../src/tweak-context.cpp:1254
-#, fuzzy
 msgid "Move tweak"
-msgstr "Nyújtásos manipulálás"
+msgstr "Elmozdításos manipulálás"
 
 #: ../src/tweak-context.cpp:1258
-#, fuzzy
 msgid "Move in/out tweak"
-msgstr "Színfestéses manipulálás"
+msgstr "Befelé/kifelé való elmozdításos manipulálás"
 
 #: ../src/tweak-context.cpp:1262
-#, fuzzy
 msgid "Move jitter tweak"
-msgstr "Színmódosításos manipulálás"
+msgstr "Véletlenszerű elmozdításos manipulálás"
 
 #: ../src/tweak-context.cpp:1266
-#, fuzzy
 msgid "Scale tweak"
-msgstr "Méretezés"
+msgstr "Méretezéses manipulálás"
 
 #: ../src/tweak-context.cpp:1270
-#, fuzzy
 msgid "Rotate tweak"
-msgstr "Vonzásos manipulálás"
+msgstr "Elforgatásos manipulálás"
 
 #: ../src/tweak-context.cpp:1274
-#, fuzzy
 msgid "Duplicate/delete tweak"
-msgstr "A kijelölt objektumok kettőzése"
+msgstr "Kettőzéses/törléses manipulálás"
 
 #: ../src/tweak-context.cpp:1278
-#, fuzzy
 msgid "Push path tweak"
-msgstr "Eltolásos manipulálás"
+msgstr "Útvonal-eltolásos manipulálás"
 
 #: ../src/tweak-context.cpp:1282
-#, fuzzy
 msgid "Shrink/grow path tweak"
-msgstr ""
-"csökkent növel"
-"manipulálás"
+msgstr "Útvonal-csökkentéses/-növeléses manipulálás"
 
 #: ../src/tweak-context.cpp:1286
-#, fuzzy
 msgid "Attract/repel path tweak"
-msgstr "Vonzásos manipulálás"
+msgstr "Útvonal-vonzásos/-taszításos manipulálás"
 
 #: ../src/tweak-context.cpp:1290
-#, fuzzy
 msgid "Roughen path tweak"
-msgstr "Durvábbá tevéses manipulálás"
+msgstr "Útvonal-durvításos manipulálás"
 
 #: ../src/tweak-context.cpp:1294
 msgid "Color paint tweak"
@@ -11233,12 +11173,11 @@ msgstr "Színfestéses manipulálás"
 
 #: ../src/tweak-context.cpp:1298
 msgid "Color jitter tweak"
-msgstr "Színmódosításos manipulálás"
+msgstr "Véletlenszerű színmódosításos manipulálás"
 
 #: ../src/tweak-context.cpp:1302
-#, fuzzy
 msgid "Blur tweak"
-msgstr "Eltolásos manipulálás"
+msgstr "Elmosásos manipulálás"
 
 #. check whether something is selected
 #: ../src/ui/clipboard.cpp:255
@@ -11255,18 +11194,16 @@ msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
 #: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
-#, fuzzy
 msgid "No style on the clipboard."
-msgstr "A vágólap üres."
+msgstr "Nincs stílus a vágólapon."
 
 #: ../src/ui/clipboard.cpp:423
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a méret beillesztéséhez."
 
 #: ../src/ui/clipboard.cpp:430
-#, fuzzy
 msgid "No size on the clipboard."
-msgstr "A vágólap üres."
+msgstr "Nincs méret a vágólapon."
 
 #: ../src/ui/clipboard.cpp:481
 msgid "Select <b>object(s)</b> to paste live path effect to."
@@ -11274,9 +11211,8 @@ msgstr "Jelöljön ki <b>objektumo(ka)t</b> az élő útvonaleffektus beilleszt�
 
 #. no_effect:
 #: ../src/ui/clipboard.cpp:505
-#, fuzzy
 msgid "No effect on the clipboard."
-msgstr "A vágólap üres."
+msgstr "Nincs effektus a vágólapon."
 
 #: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
 msgid "Clipboard does not contain a path."
@@ -11349,7 +11285,7 @@ msgstr "Ké_p tulajdonságai"
 #: ../src/ui/context-menu.cpp:411
 #, fuzzy
 msgid "Edit Externally..."
-msgstr "Kitöltés szerkesztése..."
+msgstr "Külső szerkesztés..."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
@@ -11629,14 +11565,12 @@ msgid "Selection"
 msgstr "Kijelölés"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
-#, fuzzy
 msgid "Profile name:"
-msgstr "Fájlnév beállítása"
+msgstr "Profilnév:"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
-#, fuzzy
 msgid "Save"
-msgstr "M_entés"
+msgstr "Mentés"
 
 #: ../src/ui/dialog/debug.cpp:68
 msgid "Messages"
@@ -11934,15 +11868,12 @@ msgstr "<b>Segédvonalakhoz való illesztés</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:323
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(érvénytelen UTF-8-szöveg)"
 
 #: ../src/ui/dialog/document-properties.cpp:349
 #, c-format
-#, fuzzy
 msgid "Color profiles directory (%s) is unavailable."
-msgstr ""
-"Színprofil"
-"A palettakönyvtár (%s) nem elérhető."
+msgstr "Színprofil-könyvtár (%s) nem elérhető."
 
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
@@ -12140,16 +12071,12 @@ msgid "Destination"
 msgstr "Cél"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:476
-#, fuzzy
 msgid "Show Preview"
-msgstr ""
-"Előnézet"
-"megjelenítése"
+msgstr "Előnézet megjelenítése"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:612
-#, fuzzy
 msgid "No file selected"
-msgstr "Nincs kijelölve szűrő"
+msgstr "Nincs kijelölve fájl"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:48
 #: ../share/extensions/interp_att_g.inx.h:4
@@ -13776,25 +13703,25 @@ msgstr "Klónok"
 #: ../src/ui/dialog/inkscape-preferences.cpp:639
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
-"Alkalmazáskor a legfelül levő kijelölt objektum használata vágóláncként "
+"Alkalmazáskor a legfelül levő kijelölt objektum használata vágóútvonalként "
 "illetve maszkként"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:641
 msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
-"Ha a legalsó kijelölt objektumot szeretné használni vágóláncként illetve "
+"Ha a legalsó kijelölt objektumot szeretné használni vágóútvonalként illetve "
 "maszkként, akkor távolítsa el a bejelölést az opcióról"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:642
 msgid "Remove clippath/mask object after applying"
-msgstr "A vágólánc- illetve maszkobjektum eltávolítása alkalmazás után"
+msgstr "A vágóútvonal- illetve maszkobjektum eltávolítása alkalmazás után"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:644
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
-"Alkalmazás után kerüljön eltávolításra a vágóláncként illetve maszkként "
+"Alkalmazás után kerüljön eltávolításra a vágóútvonalként illetve maszkként "
 "használt objektum a rajzról"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
@@ -15219,8 +15146,8 @@ msgid ""
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
 msgstr ""
 "Nem sikerült fogadni az Open Clip Art Library RSS-forrást (feed). "
-"Ellenőrizze, hogy helyes-e a kiszolgálónév a Beállításoknál (lehet például "
-"\"openclipart.org\")."
+"Ellenőrizze, hogy helyes-e a kiszolgálónév a Beállítások->Import/Export "
+"szekcióban (lehet például \"openclipart.org\")."
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
@@ -15302,14 +15229,13 @@ msgstr ""
 "Tulajdonság beállítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
-#, fuzzy
 msgid "Adjust kerning value"
-msgstr "Árnyalat módosítása"
+msgstr "Alávágási érték módosítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
 #, fuzzy
 msgid "Family Name:"
-msgstr "Fájlnév beállítása"
+msgstr "Családnév:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
 #, fuzzy
@@ -15354,8 +15280,9 @@ msgid "Set glyph curves"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+#, fuzzy
 msgid "Reset missing-glyph"
-msgstr ""
+msgstr "hiányzó"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 #, fuzzy
@@ -15377,18 +15304,18 @@ msgid "Remove glyph"
 msgstr "Kitöltés eltávolítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Létező segédvonalak eltávolítása"
+msgstr "Alávágási pár eltávolítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
+#, fuzzy
 msgid "Missing Glyph:"
-msgstr ""
+msgstr "hiányzó"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 #, fuzzy
 msgid "From selection..."
-msgstr "Beállítás a kijelölésből"
+msgstr "A kijelölésből..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:654
 #: ../src/ui/widget/preferences-widget.cpp:590
@@ -15403,7 +15330,7 @@ msgstr "A réteg neve:"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 #, fuzzy
 msgid "Matching string"
-msgstr "  szöveg: "
+msgstr "Egyező szöveg"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 #, fuzzy
@@ -15417,13 +15344,13 @@ msgstr "Maszk eltávolítása a kijelölésről"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
-msgstr ""
+msgstr "Alávágási pár felvétele"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 #, fuzzy
 msgid "Kerning Setup:"
-msgstr "Alávágás felfelé"
+msgstr "Alávágás beállítása:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
@@ -15436,21 +15363,20 @@ msgstr ""
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 #, fuzzy
 msgid "Add pair"
-msgstr "Réteg felvétele"
+msgstr "Pár felvétele"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
-#, fuzzy
 msgid "First Unicode range"
-msgstr "Unicode-karakter beszúrása"
+msgstr "Első Unicode-tartomány"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
-msgstr ""
+msgstr "Második Unicode-tartomány"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 #, fuzzy
 msgid "Kerning value:"
-msgstr "Az értékek törlése"
+msgstr "Alávágási érték:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 #, fuzzy
@@ -15460,7 +15386,7 @@ msgstr "Betűtípus-család beállítása"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 #, fuzzy
 msgid "font"
-msgstr "Betűtípus"
+msgstr "betűtípus"
 
 #. select_font(font);
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:842
@@ -15476,7 +15402,7 @@ msgstr "Betűtípus"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 #, fuzzy
 msgid "_Global Settings"
-msgstr "Lapbeállítások"
+msgstr "Globális beállítások"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
@@ -15485,7 +15411,7 @@ msgstr ""
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 #, fuzzy
 msgid "_Kerning"
-msgstr "_Rajz"
+msgstr "_Alávágás"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
@@ -17787,8 +17713,8 @@ msgstr "Maszk eltávolítása a kijelölésről"
 #: ../src/verbs.cpp:2493
 msgid "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
-"Vágólánc alkalmazása a kijelölésre (a legfelül levő objektumot használva "
-"vágóláncként)"
+"Vágóútvonal alkalmazása a kijelölésre (a legfelül levő objektumot használva "
+"vágóútvonalként)"
 
 #: ../src/verbs.cpp:2495 ../src/widgets/toolbox.cpp:1446
 msgid "Edit clipping path"
@@ -17796,7 +17722,7 @@ msgstr "Vágóútvonal szerkesztése"
 
 #: ../src/verbs.cpp:2497
 msgid "Remove clipping path from selection"
-msgstr "Vágólánc eltávolítása a kijelölésről"
+msgstr "Vágóútvonal eltávolítása a kijelölésről"
 
 #. Tools
 #: ../src/verbs.cpp:2500
@@ -18666,7 +18592,7 @@ msgstr "nincs"
 #: ../src/widgets/ege-paint-def.cpp:89
 #, fuzzy
 msgid "remove"
-msgstr "Eltávolítás"
+msgstr "eltávolítás"
 
 #: ../src/widgets/fill-style.cpp:283
 msgid "Change fill rule"
@@ -20317,7 +20243,7 @@ msgstr "Az eszköz színének festése a kijelölt objektumokra"
 
 #: ../src/widgets/toolbox.cpp:4234
 msgid "Color jitter mode"
-msgstr "Színmódosítási üzemmód"
+msgstr "Véletlenszerű színmódosítási üzemmód"
 
 #: ../src/widgets/toolbox.cpp:4235
 msgid "Jitter the colors of selected objects"
@@ -20806,7 +20732,7 @@ msgstr "megjelenítése"
 #: ../src/widgets/toolbox.cpp:5618
 #, fuzzy
 msgid "Get limiting bounding box from selection"
-msgstr "Vágólánc eltávolítása a kijelölésről"
+msgstr "Vágóútvonal eltávolítása a kijelölésről"
 
 #: ../src/widgets/toolbox.cpp:5619
 #, fuzzy
@@ -20835,18 +20761,15 @@ msgid "Display measuring info for selected items"
 msgstr "elem"
 
 #: ../src/widgets/toolbox.cpp:5668
-#, fuzzy
 msgid "Open LPE dialog"
-msgstr ""
-"Élő útvonaleffektus"
-"párbeszédablak"
+msgstr "\"Élő útvonaleffektus\" párbeszédablak megnyitása"
 
 #: ../src/widgets/toolbox.cpp:5669
 #, fuzzy
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
-"Élő útvonaleffektus"
-"párbeszédablak"
+"\"Élő útvonaleffektus\" párbeszédablak megnyitása (a paraméterek "
+"számszerű beállításához)"
 
 #: ../src/widgets/toolbox.cpp:5733
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -21068,10 +20991,11 @@ msgid "Area /px^2: "
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.py:33
+#, fuzzy
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
-msgstr ""
+msgstr "Nem sikerült"
 
 #: ../share/extensions/embedimage.py:74
 #, fuzzy
@@ -21118,8 +21042,9 @@ msgstr "Csomópont"
 
 #: ../share/extensions/markers_strokepaint.py:41
 #, python-format
+#, fuzzy
 msgid "No style attribute found for id: %s"
-msgstr ""
+msgstr "stílus"
 
 #: ../share/extensions/markers_strokepaint.py:56
 #, python-format
@@ -21142,12 +21067,13 @@ msgid "Please first convert objects to paths!  (Got [%s].)"
 msgstr "Objektumok"
 
 #: ../share/extensions/perspective.py:29
+#, fuzzy
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again.  On a Debian-"
 "like system this can be done with the command, sudo apt-get install python-"
 "numpy."
-msgstr ""
+msgstr "Nem sikerült"
 
 #: ../share/extensions/perspective.py:62
 #: ../share/extensions/summersnight.py:39
@@ -21191,11 +21117,12 @@ msgid ""
 msgstr "objektum"
 
 #: ../share/extensions/polyhedron_3d.py:58
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Nem sikerült"
 
 #: ../share/extensions/polyhedron_3d.py:329
 msgid "No face data found in specified file\n"
@@ -22442,7 +22369,9 @@ msgstr "Interpolálás"
 #: ../share/extensions/interp.inx.h:5
 #, fuzzy
 msgid "Interpolate style"
-msgstr "Interpolálás"
+msgstr ""
+"stílus"
+"Interpolálás"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -23173,7 +23102,7 @@ msgstr "PostScript-bemenet"
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
-msgstr "Csomópontok szétszórása"
+msgstr "Csomópontok véletlenszerű szétszórása"
 
 #: ../share/extensions/radiusrand.inx.h:2
 #, fuzzy
