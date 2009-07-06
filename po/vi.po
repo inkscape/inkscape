@@ -135,7 +135,7 @@ msgstr "Chiếu sáng và đổ bóng"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr "Đổ bóng bên dưới nét của hình, tạo cảm giác hình bị cắt rời ra khỏi vùng vẽ"
+msgstr "Đổ bóng mạnh ở góc trên bên trái và nhẹ ở góc đối diện, như khi hình bị cắt rời khỏi trang giấy"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
@@ -536,13 +536,12 @@ msgid "Soft bevel, slightly depressed middle"
 msgstr "Nét vát nông, sâu dần vào giữa"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Inset"
-msgstr "Dát"
+msgstr "Đổ bóng xung quanh"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
-msgstr "Vát nghiêng ra phía ngoài, có đổ bóng"
+msgstr "Đổ bóng ra xung quanh đối tượng"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Dripping"
@@ -1046,7 +1045,7 @@ msgstr "Làm nhòe dựa trên các đường đồng mức, cho phép giảm đ
 
 #: ../share/filters/filters.svg.h:96
 msgid "Glow"
-msgstr "Nhòe phát sáng"
+msgstr "Quầng sáng"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Glow of object's own color at the edges"
@@ -1251,14 +1250,13 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Nét vát phản chiếu nhẹ, cho ánh sáng khuếch tán, dùng để tạo các mẫu văn hoa"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "Cutout Glow"
-msgstr "Ánh sáng tàn"
+msgstr "Cắt rời hình, phát sáng"
 
 #: ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:187
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
+msgstr "Phát sáng vào trong và ra ngoài, tạo cảm giác như đối tượng bị cắt rời khỏi trang giấy"
 
 #: ../share/filters/filters.svg.h:121
 msgid "HSL Bumps, diffuse"
@@ -1697,22 +1695,20 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:180
-#, fuzzy
 msgid "Dark and glow"
-msgstr "Kích cỡ rực rỡ (điểm ảnh * 4)"
+msgstr "Làm sẫm màu cạnh, phát sáng"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr ""
+msgstr "Làm nhòe các cạnh vào trong, khiến màu sẫm hơn, và thêm quầng sáng xung quanh"
 
 #: ../share/filters/filters.svg.h:181
-#, fuzzy
 msgid "Darken edges"
-msgstr "Tìm cạnh"
+msgstr "Làm sẫm màu cạnh"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Darken the edges with an inner blur"
-msgstr ""
+msgstr "Làm nhòe các cạnh vào trong, khiến màu sẫm hơn"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Warped rainbow"
@@ -2138,45 +2134,44 @@ msgstr "<small>Nhiều đối tượng đã được chọn.</small>"
 #: ../src/dialogs/clonetiler.cpp:168
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
-msgstr "<small>Đối tượng có <b>%d</b> bản sao được lát đều.</small>"
+msgstr "<small>Đối tượng có <b>%d</b> bản sao liên kết lát đều.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:173
 msgid "<small>Object has no tiled clones.</small>"
-msgstr "<small>Đối tượng không có bản sao được lát đều.</small>"
+msgstr "<small>Đối tượng không có bản sao liên kết lát đều.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:976
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "Chọn <b>một đối tượng</b> có bản sao được lát đều để tháo cục."
+msgstr "Chọn <b>một đối tượng</b> có bản sao liên kết lát đều để tháo cục."
 
 #: ../src/dialogs/clonetiler.cpp:998
 msgid "Unclump tiled clones"
-msgstr "Tháo cục các bản sao đã lát đều"
+msgstr "Tháo cục các bản sao liên kết lát đều"
 
 #: ../src/dialogs/clonetiler.cpp:1028
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Chọn <b>một đối tượng</b> có bản sao được lát đều để xoá bỏ."
+msgstr "Chọn <b>một đối tượng</b> có bản sao liên kết lát đều để xoá bỏ."
 
 #: ../src/dialogs/clonetiler.cpp:1051
 msgid "Delete tiled clones"
-msgstr "Xoá các bản sao đã lát đều"
+msgstr "Xoá các bản sao liên kết lát đều"
 
 #: ../src/dialogs/clonetiler.cpp:1097
 #: ../src/selection-chemistry.cpp:1883
 msgid "Select an <b>object</b> to clone."
-msgstr "Chọn <b>một đối tượng</b> sao chép."
+msgstr "Chọn <b>một đối tượng</b> tạo bản sao liên kết."
 
 #: ../src/dialogs/clonetiler.cpp:1103
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
-msgstr "Nếu bạn muốn sao chép lại nhiều đối tượng, hãy <b>nhóm chúng lại</b> rồi <b>sao chép lại cả nhóm</b> đó."
+msgstr "Nếu bạn muốn tạo bản sao liên kết cho nhiều đối tượng, hãy <b>nhóm chúng lại</b> rồi <b>sao chép liên kết nhóm</b> đó."
 
 #: ../src/dialogs/clonetiler.cpp:1112
-#, fuzzy
 msgid "<small>Creating tiled clones...</small>"
-msgstr "<small>Đối tượng có <b>%d</b> bản sao được lát đều.</small>"
+msgstr "<small>Đang tạo các bản sao liên kết lát đều...</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1515
 msgid "Create tiled clones"
-msgstr "Tạo các bản sao đã lát đều"
+msgstr "Tạo các bản sao liên kết lát đều"
 
 #: ../src/dialogs/clonetiler.cpp:1706
 msgid "<small>Per row:</small>"
@@ -3835,11 +3830,11 @@ msgstr "Xác định có nên đính lưới này hay không. Cũng có thể hi
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "Chỉ bám dính vào _các đường lưới được hiển thị"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid "When zoomed out, not all grid lines will be displayed. Only the visible ones will be snapped to"
-msgstr ""
+msgstr "Khi thu nhỏ, một số đường lưới sẽ bị ẩn đi. Chỉ những đường lưới được hiển thị mới cho đối tượng bám dính vào"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -4173,25 +4168,23 @@ msgstr "<b>Đang vẽ theo</b> một nét gióng"
 
 #: ../src/dyna-draw-context.cpp:755
 msgid "<b>Drawing</b> a calligraphic stroke"
-msgstr "<b>Đang vẽ</b> một nét thư pháp"
+msgstr "<b>Đang vẽ</b> một nét chữ đẹp"
 
 #: ../src/dyna-draw-context.cpp:1044
 msgid "Draw calligraphic stroke"
-msgstr "Vẽ nét thư pháp"
+msgstr "Vẽ nét chữ đẹp"
 
 #: ../src/eraser-context.cpp:527
-#, fuzzy
 msgid "<b>Drawing</b> an eraser stroke"
-msgstr "<b>Đang vẽ</b> một nét thư pháp"
+msgstr "<b>Đang vẽ</b> một nét tẩy"
 
 #: ../src/eraser-context.cpp:830
-#, fuzzy
 msgid "Draw eraser stroke"
-msgstr "Vẽ nét thư pháp"
+msgstr "Vẽ nét tẩy"
 
 #: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
-msgstr "<b>Phím cách và kéo chuột</b> di chuyển trong vùng vẽ"
+msgstr "<b>Phím cách và kéo chuột</b> để di chuyển vùng vẽ"
 
 #: ../src/event-log.cpp:37
 msgid "[Unchanged]"
@@ -4202,7 +4195,7 @@ msgstr "[Chưa thay đổi]"
 #: ../src/event-log.cpp:267
 #: ../src/verbs.cpp:2276
 msgid "_Undo"
-msgstr "_Hoàn tác"
+msgstr "_Hủy bước"
 
 #: ../src/event-log.cpp:274
 #: ../src/event-log.cpp:278
@@ -5064,14 +5057,12 @@ msgid "Black, blurred drop shadow"
 msgstr "Đổ bóng nhòe, màu đen"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
-#, fuzzy
 msgid "Drop Glow"
-msgstr "Ánh sáng tàn"
+msgstr "Quầng sáng nhòe"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
-#, fuzzy
 msgid "White, blurred drop glow"
-msgstr "Đổ ánh sáng nhòe, màu trắng"
+msgstr "Thêm quầng sáng trắng, nhòe xung quanh"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
 #, fuzzy
@@ -10337,7 +10328,7 @@ msgstr " <b>Nhấn</b> vào hay <b>nhấn và kéo</b> bắt đầu vẽ đườ
 #: ../src/tools-switch.cpp:184
 #, fuzzy
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr "<b>Kéo</b> vẽ một nét thư pháp; giữ <b>Ctrl</b> theo vết đường gióng; <b>Alt</b> thay đổi chiều rộng. <b>phím mũi tên</b> điều chỉnh chiều rộng (bên trái/phải) và góc (bên trên/dưới)."
+msgstr "<b>Kéo</b> vẽ một nét chữ đẹp; giữ <b>Ctrl</b> theo vết đường gióng; <b>Alt</b> thay đổi chiều rộng. <b>phím mũi tên</b> điều chỉnh chiều rộng (bên trái/phải) và góc (bên trên/dưới)."
 
 #: ../src/tools-switch.cpp:196
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
@@ -12139,11 +12130,11 @@ msgstr "Khoảng cách (theo điểm ảnh màn hình) ra cạnh vùng vẽ sẻ
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:206
 msgid "Left mouse button pans when Space is pressed"
-msgstr "Nút chuột bên trái kéo ngang khi ấn giữ phím dài"
+msgstr "Nút chuột bên trái kéo ngang khi ấn giữ phím cách"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:208
 msgid "When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator). When off, Space temporarily switches to Selector tool (default)."
-msgstr "Bật tùy chọn này thì việc ấn giữ phím dài và kéo bằng cái nút bên trái trên chuột sẽ kéo ngang vùng vẽ (như trong chương trình Adobe Illustrator). Không thì phím dài chuyển đổi tạm thời sang công cụ lựa chọn (mặc định)."
+msgstr "Bật tùy chọn này thì việc ấn giữ phím cách và kéo bằng nút trái chuột sẽ kéo ngang vùng vẽ (như trong chương trình Adobe Illustrator). Không thì nhấn phím cách để kích hoạt Công cụ chọn (mặc định)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:209
 msgid "Mouse wheel zooms by default"
@@ -12522,7 +12513,7 @@ msgstr "Bút"
 #: ../src/ui/dialog/inkscape-preferences.cpp:497
 #: ../src/verbs.cpp:2520
 msgid "Calligraphy"
-msgstr "Thư pháp"
+msgstr "Viết chữ đẹp"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"
@@ -12736,7 +12727,7 @@ msgstr "Khi điều gốc bị xoá, các bản sao của nó :"
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
 #, fuzzy
 msgid "Relink duplicated clones"
-msgstr "Tạo bản sao đã lát đều..."
+msgstr "Tạo bản sao liên kết lát đều..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"
@@ -14273,9 +14264,8 @@ msgid "Set glyph unicode"
 msgstr "Kiểm tra đa Unicode"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
-#, fuzzy
 msgid "Remove font"
-msgstr "_Bỏ phông"
+msgstr "Xóa phông"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 #, fuzzy
@@ -14349,14 +14339,12 @@ msgid "Add pair"
 msgstr "cặp định chỗ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
-#, fuzzy
 msgid "First Unicode range"
-msgstr "Giá trị Unicode ở ngoại phạm vi"
+msgstr "Phạm vi Unicode đầu tiên"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:754
-#, fuzzy
 msgid "Second Unicode range"
-msgstr "Giá trị Unicode ở ngoại phạm vi"
+msgstr "Phạm vi Unicode thứ hai"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 #, fuzzy
@@ -14364,30 +14352,25 @@ msgid "Kerning value:"
 msgstr "Giá trị thẻ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
-#, fuzzy
 msgid "Set font family"
-msgstr "Đặt nhóm phông"
+msgstr "Đặt nhóm phông chữ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:828
-#, fuzzy
 msgid "font"
-msgstr "Phông chữ..."
+msgstr "phông chữ"
 
 #. select_font(font);
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:842
-#, fuzzy
 msgid "Add font"
-msgstr "Mô tả về phông"
+msgstr "Thêm phông chữ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:862
-#, fuzzy
 msgid "_Font"
-msgstr "_Phông"
+msgstr "_Phông chữ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:870
-#, fuzzy
 msgid "_Global Settings"
-msgstr "Thiết lập toàn cục"
+msgstr "_Thiết lập toàn cục"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 #, fuzzy
@@ -14401,14 +14384,12 @@ msgstr "Định chỗ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
-#, fuzzy
 msgid "Sample Text"
-msgstr "Đoạn mẫu"
+msgstr "Văn bản mẫu"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:884
-#, fuzzy
 msgid "Preview Text:"
-msgstr "Đoạn xem thử"
+msgstr "Văn bản xem thử:"
 
 #: ../src/ui/dialog/swatches.cpp:329
 #, c-format
@@ -14417,13 +14398,11 @@ msgstr "Màu: <b>%s</b>; <b>Chuột trái</b> để đặt làm màu tô, <b>Shi
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:438
-#, fuzzy
 msgid "Set fill"
 msgstr "Đặt màu tô"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:446
-#, fuzzy
 msgid "Set stroke"
 msgstr "Đặt màu nét"
 
@@ -14434,41 +14413,36 @@ msgid "Edit..."
 msgstr "Sửa..."
 
 #: ../src/ui/dialog/swatches.cpp:483
-#, fuzzy
 msgid "Convert"
 msgstr "Chuyển đổi"
 
 #: ../src/ui/dialog/swatches.cpp:645
 msgid "Change color definition"
-msgstr "Đổi lời xác định màu"
+msgstr "Thay đổi định nghĩa màu"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove stroke color"
-msgstr "Nét màu phẳng"
+msgstr "Xóa màu nét"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove fill color"
-msgstr "Tô màu phẳng"
+msgstr "Xóa màu tô"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "Áp dụng cho nét màu đặt cuối cùng"
+msgstr "Đặt màu nét thành trong suốt"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "Áp dụng cho việc tô màu đặt cuối cùng"
+msgstr "Đặt màu tô thành trong suốt"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set stroke color from swatch"
-msgstr "Đặt màu nét từ bảng màu"
+msgstr "Đặt màu nét từ bảng chọn màu"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set fill color from swatch"
-msgstr "Đặt màu tô từ bảng màu"
+msgstr "Đặt màu tô từ bảng chọn màu"
 
 #: ../src/ui/dialog/swatches.cpp:1192
 #, c-format
@@ -15620,7 +15594,7 @@ msgstr "Lớp đã nâng lên <b>%s</b>."
 
 #: ../src/verbs.cpp:1202
 msgid "Layer to top"
-msgstr "Lớp lên trên"
+msgstr "Lớp lên trên cùng"
 
 #: ../src/verbs.cpp:1206
 msgid "Raise layer"
@@ -16448,7 +16422,7 @@ msgstr "Di chuyển vùng chọn sang lớp bên dưới lớp hiện tại"
 
 #: ../src/verbs.cpp:2446
 msgid "Layer to _Top"
-msgstr "Lớp lên t_rên đầun"
+msgstr "Lớp lên t_rên cùng"
 
 #: ../src/verbs.cpp:2447
 msgid "Raise the current layer to the top"
@@ -16660,7 +16634,7 @@ msgstr "Vẽ cung Bezier và đường thẳng"
 
 #: ../src/verbs.cpp:2521
 msgid "Draw calligraphic or brush strokes"
-msgstr "Nét thư pháp hay nét bút lông"
+msgstr "nét chữ đẹp hay nét bút lông"
 
 #: ../src/verbs.cpp:2523
 msgid "Create and edit text objects"
@@ -16709,7 +16683,7 @@ msgstr "Tùy thích Lựa chọn"
 
 #: ../src/verbs.cpp:2542
 msgid "Open Preferences for the Selector tool"
-msgstr "Mở Tùy thích cho công cụ Chọn"
+msgstr "Mở Tùy thích cho Công cụ chọn"
 
 #: ../src/verbs.cpp:2543
 msgid "Node Tool Preferences"
@@ -16785,11 +16759,11 @@ msgstr "Mở Tùy thích cho công cụ Bút"
 
 #: ../src/verbs.cpp:2561
 msgid "Calligraphic Preferences"
-msgstr "Tùy thích Thư pháp"
+msgstr "Tùy thích Viết chữ đẹp"
 
 #: ../src/verbs.cpp:2562
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "Mở Tùy thích cho công cụ Thư pháp"
+msgstr "Mở Tùy thích cho công cụ Viết chữ đẹp"
 
 #: ../src/verbs.cpp:2563
 msgid "Text Preferences"
@@ -17326,11 +17300,11 @@ msgstr "Chuyển ảnh bitmap thành ảnh véc-tơ"
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2709
 msgid "Inkscape: _Calligraphy"
-msgstr "Inkscape: _Thư pháp"
+msgstr "Inkscape: _Viết chữ đẹp"
 
 #: ../src/verbs.cpp:2710
 msgid "Using the Calligraphy pen tool"
-msgstr "Sử dụng công cụ bút thư pháp"
+msgstr "Sử dụng công cụ Viết chữ đẹp"
 
 #: ../src/verbs.cpp:2711
 msgid "_Elements of Design"
@@ -18143,12 +18117,12 @@ msgstr "Kiểu dáng của đường nét tạo bằng Bút"
 
 #: ../src/widgets/toolbox.cpp:201
 msgid "Style of new calligraphic strokes"
-msgstr "Kiểu dáng của nét thư pháp mới"
+msgstr "Kiểu dáng của nét chữ đẹp mới"
 
 #: ../src/widgets/toolbox.cpp:203
 #: ../src/widgets/toolbox.cpp:205
 msgid "TBD"
-msgstr ""
+msgstr "TBD"
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -19017,24 +18991,20 @@ msgid "Push parts of paths in any direction"
 msgstr "Đẩy phần của đường nét về bất cứ hướng nào"
 
 #: ../src/widgets/toolbox.cpp:4206
-#, fuzzy
 msgid "Shrink/grow mode"
-msgstr "Phóng to/thu nhỏ theo"
+msgstr "Chế độ Mở rộng/Thu nhỏ"
 
 #: ../src/widgets/toolbox.cpp:4207
-#, fuzzy
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "Thu nhỏ (bu vào) phần của đường nét"
+msgstr "Thu nhỏ (dời vào trong) phần của đường nét; giữ Shift để mở rộng (dời ra ngoài)"
 
 #: ../src/widgets/toolbox.cpp:4213
-#, fuzzy
 msgid "Attract/repel mode"
-msgstr "chế độ cập nhật không hợp lệ"
+msgstr "Chế độ Kéo/Đẩy"
 
 #: ../src/widgets/toolbox.cpp:4214
-#, fuzzy
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr "Hấp dẫn phần của đường nét đến con trỏ"
+msgstr "Kéo các phần của đường nét về phía con trỏ; giữ Shift đẩy chúng ra xa"
 
 #: ../src/widgets/toolbox.cpp:4220
 msgid "Roughen mode"
@@ -19061,14 +19031,12 @@ msgid "Jitter the colors of selected objects"
 msgstr "Bù ngẫu nhiên màu sắc của các đối tượng đã chọn"
 
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Blur mode"
-msgstr "không cho phép chế độ %s"
+msgstr "Chế độ làm nhòe"
 
 #: ../src/widgets/toolbox.cpp:4242
-#, fuzzy
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "Lật các đối tượng đã chọn theo chiều ngang"
+msgstr "Làm nhòe các đối tượng đã chọn; giữ Shift để làm sắc"
 
 #: ../src/widgets/toolbox.cpp:4269
 msgid "Channels:"
@@ -19085,7 +19053,7 @@ msgstr "H"
 
 #: ../src/widgets/toolbox.cpp:4295
 msgid "In color mode, act on objects' saturation"
-msgstr "Ở chế độ màu, thao tác độ bão hoà của đối tượng"
+msgstr "Ở chế độ màu, tác động lên độ bão hoà của đối tượng"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/toolbox.cpp:4299
@@ -19142,14 +19110,12 @@ msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr "Dùng ứng suất của thiết bị nhập để thay đổi sức mạnh của hành động điều chỉnh"
 
 #: ../src/widgets/toolbox.cpp:4541
-#, fuzzy
 msgid "No preset"
-msgstr "Gạch định _sẵn:"
+msgstr "Không dùng thiết lập sẵn"
 
 #: ../src/widgets/toolbox.cpp:4559
-#, fuzzy
 msgid "Save..."
-msgstr "&Lưu..."
+msgstr "Lưu..."
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4710
@@ -19169,7 +19135,7 @@ msgstr "Rộng bút"
 
 #: ../src/widgets/toolbox.cpp:4714
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr "Chiều rộng của bút thư pháp (so với vùng vẽ hiển thị)"
+msgstr "Chiều rộng của bút viết chữ đẹp (so với vùng vẽ hiển thị)"
 
 #. Thinning
 #: ../src/widgets/toolbox.cpp:4727
