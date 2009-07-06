@@ -1826,7 +1826,7 @@
 <feBlend id="feBlend2858" mode="normal" blend="normal" in2="result8" result="result11" />
 <feBlend id="feBlend2860" blend="normal" mode="multiply" in2="result11" />
 </filter>
-<filter id="Plast0" y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Plastify" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a HSL edges detection bump with a wavy reflective surface effect">
+<filter id="Plastify0" y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Plastify" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a HSL edges detection bump with a wavy reflective surface effect">
 <feGaussianBlur id="feGaussianBlur3091" stdDeviation="1" result="result14" />
 <feFlood flood-opacity="1" result="result15" flood-color="rgb(55,200,113)" id="feFlood3093" in="result14" />
 <feTurbulence id="feTurbulence3095" result="result5" numOctaves="1" baseFrequency="0.0040000000000000001 0.0080000000000000002" seed="25" type="fractalNoise" in="result15" />
@@ -1836,6 +1836,17 @@
 </feSpecularLighting>
 <feBlend id="feBlend3103" blend="normal" mode="screen" result="result9" in2="SourceGraphic" />
 <feComposite id="feComposite3105" operator="atop" in2="result14" result="result11" in="result9" k1="1" k2="1" k3="0" />
+</filter>
+<filter id="Plaster0" y="-0.2" x="-0.2" width="1.4" height="1.4" inkscape:label="Plaster" inkscape:menu="Bumps" inkscape:menu-tooltip="Combine a HSL edges detection bump with a matte and crumpled surface effect">
+<feGaussianBlur id="feGaussianBlur3032" stdDeviation="2" result="result14" />
+<feFlood id="feFlood3034" flood-opacity="0.75" result="result15" flood-color="rgb(255,255,255)" in="result14" />
+<feTurbulence id="feTurbulence3036" result="result5" numOctaves="5" baseFrequency="0.0040000000000000001 0.0040000000000000001" seed="25" type="fractalNoise" in="result15" />
+<feDisplacementMap id="feDisplacementMap3038" in2="result14" yChannelSelector="G" result="result8" in="result5" xChannelSelector="R" scale="200" />
+<feDiffuseLighting id="feDiffuseLighting3048" in="result8" surfaceScale="50" lighting-color="rgb(255,255,255)" diffuseConstant="1">
+<feDistantLight id="feDistantLight3050" azimuth="225" elevation="10" />
+</feDiffuseLighting>
+<feBlend id="feBlend3044" blend="normal" mode="screen" result="result9" in2="SourceGraphic" />
+<feComposite id="feComposite3046" operator="in" in2="SourceGraphic" result="result11" in="result9" k1="1" k2="1" k3="0" />
 </filter>
 </defs>
 </svg>
