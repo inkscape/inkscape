@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-03 19:34+0100\n"
-"PO-Revision-Date: 2009-07-03 22:29+0100\n"
+"POT-Creation-Date: 2009-07-04 09:03+0200\n"
+"PO-Revision-Date: 2009-07-06 21:41+0100\n"
 "Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: Polish <inkscapeplteam@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,6 @@ msgid "Smooth drop-like bevel with metallic finish"
 msgstr "Gładka jak kropla wypukłość wykończona metalem"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Motion blur, horizontal"
 msgstr "Smuga pozioma"
 
@@ -96,7 +95,6 @@ msgstr "Smuga pozioma"
 #: ../share/filters/filters.svg.h:8
 #: ../share/filters/filters.svg.h:58
 #: ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:112
 #: ../share/filters/filters.svg.h:169
@@ -130,6 +128,7 @@ msgstr "Wycięcie"
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:179
 #: ../share/filters/filters.svg.h:180
@@ -184,9 +183,13 @@ msgstr "Gumowy stempel"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:196
 msgid "Overlays"
 msgstr "Powłoki"
 
@@ -288,13 +291,10 @@ msgstr "Skóra leoparda"
 #: ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:160
 #: ../share/filters/filters.svg.h:161
 #: ../share/filters/filters.svg.h:162
 #: ../share/filters/filters.svg.h:163
-#: ../share/filters/filters.svg.h:164
 msgid "Materials"
 msgstr "Materiały"
 
@@ -332,16 +332,10 @@ msgstr "Wyostrzanie"
 #: ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
-#: ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:170
 #: ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:173
 #: ../share/filters/filters.svg.h:186
-#: ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192
 msgid "Image effects"
 msgstr "Efekty obrazka"
 
@@ -483,12 +477,14 @@ msgstr "Organiczna"
 #: ../share/filters/filters.svg.h:36
 #: ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:47
 #: ../share/filters/filters.svg.h:62
 #: ../share/filters/filters.svg.h:64
 #: ../share/filters/filters.svg.h:65
 #: ../share/filters/filters.svg.h:82
 #: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:124
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:128
@@ -502,6 +498,7 @@ msgstr "Organiczna"
 #: ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182
 #: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:185
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:194
 msgid "Textures"
@@ -576,13 +573,22 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "Efekt malarski VanGogha dla bitmap"
 
 #: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:185
 msgid "HSL Bumps"
 msgstr "Uwypuklenia HSL"
+
+#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
+msgid "Bumps"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Highly flexible specular bump"
@@ -664,7 +670,8 @@ msgid "Thin like a soap membrane"
 msgstr "Cienka membrana jak bańka mydlana"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft ridge"
+#, fuzzy
+msgid "Matte ridge"
 msgstr "Miękka krawędź"
 
 #: ../share/filters/filters.svg.h:54
@@ -1118,7 +1125,7 @@ msgid "Same than HSL bumps but with an alpha added for combination with transpar
 msgstr "To samo, co uwypuklenia HSL, ale z kanałem alfa w celu kombinacji z filtrami odpowiedzialnymi za przezroczystość"
 
 #: ../share/filters/filters.svg.h:105
-msgid "HSL Bubbles, alpha"
+msgid "HSL bubbles, alpha"
 msgstr "Bąbelki HSL, kanał alfa"
 
 #: ../share/filters/filters.svg.h:106
@@ -1267,7 +1274,7 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Proste rozmycie gaussowskie – takie samo działanie, jak suwak w oknie dialogowym „Wypełnienie i kontur”"
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL Bubbles, diffuse"
+msgid "HSL bubbles, diffuse"
 msgstr "Bąbelki HSL, dyfuzja"
 
 #: ../share/filters/filters.svg.h:124
@@ -1399,7 +1406,6 @@ msgstr "Szkic komiksowy"
 #: ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:159
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Non realistic 3D shaders"
 msgstr "Nierealistyczne cieniowania 3D"
 
@@ -1598,7 +1604,6 @@ msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Niewielka chropowatość krawędzi"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Film grain"
 msgstr "Ziarnistość"
 
@@ -1719,7 +1724,8 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "Wypełnienie z efektem żelatynowych zawirowań i przezroczystością oraz możliwością podkolorowania"
 
 #: ../share/filters/filters.svg.h:185
-msgid "HSL Bubbles, transparent"
+#, fuzzy
+msgid "HSL bubbles, transparent"
 msgstr "Przezroczyste bąbelki HSL"
 
 #: ../share/filters/filters.svg.h:185
@@ -1760,9 +1766,8 @@ msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "Daje obszar roboczy, jak czuła przezroczystość HSL"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Smear transparency"
-msgstr "Przezroczysty szum"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:190
 msgid "Paint objects with a transparent turbulence which turn around color edges"
@@ -1774,7 +1779,7 @@ msgstr "Gęsta farba"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "Efekt gęstej farby z zawirowaniami"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick paint, glossy"
@@ -1782,7 +1787,7 @@ msgstr "Gęsta farba, błyszcząca"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr ""
+msgstr "Efekt gęstej farby z zawirowaniami i błyszczącą powłoką"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Burst"
@@ -1798,6 +1803,30 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid "Embossed leather"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:195
+msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+msgid "Carnaval"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:196
+msgid "White splotches evocating carnaval masks"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr "Uplastycznienie"
+
+#: ../share/filters/filters.svg.h:197
+msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -2064,11 +2093,11 @@ msgstr "<b>Aktywna warstwa jest zablokowana</b>. Aby móc na niej rysować odblo
 
 #: ../src/desktop.cpp:819
 msgid "No previous zoom."
-msgstr "Nie ma poprzedniego zoomu"
+msgstr "Nie ma poprzedniej skali rysunku"
 
 #: ../src/desktop.cpp:844
 msgid "No next zoom."
-msgstr "Nie ma następnego zoomu"
+msgstr "Nie ma następnej skali rysunku"
 
 #: ../src/desktop-events.cpp:201
 msgid "Create guide"
@@ -2789,7 +2818,7 @@ msgstr "Usuń istniejące klony zaznaczonego obiektu (usuwa tylko kopie)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
-msgstr "_Resetuj "
+msgstr "Przywróć _domyślne "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2981
@@ -2799,12 +2828,12 @@ msgstr "Wyzeruj wartości wszystkich przesunięć, skalowań, obrotów, zmian kr
 #: ../src/dialogs/export.cpp:141
 #: ../src/verbs.cpp:2623
 msgid "_Page"
-msgstr "Cała _strona"
+msgstr "_Strona"
 
 #: ../src/dialogs/export.cpp:141
 #: ../src/verbs.cpp:2627
 msgid "_Drawing"
-msgstr "Cały _rysunek"
+msgstr "_Rysunek"
 
 #: ../src/dialogs/export.cpp:141
 #: ../src/verbs.cpp:2629
@@ -2813,7 +2842,7 @@ msgstr "_Zaznaczenie"
 
 #: ../src/dialogs/export.cpp:141
 msgid "_Custom"
-msgstr "Rozmiar _użytkownika"
+msgstr "Obszar _użytkownika"
 
 #: ../src/dialogs/export.cpp:266
 msgid "<big><b>Export area</b></big>"
@@ -4158,7 +4187,7 @@ msgstr "Wyświetlaj to okno podczas uruchamiania programu"
 #: ../src/extension/execution-env.cpp:134
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr "„%s” pracuje… Proszę czekać."
+msgstr "Rozszerzenie „%s” pracuje… Proszę czekać."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -4482,7 +4511,7 @@ msgstr "Cykl palety kolorów"
 #: ../src/extension/internal/bitmap/spread.cpp:38
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:44
 msgid "Amount"
-msgstr "Ilość"
+msgstr "Liczba"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:44
 msgid "Cycle colormap(s) of selected bitmap(s)."
@@ -6754,7 +6783,7 @@ msgstr "Dwusieczna kąta"
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
 msgid "Boolops"
-msgstr "Operacje boolowskie"
+msgstr "Operacje logiczne"
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
@@ -9477,7 +9506,7 @@ msgstr "Prowadnice wokół strony"
 
 #: ../src/sp-guide.cpp:418
 msgid "<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
-msgstr ""
+msgstr "<b>Ciągnij</b>, aby przesunąć, <b>Shift+ciągnięcie</b>, aby obrócić, <b>Ctrl</b>+kliknięcie, aby usunąć"
 
 #: ../src/sp-guide.cpp:422
 #, c-format
@@ -10523,7 +10552,7 @@ msgstr "Węzły"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:797
 msgid "Relative to: "
-msgstr "Element sterujący: "
+msgstr "Względem: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
 msgid "Treat selection as group: "
@@ -11930,7 +11959,7 @@ msgstr "Przybliżaj/oddalaj o:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"
-msgstr "Narzędzia zmiany zoomu – klawisze [ +/- ] oraz środkowy przycisk myszy wykonują przybliżenie/oddalenie obiektu o ten mnożnik"
+msgstr "Narzędzia zmiany skali – klawisze [ +/- ] oraz środkowy przycisk myszy wykonują przybliżenie/oddalenie obiektu o ten mnożnik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:269
 msgid "Show selection cue"
@@ -12205,7 +12234,7 @@ msgstr "Kaligrafia"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"
-msgstr "Szerokość linii pióra – niezależnie od zoomu – będzie wyrażona w jednostkach absolutnych (px). Jeśli jest nieaktywna – szerokość będzie zależała od zoomu i będzie wyglądała tak samo w każdym przybliżeniu."
+msgstr "Szerokość linii pióra – niezależnie od skali – będzie wyrażona w jednostkach absolutnych (px). Jeśli jest nieaktywna – szerokość będzie zależała od zoomu i będzie wyglądała tak samo w każdym przybliżeniu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:503
 msgid "If on, each newly created object will be selected (deselecting previous selection)"
@@ -12344,7 +12373,7 @@ msgstr "Wyłącza wyświetlanie przycisków okien dialogowych na pasku zadań me
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:595
 msgid "Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"
-msgstr "Wraz ze zmianą rozmiarów okna dokumentu, nastąpi zmiana zoomu z zachowaniem widocznego obszaru. Jest to zachowanie domyślne, które może być zmienione w każdym oknie przyciskiem znajdującym się nad prawym paskiem przewijania."
+msgstr "Wraz ze zmianą rozmiarów okna dokumentu, nastąpi zmiana skali z zachowaniem widocznego obszaru. Jest to zachowanie domyślne, które może być zmienione w każdym oknie przyciskiem znajdującym się nad prawym paskiem przewijania."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:597
 msgid "Whether dialog windows have a close button (requires restart)"
@@ -13247,11 +13276,11 @@ msgstr "Określ maksymalną liczbę dokumentów przechowywanych na liście ostat
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Zoom correction factor (in %):"
-msgstr "Wskaźnik korekcji zoomu (%)"
+msgstr "Wskaźnik korekcji skali (%)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
-msgstr "Dostrój, używając suwaka, długość widocznej tutaj linijki do wartości rzeczywistych. Dane te są używane podczas zmiany zoomu w skali 1:1, 1:2 itd., aby wyświetlać obiekty w ich rzeczywistej wielkości."
+msgstr "Dostrój, używając suwaka, długość widocznej tutaj linijki do wartości rzeczywistych. Dane te są używane podczas zmiany skali na 1:1, 1:2 itd., aby wyświetlać obiekty w ich rzeczywistej wielkości."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
 msgid "Interface"
@@ -14133,11 +14162,11 @@ msgstr "Liczba kolorów:"
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:483
 msgid "Invert image"
-msgstr "Odwróć obrazek"
+msgstr "Negatyw"
 
 #: ../src/ui/dialog/tracedialog.cpp:488
 msgid "Invert black and white regions"
-msgstr "Zamienia białe i czarne obszary"
+msgstr "Tworzy negatyw zamieniając miejscami białe i czarne obszary"
 
 #. # end single scan
 #. # begin multiple scan
@@ -14546,7 +14575,7 @@ msgstr "Własność autora"
 #: ../src/ui/widget/licensor.cpp:38
 #: ../share/extensions/interp_att_g.inx.h:13
 msgid "Other"
-msgstr "Inne"
+msgstr "Inny"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -17011,7 +17040,7 @@ msgstr "Styl"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
-msgstr "Rozmiar czcionki:"
+msgstr "Rozmiar:"
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
 #. * text has been entered) to get a preview of the font.  Choose
@@ -17020,7 +17049,7 @@ msgstr "Rozmiar czcionki:"
 #: ../src/widgets/font-selector.cpp:641
 #: ../src/widgets/toolbox.cpp:6495
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr "AaĄąBbCćĘęKkÓóŹź0123:/()"
+msgstr "AaĄąBbCćĘęKkŁłÓóŹź0123:/()"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:161
@@ -17564,11 +17593,11 @@ msgstr "Ścięte"
 #. when they become too long.
 #: ../src/widgets/stroke-style.cpp:1161
 msgid "Miter limit:"
-msgstr "Ograniczenie połączeń ostrych:"
+msgstr "Limit ostrych narożników:"
 
 #: ../src/widgets/stroke-style.cpp:1169
 msgid "Maximum length of the miter (in units of stroke width)"
-msgstr "Maksymalna długość połączeń ostrych (w jednostkach szerokości konturu)"
+msgstr "Maksymalna długość ostrych narożników (w jednostkach szerokości konturu)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
@@ -19267,7 +19296,7 @@ msgstr "nie można zlokalizować znacznikar: %s"
 #: ../share/extensions/perspective.py:61
 #: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
-msgstr "To rozszerzenie wymaga zaznaczenia dwóch ścieżek"
+msgstr "To rozszerzenie wymaga zaznaczenia dwóch ścieżek."
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -19361,11 +19390,11 @@ msgstr "Dodaj węzły"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "By max. segment length"
-msgstr "Wg maksymalnej długość odcinka"
+msgstr "Według maksymalnej długość odcinka"
 
 #: ../share/extensions/addnodes.inx.h:3
 msgid "By number of segments"
-msgstr "Wg liczby zębów"
+msgstr "Według liczby zębów"
 
 #: ../share/extensions/addnodes.inx.h:4
 msgid "Division method"
@@ -20195,7 +20224,7 @@ msgstr "Liczba głównych okręgów"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr "Dalsze podziały głównych podziałów kołowychniewidoczne dla podanej liczby podziałów od środka"
+msgstr "Dalsze podziały głównych podziałów kołowych niewidoczne dla podanej liczby podziałów od środka"
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
@@ -20307,24 +20336,23 @@ msgstr "Zapis w formacie HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
 msgid "Mirror Y-axis"
-msgstr ""
+msgstr "Odbicie w osi Y"
 
 #: ../share/extensions/hpgl_output.inx.h:5
-#, fuzzy
 msgid "Plot invisible layers"
-msgstr "Zaznaczaj na wszystkich warstwach"
+msgstr "Plotuj niewidoczne warstwy"
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "X-origin (px)"
-msgstr ""
+msgstr "Początek osi X (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:7
 msgid "Y-origin (px)"
-msgstr ""
+msgstr "Początek osi Y (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
-msgstr ""
+msgstr "Zapis HPGL - płaskość krzywych"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -20371,9 +20399,8 @@ msgid "Float Number"
 msgstr "Liczba zmiennoprzecinkowa"
 
 #: ../share/extensions/interp_att_g.inx.h:7
-#, fuzzy
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\":"
-msgstr "Jeśli zaznaczono „Inne”, trzeba znać atrybuty SVG, aby „inne” zidentyfikować:"
+msgstr "Jeśli wybrano „Inny”, trzeba znać atrybuty SVG, aby „inny” atrybut zidentyfikować:"
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
@@ -20410,7 +20437,7 @@ msgstr "Tag"
 
 #: ../share/extensions/interp_att_g.inx.h:20
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection"
-msgstr "Ten efekt nadaje wartość dowolnemu interpolowanemu atrybutowi wszystkim elementom wewnątrz zaznaczonej grupy lub wszystkim elementom w zaznaczeniu zawierającym wiele elementó"
+msgstr "Ten efekt nadaje wartość dowolnemu interpolowanemu atrybutowi wszystkim elementom wewnątrz zaznaczonej grupy lub wszystkim elementom w zaznaczeniu zawierającym wiele elementów"
 
 #: ../share/extensions/interp_att_g.inx.h:21
 msgid "Transformation"
@@ -21303,11 +21330,11 @@ msgstr "Zapis ZIP"
 
 #: ../share/extensions/svgcalendar.inx.h:1
 msgid "(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)"
-msgstr "(Wybierz kodowanie znaków. Więcje informacji dostępne pod http://docs.python.org/library/codecs.html#standard-encodings)"
+msgstr "Wybierz kodowanie znaków. Więcej informacji jest dostępnych pod adresem http://docs.python.org/library/codecs.html#standard-encodings"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
-msgstr "(Lista nazw dni tygodnia musi zaczynać się od niedzieli)"
+msgstr "Lista nazw dni tygodnia musi zaczynać się od niedzieli"
 
 #: ../share/extensions/svgcalendar.inx.h:3
 msgid "Automatically set size and position"
@@ -21395,7 +21422,7 @@ msgstr "niedziela"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options below have no influence when the above is checked."
-msgstr "Ustawienia poniżej nie są brane pod uwagę jeśli opcja powyżej jest zaznaczona."
+msgstr "Poniższe ustawienia nie są brane pod uwagę jeśli opcja powyżej jest zaznaczona."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -21571,7 +21598,7 @@ msgstr "Lista wartości musi mieć ten sam rozmiar, co lista atrybutów"
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr "Natępny parametr jest użyteczny, gdy są zaznaczone więcej niż dwa elementy"
+msgstr "Następny parametr jest użyteczny, gdy są zaznaczone więcej niż dwa elementy"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
@@ -21647,7 +21674,7 @@ msgstr "po zwolneniu klawisza myszy"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 msgid "All selected ones transmits to the last one"
-msgstr "Wszystkie zaznaczone przekazują do przynajmniej jednego"
+msgstr "Wszystkie zaznaczone przekazują przynajmniej do jednego"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
@@ -21675,7 +21702,7 @@ msgstr "Przekazywanie atrybutów"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
 msgid "When to transmit"
-msgstr "Kiedy przesłać"
+msgstr "Prześlij"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
