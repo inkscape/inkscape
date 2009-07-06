@@ -4550,7 +4550,7 @@ static void sp_dcc_build_presets_list(GObject *tbl)
     	GtkTreeIter iter;
         Glib::ustring preset_name = prefs->getString(*i + "/name");
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, preset_name.data(), 1, ii++, -1 );
+        gtk_list_store_set( model, &iter, 0, _(preset_name.data()), 1, ii++, -1 );
     }
 
     {
