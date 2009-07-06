@@ -1732,15 +1732,18 @@
 <feGaussianBlur stdDeviation="0.69999999999999996" id="feGaussianBlur4080" />
 <feColorMatrix id="feColorMatrix4082" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
 </filter>
-<filter inkscape:label="Smear transparency" x="-0.1" y="-0.1" width="1.2" height="1.2" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Paint objects with a transparent turbulence which turn around color edges" id="SmearTrans0">
-<feGaussianBlur stdDeviation="3" result="result6" id="feGaussianBlur3132" />
-<feTurbulence result="result1" numOctaves="3" baseFrequency="0.4 0.8" type="fractalNoise" id="feTurbulence3134" />
-<feDisplacementMap scale="60" xChannelSelector="R" yChannelSelector="B" in="result1" result="result3" in2="result6" id="feDisplacementMap3136" />
-<feColorMatrix result="result0" in="result6" type="luminanceToAlpha" id="feColorMatrix3138" />
-<feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.75 0 " result="result2" id="feColorMatrix3140" />
-<feComposite in="result2" operator="over" in2="result3" result="result4" id="feComposite3142" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" result="result5" id="feColorMatrix3144" />
-<feComposite result="result7" operator="out" in="SourceGraphic" in2="result5" id="feComposite3146" />
+<filter id="SmearTransp0" inkscape:label="Smear transparency" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Paint objects with a transparent turbulence which turn around color edges" height="1.4" y="-0.2" width="1.4" x="-0.2">
+<feColorMatrix id="feColorMatrix3274" in="SourceGraphic" result="result1" type="luminanceToAlpha" />
+<feComposite in2="result1" id="feComposite3276" k2="0" k3="1" in="SourceGraphic" result="result2" operator="out" k1="0" />
+<feGaussianBlur stdDeviation="0.69999999999999996" id="feGaussianBlur3296" result="result10" />
+<feBlend in2="result10" id="feBlend3278" blend="normal" mode="screen" in="result10" result="fbSourceGraphic" />
+<feGaussianBlur id="feGaussianBlur3280" stdDeviation="3" result="result8" in="fbSourceGraphic" />
+<feTurbulence id="feTurbulence3282" seed="0" result="result7" type="fractalNoise" numOctaves="1" baseFrequency="0.29999999999999999" />
+<feColorMatrix id="feColorMatrix3284" result="result9" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.2 -0.2 " />
+<feComposite id="feComposite3286" in2="result8" result="result6" operator="atop" in="result8" />
+<feDisplacementMap id="feDisplacementMap3288" in="result9" in2="result6" xChannelSelector="R" yChannelSelector="A" scale="100" result="result4" />
+<feComposite id="feComposite3290" in2="result4" result="result2" operator="arithmetic" in="result8" k1="2" />
+<feComposite id="feComposite3292" result="fbSourceGraphic" in="fbSourceGraphic" operator="in" in2="result2" />
 </filter>
 <filter inkscape:label="Thick paint" x="-0.050000001" y="-0.050000001" width="1.1" height="1.1" inkscape:menu="Bumps" inkscape:menu-tooltip="Thick painting effect with turbulence" id="ThickPaint0">
 <feGaussianBlur result="result6" stdDeviation="0.90000000000000002" id="feGaussianBlur3181" />
