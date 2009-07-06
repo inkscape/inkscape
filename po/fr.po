@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-04 09:03+0200\n"
-"PO-Revision-Date: 2009-07-04 20:51+0100\n"
+"POT-Creation-Date: 2009-07-06 19:00+0200\n"
+"PO-Revision-Date: 2009-07-06 19:05+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -592,6 +592,7 @@ msgstr "Bosselage TSL"
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
 #: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:198
 msgid "Bumps"
 msgstr "Bosselage"
 
@@ -1809,7 +1810,15 @@ msgstr "Plastifier"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr "Combine un bosselage de type détection de contours TSL avec un effet de surface ondulant et réflectif."
+msgstr "Combine un bosselage de type détection de contours TSL avec un effet de surface ondulant et réflectif"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Plaster"
+msgstr "Plâtre"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgstr "Combine un bosselage de type détection de contours TSL avec un effet de surface mat et froissé"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
