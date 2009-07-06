@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-06-25 19:20+0100\n"
+"POT-Creation-Date: 2009-07-04 09:03+0200\n"
+"PO-Revision-Date: 2009-07-06 01:38+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -583,6 +583,7 @@ msgstr "Izbokline HSL"
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
 msgid "Bumps"
 msgstr "Izbokline"
 
@@ -1794,6 +1795,14 @@ msgstr "Karneval"
 msgid "White splotches evocating carnaval masks"
 msgstr "Bele packe, ki spominjajo na karnevalske maske"
 
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr "Plastificiraj"
+
+#: ../share/filters/filters.svg.h:197
+msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr "Združi izboklino razpoznave robov HSL z učinkom valovite odsevne površine"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Črte 1:1"
@@ -1958,26 +1967,26 @@ msgstr "Tkanina (bitna slika)"
 msgid "Old paint (bitmap)"
 msgstr "Stara barva (bitna slika)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b>: narišite krog ali elipso z razmerji celih števil, odsek preskakujte po kotih"
 
-#: ../src/arc-context.cpp:304
+#: ../src/arc-context.cpp:305
 #: ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: rišite okrog začetne točke"
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Elipsa</b>: %s &#215; %s (omejeno na razmerje %d:%d) ; s <b>Shift</b> za risanje okrog začetne točke"
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> za risanje kvadrata ali elips v razmerjih celih števil; s <b>Shift</b> za risanje okrog začetne točke"
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr "Ustvari elipso"
 
@@ -5406,8 +5415,8 @@ msgid "Document saved."
 msgstr "Dokument shranjen."
 
 #: ../src/file.cpp:750
-#: ../src/file.cpp:1161
-#: ../src/file.cpp:1281
+#: ../src/file.cpp:1180
+#: ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr "risba%s"
@@ -5437,34 +5446,34 @@ msgstr "Shranjevanje dokumenta ..."
 msgid "Import"
 msgstr "Uvozi"
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1182
-#: ../src/file.cpp:1296
+#: ../src/file.cpp:1201
+#: ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Napaka pri shranjevanju začasne kopije"
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
 msgstr "Prijava v Open Clip Art"
 
-#: ../src/file.cpp:1374
+#: ../src/file.cpp:1393
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Napaka pri izvozu dokumenta. Preverite, da so ime strežnika, uporabniško ime in geslo pravilni, če ima strežnik podporo za webdav, preverite pa tudi, če niste pozabili izbrati licence."
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr "Dokument izvožen ..."
 
-#: ../src/file.cpp:1423
+#: ../src/file.cpp:1442
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Uvozi iz odprte knjižnice izrezkov (Open Clip Art Library)"
@@ -19359,7 +19368,7 @@ msgstr "Notranja napaka. Izbrana ni nobena vrsta prikaza\n"
 msgid "The second path must be exactly four nodes long."
 msgstr "Druga pot mora biti dolga natanko štiri vozlišča."
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "Ni mogoče najti datoteke: %s"
@@ -20315,6 +20324,22 @@ msgid "HPGL Output"
 msgstr "Izvoz HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr "Zrcali os Y"
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr "Izriši nevidne plasti"
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr "X-izvor (slik. točke)"
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr "Y-izvor (slik. točke)"
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr "Ploskost izvoza HPGL"
 
@@ -20509,7 +20534,7 @@ msgstr "Ta učinek ustvari običajno besedilo za ogrado \"Lorem Ipsum\" v psevdo
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr "Barvne oznake naj se ujemajo s potezo"
+msgstr "Barvne oznake, ujemajoče s potezo"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
@@ -21697,23 +21722,4 @@ msgstr "Uvoz Metadatoteke Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Uvoz XAML"
-
-#~ msgid "Pixel smear, glossy"
-#~ msgstr "Razmazane točke, bleščeče"
-#~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "Bleščeči slikarski učinek za bitne slike"
-#~ msgid "Soft bump"
-#~ msgstr "Nežna izboklina"
-#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
-#~ msgstr ""
-#~ "Konvolucijska izboklina; z zabrisanostjo lahko dosežete lepe učinke "
-#~ "reliefa"
-#~ msgid "Adds a film grain noise to images and objects"
-#~ msgstr "Podobam in predmetom doda šum filmskega zrna"
-#~ msgid "Alpha paint"
-#~ msgstr "Alfa-barvanje"
-#~ msgid "Previous Effect"
-#~ msgstr "Prejšnji učinek"
-#~ msgid "All Image Files"
-#~ msgstr "Vse slikovne datoteke"
 
