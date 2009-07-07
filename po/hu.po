@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-07-06 23:20+0200\n"
+"PO-Revision-Date: 2009-07-07 14:33+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1082,7 +1082,7 @@ msgstr ""
 #, fuzzy
 msgid "Draws an outline around"
 msgstr ""
-"Rács rajzolása lánc formájában"
+"rajzolása"
 "kontúr"
 
 #: ../share/filters/filters.svg.h:95
@@ -1824,7 +1824,7 @@ msgstr "Fekete kontúr"
 #, fuzzy
 msgid "Draws a black outline around"
 msgstr ""
-"Rács rajzolása lánc formájában"
+"rajzolása"
 "Fekete"
 "kontúr"
 
@@ -1839,7 +1839,7 @@ msgstr ""
 #, fuzzy
 msgid "Draws a coloured outline around"
 msgstr ""
-"Rács rajzolása lánc formájában"
+"rajzolása"
 "kontúr"
 
 #: ../share/filters/filters.svg.h:180
@@ -4167,12 +4167,12 @@ msgstr "Névtelen dokumentum %d"
 #. We hit green anchor, closing Green-Blue-Red
 #: ../src/draw-context.cpp:581
 msgid "Path is closed."
-msgstr "A lánc lezárva."
+msgstr "Az útvonal lezárva."
 
 #. We hit bot start and end of single curve, closing paths
 #: ../src/draw-context.cpp:596
 msgid "Closing path."
-msgstr "A lánc lezárása."
+msgstr "Az útvonal lezárása."
 
 # node-ok és szakaszok száma nem változik
 #: ../src/draw-context.cpp:706
@@ -4227,21 +4227,21 @@ msgstr "Leolvasott szín beállítása"
 
 #: ../src/dyna-draw-context.cpp:615
 msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
-msgstr "<b>Vezetőlánc kijelölve</b>. Rajzolás a vezetőlánc mentén: <b>Ctrl</b>."
+msgstr "<b>Vezetőútvonal kijelölve</b>. Rajzolás a vezetőútvonal mentén: <b>Ctrl</b>."
 
 #: ../src/dyna-draw-context.cpp:617
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
 msgstr ""
-"<b>Jelöljön ki egy vezetőláncot</b>, amelyet a <b>Ctrl</b> billentyűvel "
+"<b>Jelöljön ki egy vezetőútvonalat</b>, amelyet a <b>Ctrl</b> billentyűvel "
 "követni kíván."
 
 #: ../src/dyna-draw-context.cpp:752
 msgid "Tracking: <b>connection to guide path lost!</b>"
-msgstr "Követés: <b>elveszett a kapcsolat a vezetőlánccal.</b>"
+msgstr "Követés: <b>elveszett a kapcsolat a vezetőútvonallal.</b>"
 
 #: ../src/dyna-draw-context.cpp:752
 msgid "<b>Tracking</b> a guide path"
-msgstr "Vezetőlánc <b>követése</b>"
+msgstr "Vezetőútvonal <b>követése</b>"
 
 #: ../src/dyna-draw-context.cpp:755
 msgid "<b>Drawing</b> a calligraphic stroke"
@@ -5012,7 +5012,7 @@ msgstr "Az objektumról készítendő zsugorított illetve nyújtott másolatok 
 #: ../share/extensions/pathalongpath.inx.h:4
 #: ../share/extensions/pathscatter.inx.h:5
 msgid "Generate from Path"
-msgstr "Létrehozás lánc alapján"
+msgstr "Létrehozás útvonal alapján"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:274
 #: ../share/extensions/ps_input.inx.h:1
@@ -5314,7 +5314,7 @@ msgstr "Megjelenítés"
 
 #: ../src/extension/internal/grid.cpp:204
 msgid "Draw a path which is a grid"
-msgstr "Rács rajzolása lánc formájában"
+msgstr "Rács rajzolása útvonal formájában"
 
 #: ../src/extension/internal/javafx-out.cpp:965
 msgid "JavaFX Output"
@@ -6009,18 +6009,18 @@ msgstr "<b>Túl nagy zsugorítás</b> - az eredmény üres."
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
 msgstr[0] ""
-"A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva és "
+"A terület kitöltve, <b>%d</b> csomópontot tartalmazó útvonal létrehozva és "
 "egyesítve a kijelöléssel."
 msgstr[1] ""
-"A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva és "
+"A terület kitöltve, <b>%d</b> csomópontot tartalmazó útvonal létrehozva és "
 "egyesítve a kijelöléssel."
 
 #: ../src/flood-context.cpp:513
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
-msgstr[0] "A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva."
-msgstr[1] "A terület kitöltve, <b>%d</b> csomópontot tartalmazó lánc létrehozva."
+msgstr[0] "A terület kitöltve, <b>%d</b> csomópontot tartalmazó útvonal létrehozva."
+msgstr[1] "A terület kitöltve, <b>%d</b> csomópontot tartalmazó útvonal létrehozva."
 
 #: ../src/flood-context.cpp:785 ../src/flood-context.cpp:1099
 msgid "<b>Area is not bounded</b>, cannot fill."
@@ -7118,7 +7118,7 @@ msgstr "Normál eltolás"
 #: ../src/live_effects/effect.cpp:98
 #, fuzzy
 msgid "Path length"
-msgstr "Lánc a lánc mentén"
+msgstr "útvonal"
 
 #: ../src/live_effects/effect.cpp:99
 #, fuzzy
@@ -7143,7 +7143,9 @@ msgstr "Maszk eltávolítása a kijelölésről"
 #: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Tangent to curve"
-msgstr "Ív húzása"
+msgstr ""
+"Érintő"
+"Ív húzása"
 
 #: ../src/live_effects/effect.cpp:104
 #, fuzzy
@@ -7161,7 +7163,7 @@ msgstr "Fogaskerekek"
 
 #: ../src/live_effects/effect.cpp:109
 msgid "Pattern Along Path"
-msgstr "Minta a lánc mentén"
+msgstr "Minta az útvonal mentén"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:110
@@ -7240,15 +7242,15 @@ msgstr ""
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Path along which to bend the original path"
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
-msgstr "A lánc szélessége"
+msgstr "Az útvonal szélessége"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
@@ -7257,15 +7259,15 @@ msgstr "Szélesség a hossz arányában megadva"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
-msgstr "A lánc szélessége a lánc hosszának arányában legyen méretezve"
+msgstr "Az útvonal szélessége az útvonal hosszának arányában legyen méretezve"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Original path is vertical"
-msgstr "Az eredeti lánc függőleges"
+msgstr "Az eredeti útvonal függőleges"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
-msgstr "90 fokkal elforgatja az eredetit a hajlítási lánc mentén való hajlítás előtt"
+msgstr "90 fokkal elforgatja az eredetit a hajlítási útvonal mentén való hajlítás előtt"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 #, fuzzy
@@ -7294,7 +7296,7 @@ msgstr "Al-útvonalak összevarrása"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
-msgstr "Az öltésként használandó lánc"
+msgstr "Az öltésként használandó útvonal"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths"
@@ -7313,7 +7315,7 @@ msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
-"Az öltések kezdőpontjainak a vezetőlánctól befelé, illetve kifelé való "
+"Az öltések kezdőpontjainak a vezetőútvonaltól befelé, illetve kifelé való "
 "véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
@@ -7325,7 +7327,7 @@ msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
-"Az öltések kezdőpontjainak a vezetőlánc mentén előre, illetve hátra való "
+"Az öltések kezdőpontjainak a vezetőútvonal mentén előre, illetve hátra való "
 "véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
@@ -7337,7 +7339,7 @@ msgid ""
 "The amount of randomness that moves the end points of the stitches inside & "
 "outside the guide path"
 msgstr ""
-"Az öltések végpontjainak a vezetőlánctól befelé, illetve kifelé való "
+"Az öltések végpontjainak a vezetőútvonaltól befelé, illetve kifelé való "
 "véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
@@ -7349,7 +7351,7 @@ msgid ""
 "The amount of random shifting to move the end points of the stitches back & "
 "forth along the guide path"
 msgstr ""
-"Az öltések végpontjainak a vezetőlánc mentén előre, illetve hátra való "
+"Az öltések végpontjainak a vezetőútvonal mentén előre, illetve hátra való "
 "véletlenszerű elmozdításának mértéke"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
@@ -7359,7 +7361,7 @@ msgstr "Szélesség méretezése"
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 #, fuzzy
 msgid "Scale the width of the stitch path"
-msgstr "Körvonal-lánc szélességének méretezése"
+msgstr "útvonal szélességének méretezése"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
@@ -7369,51 +7371,51 @@ msgstr "Szélesség méretezése relatívan"
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
+msgstr "útvonal szélességének méretezése a hosszához viszonyítva"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
 msgid "Top bend path"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
 msgid "Top path along which to bend the original path"
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:34
 #, fuzzy
 msgid "Right bend path"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 #, fuzzy
 msgid "Right path along which to bend the original path"
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:35
 #, fuzzy
 msgid "Bottom bend path"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 #, fuzzy
 msgid "Bottom path along which to bend the original path"
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:36
 #, fuzzy
 msgid "Left bend path"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 #, fuzzy
 msgid "Left path along which to bend the original path"
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 #, fuzzy
@@ -7465,7 +7467,7 @@ msgstr "Tényező"
 #: ../src/live_effects/lpe-interpolate.cpp:30
 #, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
+msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
@@ -7578,7 +7580,7 @@ msgstr "Mintaforrás"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Path to put along the skeleton path"
-msgstr "A vázként szolgáló lánc mentén elhelyezendő lánc"
+msgstr "A vázként szolgáló útvonal mentén elhelyezendő útvonal"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "Pattern copies"
@@ -7587,7 +7589,7 @@ msgstr "A minta példányszáma"
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
 msgstr ""
-"Hány darab példány legyen elhelyezve a vázként szolgáló lánc mentén a "
+"Hány darab példány legyen elhelyezve a vázként szolgáló útvonal mentén a "
 "mintából"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
@@ -7628,10 +7630,11 @@ msgid "Offsets in unit of pattern size"
 msgstr "Objektumok átalakítása mintává"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
+#, fuzzy
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
-msgstr ""
+msgstr "Érintői"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -7752,14 +7755,18 @@ msgstr ""
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
-msgstr "véletlenszerű"
+msgstr ""
+"Érintői"
+"véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
-msgstr "véletlenszerű"
+msgstr ""
+"Érintői"
+"véletlenszerű"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 #, fuzzy
@@ -7780,7 +7787,7 @@ msgstr "véletlenszerű"
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
 msgid "Generate thick/thin path"
-msgstr "Új lánc létrehozása"
+msgstr "Új útvonal létrehozása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
@@ -7791,7 +7798,7 @@ msgstr "Körvonalszélesség átméretezése"
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
 msgid "Bend hatches"
-msgstr "Lánc hajlítása"
+msgstr "Útvonal hajlítása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
@@ -7982,7 +7989,8 @@ msgstr ""
 #, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr ""
-"Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
+"Körvonal "
+"hosszához viszonyítva"
 "véletlenszerű"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
@@ -7992,7 +8000,9 @@ msgstr ""
 #: ../src/live_effects/lpe-sketch.cpp:41
 #, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Körvonal-lánc szélességének méretezése a hosszához viszonyítva"
+msgstr ""
+"Körvonal "
+"a hosszához viszonyítva"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
@@ -8047,8 +8057,9 @@ msgid "Construction lines"
 msgstr "Sorok igazítása középre"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
+#, fuzzy
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "Érintő"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
 #: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
@@ -8123,7 +8134,7 @@ msgstr ""
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 #, fuzzy
 msgid "Generating path"
-msgstr "Új lánc létrehozása"
+msgstr "Új útvonal létrehozása"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 #, fuzzy
@@ -8192,11 +8203,11 @@ msgstr "Szerkesztés a rajzvásznon"
 
 #: ../src/live_effects/parameter/path.cpp:168
 msgid "Copy path"
-msgstr "Lánc másolása"
+msgstr "Útvonal másolása"
 
 #: ../src/live_effects/parameter/path.cpp:178
 msgid "Paste path"
-msgstr "Lánc beillesztése"
+msgstr "Útvonal beillesztése"
 
 #: ../src/live_effects/parameter/path.cpp:188
 #, fuzzy
@@ -8205,12 +8216,12 @@ msgstr "Útvonalhoz való illesztés"
 
 #: ../src/live_effects/parameter/path.cpp:409
 msgid "Paste path parameter"
-msgstr "Láncparaméter beillesztése"
+msgstr "Útvonal-paraméter beillesztése"
 
 #: ../src/live_effects/parameter/path.cpp:441
 #, fuzzy
 msgid "Link path parameter to path"
-msgstr "Láncparaméter beillesztése"
+msgstr "Útvonal-paraméter"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
@@ -8653,11 +8664,11 @@ msgstr "Csomópont felvétele"
 # node-ok és szakaszok száma nem változik
 #: ../src/nodepath.cpp:2208
 msgid "Break path"
-msgstr "Lánc szétbontása"
+msgstr "Útvonal szétbontása"
 
 #: ../src/nodepath.cpp:2264
 msgid "Close subpath"
-msgstr "Allánc lezárása"
+msgstr "Al-útvonal lezárása"
 
 #: ../src/nodepath.cpp:2325
 msgid "Join nodes"
@@ -8665,7 +8676,7 @@ msgstr "Csomópontok összekapcsolása"
 
 #: ../src/nodepath.cpp:2352
 msgid "Close subpath by segment"
-msgstr "Allánc lezárása szakasszal"
+msgstr "Al-útvonal lezárása szakasszal"
 
 #: ../src/nodepath.cpp:2406
 msgid "Join nodes by segment"
@@ -8688,12 +8699,12 @@ msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
-"Ki kell jelölni egy láncon <b>két nem végponti csomópontot</b>, amelyek a "
+"Ki kell jelölni egy útvonalon <b>két nem végponti csomópontot</b>, amelyek a "
 "törlendő szakaszokat közrefogják."
 
 #: ../src/nodepath.cpp:2760
 msgid "Cannot find path between nodes."
-msgstr "A csomópontok közt nem található lánc."
+msgstr "A csomópontok közt nem található útvonal."
 
 #: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
@@ -8753,7 +8764,7 @@ msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
-"<b>Csomópont</b>. Lánc szerkesztése: húzással; vízszintes/függőleges "
+"<b>Csomópont</b>. Útvonal szerkesztése: húzással; vízszintes/függőleges "
 "illesztés: <b>Ctrl</b>; illesztés a vezérlőelemek irányában: <b>Ctrl+Alt</b>."
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
@@ -8847,10 +8858,10 @@ msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
-"<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban "
+"<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> al-útvonalban "
 "(összesen: <b>%i</b>). %s."
 msgstr[1] ""
-"<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban "
+"<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> al-útvonalban "
 "(összesen: <b>%i</b>). %s."
 
 #: ../src/nodepath.cpp:4975
@@ -8994,7 +9005,7 @@ msgstr "A kijelölésben <b>nincs összevonható útvonal</b>."
 
 #: ../src/path-chemistry.cpp:180
 msgid "Select <b>path(s)</b> to break apart."
-msgstr "Jelölje ki a szétbontandó <b>lánco(ka)t</b>."
+msgstr "Jelölje ki a szétbontandó <b>útvonala(ka)t</b>."
 
 # node-ok és szakaszok száma nem változik
 #: ../src/path-chemistry.cpp:184
@@ -9008,11 +9019,11 @@ msgstr "Szétbontás"
 
 #: ../src/path-chemistry.cpp:273
 msgid "<b>No path(s)</b> to break apart in the selection."
-msgstr "A kijelölésben <b>nincs szétbontható lánc</b>."
+msgstr "A kijelölésben <b>nincs szétbontható útvonal</b>."
 
 #: ../src/path-chemistry.cpp:285
 msgid "Select <b>object(s)</b> to convert to path."
-msgstr "Jelölje ki a lánccá alakítandó <b>objektumo(ka)t</b>."
+msgstr "Jelölje ki az útvonallá alakítandó <b>objektumo(ka)t</b>."
 
 #: ../src/path-chemistry.cpp:291
 msgid "Converting objects to paths..."
@@ -9020,15 +9031,15 @@ msgstr "Objektumok átalakítása útvonalakká..."
 
 #: ../src/path-chemistry.cpp:313
 msgid "Object to path"
-msgstr "Objektum átalakítása lánccá"
+msgstr "Objektum átalakítása útvonallá"
 
 #: ../src/path-chemistry.cpp:315
 msgid "<b>No objects</b> to convert to path in the selection."
-msgstr "A kijelölésben <b>nincs lánccá alakítható objektum</b>."
+msgstr "A kijelölésben <b>nincs útvonallá alakítható objektum</b>."
 
 #: ../src/path-chemistry.cpp:551
 msgid "Select <b>path(s)</b> to reverse."
-msgstr "Jelöljön ki egy vagy több <b>láncot</b> a megfordításhoz."
+msgstr "Jelöljön ki egy vagy több <b>útvonalat</b> a megfordításhoz."
 
 #: ../src/path-chemistry.cpp:560
 msgid "Reversing paths..."
@@ -9036,35 +9047,35 @@ msgstr "Útvonalak megfordítása..."
 
 #: ../src/path-chemistry.cpp:594
 msgid "Reverse path"
-msgstr "Lánc megfordítása"
+msgstr "Útvonal megfordítása"
 
 #: ../src/path-chemistry.cpp:596
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr "A kijelölésben <b>nincs megfordítható lánc</b>."
+msgstr "A kijelölésben <b>nincs megfordítható útvonal</b>."
 
 #: ../src/pencil-context.cpp:262 ../src/pen-context.cpp:495
 msgid "Continuing selected path"
-msgstr "A kijelölt lánc folytatása"
+msgstr "A kijelölt útvonal folytatása"
 
 #: ../src/pencil-context.cpp:270 ../src/pen-context.cpp:505
 msgid "Creating new path"
-msgstr "Új lánc létrehozása"
+msgstr "Új útvonal létrehozása"
 
 #: ../src/pencil-context.cpp:273 ../src/pen-context.cpp:507
 msgid "Appending to selected path"
-msgstr "Hozzáfűzés a kijelölt lánchoz"
+msgstr "Hozzáfűzés a kijelölt útvonalhoz"
 
 #: ../src/pencil-context.cpp:374
 msgid "<b>Release</b> here to close and finish the path."
-msgstr "A lánc lezárásához és befejezéséhez <b>engedje fel</b> a gombot itt."
+msgstr "Az útvonal lezárásához és befejezéséhez <b>engedje fel</b> a gombot itt."
 
 #: ../src/pencil-context.cpp:380
 msgid "Drawing a freehand path"
-msgstr "Szabadkézi lánc rajzolása"
+msgstr "Szabadkézi útvonal rajzolása"
 
 #: ../src/pencil-context.cpp:385
 msgid "<b>Drag</b> to continue the path from this point."
-msgstr "A lánc folytatása ebből a pontból: <b>húzással</b>."
+msgstr "Az útvonal folytatása ebből a pontból: <b>húzással</b>."
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:458
@@ -9089,13 +9100,13 @@ msgstr "Szabadkézi vázlat befejezése"
 #: ../src/pen-context.cpp:667
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
-"A lánc lezárása és befejezése: <b>kattintással</b> vagy <b>kattintással + "
+"Az útvonal lezárása és befejezése: <b>kattintással</b> vagy <b>kattintással + "
 "húzással</b>."
 
 #: ../src/pen-context.cpp:677
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
-"A lánc folytatása ebből a pontból: <b>kattintással</b> vagy <b>kattintással "
+"Az útvonal folytatása ebből a pontból: <b>kattintással</b> vagy <b>kattintással "
 "+ húzással</b>."
 
 #: ../src/pen-context.cpp:1273
@@ -9105,7 +9116,7 @@ msgid ""
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 "<b>Ívszakasz</b>. Szög: %3.2f&#176;. Távolság: %s. Szöghöz való illesztés: <b>Ctrl</"
-"b>; a lánc befejezése: <b>Enter</b>."
+"b>; az útvonal befejezése: <b>Enter</b>."
 
 #: ../src/pen-context.cpp:1274
 #, c-format
@@ -9114,7 +9125,7 @@ msgid ""
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 "<b>Vonalszakasz</b>. Szög: %3.2f&#176;. Távolság: %s. Szöghöz való illesztés: <b>Ctrl</"
-"b>; a lánc befejezése: <b>Enter</b>."
+"b>; az útvonal befejezése: <b>Enter</b>."
 
 #: ../src/pen-context.cpp:1292
 #, c-format
@@ -9770,8 +9781,8 @@ msgid ""
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 "<b>Klónt</b> kijelölve eljuthat annak eredeti objektumához; <b>kapcsolt "
-"peremet</b> kijelölve annak forrásához; <b>láncon levő szöveget</b> "
-"kijelölve a lánchoz; <b>tördelt szöveget</b> kijelölve pedig annak keretéhez."
+"peremet</b> kijelölve annak forrásához; <b>útvonalon levő szöveget</b> "
+"kijelölve az útvonalhoz; <b>tördelt szöveget</b> kijelölve pedig annak keretéhez."
 
 #: ../src/selection-chemistry.cpp:2072
 msgid ""
@@ -9779,7 +9790,7 @@ msgid ""
 "flowed text?)"
 msgstr ""
 "A kijelölendő objektum <b>nem található</b> (elárvult klón, perem, szöveg-"
-"lánc, vagy tördelt szöveg?)"
+"útvonal, vagy tördelt szöveg?)"
 
 #: ../src/selection-chemistry.cpp:2078
 msgid ""
@@ -9920,7 +9931,7 @@ msgstr "Vonal"
 
 #: ../src/selection-describer.cpp:59
 msgid "Path"
-msgstr "Lánc"
+msgstr "Útvonal"
 
 #: ../src/selection-describer.cpp:61 ../src/widgets/toolbox.cpp:2724
 msgid "Polygon"
@@ -10028,7 +10039,7 @@ msgstr "Az eredeti objektum meghatározása: <b>Shift+D</b>"
 # kiíráskor tesz egy pontot a végére
 #: ../src/selection-describer.cpp:192
 msgid "Use <b>Shift+D</b> to look up path"
-msgstr "A lánc meghatározása: <b>Shift+D</b>"
+msgstr "Az útvonal meghatározása: <b>Shift+D</b>"
 
 # kiíráskor tesz egy pontot a végére
 #: ../src/selection-describer.cpp:196
@@ -10332,22 +10343,22 @@ msgstr "Felosztás"
 
 #: ../src/splivarot.cpp:106
 msgid "Cut path"
-msgstr "Lánc elvágása"
+msgstr "Útvonal elvágása"
 
 #: ../src/splivarot.cpp:121
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
-msgstr "Logikai műveletekhez <b>legalább 2 láncot</b> ki kell jelölni."
+msgstr "Logikai műveletekhez <b>legalább 2 útvonalat</b> ki kell jelölni."
 
 #: ../src/splivarot.cpp:125
 msgid "Select <b>at least 1 path</b> to perform a boolean union."
-msgstr "Logikai unióképzéshez jelöljön ki <b>legalább 1 láncot</b>."
+msgstr "Logikai unióképzéshez jelöljön ki <b>legalább 1 útvonalat</b>."
 
 #: ../src/splivarot.cpp:131
 #, fuzzy
 msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr ""
-"Különbségképzés, kizáró VAGY, felosztás illetve láncelvágás esetén "
-"<b>pontosan 2 láncot</b> kell kijelölni."
+"Különbségképzés, kizáró VAGY, felosztás illetve útvonal-elvágás esetén "
+"<b>pontosan 2 útvonalat</b> kell kijelölni."
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
 msgid ""
@@ -10355,29 +10366,29 @@ msgid ""
 "difference, XOR, division, or path cut."
 msgstr ""
 "Nem sikerült meghatározni a különbségképzéshez, \"kizáró VAGY\" művelethez, "
-"felosztáshoz illetve láncelvágáshoz kijelölt objektumok <b>z-sorrendjét</b>."
+"felosztáshoz illetve útvonal-elvágáshoz kijelölt objektumok <b>z-sorrendjét</b>."
 
 #: ../src/splivarot.cpp:192
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
-msgstr "Az egyik objektum <b>nem lánc</b>; logikai művelet nem hajtható végre."
+msgstr "Az egyik objektum <b>nem útvonal</b>; logikai művelet nem hajtható végre."
 
 #: ../src/splivarot.cpp:633
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "Körvonal lánccá való alakításához jelöljön ki <b>megrajzolt lánco(ka)t</b>."
+msgstr "Körvonal útvonallá való alakításához jelöljön ki <b>megrajzolt útvonala(ka)t</b>."
 
 #: ../src/splivarot.cpp:954
 msgid "Convert stroke to path"
-msgstr "Körvonal átalakítása lánccá"
+msgstr "Körvonal átalakítása útvonallá"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:957
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "A kijelölésben <b>nincs megrajzolt lánc</b>."
+msgstr "A kijelölésben <b>nincs megrajzolt útvonal</b>."
 
 #: ../src/splivarot.cpp:1040
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
-"A kijelölt objektum <b>nem lánc</b>; zsugorítás illetve nyújtás nem "
+"A kijelölt objektum <b>nem útvonal</b>; zsugorítás illetve nyújtás nem "
 "végezhető."
 
 #: ../src/splivarot.cpp:1159 ../src/splivarot.cpp:1228
@@ -10390,19 +10401,19 @@ msgstr "Dinamikus perem létrehozása"
 
 #: ../src/splivarot.cpp:1254
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr "Jelölje ki a zsugorítandó illetve nyújtandó <b>lánco(ka)t</b>."
+msgstr "Jelölje ki a zsugorítandó illetve nyújtandó <b>útvonala(ka)t</b>."
 
 #: ../src/splivarot.cpp:1472
 msgid "Outset path"
-msgstr "Lánc nyújtása"
+msgstr "Útvonal nyújtása"
 
 #: ../src/splivarot.cpp:1472
 msgid "Inset path"
-msgstr "Lánc zsugorítása"
+msgstr "Útvonal zsugorítása"
 
 #: ../src/splivarot.cpp:1474
 msgid "<b>No paths</b> to inset/outset in the selection."
-msgstr "A kijelölésben <b>nincs zsugorítható illetve nyújtható lánc</b>."
+msgstr "A kijelölésben <b>nincs zsugorítható illetve nyújtható útvonal</b>."
 
 #: ../src/splivarot.cpp:1652
 msgid "Simplifying paths (separately):"
@@ -10415,16 +10426,16 @@ msgstr "Útvonalak egyszerűsítése:"
 #: ../src/splivarot.cpp:1691
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr "%s <b>%d</b> lánc egyszerűsítve (összesen: <b>%d</b>)..."
+msgstr "%s <b>%d</b> útvonal egyszerűsítve (összesen: <b>%d</b>)..."
 
 #: ../src/splivarot.cpp:1703
 #, c-format
 msgid "<b>%d</b> paths simplified."
-msgstr "<b>%d</b> lánc egyszerűsítve."
+msgstr "<b>%d</b> útvonal egyszerűsítve."
 
 #: ../src/splivarot.cpp:1717
 msgid "Select <b>path(s)</b> to simplify."
-msgstr "Jelölje ki az egyszerűsítendő <b>lánco(ka)t</b>."
+msgstr "Jelölje ki az egyszerűsítendő <b>útvonala(ka)t</b>."
 
 #: ../src/splivarot.cpp:1731
 msgid "Simplify"
@@ -10432,7 +10443,7 @@ msgstr "Egyszerűsítés"
 
 #: ../src/splivarot.cpp:1733
 msgid "<b>No paths</b> to simplify in the selection."
-msgstr "A kijelölésben <b>nincs egyszerűsíthető lánc</b>."
+msgstr "A kijelölésben <b>nincs egyszerűsíthető útvonal</b>."
 
 #: ../src/sp-lpe-item.cpp:346
 msgid "An exception occurred during execution of the Path Effect."
@@ -10462,15 +10473,15 @@ msgstr "<b>Dinamikus perem</b>; %s %f ponttal (pt)"
 #, fuzzy, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Lánc</b> (%i csomópont, útvonaleffektus)"
-msgstr[1] "<b>Lánc</b> (%i csomópont, útvonaleffektus)"
+msgstr[0] "<b>Útvonal</b> (%i csomópont, útvonaleffektus)"
+msgstr[1] "<b>Útvonal</b> (%i csomópont, útvonaleffektus)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "<b>Lánc</b> (%i csomópont)"
-msgstr[1] "<b>Lánc</b> (%i csomópont)"
+msgstr[0] "<b>Útvonal</b> (%i csomópont)"
+msgstr[1] "<b>Útvonal</b> (%i csomópont)"
 
 #: ../src/sp-polygon.cpp:226
 msgid "<b>Polygon</b>"
@@ -10520,7 +10531,7 @@ msgstr "&lt;név nem található&gt;"
 #: ../src/sp-text.cpp:425
 #, c-format
 msgid "<b>Text on path</b> (%s, %s)"
-msgstr "<b>Láncon levő szöveg</b> (%s, %s)"
+msgstr "<b>Útvonalon levő szöveg</b> (%s, %s)"
 
 #: ../src/sp-text.cpp:426
 #, c-format
@@ -10584,16 +10595,16 @@ msgstr "Csillag létrehozása"
 #: ../src/text-chemistry.cpp:104
 msgid "Select <b>a text and a path</b> to put text on path."
 msgstr ""
-"Szövegnek egy láncra való illesztéséhez jelöljön ki <b>egy szöveget és egy "
-"láncot</b>."
+"Szövegnek egy útvonalra való illesztéséhez jelöljön ki <b>egy szöveget és egy "
+"útvonalat</b>."
 
 #: ../src/text-chemistry.cpp:109
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
 msgstr ""
-"Ez a szövegobjektum <b>már láncra lett illesztve</b>. Előbb távolítsa el a "
-"láncról. A lánc meghatározása: <b>Shift+D</b>."
+"Ez a szövegobjektum <b>már útvonalra lett illesztve</b>. Előbb távolítsa el az "
+"útvonalról. Az útvonal meghatározása: <b>Shift+D</b>."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:115
@@ -10602,31 +10613,31 @@ msgid ""
 "path first."
 msgstr ""
 "A jelenlegi verzió nem támogatja a szöveg téglalapra való illesztését. Az "
-"illesztés elvégzéséhez alakítsa lánccá a téglalapot."
+"illesztés elvégzéséhez alakítsa útvonallá a téglalapot."
 
 #: ../src/text-chemistry.cpp:125
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
-"A tördelt szöveg(ek)nek <b>láthatónak</b> kell lenni ahhoz, hogy láncra "
+"A tördelt szöveg(ek)nek <b>láthatónak</b> kell lenni ahhoz, hogy útvonalra "
 "lehessen illeszteni az(oka)t."
 
 #: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2364
 msgid "Put text on path"
-msgstr "Szöveg illesztése láncra"
+msgstr "Szöveg illesztése útvonalra"
 
 #: ../src/text-chemistry.cpp:204
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr ""
-"Szövegnek egy láncról való eltávolításához jelöljön ki <b>egy láncon levő "
+"Szövegnek egy útvonalról való eltávolításához jelöljön ki <b>egy útvonalon levő "
 "szöveget</b>."
 
 #: ../src/text-chemistry.cpp:226
 msgid "<b>No texts-on-paths</b> in the selection."
-msgstr "A kijelölésben <b>nincs láncon levő szöveg</b>."
+msgstr "A kijelölésben <b>nincs útvonalon levő szöveg</b>."
 
 #: ../src/text-chemistry.cpp:229 ../src/verbs.cpp:2366
 msgid "Remove text from path"
-msgstr "Szöveg eltávolítása láncról"
+msgstr "Szöveg eltávolítása útvonalról"
 
 #: ../src/text-chemistry.cpp:269 ../src/text-chemistry.cpp:290
 msgid "Select <b>text(s)</b> to remove kerns from."
@@ -10642,7 +10653,7 @@ msgid ""
 "into frame."
 msgstr ""
 "Szövegnek egy keretbe való tördeléséhez jelöljön ki <b>egy szöveget</b> és "
-"egy vagy több <b>láncot illetve alakzatot</b>."
+"egy vagy több <b>útvonalat illetve alakzatot</b>."
 
 #: ../src/text-chemistry.cpp:381
 msgid "Flow text into shape"
@@ -10838,14 +10849,14 @@ msgid ""
 "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an "
 "object to select."
 msgstr ""
-"Lánc szerkesztéséhez jelöljön ki csomópontokat (<b>kattintással</b>, <b>Shift"
+"Útvonal szerkesztéséhez jelöljön ki csomópontokat (<b>kattintással</b>, <b>Shift"
 "+kattintással</b> vagy <b>terület-kijelöléssel</b>), majd <b>helyezze át</b> "
 "azokat vagy vezérlőelemeiket. Objektumkijelölés: <b>kattintással</b>."
 
 #: ../src/tools-switch.cpp:136
 msgid "To tweak a path by pushing, select it and drag over it."
 msgstr ""
-"Egy lánc eltolásos manipulálásához jelölje ki azt, majd végezzen húzást "
+"Egy útvonal eltolásos manipulálásához jelölje ki azt, majd végezzen húzást "
 "felette az egérrel."
 
 #: ../src/tools-switch.cpp:142
@@ -10894,7 +10905,7 @@ msgid ""
 "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected "
 "path, <b>Alt</b> activates sketch mode."
 msgstr ""
-"Szabadkézi vonal létrehozása: <b>húzással</b>. A kijelölt lánchoz való "
+"Szabadkézi vonal létrehozása: <b>húzással</b>. A kijelölt útvonalhoz való "
 "hozzáfűzéshez a <b>Shift</b> lenyomása mellett kezdje a rajzolást. Vázlatmód "
 "aktiválása: <b>Alt</b>."
 
@@ -10905,8 +10916,8 @@ msgid ""
 "append to selected path. <b>Ctrl+click</b> to create single dots (straight "
 "line modes only)."
 msgstr ""
-"Lánc létrehozása: <b>kattintással</b> vagy <b>kattintással + húzással</b>. A "
-"kijelölt lánchoz való hozzáfűzés: <b>Shift</b>. Pontok rajzolása: <b>Ctrl"
+"Útvonal létrehozása: <b>kattintással</b> vagy <b>kattintással + húzással</b>. A "
+"kijelölt útvonalhoz való hozzáfűzés: <b>Shift</b>. Pontok rajzolása: <b>Ctrl"
 "+kattintással</b>."
 "vonal"
 
@@ -10916,7 +10927,7 @@ msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide "
 "path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
 msgstr ""
-"Művészi vonal rajzolása: <b>húzással</b>. Vezetőlánc követése: <b>Ctrl</b>. "
+"Művészi vonal rajzolása: <b>húzással</b>. Vezetőútvonal követése: <b>Ctrl</b>. "
 "Vékonyítás/vastagítás: <b>Alt</b>. Szélesség állítása: <b>Balra</b>/"
 "<b>Jobbra</b> nyíl. Szög állítása: <b>Fel</b>/<b>Le</b> nyíl."
 
@@ -11216,7 +11227,7 @@ msgstr "Nincs effektus a vágólapon."
 
 #: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
 msgid "Clipboard does not contain a path."
-msgstr "A vágólap nem tartalmaz láncot."
+msgstr "A vágólap nem tartalmaz útvonalat."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:105
@@ -13077,7 +13088,7 @@ msgstr "Zsugorítás/nyújtás mértéke:"
 msgid "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "A zsugorítási és a nyújtási művelet ekkora (képpontokban (px) megadott) "
-"távolsággal mozdítja el a láncot"
+"távolsággal mozdítja el az útvonalat"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:251
 msgid "Compass-like display of angles"
@@ -13246,7 +13257,7 @@ msgstr "Geometriai határoló téglalap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:391
 msgid "This bounding box includes only the bare path"
-msgstr "Ez a határoló téglalap csak magát a nyers láncot tartalmazza"
+msgstr "Ez a határoló téglalap csak magát a nyers útvonalat tartalmazza"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "Conversion to guides:"
@@ -13286,7 +13297,7 @@ msgstr "A szélesség abszolút egységekben van megadva"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid "Select new path"
-msgstr "Új lánc kijelölése"
+msgstr "Új útvonal kijelölése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Don't attach connectors to text objects"
@@ -15245,53 +15256,64 @@ msgstr "Szélesség méretezése"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
 #, fuzzy
 msgid "glyph"
-msgstr "Alfa"
+msgstr "betűrajzolat"
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:465
-#, fuzzy
 msgid "Add glyph"
-msgstr "Réteg felvétele"
+msgstr "Betűrajzolat felvétele"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:481
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:525
 #, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "Jelölje ki a zsugorítandó illetve nyújtandó <b>lánco(ka)t</b>."
+msgstr ""
+"Jelölje ki a zsugorítandó illetve nyújtandó <b>útvonala(ka)t</b>. "
+"betűrajzolat "
+"Ív"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:489
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:533
 #, fuzzy
 msgid "The selected object does not have a <b>path</b> description."
 msgstr ""
-"A kijelölt objektum <b>nem lánc</b>; zsugorítás illetve nyújtás nem "
+"A kijelölt objektum <b>nem útvonal</b>; zsugorítás illetve nyújtás nem "
 "végezhető."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 #, fuzzy
 msgid "No glyph selected in the SVGFonts dialog."
 msgstr ""
+"betűrajzolat"
 "Betűtípus"
 "párbeszédablak"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
+#, fuzzy
 msgid "Set glyph curves"
 msgstr ""
+"betűrajzolat "
+"Ív"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
 #, fuzzy
 msgid "Reset missing-glyph"
-msgstr "hiányzó"
+msgstr ""
+"hiányzó "
+"betűrajzolat"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 #, fuzzy
 msgid "Edit glyph name"
-msgstr "szerkesztés"
+msgstr ""
+"betűrajzolat"
+"szerkesztés"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:598
+#, fuzzy
 msgid "Set glyph unicode"
-msgstr ""
+msgstr "betűrajzolat"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 #, fuzzy
@@ -15299,9 +15321,8 @@ msgid "Remove font"
 msgstr "Betűtípus eltávolítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
-#, fuzzy
 msgid "Remove glyph"
-msgstr "Kitöltés eltávolítása"
+msgstr "Betűrajzolat eltávolítása"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 msgid "Remove kerning pair"
@@ -15310,7 +15331,9 @@ msgstr "Alávágási pár eltávolítása"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 #, fuzzy
 msgid "Missing Glyph:"
-msgstr "hiányzó"
+msgstr ""
+"hiányzó "
+"betűrajzolat"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 #, fuzzy
@@ -15325,7 +15348,7 @@ msgstr "Visszaállítás"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:665
 #, fuzzy
 msgid "Glyph name"
-msgstr "A réteg neve:"
+msgstr "A betűrajzolat neve"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 #, fuzzy
@@ -15333,14 +15356,15 @@ msgid "Matching string"
 msgstr "Egyező szöveg"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
-#, fuzzy
 msgid "Add Glyph"
-msgstr "Réteg felvétele"
+msgstr "Betűrajzolat felvétele"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 #, fuzzy
 msgid "Get curves from selection..."
-msgstr "Maszk eltávolítása a kijelölésről"
+msgstr ""
+"Maszk eltávolítása a kijelölésről "
+"Ív"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
@@ -15353,12 +15377,14 @@ msgid "Kerning Setup:"
 msgstr "Alávágás beállítása:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
+#, fuzzy
 msgid "1st Glyph:"
-msgstr ""
+msgstr "betűrajzolat"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#, fuzzy
 msgid "2nd Glyph:"
-msgstr ""
+msgstr "betűrajzolat"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 #, fuzzy
@@ -15405,8 +15431,9 @@ msgid "_Global Settings"
 msgstr "Globális beállítások"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
+#, fuzzy
 msgid "_Glyphs"
-msgstr ""
+msgstr "betűrajzolatok"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 #, fuzzy
@@ -15573,7 +15600,7 @@ msgstr "Fényesség-levágás fekete-fehér esetén"
 
 #: ../src/ui/dialog/tracedialog.cpp:425
 msgid "Single scan: creates a path"
-msgstr "Egyetlen menet: egy lánc létrehozása"
+msgstr "Egyetlen menet: egy útvonal létrehozása"
 
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
@@ -17292,11 +17319,11 @@ msgstr "A kijelölt csoportok szétbontása"
 
 #: ../src/verbs.cpp:2363
 msgid "_Put on Path"
-msgstr "Láncra való _illesztés"
+msgstr "Útvonalra való _illesztés"
 
 #: ../src/verbs.cpp:2365
 msgid "_Remove from Path"
-msgstr "Láncról való _eltávolítás"
+msgstr "Útvonalról való _eltávolítás"
 
 #: ../src/verbs.cpp:2367
 msgid "Remove Manual _Kerns"
@@ -17307,7 +17334,7 @@ msgstr "Kézi _alávágások eltávolítása"
 #: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
-"Az összes kézi alávágás és karakter-elforgatás eltávolítása egy "
+"Az összes kézi alávágás és betűrajzolat-elforgatás eltávolítása egy "
 "szövegobjektumból"
 
 #: ../src/verbs.cpp:2372
@@ -17344,7 +17371,7 @@ msgid ""
 "path)"
 msgstr ""
 "Kizáró VAGY művelet végrehajtása a kijelölt útvonalakon (az eredményt azon "
-"részek alkotják, amelyek csak egy lánchoz tartoznak)"
+"részek alkotják, amelyek csak egy útvonalhoz tartoznak)"
 
 #: ../src/verbs.cpp:2380
 msgid "Di_vision"
@@ -17352,17 +17379,17 @@ msgstr "_Felosztás"
 
 #: ../src/verbs.cpp:2381
 msgid "Cut the bottom path into pieces"
-msgstr "Az alsó lánc feldarabolása"
+msgstr "Az alsó útvonal feldarabolása"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2384
 msgid "Cut _Path"
-msgstr "Lánc el_vágása"
+msgstr "Útvonal el_vágása"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "Az alsó lánc körvonalának feldarabolása a kitöltés eltávolításával"
+msgstr "Az alsó útvonal körvonalának feldarabolása a kitöltés eltávolításával"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -17377,7 +17404,7 @@ msgstr "A kijelölt útvonalak nyújtása"
 
 #: ../src/verbs.cpp:2392
 msgid "O_utset Path by 1 px"
-msgstr "Lánc _nyújtása 1 px mérettel"
+msgstr "Útvonal _nyújtása 1 px mérettel"
 
 #: ../src/verbs.cpp:2393
 msgid "Outset selected paths by 1 px"
@@ -17385,7 +17412,7 @@ msgstr "A kijelölt útvonalak nyújtása 1 px mérettel"
 
 #: ../src/verbs.cpp:2395
 msgid "O_utset Path by 10 px"
-msgstr "Lánc _nyújtása 10 px mérettel"
+msgstr "Útvonal _nyújtása 10 px mérettel"
 
 #: ../src/verbs.cpp:2396
 msgid "Outset selected paths by 10 px"
@@ -17404,7 +17431,7 @@ msgstr "A kijelölt útvonalak zsugorítása"
 
 #: ../src/verbs.cpp:2403
 msgid "I_nset Path by 1 px"
-msgstr "Lánc zsu_gorítása 1 px mérettel"
+msgstr "Útvonal zsu_gorítása 1 px mérettel"
 
 #: ../src/verbs.cpp:2404
 msgid "Inset selected paths by 1 px"
@@ -17412,7 +17439,7 @@ msgstr "A kijelölt útvonalak zsugorítása 1 px mérettel"
 
 #: ../src/verbs.cpp:2406
 msgid "I_nset Path by 10 px"
-msgstr "Lánc zsu_gorítása 10 px mérettel"
+msgstr "Útvonal zsu_gorítása 10 px mérettel"
 
 #: ../src/verbs.cpp:2407
 msgid "Inset selected paths by 10 px"
@@ -17432,11 +17459,11 @@ msgstr "Kap_csolt perem"
 
 #: ../src/verbs.cpp:2412
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "Dinamikus peremobjektum létrehozása az eredeti lánchoz kapcsolva"
+msgstr "Dinamikus peremobjektum létrehozása az eredeti útvonalhoz kapcsolva"
 
 #: ../src/verbs.cpp:2414
 msgid "_Stroke to Path"
-msgstr "Körvonal át_alakítása lánccá"
+msgstr "Körvonal át_alakítása útvonallá"
 
 #: ../src/verbs.cpp:2415
 msgid "Convert selected object's stroke to paths"
@@ -17467,7 +17494,7 @@ msgstr "Bitkép vektor_izálása..."
 
 #: ../src/verbs.cpp:2422
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr "Egy vagy több lánc létrehozása egy bitkép vektorizálásával"
+msgstr "Egy vagy több útvonal létrehozása egy bitkép vektorizálásával"
 
 #: ../src/verbs.cpp:2423
 msgid "_Make a Bitmap Copy"
@@ -17483,7 +17510,7 @@ msgstr "Összev_onás"
 
 #: ../src/verbs.cpp:2426
 msgid "Combine several paths into one"
-msgstr "Több lánc összevonása eggyé"
+msgstr "Több útvonal összevonása eggyé"
 
 # node-ok és szakaszok száma nem változik
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
@@ -17640,11 +17667,11 @@ msgstr "Az objektum transzformációjának megszüntetése"
 
 #: ../src/verbs.cpp:2472
 msgid "_Object to Path"
-msgstr "Objektum átalakítása _lánccá"
+msgstr "Objektum átalakítása útvona_llá"
 
 #: ../src/verbs.cpp:2473
 msgid "Convert selected object to path"
-msgstr "A kijelölt objektum lánccá alakítása"
+msgstr "A kijelölt objektum útvonallá alakítása"
 
 #: ../src/verbs.cpp:2474
 msgid "_Flow into Frame"
@@ -17655,7 +17682,7 @@ msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr ""
-"Szöveg behelyezése egy keretbe (lánc vagy alakzat) - létrehozva egy, a "
+"Szöveg behelyezése egy keretbe (útvonal vagy alakzat) - létrehozva egy, a "
 "keretobjektumhoz kapcsolt tördelt szöveget"
 
 #: ../src/verbs.cpp:2476
@@ -18812,7 +18839,7 @@ msgstr ""
 #: ../src/widgets/paint-selector.cpp:214
 msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
-"A kitöltés egyenletes, kivéve akkor, ha egy allánc ellentétes irányú (fill-"
+"A kitöltés egyenletes, kivéve akkor, ha egy al-útvonal ellentétes irányú (fill-"
 "rule: nonzero, azaz kitöltési szabály: nem-nulla)"
 
 #: ../src/widgets/paint-selector.cpp:531
@@ -19363,7 +19390,7 @@ msgstr "Csomópontok szétbontása"
 
 #: ../src/widgets/toolbox.cpp:1323
 msgid "Break path at selected nodes"
-msgstr "Lánc elvágása a kijelölt csomópontoknál"
+msgstr "Útvonal elvágása a kijelölt csomópontoknál"
 
 #: ../src/widgets/toolbox.cpp:1333
 msgid "Join with segment"
@@ -20924,7 +20951,7 @@ msgstr "Növelés/csökkentés:"
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Azon mennyiség, amellyel növelni (pozitív), illetve csökkenteni (negatív) "
-"kell a létrehozott kitöltési láncot"
+"kell a létrehozott kitöltési útvonalat"
 
 #: ../src/widgets/toolbox.cpp:7210
 msgid "Close gaps"
@@ -21195,7 +21222,7 @@ msgstr "Maximális szakaszhossz (px)"
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:2
 msgid "Modify Path"
-msgstr "Lánc módosítása"
+msgstr "Útvonal módosítása"
 
 #: ../share/extensions/addnodes.inx.h:7
 #, fuzzy
@@ -21429,7 +21456,7 @@ msgstr ""
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
-msgstr "Lánc megjelenítése"
+msgstr "Útvonal megjelenítése"
 
 #: ../share/extensions/dimension.inx.h:3
 msgid "X Offset"
@@ -22478,7 +22505,7 @@ msgstr "Mérés"
 
 #: ../share/extensions/measure.inx.h:6
 msgid "Measure Path"
-msgstr "Lánc megmérése"
+msgstr "Útvonal megmérése"
 
 #: ../share/extensions/measure.inx.h:7
 msgid "Offset [px]"
@@ -22501,10 +22528,10 @@ msgid ""
 "in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
 "real world, Scale must be set to 250."
 msgstr ""
-"Ez az effektus megméri a kijelölt lánc hosszát, majd a választott "
-"mértékegység szerint feltünteti ezen értéket a láncon (láncra illesztett "
+"Ez az effektus megméri a kijelölt útvonal hosszát, majd a választott "
+"mértékegység szerint feltünteti ezen értéket az útvonalon (útvonalra illesztett "
 "szövegként). A lényeges számjegyek darabszáma megadható a Pontosság mezőben. "
-"A szövegnek a lánctól való távolsága az Eltolás mezőbe írt érték lesz. "
+"A szövegnek az útvonaltól való távolsága az Eltolás mezőbe írt érték lesz. "
 "Átméretezett rajzokon a méretezési tényező használatával lehet méréseket "
 "végezni. Ha például a rajz 1 centimétere a valós világban 2,5 méternek felel "
 "meg, akkor méretezési tényezőnek 250 adandó meg."
@@ -22554,7 +22581,9 @@ msgstr "X-tartomány szorzása 2*pi-vel"
 #: ../share/extensions/param_curves.inx.h:6
 #, fuzzy
 msgid "Parametric Curves"
-msgstr "Paraméterek"
+msgstr ""
+"Paraméterek "
+"Ív"
 
 #: ../share/extensions/param_curves.inx.h:7
 #, fuzzy
@@ -22621,7 +22650,7 @@ msgstr "A minta duplázása az alakváltoztatás előtt"
 
 #: ../share/extensions/pathalongpath.inx.h:6
 msgid "Pattern along Path"
-msgstr "Minta a lánc mentén"
+msgstr "Minta az útvonal mentén"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
@@ -22670,7 +22699,7 @@ msgstr "Áthelyezés"
 #: ../share/extensions/pathscatter.inx.h:8
 #, fuzzy
 msgid "Original pattern will be:"
-msgstr "Az eredeti lánc függőleges"
+msgstr "Az eredeti útvonal függőleges"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
@@ -23128,7 +23157,7 @@ msgid ""
 "This effect randomly shifts the nodes (and optionally node handles) of the "
 "selected path."
 msgstr ""
-"Ez az effektus véletlenszerűen elmozdítja a kijelölt lánc csomópontjait "
+"Ez az effektus véletlenszerűen elmozdítja a kijelölt útvonal csomópontjait "
 "(valamint kérésre a csomópont-vezérlőelemeit is)."
 
 #: ../share/extensions/radiusrand.inx.h:8
