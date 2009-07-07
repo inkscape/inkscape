@@ -66,6 +66,7 @@
 #include "../lpe-tool-context.h"
 #include "../mod360.h"
 #include "../node-context.h"
+#include "../ui/tool/node-tool.h"
 #include "../pen-context.h"
 #include "../preferences.h"
 #include "../selection-chemistry.h"
@@ -144,7 +145,7 @@ static struct {
     sp_verb_t doubleclick_verb;
 } const tools[] = {
     { "SPSelectContext",   "select_tool",    SP_VERB_CONTEXT_SELECT,  SP_VERB_CONTEXT_SELECT_PREFS},
-    { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
+    { "InkNodeTool",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
@@ -177,7 +178,7 @@ static struct {
 } const aux_toolboxes[] = {
     { "SPSelectContext", "select_toolbox", 0, sp_select_toolbox_prep,            "SelectToolbar",
       SP_VERB_INVALID, 0, 0},
-    { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
+    { "InkNodeTool",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_CONTEXT_TWEAK_PREFS, "/tools/tweak", N_("Color/opacity used for color tweaking")},
@@ -997,6 +998,16 @@ static ShapeEditor *get_current_shape_editor()
     }
 
     return event_context->shape_editor;
+}
+
+/** Temporary hack: Returns the node tool in the active desktop.
+ * Will go away during tool refactoring. */
+static InkNodeTool *get_node_tool()
+{
+    if (!SP_ACTIVE_DESKTOP) return NULL;
+    SPEventContext *ec = SP_ACTIVE_DESKTOP->event_context;
+    if (!INK_IS_NODE_TOOL(ec)) return NULL;
+    return INK_NODE_TOOL(ec);
 }
 
 
@@ -4434,14 +4445,14 @@ static void update_presets_list (GObject *tbl)
 static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/mass", adj->value * 0.01 );
+    prefs->setDouble( "/tools/calligraphic/mass", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/wiggle", adj->value * 0.01 );
+    prefs->setDouble( "/tools/calligraphic/wiggle", adj->value );
     update_presets_list(tbl);
 }
 
@@ -4455,28 +4466,28 @@ static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* tbl )
 static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/width", adj->value * 0.01 );
+    prefs->setDouble( "/tools/calligraphic/width", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("/tools/calligraphic/thinning", adj->value * 0.01 );
+    prefs->setDouble("/tools/calligraphic/thinning", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/flatness", adj->value * 0.01);
+    prefs->setDouble( "/tools/calligraphic/flatness", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/tremor", adj->value * 0.01 );
+    prefs->setDouble( "/tools/calligraphic/tremor", adj->value );
     update_presets_list(tbl);
 }
 
@@ -4716,7 +4727,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_width_value_changed,  0.01, 0, 100 );
+                                                              sp_ddc_width_value_changed,  1, 0);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -4733,7 +4744,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               -100, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_velthin_value_changed, 0.01, 0, 100);
+                                                              sp_ddc_velthin_value_changed, 1, 0);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4767,7 +4778,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               0.0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_flatness_value_changed, 0.01, 0, 100 );
+                                                              sp_ddc_flatness_value_changed, 1, 0);
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         }
@@ -4800,7 +4811,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_tremor_value_changed, 0.01, 0, 100 );
+                                                              sp_ddc_tremor_value_changed, 1, 0);
 
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
@@ -4818,7 +4829,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_wiggle_value_changed, 0.01, 0, 100 );
+                                                              sp_ddc_wiggle_value_changed, 1, 0);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -4835,7 +4846,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_mass_value_changed, 0.01, 0, 100 );
+                                                              sp_ddc_mass_value_changed, 1, 0);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );

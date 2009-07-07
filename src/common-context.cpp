@@ -166,19 +166,20 @@ static void sp_common_context_set(SPEventContext *ec, Inkscape::Preferences::Ent
     if (full_path.compare(0, presets_path.size(), presets_path) == 0) return;
 
     if (path == "mass") {
-        ctx->mass = CLAMP(value->getDouble(0.2), -1000.0, 1000.0);
+        ctx->mass = 0.01 * CLAMP(value->getInt(10), 0, 100);
     } else if (path == "wiggle") {
-        ctx->drag = CLAMP((1 - value->getDouble(1 - DRAG_DEFAULT)), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
+        ctx->drag = CLAMP((1 - 0.01 * value->getInt()),
+            DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
     } else if (path == "angle") {
         ctx->angle = CLAMP(value->getDouble(), -90, 90);
     } else if (path == "width") {
-        ctx->width = CLAMP(value->getDouble(0.1), -1000.0, 1000.0);
+        ctx->width = 0.01 * CLAMP(value->getInt(10), 1, 100);
     } else if (path == "thinning") {
-        ctx->vel_thin = CLAMP(value->getDouble(0.1), -1.0, 1.0);
+        ctx->vel_thin = 0.01 * CLAMP(value->getInt(10), -100, 100);
     } else if (path == "tremor") {
-        ctx->tremor = CLAMP(value->getDouble(), 0.0, 1.0);
+        ctx->tremor = 0.01 * CLAMP(value->getInt(), 0, 100);
     } else if (path == "flatness") {
-        ctx->flatness = CLAMP(value->getDouble(1.0), 0, 1.0);
+        ctx->flatness = 0.01 * CLAMP(value->getInt(), 0, 100);
     } else if (path == "usepressure") {
         ctx->usepressure = value->getBool();
     } else if (path == "usetilt") {
