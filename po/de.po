@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-11 20:58+0200\n"
-"PO-Revision-Date: 2009-06-11 11:36+0100\n"
+"PO-Revision-Date: 2009-07-07 08:58+0100\n"
 "Last-Translator: Uwe Schöler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1226,7 +1226,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
-msgstr ""
+msgstr "Einfache Unschärfe"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
@@ -1357,7 +1357,7 @@ msgstr "Dunkel und Glühend"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
-msgstr ""
+msgstr "Flexibles Metall"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -1461,9 +1461,8 @@ msgstr ""
 
 # !!!
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "Die Seite in die Zeichnungsgröße einpassen"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
@@ -3081,12 +3080,12 @@ msgstr "%s Eigenschaften"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>Beendet</b>, <b>%d</b> Wörter zum Wörterbuch hinzugefügt"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr ""
+msgstr "<b>Beendet</b>, nichts ungewöhnliches gefunden"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
@@ -3120,7 +3119,7 @@ msgstr "Einmal _ignorieren"
 
 #: ../src/dialogs/spellcheck.cpp:970
 msgid "Ignore this word only once"
-msgstr ""
+msgstr "Ignoriere das Wort nur einmal"
 
 # CHECK
 #: ../src/dialogs/spellcheck.cpp:972
@@ -3129,7 +3128,7 @@ msgstr "_Ignorieren"
 
 #: ../src/dialogs/spellcheck.cpp:972
 msgid "Ignore this word in this session"
-msgstr ""
+msgstr "Ignoriere das Wort in dieser Sitzung"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "A_dd to dictionary:"
@@ -3609,9 +3608,8 @@ msgid "Bounding box side midpoint"
 msgstr "Zu verwendende Umrandungsbox:"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Smooth node"
-msgstr "Glattheit"
+msgstr "weicher Knoten"
 
 #: ../src/display/snap-indicator.cpp:163
 msgid "Cusp node"
@@ -5662,7 +5660,7 @@ msgstr "Standard-Farbverlauf erzeugen"
 
 #: ../src/gradient-context.cpp:586
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "<b>Zeichne um</b> Anfasser um diese auszuwählen"
 
 #: ../src/gradient-context.cpp:684
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -6112,7 +6110,7 @@ msgstr ""
 #: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
 #, c-format
 msgid "Invalid string in environment: %s"
-msgstr ""
+msgstr "Ungültiger String in der Umgebung: %s"
 
 # !!! tempfile is slang
 #: ../src/io/sys.cpp:705
@@ -6270,7 +6268,7 @@ msgstr "Y-Koordinate des Gitterursprungs"
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
 msgid "Dock #%d"
-msgstr ""
+msgstr "Andocken #%d"
 
 #: ../src/libgdl/gdl-dock-item.c:287
 msgid "Orientation"
@@ -6278,7 +6276,7 @@ msgstr "Ausrichtung"
 
 #: ../src/libgdl/gdl-dock-item.c:288
 msgid "Orientation of the docking item"
-msgstr ""
+msgstr "Ausrichtung des anzudockenden Elementes"
 
 #: ../src/libgdl/gdl-dock-item.c:303
 msgid "Resizable"
@@ -6632,13 +6630,12 @@ msgid "Boolops"
 msgstr "Werkzeuge"
 
 #: ../src/live_effects/effect.cpp:90
-#, fuzzy
 msgid "Circle (by center and radius)"
 msgstr "Kreis (Mittelpunkt+Radius)"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "Kreis durch 3 Punkte"
 
 #: ../src/live_effects/effect.cpp:92
 #, fuzzy
@@ -6646,9 +6643,8 @@ msgid "Dynamic stroke"
 msgstr "Schwarze Kontur"
 
 #: ../src/live_effects/effect.cpp:93
-#, fuzzy
 msgid "Interpolate Sub-Paths"
-msgstr "Interpolieren"
+msgstr "Unterpfade interpolieren"
 
 #: ../src/live_effects/effect.cpp:94
 #, fuzzy
@@ -6662,16 +6658,15 @@ msgstr "Segment verbinden"
 
 #: ../src/live_effects/effect.cpp:96
 msgid "Mirror symmetry"
-msgstr ""
+msgstr "Spiegelsymmetrisch"
 
 #: ../src/live_effects/effect.cpp:98
 msgid "Parallel"
 msgstr "Parallel"
 
 #: ../src/live_effects/effect.cpp:99
-#, fuzzy
 msgid "Path length"
-msgstr "Wellenlänge"
+msgstr "Pfadlänge"
 
 #: ../src/live_effects/effect.cpp:100
 #, fuzzy
@@ -6694,7 +6689,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:104
 msgid "Ruler"
-msgstr "_Lineal"
+msgstr "Lineal"
 
 #: ../src/live_effects/effect.cpp:105
 #, fuzzy
@@ -6708,9 +6703,8 @@ msgstr "Objektbezeichner setzen"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:109
-#, fuzzy
 msgid "Bend"
-msgstr "Mischen"
+msgstr "Biegen"
 
 #: ../src/live_effects/effect.cpp:110
 msgid "Gears"
@@ -6722,36 +6716,33 @@ msgstr "Muster entlang Pfad"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:112
-#, fuzzy
 msgid "Stitch Sub-Paths"
-msgstr "Kacheln zusammenfügen"
+msgstr "Unterpfade zusammenfügen"
 
 #. 0.47
 #: ../src/live_effects/effect.cpp:114
 msgid "VonKoch"
-msgstr ""
+msgstr "VonKoch"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Knot"
 msgstr "Knoten"
 
 #: ../src/live_effects/effect.cpp:116
-#, fuzzy
 msgid "Construct grid"
-msgstr "Axonometrisches Gitter"
+msgstr "Gitter erzeugen"
 
 #: ../src/live_effects/effect.cpp:117
 msgid "Spiro spline"
-msgstr ""
+msgstr "Spiro spline"
 
 #: ../src/live_effects/effect.cpp:118
-#, fuzzy
 msgid "Envelope Deformation"
-msgstr "Information"
+msgstr "Hüllen-Verformung"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "Schraffur (grob)"
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Sketch"
@@ -6766,6 +6757,8 @@ msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
 msgstr ""
+"Wenn die Option deaktiviert ist, wird der Effekt auf das Objekt angewendet, "
+"jedoch temporär ausgeblendet."
 
 #: ../src/live_effects/effect.cpp:293
 msgid "No effect"
@@ -6791,9 +6784,8 @@ msgstr ""
 #: ../src/live_effects/lpe-parallel.cpp:47
 #: ../src/live_effects/lpe-perp_bisector.cpp:103
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-#, fuzzy
 msgid "Length left"
-msgstr "Unterschneidung nach links"
+msgstr "Länge links"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:51
 #: ../src/live_effects/lpe-perp_bisector.cpp:103
@@ -6804,9 +6796,8 @@ msgstr ""
 #: ../src/live_effects/lpe-parallel.cpp:48
 #: ../src/live_effects/lpe-perp_bisector.cpp:104
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-#, fuzzy
 msgid "Length right"
-msgstr "Längeneinheit: "
+msgstr "Länge rechts"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:52
 #: ../src/live_effects/lpe-perp_bisector.cpp:104
@@ -6825,7 +6816,6 @@ msgid "Adjust the \"right\" of the bisector"
 msgstr "Helligkeit des Farbwertes übernehmen"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Bend path"
 msgstr "Pfad verbiegen"
 
@@ -6843,9 +6833,8 @@ msgstr "Breite des Pfades"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-#, fuzzy
 msgid "Width in units of length"
-msgstr "Breite der Halo in Pixeln"
+msgstr "Breite in Einheiten der Länge"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #, fuzzy
@@ -6853,9 +6842,8 @@ msgid "Scale the width of the path in units of its length"
 msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
-#, fuzzy
 msgid "Original path is vertical"
-msgstr "Muster ist vertikal"
+msgstr "Originalpfad ist vertikal"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
@@ -6871,7 +6859,6 @@ msgid "Intersect"
 msgstr "Überschneidung"
 
 #: ../src/live_effects/lpe-boolops.cpp:25
-#, fuzzy
 msgid "Subtract A-B"
 msgstr "Subtrahiere A-B"
 
@@ -6881,7 +6868,6 @@ msgid "Identity A"
 msgstr "Identifikator"
 
 #: ../src/live_effects/lpe-boolops.cpp:27
-#, fuzzy
 msgid "Subtract B-A"
 msgstr "Subtrahiere B-A"
 
@@ -6938,7 +6924,6 @@ msgid "The size of the grid in Y direction."
 msgstr "VP in X-Richtung umschalten"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
-#, fuzzy
 msgid "Starting"
 msgstr "Anfang"
 
@@ -6947,23 +6932,20 @@ msgid "Angle of the first copy"
 msgstr "Winkel der ersten Kopie"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
-#, fuzzy
 msgid "Rotation angle"
-msgstr "Rotationszentrum"
+msgstr "Rotationswinkel"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Angle between two successive copies"
 msgstr ""
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
 msgid "Number of copies"
-msgstr "Anzahl der Zeilen"
+msgstr "Anzahl der Kopien"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
 msgid "Number of copies of the original path"
-msgstr "Zahl der Ecken eines Polygons oder Sterns"
+msgstr "Anzahl der Kopien des Originalpfades"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:50
 #, fuzzy
@@ -6976,37 +6958,32 @@ msgid "Origin of the rotation"
 msgstr "Ausrichtung der Zeichenfläche:"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:61
-#, fuzzy
 msgid "Adjust the starting angle"
-msgstr "Sättigung anpassen"
+msgstr "Anpassen des Startwinkels"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:62
-#, fuzzy
 msgid "Adjust the rotation angle"
-msgstr "Sättigung anpassen"
+msgstr "Anpassen des Rotationswinkels"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "Kacheln zusammenfügen"
+msgstr "Verändere Pfad"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
-#, fuzzy
 msgid "Number of paths"
-msgstr "Anzahl der Abschnitte"
+msgstr "Anzahl der Pfade"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "The number of paths that will be generated."
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Start edge variance"
-msgstr "Einstellungen für Sternwerkzeug"
+msgstr "Start der Kanten Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid ""
@@ -7015,9 +6992,8 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "Start spacing variance"
-msgstr "Sättigung"
+msgstr "Start der Abstands-Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid ""
@@ -7027,7 +7003,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
-msgstr ""
+msgstr "Ende der Kanten Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid ""
@@ -7036,9 +7012,8 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-#, fuzzy
 msgid "End spacing variance"
-msgstr "Sättigung"
+msgstr "Ende der Abstands-Abweichung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid ""
@@ -7047,9 +7022,8 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale width"
-msgstr "Quellenbreite"
+msgstr "Skaliere Breite"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 #, fuzzy
@@ -7057,9 +7031,8 @@ msgid "Scale the width of the stitch path"
 msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
+msgstr "Skaliere die Breite relativ zur Länge"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
@@ -7096,23 +7069,20 @@ msgid "Method"
 msgstr "Schmelzen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:75
-#, fuzzy
 msgid "Choose pen type"
-msgstr "Segmenttyp ändern"
+msgstr "Wähle den Stifttyp"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:76
 msgid "Pen width"
 msgstr "Stiftbreite"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
 msgid "Maximal stroke width"
-msgstr "Breite der Kontur skalieren"
+msgstr "Maximale Strichbreite"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
-#, fuzzy
 msgid "Pen roundness"
-msgstr "Nicht abgerundet"
+msgstr "Stiftabrundung"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
 msgid "Min/Max width ratio"
@@ -7148,9 +7118,8 @@ msgid "Choose end capping type"
 msgstr "Segmenttyp ändern"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
-#, fuzzy
 msgid "Grow for"
-msgstr "Ausweitmodus"
+msgstr "Wachse um"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Make the stroke thiner near it's start"
@@ -7165,14 +7134,12 @@ msgid "Make the stroke thiner near it's end"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
 msgid "Round ends"
-msgstr "Abgerundet"
+msgstr "Runde Enden ab"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
 msgid "Strokes end with a round end"
-msgstr "Einstellungen für Sternwerkzeug"
+msgstr "Striche enden mit einem runden Ende"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 #, fuzzy
@@ -7185,9 +7152,8 @@ msgid "left capping"
 msgstr "Linker Winkel"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top bend path"
-msgstr "Pfad verbiegen"
+msgstr "Oberen Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
@@ -7197,9 +7163,8 @@ msgstr ""
 "bleibt bestehen."
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right bend path"
-msgstr "Pfad verbiegen"
+msgstr "Rechten Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 #, fuzzy
@@ -7209,9 +7174,8 @@ msgstr ""
 "bleibt bestehen."
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom bend path"
-msgstr "Pfad verbiegen"
+msgstr "Unteren Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 #, fuzzy
@@ -7221,9 +7185,8 @@ msgstr ""
 "bleibt bestehen."
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left bend path"
-msgstr "Pfad verbiegen"
+msgstr "Linken Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 #, fuzzy
@@ -7234,21 +7197,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
-msgstr ""
+msgstr "Aktiviere linke und rechte Pfade"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
-msgstr ""
+msgstr "Aktiviere linke und rechte Verformungs-Pfade"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable top & bottom paths"
-msgstr "An Objektpfaden einra_sten"
+msgstr "Aktiviere obere und untere Pfade"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable the top and bottom deformation paths"
-msgstr "Muster vor der Deformation duplizieren"
+msgstr "Aktiviere obere und untere Verformungs-Pfade"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -7260,7 +7221,7 @@ msgstr "Zahl der Zähne"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Phi"
-msgstr ""
+msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid ""
@@ -7270,7 +7231,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
 msgid "Trajectory"
-msgstr "Flugbahn"
+msgstr "Kurve"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
 #, fuzzy
@@ -7303,18 +7264,16 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Interruption width"
-msgstr "Interpolationsmethode"
+msgstr "Unterbrechungsbreite"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "unit of stroke width"
-msgstr "Breite der Konturlinie"
+msgstr "Einheit der Strichbreite"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
@@ -7322,24 +7281,23 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
-msgstr ""
+msgstr "Addiere Strichdicke zur Unterbrechungslänge"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "Addiere Strichdicke zur Unterbrechungslänge."
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "Addiere andere Strichdicke zur Unterbrechungslänge"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size."
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Switcher size"
-msgstr "Kacheln zusammenfügen"
+msgstr "Größe des Drehpfeiles"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
@@ -7439,9 +7397,8 @@ msgid "Control handle 15"
 msgstr "Knotenanfasser verschieben"
 
 #: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5507
-#, fuzzy
 msgid "Closed"
-msgstr "S_chließen"
+msgstr "Geschlossen"
 
 #: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5509
 #, fuzzy
@@ -7487,7 +7444,6 @@ msgid "Handle to control the distance of the offset from the curve"
 msgstr ""
 
 #: ../src/live_effects/lpe-parallel.cpp:46
-#, fuzzy
 msgid "Adjust the offset"
 msgstr "<b>Versatz-Abstand</b> anpassen"
 
@@ -7561,9 +7517,8 @@ msgid "Path to put along the skeleton path"
 msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-#, fuzzy
 msgid "Pattern copies"
-msgstr "Muster"
+msgstr "Muster-Kopien"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
@@ -7602,9 +7557,8 @@ msgid "Tangential offset"
 msgstr "Tangentialer Versatz"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "Objekte in Füllmuster umwandeln"
+msgstr "Versatz in der Einheit der Mustergröße"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid ""
@@ -7692,7 +7646,7 @@ msgstr "Farbton anpassen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
-msgstr ""
+msgstr "Zufalls-Frequenz"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
@@ -7709,7 +7663,7 @@ msgstr ""
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half turns smoothness: 1st side, in"
-msgstr ""
+msgstr "Weichheit der Rundungen: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
@@ -7749,7 +7703,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "Ausmaß Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
@@ -7767,7 +7721,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "Parallelität Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid ""
@@ -7804,9 +7758,8 @@ msgid "Simulate a stroke of varrying width"
 msgstr "Breite der Kontur skalieren"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
-#, fuzzy
 msgid "Bend hatches"
-msgstr "Pfad verbiegen"
+msgstr "Schraffur verbiegen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
@@ -7878,9 +7831,8 @@ msgid "Both"
 msgstr "Unten"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
-#, fuzzy
 msgid "Mark distance"
-msgstr "Einrastabstand:"
+msgstr "Markierungsdistanz"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
 #, fuzzy
@@ -7888,44 +7840,40 @@ msgid "Distance between successive ruler marks"
 msgstr "Abstand der vertikalen Gitterlinien"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
-#, fuzzy
 msgid "Major length"
-msgstr "Wellenlänge"
+msgstr "Große Länge"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Length of major ruler marks"
-msgstr ""
+msgstr "Länge der großen Linealmarken"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-#, fuzzy
 msgid "Minor length"
-msgstr "Wellenlänge"
+msgstr "Kleine Länge"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Length of minor ruler marks"
-msgstr ""
+msgstr "Länge der kleinen Linealmarken"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Major steps"
-msgstr ""
+msgstr "Große Schritte"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "Zeichne eine große Marke alle ... Schritte"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-#, fuzzy
 msgid "Shift marks by"
-msgstr "Markierungen setzen"
+msgstr "Verschiebe markierung um"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Shift marks by this many steps"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-#, fuzzy
 msgid "Mark direction"
-msgstr "Zeilenabstand vergrößern"
+msgstr "Markierungsrichtung"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Direction of marks (when viewing along the path from start to end)"
@@ -7936,9 +7884,8 @@ msgid "Offset of first mark"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:50
-#, fuzzy
 msgid "Border marks"
-msgstr "_Randfarbe:"
+msgstr "Beginne Markierung"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Choose whether to draw marks at the beginning and end of the path"
@@ -7962,25 +7909,23 @@ msgstr "Kontur:"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr ""
+msgstr "Zeichne diese Zahl an durchschnittlichen Strichen"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
 msgstr "Maximale Konturbreite"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
-#, fuzzy
 msgid "Maximum length of approximating strokes"
-msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
+msgstr "Maximale Länge der durchschnittlichen Striche"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
-#, fuzzy
 msgid "Stroke length variation"
-msgstr "Einstellungen für Sternwerkzeug"
+msgstr "Strichlängen-Variation"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr ""
+msgstr "Zufällige Variation der Strichlänge (relativ zur max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7989,30 +7934,32 @@ msgstr "Max. Überlappung"
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr ""
+"Wie viele erfolgreich gezeichnete Striche sollen überlappen (relativ zur "
+"max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
-msgstr ""
+msgstr "Überlappungs-Varaition"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr ""
+msgstr "Zufällige Variation der Überlappung (relativ zur max. Überlappung)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
-#, fuzzy
 msgid "Max. end tolerance"
-msgstr "Max. Endtoleranz  "
+msgstr "Max. Endtoleranz"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
 msgstr ""
+"Maximale Distanz zwischen dem Ende der originalen und durschnittlichen Pfade "
+"(relativ zur max. Länge)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
-msgstr "Normaler Versatz"
+msgstr "Durchschn. Versatz"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance each stroke is away from the original path"
@@ -8020,60 +7967,61 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr ""
+msgstr "Max. Zittern"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr ""
+msgstr "Maximales Ausmaß des Zitterns"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
-msgstr ""
+msgstr "Zitterfrequenz"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Average number of tremble periods in a stroke"
-msgstr ""
+msgstr "Durchschnittliche Anzahl der Zitterperioden in einem Strich"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
-#, fuzzy
 msgid "Construction lines"
-msgstr "Zeilen zentrieren"
+msgstr "Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "Wie viele Konstruktionslinien (Tangenten)  gezeichnet werden sollen"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
 msgstr ""
+"Skalierungsfaktor im Bezug auf Krümmung und Länge der Konstruktionslinien "
+"(Versuchen Sie 5*Versatz)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Max. length"
-msgstr "Wellenlänge"
+msgstr "Max. Länge"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "Maximale Länge der Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-#, fuzzy
 msgid "Length variation"
-msgstr "Weniger Sättigung"
+msgstr "Längenvariation"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "Zufällige Variation der Länge der Konstruktionslinien"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "Placement randomness"
-msgstr ""
+msgstr "Zufällige Platzierung"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
+"0: gleichmäßig verteilte Konstruktionslinien, 1: absolut zufällige "
+"Platzierung"
 
 # !!! maybe use "verbinden"
 #: ../src/live_effects/lpe-sketch.cpp:61
@@ -8083,16 +8031,15 @@ msgstr "_Kombinieren"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
-msgstr ""
+msgstr "min. Krümmung"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
 msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
-msgstr "Kurve ziehen"
+msgstr "maximale Krümmung"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -8156,9 +8103,8 @@ msgid "Text label attached to the path"
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
-#, fuzzy
 msgid "Nb of generations"
-msgstr "Anzahl der Umdrehungen"
+msgstr "Anzahl der Generationen"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Depth of the recursion --- keep low!!"
@@ -8166,7 +8112,7 @@ msgstr "Tiefe der Rekursion --- Mit Bedacht!!"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Generating path"
-msgstr "Erzeuge nene Pfad"
+msgstr "Erzeuge neuen Pfad"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Path whose segments define the iterated transforms"
@@ -8184,7 +8130,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Draw all generations"
-msgstr ""
+msgstr "Zeichne alle Generatinen"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "If unchecked, draw only the last generation"
@@ -8192,9 +8138,8 @@ msgstr ""
 
 #. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "Reference segment"
-msgstr "Segment löschen"
+msgstr "Referenz-Segment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "The reference segment. Defaults to bbox diameter."
@@ -8209,7 +8154,7 @@ msgstr "Maximale Kompexität"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Disable effect if the output is too complex"
-msgstr ""
+msgstr "Deaktivieren Sie den Effekt, wenn die Ausgabe zu komplex wird."
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -8238,9 +8183,8 @@ msgid "Paste path"
 msgstr "Pfad einfügen"
 
 #: ../src/live_effects/parameter/path.cpp:188
-#, fuzzy
 msgid "Link to path"
-msgstr "An Objektpfaden einra_sten"
+msgstr "Am Pfad verknüpfen"
 
 #: ../src/live_effects/parameter/path.cpp:409
 msgid "Paste path parameter"
@@ -8608,14 +8552,12 @@ msgstr "_Text"
 
 # !!!
 #: ../src/menus-skeleton.h:244
-#, fuzzy
 msgid "Filter_s"
 msgstr "Filter"
 
 #: ../src/menus-skeleton.h:250
-#, fuzzy
 msgid "Exte_nsions"
-msgstr "Erweiterung »"
+msgstr "Erweiterungen »"
 
 #: ../src/menus-skeleton.h:257
 msgid "Whiteboa_rd"
@@ -8812,9 +8754,8 @@ msgid "smooth"
 msgstr "glatt"
 
 #: ../src/nodepath.cpp:4892
-#, fuzzy
 msgid "auto"
-msgstr "Ausrichtung"
+msgstr "automatisch"
 
 #: ../src/nodepath.cpp:4894
 msgid "symmetric"
@@ -9099,7 +9040,7 @@ msgstr "Gewählten Pfad verlängern"
 
 #: ../src/pencil-context.cpp:270 ../src/pen-context.cpp:505
 msgid "Creating new path"
-msgstr "Erzeuge neue Kurve"
+msgstr "Erzeuge neuen Pfad"
 
 #: ../src/pencil-context.cpp:273 ../src/pen-context.cpp:507
 msgid "Appending to selected path"
@@ -9220,45 +9161,39 @@ msgstr ""
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:116
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create profile directory %s."
-msgstr ""
-"Kann Verzeichnis %s nicht anlegen.\n"
-"%s"
+msgstr "Kann Profilverzeichnis %s nicht anlegen."
 
 #. The profile dir is not actually a directory
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:134
-#, fuzzy, c-format
+#, c-format
 msgid "%s is not a valid directory."
-msgstr ""
-"%s ist kein gültiges Verzeichnis.\n"
-"%s"
+msgstr "%s ist kein gültiges Verzeichnis."
 
 #. The write failed.
 #. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:145
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create the preferences file %s."
-msgstr "Laden der gewünschten Datei %s fehlgeschlagen"
+msgstr "Fehler beim Erstellen der Einstellungs-Datei %s."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:163
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s is not a regular file."
-msgstr ""
-"%s ist keine reguläre Datei.\n"
-"%s"
+msgstr "Die Einstellungs-Datei %s ist keine reguläre Datei."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s could not be read."
-msgstr "Datei %s konnte nicht gespeichert werden."
+msgstr "Datei %s konnte nicht gelesen werden."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
@@ -9270,11 +9205,9 @@ msgstr ""
 #. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
-msgstr ""
-"%s ist keine gültige Einstellungsdatei.\n"
-"%s"
+msgstr "%s ist keine gültige Einstellungsdatei."
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -9685,19 +9618,16 @@ msgid "Paste live path effect"
 msgstr "Pfad-Effekt einfügen"
 
 #: ../src/selection-chemistry.cpp:989
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove live path effects from."
-msgstr "<b>Objekt(e)</b> auswählen, um den Pfad-Effekt einzufügen."
+msgstr "<b>Objekt(e)</b> auswählen, um den Pfad-Effekt zu entfernen."
 
 #: ../src/selection-chemistry.cpp:1001
-#, fuzzy
 msgid "Remove live path effect"
 msgstr "Pfad-Effekt entfernen"
 
 #: ../src/selection-chemistry.cpp:1012
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove filters from."
-msgstr "<b>Text</b> auswählen, um Kerning zu entfernen."
+msgstr "<b>Text</b> auswählen, um Filter zu entfernen."
 
 #: ../src/selection-chemistry.cpp:1022
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1335
@@ -9973,7 +9903,6 @@ msgstr "Seite in Auswahl oder ganze Zeichnung einpassen"
 # !!! verb or noun?
 #. TRANSLATORS: only translate and put "Link" in the translation. It means internet link (anchor)
 #: ../src/selection-describer.cpp:43
-#, fuzzy
 msgid "web|Link"
 msgstr "Verknüpfung"
 
@@ -11100,22 +11029,26 @@ msgstr "Es wurde <b>nichts</b> gelöscht."
 #: ../src/tweak-context.cpp:210
 #, c-format
 msgid "%s. Drag to <b>move</b>."
-msgstr ""
+msgstr "%s. Ziehen zum <b>verschieben</b>."
 
 #: ../src/tweak-context.cpp:215
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
+"%s. Ziehen oder Klicken zum <b>verschieben hinein </b>; mit Umschalttaste "
+"zum <b>verschieben hinaus</b>."
 
 #: ../src/tweak-context.cpp:218
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr ""
+msgstr "%s. Ziehen oder Klicken zum <b>zufälligen verschieben</b>."
 
 #: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
+"%s. Ziehen oder Klicken zum <b>kleiner skalieren</b>; mit Umschalttaste zum "
+"<b>größer skalieren</b>."
 
 #: ../src/tweak-context.cpp:224
 #, c-format
@@ -11123,11 +11056,15 @@ msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr ""
+"%s. Ziehen oder Klicken zum <b>Drehen im Uhrzeigersinn</b>; mit "
+"Umschalttaste zum <b>gegen den Uhrzeigersinn</b>."
 
 #: ../src/tweak-context.cpp:227
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
+"%s. Ziehen oder Klicken zum <b>Duplizieren</b>; mit Umschalttaste zum "
+"<b>Löschen</b>."
 
 #: ../src/tweak-context.cpp:230
 #, c-format
@@ -11300,15 +11237,13 @@ msgstr "Maskierung entfernen"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
-#, fuzzy
 msgid "Set Clip"
-msgstr "Füllung festlegen"
+msgstr "Clip setzen"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
-#, fuzzy
 msgid "Release Clip"
-msgstr "_Entfernen"
+msgstr "Clip lösen"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -11340,9 +11275,8 @@ msgid "Image _Properties"
 msgstr "_Bildeigenschaften"
 
 #: ../src/ui/context-menu.cpp:411
-#, fuzzy
 msgid "Edit Externally..."
-msgstr "Füllung bearbeiten…"
+msgstr "Extern bearbeiten…"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
@@ -11484,37 +11418,31 @@ msgid "Treat selection as group: "
 msgstr "Auf die Selektion ist kein Pfad-Effekt angewandt."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:802
-#, fuzzy
 msgid "Align right edges of objects to the left edge of the anchor"
 msgstr "Rechte Seite der Objekte an linker Seite der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:805
-#, fuzzy
 msgid "Align left edges"
 msgstr "Linksbündig ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:808
-#, fuzzy
 msgid "Center objects horizontally"
-msgstr "Ausgewählte Objekte horizontal umkehren"
+msgstr "Objekte horizontal zentrieren"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:811
 msgid "Align right sides"
 msgstr "Rechtsbündig ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:814
-#, fuzzy
 msgid "Align left edges of objects to the right edge of the anchor"
 msgstr ""
 "Linke Kanten der Objekte an der rechten Seite der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:817
-#, fuzzy
 msgid "Align bottom edges of objects to the top edge of the anchor"
 msgstr "Unterseiten der Objekte an Oberseite der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:820
-#, fuzzy
 msgid "Align top edges"
 msgstr "An Oberkanten ausrichten"
 
@@ -11523,12 +11451,10 @@ msgid "Center on horizontal axis"
 msgstr "Horizontal zentrieren"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:826
-#, fuzzy
 msgid "Align bottom edges"
 msgstr "An Unterkante ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:829
-#, fuzzy
 msgid "Align top edges of objects to the bottom edge of the anchor"
 msgstr "Oberseiten der Objekte an Unterseite der Verankerung ausrichten"
 
@@ -11656,9 +11582,8 @@ msgid "Selection"
 msgstr "Auswahl"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
-#, fuzzy
 msgid "Profile name:"
-msgstr "Dateiname setzen"
+msgstr "Profilname:"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
 msgid "Save"
@@ -11877,7 +11802,6 @@ msgid "Snapping distance, in screen pixels, for snapping to objects"
 msgstr "Einrastabstand in Bildschirmpixeln, um an Objekten einzurasten"
 
 #: ../src/ui/dialog/document-properties.cpp:271
-#, fuzzy
 msgid "Always snap to objects, regardless of their distance"
 msgstr ""
 "Wenn gesetzt, dann rasten Objekte am nahesten Objekt ein, unabhängig von der "
@@ -11903,10 +11827,9 @@ msgid "Snapping distance, in screen pixels, for snapping to grid"
 msgstr "Einrastabstand in Bildschirmpixeln, um in das Gitter einzurasten"
 
 #: ../src/ui/dialog/document-properties.cpp:277
-#, fuzzy
 msgid "Always snap to grids, regardless of the distance"
 msgstr ""
-"Wenn gesetzt, dann rasten Objekte an der nahesten Führungslinie ein, "
+"Wenn gesetzt, dann rasten Objekte an der nahesten Gitterslinie ein, "
 "unabhängig von der Entfernung"
 
 #: ../src/ui/dialog/document-properties.cpp:278
@@ -11929,7 +11852,6 @@ msgid "Snapping distance, in screen pixels, for snapping to guides"
 msgstr "Einrastabstand in Bildschirmpixeln, um an Führungslinien einzurasten"
 
 #: ../src/ui/dialog/document-properties.cpp:283
-#, fuzzy
 msgid "Always snap to guides, regardless of the distance"
 msgstr ""
 "Wenn gesetzt, dann rasten Objekte an der nahesten Führungslinie ein, "
@@ -11947,15 +11869,13 @@ msgstr "<b>An Objekten einrasten</b>"
 
 # !!!
 #: ../src/ui/dialog/document-properties.cpp:290
-#, fuzzy
 msgid "<b>Snap to grids</b>"
 msgstr "<b>Einrasten am Gitter</b>"
 
 # !!! points?
 #: ../src/ui/dialog/document-properties.cpp:292
-#, fuzzy
 msgid "<b>Snap to guides</b>"
-msgstr "_Knoten (Punkte) an Führungslinien einrasten"
+msgstr "<b>Einrasten an Führungslinien</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:321
 msgid "(invalid UTF-8 string)"
@@ -11972,39 +11892,33 @@ msgstr "Palettenverzeichnis (%s) nicht auffindbar."
 #. inform the document, so we can undo
 #. Color Management
 #: ../src/ui/dialog/document-properties.cpp:414 ../src/verbs.cpp:2739
-#, fuzzy
 msgid "Link Color Profile"
-msgstr "Farben aus dem Bild übernehmen"
+msgstr "Farb-Profil verknüpfen"
 
 #: ../src/ui/dialog/document-properties.cpp:487
-#, fuzzy
 msgid "Remove linked color profile"
-msgstr "Filterprimitiv entfernen"
+msgstr "Verknüpftes Farb-Profil entfernen"
 
 #: ../src/ui/dialog/document-properties.cpp:501
-#, fuzzy
 msgid "<b>Linked Color Profiles:</b>"
-msgstr "<b>Definierte Gitter</b>"
+msgstr "<b>Verknüpfte Farb-Profile:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:503
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Verfügbare Farb-Profile:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:505
-#, fuzzy
 msgid "Link Profile"
-msgstr "Verknüpfungs_eigenschaften"
+msgstr "Profil verknüpfen"
 
 #: ../src/ui/dialog/document-properties.cpp:536
-#, fuzzy
 msgid "Profile Name"
-msgstr "Dateiname setzen"
+msgstr "Profil-Name"
 
 # !!! points?
 #: ../src/ui/dialog/document-properties.cpp:567
-#, fuzzy
 msgid "<b>External script files:</b>"
-msgstr "_Knoten (Punkte) an Führungslinien einrasten"
+msgstr "<b>Externe Script-Dateien:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:569
 #: ../src/ui/dialog/swatches.cpp:458
@@ -12017,14 +11931,12 @@ msgstr "Dateiname"
 
 #. inform the document, so we can undo
 #: ../src/ui/dialog/document-properties.cpp:632
-#, fuzzy
 msgid "Add external script..."
-msgstr "Füllung bearbeiten…"
+msgstr "Füge externes Script hinzu..."
 
 #: ../src/ui/dialog/document-properties.cpp:656
-#, fuzzy
 msgid "Remove external script"
-msgstr "Text wird von Pfad getrennt"
+msgstr "Lösche externes Script"
 
 #: ../src/ui/dialog/document-properties.cpp:733
 msgid "<b>Creation</b>"
@@ -12106,25 +12018,22 @@ msgid "Guess from extension"
 msgstr "Automatisch bestimmen"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
-#, fuzzy
 msgid "Left edge of source"
-msgstr "(linke Kante oben)"
+msgstr "Linke Kante der Quelle"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
 msgid "Top edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
-#, fuzzy
 msgid "Right edge of source"
-msgstr "(rechte Kante oben)"
+msgstr "Rechte Kante der Quelle"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
 msgid "Bottom edge of source"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
-#, fuzzy
 msgid "Source width"
 msgstr "Quellenbreite"
 
@@ -12385,19 +12294,16 @@ msgstr ""
 #. default height:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 #: ../share/extensions/dimension.inx.h:1
-#, fuzzy
 msgid "Dimensions"
-msgstr "Division"
+msgstr "Dimensionen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#, fuzzy
 msgid "Width of filter effects region"
-msgstr "Breite der Auswahl"
+msgstr "Breite des Filtereffekts"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#, fuzzy
 msgid "Height of filter effects region"
-msgstr "Höhe der Auswahl"
+msgstr "Höhe des Filtereffekts"
 
 #. # end multiple scan
 #. ## end mode page
@@ -14240,7 +14146,6 @@ msgid "SVG output"
 msgstr "SVG-Ausgabe"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "System default"
 msgstr "Zur Vorgabe machen"
 
@@ -14921,7 +14826,7 @@ msgstr "Neuen Effekt anwenden"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:79
 msgid "Current effect"
-msgstr "Ak"
+msgstr "Aktion"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:80
 msgid "Effect list"
@@ -15092,18 +14997,16 @@ msgid "Rendering"
 msgstr "Rendern"
 
 #: ../src/ui/dialog/scriptdialog.cpp:211
-#, fuzzy
 msgid "_Execute Javascript"
-msgstr "Perl _ausführen"
+msgstr "Javascript _ausführen"
 
 #: ../src/ui/dialog/scriptdialog.cpp:213
 msgid "_Execute Python"
 msgstr "Python _ausführen"
 
 #: ../src/ui/dialog/scriptdialog.cpp:215
-#, fuzzy
 msgid "_Execute Ruby"
-msgstr "Python _ausführen"
+msgstr "Ruby _ausführen"
 
 #: ../src/ui/dialog/scriptdialog.cpp:224
 msgid "Script"
@@ -15119,7 +15022,6 @@ msgstr "Fehler"
 
 #. Dialog organization
 #: ../src/ui/dialog/session-player.cpp:70
-#, fuzzy
 msgid "Session file"
 msgstr "Sitzungsdatei _schreiben:"
 
@@ -15136,9 +15038,8 @@ msgstr "Informationen über die Speichernutzung"
 #. fixme: Does this mean the active file for the session, or the file for the active session?
 #. Please indicate which with a TRANSLATORS comment.
 #: ../src/ui/dialog/session-player.cpp:82
-#, fuzzy
 msgid "Active session file:"
-msgstr "Sitzungsdatei _schreiben:"
+msgstr "Aktive Sitzungsdatei:"
 
 #: ../src/ui/dialog/session-player.cpp:83
 msgid "Delay (milliseconds):"
@@ -15178,14 +15079,12 @@ msgid "Play"
 msgstr "Abspielen"
 
 #: ../src/ui/dialog/session-player.cpp:166
-#, fuzzy
 msgid "Open session file"
-msgstr "Sitzungsdatei _schreiben:"
+msgstr "Öffne Sitzungsdatei:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
-#, fuzzy
 msgid "Set SVG Font attribute"
-msgstr "Attribut festlegen"
+msgstr "SVG-Schrift-Attribut setzen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
 #, fuzzy
@@ -15198,9 +15097,8 @@ msgid "Family Name:"
 msgstr "Dateiname setzen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
-#, fuzzy
 msgid "Set width:"
-msgstr "Quellenbreite"
+msgstr "Breite setzen:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
 #, fuzzy
@@ -15328,9 +15226,8 @@ msgid "Second Unicode range"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
-#, fuzzy
 msgid "Kerning value:"
-msgstr "Werte zurücksetzen"
+msgstr "Unterschneidungswert:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
@@ -15351,18 +15248,16 @@ msgid "_Font"
 msgstr "Schrift"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:870
-#, fuzzy
 msgid "_Global Settings"
-msgstr "Seiteneinstellungen"
+msgstr "_Globale Einstellungen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr "_Furchen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "_Kerning"
-msgstr "_Zeichnung"
+msgstr "_Unterschneidung"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
@@ -15406,24 +15301,20 @@ msgid "Change color definition"
 msgstr "Farbdefinition ändern"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove stroke color"
-msgstr "Kontur entfernen"
+msgstr "Konturfarbe entfernen"
 
 #: ../src/ui/dialog/swatches.cpp:846
-#, fuzzy
 msgid "Remove fill color"
-msgstr "Füllung entfernen"
+msgstr "Füllfarbe entfernen"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "Farbe der Kontur setzen"
+msgstr "Farbe der Kontur auf nichts setzen"
 
 #: ../src/ui/dialog/swatches.cpp:851
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "Füllungsfarbe setzen"
+msgstr "Füllungsfarbe auf nichts setzen"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set stroke color from swatch"
@@ -16646,7 +16537,6 @@ msgstr ""
 
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
-#, fuzzy
 msgid "sliders|Link"
 msgstr "Verbinden"
 
@@ -16799,15 +16689,13 @@ msgid "%s copy"
 msgstr ""
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Duplicate layer"
-msgstr "Filter duplizieren"
+msgstr "Ebene duplizieren"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
 #: ../src/verbs.cpp:1266
-#, fuzzy
 msgid "Duplicated layer."
-msgstr "Filter duplizieren"
+msgstr "Duplizierte Ebene."
 
 #: ../src/verbs.cpp:1295
 msgid "Delete layer"
@@ -17144,14 +17032,12 @@ msgid "Remove any path effects from selected objects"
 msgstr "Effekt von Auswahl entfernen"
 
 #: ../src/verbs.cpp:2306
-#, fuzzy
 msgid "Remove Filters"
 msgstr "Filter entfernen"
 
 #: ../src/verbs.cpp:2307
-#, fuzzy
 msgid "Remove any filters from selected objects"
-msgstr "Maskierung von Auswahl entfernen"
+msgstr "Jeden Filter von Auswahl entfernen"
 
 #: ../src/verbs.cpp:2308
 msgid "_Delete"
@@ -17218,9 +17104,8 @@ msgid "Convert selection to a line marker"
 msgstr "Die gewählten Objekte in die Zwischenablage verschieben"
 
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Objects to Gu_ides"
-msgstr "Objekte in Füllmuster umwandeln"
+msgstr "Objekte in Führungslinien umwandeln"
 
 #: ../src/verbs.cpp:2323
 msgid ""
@@ -17887,14 +17772,12 @@ msgid "Fill bounded areas"
 msgstr "Abgegrenzte Gebiete füllen"
 
 #: ../src/verbs.cpp:2534
-#, fuzzy
 msgid "LPE Edit"
-msgstr "_Bearbeiten"
+msgstr "LPE bearbeiten"
 
 #: ../src/verbs.cpp:2535
-#, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr "Nächster Pfad-Effekt-Parameter"
+msgstr "Pfad-Effekt-Parameter bearbeiten"
 
 #: ../src/verbs.cpp:2537
 msgid "Erase existing paths"
@@ -18052,9 +17935,8 @@ msgid "Open Preferences for the Eraser tool"
 msgstr "Eigenschaften für das Sternwerkzeug öffnen"
 
 #: ../src/verbs.cpp:2577
-#, fuzzy
 msgid "LPE Tool Preferences"
-msgstr "Einstellungen für Knotenwerkzeug"
+msgstr "Pfad-Effekt-Einstellungen"
 
 #: ../src/verbs.cpp:2578
 #, fuzzy
@@ -18224,7 +18106,6 @@ msgstr "Zwischen normaler und Umriss-Ansicht umschalten"
 
 # ???
 #: ../src/verbs.cpp:2618
-#, fuzzy
 msgid "Color-managed view"
 msgstr "Farbverwaltungsansicht"
 
@@ -19070,7 +18951,6 @@ msgid "Scale rounded corners"
 msgstr "Abgerundete Ecken mitskalieren"
 
 #: ../src/widgets/select-toolbar.cpp:566
-#, fuzzy
 msgid "Move gradients"
 msgstr "Farbverlaufs-Anfasser verschieben"
 
@@ -19684,9 +19564,8 @@ msgid "Snap from and to an item's rotation center"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2154
-#, fuzzy
 msgid "Page border"
-msgstr "Randfarbe der Zeichenfläche"
+msgstr "Seitenrand"
 
 #: ../src/widgets/toolbox.cpp:2154
 msgid "Snap to the page border"
@@ -20065,9 +19944,8 @@ msgid "even"
 msgstr "eben"
 
 #: ../src/widgets/toolbox.cpp:3736
-#, fuzzy
 msgid "center is denser"
-msgstr "Zeilen zentrieren"
+msgstr "Mittelpunkt ist dichter"
 
 #: ../src/widgets/toolbox.cpp:3736
 msgid "center is much denser"
@@ -20086,9 +19964,8 @@ msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr "Dichte der äußeren Umdrehungen; 1 = gleichförmig"
 
 #: ../src/widgets/toolbox.cpp:3750
-#, fuzzy
 msgid "starts from center"
-msgstr "Mittelpunkt zurücksetzen"
+msgstr "startet vom Mittelpunkt"
 
 #: ../src/widgets/toolbox.cpp:3750
 msgid "starts mid-way"
@@ -20119,7 +19996,6 @@ msgid "Create regular Bezier path"
 msgstr "Erstelle Bezier Pfad"
 
 #: ../src/widgets/toolbox.cpp:3833
-#, fuzzy
 msgid "Spiro"
 msgstr "Spirale"
 
@@ -20176,9 +20052,8 @@ msgid "(default)"
 msgstr "(Vorgabe)"
 
 #: ../src/widgets/toolbox.cpp:3999
-#, fuzzy
 msgid "(few nodes, smooth)"
-msgstr "Die gewählten Knoten glätten"
+msgstr "(wenige Knoten, weich)"
 
 #: ../src/widgets/toolbox.cpp:4002
 msgid "Smoothing:"
@@ -20241,14 +20116,12 @@ msgid "The force of the tweak action"
 msgstr "Die Kraft der Modellierungsaktion"
 
 #: ../src/widgets/toolbox.cpp:4157
-#, fuzzy
 msgid "Move mode"
-msgstr "Knoten verschieben"
+msgstr "Verschiebungs-Modus"
 
 #: ../src/widgets/toolbox.cpp:4158
-#, fuzzy
 msgid "Move objects in any direction"
-msgstr "VP in X-Richtung umschalten"
+msgstr "Verschiebe Objekte in irgendeine Richtung"
 
 #: ../src/widgets/toolbox.cpp:4164
 #, fuzzy
@@ -20350,9 +20223,8 @@ msgid "Jitter the colors of selected objects"
 msgstr "Die gewählten Objekte vereinigen"
 
 #: ../src/widgets/toolbox.cpp:4241
-#, fuzzy
 msgid "Blur mode"
-msgstr "Mischmodus:"
+msgstr "Unschärfemodus"
 
 #: ../src/widgets/toolbox.cpp:4242
 #, fuzzy
@@ -20763,9 +20635,8 @@ msgid "Opacity:"
 msgstr "Deckkraft:"
 
 #: ../src/widgets/toolbox.cpp:5304
-#, fuzzy
 msgid "Pick opacity"
-msgstr "Transparenz übernehmen"
+msgstr "Wähle Transparenz"
 
 #: ../src/widgets/toolbox.cpp:5305
 msgid ""
@@ -20780,9 +20651,8 @@ msgid "Pick"
 msgstr "Aufnehmen"
 
 #: ../src/widgets/toolbox.cpp:5317
-#, fuzzy
 msgid "Assign opacity"
-msgstr "Deckkraft ändern"
+msgstr "Transparenz festlegen"
 
 #: ../src/widgets/toolbox.cpp:5318
 msgid ""
@@ -20929,9 +20799,8 @@ msgid "Ignore"
 msgstr "Ignorieren"
 
 #: ../src/widgets/toolbox.cpp:6986
-#, fuzzy
 msgid "Connector Spacing"
-msgstr "Abstand der Objektverbinder ändern"
+msgstr "Verbinderabstand"
 
 #: ../src/widgets/toolbox.cpp:6986
 msgid "Spacing:"
@@ -20946,9 +20815,8 @@ msgid "Graph"
 msgstr "Graph"
 
 #: ../src/widgets/toolbox.cpp:7008
-#, fuzzy
 msgid "Connector Length"
-msgstr "Objektverbinder"
+msgstr "Verbinderlänge"
 
 #: ../src/widgets/toolbox.cpp:7008
 msgid "Length:"
@@ -21026,19 +20894,16 @@ msgstr ""
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
-#, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "Schrittweite (px)"
+msgstr "Seitenlänge 'a'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:176
-#, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "Schrittweite (px)"
+msgstr "Seitenlänge 'b'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:177
-#, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "Schrittweite (px)"
+msgstr "Seitenlänge 'c'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians:"
@@ -21218,24 +21083,20 @@ msgid "Add Nodes"
 msgstr "Knoten hinzufügen"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "By max. segment length"
-msgstr "Maximale Segmentlänge"
+msgstr "in max. Segmentlänge"
 
 #: ../share/extensions/addnodes.inx.h:3
-#, fuzzy
 msgid "By number of segments"
-msgstr "Zahl der Zähne"
+msgstr "in der Anzahl der Segmente"
 
 #: ../share/extensions/addnodes.inx.h:4
-#, fuzzy
 msgid "Division method"
-msgstr "Division"
+msgstr "Divisionsmethode"
 
 #: ../share/extensions/addnodes.inx.h:5
-#, fuzzy
 msgid "Maximum segment length (px)"
-msgstr "Maximale Segmentlänge"
+msgstr "Maximale Segmentlänge (px)"
 
 #: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
 #: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
@@ -21250,9 +21111,8 @@ msgid "Modify Path"
 msgstr "Pfad modifizieren"
 
 #: ../share/extensions/addnodes.inx.h:7
-#, fuzzy
 msgid "Number of segments"
-msgstr "Anzahl der Schritte"
+msgstr "Anzahl der Segmente"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI 8.0 Input"
@@ -21311,9 +21171,8 @@ msgid "Corel DRAW Input"
 msgstr "Corel DRAW Input"
 
 #: ../share/extensions/cdr_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "Mit XFIG gespeicherte Dateien öffnen"
+msgstr "In Corel DRAW 7-X4 gespeicherte Dateien öffnen"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
@@ -21324,9 +21183,8 @@ msgid "Corel DRAW templates input"
 msgstr "Corel DRAW Vorlagen Input"
 
 #: ../share/extensions/cdt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "Mit XFIG gespeicherte Dateien öffnen"
+msgstr "In Corel DRAW 7-13 gespeicherte Dateien öffnen"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
@@ -21492,9 +21350,8 @@ msgid "Number Nodes"
 msgstr "Knoten nummerieren"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
-#, fuzzy
 msgid "Altitudes"
-msgstr "Amplitude"
+msgstr "Höhen"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
 #, fuzzy
@@ -21814,9 +21671,8 @@ msgid "Add Guide Lines"
 msgstr "Führungslinie hinzufügen"
 
 #: ../share/extensions/foldablebox.inx.h:2
-#, fuzzy
 msgid "Depth"
-msgstr "Zähne"
+msgstr "Tiefe"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
@@ -22062,9 +21918,8 @@ msgid "Subsubdivs. per Y Subdivision"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:1
-#, fuzzy
 msgid "Angle Divisions"
-msgstr "Division"
+msgstr "Winkelteilung"
 
 #: ../share/extensions/grid_polar.inx.h:2
 msgid "Angle Divisions at Centre"
