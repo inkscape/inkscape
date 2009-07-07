@@ -66,7 +66,6 @@
 #include "../lpe-tool-context.h"
 #include "../mod360.h"
 #include "../node-context.h"
-#include "../ui/tool/node-tool.h"
 #include "../pen-context.h"
 #include "../preferences.h"
 #include "../selection-chemistry.h"
@@ -998,16 +997,6 @@ static ShapeEditor *get_current_shape_editor()
     }
 
     return event_context->shape_editor;
-}
-
-/** Temporary hack: Returns the node tool in the active desktop.
- * Will go away during tool refactoring. */
-static InkNodeTool *get_node_tool()
-{
-    if (!SP_ACTIVE_DESKTOP) return NULL;
-    SPEventContext *ec = SP_ACTIVE_DESKTOP->event_context;
-    if (!INK_IS_NODE_TOOL(ec)) return NULL;
-    return INK_NODE_TOOL(ec);
 }
 
 
