@@ -9,7 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   John Cliff <simarilius@yahoo.com>
  *   David Turner <novalis@gnu.org>
- *   Josh Andler <scislac@scislac.com>
+ *   Josh Andler <scislac@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *
@@ -144,7 +144,7 @@ static struct {
     sp_verb_t doubleclick_verb;
 } const tools[] = {
     { "SPSelectContext",   "select_tool",    SP_VERB_CONTEXT_SELECT,  SP_VERB_CONTEXT_SELECT_PREFS},
-    { "InkNodeTool",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
+    { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
@@ -177,7 +177,7 @@ static struct {
 } const aux_toolboxes[] = {
     { "SPSelectContext", "select_toolbox", 0, sp_select_toolbox_prep,            "SelectToolbar",
       SP_VERB_INVALID, 0, 0},
-    { "InkNodeTool",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
+    { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_CONTEXT_TWEAK_PREFS, "/tools/tweak", N_("Color/opacity used for color tweaking")},
@@ -6312,10 +6312,10 @@ sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *
         case GDK_Return:
             // unfreeze and update, which will defocus
             g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-            sp_text_toolbox_family_changed (NULL, tbl); 
+            sp_text_toolbox_family_changed (NULL, tbl);
             return TRUE; // I consumed the event
             break;
-        case GDK_Escape: 
+        case GDK_Escape:
             // defocus
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
             return TRUE; // I consumed the event
@@ -6508,7 +6508,7 @@ cell_data_func  (GtkCellLayout */*cell_layout*/,
 gboolean            text_toolbox_completion_match_selected    (GtkEntryCompletion *widget,
                                                         GtkTreeModel       *model,
                                                         GtkTreeIter        *iter,
-                                                        GObject *tbl) 
+                                                        GObject *tbl)
 {
     // We intercept this signal so as to fire family_changed at once (without it, you'd have to
     // press Enter again after choosing a completion)
@@ -6583,10 +6583,10 @@ void        sp_text_toolbox_family_popnotify          (GtkComboBox *widget,
                          }
 
                          // update
-                         sp_text_toolbox_family_changed (NULL, tbl); 
+                         sp_text_toolbox_family_changed (NULL, tbl);
                          break;
                      }
-                 } 
+                 }
              }
          }
 
@@ -6625,7 +6625,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect (G_OBJECT (font_sel->gobj()), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
 
     cbe_add_completion(font_sel->gobj(), G_OBJECT(tbl));
-    
+
     gtk_toolbar_append_widget( tbl, (GtkWidget*) font_sel->gobj(), "", "");
     g_object_set_data (G_OBJECT (tbl), "family-entry-combo", font_sel);
 
@@ -6638,7 +6638,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
 
     g_signal_connect (G_OBJECT (font_sel->gobj()), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown", 
+    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown",
              G_CALLBACK (sp_text_toolbox_family_popnotify), tbl);
     g_signal_connect (G_OBJECT (entry), "key-press-event", G_CALLBACK(sp_text_toolbox_family_keypress), tbl);
     g_signal_connect (G_OBJECT (entry),  "focus-in-event", G_CALLBACK (sp_text_toolbox_entry_focus_in), tbl);
@@ -6854,7 +6854,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 
     if ( !repr->attribute("inkscape:connector-spacing") &&
             ( adj->value == defaultConnSpacing )) {
-        // Don't need to update the repr if the attribute doesn't 
+        // Don't need to update the repr if the attribute doesn't
         // exist and it is being set to the default value -- as will
         // happen at startup.
         return;
@@ -6945,7 +6945,7 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
 
     gtk_adjustment_set_value(adj, spacing);
     gtk_adjustment_value_changed(adj);
-    
+
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
