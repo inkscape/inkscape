@@ -41,6 +41,7 @@ export GTK_EXE_PREFIX="$TOP"
 export GNOME_VFS_MODULE_CONFIG_PATH="$TOP/etc/gnome-vfs-2.0/modules"
 export GNOME_VFS_MODULE_PATH="$TOP/lib/gnome-vfs-2.0/modules"
 export XDG_DATA_DIRS="$TOP/share"
+export ASPELL_CONF="prefix $TOP;"
 
 export INKSCAPE_SHAREDIR="$TOP"
 # TODO: move the share directory to a its own folder to make things a bit cleaner in the app bundle

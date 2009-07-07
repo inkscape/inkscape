@@ -812,19 +812,18 @@ void
 sp_spellcheck_add (GObject */*obj*/, GObject */*dlg*/)
 {
     _adds++;
-    GtkMenu *m =
-        GTK_MENU(gtk_object_get_data (GTK_OBJECT (dlg), "addto_langs"));
-    GtkWidget *mi = gtk_menu_get_active (m);
-    unsigned int num = GPOINTER_TO_UINT(gtk_object_get_data (GTK_OBJECT (mi), "number"));
+    GtkComboBox *cbox =
+        GTK_COMBO_BOX(gtk_object_get_data (GTK_OBJECT (dlg), "addto_langs"));
+    gint num = gtk_combo_box_get_active(cbox);
     switch (num) {
-        case 1:
+        case 0:
             aspell_speller_add_to_personal(_speller, _word.c_str(), -1);
             break;
-        case 2:
+        case 1:
             if (_speller2)
                 aspell_speller_add_to_personal(_speller2, _word.c_str(), -1);
             break;
-        case 3:
+        case 2:
             if (_speller3)
                 aspell_speller_add_to_personal(_speller3, _word.c_str(), -1);
             break;
@@ -978,27 +977,18 @@ sp_spellcheck_dialog (void)
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
             sp_spellcheck_new_button (dlg, hb, _("A_dd to dictionary:"), tt, _("Add this word to the chosen dictionary"),
                                       sp_spellcheck_add, "b_add");
-            GtkWidget *cbox = gtk_menu_new ();
-            {
-                GtkWidget *mi = gtk_menu_item_new_with_label(_lang);
-                g_object_set_data (G_OBJECT (mi), "number", GUINT_TO_POINTER (1));
-                gtk_menu_append (GTK_MENU (cbox), mi);
-            }
+            GtkComboBox *cbox = GTK_COMBO_BOX (gtk_combo_box_new_text());
+            gtk_combo_box_append_text (cbox,  _lang);
             if (_lang2) {
-                GtkWidget *mi = gtk_menu_item_new_with_label(_lang2);
-                g_object_set_data (G_OBJECT (mi), "number", GUINT_TO_POINTER (2));
-                gtk_menu_append (GTK_MENU (cbox), mi);
+                gtk_combo_box_append_text (cbox, _lang2);
             }
             if (_lang3) {
-                GtkWidget *mi = gtk_menu_item_new_with_label(_lang3);
-                g_object_set_data (G_OBJECT (mi), "number", GUINT_TO_POINTER (3));
-                gtk_menu_append (GTK_MENU (cbox), mi);
+                gtk_combo_box_append_text (cbox, _lang3);
             }
-            gtk_widget_show_all (cbox);
-            GtkWidget *mnu = gtk_option_menu_new();
-            gtk_option_menu_set_menu(GTK_OPTION_MENU(mnu), cbox);
+            gtk_combo_box_set_active (cbox, 0);
+            gtk_widget_show_all (GTK_WIDGET(cbox));
             g_object_set_data (G_OBJECT (dlg), "addto_langs", cbox);
-            gtk_box_pack_start (GTK_BOX (hb), mnu, TRUE, TRUE, 0);
+            gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(cbox), TRUE, TRUE, 0);
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
 

@@ -126,6 +126,17 @@ if [ ! -e "$LIBPREFIX/share/themes/Clearlooks-Quicksilver" ]; then
 	exit 1
 fi
 
+if [ ! -e "$LIBPREFIX/lib/gnome-vfs-2.0" ]; then
+	echo "Missing gnome-vfs -- please install gnome-vfs and try again." >&2
+	exit 1
+fi
+
+if [ ! -e "$LIBPREFIX/lib/aspell-0.60/en.dat" ]; then
+	echo "Missing aspell en dictionary -- please install at least 'aspell-dict-en', but" >&2
+	echo "preferably all dictionaries ('aspell-dict-*') and try again." >&2
+	exit 1
+fi
+
 if [ ! -f "$binary" ]; then
 	echo "Need Inkscape binary" >&2
 	exit 1
@@ -224,16 +235,16 @@ cp -v "$binary" "$binpath"
 # TODO Add a "$verbose" variable and command line switch, which sets wether these commands are verbose or not
 
 # Share files
-rsync -av "$binary_dir/../share/$binary_name"/* "$package/Contents/Resources/"
+rsync -av "$binary_dir/../share/$binary_name"/* "$pkgresources/"
 cp "$plist" "$package/Contents/Info.plist"
-rsync -av "$binary_dir/../share/locale"/* "$package/Contents/Resources/locale"
+rsync -av "$binary_dir/../share/locale"/* "$pkgresources/locale"
 
 # Copy GTK shared mime information
 mkdir -p "$pkgresources/share"
 cp -rp "$LIBPREFIX/share/mime" "$pkgresources/share/"
 
 # Icons and the rest of the script framework
-rsync -av --exclude ".svn" "$resdir"/Resources/* "$package"/Contents/Resources/
+rsync -av --exclude ".svn" "$resdir"/Resources/* "$pkgresources/"
 
 # Add python modules if requested
 if [ ${add_python} = "true" ]; then
@@ -282,6 +293,10 @@ cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
+
+# Copy aspell dictionary files:
+cp -r "$LIBPREFIX/lib/aspell-0.60" "$pkglib/"
+cp -r "$LIBPREFIX/share/aspell" "$pkgresources/share/"
 
 # Find out libs we need from fink, darwinports, or from a custom install
 # (i.e. $LIBPREFIX), then loop until no changes.
