@@ -244,6 +244,7 @@ void Inkscape::SelTrans::setCenter(Geom::Point const &p)
 void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles)
 {
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     g_return_if_fail(!_grabbed);
 
@@ -296,7 +297,11 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 		/* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
 		An average user would rarely ever try to snap such a large number of nodes anyway, because
 		(s)he could hardly discern which node would be snapping */
-		_snap_points = snap_points_hull;
+		if (prefs->getBool("/options/snapclosestonly/value", false)) {
+			_keepClosestPointOnly(_snap_points, p);
+		} else {
+			_snap_points = snap_points_hull;
+		}
 		// Unfortunately, by now we will have lost the font-baseline snappoints :-(
 	}
 
@@ -333,7 +338,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // When snapping the node closest to the mouse pointer is absolutely preferred over the closest snap
     // (i.e. when weight == 1), then we will not even try to snap to other points and discard those other
     // points immediately.
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
 	if (prefs->getBool("/options/snapclosestonly/value", false)) {
     	if (m.snapprefs.getSnapModeNode()) {
 			_keepClosestPointOnly(_snap_points, p);
@@ -356,7 +361,6 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     			_snap_points.clear();
     		}
 		}
-
 
     	// Optionally, show the snap source
     	if (!(_state == STATE_ROTATE && x != 0.5 && y != 0.5)) { // but not when we're draging a rotation handle, because that won't snap
