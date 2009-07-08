@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-06 19:50+0200\n"
+"POT-Creation-Date: 2009-07-08 19:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3303,55 +3303,55 @@ msgstr ""
 msgid "Fix spelling"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:956
+#: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "_Accept"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "Accept the chosen suggestion"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "_Ignore once"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "_Ignore"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "A_dd to dictionary:"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "Add this word to the chosen dictionary"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "_Stop"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "_Start"
 msgstr ""
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
 msgstr ""
 
@@ -14700,8 +14700,8 @@ msgstr ""
 msgid "Proprietary"
 msgstr ""
 
-#: ../src/ui/widget/licensor.cpp:38 ../share/extensions/interp_att_g.inx.h:13
-msgid "Other"
+#: ../src/ui/widget/licensor.cpp:38
+msgid "MetadataLicence|Other"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
@@ -20596,6 +20596,10 @@ msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
+msgstr ""
+
+#: ../share/extensions/interp_att_g.inx.h:13
+msgid "Other"
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:14
