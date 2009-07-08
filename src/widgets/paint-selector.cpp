@@ -790,9 +790,9 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
         // create label
                 GtkWidget *l;
                 if (repr->attribute("inkscape:stockid"))
-                    l = gtk_label_new(repr->attribute("inkscape:stockid"));
+                    l = gtk_label_new(_(repr->attribute("inkscape:stockid")));
                 else
-                    l = gtk_label_new(repr->attribute("id"));
+                    l = gtk_label_new(_(repr->attribute("id")));
                 gtk_widget_show(l);
                 gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
 
