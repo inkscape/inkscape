@@ -57,6 +57,7 @@ static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *
 
 static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state);
 static void sp_rect_finish(SPRectContext *rc);
+static void sp_rect_cancel(SPRectContext *rc);
 
 static SPEventContextClass *parent_class;
 
@@ -372,9 +373,14 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             break;
 
         case GDK_Escape:
-            sp_desktop_selection(desktop)->clear();
-            //TODO: make dragging escapable by Esc
-            break;
+        	if (dragging) {
+        		dragging = false;
+        		sp_event_context_snap_window_closed(event_context);
+        		// if drawing, cancel, otherwise pass it up for deselecting
+        		sp_rect_cancel(rc);
+        		ret = TRUE;
+        	}
+        	break;
 
         case GDK_space:
             if (dragging) {
@@ -503,9 +509,13 @@ static void sp_rect_finish(SPRectContext *rc)
     rc->_message_context->clear();
 
     if ( rc->item != NULL ) {
-        SPDesktop * desktop;
+        SPRect *rect = SP_RECT(rc->item);
+        if (rect->width.computed == 0 || rect->height.computed == 0) {
+        	sp_rect_cancel(rc); // Don't allow the creating of zero sized rectangle, for example when the start and and point snap to the snap grid point
+        	return;
+        }
 
-        desktop = SP_EVENT_CONTEXT_DESKTOP(rc);
+        SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(rc);
 
         SP_OBJECT(rc->item)->updateRepr();
 
@@ -518,6 +528,29 @@ static void sp_rect_finish(SPRectContext *rc)
         rc->item = NULL;
     }
 }
+
+static void sp_rect_cancel(SPRectContext *rc)
+{
+	SPDesktop *desktop = SP_EVENT_CONTEXT(rc)->desktop;
+
+	sp_desktop_selection(desktop)->clear();
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
+
+    if (rc->item != NULL) {
+    	SP_OBJECT(rc->item)->deleteObject();
+    	rc->item = NULL;
+    }
+
+    rc->within_tolerance = false;
+    rc->xp = 0;
+    rc->yp = 0;
+    rc->item_to_select = NULL;
+
+    sp_canvas_end_forced_full_redraws(desktop->canvas);
+
+    sp_document_cancel(sp_desktop_document(desktop));
+}
+
 
 /*
   Local Variables:
