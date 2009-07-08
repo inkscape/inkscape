@@ -35,7 +35,7 @@ const struct rdf_license_t _proprietary_license =
   {_("Proprietary"), "", 0};
 
 const struct rdf_license_t _other_license = 
-  {_("Other"), "", 0};
+  {Q_("MetadataLicence|Other"), "", 0};
 
 class LicenseItem : public Gtk::RadioButton {
 public:
