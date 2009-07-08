@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-26 03:03+0400\n"
-"PO-Revision-Date: 2009-06-26 10:04+0300\n"
+"POT-Creation-Date: 2009-07-08 02:04+0400\n"
+"PO-Revision-Date: 2009-07-08 03:21+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgstr "Фаска"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr ""
+msgstr "Вздутый слой матового желе"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Glossy jelly"
@@ -67,7 +67,7 @@ msgstr "Блестящее желе"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Bulging, glossy jelly covering"
-msgstr ""
+msgstr "Вздутый слой блестящего желе"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
@@ -75,7 +75,7 @@ msgstr "Блестящее желе в контровом свете"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
-msgstr ""
+msgstr "Вздутый слой блестящего желе; два источника света"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
@@ -140,7 +140,7 @@ msgstr "Свет и тень"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "Тень, отброшенная от вырезанного объекта"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
@@ -166,9 +166,8 @@ msgid "ABCs"
 msgstr "Простые"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Менять радиус закругленных углов"
+msgstr "Небольшое зашершавливание краев и содержимого"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Rubber stamp"
@@ -260,7 +259,7 @@ msgstr "Пятно"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Fill object with sparse translucent specks"
-msgstr ""
+msgstr "Заполнить объект редкими просвечивающими пятнами"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Oil slick"
@@ -555,7 +554,7 @@ msgstr "Протекание"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Random paint streaks downwards"
-msgstr ""
+msgstr "Случайное стекание краски вниз"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Jam spread"
@@ -563,7 +562,7 @@ msgstr "Слой джема"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
-msgstr ""
+msgstr "Слой блестящего комковатого джема"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
@@ -587,6 +586,8 @@ msgstr "Выпуклости"
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:198
 msgid "Bumps"
 msgstr "Выпуклости"
 
@@ -810,7 +811,7 @@ msgstr "Приподнятый край"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Strongly raised border around a flat surface"
-msgstr ""
+msgstr "Высоко поднятая над плоской поверхностью фаска"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Metallized ridge"
@@ -835,7 +836,7 @@ msgstr "Тонирование"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Gives the flood color to the dark parts of the image"
-msgstr ""
+msgstr "Раскрасить темные части изображения примитивом Заливка"
 
 #: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
@@ -1010,9 +1011,8 @@ msgid "Inner outline"
 msgstr "Внутренний абрис"
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Draws an outline around"
-msgstr "Нарисовать внутри дырку с плавными краями"
+msgstr "Нарисовать абрис вокруг"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Outline, double"
@@ -1261,7 +1261,7 @@ msgstr "Простое размывание"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr ""
+msgstr "Простое гауссово размывание, аналогичное ползунку в диалоге «Заливка и обводка»"
 
 #: ../share/filters/filters.svg.h:124
 msgid "HSL bubbles, diffuse"
@@ -1278,7 +1278,7 @@ msgstr "Рельеф"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
-msgstr ""
+msgstr "Эффект рельефа: исходные цвета сохраняются или меняются примитивом Смешивание"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Blotting paper"
@@ -1586,9 +1586,8 @@ msgid "Noisy blur"
 msgstr "Шумное размывание"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Менять радиус закругленных углов"
+msgstr "Небольшое зашершавливание и размывание краев и содержимого"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Film grain"
@@ -1609,7 +1608,6 @@ msgid "Drawing"
 msgstr "Рисунок"
 
 #: ../share/filters/filters.svg.h:172
-#, fuzzy
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
 msgstr "Создать эффект зарисовки свинцовым карандашом или хромолитографии"
 
@@ -1803,6 +1801,23 @@ msgstr "Карнавал"
 msgid "White splotches evocating carnaval masks"
 msgstr "Белые неровные пятна, напоминающие карнавальные маски"
 
+#: ../share/filters/filters.svg.h:197
+#, fuzzy
+msgid "Plastify"
+msgstr "Выключка по ширине"
+
+#: ../share/filters/filters.svg.h:197
+msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr "Объединение выпуклости по определенным краям с эффектом волнистой отражающей поверхности"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Plaster"
+msgstr "Штукатурка"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgstr "Объединение выпуклости по определенным краям с эффектом сморщенной поверхности"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Полосы 1:1"
@@ -1967,26 +1982,26 @@ msgstr "Ткань (растровая текстура)"
 msgid "Old paint (bitmap)"
 msgstr "Старая краска (растровая текстура)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b>: создать круг или эллипс с целым отношением сторон, ограничить угол дуги/сегмента"
 
-#: ../src/arc-context.cpp:304
+#: ../src/arc-context.cpp:305
 #: ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: рисовать вокруг начальной точки"
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Эллипс</b>: %s &#215; %s; (с соотношением сторон %d:%d); с <b>Shift</b> рисует вокруг начальной точки"
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Эллипс</b>: %s &#215; %s; с <b>Ctrl</b> рисует круг или эллипс с целым отношением сторон; с <b>Shift</b> рисует вокруг начальной точки"
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr "Создание эллипса"
 
@@ -3475,55 +3490,55 @@ msgstr "<i>Выполняется проверка...</i>"
 msgid "Fix spelling"
 msgstr "Исправить орфографию"
 
-#: ../src/dialogs/spellcheck.cpp:956
+#: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
 msgstr "Варианты:"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "_Accept"
 msgstr "_Принять"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "Accept the chosen suggestion"
 msgstr "Принять выбранный вариант"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "_Ignore once"
 msgstr "_Пропустить единожды"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr "Проигнорировать это слово только один раз"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "_Ignore"
 msgstr "_Пропустить"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
 msgstr "Проигнорировать это слово для текущего сеанса"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "A_dd to dictionary:"
 msgstr "_Добавить в словарь:"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "Add this word to the chosen dictionary"
 msgstr "Добавить это слово в выбранный словарь"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "_Stop"
 msgstr "_Остановить"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr "Остановить проверку орфографии"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "_Start"
 msgstr "_Начать"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
 msgstr "Начать проверку"
 
@@ -4020,9 +4035,8 @@ msgid "Guide"
 msgstr "Направляющая"
 
 #: ../src/display/snap-indicator.cpp:184
-#, fuzzy
 msgid "Guide origin"
-msgstr "Направляющая"
+msgstr "Начало координат направляющей"
 
 #: ../src/display/snap-indicator.cpp:187
 msgid "Convex hull corner"
@@ -4638,9 +4652,8 @@ msgid "Median"
 msgstr "Среднее значение"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid "Replace each pixel component with the median color in a circular neighborhood."
-msgstr "Отфильтровать выделенные растровые изображения, заменив значение каждого пиксела на усредненное значение пикселов вокруг"
+msgstr "Заменить значение каждого пиксела на усредненное значение пикселов вокруг"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -4736,9 +4749,8 @@ msgid "Resample"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-#, fuzzy
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "Изменить разрешение выделенного изображения, сменив его размер."
+msgstr "Изменить разрешение выделенного изображения, сменив его размер на указанный"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -4775,9 +4787,8 @@ msgid "Dither"
 msgstr "Сглаживание"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
-msgstr "Случайным образом распределить пикселы выбранных изображений в радиусе, равном указанному «количеству»."
+msgstr "Случайным образом распределить пикселы выбранных изображений в заданном радиусе от исходного положения"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -5470,8 +5481,8 @@ msgid "Document saved."
 msgstr "Документ сохранен."
 
 #: ../src/file.cpp:750
-#: ../src/file.cpp:1161
-#: ../src/file.cpp:1281
+#: ../src/file.cpp:1180
+#: ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr "рисунок%s"
@@ -5501,34 +5512,34 @@ msgstr "Выполняется сохранение документа..."
 msgid "Import"
 msgstr "Импорт"
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr "Выберите файл для импорта"
 
-#: ../src/file.cpp:1182
-#: ../src/file.cpp:1296
+#: ../src/file.cpp:1201
+#: ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr "Выберите файл для экспорта"
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Ошибка сохранения временной копии"
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
 msgstr "Вход в Open Clip Art"
 
-#: ../src/file.cpp:1374
-#, fuzzy, c-format
+#: ../src/file.cpp:1393
+#, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
-msgstr "В ходе экспорта документа произошла ошибка. Проверьте, корректно ли введены имя сервера, имя пользователя и пароль, есть ли у сервера поддержка webdav, не забыли ли вы указать лицензию."
+msgstr "Произошла ошибка при экспорте документа. Проверьте, корректно ли введены имя сервера, имя пользователя и пароль, есть ли у сервера поддержка webdav, не забыли ли вы указать лицензию."
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr "Документ экспортирован..."
 
-#: ../src/file.cpp:1423
+#: ../src/file.cpp:1442
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Импортировать из Open Clip Art Library"
@@ -6496,7 +6507,7 @@ msgstr "Координата Y плавающей панели"
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
 msgid "Dock #%d"
-msgstr "Прикрепить #%d"
+msgstr "Панель №%d"
 
 #: ../src/libgdl/gdl-dock-item.c:287
 msgid "Orientation"
@@ -7559,18 +7570,16 @@ msgid "Stroke length variation"
 msgstr "Вариативность длины штрихов"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
-#, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Менять толщину обводящего контура относительно его длины"
+msgstr "Случайное изменение длины штриха (относительно максимальной длины)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
 msgstr "Макс. перекрытие"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
-#, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Менять толщину обводящего контура относительно его длины"
+msgstr "Как много последующих штрихов должно пересечься (относительно максимальной длины)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
@@ -10594,9 +10603,8 @@ msgid "Treat selection as group: "
 msgstr "Считать выделение группой:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
-#, fuzzy
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "Правые края объектов к левому краю якоря"
+msgstr "Выровнять правые края объектов к левому краю якоря"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:807
 msgid "Align left edges"
@@ -10700,14 +10708,12 @@ msgid "Nicely arrange selected connector network"
 msgstr "Гармонично расставить связанные коннектором объекты"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:901
-#, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "Выровнять выделенные узлы по горизонтали"
+msgstr "Выровнять выделенные узлы по общей горизонтальной линии"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
-#, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "Выровнять выделенные узлы по вертикали"
+msgstr "Выровнять выделенные узлы по общей вертикальной линии"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Distribute selected nodes horizontally"
@@ -10741,6 +10747,30 @@ msgstr "Наименьший объект"
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Выделение"
+
+#: ../src/ui/dialog/calligraphic-presets.h:2
+msgid "Dip pen"
+msgstr "Чернильное перо"
+
+#: ../src/ui/dialog/calligraphic-presets.h:3
+msgid "Marker"
+msgstr "Маркер"
+
+#: ../src/ui/dialog/calligraphic-presets.h:4
+msgid "Brush"
+msgstr "Кисть"
+
+#: ../src/ui/dialog/calligraphic-presets.h:5
+msgid "Wiggly"
+msgstr "Виляющее перо"
+
+#: ../src/ui/dialog/calligraphic-presets.h:6
+msgid "Splotchy"
+msgstr "Пачкающее перо"
+
+#: ../src/ui/dialog/calligraphic-presets.h:7
+msgid "Tracing"
+msgstr "Трассировка"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -19301,9 +19331,8 @@ msgid "Area /px^2: "
 msgstr "Площадь в px^2:"
 
 #: ../share/extensions/dxf_outlines.py:33
-#, fuzzy
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
-msgstr "Не удалось импортировать модуль numpy, необходимый для этого расширения. Установите его и попробуйте еще раз. В системах наподобие Debian это можно сделать командой sudo apt-get install python-numpy."
+msgstr "Не удалось импортировать модуль numpy или numpy.linalg, необходимые для этого расширения. Установите их и попробуйте еще раз."
 
 #: ../share/extensions/embedimage.py:74
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
@@ -19427,7 +19456,7 @@ msgstr "Внутренняя ошибка: не выбран тип вида\n"
 msgid "The second path must be exactly four nodes long."
 msgstr "Второй контур должен состоят ровно из четырех узлов."
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "Не удалось найти файл: %s"
@@ -20386,6 +20415,22 @@ msgid "HPGL Output"
 msgstr "Экспорт в HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr "Отразить по оси Y"
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr "Экспортировать невидимые слои"
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr "Начало координат по X (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr "Начало координат по Y (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr ""
 
@@ -20430,9 +20475,8 @@ msgid "End Value"
 msgstr "Конечное значение"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "Параметры эффекта"
+msgstr "Число с плавающей точкой"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\":"
@@ -20447,9 +20491,8 @@ msgid "Interpolate Attribute in a group"
 msgstr "Интерполировать атрибут в группе"
 
 #: ../share/extensions/interp_att_g.inx.h:11
-#, fuzzy
 msgid "No Unit"
-msgstr "Единица"
+msgstr "Нет"
 
 #: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"
@@ -20481,14 +20524,12 @@ msgid "Transformation"
 msgstr "Преобразование"
 
 #: ../share/extensions/interp_att_g.inx.h:22
-#, fuzzy
 msgid "Translate X"
-msgstr "Пере_водчики"
+msgstr "Перемещение по X"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Translate Y"
-msgstr "Пере_водчики"
+msgstr "Перемещение по Y"
 
 #: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
@@ -21609,7 +21650,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid "If you want to set more then one attribute, you must separate this with a space, and only with a space."
-msgstr ""
+msgstr "Если вы хотите установить более чем один атрибут, необходимо разделить их пробелом."
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
@@ -21627,11 +21668,11 @@ msgstr "Установить атрибуты"
 
 #: ../share/extensions/web-set-att.inx.h:9
 msgid "Source and destination of setting"
-msgstr ""
+msgstr "Источник и получатель установки:"
 
 #: ../share/extensions/web-set-att.inx.h:10
 msgid "The first selected set an attribute in all others"
-msgstr ""
+msgstr "Первый выбранный передает атрибут остальным"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
@@ -21640,12 +21681,12 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr ""
+msgstr "Следующий параметр полезен, когда выбрано больше двух элементов"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
 msgid "This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox)."
-msgstr ""
+msgstr "Этот эффект добавляет функцию, видимую (и используемую) только в браузере с поддержкой SVG (вроде Firefox)"
 
 #: ../share/extensions/web-set-att.inx.h:14
 msgid "This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element."
@@ -21724,15 +21765,15 @@ msgstr "Передаваемые атрибуты"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
 msgid "If you want to transmit more than one attribute, you should separate this with a space, and only with a space."
-msgstr ""
+msgstr "Если вы хотите передать более чем один атрибут, необходимо разделить их пробелом."
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
-msgstr ""
+msgstr "Источник и получатель передачи:"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
 msgid "The first selected transmits to all others"
-msgstr ""
+msgstr "Первый выбранный передает всем остальным"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
 msgid "This effect transmits one or more attributes from the first selected element to the second when a event occurs."
