@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-09 10:23+0200\n"
+"POT-Creation-Date: 2009-07-09 18:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2533,7 +2533,6 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2615 ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 #: ../src/widgets/toolbox.cpp:4324 ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
 msgstr ""
@@ -2639,7 +2638,6 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr ""
 
@@ -3213,11 +3211,17 @@ msgstr ""
 msgid "Href:"
 msgstr ""
 
+#. default x:
+#. default y:
 #: ../src/dialogs/object-attributes.cpp:33
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Target:"
 msgstr ""
 
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Type:"
 msgstr ""
 
@@ -4188,10 +4192,7 @@ msgstr ""
 msgid "Add Noise"
 msgstr ""
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr ""
 
@@ -4235,7 +4236,6 @@ msgstr ""
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid "Radius"
 msgstr ""
 
@@ -4559,12 +4559,12 @@ msgid "Shade"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Azimuth"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Elevation"
 msgstr ""
 
@@ -7433,8 +7433,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:489 ../src/ui/dialog/filter-effects-dialog.cpp:2207
-#: ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:489 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8836,7 +8835,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1024
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr ""
 
@@ -11181,178 +11180,175 @@ msgstr ""
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:937
+#: ../src/ui/dialog/filter-effects-dialog.cpp:938
 msgid "Light Source:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr ""
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
 msgid "Location"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Y coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Specular Exponent"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
 msgstr ""
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid ""
 "This is the angle between the spot light axis (i.e. the axis between the "
 "light source and the point to which it is pointing at) and the spot light "
 "cone. No light is projected outside this cone."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1070
 msgid "_Duplicate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1096
 msgid "_Filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1110
 msgid "R_ename"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1213
 msgid "Rename filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1249
 msgid "Apply filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1351
 msgid "Duplicate filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1418
 msgid "_Effect"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1426
 msgid "Connections"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No effect selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2066
 msgid "No filter selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Effect parameters"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2105
 msgid "Filter General Settings"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
-msgid "Coordinates"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "Coordinates:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr ""
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#: ../share/extensions/dimension.inx.h:1
-msgid "Dimensions"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "Dimensions:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Height of filter effects region"
 msgstr ""
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-#: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4247
-#: ../share/extensions/triangle.inx.h:9
-msgid "Mode"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
+#: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
+#: ../share/extensions/extrude.inx.h:3
+msgid "Mode:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid ""
 "Indicates the type of matrix operation. The keyword 'matrix' indicates that "
 "a full 5x4 matrix of values will be provided. The other keywords represent "
@@ -11360,73 +11356,72 @@ msgid ""
 "performed without specifying a complete matrix."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
-msgid "Value(s)"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
-msgid "Operator"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Value(s):"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
-msgid "K1"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+msgid "Operator:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "K1:"
+msgstr ""
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
 "values of the first and second inputs respectively."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-msgid "K2"
-msgstr ""
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-msgid "K3"
+msgid "K2:"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-msgid "K4"
+msgid "K3:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "K4:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/tracedialog.cpp:581
+msgid "Size:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "width of the convolve matrix"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "height of the convolve matrix"
 msgstr ""
 
-#. default x:
-#. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-msgid "Target"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-msgid "Kernel"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+msgid "Kernel:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid ""
 "This matrix describes the convolve operation that is applied to the input "
 "image in order to calculate the pixel colors at the output. Different "
@@ -11436,11 +11431,11 @@ msgid ""
 "would lead to a common blur effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
-msgid "Divisor"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+msgid "Divisor:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid ""
 "After applying the kernelMatrix to the input image to yield a number, that "
 "number is divided by divisor to yield the final destination color value. A "
@@ -11448,189 +11443,201 @@ msgid ""
 "effect on the overall color intensity of the result."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-msgid "Bias"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+msgid "Bias:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid ""
 "This value is added to each component. This is useful to define a constant "
 "value as the zero response of the filter."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-msgid "Edge Mode"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+msgid "Edge Mode:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid ""
 "Determines how to extend the input image as necessary with color values so "
 "that the matrix operations can be applied when the kernel is positioned at "
 "or near the edge of the input image."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Preserve Alpha"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr ""
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-msgid "Diffuse Color"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+msgid "Diffuse Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "Defines the color of the light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-msgid "Surface Scale"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+msgid "Surface Scale:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid ""
 "This value amplifies the heights of the bump map defined by the input alpha "
 "channel"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-msgid "Constant"
-msgstr ""
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-msgid "This constant affects the Phong lighting model."
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+msgid "Constant:"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-msgid "Kernel Unit Length"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+msgid "This constant affects the Phong lighting model."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+msgid "Kernel Unit Length:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+msgid "Scale:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-msgid "X displacement"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "X displacement:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-msgid "Y displacement"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
+msgid "Y displacement:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
 msgstr ""
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
-msgid "Flood Color"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+msgid "Flood Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
-msgid "Standard Deviation"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
+#: ../src/widgets/toolbox.cpp:5297
+msgid "Opacity:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+msgid "Standard Deviation:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
-msgid "Source of Image"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+msgid "Radius:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-msgid "Delta X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+msgid "Source of Image:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+msgid "Delta X:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-msgid "Delta Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+msgid "Delta Y:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
 msgstr ""
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-msgid "Specular Color"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+msgid "Specular Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#: ../share/extensions/interp.inx.h:2
-msgid "Exponent"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+msgid "Exponent:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid ""
 "Indicates whether the filter primitive should perform a noise or turbulence "
 "function."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
-msgid "Base Frequency"
-msgstr ""
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-msgid "Octaves"
+msgid "Base Frequency:"
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
-msgid "Seed"
+msgid "Octaves:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
+msgid "Seed:"
+msgstr ""
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Add filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2281
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
 "to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -11638,7 +11645,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2290
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
@@ -11646,7 +11653,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2294
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -11655,7 +11662,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2298
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -11663,7 +11670,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2302
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -11671,26 +11678,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2306
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2310
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2314
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2318
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -11698,21 +11705,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -11720,23 +11727,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2334
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2338
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2410
 msgid "Set filter primitive attribute"
 msgstr ""
 
@@ -14377,6 +14384,13 @@ msgstr ""
 msgid "Multiple scans: creates a group of paths"
 msgstr ""
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4247
+#: ../share/extensions/triangle.inx.h:9
+msgid "Mode"
+msgstr ""
+
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
@@ -14389,10 +14403,6 @@ msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:579
 msgid "Speckles of up to this many pixels will be suppressed"
-msgstr ""
-
-#: ../src/ui/dialog/tracedialog.cpp:581
-msgid "Size:"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:584
@@ -18550,11 +18560,6 @@ msgstr ""
 msgid "Create a sequence of paraxial line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
-#: ../share/extensions/extrude.inx.h:3
-msgid "Mode:"
-msgstr ""
-
 #: ../src/widgets/toolbox.cpp:3857
 msgid "Mode of new lines drawn by this tool"
 msgstr ""
@@ -19121,10 +19126,6 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5228
 msgid "Make the shape a whole ellipse, not arc or segment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5297
-msgid "Opacity:"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5304
@@ -19817,6 +19818,10 @@ msgid ""
 "The dia2svg.sh script should be installed with your Inkscape distribution.  "
 "If you do not have it, there is likely to be something wrong with your "
 "Inkscape installation."
+msgstr ""
+
+#: ../share/extensions/dimension.inx.h:1
+msgid "Dimensions"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
@@ -20666,6 +20671,10 @@ msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
+msgstr ""
+
+#: ../share/extensions/interp.inx.h:2
+msgid "Exponent"
 msgstr ""
 
 #: ../share/extensions/interp.inx.h:4

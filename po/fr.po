@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-08 19:41+0200\n"
-"PO-Revision-Date: 2009-07-08 19:42+0100\n"
+"POT-Creation-Date: 2009-07-09 18:07+0200\n"
+"PO-Revision-Date: 2009-07-09 18:20+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1989,7 +1989,7 @@ msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle
 msgstr "<b>Ctrl</b> : dessiner des cercles ou des ellipses de ratio entier, forcer la modification des angles des arcs/camemberts par incréments"
 
 #: ../src/arc-context.cpp:305
-#: ../src/rect-context.cpp:345
+#: ../src/rect-context.cpp:346
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Maj</b> : dessiner autour du point de départ"
 
@@ -2621,7 +2621,6 @@ msgstr "Capturer la couleur et l'opacité visibles"
 #: ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 #: ../src/widgets/toolbox.cpp:4324
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
@@ -2729,7 +2728,6 @@ msgid "Each clone is created with the probability determined by the picked value
 msgstr "Chaque clone est créé selon une probabilité déterminée par la valeur capturée en ce point"
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr "Dimensions"
 
@@ -3351,11 +3349,17 @@ msgstr "Définir la description d'un objet"
 msgid "Href:"
 msgstr "Href :"
 
+#. default x:
+#. default y:
 #: ../src/dialogs/object-attributes.cpp:33
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Target:"
 msgstr "Cible :"
 
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Type:"
 msgstr "Type :"
 
@@ -4348,11 +4352,8 @@ msgstr "Appliquer un effet de seuil adaptif au bitmap sélectionné."
 msgid "Add Noise"
 msgstr "Ajouter du bruit"
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
 #: ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr "Type"
 
@@ -4396,7 +4397,6 @@ msgstr "Flou"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid "Radius"
 msgstr "Rayon"
 
@@ -4711,12 +4711,12 @@ msgid "Shade"
 msgstr "Ombre"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Azimuth"
 msgstr "Azimut"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Elevation"
 msgstr "Élévation"
 
@@ -7577,8 +7577,7 @@ msgstr "Nombre de lignes de construction (tangentes) à dessiner"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/seltrans.cpp:489
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
@@ -8066,7 +8065,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b> : bloquer la longueur des poignées; <b>Ctrl+Alt</b> : déplacer le long des poignées"
 
 #: ../src/nodepath.cpp:753
-#: ../src/seltrans.cpp:578
+#: ../src/seltrans.cpp:582
 msgid "Stamp"
 msgstr "Tamponner"
 
@@ -8744,31 +8743,31 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Fragment XML pour la section « Licence » (RDF)."
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:345
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr "<b>Ctrl</b> : forcer un rectangle carré ou de ratio entier, préserver le rayon d'arrondi d'un coin"
 
-#: ../src/rect-context.cpp:486
+#: ../src/rect-context.cpp:492
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint de ratio %d:%d) ; <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:489
+#: ../src/rect-context.cpp:495
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1.618 : 1) ; <b>Maj</b> dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:497
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1 : 1.618) ; <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:495
+#: ../src/rect-context.cpp:501
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; <b>Ctrl</b> forcer un rectangle carré ou de ratio entier; <b>Maj</b> dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:516
+#: ../src/rect-context.cpp:526
 msgid "Create rectangle"
 msgstr "Créer un rectangle"
 
@@ -8925,7 +8924,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Sélectionner les <b>objets</b> pour en retirer les filtres."
 
 #: ../src/selection-chemistry.cpp:1024
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr "Supprimer le filtre"
 
@@ -8974,7 +8973,7 @@ msgid "Rotate 90&#176; CW"
 msgstr "Tourner de 90&#176; dans le sens horaire"
 
 #: ../src/selection-chemistry.cpp:1439
-#: ../src/seltrans.cpp:488
+#: ../src/seltrans.cpp:492
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Tourner"
@@ -8997,7 +8996,7 @@ msgstr "Déplacer horizontalement"
 
 #: ../src/selection-chemistry.cpp:1562
 #: ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482
+#: ../src/seltrans.cpp:486
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Déplacer"
@@ -9353,65 +9352,65 @@ msgstr[1] "<b>%i</b> objets de <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491
+#: ../src/seltrans.cpp:495
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Incliner"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:507
 msgid "Set center"
 msgstr "Définir le centre"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:604
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "<b>Centre</b> de rotation/inclinaison : cliquer-déplacer pour le déplacer; redimensionner avec <b>Maj</b> utilise aussi ce centre"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:631
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Agrandir ou rétrécir</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément; <b>Maj</b> pour redimensionner autour du centre de rotation"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:632
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:636
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "<b>Incliner</b> la sélection; <b>Ctrl</b> pour incliner par incréments; <b>Maj</b> pour incliner autour du coin opposé"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:637
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour tourner autour du coin opposé"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:771
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:1012
-#: ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1016
+#: ../src/seltrans.cpp:1115
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%%; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1227
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinaison</b> : %0.2f&#176;; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1287
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1499
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -10677,27 +10676,33 @@ msgstr "Objet le plus petit"
 msgid "Selection"
 msgstr "Sélection"
 
-#: ../src/ui/dialog/calligraphic-presets.h:2
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:3
 msgid "Dip pen"
 msgstr "Calame"
 
-#: ../src/ui/dialog/calligraphic-presets.h:3
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:5
 msgid "Marker"
 msgstr "Marqueur"
 
-#: ../src/ui/dialog/calligraphic-presets.h:4
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:7
 msgid "Brush"
 msgstr "Brosse"
 
-#: ../src/ui/dialog/calligraphic-presets.h:5
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:9
 msgid "Wiggly"
 msgstr "Pinceau fou"
 
-#: ../src/ui/dialog/calligraphic-presets.h:6
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:11
 msgid "Splotchy"
 msgstr "Plume"
 
-#: ../src/ui/dialog/calligraphic-presets.h:7
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:13
 msgid "Tracing"
 msgstr "Gravure"
 
@@ -11227,347 +11232,352 @@ msgstr "Ce filtre SVG ne demande aucun paramètre."
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Ce filtre SVG n'est pas encore implémenté dans Inkscape."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:937
+#: ../src/ui/dialog/filter-effects-dialog.cpp:938
 msgid "Light Source:"
 msgstr "Source de lumière :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Angle pour la direction de la source de lumière dans le plan XY, en degrés"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Angle pour la direction de la source de lumière dans le plan XY, en degrés"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
 msgid "Location"
 msgstr "Localisation"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
 msgstr "Coordonnées X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Y coordinate"
 msgstr "Coordonnée Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
 msgstr "Coordonnée Z"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
 msgstr "Pointe vers"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Specular Exponent"
 msgstr "Exposant spéculaire"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Valeur d'exposant contrôlant la focalisation de la source de lumière"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
 msgstr "Angle du cône"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
 msgstr "C'est l'ouverture du cône de lumière autour de l'axe de la source (la ligne entre la source et le point vers lequel elle pointe). Aucune lumière n'est projetée hors de ce cône."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
 msgstr "Nouvelle source de lumière"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1070
 msgid "_Duplicate"
 msgstr "_Dupliquer"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1096
 msgid "_Filter"
 msgstr "_Filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1110
 msgid "R_ename"
 msgstr "R_enommer"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1213
 msgid "Rename filter"
 msgstr "Renommer le filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1249
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Ajouter un filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1351
 msgid "Duplicate filter"
 msgstr "Dupliquer le filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1418
 msgid "_Effect"
 msgstr "_Effets"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1426
 msgid "Connections"
 msgstr "Connecteurs"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
 msgstr "Supprimer la primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
 msgstr "Supprimer le nœud de fusion"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
 msgstr "Réordonner la primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
 msgstr "Ajouter un effet :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No effect selected"
 msgstr "Aucun effet sélectionné"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2066
 msgid "No filter selected"
 msgstr "Aucun filtre sélectionné"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Effect parameters"
 msgstr "Paramètres de l'effet"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2105
 msgid "Filter General Settings"
 msgstr "Paramètres généraux des filtres"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
-msgid "Coordinates"
-msgstr "Coordonnées"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "Coordinates:"
+msgstr "Coordonnées :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "Coordonnée X des coins gauches de la zone d'action du filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Coordonnée Y des coins supérieurs de la zone d'action du filtre"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#: ../share/extensions/dimension.inx.h:1
-msgid "Dimensions"
-msgstr "Dimensions"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "Dimensions:"
+msgstr "Dimensions :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
 msgstr "Largeur de la zone d'action du filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Height of filter effects region"
 msgstr "Hauteur de la zone d'action du filtre"
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-#: ../src/ui/dialog/tracedialog.cpp:563
-#: ../src/widgets/toolbox.cpp:4247
-#: ../share/extensions/triangle.inx.h:9
-msgid "Mode"
-msgstr "Mode"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
+#: ../src/widgets/toolbox.cpp:3857
+#: ../src/widgets/toolbox.cpp:4248
+#: ../share/extensions/extrude.inx.h:3
+msgid "Mode:"
+msgstr "Mode :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
 msgstr "Indique le type d'opération matricielle. Le mot-clef « matrice » indique qu'une matrice 5x4 sera donnée en entrée. Les autres mots-clés représentent des raccourcis pour les opérations les plus fréquentes sur les couleurs sans spécifier de matrice."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
-msgid "Value(s)"
-msgstr "Valeur(s)"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
-msgid "Operator"
-msgstr "Opérateur"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Value(s):"
+msgstr "Valeur(s) :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
-msgid "K1"
-msgstr "K1"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+msgid "Operator:"
+msgstr "Opérateur :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "K1:"
+msgstr "K1 :"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
 msgstr "Si une opération arithmétique est sélectionnée, chaque pixel du résultat est calculé par: k1*i1*i2 + k2*i1 + k3*i2 + k4. i1 et i2 sont les valeurs de la première et de la deuxième entrée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-msgid "K2"
-msgstr "K2"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-msgid "K3"
-msgstr "K3"
+msgid "K2:"
+msgstr "K2 :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-msgid "K4"
-msgstr "K4"
+msgid "K3:"
+msgstr "K3 :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "K4:"
+msgstr "K4 :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/tracedialog.cpp:581
+msgid "Size:"
+msgstr "Taille :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "width of the convolve matrix"
 msgstr "largeur de la matrice de convolution"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "height of the convolve matrix"
 msgstr "hauteur de la matrice de convolution"
 
-#. default x:
-#. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-msgid "Target"
-msgstr "Cible"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Coordonnée X du point cible de la matrice de convolution. La convolution est appliquéee aux pixels qui entourent ce point."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Coordonnée Y du point cible de la matrice de convolution. La convolution est appliquéee aux pixels qui entourent ce point."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-msgid "Kernel"
-msgstr "Kernel"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+msgid "Kernel:"
+msgstr "Kernel :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Cette matrice décrit l'opération de convolution qui est appliquée à l'image en entrée pour calculer les valeurs des pixels en sortie. Les organisations différentes des valeurs dans cette matrice donnent divers effets visuels possibles. Une matrice identité produira un effet de flou de mouvement (parallèle à la diagonale de la matrice) alors qu'une matrice remplie d'une valeur non-nulle constante produira un effet de flou simple."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
-msgid "Divisor"
-msgstr "Diviseur"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+msgid "Divisor:"
+msgstr "Diviseur :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "Après l'application de la kernelMatrix à l'image en entrée pour obtenir un nombre, ce nombre est divisé par le diviseur, ce qui donne la valeur de couleur finale en sortie. Un diviseur d'une valeur égale à la somme de toutes les valeurs de la matrice aura tendance à avoir un effet lissant sur l'intensité globale de la couleur du résultat."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-msgid "Bias"
-msgstr "Déviation"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+msgid "Bias:"
+msgstr "Déviation :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Cette valeur est ajoutée à chaque composant. Permet de définir une valeur constante comme la réponse en zéro du filtre."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-msgid "Edge Mode"
-msgstr "Mode bordure"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+msgid "Edge Mode:"
+msgstr "Mode bordure :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Détermine comment étendre l'image en entrée avec des valeurs de couleur si besoin, pour que les opérations matricielles puissent être appliquées quand le kernel est positionné au bord ou près du bord de l'image en entrée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Preserve Alpha"
 msgstr "Préserver l'opacité"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Si coché, la composante opacité (alpha) ne sera pas modifiée par cette primitive de filtre."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-msgid "Diffuse Color"
-msgstr "Diffusion de la couleur"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+msgid "Diffuse Color:"
+msgstr "Diffusion de la couleur :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "Defines the color of the light source"
 msgstr "Définit la couleur de la source lumineuse"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-msgid "Surface Scale"
-msgstr "Relief de surface"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+msgid "Surface Scale:"
+msgstr "Relief de surface :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "Cette valeur amplifie la hauteur du relief défini par la composante opacité (alpha) en entrée"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-msgid "Constant"
-msgstr "Constante"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+msgid "Constant:"
+msgstr "Constante :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This constant affects the Phong lighting model."
 msgstr "Cette constante agit sur le  modèle d'éclairage Phong."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-msgid "Kernel Unit Length"
-msgstr "Unité de longueur du Kernel"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+msgid "Kernel Unit Length:"
+msgstr "Unité de longueur du Kernel :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+msgid "Scale:"
+msgstr "Longueur/Courbure :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr "Définit l'intensité de l'effet de déplacement."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-msgid "X displacement"
-msgstr "Déplacement en X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "X displacement:"
+msgstr "Déplacement en X :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Composante RGB qui contrôle le déplacement suivant l'axe X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-msgid "Y displacement"
-msgstr "Déplacement en Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
+msgid "Y displacement:"
+msgstr "Déplacement en Y :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Composante RGB qui contrôle le déplacement dans la direction Y"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
-msgid "Flood Color"
-msgstr "Couleur de remplissage"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+msgid "Flood Color:"
+msgstr "Couleur de remplissage :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
 msgstr "Toute la région affectée par le filtre sera remplie avec cette couleur."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
-msgid "Standard Deviation"
-msgstr "Variance"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
+#: ../src/widgets/toolbox.cpp:5297
+msgid "Opacity:"
+msgstr "Opacité :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+msgid "Standard Deviation:"
+msgstr "Variance :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
 msgstr "La variance pour l'effet de flou."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -11575,133 +11585,136 @@ msgstr ""
 "Contracter : rend l'image plus « fine ».\n"
 "Dilater : rend l'image plus « épaisse »"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
-msgid "Source of Image"
-msgstr "Source de l'image"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+msgid "Radius:"
+msgstr "Rayon :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-msgid "Delta X"
-msgstr "Delta X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+msgid "Source of Image:"
+msgstr "Source de l'image :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+msgid "Delta X:"
+msgstr "Delta X :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Distance du décalage de l'image vers la droite"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-msgid "Delta Y"
-msgstr "Delta Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+msgid "Delta Y:"
+msgstr "Delta Y :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Distance du décalage de l'image vers le bas"
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-msgid "Specular Color"
-msgstr "Couleur spéculaire"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+msgid "Specular Color:"
+msgstr "Couleur spéculaire :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#: ../share/extensions/interp.inx.h:2
-msgid "Exponent"
-msgstr "Exposant"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+msgid "Exponent:"
+msgstr "Exposant :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Exposant pour le terme spéculaire. Plus il est grand, plus l'objet est « brillant »."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Indique si la primitive de filtre doit effectuer une fonction de bruit ou de turbulence."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
-msgid "Base Frequency"
-msgstr "Fréquence de base"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-msgid "Octaves"
-msgstr "Octaves"
+msgid "Base Frequency:"
+msgstr "Fréquence de base :"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
-msgid "Seed"
-msgstr "Germe"
+msgid "Octaves:"
+msgstr "Octaves :"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
+msgid "Seed:"
+msgstr "Germe :"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
 msgstr "La graine pour le générateur pseudo-aléatoire."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Add filter primitive"
 msgstr "Ajouter une primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "<b>feBlend</b> fournit quatre modes de fondu d'image : produit, superposition, obscurcir et éclaircir."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2281
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."
 msgstr "<b>feColorMatrix</b> applique une transformation matricielle à la couleur de chaque pixel. Cela permet des effets comme la  transformation d'objets en niveaux de gris, la modification de la saturation des couleurs et la modification de la teinte des couleurs."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "<b>feComponentTransfer</b> manipule les composantes de couleur de l'entrée (rouge, vert, bleu et opacité) suivant des fonctions de tranfert. Cela permet des opérations comme l'ajustement de luminosité et de contraste, la balance des couleurs, et la détection de seuil."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2290
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "La primitive <b>feComposite</b> fond deux images ensemble en utilisant un des modes de fondu Porter-Duff ou le mode arithmétique décrit dans le standard SVG. Les modes de fondu Porter-Duff sont en résumé des opérations logiques entre les valeurs de pixels respectives des images."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2294
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "<b>feConvolveMatrix</b> vous permet de spécifier une matrice de convolution à appliquer à l'image. Les effets courants créés par des matrices de convolution sont le flou, la netteté, le gauffrage et la détection de bords. Il faut noter que, bien qu'un flou gaussien puisse être créé en utilisant cette primitive de filtre, la primitive dédiée au flou gaussien est plus rapide et ne dépend pas de la résolution."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2298
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "<b>feDiffuseLighting</b> et feSpecularLighting créent des ombrages « gauffrés ». La composante d'opacité (alpha) de l'entrée est utilisée pour founir l'information de profondeur : les zones de forte opacité sont élevées vers le point de vue et les zones de faible opacité sont reculées par rapport au point de vue."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2302
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "<b>feDisplacementMap</b> déplace les pixels de la première entrée en utilisant la deuxième entrée comme displacement map, qui définit la distance d'où le pixel doit venir. Les exemples les plus classiques sont les effets de tourbillon et de contraction."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2306
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "<b>feFlood</b> remplit la région avec une couleur et une opacité données. Il est le plus souvent utilisé comme entrée pour d'autres filtres pour appliquer une couleur à une ressource graphique."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2310
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "<b>feGaussianBlur</b> rend uniformément flou son entrée. Il est le plus souvent utilisé avec feOffset pour créer un effet d'ombre portée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2314
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "<b>feImage</b> remplit la zone avec une image externe ou une autre partie du document."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2318
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "<b>feMerge</b> compose plusieurs images temporaires à l'intérieur du filtre de primitive en une seule image. Il utilise la composition alpha normale pour ce faire. Celà équivaut à utiliser plusieurs primitives feBlend en mode 'normal' ou plusieurs primitives feComposite en mode 'over'."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
 msgstr "<b>feMorphology</b> fournit des effets de contraction et de dilatation. Pour des objets de couleur uniforme la contraction rend l'objet plus fin et la dilatation le rend plus épais."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
 msgstr "<b>feOffset</b> décale l'image d'une quantité définie par l'utilisateur. Par example, il est utile dans le cas des ombres portées, où les ombres sont dans une position légèrement différente de l'objet source de l'ombre."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "<b>feDiffuseLighting</b> et <b>feSpecularLighting</b> créent des ombrages « gauffrés ». La composante d'opacité (alpha) de l'entrée est utilisée pour founir l'information de profondeur : les zones de forte opacité sont élevées vers le point de vue et les zones de faible opacité sont reculées par rapport au point de vue."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2334
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "<b>feTile</b> pave une région avec la ressource graphique fournie en entrée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2338
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "<b>feTurbulence</b> crée du bruit de Perlin. Ce genre de bruit est utile pour simuler les phénomènes naturels comme les nuages, le feu et la fumée, et pour générer des textures complexes comme le marbre ou le granit."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
 msgstr "Dupliquer la primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2410
 msgid "Set filter primitive attribute"
 msgstr "Définir l'attribut de la primitive de filtre"
 
@@ -14230,6 +14243,14 @@ msgstr "Retirer le calque du fond (arrière-plan) après l'opération"
 msgid "Multiple scans: creates a group of paths"
 msgstr "Passes multiples : crée un groupe de chemins"
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/tracedialog.cpp:563
+#: ../src/widgets/toolbox.cpp:4247
+#: ../share/extensions/triangle.inx.h:9
+msgid "Mode"
+msgstr "Mode"
+
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
@@ -14243,10 +14264,6 @@ msgstr "Ignorer les petits points (parasites) présents dans le bitmap"
 #: ../src/ui/dialog/tracedialog.cpp:579
 msgid "Speckles of up to this many pixels will be suppressed"
 msgstr "Les taches comportant jusqu'à ce nombre de pixels seront supprimées."
-
-#: ../src/ui/dialog/tracedialog.cpp:581
-msgid "Size:"
-msgstr "Taille :"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Smooth corners"
@@ -17355,6 +17372,10 @@ msgstr "Hauteur de la sélection"
 msgid "Affect:"
 msgstr "Affecter :"
 
+#: ../src/widgets/select-toolbar.cpp:536
+msgid "Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"
+msgstr "Définit si l'épaisseur des contours, les coins des rectangles, et les remplissages par gradient ou par motif doivent être affectés par le redimensionnement de l'objet"
+
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
 msgstr "Redimensionner les coins arrondis des rectangles"
@@ -18404,12 +18425,6 @@ msgid "Create a sequence of paraxial line segments"
 msgstr "Créer une séquence de segments de lignes paraxiales"
 
 #: ../src/widgets/toolbox.cpp:3857
-#: ../src/widgets/toolbox.cpp:4248
-#: ../share/extensions/extrude.inx.h:3
-msgid "Mode:"
-msgstr "Mode :"
-
-#: ../src/widgets/toolbox.cpp:3857
 msgid "Mode of new lines drawn by this tool"
 msgstr "Mode des nouvelles lignes dessinées avec cet outil"
 
@@ -18973,10 +18988,6 @@ msgstr "Refermer"
 #: ../src/widgets/toolbox.cpp:5228
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Transformer en ellipse pleine (pas un arc ou un camembert)"
-
-#: ../src/widgets/toolbox.cpp:5297
-msgid "Opacity:"
-msgstr "Opacité :"
 
 #: ../src/widgets/toolbox.cpp:5304
 msgid "Pick opacity"
@@ -19640,6 +19651,10 @@ msgstr "Pour pouvoir importer des fichiers Dia, Dia doit aussi être installé. 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
 msgstr "Le script dia2svg devrait être installé avec votre distribution d'Inkscape. Si ce n'est pas le cas, il y a sans doute un problème avec votre installation d'Inkscape."
+
+#: ../share/extensions/dimension.inx.h:1
+msgid "Dimensions"
+msgstr "Dimensions"
 
 #: ../share/extensions/dimension.inx.h:2
 #: ../share/extensions/dots.inx.h:4
@@ -20478,6 +20493,10 @@ msgstr "••••••••••••••••••••••••
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
 msgstr "Dupliquer les extrémités"
+
+#: ../share/extensions/interp.inx.h:2
+msgid "Exponent"
+msgstr "Exposant"
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
@@ -21751,6 +21770,10 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Target"
+#~ msgstr "Cible"
+#~ msgid "Seed"
+#~ msgstr "Germe"
 #~ msgid "Pixel smear, glossy"
 #~ msgstr "Barbouillage de pixels, brillant"
 #~ msgid "Glossy painting effect for bitmaps"
