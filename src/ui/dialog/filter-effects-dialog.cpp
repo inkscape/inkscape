@@ -906,7 +906,8 @@ private:
         hb->set_spacing(12);
 
         if(label != "") {
-            lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT));
+            //lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT)); colon now in label (LP #358921)
+            lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_LEFT));
             hb->pack_start(*lbl, false, false);
             _size_group->add_widget(*lbl);
             lbl->show();
@@ -2157,15 +2158,15 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings_initialized = true;
 
     _filter_general_settings->type(0);
-    _filter_general_settings->add_multispinbutton(/*default x:*/ (double) -0.1, /*default y:*/ (double) -0.1, SP_ATTR_X, SP_ATTR_Y, _("Coordinates"), -100, 100, 0.01, 0.1, 2, _("X coordinate of the left corners of filter effects region"), _("Y coordinate of the upper corners of filter effects region"));
-    _filter_general_settings->add_multispinbutton(/*default width:*/ (double) 1.2, /*default height:*/ (double) 1.2, SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions"), 0, 1000, 0.01, 0.1, 2, _("Width of filter effects region"), _("Height of filter effects region"));
+    _filter_general_settings->add_multispinbutton(/*default x:*/ (double) -0.1, /*default y:*/ (double) -0.1, SP_ATTR_X, SP_ATTR_Y, _("Coordinates:"), -100, 100, 0.01, 0.1, 2, _("X coordinate of the left corners of filter effects region"), _("Y coordinate of the upper corners of filter effects region"));
+    _filter_general_settings->add_multispinbutton(/*default width:*/ (double) 1.2, /*default height:*/ (double) 1.2, SP_ATTR_WIDTH, SP_ATTR_HEIGHT, _("Dimensions:"), 0, 1000, 0.01, 0.1, 2, _("Width of filter effects region"), _("Height of filter effects region"));
 
     _settings->type(NR_FILTER_BLEND);
-    _settings->add_combo(BLEND_NORMAL, SP_ATTR_MODE, _("Mode"), BlendModeConverter);
+    _settings->add_combo(BLEND_NORMAL, SP_ATTR_MODE, _("Mode:"), BlendModeConverter);
 
     _settings->type(NR_FILTER_COLORMATRIX);
-    ComboBoxEnum<FilterColorMatrixType>* colmat = _settings->add_combo(COLORMATRIX_MATRIX, SP_ATTR_TYPE, _("Type"), ColorMatrixTypeConverter, _("Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."));
-    _color_matrix_values = _settings->add_colormatrixvalues(_("Value(s)"));
+    ComboBoxEnum<FilterColorMatrixType>* colmat = _settings->add_combo(COLORMATRIX_MATRIX, SP_ATTR_TYPE, _("Type:"), ColorMatrixTypeConverter, _("Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."));
+    _color_matrix_values = _settings->add_colormatrixvalues(_("Value(s):"));
     colmat->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::update_color_matrix));
 
     _settings->type(NR_FILTER_COMPONENTTRANSFER);
@@ -2179,62 +2180,62 @@ void FilterEffectsDialog::init_settings_widgets()
     _ct_offset = _settings->add_spinslider(SP_ATTR_OFFSET, _("Offset"), -100, 100, 1, 0.01, 1);*/
 
     _settings->type(NR_FILTER_COMPOSITE);
-    _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator"), CompositeOperatorConverter);
-    _k1 = _settings->add_spinslider(0, SP_ATTR_K1, _("K1"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k2 = _settings->add_spinslider(0, SP_ATTR_K2, _("K2"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k3 = _settings->add_spinslider(0, SP_ATTR_K3, _("K3"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k4 = _settings->add_spinslider(0, SP_ATTR_K4, _("K4"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator:"), CompositeOperatorConverter);
+    _k1 = _settings->add_spinslider(0, SP_ATTR_K1, _("K1:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k2 = _settings->add_spinslider(0, SP_ATTR_K2, _("K2:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k3 = _settings->add_spinslider(0, SP_ATTR_K3, _("K3:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k4 = _settings->add_spinslider(0, SP_ATTR_K4, _("K4:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
-    _convolve_order = _settings->add_dualspinbutton((char*)"3", SP_ATTR_ORDER, _("Size"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
-    _convolve_target = _settings->add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target"), 0, 4, 1, 1, 0, _("X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."), _("Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."));
+    _convolve_order = _settings->add_dualspinbutton((char*)"3", SP_ATTR_ORDER, _("Size:"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
+    _convolve_target = _settings->add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, SP_ATTR_TARGETX, SP_ATTR_TARGETY, _("Target:"), 0, 4, 1, 1, 0, _("X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."), _("Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."));
     //TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-    _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel"), _("This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."));
+    _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel:"), _("This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."));
     _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
-    _settings->add_spinslider(0, SP_ATTR_DIVISOR, _("Divisor"), 0, 20, 1, 0.1, 2, _("After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."));
-    _settings->add_spinslider(0, SP_ATTR_BIAS, _("Bias"), -10, 10, 1, 0.01, 1, _("This value is added to each component. This is useful to define a constant value as the zero response of the filter."));
-    _settings->add_combo(CONVOLVEMATRIX_EDGEMODE_DUPLICATE, SP_ATTR_EDGEMODE, _("Edge Mode"), ConvolveMatrixEdgeModeConverter, _("Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."));
+    _settings->add_spinslider(0, SP_ATTR_DIVISOR, _("Divisor:"), 0, 20, 1, 0.1, 2, _("After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."));
+    _settings->add_spinslider(0, SP_ATTR_BIAS, _("Bias:"), -10, 10, 1, 0.01, 1, _("This value is added to each component. This is useful to define a constant value as the zero response of the filter."));
+    _settings->add_combo(CONVOLVEMATRIX_EDGEMODE_DUPLICATE, SP_ATTR_EDGEMODE, _("Edge Mode:"), ConvolveMatrixEdgeModeConverter, _("Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."));
     _settings->add_checkbutton(false, SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false", _("If set, the alpha channel won't be altered by this filter primitive."));
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
-    _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Diffuse Color"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_DIFFUSECONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
-    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Diffuse Color:"), _("Defines the color of the light source"));
+    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinslider(1, SP_ATTR_DIFFUSECONSTANT, _("Constant:"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
     _settings->type(NR_FILTER_DISPLACEMENTMAP);
-    _settings->add_spinslider(0, SP_ATTR_SCALE, _("Scale"), 0, 100, 1, 0.01, 1, _("This defines the intensity of the displacement effect."));
-    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_XCHANNELSELECTOR, _("X displacement"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the X direction"));
-    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_YCHANNELSELECTOR, _("Y displacement"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the Y direction"));
+    _settings->add_spinslider(0, SP_ATTR_SCALE, _("Scale:"), 0, 100, 1, 0.01, 1, _("This defines the intensity of the displacement effect."));
+    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_XCHANNELSELECTOR, _("X displacement:"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the X direction"));
+    _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_YCHANNELSELECTOR, _("Y displacement:"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the Y direction"));
 
     _settings->type(NR_FILTER_FLOOD);
-    _settings->add_color(/*default: black*/ 0, SP_PROP_FLOOD_COLOR, _("Flood Color"), _("The whole filter region will be filled with this color."));
-    _settings->add_spinslider(1, SP_PROP_FLOOD_OPACITY, _("Opacity"), 0, 1, 0.1, 0.01, 2);
+    _settings->add_color(/*default: black*/ 0, SP_PROP_FLOOD_COLOR, _("Flood Color:"), _("The whole filter region will be filled with this color."));
+    _settings->add_spinslider(1, SP_PROP_FLOOD_OPACITY, _("Opacity:"), 0, 1, 0.1, 0.01, 2);
 
     _settings->type(NR_FILTER_GAUSSIANBLUR);
-    _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation"), 0.01, 100, 1, 0.01, 1, _("The standard deviation for the blur operation."));
+    _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation:"), 0.01, 100, 1, 0.01, 1, _("The standard deviation for the blur operation."));
 
     _settings->type(NR_FILTER_MERGE);
     _settings->add_no_params();
 
     _settings->type(NR_FILTER_MORPHOLOGY);
-    _settings->add_combo(MORPHOLOGY_OPERATOR_ERODE, SP_ATTR_OPERATOR, _("Operator"), MorphologyOperatorConverter, _("Erode: performs \"thinning\" of input image.\nDilate: performs \"fattenning\" of input image."));
-    _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius"), 0, 100, 1, 0.01, 1);
+    _settings->add_combo(MORPHOLOGY_OPERATOR_ERODE, SP_ATTR_OPERATOR, _("Operator:"), MorphologyOperatorConverter, _("Erode: performs \"thinning\" of input image.\nDilate: performs \"fattenning\" of input image."));
+    _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius:"), 0, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_IMAGE);
-    _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image"));
+    _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image:"));
 
     _settings->type(NR_FILTER_OFFSET);
-    _settings->add_spinslider(0, SP_ATTR_DX, _("Delta X"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted to the right"));
-    _settings->add_spinslider(0, SP_ATTR_DY, _("Delta Y"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
+    _settings->add_spinslider(0, SP_ATTR_DX, _("Delta X:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted to the right"));
+    _settings->add_spinslider(0, SP_ATTR_DY, _("Delta Y:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
-    _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Specular Color"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_SPECULARCONSTANT, _("Constant"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
-    _settings->add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Exponent"), 1, 128, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
-    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Specular Color:"), _("Defines the color of the light source"));
+    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -1000, 1000, 1, 0.01, 1, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinslider(1, SP_ATTR_SPECULARCONSTANT, _("Constant:"), 0, 100, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Exponent:"), 1, 128, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
+    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
     _settings->type(NR_FILTER_TILE);
@@ -2242,10 +2243,10 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_TURBULENCE);
 //    _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-    _settings->add_combo(TURBULENCE_TURBULENCE, SP_ATTR_TYPE, _("Type"), TurbulenceTypeConverter, _("Indicates whether the filter primitive should perform a noise or turbulence function."));
-    _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency"), 0, 0.4, 0.001, 0.01, 3);
-    _settings->add_spinslider(1, SP_ATTR_NUMOCTAVES, _("Octaves"), 1, 10, 1, 1, 0);
-    _settings->add_spinslider(0, SP_ATTR_SEED, _("Seed"), 0, 1000, 1, 1, 0, _("The starting number for the pseudo random number generator."));
+    _settings->add_combo(TURBULENCE_TURBULENCE, SP_ATTR_TYPE, _("Type:"), TurbulenceTypeConverter, _("Indicates whether the filter primitive should perform a noise or turbulence function."));
+    _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency:"), 0, 0.4, 0.001, 0.01, 3);
+    _settings->add_spinslider(1, SP_ATTR_NUMOCTAVES, _("Octaves:"), 1, 10, 1, 1, 0);
+    _settings->add_spinslider(0, SP_ATTR_SEED, _("Seed:"), 0, 1000, 1, 1, 0, _("The starting number for the pseudo random number generator."));
 }
 
 void FilterEffectsDialog::add_primitive()
