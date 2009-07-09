@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-06-26 22:27+0800\n"
+"POT-Creation-Date: 2009-07-09 10:23+0200\n"
+"PO-Revision-Date: 2009-07-09 22:45+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -582,6 +582,8 @@ msgstr "HSL 凹凸"
 #: ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:198
 msgid "Bumps"
 msgstr "凹凸"
 
@@ -1793,6 +1795,22 @@ msgstr "狂歡節"
 msgid "White splotches evocating carnaval masks"
 msgstr "白色斑點喚起狂歡節面具"
 
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr "塑膠化"
+
+#: ../share/filters/filters.svg.h:197
+msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr "波狀反射表面結合 HSL 邊緣偵測凹凸效果"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Plaster"
+msgstr "石膏"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgstr "霧面、壓皺的表面結合 HSL 邊緣偵測凹凸效果"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "條紋 1:1"
@@ -1957,26 +1975,26 @@ msgstr "布料 (點陣圖)"
 msgid "Old paint (bitmap)"
 msgstr "老舊油漆 (點陣圖)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b>：製作正圓形或等比例縮放的橢圓形，捉取弧形或線段的角度"
 
-#: ../src/arc-context.cpp:304
-#: ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:305
+#: ../src/rect-context.cpp:346
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>：在起始點周圍繪製"
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>橢圓形</b>：%s &#215; %s (強制比例為 %d:%d )；按著 <b>Shift</b> 可在起始點周圍繪製"
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>橢圓形</b>：%s &#215; %s；按著 <b>Ctrl</b> 可以繪製正圓形或等比例的橢圓形；按著 <b>Shift</b> 可在起始點周圍繪製"
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr "建立橢圓"
 
@@ -3110,7 +3128,7 @@ msgstr "文字 (_T)："
 #: ../src/dialogs/find.cpp:687
 #: ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
-msgstr "藉由文字內容來搜尋物件 (完全或部份相符)"
+msgstr "用文字內容來搜尋物件 (完全或部份相符)"
 
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:61
@@ -3120,7 +3138,7 @@ msgstr "_ID："
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:61
 msgid "Find objects by the value of the id attribute (exact or partial match)"
-msgstr "藉由 id 屬性的值來搜尋物件 (完全或部份相符)"
+msgstr "用 id 屬性的值來搜尋物件 (完全或部份相符)"
 
 #: ../src/dialogs/find.cpp:689
 #: ../src/ui/dialog/find.cpp:62
@@ -3130,7 +3148,7 @@ msgstr "樣式 (_S)："
 #: ../src/dialogs/find.cpp:689
 #: ../src/ui/dialog/find.cpp:62
 msgid "Find objects by the value of the style attribute (exact or partial match)"
-msgstr "藉由樣式屬性的值來搜尋物件 (完全或部份相符)"
+msgstr "用樣式屬性的值來搜尋物件 (完全或部份相符)"
 
 #: ../src/dialogs/find.cpp:690
 #: ../src/ui/dialog/find.cpp:63
@@ -3140,7 +3158,7 @@ msgstr "屬性 (_A)："
 #: ../src/dialogs/find.cpp:690
 #: ../src/ui/dialog/find.cpp:63
 msgid "Find objects by the name of an attribute (exact or partial match)"
-msgstr "藉由屬性名稱來搜尋物件 (完全或部份相符)"
+msgstr "用屬性名稱來搜尋物件 (完全或部份相符)"
 
 #: ../src/dialogs/find.cpp:704
 #: ../src/ui/dialog/find.cpp:64
@@ -3411,55 +3429,55 @@ msgstr "<i>正在檢查...</i>"
 msgid "Fix spelling"
 msgstr "修正拼寫"
 
-#: ../src/dialogs/spellcheck.cpp:956
+#: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
 msgstr "建議:"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "_Accept"
 msgstr "同意 (_A)"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "Accept the chosen suggestion"
 msgstr "同意所選擇的提議"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "_Ignore once"
 msgstr "忽略一次 (_I)"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr "只忽略這個單字一次"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "_Ignore"
 msgstr "忽略 (_I)"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
 msgstr "在這個段落中忽略這個單字"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "A_dd to dictionary:"
 msgstr "加入到字典 (_D):"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "Add this word to the chosen dictionary"
 msgstr "這個單字加入到所選擇的字典"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "_Stop"
 msgstr "停止 (_S)"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr "停止檢查"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "_Start"
 msgstr "開始 (_S)"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
 msgstr "開始檢查"
 
@@ -4558,7 +4576,7 @@ msgstr "伽馬校正"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid "Level the specified channel of selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "由落在給定範圍到全部色彩範圍之間的比例數值來調整所選點陣圖之指定色版的色階。"
+msgstr "用落在給定範圍到全部色彩範圍之間的比例數值來調整所選點陣圖之指定色版的色階。"
 
 #: ../src/extension/internal/bitmap/level.cpp:40
 msgid "Level"
@@ -4566,7 +4584,7 @@ msgstr "色階"
 
 #: ../src/extension/internal/bitmap/level.cpp:50
 msgid "Level selected bitmap(s) by scaling values falling between the given ranges to the full color range."
-msgstr "由落在給定範圍到全部色彩範圍之間的比例數值來調整所選點陣圖的色階。"
+msgstr "用落在給定範圍到全部色彩範圍之間的比例數值來調整所選點陣圖的色階。"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median"
@@ -5399,8 +5417,8 @@ msgid "Document saved."
 msgstr "文件已儲存"
 
 #: ../src/file.cpp:750
-#: ../src/file.cpp:1161
-#: ../src/file.cpp:1281
+#: ../src/file.cpp:1180
+#: ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr "繪圖%s"
@@ -5430,37 +5448,37 @@ msgstr "儲存文件中..."
 msgid "Import"
 msgstr "匯入"
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr "選擇欲匯入之檔案"
 
-#: ../src/file.cpp:1182
-#: ../src/file.cpp:1296
+#: ../src/file.cpp:1201
+#: ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr "選取要匯出的檔案"
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "儲存暫存複本時錯誤"
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
-msgstr "Open Clip Art 登入"
+msgstr "登入開放美工圖庫"
 
-#: ../src/file.cpp:1374
+#: ../src/file.cpp:1393
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "匯出文件錯誤。確認伺服器名稱、使用者名稱和密碼是否正確的。這個伺服器是否支援 webdav 也確認你沒忘記選擇授權。"
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr "匯出文件中..."
 
-#: ../src/file.cpp:1423
+#: ../src/file.cpp:1442
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
-msgstr "從 Open Clip Art Library 匯入"
+msgstr "從開放美工圖庫匯入"
 
 #: ../src/filter-enums.cpp:20
 msgid "Blend"
@@ -7540,7 +7558,7 @@ msgstr "繪製多少條結構線 (切線)"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485
+#: ../src/seltrans.cpp:489
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
@@ -8029,7 +8047,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
 
 #: ../src/nodepath.cpp:753
-#: ../src/seltrans.cpp:578
+#: ../src/seltrans.cpp:582
 msgid "Stamp"
 msgstr "圖章"
 
@@ -8705,31 +8723,31 @@ msgstr "片斷"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "用於 RDF「授權」款項的 XML 片斷。"
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:345
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr "<b>Ctrl</b>：製作正方形或整數比例縮放的矩形，鎖定圓角"
 
-#: ../src/rect-context.cpp:486
+#: ../src/rect-context.cpp:492
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>矩形</b>：%s &#215; %s (限制比例為 %d:%d )；按著 <b>Shift</b> 在起點周圍繪製"
 
-#: ../src/rect-context.cpp:489
+#: ../src/rect-context.cpp:495
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>矩形</b>: %s &#215; %s (限制成黃金比例 1 : 1.618 )；按著 <b>Shift</b> 在起點周圍繪製"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:497
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>矩形</b>：%s &#215; %s (限制成黃金比例 1 : 1.618 )；按著 <b>Shift</b> 在起點周圍繪製"
 
-#: ../src/rect-context.cpp:495
+#: ../src/rect-context.cpp:501
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>矩形</b>：%s &#215; %s；按著 <b>Ctrl</b> 製作正方形或整數比例縮放的矩形；按著 <b>Shift</b> 在起點四周繪製"
 
-#: ../src/rect-context.cpp:516
+#: ../src/rect-context.cpp:526
 msgid "Create rectangle"
 msgstr "建立矩形"
 
@@ -8935,7 +8953,7 @@ msgid "Rotate 90&#176; CW"
 msgstr "旋轉 90&#176; 順時鐘"
 
 #: ../src/selection-chemistry.cpp:1439
-#: ../src/seltrans.cpp:488
+#: ../src/seltrans.cpp:492
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "旋轉"
@@ -8958,7 +8976,7 @@ msgstr "水平地移動"
 
 #: ../src/selection-chemistry.cpp:1562
 #: ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482
+#: ../src/seltrans.cpp:486
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "移動"
@@ -9314,65 +9332,65 @@ msgstr[1] "<b>%i</b>個物件個<b>%i</b>類型"
 msgid "%s%s. %s."
 msgstr "%s%s。%s。"
 
-#: ../src/seltrans.cpp:491
+#: ../src/seltrans.cpp:495
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "傾斜"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:507
 msgid "Set center"
 msgstr "設定中心點"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:604
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "旋轉以及傾斜的<b>中心點</b>：拖曳以改變位置；按著 Shift 以改變物件比例時也是使用此中心點。"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:631
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>擠壓或伸展</b>選擇區；按著 <b>Ctrl</b> 來均勻地縮放；按著 <b>Shift</b> 來在旋轉中心四周縮放"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:632
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>縮放</b>選擇區；按著 <b>Ctrl</b> 來均勻地縮放；按著 <b>Shift</b> 來在旋轉中心四周縮放"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:636
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "<b>傾斜</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 來繞著相對面傾斜"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:637
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "<b>旋轉</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 繞著相對面旋轉"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:771
 msgid "Reset center"
 msgstr "重設中心點"
 
-#: ../src/seltrans.cpp:1012
-#: ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1016
+#: ../src/seltrans.cpp:1115
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>縮放</b>：%0.2f%% x %0.2f%%; 按著 <b>Ctrl</b> 來鎖定長寬比"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1227
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>傾斜</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1287
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋轉</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移動<b>中心點</b>到 %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1499
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>移動</b>透過 %s﹑%s; 按著 <b>Ctrl</b> 來限制為水平/垂直；按著 <b>Shift</b> 來停用貼齊"
@@ -10630,6 +10648,36 @@ msgstr "最小物件"
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "選取區"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:3
+msgid "Dip pen"
+msgstr "沾水筆"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:5
+msgid "Marker"
+msgstr "麥克筆"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:7
+msgid "Brush"
+msgstr "筆刷"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:9
+msgid "Wiggly"
+msgstr "波浪"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:11
+msgid "Splotchy"
+msgstr "弄髒"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:13
+msgid "Tracing"
+msgstr "描繪"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -12591,27 +12639,27 @@ msgstr "匯出對話窗中的預設點陣圖解析度 (每英吋幾點)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Open Clip Art Library Server Name:"
-msgstr "Open Clip Art Library 伺服器名稱:"
+msgstr "開放美工圖庫伺服器名稱:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."
-msgstr "Open Clip Art Library webdav 伺服器的名稱。它會在匯入和匯出到 OCAL 的功能中被使用。"
+msgstr "開放美工圖庫 webdav 伺服器的名稱。它會在匯入和匯出到 OCAL 的功能中被使用。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:770
 msgid "Open Clip Art Library Username:"
-msgstr "Open Clip Art Library 使用者名稱:"
+msgstr "開放美工圖庫使用者名稱:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:771
 msgid "The username used to log into Open Clip Art Library."
-msgstr "登入 Open Clip Art Library 會用到使用者名稱。"
+msgstr "登入開放美工圖庫會用到使用者名稱。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:773
 msgid "Open Clip Art Library Password:"
-msgstr "Open Clip Art Library 密碼:"
+msgstr "開放美工圖庫密碼:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:774
 msgid "The password used to log into Open Clip Art Library."
-msgstr "登入 Open Clip Art Library 會用到密碼。"
+msgstr "登入到開放美工圖庫會用到密碼。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:776
 msgid "Import/Export"
@@ -13390,11 +13438,11 @@ msgstr "從實際時間中事件時鐘被扭曲的係數 (在一些系統上為 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Pre-render named icons"
-msgstr "預先演算命名的圖示"
+msgstr "預先演算被命名的圖示"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"
-msgstr "開啟時，顯示此使用介面前先演算命名的圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
+msgstr "開啟時，顯示此使用介面前先演算被命名的圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
@@ -13659,15 +13707,15 @@ msgstr "密碼："
 
 #: ../src/ui/dialog/ocaldialogs.cpp:404
 msgid "Error while reading the Open Clip Art RSS feed"
-msgstr "讀取 Open Clip Art RSS 訂閱時發生錯誤"
+msgstr "讀取開放美工圖庫 RSS 訂閱時發生錯誤"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:443
 msgid "Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
-msgstr "無法接收 Open Clip Art Library RSS 訂閱。確認在 設定檔->匯入/匯出 的伺服器名稱是否正確 (如：openclipart.org)"
+msgstr "無法接收開放美工圖庫 RSS 訂閱。確認在 設定檔->匯入/匯出 的伺服器名稱是否正確 (如：openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
-msgstr "伺服器提供不正常的 Clip Art 訂閱"
+msgstr "伺服器提供不正常的美工圖訂閱"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 msgid "Search for:"
@@ -14500,8 +14548,7 @@ msgid "Proprietary"
 msgstr "所有權"
 
 #: ../src/ui/widget/licensor.cpp:38
-#: ../share/extensions/interp_att_g.inx.h:13
-msgid "Other"
+msgid "MetadataLicence|Other"
 msgstr "其他"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
@@ -15315,15 +15362,15 @@ msgstr "把文件或選取區以點陣圖圖像匯出"
 
 #: ../src/verbs.cpp:2265
 msgid "Import a document from Open Clip Art Library"
-msgstr "從 Open Clip Art Library 匯入一個文件"
+msgstr "從開放美工圖庫匯入一個文件"
 
 #: ../src/verbs.cpp:2266
 msgid "Export To Open Clip Art Library"
-msgstr "匯出到 Open Clip Art Library"
+msgstr "匯出到開放美工圖庫"
 
 #: ../src/verbs.cpp:2266
 msgid "Export this document to Open Clip Art Library"
-msgstr "匯出這個文件到 Open Clip Art Library"
+msgstr "匯出這個文件到開放美工圖庫"
 
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
@@ -17275,6 +17322,10 @@ msgstr "選取區高度"
 msgid "Affect:"
 msgstr "影響："
 
+#: ../src/widgets/select-toolbar.cpp:536
+msgid "Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"
+msgstr "控制是否隨著物件縮放邊框寬度、縮放矩形邊角、改變漸層填色和改變圖樣填塗"
+
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
 msgstr "縮放圓角"
@@ -18985,7 +19036,7 @@ msgstr "剪下"
 
 #: ../src/widgets/toolbox.cpp:5758
 msgid "Cut out from objects"
-msgstr "從物件減去"
+msgstr "從物件切掉"
 
 #: ../src/widgets/toolbox.cpp:6102
 msgid "Text: Change font family"
@@ -19292,7 +19343,7 @@ msgstr "內部錯誤。沒有選擇檢視類型\n"
 msgid "The second path must be exactly four nodes long."
 msgstr "第二個路徑必須恰好是四個節點長。"
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "無法找出檔案： %s"
@@ -19571,7 +19622,7 @@ msgstr "字型大小"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr "節點數"
+msgstr "數字節點"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
 msgid "Altitudes"
@@ -19876,7 +19927,7 @@ msgstr "深度"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr "包裝盒"
+msgstr "折疊盒"
 
 #: ../share/extensions/foldablebox.inx.h:5
 msgid "Paper Thickness"
@@ -20248,6 +20299,22 @@ msgid "HPGL Output"
 msgstr "HPGL 輸出"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr "鏡像 Y 軸"
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr "繪製隱形的圖層"
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr "X 原點 (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr "Y 原點 (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr "HP 圖形語言輸出平坦度"
 
@@ -20305,11 +20372,15 @@ msgstr "整體數目"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
-msgstr "在一個群組中插入屬性"
+msgstr "群組中插入屬性"
 
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
-msgstr "沒有單位"
+msgstr "無單位"
+
+#: ../share/extensions/interp_att_g.inx.h:13
+msgid "Other"
+msgstr "其他"
 
 #: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"
@@ -20442,7 +20513,7 @@ msgstr "這個特效可以製作標準的 \"Lorem Ipsum\" 偽拉丁文佔位符�
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr "彩色標記匹配邊框"
+msgstr "著色標記以符合邊框"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
@@ -20800,7 +20871,7 @@ msgstr "線的粗細 / px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
-msgstr "由檔案載入"
+msgstr "從檔案載入"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Maximum"
@@ -21959,9 +22030,4 @@ msgstr "XAML 輸入"
 #~ msgstr "鉛筆"
 #~ msgid "Cross blotches"
 #~ msgstr "交叉斑點"
-#~ msgid ""
-#~ "Control whether or not to scale stroke widths, scale rectangle corners, "
-#~ "transform gradient fills, and transform pattern fills with the object"
-#~ msgstr ""
-#~ "控制是否隨著物件縮放邊框寬度、縮放矩形邊角、改變漸層填色和改變圖樣填塗"
 
