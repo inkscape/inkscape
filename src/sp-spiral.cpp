@@ -493,7 +493,7 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 	spiral->cy         = cy;
 	spiral->exp        = exp;
 	spiral->revo       = revo;
-	spiral->rad        = MAX (rad, 0.001);
+	spiral->rad        = MAX (rad, 0.0);
 	spiral->arg        = arg;
 	spiral->t0         = CLAMP(t0, 0.0, 0.999);
 

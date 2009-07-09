@@ -52,6 +52,7 @@ static gint sp_spiral_context_root_handler(SPEventContext *event_context, GdkEve
 
 static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state);
 static void sp_spiral_finish(SPSpiralContext *sc);
+static void sp_spiral_cancel(SPSpiralContext *sc);
 
 static SPEventContextClass *parent_class;
 
@@ -320,9 +321,14 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     break;
                 case GDK_Escape:
-                    sp_desktop_selection(desktop)->clear();
-                    //TODO: make dragging escapable by Esc
-                    break;
+                	if (dragging) {
+                		dragging = false;
+                		sp_event_context_snap_window_closed(event_context);
+                		// if drawing, cancel, otherwise pass it up for deselecting
+                		sp_spiral_cancel(sc);
+                		ret = TRUE;
+                	}
+                	break;
 
                 case GDK_space:
                     if (dragging) {
@@ -331,7 +337,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         dragging = false;
                         sp_event_context_snap_window_closed(event_context);
                         if (!event_context->within_tolerance) {
-                            // we've been dragging, finish the rect
+                            // we've been dragging, finish the spiral
                             sp_spiral_finish(sc);
                         }
                         // do not return true, so that space would work switching to selector
@@ -440,8 +446,13 @@ sp_spiral_finish(SPSpiralContext *sc)
     sc->_message_context->clear();
 
     if (sc->item != NULL) {
-        SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
-        SPSpiral  *spiral = SP_SPIRAL(sc->item);
+    	SPSpiral *spiral = SP_SPIRAL(sc->item);
+    	if (spiral->rad == 0) {
+    		sp_spiral_cancel(sc); // Don't allow the creating of zero sized spiral, for example when the start and and point snap to the snap grid point
+    		return;
+    	}
+
+    	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
         sp_shape_set_shape(SP_SHAPE(spiral));
         SP_OBJECT(spiral)->updateRepr(SP_OBJECT_WRITE_EXT);
@@ -456,6 +467,27 @@ sp_spiral_finish(SPSpiralContext *sc)
     }
 }
 
+static void sp_spiral_cancel(SPSpiralContext *sc)
+{
+	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+
+	sp_desktop_selection(desktop)->clear();
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
+
+    if (sc->item != NULL) {
+    	SP_OBJECT(sc->item)->deleteObject();
+    	sc->item = NULL;
+    }
+
+    sc->within_tolerance = false;
+    sc->xp = 0;
+    sc->yp = 0;
+    sc->item_to_select = NULL;
+
+    sp_canvas_end_forced_full_redraws(desktop->canvas);
+
+    sp_document_cancel(sp_desktop_document(desktop));
+}
 
 /*
   Local Variables:

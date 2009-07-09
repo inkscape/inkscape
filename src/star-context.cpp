@@ -56,6 +56,7 @@ static gint sp_star_context_root_handler (SPEventContext *ec, GdkEvent *event);
 
 static void sp_star_drag (SPStarContext * sc, Geom::Point p, guint state);
 static void sp_star_finish (SPStarContext * sc);
+static void sp_star_cancel(SPStarContext * sc);
 
 static SPEventContextClass * parent_class;
 
@@ -332,10 +333,14 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             }
             break;
         case GDK_Escape:
-            sp_desktop_selection(desktop)->clear();
-            //TODO: make dragging escapable by Esc
-            break;
-
+        	if (dragging) {
+        		dragging = false;
+        		sp_event_context_snap_window_closed(event_context);
+        		// if drawing, cancel, otherwise pass it up for deselecting
+        		sp_star_cancel(sc);
+        		ret = TRUE;
+        	}
+        	break;
         case GDK_space:
             if (dragging) {
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
@@ -343,7 +348,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
                 dragging = false;
                 sp_event_context_snap_window_closed(event_context);
                 if (!event_context->within_tolerance) {
-                    // we've been dragging, finish the rect
+                    // we've been dragging, finish the star
                     sp_star_finish(sc);
                 }
                 // do not return true, so that space would work switching to selector
@@ -452,7 +457,13 @@ sp_star_finish (SPStarContext * sc)
     sc->_message_context->clear();
 
     if (sc->item != NULL) {
-        SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+    	SPStar *star = SP_STAR(sc->item);
+    	if (star->r[1] == 0) {
+    		sp_star_cancel(sc); // Don't allow the creating of zero sized arc, for example when the start and and point snap to the snap grid point
+    		return;
+    	}
+
+    	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
         SPObject *object = SP_OBJECT(sc->item);
 
         sp_shape_set_shape(SP_SHAPE(sc->item));
@@ -467,6 +478,28 @@ sp_star_finish (SPStarContext * sc)
 
         sc->item = NULL;
     }
+}
+
+static void sp_star_cancel(SPStarContext *sc)
+{
+	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+
+	sp_desktop_selection(desktop)->clear();
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
+
+    if (sc->item != NULL) {
+    	SP_OBJECT(sc->item)->deleteObject();
+    	sc->item = NULL;
+    }
+
+    sc->within_tolerance = false;
+    sc->xp = 0;
+    sc->yp = 0;
+    sc->item_to_select = NULL;
+
+    sp_canvas_end_forced_full_redraws(desktop->canvas);
+
+    sp_document_cancel(sp_desktop_document(desktop));
 }
 
 /*
