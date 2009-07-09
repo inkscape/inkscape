@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-06-25 17:28+0100\n"
+"POT-Creation-Date: 2009-07-09 10:23+0200\n"
+"PO-Revision-Date: 2009-07-09 10:25+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -517,6 +517,7 @@ msgstr "HSL hrče"
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
 #: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
 #: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 msgid "Bumps"
 msgstr "Hrče"
 
@@ -1754,6 +1755,24 @@ msgstr "Karneval"
 msgid "White splotches evocating carnaval masks"
 msgstr "Biele špliechance evokujúce karnevalové masky"
 
+#: ../share/filters/filters.svg.h:197
+msgid "Plastify"
+msgstr "Plastifikovať"
+
+#: ../share/filters/filters.svg.h:197
+msgid ""
+"Combine a HSL edges detection bump with a wavy reflective surface effect"
+msgstr "Kombinácia HSL detekcie hrán s efektom vlnitého reflektívneho povrchu"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Plaster"
+msgstr "Sadra"
+
+#: ../share/filters/filters.svg.h:198
+msgid ""
+"Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgstr "Kombinácia HSL detekcie hrán s efektom matného a pokrčeného povrchu"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Prúžky 1:1"
@@ -1918,18 +1937,18 @@ msgstr "Látka (bitmapa)"
 msgid "Old paint (bitmap)"
 msgstr "Stará farba (bitmapa)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:304
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: vytvoriť kruh alebo celočíselnú elipsu, prichytávať uhol oblúka/"
 "segmentu"
 
-#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:305 ../src/rect-context.cpp:346
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: kresliť okolo štartovacieho bodu"
 
-#: ../src/arc-context.cpp:451
+#: ../src/arc-context.cpp:456
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
@@ -1938,7 +1957,7 @@ msgstr ""
 "<b>Elipsa</b>: %s &#215; %s (obmedzenie na pomer %d:%d); so <b>Shift</b> "
 "kresliť okolo štartovacieho bodu"
 
-#: ../src/arc-context.cpp:453
+#: ../src/arc-context.cpp:458
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -1947,7 +1966,7 @@ msgstr ""
 "<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> vytvoriť štvorec alebo "
 "celočíselnú elipsu so <b>Shift</b> kresliť okolo štartovacieho bodu"
 
-#: ../src/arc-context.cpp:472
+#: ../src/arc-context.cpp:484
 msgid "Create ellipse"
 msgstr "Vytvoriť elipsu"
 
@@ -3362,55 +3381,55 @@ msgstr "<i>Prebieha kontrola...</i>"
 msgid "Fix spelling"
 msgstr "Opraviť pravopis"
 
-#: ../src/dialogs/spellcheck.cpp:956
+#: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
 msgstr "Návrhy:"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "_Accept"
 msgstr "Prij_ať"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "Accept the chosen suggestion"
 msgstr "Prijať zvolené riešenie"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "_Ignore once"
 msgstr "_Ignorovať raz"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr "Ignorovať iba tento jeden výskyt tohto slova"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "_Ignore"
 msgstr "_Ignorovať vždy"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
 msgstr "Ignorovať všetky výskyty tohto slova počas tejto kontroly"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "A_dd to dictionary:"
 msgstr "Pri_dať do slovníka:"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "Add this word to the chosen dictionary"
 msgstr "Pridať toto slovo do zvoleného slovníka"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "_Stop"
 msgstr "Za_staviť"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr "Zastaviť kontrolu"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "_Start"
 msgstr "_Spustiť"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
 msgstr "Spustiť kontrolu"
 
@@ -5389,7 +5408,7 @@ msgstr "Súbor %s nie je uložený."
 msgid "Document saved."
 msgstr "Dokument bol uložený."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
+#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
 #, c-format
 msgid "drawing%s"
 msgstr "kresba%s"
@@ -5419,24 +5438,24 @@ msgstr "Ukladá sa dokument..."
 msgid "Import"
 msgstr "Importovať"
 
-#: ../src/file.cpp:1063
+#: ../src/file.cpp:1083
 msgid "Select file to import"
 msgstr "Voľba súboru na importovanie"
 
-#: ../src/file.cpp:1182 ../src/file.cpp:1296
+#: ../src/file.cpp:1201 ../src/file.cpp:1315
 msgid "Select file to export to"
 msgstr "Voľba súboru na exportovanie"
 
-#: ../src/file.cpp:1328
+#: ../src/file.cpp:1347
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Chyba pri ukladaní dočasnej kópie."
 
-#: ../src/file.cpp:1348
+#: ../src/file.cpp:1367
 msgid "Open Clip Art Login"
 msgstr "Prihlásenie sa do Open Clip Art"
 
-#: ../src/file.cpp:1374
+#: ../src/file.cpp:1393
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5447,11 +5466,11 @@ msgstr ""
 "mena a hesla. Ak má server podporu WebDAV a overte, či ste nezabudli zvoliť "
 "aj licenciu."
 
-#: ../src/file.cpp:1395
+#: ../src/file.cpp:1414
 msgid "Document exported..."
 msgstr "Dokument bol exportovaný."
 
-#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importovať z knižnice Open Clip Art"
 
@@ -7661,7 +7680,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "Koľko konštrukčných čiar (dotyčníc) nakresliť"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/seltrans.cpp:489 ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
@@ -8185,7 +8204,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: zamknúť dĺžku úchopu; <b>Ctrl+Alt</b>: posun pozdĺž úchopov"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:582
 msgid "Stamp"
 msgstr "Pečiatkovať"
 
@@ -8980,7 +8999,7 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML fragment časti „License“ v RDF."
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:345
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
@@ -8988,7 +9007,7 @@ msgstr ""
 "<b>Ctrl</b>: urobiť štvorec alebo celočíselný obdĺžnik, zamknutie zaoblených "
 "rohov kruhovými"
 
-#: ../src/rect-context.cpp:486
+#: ../src/rect-context.cpp:492
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
@@ -8997,7 +9016,7 @@ msgstr ""
 "<b>Obdĺžnik</b>: %s &#215; %s (obmedzenie na pomer %d:%d); so <b>Shift</b> "
 "kreslenie okolo štartovacieho bodu"
 
-#: ../src/rect-context.cpp:489
+#: ../src/rect-context.cpp:495
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
@@ -9006,7 +9025,7 @@ msgstr ""
 "<b>Obdĺžnik</b>: %s &#215; %s (obmedzenie na zlatý rez 1,618 : 1); so "
 "<b>Shift</b> kreslenie okolo štartovacieho bodu"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:497
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
@@ -9015,7 +9034,7 @@ msgstr ""
 "<b>Obdĺžnik</b>: %s &#215; %s (obmedzenie na pomer zlatý rez 1 : 1,618); so "
 "<b>Shift</b> kreslenie okolo štartovacieho bodu"
 
-#: ../src/rect-context.cpp:495
+#: ../src/rect-context.cpp:501
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -9024,7 +9043,7 @@ msgstr ""
 "<b>Obdĺžnik</b>: %s &#215; %s; s <b>Ctrl</b> vytvoriť štvorec alebo "
 "celočíselný obdĺžnik; so <b>Shift</b> kreslenie okolo štartovacieho bodu"
 
-#: ../src/rect-context.cpp:516
+#: ../src/rect-context.cpp:526
 msgid "Create rectangle"
 msgstr "Vytvoriť obdĺžnik"
 
@@ -9238,7 +9257,7 @@ msgstr "Otočiť o 90&#176; proti smeru hodinových ručičiek"
 msgid "Rotate 90&#176; CW"
 msgstr "Otočiť o 90&#176; v smere hodinových ručičiek"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:492
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Otočiť"
@@ -9260,7 +9279,7 @@ msgid "Move horizontally"
 msgstr "Presunúť vodorovne"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:486 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Presunúť"
 
@@ -9636,15 +9655,15 @@ msgstr[2] "<b>%i</b> objektov <b>%i</b> typov"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:495 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Skosenie"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:507
 msgid "Set center"
 msgstr "Nastaviť stred"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:604
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9652,7 +9671,7 @@ msgstr ""
 "<b>Stred</b> otáčania a skosenia: ťahaním zmeníte jeho polohu; zmena mierky "
 "so Shift tiež používa tento stred"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:631
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9660,7 +9679,7 @@ msgstr ""
 "Výber <b>stlačenia alebo roztiahnutia</b>; s <b>Ctrl</b> rovnomerná zmena "
 "mierky; s <b>Shift</b> zmena mierky okolo stredu otáčania"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:632
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9668,7 +9687,7 @@ msgstr ""
 "Výber <b>zmeny mierky</b>; s <b>Ctrl</b> rovnomerná zmena mierky; s "
 "<b>Shift</b> zmena mierky okolo stredu otáčania"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:636
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9676,7 +9695,7 @@ msgstr ""
 "<b>Skosenie</b> výberu; s <b>Ctrl</b> prichytávanie k uhlu; s <b>Shift</b> "
 "skosenie okolo opačnej strany"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:637
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9684,35 +9703,35 @@ msgstr ""
 "Výber <b>otáčania</b>; s <b>Ctrl</b> prichytávanie k uhlu; s <b>Shift</b> "
 "otáčanie okolo opačného rohu"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:771
 msgid "Reset center"
 msgstr "Znovunastaviť stred"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1016 ../src/seltrans.cpp:1115
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Zmena mierky</b>: %0.2f%% x %0.2f%%; s <b>Ctrl</b> zamknutie pomeru"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1227
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Skosenie</b>: %0.2f&#176;; s <b>Ctrl</b> prichytávanie k uhlu"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1287
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Otáčanie</b>: %0.2f&#176;; s <b>Ctrl</b> prichytávanie k uhlu"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Presunúť <b>stred</b> do %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1499
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11088,6 +11107,36 @@ msgstr "Najmenší objekt"
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Výber"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:3
+msgid "Dip pen"
+msgstr "Brko"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:5
+msgid "Marker"
+msgstr "Značkovadlo"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:7
+msgid "Brush"
+msgstr "Štetec"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:9
+msgid "Wiggly"
+msgstr "Krútivé"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:11
+msgid "Splotchy"
+msgstr "Machule"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:13
+msgid "Tracing"
+msgstr "Obrysové"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -15445,9 +15494,9 @@ msgstr "(koreň)"
 msgid "Proprietary"
 msgstr "Proprietárna"
 
-#: ../src/ui/widget/licensor.cpp:38 ../share/extensions/interp_att_g.inx.h:13
-msgid "Other"
-msgstr "Ďalšie"
+#: ../src/ui/widget/licensor.cpp:38
+msgid "MetadataLicence|Other"
+msgstr "Iná"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -18342,6 +18391,14 @@ msgstr "Výška výberu"
 msgid "Affect:"
 msgstr "Ovplyvniť:"
 
+#: ../src/widgets/select-toolbar.cpp:536
+msgid ""
+"Control whether or not to scale stroke widths, scale rectangle corners, "
+"transform gradient fills, and transform pattern fills with the object"
+msgstr ""
+"Ovláda či sa má alebo nemá primerane k veľkosti objektu meniť šírka ťahu, "
+"okraje obdĺžnikov, výplne farebným prechodom a výplne vzorkou"
+
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
 msgstr "Zmeniť mierku zaoblených rohov"
@@ -20447,7 +20504,7 @@ msgstr "Vnútorná chyba. Nebol vybraný typ pohľadu\n"
 msgid "The second path must be exactly four nodes long."
 msgstr "Druhá cesta musí mať dĺžku presne štyri uzly."
 
-#: ../share/extensions/svg_and_media_zip_output.py:113
+#: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "Nebolo možné nájsť súbor: %s"
@@ -21437,6 +21494,22 @@ msgid "HPGL Output"
 msgstr "Výstup HPGL"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+msgid "Mirror Y-axis"
+msgstr "Zrkadlovo otočiť os Y"
+
+#: ../share/extensions/hpgl_output.inx.h:5
+msgid "Plot invisible layers"
+msgstr "Vykresliť neviditeľné vrstvy"
+
+#: ../share/extensions/hpgl_output.inx.h:6
+msgid "X-origin (px)"
+msgstr "počiatok X (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:7
+msgid "Y-origin (px)"
+msgstr "počiatok Y (px)"
+
+#: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
 msgstr "plochosť výstupu hpgl"
 
@@ -21503,6 +21576,10 @@ msgstr "Interpolovať atribút v skupine"
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
 msgstr "Žiadna jednotka"
+
+#: ../share/extensions/interp_att_g.inx.h:13
+msgid "Other"
+msgstr "Ďalšie"
 
 #: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"

@@ -533,7 +533,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // "Transform with object" buttons
 
     {
-        EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), "", 0 );
+        EgeOutputAction* act = ege_output_action_new( "transform_affect_label", _("Affect:"), _("Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"), 0 );
         ege_output_action_set_use_markup( act, TRUE );
         g_object_set( act, "visible-overflown", FALSE, NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
