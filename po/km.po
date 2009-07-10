@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-09 16:02+0700\n"
+"PO-Revision-Date: 2009-07-10 11:25+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1097,11 +1097,11 @@ msgstr "មិនស្ថិតស្ថេរ"
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​ផ្នែក​ខាង​ក្នុង​វត្ថុ​ព្រិល ដោយ​បម្រុង​ទុក​នូវ​គ្រោង និង​បន្ថែមភាព​ថ្លា​បន្តបន្ទាប់​នៅ​គែម"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
-msgstr ""
+msgstr "ដីស និង​ប៉ុងហ្ស៍​លុប"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
@@ -1121,7 +1121,7 @@ msgstr "ស្កុតលែន"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
-msgstr ""
+msgstr "ដាក់​ពណ៌​កំពូល​ភ្នំ​ដែល​ពេញ​ដោយ​អ័ព្ទ"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
@@ -1129,15 +1129,15 @@ msgstr "ភាព​ថ្លា​មិន​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "វាយនភាព​ថ្លា​មិនច្បាស់​មូលដ្ឋាន"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
-msgstr ""
+msgstr "ការ​បំពេញ​ភាព​មិន​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "វាយនភាព​បំពេញ​ភាព​មិនច្បាស់​មូលដ្ឋាន ។ លៃតម្រូវ​ពណ៌​ជា Flood"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
@@ -1148,13 +1148,12 @@ msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delig
 msgstr ""
 
 #: ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "Diffuse light"
 msgstr "សាយ​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "ជ្រុង​ទេ​សាយ ដែល​ត្រូវប្រើ​សម្រាប់​បង្កើត​វាយនភាព"
 
 #: ../share/filters/filters.svg.h:122
 #, fuzzy
