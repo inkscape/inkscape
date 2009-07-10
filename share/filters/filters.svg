@@ -1861,5 +1861,12 @@
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" id="feColorMatrix3338" />
 <feComposite in="fbSourceGraphic" operator="out" id="feComposite3340" />
 </filter>
+<filter inkscape:menu-tooltip="Partly opaque water color effect with bleed" inkscape:menu="Textures" inkscape:label="Gouache" id="Gouach0">
+<feGaussianBlur stdDeviation="3" id="feGaussianBlur2954" result="result5" in="SourceGraphic" />
+<feTurbulence result="result1" baseFrequency="0.029999999999999999" type="fractalNoise" seed="0" numOctaves="3" id="feTurbulence2944" />
+<feDisplacementMap result="result3" in2="result1" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="20" numOctaves="2" id="feDisplacementMap2946" />
+<feComposite result="result4" in="result3" in2="result1" operator="out" id="feComposite2950" />
+<feComposite in2="result5" in="result4" id="feComposite2952" operator="over" k1="1" />
+</filter>
 </defs>
 </svg>
