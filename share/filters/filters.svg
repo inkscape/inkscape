@@ -1851,5 +1851,15 @@
 <feBlend id="feBlend3044" blend="normal" mode="screen" result="result9" in2="SourceGraphic" />
 <feComposite id="feComposite3046" operator="in" in2="SourceGraphic" result="result11" in="result9" k1="1" k2="1" k3="0" />
 </filter>
+<filter height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:menu-tooltip="Adds a turbulent transparency which displace pixels at the same time" inkscape:menu="Mask and transparency effects" inkscape:label="Rough transparency" id="RoughTrans0">
+<feTurbulence result="result3" baseFrequency="0.10000000000000001" in="SourceAlpha" type="fractalNoise" seed="0" numOctaves="5" id="feTurbulence3328" />
+<feDisplacementMap result="fbSourceGraphic" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="20" numOctaves="2" id="feDisplacementMap3330" />
+<feColorMatrix type="luminanceToAlpha" in="fbSourceGraphic" result="result0" id="feColorMatrix3332" />
+<feColorMatrix result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " id="feColorMatrix3334" />
+<feComposite in2="result2" operator="over" in="result3" id="feComposite3336" result="result4" />
+<feDisplacementMap id="feDisplacementMap3342" scale="90" xChannelSelector="R" in="result4" in2="result3" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" id="feColorMatrix3338" />
+<feComposite in="fbSourceGraphic" operator="out" id="feComposite3340" />
+</filter>
 </defs>
 </svg>
