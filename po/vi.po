@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-07-05 00:08+0700\n"
+"PO-Revision-Date: 2009-07-11 04:00+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,7 @@ msgstr "Làm sắc"
 #: ../share/filters/filters.svg.h:172
 #: ../share/filters/filters.svg.h:186
 msgid "Image effects"
-msgstr "Hiệu ứng dành cho ảnh"
+msgstr "Hiệu ứng cho ảnh bitmap"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.15"
@@ -653,7 +653,6 @@ msgid "Matte Bevel"
 msgstr "Vát mờ"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Nét vát mềm, mờ, hơi nhòe, giống như màu phấn"
 
@@ -666,9 +665,8 @@ msgid "Thin like a soap membrane"
 msgstr "Mỏng như màng xà phòng"
 
 #: ../share/filters/filters.svg.h:54
-#, fuzzy
 msgid "Matte ridge"
-msgstr "Chóp xanh da trời"
+msgstr "Lằn nhẹ"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Soft pastel ridge"
@@ -770,22 +768,18 @@ msgid "Silk carpet texture, horizontal stripes"
 msgstr "Văn hoa giống tấm thảm lụa, có sọc ngang"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Refractive gel A"
 msgstr "Kem khúc xạ dạng A"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Gel effect with light refraction"
-msgstr "Hiệu ứng ánh sáng khúc xạ kem"
+msgstr "Hiệu ứng khúc xạ ánh sáng, nhẹ"
 
 #: ../share/filters/filters.svg.h:67
-#, fuzzy
 msgid "Refractive gel B"
-msgstr "Kem khúc xạ dạng B"
+msgstr "Hiệu ứng khúc xạ ánh sáng, mạnh"
 
 #: ../share/filters/filters.svg.h:67
-#, fuzzy
 msgid "Gel effect with strong refraction"
 msgstr "Hiệu ứng ánh sáng khúc xạ mạnh"
 
@@ -798,13 +792,12 @@ msgid "Metallized effect with a soft lighting, slightly translucent at the edges
 msgstr "Bề mặt được phủ kim loại, phản quang nhẹ, một chút trong suốt ở ngoài viền"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Dragee"
-msgstr "Kéo đường cong"
+msgstr "Kẹo dẻo"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "Lằn trong dạng keo, có màu ngọc trai"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Raised border"
@@ -815,13 +808,12 @@ msgid "Strongly raised border around a flat surface"
 msgstr "Viền nhô cao, bo xung quanh bề mặt phẳng ở bên trong"
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Metallized ridge"
-msgstr "Chóp xanh da trời"
+msgstr "Kim loại"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "Lằn dạng keo, có ánh kim loại phủ lên"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Fat oil"
@@ -838,12 +830,11 @@ msgstr "Tô màu"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Gives the flood color to the dark parts of the image"
-msgstr ""
+msgstr "Tô màu đặc lên phần sẫm màu của bức ảnh"
 
 #: ../share/filters/filters.svg.h:74
-#, fuzzy
 msgid "Parallel hollow"
-msgstr "Kim cương rỗng"
+msgstr "Viền song song, trong đặc"
 
 #: ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:75
@@ -863,33 +854,31 @@ msgstr "Hình thái học"
 
 #: ../share/filters/filters.svg.h:74
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "Một rãnh trống không chạy song song bên trong, dọc theo viền của đối tượng"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Hole"
-msgstr "Hố Đen"
+msgstr "Hố"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "Đào một hố bên trong đối tượng"
 
 #: ../share/filters/filters.svg.h:76
-#, fuzzy
 msgid "Black hole"
-msgstr "Hố Đen"
+msgstr "Lỗ Đen"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "Tạo quầng màu đen ở trong và bên ngoài đối tượng"
 
 #: ../share/filters/filters.svg.h:77
-#, fuzzy
 msgid "Smooth outline"
-msgstr "Nét ngoài"
+msgstr "Nét ngoài mượt"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "Tô viền các đường nét và làm mượt những vị trí giao cắt"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Cubes"
@@ -957,13 +946,12 @@ msgid "Crumpled glossy paper effect which can be used for pictures as for object
 msgstr "Văn hoa giống như tờ giấy nhám, sáng bóng, thường dùng trên đối tượng ảnh"
 
 #: ../share/filters/filters.svg.h:86
-#, fuzzy
 msgid "In and Out"
-msgstr "Phóng to Thu nhỏ"
+msgstr "Trong màu, ngoài đen"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Inner colorized shadow, outer black shadow"
-msgstr ""
+msgstr "Phía trong viền giữ màu gốc, phía ngoài viền thêm bóng màu đen, ở giữa trong suốt"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Air spray"
@@ -974,22 +962,20 @@ msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "Sơn phun; điều chỉnh Bản đồ chuyển vị"
 
 #: ../share/filters/filters.svg.h:88
-#, fuzzy
 msgid "Warm inside"
 msgstr "Đang để %s bên trong %s"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, filled inside"
-msgstr ""
+msgstr "Làm nổi, đổi màu và mờ phần viền ngoài, giữ màu phần giữa"
 
 #: ../share/filters/filters.svg.h:89
-#, fuzzy
 msgid "Cool outside"
 msgstr "Chữ bên ngoài"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "Lằn nổi, nhòe, đảo màu đường viền, nhưng bên trong lại trong suốt"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Electronic microscopy"
@@ -1008,32 +994,28 @@ msgid "Checkered tartan pattern"
 msgstr "Vải kẻ ô với các đường ngang và dọc"
 
 #: ../share/filters/filters.svg.h:92
-#, fuzzy
 msgid "Invert hue"
-msgstr "Màu ngẫu nhiên"
+msgstr "Đảo độ màu"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Invert hue, or rotate it"
-msgstr ""
+msgstr "Đảo độ màu, làm chuyển tông màu của đối tượng"
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Inner outline"
-msgstr "Nét ngoài"
+msgstr "Viền bo trong"
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Draws an outline around"
-msgstr "Xoay 3D chung quanh..."
+msgstr "Vẽ một nét bao quanh phần trong đường viền đối tượng"
 
 #: ../share/filters/filters.svg.h:94
-#, fuzzy
 msgid "Outline, double"
-msgstr "Nhấn kép"
+msgstr "Đường viền kép"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "Vẽ một đường mượt ở phía trong viền, ở giữa đổi màu"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Fancy blur"
@@ -1052,22 +1034,20 @@ msgid "Glow of object's own color at the edges"
 msgstr "Làm nhòe đường viền ra phía ngoài, tạo cảm giác như khi đối tượng đang phát sáng"
 
 #: ../share/filters/filters.svg.h:97
-#, fuzzy
 msgid "Outline"
-msgstr "Phác thảo"
+msgstr "Đường viền ngoài"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Adds a glowing blur and removes the shape"
-msgstr ""
+msgstr "Thêm một quầng sáng mờ và xóa bỏ đường viền gốc"
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Color emboss"
-msgstr "Chọn màu"
+msgstr "Chạm nổi, đổi màu"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
-msgstr ""
+msgstr "Hiệu ứng chạm nổi, làm nhạt bớt màu gốc của ảnh"
 
 #: ../share/filters/filters.svg.h:99
 #: ../src/extension/internal/bitmap/solarize.cpp:36
@@ -1087,13 +1067,12 @@ msgid "An effect between solarize and invert which often preserves sky and water
 msgstr "Hiệu ứng kết hợp giữa Hỏng do phơi lâu với Đảo màu, thường giữ lại màu da trời và màu mặt nước"
 
 #: ../share/filters/filters.svg.h:101
-#, fuzzy
 msgid "Soft focus lens"
-msgstr "Ống kính D khác AF"
+msgstr "Ống kính hội tụ, nhẹ"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "Tăng sáng ở giữa, làm nổi ảnh nhưng không làm nó bị nhòe"
 
 #: ../share/filters/filters.svg.h:102
 msgid "Stained glass"
@@ -1135,13 +1114,12 @@ msgid "HSL bubbles, alpha"
 msgstr "Tạo bọt, kênh trong suốt"
 
 #: ../share/filters/filters.svg.h:106
-#, fuzzy
 msgid "Smooth edges"
 msgstr "Cạnh mịn"
 
 #: ../share/filters/filters.svg.h:106
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr ""
+msgstr "Làm mịn phần bên ngoài của hình dạng hoặc ảnh, không thay đổi phần giữa"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Torn edges"
@@ -1251,7 +1229,7 @@ msgstr "Nét vát phản chiếu nhẹ, cho ánh sáng khuếch tán, dùng đ�
 
 #: ../share/filters/filters.svg.h:120
 msgid "Cutout Glow"
-msgstr "Cắt rời hình, phát sáng"
+msgstr "Cắt rời hình, quầng sáng"
 
 #: ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:187
@@ -1267,13 +1245,12 @@ msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular on
 msgstr "Làm nổi dựa vào các giá trị độ màu, độ bão hòa và độ sáng; chiếu sáng mờ"
 
 #: ../share/filters/filters.svg.h:122
-#, fuzzy
 msgid "Dark Emboss"
-msgstr "xanh sẫm"
+msgstr "Chạm nổi, tối màu"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "Chạm nổi, thay các mảng trắng bằng màu đen"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Simple blur"
@@ -1298,7 +1275,7 @@ msgstr "Chạm nổi"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
-msgstr ""
+msgstr "Hiệu ứng chạm nổi : Màu của ảnh gốc được bảo tồn và sửa đổi bởi hiệu ứng hòa trộn màu"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Blotting paper"
@@ -1333,13 +1310,12 @@ msgid "Torn edges with a dark inner blur"
 msgstr "Khoét các cạnh bằng các khoang nhòe sậm màu"
 
 #: ../share/filters/filters.svg.h:130
-#, fuzzy
 msgid "Color outline, in"
-msgstr "Lựa chọn màu nhúng trong hộp thoại."
+msgstr "Tô viền màu, bên trong"
 
 #: ../share/filters/filters.svg.h:130
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr ""
+msgstr "Tạo một nét nhòe bao quanh phía trong viền của đối tượng"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Liquid"
@@ -1612,9 +1588,8 @@ msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Làm đối tượng sần sùi rồi mới làm mờ toàn bộ đối tượng, khiến nó vừa bị nhòe, vừa bị rung"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Film grain"
-msgstr "Hạt mảng thuốc"
+msgstr "Phim xước"
 
 #: ../share/filters/filters.svg.h:171
 msgid "HSL Bumps, transparent"
@@ -1630,18 +1605,19 @@ msgstr "Làm nổi dựa vào các giá trị độ màu, độ bão hòa và đ
 msgid "Drawing"
 msgstr "Bản vẽ"
 
+# Nên giải thích xác đáng hơn
 #: ../share/filters/filters.svg.h:172
+#, fuzzy
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
-msgstr ""
+msgstr "Tạo bản vẽ bút chì cho ảnh hoặc đối tượng có màu tô"
 
 #: ../share/filters/filters.svg.h:173
-#, fuzzy
 msgid "Velvet bump"
-msgstr "Kích cỡ mụn"
+msgstr "Làm nổi, vải nhung"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "Bề mặt được làm nổi nhẹ, giống như bề mặt nhung"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Alpha draw"
@@ -1676,27 +1652,24 @@ msgid "Draws a black outline around"
 msgstr "Thêm một nét viền đen bao quanh đối tượng"
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Color outline"
-msgstr "Màu nét ngoài"
+msgstr "Tô viền màu"
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Draws a coloured outline around"
-msgstr "Xoay 3D chung quanh..."
+msgstr "Vẽ một nét bao quanh phía ngoài viền của đối tượng"
 
 #: ../share/filters/filters.svg.h:179
-#, fuzzy
 msgid "Inner shadow"
-msgstr "Bóng"
+msgstr "Đổ bóng vào trong"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Adds a colorizable drop shadow inside"
-msgstr ""
+msgstr "Đổ bóng màu đen vào phía trong của viền"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Dark and glow"
-msgstr "Làm sẫm màu cạnh, phát sáng"
+msgstr "Làm sẫm màu cạnh, quầng sáng"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
@@ -1733,7 +1706,7 @@ msgstr "Chất keo"
 
 #: ../share/filters/filters.svg.h:184
 msgid "Colorizable filling with gelatin like turbulence and transparency"
-msgstr ""
+msgstr "Tạo bề mặt keo bằng cách thêm vào nhiều mảng hỗn độn trong suốt"
 
 #: ../share/filters/filters.svg.h:185
 msgid "HSL bubbles, transparent"
@@ -1779,7 +1752,7 @@ msgstr "Dùng trong suốt"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Paint objects with a transparent turbulence which turn around color edges"
-msgstr ""
+msgstr "Thêm một ống trong suốt chạy dọc quanh viền màu của đối tượng"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
@@ -2866,9 +2839,8 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #: ../src/dialogs/export.cpp:318
-#, fuzzy
 msgid "Wid_th:"
-msgstr "Tiếng Cợ-ri TH"
+msgstr "Rộn_g:"
 
 #: ../src/dialogs/export.cpp:324
 msgid "_y0:"
@@ -2879,7 +2851,6 @@ msgid "y_1:"
 msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:334
-#, fuzzy
 msgid "Hei_ght:"
 msgstr "Ca_o :"
 
@@ -2930,7 +2901,6 @@ msgid "Export each selected object into its own PNG file, using export hints if 
 msgstr "Xuất từng đối tượng vào tập tin PNG riêng dùng các tuỳ chọn nếu có (cẩn thận: ghi đè mà không cần xác nhận !) "
 
 #: ../src/dialogs/export.cpp:627
-#, fuzzy
 msgid "Hide all except selected"
 msgstr "Ẩn tất cả trừ những đối tượng đã chọn"
 
@@ -2947,7 +2917,7 @@ msgid "Export the bitmap file with these settings"
 msgstr "Xuất khẩu tập tin bitmap tùy theo thiết lập này"
 
 #: ../src/dialogs/export.cpp:678
-#, fuzzy, c-format
+#, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "Xuất %d đối tượng vừa chọn"
@@ -3119,9 +3089,8 @@ msgstr "Tìm các bản sao"
 #. "Clones" is a noun indicating type of object to find
 #: ../src/dialogs/find.cpp:612
 #: ../src/ui/dialog/find.cpp:82
-#, fuzzy
 msgid "find|Clones"
-msgstr "Tìm các bản sao"
+msgstr "Tìm bản sao liên kết"
 
 #: ../src/dialogs/find.cpp:617
 #: ../src/ui/dialog/find.cpp:83
@@ -3279,13 +3248,11 @@ msgstr "Nhãn hình tự do cho đối tượng"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-#, fuzzy
 msgid "_Title"
 msgstr "_Tên"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
-#, fuzzy
 msgid "_Description"
 msgstr "_Mô tả"
 
@@ -3310,9 +3277,8 @@ msgstr "Bạn sẽ không thể dùng chuột để chọn các đối tượng 
 
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:243
-#, fuzzy
 msgid "_Interactivity"
-msgstr "Tương tác"
+msgstr "_Tương tác"
 
 #: ../src/dialogs/item-properties.cpp:317
 #: ../src/dialogs/item-properties.cpp:324
@@ -6619,24 +6585,21 @@ msgstr "Không hỗ trợ chiến lược cư trú %s trong đối tượng cư 
 
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
-#, fuzzy
 msgid "UnLock"
-msgstr "Thôi nằm ở"
+msgstr "Mở khóa"
 
 #. Hide menuitem.
 #: ../src/libgdl/gdl-dock-item.c:1486
-#, fuzzy
 msgid "Hide"
 msgstr "Ẩn"
 
 #. Lock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1491
-#, fuzzy
 msgid "Lock"
 msgstr "Khoá"
 
 #: ../src/libgdl/gdl-dock-item.c:1717
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to bind an unbound item %p"
 msgstr "Cố gắng ràng buộc một mục tự do %p"
 
@@ -6645,7 +6608,6 @@ msgid "Iconify"
 msgstr "Thu nhỏ"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:395
-#, fuzzy
 msgid "Iconify this dock"
 msgstr "Thu nhỏ neo này thành biểu tượng"
 
@@ -6654,40 +6616,33 @@ msgid "Close"
 msgstr "Đóng"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:397
-#, fuzzy
 msgid "Close this dock"
 msgstr "Đóng neo này"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
-#, fuzzy
 msgid "Controlling dock item"
-msgstr "Điều khiển mục cư trú"
+msgstr "Điều khiển mục neo"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:707
-#, fuzzy
 msgid "Dockitem which 'owns' this grip"
-msgstr "Mục-cư-trú có 'riêng' nhãn tab này"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-master.c:145
-#, fuzzy
 msgid "Default title for newly created floating docks"
-msgstr "Tiêu đề mặc định cho các cư trú nổi mới được tạo"
+msgstr "Tiêu đề mặc định cho các neo nổi mới được tạo"
 
 #: ../src/libgdl/gdl-dock-master.c:152
-#, fuzzy
 msgid "If is set to 1, all the dock items bound to the master are locked; if it's 0, all are unlocked; -1 indicates inconsistency among the items"
-msgstr "Nết lập nó là 1, toàn bộ các mục cư trú giới hạn cho chủ chính được khoá, nếu là 0, toàn bộ được bỏ khoá, -1 biểu thị sự mâu thuẫn giữa các mục"
+msgstr "Nết lập nó là 1, toàn bộ các mục neo giới hạn cho chủ chính được khoá, nếu là 0, toàn bộ được bỏ khoá, -1 biểu thị sự mâu thuẫn giữa các mục"
 
 #: ../src/libgdl/gdl-dock-master.c:160
 #: ../src/libgdl/gdl-switcher.c:707
-#, fuzzy
 msgid "Switcher Style"
-msgstr "Kiểu Chuyển"
+msgstr "Kiểu nút chuyển"
 
 #: ../src/libgdl/gdl-dock-master.c:161
 #: ../src/libgdl/gdl-switcher.c:708
-#, fuzzy
 msgid "Switcher buttons style"
 msgstr "Kiểu dáng của các cái nút chuyển đổi"
 
@@ -6699,15 +6654,17 @@ msgstr "Mở rộng hướng"
 msgid "Allow the master's dock items to expand their container dock objects in the given direction"
 msgstr "Cho phép các mục chủ đã neo có thể mở rộng ra các đối tượng neo chứa nó theo phương đã chọn"
 
+# hash có nên hiểu là tập hợp?
 #: ../src/libgdl/gdl-dock-master.c:796
-#, fuzzy, c-format
+#, c-format
 msgid "master %p: unable to add object %p[%s] to the hash.  There already is an item with that name (%p)."
-msgstr "Chủ chính: %p không thể thêm đối tượng %p[%s] vào một mớ. Đã có một mục với tên đó (%p)."
+msgstr "chủ chính %p: không thể thêm đối tượng %p[%s] vào tập hợp. Đã có một mục với tên đó (%p)."
 
+# Dịch dễ hiểu hơn
 #: ../src/libgdl/gdl-dock-master.c:969
-#, fuzzy, c-format
+#, c-format
 msgid "The new dock controller %p is automatic.  Only manual dock objects should be named controller."
-msgstr "Trình điều khiển cư trú mới %p được tự động. Chỉ các đối tượng cư trú thủ công nên là trình điều khiển có tên."
+msgstr "Trình điều khiển neo mới %p được tự động. Chỉ các đối tượng neo tự chọn mới có tên."
 
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
@@ -6727,18 +6684,16 @@ msgid "Name"
 msgstr "Tên"
 
 #: ../src/libgdl/gdl-dock-object.c:121
-#, fuzzy
 msgid "Unique name for identifying the dock object"
-msgstr "Tên đơn nhất để nhận diện đối tượng cư trú"
+msgstr "Tên duy nhất dùng phân biệt đối tượng neo"
 
 #: ../src/libgdl/gdl-dock-object.c:128
 msgid "Long name"
 msgstr "Tên đầy đủ"
 
 #: ../src/libgdl/gdl-dock-object.c:129
-#, fuzzy
 msgid "Human readable name for the dock object"
-msgstr "Tên người có thể đọc được cho đối tượng cư trú"
+msgstr "Tên thân mật đối với người dùng"
 
 #: ../src/libgdl/gdl-dock-object.c:135
 #, fuzzy
@@ -7033,14 +6988,12 @@ msgid "Sketch"
 msgstr "Thêm một bức phác hoạ"
 
 #: ../src/live_effects/effect.cpp:120
-#, fuzzy
 msgid "Ruler"
-msgstr "Thước đo"
+msgstr "Thước"
 
 #: ../src/live_effects/effect.cpp:273
-#, fuzzy
 msgid "Is visible?"
-msgstr "Hiện thanh Tab"
+msgstr "Đang hiện?"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
@@ -7065,14 +7018,12 @@ msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Hiệu ứng đường nét đã áp dụng không có tham số có thể sửa tại chỗ."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Bend path"
 msgstr "Uốn đường nét"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Path along which to bend the original path"
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét muốn dùng để uốn đường nét gốc"
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
@@ -7084,9 +7035,8 @@ msgid "Width in units of length"
 msgstr "Chiều rộng theo đơn vị chiều dài"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
-#, fuzzy
 msgid "Scale the width of the path in units of its length"
-msgstr "Co giãn chiều rộng của mẫu theo đơn vị chiều dài của nó"
+msgstr "Co giãn chiều rộng của đường nét theo đơn vị chiều dài của nó"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Original path is vertical"
@@ -7191,7 +7141,7 @@ msgstr "Co giãn chiều rộng của đường nét nét tương đối so vớ
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
 msgid "Top bend path"
-msgstr "Nâng đường dẫn lên trên"
+msgstr "Nâng đường dẫn lên trên cùng"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
@@ -7475,27 +7425,24 @@ msgid "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sha
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
-#, fuzzy
 msgid "1st side, out"
-msgstr "Kết nối đã quá giờ"
+msgstr "mặt thứ nhất, bên ngoài"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
-msgstr "Dùng ảnh nằm bên trong thực đơn K"
+msgstr "mặt thứ hai, bên trong"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
-#, fuzzy
 msgid "2nd side, out"
-msgstr "In thủ công trên mặt khác"
+msgstr "mặt thứ hai, bên ngoài"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"
@@ -7512,9 +7459,8 @@ msgstr ""
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-#, fuzzy
 msgid "2nd side"
-msgstr "Vị trí phương hướng bên:"
+msgstr "mặt thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
@@ -7533,9 +7479,8 @@ msgid "Add direction randomness by randomly moving 'top' halfsturns tangentially
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Variance: 1st side"
-msgstr "Sự phản cộng vị trí phương hướng bên"
+msgstr "Dạng khác : mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
@@ -7622,7 +7567,6 @@ msgstr "Trái"
 
 #: ../src/live_effects/lpe-ruler.cpp:28
 #: ../share/extensions/restack.inx.h:14
-#, fuzzy
 msgid "Right"
 msgstr "Phải"
 
@@ -7716,48 +7660,40 @@ msgstr ""
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
-#, fuzzy
 msgid "Strokes"
-msgstr "Nét tiếng Trung/Nhật/Hàn"
+msgstr "Nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:36
-#, fuzzy
 msgid "Max stroke length"
-msgstr "Chiều dài dòng tối đa"
+msgstr "Chiều dài tối đa của nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
-#, fuzzy
 msgid "Maximum length of approximating strokes"
-msgstr "Độ dài trường chữ tối đa"
+msgstr "Chiều dài xấp xỉ tối đa của nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
-#, fuzzy
 msgid "Stroke length variation"
-msgstr "Dấu chọn biến đổi bất thường"
+msgstr "Biến đổi chiều dài của nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
-#, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Co giãn chiều rộng của đường nét nét tương đối so với chiều dài của nó"
+msgstr "Mức biến đổi ngẫu nhiên chiều dài của nét (tương đối với chiều dài tối đa)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
-#, fuzzy
 msgid "Max. overlap"
-msgstr "Bỏ chỗ chồng lấp"
+msgstr "Độ chồng lấp tối đa"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
-#, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Co giãn chiều rộng của đường nét nét tương đối so với chiều dài của nó"
+msgstr "Mức độ chồng lấp lên trên các nét đã có của nét mới (so với chiều dài tối đa của nét)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
-#, fuzzy
 msgid "Overlap variation"
-msgstr "Biến đổi nét _vẽ"
+msgstr "Biến đổi chồng lấp"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
@@ -8771,33 +8707,31 @@ msgstr "Không thể tạo thư mục lưu tạm."
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:134
-#, fuzzy, c-format
+#, c-format
 msgid "%s is not a valid directory."
-msgstr ""
-"%s không phải là thư mục hợp lệ.\n"
-"%s"
+msgstr "Thư mục %s không hợp lệ."
 
 #. The write failed.
 #. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:145
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create the preferences file %s."
-msgstr "Lỗi khi tạo tập tin '%s': %s"
+msgstr "Lỗi khi tạo tập tin tùy thích %s."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:163
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s is not a regular file."
-msgstr "`%s' không phải tệp thông thường - bỏ qua\n"
+msgstr "Tập tin tùy thích %s không hợp lệ."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s could not be read."
-msgstr "CẢNH BÁO : không đọc được %<PRIuMAX> trên %<PRIuMAX> tập tin đã liệt kê"
+msgstr "Không đọc được tập tin tùy thích %s."
 
 #. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
@@ -8809,9 +8743,9 @@ msgstr ""
 #. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
-msgstr "Tập tin « %s » không phải là ảnh đĩa hợp lệ."
+msgstr "Tập tin %s không phải là tập tin tùy thích Inkscape."
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -9273,29 +9207,24 @@ msgid "action|Clone"
 msgstr "Sao lại"
 
 #: ../src/selection-chemistry.cpp:1935
-#, fuzzy
 msgid "Select <b>clones</b> to relink."
-msgstr "3. Áp dụng giá trị cho các bản sao:"
+msgstr "Chọn <b>bản sao liên kết</b> để tái tạo liên kết."
 
 #: ../src/selection-chemistry.cpp:1942
-#, fuzzy
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
-msgstr "Chọn <b>một đối tượng</b> sao chép."
+msgstr "Chép <b>một đối tượng</b> vào bảng nháp để tái tạo liên kết tới các bản sao."
 
 #: ../src/selection-chemistry.cpp:1966
-#, fuzzy
 msgid "<b>No clones to relink</b> in the selection."
-msgstr "Trong vùng chọn, <b>không có bản sao cần bỏ liên kết</b>."
+msgstr "Trong vùng chọn, <b>không có bản sao nào</b> có thể tái tạo liên kết."
 
 #: ../src/selection-chemistry.cpp:1969
-#, fuzzy
 msgid "Relink clone"
-msgstr "Sao ảnh"
+msgstr "Tái tạo liên kết tới bản sao"
 
 #: ../src/selection-chemistry.cpp:1983
-#, fuzzy
 msgid "Select <b>clones</b> to unlink."
-msgstr "Chọn một <b>bản sao</b> cần bỏ liên kết."
+msgstr "Chọn <b>bản sao</b> cần bỏ liên kết."
 
 #: ../src/selection-chemistry.cpp:2032
 msgid "<b>No clones to unlink</b> in the selection."
@@ -9728,19 +9657,19 @@ msgid "<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to de
 msgstr ""
 
 #: ../src/sp-guide.cpp:422
-#, fuzzy, c-format
+#, c-format
 msgid "vertical, at %s; %s"
-msgstr "  %s siêu khối tại "
+msgstr "chiều dọc, tại %s; %s"
 
 #: ../src/sp-guide.cpp:425
-#, fuzzy, c-format
+#, c-format
 msgid "horizontal, at %s; %s"
-msgstr "  %s siêu khối tại "
+msgstr "chiều ngang, tại %s; %s"
 
 #: ../src/sp-guide.cpp:430
-#, fuzzy, c-format
+#, c-format
 msgid "at %d degrees, through (%s,%s); %s"
-msgstr "Xuất bằng XSLT"
+msgstr "ở %d độ, qua (%s,%s); %s"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
@@ -9788,9 +9717,9 @@ msgid "%s; <i>masked</i>"
 msgstr "%s; <i>có mặt nạ</i>"
 
 #: ../src/sp-item.cpp:1065
-#, fuzzy, c-format
+#, c-format
 msgid "%s; <i>filtered (%s)</i>"
-msgstr "Đã lọc %ld dòng"
+msgstr "%s; <i>đã lọc (%s)</i>"
 
 #: ../src/sp-item.cpp:1067
 #, c-format
@@ -9842,9 +9771,8 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "Chọn <b>ít nhất 1 đường nét</b> thực hiện thao tác hợp luận lý."
 
 #: ../src/splivarot.cpp:131
-#, fuzzy
 msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
-msgstr "Chọn <b>ít nhất 2 đường nét</b> chao thao tác tính hiệu, XOR, chia hay cắt đường nét."
+msgstr "Chọn <b>đúng 2 đường nét</b> để tính hiệu, chia hay cắt đường nét."
 
 #: ../src/splivarot.cpp:147
 #: ../src/splivarot.cpp:162
@@ -9955,10 +9883,10 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Đối tượng dời hình động</b>, %s theo %f điểm"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Đường nét</b> (%i nút, hiệu ứng đường nét)"
+msgstr[0] "<b>Đường nét</b> (%i nút, hiệu ứng đường nét: %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -10019,18 +9947,17 @@ msgid "<b>Text</b> (%s, %s)"
 msgstr "<b>Văn bản</b> (%s, %s)"
 
 #: ../src/sp-tref.cpp:368
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Cloned character data</b>%s%s"
-msgstr "%s: có dữ liệu theo ký tự đệm « = »"
+msgstr "<b>Đã sao chép dữ liệu ký tự</b>%s%s"
 
 #: ../src/sp-tref.cpp:369
 msgid " from "
 msgstr "từ"
 
 #: ../src/sp-tref.cpp:374
-#, fuzzy
 msgid "<b>Orphaned cloned character data</b>"
-msgstr "%s: có dữ liệu theo ký tự đệm « = »"
+msgstr "<b>Dữ liệu ký tự sao chép bị thừa</b>"
 
 #: ../src/sp-tspan.cpp:284
 msgid "<b>Text span</b>"
@@ -10265,14 +10192,14 @@ msgid "Paste text"
 msgstr "Dán văn bản"
 
 #: ../src/text-context.cpp:1605
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit flowed text (%d characters); <b>Enter</b> to start new paragraph."
-msgstr "Gõ văn bản trong khung ; nhấn <b>Enter</b> xuống đoạn mới."
+msgstr "Gõ văn bản trong khung (%d ký tự); nhấn <b>Enter</b> để xuống đoạn mới."
 
 #: ../src/text-context.cpp:1607
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Gỡ văn bản; nhấn <b>Enter</b> xuống dòng."
+msgstr "Gỡ văn bản (%d ký tự); nhấn <b>Enter</b> để xuống dòng."
 
 #: ../src/text-context.cpp:1615
 #: ../src/tools-switch.cpp:190
@@ -10316,9 +10243,8 @@ msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral s
 msgstr " <b>Kéo</b> tạo một xoắn ốc. <b>Kéo chốt</b> sửa đổi hình của xoắn ốc. <b>Nhấn</b> vào để lựa chọn"
 
 #: ../src/tools-switch.cpp:172
-#, fuzzy
 msgid "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected path, <b>Alt</b> activates sketch mode."
-msgstr " <b>Kéo</b> tạo một đường vẽ bằng tay. Bắt đầu vẽ giữ <b>Shift</b> phụ thêm đường vào đường nét đã chọn."
+msgstr " <b>Kéo</b> tạo một đường vẽ bằng tay. Thêm <b>Shift</b> để thêm vào cuối đường nét đã chọn, <b>Alt</b> kích hoạt chế độ vẽ phác."
 
 #: ../src/tools-switch.cpp:178
 #, fuzzy
@@ -10347,14 +10273,12 @@ msgid "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new
 msgstr " <b>Nhấn</b> vào để sơn vùng đã giới hạn; <b>Shift+nhấn</b> tạo hợp của vùng tô mới và vùng chọn hiện thời; <b>Ctrl+nhấn</b> thay đổi kiểu tô và nét của đối tượng đã nhấn thành thiết lập hiện thời."
 
 #: ../src/tools-switch.cpp:226
-#, fuzzy
 msgid "<b>Drag</b> to erase."
-msgstr ", kéo để điều chỉnh"
+msgstr "<b>Rê chuột</b> để tẩy."
 
 #: ../src/tools-switch.cpp:232
-#, fuzzy
 msgid "Choose a subtool from the toolbar"
-msgstr "Gỡ bỏ mục đã chọn ra thanh công cụ."
+msgstr "Chọn một công cụ phụ từ thanh công cụ"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:524
 #: ../src/trace/potrace/inkscape-potrace.cpp:598
@@ -10408,14 +10332,14 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "Đồ lại: đã xong. %ld nút đã được tạo."
 
 #: ../src/tweak-context.cpp:204
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Nothing</b> selected"
-msgstr "Chưa chọn gì"
+msgstr "<b>Chưa chọn gì</b>"
 
 #: ../src/tweak-context.cpp:210
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag to <b>move</b>."
-msgstr "Kéo để di chuyển"
+msgstr "%s. Kéo để <b>di chuyển</b>."
 
 #: ../src/tweak-context.cpp:215
 #, fuzzy, c-format
@@ -10427,20 +10351,21 @@ msgstr "<b>Nhấn</b> vào hay <b>kéo vòng quanh vùng</b> phóng to, <b>Shift
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "Nhấn và rê để di chuyển dải âm theo thời gian"
 
+# Co giãn lên, co giãn xuống, hay phóng to và thu nhỏ???
 #: ../src/tweak-context.cpp:221
-#, c-format
+#, fuzzy, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr ""
+msgstr "%s. Rê hoặc chuột trái để <b>co giãn xuống</b>; thêm Shift để <b>co giãn lên</b>."
 
 #: ../src/tweak-context.cpp:224
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
-msgstr ""
+msgstr "%s. Rê hoặc chuột trái để <b>xoay phải</b>; thêm Shift để <b>xoay trái</b>."
 
 #: ../src/tweak-context.cpp:227
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
-msgstr ""
+msgstr "%s. Rê hoặc chuột trái để <b>nhân đôi</b>; thêm Shift để <b>xóa</b>."
 
 #: ../src/tweak-context.cpp:230
 #, fuzzy, c-format
@@ -10450,12 +10375,12 @@ msgstr "Chuyển đổi văn bản sang đường nét"
 #: ../src/tweak-context.cpp:234
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
-msgstr ""
+msgstr "%s. Rê hoặc chuột trái để <b>dịch nét vào trong</b>; thêm Shift để <b>dịch ra ngoài</b>."
 
 #: ../src/tweak-context.cpp:242
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr ""
+msgstr "%s. Rê hoặc chuột trái để <b>co cụm đường nét</b>; thêm Shift để <b>tách rời nó</b>."
 
 #: ../src/tweak-context.cpp:250
 #, fuzzy, c-format
@@ -10606,27 +10531,23 @@ msgstr "Tạo _liên kết"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
-#, fuzzy
 msgid "Set Mask"
 msgstr "Đặt mặt nạ"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
-#, fuzzy
 msgid "Release Mask"
-msgstr "Buông mặt nạ"
+msgstr "Bỏ mặt nạ"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
-#, fuzzy
 msgid "Set Clip"
-msgstr "Tậ&p ảnh"
+msgstr ""
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
-#, fuzzy
 msgid "Release Clip"
-msgstr "Tậ&p ảnh"
+msgstr ""
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -10659,9 +10580,8 @@ msgid "Image _Properties"
 msgstr "Th_uộc tính ảnh"
 
 #: ../src/ui/context-menu.cpp:411
-#, fuzzy
 msgid "Edit Externally..."
-msgstr "&Sửa nhãn"
+msgstr "Sửa bằng chương trình ngoài..."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
@@ -10730,9 +10650,8 @@ msgstr "Khe tối thiểu theo chiều ngang (theo điểm ảnh) giữa hai h�
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:470
-#, fuzzy
 msgid "gap|H:"
-msgstr "_Khe:"
+msgstr "N:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:478
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -10784,33 +10703,28 @@ msgid "Relative to: "
 msgstr "Tương đối với: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
-#, fuzzy
 msgid "Treat selection as group: "
-msgstr "Định dạng vùng chọn là Chung"
+msgstr "Coi vùng chọn là nhóm:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
-#, fuzzy
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "Sắp sườn trái của đối tượng trên cạnh phải của vùng neo"
+msgstr "Sắp cạnh phải của đối tượng dọc theo cạnh trái của vùng neo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:807
-#, fuzzy
 msgid "Align left edges"
-msgstr "Canh trái đoạn"
+msgstr "Canh cạnh trái"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:810
-#, fuzzy
 msgid "Center objects horizontally"
-msgstr "Lật các đối tượng đã chọn theo chiều ngang"
+msgstr "Sắp xếp đối tượng vào giữa theo chiều ngang"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
 msgid "Align right sides"
 msgstr "Sắp hàng bên phải"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
-#, fuzzy
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr "Sắp sườn trái của đối tượng trên cạnh phải của vùng neo"
+msgstr "Sắp xếp cạnh trái của đối tượng dọc theo cạnh phải của vùng neo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 #, fuzzy
@@ -11088,9 +11002,8 @@ msgstr "Màu của đường gióng nằm dưới con chuột"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "New" refers to grid
 #: ../src/ui/dialog/document-properties.cpp:109
-#, fuzzy
 msgid "Grid|_New"
-msgstr "Tạo lưới mới"
+msgstr "Tạo lưới _mới"
 
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
@@ -11122,14 +11035,12 @@ msgid "Snap"
 msgstr "Đính"
 
 #: ../src/ui/dialog/document-properties.cpp:122
-#, fuzzy
 msgid "Color Management"
 msgstr "Quản lý màu"
 
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid "Scripting"
-msgstr "Tạo tập lệnh"
+msgstr "Tập lệnh"
 
 #: ../src/ui/dialog/document-properties.cpp:221
 msgid "<b>General</b>"
@@ -11153,7 +11064,7 @@ msgstr "Kh_oảng đính"
 
 #: ../src/ui/dialog/document-properties.cpp:272
 msgid "Snap only when _closer than:"
-msgstr ""
+msgstr "Chỉ bám dính khi _gần hơn:"
 
 #: ../src/ui/dialog/document-properties.cpp:272
 #: ../src/ui/dialog/document-properties.cpp:278
@@ -11495,11 +11406,11 @@ msgstr "Nguồn ánh sáng:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Direction angle for the light source on the XY plane, in degrees"
-msgstr ""
+msgstr "Góc chiếu sáng trên mặt phẳng XY, tính bằng độ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the YZ plane, in degrees"
-msgstr ""
+msgstr "Góc chiếu sáng trên mặt phẳng YZ, tính bằng độ"
 
 #. default x:
 #. default y:
@@ -11536,8 +11447,9 @@ msgid "Specular Exponent"
 msgstr "Luỹ thừa phản chiếu"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#, fuzzy
 msgid "Exponent value controlling the focus for the light source"
-msgstr ""
+msgstr "Giá trị số mũ điều khiển tiêu điểm của nguồn sáng"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:967
@@ -11546,7 +11458,7 @@ msgstr "Góc nón"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:967
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
-msgstr ""
+msgstr "Đây là góc giữa trục chiếu sáng (trục giữa nguồn sáng và điểm được chiếu tới) và vùng sáng dạng nón (bên ngoài vùng nón này không có tia sáng nào)."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1028
 msgid "New light source"
@@ -12070,7 +11982,7 @@ msgstr "Ứng xử hộp thoại (cần khởi chạy lại):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
-msgstr ""
+msgstr "Thay đổi công cụ khi người dùng dùng thiết bị khác để làm việc trên bàn vẽ (bút, tẩy, chuột)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 msgid "Scrolling"
@@ -12252,15 +12164,15 @@ msgstr "Đối tượng đã chọn có hiển thị các điều khiển sửa 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:282
 msgid "Conversion to guides uses edges instead of bounding box"
-msgstr ""
+msgstr "Chuyển thành đường gióng dựa theo cạnh thay vì hộp bao quanh"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:283
 msgid "Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."
-msgstr ""
+msgstr "Chuyển một đối tượng thành các đường gióng đặt xung quanh các trục thực của đối tượng (gần giống hình dạng của nó)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:290
 msgid "Ctrl+click dot size:"
-msgstr ""
+msgstr "Kích thước chấm khi Ctrl+nhấn chuột:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:290
 #, fuzzy
@@ -12269,7 +12181,7 @@ msgstr "Hệ số co giãn chiều rộng của nét viền"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:291
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
-msgstr ""
+msgstr "Kích thước của chấm được tạo ra khi giữ Ctrl và bấm chuột (so với độ rộng nét đang dùng)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "<b>No objects selected</b> to take the style from."
@@ -12343,11 +12255,11 @@ msgstr "<b>Đính đường gióng</b>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:394
 msgid "Keep objects after conversion to guides"
-msgstr ""
+msgstr "Giữ đối tượng lại sau khi đã chuyển nó thành đường gióng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
 msgid "When converting an object to guides, don't delete the object after the conversion."
-msgstr ""
+msgstr "Khi chuyển một đối tượng thành đường gióng, không xóa bỏ nó đi."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
 #, fuzzy
@@ -13013,7 +12925,8 @@ msgstr "Điều chỉnh hiển thị"
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
-msgstr "Hồ sơ ICC cần dùng để định chuẩn kết xuất màn hình.\n"
+msgstr ""
+"Hồ sơ ICC cần dùng để định chuẩn kết xuất màn hình.\n"
 "Các thư mục sẽ tìm kiếm:%s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:845
@@ -13258,324 +13171,261 @@ msgid "The smallest number written to SVG is 10 to the power of this exponent; a
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1042
-#, fuzzy
 msgid "SVG output"
-msgstr "Kết xuất SVG"
+msgstr "Xuất SVG"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "System default"
-msgstr "Mặc định hệ thống"
+msgstr "Mặc định của hệ thống"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Albanian (sq)"
-msgstr "Name=An-ba-ni"
+msgstr "Albania (sq)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Amharic (am)"
-msgstr "Am-ha-ri (am_ET)"
+msgstr "Amhari (am)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Arabic (ar)"
-msgstr "Ả rập (ar)"
+msgstr "Arập (ar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Armenian (hy)"
-msgstr "Đồng Đơ-ram Ac-mê-ni"
+msgstr "Acmenia (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Azerbaijani (az)"
-msgstr "Az Zahirah"
+msgstr "Azecbaizan (az)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Basque (eu)"
-msgstr "Bas-quợ (eu_ES)"
+msgstr "Basque (eu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Belarusian (be)"
-msgstr "snên là"
+msgstr "Belarus (be)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Bulgarian (bg)"
-msgstr "Bun-ga-ri (bg_BG)"
+msgstr "Bulgarian (bg)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Bengali (bn)"
-msgstr "Ben-ga-li (bn_IN)"
+msgstr "Bengali (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Breton (br)"
-msgstr "Pháp Bợ-re-ton (br_FR)"
+msgstr "Breton (br)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Catalan (ca)"
-msgstr "Ca-ta-lan (ca_ES)"
+msgstr "Catalan (ca)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Valencian Catalan (ca@valencia)"
-msgstr "Ca-ta-lan (ca_ES)"
+msgstr "Valencian Catalan (ca@valencia)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
-#, fuzzy
 msgid "Chinese/China (zh_CN)"
-msgstr "Trung Xin-ga-po (zh_SG)"
+msgstr "Trung Quốc (zh_CN)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
-#, fuzzy
 msgid "Chinese/Taiwan (zh_TW)"
-msgstr "Tiếng Hoa Phồn Thể, EUC-TW"
+msgstr "Trung Quốc/Đài Loan (zh_TW)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
-#, fuzzy
 msgid "Croatian (hr)"
-msgstr "Cợ-rô-a-ti-a (hr_HR)"
+msgstr "Croatia (hr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
-#, fuzzy
 msgid "Czech (cs)"
-msgstr "Cộng Hoà Séc (cs_CZ)"
+msgstr "Séc (cs_CZ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "Danish (da)"
 msgstr "Đan mạch (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 #, fuzzy
 msgid "Dutch (nl)"
-msgstr "Ha Lan (nl_NL)"
+msgstr "Ha Lan (nl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "Dzongkha (dz)"
-msgstr "Tây Tạng"
+msgstr "Dzongkha (dz)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "German (de)"
 msgstr "Đức (de)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "Greek (el)"
-msgstr "En-xan-va-đoa"
+msgstr "Hi Lạp (el)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "English (en)"
-msgstr "Anh Mỹ (en-us)"
+msgstr "Anh (en)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "English/Australia (en_AU)"
-msgstr "Anh Anh (en-gb)"
+msgstr "Anh Úc (en_AU)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
-#, fuzzy
 msgid "English/Canada (en_CA)"
-msgstr "Anh Ca-na-đa (en_CA)"
+msgstr "Anh/Canađa (en_CA)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
-#, fuzzy
 msgid "English/Great Britain (en_GB)"
-msgstr "Coa-ni-s (kw_GB)"
+msgstr "Anh/Anh (en_GB)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Pig Latin (en_US@piglatin)"
 msgstr "Pig Latin (en_US@piglatin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
-#, fuzzy
 msgid "Esperanto (eo)"
-msgstr "Etpêrantô (eo_EO)"
+msgstr "Esperanto (eo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
-#, fuzzy
 msgid "Estonian (et)"
-msgstr "Roi Et"
+msgstr "Estonia (et)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
-#, fuzzy
 msgid "Finnish (fi)"
 msgstr "Phần Lan (fi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
-#, fuzzy
 msgid "French (fr)"
 msgstr "Pháp (fr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
-#, fuzzy
 msgid "Irish (ga)"
-msgstr "Đồng Bảng Ái-nhĩ-lan"
+msgstr "Ái Nhĩ Lan (ga)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
-#, fuzzy
 msgid "Galician (gl)"
-msgstr "Ga-li-xi (gl_ES)"
+msgstr "Galicia (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
-#, fuzzy
 msgid "Hebrew (he)"
-msgstr "1255, tiếng Do Thái"
+msgstr "Hebrew (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
-#, fuzzy
 msgid "Hungarian (hu)"
-msgstr "Hun-ga-ri (hu)"
+msgstr "Hungari (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Indonesian (id)"
-msgstr "_Mã số tính năng:"
+msgstr "Indonesian (id)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Italian (it)"
-msgstr "I-ta-li-a (it)"
+msgstr "Italia (it)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Japanese (ja)"
 msgstr "Nhật Bản (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Khmer (km)"
-msgstr "%.1f cây số"
+msgstr "Khmer (km)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Kinyarwanda (rw)"
-msgstr "Tiếng Kin-ia-ouanh-đa"
+msgstr "Kinyarwanda (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Korean (ko)"
-msgstr "Johab (Hàn)"
+msgstr "Hàn Quốc (ko)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Lithuanian (lt)"
-msgstr "Li-tu-a-ni (lt)"
+msgstr "Lithuania (lt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Macedonian (mk)"
-msgstr "Ma-xê-đô-ni-a (mk)"
+msgstr "Macedonia (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Mongolian (mn)"
-msgstr "Tiếng Mông Cổ"
+msgstr "Mông Cổ (mn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Nepali (ne)"
-msgstr "S_ao lại"
+msgstr "Nepal (ne)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Norwegian Bokmål (nb)"
-msgstr "Name=Na-uy (Bóc-mặn)"
+msgstr "Bokmål Nauy (nb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Norwegian Nynorsk (nn)"
-msgstr "Name=Na-uy (Ny-noạ-x-kh)"
+msgstr "Nynorsk Nauy (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Panjabi (pa)"
-msgstr "Đồng Pa-an-ga"
+msgstr "Panjabi (pa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Polish (pl)"
 msgstr "Ba Lan (pl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Portuguese (pt)"
 msgstr "Bồ Đào Nha (pt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Portuguese/Brazil (pt_BR)"
-msgstr "Ảnh xạ phím Sun Bồ-đào-nha (tại Bra-xin)"
+msgstr "Bồ Đào Nha/Brazil (pt_BR)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Romanian (ro)"
-msgstr "_Tròn"
+msgstr "Romani (ro)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Russian (ru)"
 msgstr "Nga (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#, fuzzy
 msgid "Serbian (sr)"
-msgstr "Đồng Đi-nă Xéc-bi"
+msgstr "Secbi (sr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Serbian in Latin script (sr@latin)"
 msgstr "Tiếng Xecbi dùng mẫu tự Latin (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#, fuzzy
 msgid "Slovak (sk)"
-msgstr ""
-"\n"
-"%*s[ nhảy qua %sK ]"
+msgstr "Slovakia (sk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#, fuzzy
 msgid "Slovenian (sl)"
-msgstr "Xờ-la-ve-nhi-a (sl)"
+msgstr "Slovenia (sl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#, fuzzy
 msgid "Spanish (es)"
 msgstr "Tây Ban Nha (es)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
-#, fuzzy
 msgid "Spanish/Mexico (es_MX)"
-msgstr "Tây Ban Nha Mỹ (es_US)"
+msgstr "Tây Ban Nha/Mexico (es_MX)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
-#, fuzzy
 msgid "Swedish (sv)"
 msgstr "Thụy Điển (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
-#, fuzzy
 msgid "Thai (th)"
 msgstr "Thái Lan (th)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
-#, fuzzy
 msgid "Turkish (tr)"
 msgstr "Thổ Nhĩ Kỳ (tr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
-#, fuzzy
 msgid "Ukrainian (uk)"
-msgstr "A-M|Tiếng Anh (quốc Anh)"
+msgstr "Ukraina (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Vietnamese (vi)"
@@ -13838,59 +13688,48 @@ msgstr ""
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
-#, fuzzy
 msgid "User config: "
-msgstr "cấu hình gói"
+msgstr "Cấu hình người dùng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1292
-#, fuzzy
 msgid "User data: "
-msgstr "Dữ liệu người dùng"
+msgstr "Dữ liệu người dùng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1296
-#, fuzzy
 msgid "User cache: "
-msgstr "Bộ đệm âm thanh"
+msgstr "Bộ đệm người dùng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1300
-#, fuzzy
 msgid "System config: "
-msgstr "cấu hình gói"
+msgstr "Cấu hình hệ thống:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1303
-#, fuzzy
 msgid "System data: "
-msgstr "Hệ thống cất giữ dữ liệu"
+msgstr "Dữ liệu hệ thống:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1306
-#, fuzzy
 msgid "PIXMAP: "
-msgstr "Ảnh điểm"
+msgstr "PIXMAP: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1310
-#, fuzzy
 msgid "DATA: "
-msgstr "dữ liệu"
+msgstr "DATA: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1314
-#, fuzzy
 msgid "UI: "
-msgstr "Giao diện người dùng"
+msgstr "UI: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1323
-#, fuzzy
 msgid "Icon theme: "
-msgstr "Sắc thái Biểu tượng"
+msgstr "Sắc thái Biểu tượng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#, fuzzy
 msgid "System info"
-msgstr "Lấy Thông Tin Hệ Thống"
+msgstr "Thông Tin Hệ Thống"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#, fuzzy
 msgid "General system information"
-msgstr "Lấy thông tin hệ thống"
+msgstr "Thông tin tổng quát về hệ thống"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1340
 msgid "Misc"
@@ -13970,7 +13809,6 @@ msgid "Unlock layer"
 msgstr "Gỡ khoá lớp"
 
 #: ../src/ui/dialog/layers.cpp:645
-#, fuzzy
 msgid "Layers"
 msgstr "Lớp"
 
@@ -14127,7 +13965,6 @@ msgid "Server supplied malformed Clip Art feed"
 msgstr "Máy chủ trả về thông tin Clip Art không đúng"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
-#, fuzzy
 msgid "Search for:"
 msgstr "Tìm:"
 
@@ -14140,23 +13977,20 @@ msgid "Search"
 msgstr "Tìm kiếm"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:577
-#, fuzzy
 msgid "Files found"
-msgstr "Tìm thấy tập tin trao đổi (swap):"
+msgstr "Các tập tin tìm thấy"
 
 #: ../src/ui/dialog/print.cpp:92
 msgid "Could not open temporary PNG for bitmap printing"
 msgstr "Không mở được tập tin PNG nháp dùng để in ảnh bitmap"
 
 #: ../src/ui/dialog/print.cpp:117
-#, fuzzy
 msgid "Could not set up Document"
-msgstr "Không thể thiết lập kết nối finger."
+msgstr "Không thể thiết lập tài liệu"
 
 #: ../src/ui/dialog/print.cpp:121
-#, fuzzy
 msgid "Failed to set CairoRenderContext"
-msgstr "Lỗi đặt cá tính thành %s"
+msgstr "Lỗi đặt CairoRenderContext"
 
 #. set up dialog title, based on document name
 #: ../src/ui/dialog/print.cpp:161
@@ -14197,46 +14031,39 @@ msgid "Errors"
 msgstr "Lỗi"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
-#, fuzzy
 msgid "Set SVG Font attribute"
-msgstr "Đặt thuộc tính về bộ lọc có sẵn"
+msgstr "Đặt thuộc tính cho phông SVG"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
-#, fuzzy
 msgid "Adjust kerning value"
 msgstr "Chỉnh giá trị co dãn"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
-#, fuzzy
 msgid "Family Name:"
-msgstr "_Tên nhóm:"
+msgstr "Tên nhóm:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
 msgid "Set width:"
 msgstr "Đặt bề rộng:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:433
-#, fuzzy
 msgid "glyph"
-msgstr "Hình tượng"
+msgstr "glyph"
 
 #. SPGlyph* glyph =
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:465
-#, fuzzy
 msgid "Add glyph"
-msgstr "<không có hình tượng>"
+msgstr "Thêm glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:481
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:525
-#, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "Chọn (các) <b>đường nét</b> cần bù vào/ra."
+msgstr "Chọn một <b>đường nét</b> để đặt các cung của glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:489
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:533
-#, fuzzy
 msgid "The selected object does not have a <b>path</b> description."
-msgstr "Đối tượng đã chọn <b>không phải là đường nét</b> nên không thể dời vào/ra."
+msgstr "Đối tượng đã chọn không có mô tả <b>đường nét</b>."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
@@ -14244,48 +14071,40 @@ msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
-#, fuzzy
 msgid "Set glyph curves"
-msgstr "Đường cong hồi quy tuyến"
+msgstr "Đặt cung glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
-#, fuzzy
 msgid "Reset missing-glyph"
-msgstr "Thiếu tên hình tượng"
+msgstr "Đặt lại glyph thiếu"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
-#, fuzzy
 msgid "Edit glyph name"
-msgstr "Tên hình tượng sai"
+msgstr "Sửa tên glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:598
-#, fuzzy
 msgid "Set glyph unicode"
-msgstr "Kiểm tra đa Unicode"
+msgstr "Đặt unicode cho glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
 msgstr "Xóa phông"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
-#, fuzzy
 msgid "Remove glyph"
-msgstr "Bỏ hình tượng này"
+msgstr "Xóa glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Vị trí cặp (định chỗ)"
+msgstr "Xóa cặp định chỗ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
-#, fuzzy
 msgid "Missing Glyph:"
-msgstr "Thiếu hình tượng"
+msgstr "Các Glyph còn thiếu:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
-#, fuzzy
 msgid "From selection..."
-msgstr "Bắt từ vùng chọn"
+msgstr "Từ vùng chọn..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:654
 #: ../src/ui/widget/preferences-widget.cpp:590
@@ -14293,50 +14112,41 @@ msgid "Reset"
 msgstr "Đặt lại"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:665
-#, fuzzy
 msgid "Glyph name"
-msgstr "Tên hình tượng sai"
+msgstr "Tên glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
-#, fuzzy
 msgid "Matching string"
-msgstr "khớp chuỗi nghĩa chữ"
+msgstr "Chuỗi so khớp"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
-#, fuzzy
 msgid "Add Glyph"
-msgstr "<không có hình tượng>"
+msgstr "Thêm Glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:676
-#, fuzzy
 msgid "Get curves from selection..."
-msgstr "Gỡ bỏ khỏi vùng chọn hiệu ứng"
+msgstr "Lấy các cung từ vùng chọn..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
-#, fuzzy
 msgid "Add kerning pair"
-msgstr "Vị trí cặp (định chỗ)"
+msgstr "Đặt cặp định chỗ"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:734
-#, fuzzy
 msgid "Kerning Setup:"
-msgstr "Cài đặt Unikey"
+msgstr "Thiết lập định chỗ ký tự:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
-#, fuzzy
 msgid "1st Glyph:"
-msgstr "<không có hình tượng>"
+msgstr "Glyph thứ nhất:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:738
-#, fuzzy
 msgid "2nd Glyph:"
-msgstr "<không có hình tượng>"
+msgstr "Glyph thứ hai:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
-#, fuzzy
 msgid "Add pair"
-msgstr "cặp định chỗ"
+msgstr "Thêm cặp"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
@@ -14347,9 +14157,8 @@ msgid "Second Unicode range"
 msgstr "Phạm vi Unicode thứ hai"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
-#, fuzzy
 msgid "Kerning value:"
-msgstr "Giá trị thẻ"
+msgstr "Giá trị định chỗ ký tự:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
@@ -14373,14 +14182,12 @@ msgid "_Global Settings"
 msgstr "_Thiết lập toàn cục"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:871
-#, fuzzy
 msgid "_Glyphs"
-msgstr "Hình tượng:"
+msgstr "_Glyph"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "_Kerning"
-msgstr "Định chỗ"
+msgstr "Đị_nh chỗ"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
@@ -14512,9 +14319,8 @@ msgstr "Khoảng cách theo chiều ngang giữa các cột (đơn vị điểm 
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
-#, fuzzy
 msgid "tileClonesDialog|Arrange"
-msgstr "Xếp th_eo"
+msgstr "Sắp xếp"
 
 #: ../src/ui/dialog/tile.cpp:864
 msgid "Arrange selected objects"
@@ -14703,14 +14509,18 @@ msgstr "Tùy chọn"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:627
-#, fuzzy
 msgid ""
 "Inkscape bitmap tracing\n"
 "is based on Potrace,\n"
 "created by Peter Selinger\n"
 "\n"
 "http://potrace.sourceforge.net"
-msgstr "Nhờ Peter Selinger, http://potrace.sourceforge.net"
+msgstr ""
+"Bộ đồ ảnh bitmap của Inkscape\n"
+"dựa trên Potrace,\n"
+"viết bởi Peter Selinger\n"
+"\n"
+"http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -14917,9 +14727,8 @@ msgid "Cursor coordinates"
 msgstr "Toạ độ con trỏ"
 
 #: ../src/ui/view/edit-widget.cpp:1089
-#, fuzzy
 msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>Chúc mừng bạn dùng chương trình Inkscape !</b> Hãy dùng các công cụ kiểu hình hay dạng tự do để táo đối tượng; dùng bộ chọn (mũi tên) để di chuyển hay chuyển dạng mục."
+msgstr "<b>Chào mừng bạn đến với Inkscape!</b> Hãy dùng các công cụ để vẽ các hình dạng; dùng công cụ Chọn (mũi tên) để di chuyển hay chuyển dạng chúng."
 
 #: ../src/ui/view/edit-widget.cpp:1200
 #: ../src/widgets/desktop-widget.cpp:832
@@ -14991,9 +14800,8 @@ msgid "Other"
 msgstr "Khác"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
-#, fuzzy
 msgid "Change blur"
-msgstr "Đổi mờ"
+msgstr "Đổi nhòe"
 
 #: ../src/ui/widget/object-composite-settings.cpp:212
 #: ../src/ui/widget/selected-style.cpp:857
@@ -17114,24 +16922,20 @@ msgid "Find objects in document"
 msgstr "Tìm đối tượng trong tài liệu"
 
 #: ../src/verbs.cpp:2656
-#, fuzzy
 msgid "Find and _Replace Text..."
-msgstr "Tìm và thay thế đoạn"
+msgstr "Tìm và _thay thế văn bản..."
 
 #: ../src/verbs.cpp:2657
-#, fuzzy
 msgid "Find and replace text in document"
-msgstr "Nhận ra mọi liên kết trong văn bản và thay thế chúng."
+msgstr "Tìm và thay thế văn bản có trong tài liệu"
 
 #: ../src/verbs.cpp:2658
-#, fuzzy
 msgid "Check Spellin_g..."
-msgstr ", kiểm tra bị ép buộc.\n"
+msgstr "_Kiểm tra chính tả..."
 
 #: ../src/verbs.cpp:2659
-#, fuzzy
 msgid "Check spelling of text in document"
-msgstr "Ẩn lỗi chính tả trong tài liệu"
+msgstr "Kiểm tra chính tả của văn bản có trong tài liệu"
 
 #: ../src/verbs.cpp:2660
 msgid "_Messages..."
@@ -17371,19 +17175,16 @@ msgid "Unhide All in All Layers"
 msgstr "Hủy ẩn tất cả trên mọi lớp"
 
 #: ../src/verbs.cpp:2740
-#, fuzzy
 msgid "Link an ICC color profile"
-msgstr "Thông tin hồ sơ màu ICC"
+msgstr "Liên kết tới một hồ sơ màu ICC"
 
 #: ../src/verbs.cpp:2741
-#, fuzzy
 msgid "Remove Color Profile"
-msgstr "Hồ sơ màu nhúng:"
+msgstr "Xóa hồ sơ màu ICC"
 
 #: ../src/verbs.cpp:2742
-#, fuzzy
 msgid "Remove a linked ICC color profile"
-msgstr "Các cờ quản lý màu sắc hồ sơ ICC"
+msgstr "Xóa một hồ sơ màu ICC đã liên kết"
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -17429,9 +17230,8 @@ msgid "none"
 msgstr "không có"
 
 #: ../src/widgets/ege-paint-def.cpp:89
-#, fuzzy
 msgid "remove"
-msgstr "gỡ bỏ"
+msgstr "xóa"
 
 #: ../src/widgets/fill-style.cpp:283
 msgid "Change fill rule"
@@ -17459,9 +17259,8 @@ msgstr "Nhóm phông"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. Style frame
 #: ../src/widgets/font-selector.cpp:190
-#, fuzzy
 msgid "fontselector|Style"
-msgstr "Kiểu dáng sai"
+msgstr "Kiểu dáng"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
@@ -19524,7 +19323,6 @@ msgid "Delete objects touched by the eraser"
 msgstr "Xoá các đối tượng nằm dưới cục tẩy"
 
 #: ../src/widgets/toolbox.cpp:5757
-#, fuzzy
 msgid "Cut"
 msgstr "Cắt"
 
@@ -19853,39 +19651,34 @@ msgid "The second path must be exactly four nodes long."
 msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút."
 
 #: ../share/extensions/svg_and_media_zip_output.py:113
-#, fuzzy, python-format
+#, python-format
 msgid "Could not locate file: %s"
-msgstr "Không thể mở tập tin %s"
+msgstr "Không thể mở tập tin: %s"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
-#, fuzzy
 msgid "You must select at least two elements."
-msgstr "Bạn phải chọn ít nhất một máy in."
+msgstr "Bạn phải chọn ít nhất hai đối tượng."
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "Thêm nút"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "By max. segment length"
-msgstr "Độ dài tên trường tối đa"
+msgstr "Theo chiều dài đoạn dài nhất"
 
 #: ../share/extensions/addnodes.inx.h:3
-#, fuzzy
 msgid "By number of segments"
-msgstr "số đoạn lớn nhất = %lu\n"
+msgstr "Theo số đoạn"
 
 #: ../share/extensions/addnodes.inx.h:4
-#, fuzzy
 msgid "Division method"
-msgstr "Lời gọi phương pháp"
+msgstr "Phương pháp chia"
 
 #: ../share/extensions/addnodes.inx.h:5
-#, fuzzy
 msgid "Maximum segment length (px)"
-msgstr "Độ dài trường chữ tối đa"
+msgstr "Độ dài tối đa của mỗi đoạn (px)"
 
 #: ../share/extensions/addnodes.inx.h:6
 #: ../share/extensions/convert2dashes.inx.h:2
@@ -19904,7 +19697,6 @@ msgid "Modify Path"
 msgstr "Sửa đường nét"
 
 #: ../share/extensions/addnodes.inx.h:7
-#, fuzzy
 msgid "Number of segments"
 msgstr "Số đoạn"
 
@@ -19914,9 +19706,8 @@ msgstr "Dữ liệu nhập AI 8.0"
 
 # Name: don't translate / Tên: đừng dịch
 #: ../share/extensions/ai_input.inx.h:2
-#, fuzzy
 msgid "Adobe Illustrator 8.0 and below (*.ai)"
-msgstr "Adobe Illustrator 9.0 trở lên (*.ai)"
+msgstr "Adobe Illustrator 8.0 trở xuống (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
@@ -19965,14 +19756,12 @@ msgid "Corel DRAW 7-X4 files (*.cdr)"
 msgstr "Tập tin Corel DRAW 7-X4 (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
-#, fuzzy
 msgid "Corel DRAW Input"
 msgstr "Bản vẽ Corel Draw"
 
 #: ../share/extensions/cdr_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "Mở tập tin được XFIG lưu"
+msgstr "Mở tập tin được lưu bởi Corel DRAW 7-X4"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
@@ -21193,14 +20982,12 @@ msgid "Select a rectangle before calling the extension; it will determine X and 
 msgstr ""
 
 #: ../share/extensions/param_curves.inx.h:13
-#, fuzzy
 msgid "Start t-value"
-msgstr "Giá trị x đầu"
+msgstr "Giá trị t đầu"
 
 #: ../share/extensions/param_curves.inx.h:15
-#, fuzzy
 msgid "x-Function"
-msgstr "Hàm"
+msgstr "Hàm-x"
 
 #: ../share/extensions/param_curves.inx.h:16
 #, fuzzy
@@ -21213,9 +21000,8 @@ msgid "x-value of rectangle's right"
 msgstr "Giá trị y của cạnh bên dưới hình chữ nhật"
 
 #: ../share/extensions/param_curves.inx.h:18
-#, fuzzy
 msgid "y-Function"
-msgstr "Hàm"
+msgstr "Hàm-y"
 
 #: ../share/extensions/param_curves.inx.h:19
 #, fuzzy
@@ -21627,7 +21413,6 @@ msgid "Bottom:"
 msgstr "Dưới:"
 
 #: ../share/extensions/printing-marks.inx.h:4
-#, fuzzy
 msgid "Canvas"
 msgstr "Vùng vẽ"
 
