@@ -158,6 +158,8 @@ void Crc32::reset()
 void Crc32::update(unsigned char b)
 {
     unsigned long c = ~value;
+
+    c &= 0xffffffff;
     c = crc_table[(c ^ b) & 0xff] ^ (c >> 8);
     value = ~c;
 }
