@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-07 15:11+0700\n"
+"PO-Revision-Date: 2009-07-09 16:02+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "ព្រិល"
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "ព្រឹល​នៅពេល​ដែល​វត្ថុ​ហោះ​អណ្ដែត​ផ្ដេក ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
+msgstr "ព្រិល​នៅពេល​ដែល​វត្ថុ​ហោះ​អណ្ដែត​ផ្ដេក ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Motion blur, vertical"
@@ -95,7 +95,7 @@ msgstr "ចលនា​ព្រិល បញ្ឈរ"
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "ព្រឹល​នៅពេល​​វត្ថុ​ហោះ​អណ្ដែត​បញ្ឈរ ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
+msgstr "ព្រិល​នៅពេល​​វត្ថុ​ហោះ​អណ្ដែត​បញ្ឈរ ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Apparition"
@@ -457,7 +457,7 @@ msgstr "ហ្វ្រូម៉ា​ខៀវ"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Marble-like bluish speckles"
-msgstr ""
+msgstr "ថ្មម៉ាប​ដែល​ដូច​នឹង​ចំណុច​ពណ៌​ខៀវ​ប្រឿងៗ"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Button"
@@ -568,7 +568,7 @@ msgstr "រលាយ​បាត់ និង​ពន្លឺ​"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "បញ្ចូល​ផ្នែក​របស់​វត្ថុ​បញ្ចូល​គ្នា ដោយ​ជ្រុង​ទេ​រលោង និង​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Badge"
@@ -720,9 +720,8 @@ msgid "Metallized effect with a soft lighting, slightly translucent at the edges
 msgstr ""
 
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Dragee"
-msgstr "អូស​ខ្សែកោង​"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
@@ -745,13 +744,12 @@ msgid "Gel Ridge metallized at its top"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:73
-#, fuzzy
 msgid "Fat oil"
-msgstr "ពណ៌​រាបស្មើ"
+msgstr "ពណ៌ប្រេង​រាបស្មើ"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "ពណ៌ប្រេង​រាបស្មើ​ដែលមាន​ភាព​គួចវិល​ដែល​អាច​កែសម្រួល​បាន"
 
 #: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -777,7 +775,7 @@ msgstr "រូបវិទូ"
 
 #: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "ក្រហូង​ដែល​ព្រិល​នឹង​ប៉ារ៉ាឡែល​នឹង​គែម​នៅ​ខាងក្នុង"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Hole"
@@ -801,7 +799,7 @@ msgstr "គ្រោង​រលូន"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "គូស​គ្រោង​បន្ទាត់ និង​ធ្វើ​ឲ្យ​បន្ទាត់​កាត់​ខ្វែង​របស់​ពួកវា​រលោង"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Cubes"
@@ -809,30 +807,27 @@ msgstr "គូប"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr ""
+msgstr "គូប​ដែល​បាន​ពង្រាយ ។ លៃតម្រូវ​ Morphology កម្រិតទាប​ទៅកាន់​ទំហំ​ផ្សេងៗ"
 
 #: ../share/filters/filters.svg.h:80
-#, fuzzy
 msgid "Peel off"
-msgstr "អុហ្វសិត​​ប៉ារ៉ាឡែល​"
+msgstr "​"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:81
-#, fuzzy
 msgid "Gold splatter"
-msgstr "ផ្លាស់ទី​លំនាំ"
+msgstr "កំទេច​ពណ៌​មាស"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "កំទេច​លោហៈ​ដែល​ខ្ទាត ដោយមាន​ការ​បន្លិច​ពណ៌​មាស"
 
 #: ../share/filters/filters.svg.h:82
-#, fuzzy
 msgid "Gold paste"
-msgstr "សមាមាត្រ​កាំ"
+msgstr "កំហាប់​ពណ៌​មាស"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
@@ -840,11 +835,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
-msgstr ""
+msgstr "ប្លាស្ទិក​ដែល​ខ្ញុកខ្ញី"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "ប្លាស្ទិក​ក្រាស​ដែល​ខ្ញុកខ្ញី ដែល​មាន​គែម​រលាយ"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
@@ -860,7 +855,7 @@ msgstr "ក្រដាស​គ្រើម"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "បែបផែន​ក្រដាស​ពណ៌​ទឹក ដែល​អាច​ប្រើ​សម្រាប់​រូបភាព​ ដូច​ដែល​ប្រើ​សម្រាប់​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
@@ -868,7 +863,7 @@ msgstr "គ្រើម និង​រលោង"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "បែបផែន​ក្រដាស់​រលោង​ខ្ញុកខ្ញី ដែល​អាច​ត្រូវបាន​ប្រើ​សម្រាប់​រូបភាព ដូច​គ្នា​នឹង​សម្រាប់​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:87
 msgid "In and Out"
@@ -880,11 +875,11 @@ msgstr "ស្រមោល​ពណ៌​ខាង​ក្នុង និង�
 
 #: ../share/filters/filters.svg.h:88
 msgid "Air spray"
-msgstr ""
+msgstr "ស្ប៉ាយ​"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
-msgstr ""
+msgstr "ស្ប៉ាយ - លៃតម្រូវចំនួន​បម្លាស់ទី​ផែនទី"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
@@ -905,20 +900,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
-msgstr ""
+msgstr "មីក្រូស្កូពី​អេឡិចត្រូនិក"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr ""
+msgstr "ជ្រុងទេរ ពន្លឺព្រាងៗ ការ​​ប្ដូរ​ពណ៌ និង​ពន្លឺ​ភ្លឺ​ដូច​មីក្រូស្កូពី​អេឡិចត្រូនិក"
 
 #: ../share/filters/filters.svg.h:92
-#, fuzzy
 msgid "Tartan"
-msgstr "គោលដៅ"
+msgstr "ក្រឡាតាតាន់"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
-msgstr ""
+msgstr "លំនាំក្រឡា checkered tartan"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Invert hue"
@@ -938,7 +932,7 @@ msgstr "គូរ​គ្រោង"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
-msgstr ""
+msgstr "គ្រោង ទ្វេ"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -946,11 +940,11 @@ msgstr "គូស​បន្ទាត់​រលោង​មួយ​ដោយ
 
 #: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
-msgstr "ព្រឹល​ស្អាត"
+msgstr "ព្រិល​ស្អាត"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "វណ្ឌវង្ក​ដែល​មាន​ពណ៌​រលោង ដែល​អនុញ្ញាត​​ឲ្យ​ផ្លាស់ប្ដូរ​តិត្ថិភាព និង​ការ​បង្វិល​ភាពលាំៗ​ណៃ​ពណ៌"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Glow"
@@ -966,7 +960,7 @@ msgstr "គ្រោង Ghost"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
-msgstr "បន្ថែម​ភាព​ព្រឹល​មាន​ពន្លឺ និង​យក​រូបរាង​ចេញ"
+msgstr "បន្ថែម​ភាព​ព្រិល​មាន​ពន្លឺ និង​យក​រូបរាង​ចេញ"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
@@ -1009,16 +1003,15 @@ msgstr "កញ្ចក់​កែវ​ផ្ដោត​ទន់"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
-msgstr "មាតិកា​រូបភាព​ភ្លឺ​ដោយ​មិន​ធ្វើ​ឲ្យ​វា​ព្រឹល"
+msgstr "មាតិកា​រូបភាព​ភ្លឺ​ដោយ​មិន​ធ្វើ​ឲ្យ​វា​ព្រិល"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
-msgstr ""
+msgstr "កែវលាបថ្នាំ"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Illuminated stained glass effect"
-msgstr "មុំ​បំភ្លឺ"
+msgstr "បែបផែន​កែវ​លាបថ្នាំ​ភ្លឺ​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
@@ -1026,7 +1019,7 @@ msgstr "កែវ​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
-msgstr ""
+msgstr "បែបផែន​កែវ​មាន​ពន្លឺ​ភ្លឺច្បាស់​ដោយមាន​ពន្លឺ​នៅ​ពីក្រោម"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
@@ -1054,16 +1047,15 @@ msgstr "គែម​​រលោង"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​ខាងក្រៅ​រូបរាង​ និង​រូបភាព​រលោង​ដោយ​មិនផ្លាស់ប្ដូរ​ខាងក្នុង​របស់​ពួកវា"
 
 #: ../share/filters/filters.svg.h:109
-#, fuzzy
 msgid "Torn edges"
-msgstr "ផ្លាស់ទី​ថ្នាំង​"
+msgstr "គែម​ស្រក់​"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "ផ្លាស់ប្ដូរ​ខាងក្រៅ​រូបរាង និង​រូបភាព​ដោយ​មិន​ផ្លាស់ប្ដូរ​ខាងក្នុង​របស់​វា"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Feather"
@@ -1071,23 +1063,23 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "របាំង​ដែល​ព្រិល​នៅលើ​គែម​ដោយ​មិន​ផ្លាស់ប្ដូរ​ខាងក្នុង"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur content"
-msgstr "ធ្វើ​ឲ្យ​មាតិកា​ព្រឹល"
+msgstr "ធ្វើ​ឲ្យ​ខាងក្នុង​ព្រិល"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "ធ្វើ​ឲ្យ​មាតិកា​របស់​វត្ថុ​ព្រឹល ដែល​រក្សាទុក​នូវ​គ្រោង"
+msgstr "ធ្វើ​ឲ្យ​មាតិកា​របស់​វត្ថុ​ព្រិល ដែល​រក្សាទុក​នូវ​គ្រោង"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Specular light"
-msgstr "ស្ទង់​ពន្លឺ"
+msgstr "ឆ្លុះ​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "ជ្រុង​ទ្រេត​ឆ្លុះ​មូលដ្ឋាន​ដែលត្រូវប្រើ​សម្រាប់​បង្កើត​វាយនភាព"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
@@ -1099,7 +1091,7 @@ msgstr "ធ្វើ​ឥ្យ​រូបរាង​ខាង​ក្នុ
 
 #: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
-msgstr ""
+msgstr "មិនស្ថិតស្ថេរ"
 
 #: ../share/filters/filters.svg.h:114
 msgid ""
@@ -1191,7 +1183,7 @@ msgstr "បែបផែន​ផុស ៖ ត្រីមាត្រ​អណ
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
-msgstr "ព្រឹល​គំរូ"
+msgstr "ព្រិល​គំរូ"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
@@ -1255,7 +1247,7 @@ msgstr "គ្រោង​ពណ៌"
 
 #: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
-msgstr "គ្រោង​ដែល​ដាក់​ពណ៌​បាន ដែល​មាន​ទទឹង និង​ភាព​ព្រឹល​ដែល​អាច​លៃតម្រូវបាន"
+msgstr "គ្រោង​ដែល​ដាក់​ពណ៌​បាន ដែល​មាន​ទទឹង និង​ភាព​ព្រិល​ដែល​អាច​លៃតម្រូវបាន"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Liquid"
@@ -4612,7 +4604,7 @@ msgstr "ទំហំ​រអិល"
 
 #: ../src/extension/internal/filter/snow.h:42
 msgid "Snow has fallen on object"
-msgstr "ព្រឹល​ធ្លាក់​លើ​វត្ថុ"
+msgstr "ព្រិល​ធ្លាក់​លើ​វត្ថុ"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
@@ -10484,7 +10476,7 @@ msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>ដាក់​ព�
 #: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
-msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បង្កើន​ភាព​ព្រឹល</b> ។ ប្រើ​ប្ដូរ(Shift) ដើម្បី​<b>បន្ថយ</b> ។"
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បង្កើន​ភាព​ព្រិល</b> ។ ប្រើ​ប្ដូរ(Shift) ដើម្បី​<b>បន្ថយ</b> ។"
 
 #: ../src/tweak-context.cpp:1218
 msgid "<b>Nothing selected!</b> Select objects to tweak."
@@ -19238,11 +19230,11 @@ msgstr "ពណ៌​មិន​ច្បាស់​របស់​វត្ថ
 
 #: ../src/widgets/toolbox.cpp:4241
 msgid "Blur mode"
-msgstr "របៀប​ព្រឹល​"
+msgstr "របៀប​ព្រិល​"
 
 #: ../src/widgets/toolbox.cpp:4242
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "ធ្វើ​ឲ្យ​វត្ថុ​ដែល​បាន​ជ្រើស​ព្រឹល​កាន់​តែ​ព្រឹល ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​​បន្ថយ​ភាព​ព្រឹល​វិញ"
+msgstr "ធ្វើ​ឲ្យ​វត្ថុ​ដែល​បាន​ជ្រើស​ព្រិល​កាន់​តែ​ព្រិល ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​​បន្ថយ​ភាព​ព្រិល​វិញ"
 
 #: ../src/widgets/toolbox.cpp:4269
 msgid "Channels:"
