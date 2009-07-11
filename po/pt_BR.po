@@ -5370,7 +5370,7 @@ msgstr "de %i"
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:92
 msgid "Clip to:"
-msgstr "Aparar para:"
+msgstr "Clip para:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
 msgid "Page settings"
@@ -8506,7 +8506,7 @@ msgstr "_Objeto"
 
 #: ../src/menus-skeleton.h:166
 msgid "Cli_p"
-msgstr "A_paragem"
+msgstr "Cli_p"
 
 #: ../src/menus-skeleton.h:170
 msgid "Mas_k"
@@ -9659,7 +9659,7 @@ msgstr "A seleção não possui efeito de caminho aplicado."
 
 #: ../src/selection-chemistry.cpp:1760
 msgid "The selection has no applied clip path."
-msgstr "A seleção não possui aparagem aplicada."
+msgstr "A seleção não possui clip aplicado."
 
 #: ../src/selection-chemistry.cpp:1762
 msgid "The selection has no applied mask."
@@ -9777,18 +9777,18 @@ msgstr "Criar bitmap"
 #: ../src/selection-chemistry.cpp:2708
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
-"Selecione o(s) <b>objeto(s)</b> para criar um caminho de aparagem ou uma "
+"Selecione o(s) <b>objeto(s)</b> para criar um caminho de clip ou uma "
 "máscara a partir dele(s)."
 
 #: ../src/selection-chemistry.cpp:2711
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Selecione objeto máscara e <b>o(s) objeto(s)</b> para aplicar o caminho de "
-"aparagem ou máscara."
+"clip ou máscara."
 
 #: ../src/selection-chemistry.cpp:2818
 msgid "Set clipping path"
-msgstr "Definir caminho de aparagem"
+msgstr "Definir caminho de clip"
 
 #: ../src/selection-chemistry.cpp:2820
 msgid "Set mask"
@@ -9797,12 +9797,12 @@ msgstr "Definir máscara"
 #: ../src/selection-chemistry.cpp:2833
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
-"Selecione o(s) <b>objetos(s)</b> para remover seu caminho de aparagem ou "
+"Selecione o(s) <b>objetos(s)</b> para remover seu caminho de clip ou "
 "máscara."
 
 #: ../src/selection-chemistry.cpp:2906
 msgid "Release clipping path"
-msgstr "Retirar caminho de aparagem"
+msgstr "Retirar caminho de clip"
 
 #: ../src/selection-chemistry.cpp:2908
 msgid "Release mask"
@@ -10222,7 +10222,7 @@ msgstr "Objeto"
 #: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr "%s; <i>aparado</i>"
+msgstr "%s; <i>clipado</i>"
 
 #: ../src/sp-item.cpp:1057
 #, c-format
@@ -11156,22 +11156,22 @@ msgstr "_Criar vínculo"
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
 msgid "Set Mask"
-msgstr "Aplicar máscara"
+msgstr "Aplicar Máscara"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
 msgid "Release Mask"
-msgstr "Retirar máscara"
+msgstr "Retirar Máscara"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
 msgid "Set Clip"
-msgstr "Aplicar aparagem"
+msgstr "Aplicar Clip"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
 msgid "Release Clip"
-msgstr "Retirar aparagem"
+msgstr "Retirar Clip"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -13677,28 +13677,28 @@ msgstr "Clones"
 #: ../src/ui/dialog/inkscape-preferences.cpp:639
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
-"Use o objeto superior selecionado como caminho para aparagem ou máscara"
+"Use o objeto superior selecionado como caminho para clip ou máscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:641
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
-"Desmarque para usar o objeto inferior selecionado como caminho de aparagem "
+"Desmarque para usar o objeto inferior selecionado como caminho de clip "
 "ou máscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:642
 msgid "Remove clippath/mask object after applying"
-msgstr "Remover o caminho de aparagem ou a máscara após aplicar"
+msgstr "Remover o caminho de clip ou a máscara após aplicar"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:644
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
-msgstr "Após aplicar, remove o objeto usado como aparagem ou máscara"
+msgstr "Após aplicar, remove o objeto usado como clip ou máscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid "Clippaths and masks"
-msgstr "Aparagens e máscaras"
+msgstr "Clips e máscaras"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:650
 #: ../src/widgets/select-toolbar.cpp:544
@@ -16796,7 +16796,7 @@ msgid ""
 "defs&gt; of the document"
 msgstr ""
 "Remove definições não usadas no documento atual (como gradiente ou caminhos "
-"de aparagem)"
+"de clip)"
 
 #: ../src/verbs.cpp:2259
 msgid "Print Previe_w"
@@ -17635,16 +17635,16 @@ msgstr "Retira a máscara da seleção"
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
-"Aplica o caminho de aparagem à seleção (considerando o objeto mais acima "
-"como caminho de aparagem)"
+"Aplica o caminho de clip à seleção (considerando o objeto mais acima "
+"como caminho de clip)"
 
 #: ../src/verbs.cpp:2495 ../src/widgets/toolbox.cpp:1446
 msgid "Edit clipping path"
-msgstr "Editar caminho de aparagem"
+msgstr "Editar caminho do clip"
 
 #: ../src/verbs.cpp:2497
 msgid "Remove clipping path from selection"
-msgstr "Retira o caminho de aparagem da seleção"
+msgstr "Retira o caminho de clip da seleção"
 
 #. Tools
 #: ../src/verbs.cpp:2500
@@ -19357,7 +19357,7 @@ msgstr "Exibir o próximo parâmetro de efeito de caminho para edição"
 
 #: ../src/widgets/toolbox.cpp:1447
 msgid "Edit the clipping path of the object"
-msgstr "Editar caminho da máscara de aparagem do objeto"
+msgstr "Editar caminho da máscara de clip do objeto"
 
 #: ../src/widgets/toolbox.cpp:1457
 msgid "Edit mask path"
