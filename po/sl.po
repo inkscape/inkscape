@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-04 09:03+0200\n"
-"PO-Revision-Date: 2009-07-06 01:38+0100\n"
+"POT-Creation-Date: 2009-07-11 09:42+0200\n"
+"PO-Revision-Date: 2009-07-11 20:34+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -498,6 +498,7 @@ msgstr "Organsko"
 #: ../share/filters/filters.svg.h:185
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Teksture"
 
@@ -584,6 +585,7 @@ msgstr "Izbokline HSL"
 #: ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:195
 #: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:198
 msgid "Bumps"
 msgstr "Izbokline"
 
@@ -1103,6 +1105,7 @@ msgstr "Izbokline HSL, alfa"
 #: ../share/filters/filters.svg.h:188
 #: ../share/filters/filters.svg.h:189
 #: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:199
 msgid "Mask and transparency effects"
 msgstr "Učinki maske in prosojnosti"
 
@@ -1803,6 +1806,30 @@ msgstr "Plastificiraj"
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr "Združi izboklino razpoznave robov HSL z učinkom valovite odsevne površine"
 
+#: ../share/filters/filters.svg.h:198
+msgid "Plaster"
+msgstr "Mavec"
+
+#: ../share/filters/filters.svg.h:198
+msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgstr "Združi izboklino razpoznave robov HSL z učinkom motne in nagubane površine"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Rough transparency"
+msgstr "Groba prosojnost"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Adds a turbulent transparency which displace pixels at the same time"
+msgstr "Doda turbulentno prosojnost, ki obenem razmesti slikovne točke"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Gouache"
+msgstr "Gvaš"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Partly opaque water color effect with bleed"
+msgstr "Delno prosojen učinek akvarela z razlivanjem"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "Črte 1:1"
@@ -1972,7 +1999,7 @@ msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle
 msgstr "<b>Ctrl</b>: narišite krog ali elipso z razmerji celih števil, odsek preskakujte po kotih"
 
 #: ../src/arc-context.cpp:305
-#: ../src/rect-context.cpp:345
+#: ../src/rect-context.cpp:346
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: rišite okrog začetne točke"
 
@@ -2600,7 +2627,6 @@ msgstr "Izberi vidno barvo in prekrivnost"
 #: ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 #: ../src/widgets/toolbox.cpp:4324
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
@@ -2705,7 +2731,6 @@ msgid "Each clone is created with the probability determined by the picked value
 msgstr "Vsak klon ima verjetnost določeno z izbrano barvo v dani točki"
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr "Velikost"
 
@@ -3331,11 +3356,17 @@ msgstr "Nastavi opis predmeta"
 msgid "Href:"
 msgstr "Href:"
 
+#. default x:
+#. default y:
 #: ../src/dialogs/object-attributes.cpp:33
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Target:"
 msgstr "Cilj:"
 
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Type:"
 msgstr "Vrsta:"
 
@@ -3425,55 +3456,55 @@ msgstr "<i>Preverjanje ...</i>"
 msgid "Fix spelling"
 msgstr "Popravi črkovanje"
 
-#: ../src/dialogs/spellcheck.cpp:956
+#: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
 msgstr "Predlogi:"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "_Accept"
 msgstr "_Sprejmi"
 
-#: ../src/dialogs/spellcheck.cpp:968
+#: ../src/dialogs/spellcheck.cpp:967
 msgid "Accept the chosen suggestion"
 msgstr "Sprejmi izbrani predlog"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "_Ignore once"
 msgstr "_Prezri enkrat"
 
-#: ../src/dialogs/spellcheck.cpp:970
+#: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr "Prezri to besedo le enkrat"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "_Ignore"
 msgstr "_Prezri"
 
-#: ../src/dialogs/spellcheck.cpp:972
+#: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
 msgstr "Prezri to besedo v tej seji"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "A_dd to dictionary:"
 msgstr "_Dodaj slovarju:"
 
-#: ../src/dialogs/spellcheck.cpp:979
+#: ../src/dialogs/spellcheck.cpp:978
 msgid "Add this word to the chosen dictionary"
 msgstr "Dodaj besedo izbranemu slovarju"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "_Stop"
 msgstr "_Ustavi"
 
-#: ../src/dialogs/spellcheck.cpp:1012
+#: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr "Ustavi preverjanje"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "_Start"
 msgstr "_Začni"
 
-#: ../src/dialogs/spellcheck.cpp:1014
+#: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
 msgstr "Zaženi preveranje"
 
@@ -4328,11 +4359,8 @@ msgstr "Uporabi učinek praga prilagajanja na izbranih bitnih slikah."
 msgid "Add Noise"
 msgstr "Dodaj šum"
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
 #: ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr "Vrsta"
 
@@ -4376,7 +4404,6 @@ msgstr "Zabriši"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid "Radius"
 msgstr "Radij"
 
@@ -4670,7 +4697,7 @@ msgid "Reduce Noise"
 msgstr "Zmanjšaj šum"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx.h:26
 msgid "Order"
 msgstr "Vrstni red"
 
@@ -4691,12 +4718,12 @@ msgid "Shade"
 msgstr "Senči"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Azimuth"
 msgstr "Azimut"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Elevation"
 msgstr "Dvignjenost"
 
@@ -5050,7 +5077,7 @@ msgstr "Navpični zamiki"
 #: ../share/extensions/grid_cartesian.inx.h:15
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
@@ -7574,8 +7601,7 @@ msgstr "Koliko konstrukcijskih črt (tangent) naj bo narisanih"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/seltrans.cpp:489
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
@@ -8063,7 +8089,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: zakleni dolžino ročice; <b>Ctrl+Alt</b>: premikaj po ročicah"
 
 #: ../src/nodepath.cpp:753
-#: ../src/seltrans.cpp:578
+#: ../src/seltrans.cpp:582
 msgid "Stamp"
 msgstr "Ožigosaj"
 
@@ -8747,31 +8773,31 @@ msgstr "Delček"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML koščki za odsek RDF licenca."
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:345
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr "<b>Ctrl</b>: narišite kvadrat ali pravokotnik z razmerji celih števil, zaklenite krožen zaobljen kot"
 
-#: ../src/rect-context.cpp:486
+#: ../src/rect-context.cpp:492
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Pravokotnik</b>: %s &#215; %s (omejeno na razmerje %d:%d); s <b>Shift</b> rišete okrog začetne točke"
 
-#: ../src/rect-context.cpp:489
+#: ../src/rect-context.cpp:495
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Pravokotnik</b>: %s &#215; %s (omejeno na razmerje zlatega reza 1,618 : 1); s <b>Shift</b> rišete okrog začetne točke"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:497
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Pravokotnik</b>: %s &#215; %s (omejeno na razmerje zlatega reza 1 : 1,618); s <b>Shift</b> rišete okrog začetne točke"
 
-#: ../src/rect-context.cpp:495
+#: ../src/rect-context.cpp:501
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Pravokotnik</b>: %s &#215; %s <b>Ctrl</b> da narišete kvadrat ali pravokotnik z razmerji celih števil; s <b>Shift</b> rišete okrog začetne točke"
 
-#: ../src/rect-context.cpp:516
+#: ../src/rect-context.cpp:526
 msgid "Create rectangle"
 msgstr "Ustvari pravokotnik"
 
@@ -8928,7 +8954,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Izberite <b>predmete</b> za odstranitev filtrov."
 
 #: ../src/selection-chemistry.cpp:1024
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
@@ -8977,7 +9003,7 @@ msgid "Rotate 90&#176; CW"
 msgstr "Zasukaj 90&#176; v SUK"
 
 #: ../src/selection-chemistry.cpp:1439
-#: ../src/seltrans.cpp:488
+#: ../src/seltrans.cpp:492
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Zasukaj"
@@ -9000,7 +9026,7 @@ msgstr "Premakni vodoravno"
 
 #: ../src/selection-chemistry.cpp:1562
 #: ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482
+#: ../src/seltrans.cpp:486
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Premakni"
@@ -9370,65 +9396,65 @@ msgstr[3] "<b>%i</b> predmeti <b>%i</b> vrst"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491
+#: ../src/seltrans.cpp:495
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Nagibaj"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:507
 msgid "Set center"
 msgstr "Nastavi središče"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:604
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "<b>Središče</b> vrtenja ali vlečenja: povlecite za premik središča; tudi raztegovanje s držanjem Shifta uporablja to središče"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:631
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Stisni ali raztegni</b> izbrano; s <b>Ctrl</b> razteguj enakomerno; s <b>Shift</b> razteguj okrog središča vrtenja"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:632
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Razteguj</b> izbrano; s <b>Ctrl</b> razteguj enakomerno; s <b>Shift</b> razteguj okrog središča vrtenja"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:636
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "<b>Nagni</b> izbrano; s <b>Ctrl</b> preskakuj po kotih; s <b>Shift</b> nagiba okrog nasprotne strani"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:637
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "<b>Zavrti</b> izbrano; s <b>Ctrl</b> preskakuj po kotih; s <b>Shift</b> vrti okrog nasprotnega kota"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:771
 msgid "Reset center"
 msgstr "Ponastavi središče"
 
-#: ../src/seltrans.cpp:1012
-#: ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1016
+#: ../src/seltrans.cpp:1115
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Razteguj</b>: %0.2f%% x %0.2f%%; s <b>Ctrl</b> zakleni razmerje"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1227
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Nagni</b>: %0.2f&#176;; s <b>Ctrl</b> preskakuj po kotih "
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1287
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zavrti</b>: %0.2f stopinj;s <b>Ctrl</b> preskakuj po kotih "
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Premakni <b>središče</b> na %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1499
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Premakni</b> za %s, %s; s <b>Ctrl</b> da omejite na vodoravno / navpično; s <b>Shift</b> izključite preskakovanje"
@@ -9533,20 +9559,20 @@ msgstr "<b>Slika s slabo povezavo</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Slika</b> %d &#215; %d: %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:304
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b>: preskakuj po kotih"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:306
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: zakleni polmer spirale"
 
-#: ../src/spiral-context.cpp:432
+#: ../src/spiral-context.cpp:438
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Spirala</b>: polmer %s, kot %5g&#176;; s <b>Ctrl</b> preskakujete po kotih"
 
-#: ../src/spiral-context.cpp:453
+#: ../src/spiral-context.cpp:464
 msgid "Create spiral"
 msgstr "Ustvari spiralo"
 
@@ -9844,21 +9870,21 @@ msgstr "<b>Klon</b> predmeta %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Klon-sirota</b>"
 
-#: ../src/star-context.cpp:315
+#: ../src/star-context.cpp:316
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: preskakuj po kotih; obdrži radialne žarke"
 
-#: ../src/star-context.cpp:442
+#: ../src/star-context.cpp:447
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Mnogokotnik</b>: polmer %s, kot %5g&#176;; s <b>Ctrl</b> preskakujete po kotih"
 
-#: ../src/star-context.cpp:443
+#: ../src/star-context.cpp:448
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zvezda</b>: polmer %s, kot %5g&#176;; s <b>Ctrl</b> preskakujete po kotih"
 
-#: ../src/star-context.cpp:466
+#: ../src/star-context.cpp:477
 msgid "Create star"
 msgstr "Ustvari zvezdo"
 
@@ -10699,7 +10725,37 @@ msgstr "Najmanjši predmet"
 #: ../src/widgets/desktop-widget.cpp:1567
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
-msgstr "Izbira"
+msgstr "Izbor"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:3
+msgid "Dip pen"
+msgstr "Redis pero"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:5
+msgid "Marker"
+msgstr "Flomaster"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:7
+msgid "Brush"
+msgstr "Čopič"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:9
+msgid "Wiggly"
+msgstr "Vijugavec"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:11
+msgid "Splotchy"
+msgstr "Zapackano"
+
+#. TRANSLATORS: calligraphic pen type
+#: ../src/ui/dialog/calligraphic-presets.h:13
+msgid "Tracing"
+msgstr "Prerisovanje"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -11052,7 +11108,7 @@ msgstr "Podatki"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "Pomoč"
@@ -11227,347 +11283,352 @@ msgstr "Ta učinek filtra SVG ne potrebuje nobenih parametrov."
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Ta učinek filtra SVG v Inkscape še ni implementiran."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:937
+#: ../src/ui/dialog/filter-effects-dialog.cpp:938
 msgid "Light Source:"
 msgstr "Vir svetlobe:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Kot smeri vira svetlobe na ravnini XY, v stopinjah"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Kot smeri vira svetlobe na ravnini YZ, v stopinjah"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
 msgid "Location"
 msgstr "Mesto"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
 msgstr "Koordinata X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Y coordinate"
 msgstr "Koordinata Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
 msgstr "Koordinata Z"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
 msgstr "Usmerjen na"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Specular Exponent"
 msgstr "Eksponent odsevnosti"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Eksponentna vrednost, ki nadzira gorišče vira svetlobe"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
 msgstr "Kot svetlobnega snopa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."
 msgstr "To je kot med svetlobno osjo (osjo med virom svetlobe in točko, v katero je ta usmerjen) in stožcem snopa svetlobe. Zunaj tega stožca svetloba ni projicirana."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
 msgstr "Nov svetlobni vir"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1070
 msgid "_Duplicate"
 msgstr "_Podvoji"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1096
 msgid "_Filter"
 msgstr "_Filtriraj"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1110
 msgid "R_ename"
 msgstr "P_reimenuj"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1213
 msgid "Rename filter"
 msgstr "Preimenuj filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1249
 msgid "Apply filter"
 msgstr "Uporabi filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Dodaj filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1351
 msgid "Duplicate filter"
 msgstr "Podvoji filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1418
 msgid "_Effect"
 msgstr "_Učinek"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1426
 msgid "Connections"
 msgstr "Povezave"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
 msgstr "Odstrani osnovo filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
 msgstr "Odstrani spojitev vozlišč"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
 msgstr "Prerazvrsti osnovo filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
 msgstr "Dodaj učinek:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No effect selected"
 msgstr "Izbran ni noben učinek"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2066
 msgid "No filter selected"
 msgstr "Izbran ni noben filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Effect parameters"
 msgstr "Parametri učinka"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2105
 msgid "Filter General Settings"
 msgstr "Splošne nastavitve filtra"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
-msgid "Coordinates"
-msgstr "Koordinate"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "Coordinates:"
+msgstr "Koordinate:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "Koordinata X levih oglišč območja učinkovanja filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Koordinata Y zgornjih robov območja učinkovanja filtra"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#: ../share/extensions/dimension.inx.h:1
-msgid "Dimensions"
-msgstr "Mere"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "Dimensions:"
+msgstr "Mere:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
 msgstr "Širina območja učinkovanja filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Height of filter effects region"
 msgstr "Višina območja učinkovanja filtra"
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-#: ../src/ui/dialog/tracedialog.cpp:563
-#: ../src/widgets/toolbox.cpp:4247
-#: ../share/extensions/triangle.inx.h:9
-msgid "Mode"
-msgstr "Način"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
+#: ../src/widgets/toolbox.cpp:3857
+#: ../src/widgets/toolbox.cpp:4248
+#: ../share/extensions/extrude.inx.h:3
+msgid "Mode:"
+msgstr "Način:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
 msgstr "Nakazuje vrsto operacije z matriko. Ključna beseda 'matrika' nakazuje, da bodo zagotovljena polna matrika vrednosti 5x4. Druge ključne besede predstavljajo tipke za bližnjico, ki omogočajo rabo pogosto uporabljenih barvnih operacij brez določanja celotne matrike."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
-msgid "Value(s)"
-msgstr "Vrednost(i)"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
-msgid "Operator"
-msgstr "Operator"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Value(s):"
+msgstr "Vrednost(i):"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
-msgid "K1"
-msgstr "K1"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+msgid "Operator:"
+msgstr "Operator:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "K1:"
+msgstr "K1:"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
 msgstr "Če je aritmetična operacija izbrana, bo vsaka točka rezultata izračunana s formulo k1*i1*i2 + k2*i1 + k3*i2 + k4, kjer sta i1 in i2 točkovni vrednosti prvega in drugega vhoda."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-msgid "K2"
-msgstr "K2"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-msgid "K3"
-msgstr "K3"
+msgid "K2:"
+msgstr "K2:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-msgid "K4"
-msgstr "K4"
+msgid "K3:"
+msgstr "K3:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "K4:"
+msgstr "K4:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/tracedialog.cpp:581
+msgid "Size:"
+msgstr "Velikost:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "width of the convolve matrix"
 msgstr "Širina konvolucijske matrike"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "height of the convolve matrix"
 msgstr "Višina konvolucijske matrike"
 
-#. default x:
-#. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-msgid "Target"
-msgstr "Cilj"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Koordinata X ciljne točke v konvolucijski matriki. Konvolucija se izbede na slikovnih točkah okoli te točke."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
 msgstr "Koordinata Y ciljne točke v konvolucijski matriki. Konvolucija se izbede na slikovnih točkah okoli te točke."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-msgid "Kernel"
-msgstr "Jedro"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+msgid "Kernel:"
+msgstr "Jedro:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Ta matrika opisuje konvolucijo, ki se izvede nad vhodno sliko, da bi izračunali barve točk na izhodu. Različne razporeditve vrednosti v tej matriki povzročijo različne možne vidne učinke. Identifikacijska matrika povzroči učinek zabrisa gibanja (vzporedno z diagonalo matrike), medtem ko matrika, zapolnjena s konstantnimi neničelnimi vrednostmi pripelje do navadnega učinka zabrisanja."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
-msgid "Divisor"
-msgstr "Delitelj"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+msgid "Divisor:"
+msgstr "Delitelj:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "Po uporabi kernelMatrix na vhodni sliki je številka rezultata deljena z deliteljem, da določi končno ciljno barvno vredonst. Delitelj, ki je vsota vseh matričnih vrednosti, ima nekakšen večerni učinek na celotno barvno intenzivnost rezultata."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-msgid "Bias"
-msgstr "Poševno/prečno"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+msgid "Bias:"
+msgstr "Poševnost:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Vrednost je dodana vsaki komponenti. To je uporabno za določanje konstantne vrednosti kot ničelnega odziva filtra."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-msgid "Edge Mode"
-msgstr "Robni način"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+msgid "Edge Mode:"
+msgstr "Robni način:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Določa, kako prilagojeno razširiti vhodno sliko z barvnimi vrednostmi, da je matrična operacija lahko izvedena, ko je jedro postavljeno na ali blizu roba vhodne slike."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Preserve Alpha"
 msgstr "Ohrani alfo"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Če je nastavljeno, kanal alfa ne bo spremenjen s to osnovo filtra."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-msgid "Diffuse Color"
-msgstr "Razpršena barva"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+msgid "Diffuse Color:"
+msgstr "Razpršena barva:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "Defines the color of the light source"
 msgstr "Določa barvo svetlobnega vira"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-msgid "Surface Scale"
-msgstr "Površinsko merilo"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+msgid "Surface Scale:"
+msgstr "Površinsko merilo;"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "Ta vrednost okrepi višine poslikave odtisa, kot jo določa vhodni kanal alfa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-msgid "Constant"
-msgstr "Konstantno"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+msgid "Constant:"
+msgstr "Konstanta:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This constant affects the Phong lighting model."
 msgstr "Ta konstanta vpliva na model osvetlitve Phong."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-msgid "Kernel Unit Length"
-msgstr "Dolžina enote jedra"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+msgid "Kernel Unit Length:"
+msgstr "Dolžina enote jedra:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+msgid "Scale:"
+msgstr "Merilo:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr "To določa intenzivnost učinka razmestitve."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-msgid "X displacement"
-msgstr "Razmestitev X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "X displacement:"
+msgstr "Razmestitev X:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Barvna komponenta, ki nadzira razmestitev v smeri X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-msgid "Y displacement"
-msgstr "Razmestitev Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
+msgid "Y displacement:"
+msgstr "Razmestitev Y:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Barvna komponenta, ki nadzira razmestitev v smeri Y"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
-msgid "Flood Color"
-msgstr "Razlita barva"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+msgid "Flood Color:"
+msgstr "Razlita barva:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
 msgstr "S to barvo bo zapolnjeno celotno območje filtriranja."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
-msgid "Standard Deviation"
-msgstr "Standardna deviacija"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
+#: ../src/widgets/toolbox.cpp:5297
+msgid "Opacity:"
+msgstr "Prekrivnost:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+msgid "Standard Deviation:"
+msgstr "Standardna deviacija:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
 msgstr "Standardna deviacija za operacijo zabrisa."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -11575,133 +11636,136 @@ msgstr ""
 "Razjedi: performs \"tanjšanje\" vhodne podobe.\n"
 "Razpostri: izvede \"debelitev\" vhodne podobe."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
-msgid "Source of Image"
-msgstr "Vir slike"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+msgid "Radius:"
+msgstr "Radij:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-msgid "Delta X"
-msgstr "Sprememba X (delta)"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+msgid "Source of Image:"
+msgstr "Vir slike:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+msgid "Delta X:"
+msgstr "Sprememba X (delta):"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Tako daleč se vhodna slika zamakne na desno"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-msgid "Delta Y"
-msgstr "Sprememba Y (delta)"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+msgid "Delta Y:"
+msgstr "Sprememba Y (delta):"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Tako daleč se vhodna slika zamakne navzdol"
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-msgid "Specular Color"
-msgstr "Odbojna barva"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+msgid "Specular Color:"
+msgstr "Odbojna barva:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#: ../share/extensions/interp.inx.h:2
-msgid "Exponent"
-msgstr "Eksponentno"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+msgid "Exponent:"
+msgstr "Eksponent:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Eksponent odbojnega pogoja, več pomeni bolj \"blesteče\"."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Nakazuje, ali naj osnova filtra izvede funkcijo šuma ali turbulence."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
-msgid "Base Frequency"
-msgstr "Osnovna frekvenca"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-msgid "Octaves"
-msgstr "Oktave"
+msgid "Base Frequency:"
+msgstr "Osnovna frekvenca:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
-msgid "Seed"
-msgstr "Seme"
+msgid "Octaves:"
+msgstr "Oktave:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
+msgid "Seed:"
+msgstr "Seme:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
 msgstr "Začetna številka za generator psevdo naključnih številk."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Add filter primitive"
 msgstr "Dodaj osnovo filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "Bazični filter <b>feBlend</b> (feStopi) ponuja štiri načine stapljanja slik: zaslon, pomnoži, potemni in posvetli."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2281
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."
 msgstr "Bazični filter <b>feColorMatrix</b> (feBarvnaMatrika) uveljavi matrično transformacijo na barvi vsake upodobljene slikovne točke. To omogoča učinke, kakršen je pretvorba predmeta v sivinskega, spreminjanje nasičenosti barv in spreminjanje obarvanosti."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "Bazični filter <b>feComponentTransfer</b> (fePrenosKomponent) manipulira s barvnimi komponentami vhoda (rdeča, zelena, modra in kanal alfa) glede na določene funkcije prenosa, kar omogoča operacije, kakršne so prilagajanje svetlosti in kontrasta, ravnovesje barv in določanje pragov."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2290
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "Bazični filter <b>feComposite</b> (feSestavi) sestavi dve sliki z eno izmed metod spajanja Porter-Duff ali z aritmetično metodo, opisano s standardom SVG. Metode spajanja Porter-Duff so v svojem bistvu logične operacije med ustreznima točkovnima vrednostma slik."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2294
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "Bazični filter <b>feConvolveMatrix</b> (feKonvolucijskaMatrika) omogoča določitev konvolucije, ki bo uporabljena na sliki. Pogosti učinki, opravljeni s konvolucijskimi matrikami, so zabrisanost, izostritev, izbočenost in razpoznava robov. Upoštevajte, da lahko Gaussovo zabrisanost sicer ustvarite s to osnovo filtra, da pa je posebna osnova filtra za Gaussovo zabrisanost hitrejša in neodvisna od ločljivosti."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2298
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Bazična filtra <b>feDiffuseLighting</b> (feRazpršenaSvetloba) in feSpecularLighting (feOdbojnaSvetloba) ustvarita \"izbočeno\" senčenje.  Kanal alfa vhoda je uporabljen kot vir podatkov o globini: področja z višjo prekrivnostjo so dvignjena proti gledalcu, področja z nižjo prekrivnostjo pa se umikajo stran od gledalca."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2302
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "Bazični filter <b>feDisplacementMap</b> (feZemljevidRazmestitve) premesti slikovne točke prvega vhoda glede na zemljevid razmestitve na drugem vhodu, ki pokaže, od kako daleč naj pride slikovna točka. Klasična primera sta učinka vrtinčenja in ščipanja."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2306
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "Bazični filter <b>feFlood</b> (feZalij) zapolni področje s podano barvo in prekrivnostjo.  Ponavadi uporabljen kot vhod za druge osnove filtrov, ki slikam dodajajo barve."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2310
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "Bazični filter <b>feGaussianBlur</b> (feGaussovaZabrisanost) enakovredno zabriše vhod.  Pogosto je v rabi skupaj s feOffset (feZamik) pri ustvarjanju učinka padlih senc."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2314
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "Bazični filter <b>feImage</b> (feSlika) zapolni območje z zunanjo sliko ali drugim delom dokumenta."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2318
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "Bazični filter <b>feMerge</b> (feSpoji) sestavi več začasnih slik znotraj osnove filtra v eno samo sliko. Uporablja navadno sestavljanje z alfami. To je enako uporabi več osnov filtrov feBlend (feStopi) v načinu 'normal' (navadno) ali več osnov filtrov feComposite (feSestavi) v načinu 'over' (preko)."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
 msgstr "Bazični filter <b>feMorphology</b> (feMorfologija) ponuja učinka razjedanja in razpostiranja. Enobarvne predmete naredi razjedanje tanjše, razpostiranje pa debelejše."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
 msgstr "Bazični filter <b>feOffset</b> (feZamik) zamakne sliko za vrednost, ki jo poda uporabnik. To je npr. uporabno za padle sence, saj je senca rahlo zamaknjena glede na dejanski predmet."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "Bazična filtra feDiffuseLighting (feRazpršenaSvetloba) in <b>feSpecularLighting</b> (feOdbojnaSvetloba) ustvarita \"izbočeno\" senčenje.  Kanal alfa vhoda je uporabljen kot vir podatkov o globini: področja z višjo prekrivnostjo so dvignjena proti gledalcu, področja z nižjo prekrivnostjo pa se umikajo stran od gledalca."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2334
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "Osnova filtra <b>feTile</b> (feTlakuj) tlakuje področje z vhodno sliko"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2338
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "Bazični filter <b>feTurbulence</b> (feTurbulenca) upodobi Pelinov šum. Tovrsten šum je uporaben pri simulacijah določenih naravnih pojavov, kot so oblaki, ogenj in dim, pa tudi pri ustvarjanju kompleksnejših tekstur, kakršni sta marmor in granit."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
 msgstr "Podvoji osnovo filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2410
 msgid "Set filter primitive attribute"
 msgstr "Nastavite atribut osnove filtra"
 
@@ -14230,6 +14294,14 @@ msgstr "Odstrani spodnjo plast (ozadje), ko končaš"
 msgid "Multiple scans: creates a group of paths"
 msgstr "Večkratni pregledi: ustvari skupino poti"
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/tracedialog.cpp:563
+#: ../src/widgets/toolbox.cpp:4247
+#: ../share/extensions/triangle.inx.h:9
+msgid "Mode"
+msgstr "Način"
+
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
@@ -14243,10 +14315,6 @@ msgstr "Prezri majhne madeže (pege) v bitni sliki"
 #: ../src/ui/dialog/tracedialog.cpp:579
 msgid "Speckles of up to this many pixels will be suppressed"
 msgstr "Preprečene bodo pege do te velikosti (v slikovnih točkah)"
-
-#: ../src/ui/dialog/tracedialog.cpp:581
-msgid "Size:"
-msgstr "Velikost:"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Smooth corners"
@@ -14570,9 +14638,8 @@ msgid "Proprietary"
 msgstr "Zaščiten"
 
 #: ../src/ui/widget/licensor.cpp:38
-#: ../share/extensions/interp_att_g.inx.h:13
-msgid "Other"
-msgstr "Drugo"
+msgid "MetadataLicence|Other"
+msgstr "MetadataLicence|Drugo"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -17351,6 +17418,10 @@ msgstr "Višina izbora"
 msgid "Affect:"
 msgstr "Afekt:"
 
+#: ../src/widgets/select-toolbar.cpp:536
+msgid "Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"
+msgstr "Nadzirajte, ali naj bo spremenjeno merilo širine čopiča in kotov pravokotnika, ali naj bodo polnila s prelivom transformirana in ali naj se vzorec transformacije zapolni s predmetom"
+
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
 msgstr "Spremeni merilo zaobljenih oglišč"
@@ -18388,12 +18459,6 @@ msgid "Create a sequence of paraxial line segments"
 msgstr "Ustvari niz odsekov prečnih črt"
 
 #: ../src/widgets/toolbox.cpp:3857
-#: ../src/widgets/toolbox.cpp:4248
-#: ../share/extensions/extrude.inx.h:3
-msgid "Mode:"
-msgstr "Način:"
-
-#: ../src/widgets/toolbox.cpp:3857
 msgid "Mode of new lines drawn by this tool"
 msgstr "Način novih črt, narisanih s tem orodjem"
 
@@ -18954,10 +19019,6 @@ msgstr "Celota"
 #: ../src/widgets/toolbox.cpp:5228
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Naj bo predmet cela elipsa in ne le odsek ali lok"
-
-#: ../src/widgets/toolbox.cpp:5297
-msgid "Opacity:"
-msgstr "Prekrivnost:"
 
 #: ../src/widgets/toolbox.cpp:5304
 msgid "Pick opacity"
@@ -19622,6 +19683,10 @@ msgstr "Da bi lahko uvozili datoteke Dia, morate imeti nameščen program Dia.  
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
 msgstr "Skript dia2svg.sh bi moral biti nameščen z vašo distribucijo Inkscape. Če ga nimate, je morda nekaj narobe z vašo namestitvijo programa Inkscape."
 
+#: ../share/extensions/dimension.inx.h:1
+msgid "Dimensions"
+msgstr "Mere"
+
 #: ../share/extensions/dimension.inx.h:2
 #: ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2
@@ -20026,32 +20091,66 @@ msgid "Remove rectangle"
 msgstr "Odstrani pravokotnik"
 
 #: ../share/extensions/funcplot.inx.h:14
-msgid "Select a rectangle before calling the extension, it will determine X and Y scales. With polar coordinates: Start and end X values define the angle range in radians. X scale is set so that left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
-msgstr "Pred klicem učinka izberite pravokotnik. Ta določa razmerje stranic X in Y. S polarnimi koordinatami: začetna in končna vrednost X določata kotni obseg v radianih. Merilo X je nastavljeno tako, da sta levi in desni rob pravokotnika pri vrednostih +/-1. Izotropno merilo je onemogočeno. Prvi odvod je vedno določen numerično."
+msgid ""
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"With polar coordinates:\n"
+"   Start and end X values define the angle range in radians.\n"
+"   X scale is set so that left and right edges of rectangle are at +/-1.\n"
+"   Isotropic scaling is disabled.\n"
+"   First derivative is always determined numerically."
+msgstr ""
+"Pred klicem učinka izberite pravokotnik,\n"
+"ta določa razmerje stranic X in Y.\n"
+"\n"
+"S polarnimi koordinatami:\n"
+"   začetna in končna vrednost X določata kotni obseg v radianih.\n"
+"   Merilo X je nastavljeno tako, da sta levi in desni rob pravokotnika\n"
+"   pri vrednostih +/-1. Izotropno merilo je onemogočeno.\n"
+"   Prvi odvod je vedno določen numerično."
 
-#: ../share/extensions/funcplot.inx.h:15
-#: ../share/extensions/param_curves.inx.h:12
-msgid "Standard Python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
-msgstr "Na voljo so naslednje standardne matematične funkcije Pythona: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, osnova]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Na voljo sta tudi konstanti pi in e."
+#: ../share/extensions/funcplot.inx.h:22
+#: ../share/extensions/param_curves.inx.h:15
+msgid ""
+"Standard Python math functions are available:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"The constants pi and e are also available."
+msgstr ""
+"Na voljo so naslednje standardne matematične funkcije Pythona:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, osnova]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"Na voljo sta tudi konstanti pi in e."
 
-#: ../share/extensions/funcplot.inx.h:16
+#: ../share/extensions/funcplot.inx.h:31
 msgid "Start X value"
 msgstr "Začetna X-vrednost"
 
-#: ../share/extensions/funcplot.inx.h:17
-#: ../share/extensions/param_curves.inx.h:14
+#: ../share/extensions/funcplot.inx.h:32
+#: ../share/extensions/param_curves.inx.h:25
 msgid "Use"
 msgstr "Uporabi"
 
-#: ../share/extensions/funcplot.inx.h:18
+#: ../share/extensions/funcplot.inx.h:33
 msgid "Use polar coordinates"
 msgstr "Uporabi polarne koordinate"
 
-#: ../share/extensions/funcplot.inx.h:19
+#: ../share/extensions/funcplot.inx.h:34
 msgid "Y value of rectangle's bottom"
 msgstr "Spodnja Y-vrednost pravokotnika"
 
-#: ../share/extensions/funcplot.inx.h:20
+#: ../share/extensions/funcplot.inx.h:35
 msgid "Y value of rectangle's top"
 msgstr "Zgornja Y-vrednost pravokotnika"
 
@@ -20403,6 +20502,10 @@ msgstr "Interpoliraj vrednost v skupini"
 msgid "No Unit"
 msgstr "Ni enot"
 
+#: ../share/extensions/interp_att_g.inx.h:13
+msgid "Other"
+msgstr "Drugo"
+
 #: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"
 msgstr "Druga lastnost"
@@ -20454,6 +20557,10 @@ msgstr "••••••••••••••••••••••••
 msgid "Duplicate endpaths"
 msgstr "Podvoji končne poti"
 
+#: ../share/extensions/interp.inx.h:2
+msgid "Exponent"
+msgstr "Eksponentno"
+
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
 msgstr "Interpoliraj"
@@ -20471,46 +20578,83 @@ msgid "Interpolation steps"
 msgstr "Koraki interpolacije"
 
 #: ../share/extensions/lindenmayer.inx.h:1
+msgid ""
+"\n"
+"The path is generated by applying the \n"
+"substitutions of Rules to the Axiom, \n"
+"Order times. The following commands are \n"
+"recognized in Axiom and Rules:\n"
+"\n"
+"Any of A,B,C,D,E,F: draw forward \n"
+"\n"
+"Any of G,H,I,J,K,L: move forward \n"
+"\n"
+"+: turn left\n"
+"\n"
+"-: turn right\n"
+"\n"
+"|: turn 180 degrees\n"
+"\n"
+"[: remember point\n"
+"\n"
+"]: return to remembered point\n"
+msgstr ""
+"\n"
+"Pot ustvarijo substitucije pravil aksioma, \n"
+"število-krat. Naslednji ukazi so prepoznani \n"
+"med aksiomi in pravili:\n"
+"\n"
+"poljubna izmed A,B,C,D,E,F: riši naprej\n"
+"\n"
+"poljubna izmed G,H,I,J,K,L: premakni naprej\n"
+"\n"
+"+: obrni levo\n"
+"\n"
+"-: obrni desno\n"
+"\n"
+"|: obrni za 180 stopinj\n"
+"\n"
+"[: zapomni si točko\n"
+"\n"
+"]: vrni se na pomnjeno točko\n"
+
+#: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
 msgstr "Aksiom"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:22
 msgid "Axiom and rules"
 msgstr "Aksiom in pravila"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:24
 msgid "L-system"
 msgstr "Sistem L"
 
-#: ../share/extensions/lindenmayer.inx.h:5
+#: ../share/extensions/lindenmayer.inx.h:25
 msgid "Left angle"
 msgstr "Levi kot"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx.h:28
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Naključni kot (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx.h:30
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Naključni korak (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx.h:32
 msgid "Right angle"
 msgstr "Desni kot"
 
-#: ../share/extensions/lindenmayer.inx.h:13
+#: ../share/extensions/lindenmayer.inx.h:33
 msgid "Rules"
 msgstr "Pravila"
 
-#: ../share/extensions/lindenmayer.inx.h:14
+#: ../share/extensions/lindenmayer.inx.h:34
 msgid "Step length (px)"
 msgstr "Dolžina koraka (slik. točke)"
-
-#: ../share/extensions/lindenmayer.inx.h:15
-msgid "The path is generated by applying the substitutions of Rules to the Axiom, Order times. The following commands are recognized in Axiom and Rules: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember point ]: return to remembered point"
-msgstr "Pot ustvarijo substitucije pravil aksioma, število-krat. Naslednji ulazi so prepoznani med aksiomi in pravili: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember point ]: return to remembered point"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -20619,34 +20763,42 @@ msgid "Samples"
 msgstr "Vzorci"
 
 #: ../share/extensions/param_curves.inx.h:11
-msgid "Select a rectangle before calling the extension; it will determine X and Y scales. First derivatives are always determined numerically."
-msgstr "Izberite pravokotnik, preden pokličete razširitev; določil bo merili X in Y. Prvi derivati so vedno določeni numerično."
+msgid ""
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"First derivatives are always determined numerically."
+msgstr ""
+"Izberite pravokotnik, preden pokličete razširitev;\n"
+"določil bo merili X in Y.\n"
+"\n"
+"Prvi derivati so vedno določeni numerično."
 
-#: ../share/extensions/param_curves.inx.h:13
+#: ../share/extensions/param_curves.inx.h:24
 msgid "Start t-value"
 msgstr "Začetna t-vrednost"
 
-#: ../share/extensions/param_curves.inx.h:15
+#: ../share/extensions/param_curves.inx.h:26
 msgid "x-Function"
 msgstr "Funkcija x"
 
-#: ../share/extensions/param_curves.inx.h:16
+#: ../share/extensions/param_curves.inx.h:27
 msgid "x-value of rectangle's left"
 msgstr "x-vrednost leve pravokotnika"
 
-#: ../share/extensions/param_curves.inx.h:17
+#: ../share/extensions/param_curves.inx.h:28
 msgid "x-value of rectangle's right"
 msgstr "x-vrednost desne pravokotnika"
 
-#: ../share/extensions/param_curves.inx.h:18
+#: ../share/extensions/param_curves.inx.h:29
 msgid "y-Function"
 msgstr "Funkcija y"
 
-#: ../share/extensions/param_curves.inx.h:19
+#: ../share/extensions/param_curves.inx.h:30
 msgid "y-value of rectangle's bottom"
 msgstr "y-vrednost dna pravokotnika"
 
-#: ../share/extensions/param_curves.inx.h:20
+#: ../share/extensions/param_curves.inx.h:31
 msgid "y-value of rectangle's top"
 msgstr "y-vrednost vrha pravokotnika"
 
@@ -21722,4 +21874,9 @@ msgstr "Uvoz Metadatoteke Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Uvoz XAML"
+
+#~ msgid "Target"
+#~ msgstr "Cilj"
+#~ msgid "Seed"
+#~ msgstr "Seme"
 
