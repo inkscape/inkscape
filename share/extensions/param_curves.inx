@@ -17,18 +17,18 @@
       <param name="isoscale" type="boolean" _gui-text="Isotropic scaling (uses smallest: width/xrange or height/yrange)">false</param>
     </page>
     <page name="use" _gui-text="Use">
-      <_param name="funcplotuse" type="description">Select a rectangle before calling the extension;
+      <_param name="funcplotuse" type="description" xml:space="preserve">Select a rectangle before calling the extension,
 it will determine X and Y scales.
 
 First derivatives are always determined numerically.</_param>
     </page>
     <page name="desc" _gui-text="Functions">
-       <_param name="pythonfunctions" type="description">Standard Python math functions are available:
+      <_param name="pythonfunctions" type="description" xml:space="preserve">Standard Python math functions are available:
 
-ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i);
-modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x);
-acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y);
-cos(x); sin(x); tan(x); degrees(x); radians(x);
+ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); 
+modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); 
+acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); 
+cos(x); sin(x); tan(x); degrees(x); radians(x); 
 cosh(x); sinh(x); tanh(x).
 
 The constants pi and e are also available.</_param>
