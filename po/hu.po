@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-21 13:12+0200\n"
-"PO-Revision-Date: 2009-07-10 23:42+0200\n"
+"PO-Revision-Date: 2009-07-11 11:19+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -4903,7 +4903,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/raise.cpp:39
 msgid "Raise"
-msgstr "Feljebb helyezés"
+msgstr "Felemelés"
 
 #: ../src/extension/internal/bitmap/raise.cpp:43
 msgid "Raised"
@@ -7258,7 +7258,6 @@ msgid "Is visible?"
 msgstr "Látható?"
 
 #: ../src/live_effects/effect.cpp:273
-#, fuzzy
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
@@ -7708,7 +7707,6 @@ msgid "Pattern is vertical"
 msgstr "A minta függőleges"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
-#, fuzzy
 msgid "Rotate pattern 90 deg before applying"
 msgstr "A minta 90 fokos elforgatása az alkalmazása előtt"
 
@@ -8321,18 +8319,16 @@ msgid "Paste path"
 msgstr "Útvonal beillesztése"
 
 #: ../src/live_effects/parameter/path.cpp:188
-#, fuzzy
 msgid "Link to path"
-msgstr "Útvonalhoz való illesztés"
+msgstr "Útvonalhoz való kapcsolás"
 
 #: ../src/live_effects/parameter/path.cpp:409
 msgid "Paste path parameter"
 msgstr "Útvonal-paraméter beillesztése"
 
 #: ../src/live_effects/parameter/path.cpp:441
-#, fuzzy
 msgid "Link path parameter to path"
-msgstr "Útvonal-paraméter"
+msgstr "Útvonal-paraméter kapcsolása útvonalhoz"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
@@ -21025,7 +21021,9 @@ msgstr ""
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
-msgstr "Nem sikerült"
+msgstr ""
+"Nem sikerült"
+"kiterjesztés"
 
 #: ../share/extensions/embedimage.py:74
 #, fuzzy
@@ -21057,12 +21055,13 @@ msgid "Difficulty finding the image data."
 msgstr ""
 
 #: ../share/extensions/inkex.py:66
+#, fuzzy
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
 "this extension. Please download and install the latest version from http://"
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
-msgstr ""
+msgstr "kiterjesztés"
 
 #: ../share/extensions/inkex.py:213
 #, python-format
@@ -21088,7 +21087,9 @@ msgstr "jelölőelem"
 #: ../share/extensions/summersnight.py:30
 #, fuzzy
 msgid "This extension requires two selected paths."
-msgstr "A kijelölt útvonalak uniójának létrehozása"
+msgstr ""
+"A kijelölt útvonalak uniójának létrehozása"
+"kiterjesztés"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -21105,7 +21106,9 @@ msgid ""
 "required by this extension. Please install them and try again.  On a Debian-"
 "like system this can be done with the command, sudo apt-get install python-"
 "numpy."
-msgstr "Nem sikerült"
+msgstr ""
+"Nem sikerült"
+"kiterjesztés"
 
 #: ../share/extensions/perspective.py:62
 #: ../share/extensions/summersnight.py:39
@@ -21123,6 +21126,7 @@ msgstr ""
 #, fuzzy
 msgid "This extension requires that the second selected path be four nodes long."
 msgstr ""
+"kiterjesztés"
 "útvonal"
 "Csomópont"
 
@@ -21163,7 +21167,9 @@ msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
-msgstr "Nem sikerült"
+msgstr ""
+"Nem sikerült"
+"kiterjesztés"
 
 #: ../share/extensions/polyhedron_3d.py:329
 msgid "No face data found in specified file\n"
@@ -21870,7 +21876,6 @@ msgid "Draw Axes"
 msgstr "Tengelyek megrajzolása"
 
 #: ../share/extensions/funcplot.inx.h:3
-#, fuzzy
 msgid "End X value"
 msgstr "X-végérték"
 
@@ -21892,24 +21897,20 @@ msgid "Functions"
 msgstr "Függvények"
 
 #: ../share/extensions/funcplot.inx.h:8
-#, fuzzy
 msgid "Isotropic scaling (uses smallest of width/xrange or height/yrange)"
 msgstr ""
-"Izotropikus méretezés (a legkisebbet használja: szélesség/X-tartomány vagy "
+"Izotropikus méretezés (a legkisebbet használja ezek közül: szélesség/X-tartomány, "
 "magasság/Y-tartomány)"
 
 #: ../share/extensions/funcplot.inx.h:9
-#, fuzzy
 msgid "Multiply X range by 2*pi"
 msgstr "X-tartomány szorzása 2*pi-vel"
 
 #: ../share/extensions/funcplot.inx.h:10
-#, fuzzy
 msgid "Number of samples"
-msgstr "Lépések száma"
+msgstr "Minták száma"
 
 #: ../share/extensions/funcplot.inx.h:11
-#, fuzzy
 msgid "Range and sampling"
 msgstr "Tartomány és minták"
 
@@ -21919,7 +21920,6 @@ msgid "Remove rectangle"
 msgstr "Téglalap eltávolítása"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension, it will determine X and Y "
 "scales. With polar coordinates: Start and end X values define the angle "
@@ -21927,7 +21927,7 @@ msgid ""
 "are at +/-1. Isotropic scaling is disabled. First derivative is always "
 "determined numerically."
 msgstr ""
-"Az effektus használata előtt jelöljön ki egy téglalapot. A téglalap adja meg "
+"A kiterjesztés használata előtt jelöljön ki egy téglalapot. A téglalap adja meg "
 "az x és y irányú méretezést. Polárkoordináták esetén az x kezdő- és "
 "végértéke adja meg a szögtartományt radiánban. Az x irányú méretezés úgy "
 "lesz beállítva, hogy a téglalap bal, illetve jobb oldali széle +/-1 értéknél "
@@ -21936,7 +21936,6 @@ msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:15
 #: ../share/extensions/param_curves.inx.h:12
-#, fuzzy
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -21951,7 +21950,6 @@ msgstr ""
 "(x). Használható a \"pi\" és az \"e\" konstans is."
 
 #: ../share/extensions/funcplot.inx.h:16
-#, fuzzy
 msgid "Start X value"
 msgstr "X-kezdőérték"
 
@@ -21965,12 +21963,10 @@ msgid "Use polar coordinates"
 msgstr "Polárkoordináták használata"
 
 #: ../share/extensions/funcplot.inx.h:19
-#, fuzzy
 msgid "Y value of rectangle's bottom"
 msgstr "A téglalap aljának Y-értéke"
 
 #: ../share/extensions/funcplot.inx.h:20
-#, fuzzy
 msgid "Y value of rectangle's top"
 msgstr "A téglalap tetejének Y-értéke"
 
@@ -22616,10 +22612,11 @@ msgid "Samples"
 msgstr "Minták"
 
 #: ../share/extensions/param_curves.inx.h:11
+#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension; it will determine X and Y "
 "scales. First derivatives are always determined numerically."
-msgstr ""
+msgstr "kiterjesztés"
 
 #: ../share/extensions/param_curves.inx.h:13
 #, fuzzy
@@ -22675,12 +22672,11 @@ msgstr "Minta az útvonal mentén"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
-msgstr ""
+msgstr "Szalag"
 
 #: ../share/extensions/pathalongpath.inx.h:13
-#, fuzzy
 msgid "Snake"
-msgstr "Nyírás"
+msgstr "Kígyó"
 
 #: ../share/extensions/pathalongpath.inx.h:14
 #: ../share/extensions/pathscatter.inx.h:11
@@ -23590,19 +23586,16 @@ msgid "rANdOm CasE"
 msgstr "kISbEtŰ-naGyBEtŰ vÉleTlENszErŰen"
 
 #: ../share/extensions/text_replace.inx.h:1
-#, fuzzy
 msgid "By:"
-msgstr "Ry:"
+msgstr "Erre:"
 
 #: ../share/extensions/text_replace.inx.h:2
-#, fuzzy
 msgid "Replace text"
-msgstr "Szöveg cserélése..."
+msgstr "Szöveg cserélése"
 
 #: ../share/extensions/text_replace.inx.h:3
-#, fuzzy
 msgid "Replace:"
-msgstr "Lecserélés"
+msgstr "Cserélendő:"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
