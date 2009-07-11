@@ -1868,5 +1868,18 @@
 <feComposite result="result4" in="result3" in2="result1" operator="out" id="feComposite2950" />
 <feComposite in2="result5" in="result4" id="feComposite2952" operator="over" k1="1" />
 </filter>
+<filter id="AlphEngr0" inkscape:menu-tooltip="Gives a transparent engraving effect with rough line and filling" inkscape:menu="Mask and transparency effects" inkscape:label="Alpha engraving" height="1" width="1" y="0" x="0">
+<feTurbulence id="feTurbulence2932" result="result1" baseFrequency="0.029999999999999999" type="fractalNoise" seed="0" numOctaves="5" in="SourceGraphic" />
+<feDisplacementMap id="feDisplacementMap2934" result="result3" in2="result1" xChannelSelector="R" yChannelSelector="G" scale="7" numOctaves="2" in="SourceGraphic" />
+<feComposite id="feComposite2936" result="result4" in="result3" in2="result1" operator="in" />
+<feGaussianBlur id="feGaussianBlur2938" result="result8" stdDeviation="0.69999999999999996" in="result4" />
+<feConvolveMatrix id="feConvolveMatrix2940" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
+<feColorMatrix id="feColorMatrix2942" values="1" in="result0" result="result1" type="luminanceToAlpha" />
+<feComposite id="feComposite2970" result="result11" operator="arithmetic" k2="5" k3="0" k1="0" />
+<feGaussianBlur id="feGaussianBlur2944" result="result7" in="result11" stdDeviation="0.5" />
+<feColorMatrix id="feColorMatrix2946" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 3 0 " />
+<feFlood id="feFlood2948" flood-opacity="1" result="result10" flood-color="rgb(157,87,40)" in="result9" />
+<feComposite id="feComposite2950" in2="result9" in="result10" operator="in" />
+</filter>
 </defs>
 </svg>
