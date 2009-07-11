@@ -13054,7 +13054,7 @@ msgstr "Teclas > e < redimensionam em:"
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
-"Pressionando as teclas > ou <, a seleção é redimensionada por este valor (em "
+"Pressionando as teclas &gt; ou &lt;, a seleção é redimensionada por este valor (em "
 "pixels)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:249
@@ -14584,7 +14584,7 @@ msgid ""
 "the list"
 msgstr ""
 "Define a capacidade máxima da lista de documentos abertos recemente, "
-"localizada no menu Arquivo >> Abrir recentes"
+"localizada no menu Arquivo &gt;&gt; Abrir recentes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Zoom correction factor (in %):"
@@ -18741,7 +18741,7 @@ msgid ""
 msgstr ""
 "Use a ferramenta <b>Editor de nós</b> para ajustar a posição, escala, e "
 "rotação do padrão de preenchimento no objeto preenchido. Use o comando "
-"<b>Objetos > Padrão de preencimento >> Converter objetos em padrões</b> para "
+"<b>Objetos &gt; Padrão de preencimento &gt;&gt; Converter objetos em padrões</b> para "
 "criar um novo padrão a partir da seleção"
 
 #: ../src/widgets/select-toolbar.cpp:247
