@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-09 18:07+0200\n"
-"PO-Revision-Date: 2009-07-09 18:20+0100\n"
+"POT-Creation-Date: 2009-07-11 09:42+0200\n"
+"PO-Revision-Date: 2009-07-11 09:48+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -506,6 +506,7 @@ msgstr "Relief organique"
 #: ../share/filters/filters.svg.h:185
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Textures"
 
@@ -1112,6 +1113,7 @@ msgstr "Masque de bosselage TSL"
 #: ../share/filters/filters.svg.h:188
 #: ../share/filters/filters.svg.h:189
 #: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:199
 msgid "Mask and transparency effects"
 msgstr "Masques et transparences"
 
@@ -1205,15 +1207,15 @@ msgstr "Sommets colorés émergeant du brouillard"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Noise transparency"
-msgstr "Transparence agitée"
+msgstr "Transparence turbulente"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Basic noise transparency texture"
-msgstr "Texture en  transparence agitée de base"
+msgstr "Texture en transparence turbulente de base"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Noise fill"
-msgstr "Remplissage agité"
+msgstr "Remplissage turbulent"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Basic noise fill texture; adjust color in Flood"
@@ -1819,6 +1821,22 @@ msgstr "Plâtre"
 #: ../share/filters/filters.svg.h:198
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr "Combine un bosselage de type détection de contours TSL avec un effet de surface mat et froissé"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Rough transparency"
+msgstr "Transparence agitée"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Adds a turbulent transparency which displace pixels at the same time"
+msgstr "Ajoute une transparence agitée qui déplaces plusieurs pixels en même temps"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Gouache"
+msgstr "Gouache"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Partly opaque water color effect with bleed"
+msgstr "Effet d'aquarelle partiellement opaque avec bavure"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4690,7 +4708,7 @@ msgid "Reduce Noise"
 msgstr "Réduire le bruit"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx.h:26
 msgid "Order"
 msgstr "Ordre"
 
@@ -5070,7 +5088,7 @@ msgstr "Décalage vertical"
 #: ../share/extensions/grid_cartesian.inx.h:15
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
@@ -9511,20 +9529,20 @@ msgstr "<b>Image avec une mauvaise référence</b> : %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Image</b> %d &#215; %d : %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:304
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b> : pour tourner par incréments"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:306
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b> : verrouiller le rayon de la spirale"
 
-#: ../src/spiral-context.cpp:432
+#: ../src/spiral-context.cpp:438
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Spirale</b> : rayon %s, angle %5g&#176;; avec <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/spiral-context.cpp:453
+#: ../src/spiral-context.cpp:464
 msgid "Create spiral"
 msgstr "Créer une spirale"
 
@@ -9810,21 +9828,21 @@ msgstr "<b>Clone</b> de : %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Clone orphelin</b>"
 
-#: ../src/star-context.cpp:315
+#: ../src/star-context.cpp:316
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b> pour tourner par incréments; forcer la radialité des branches"
 
-#: ../src/star-context.cpp:442
+#: ../src/star-context.cpp:447
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Polygone</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/star-context.cpp:443
+#: ../src/star-context.cpp:448
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Étoile</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner/incliner par incréments"
 
-#: ../src/star-context.cpp:466
+#: ../src/star-context.cpp:477
 msgid "Create star"
 msgstr "Créer une étoile"
 
@@ -11057,7 +11075,7 @@ msgstr "Information"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/lindenmayer.inx.h:3
+#: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "Aide"
@@ -20060,32 +20078,65 @@ msgid "Remove rectangle"
 msgstr "Supprimer le rectangle"
 
 #: ../share/extensions/funcplot.inx.h:14
-msgid "Select a rectangle before calling the extension, it will determine X and Y scales. With polar coordinates: Start and end X values define the angle range in radians. X scale is set so that left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
-msgstr "Sélectionner un rectangle avant d'appeler la fonction. Le rectangle détermine les échelles X et Y. Avec des coordonnées polaires : les valeurs X de début et de fin définissent l'amplitude d'angle en radians. L'échelle X est fixée de manière à ce que les bords gauche et droit du rectangle soient à +/-1. Le redimensionnement isotrope est désactivé. La dérivée première est toujours déterminée numériquement."
+msgid ""
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"With polar coordinates:\n"
+"   Start and end X values define the angle range in radians.\n"
+"   X scale is set so that left and right edges of rectangle are at +/-1.\n"
+"   Isotropic scaling is disabled.\n"
+"   First derivative is always determined numerically."
+msgstr ""
+"Sélectionner un rectangle avant d'appeler la fonction.\n"
+"Le rectangle détermine les échelles X et Y. \n"
+"\n"
+"Avec des coordonnées polaires :\n"
+"  Les valeurs X de début et de fin définissent l'amplitude d'angle en radians.\n"
+"  L'échelle X est fixée de manière à ce que les bords gauche et droit du rectangle soient à +/-1.\n"
+"  Le redimensionnement isotrope est désactivé. La dérivée première est toujours déterminée numériquement."
 
-#: ../share/extensions/funcplot.inx.h:15
-#: ../share/extensions/param_curves.inx.h:12
-msgid "Standard Python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
-msgstr "Les fonctions mathématiques standard de python sont disponibles: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Les constantes « pi » et « e » sont aussi disponibles."
+#: ../share/extensions/funcplot.inx.h:22
+#: ../share/extensions/param_curves.inx.h:15
+msgid ""
+"Standard Python math functions are available:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"The constants pi and e are also available."
+msgstr ""
+"Les fonctions mathématiques standard de python sont disponibles:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i);\n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x);\n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y);\n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x);\n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"Les constantes « pi » et « e » sont aussi disponibles."
 
-#: ../share/extensions/funcplot.inx.h:16
+#: ../share/extensions/funcplot.inx.h:31
 msgid "Start X value"
 msgstr "Valeur X de début"
 
-#: ../share/extensions/funcplot.inx.h:17
-#: ../share/extensions/param_curves.inx.h:14
+#: ../share/extensions/funcplot.inx.h:32
+#: ../share/extensions/param_curves.inx.h:25
 msgid "Use"
 msgstr "Utiliser"
 
-#: ../share/extensions/funcplot.inx.h:18
+#: ../share/extensions/funcplot.inx.h:33
 msgid "Use polar coordinates"
 msgstr "Utiliser les coordonnées polaires"
 
-#: ../share/extensions/funcplot.inx.h:19
+#: ../share/extensions/funcplot.inx.h:34
 msgid "Y value of rectangle's bottom"
 msgstr "Valeur Y du bas du rectangle"
 
-#: ../share/extensions/funcplot.inx.h:20
+#: ../share/extensions/funcplot.inx.h:35
 msgid "Y value of rectangle's top"
 msgstr "Valeur Y du haut du rectangle"
 
@@ -20515,48 +20566,74 @@ msgid "Interpolation steps"
 msgstr "Étapes d'interpolation"
 
 #: ../share/extensions/lindenmayer.inx.h:1
+msgid ""
+"\n"
+"The path is generated by applying the \n"
+"substitutions of Rules to the Axiom, \n"
+"Order times. The following commands are \n"
+"recognized in Axiom and Rules:\n"
+"\n"
+"Any of A,B,C,D,E,F: draw forward \n"
+"\n"
+"Any of G,H,I,J,K,L: move forward \n"
+"\n"
+"+: turn left\n"
+"\n"
+"-: turn right\n"
+"\n"
+"|: turn 180 degrees\n"
+"\n"
+"[: remember point\n"
+"\n"
+"]: return to remembered point\n"
+msgstr ""
+"\n"
+"Le chemin est généré en appliquant des règles à un axiome, sur plusieurs générations. Les commandes suivantes sont reconnues dans les champs Axiome et Règles :\n"
+"\n"
+"A, B, C, D, E ou F : dessiner d'un pas en avant ;\n"
+"G, H, I, J, K ou L : déplacer d'un pas en avant ;\n"
+"+ : tourner à gauche ;- : tourner à droite ;\n"
+"| : tourner de 180 degrés ;\n"
+"[ : enregistrer le point ;\n"
+"] : retourner au point enregistré.\n"
+
+#: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
 msgstr "Axiome"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:22
 msgid "Axiom and rules"
 msgstr "Axiome et règles"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:24
 msgid "L-system"
 msgstr "Système de Lindenmayer"
 
-#: ../share/extensions/lindenmayer.inx.h:5
+#: ../share/extensions/lindenmayer.inx.h:25
 msgid "Left angle"
 msgstr "Rotation à gauche"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx.h:28
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Rendre l'angle aléatoire (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx.h:30
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Rendre les incréments aléatoires (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx.h:32
 msgid "Right angle"
 msgstr "Angle droit"
 
-#: ../share/extensions/lindenmayer.inx.h:13
+#: ../share/extensions/lindenmayer.inx.h:33
 msgid "Rules"
 msgstr "Règles"
 
-#: ../share/extensions/lindenmayer.inx.h:14
+#: ../share/extensions/lindenmayer.inx.h:34
 msgid "Step length (px)"
 msgstr "Longueur d'incrément (px)"
-
-#: ../share/extensions/lindenmayer.inx.h:15
-msgid "The path is generated by applying the substitutions of Rules to the Axiom, Order times. The following commands are recognized in Axiom and Rules: Any of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left -: turn right |: turn 180 degrees [: remember point ]: return to remembered point"
-msgstr ""
-"Le chemin est généré en applicant des règles à un axiome, sur plusieurs générations. Les commandes suivantes sont reconnues dans les champs Axiome et Règles :\n"
-"A, B, C, D, E ou F : dessiner d'un pas en avant ;G, H, I, J, K ou L : déplacer d'un pas en avant ;+ : tourner à gauche ;- : tourner à droite ;| : tourner de 180 degrés ;[ : enregistrer le point ;] : retourner au point enregistré."
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -20665,34 +20742,41 @@ msgid "Samples"
 msgstr "Échantillons"
 
 #: ../share/extensions/param_curves.inx.h:11
-msgid "Select a rectangle before calling the extension; it will determine X and Y scales. First derivatives are always determined numerically."
-msgstr "Sélectionner un rectangle avant de lancer l'extension ; il déterminera les échelles X et Y. Les dérivées premières sont toujours déterminées numériquement."
+msgid ""
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"First derivatives are always determined numerically."
+msgstr ""
+"Sélectionner un rectangle avant de lancer l'extension ; il déterminera les échelles X et Y.\n"
+"\n"
+"Les dérivées premières sont toujours déterminées numériquement."
 
-#: ../share/extensions/param_curves.inx.h:13
+#: ../share/extensions/param_curves.inx.h:24
 msgid "Start t-value"
 msgstr "Valeur T de début"
 
-#: ../share/extensions/param_curves.inx.h:15
+#: ../share/extensions/param_curves.inx.h:26
 msgid "x-Function"
 msgstr "Fonction X"
 
-#: ../share/extensions/param_curves.inx.h:16
+#: ../share/extensions/param_curves.inx.h:27
 msgid "x-value of rectangle's left"
 msgstr "Valeur X de la gauche du rectangle"
 
-#: ../share/extensions/param_curves.inx.h:17
+#: ../share/extensions/param_curves.inx.h:28
 msgid "x-value of rectangle's right"
 msgstr "Valeur X de la droite du rectangle"
 
-#: ../share/extensions/param_curves.inx.h:18
+#: ../share/extensions/param_curves.inx.h:29
 msgid "y-Function"
 msgstr "Fonction Y"
 
-#: ../share/extensions/param_curves.inx.h:19
+#: ../share/extensions/param_curves.inx.h:30
 msgid "y-value of rectangle's bottom"
 msgstr "Valeur Y du bas du rectangle"
 
-#: ../share/extensions/param_curves.inx.h:20
+#: ../share/extensions/param_curves.inx.h:31
 msgid "y-value of rectangle's top"
 msgstr "Valeur Y du haut du rectangle"
 
@@ -21770,6 +21854,19 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid ""
+#~ "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
+#~ "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10"
+#~ "(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,"
+#~ "y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh"
+#~ "(x). The constants pi and e are also available."
+#~ msgstr ""
+#~ "Les fonctions mathématiques standard de python sont disponibles: ceil(x); "
+#~ "fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log"
+#~ "(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); "
+#~ "atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); "
+#~ "cosh(x); sinh(x); tanh(x). Les constantes « pi » et « e » sont aussi "
+#~ "disponibles."
 #~ msgid "Target"
 #~ msgstr "Cible"
 #~ msgid "Seed"
