@@ -1606,15 +1606,16 @@
 <feConvolveMatrix id="feConvolveMatrix3330" order="3 3" kernelMatrix="2 0 0 1 1 -1 0 0 -2 " targetX="1" targetY="1" result="result8" />
 <feBlend id="feBlend3332" blend="normal" mode="darken" in="result7" result="result6" />
 </filter>
-<filter id="Alphadraw0" inkscape:label="Alpha draw" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent drawing effect to bitmaps and materials" height="1" width="1" y="0" x="0">
-<feGaussianBlur id="feGaussianBlur3670" result="result8" stdDeviation="0.6" />
-<feConvolveMatrix id="feConvolveMatrix3672" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
-<feColorMatrix id="feColorMatrix3674" values="1" in="result0" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite3676" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
-<feGaussianBlur id="feGaussianBlur3678" result="result7" in="result2" stdDeviation="0.01" />
-<feColorMatrix id="feColorMatrix3680" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " />
-<feFlood id="feFlood3682" flood-opacity="1" result="result10" flood-color="rgb(0,0,0)" />
-<feComposite id="feComposite3684" in2="result9" in="result10" operator="in" />
+<filter id="AlphDr0" inkscape:label="Alpha draw" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent drawing effect to bitmaps and materials" height="1" width="1" y="0" x="0">
+<feGaussianBlur id="feGaussianBlur2905" result="result8" stdDeviation="0.6" />
+<feConvolveMatrix id="feConvolveMatrix2907" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
+<feColorMatrix id="feColorMatrix2909" values="1" in="result0" result="result1" type="luminanceToAlpha" />
+<feComposite id="feComposite2911" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
+<feGaussianBlur id="feGaussianBlur2913" result="result7" in="result2" stdDeviation="0.01" />
+<feColorMatrix id="feColorMatrix2915" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " />
+<feFlood id="feFlood2917" flood-opacity="1" result="result10" flood-color="rgb(0,0,0)" />
+<feComposite id="feComposite2919" in2="result9" in="result10" operator="in" result="result11" />
+<feComposite id="feComposite2921" in2="result11" operator="in" />
 </filter>
 <filter id="AlphaDrawCol0" inkscape:label="Alpha draw, color" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0">
 <feGaussianBlur id="feGaussianBlur3724" result="result8" stdDeviation="0.6" />
@@ -1869,32 +1870,46 @@
 <feComposite in2="result5" in="result4" id="feComposite2952" operator="over" k1="1" />
 </filter>
 <filter id="AlphEngr0" inkscape:menu-tooltip="Gives a transparent engraving effect with rough line and filling" inkscape:menu="Mask and transparency effects" inkscape:label="Alpha engraving" height="1" width="1" y="0" x="0">
-<feTurbulence id="feTurbulence2932" result="result1" baseFrequency="0.029999999999999999" type="fractalNoise" seed="0" numOctaves="5" in="SourceGraphic" />
-<feDisplacementMap id="feDisplacementMap2934" result="result3" in2="result1" xChannelSelector="R" yChannelSelector="G" scale="7" numOctaves="2" in="SourceGraphic" />
-<feComposite id="feComposite2936" result="result4" in="result3" in2="result1" operator="in" />
-<feGaussianBlur id="feGaussianBlur2938" result="result8" stdDeviation="0.69999999999999996" in="result4" />
-<feConvolveMatrix id="feConvolveMatrix2940" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
-<feColorMatrix id="feColorMatrix2942" values="1" in="result0" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite2970" result="result11" operator="arithmetic" k2="5" k3="0" k1="0" />
-<feGaussianBlur id="feGaussianBlur2944" result="result7" in="result11" stdDeviation="0.5" />
-<feColorMatrix id="feColorMatrix2946" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 3 0 " />
-<feFlood id="feFlood2948" flood-opacity="1" result="result10" flood-color="rgb(157,87,40)" in="result9" />
-<feComposite id="feComposite2950" in2="result9" in="result10" operator="in" />
+<feTurbulence id="feTurbulence3009" result="result1" baseFrequency="0.029999999999999999" type="fractalNoise" seed="0" numOctaves="5" in="SourceGraphic" />
+<feDisplacementMap id="feDisplacementMap3011" result="result3" in2="result1" xChannelSelector="R" yChannelSelector="G" scale="7" numOctaves="2" in="SourceGraphic" />
+<feComposite id="feComposite3013" result="result4" in="result3" in2="result1" operator="in" />
+<feGaussianBlur id="feGaussianBlur3015" result="result8" stdDeviation="0.69999999999999996" in="result4" />
+<feConvolveMatrix id="feConvolveMatrix3017" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
+<feColorMatrix id="feColorMatrix3019" values="1" in="result0" result="result1" type="luminanceToAlpha" />
+<feComposite id="feComposite3021" result="result11" operator="arithmetic" k2="5" k3="0" k1="0" />
+<feGaussianBlur id="feGaussianBlur3023" result="result7" in="result11" stdDeviation="0.5" />
+<feColorMatrix id="feColorMatrix3025" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 3 0 " />
+<feFlood id="feFlood3027" flood-opacity="1" result="result10" flood-color="rgb(157,87,40)" in="result9" />
+<feComposite id="feComposite3029" in2="result9" in="result10" operator="in" />
+<feComposite id="feComposite3031" in2="SourceGraphic" operator="in" />
 </filter>
-<filter x="-0.2" y="-0.2" width="1.4" height="1.4" inkscape:label="Alpha draw, liquid" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent fluid drawing effect with rough line and filling" id="AlphaDLq0">
-<feGaussianBlur result="result12" id="feGaussianBlur3265" stdDeviation="2" />
-<feTurbulence in="result12" numOctaves="1" seed="0" type="fractalNoise" baseFrequency="0.029999999999999999" result="result1" id="feTurbulence3267" />
-<feDisplacementMap in="result1" numOctaves="2" scale="200" yChannelSelector="B" xChannelSelector="R" in2="result12" result="result3" id="feDisplacementMap3269" />
-<feComposite id="feComposite3313" result="result14" operator="in" in2="result1" />
-<feGaussianBlur in="result14" stdDeviation="0.5" result="result8" id="feGaussianBlur3271" />
-<feConvolveMatrix bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result8" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" id="feConvolveMatrix3273" />
-<feColorMatrix type="luminanceToAlpha" result="result1" in="result0" values="1" id="feColorMatrix3275" />
-<feComposite in="result1" in2="result1" k1="0" k3="0" k2="5" operator="arithmetic" result="result11" id="feComposite3277" />
-<feGaussianBlur stdDeviation="0.20000000000000001" in="result11" result="result7" id="feGaussianBlur3279" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -0.5 " result="result9" id="feColorMatrix3281" />
-<feComposite id="feComposite3283" result="result13" operator="in" in2="result9" in="result12" />
-<feFlood in="result13" flood-color="rgb(157,87,40)" result="result10" flood-opacity="1" id="feFlood3285" />
-<feComposite operator="in" in="result10" in2="result13" id="feComposite3287" />
+<filter id="AlphDrLq0" x="-0.2" y="-0.2" width="1.4" height="1.4" inkscape:label="Alpha draw, liquid" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent fluid drawing effect with rough line and filling">
+<feGaussianBlur id="feGaussianBlur2979" result="result12" stdDeviation="2" />
+<feTurbulence id="feTurbulence2981" in="result12" numOctaves="1" seed="0" type="fractalNoise" baseFrequency="0.029999999999999999" result="result1" />
+<feDisplacementMap id="feDisplacementMap2983" in="result1" numOctaves="2" scale="200" yChannelSelector="B" xChannelSelector="R" in2="result12" result="result3" />
+<feComposite id="feComposite2985" result="result14" operator="in" in2="result1" />
+<feGaussianBlur id="feGaussianBlur2987" in="result14" stdDeviation="0.5" result="result8" />
+<feConvolveMatrix id="feConvolveMatrix2989" bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result8" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" />
+<feColorMatrix id="feColorMatrix2991" type="luminanceToAlpha" result="result1" in="result0" values="1" />
+<feComposite id="feComposite2993" in="result1" in2="result1" k1="0" k3="0" k2="5" operator="arithmetic" result="result11" />
+<feGaussianBlur id="feGaussianBlur2995" stdDeviation="0.20000000000000001" in="result11" result="result7" />
+<feColorMatrix id="feColorMatrix2997" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -0.5 " result="result9" />
+<feComposite id="feComposite2999" result="result13" operator="in" in2="result9" in="result12" />
+<feFlood id="feFlood3001" in="result13" flood-color="rgb(157,87,40)" result="result10" flood-opacity="1" />
+<feComposite id="feComposite3003" operator="in" in="result10" in2="result13" />
+<feComposite id="feComposite3005" operator="in" in2="SourceGraphic" />
+</filter>
+<filter id="LiquDr0" inkscape:menu-tooltip="Gives a fluid and wavy expressionist drawing effect to images" inkscape:menu="Image effects" inkscape:label="Liquid drawing">
+<feGaussianBlur result="result11" id="feGaussianBlur2952" stdDeviation="2" />
+<feGaussianBlur in="SourceGraphic" id="feGaussianBlur2954" stdDeviation="0.5" result="result8" />
+<feTurbulence id="feTurbulence2956" result="result9" baseFrequency="0.080000000000000002" numOctaves="1" type="fractalNoise" />
+<feDisplacementMap id="feDisplacementMap2958" result="result10" in2="result11" xChannelSelector="G" scale="100" yChannelSelector="R" />
+<feConvolveMatrix id="feConvolveMatrix2960" bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result10" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" />
+<feColorMatrix in="result0" id="feColorMatrix2962" values="0 -6 0 0 1 0 -6 0 0 1 0 -6 0 0 1 0 0 0 1 0 " result="result3" type="matrix" />
+<feComposite id="feComposite2964" k2="0" k3="0" k1="0" operator="in" in2="SourceGraphic" in="result3" result="fbSourceGraphic" />
+<feBlend id="feBlend2966" in2="result8" mode="multiply" blend="normal" result="result12" />
+<feGaussianBlur id="feGaussianBlur2968" stdDeviation="0.01" in="result12" result="result7" />
+<feBlend blend="normal" id="feBlend2970" mode="screen" in2="result12" />
 </filter>
 </defs>
 </svg>
