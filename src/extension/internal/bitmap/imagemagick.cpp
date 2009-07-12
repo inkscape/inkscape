@@ -129,6 +129,7 @@ ImageMagickDocCache::readImage(const char *xlink, Magick::Image *image)
 			image->read(path);
 		} catch (...) {}
 	}
+	g_free(search);
 }
 
 bool
