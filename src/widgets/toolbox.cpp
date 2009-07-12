@@ -2384,8 +2384,10 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("/tools/shapes/star/proportion", adj->value);
+        if (!IS_NAN(adj->value)) {
+			Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+			prefs->setDouble("/tools/shapes/star/proportion", adj->value);
+        }
     }
 
     // quit if run by the attr_changed listener
