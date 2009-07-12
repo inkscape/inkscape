@@ -1911,5 +1911,32 @@
 <feGaussianBlur id="feGaussianBlur2968" stdDeviation="0.01" in="result12" result="result7" />
 <feBlend blend="normal" id="feBlend2970" mode="screen" in2="result12" />
 </filter>
+<filter id="MarblInk0" inkscape:label="Marbled ink" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Marbled transparency effect" height="1.5" y="-0.25" width="1.3" x="-0.15">
+<feGaussianBlur id="feGaussianBlur3312" stdDeviation="2" result="result8" />
+<feGaussianBlur stdDeviation="1" id="feGaussianBlur3328" in="SourceGraphic" result="result9" />
+<feTurbulence id="feTurbulence3314" seed="0" result="result7" type="fractalNoise" numOctaves="10" baseFrequency="0.059999999999999998" in="result8" />
+<feColorMatrix type="matrix" id="feColorMatrix3316" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
+<feComposite id="feComposite3318" in2="result5" result="result6" operator="out" in="result8" />
+<feDisplacementMap id="feDisplacementMap3320" in="result5" in2="result6" xChannelSelector="A" yChannelSelector="G" scale="120" result="result4" />
+<feComposite id="feComposite3322" in2="result4" result="result2" operator="in" in="result9" />
+<feComposite id="feComposite3324" result="fbSourceGraphic" in="result2" operator="in" in2="SourceGraphic" />
+<feBlend mode="multiply" in2="result2" id="feBlend3326" blend="normal" />
+</filter>
+<filter x="-0.15000001" width="1.3" y="-0.15000001" height="1.3" inkscape:menu-tooltip="Basic specular bevel to use for building textures" inkscape:menu="Bumps" inkscape:label="Thick acrylic" id="ThickAcr0">
+<feGaussianBlur result="result8" stdDeviation="2" id="feGaussianBlur3456" />
+<feGaussianBlur result="result9" in="SourceGraphic" id="feGaussianBlur3458" stdDeviation="1" />
+<feTurbulence in="result8" baseFrequency="0.02" numOctaves="5" type="fractalNoise" result="result7" seed="0" id="feTurbulence3460" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result5" id="feColorMatrix3462" type="matrix" />
+<feComposite in="result8" operator="out" result="result6" in2="result5" id="feComposite3464" />
+<feDisplacementMap result="result4" scale="120" yChannelSelector="G" xChannelSelector="A" in2="result6" in="result5" id="feDisplacementMap3466" />
+<feComposite in="result9" operator="in" result="result2" in2="result4" id="feComposite3468" />
+<feComposite in2="SourceGraphic" operator="in" result="fbSourceGraphic" id="feComposite3470" />
+<feBlend blend="normal" id="feBlend3472" mode="multiply" result="fbSourceGraphic" />
+<feDiffuseLighting diffuseConstant="0.7" surfaceScale="10" in="fbSourceGraphic" result="result10" id="feDiffuseLighting3476">
+<feDistantLight elevation="25" azimuth="235" id="feDistantLight3478" />
+</feDiffuseLighting>
+<feComposite id="feComposite3480" operator="in" result="result2" in="result10" in2="fbSourceGraphic" />
+<feComposite id="feComposite3482" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+</filter>
 </defs>
 </svg>
