@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-25 17:08+0200\n"
-"PO-Revision-Date: 2009-07-11 04:00+0700\n"
+"PO-Revision-Date: 2009-07-13 02:19+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1607,7 +1607,6 @@ msgstr "Bản vẽ"
 
 # Nên giải thích xác đáng hơn
 #: ../share/filters/filters.svg.h:172
-#, fuzzy
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
 msgstr "Tạo bản vẽ bút chì cho ảnh hoặc đối tượng có màu tô"
 
@@ -1725,7 +1724,6 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "Giới hạn số màu và tô đậm các cạnh, giống như trên tấm bưu ảnh cũ"
 
 #: ../share/filters/filters.svg.h:187
-#, fuzzy
 msgid "Fuzzy glow"
 msgstr "Ánh sáng tàn"
 
@@ -1746,58 +1744,52 @@ msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "Tạo một tấm bạt trong suốt, phụ thuộc vào giá trị màu"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Smear transparency"
-msgstr "Dùng trong suốt"
+msgstr "Vết trong suốt"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Paint objects with a transparent turbulence which turn around color edges"
-msgstr "Thêm một ống trong suốt chạy dọc quanh viền màu của đối tượng"
+msgstr "Thêm mảng hỗn độn trong suốt chạy dọc quanh viền màu của đối tượng"
 
 #: ../share/filters/filters.svg.h:191
-#, fuzzy
 msgid "Thick paint"
-msgstr "Sơn dầu"
+msgstr "Sơn dày"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "Lớp sơn dày với nhiều mảng hỗn độn"
 
 #: ../share/filters/filters.svg.h:192
-#, fuzzy
 msgid "Thick paint, glossy"
-msgstr "Giao diện hào nhoáng"
+msgstr "Sơn dày, sáng mạnh"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr ""
+msgstr "Lớp sơn dày với nhiều mảng hỗn độn, bề mặt phản chiếu mạnh"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid "Burst"
-msgstr "Loạt"
+msgstr "Vỡ tung"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "Bóng bay vỡ tung thành nhiều mảnh với nhiều lỗ thủng"
 
 #: ../share/filters/filters.svg.h:194
-#, fuzzy
 msgid "Burst, glossy"
-msgstr "Mành bóng loáng"
+msgstr "Vỡ tung, sáng mạnh"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr ""
+msgstr "Bóng bay vỡ thành nhiều mảnh, với các lỗ thủng và ánh sáng phản chiếu"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Embossed leather"
-msgstr "  [ -append [1-số_bàn_giao_tiếp] ]\tphụ thêm\n"
+msgstr "Làm nổi, bề mặt da"
 
 #: ../share/filters/filters.svg.h:195
 msgid "Combine a HSL edges detection bump with a leathery or woody and colorizable texture"
-msgstr ""
+msgstr "Kết hợp giữa hiệu ứng phát hiện cạnh HSL trên bề mặt da hoặc vân gỗ"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Carnaval"
@@ -3401,94 +3393,79 @@ msgid "%s Properties"
 msgstr "Thuộc tính %s"
 
 #: ../src/dialogs/spellcheck.cpp:444
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr "Thêm các từ đã kiểm tra vào từ điển"
+msgstr "<b>Đã xong</b>! Vừa thêm <b>%d</b> từ vào từ điển"
 
 #: ../src/dialogs/spellcheck.cpp:446
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr "không tìm thấy mục nhập cho « %s » nên không xóa gì"
+msgstr "<b>Đã xong</b>, không thấy từ nào cần sửa"
 
 #: ../src/dialogs/spellcheck.cpp:559
-#, fuzzy, c-format
+#, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr "&Không có trong từ điển:"
+msgstr "Không có trong từ điển (%s): <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
-#, fuzzy
 msgid "<i>Checking...</i>"
-msgstr "Đang kiểm tra..."
+msgstr "<i>Đang kiểm tra...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
-#, fuzzy
 msgid "Fix spelling"
-msgstr "Kiểm tra _chính tả..."
+msgstr "Sửa lỗi chính tả"
 
 #: ../src/dialogs/spellcheck.cpp:956
-#, fuzzy
 msgid "Suggestions:"
-msgstr "Gợi ý"
+msgstr "Gợi ý:"
 
 #: ../src/dialogs/spellcheck.cpp:968
-#, fuzzy
 msgid "_Accept"
 msgstr "_Chấp nhận"
 
 #: ../src/dialogs/spellcheck.cpp:968
-#, fuzzy
 msgid "Accept the chosen suggestion"
-msgstr "Chấp nhận chứng nhận cho %s không?"
+msgstr "Chấp nhận sửa theo gợi ý đã chọn"
 
 #: ../src/dialogs/spellcheck.cpp:970
-#, fuzzy
 msgid "_Ignore once"
 msgstr "Cho phép _một lần"
 
 #: ../src/dialogs/spellcheck.cpp:970
-#, fuzzy
 msgid "Ignore this word only once"
-msgstr "Bỏ qua mọi từ này trong tài liệu"
+msgstr "Bỏ qua lỗi chính tả của từ này một lần"
 
 #: ../src/dialogs/spellcheck.cpp:972
-#, fuzzy
 msgid "_Ignore"
-msgstr "_Lờ đi"
+msgstr "_Bỏ qua"
 
 #: ../src/dialogs/spellcheck.cpp:972
-#, fuzzy
 msgid "Ignore this word in this session"
-msgstr "Bỏ qua mọi từ này trong tài liệu"
+msgstr "Bỏ qua lỗi chính tả cho tất cả các lần xuất hiện của từ này trong tài liệu"
 
 #: ../src/dialogs/spellcheck.cpp:979
-#, fuzzy
 msgid "A_dd to dictionary:"
-msgstr "<<Thêm vào Từ điển"
+msgstr "_Thêm vào Từ điển"
 
 #: ../src/dialogs/spellcheck.cpp:979
-#, fuzzy
 msgid "Add this word to the chosen dictionary"
-msgstr "Thêm từ này vào từ điển riêng"
+msgstr "Thêm từ này vào từ điển đã chọn"
 
 #: ../src/dialogs/spellcheck.cpp:1012
-#, fuzzy
 msgid "_Stop"
 msgstr "_Dừng"
 
 #: ../src/dialogs/spellcheck.cpp:1012
-#, fuzzy
 msgid "Stop the check"
-msgstr ", kiểm tra bị ép buộc.\n"
+msgstr "Dừng việc kiểm tra chính tả"
 
 #: ../src/dialogs/spellcheck.cpp:1014
-#, fuzzy
 msgid "_Start"
 msgstr "_Bắt đầu"
 
 #: ../src/dialogs/spellcheck.cpp:1014
-#, fuzzy
 msgid "Start the check"
-msgstr ", kiểm tra bị ép buộc.\n"
+msgstr "Bắt đầu kiểm tra chính tả"
 
 #: ../src/dialogs/text-edit.cpp:198
 msgid "Font"
@@ -3589,9 +3566,8 @@ msgid "Duplicate node"
 msgstr "Nhân đôi nút"
 
 #: ../src/dialogs/xml-tree.cpp:347
-#, fuzzy
 msgid "nodeAsInXMLdialogTooltip|Delete node"
-msgstr "@h %i có một nút gốc @n.\n"
+msgstr "Xóa nút"
 
 #: ../src/dialogs/xml-tree.cpp:363
 #: ../src/dialogs/xml-tree.cpp:1571
@@ -3665,9 +3641,8 @@ msgid "Create new text node"
 msgstr "Tạo nút văn bản mới"
 
 #: ../src/dialogs/xml-tree.cpp:1426
-#, fuzzy
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
-msgstr "@h %i có một nút gốc @n.\n"
+msgstr "Xóa nút"
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
@@ -3861,189 +3836,155 @@ msgid "grid-guide intersection"
 msgstr "Giao điểm giữa lưới và đường gióng"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "cusp node"
-msgstr "Nút đỉnh"
+msgstr "nút đỉnh"
 
 #: ../src/display/snap-indicator.cpp:84
-#, fuzzy
 msgid "smooth node"
-msgstr "Nút mịn"
+msgstr "nút mịn"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "path"
-msgstr "đường dẫn"
+msgstr "đường nét"
 
 #: ../src/display/snap-indicator.cpp:90
-#, fuzzy
 msgid "path intersection"
-msgstr "Chọn (giao)"
+msgstr "giao giữa các đường nét"
 
 #: ../src/display/snap-indicator.cpp:93
-#, fuzzy
 msgid "bounding box corner"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:96
-#, fuzzy
 msgid "bounding box side"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "cạnh của hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box"
-msgstr "Hộp biên"
+msgstr "Hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:102
-#, fuzzy
 msgid "page border"
-msgstr "Màu của viền trang."
+msgstr "viền trang"
 
 #: ../src/display/snap-indicator.cpp:105
-#, fuzzy
 msgid "line midpoint"
-msgstr "Quần Đảo Line"
+msgstr "điểm giữa của đường"
 
 #: ../src/display/snap-indicator.cpp:108
-#, fuzzy
 msgid "object midpoint"
-msgstr "Hàm đối tượng"
+msgstr "điểm giữa của đối tượng"
 
 #: ../src/display/snap-indicator.cpp:111
-#, fuzzy
 msgid "object rotation center"
-msgstr "Chuẩn/Lệch tâm"
+msgstr "tâm xoay của đối tượng"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "handle"
 msgstr "chốt"
 
 #: ../src/display/snap-indicator.cpp:117
-#, fuzzy
 msgid "bounding box side midpoint"
-msgstr "Hộp giới hạn sai cho %s.\n"
+msgstr "điểm giữa trên cạnh hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:120
-#, fuzzy
 msgid "bounding box midpoint"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "điểm giữa của hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:123
-#, fuzzy
 msgid "page corner"
-msgstr "Thêm góc"
+msgstr "góc trang giấy"
 
 #: ../src/display/snap-indicator.cpp:126
-#, fuzzy
 msgid "convex hull corner"
-msgstr "Thêm một điểm góc"
+msgstr "góc đường bao lồi"
 
 #: ../src/display/snap-indicator.cpp:129
-#, fuzzy
 msgid "quadrant point"
-msgstr "Point Fortin"
+msgstr "điểm một phần tư"
 
 #: ../src/display/snap-indicator.cpp:132
-#, fuzzy
 msgid "center"
-msgstr "giữa"
+msgstr "tâm điểm"
 
 #: ../src/display/snap-indicator.cpp:135
-#, fuzzy
 msgid "corner"
-msgstr "Đỉnh"
+msgstr "đỉnh"
 
 #: ../src/display/snap-indicator.cpp:138
-#, fuzzy
 msgid "text baseline"
-msgstr "(chuỗi thay thế)"
+msgstr "đường chuẩn của văn bản"
 
 #: ../src/display/snap-indicator.cpp:151
-#, fuzzy
 msgid "Bounding box corner"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "góc của hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:154
-#, fuzzy
 msgid "Bounding box midpoint"
-msgstr "Vẽ Hộp Bao quanh"
+msgstr "Điểm giữa của hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:157
-#, fuzzy
 msgid "Bounding box side midpoint"
-msgstr "Hộp giới hạn sai cho %s.\n"
+msgstr "Điểm giữa trên cạnh của hộp bao quanh"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Smooth node"
 msgstr "Nút mịn"
 
 #: ../src/display/snap-indicator.cpp:163
-#, fuzzy
 msgid "Cusp node"
 msgstr "Nút đỉnh"
 
 #: ../src/display/snap-indicator.cpp:166
-#, fuzzy
 msgid "Line midpoint"
-msgstr "Quần Đảo Line"
+msgstr "Điểm giữa của đường"
 
 #: ../src/display/snap-indicator.cpp:169
-#, fuzzy
 msgid "Object midpoint"
-msgstr "Hàm đối tượng"
+msgstr "Điểm giữa của đối tượng"
 
 #: ../src/display/snap-indicator.cpp:172
-#, fuzzy
 msgid "Object rotation center"
-msgstr "Chuẩn/Lệch tâm"
+msgstr "Tâm xoay của đối tượng"
 
 #: ../src/display/snap-indicator.cpp:175
 msgid "Handle"
 msgstr "Chốt"
 
 #: ../src/display/snap-indicator.cpp:178
-#, fuzzy
 msgid "Path intersection"
-msgstr "Chọn (giao)"
+msgstr "Giao các đường nét"
 
 #: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
 msgstr "Đường gióng"
 
 #: ../src/display/snap-indicator.cpp:184
-#, fuzzy
 msgid "Guide origin"
-msgstr "Gốc hình tượng"
+msgstr "Gốc đường gióng"
 
 #: ../src/display/snap-indicator.cpp:187
-#, fuzzy
 msgid "Convex hull corner"
-msgstr "Thêm một điểm góc"
+msgstr "Góc đường bao lồi"
 
 #: ../src/display/snap-indicator.cpp:190
-#, fuzzy
 msgid "Quadrant point"
-msgstr "Point Fortin"
+msgstr "Điểm một phần tư"
 
 #: ../src/display/snap-indicator.cpp:193
 #: ../src/widgets/toolbox.cpp:6707
 msgid "Center"
-msgstr "Giữa lại"
+msgstr "Tâm điểm"
 
 #: ../src/display/snap-indicator.cpp:196
-#, fuzzy
 msgid "Corner"
 msgstr "Đỉnh"
 
 #: ../src/display/snap-indicator.cpp:199
-#, fuzzy
 msgid "Text baseline"
-msgstr "(chuỗi thay thế)"
+msgstr "Đường gốc của văn bản"
 
 #: ../src/display/snap-indicator.cpp:238
-#, fuzzy
 msgid " to "
 msgstr " tới "
 
@@ -4367,7 +4308,7 @@ msgstr "Dịch hình"
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:49
 #: ../src/extension/internal/bitmap/wave.cpp:44
 msgid "Raster"
-msgstr "Tạo ảnh bitmap"
+msgstr "Định hình"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)."
@@ -4884,19 +4825,18 @@ msgstr "Vùng được xuất là vùng chứa nội dung"
 msgid "Convert texts to paths"
 msgstr "Chuyển đổi văn bản sang đường nét"
 
+#. TODO: Chưa nghĩ ra từ nào hay hơn cho Rasterize
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-#, fuzzy
 msgid "Rasterize filter effects"
-msgstr "Quản lý các hiệu ứng lọc SVG"
+msgstr "Định hình các bộ lọc hiệu ứng"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
-#, fuzzy
 msgid "Resolution for rasterization (dpi)"
-msgstr "Độ phân giải (DPI) muốn dùng cho ảnh bitmap"
+msgstr "Độ phân giải (DPI) của ảnh bitmap tạo được khi định hình"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -4999,15 +4939,13 @@ msgstr "Độ đục, %:"
 
 #: ../src/extension/internal/filter/drop-shadow.h:39
 #: ../src/extension/internal/filter/drop-shadow.h:94
-#, fuzzy
 msgid "Horizontal offset, px"
-msgstr "Bước răng hình tròn, điểm ảnh"
+msgstr "Độ dịch ngang, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:40
 #: ../src/extension/internal/filter/drop-shadow.h:95
-#, fuzzy
 msgid "Vertical offset, px"
-msgstr "Bước răng hình tròn, điểm ảnh"
+msgstr "Độ dịch dọc, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
@@ -5041,9 +4979,8 @@ msgid "Personal"
 msgstr "Cá nhân"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
-#, fuzzy
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr "Gặp tên thư mục mô-đun bên ngoài rỗng nên các mô-đun sẽ không được tải."
+msgstr "Chưa thiết lập thư mục mô-đun ngoài chương trình. Sẽ bỏ qua việc nạp các bộ lọc."
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow crest"
@@ -5127,18 +5064,16 @@ msgid "Draw a path which is a grid"
 msgstr "Vẽ đường nét là lưới"
 
 #: ../src/extension/internal/javafx-out.cpp:965
-#, fuzzy
 msgid "JavaFX Output"
-msgstr "Đầu ra của lệnh"
+msgstr "Xuất JavaFX"
 
 #: ../src/extension/internal/javafx-out.cpp:970
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
 #: ../src/extension/internal/javafx-out.cpp:971
-#, fuzzy
 msgid "JavaFX Raytracer File"
-msgstr "Tập tin Raytracer PovRay"
+msgstr "Tập tin Raytracer JavaFX"
 
 #: ../src/extension/internal/latex-pstricks.cpp:337
 msgid "LaTeX Print"
@@ -5251,20 +5186,18 @@ msgstr "Thiết lập nhập PDF"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
-#, fuzzy
 msgid "pdfinput|medium"
-msgstr "500 Vừa"
+msgstr "vừa"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
 msgid "fine"
-msgstr "nhỏ"
+msgstr "tốt"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:398
 msgid "very fine"
-msgstr "rất nhỏ"
+msgstr "rất tốt"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:753
-#, fuzzy
 msgid "PDF Input"
 msgstr "Nhập PDF"
 
@@ -5274,12 +5207,10 @@ msgid "Adobe PDF (*.pdf)"
 msgstr "Adobe PDF (*.pdf)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:759
-#, fuzzy
 msgid "Adobe Portable Document Format"
-msgstr "Dạng thức tài liệu di động Cairo"
+msgstr "Định dạng Portable Document Format của Adobe"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:766
-#, fuzzy
 msgid "AI Input"
 msgstr "Nhập AI"
 
@@ -5289,18 +5220,16 @@ msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr "Adobe Illustrator 9.0 trở lên (*.ai)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:772
-#, fuzzy
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Mở tập tin lưu bởi Adobe Illustrator bản 9.0 trở lên"
 
 #: ../src/extension/internal/pov-out.cpp:677
 msgid "PovRay Output"
-msgstr "Kết xuất PovRay"
+msgstr "Xuất PovRay"
 
 #: ../src/extension/internal/pov-out.cpp:682
-#, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
-msgstr "PovRay (*.pov) (xuất chốt trục)"
+msgstr "PovRay (*.pov) (chỉ các đường nét và hình dáng)"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
@@ -5531,9 +5460,9 @@ msgid "Open Clip Art Login"
 msgstr "Thông tin đăng nhập vào trang Open Clip Art"
 
 #: ../src/file.cpp:1374
-#, fuzzy, c-format
+#, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
-msgstr "Gặp lỗi khi xuất tài liệu. Hãy kiểm tra xem cả tên máy phục vụ, tên người dùng và mật khẩu đều là đúng. Nếu máy phục vụ hỗ trợ WebDAV, cũng kiểm tra bạn đã chọn giấy phép."
+msgstr "Gặp lỗi khi xuất tài liệu. Hãy kiểm tra xem cả tên máy chủ, tên người dùng và mật khẩu đều là đúng. Nếu máy chủ hỗ trợ WebDAV, cũng kiểm tra bạn đã chọn giấy phép."
 
 #: ../src/file.cpp:1395
 msgid "Document exported..."
@@ -5625,9 +5554,8 @@ msgstr "Sơn nét"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/filter-enums.cpp:53
-#, fuzzy
 msgid "filterBlendMode|Normal"
-msgstr "  Gói chuẩn: "
+msgstr "Thường"
 
 #: ../src/filter-enums.cpp:54
 msgid "Multiply"
@@ -5643,7 +5571,7 @@ msgstr "Tối hơn"
 
 #: ../src/filter-enums.cpp:57
 msgid "Lighten"
-msgstr "Nhạt hơn"
+msgstr "Sáng hơn"
 
 #: ../src/filter-enums.cpp:63
 msgid "Matrix"
@@ -5655,11 +5583,11 @@ msgstr "Bão hòa"
 
 #: ../src/filter-enums.cpp:65
 msgid "Hue Rotate"
-msgstr "Xoay sắc màu"
+msgstr "Xoay độ màu"
 
 #: ../src/filter-enums.cpp:66
 msgid "Luminance to Alpha"
-msgstr "Độ sáng tới Alpha"
+msgstr "Độ sáng thành độ trong suốt"
 
 #. File
 #: ../src/filter-enums.cpp:72
@@ -5701,15 +5629,15 @@ msgstr "Bảng"
 
 #: ../src/filter-enums.cpp:86
 msgid "Discrete"
-msgstr "Rời rác"
+msgstr "Rời rạc"
 
 #: ../src/filter-enums.cpp:87
 msgid "Linear"
-msgstr "Tuyến"
+msgstr "Tuyến tính"
 
 #: ../src/filter-enums.cpp:88
 msgid "Gamma"
-msgstr "Gamma γ"
+msgstr "Gamma"
 
 #: ../src/filter-enums.cpp:94
 #: ../src/selection-chemistry.cpp:316
@@ -5824,13 +5752,13 @@ msgid "<b>Too much inset</b>, the result is empty."
 msgstr "<b>Bù quá lớn</b> nên kết quả rỗng."
 
 #: ../src/flood-context.cpp:509
-#, fuzzy, c-format
+#, c-format
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr[0] "Vùng được tô, đường nét có <b>%d</b> nút được tạo và có hợp với vùng chọn."
+msgstr[0] "Vùng được tô, đường nét có <b>%d</b> nút được tạo và hợp nhất với vùng chọn."
 
 #: ../src/flood-context.cpp:513
-#, fuzzy, c-format
+#, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
 msgstr[0] "Vùng được tô, đường nét có <b>%d</b> nút được tạo."
@@ -5900,7 +5828,7 @@ msgstr "<b>Chỗ dừng ở giữa</b> của chuyển sắc tròn"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
 #: ../src/gradient-context.cpp:165
-#, fuzzy, c-format
+#, c-format
 msgid "%s selected"
 msgstr "Đã chọn %s"
 
@@ -6430,24 +6358,20 @@ msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Xoay</b>mẫu tô; giữ <b>Ctrl</b> đính góc."
 
 #: ../src/libgdl/gdl-dock-bar.c:108
-#, fuzzy
 msgid "Master"
 msgstr "Chính"
 
 #: ../src/libgdl/gdl-dock-bar.c:109
-#, fuzzy
 msgid "GdlDockMaster object which the dockbar widget is attached to"
-msgstr "Đối tượng GdlDockMaster là đối tượng layout được gắn kèm với to"
+msgstr "Đối tượng GdlDockMaster chứa khung điều khiển cần neo tới"
 
 #: ../src/libgdl/gdl-dock-bar.c:116
-#, fuzzy
 msgid "Dockbar style"
 msgstr "Kiểu thanh neo"
 
 #: ../src/libgdl/gdl-dock-bar.c:117
-#, fuzzy
 msgid "Dockbar style to show items on it"
-msgstr "Kiểu dáng hiển thị mục trên thanh neo"
+msgstr "Kiểu dáng thanh neo sẽ dùng để hiển thị các mục trên đó"
 
 #: ../src/libgdl/gdl-dock.c:175
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
@@ -6456,137 +6380,116 @@ msgid "Floating"
 msgstr "Nổi"
 
 #: ../src/libgdl/gdl-dock.c:176
-#, fuzzy
 msgid "Whether the dock is floating in its own window"
-msgstr "Có để sự cư trú nổi trong cửa sổ của riêng nó"
+msgstr "Có đặt thanh neo vào một cửa sổ riêng của nó không?"
 
 #: ../src/libgdl/gdl-dock.c:183
 #: ../src/libgdl/gdl-dock-master.c:144
-#, fuzzy
 msgid "Default title"
-msgstr "Tựa đề mặc định"
+msgstr "Tiêu đề mặc định"
 
 #: ../src/libgdl/gdl-dock.c:184
-#, fuzzy
 msgid "Default title for the newly created floating docks"
-msgstr "Tiêu đề mặc định cho các mục cư trú nổi mới được tạo"
+msgstr "Tiêu đề mặc định cho các mục nổi mới được tạo"
 
 #: ../src/libgdl/gdl-dock.c:191
-#, fuzzy
 msgid "Width for the dock when it's of floating type"
-msgstr "Bề rộng của mục cư trú khi nó là kiểu nổi"
+msgstr "Chiều rộng của thanh neo khi nó là kiểu nổi"
 
 #: ../src/libgdl/gdl-dock.c:199
-#, fuzzy
 msgid "Height for the dock when it's of floating type"
-msgstr "Chiều cao của mục cư trú khi nó là kiểu nổi"
+msgstr "Chiều cao của thanh neo khi nó là kiểu nổi"
 
 #: ../src/libgdl/gdl-dock.c:206
-#, fuzzy
 msgid "Float X"
-msgstr "Phao X"
+msgstr "Tọa độ X"
 
 #: ../src/libgdl/gdl-dock.c:207
-#, fuzzy
 msgid "X coordinate for a floating dock"
-msgstr "Phối hợp X cho sự cư trú nổi"
+msgstr "Tọa độ phương X khi mở bảng điều khiển nổi"
 
 #: ../src/libgdl/gdl-dock.c:214
-#, fuzzy
 msgid "Float Y"
-msgstr "Phao Y"
+msgstr "Tọa độ Y"
 
 #: ../src/libgdl/gdl-dock.c:215
-#, fuzzy
 msgid "Y coordinate for a floating dock"
-msgstr "Phối hợp Y cho sự cư trú nổi"
+msgstr "Tọa độ phương Y khi mở bảng điều khiển nổi"
 
 #: ../src/libgdl/gdl-dock.c:499
-#, fuzzy, c-format
+#, c-format
 msgid "Dock #%d"
-msgstr "Cư trú #%d"
+msgstr "Thanh neo #%d"
 
 #: ../src/libgdl/gdl-dock-item.c:287
-#, fuzzy
 msgid "Orientation"
-msgstr "Định Hướng"
+msgstr "Hướng"
 
 #: ../src/libgdl/gdl-dock-item.c:288
-#, fuzzy
 msgid "Orientation of the docking item"
-msgstr "Định hướng của mục cư trú"
+msgstr "Hướng của các mục trên thanh neo"
 
 #: ../src/libgdl/gdl-dock-item.c:303
-#, fuzzy
 msgid "Resizable"
-msgstr "Có thể đặt lại kích thước"
+msgstr "Đặt được kích thước"
 
 #: ../src/libgdl/gdl-dock-item.c:304
-#, fuzzy
 msgid "If set, the dock item can be resized when docked in a panel"
-msgstr "Bật thì mục neo có thể thay đổi kích cỡ khi thả neo vào một ô điều khiển GtkPanel."
+msgstr "Bật thì mục trên thanh neo có kích cỡ thay đổi được"
 
 #: ../src/libgdl/gdl-dock-item.c:311
-#, fuzzy
 msgid "Item behavior"
-msgstr "Ứng xử của mục"
+msgstr "Ứng xử của mục trên thanh neo"
 
 #: ../src/libgdl/gdl-dock-item.c:312
-#, fuzzy
 msgid "General behavior for the dock item (i.e. whether it can float, if it's locked, etc.)"
-msgstr "Ứng xử chung của mục cư trú (VD: nó có thể nổi hay không khi nó được khoá, v.v...)"
+msgstr "Ứng xử chung của mục trên thanh neo (VD: nó có thể nổi hay không, có bị khóa không, v.v...)"
 
 #: ../src/libgdl/gdl-dock-item.c:320
 #: ../src/libgdl/gdl-dock-master.c:151
-#, fuzzy
 msgid "Locked"
 msgstr "Bị khoá"
 
 #: ../src/libgdl/gdl-dock-item.c:321
-#, fuzzy
 msgid "If set, the dock item cannot be dragged around and it doesn't show a grip"
-msgstr "Nếu lập, mục cư trú không thể kéo xung quanh và sẽ không hiện grip"
+msgstr "Nếu chọn, mục neo sẽ không di chuyển được, và không có chốt di chuyển"
 
 #: ../src/libgdl/gdl-dock-item.c:329
-#, fuzzy
 msgid "Preferred width"
-msgstr "Bề rộng ưa thích"
+msgstr "Chiều rộng nên dùng"
 
 #: ../src/libgdl/gdl-dock-item.c:330
-#, fuzzy
 msgid "Preferred width for the dock item"
-msgstr "Bề rộng ưa thích của mục cư trú"
+msgstr "Chiều rộng ưu tiên nên dùng của mục trên thanh neo"
 
 #: ../src/libgdl/gdl-dock-item.c:336
-#, fuzzy
 msgid "Preferred height"
-msgstr "Bề cao ưa thích"
+msgstr "Chiều cao nên dùng"
 
 #: ../src/libgdl/gdl-dock-item.c:337
-#, fuzzy
 msgid "Preferred height for the dock item"
-msgstr "Chiều cao ưa thích của mục cư trú"
+msgstr "Chiều cao ưu tiên nên dùng của mục trên thanh neo"
 
 #: ../src/libgdl/gdl-dock-item.c:616
-#, fuzzy, c-format
+#, c-format
 msgid "You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or some other compound dock object."
-msgstr "Không thể thêm đối tượng cư trú (%p của kiểu %s) trong một %s. Hãy dùng GdlDock hay một đối tượng cư trú phức hợp khác."
+msgstr "Không thể thêm đối tượng (%p của kiểu %s) trong một %s. Hãy dùng GdlDock hay một đối tượng neo phức hợp khác."
 
 #: ../src/libgdl/gdl-dock-item.c:623
-#, fuzzy, c-format
+#, c-format
 msgid "Attempting to add a widget with type %s to a %s, but it can only contain one widget at a time; it already contains a widget of type %s"
-msgstr "Đang cố thêm một widget với kiểu %s vào %s, nhưng chỉ có thể chứa một widget vào một thời điểm, nó đã chứa một widget với kiểu %s"
+msgstr "Không thể thêm khung điều khiển kiểu %s vào %s, vì hiện đã có một khung điều khiển kiểu %s tại đó"
 
 #: ../src/libgdl/gdl-dock-item.c:1345
 #: ../src/libgdl/gdl-dock-item.c:1390
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported docking strategy %s in dock object of type %s"
-msgstr "Không hỗ trợ chiến lược cư trú %s trong đối tượng cư trú của kiểu %s"
+msgstr "Không hỗ trợ chiến lược neo %s trong đối tượng neo kiểu %s"
 
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
 msgid "UnLock"
-msgstr "Mở khóa"
+msgstr "Gỡ khóa"
 
 #. Hide menuitem.
 #: ../src/libgdl/gdl-dock-item.c:1486
@@ -6696,51 +6599,46 @@ msgid "Human readable name for the dock object"
 msgstr "Tên thân mật đối với người dùng"
 
 #: ../src/libgdl/gdl-dock-object.c:135
-#, fuzzy
 msgid "Stock Icon"
-msgstr "Biểu tượng chuẩn"
+msgstr "Biểu tượng có sẵn"
 
 #: ../src/libgdl/gdl-dock-object.c:136
-#, fuzzy
 msgid "Stock icon for the dock object"
-msgstr "Tên người có thể đọc được cho đối tượng cư trú"
+msgstr "Các biểu tượng có sẵn cho đối tượng neo"
 
 #: ../src/libgdl/gdl-dock-object.c:142
 msgid "Pixbuf Icon"
 msgstr "Biểu tượng Pixbuf"
 
 #: ../src/libgdl/gdl-dock-object.c:143
-#, fuzzy
 msgid "Pixbuf icon for the dock object"
-msgstr "Tên người có thể đọc được cho đối tượng cư trú"
+msgstr "Biểu tượng Pixbuf cho đối tượng neo"
 
 #: ../src/libgdl/gdl-dock-object.c:148
-#, fuzzy
 msgid "Dock master"
-msgstr "Chủ chính cư trú"
+msgstr "Chủ neo"
 
 #: ../src/libgdl/gdl-dock-object.c:149
-#, fuzzy
 msgid "Dock master this dock object is bound to"
-msgstr "Chủ chính cư trú đối tượng cư trú này được giới hạn tới"
+msgstr "Chủ neo của đối tượng neo này được gắn tới"
 
 #: ../src/libgdl/gdl-dock-object.c:434
-#, fuzzy, c-format
+#, c-format
 msgid "Call to gdl_dock_object_dock in a dock object %p (object type is %s) which hasn't implemented this method"
-msgstr "Gọi tới gdl_dock_object_dock trong đối tượng cư trú %p (kiểu đối tượng là %s) mà nó đã không thực thi phương pháp này"
+msgstr "Gọi tới gdl_dock_object_dock trong đối tượng neo %p (kiểu %s) nhưng phương pháp này chưa được phát triển"
 
 #: ../src/libgdl/gdl-dock-object.c:563
-#, fuzzy, c-format
+#, c-format
 msgid "Dock operation requested in a non-bound object %p. The application might crash"
-msgstr "Chức năng cư trú được yêu cầu trong một đối tượng không giới hạn %p. Ứng dụng có thể đổ vỡ."
+msgstr "Yêu cầu neo tới đối tượng %p nhưng đối tượng này không có bo. Ứng dụng có thể đổ vỡ."
 
 #: ../src/libgdl/gdl-dock-object.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot dock %p to %p because they belong to different masters"
-msgstr "Không thể cư trú %p vào %p vì chúng là của các chủ chính khác nhau"
+msgstr "Không thể neo %p vào %p vì chúng không cùng chủ"
 
 #: ../src/libgdl/gdl-dock-object.c:612
-#, fuzzy, c-format
+#, c-format
 msgid "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr "Cố rằng buộc %p một đối tượng cư trú hạn định %p (Chủ chính hiện thời là %p)"
 
@@ -6753,90 +6651,76 @@ msgid "Position of the divider in pixels"
 msgstr "Vị trí của thanh ngăn, tính bằng điểm ảnh"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:143
-#, fuzzy
 msgid "Sticky"
-msgstr "Dính"
+msgstr "Bám dính"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:144
-#, fuzzy
 msgid "Whether the placeholder will stick to its host or move up the hierarchy when the host is redocked"
-msgstr "Nơi cư trú sẽ bám dính tới chủ của nó hay chuyển thứ bậc khi chủ thôi cư trú"
+msgstr "Nơi giữ chỗ sẽ bám dính tới chủ của nó hay chuyển thứ bậc khi chủ được neo lại"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
-#, fuzzy
 msgid "Host"
 msgstr "Chủ"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:152
-#, fuzzy
 msgid "The dock object this placeholder is attached to"
-msgstr "Đối tượng cư trú trên vị trí này được gắn kèm với"
+msgstr "Thanh neo chứa đối tượng giữ chỗ này"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:159
-#, fuzzy
 msgid "Next placement"
-msgstr "Sự định vị tiếp theo"
+msgstr "Vị trí tiếp theo"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:160
-#, fuzzy
 msgid "The position an item will be docked to our host if a request is made to dock to us"
-msgstr "Vị trí một mục sẽ được cư trú tới chủ của chúng ta nếu một yêu cầu được thực hiện để cư trú vào chúng ta"
+msgstr "Vị trí đặt một mục mới sẽ xuất hiện trên thanh neo khi cần"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:170
-#, fuzzy
 msgid "Width for the widget when it's attached to the placeholder"
-msgstr "Chiều rộng của ô điều khiển khi được gắn kết đến bộ giữ chỗ"
+msgstr "Chiều rộng của ô điều khiển khi được gắn vào bộ giữ chỗ"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:178
-#, fuzzy
 msgid "Height for the widget when it's attached to the placeholder"
-msgstr "Chiều cao của ô điều khiển khi được gắn kết đến bộ giữ chỗ"
+msgstr "Chiều cao của ô điều khiển khi được gắn vào bộ giữ chỗ"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:184
-#, fuzzy
 msgid "Floating Toplevel"
-msgstr "Bậc đầu nổi"
+msgstr "Cấp cao nhất nổi"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:185
-#, fuzzy
 msgid "Whether the placeholder is standing in for a floating toplevel dock"
-msgstr "Bộ giữ chỗ có thay thế neo bậc đầu đang nổi hay không"
+msgstr "Bộ giữ chỗ có thay thế neo tới cấp cao nhất nổi hay không"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
 msgstr "Toạ độ X"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
-#, fuzzy
 msgid "X coordinate for dock when floating"
-msgstr "Toạ độ X cho neo khi nổi"
+msgstr "Toạ độ X cho thanh neo khi nổi"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
 msgid "Y-Coordinate"
 msgstr "Toạ độ Y"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
-#, fuzzy
 msgid "Y coordinate for dock when floating"
-msgstr "Toạ độ X cho neo khi nổi"
+msgstr "Toạ độ X cho thanh neo khi nổi"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
-#, fuzzy
 msgid "Attempt to dock a dock object to an unbound placeholder"
 msgstr "Cố cư trú một đối tượng cư trú vào vào một nơi không rằng buộc"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:618
-#, fuzzy, c-format
+#, c-format
 msgid "Got a detach signal from an object (%p) who is not our host %p"
-msgstr "Đã nhận tín hiệu tách ra từ một đối tượng (%p) không phải là %p của chủ chúng ta"
+msgstr "Nhận được yêu cầu tách ra từ đối tượng (%p) không thuộc chủ %p của ta"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:643
-#, fuzzy, c-format
+#, c-format
 msgid "Something weird happened while getting the child placement for %p from parent %p"
 msgstr "Một ss cái khó hiểu xẩy ra khi nhận sự định vị con cho %p từ cha %p"
 
 #: ../src/libgdl/gdl-dock-tablabel.c:129
-#, fuzzy
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "Mục-cư-trú có 'riêng' nhãn tab này"
 
@@ -6846,92 +6730,75 @@ msgstr "Đang bỏ qua phông không có nhóm mà sẽ làm cho Pango sụp đ�
 
 #: ../src/live_effects/effect.cpp:86
 msgid "doEffect stack test"
-msgstr "Thử đống doEffect"
+msgstr "Thử hàm doEffect"
 
 #: ../src/live_effects/effect.cpp:87
-#, fuzzy
 msgid "Angle bisector"
-msgstr "Góc ánh sáng:"
+msgstr "Đường phân giác"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
-#, fuzzy
 msgid "Boolops"
-msgstr "Công cụ"
+msgstr "Phép toán Bool"
 
 #: ../src/live_effects/effect.cpp:90
-#, fuzzy
 msgid "Circle (by center and radius)"
-msgstr ", được tính trung bình với bán kính %d"
+msgstr "Đường tròn (cho bởi tâm và bán kính)"
 
 #: ../src/live_effects/effect.cpp:91
-#, fuzzy
 msgid "Circle by 3 points"
-msgstr "Chọn điểm bị HM tác động"
+msgstr "Đường tròn theo 3 điểm"
 
 #: ../src/live_effects/effect.cpp:92
-#, fuzzy
 msgid "Dynamic stroke"
-msgstr "Nét sai"
+msgstr "Nét động"
 
 #: ../src/live_effects/effect.cpp:93
-#, fuzzy
 msgid "Lattice Deformation"
-msgstr "Cách làm biến dạng:"
+msgstr "Làm biến dạng mạng"
 
 #: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Line Segment"
-msgstr "Dấu phân cách đoạn"
+msgstr "Đoạn thẳng"
 
 #: ../src/live_effects/effect.cpp:95
-#, fuzzy
 msgid "Mirror symmetry"
-msgstr "Với Đối xứng X"
+msgstr "Đối xứng gương"
 
 #: ../src/live_effects/effect.cpp:97
-#, fuzzy
 msgid "Parallel"
 msgstr "Song song"
 
 #: ../src/live_effects/effect.cpp:98
-#, fuzzy
 msgid "Path length"
-msgstr "Đường dẫn quá dài"
+msgstr "Chiều dài đường nét"
 
 #: ../src/live_effects/effect.cpp:99
-#, fuzzy
 msgid "Perpendicular bisector"
-msgstr "(vuông góc với nét, « chổi »)"
+msgstr "Phân giác vuông góc"
 
 #: ../src/live_effects/effect.cpp:100
-#, fuzzy
 msgid "Perspective path"
-msgstr "đường dẫn trùng %s"
+msgstr "Đường nét vuông góc"
 
 #: ../src/live_effects/effect.cpp:101
-#, fuzzy
 msgid "Rotate copies"
-msgstr "Bản sao của mẫu :"
+msgstr "Xoay bản sao"
 
 #: ../src/live_effects/effect.cpp:102
-#, fuzzy
 msgid "Recursive skeleton"
-msgstr "Tải đệ quy:\n"
+msgstr "Khung đệ quy"
 
 #: ../src/live_effects/effect.cpp:103
-#, fuzzy
 msgid "Tangent to curve"
-msgstr "Lưu các điểm đường cong vào tập tin"
+msgstr "Tiếp tuyến thành cung"
 
 #: ../src/live_effects/effect.cpp:104
-#, fuzzy
 msgid "Text label"
-msgstr "Nội dung nhãn."
+msgstr "Nhãn văn bản"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:107
-#, fuzzy
 msgid "Bend"
 msgstr "Uốn đường nét"
 
@@ -6955,41 +6822,35 @@ msgstr "VonKoch"
 
 #: ../src/live_effects/effect.cpp:113
 msgid "Knot"
-msgstr "Núm"
+msgstr "Cắt rời nét nằm dưới tại giao điểm"
 
 #: ../src/live_effects/effect.cpp:114
-#, fuzzy
 msgid "Construct grid"
-msgstr "Vừa lưới"
+msgstr "Tạo lưới"
 
 #: ../src/live_effects/effect.cpp:115
-#, fuzzy
 msgid "Spiro spline"
-msgstr "Không biết kiểu phụ chốt trục: %d\n"
+msgstr "Trục đường cong"
 
 #: ../src/live_effects/effect.cpp:116
-#, fuzzy
 msgid "Envelope Deformation"
-msgstr "Cách làm biến dạng:"
+msgstr "Biến dạng theo hộp bao"
 
 #: ../src/live_effects/effect.cpp:117
-#, fuzzy
 msgid "Interpolate Sub-Paths"
-msgstr "Khâu vết các đường nét thành phần"
+msgstr "Nội suy đường nét thành phần"
 
 #: ../src/live_effects/effect.cpp:118
-#, fuzzy
 msgid "Hatches (rough)"
-msgstr "Dịch &thô ..."
+msgstr "Sóng dạng sin"
 
 #: ../src/live_effects/effect.cpp:119
-#, fuzzy
 msgid "Sketch"
-msgstr "Thêm một bức phác hoạ"
+msgstr "Phác thảo"
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Ruler"
-msgstr "Thước"
+msgstr "Thước kẻ"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
@@ -7063,9 +6924,8 @@ msgid "The size of the grid in Y direction."
 msgstr "Kích thước lưới theo phương dọc"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "đường dẫn trùng %s"
+msgstr "Đường khâu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -7080,227 +6940,195 @@ msgid "The number of paths that will be generated."
 msgstr "Số đường nét cần tạo ra."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "Start edge variance"
-msgstr "Phương sai dân số biến _1:"
+msgstr "Sai lệch về cạnh đầu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
-#, fuzzy
 msgid "The amount of random jitter to move the start points of the stitches inside & outside the guide path"
-msgstr "Khoảng bù ngẫu nhiên cần áp dụng cho các điểm bắt đầu khâu vết"
+msgstr "Khoảng bù ngẫu nhiên để di chuyển điểm đầu vết khâu ra bên ngoài và bên trong của đường nét gióng"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "Start spacing variance"
-msgstr "Phương sai dân số biến _1:"
+msgstr "Sai lệch khoảng cách đầu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
-#, fuzzy
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
-msgstr "Khoảng bù ngẫu nhiên cần áp dụng cho các điểm bắt đầu khâu vết"
+msgstr "Khoảng bù ngẫu nhiên để di chuyển điểm đầu vết khâu tới và lui dọc theo đường nét gióng"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-#, fuzzy
 msgid "End edge variance"
-msgstr "Phương sai dân số biến _1:"
+msgstr "Sai lệch về cạnh cuối"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
-#, fuzzy
 msgid "The amount of randomness that moves the end points of the stitches inside & outside the guide path"
-msgstr "Khoảng bù ngẫu nhiên cần áp dụng cho các điểm kết thúc khâu vết"
+msgstr "Mức ngẫu nhiên để di chuyển điểm cuối vết khâu ra ngoài và vào trong đường nét gióng"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-#, fuzzy
 msgid "End spacing variance"
-msgstr "Phương sai dân số biến _1:"
+msgstr "Sai lệch khoảng cách cuối"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
-#, fuzzy
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
-msgstr "Khoảng bù ngẫu nhiên cần áp dụng cho các điểm kết thúc khâu vết"
+msgstr "Mức ngẫu nhiên để di chuyển điểm cuối của vết khâu tới và lui dọc theo đường nét gióng"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale width"
 msgstr "Co giãn chiều rộng"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale the width of the stitch path"
-msgstr "Hệ số co giãn chiều rộng của nét viền"
+msgstr "Co giãn chiều rộng của đường nét khâu"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Chiều rộng của vùng điều chỉnh (so với vùng vẽ hiển thị)"
+msgstr "Co giãn chiều rộng so với chiều dài"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Co giãn chiều rộng của đường nét nét tương đối so với chiều dài của nó"
+msgstr "Tự co giãn chiều rộng của đường nét khâu dựa theo chiều dài của nó"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top bend path"
-msgstr "Nâng đường dẫn lên trên cùng"
+msgstr "Đường nét uốn phía trên"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top path along which to bend the original path"
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét phía trên dùng làm chuẩn để uốn đường nét gốc"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right bend path"
-msgstr "« --%s » cần hai giá trị <tên> <đường_dẫn>"
+msgstr "Đường nét uốn bên phải"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right path along which to bend the original path"
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét bên phải dùng làm chuẩn để uốn đường nét gốc"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom bend path"
-msgstr "Hạ thấp đường dẫn xuống dưới"
+msgstr "Đường nét uốn phía dưới"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom path along which to bend the original path"
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét phía dưới dùng làm chuẩn để uốn đường nét gốc"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left bend path"
-msgstr "« --%s » cần hai giá trị <tên> <đường_dẫn>"
+msgstr "Đường nét uốn bên trái"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left path along which to bend the original path"
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét bên trái dùng làm chuẩn để uốn đường nét gốc"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
-#, fuzzy
 msgid "Enable left & right paths"
-msgstr "Lăn trái hay phải"
+msgstr "Dùng đường nét bên phải và trái"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
-#, fuzzy
 msgid "Enable the left and right deformation paths"
-msgstr "Cho phép &rê cạnh trái và phải của vùng chọn"
+msgstr "Sử dụng đường nét ở bên trái và bên phải để làm biến dạng nét gốc"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable top & bottom paths"
-msgstr "Chia xem thành t&rên/dưới"
+msgstr "Dùng đường nét trên và dưới"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable the top and bottom deformation paths"
-msgstr "Nhân đôi mẫu trước khi làm biến dạng"
+msgstr "Sử dụng đường nét ở trên và dưới để làm biến dạng nét gốc"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
-msgstr "Răng"
+msgstr "Số răng"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "The number of teeth"
-msgstr "Số răng"
+msgstr "Số răng có trên mỗi bánh răng"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Phi"
-msgstr "Phi φ"
+msgstr "Phi"
 
 #: ../src/live_effects/lpe-gears.cpp:213
 msgid "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in contact."
-msgstr ""
+msgstr "Góc vát trên đỉnh mỗi răng (thường là 20-25 độ). Tỉ lệ các răng không gặp nhau."
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Trajectory"
-msgstr "Hệ số"
+msgstr "Đường nét quỹ đạo"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "Tạo một đối tượng mở rộng/co rút được liên kết đến đường nét gốc"
+msgstr "Đường nét mà các bước trung gian được tạo ra sẽ chạy theo."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
 msgid "Steps"
-msgstr "Bước"
+msgstr "Số bước"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "Số bước nội suy giữa đường nét ban đầu và đường nét cuối."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "Dãn cách chữ hoa"
+msgstr "Khoảng cách đều nhau"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
-msgstr ""
+msgstr "Nếu chọn, khoảng cách giữa hai bước trung gian liên tiếp sẽ không thay đổi dọc theo chiều dài đường nét. Nếu không chọn, khoảng cách này sẽ phụ thuộc vào vị trí các nút trên đường nét quỹ đạo"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Interruption width"
-msgstr "Bề rộng tự động"
+msgstr "Độ rộng đoạn bị cắt rời"
 
+# lower string là chuỗi viết thường???
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
-msgstr ""
+msgstr "Độ rộng đoạn bị tách rời ra thuộc đoạn nét nằm bên dưới"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "unit of stroke width"
-msgstr "Đổi chiều rộng nét"
+msgstr "Lấy chiều rộng nét làm đơn vị"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr ""
+msgstr "Độ dài đoạn cắt rời bằng giá trị trong ô 'Độ rộng đoạn bị cắt rời' nhân với chiều rộng nét."
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
-msgstr ""
+msgstr "cộng chiều rộng nét vào độ rộng đoạn cắt rời"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "Cộng chiều rộng nét vào đoạn cắt rời"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "cộng chiều rộng nét các đoạn nét cắt rời khác vào độ rộng đoạn cắt rời"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size."
-msgstr ""
+msgstr "Cộng chiều rộng nét đi qua vào kích thước ngắt"
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Switcher size"
-msgstr "Kích cỡ không khớp được"
+msgstr "Kích cỡ vòng đổi hướng"
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Orientation indicator/switcher size"
-msgstr "Kích thước của vòng bên trong chỉ chọn một"
+msgstr "Kích thước vòng định hướng/xoay"
 
 #: ../src/live_effects/lpe-knot.cpp:328
-#, fuzzy
 msgid "Crossing Signs"
-msgstr "Chữ ký cho %s:"
+msgstr "Dấu cắt chéo"
 
 #: ../src/live_effects/lpe-knot.cpp:328
-#, fuzzy
 msgid "Crossings signs"
-msgstr "Chữ ký cho %s:"
+msgstr "Dấu cắt chéo"
 
 #: ../src/live_effects/lpe-knot.cpp:339
-#, fuzzy
 msgid "Drag to select a crossing, click to flip it"
-msgstr "Kéo chuột để chọn một dấu chữ thập và nhấn để lật nó"
+msgstr "Rê chuột để chọn một chỗ cắt chéo, nhấn chuột để lật nó"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7353,7 +7181,7 @@ msgstr "Khoảng cách"
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
 msgid "Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."
-msgstr ""
+msgstr "Khoảng cách giữa các bản sao của mẫu. Có thể nhập giá trị âm, nhưng phải lớn hơn -90% chiều rộng của mẫu."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -7374,7 +7202,7 @@ msgstr "Đối tượng sang mẫu"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
-msgstr ""
+msgstr "Khoảng cách, tiếp tuyến và độ dịch chuẩn được biểu diễn dưới dạng tỉ số chiều rộng/chiều cao"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -7396,65 +7224,61 @@ msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-#, fuzzy
 msgid "Frequency randomness"
-msgstr "Tần số (Hz)"
+msgstr "Tần số ngẫu nhiên"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-#, fuzzy
 msgid "Variation of distance between hatches, in %."
-msgstr "Khoảng cách tối đa giữa hai điể_m trong vùng"
+msgstr "Sự biến đổi về khoảng cách giữa hai bước sóng, %"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth"
-msgstr "Tăng t_rưởng"
+msgstr "Độ khuếch đại"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth of distance between hatches."
-msgstr "Đo khoảng cách và góc giữa hai điểm"
+msgstr "Độ tăng khoảng cách giữa hai bước sóng"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half turns smoothness: 1st side, in"
-msgstr ""
+msgstr "Độ mượt của nửa dưới: mặt thứ nhất, đi tới"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Đặt độ mượt/độ sắc của đường nét khi đi tới nửa 'dưới' của bước sóng. 0=sắc, 1=mặc định"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr "mặt thứ nhất, bên ngoài"
+msgstr "mặt thứ nhất, đi xa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Đặt độ mượt/độ sắc của đường nét khi đi xa khỏi nửa 'dưới' của bước sóng. 0=sắc, 1=mặc định"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in"
-msgstr "mặt thứ hai, bên trong"
+msgstr "mặt thứ hai, đi tới"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Đặt độ mượt/độ sắc của đường nét khi tới nửa 'trên' của bước sóng. 0=sắc, 1=mặc định"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr "mặt thứ hai, bên ngoài"
+msgstr "mặt thứ hai, đi xa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Đặt độ mượt/độ sắc của đường nét đi xa khỏi nửa 'trên' của bước sóng. 0=sắc, 1=mặc định"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "Bù biên độ: mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "Di chuyển ngãu nhiên nửa 'dưới' để tạo ra thay đổi biên độ ngẫu nhiên."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7464,19 +7288,19 @@ msgstr "mặt thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "Di chuyển ngãu nhiên nửa 'trên' để tạo ra thay đổi biên độ ngẫu nhiên."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "Bù song song : mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."
-msgstr ""
+msgstr "Tạo hướng ngẫu nhiên bằng cách di chuyển nửa 'dưới' theo phương tiếp tuyến với đường bao."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."
-msgstr ""
+msgstr "Tạo hướng ngẫu nhiên bằng cách di chuyển nửa 'trên' theo phương tiếp tuyến với đường bao."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
@@ -7484,31 +7308,29 @@ msgstr "Dạng khác : mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr ""
+msgstr "Mức ngẫu nhiên của độ mịn nửa 'dưới'"
 
+# halfturn là gì?
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr ""
+msgstr "Mức ngẫu nhiên của độ mịn nửa 'trên'"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Generate thick/thin path"
-msgstr "Tạo đường nét"
+msgstr "Tạo đường nét dày/mỏng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Simulate a stroke of varrying width"
-msgstr "Hệ số co giãn chiều rộng của nét viền"
+msgstr "Mô phỏng nét vẽ có độ rộng thay đổi"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
-#, fuzzy
 msgid "Bend hatches"
-msgstr "Uốn đường nét"
+msgstr "Uốn nét sóng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "Uốn cong toàn bộ nét lượn sóng (chậm hơn)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
@@ -7516,7 +7338,7 @@ msgstr "Độ dày: ở mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half turns"
-msgstr "Chiều rộng ở nửa 'dưới' chuyển thành"
+msgstr "Chiều rộng ở nửa 'dưới' bước sóng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
@@ -7524,7 +7346,7 @@ msgstr "ở mặt thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' halfturns"
-msgstr "Chiều rộng ở nửa 'trên' chuyển thành"
+msgstr "Chiều rộng ở nửa 'trên' bước sóng"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
@@ -7534,31 +7356,29 @@ msgstr "từ mặt thứ hai sang mặt thứ nhất"
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width of paths from 'top' to 'bottom' halfturns"
-msgstr ""
+msgstr "Chiều rộng của đường nét từ nửa 'trên' xuống nửa 'dưới'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
-msgstr ""
+msgstr "từ mặt thứ nhất đến thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
-#, fuzzy
 msgid "Hatches width and dir"
-msgstr "Khoá chiều rộng/cao"
+msgstr "Chiều rộng và phương hướng của bước sóng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "Đặt tần số và phương hướng của bước sóng"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
-#, fuzzy
 msgid "Global bending"
-msgstr "Hàm toàn cục"
+msgstr "Uốn cong toàn bộ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Relative position to a reference point defines global bending direction and amount"
-msgstr ""
+msgstr "Vị trí tương đối tới một điểm tham chiếu, định nghĩa mức độ và hướng uốn cong toàn bộ sóng"
 
 #: ../src/live_effects/lpe-ruler.cpp:27
 #: ../share/extensions/restack.inx.h:7
@@ -7572,7 +7392,6 @@ msgstr "Phải"
 
 #: ../src/live_effects/lpe-ruler.cpp:29
 #: ../src/live_effects/lpe-ruler.cpp:37
-#, fuzzy
 msgid "Both"
 msgstr "Cả hai"
 
@@ -7587,85 +7406,74 @@ msgid "End"
 msgstr "Cuối"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
-#, fuzzy
 msgid "Mark distance"
-msgstr "Khoảng cách đối tượng"
+msgstr "Khoảng cách vạch"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
-#, fuzzy
 msgid "Distance between successive ruler marks"
-msgstr "Khoảng cách giữa hai đường lưới theo chiều dọc"
+msgstr "Khoảng cách giữa hai vạch đánh dấu liên tiếp nhau trên thước"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-#, fuzzy
 msgid "Major length"
-msgstr "zdài bằng không"
+msgstr "Độ dài chính"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-#, fuzzy
 msgid "Length of major ruler marks"
-msgstr "Vạch khấc chính bên trong vùng sơ đồ"
+msgstr "Độ dài của vạch đánh dấu chính"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-#, fuzzy
 msgid "Minor length"
-msgstr "zdài bằng không"
+msgstr "Độ dài phụ"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-#, fuzzy
 msgid "Length of minor ruler marks"
-msgstr "Vạch khấc phụ bên ngoài vùng sơ đồ"
+msgstr "Độ dài của vạch đánh dấu phụ"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
-#, fuzzy
 msgid "Major steps"
-msgstr "Bước Nội suy"
+msgstr "Số vạch phụ giữa hai vạch chính"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "Số vạch phụ nằm giữa hai vạch chính"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-#, fuzzy
 msgid "Shift marks by"
-msgstr "Dịch mọi ảnh chụp theo {0}"
+msgstr "Dịch cách vạch đi"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Shift marks by this many steps"
-msgstr ""
+msgstr "Số lần dịch vạch đánh dấu đi"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
-#, fuzzy
 msgid "Mark direction"
-msgstr "<Hướng không rõ>"
+msgstr "Hướng đánh dấu"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr ""
+msgstr "Hướng của các vạch đánh dấu (theo chiều từ đầu đến cuối đường nét)"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
-#, fuzzy
 msgid "Offset of first mark"
-msgstr "Đánh dấu hình tượng hiện tại là thứ nhất"
+msgstr "Độ dịch của vạch đầu tiên"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
-#, fuzzy
 msgid "Border marks"
-msgstr "Đồng Mác có thể chuyển đổi"
+msgstr "Vẽ các vạch ở biên"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
+msgstr "Có thêm các vạch ở đầu và cuối đường nét hay không"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
-msgstr "Nét"
+msgstr "Số nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr ""
+msgstr "Số đường phác xấp xỉ được vẽ"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
@@ -7673,15 +7481,15 @@ msgstr "Chiều dài tối đa của nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
-msgstr "Chiều dài xấp xỉ tối đa của nét"
+msgstr "Chiều dài tối đa của nét phác xấp xỉ"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr "Biến đổi chiều dài của nét"
+msgstr "Mức ngẫu nhiên của chiều dài nét"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Mức biến đổi ngẫu nhiên chiều dài của nét (tương đối với chiều dài tối đa)"
+msgstr "Mức biến đổi ngẫu nhiên cho chiều dài của nét (tương đối với chiều dài tối đa)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7693,57 +7501,51 @@ msgstr "Mức độ chồng lấp lên trên các nét đã có của nét mới
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
-msgstr "Biến đổi chồng lấp"
+msgstr "Mức biến đổi chồng lấp"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr ""
+msgstr "Mức biến đổi ngẫu nhiên để xếp chồng nét sau lên trên nét trước (tương ứng với độ chồng lấp tối đa)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
-#, fuzzy
 msgid "Max. end tolerance"
-msgstr "Chuyển về cuối"
+msgstr "Độ sai lệch cho phép tối đa"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum distance between ends of original and approximating paths (relative to maximum length)"
-msgstr ""
+msgstr "Khoảng cách tối đa giữa các điểm biên của đường nét gốc và đường nét phác mới tạo ra (tương ứng với chiều dài tối đa)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
-msgstr "@i @d %i, @b %B, hiệu %N: @d bị hỏng\n"
+msgstr "Độ dịch trung bình"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average distance each stroke is away from the original path"
-msgstr ""
+msgstr "Khoảng cách trung bình giữa mỗi đường nét lệch ra khỏi đường nét gốc"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
-#, fuzzy
 msgid "Max. tremble"
-msgstr "Max dB"
+msgstr "Độ uốn lượn tối đa"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
-#, fuzzy
 msgid "Maximum tremble magnitude"
-msgstr "Dùng sơ đồ độ lớn"
+msgstr "Biên độ tối đa khi nét phác thảo uốn lượn"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "Tần số (Hz)"
+msgstr "Tần số uốn lượn"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Average number of tremble periods in a stroke"
-msgstr ""
+msgstr "Số lần uốn lượn có trên 1 nét phác thảo"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
-#, fuzzy
 msgid "Construction lines"
-msgstr "_Nối dòng"
+msgstr "Nét dựng hình"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "Bao nhiêu nét dựng hình (tiếp tuyến) được vẽ"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
@@ -7753,59 +7555,52 @@ msgstr ""
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
-msgstr "Co giãn"
+msgstr "Hệ số co giãn"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr ""
+msgstr "Hệ số co giãn liên quan giữa độ cong và chiều dài của các đường được tạo ra (thường gấp 5 lần độ dịch)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Max. length"
-msgstr "Chiều dài dòng tối đa"
+msgstr "Chiều dài tối đa"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Maximum length of construction lines"
-msgstr "Nhập chiều dài dấu khắc."
+msgstr "Chiều dài tối đa của nét dựng hình"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-#, fuzzy
 msgid "Length variation"
-msgstr "Biến đổi nét _vẽ"
+msgstr "Mức biến đổi chiều dài"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "Sự thay đổi ngẫu nhiên của chiều dài đường nét dựng hình"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "Placement randomness"
-msgstr "Vị trí cuộc thoại"
+msgstr "Mức ngẫu nhiên khi sắp xếp"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
+msgstr "0: phân bố các nét dựng hình đều nhau, 1: phân bố toàn bộ ngẫu nhiên"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min"
-msgstr "Nhỏ nhất"
+msgstr "Độ cong nhỏ nhất"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "min curvature"
-msgstr " Độ cong: %g  Bán kính: %g"
+msgstr " Độ cong nhỏ nhất"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "k_max"
-msgstr "Lớn nhất"
+msgstr "Độ cong lớn nhất"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 #, fuzzy
 msgid "max curvature"
-msgstr " Độ cong: %g  Bán kính: %g"
+msgstr " Độ cong lớn nhất"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Nb of generations"
@@ -7958,7 +7753,7 @@ msgstr "Xuất khẩu tài liệu vào tập tin PNG"
 
 #: ../src/main.cpp:294
 msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
-msgstr ""
+msgstr "Độ phân giải để xuất ảnh bitmap và định hình các bộ lọc dưới dạng PS/EPS/PDF (mặc định: 90)"
 
 #: ../src/main.cpp:295
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -8125,7 +7920,7 @@ msgstr "ID_ĐỐI_TƯỢNG"
 
 #: ../src/main.cpp:453
 msgid "Start Inkscape in interactive shell mode."
-msgstr ""
+msgstr "Chạy Inkscape trong giao diện dòng lệnh"
 
 #: ../src/main.cpp:761
 #: ../src/main.cpp:1072
@@ -8639,7 +8434,7 @@ msgstr "Tiến trình vẽ bị thôi"
 
 #: ../src/pencil-context.cpp:565
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
-msgstr ""
+msgstr "<b>Chế độ phác thảo</b>: giữ <b>Alt</b> nội suy giữa các đường nét phác thảo. Thôi giữ <b>Alt</b> để kết thúc."
 
 #: ../src/pencil-context.cpp:593
 #, fuzzy
@@ -8738,7 +8533,7 @@ msgstr "Không đọc được tập tin tùy thích %s."
 #: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
-msgstr ""
+msgstr "Tập tin tùy thích %s không phải là một tài liệu XML hợp lệ."
 
 #. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
@@ -9654,7 +9449,7 @@ msgstr "Dựng đường gióng bao quanh trang"
 
 #: ../src/sp-guide.cpp:418
 msgid "<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete"
-msgstr ""
+msgstr "<b>rê chuột</b> để di chuyển, thêm <b>Shift</b> để xoay, hoặc giữ <b>Ctrl</b>+chuột trái để xóa"
 
 #: ../src/sp-guide.cpp:422
 #, c-format
@@ -9739,16 +9534,16 @@ msgstr "<b>Đường</b>"
 #: ../src/splivarot.cpp:66
 #: ../src/splivarot.cpp:72
 msgid "Union"
-msgstr "Hợp"
+msgstr "Hợp nhất"
 
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
-msgstr "Giao"
+msgstr "Lấy Giao"
 
 #: ../src/splivarot.cpp:84
 #: ../src/splivarot.cpp:90
 msgid "Difference"
-msgstr "Hiệu"
+msgstr "Lấy Hiệu"
 
 #: ../src/splivarot.cpp:96
 msgid "Exclusion"
@@ -10210,9 +10005,10 @@ msgstr "<b>Nhấn</b> chọn hay tạo văn bản, <b>kéo</b> tạo khung văn 
 msgid "Type text"
 msgstr "Gõ văn bản"
 
+# TODO: cái này chưa rõ, hơi phuwca tạp.
 #: ../src/text-editing.cpp:40
 msgid "You cannot edit <b>cloned character data</b>."
-msgstr ""
+msgstr "Bạn không thể sửa <b>dữ liệu ký tự bản sao</b>."
 
 #: ../src/tools-switch.cpp:130
 msgid "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."
@@ -11298,22 +11094,18 @@ msgid "Bottom edge of source"
 msgstr "Bảng điều khiển cạnh đáy"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
-#, fuzzy
 msgid "Source width"
 msgstr "Rộng nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
-#, fuzzy
 msgid "Source height"
 msgstr "Cao nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
-#, fuzzy
 msgid "Destination width"
 msgstr "Rộng đích"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
-#, fuzzy
 msgid "Destination height"
 msgstr "Cao đích"
 
@@ -11545,7 +11337,7 @@ msgstr "Tạo và xếp lát các bản sao của vùng chọn"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Y coordinate of the upper corners of filter effects region"
-msgstr ""
+msgstr "Tọa độ Y góc trên của vùng chịu hiệu ứng"
 
 #. default width:
 #. default height:
@@ -11573,7 +11365,7 @@ msgstr "Chế độ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 msgid "Indicates the type of matrix operation. The keyword 'matrix' indicates that a full 5x4 matrix of values will be provided. The other keywords represent convenience shortcuts to allow commonly used color operations to be performed without specifying a complete matrix."
-msgstr ""
+msgstr "Đặt phép toán ma trận. 'Ma trận' ở đây là một bảng giá trị 5x4 do người dùng nhập. Các lựa chọn khác tương ứng với một trường hợp đặc biệt, thường dùng trong phép toán màu, để người dùng không cần nhập đủ toàn bộ ma trận."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid "Value(s)"
@@ -11593,7 +11385,7 @@ msgstr "K1"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid "If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."
-msgstr ""
+msgstr "Nếu chọn phép toán số học, mỗi điểm ảnh đầu ra thu được bằng công thức k1*i1*i2 + k2*i1 + k3*i2 + k4 trong đó i1 và i2 là giá trị điểm ảnh của đầu vào 1 và 2."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K2"
@@ -11625,11 +11417,11 @@ msgstr "Đích"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "X coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
-msgstr ""
+msgstr "Tọa độ X của điểm đích trong ma trận tích chập. Phép tích chập sẽ được áp dụng lên các điểm ảnh xung quanh điểm này."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Y coordinate of the target point in the convolve matrix. The convolution is applied to pixels around this point."
-msgstr ""
+msgstr "Tọa độ Y của điểm đích trong ma trận tích chập. Phép tích chập sẽ được áp dụng lên các điểm ảnh xung quanh điểm này."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2192
@@ -11670,7 +11462,7 @@ msgstr "Bảo tồn Alpha"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "If set, the alpha channel won't be altered by this filter primitive."
-msgstr ""
+msgstr "Nếu chọn, bộ lọc nguồn này sẽ không làm thay đổi kênh alpha."
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2200
@@ -11679,7 +11471,6 @@ msgstr "Khuếch tán màu"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2200
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-#, fuzzy
 msgid "Defines the color of the light source"
 msgstr "Đặt màu nguồn ánh sáng"
 
@@ -11691,7 +11482,7 @@ msgstr "Tỷ lệ mặt"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
-msgstr ""
+msgstr "Giá trị này khuếch đại chiều cao của ánh xạ nhô cao được định nghĩa bởi kênh alpha đầu vào"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -11701,7 +11492,7 @@ msgstr "Hằng"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This constant affects the Phong lighting model."
-msgstr ""
+msgstr "Hằng số này ảnh hưởng tới mô hình chiếu sáng Phong."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
@@ -11710,25 +11501,23 @@ msgstr "Chiều dài đơn vị hạt"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 msgid "This defines the intensity of the displacement effect."
-msgstr ""
+msgstr "Tham số này định nghĩa mức độ dịch chuyển."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-#, fuzzy
 msgid "X displacement"
-msgstr "Đổ_i chỗ :"
+msgstr "Đổi chỗ ngang"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "Color component that controls the displacement in the X direction"
-msgstr ""
+msgstr "Thành phần màu sẽ điều khiển mức độ dịch chuyển theo phương ngang"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#, fuzzy
 msgid "Y displacement"
-msgstr "Đổ_i chỗ :"
+msgstr "Đổi chỗ dọc"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the Y direction"
-msgstr ""
+msgstr "Thành phần màu sẽ điều khiển mức độ dịch chuyển theo phương dọc"
 
 #. default: black
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2212
@@ -11737,7 +11526,7 @@ msgstr "Màu tràn ngập"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2212
 msgid "The whole filter region will be filled with this color."
-msgstr ""
+msgstr "Toàn bộ vùng áp dụng bộ lọc sẽ được tô màu này."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "Standard Deviation"
@@ -11745,16 +11534,17 @@ msgstr "Độ lệch chuẩn"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2216
 msgid "The standard deviation for the blur operation."
-msgstr ""
+msgstr "Độ lệch chuẩn của phép toán làm nhòe."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
 msgstr ""
+"Thu nhỏ: làm \"mỏng\" ảnh đầu vào.\n"
+"Nới rộng: làm \"dày\" ảnh đầu vào."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2226
-#, fuzzy
 msgid "Source of Image"
 msgstr "Nguồn ảnh"
 
@@ -11786,11 +11576,11 @@ msgstr "Luỹ thừa"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "Exponent for specular term, larger is more \"shiny\"."
-msgstr ""
+msgstr "Số mũ của độ phản xạ, càng lớn càng \"sáng bóng\" hơn."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
-msgstr ""
+msgstr "Chọn xem bộ lọc nguồn có tạo nhiễu hay hỗn độn không."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Base Frequency"
@@ -11827,55 +11617,55 @@ msgstr "Bộ lọc thô <b>feComponentTransfer</b> thay đổi các thành phầ
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feComposite</b> kết hợp 2 ảnh bằng các chế độ hòa trộn Porter-Duff hoặc các chế độ số học theo chuẩn SVG. Chế độ hòa trộn Porter-Duff là phép hòa trộn dựa trên các phép toán logic giữa các điểm ảnh tương đương có trên hai bức ảnh."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feConvolveMatrix</b> dùng phép tính tích chập trên ma trận để áp dụng lên ảnh. Các hiệu ứng nhòe, làm sắc, làm nổi và phát hiện cạnh được xây dựng dựa trên bộ lọc này. Lưu ý rằng ta có thể làm nhòe chuẩn nhiễu trắng bằng bộ lọc nguồn này, còn làm nhòe chuẩn đặc biệt thường nhanh hơn và không phụ thuộc độ phân giải."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2297
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
-msgstr ""
+msgstr "Các bộ lọc nguồn <b>feDiffuseLighting</b> và feSpecularLighting tạo ra hiệu ứng đổ bóng \"nổi\".  Kênh alpha đầu vào quy định chiều sâu của đầu ra: người xem sẽ thấy các vùng càng trong càng được nâng lên cao, còn các vùng đục hơn thì bị đưa xuống thấp."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2301
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feDisplacementMap</b> đổi chỗ các điểm ảnh ở đầu vào thứ nhất dựa trên một bảng lấy từ đầu vào thứ hai, quy định khoảng cách điểm ảnh sẽ dời đi. Các hiệu ứng như xoáy nước và bó chặt được xây dựng dựa trên bộ lọc này."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2305
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feFlood</b> tô màu và độ trong suốt cho các vùng. Nó được dùng để làm đầu vào cho các bộ lọc khác để đổi màu ảnh."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2309
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feGaussianBlur</b> làm nhòe đơn giản đầu vào của nó. Bộ lọc này thường kết hợp với bộ lọc feOffset để tạo hiệu ứng đổ bóng."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2313
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feImage</b> tô màu các vùng của một ảnh bên ngoài hoặc một phần của bản vẽ."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2317
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feMerge</b> kết hợp nhiều ảnh tạm thời ở trong bộ lọc để tạo thành một ảnh duy nhất, dựa trên phép kết hợp kênh alpha, giống như khi dùng nhiều bộ lọc feBlend ở chế độ 'thường', hay nhiều bộ lọc feComposite ở chế độ 'over'."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2321
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feMorphology</b> tạo hiệu ứng thu nhỏ và mở rộng. Đối với các đối tượng đơn sắc, thu nhỏ khiến đối tượng mỏng đi, và mở rộng làm nó dày lên."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2325
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feOffset</b> dịch chuyển ảnh đi một khoảng do người dùng đặt. Ví dụ, muốn tạo một bóng hơi lệch so với ảnh gốc, ta có thể dùng bộ lọc này."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2329
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
-msgstr ""
+msgstr "Các bộ lọc nguồn feDiffuseLighting và <b>feSpecularLighting</b> tạo ra hiệu ứng đổ bóng \"nổi\".  Kênh alpha đầu vào quy định chiều sâu của đầu ra: người xem sẽ thấy các vùng càng trong càng được nâng lên cao, còn các vùng đục hơn thì bị đưa xuống thấp."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2333
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feTile</b> dùng ảnh đầu vào để xếp lát kín toàn bộ một vùng"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2337
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
-msgstr ""
+msgstr "Bộ lọc nguồn <b>feTurbulence</b> tạo ra các nhiễu Perlin. Loại nhiễu này cho phép mô phỏng các hiện tượng thiên nhiên như mây, lửa và khói, tạo ra các văn hoa phức tạp như đá granite hay cẩm thạch."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2356
 msgid "Duplicate filter primitive"
@@ -11886,22 +11676,18 @@ msgid "Set filter primitive attribute"
 msgstr "Đặt thuộc tính về bộ lọc có sẵn"
 
 #: ../src/ui/dialog/guides.cpp:42
-#, fuzzy
 msgid "Unit:"
 msgstr "Đơn vị:"
 
 #: ../src/ui/dialog/guides.cpp:45
-#, fuzzy
 msgid "Angle (degrees):"
 msgstr "Góc (độ):"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "Rela_tive change"
 msgstr "_Thay đổi tương đối"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "Move and/or rotate the guide relative to current settings"
 msgstr "Di chuyển và/hoặc xoay đường gióng theo thiết lập hiện có"
 
@@ -11910,17 +11696,17 @@ msgid "Set guide properties"
 msgstr "Đặt thuộc tính đường gióng"
 
 #: ../src/ui/dialog/guides.cpp:151
-#, fuzzy
 msgid "Guideline"
 msgstr "Đường gióng"
 
 #: ../src/ui/dialog/guides.cpp:239
-#, fuzzy, c-format
+#, c-format
 msgid "Guideline ID: %s"
 msgstr "ID đường gióng: %s"
 
+# Xem lại ngữ cảnh
 #: ../src/ui/dialog/guides.cpp:245
-#, fuzzy, c-format
+#, c-format
 msgid "Current: %s"
 msgstr "Đang chọn: %s"
 
@@ -11976,9 +11762,8 @@ msgid "Use the capabilities of a tablet or other pressure-sensitive device. Disa
 msgstr "Dùng khả năng của bảng vẽ hay thiết bị nhạy ứng suất khác. Tắt tùy chọn này chỉ nếu bạn gặp khó khăn trong việc sử dụng bảng vẽ (bạn vẫn còn có thể dùng nó làm con chuột)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
-#, fuzzy
 msgid "Switch tool based on tablet device (requires restart)"
-msgstr "Ứng xử hộp thoại (cần khởi chạy lại):"
+msgstr "Thay đổi công cụ tùy theo thiết bị dùng trên bảng vẽ (cần khởi động lại)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
@@ -12249,9 +12034,8 @@ msgid "This bounding box includes only the bare path"
 msgstr "Hộp giới hạn này gồm có chỉ đường nét trần"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
-#, fuzzy
 msgid "Conversion to guides:"
-msgstr "<b>Đính đường gióng</b>"
+msgstr "Chuyển đổi thành đường gióng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:394
 msgid "Keep objects after conversion to guides"
@@ -12262,18 +12046,16 @@ msgid "When converting an object to guides, don't delete the object after the co
 msgstr "Khi chuyển một đối tượng thành đường gióng, không xóa bỏ nó đi."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
-#, fuzzy
 msgid "Treat groups as a single object"
-msgstr "Đang tạo điểm đơn"
+msgstr "Coi nhóm như một đối tượng riêng lẻ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:399
 msgid "Treat groups as a single object during conversion to guides rather than converting each child separately."
-msgstr ""
+msgstr "Coi các nhóm giống như đối tượng đơn khi chuyển chúng thành đường gióng, thay vì chuyển đổi từng nhóm một."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
-#, fuzzy
 msgid "Average all sketches"
-msgstr "Mọi tập tin|*.*|Mọi tập tin được hỗ trơ|"
+msgstr "Lấy trung bình các phác thảo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Width is in absolute units"
@@ -12342,45 +12124,43 @@ msgid "Node"
 msgstr "Nút"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:432
-#, fuzzy
 msgid "Path outline:"
-msgstr "Nét ngoài"
+msgstr "Nét ngoài đường nét:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:433
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
-#, fuzzy
 msgid "Path outline color"
-msgstr "Chọn theo _Màu"
+msgstr "Màu nét ngoài đường nét"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
-#, fuzzy
 msgid "Selects the color used for showing the path outline."
-msgstr "Chọn màu dùng cho các đường lưới chuẩn."
+msgstr "Chọn màu được dùng để hiển thị nét ngoài của đường nét."
 
+# flash không rõ có phải là nhắp nháy không. Làm thử không thấy gì
 #: ../src/ui/dialog/inkscape-preferences.cpp:435
 msgid "Path outline flash on mouse-over"
-msgstr ""
+msgstr "Nhấp nháy viền của đường nét khi di chuột lên trên"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "When hovering over a path, briefly flash its outline."
-msgstr ""
+msgstr "Khi di chuột lên trên một đường nét, đường viền của nó sẽ nhấp nháy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Suppress path outline flash when one path selected"
-msgstr ""
+msgstr "Bỏ nhắp nháy viền khi chuột chọn đường nét"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "Nếu đang chọn một đường nét, thôi không nhắp nháy đường viền của nó nữa."
 
+# Flash ở đây dịch là nháy, giống đèn flash
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
-#, fuzzy
 msgid "Flash time"
-msgstr "thời gian: %5.2f/%5.2f/%5.2f\n"
+msgstr "Thời gian nháy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."
-msgstr ""
+msgstr "Thời gian sau khi chuột ở trên đường nét tới khi viền nhắp nháy (ms). Nhập 0 sẽ khiến đường viền chỉ hiện lên tới khi di chuột ra khỏi đường nét."
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
@@ -12389,9 +12169,8 @@ msgid "Tweak"
 msgstr "Tinh chỉnh"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
-#, fuzzy
 msgid "Paint objects with:"
-msgstr "Nhóm có %d đối tượng."
+msgstr "Tô màu đối tượng bằng:"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
@@ -12407,13 +12186,13 @@ msgid "Shapes"
 msgstr "Hình"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
-#, fuzzy
 msgid "Sketch mode"
-msgstr "không cho phép chế độ %s"
+msgstr "Chế độ phác thảo"
 
+# chỗ này hơi tối nghĩa, phải dùng thử
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."
-msgstr ""
+msgstr "Nếu chọn, kết quả bản vẽ phác sẽ là trung bình cộng của tất cả các nét phác đã tạo, thay vì trung bình của kết quả cũ với nét phác mới."
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
@@ -12444,9 +12223,8 @@ msgstr "Xô sơn"
 #. LPETool
 #: ../src/ui/dialog/inkscape-preferences.cpp:514
 #: ../src/verbs.cpp:2538
-#, fuzzy
 msgid "LPE Tool"
-msgstr "Công cụ vẽ"
+msgstr "Công cụ hiệu ứng đường nét"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:524
@@ -12544,24 +12322,20 @@ msgid "Same as Normal but may work better with some window managers"
 msgstr "Trùng với Chuẩn nhưng có thể hoạt động khá hơn với một số bộ quản lý cửa sổ nào đó"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:580
-#, fuzzy
 msgid "Dialog Transparency:"
-msgstr "Dùng trong suốt"
+msgstr "Độ trong suốt của hộp thoại:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:582
-#, fuzzy
 msgid "Opacity when focused:"
-msgstr "Kích hoạt ảnh có tiê_u điểm"
+msgstr "Độ trong suốt khi sử dụng:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:584
-#, fuzzy
 msgid "Opacity when unfocused:"
-msgstr "Tắt khi vắng mặt"
+msgstr "Độ trong suốt khi không dùng tới:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:586
-#, fuzzy
 msgid "Time of opacity change animation:"
-msgstr "Ngày giờ thay đổi"
+msgstr "Thời gian điều chỉnh độ trong suốt:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:589
 msgid "Miscellaneous:"
@@ -12632,18 +12406,16 @@ msgid "Orphaned clones are deleted along with their original."
 msgstr "Bản sao thừa bị xoá cùng với bản gốc của nó."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:627
-#, fuzzy
 msgid "When duplicating original+clones:"
-msgstr "Khi điều gốc bị xoá, các bản sao của nó :"
+msgstr "Khi nhân đôi đối tượng gốc và các bản sao liên kết:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:629
-#, fuzzy
 msgid "Relink duplicated clones"
-msgstr "Tạo bản sao liên kết lát đều..."
+msgstr "Tạo liên kết lại cho bản sao liên kết được nhân đôi"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"
-msgstr ""
+msgstr "Khi nhân đôi vùng chọn có cả bản sao liên kết lẫn bản gốc (ở cùng nhóm chả hạn), tạo liên kết cho bản sao liên kết mới tới bản gốc mới, thay vì tới bản gốc cũ"
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
 #: ../src/ui/dialog/inkscape-preferences.cpp:634
@@ -12788,19 +12560,17 @@ msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Chất lượng thấp nhất (nhiều đồ tạo tác), còn trình bày nhanh nhất"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:712
-#, fuzzy
 msgid "Filter effects quality for display:"
-msgstr "Chất lượng làm mờ Gauss để trình bày:"
+msgstr "Chất lượng hiệu ứng được hiển thị:"
 
 #. show infobox
 #: ../src/ui/dialog/inkscape-preferences.cpp:725
-#, fuzzy
 msgid "Show filter primitives infobox"
-msgstr "Hiện Menu bộ lọc"
+msgstr "Hiện thông tin về bộ lọc nguồn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:727
 msgid "Show icons and descriptions for the filter primitives available at the filter effects dialog."
-msgstr ""
+msgstr "Hiển thị biểu tượng và mô tả cho các bộ lọc nguồn có trong hộp thoại hiệu ứng bộ lọc."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 msgid "Select in all layers"
@@ -12815,14 +12585,12 @@ msgid "Select in current layer and sublayers"
 msgstr "Chọn trong lớp hiện tại và các lớp phụ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:738
-#, fuzzy
 msgid "Ignore hidden objects and layers"
-msgstr "Công cụ chuyển: di chuyển lớp, phần chọn và các đối tượng khác"
+msgstr "Bỏ qua các đối tượng và lớp đang ẩn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:739
-#, fuzzy
 msgid "Ignore locked objects and layers"
-msgstr "Công cụ chuyển: di chuyển lớp, phần chọn và các đối tượng khác"
+msgstr "Bỏ qua các đối tượng và lớp đã khóa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Deselect upon layer change"
@@ -12873,11 +12641,11 @@ msgstr "Độ phân giải ảnh bitmap mặc định (theo điểm trên mỗi 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Open Clip Art Library Server Name:"
-msgstr "Tên máy phục vụ thư viện Open Clip Art Library:"
+msgstr "Tên máy chủ thư viện Open Clip Art Library:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."
-msgstr "Tên máy phục vụ của máy WebDAV Open Clip Art Library. Nó dùng bởi chức năng « Nhập » và « Xuất dạng OCAL »."
+msgstr "Tên máy chủ của máy WebDAV Open Clip Art Library. Nó dùng bởi chức năng « Nhập » và « Xuất dạng OCAL »."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:770
 msgid "Open Clip Art Library Username:"
@@ -13140,31 +12908,28 @@ msgid "If set, relative coordinates may be used in path data"
 msgstr "Nếu chọn, hệ tọa độ tương đối sẽ được dùng trong dữ liệu đường nét"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1031
-#, fuzzy
 msgid "Force repeat commands"
-msgstr "Lệnh SQL*Plus"
+msgstr "Buộc lặp lại các lệnh"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
-msgstr ""
+msgstr "Buộc gõ lại các lệnh giống nhau (ví dụ, 'L 1,2 L 3,4' thay vì 'L 1,2 3,4')"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1034
 msgid "Numbers"
 msgstr "Số"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
-#, fuzzy
 msgid "Numeric precision:"
-msgstr "Đặt độ chính xác"
+msgstr "Độ chính xác:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "How many digits to write after the decimal dot"
 msgstr "Số chữ số đặt sau dấu phẩy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
-#, fuzzy
 msgid "Minimum exponent:"
-msgstr "Mũ : 0x"
+msgstr "Số mũ nhỏ nhất:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."
@@ -13247,7 +13012,6 @@ msgid "Danish (da)"
 msgstr "Đan mạch (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "Dutch (nl)"
 msgstr "Ha Lan (nl)"
 
@@ -13680,11 +13444,11 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Pre-render named icons"
-msgstr ""
+msgstr "Chuẩn bị trước các biểu tượng có tên."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"
-msgstr ""
+msgstr "Nếu chọn, các biểu tượng có tên sẽ được chuẩn bị trước khi hiển thị giao diện. Lựa chọn này giúp khắc phục lỗi thông báo tên biểu tượng trong thư viện GTK+."
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
@@ -13889,14 +13653,12 @@ msgid "Move path effect down"
 msgstr "Tham số hiệu ứng đường nét kế"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:462
-#, fuzzy
 msgid "Activate path effect"
-msgstr "<b>Đường nét</b> (%i nút, hiệu ứng đường nét)"
+msgstr "Hiện hiệu ứng đường nét"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:462
-#, fuzzy
 msgid "Deactivate path effect"
-msgstr "<b>Đường nét</b> (%i nút, hiệu ứng đường nét)"
+msgstr "Ẩn hiệu ứng đường nét"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
@@ -13949,20 +13711,19 @@ msgstr "Tên người dùng:"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:177
 msgid "Password:"
-msgstr "Mật khẩu :"
+msgstr "Mật khẩu:"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:404
 msgid "Error while reading the Open Clip Art RSS feed"
-msgstr "Lỗi khi đọc thông tin Open Clip Art"
+msgstr "Lỗi khi đọc nguồn tin RSS từ thư viện Open Clip Art"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:443
-#, fuzzy
 msgid "Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
-msgstr "Không nhận được nguồn tin tức RSS của Open Clip Art Library. Hãy kiểm tra xem bạn đã nhập đúng tên máy phục vụ trong « Cấu hình > Linh tinh » (v.d. openclipart.org)"
+msgstr "Không nhận được nguồn tin RSS của thư viện Open Clip Art. Hãy kiểm tra xem bạn đã nhập đúng tên máy chủ trong Cấu hình -> Nhập/Xuất chưa (v.d: openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
-msgstr "Máy chủ trả về thông tin Clip Art không đúng"
+msgstr "Máy chủ trả về nguồn thông Clip Art bị lỗi"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:548
 msgid "Search for:"
@@ -13970,7 +13731,7 @@ msgstr "Tìm:"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:549
 msgid "No files matched your search"
-msgstr "Không tìm thấy"
+msgstr "Không tìm thấy tập tin nào"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:560
 msgid "Search"
@@ -14067,7 +13828,7 @@ msgstr "Đối tượng đã chọn không có mô tả <b>đường nét</b>."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
-msgstr ""
+msgstr "Chưa chọn glyph nào trong hộp thoại Phông chữ SVG."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
@@ -17859,7 +17620,7 @@ msgstr "Hình nút đầu :"
 
 #: ../src/widgets/stroke-style.cpp:1234
 msgid "Start Markers are drawn on the first node of a path or shape"
-msgstr ""
+msgstr "Hình nút đầu được vẽ trên nút đầu tiên của hình dáng hoặc đường nét"
 
 #: ../src/widgets/stroke-style.cpp:1243
 msgid "Mid Markers:"
@@ -17867,7 +17628,7 @@ msgstr "Hình nút giữa:"
 
 #: ../src/widgets/stroke-style.cpp:1245
 msgid "Mid Markers are drawn on every node of a path or shape except the first and last nodes"
-msgstr ""
+msgstr "Hình nút giữa được vẽ trên tất cả các nút của hình dáng hoặc đường nét, trừ nút đầu và cuối"
 
 #: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers:"
@@ -17875,7 +17636,7 @@ msgstr "Hình nút cuối:"
 
 #: ../src/widgets/stroke-style.cpp:1256
 msgid "End Markers are drawn on the last node of a path or shape"
-msgstr ""
+msgstr "Hình nút cuối được vẽ trên nút cuối cùng của hình dáng hoặc đường nét"
 
 #: ../src/widgets/stroke-style.cpp:1605
 #: ../src/widgets/stroke-style.cpp:1701
@@ -18056,16 +17817,15 @@ msgstr "Hiển thị tham số Hiệu ứng Đường nét kế tiếp để s�
 msgid "Edit the clipping path of the object"
 msgstr "Không đủ bộ nhớ đăng ký object path '%s'"
 
+# Không biết là "mặt nạ đường nét" hay "đường nét mặt nạ"?
 #: ../src/widgets/toolbox.cpp:1457
-#, fuzzy
 msgid "Edit mask path"
-msgstr "Sửa thuộc tính đường dẫn"
+msgstr "Sửa mặt nạ đường nét"
 
 # Stop = phase (pha)
 #: ../src/widgets/toolbox.cpp:1458
-#, fuzzy
 msgid "Edit the mask of the object"
-msgstr "Sửa bộ lọc đếm"
+msgstr "Sửa mặt nạ của đối tượng"
 
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X coordinate:"
@@ -18591,9 +18351,8 @@ msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "Bán kính của lần quay ở tận trong cùng (so với kích cỡ xoắn ốc)"
 
 #: ../src/widgets/toolbox.cpp:3826
-#, fuzzy
 msgid "Bezier"
-msgstr "Tạo cong Bézier"
+msgstr "Cung Bezier"
 
 #: ../src/widgets/toolbox.cpp:3827
 msgid "Create regular Bezier path"
@@ -18682,12 +18441,11 @@ msgstr "Độ mịn: "
 
 #: ../src/widgets/toolbox.cpp:4003
 msgid "How much smoothing (simplifying) is applied to the line"
-msgstr ""
+msgstr "Độ mịn (làm đơn giản đường nét) áp dụng cho đường nét"
 
 #: ../src/widgets/toolbox.cpp:4026
-#, fuzzy
 msgid "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Đặt lại về giá trị mặc định các tham số về hình (dùng « Tùy thích Inkscape > Công cụ » để thay đổi giá trị mặc định)"
+msgstr "Đặt các tham số bút chì  về giá trị mặc định (dùng Tùy thích Inkscape > Công cụ để thay đổi giá trị mặc định)"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4119
@@ -18724,58 +18482,49 @@ msgid "The force of the tweak action"
 msgstr "Sức mạnh của hành động điều chỉnh"
 
 #: ../src/widgets/toolbox.cpp:4157
-#, fuzzy
 msgid "Move mode"
-msgstr "không cho phép chế độ %s"
+msgstr "Chế độ di chuyển"
 
 #: ../src/widgets/toolbox.cpp:4158
-#, fuzzy
 msgid "Move objects in any direction"
-msgstr "Đẩy phần của đường nét về bất cứ hướng nào"
+msgstr "Di chuyển các đối tượng theo mọi hướng"
 
 #: ../src/widgets/toolbox.cpp:4164
-#, fuzzy
 msgid "Move in/out mode"
-msgstr "-A\t\t\tKhởi động vào chế độ Ả Rập"
+msgstr "Chế độ dịch vào/ra"
 
 #: ../src/widgets/toolbox.cpp:4165
 msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "Di chuyển đối tượng tới con trỏ; thêm Shift để ra xa khỏi con trỏ"
 
+# Jitter là nhiễu sửa sai. Biết dịch là gì?
 #: ../src/widgets/toolbox.cpp:4171
-#, fuzzy
 msgid "Move jitter mode"
-msgstr "Chế độ bù ngẫu nhiên màu"
+msgstr "Chế độ di chuyển bù"
 
 #: ../src/widgets/toolbox.cpp:4172
-#, fuzzy
 msgid "Move objects in random directions"
-msgstr "Hệ số co giãn theo chiều ngang"
+msgstr "Di chuyển đối tượng theo các hướng ngẫu nhiên"
 
 #: ../src/widgets/toolbox.cpp:4178
-#, fuzzy
 msgid "Scale mode"
-msgstr "không cho phép chế độ %s"
+msgstr "Chế độ co giãn"
 
 #: ../src/widgets/toolbox.cpp:4179
-#, fuzzy
 msgid "Shrink objects, with Shift enlarge"
-msgstr "Đặt tên đối tượng"
+msgstr "Thu nhỏ đối tượng, thêm Shift để phóng to"
 
 #: ../src/widgets/toolbox.cpp:4185
-#, fuzzy
 msgid "Rotate mode"
-msgstr "không cho phép chế độ %s"
+msgstr "Chế độ xoay"
 
 #: ../src/widgets/toolbox.cpp:4186
-#, fuzzy
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "Xoay vùng chọn 90° ngược chiều kim đồng hồ"
+msgstr "Xoay phải đối tượng, thêm Shift để xoay trái"
 
 #: ../src/widgets/toolbox.cpp:4192
-#, fuzzy
 msgid "Duplicate/delete mode"
-msgstr "chế độ cập nhật không hợp lệ"
+msgstr "Chế độ nhân đôi/xóa bỏ"
 
 #: ../src/widgets/toolbox.cpp:4193
 msgid "Duplicate objects, with Shift delete"
@@ -19015,10 +18764,10 @@ msgstr "Độ cố định"
 msgid "Fixation:"
 msgstr "Độ cố định:"
 
+# Angle behavior không biết thay behavior là gì
 #: ../src/widgets/toolbox.cpp:4765
-#, fuzzy
 msgid "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = fixed angle)"
-msgstr "Ứng xử góc (0 = ngòi bút luôn luôn vuông góc hướng của nét, 1 = góc cố định)"
+msgstr "Ứng xử góc (0 = ngòi bút luôn luôn vuông góc hướng của nét, 100 = góc cố định)"
 
 #. Cap Rounding
 #: ../src/widgets/toolbox.cpp:4777
@@ -19153,9 +18902,8 @@ msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "Dùng cảm ứng nghiêng trên bàn vẽ, thay đổi góc của ngòi bút"
 
 #: ../src/widgets/toolbox.cpp:4888
-#, fuzzy
 msgid "Choose a preset"
-msgstr "Gạch định _sẵn:"
+msgstr "Chọn một thiết lập sẵn"
 
 #: ../src/widgets/toolbox.cpp:4976
 msgid "Arc: Change start/end"
@@ -19206,57 +18954,48 @@ msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Làm cho hình là thành elip kín, không phải hình cung hay quạt"
 
 #: ../src/widgets/toolbox.cpp:5297
-#, fuzzy
 msgid "Opacity:"
 msgstr "Độ mờ đục:"
 
 #: ../src/widgets/toolbox.cpp:5304
-#, fuzzy
 msgid "Pick opacity"
-msgstr "Lấy độ đục tổng hợp"
+msgstr "Lấy độ đục"
 
 #: ../src/widgets/toolbox.cpp:5305
 msgid "Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"
 msgstr "Lấy cả hai màu và alpha (tính trong suốt) dưới con trỏ; nếu không thì lấy chỉ màu hiện rõ được nhân sẵn với alpha"
 
 #: ../src/widgets/toolbox.cpp:5308
-#, fuzzy
 msgid "Pick"
-msgstr "NN: t_rao đổi..."
+msgstr "Lấy"
 
 #: ../src/widgets/toolbox.cpp:5317
-#, fuzzy
 msgid "Assign opacity"
-msgstr "Độ mờ đục ảnh"
+msgstr "Gán độ đục"
 
 #: ../src/widgets/toolbox.cpp:5318
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr "Nếu lấy alpha, giá trị alpha sẽ là độ trong suốt của màu tô hay nét vẽ trong vùng chọn "
 
 #: ../src/widgets/toolbox.cpp:5321
-#, fuzzy
 msgid "Assign"
 msgstr "Gán"
 
 #: ../src/widgets/toolbox.cpp:5507
-#, fuzzy
 msgid "Closed"
 msgstr "Đã đóng"
 
 #: ../src/widgets/toolbox.cpp:5509
-#, fuzzy
 msgid "Open start"
-msgstr "Mở \"Mở đầu\""
+msgstr "Mở đầu"
 
 #: ../src/widgets/toolbox.cpp:5511
-#, fuzzy
 msgid "Open end"
-msgstr "Thời gian kết thúc"
+msgstr "Mở cuối"
 
 #: ../src/widgets/toolbox.cpp:5513
-#, fuzzy
 msgid "Open both"
-msgstr "cả hai chế độ"
+msgstr "Mở cả hai"
 
 #: ../src/widgets/toolbox.cpp:5572
 #, fuzzy
@@ -19280,7 +19019,7 @@ msgstr "Hộp giới hạn sai cho %s.\n"
 
 #: ../src/widgets/toolbox.cpp:5607
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
+msgstr "Hiện hộp bao quanh (dùng để cắt các đường vô hạn)"
 
 #: ../src/widgets/toolbox.cpp:5618
 #, fuzzy
@@ -19590,6 +19329,8 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Đối tượng đầu tiên được chọn thuộc kiểu '%s'.\n"
+"Hãy thử dùng lệnh Đường nét | Đối tượng sang Đường nét."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
@@ -19802,7 +19543,7 @@ msgstr "Nhập tập tin Corel DRAW Presentation Exchange"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "Mở tập tin presentation exchange, lưu bởi Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -19986,7 +19727,7 @@ msgstr "không thể kết hợp hai tùy chọn « -e » và « -i »"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle About This Point"
-msgstr ""
+msgstr "Vẽ đường tròn quanh điểm này"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
 #, fuzzy
@@ -20005,7 +19746,7 @@ msgstr "Công cụ vẽ\tF3"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
-msgstr ""
+msgstr "Vẽ hình nút tại điểm này"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 #, fuzzy
@@ -20127,11 +19868,11 @@ msgstr "Nhập khẩu định dạng trao đổi tài liệu của AutoCAD"
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Hoặc tự đặt hệ số co giãn"
 
 #: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
-msgstr ""
+msgstr "Tự động co giãn về cỡ A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -20977,9 +20718,10 @@ msgstr "Phạm vi và Lấy mẩu"
 msgid "Samples"
 msgstr "Mẫu"
 
+# TODO: dùng thử phần mở rộng mới biết được
 #: ../share/extensions/param_curves.inx.h:11
 msgid "Select a rectangle before calling the extension; it will determine X and Y scales. First derivatives are always determined numerically."
-msgstr ""
+msgstr "Chọn một hình chữ nhật để định nghĩa độ co giãn X và Y trước khi gọi phần mở rộng này. Đạo hàm cấp 1 luôn phải có dạng số."
 
 #: ../share/extensions/param_curves.inx.h:13
 msgid "Start t-value"
@@ -21398,17 +21140,14 @@ msgid "Z-Sort Faces By:"
 msgstr "Sắp xếp các mặt theo trục Z bởi:"
 
 #: ../share/extensions/printing-marks.inx.h:1
-#, fuzzy
 msgid "Bleed Margin"
-msgstr "Vị trí lề"
+msgstr "Lề dòng in"
 
 #: ../share/extensions/printing-marks.inx.h:2
-#, fuzzy
 msgid "Bleed Marks"
-msgstr "Đồng Mác có thể chuyển đổi"
+msgstr "Dấu dòng in"
 
 #: ../share/extensions/printing-marks.inx.h:3
-#, fuzzy
 msgid "Bottom:"
 msgstr "Dưới:"
 
@@ -21417,44 +21156,36 @@ msgid "Canvas"
 msgstr "Vùng vẽ"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Colour Bars"
-msgstr "Thanh _cuộn"
+msgstr "Thanh màu"
 
 #: ../share/extensions/printing-marks.inx.h:6
-#, fuzzy
 msgid "Crop Marks"
-msgstr "In dấu _xén"
+msgstr "In dấu xén"
 
 #: ../share/extensions/printing-marks.inx.h:7
-#, fuzzy
 msgid "Left:"
 msgstr "Trái:"
 
 #: ../share/extensions/printing-marks.inx.h:8
-#, fuzzy
 msgid "Marks"
 msgstr "Dấu"
 
 #: ../share/extensions/printing-marks.inx.h:10
-#, fuzzy
 msgid "Page Information"
-msgstr "Thông tin _bảo mật về trang"
+msgstr "Thông tin trang vẽ"
 
 #: ../share/extensions/printing-marks.inx.h:11
-#, fuzzy
 msgid "Positioning"
-msgstr "định vị"
+msgstr "Định vị"
 
 #: ../share/extensions/printing-marks.inx.h:12
-#, fuzzy
 msgid "Printing Marks"
-msgstr "Đồng Mác có thể chuyển đổi"
+msgstr "Dấu bản in"
 
 #: ../share/extensions/printing-marks.inx.h:13
-#, fuzzy
 msgid "Registration Marks"
-msgstr "Đồng Mác có thể chuyển đổi"
+msgstr "Dấu đăng ký"
 
 #: ../share/extensions/printing-marks.inx.h:15
 #, fuzzy
@@ -21462,22 +21193,18 @@ msgid "Right:"
 msgstr "Phải:"
 
 #: ../share/extensions/printing-marks.inx.h:17
-#, fuzzy
 msgid "Set crop marks to"
-msgstr "Xén ảnh chụp để _vừa"
+msgstr "Đặt dấu xén vào"
 
 #: ../share/extensions/printing-marks.inx.h:18
-#, fuzzy
 msgid "Star Target"
-msgstr "Cơ bản đích"
+msgstr "Đánh dấu sao cho đích"
 
 #: ../share/extensions/printing-marks.inx.h:19
-#, fuzzy
 msgid "Top:"
 msgstr "Trên:"
 
 #: ../share/extensions/ps_input.inx.h:3
-#, fuzzy
 msgid "PostScript Input"
 msgstr "Nhập PostScript"
 
@@ -21486,14 +21213,12 @@ msgid "Jitter nodes"
 msgstr "Làm mịn ngẫu nhiên cho các nút"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement in X, px"
-msgstr "Độ rộng của quầng (theo điểm ảnh)"
+msgstr "Chuyển vị ngang tối đa, px"
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Maximum displacement in Y, px"
-msgstr "Độ rộng của quầng (theo điểm ảnh)"
+msgstr "Chuyển vị dọc tối đa, px"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
