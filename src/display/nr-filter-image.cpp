@@ -107,6 +107,13 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     if (!image_pixbuf){
         try {
+            /* TODO: If feImageHref is absolute, then use that (preferably handling the
+             * case that it's not a file URI).  Otherwise, go up the tree looking
+             * for an xml:base attribute, and use that as the base URI for resolving
+             * the relative feImageHref URI.  Otherwise, if document && document->base,
+             * then use that as the base URI.  Otherwise, use feImageHref directly
+             * (i.e. interpreting it as relative to our current working directory).
+             * (See http://www.w3.org/TR/xmlbase/#resolution .) */
             gchar *fullname = feImageHref;
             if ( !g_file_test( fullname, G_FILE_TEST_EXISTS ) ) {
                 // Try to load from relative postion combined with document base
