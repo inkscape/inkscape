@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-10 11:25+0700\n"
+"PO-Revision-Date: 2009-07-13 16:54+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -127,7 +127,7 @@ msgstr "បំណែក​ល្បែង​ផ្គុំ​រូប"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "ជ្រុង​ទេរ​ស្រួច ទាល"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Roughen"
@@ -141,9 +141,8 @@ msgid "ABCs"
 msgstr "ABCs"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ជ្រុង​មូល"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​គ្រើម​តិចតួច​ទៅកាន់​ជ្រុង និង​ផ្នែក​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Rubber stamp"
@@ -173,7 +172,7 @@ msgstr "លយចេញ​ពី​ក្រៅ"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
-msgstr ""
+msgstr "ស្នាម​ទឹកខ្មៅ​នៅ​ពីក្រោម​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Fire"
@@ -235,7 +234,7 @@ msgstr "កំណក"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Flake-like white splotches"
-msgstr ""
+msgstr "ស្នាម​ពណ៌​ស​មានលក្ខណៈ​ដូច​ស្បែក​ស្ដើងៗ"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard fur"
@@ -255,7 +254,7 @@ msgstr "សម្ភារៈ"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
-msgstr ""
+msgstr "ស្នាម​អុជៗ​លើ​ខ្លួន​ខ្លា​រខិន (បាត់បង់​ពណ៌​ផ្ទាល់ខ្លួន​របស់​វត្ថុ)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
@@ -402,9 +401,8 @@ msgid "Sepia"
 msgstr "ពណ៌​ប្រផេះ​ចាស់"
 
 #: ../share/filters/filters.svg.h:34
-#, fuzzy
 msgid "Render in warm sepia tones"
-msgstr "កត្តា​មាត្រដ្ឋាន​ក្នុង​ទិស x"
+msgstr "បង្ហាញ​ជា​ពណ៌​ប្រផេះ​ក្រហម​ព្រឿងៗ"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Age"
@@ -433,7 +431,7 @@ msgstr "វាយនភាព"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "ផ្ទៃ​ត្រីមាត្រ​​ប៉ោង ដុំពកៗ រអិល"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
@@ -465,7 +463,7 @@ msgstr "ប៊ូតុង"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "ជ្រុងទេរ​ស្រទន់ មាន​ដំណាក់ៗ​តិចតួច​នៅ​កណ្ដាល"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Inset"
@@ -584,7 +582,7 @@ msgstr "ជ្រុង​ទេរ​ពណ៌​ព្រឿងៗ​"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "ជ្រុង​ទេរ​ស្រទន់ មាន​ពណ៌​ព្រឿងៗ និង​ព្រិល"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
@@ -653,11 +651,11 @@ msgstr "លោហៈ​ដែល​បាន​កាត់"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "វាយនភាព​លោហៈ​ច្រែះ ដោយមាន​ចង្អូរ ស្នាម​រលក មាន​រន្ធ និង​មាន​ដុំ​ពក"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
-msgstr " "
+msgstr "ស្នាម​កម្អែ​ភ្នំភ្លើង​ផ្ទុះ"
 
 #: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
@@ -713,11 +711,11 @@ msgstr "បែបផែន​អន្ធឹល ដែល​មាន​វង�
 
 #: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
-msgstr ""
+msgstr "គំនូរ​លក្ខណៈ​លោហៈ"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "បែបផែន​ជា​លក្ខណៈ​លោហៈ ដែល​មាន​ពន្លឺ​ស្រទន់ មាន​ភាព​ស្រអាប់​បន្តិចបន្តួច​នៅ​គែម"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Dragee"
@@ -725,7 +723,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "កំពូល​អន្ធិលៗ​ដែល​មាន​រូបរាង​ដូច​នឹង​​គុជ​ខ្យង​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Raised border"
@@ -737,11 +735,11 @@ msgstr "ស៊ុម​ដែល​បាន​លើក​ឡើង​យ៉ា
 
 #: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
-msgstr ""
+msgstr "កំពូល​ដូច​ជា​លក្ខណៈ​លោហៈ"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "កំពូល​អន្ធិល​ដូច​លោហៈ​នៅ​ខាង​លើ​វា"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
@@ -815,7 +813,7 @@ msgstr "​"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "គំនូរ​សំបក​នៅ​លើ​ជញ្ជាំង"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
@@ -883,20 +881,19 @@ msgstr "ស្ប៉ាយ - លៃតម្រូវចំនួន​បម្
 
 #: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
-msgstr ""
+msgstr "ក្រហម​ព្រឿងៗ​នៅ​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
-msgstr ""
+msgstr "វណ្ឌវង្គ​មាន​ពណ៌​​ព្រិល​ស្រអាប់ និង​មាន​ផ្ទៃ​នៅ​ខាងក្នុង"
 
 #: ../share/filters/filters.svg.h:90
-#, fuzzy
 msgid "Cool outside"
-msgstr "គ្រោង​ប្រអប់​"
+msgstr "ភ្លឺ​ស្រទន់​ព្រឿងៗ​នៅ​ខាងក្រៅ"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "វណ្ឌវង្គ​​មាន​ពណ៌​​ព្រិល​ស្រអាប់ និងគ្មាន​ផ្ទៃ​នៅ​ខាងក្នុង"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
@@ -1023,7 +1020,7 @@ msgstr "បែបផែន​កែវ​មាន​ពន្លឺ​ភ្ល
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr ""
+msgstr "ដុំ​ពក HSL អាល់ហ្វា"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
@@ -1035,7 +1032,7 @@ msgstr "ឧបករណ៍​របាំង"
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
-msgstr ""
+msgstr "ដូចគ្នា​នឹង​ដុំ​ពក HSL ប៉ុន្តែ​ត្រូវ​បន្ថែម​អាល់ហ្វា​សម្រាប់​ការ​បន្សំ​ជាមួយ​នឹង​ភាព​ថ្លា ដោយ​ផ្អែក​លើ​តម្រង"
 
 #: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
@@ -1105,7 +1102,7 @@ msgstr "ដីស និង​ប៉ុងហ្ស៍​លុប"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "ភាព​​គួចវិល​តិចតួច​ដែល​ធ្វើ​ឲ្យ​មាន​លក្ខណៈ​ដូច​ជា​ប៉ុងហ្ស៍​​លុប និង​ដី​ស​មាន​លក្ខណៈ​គួចខ្ពស់"
 
 #: ../share/filters/filters.svg.h:116
 msgid "People"
@@ -1113,7 +1110,7 @@ msgstr "មនុស្ស"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
-msgstr ""
+msgstr "ចំណុច​ធំៗ​មាន​ដាក់​ពណ៌ មានលក្ខណៈ​ដូច​នឹង​ហ្វូង​មនុស្ស"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Scotland"
@@ -1141,7 +1138,7 @@ msgstr "វាយនភាព​បំពេញ​ភាព​មិនច្ប
 
 #: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
-msgstr ""
+msgstr "សួន​នៃ​ភាព​រីករាយ"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
@@ -1156,9 +1153,8 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "ជ្រុង​ទេ​សាយ ដែល​ត្រូវប្រើ​សម្រាប់​បង្កើត​វាយនភាព"
 
 #: ../share/filters/filters.svg.h:122
-#, fuzzy
 msgid "Cutout Glow"
-msgstr "​"
+msgstr "កាត់បន្ថយ​ភាព​ភ្លឺ​រលោង"
 
 #: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1166,7 +1162,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr ""
+msgstr "ដុំ​ពក HSL ដែល​នៅ​រាយប៉ាយ"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
@@ -1174,11 +1170,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
-msgstr ""
+msgstr "ផុស​ក្រឡោត​ក្រម៉ៅ"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr "បែបផែន​ផុស ៖ ត្រីមាត្រ​អណ្ដែត គឺ​ត្រូវបាន​ជំនួស​ដោយ​ពណ៌​ខ្មៅ"
+msgstr "បែបផែន​ផុស​ក្រឡោត ៖ ត្រីមាត្រ​អណ្ដែត គឺ​ត្រូវបាន​ជំនួស​ដោយ​ពណ៌​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
@@ -1190,7 +1186,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
-msgstr ""
+msgstr "ពពុះ HSL ដែល​នៅ​រាយប៉ាយ"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
@@ -1209,11 +1205,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
-msgstr ""
+msgstr "ដាម​ក្រដាស"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
-msgstr ""
+msgstr "ដាម​ទឹក​ខ្មៅ​នៅលើ​ក្រដាស​ដាម"
 
 #: ../share/filters/filters.svg.h:129
 #, fuzzy
@@ -1226,11 +1222,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
-msgstr ""
+msgstr "ដាម​ទឹកខ្មៅ"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
-msgstr ""
+msgstr "ដាម​ទឹកខ្មៅ​នៅលើ​ក្រដាស​ទន់ៗ ឬ​ក្រដាស​គគ្រើម"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
@@ -1254,7 +1250,7 @@ msgstr "វត្ថុ​រាវ"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
-msgstr ""
+msgstr "ការ​បំពេញ​ដែល​អាច​ដាក់​ពណ៌​បាន​ដោយមាន​វត្ថុ​រាវ​ថ្លា"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Watercolor"
