@@ -34,6 +34,7 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "message-context.h"
+#include "libnr/nr-macros.h"
 #include "pixmaps/cursor-star.xpm"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
@@ -204,9 +205,9 @@ sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val)
     Glib::ustring path = val->getEntryName();
 
     if (path == "magnitude") {
-        sc->magnitude = CLAMP (val->getInt(5), 3, 1024);
+        sc->magnitude = NR_CLAMP(val->getInt(5), 3, 1024);
     } else if (path == "proportion") {
-        sc->proportion = CLAMP (val->getDouble(0.5), 0.01, 2.0);
+        sc->proportion = NR_CLAMP(val->getDouble(0.5), 0.01, 2.0);
     } else if (path == "isflatsided") {
         sc->isflatsided = val->getBool();
     } else if (path == "rounded") {
