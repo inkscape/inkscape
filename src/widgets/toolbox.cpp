@@ -5573,7 +5573,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         gtk_list_store_set( model, &iter,
                             0, _("All inactive"),
                             1, _("No geometric tool is active"),
-                            2, _("draw-geometry-inactive"),
+                            2, "draw-geometry-inactive",
                             -1 );
 
         Inkscape::LivePathEffect::EffectType type;
