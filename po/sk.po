@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-09 10:23+0200\n"
-"PO-Revision-Date: 2009-07-09 10:25+0100\n"
+"POT-Creation-Date: 2009-07-11 09:42+0200\n"
+"PO-Revision-Date: 2009-07-13 15:53+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -436,7 +436,7 @@ msgstr "Organické"
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
 #: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Textúry"
 
@@ -1035,6 +1035,7 @@ msgstr "HSL hrče, priesvitnosť"
 #: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:174
 #: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:188
 #: ../share/filters/filters.svg.h:189 ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:199
 msgid "Mask and transparency effects"
 msgstr "Efekty masky a priesvitnosti"
 
@@ -1772,6 +1773,22 @@ msgstr "Sadra"
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr "Kombinácia HSL detekcie hrán s efektom matného a pokrčeného povrchu"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Rough transparency"
+msgstr "Hrubá priesvitnosť"
+
+#: ../share/filters/filters.svg.h:199
+msgid "Adds a turbulent transparency which displace pixels at the same time"
+msgstr "Pridáva turbulentnú priesvitnosť, ktorá zároveň posúva pixle"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Gouache"
+msgstr "Kvaš"
+
+#: ../share/filters/filters.svg.h:200
+msgid "Partly opaque water color effect with bleed"
+msgstr "Efekt čiastočne nepriesvitných vodových farieb so spadávkou"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2592,7 +2609,6 @@ msgstr "Vybrať viditeľnú farbu a krytie"
 #: ../src/dialogs/clonetiler.cpp:2615 ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 #: ../src/widgets/toolbox.cpp:4324 ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
 msgstr "Krytie"
@@ -2701,7 +2717,6 @@ msgstr ""
 "bode"
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -3291,11 +3306,17 @@ msgstr "Nastaviť popis objektu"
 msgid "Href:"
 msgstr "Href:"
 
+#. default x:
+#. default y:
 #: ../src/dialogs/object-attributes.cpp:33
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid "Target:"
 msgstr "Cieľ:"
 
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Type:"
 msgstr "Typ:"
 
@@ -4296,10 +4317,7 @@ msgstr "Použiť na vybrané bitmapy adaptívny prah."
 msgid "Add Noise"
 msgstr "Pridať šum"
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr "Typ"
 
@@ -4343,7 +4361,6 @@ msgstr "Rozostrenie"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid "Radius"
 msgstr "Polomer"
 
@@ -4652,7 +4669,7 @@ msgid "Reduce Noise"
 msgstr "Redukovať šum"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
-#: ../share/extensions/lindenmayer.inx.h:6
+#: ../share/extensions/lindenmayer.inx.h:26
 msgid "Order"
 msgstr "Poradie"
 
@@ -4679,12 +4696,12 @@ msgid "Shade"
 msgstr "Tieň"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Azimuth"
 msgstr "Azimut"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Elevation"
 msgstr "Vyvýšenie"
 
@@ -5041,7 +5058,7 @@ msgstr "Vertikálny posun"
 #: ../share/extensions/grid_cartesian.inx.h:15
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
-#: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
@@ -7680,8 +7697,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "Koľko konštrukčných čiar (dotyčníc) nakresliť"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:489 ../src/ui/dialog/filter-effects-dialog.cpp:2207
-#: ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:489 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -9209,7 +9225,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Vyberte <b>objekt(y)</b>, z ktorého sa odstránia filtre."
 
 #: ../src/selection-chemistry.cpp:1024
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr "Odstrániť filter"
 
@@ -9840,15 +9856,15 @@ msgstr "<b>Obrázok so zlým odkazom</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Obrázok</b> %d &#215; %d: %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:304
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b>: zlomiť uhol"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:306
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: zamknúť polomer špirály"
 
-#: ../src/spiral-context.cpp:432
+#: ../src/spiral-context.cpp:438
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
@@ -9856,7 +9872,7 @@ msgstr ""
 "<b>Špirála</b>: polomer %s, uhol %5g&#176;; s <b>Ctrl</b> prichytávanie k "
 "uzlu"
 
-#: ../src/spiral-context.cpp:453
+#: ../src/spiral-context.cpp:464
 msgid "Create spiral"
 msgstr "Vytvorenie špirály"
 
@@ -10151,11 +10167,11 @@ msgstr "<b>Klonovanie</b> of: %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Osirotený klon</b>"
 
-#: ../src/star-context.cpp:315
+#: ../src/star-context.cpp:316
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: prichytávanie k uhlu; udržiavať lúče radiálne"
 
-#: ../src/star-context.cpp:442
+#: ../src/star-context.cpp:447
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
@@ -10163,14 +10179,14 @@ msgstr ""
 "<b>Mnohouholník</b>: polomer %s, uhol %5g&#176;; s <b>Ctrl</b> prichytávanie "
 "k uhlu"
 
-#: ../src/star-context.cpp:443
+#: ../src/star-context.cpp:448
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Hviezda</b>: polomer %s, uhol %5g&#176;; s <b>Ctrl</b> prichytávanie k "
 "uhlu"
 
-#: ../src/star-context.cpp:466
+#: ../src/star-context.cpp:477
 msgid "Create star"
 msgstr "Vytvoriť hviezdu"
 
@@ -11510,7 +11526,8 @@ msgstr "Informácie"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/lindenmayer.inx.h:3 ../share/extensions/measure.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:23
+#: ../share/extensions/measure.inx.h:2
 msgid "Help"
 msgstr "Pomocník"
 
@@ -11692,62 +11709,62 @@ msgstr "Tento SVG filter nevyžaduje žiadne parametre."
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Tento SVG filter zatiaľ nie je v Inkscape implementovaný."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:937
+#: ../src/ui/dialog/filter-effects-dialog.cpp:938
 msgid "Light Source:"
 msgstr "Zdroj svetla:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Uhol smeru svetelného zdroja v rovine XY v stupňoch"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:955
+#: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Uhol smeru svetelného zdroja v rovine YZ v stupňoch"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
 msgid "Location"
 msgstr "Umiestnenie"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
 msgstr "Súradnica X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Y coordinate"
 msgstr "Súradnica Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:958
-#: ../src/ui/dialog/filter-effects-dialog.cpp:961
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:959
+#: ../src/ui/dialog/filter-effects-dialog.cpp:962
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
 msgstr "Súradnica Z"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
 msgstr "Body na"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Specular Exponent"
 msgstr "Zrkadlový exponent"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:965
+#: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Hodnota exponentu riadiaca zaostrenie svetelného zdroja"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
 msgstr "Uhol kužeľa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:967
+#: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid ""
 "This is the angle between the spot light axis (i.e. the axis between the "
 "light source and the point to which it is pointing at) and the spot light "
@@ -11757,116 +11774,113 @@ msgstr ""
 "zdrojom a bodom, na ktorý ukazuje) a kužeľom bodového osvetlenia. Žiadne "
 "svetlo sa nepremieta mimo tento kužeľ."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
 msgstr "Nový zdroj svetla"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1070
 msgid "_Duplicate"
 msgstr "_Duplikovať"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1096
 msgid "_Filter"
 msgstr "_Filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1110
 msgid "R_ename"
 msgstr "Pr_emenovať"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1213
 msgid "Rename filter"
 msgstr "Premenovať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1249
 msgid "Apply filter"
 msgstr "Použiť filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Pridať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1351
 msgid "Duplicate filter"
 msgstr "Duplikovať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1418
 msgid "_Effect"
 msgstr "_Efekt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1426
 msgid "Connections"
 msgstr "Konektory"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
 msgstr "Odstrániť primitívu filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
 msgstr "Odstrániť uzol zlúčenia"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
 msgstr "Zmeniť poradie primitív filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
 msgstr "Pridať efekt:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No effect selected"
 msgstr "Žiadny efekt nebol zvolený"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2066
 msgid "No filter selected"
 msgstr "Žiadny efekt nebol zvolený"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Effect parameters"
 msgstr "Parametre efektu"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2105
 msgid "Filter General Settings"
 msgstr "Všeobecné nastavenia filtra"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
-msgid "Coordinates"
-msgstr "Súradnice"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+msgid "Coordinates:"
+msgstr "Súradnice:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "Súradnica X ľavých rohov oblasti efektov filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Súradnica Y horných rohov oblasti efektov filtra"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#: ../share/extensions/dimension.inx.h:1
-msgid "Dimensions"
-msgstr "Rozmery"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
+msgid "Dimensions:"
+msgstr "Rozmery:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
 msgstr "Šírka oblasti efektov filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Height of filter effects region"
 msgstr "Výška oblasti efektov filtra"
 
-#. # end multiple scan
-#. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
-#: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4247
-#: ../share/extensions/triangle.inx.h:9
-msgid "Mode"
-msgstr "Režim"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2165
+#: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
+#: ../share/extensions/extrude.inx.h:3
+msgid "Mode:"
+msgstr "Režim:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid ""
 "Indicates the type of matrix operation. The keyword 'matrix' indicates that "
 "a full 5x4 matrix of values will be provided. The other keywords represent "
@@ -11877,23 +11891,23 @@ msgstr ""
 "hodnôt s rozmerom 5x4. Ostatné kľúčové slová určujú pohodlné skratky pre "
 "často vykonávané operácie s farbami bez nutnosti určovať kompletnú maticu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
-msgid "Value(s)"
-msgstr "Hodnoty"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
-msgid "Operator"
-msgstr "Operátor"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2169
+msgid "Value(s):"
+msgstr "Hodnoty:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
-msgid "K1"
-msgstr "K1"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+msgid "Operator:"
+msgstr "Operátor:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+msgid "K1:"
+msgstr "K1:"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
@@ -11903,33 +11917,32 @@ msgstr ""
 "vzorca k1*i1*i2 + k2*i1 + k3*i2 + k4, kde i1 a i2 sú hodnoty pixelov prvého "
 "resp. druhého vstupu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-msgid "K2"
-msgstr "&"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-msgid "K3"
-msgstr "&"
+msgid "K2:"
+msgstr "K2:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-msgid "K4"
-msgstr "&"
+msgid "K3:"
+msgstr "K3:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2187
+msgid "K4:"
+msgstr "K4:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/tracedialog.cpp:581
+msgid "Size:"
+msgstr "Veľkosť:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "width of the convolve matrix"
 msgstr "šírka konvolučnej matice"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "height of the convolve matrix"
 msgstr "výška konvolučnej matice"
 
-#. default x:
-#. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-msgid "Target"
-msgstr "Cieľ"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
@@ -11937,7 +11950,7 @@ msgstr ""
 "Súradnica X cieľového bodu v konvolučnej matici. Konvolúcia sa použije na "
 "pixely okolo tohto bodu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
@@ -11946,11 +11959,11 @@ msgstr ""
 "pixely okolo tohto bodu."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
-msgid "Kernel"
-msgstr "Jadro"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
+msgid "Kernel:"
+msgstr "Jadro:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid ""
 "This matrix describes the convolve operation that is applied to the input "
 "image in order to calculate the pixel colors at the output. Different "
@@ -11966,11 +11979,11 @@ msgstr ""
 "matice), kým matica vyplnená konštantnou nenulovou hodnotou by mala za "
 "následok bežný efekt rozmazania."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
-msgid "Divisor"
-msgstr "Deliteľ"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+msgid "Divisor:"
+msgstr "Deliteľ:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid ""
 "After applying the kernelMatrix to the input image to yield a number, that "
 "number is divided by divisor to yield the final destination color value. A "
@@ -11982,11 +11995,11 @@ msgstr ""
 "Deliteľ, ktorý je súčtom všetkých hodnôt matice zvykne mať vyrovnávajúci "
 "efekt na celkovú výslednú intenzitu farby."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-msgid "Bias"
-msgstr "Skreslenie"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+msgid "Bias:"
+msgstr "Skreslenie:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid ""
 "This value is added to each component. This is useful to define a constant "
 "value as the zero response of the filter."
@@ -11994,11 +12007,11 @@ msgstr ""
 "Táto hodnota sa pripočíta ku každej zložke. To sa hodí na definovanie "
 "konštantnej hodnoty ako nulová odpoveď filtra."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-msgid "Edge Mode"
-msgstr "Režim hrany"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+msgid "Edge Mode:"
+msgstr "Režim hrany:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid ""
 "Determines how to extend the input image as necessary with color values so "
 "that the matrix operations can be applied when the kernel is positioned at "
@@ -12008,91 +12021,100 @@ msgstr ""
 "hodnotami, aby bolo možné aplikovať maticové operácie, keď sa jadro nachádza "
 "blízko okraja vstupného obrázka."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Preserve Alpha"
 msgstr "Zachovávať alfa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr ""
 "Ak je táto voľba nastavená, táto primitíva filtra nebude meniť alfa kanál."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-msgid "Diffuse Color"
-msgstr "Difúzna farba"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+msgid "Diffuse Color:"
+msgstr "Difúzna farba:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "Defines the color of the light source"
 msgstr "Definuje farbu svetelného zdroja"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-msgid "Surface Scale"
-msgstr "Mierka povrchu"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+msgid "Surface Scale:"
+msgstr "Mierka povrchu:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid ""
 "This value amplifies the heights of the bump map defined by the input alpha "
 "channel"
 msgstr ""
 "Táto hodnota znásobuje výšky bumpmapy definovanej vstupným alfa kanálom"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-msgid "Constant"
-msgstr "Konštanta"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+msgid "Constant:"
+msgstr "Konštanta:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "This constant affects the Phong lighting model."
 msgstr "Táto konštanta ovplyvňuje Phongov model osvetľovania."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-msgid "Kernel Unit Length"
-msgstr "Dĺžka jednotky jadra"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2204
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2238
+msgid "Kernel Unit Length:"
+msgstr "Dĺžka jednotky jadra:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+msgid "Scale:"
+msgstr "Mierka:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr "Toto definuje intenzitu efektu posunutia."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-msgid "X displacement"
-msgstr "Posunutie X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+msgid "X displacement:"
+msgstr "Posunutie X:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Farebná zložka, ktorá riadi posunutie v smere X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-msgid "Y displacement"
-msgstr "Posunutie Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
+msgid "Y displacement:"
+msgstr "Posunutie Y:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Farebná zložka, ktorá riadi posunutie v smere Y"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
-msgid "Flood Color"
-msgstr "Farba výplne"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+msgid "Flood Color:"
+msgstr "Farba výplne:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
 msgstr "Celá oblasť filtra sa zaplní touto farbou."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
-msgid "Standard Deviation"
-msgstr "Štandardná odchýlka"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2214
+#: ../src/widgets/toolbox.cpp:5297
+msgid "Opacity:"
+msgstr "Krytie:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
+msgid "Standard Deviation:"
+msgstr "Štandardná odchýlka:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
 msgstr "Štandardná odchýlka operácie rozostrenie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -12100,68 +12122,71 @@ msgstr ""
 "Erózia: vykoná „stenčenie“ vstupného obrázka.\n"
 "Dilatácia: vykoná „zhrubnutie“ vstupného obrázka."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
-msgid "Source of Image"
-msgstr "Zdroj obrazu"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2224
+msgid "Radius:"
+msgstr "Polomer:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
-msgid "Delta X"
-msgstr "Delta X"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2227
+msgid "Source of Image:"
+msgstr "Zdroj obrazu:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+msgid "Delta X:"
+msgstr "Delta X:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Ako ďaleko sa vstupný obrázok posunie smerom doprava"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-msgid "Delta Y"
-msgstr "Delta Y"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
+msgid "Delta Y:"
+msgstr "Delta Y:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Ako ďaleko sa vstupný obrázok posunie smerom dolu"
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
-msgid "Specular Color"
-msgstr "Zrkadlová farba"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+msgid "Specular Color:"
+msgstr "Zrkadlová farba:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#: ../share/extensions/interp.inx.h:2
-msgid "Exponent"
-msgstr "Exponent"
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+msgid "Exponent:"
+msgstr "Exponent:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Exponent zrkadlovej zložky, väčší znamená „lesklejší“"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid ""
 "Indicates whether the filter primitive should perform a noise or turbulence "
 "function."
 msgstr ""
 "Indikuje, či má primitíva filtra vykonávať funkciu šumu alebo turbulencie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
-msgid "Base Frequency"
-msgstr "Základná frekvencia"
-
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-msgid "Octaves"
-msgstr "Oktávy"
+msgid "Base Frequency:"
+msgstr "Základná frekvencia:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
-msgid "Seed"
-msgstr "Báza"
+msgid "Octaves:"
+msgstr "Oktávy:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
+msgid "Seed:"
+msgstr "Báza:"
+
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
 msgstr "Báza generátora pseudonáhodných čísel."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Add filter primitive"
 msgstr "Pridať primitívu filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
@@ -12169,7 +12194,7 @@ msgstr ""
 "Primitíva filtra <b>feBlend</b> poskytuje 4 režimy miešania obrázkov: "
 "tienenie, násobenie, stmavenie a zosvetlenie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2281
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
@@ -12179,7 +12204,7 @@ msgstr ""
 "zafarbenie každého vykresľovaného pixla. To umožňuje efekty ako prevedenie "
 "objektu na odtiene šedej, zmena sýtosti farieb a zmena farebného odtieňa."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -12191,7 +12216,7 @@ msgstr ""
 "umožňuje operácie ako ladenie svetlosti a kontrastu, vyváženia farieb a "
 "prahu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2290
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
@@ -12203,7 +12228,7 @@ msgstr ""
 "popísaný v štandarde SVG. Porter-Duffove miešacie moduly sú v podstate "
 "logické operácie medzi hodnotami zodpovedajúcich pixlov obrázkov."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2294
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -12217,7 +12242,7 @@ msgstr ""
 "primitívy filtra je možné vytvoriť gaussovské rozostrenie, špecializovaná "
 "primitáva pre gaussovské rozostrenie je rýchlejšia a nezávislá od rozlíšenia."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2298
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -12229,7 +12254,7 @@ msgstr ""
 "vyšším krytím sú zdvihnuté smerom k pozorovateľovi a s nižším krytím sú "
 "vzdialenejšie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2302
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -12241,7 +12266,7 @@ msgstr ""
 "ďaleko by mali byť pixely od seba. Klasickými príkladmi sú efekty vír a "
 "prelínanie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2306
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
@@ -12251,7 +12276,7 @@ msgstr ""
 "Zvyčajne sa používa ako vstup iného efektu filtra, aby sa na grafiku "
 "aplikovala farba."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2310
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
@@ -12259,7 +12284,7 @@ msgstr ""
 "Primitíva filtra <b>feGaussianBlur</b> rovnomerne rozostrí vstup. Bežne sa "
 "používa spolu s feOffset na vytvorenie efektu vrhania tieňov."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2314
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
@@ -12267,7 +12292,7 @@ msgstr ""
 "Primitíva filtra <b>feImage</b> vyplní oblasť externým obrázkom alebo inou "
 "časťou dokumentu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2318
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -12279,7 +12304,7 @@ msgstr ""
 "ekvivalentom použitia niekoľkých primitív feBlend v „normálnom“ režime alebo "
 "niekoľkých primitív feComposite v režime „cez“."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-colour objects erode makes the object thinner and dilate makes it "
@@ -12288,7 +12313,7 @@ msgstr ""
 "Primitíva filtra <b>feMorphology</b> poskytuje efekty erózia a dilatácia. "
 "Erózia stenčuje a dilatácia robí hrubšími jednofarebné objekty."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
@@ -12298,7 +12323,7 @@ msgstr ""
 "hodnotu. To je napríklad užitočné pri vrhaní tieňov, kde tieň je v mierne "
 "odlišnej polohe ako samotný objekt."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -12310,12 +12335,12 @@ msgstr ""
 "vyšším krytím sú zdvihnuté smerom k pozorovateľovi a s nižším krytím sú "
 "vzdialenejšie."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2334
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "Primitíva filtra <b>feTile</b> dláždi oblasť vstupným obrázkom."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2338
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
@@ -12325,11 +12350,11 @@ msgstr ""
 "šumu sa hodí na simuláciu niekoľkých prírodných javov ako oblaky, oheň a na "
 "tvorbu komplexných textúr ako mramor či žula."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
 msgstr "Duplikovať primitívu filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2410
 msgid "Set filter primitive attribute"
 msgstr "Nastaviť atribút primitívy filtra"
 
@@ -15134,6 +15159,13 @@ msgstr "Po skončení odstrániť spodnú vrstvu (pozadie)"
 msgid "Multiple scans: creates a group of paths"
 msgstr "Viaceré skeny: vytvorí skupinu ciest"
 
+#. # end multiple scan
+#. ## end mode page
+#: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4247
+#: ../share/extensions/triangle.inx.h:9
+msgid "Mode"
+msgstr "Režim"
+
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:569
@@ -15147,10 +15179,6 @@ msgstr "Ignorovať malé oblasti (škvrny) na bitmape"
 #: ../src/ui/dialog/tracedialog.cpp:579
 msgid "Speckles of up to this many pixels will be suppressed"
 msgstr "Do akej veľkosti škvrny budú tieto potlačené"
-
-#: ../src/ui/dialog/tracedialog.cpp:581
-msgid "Size:"
-msgstr "Veľkosť:"
 
 #: ../src/ui/dialog/tracedialog.cpp:584
 msgid "Smooth corners"
@@ -19437,11 +19465,6 @@ msgstr "Paraxiálna"
 msgid "Create a sequence of paraxial line segments"
 msgstr "Vytvoriť postupnosť paraxiálnych úsečiek"
 
-#: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
-#: ../share/extensions/extrude.inx.h:3
-msgid "Mode:"
-msgstr "Režim:"
-
 #: ../src/widgets/toolbox.cpp:3857
 msgid "Mode of new lines drawn by this tool"
 msgstr "Režim nových čiar nakreslených týmto nástrojom"
@@ -20022,10 +20045,6 @@ msgstr "Vytvoriť celok"
 #: ../src/widgets/toolbox.cpp:5228
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Vytvoriť tvar celej elipsy, nie oblúk alebo segment"
-
-#: ../src/widgets/toolbox.cpp:5297
-msgid "Opacity:"
-msgstr "Krytie:"
 
 #: ../src/widgets/toolbox.cpp:5304
 msgid "Pick opacity"
@@ -20765,6 +20784,10 @@ msgstr ""
 "Skript dia2svg.sh by mal byť súčasťou vašej inštalácie Inkscape.  Ak ho "
 "nemáte, s vašou inštaláciou Inkscape pravdepodobne niečo nie je v poriadku."
 
+#: ../share/extensions/dimension.inx.h:1
+msgid "Dimensions"
+msgstr "Rozmery"
+
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
@@ -21177,51 +21200,66 @@ msgstr "Odstrániť obdĺžnik"
 
 #: ../share/extensions/funcplot.inx.h:14
 msgid ""
-"Select a rectangle before calling the extension, it will determine X and Y "
-"scales. With polar coordinates: Start and end X values define the angle "
-"range in radians. X scale is set so that left and right edges of rectangle "
-"are at +/-1. Isotropic scaling is disabled. First derivative is always "
-"determined numerically."
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"With polar coordinates:\n"
+"   Start and end X values define the angle range in radians.\n"
+"   X scale is set so that left and right edges of rectangle are at +/-1.\n"
+"   Isotropic scaling is disabled.\n"
+"   First derivative is always determined numerically."
 msgstr ""
-"Pred zavolaním rozšírenia vytvorte obdĺžnik. Obdĺžnik určí veľkosti x a y. "
-"Pri polárnych súradniciach: x-hodnoty Začiatok: a Koniec: definujú rozsah "
-"uhla v radiánoch. Mierka x je nastavená tak, aby pravé a ľavé okraje "
-"obdĺžnika boli na +/-1. Izotropická zmena veľkosti je vypnutá. Prvá "
-"derivácia sa vždy určuje numericky."
+"Pred zavolaním rozšírenia vyberte obdĺžnik.\n"
+"Obdĺžnik určí mierky x a y.\n"
+"\n"
+"Pri polárnych súradniciach:\n"
+"   x-hodnoty Začiatok: a Koniec: definujú rozsah uhla v radiánoch.\n"
+"   Mierka x je nastavená tak, aby pravé a ľavé okraje obdĺžnika boli na +/-"
+"1.\n"
+"   Izotropická zmena veľkosti je vypnutá.\n"
+"   Prvá derivácia sa vždy určuje numericky."
 
-#: ../share/extensions/funcplot.inx.h:15
-#: ../share/extensions/param_curves.inx.h:12
+#: ../share/extensions/funcplot.inx.h:22
+#: ../share/extensions/param_curves.inx.h:15
 msgid ""
-"Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
-"fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
-"pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos"
-"(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The "
-"constants pi and e are also available."
+"Standard Python math functions are available:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"The constants pi and e are also available."
 msgstr ""
-"Sú dostupné štandardné matematické funkcie Pythonu: ceil(x); fabs(x); floor"
-"(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10"
-"(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); "
-"cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). "
+"Sú dostupné štandardné matematické funkcie Pythonu:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
 "Tiež sú dostupné konštanty pi a e."
 
-#: ../share/extensions/funcplot.inx.h:16
+#: ../share/extensions/funcplot.inx.h:31
 msgid "Start X value"
 msgstr "Počiatočná hodnota X"
 
-#: ../share/extensions/funcplot.inx.h:17
-#: ../share/extensions/param_curves.inx.h:14
+#: ../share/extensions/funcplot.inx.h:32
+#: ../share/extensions/param_curves.inx.h:25
 msgid "Use"
 msgstr "Použiť"
 
-#: ../share/extensions/funcplot.inx.h:18
+#: ../share/extensions/funcplot.inx.h:33
 msgid "Use polar coordinates"
 msgstr "Používať polárne súradnice"
 
-#: ../share/extensions/funcplot.inx.h:19
+#: ../share/extensions/funcplot.inx.h:34
 msgid "Y value of rectangle's bottom"
 msgstr "hodnota Y spodku obdĺžnika"
 
-#: ../share/extensions/funcplot.inx.h:20
+#: ../share/extensions/funcplot.inx.h:35
 msgid "Y value of rectangle's top"
 msgstr "hodnota Y vrchu obdĺžnika"
 
@@ -21637,6 +21675,10 @@ msgstr "••••••••••••••••••••••••
 msgid "Duplicate endpaths"
 msgstr "Duplikovať konce ciest"
 
+#: ../share/extensions/interp.inx.h:2
+msgid "Exponent"
+msgstr "Exponent"
+
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
 msgstr "Interpolácia"
@@ -21654,56 +21696,84 @@ msgid "Interpolation steps"
 msgstr "Krokov interpolácie"
 
 #: ../share/extensions/lindenmayer.inx.h:1
+msgid ""
+"\n"
+"The path is generated by applying the \n"
+"substitutions of Rules to the Axiom, \n"
+"Order times. The following commands are \n"
+"recognized in Axiom and Rules:\n"
+"\n"
+"Any of A,B,C,D,E,F: draw forward \n"
+"\n"
+"Any of G,H,I,J,K,L: move forward \n"
+"\n"
+"+: turn left\n"
+"\n"
+"-: turn right\n"
+"\n"
+"|: turn 180 degrees\n"
+"\n"
+"[: remember point\n"
+"\n"
+"]: return to remembered point\n"
+msgstr ""
+"\n"
+"Cesta sa tvorí aplikáciou substitúcií\n"
+"pravidiel na axiómu Poradie-krát.\n"
+"V axióme a pravidlách sa rozoznávajú\n"
+"nasledovné príkazy:\n"
+"\n"
+"Ktorékoľvek z A,B,C,D,E,F: kresliť vpred\n"
+"\n"
+"Ktorékoľvek z G,H,I,J,K,L: posunúť vpred\n"
+"\n"
+"+: otočiť vľavo\n"
+"\n"
+"-: otočiť vpravo\n"
+"\n"
+"|: otočiť o 180 stupňov\n"
+"\n"
+"[: zapamätať bod\n"
+"\n"
+"]: návrat na zapamätaný bod\n"
+
+#: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
 msgstr "Axióma"
 
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:22
 msgid "Axiom and rules"
 msgstr "Axióma a pravidlá"
 
-#: ../share/extensions/lindenmayer.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:24
 msgid "L-system"
 msgstr "L-systém"
 
-#: ../share/extensions/lindenmayer.inx.h:5
+#: ../share/extensions/lindenmayer.inx.h:25
 msgid "Left angle"
 msgstr "Ľavý uhol"
 
-#: ../share/extensions/lindenmayer.inx.h:8
+#: ../share/extensions/lindenmayer.inx.h:28
 #, no-c-format
 msgid "Randomize angle (%)"
 msgstr "Náhodnosť uhla (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:10
+#: ../share/extensions/lindenmayer.inx.h:30
 #, no-c-format
 msgid "Randomize step (%)"
 msgstr "Náhodnosť kroku (%)"
 
-#: ../share/extensions/lindenmayer.inx.h:12
+#: ../share/extensions/lindenmayer.inx.h:32
 msgid "Right angle"
 msgstr "Pravý uhol"
 
-#: ../share/extensions/lindenmayer.inx.h:13
+#: ../share/extensions/lindenmayer.inx.h:33
 msgid "Rules"
 msgstr "Pravítka"
 
-#: ../share/extensions/lindenmayer.inx.h:14
+#: ../share/extensions/lindenmayer.inx.h:34
 msgid "Step length (px)"
 msgstr "Dĺžka kroku (px)"
-
-#: ../share/extensions/lindenmayer.inx.h:15
-msgid ""
-"The path is generated by applying the substitutions of Rules to the Axiom, "
-"Order times. The following commands are recognized in Axiom and Rules: Any "
-"of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left "
-"-: turn right |: turn 180 degrees [: remember point ]: return to remembered "
-"point"
-msgstr ""
-"Cesta sa tvorí aplikáciou substitúcií pravidiel na axiómu Poradie-krát. V "
-"axióme a pravidlách sa rozoznávajú nasledovné príkazy: Ktorékoľvek z A,B,C,D,"
-"E,F: kresliť vpred Ktorékoľvek z G,H,I,J,K,L: posunúť vpred +: otočiť vľavo "
-"-: otočiť vpravo |: otočiť o 180 stupňov [: zapamätať bod ]: návrat na "
-"zapamätaný bod"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -21831,37 +21901,41 @@ msgstr "Vzorky"
 
 #: ../share/extensions/param_curves.inx.h:11
 msgid ""
-"Select a rectangle before calling the extension; it will determine X and Y "
-"scales. First derivatives are always determined numerically."
+"Select a rectangle before calling the extension,\n"
+"it will determine X and Y scales.\n"
+"\n"
+"First derivatives are always determined numerically."
 msgstr ""
-"Pred zavolaním rozšírenia vyberte pravouholník; určí mierky X a Y. Prvé "
-"derivácie sa vždy určujú numericky."
+"Pred zavolaním rozšírenia vyberte obdĺžnik.\n"
+"Obdĺžnik určí mierky X a Y.\n"
+"\n"
+"Prvé derivácie sa vždy určujú numericky."
 
-#: ../share/extensions/param_curves.inx.h:13
+#: ../share/extensions/param_curves.inx.h:24
 msgid "Start t-value"
 msgstr "Počiatočná hodnota t"
 
-#: ../share/extensions/param_curves.inx.h:15
+#: ../share/extensions/param_curves.inx.h:26
 msgid "x-Function"
 msgstr "Funkcia t"
 
-#: ../share/extensions/param_curves.inx.h:16
+#: ../share/extensions/param_curves.inx.h:27
 msgid "x-value of rectangle's left"
 msgstr "hodnota t ľavej strany obdĺžnika"
 
-#: ../share/extensions/param_curves.inx.h:17
+#: ../share/extensions/param_curves.inx.h:28
 msgid "x-value of rectangle's right"
 msgstr "hodnota t pravej strany obdĺžnika"
 
-#: ../share/extensions/param_curves.inx.h:18
+#: ../share/extensions/param_curves.inx.h:29
 msgid "y-Function"
 msgstr "Funkcia y"
 
-#: ../share/extensions/param_curves.inx.h:19
+#: ../share/extensions/param_curves.inx.h:30
 msgid "y-value of rectangle's bottom"
 msgstr "hodnota y spodku obdĺžnika"
 
-#: ../share/extensions/param_curves.inx.h:20
+#: ../share/extensions/param_curves.inx.h:31
 msgid "y-value of rectangle's top"
 msgstr "hodnota y vrchu obdĺžnika"
 
@@ -22983,6 +23057,12 @@ msgstr "Vstup Windows Metasúbor"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Vstup XAML"
+
+#~ msgid "Target"
+#~ msgstr "Cieľ"
+
+#~ msgid "Seed"
+#~ msgstr "Báza"
 
 #~ msgid "Pixel smear, glossy"
 #~ msgstr "Lesklé rozmazanie pixelov"
