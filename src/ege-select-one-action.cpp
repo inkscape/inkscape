@@ -44,7 +44,7 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtktoolitem.h>
-#include <gtk/gtkcombobox.h>
+#include <gtk/gtk.h>
 #include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkcellrendererpixbuf.h>
 #include <gtk/gtkcelllayout.h>

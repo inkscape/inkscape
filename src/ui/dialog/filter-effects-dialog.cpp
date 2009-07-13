@@ -15,7 +15,7 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtktreeview.h>
+#include <gtk/gtk.h>
 #include <gtkmm/cellrenderertext.h>
 #include <gtkmm/colorbutton.h>
 #include <gtkmm/messagedialog.h>

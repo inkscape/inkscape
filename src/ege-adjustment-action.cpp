@@ -47,7 +47,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkversion.h>
 #include <gtk/gtktoolitem.h>
-#include <gtk/gtkspinbutton.h>
+#include <gtk/gtk.h>
 #include <gtk/gtkhscale.h>
 #if GTK_CHECK_VERSION(2,12,0)
 #include <gtk/gtkscalebutton.h>

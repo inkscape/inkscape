@@ -3,7 +3,7 @@
 #endif
 #include <math.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtkcombobox.h>
+#include <gtk/gtk.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtktable.h>

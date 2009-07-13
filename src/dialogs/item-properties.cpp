@@ -19,7 +19,7 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkcheckbutton.h>
-#include <gtk/gtkspinbutton.h>
+#include <gtk/gtk.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkframe.h>
 #include <gtk/gtkexpander.h>
