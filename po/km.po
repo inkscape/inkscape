@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-14 11:05+0700\n"
+"PO-Revision-Date: 2009-07-14 15:04+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1466,12 +1466,11 @@ msgstr "រោម​ខ្លា​ដំបង"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "លំនាំ​រោម​ខ្លា​ដំបង​ ដោយមាន​ផ្នត់ និង​ជ្រុង​ទេរ​នៅ​ជុំវិញ​គែម"
 
 #: ../share/filters/filters.svg.h:160
-#, fuzzy
 msgid "Flow inside"
-msgstr "របៀប​រដិបរដុប​"
+msgstr "ហូរ​នៅ​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
@@ -1486,13 +1485,12 @@ msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:162
-#, fuzzy
 msgid "Black Light"
-msgstr "ចំណុច​ខ្មៅ"
+msgstr "ពន្លឺ​ពណ៌​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
-msgstr ""
+msgstr "ផ្ទៃ​ដែល​មាន​ពន្លឺ​ភ្លឺ ត្រឡប់​ទៅ​ជា​ពណ៌​ខ្មៅ"
 
 #. Eraser
 #: ../share/filters/filters.svg.h:163
@@ -21212,10 +21210,7 @@ msgid ""
 "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder "
 "text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a "
 "new flowed text object, the size of the page, is created in a new layer."
-msgstr ""
-"បែបផែន​នេះ​បង្កើត​ \"Lorem Ipsum\" ស្តង់ដារ អត្ថបទ​កន្លែង​មិន​ត្រូវ ។ ប្រសិន​បើ​អត្ថបទ​លំហូរ​ត្រូវ​បាន​"
-"ជ្រើស Lorem Ipsum ត្រូវ​បាន​បន្ថែម​ទៅកាន់វា បើ​មិន​ដូច្នេះ​ទេ វត្ថុ​អត្ថបទ​លំហូរ​ថ្មី​មួយ ទំហំ​របស់​ទំព័រ ត្រូវ​"
-"បាន​បង្កើត​នៅ​ក្នុង​ស្រទាប់​ថ្មី​មួយ ។"
+msgstr "បែបផែន​នេះ​បង្កើត​ \"Lorem Ipsum\" ស្តង់ដារ អត្ថបទ​កន្លែង​មិន​ត្រូវ ។ ប្រសិន​បើ​អត្ថបទ​លំហូរ​ត្រូវ​បាន​ជ្រើស Lorem Ipsum ត្រូវ​បាន​បន្ថែម​ទៅកាន់វា បើ​មិន​ដូច្នេះ​ទេ វត្ថុ​អត្ថបទ​លំហូរ​ថ្មី​មួយ ទំហំ​របស់​ទំព័រ ត្រូវ​បាន​បង្កើត​នៅ​ក្នុង​ស្រទាប់​ថ្មី​មួយ ។"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -21259,9 +21254,7 @@ msgid ""
 "in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
 "real world, Scale must be set to 250."
 msgstr ""
-"រង្វាស់​បែបផែន​នេះ​ ប្រវែង​របស់​ផ្លូវ​​ដែល​បាន​ជ្រើស​ និង​បន្ថែម​វា​ជា​វត្ថុ​អត្ថបទ​នៅ​លើ​ផ្លូវ​ជា​មួយ​នឹង​ឯកតា​ដែល​"
-"បានជ្រើស ។ ចំនួន​តួលេខ​សំខាន់​អាច​ត្រូវ​បាន​ត្រួតពិនិត្យ​ដោយ​វាល​ទសភាគ ។ វាល​អុហ្វសិត​ត្រួតពិនិត្យ​ចម្ងាយ​ពី​អត្ថបទ​"
-"ទៅ​ផ្លូវ ។ កត្តា​មាត្រដ្ឋាន​អាច​ត្រូវ​បាន​ប្រើ​ដើម្បី​បង្កើត​រង្វាស់​នៅ​ក្នុង​គំនូរ​មាន​មាត្រដ្ឋាន ។ ឧទាហរណ៍ "
+"រង្វាស់​បែបផែន​នេះ​ ប្រវែង​របស់​ផ្លូវ​​ដែល​បាន​ជ្រើស​ និង​បន្ថែម​វា​ជា​វត្ថុ​អត្ថបទ​នៅ​លើ​ផ្លូវ​ជា​មួយ​នឹង​ឯកតា​ដែល​បានជ្រើស ។ ចំនួន​តួលេខ​សំខាន់​អាច​ត្រូវ​បាន​ត្រួតពិនិត្យ​ដោយ​វាល​ទសភាគ ។ វាល​អុហ្វសិត​ត្រួតពិនិត្យ​ចម្ងាយ​ពី​អត្ថបទ​ទៅ​ផ្លូវ ។ កត្តា​មាត្រដ្ឋាន​អាច​ត្រូវ​បាន​ប្រើ​ដើម្បី​បង្កើត​រង្វាស់​នៅ​ក្នុង​គំនូរ​មាន​មាត្រដ្ឋាន ។ ឧទាហរណ៍ "
 "ប្រសិន​បើ ១ ស.ម. នៅ​ក្នុង​គំនូរ​ស្មើ​នឹង ២.៥. ម. នៅ​ក្នុង​ពិភព​ពិតៗ មាត្រដ្ឋាន​ត្រូវ​បានកំណត់​ទៅ ២៥០ ។"
 
 #: ../share/extensions/motion.inx.h:3
@@ -21289,9 +21282,8 @@ msgid "End t-value"
 msgstr "End t-value"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូច​បំផុត​នៃ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
+msgstr "ការ​កំណត់​មាត្រដ្ឋាន Isotropic (ប្រើ​តូច​បំផុត ៖ ទទឹង/ជួរ x ឬ​កម្ពស់/ជួរ y)"
 
 #: ../share/extensions/param_curves.inx.h:5
 msgid "Multiply t-range by 2*pi"
@@ -21413,7 +21405,7 @@ msgstr "បែបផែន​នេះ​ធ្វើ​ឲ្យ​វត្ថ
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
-msgstr "សម្រក់​ឈាម (ក្នុង)"
+msgstr "ដំណក់ស្រក់ (ក្នុង)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Bond Weight #"
@@ -21464,9 +21456,8 @@ msgid "Paper Thickness Measurement"
 msgstr "រង្វាស់​ក្រដាស​ក្រាស់"
 
 #: ../share/extensions/perfectboundcover.inx.h:14
-#, fuzzy
 msgid "Perfect-Bound Cover Template"
-msgstr "គម្រប​បាន​ចង​ល្អ​ឥត​ខ្ចោះ"
+msgstr "ពុម្ព​គម្រប​លោតៗ"
 
 #: ../share/extensions/perfectboundcover.inx.h:16
 msgid "Remove existing guides"
@@ -21688,11 +21679,11 @@ msgstr "មុខ​តម្រៀប Z តាម ៖"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
-msgstr ""
+msgstr "គែម​មាន​ដំណក់​ស្រក់"
 
 #: ../share/extensions/printing-marks.inx.h:2
 msgid "Bleed Marks"
-msgstr ""
+msgstr "សញ្ញា​សម្គាល់​ដំណក់​ស្រក់"
 
 #: ../share/extensions/printing-marks.inx.h:3
 msgid "Bottom:"
@@ -21744,7 +21735,7 @@ msgstr "កំណត់​សញ្ញា​សម្គាល់​ការ​
 
 #: ../share/extensions/printing-marks.inx.h:18
 msgid "Star Target"
-msgstr ""
+msgstr "ទិស​តារា"
 
 #: ../share/extensions/printing-marks.inx.h:19
 msgid "Top:"
