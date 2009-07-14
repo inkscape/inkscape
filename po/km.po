@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-13 16:54+0700\n"
+"PO-Revision-Date: 2009-07-14 11:05+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1201,7 +1201,7 @@ msgstr "ផុស"
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
-msgstr ""
+msgstr "បែបផែន​ផុស​ក្រឡោត ៖ ពណ៌​រូបភាព​ដើម​គឺ​ត្រូវបាន​បម្រុង​ទុក ឬ​កែប្រែ​ដោយ​ការ​លាយ​បញ្ចូល​គ្នា"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
@@ -1212,13 +1212,12 @@ msgid "Inkblot on blotting paper"
 msgstr "ដាម​ទឹក​ខ្មៅ​នៅលើ​ក្រដាស​ដាម"
 
 #: ../share/filters/filters.svg.h:129
-#, fuzzy
 msgid "Wax print"
-msgstr "បោះពុម្ព​ LaTeX"
+msgstr "ក្រណាត់ Wax print"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
-msgstr ""
+msgstr "ក្រណាត់ Wax print នៅលើ​វាយនភាព​ក្រដាស​ទន់ៗ"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
@@ -1275,11 +1274,11 @@ msgstr "គំនូរ​ទឹក​ថ្នាំ​ពណ៌​ខ្មៅ
 
 #: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "គំនូរ​ទឹកខ្មៅ​នៅលើ​ក្រដាស​ដោយមាន​ការ​ប្ដូរ​ពណ៌​គួច"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
-msgstr ""
+msgstr "ឥន្ទធនូ​ពណ៌​ព្រឿងៗ"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
@@ -1337,16 +1336,15 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "រចនាប័ទ្ម​គំនូរ​តុក្កតា ដោយមាន​គែម​ស្រមោល​ស្រាលៗ"
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Smooth shader NR"
-msgstr "ភាព​រលោង"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "ដាក់ស្រមោល​រលោង ដោយ​ប្រើ​ខ្មៅដៃ​ពណ៌​ប្រផេះ"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
@@ -1432,11 +1430,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
-msgstr ""
+msgstr "ក្រាឡា​តាតាន់​មាន​ផ្នត់"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
+msgstr "លំនាំ​ក្រឡា​តាតាន់​ដែល​មាន​ផ្នត់ និង​ជ្រុង​ទេរ​នៅ​ជុំវិញ​គែម"
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D marble"
@@ -1452,7 +1450,7 @@ msgstr "ឈើ​ត្រីមាត្រ"
 
 #: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
-msgstr ""
+msgstr "កោង​ត្រីមាត្រ វាយនភាព​សរសៃ​ឈើ"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Mother of pearl"
@@ -10340,9 +10338,7 @@ msgid ""
 "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new "
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
-msgstr ""
-"<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​"
-"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​របស់វត្ថុ​ដែល​បាន​ចុចុ និងស្នាម​គូស​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
+msgstr "<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​ និងស្នាម​គូស​របស់​វត្ថុ​ដែល​បាន​ចុច​​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
