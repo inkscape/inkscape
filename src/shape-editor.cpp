@@ -54,7 +54,8 @@ ShapeEditor::ShapeEditor(SPDesktop *dt) {
     this->nodepath = NULL;
     this->knotholder = NULL;
     this->hit = false;
-    this->listener_attached_for = NULL;
+    this->knotholder_listener_attached_for = NULL;
+    this->nodepath_listener_attached_for = NULL;
 }
 
 ShapeEditor::~ShapeEditor() {
@@ -69,10 +70,10 @@ void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
         case SH_NODEPATH:
             if (this->nodepath) {
                 old_repr = this->nodepath->repr;
-                if (old_repr && old_repr == listener_attached_for) {
+                if (old_repr && old_repr == nodepath_listener_attached_for) {
                     sp_repr_remove_listener_by_data(old_repr, this);
                     Inkscape::GC::release(old_repr);
-                    listener_attached_for = NULL;
+                    nodepath_listener_attached_for = NULL;
                 }
 
                 this->grab_node = -1;
@@ -83,10 +84,10 @@ void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
         case SH_KNOTHOLDER:
             if (this->knotholder) {
                 old_repr = this->knotholder->repr;
-                if (old_repr && old_repr == listener_attached_for) {
+                if (old_repr && old_repr == knotholder_listener_attached_for) {
                     sp_repr_remove_listener_by_data(old_repr, this);
                     Inkscape::GC::release(old_repr);
-                    listener_attached_for = NULL;
+                    knotholder_listener_attached_for = NULL;
                 }
 
                 if (!keep_knotholder) {
@@ -256,10 +257,10 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
 
                     // setting new listener
                     repr = SP_OBJECT_REPR(item);
-                    if (repr != listener_attached_for) {
+                    if (repr != nodepath_listener_attached_for) {
                         Inkscape::GC::anchor(repr);
                         sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
-                        listener_attached_for = repr;
+                        nodepath_listener_attached_for = repr;
                     }
                 }
                 break;
@@ -273,10 +274,10 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
                     this->knotholder->update_knots();
                     // setting new listener
                     repr = this->knotholder->repr;
-                    if (repr != listener_attached_for) {
+                    if (repr != knotholder_listener_attached_for) {
                         Inkscape::GC::anchor(repr);
                         sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
-                        listener_attached_for = repr;
+                        knotholder_listener_attached_for = repr;
                     }
                 }
                 break;
@@ -303,10 +304,10 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, LivePathEffectObject
 
             // setting new listener
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(lpeobject);
-            if (repr && repr != listener_attached_for) {
+            if (repr && repr != nodepath_listener_attached_for) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
-                listener_attached_for = repr;
+                nodepath_listener_attached_for = repr;
             }
         }
     }
@@ -317,9 +318,6 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, LivePathEffectObject
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
-    /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
-    SPObject *obj = sp_desktop_document(desktop)->getObjectByRepr(listener_attached_for);
-
     switch (type) {
         case SH_NODEPATH:
             if ( (nodepath) && (IS_LIVEPATHEFFECT(nodepath->object)) ) {
@@ -327,11 +325,13 @@ void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
                 set_item_lpe_path_parameter(nodepath->item, LIVEPATHEFFECT(nodepath->object), key); // the above checks for nodepath, so it is indeed a path that we are editing
                 g_free(key);
             } else {
+                SPObject *obj = sp_desktop_document(desktop)->getObjectByRepr(nodepath_listener_attached_for); /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
                 set_item(SP_ITEM(obj), SH_NODEPATH);
             }
             break;
         case SH_KNOTHOLDER:
-            if (this->knotholder) {
+            if ( knotholder ) {
+                SPObject *obj = sp_desktop_document(desktop)->getObjectByRepr(knotholder_listener_attached_for); /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
                 set_item(SP_ITEM(obj), SH_KNOTHOLDER, keep_knotholder);
             }
             break;

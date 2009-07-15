@@ -143,7 +143,8 @@ private:
     Geom::Point curvepoint_event; // int coords from event
     Geom::Point curvepoint_doc; // same, in doc coords
 
-    Inkscape::XML::Node *listener_attached_for;
+    Inkscape::XML::Node *knotholder_listener_attached_for;
+    Inkscape::XML::Node *nodepath_listener_attached_for;
 };
 
 
