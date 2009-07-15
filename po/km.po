@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-15 10:01+0700\n"
+"PO-Revision-Date: 2009-07-15 16:20+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -19873,7 +19873,7 @@ msgstr "មុំ 'C'/រ៉ាដ្យង់ ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:181
 msgid "Semiperimeter/px: "
-msgstr ""
+msgstr "ពាក់កណ្ដាល​បរិមាត្រ​/​ភីកសែល ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Area /px^2: "
@@ -19883,7 +19883,7 @@ msgstr "ផ្ទៃ /px^2 ៖ "
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
-msgstr ""
+msgstr "បរាជ័យ​ក្នុងការ​នាំចូល​ម៉ូឌុល numpy ឬ numpy.linalg ។ ម៉ូឌុល​ទាំងនេះ​គឺ​ត្រូវការ​ដោយ​ផ្នែក​បន្ថែម ។ សូម​ដំឡើង​ម៉ូឌុល​ទាំង​នោះ ហើយ​ព្យាយាម​ម្ដងទៀត ។"
 
 #: ../share/extensions/embedimage.py:74
 msgid ""
