@@ -52,6 +52,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex
 import simplestyle, sys, re
 from math import *
+import gettext
+_ = gettext.gettext
 try:
     from numpy import *
 except:
@@ -326,14 +328,16 @@ class Obj(object): #a 3d object defined by the vertices and the faces (eg a poly
             if self.fce != []:
                 self.type = 'face'
             else:
-                inkex.errormsg(_('No face data found in specified file\n'))
+                inkex.errormsg(_('No face data found in specified file.'))
+                inkex.errormsg(_('Try selecting "Edge Specified" in the Model File tab.\n'))
                 self.type = 'error'
         else:
             if self.edg != []:
                 self.type = 'edge'
             else:
-                inkex.errormsg(_('No edge data found in specified file\n'))
-                obj.type = 'error'
+                inkex.errormsg(_('No edge data found in specified file.'))
+                inkex.errormsg(_('Try selecting "Face Specified" in the Model File tab.\n'))
+                self.type = 'error'
 
 class Poly_3D(inkex.Effect):
     def __init__(self):
