@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-14 15:04+0700\n"
+"PO-Revision-Date: 2009-07-15 10:01+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -20317,24 +20317,23 @@ msgstr "លេខ​ថ្នាំង"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
 msgid "Altitudes"
-msgstr "រយៈ​កម្ពស់"
+msgstr "បន្ទាត់​ភ្ជាប់​កំពូល ហើយកែង​នឹង​ជ្រុង​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
 msgid "Angle Bisectors"
-msgstr ""
+msgstr "បន្ទាត់​ពុះ​មុំ​ជា​ពីរ​ស្មើគ្នា"
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
 msgid "Centroid"
-msgstr ""
+msgstr "ចំណុច​ប្រសព្វ​មេដ្យាន"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
 msgid "Circumcentre"
-msgstr ""
+msgstr "ចំណុច​កណ្ដាល​រង្វង់​ប៉ះ​ពហុកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
-#, fuzzy
 msgid "Circumcircle"
-msgstr "រង្វង់"
+msgstr "រង្វង់ប៉ះ​ពហុកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
 msgid "Common Objects"
@@ -20362,7 +20361,7 @@ msgstr "គូរ​ចេញ​ពី​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
-msgstr ""
+msgstr "គូរ​ចំណុច​ច្រាស"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
@@ -20373,17 +20372,16 @@ msgid "Draw Marker At This Point"
 msgstr "គូរ​ចំណុច​សម្គាល់​ត្រង់​ចំណុច​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
-#, fuzzy
 msgid "Excentral Triangle"
-msgstr "ត្រីកោណ"
+msgstr "ត្រីកោណ​ក្រៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
 msgid "Excentres"
-msgstr ""
+msgstr "ចំណុច​កណ្ដាល​រង្វង់​ក្រៅ​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
 msgid "Excircles"
-msgstr "រង្វង់​ប៉ះក្រៅ​"
+msgstr "រង្វង់​ក្រៅ​ត្រីកោណ​"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 msgid "Extouch Triangle"
@@ -20395,7 +20393,7 @@ msgstr "ចំណុច​ភ្ជាប់​ត្រីកោណ​ប៉ះ
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
 msgid "Incentre"
-msgstr ""
+msgstr "ចំណុច​ប្រសព្វ​បន្ទាត់​ពុះ​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
 msgid "Incircle"
@@ -20411,7 +20409,7 @@ msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Nine-Point Circle"
-msgstr "រង្វង់មាន​​ប្រាំបួន​ចំណុច"
+msgstr "រង្វង់​ដែល​មាន​ចំណុច​ប៉ះ​ត្រីកោណ ៩"
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
 msgid "Orthic Triangle"
