@@ -309,6 +309,9 @@ SPConnEndPair::reroutePath(void)
         Geom::Point p(route.ps[i].x, route.ps[i].y);
         curve->lineto(p);
     }
+
+    Geom::Matrix doc2item = sp_item_i2doc_affine(SP_ITEM(_path)).inverse();
+    curve->transform(doc2item); 
 }
 
 /*
