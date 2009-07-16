@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-16 09:46+0700\n"
+"PO-Revision-Date: 2009-07-16 16:19+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -841,11 +841,11 @@ msgstr "ប្លាស្ទិក​ក្រាស​ដែល​ខ្ញុ
 
 #: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
-msgstr ""
+msgstr "គ្រឿង​អលង្ការ​មាន​ពណ៌"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
-msgstr ""
+msgstr "វាយនភាព​ស្រអាប់ៗ​ដែល​ប្រេះ​តិចៗ"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Rough paper"
@@ -973,7 +973,7 @@ msgstr "ពកៗ​ស្រទន់"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr ""
+msgstr "ដុំពក​រមូរ​អង្កាញ់ៗ​ព្រិល ហើយ​វា​អាច​បង្កើត​ជា​បែបផែន​ផុស​ក្រឡោត​យ៉ាង​ស្រស់ស្អាត"
 
 #: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
@@ -1056,7 +1056,7 @@ msgstr "ផ្លាស់ប្ដូរ​ខាងក្រៅ​រូបរ
 
 #: ../share/filters/filters.svg.h:110
 msgid "Feather"
-msgstr ""
+msgstr "ស្លាប​សត្វ"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
@@ -1158,7 +1158,7 @@ msgstr "កាត់បន្ថយ​ភាព​ភ្លឺ​រលោង"
 
 #: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
+msgstr "បញ្ចេញ​ពន្លឺ​ចេញក្រៅ និង​ចូលក្នុង ដោយ​មាន​​អុហ្វសិត​ដែល​អាច​ធ្វើ​បាន និង​អាច​ប្ដូរ​ពណ៌បាន​យ៉ាង​សម្បូរបែប"
 
 #: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
@@ -1166,7 +1166,7 @@ msgstr "ដុំ​ពក HSL ដែល​នៅ​រាយប៉ាយ"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr ""
+msgstr "ដូចគ្នា​នឹង​ដុំពក HSL ប៉ុន្តែ​ខុស​ត្រង់ថា​វា​មាន​ការ​សាយ​ជះ​ត្រឡប់​ ដោយ​មិនមាន​ការ​គួច"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
@@ -1182,7 +1182,7 @@ msgstr "ព្រិល​គំរូ"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr ""
+msgstr "ព្រិល​លក្ខណៈ​ហ្គូសៀន​ធម្មតា ដូចគ្នា​នឹងគ្រាប់រំកិល​ព្រិល​នៅ​ក្នុង​ប្រអប់​បំពេញ និង​ស្នាម​គូស"
 
 #: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
@@ -1190,7 +1190,7 @@ msgstr "ពពុះ HSL ដែល​នៅ​រាយប៉ាយ"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "ដូចគ្នា​នឹង​ពពុះ HSL ប៉ុន្តែ​ខុស​ត្រង់ថា​​វា​មានពន្លឺ​សាយ​ចេញ ជំនួស​ការ​គួច"
 
 #: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1260,13 +1260,12 @@ msgid "Cloudy watercolor effect"
 msgstr "បែបផែន​ពពក​ថ្នាំ​ពណ៌​ទឹក"
 
 #: ../share/filters/filters.svg.h:135
-#, fuzzy
 msgid "Felt"
-msgstr "ហ្វីត"
+msgstr "ក្រណាត់​សំពត់"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "វាយនភាព​ដូច​គ្នា​នឹង​ក្រណាត់​សំពត់ ដោយមាន​ពណ៌ និង​ក្រម៉ៅៗ​នៅ​គែម"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Ink paint"
@@ -1310,7 +1309,7 @@ msgstr "លោហៈ​បត់បែន"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
+msgstr "ការ​សាយ​លោហៈ​មាន​ពន្លឺ​ភ្លឺៗ​មិន​ស្មើ​គ្នា ហើយ​អាច​ប្ដូរ​ពណ៌​បាន"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
