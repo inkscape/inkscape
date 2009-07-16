@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-15 16:56+0700\n"
+"PO-Revision-Date: 2009-07-16 09:46+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -226,7 +226,7 @@ msgstr "ទឹក​មាន​ដំណក់​ប្រេង"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Rainbow-colored semitransparent oily splotches"
-msgstr ""
+msgstr "ឥន្ទធនូ​មាន​ស្នាម​ពណ៌​ប្រេង​ពាក់កណ្ដាល​ថ្លា"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Frost"
@@ -270,7 +270,7 @@ msgstr "ពពក"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Airy, fluffy, sparse white clouds"
-msgstr ""
+msgstr "ពពក​ពណ៌​ស​បន្តិចបន្តួច​អណ្ដែត​រសាត់"
 
 #: ../share/filters/filters.svg.h:24
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
@@ -517,7 +517,7 @@ msgstr "ដុំ​ពក"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "ដុំពក​ឆ្លុះ​ផ្លាស់ប្ដូរ​ខ្ពស់"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
@@ -639,7 +639,7 @@ msgstr "ធ្វើ​ឲ្យ​ព្រំដែន និង​ចំណ�
 
 #: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
-msgstr ""
+msgstr "ពណ៌​ក្រមួន​ឃ្មុំ​ថ្លា"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
@@ -695,7 +695,7 @@ msgstr "វាយនភាព​ព្រំ​ធ្វើ​ពី​សូត
 
 #: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
-msgstr ""
+msgstr "បែបផែន​អន្ធឹល​មាន​វង្គ​កាំ​ពន្លឺ A"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
