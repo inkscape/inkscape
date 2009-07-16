@@ -404,35 +404,45 @@ void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line,
 
 /**
  * Returns a human-readable description of the guideline for use in dialog boxes and status bar.
+ * If verbose is false, only positioning information is included (useful for dialogs).
  *
  * The caller is responsible for freeing the string.
  */
-char *sp_guide_description(SPGuide const *guide)
+char *sp_guide_description(SPGuide const *guide, const bool verbose)
 {
     using Geom::X;
     using Geom::Y;
             
-    GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
-    GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y], SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
+    GString *position_string_x = SP_PX_TO_METRIC_STRING(guide->point_on_line[X],
+                                                        SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
+    GString *position_string_y = SP_PX_TO_METRIC_STRING(guide->point_on_line[Y],
+                                                        SP_ACTIVE_DESKTOP->namedview->getDefaultMetric());
 
-    const gchar *shortcuts = _("<b>drag</b> to move, <b>Shift+drag</b> to rotate, <b>Ctrl</b>+click to delete");
+    gchar *shortcuts = g_strdup_printf("; %s", _("<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"));
+    gchar *descr;
 
     if ( are_near(guide->normal_to_line, component_vectors[X]) ||
          are_near(guide->normal_to_line, -component_vectors[X]) ) {
-        return g_strdup_printf(_("vertical, at %s; %s"), position_string_x->str, shortcuts);
+        descr = g_strdup_printf(_("vertical, at %s"), position_string_x->str);
     } else if ( are_near(guide->normal_to_line, component_vectors[Y]) ||
                 are_near(guide->normal_to_line, -component_vectors[Y]) ) {
-        return g_strdup_printf(_("horizontal, at %s; %s"), position_string_y->str, shortcuts);
+        descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
     } else {
         double const radians = guide->angle();
         double const degrees = Geom::rad_to_deg(radians);
         int const degrees_int = (int) round(degrees);
-        return g_strdup_printf(_("at %d degrees, through (%s,%s); %s"), 
-                               degrees_int, position_string_x->str, position_string_y->str, shortcuts);
+        descr = g_strdup_printf(_("at %d degrees, through (%s,%s)"), 
+                                degrees_int, position_string_x->str, position_string_y->str);
     }
 
     g_string_free(position_string_x, TRUE);
     g_string_free(position_string_y, TRUE);
+
+    if (verbose) {
+        descr = g_strconcat(descr, shortcuts, NULL);
+    }
+    g_free(shortcuts);
+    return descr;
 }
 
 void sp_guide_remove(SPGuide *guide)

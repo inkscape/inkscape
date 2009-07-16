@@ -1252,6 +1252,7 @@ RotateableSwatch::do_motion(double by, guint modifier) {
             g_object_unref (bitmap);
             g_object_unref (mask);
             gdk_window_set_cursor(w->window, cr);
+            gdk_cursor_unref(cr);
             cr_set = true;
         }
     }

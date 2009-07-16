@@ -952,8 +952,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             }
             // set cursor to default.
-            if (!desktop->isWaitingCursor())
+            if (!desktop->isWaitingCursor()) {
                 gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+            }
             break;
         default:
             break;

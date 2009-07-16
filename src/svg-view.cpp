@@ -114,7 +114,7 @@ SPSVGView::mouseover()
 {
     GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
     gdk_window_set_cursor(GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas)->window, cursor);
-    gdk_cursor_destroy(cursor);
+    gdk_cursor_unref(cursor);
 }
 
 void

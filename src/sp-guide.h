@@ -59,7 +59,7 @@ void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool
 void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line, bool const commit);
 void sp_guide_remove(SPGuide *guide);
 
-char *sp_guide_description(SPGuide const *guide);
+char *sp_guide_description(SPGuide const *guide, const bool verbose = true);
 
 
 #endif /* !SP_GUIDE_H */
