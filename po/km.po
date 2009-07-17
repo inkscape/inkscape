@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-16 16:19+0700\n"
+"PO-Revision-Date: 2009-07-17 10:56+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "ការ​ចាក់​ពុម្ព​លោហៈ"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "ជ្រុង​ទេរ​ទម្លាក់​ដោយមាន​ផ្ទៃ​ភ្លឺ​ផ្លេកៗ"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, horizontal"
@@ -1363,12 +1363,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:147
 msgid "Comics"
-msgstr ""
+msgstr "ត្លុក​កំប្លែង"
 
 #: ../share/filters/filters.svg.h:147
-#, fuzzy
 msgid "Imitation of black and white cartoon shading"
-msgstr "ដាក់​បញ្ច្រាស​តំបន់​ពណ៌​ខ្មៅ និង​ស"
+msgstr "ដាក់​ពណ៌​ស្រមោល​គំនូរ​ជីវចល​ពណ៌​ស និង​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
@@ -1376,7 +1375,7 @@ msgstr "សាតាំង NR"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "ភ្លឺរលោង​ដូច​នឹង​ស្រមោល​​មេ​គុជខ្យង"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
@@ -1388,11 +1387,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
-msgstr ""
+msgstr "វណ្ឌវង្គ​ស្រមោល​រលោង NR"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "វណ្ឌវង្គ​ស្រមោល​រលោង"
 
 #: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
@@ -1407,9 +1406,8 @@ msgid "Comics fluid"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​នឹង​គំនូរ​"
+msgstr "គំនូរ​តុក្កតា​លាប​ពណ៌​ទឹក"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
@@ -1473,15 +1471,15 @@ msgstr "ហូរ​នៅ​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
-msgstr ""
+msgstr "ការ​បំពេញ​ផ្ទៃ​ដែល​អាច​ប្ដូរ​ពណ៌​បាន ដោយមាន​លំហូរ​នៅ​ក្នុង​ថ្លា"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
-msgstr ""
+msgstr "ពពុះ​សំដី​កំប្លែង"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "ស្រមោល​រូប​កំប្លែង​ដោយមាន​រលក​ពពុះ​ថ្លា"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Black Light"
@@ -1499,39 +1497,35 @@ msgstr "ជ័រ​លុប"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "ធ្វើ​​ផ្នែក​ដែល​ស្រាល​ជាង​គេ​របស់​វត្ថុ​ទៅ​ជា​ថ្លា​ជា​លំដាប់"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Noisy blur"
-msgstr "ផ្លាស់ប្ដូរ​ពណ៌​ព្រិលៗ"
+msgstr "ព្រិល​មិន​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ជ្រុង​មូល"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ឲ្យ​គ្រើម និង​ព្រិល​ទៅកាន់​គែម និង​ផ្ទៃ​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:165
-#, fuzzy
 msgid "Film Grain"
-msgstr "បំពេញ​គំនូរ"
+msgstr "គ្រាប់​ហ្វ៊ីល"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
-msgstr ""
+msgstr "បន្ថែម​គ្រាប់​ហ្វ៊ីល​​ព្រិលៗ​ទៅកាន់​រូបភាព និង​វត្ថុ"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "HSL Bumps, transparent"
-msgstr "0 (ថ្លា)"
+msgstr "ដុំ​ពក HSL ថ្លា"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "ដុំពក​ខ្ពស់​ថ្លា"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
-msgstr ""
+msgstr "ស្នូល​ខ្មៅ​ដៃ"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
