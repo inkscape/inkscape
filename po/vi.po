@@ -1160,7 +1160,7 @@ msgstr "Gồ ghề bên trong"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Roughen all inside shapes"
-msgstr "Làm sần sùi phần bên trong của đối tượng"
+msgstr "Làm gồ ghề phần bên trong của đối tượng"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Evanescent"
@@ -1585,7 +1585,7 @@ msgstr "Nhòe rung"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Làm đối tượng sần sùi rồi mới làm mờ toàn bộ đối tượng, khiến nó vừa bị nhòe, vừa bị rung"
+msgstr "Làm đối tượng gồ ghề rồi mới làm mờ toàn bộ đối tượng, khiến nó vừa bị nhòe, vừa bị rung"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Film grain"
@@ -4968,15 +4968,15 @@ msgstr "Quầng sáng nhòe"
 msgid "White, blurred drop glow"
 msgstr "Thêm quầng sáng trắng, nhòe xung quanh"
 
+#. Search Bundled directory for extensions
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "Tròn"
+msgstr "Đi kèm chương trình"
 
+#. Or search custom directory...
 #: ../src/extension/internal/filter/filter-file.cpp:33
-#, fuzzy
 msgid "Personal"
-msgstr "Cá nhân"
+msgstr "Riêng"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 msgid "Null external module directory name.  Filters will not be loaded."
@@ -5557,13 +5557,15 @@ msgstr "Sơn nét"
 msgid "filterBlendMode|Normal"
 msgstr "Thường"
 
+#. TODO: Formula: Result Color = (Top Color) * (Bottom Color) /255
 #: ../src/filter-enums.cpp:54
 msgid "Multiply"
-msgstr "Nhân"
+msgstr "Làm tối"
 
+#. TODO: Result Color = 255 - [((255 - Top Color)*(255 - Bottom Color))/255]
 #: ../src/filter-enums.cpp:55
 msgid "Screen"
-msgstr "Màn hình"
+msgstr "Chiếu sáng"
 
 #: ../src/filter-enums.cpp:56
 msgid "Darken"
@@ -7196,9 +7198,8 @@ msgid "Tangential offset"
 msgstr "Độ dịch tiếp tuyến"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "Đối tượng sang mẫu"
+msgstr "Độ dịch theo đơn vị dùng cho kích thước mẫu"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
@@ -7215,13 +7216,12 @@ msgid "Rotate pattern 90 deg before applying"
 msgstr "Xoay mẫu 90 độ trước khi áp dụng"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
-#, fuzzy
 msgid "Fuse nearby ends"
-msgstr "Một liên kết phương pháp-đích i*"
+msgstr "Kết hợp các điểm cuối gần nhau"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "Kết hợp các điểm cuối có khoảng cách nhỏ hơn số này. Nhập 0 để không kết hợp."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -7598,7 +7598,6 @@ msgid "k_max"
 msgstr "Độ cong lớn nhất"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
 msgstr " Độ cong lớn nhất"
 
@@ -7853,9 +7852,8 @@ msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Xuất tài liệu dạng tập tin EMF (siêu tập tin tăng cường)"
 
 #: ../src/main.cpp:383
-#, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
-msgstr "Chuyển đối tượng văn bản sang đường nét khi xuất (EPS)"
+msgstr "Chuyển đối tượng văn bản sang đường nét khi xuất (PS, EPS, PDF)"
 
 #: ../src/main.cpp:388
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
@@ -8177,7 +8175,7 @@ msgstr "Lật các nút"
 
 #: ../src/nodepath.cpp:4649
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr "<b>Nút</b>: kéo để sửa đường nét; với phím: <b>Ctrl</b> đính theo chiều ngang/dọc; <b>Ctrl+Alt</b> đính hướng của chốt"
+msgstr "<b>Nút</b>: kéo để sửa đường nét; giữ <b>Ctrl</b> đính theo chiều ngang/dọc; <b>Ctrl+Alt</b> đính hướng của chốt"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4882
@@ -8266,9 +8264,8 @@ msgstr "Điều chỉnh bán kính <b>làm tròn theo chiều dọc</b>; giữ <
 
 #: ../src/object-edit.cpp:447
 #: ../src/object-edit.cpp:451
-#, fuzzy
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr "Điều chỉnh <b>chiều rộng và độ cao</b> của hình chữ nhật; giữ <b>Ctrl</b> khoá tỷ lệ hay kéo giãn theo chỉ một chiều."
+msgstr "Điều chỉnh <b>chiều rộng và chiều cao</b> của chữ nhật; thêm <b>Ctrl</b> để giữ tỷ lệ hay kéo giãn một chiều."
 
 #: ../src/object-edit.cpp:685
 #: ../src/object-edit.cpp:688
@@ -8285,9 +8282,8 @@ msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>
 msgstr "Thay đổi kích cỡ hộp theo trục Z; giữ <b>Shift</b> thì về hướng X/Y; <b>Ctrl</b> hạn chế thành các hướng của cạnh hay đường chéo"
 
 #: ../src/object-edit.cpp:709
-#, fuzzy
 msgid "Move the box in perspective"
-msgstr "Số mục trong hộp"
+msgstr "Di chuyển hộp phối cảnh"
 
 #: ../src/object-edit.cpp:927
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
@@ -8298,9 +8294,8 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Thay đổi <b>chiều cao</b> của elip. Giữ <b>Ctrl</b> tạo hình tròn."
 
 #: ../src/object-edit.cpp:933
-#, fuzzy
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr "Vị trí <b>đầu</b> của cung hay hình quạt; giữ <b>Ctrl</b> đính góc; rê <b>vào trong</b> tạo cung, <b>ra ngoài</b> tạo hình quạt."
+msgstr "Chọn <b>điểm đầu</b> của cung hay hình quạt; giữ <b>Ctrl</b> đính góc; rê <b>vào trong</b> tạo cung, <b>ra ngoài</b> tạo hình quạt."
 
 #: ../src/object-edit.cpp:937
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
@@ -8316,11 +8311,11 @@ msgstr "Điều chỉnh <b>bán kính trong</b> của hình sao; giữ <b>Ctrl</
 
 #: ../src/object-edit.cpp:1266
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; với phím: <b>Ctrl</b> đính góc; <b>Alt</b> hội tụ/phân kỳ."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; giữ <b>Ctrl</b> đính góc; <b>Alt</b> hội tụ/phân kỳ."
 
 #: ../src/object-edit.cpp:1269
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; với phím: <b>Ctrl</b> đính góc; <b>Alt</b> co giãn/xoay."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; giữ <b>Ctrl</b> đính góc; <b>Alt</b> co giãn/xoay."
 
 #: ../src/object-edit.cpp:1313
 msgid "Adjust the <b>offset distance</b>"
@@ -8331,9 +8326,8 @@ msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Kéo để thay đổi kích cỡ của <b>khung văn bản trong khung</b>"
 
 #: ../src/path-chemistry.cpp:49
-#, fuzzy
 msgid "Select <b>object(s)</b> to combine."
-msgstr "Chọn (các) <b>đối tượng</b> cần nhân đôi."
+msgstr "Chọn (các) <b>đối tượng</b> cần kết hợp."
 
 #: ../src/path-chemistry.cpp:53
 msgid "Combining paths..."
@@ -8437,9 +8431,8 @@ msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched path
 msgstr "<b>Chế độ phác thảo</b>: giữ <b>Alt</b> nội suy giữa các đường nét phác thảo. Thôi giữ <b>Alt</b> để kết thúc."
 
 #: ../src/pencil-context.cpp:593
-#, fuzzy
 msgid "Finishing freehand sketch"
-msgstr "Sơ đồ Sketch (*.sk)"
+msgstr "Hoàn tất nét phác tự do"
 
 #: ../src/pen-context.cpp:667
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
@@ -8462,17 +8455,17 @@ msgstr "<b>Đoạn thẳng</b>: góc %3.2f&#176;, khoảng cách %s; giữ <b>Ct
 #: ../src/pen-context.cpp:1292
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Móc đường cong</b>: góc %3.2f&#176;, chiều dài %s; với phím: <b>Ctrl</b> đính góc."
+msgstr "<b>Móc đường cong</b>: góc %3.2f&#176;, chiều dài %s; giữ <b>Ctrl</b> đính góc."
 
 #: ../src/pen-context.cpp:1314
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> đính góc; <b>Shift</b> di chuyển chỉ chốt kéo này."
+msgstr "<b>Chốt cung, đối xứng</b>: góc %3.2f&#176;, độ dài %s; giữ <b>Ctrl</b> đính góc; giữ <b>Shift</b> chỉ di chuyển chốt kéo này."
 
 #: ../src/pen-context.cpp:1315
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> đính góc; <b>Shift</b> di chuyển chỉ chốt kéo này."
+msgstr "<b>Chốt cung</b>: góc %3.2f&#176;, độ dài %s; giữ <b>Ctrl</b> đính góc; giữ <b>Shift</b> chỉ di chuyển chốt kéo này."
 
 #: ../src/pen-context.cpp:1362
 msgid "Drawing finished"
@@ -8494,9 +8487,9 @@ msgstr "Trình Inkscape sẽ chạy với thiết lập mặc định, và các 
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:116
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create profile directory %s."
-msgstr "Không thể tạo thư mục lưu tạm."
+msgstr "Không tạo được thư mục hồ sơ %s."
 
 #. The profile dir is not actually a directory
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
@@ -8731,7 +8724,7 @@ msgstr "<b>Chữ nhật</b>: %s &#215; %s (giữ tỷ lệ %d:%d); giữ <b>Shif
 #: ../src/rect-context.cpp:489
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Chữ nhật</b>: %s &#215; %s (giữ tỷ lệ vàng 1.618 : 1); với phím: <b>Shift</b> vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s (giữ tỷ lệ vàng 1.618 : 1); giữ <b>Shift</b> vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/rect-context.cpp:491
 #, c-format
@@ -9338,19 +9331,19 @@ msgstr "<b>Tâm</b> của chức năng xoay và lệch: kéo để đắt lại 
 
 #: ../src/seltrans.cpp:627
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "<b>Vắt hay kéo giãn</b> vùng chọn; với phím: <b>Ctrl</b> co giãn đều đều; <b>Shift</b> co giãn vòng quanh tâm xoay."
+msgstr "<b>Vắt hay kéo giãn</b> vùng chọn; giữ <b>Ctrl</b> co giãn đều đều; <b>Shift</b> co giãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:628
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr "<b>Co giãn</b> vùng chọn; với phím: <b>Ctrl</b> co giãn đều đều; <b>Shift</b> co giãn vòng quanh tâm xoay."
+msgstr "<b>Co giãn</b> vùng chọn; giữ <b>Ctrl</b> co giãn đều đều; <b>Shift</b> co giãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:632
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr "<b>Xô nghiêng</b> vùng chọn; với phím: <b>Ctrl</b> đính góc; <b>Shift</b> xô nghiêng quanh bên đối diện."
+msgstr "<b>Xô nghiêng</b> vùng chọn; giữ <b>Ctrl</b> đính góc; <b>Shift</b> xô nghiêng quanh bên đối diện."
 
 #: ../src/seltrans.cpp:633
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr "<b>Xoay</b> vùng chọn; với phím: <b>Ctrl</b> đính góc; <b>Shift</b> xoay quanh góc đối diện."
+msgstr "<b>Xoay</b> vùng chọn; giữ <b>Ctrl</b> đính góc; <b>Shift</b> xoay quanh góc đối diện."
 
 #: ../src/seltrans.cpp:767
 msgid "Reset center"
@@ -9360,21 +9353,21 @@ msgstr "Đặt lại tâm"
 #: ../src/seltrans.cpp:1111
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>Co giãn</b>: %0.2f%% x %0.2f%%; với phím: <b>Ctrl</b> khoá tỷ lệ."
+msgstr "<b>Co giãn</b>: %0.2f%% x %0.2f%%; giữ <b>Ctrl</b> khoá tỷ lệ."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1223
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xô nghiêng</b>: %0.2f&#176;; với phím: <b>Ctrl</b> đính góc."
+msgstr "<b>Xô nghiêng</b>: %0.2f&#176;; giữ <b>Ctrl</b> đính góc."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1283
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xoay</b> %0.2f&#176;; với phím: <b>Ctrl</b> đính góc"
+msgstr "<b>Xoay</b> %0.2f&#176;; giữ <b>Ctrl</b> đính góc"
 
 #: ../src/seltrans.cpp:1325
 #, c-format
@@ -9384,7 +9377,7 @@ msgstr "Di chuyển <b>tâm</b> sang %s, %s"
 #: ../src/seltrans.cpp:1495
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
-msgstr "<b>Chuyển</b> theo %s, %s; với phím: <b>Ctrl</b> hạn chế thành chiều ngang/dọc; <b>Shift</b> tắt chức năng đính."
+msgstr "<b>Chuyển</b> theo %s, %s; giữ <b>Ctrl</b> hạn chế thành chiều ngang/dọc; <b>Shift</b> tắt chức năng đính."
 
 #: ../src/shape-editor.cpp:468
 msgid "Drag curve"
@@ -9491,7 +9484,7 @@ msgstr "<b>Alt</b>: khoá bán kính xoắn ốc"
 #: ../src/spiral-context.cpp:432
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> đính góc."
+msgstr "<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; giữ <b>Ctrl</b> đính góc."
 
 #: ../src/spiral-context.cpp:453
 msgid "Create spiral"
@@ -9780,12 +9773,12 @@ msgstr "<b>Ctrl</b>: đính góc, giữ tia là xuyên tâm"
 #: ../src/star-context.cpp:442
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Đa giác</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> đính góc."
+msgstr "<b>Đa giác</b>: bán kính %s, góc %5g&#176;; giữ <b>Ctrl</b> đính góc."
 
 #: ../src/star-context.cpp:443
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Sao</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> đính góc."
+msgstr "<b>Sao</b>: bán kính %s, góc %5g&#176;; giữ <b>Ctrl</b> đính góc."
 
 #: ../src/star-context.cpp:466
 msgid "Create star"
@@ -10043,14 +10036,12 @@ msgid "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected p
 msgstr " <b>Kéo</b> tạo một đường vẽ bằng tay. Thêm <b>Shift</b> để thêm vào cuối đường nét đã chọn, <b>Alt</b> kích hoạt chế độ vẽ phác."
 
 #: ../src/tools-switch.cpp:178
-#, fuzzy
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."
-msgstr " <b>Nhấn</b> vào hay <b>nhấn và kéo</b> bắt đầu vẽ đường nét; với phím: <b>Shift</b> phụ thêm nó vào đường nét khác đã chọn."
+msgstr " <b>Chuột trái</b> hoặc <b>nhấn giữ chuột trái</b> để bắt đầu đường nét; giữ <b>Shift</b> để vẽ tiếp đường nét đang chọn. <b>Ctrl+chuột trái</b> để chấm 1 điểm (chỉ trong chế độ vẽ đường thẳng)."
 
 #: ../src/tools-switch.cpp:184
-#, fuzzy
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr "<b>Kéo</b> vẽ một nét chữ đẹp; giữ <b>Ctrl</b> theo vết đường gióng; <b>Alt</b> thay đổi chiều rộng. <b>phím mũi tên</b> điều chỉnh chiều rộng (bên trái/phải) và góc (bên trên/dưới)."
+msgstr "<b>Kéo chuột</b> để viết chữ đẹp; giữ <b>Ctrl</b> để vẽ dựa trên đường gióng; <b>Các phím mũi tên</b> thay đổi chiều rộng (trái/phải) và góc ngòi bút (lên/xuống)."
 
 #: ../src/tools-switch.cpp:196
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
@@ -10138,20 +10129,20 @@ msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Kéo để <b>di chuyển</b>."
 
 #: ../src/tweak-context.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr "<b>Nhấn</b> vào hay <b>kéo vòng quanh vùng</b> phóng to, <b>Shift+nhấn</b> thu nhỏ."
+msgstr "%s. Rê hoặc bấm chuột để <b>kéo vào trong</b>; thêm Shift để <b>đưa ra ngoài</b>."
 
 #: ../src/tweak-context.cpp:218
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr "Nhấn và rê để di chuyển dải âm theo thời gian"
+msgstr "%s. Nhấn và rê chuột để <b>di chuyển ngẫu nhiên</b>."
 
 # Co giãn lên, co giãn xuống, hay phóng to và thu nhỏ???
 #: ../src/tweak-context.cpp:221
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr "%s. Rê hoặc chuột trái để <b>co giãn xuống</b>; thêm Shift để <b>co giãn lên</b>."
+msgstr "%s. Rê hoặc chuột trái để <b>thu nhỏ</b>; thêm Shift để <b>phóng to</b>."
 
 #: ../src/tweak-context.cpp:224
 #, c-format
@@ -10164,9 +10155,9 @@ msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Rê hoặc chuột trái để <b>nhân đôi</b>; thêm Shift để <b>xóa</b>."
 
 #: ../src/tweak-context.cpp:230
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag to <b>push paths</b>."
-msgstr "Chuyển đổi văn bản sang đường nét"
+msgstr "%s. Kéo chuột để <b>đẩy đường nét</b>."
 
 #: ../src/tweak-context.cpp:234
 #, c-format
@@ -10179,9 +10170,9 @@ msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr "%s. Rê hoặc chuột trái để <b>co cụm đường nét</b>; thêm Shift để <b>tách rời nó</b>."
 
 #: ../src/tweak-context.cpp:250
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr "<b>Nhấn</b> hay <b>nhấn và kéo</b> chuột để đóng và tạo xong đường nét."
+msgstr "%s. Rê hoặc bấm chuột để <b>làm đường nét gồ ghề hơn</b>."
 
 #: ../src/tweak-context.cpp:254
 #, c-format
@@ -10203,54 +10194,44 @@ msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Chưa chọn gì!</b> Hãy chọn đối tượng cần chỉnh."
 
 #: ../src/tweak-context.cpp:1254
-#, fuzzy
 msgid "Move tweak"
-msgstr "(chỉnh rộng)"
+msgstr "Chỉnh độ Dịch chuyển"
 
 #: ../src/tweak-context.cpp:1258
-#, fuzzy
 msgid "Move in/out tweak"
-msgstr "Phóng to hay thu nhỏ"
+msgstr "Dịch chuyển vào/ra"
 
 #: ../src/tweak-context.cpp:1262
-#, fuzzy
 msgid "Move jitter tweak"
-msgstr "Chỉnh bù màu"
+msgstr "Dịch chuyển bù"
 
 #: ../src/tweak-context.cpp:1266
-#, fuzzy
 msgid "Scale tweak"
-msgstr "(chỉnh rộng)"
+msgstr "Chỉnh độ co giãn"
 
 #: ../src/tweak-context.cpp:1270
-#, fuzzy
 msgid "Rotate tweak"
-msgstr "(chỉnh rộng)"
+msgstr "Chỉnh góc xoay"
 
 #: ../src/tweak-context.cpp:1274
-#, fuzzy
 msgid "Duplicate/delete tweak"
-msgstr "2. Tinh chỉnh giá trị đã lấy:"
+msgstr "Chỉnh nhân đôi/xóa"
 
 #: ../src/tweak-context.cpp:1278
-#, fuzzy
 msgid "Push path tweak"
 msgstr "2. Tinh chỉnh giá trị đã lấy:"
 
 #: ../src/tweak-context.cpp:1282
-#, fuzzy
 msgid "Shrink/grow path tweak"
-msgstr "Phóng to (hay thu nhỏ) cửa sổ này"
+msgstr "Chỉnh độ Phóng to/Thu nhỏ đường nét"
 
 #: ../src/tweak-context.cpp:1286
-#, fuzzy
 msgid "Attract/repel path tweak"
-msgstr "Chỉnh hấp dẫn"
+msgstr "Chỉnh bằng cách thu hút/đẩy xa các đường nét"
 
 #: ../src/tweak-context.cpp:1290
-#, fuzzy
 msgid "Roughen path tweak"
-msgstr "2. Tinh chỉnh giá trị đã lấy:"
+msgstr "Chỉnh độ gồ ghề của đường nét"
 
 #: ../src/tweak-context.cpp:1294
 msgid "Color paint tweak"
@@ -10261,9 +10242,8 @@ msgid "Color jitter tweak"
 msgstr "Chỉnh bù màu"
 
 #: ../src/tweak-context.cpp:1302
-#, fuzzy
 msgid "Blur tweak"
-msgstr "(chỉnh rộng)"
+msgstr "Chỉnh độ nhòe"
 
 #. check whether something is selected
 #: ../src/ui/clipboard.cpp:255
@@ -10282,18 +10262,16 @@ msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kiểu dáng."
 
 #: ../src/ui/clipboard.cpp:383
 #: ../src/ui/clipboard.cpp:401
-#, fuzzy
 msgid "No style on the clipboard."
-msgstr "Không có gì trên bảng nháp kiểu dáng."
+msgstr "Không có kiểu dáng nào lưu trong bảng nháp."
 
 #: ../src/ui/clipboard.cpp:423
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kích cỡ."
 
 #: ../src/ui/clipboard.cpp:430
-#, fuzzy
 msgid "No size on the clipboard."
-msgstr "Không có ô điều khiển được chọn trên bảng nháp"
+msgstr "Không có kích thước nào lưu trong bảng nháp"
 
 #: ../src/ui/clipboard.cpp:481
 msgid "Select <b>object(s)</b> to paste live path effect to."
@@ -10301,9 +10279,8 @@ msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán hiệu ứng �
 
 #. no_effect:
 #: ../src/ui/clipboard.cpp:505
-#, fuzzy
 msgid "No effect on the clipboard."
-msgstr "Không có ô điều khiển được chọn trên bảng nháp"
+msgstr "Không có hiệu ứng nào lưu trong bảng nháp"
 
 #: ../src/ui/clipboard.cpp:525
 #: ../src/ui/clipboard.cpp:552
@@ -10523,82 +10500,72 @@ msgid "Align left edges of objects to the right edge of the anchor"
 msgstr "Sắp xếp cạnh trái của đối tượng dọc theo cạnh phải của vùng neo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
-#, fuzzy
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr "Sắp đáy của đối tượng trên cạnh trên của vùng neo"
+msgstr "Sắp xếp đáy của đối tượng trên cạnh trên của vùng neo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:822
-#, fuzzy
 msgid "Align top edges"
-msgstr "Phân phối các cạnh bên trên của đích"
+msgstr "Căn cạnh trên"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:825
 msgid "Center on horizontal axis"
 msgstr "Tâm thẳng hàng ngang"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:828
-#, fuzzy
 msgid "Align bottom edges"
-msgstr "Cạnh lề cạnh dưới của đích"
+msgstr "Căn cạnh dưới"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
-#, fuzzy
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr "Sắp đỉnh của đối tượng trên cạnh dưới của vùng neo"
+msgstr "Sắp xếp cạnh trên của đối tượng nằm trên cạnh dưới của vùng neo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:836
 msgid "Align baseline anchors of texts horizontally"
 msgstr "Sắp hàng theo chiều ngang các neo đường gốc của văn bản"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:839
-#, fuzzy
 msgid "Align baselines of texts"
-msgstr "Sắp hàng các đường gốc của văn bản"
+msgstr "Căn thẳng các đường gốc của văn bản"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:844
 msgid "Make horizontal gaps between objects equal"
 msgstr "Khe ngang giữa 2 đối tượng là giống nhau"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:848
-#, fuzzy
 msgid "Distribute left edges equidistantly"
-msgstr "Phân phối đều theo bên trái"
+msgstr "Phân phối đều theo cạnh trái"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Distribute centers equidistantly horizontally"
 msgstr "Phân phối các tâm điểm đều theo chiều ngang"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:854
-#, fuzzy
 msgid "Distribute right edges equidistantly"
-msgstr "Phân phối đều theo bên phải"
+msgstr "Phân phối đều theo cạnh phải"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:858
 msgid "Make vertical gaps between objects equal"
 msgstr "Khe dọc giữa 2 đối tượng là giống nhau"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:862
-#, fuzzy
 msgid "Distribute top edges equidistantly"
-msgstr "Phân phối các cạnh bên trên của đích"
+msgstr "Phân phối đều các cạnh trên"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:865
 msgid "Distribute centers equidistantly vertically"
-msgstr "Phân phối các tâm điểm đều theo chiều dọc"
+msgstr "Phân phối đều các tâm điểm theo chiều dọc"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
-#, fuzzy
 msgid "Distribute bottom edges equidistantly"
-msgstr "Phân phối các tâm điểm đều theo chiều ngang"
+msgstr "Phân phối đều các cạnh dưới"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:873
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "Phân phối theo chiều ngang các neo đường gốc của văn bản"
+msgstr "Phân phối đều theo chiều ngang các neo đường gốc của văn bản"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:876
-#, fuzzy
 msgid "Distribute baselines of texts vertically"
-msgstr "Phân phối theo chiều dọc các neo đường gốc của văn bản"
+msgstr "Phân phối đều theo chiều dọc các neo đường gốc của văn bản"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 msgid "Randomize centers in both dimensions"
@@ -10618,22 +10585,20 @@ msgid "Nicely arrange selected connector network"
 msgstr "Sắp đặt hợp lý mạng đường nối đã chọn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:901
-#, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "Sắp hàng theo chiều ngang các nút đã chọn"
+msgstr "Căn thẳng theo chiều ngang các nút đã chọn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
-#, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "Sắp hàng theo chiều dọc các nút đã chọn"
+msgstr "Căn thẳng theo chiều dọc các nút đã chọn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Distribute selected nodes horizontally"
-msgstr "Phân phối theo chiều ngang các nút đã chọn"
+msgstr "Phân phối đều theo chiều ngang các nút đã chọn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:910
 msgid "Distribute selected nodes vertically"
-msgstr "Phân phối theo chiều dọc các nút đã chọn"
+msgstr "Phân phối đều theo chiều dọc các nút đã chọn"
 
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:915
@@ -10766,9 +10731,8 @@ msgid "_Snap guides while dragging"
 msgstr "Đính đường gióng tr_ong khi kéo"
 
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid "While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled; only a small part of the guide near the cursor will snap)"
-msgstr "Trong khi kéo nết dẫn, đính nút đối tượng hay góc hộp giới hạn (cũng phải hiệu lực mục « Đính nút » hay « Đính góc hộp giới hạn » trên thẻ « Đính »)"
+msgstr "Trong khi kéo đường gióng, bám dính vào nút trên đối tượng hay góc hộp giới hạn (phải bật tùy chọn 'Bám dính nút' hoặc 'góc hộp giới hạn'; chỉ một phần nhỏ của đường gióng, gần con trỏ sẽ được bám dính)"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -11084,14 +11048,12 @@ msgid "Top edge of source"
 msgstr "Cạnh trên của nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
-#, fuzzy
 msgid "Right edge of source"
-msgstr "(cạnh bên phải ở trên)"
+msgstr "Cạnh bên phải của nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
-#, fuzzy
 msgid "Bottom edge of source"
-msgstr "Bảng điều khiển cạnh đáy"
+msgstr "Cạnh bên dưới của nguồn"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
 msgid "Source width"
@@ -11131,7 +11093,6 @@ msgid "Cairo"
 msgstr "Cairo"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
-#, fuzzy
 msgid "Antialias"
 msgstr "Làm trơn"
 
@@ -11166,9 +11127,8 @@ msgstr "_Kiểu nét viền"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid "This matrix determines a linear transform on colour space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
-msgstr "Bảng này định nghĩa một phép biến đổi tuyến tính trong không gian màu. Các hàng tương ứng với các thành phần màu. Các cột định nghĩa nồng độ màu được giữ lại. Cột cuối cùng không phụ thuộc vào màu ban đầu, và được dùng để điều chỉnh giá trị thành phần không đổi."
+msgstr "Bảng này định nghĩa một phép biến đổi tuyến tính trong không gian màu. Các hàng tương ứng với các thành phần màu. Các cột định nghĩa nồng độ màu được giữ lại. Cột cuối cùng không phụ thuộc vào màu ban đầu, và được dùng để điều chỉnh giá trị của các thành phần giá trị là hằng số."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
@@ -11180,9 +11140,8 @@ msgstr "Phần tử SVG đã chọn"
 
 #. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
-#, fuzzy
 msgid "Select an image to be used as feImage input"
-msgstr "Chọn một ảnh và một hay nhiều hình bên trên nó"
+msgstr "Chọn một ảnh làm đầu vào cho bộ lọc feImage"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
@@ -11239,9 +11198,8 @@ msgid "Specular Exponent"
 msgstr "Luỹ thừa phản chiếu"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#, fuzzy
 msgid "Exponent value controlling the focus for the light source"
-msgstr "Giá trị số mũ điều khiển tiêu điểm của nguồn sáng"
+msgstr "Số mũ điều khiển tiêu điểm của nguồn sáng"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:967
@@ -11331,13 +11289,12 @@ msgid "Coordinates"
 msgstr "Hệ Toạ Độ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2160
-#, fuzzy
 msgid "X coordinate of the left corners of filter effects region"
-msgstr "Tạo và xếp lát các bản sao của vùng chọn"
+msgstr "Tọa độ X góc bên trái của vùng áp dụng bộ lọc"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Y coordinate of the upper corners of filter effects region"
-msgstr "Tọa độ Y góc trên của vùng chịu hiệu ứng"
+msgstr "Tọa độ Y góc bên trên của vùng áp dụng bộ lọc"
 
 #. default width:
 #. default height:
@@ -11400,14 +11357,12 @@ msgid "K4"
 msgstr "K4"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2189
-#, fuzzy
 msgid "width of the convolve matrix"
-msgstr "Ma trận chuyển dạng sai"
+msgstr "chiều rộng của ma trận tích chập"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2189
-#, fuzzy
 msgid "height of the convolve matrix"
-msgstr "Ma trận chuyển dạng sai"
+msgstr "chiều cao của ma trận tích chập"
 
 #. default x:
 #. default y:
@@ -11603,9 +11558,8 @@ msgid "Add filter primitive"
 msgstr "Thêm bộ lọc thô"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2277
-#, fuzzy
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
-msgstr "Bộ lọc thô <b>feBlend</b> cung cấp 4 chế độ hòa trộn ảnh: screen, multiply, darken và lighten."
+msgstr "Bộ lọc thô <b>feBlend</b> cung cấp 4 chế độ hòa trộn ảnh: chiếu sáng, làm tối, sáng hơn và tối hơn."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2281
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."
@@ -11960,9 +11914,8 @@ msgid "Ctrl+click dot size:"
 msgstr "Kích thước chấm khi Ctrl+nhấn chuột:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:290
-#, fuzzy
 msgid "times current stroke width"
-msgstr "Hệ số co giãn chiều rộng của nét viền"
+msgstr "lần độ rộng nét hiện thời"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:291
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
@@ -12614,12 +12567,10 @@ msgid "Make keyboard selection commands work on objects in current layer and all
 msgstr "Làm cho các lệnh chọn bàn phím có tác động đối tượng nằm trên lớp hiện tại và các lớp phụ của nó"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:750
-#, fuzzy
 msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"
-msgstr "Bỏ chọn để có khả năng chọn đối tượng bị ẩn (hoặc riêng hoặc vì nằm trong nhóm hay lớp bị ẩn)"
+msgstr "Bỏ chọn để có thể chọn cả các đối tượng ẩn (vì nằm trong nhóm hay lớp bị ẩn hoặc do người dùng ẩn đi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:752
-#, fuzzy
 msgid "Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"
 msgstr "Bỏ chọn để có khả năng chọn đối tượng bị khoá (hoặc riêng hoặc vì nằm trong nhóm hay lớp bị khoá)"
 
@@ -13643,14 +13594,12 @@ msgid "Remove path effect"
 msgstr "Bỏ hiệu ứng đường nét"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:407
-#, fuzzy
 msgid "Move path effect up"
-msgstr "Tham số hiệu ứng đường nét kế"
+msgstr "Đưa hiệu ứng đường nét lên trên"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:423
-#, fuzzy
 msgid "Move path effect down"
-msgstr "Tham số hiệu ứng đường nét kế"
+msgstr "Đưa hiệu ứng đường nét xuống dưới"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:462
 msgid "Activate path effect"
@@ -16264,11 +16213,11 @@ msgstr "Mở Tùy thích cho công cụ Nút"
 
 #: ../src/verbs.cpp:2545
 msgid "Tweak Tool Preferences"
-msgstr "Tùy thích công cụ Chỉnh"
+msgstr "Tùy thích công cụ Tinh chỉnh"
 
 #: ../src/verbs.cpp:2546
 msgid "Open Preferences for the Tweak tool"
-msgstr "Mở Tùy thích cho công cụ điều Chỉnh"
+msgstr "Mở Tùy thích cho công cụ Tinh chỉnh"
 
 #: ../src/verbs.cpp:2547
 msgid "Rectangle Preferences"
@@ -17439,7 +17388,6 @@ msgid "Yellow"
 msgstr "Vàng"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:296
-#, fuzzy
 msgid "Fix"
 msgstr "Sửa chữa"
 
@@ -17645,7 +17593,7 @@ msgstr "Đặt kiểu nét"
 
 #: ../src/widgets/toolbox.cpp:183
 msgid "Color/opacity used for color tweaking"
-msgstr "Màu/độ đục dùng để điều chỉnh màu"
+msgstr "Màu/độ đục dùng để tinh chỉnh màu"
 
 #: ../src/widgets/toolbox.cpp:187
 msgid "Style of new stars"
@@ -17793,29 +17741,24 @@ msgid "Show the Bezier handles of selected nodes"
 msgstr "Hiện các chốt Bezier của các nút đã chọn"
 
 #: ../src/widgets/toolbox.cpp:1424
-#, fuzzy
 msgid "Show Outline"
-msgstr "Hiện nét ngoài _bút vẽ"
+msgstr "Hiện nét ngoài"
 
 #: ../src/widgets/toolbox.cpp:1425
-#, fuzzy
 msgid "Show the outline of the path"
-msgstr "Hiện nét ngoài _bút vẽ"
+msgstr "Hiện nét ngoài của đường nét"
 
 #: ../src/widgets/toolbox.cpp:1435
-#, fuzzy
 msgid "Next path effect parameter"
-msgstr "Tham số hiệu ứng đường nét kế"
+msgstr "Tham số tiếp theo của hiệu ứng đường nét"
 
 #: ../src/widgets/toolbox.cpp:1436
-#, fuzzy
 msgid "Show next path effect parameter for editing"
-msgstr "Hiển thị tham số Hiệu ứng Đường nét kế tiếp để sửa"
+msgstr "Hiển thị tham số kế tiếp của Hiệu ứng Đường nét"
 
 #: ../src/widgets/toolbox.cpp:1447
-#, fuzzy
 msgid "Edit the clipping path of the object"
-msgstr "Không đủ bộ nhớ đăng ký object path '%s'"
+msgstr "Sửa đường nét cắt của đối tượng"
 
 # Không biết là "mặt nạ đường nét" hay "đường nét mặt nạ"?
 #: ../src/widgets/toolbox.cpp:1457
@@ -18998,48 +18941,40 @@ msgid "Open both"
 msgstr "Mở cả hai"
 
 #: ../src/widgets/toolbox.cpp:5572
-#, fuzzy
 msgid "All inactive"
-msgstr "Mật khẩu không hoạt động"
+msgstr "Tất cả đều không hoạt động"
 
 #: ../src/widgets/toolbox.cpp:5573
-#, fuzzy
 msgid "No geometric tool is active"
-msgstr "Không có tài liệu nào đang kích hoạt"
+msgstr "Không có công cụ lượng giác nào đang hoạt động"
 
 #: ../src/widgets/toolbox.cpp:5574
-#, fuzzy
 msgid "draw-geometry-inactive"
-msgstr "đang bỏ qua việc thăm dò %s, %s không hoạt động\n"
+msgstr "draw-geometry-inactive"
 
 #: ../src/widgets/toolbox.cpp:5606
-#, fuzzy
 msgid "Show limiting bounding box"
-msgstr "Hộp giới hạn sai cho %s.\n"
+msgstr "Hiện hộp bao giới hạn"
 
 #: ../src/widgets/toolbox.cpp:5607
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr "Hiện hộp bao quanh (dùng để cắt các đường vô hạn)"
+msgstr "Hiện hộp bao giới hạn (dùng để cắt các đường vô hạn)"
 
 #: ../src/widgets/toolbox.cpp:5618
-#, fuzzy
 msgid "Get limiting bounding box from selection"
-msgstr "Gỡ bỏ khỏi vùng chọn đường nét xén"
+msgstr "Lấy hộp bao giới hạn từ vùng chọn"
 
 #: ../src/widgets/toolbox.cpp:5619
-#, fuzzy
 msgid "Set limiting bounding box (used to cut infinite lines) to the bounding box of current selection"
-msgstr "Đính các góc hộp giới hạn tới các góc hộp giới hạn khác"
+msgstr "Đặt hộp bao giới hạn (để cắt các đường vô hạn) là hộp bao quanh của vùng chọn hiện thời"
 
 #: ../src/widgets/toolbox.cpp:5631
-#, fuzzy
 msgid "Choose a line segment type"
-msgstr "_Kiểu phối màu cho đoạn"
+msgstr "Chọn một kiểu đoạn thẳng"
 
 #: ../src/widgets/toolbox.cpp:5647
-#, fuzzy
 msgid "Display measuring info"
-msgstr "  -V, --version       hiển thị thông tin _phiên bản_\n"
+msgstr "Hiện thông tin kích thước"
 
 #: ../src/widgets/toolbox.cpp:5648
 msgid "Display measuring info for selected items"
@@ -19066,9 +19001,8 @@ msgid "Cut"
 msgstr "Cắt"
 
 #: ../src/widgets/toolbox.cpp:5758
-#, fuzzy
 msgid "Cut out from objects"
-msgstr "Xoá tất cả các đối tượng"
+msgstr "Lấy ra khỏi đối tượng"
 
 #: ../src/widgets/toolbox.cpp:6102
 msgid "Text: Change font family"
@@ -19216,50 +19150,36 @@ msgstr "Không xử lý được đối tượng này. Hãy thử chuyển nó s
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
-#, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "Chiều dài bước (px)"
+msgstr "Chiều dài 'a' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:176
-#, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "Chiều dài bước (px)"
+msgstr "Chiều dài 'b' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:177
-#, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "Chiều dài bước (px)"
+msgstr "Chiều dài 'c' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:178
-#, fuzzy
 msgid "Angle 'A'/radians:"
-msgstr "Radian/Pi"
+msgstr "Góc 'A' (radian):"
 
 #: ../share/extensions/draw_from_triangle.py:179
-#, fuzzy
 msgid "Angle 'B'/radians: "
-msgstr "Radian/Pi"
+msgstr "Góc 'B' (radian): "
 
 #: ../share/extensions/draw_from_triangle.py:180
-#, fuzzy
 msgid "Angle 'C'/radians: "
-msgstr "Radian/Pi"
+msgstr "Góc 'C' (radian): "
 
 #: ../share/extensions/draw_from_triangle.py:181
-#, fuzzy
 msgid "Semiperimeter/px: "
-msgstr ""
-"px\n"
-"%\n"
-"theo sau"
+msgstr "Nửa chu vi (px): "
 
 #: ../share/extensions/draw_from_triangle.py:182
-#, fuzzy
 msgid "Area /px^2: "
-msgstr ""
-"px\n"
-"%\n"
-"theo sau"
+msgstr "Diện tích (px^2):"
 
 #: ../share/extensions/dxf_outlines.py:33
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
@@ -19369,19 +19289,17 @@ msgid "Failed to import the numpy module. This module is required by this extens
 msgstr "Phần mở rộng này cần sử dụng mô-đun numpy. Hãy cài đặt mô-đun còn thiếu trước rồi thử lại. Trên Debian Linux, bạn có thể dùng lệnh sudo apt-get install python-numpy để cài đặt thư viện này."
 
 #: ../share/extensions/polyhedron_3d.py:329
-#, fuzzy
 msgid "No face data found in specified file\n"
-msgstr "Không tìm thấy tập tin liên kết lưu hợp lệ trong các thư mục dữ liệu"
+msgstr "Không tìm thấy thông tin về mặt trong tập tin đã cho\n"
 
 #: ../share/extensions/polyhedron_3d.py:335
-#, fuzzy
 msgid "No edge data found in specified file\n"
-msgstr "Không tìm thấy tập tin liên kết lưu hợp lệ trong các thư mục dữ liệu"
+msgstr "Không tìm thấy thông tin về các cạnh trong tập tin đã cho\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
 msgid "Face Data Not Found. Ensure file contains face data, and check the file is imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "Không thấy thông tin về mặt. Hãy kiểm tra lại tập tin chứa thông tin mặt, và kiểm tra tập tin được nhập dưới dạng \"Face-Specified\" trong thẻ \"Model File\"."
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
@@ -19509,29 +19427,24 @@ msgid "Corel DRAW 7-13 template files (.cdt)"
 msgstr "Tập tin mẫu của Corel DRAW 7-13 (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
-#, fuzzy
 msgid "Corel DRAW templates input"
-msgstr "Vẽ chuỗi phương pháp nhập (IM) thanh trạng thái như thế nào."
+msgstr "Nhập mẫu tài liệu Corel DRAW"
 
 #: ../share/extensions/cdt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "Mở tập tin được XFIG lưu"
+msgstr "Mở tập tin lưu bởi Corel DRAW 7-13"
 
 #: ../share/extensions/cgm_input.inx.h:1
-#, fuzzy
 msgid "Computer Graphics Metafile files (.cgm)"
-msgstr "Bộ lọc xuất CGM: Siêu tập tin đồ họa máy tính"
+msgstr "Tập tin Computer Graphics Metafile (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
-#, fuzzy
 msgid "Computer Graphics Metafile files input"
-msgstr "Bộ lọc xuất CGM: Siêu tập tin đồ họa máy tính"
+msgstr "Nhập tập tin Computer Graphics Metafile"
 
 #: ../share/extensions/cgm_input.inx.h:3
-#, fuzzy
 msgid "Open Computer Graphics Metafile files"
-msgstr "Bộ lọc xuất CGM: Siêu tập tin đồ họa máy tính"
+msgstr "Mở tập tin Computer Graphics Metafile"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
@@ -19681,70 +19594,61 @@ msgid "Number Nodes"
 msgstr "Nút số"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
-#, fuzzy
 msgid "Altitudes"
-msgstr "Biên độ"
+msgstr "Đường cao"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
-#, fuzzy
 msgid "Angle Bisectors"
-msgstr "Góc ánh sáng:"
+msgstr "Góc trung tuyến"
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
-#, fuzzy
 msgid "Centroid"
-msgstr "Giữa lại"
+msgstr "Trọng tâm"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "Tài liệu"
+msgstr "Tâm đường tròn ngoại tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
-#, fuzzy
 msgid "Circumcircle"
-msgstr "Tròn"
+msgstr "Vòng tròn ngoại tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
-#, fuzzy
 msgid "Common Objects"
-msgstr "/_Sắp xếp đối tượng"
+msgstr "Đối tượng chung"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "Tam giác đặc"
+msgstr "Tam giác tiếp xúc"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
-#, fuzzy
 msgid "Custom Point Specified By:"
-msgstr "Một địa chỉ URL được người dùng xác định"
+msgstr "Điểm tự chọn được cho bởi:"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
-#, fuzzy
 msgid "Custom Points and Options"
-msgstr "không thể kết hợp hai tùy chọn « -e » và « -i »"
+msgstr "Điểm tự chọn và Tùy chọn"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle About This Point"
 msgstr "Vẽ đường tròn quanh điểm này"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
-#, fuzzy
 msgid "Draw From Triangle"
-msgstr "Tam giác đôi đặc"
+msgstr "Vẽ từ ba điểm"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 #, fuzzy
 msgid "Draw Isogonal Conjugate"
-msgstr "Công cụ vẽ\tF3"
+msgstr "Vẽ liên hợp đẳng giác"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 #, fuzzy
 msgid "Draw Isotomic Conjugate"
-msgstr "Công cụ vẽ\tF3"
+msgstr "Vẽ điểm đồng quy"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
+#, fuzzy
 msgid "Draw Marker At This Point"
 msgstr "Vẽ hình nút tại điểm này"
 
@@ -19754,19 +19658,17 @@ msgid "Excentral Triangle"
 msgstr "Tam giác đặc"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
-#, fuzzy
 msgid "Excentres"
-msgstr "Trạm trổ"
+msgstr "Tâm đường tròn bàng tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
-#, fuzzy
 msgid "Excircles"
-msgstr "tròn"
+msgstr "Đường tròn bàng tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 #, fuzzy
 msgid "Extouch Triangle"
-msgstr "Tam giác đặc"
+msgstr "Tam giác "
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 #, fuzzy
@@ -19774,19 +19676,16 @@ msgid "Gergonne Point"
 msgstr "Point Fortin"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "Thụt lề nút"
+msgstr "Tâm đường tròn nội tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
-#, fuzzy
 msgid "Incircle"
-msgstr "tròn"
+msgstr "Đường tròn nội tiếp"
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
-#, fuzzy
 msgid "Nagel Point"
-msgstr "Point Fortin"
+msgstr "Điểm Nagel"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 #, fuzzy
@@ -19811,17 +19710,15 @@ msgstr "Khác"
 #: ../share/extensions/draw_from_triangle.inx.h:28
 #, fuzzy
 msgid "Point At"
-msgstr "Chọn điểm tại..."
+msgstr "Điểm tại"
 
 #: ../share/extensions/draw_from_triangle.inx.h:29
-#, fuzzy
 msgid "Radius / px"
-msgstr "R — bán kính vòng (px)"
+msgstr "Bán kính (px)"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
-#, fuzzy
 msgid "Report this triangle's properties"
-msgstr "Thay đổi thuộc tính của thư mục này"
+msgstr "Hiển thị tính chất của tam giác này"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 #, fuzzy
@@ -19838,14 +19735,12 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid "Triangle Function"
-msgstr "Lời gọi hàm"
+msgstr "Hàm Tam giác"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "Toạ độ cực"
+msgstr "Tọa độ tam giác"
 
 # Name: don't translate / Tên: đừng dịch
 #: ../share/extensions/dxf_input.inx.h:1
@@ -19854,7 +19749,6 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "Character Encoding"
 msgstr "Bảng mã Ký tự"
 
