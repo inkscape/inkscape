@@ -300,8 +300,6 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         nc->remove_flash_counter--;
     }
 
-    sp_event_context_snap_window_open(event_context, false); // Just put the snap window open, bluntly. Will be closed when we have left the context
-
     gint ret = FALSE;
     switch (event->type) {
         case GDK_BUTTON_PRESS:

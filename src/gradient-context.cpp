@@ -556,7 +556,6 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_CONTROL_MASK))
                     event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
 
-                sp_event_context_snap_window_open(event_context, false);
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt, Inkscape::SNAPSOURCE_HANDLE);

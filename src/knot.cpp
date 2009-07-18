@@ -284,8 +284,6 @@ void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, 
  */
 static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot)
 {
-	static bool snap_delay_temporarily_active = false;
-
 	g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
 
@@ -317,11 +315,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
                 Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
-                if (knot->desktop->event_context->_snap_window_open == false) {
-					sp_event_context_snap_window_open(knot->desktop->event_context);
-					snap_delay_temporarily_active = true;
-				}
-                consumed = TRUE;
+				consumed = TRUE;
             }
             break;
 	case GDK_BUTTON_RELEASE:
@@ -331,13 +325,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 					sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
 				}
 
-				// now we can safely close the snapping window
-				if (snap_delay_temporarily_active) {
-                	if (knot->desktop->event_context->_snap_window_open == true) {
-                		sp_event_context_snap_window_closed(knot->desktop->event_context);
-                	}
-					snap_delay_temporarily_active = false;
-				}
+				sp_event_context_discard_delayed_snap_event(knot->desktop->event_context);
 
             	knot->pressure = 0;
                 if (transform_escaped) {
@@ -446,10 +434,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 							}
 							grabbed = FALSE;
 							moved = FALSE;
-							if (snap_delay_temporarily_active) {
-								sp_event_context_snap_window_closed(knot->desktop->event_context);
-								snap_delay_temporarily_active = false;
-							}
+							sp_event_context_discard_delayed_snap_event(knot->desktop->event_context);
 							break;
 				default:
 							consumed = FALSE;

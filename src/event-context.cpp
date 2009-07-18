@@ -374,7 +374,9 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             switch (event->button.button) {
                 case 1:
                     if (event_context->space_panning) {
-                        panning = 1;
+                    	// When starting panning, make sure there are no snap events pending because these might disable the panning again
+                    	sp_event_context_discard_delayed_snap_event(event_context);
+                    	panning = 1;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                             GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                             NULL, event->button.time-1);
@@ -385,7 +387,9 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     if (event->button.state == GDK_SHIFT_MASK) {
                         zoom_rb = 2;
                     } else {
-                        panning = 2;
+                    	// When starting panning, make sure there are no snap events pending because these might disable the panning again
+						sp_event_context_discard_delayed_snap_event(event_context);
+						panning = 2;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                             GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                             NULL, event->button.time-1);
@@ -395,7 +399,9 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case 3:
                     if (event->button.state & GDK_SHIFT_MASK
                             || event->button.state & GDK_CONTROL_MASK) {
-                        panning = 3;
+                    	// When starting panning, make sure there are no snap events pending because these might disable the panning again
+						sp_event_context_discard_delayed_snap_event(event_context);
+                    	panning = 3;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                 NULL, event->button.time);
@@ -415,7 +421,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         || (panning == 3 && !(event->motion.state & GDK_BUTTON3_MASK))
                    ) {
                     /* Gdk seems to lose button release for us sometimes :-( */
-                    panning = 0;
+                	panning = 0;
                     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                             event->button.time);
                     ret = TRUE;
@@ -874,9 +880,8 @@ sp_event_context_activate(SPEventContext *ec)
 
     // Make sure no delayed snapping events are carried over after switching contexts
     // (this is only an additional safety measure against sloppy coding, because each
-    // context should take care of this by itself. It might be hard to get each and every
-    // context perfect though)
-    sp_event_context_snap_window_closed(ec, false);
+    // context should take care of this by itself.
+    sp_event_context_discard_delayed_snap_event(ec);
 
     if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate)
         ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate(ec);
@@ -901,8 +906,7 @@ sp_event_context_deactivate(SPEventContext *ec)
 gint
 sp_event_context_root_handler(SPEventContext * event_context, GdkEvent * event)
 {
-    //std::cout << "sp_event_context_root_handler" << std::endl;
-	switch (event->type) {
+    switch (event->type) {
 		case GDK_MOTION_NOTIFY:
 			sp_event_context_snap_delay_handler(event_context, NULL, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ROOT_HANDLER);
 			break;
@@ -929,8 +933,6 @@ sp_event_context_root_handler(SPEventContext * event_context, GdkEvent * event)
 gint
 sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEvent * event)
 {
-	//std::cout << "sp_event_context_virtual_root_handler -> postponed: " << event_context->desktop->namedview->snap_manager.snapprefs.getSnapPostponedGlobally() << std::endl;
-
 	gint ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
 	set_event_location(event_context->desktop, event);
 	return ret;
@@ -942,7 +944,6 @@ sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEvent *
 gint
 sp_event_context_item_handler(SPEventContext * event_context, SPItem * item, GdkEvent * event)
 {
-	//std::cout << "sp_event_context_item_handler" << std::endl;
 	switch (event->type) {
 		case GDK_MOTION_NOTIFY:
 			sp_event_context_snap_delay_handler(event_context, item, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
@@ -1185,17 +1186,14 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item,
     	// Make sure that we don't send any pending snap events to a context if we know in advance
     	// that we're not going to snap any way (e.g. while scrolling with middle mouse button)
     	// Any motion event might affect the state of the context, leading to unexpected behavior
-    	delete ec->_delayed_snap_event;
-    	ec->_delayed_snap_event = NULL;
-    }
-
-    if (ec->_snap_window_open && !c1 && !c2 && ec->desktop && ec->desktop->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
-    	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
+    	sp_event_context_discard_delayed_snap_event(ec);
+    } else if (ec->desktop && ec->desktop->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
+		// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
 		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
 		// be fully at stand still and might keep spitting out motion events.
-    	ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
+		ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
 
-    	Geom::Point event_pos(event->x, event->y);
+		Geom::Point event_pos(event->x, event->y);
 		guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
 
 		if (prev_pos) {
@@ -1232,7 +1230,7 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item,
 
 		prev_pos = event_pos;
 		prev_time = event_t;
-	}
+    }
 }
 
 gboolean sp_event_context_snap_watchdog_callback(gpointer data)
@@ -1286,51 +1284,8 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data)
 	return FALSE; //Kills the timer and stops it from executing this callback over and over again.
 }
 
-void sp_event_context_snap_window_open(SPEventContext *ec, bool show_debug_warnings)
+void sp_event_context_discard_delayed_snap_event(SPEventContext *ec)
 {
-	// Only when ec->_snap_window_open has been set, Inkscape will know that snapping is active
-	// and will delay any snapping events (but only when asked to through the preferences)
-
-	// When snapping is being delayed, then that will also mean that at some point the last event
-	// might be re-triggered. This should only occur when Inkscape is still in the same tool or context,
-	// and even more specifically, the tool should even be in the same state. If for example snapping is being delayed while
-	// creating a rectangle, then the rect-context will be active and it will be in the "dragging" state
-	// (see the static boolean variable "dragging" in the sp_rect_context_root_handler). The procedure is
-	// as follows: call sp_event_context_snap_window_open(*, TRUE) when entering the "dragging" state, which will delay
-	// snapping from that moment on, and call sp_event_context_snap_window_open(*, FALSE) when leaving the "dragging"
-	// state. This last call will also make sure that any pending snap events will be canceled.
-
-	//std::cout << "sp_event_context_snap_window_open" << std::endl;
-	if (!ec) {
-		if (show_debug_warnings) {
-			g_warning("sp_event_context_snap_window_open() has been called without providing an event context!");
-		}
-		return;
-	}
-
-	if (ec->_snap_window_open == true && show_debug_warnings) {
-		g_warning("Snap window was already open! This is a bug, please report it.");
-	}
-
-	ec->_snap_window_open = true;
-}
-
-void sp_event_context_snap_window_closed(SPEventContext *ec, bool show_debug_warnings)
-{
-	//std::cout << "sp_event_context_snap_window_closed" << std::endl;
-	if (!ec) {
-		if (show_debug_warnings) {
-			g_warning("sp_event_context_snap_window_closed() has been called without providing an event context!");
-		}
-		return;
-	}
-
-	if (ec->_snap_window_open == false && show_debug_warnings) {
-		g_warning("Snap window was already closed! This is a bug, please report it.");
-	}
-
-	ec->_snap_window_open = false;
-
 	delete ec->_delayed_snap_event;
 	ec->_delayed_snap_event = NULL;
 }

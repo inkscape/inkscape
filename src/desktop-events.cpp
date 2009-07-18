@@ -71,7 +71,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     static bool dragging = false;
     static SPCanvasItem *guide = NULL;
     static Geom::Point normal;
-    static bool snap_window_temporarily_open = false;
     int wx, wy;
 
     SPDesktop *desktop = dtw->desktop;
@@ -88,21 +87,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             if (event->button.button == 1) {
                 dragging = true;
 
-                // FIXME: The snap delay mechanism won't work here, because it has been implemented
-                // for the event context. Dragging guides off the ruler will send event to the ruler
-                // and not to the context, which bypasses sp_event_context_snap_delay_handler
-                // The snap manager will not notice the difference, so it'll check if the snap delay
-                // has been activated (This check is only needed for catching coding errors, i.e.
-                // to warn if the snap window has not been implemented properly in some context)
-                if (desktop->event_context->_snap_window_open == false) {
-                    // A dt_ruler_event might be emitted when dragging a guide off the rulers
-                    // while drawing a Bezier curve. In such a situation, we're already in that
-                    // specific context and the snap delay is already active. We should not set
-                    // the snap delay to active again, because that will trigger a similar warning
-                    // to the one above
-                    sp_event_context_snap_window_open(desktop->event_context);
-                    snap_window_temporarily_open = true;
-                }
+                // FIXME: The snap delay mechanism won't work here, because it has been implemented for the event context. Dragging
+                // guides off the ruler will send event to the ruler and not to the context, which bypasses sp_event_context_snap_delay_handler
 
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point const event_dt(desktop->w2d(event_w));
@@ -186,11 +172,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 dragging = false;
 
-                // See the comments in GDK_BUTTON_PRESS
-                if (snap_window_temporarily_open) {
-                	sp_event_context_snap_window_closed(desktop->event_context);
-                	snap_window_temporarily_open = false;
-                }
+                sp_event_context_discard_delayed_snap_event(desktop->event_context);
 
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
@@ -209,7 +191,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 // A dt_ruler_event might be emitted when dragging a guide of the rulers
                 // while drawing a Bezier curve. In such a situation, we're already in that
                 // specific context and the snap delay is already active. We should interfere
-                // with that context and we should therefore leave the snap delay status 
+                // with that context and we should therefore leave the snap delay status
                 // as it is. So although it might have been set to active above on
                 // GDK_BUTTON_PRESS, we should not set it back to inactive here. That must be
                 // done by the context.
@@ -246,7 +228,7 @@ static SPGuideDragType drag_type = SP_DRAG_NONE;
 //                                       // drag origin to that location so that constrained movement is more intuitive
 
 // Min distance from anchor to initiate rotation, measured in screenpixels
-#define tol 40.0 
+#define tol 40.0
 
 gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 {
@@ -260,7 +242,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 	case GDK_2BUTTON_PRESS:
             if (event->button.button == 1) {
                 drag_type = SP_DRAG_NONE;
-                sp_event_context_snap_window_closed(desktop->event_context);
+                sp_event_context_discard_delayed_snap_event(desktop->event_context);
                 sp_canvas_item_ungrab(item, event->button.time);
                 Inkscape::UI::Dialogs::GuidelinePropertiesDialog::showDialog(guide, desktop);
                 ret = TRUE;
@@ -268,7 +250,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
-                sp_event_context_snap_window_open(desktop->event_context);
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
@@ -442,7 +423,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     desktop->setPosition (from_2geom(event_dt));
                 }
                 drag_type = SP_DRAG_NONE;
-                sp_event_context_snap_window_closed(desktop->event_context);
+                sp_event_context_discard_delayed_snap_event(desktop->event_context);
                 sp_canvas_item_ungrab(item, event->button.time);
                 ret=TRUE;
             }

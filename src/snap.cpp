@@ -206,13 +206,6 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
-		g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
-		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
-	}
-
-	//std::cout << "SnapManager::freeSnap -> postponed: " << snapprefs.getSnapPostponedGlobally() << std::endl;
-
 	if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
@@ -371,12 +364,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
-		g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
-		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
-	}
-
-	if (!someSnapperMightSnap()) {
+    if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -419,11 +407,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
  */
 void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal) const
 {
-    if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
-			g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
-			// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
-	}
-
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
         return;
     }
@@ -465,12 +448,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal)
 
 void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const
 {
-	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
-			g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
-			// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
-	}
-
-    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
+	if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
         return;
     }
 

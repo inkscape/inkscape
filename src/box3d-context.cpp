@@ -276,7 +276,6 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, event->button.state & GDK_CONTROL_MASK);
 
             dragging = true;
-            sp_event_context_snap_window_open(event_context);
 
             /*  */
             Geom::Point button_dt(desktop->w2d(button_w));
@@ -373,7 +372,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         event_context->xp = event_context->yp = 0;
         if ( event->button.button == 1  && !event_context->space_panning) {
             dragging = false;
-            sp_event_context_snap_window_closed(event_context, false); //button release will also occur on a double-click; in that case suppress warnings
+            sp_event_context_discard_delayed_snap_event(event_context);
 
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the box
@@ -508,7 +507,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
-                sp_event_context_snap_window_closed(event_context);
+                sp_event_context_discard_delayed_snap_event(event_context);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the box
                     sp_box3d_finish(bc);

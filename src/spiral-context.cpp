@@ -221,7 +221,6 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->button.button == 1 && !event_context->space_panning) {
 
                 dragging = TRUE;
-                sp_event_context_snap_window_open(event_context);
                 sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
                 SnapManager &m = desktop->namedview->snap_manager;
@@ -270,7 +269,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             event_context->xp = event_context->yp = 0;
             if (event->button.button == 1 && !event_context->space_panning) {
                 dragging = FALSE;
-                sp_event_context_snap_window_closed(event_context, false); //button release will also occur on a double-click; in that case suppress warnings
+                sp_event_context_discard_delayed_snap_event(event_context);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the spiral
                     sp_spiral_finish(sc);
@@ -323,7 +322,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_Escape:
                 	if (dragging) {
                 		dragging = false;
-                		sp_event_context_snap_window_closed(event_context);
+                		sp_event_context_discard_delayed_snap_event(event_context);
                 		// if drawing, cancel, otherwise pass it up for deselecting
                 		sp_spiral_cancel(sc);
                 		ret = TRUE;
@@ -335,7 +334,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
                         dragging = false;
-                        sp_event_context_snap_window_closed(event_context);
+                        sp_event_context_discard_delayed_snap_event(event_context);
                         if (!event_context->within_tolerance) {
                             // we've been dragging, finish the spiral
                             sp_spiral_finish(sc);

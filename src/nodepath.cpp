@@ -3590,7 +3590,6 @@ static void node_grabbed(SPKnot *knot, guint state, gpointer data)
     }
 
     n->is_dragging = true;
-    //sp_event_context_snap_window_open(n->subpath->nodepath->desktop->canvas);
     // Reconstruct and store the location of the mouse pointer at the time when we started dragging (needed for snapping)
     n->subpath->nodepath->drag_origin_mouse = knot->grabbed_rel_pos + knot->drag_origin;
 
@@ -3608,7 +3607,6 @@ static void node_ungrabbed(SPKnot */*knot*/, guint /*state*/, gpointer data)
 
    n->dragging_out = NULL;
    n->is_dragging = false;
-   //sp_event_context_snap_window_closed(n->subpath->nodepath->desktop->canvas);
    n->subpath->nodepath->drag_origin_mouse = Geom::Point(NR_HUGE, NR_HUGE);
    sp_canvas_end_forced_full_redraws(n->subpath->nodepath->desktop->canvas);
 

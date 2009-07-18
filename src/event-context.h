@@ -40,8 +40,7 @@ namespace Inkscape {
 }
 
 gboolean sp_event_context_snap_watchdog_callback(gpointer data);
-void sp_event_context_snap_window_open(SPEventContext *ec, bool show_debug_warnings = true);
-void sp_event_context_snap_window_closed(SPEventContext *ec, bool show_debug_warnings = true);
+void sp_event_context_discard_delayed_snap_event(SPEventContext *ec);
 
 class DelayedSnapEvent
 {
@@ -123,7 +122,6 @@ struct SPEventContext : public GObject {
 
     bool space_panning;
 
-    bool _snap_window_open;
     DelayedSnapEvent *_delayed_snap_event;
 };
 

@@ -263,7 +263,7 @@ sp_pen_context_finish(SPEventContext *ec)
 {
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
 
-    sp_event_context_snap_window_closed(ec, false); //TODO: Detailed implementation of the snap window; now it's simply always open
+    sp_event_context_discard_delayed_snap_event(ec);
 
     if (pc->npoints != 0) {
         pen_cancel (pc);
@@ -366,8 +366,6 @@ static gint
 sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
 {
     SPPenContext *const pc = SP_PEN_CONTEXT(ec);
-
-    sp_event_context_snap_window_open(ec, false); //TODO: Detailed implementation of the snap window; now it's simply always open
 
     gint ret = FALSE;
 
