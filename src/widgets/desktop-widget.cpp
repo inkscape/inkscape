@@ -499,10 +499,10 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     eventbox = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->coord_status);
     gtk_tooltips_set_tip (dtw->tt, eventbox, _("Cursor coordinates"), NULL);
-    GtkWidget *label_x = gtk_label_new("X:");
+    GtkWidget *label_x = gtk_label_new(_("X:"));
     gtk_misc_set_alignment (GTK_MISC(label_x), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_x, 1,2, 0,1, GTK_FILL, GTK_FILL, 0, 0);
-    GtkWidget *label_y = gtk_label_new("Y:");
+    GtkWidget *label_y = gtk_label_new(_("Y:"));
     gtk_misc_set_alignment (GTK_MISC(label_y), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_y, 1,2, 1,2, GTK_FILL, GTK_FILL, 0, 0);
     dtw->coord_status_x = gtk_label_new(NULL);
@@ -513,7 +513,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_y), 1.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_x, 2,3, 0,1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_y, 2,3, 1,2, GTK_FILL, GTK_FILL, 0, 0);
-    gtk_table_attach(GTK_TABLE(dtw->coord_status),  gtk_label_new("Z:"), 3,4, 0,2, GTK_FILL, GTK_FILL, 0, 0);
+    gtk_table_attach(GTK_TABLE(dtw->coord_status),  gtk_label_new(_("Z:")), 3,4, 0,2, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  dtw->zoom_status, 4,5, 0,2, GTK_FILL, GTK_FILL, 0, 0);
     sp_set_font_size_smaller (dtw->coord_status);
     gtk_box_pack_end (GTK_BOX (statusbar_tail), eventbox, FALSE, FALSE, 1);

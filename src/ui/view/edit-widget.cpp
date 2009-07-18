@@ -1071,15 +1071,15 @@ EditWidget::initStatusbar()
     _coord_eventbox.add (_coord_status);
     _tooltips.set_tip (_coord_eventbox, _("Cursor coordinates"));
     _coord_status.attach (*new Gtk::VSeparator(), 0,1, 0,2, Gtk::FILL,Gtk::FILL, 0,0);
-    _coord_status.attach (*new Gtk::Label("X:", 0.0, 0.5), 1,2, 0,1, Gtk::FILL,Gtk::FILL, 0,0);
-    _coord_status.attach (*new Gtk::Label("Y:", 0.0, 0.5), 1,2, 1,2, Gtk::FILL,Gtk::FILL, 0,0);
+    _coord_status.attach (*new Gtk::Label(_("X:"), 0.0, 0.5), 1,2, 0,1, Gtk::FILL,Gtk::FILL, 0,0);
+    _coord_status.attach (*new Gtk::Label(_("Y:"), 0.0, 0.5), 1,2, 1,2, Gtk::FILL,Gtk::FILL, 0,0);
     _coord_status_x.set_text ("0.0");
     _coord_status_x.set_alignment (0.0, 0.5);
     _coord_status_y.set_text ("0.0");
     _coord_status_y.set_alignment (0.0, 0.5);
     _coord_status.attach (_coord_status_x, 2,3, 0,1, Gtk::FILL,Gtk::FILL, 0,0);
     _coord_status.attach (_coord_status_y, 2,3, 1,2, Gtk::FILL,Gtk::FILL, 0,0);
-    _coord_status.attach (*new Gtk::Label("Z:", 0.0, 0.5), 3,4, 0,2, Gtk::FILL,Gtk::FILL, 0,0);
+    _coord_status.attach (*new Gtk::Label(_("Z:"), 0.0, 0.5), 3,4, 0,2, Gtk::FILL,Gtk::FILL, 0,0);
     _coord_status.attach (_zoom_status, 4,5, 0,2, Gtk::FILL,Gtk::FILL, 0,0);
     sp_set_font_size_smaller (static_cast<GtkWidget*>((void*)_coord_status.gobj()));
     _statusbar.pack_end (_coord_eventbox, false, false, 1);
