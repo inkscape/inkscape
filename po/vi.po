@@ -19299,7 +19299,7 @@ msgstr "Không tìm thấy thông tin về các cạnh trong tập tin đã cho\
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
 msgid "Face Data Not Found. Ensure file contains face data, and check the file is imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr "Không thấy thông tin về mặt. Hãy kiểm tra lại tập tin chứa thông tin mặt, và kiểm tra tập tin được nhập dưới dạng \"Face-Specified\" trong thẻ \"Model File\"."
+msgstr "Không thấy thông tin về mặt. Hãy kiểm tra lại tập tin chứa thông tin mặt, và kiểm tra tập tin được nhập dưới dạng \"Face-Specified\" trong thẻ \"Model File\".\n"
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
