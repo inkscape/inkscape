@@ -208,23 +208,27 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
    switch (tc->mode) {
        case TWEAK_MODE_MOVE:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag to <b>move</b>."), sel_message);
-                           break;
            event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_MOVE_IN_OUT:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."), sel_message);
+           event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_MOVE_JITTER:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move randomly</b>."), sel_message);
+           event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_SCALE:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."), sel_message);
+           event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_ROTATE:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."), sel_message);
+           event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_MORELESS:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."), sel_message);
+           event_context->cursor_shape = cursor_tweak_move_xpm;
            break;
        case TWEAK_MODE_PUSH:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag to <b>push paths</b>."), sel_message);
@@ -252,6 +256,7 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
            break;
        case TWEAK_MODE_COLORPAINT:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>paint objects</b> with color."), sel_message);
+           event_context->cursor_shape = cursor_color_xpm;
            break;
        case TWEAK_MODE_COLORJITTER:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>randomize colors</b>."), sel_message);
