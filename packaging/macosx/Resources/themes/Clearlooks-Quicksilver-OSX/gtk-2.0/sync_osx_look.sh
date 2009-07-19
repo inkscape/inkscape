@@ -7,14 +7,14 @@
 #
 
 # Appearance setting
-aquaStyle=`defaults read "Apple Global Domain" AppleAquaColorVariant`
+aquaStyle=`defaults read "Apple Global Domain" AppleAquaColorVariant 2>/dev/null`
 # 1 for aqua, 6 for graphite, inexistant if the default color was never changed
 if [[ "$aquaStyle" == "" ]]; then
 	aquaStyle=1		# set aqua as default
 fi
 
 # Highlight Color setting
-hiliColor=`defaults read "Apple Global Domain" AppleHighlightColor`
+hiliColor=`defaults read "Apple Global Domain" AppleHighlightColor 2>/dev/null`
 # a RGB value, with components between 0 and 1, also inexistant if it was not changed
 if [[ "$hiliColor" == "" ]]; then
 	hiliColor="0.709800 0.835300 1.000000"	# set blue as default
