@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-11 09:42+0200\n"
-"PO-Revision-Date: 2009-07-12 23:26+0200\n"
+"PO-Revision-Date: 2009-07-19 22:35+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -7092,19 +7092,16 @@ msgstr "Szögfelező"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
-#, fuzzy
 msgid "Boolops"
-msgstr "Eszközök"
+msgstr "Logikai műveletek"
 
 #: ../src/live_effects/effect.cpp:90
-#, fuzzy
 msgid "Circle (by center and radius)"
 msgstr "Kör (középponttal és sugárral megadva)"
 
 #: ../src/live_effects/effect.cpp:91
-#, fuzzy
 msgid "Circle by 3 points"
-msgstr "Kör (3 ponttal megadva)"
+msgstr "Kör 3 ponttal megadva"
 
 #: ../src/live_effects/effect.cpp:92
 #, fuzzy
@@ -7304,9 +7301,8 @@ msgid "The size of the grid in Y direction."
 msgstr "A rács Y irányú mérete"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "Al-útvonalak összevarrása"
+msgstr "Öltési útvonal"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -7373,83 +7369,68 @@ msgid "Scale width"
 msgstr "Szélesség méretezése"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale the width of the stitch path"
-msgstr "útvonal szélességének méretezése"
+msgstr "Az öltési útvonal szélességének méretezése"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Szélesség méretezése relatívan hossz"
+msgstr "Szélesség méretezése a hosszhoz viszonyítva"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "útvonal szélességének méretezése a hosszához viszonyítva"
+msgstr "Az öltési útvonal szélességének méretezése a hosszához viszonyítva"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top bend path"
-msgstr "Útvonal hajlítása"
+msgstr "Felső hajlítási útvonal"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top path along which to bend the original path"
-msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
+msgstr "Azon felső útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right bend path"
-msgstr "Útvonal hajlítása"
+msgstr "Jobb oldali hajlítási útvonal"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right path along which to bend the original path"
-msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
+msgstr "Azon jobb oldali útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom bend path"
-msgstr "Útvonal hajlítása"
+msgstr "Alsó hajlítási útvonal"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom path along which to bend the original path"
-msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
+msgstr "Azon alsó útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left bend path"
-msgstr "Útvonal hajlítása"
+msgstr "Bal oldali hajlítási útvonal"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left path along which to bend the original path"
-msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó"
+msgstr "Azon bal oldali útvonal, amely mentén az eredeti útvonal hajlítandó"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
-#, fuzzy
 msgid "Enable left & right paths"
 msgstr "A bal és jobb oldali útvonalak bekapcsolása"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
-#, fuzzy
 msgid "Enable the left and right deformation paths"
-msgstr "A bal és jobb oldali útvonalak bekapcsolása"
+msgstr "A bal és jobb oldali deformációs útvonalak bekapcsolása"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable top & bottom paths"
 msgstr "A felső és alsó útvonalak bekapcsolása"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable the top and bottom deformation paths"
-msgstr "A felső és alsó útvonalak bekapcsolása"
+msgstr "A felső és alsó deformációs útvonalak bekapcsolása"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -7470,87 +7451,78 @@ msgid ""
 msgstr "Fognyomás-szög (általában 20-25 fok). A nem kapcsolódó fogak aránya."
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Trajectory"
-msgstr "Tényező"
+msgstr "Pályagörbe"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "Azon útvonal, amely mentén az eredeti útvonal hajlítandó létrehozása"
+msgstr "Azon útvonal, amely mentén a köztes lépések létrejönnek"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
 msgid "Steps"
-msgstr "Lépésközök"
+msgstr "Lépések"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#, fuzzy
 msgid "Determines the number of steps from start to end path."
-msgstr "útvonal"
+msgstr "A kezdeti útvonaltól a vég-útvonalig megtett lépések számát határozza meg"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "Sortávolság növelése"
+msgstr "Egyenletes helykihagyás"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid ""
 "If true, the spacing between intermediates is constant along the length of "
 "the path. If false, the distance depends on the location of the nodes of the "
 "trajectory path."
-msgstr "útvonal hossztávolságCsomópont"
+msgstr ""
+"Ha az érték igazra van állítva, akkor a köztes lépések közti távolság "
+"az útvonal teljes hosszán állandó. Ha viszont hamis az érték, akkor "
+"a távolság függ a pályagörbe-útvonal csomópontjainak helyétől."
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Interruption width"
-msgstr "szélesség"
+msgstr "A megszakítás szélessége"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
-msgstr ""
+msgstr "A lejjebb levő zsinór rejtett területének mérete"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "unit of stroke width"
-msgstr "Körvonalszélesség Mértékegység"
+msgstr "Mértékegység: a körvonalszélesség"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr "Körvonalszélesség"
+msgstr ""
+"A megszakítás szélessége a körvonalszélesség arányaként legyen "
+"kezelve"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "add stroke width to interruption size"
-msgstr "Körvonalszélesség"
+msgstr "Körvonalszélesség hozzáadása a megszakítás méretéhez"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "Add the stroke width to the interruption size."
-msgstr "Körvonalszélesség"
+msgstr "Legyen hozzáadva a körvonalszélesség a megszakítás méretéhez"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "add other's stroke width to interruption size"
-msgstr "Körvonalszélesség"
+msgstr "A másik körvonalszélességének hozzáadása a megszakítás méretéhez"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Add crossed stroke width to the interruption size."
-msgstr "Körvonalszélesség"
+msgstr "Legyen hozzáadva a keresztezett elem körvonalszélessége a megszakítás méretéhez"
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Switcher size"
-msgstr "Kapcsolóstílus"
+msgstr "Az átkapcsoló mérete"
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Orientation indicator/switcher size"
-msgstr "jelző"
+msgstr "A tájolásjelző/-átkapcsoló mérete"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
@@ -7616,11 +7588,13 @@ msgid "Spacing"
 msgstr "Helykihagyás"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
 "limited to -90% of pattern width."
-msgstr "minta szélességengedélyezése"
+msgstr ""
+"A minta példányai közti hely. Negatív érték is megadható, de "
+"csak a minta szélességének -90%-áig."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -7644,7 +7618,9 @@ msgstr "eltolásObjektumok átalakítása mintává Mértékegység"
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
-msgstr "Érintői eltolás szélesség magasság"
+msgstr ""
+"helykihagyás"
+"Érintői eltolás szélesség magasság"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -19316,8 +19292,9 @@ msgid "Style of new calligraphic strokes"
 msgstr "Új művészi vonalak stílusa"
 
 #: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
+# "to be defined"?
 msgid "TBD"
-msgstr ""
+msgstr "TBD"
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -20702,46 +20679,38 @@ msgid "Show limiting bounding box"
 msgstr "Korlátozó határoló téglalap megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:5607
-#, fuzzy
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr "Határoló téglalap megjelenítése"
+msgstr "Határoló téglalap megjelenítése (végtelen vonalak vágására használatos)"
 
 #: ../src/widgets/toolbox.cpp:5618
-#, fuzzy
 msgid "Get limiting bounding box from selection"
 msgstr "Korlátozó határoló téglalap meghatározása a kijelölésből"
 
 #: ../src/widgets/toolbox.cpp:5619
-#, fuzzy
 msgid ""
 "Set limiting bounding box (used to cut infinite lines) to the bounding box "
 "of current selection"
 msgstr ""
-"Korlátozó határoló téglalap beállítása "
-"A határoló téglalapok sarkainak illesztése más határoló téglalapok "
-"sarkaihozkijelölés"
+"Korlátozó határoló téglalap beállítása (végtelen vonalak vágására használatos) "
+"az aktuális kijelölés határoló téglalapjára"
 
 #: ../src/widgets/toolbox.cpp:5631
-#, fuzzy
 msgid "Choose a line segment type"
-msgstr "vonalSzakasztípus módosítása"
+msgstr "Vonalszakasz-típus kiválasztása"
 
 #: ../src/widgets/toolbox.cpp:5647
-#, fuzzy
 msgid "Display measuring info"
-msgstr "Képernyős megjelenítési cél:"
+msgstr "Mérési információ megjelenítése"
 
 #: ../src/widgets/toolbox.cpp:5648
-#, fuzzy
 msgid "Display measuring info for selected items"
-msgstr "elem"
+msgstr "Mérési információ megjelenítése a kijelölt elemekről"
 
 #: ../src/widgets/toolbox.cpp:5668
 msgid "Open LPE dialog"
 msgstr "\"Élő útvonaleffektus\" párbeszédablak megnyitása"
 
 #: ../src/widgets/toolbox.cpp:5669
-#, fuzzy
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
 "\"Élő útvonaleffektus\" párbeszédablak megnyitása (a paraméterek számszerű "
@@ -20784,9 +20753,8 @@ msgid "Text: Change font size"
 msgstr "Szöveg: betűméret módosítása"
 
 #: ../src/widgets/toolbox.cpp:6623
-#, fuzzy
 msgid "Select font family (Alt+X to access)"
-msgstr "Betűtípus-család kiválasztása"
+msgstr "Betűtípus-család kiválasztása (elérés: Alt+X)"
 
 #: ../src/widgets/toolbox.cpp:6660
 msgid ""
