@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-11 09:42+0200\n"
-"PO-Revision-Date: 2009-07-19 22:35+0200\n"
+"PO-Revision-Date: 2009-07-20 23:23+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1904,21 +1904,28 @@ msgstr "Objektumok megrajzolása"
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
 msgid "Thick paint"
-msgstr "Nincs megrajzolva"
+msgstr ""
+"Vastag"
+"Nincs megrajzolva"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
 msgid "Thick painting effect with turbulence"
-msgstr "effektus"
+msgstr ""
+"Vastag"
+"effektus"
 
 #: ../share/filters/filters.svg.h:192
+#, fuzzy
 msgid "Thick paint, glossy"
-msgstr ""
+msgstr "Vastag"
 
 #: ../share/filters/filters.svg.h:192
 #, fuzzy
 msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr "effektus"
+msgstr ""
+"Vastag"
+"effektus"
 
 #: ../share/filters/filters.svg.h:193
 #, fuzzy
@@ -7111,7 +7118,7 @@ msgstr "Dinamikus körvonal"
 #: ../src/live_effects/effect.cpp:93
 #, fuzzy
 msgid "Lattice Deformation"
-msgstr "Betűforgatás"
+msgstr "deformáció"
 
 #: ../src/live_effects/effect.cpp:94
 #, fuzzy
@@ -7148,17 +7155,19 @@ msgstr "Perspektíva Útvonal"
 #: ../src/live_effects/effect.cpp:101
 #, fuzzy
 msgid "Rotate copies"
-msgstr "Csomópontok elforgatása"
+msgstr ""
+"példányok"
+"elforgatása"
 
 #: ../src/live_effects/effect.cpp:102
 #, fuzzy
 msgid "Recursive skeleton"
-msgstr "Maszk eltávolítása a kijelölésről"
+msgstr "Rekurzív váz"
 
 #: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Tangent to curve"
-msgstr "ÉrintőÍv húzása"
+msgstr "Érintő az ívhez"
 
 #: ../src/live_effects/effect.cpp:104
 #, fuzzy
@@ -7609,18 +7618,16 @@ msgid "Tangential offset"
 msgstr "Érintői eltolás"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "eltolásObjektumok átalakítása mintává Mértékegység"
+msgstr "Eltolások mértékegysége: a minta mérete"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
-#, fuzzy
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
 msgstr ""
-"helykihagyás"
-"Érintői eltolás szélesség magasság"
+"A helykihagyás, az érintői és a normál eltolás a szélesség, illetve "
+"a magasság arányában van megadva"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -7634,11 +7641,13 @@ msgstr "A minta 90 fokos elforgatása az alkalmazása előtt"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "Közeli végek egyesítése"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
+"Az ezen értéknél közelebbi végek kerüljenek egyesítésre. A 0 érték "
+"megadása esetén nincs egyesítés."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 #, fuzzy
@@ -7648,7 +7657,7 @@ msgstr "véletlenszerű"
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 #, fuzzy
 msgid "Variation of distance between hatches, in %."
-msgstr "távolság"
+msgstr "Vonalkák közti távolság ingadozása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 #, fuzzy
@@ -7658,20 +7667,24 @@ msgstr "növelés"
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 #, fuzzy
 msgid "Growth of distance between hatches."
-msgstr "távolságnövel"
+msgstr ""
+"Vonalkák"
+"közti távolság növekedése"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 #, fuzzy
 msgid "Half turns smoothness: 1st side, in"
-msgstr "oldal"
+msgstr ""
+"Félfordulatok simasága"
+"oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 #, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
 "1=default"
-msgstr "útvonal"
+msgstr "Az útvonal simasága/élessége egy \"alsó\" félfordulat elérésekor. 0=éles, 1=alapértelmezés."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 #, fuzzy
@@ -7683,7 +7696,7 @@ msgstr "oldal"
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
 "1=default"
-msgstr "útvonal"
+msgstr "Az útvonal simasága/élessége egy \"alsó\" félfordulat elhagyásakor. 0=éles, 1=alapértelmezés."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 #, fuzzy
@@ -7695,7 +7708,7 @@ msgstr "oldal"
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
 "1=default"
-msgstr "útvonal"
+msgstr "Az útvonal simasága/élessége egy \"felső\" félfordulat elérésekor. 0=éles, 1=alapértelmezés."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 #, fuzzy
@@ -7707,29 +7720,29 @@ msgstr "oldal"
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
 "1=default"
-msgstr "útvonal"
+msgstr "Az útvonal simasága/élessége egy \"felső\" félfordulat elhagyásakor. 0=éles, 1=alapértelmezés."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 #, fuzzy
 msgid "Magnitude jitter: 1st side"
-msgstr "véletlenszerűoldal"
+msgstr "Nagyság véletlenszerű módosítása: 1. oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 #, fuzzy
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr "véletlenszerű"
+msgstr "Véletlenszerűen elmozdítja az \"alsó\" félfordulatokat, hogy nagysági ingadozást idézzen elő"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 #, fuzzy
 msgid "2nd side"
-msgstr "oldal"
+msgstr "2. oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #, fuzzy
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr "véletlenszerű"
+msgstr "Véletlenszerűen elmozdítja a \"felső\" félfordulatokat, hogy nagysági ingadozást idézzen elő"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 #, fuzzy
@@ -7741,61 +7754,69 @@ msgstr "Párhuzamosvéletlenszerűoldal"
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
-msgstr "Érintőivéletlenszerű"
+msgstr ""
+"Érintői véletlenszerű "
+"\"alsó\" félfordulat"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
-msgstr "Érintőivéletlenszerű"
+msgstr ""
+"Érintői véletlenszerű "
+"\"felső\" félfordulat"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 #, fuzzy
 msgid "Variance: 1st side"
-msgstr "oldal"
+msgstr "Variancia: 1. oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 #, fuzzy
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr "véletlenszerű"
+msgstr "\"Alsó\" félfordulatok simaságának véletlenszerűsége"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 #, fuzzy
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr "véletlenszerű"
+msgstr "\"Felső\" félfordulatok simaságának véletlenszerűsége"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
 msgid "Generate thick/thin path"
-msgstr "Új útvonal létrehozása"
+msgstr "Vastag/vékony útvonal létrehozása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
 msgid "Simulate a stroke of varrying width"
-msgstr "Körvonalszélesség átméretezése"
+msgstr "Változó szélességű körvonal szimulálása"
 
 # node-ok és szakaszok száma nem változik
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
 msgid "Bend hatches"
-msgstr "Útvonal hajlítása"
+msgstr "Vonalkák hajlítása"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
 msgid "Add a global bend to the hatches (slower)"
-msgstr "globális"
+msgstr ""
+"globális"
+"Vonalkák"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 #, fuzzy
 msgid "Thickness: at 1st side"
-msgstr "oldal"
+msgstr ""
+"Vastagság"
+"oldal"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 #, fuzzy
 msgid "Width at 'bottom' half turns"
-msgstr "szélesség"
+msgstr "Szélesség az \"alsó\" félfordulatoknál"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 #, fuzzy
@@ -7805,7 +7826,7 @@ msgstr "oldal"
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 #, fuzzy
 msgid "Width at 'top' halfturns"
-msgstr "szélesség"
+msgstr "Szélesség a \"felső\" félfordulatoknál"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
@@ -7817,7 +7838,7 @@ msgstr "oldal"
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 #, fuzzy
 msgid "Width of paths from 'top' to 'bottom' halfturns"
-msgstr "útvonal szélesség"
+msgstr "Útvonalak szélessége a \"felső\" félfordulatoktól az \"alsókig\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 #, fuzzy
@@ -7827,11 +7848,14 @@ msgstr "oldal"
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 #, fuzzy
 msgid "Hatches width and dir"
-msgstr "Szélesség és magasság zárolása"
+msgstr ""
+"Vonalkák "
+"Szélesség és"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
+#, fuzzy
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "Vonalkák"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
@@ -7878,7 +7902,7 @@ msgstr "Illesztési tá_volság"
 #: ../src/live_effects/lpe-ruler.cpp:44
 #, fuzzy
 msgid "Distance between successive ruler marks"
-msgstr "A függőleges rácsvonalak közti távolságVonalzó"
+msgstr "A szomszédos vonalzóbeosztások közti távolság"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 #, fuzzy
@@ -7888,7 +7912,7 @@ msgstr "Hullámhossz"
 #: ../src/live_effects/lpe-ruler.cpp:45
 #, fuzzy
 msgid "Length of major ruler marks"
-msgstr "Vonalzó hossz"
+msgstr "A fő-vonalzóbeosztások hossza"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 #, fuzzy
@@ -7898,7 +7922,7 @@ msgstr "Hullámhossz"
 #: ../src/live_effects/lpe-ruler.cpp:46
 #, fuzzy
 msgid "Length of minor ruler marks"
-msgstr "Vonalzó hossz"
+msgstr "Az al-vonalzóbeosztások hossza"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Major steps"
@@ -7945,101 +7969,94 @@ msgstr "útvonal"
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
-#, fuzzy
 msgid "Strokes"
-msgstr "Körvonal:"
+msgstr "Vonások"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
-#, fuzzy
 msgid "Draw that many approximating strokes"
-msgstr "körvonal"
+msgstr "Ennyi közelítő vonás rajzolása"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
-#, fuzzy
 msgid "Max stroke length"
-msgstr "Körvonalhossz"
+msgstr "Maximális vonáshossz"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
-#, fuzzy
 msgid "Maximum length of approximating strokes"
-msgstr "A csúcs maximális hossza (a körvonalszélesség arányában megadva)"
+msgstr "A közelítő vonások maximális hossza"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
-#, fuzzy
 msgid "Stroke length variation"
-msgstr "Kezdőszegély varianciájakörvonalhossz"
+msgstr "Vonáshossz-ingadozás"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
-#, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Körvonalhosszhosszához viszonyítvavéletlenszerű"
+msgstr ""
+"A vonáshossz véletlenszerű ingadozása "
+"(a maximális hosszhoz viszonyítva)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
-msgstr ""
+msgstr "Maximális átfedés"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
-#, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Körvonal a hosszához viszonyítva"
+msgstr ""
+"Az egymás utáni vonások közti átfedés "
+"(a maximális hosszhoz viszonyítva)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
-msgstr ""
+msgstr "Az átfedés ingadozása"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
-#, fuzzy
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr "véletlenszerű"
+msgstr ""
+"Az átfedés véletlenszerű ingadozása "
+"(a maximális átfedéshez viszonyítva)"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
-msgstr ""
+msgstr "Maximális végtűrés"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
-#, fuzzy
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
-msgstr "távolságútvonal hossz"
+msgstr ""
+"Az eredeti és a közelítő útvonalak végei közti maximális távolság (a maximális "
+"hosszhoz viszonyítva)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
 msgstr "Átlagos eltolás"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
-#, fuzzy
 msgid "Average distance each stroke is away from the original path"
-msgstr "Átlagos távolságkörvonal útvonal"
+msgstr "A vonásoknak az eredeti útvonaltól való átlagos távolsága"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr ""
+msgstr "Maximális remegés"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr ""
+msgstr "A remegés maximális nagysága"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "Alapfrekvencia"
+msgstr "Remegési frekvencia"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
-#, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr "Átlagoskörvonal"
+msgstr "Remegési periódusok átlagos száma egy vonáson belül"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
-#, fuzzy
 msgid "Construction lines"
-msgstr "Sorok igazítása középre"
+msgstr "Szerkesztővonalak"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
-#, fuzzy
 msgid "How many construction lines (tangents) to draw"
-msgstr "Érintő"
+msgstr "Megrajzolandó szerkesztővonalak (érintők) száma"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
 #: ../src/seltrans.cpp:489 ../src/ui/dialog/transformation.cpp:738
@@ -8049,41 +8066,38 @@ msgid "Scale"
 msgstr "Méretezés"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
-#, fuzzy
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
-msgstr "hosszeltolás"
+msgstr ""
+"A szerkesztővonalak görbületének és hosszának méretezési tényezője "
+"(érdemes kipróbálni például az eltolás 5-szörösét)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Max. length"
-msgstr "Hullámhossz"
+msgstr "Maximális hossz"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
-#, fuzzy
 msgid "Maximum length of construction lines"
-msgstr "hossz"
+msgstr "A szerkesztővonalak maximális hossza"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-#, fuzzy
 msgid "Length variation"
-msgstr "hossz"
+msgstr "A hossz ingadozása"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-#, fuzzy
 msgid "Random variation of the length of construction lines"
-msgstr "véletlenszerű hossz"
+msgstr "A szerkesztővonalak hosszának véletlenszerű ingadozása"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "Placement randomness"
-msgstr "elhelyezésvéletlenszerű"
+msgstr "Elhelyezés véletlenszerűsége"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr "elrendezésvéletlenszerű elhelyezés"
+msgstr ""
+"0: egyenletesen elrendezett szerkesztővonalak; 1: teljesen "
+"véletlenszerű elhelyezés"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 #, fuzzy
@@ -8101,7 +8115,9 @@ msgstr ""
 #: ../src/live_effects/lpe-sketch.cpp:62
 #, fuzzy
 msgid "max curvature"
-msgstr "Ív húzása"
+msgstr ""
+"Maximális"
+"Ív húzása"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 #, fuzzy
@@ -8109,8 +8125,9 @@ msgid "Nb of generations"
 msgstr "A körbefordulások száma"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
+#, fuzzy
 msgid "Depth of the recursion --- keep low!!"
-msgstr ""
+msgstr "A rekurzió mélysége - ne legyen túl nagy"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 #, fuzzy
@@ -8151,19 +8168,23 @@ msgstr "Szakasz törlése"
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 #, fuzzy
 msgid "The reference segment. Defaults to bbox diameter."
-msgstr "szakaszHatároló téglalap"
+msgstr ""
+"szakasz "
+"alapértelmezés "
+"Határoló téglalap"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:56
+#, fuzzy
 msgid "Max complexity"
-msgstr ""
+msgstr "Maximális bonyolultság"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 #, fuzzy
 msgid "Disable effect if the output is too complex"
-msgstr "effektus kikapcsoláskimenet"
+msgstr "Effektus kikapcsolása, ha a kimenet túl bonyolult"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -21896,7 +21917,9 @@ msgstr "Segédvonalak"
 #: ../share/extensions/grid_cartesian.inx.h:1
 #, fuzzy
 msgid "Border Thickness [px]"
-msgstr "keret"
+msgstr ""
+"keret "
+"Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 #, fuzzy
@@ -21927,7 +21950,9 @@ msgstr "Vízszintes helykihagyás"
 #: ../share/extensions/grid_cartesian.inx.h:8
 #, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "Felosztás"
+msgstr ""
+"Felosztás "
+"Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 #, fuzzy
@@ -21942,7 +21967,9 @@ msgstr "Vízszintes helykihagyás"
 #: ../share/extensions/grid_cartesian.inx.h:11
 #, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "Felosztás"
+msgstr ""
+"Felosztás "
+"Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 #, fuzzy
@@ -21952,12 +21979,16 @@ msgstr "Felosztás"
 #: ../share/extensions/grid_cartesian.inx.h:13
 #, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "Felosztás"
+msgstr ""
+"Felosztás "
+"Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
 #, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "Felosztás"
+msgstr ""
+"Felosztás "
+"Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
@@ -21968,12 +21999,14 @@ msgid "Subdivisions per Major Y Division"
 msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:18
+#, fuzzy
 msgid "Subminor X Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
+#, fuzzy
 msgid "Subminor Y Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
@@ -22014,8 +22047,9 @@ msgid "Logarithmic Subdiv. (Base given by entry above)"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:9
+#, fuzzy
 msgid "Major Angular Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_polar.inx.h:10
 #, fuzzy
@@ -22023,8 +22057,9 @@ msgid "Major Circular Division Spacing [px]"
 msgstr "Vízszintes helykihagyás"
 
 #: ../share/extensions/grid_polar.inx.h:11
+#, fuzzy
 msgid "Major Circular Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
@@ -22035,12 +22070,14 @@ msgid "Minor Angle Division End 'n' Divs. Before Centre"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:14
+#, fuzzy
 msgid "Minor Angular Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_polar.inx.h:15
+#, fuzzy
 msgid "Minor Circular Division Thickness [px]"
-msgstr ""
+msgstr "Vastagság"
 
 #: ../share/extensions/grid_polar.inx.h:17
 #, fuzzy
@@ -22514,7 +22551,7 @@ msgstr "X-tartomány szorzása 2*pi-vel"
 #: ../share/extensions/param_curves.inx.h:6
 #, fuzzy
 msgid "Parametric Curves"
-msgstr "Paraméterek Ív"
+msgstr "Paraméteres ívek"
 
 #: ../share/extensions/param_curves.inx.h:7
 #, fuzzy
@@ -22841,7 +22878,9 @@ msgstr "Pozíció"
 #: ../share/extensions/polyhedron_3d.inx.h:23
 #, fuzzy
 msgid "Line Thickness / px"
-msgstr "vonal"
+msgstr ""
+"vonal "
+"Vastagság"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
