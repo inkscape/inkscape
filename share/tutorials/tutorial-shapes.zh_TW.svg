@@ -37,6 +37,13 @@
      inkscape:snap-to-guides="false" />
   <defs
      id="defs3">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 1981.25 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="320 : 1981.25 : 1"
+       inkscape:persp3d-origin="160 : 1320.8333 : 1"
+       id="perspective1086" />
     <radialGradient
        xlink:href="#linearGradient666-5"
        id="radialGradient669-6"
@@ -328,7 +335,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -724,8 +731,8 @@
   </g>
   <text
      style="font-size:7.91511011px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-     x="189.28496"
-     y="20.645185"
+     x="191.28496"
+     y="22.645185"
      id="text1920">
     <tspan
        id="tspan1668"
@@ -755,7 +762,7 @@
     </flowRegion>
     <flowDiv
        xml:space="preserve"
-       id="flowDiv50">這個教學將會解說四種形狀工具：矩形、橢圓形、星形和螺旋。我們會示範 Inkscape 各種形狀的功能和說明這些工具該如何使用和何時該使用。</flowDiv>  </flowRoot>
+       id="flowDiv50">這篇教學將會解說四種形狀工具：矩形、橢圓形、星形和螺旋。我們會示範 Inkscape 各種形狀的功能和說明這些工具該如何使用和何時該使用。</flowDiv>  </flowRoot>
   <rect
      id="d0e18"
      width="264"
@@ -779,9 +786,7 @@
     </flowRegion>
     <flowDiv
        xml:space="preserve"
-       id="flowDiv59">使用 <flowSpan
-   style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Sans Bold"
-   id="flowSpan5131">Ctrl+</flowSpan>方向鍵、滑鼠滾輪或按著滑鼠中鍵拖曳可向下捲動頁面。關於建立、選取和改變物件的基本方法，請閱讀 說明 &gt; 指導手冊 中的基本教學。</flowDiv>  </flowRoot>
+       id="flowDiv59">使用 Ctrl+方向鍵、滑鼠滾輪或按著滑鼠中鍵拖曳可向下捲動頁面。關於建立、選取和改變物件的基本方法，請閱讀 說明 &gt; 指導手冊 中的基本教學。</flowDiv>  </flowRoot>
   <rect
      id="d0e36"
      width="288"
@@ -4527,7 +4532,7 @@
     </flowRegion>
     <flowDiv
        xml:space="preserve"
-       id="flowDiv1132">在控制列的圓角化參數能讓你調整切線長度和多邊形/星形邊長的比值。這個參數可以是負值，這樣使切線的方向反轉。在 0.2 到 0.4 之間的數值會得到「一般性」的圓角類型；其他數值則傾向於產生優美、錯綜複雜且完全無法預測的圖案。圓角化參數大的星形可能會延伸到遠超過控制點的位置。下面有一些範例，每個圖都有標示星形的圓角化參數值：</flowDiv>  </flowRoot>
+       id="flowDiv1132">在控制列的圓角化參數能讓你調整切線長度和多邊形/星形邊長的比值。這個參數可以是負值，這樣使切線的方向反轉。在 0.2 到 0.4 之間的數值會得到「一般性」的圓角類型；其他數值則傾向於產生優美、錯綜複雜且完全無法預測的圖案。圓角化參數大的星形可能會延伸到離控制點很遠的地方。下面有一些範例，每個圖都有標示星形的圓角化參數值：</flowDiv>  </flowRoot>
   <path
      transform="matrix(0.307966,-0.03233534,-0.03233534,-0.307966,-24.0515,4298.8754)"
      sodipodi:type="star"
