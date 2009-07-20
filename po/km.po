@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-17 10:56+0700\n"
+"PO-Revision-Date: 2009-07-20 16:30+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "ការ​លេចឡើង"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "គែម​គឺ​ត្រូវបាន​កាត់​ចេញ​ជា​ផ្នែកៗ"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Cutout"
@@ -188,7 +188,7 @@ msgstr "ពង្រីក"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "ទន់ ជ្រុងទេរ​ដូចជា​ទ្រនាប់​ដោយមាន​ការ​បន្លិច​យ៉ាង​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border"
@@ -1313,7 +1313,7 @@ msgstr "ការ​សាយ​លោហៈ​មាន​ពន្លឺ​ភ
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
-msgstr ""
+msgstr "សេចក្ដី​ព្រៀង​កំប្លែង"
 
 #: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
@@ -1323,7 +1323,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
-msgstr ""
+msgstr "ស្រមោល​មិន​ពិត"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
@@ -1331,7 +1331,7 @@ msgstr "តុក្កតា​​ដាក់ពណ៌​ព្រាង ដ�
 
 #: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
-msgstr ""
+msgstr "រូប​កំប្លែង​រសាត់​បាត់​បន្តិច​ម្ដងៗ"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
@@ -1339,7 +1339,7 @@ msgstr "រចនាប័ទ្ម​គំនូរ​តុក្កតា �
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shader NR"
-msgstr ""
+msgstr "NR មាន​ស្រមោល​រលោង"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
@@ -1347,7 +1347,7 @@ msgstr "ដាក់ស្រមោល​រលោង ដោយ​ប្រើ�
 
 #: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
-msgstr ""
+msgstr "NR មាន​ស្រមោល​ផុស​ក្រឡោត"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
@@ -1355,11 +1355,11 @@ msgstr "ការ​បញ្ចូល​គ្នា​រវាង​ការ
 
 #: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
-msgstr ""
+msgstr "NR មាន​ស្រមោល​ងងឹត​រលោង"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "ស្រមោល​រលោង​​ដែល​មាន​ពណ៌​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Comics"
@@ -1383,7 +1383,7 @@ msgstr "កែវ​មាន​កំណក NR"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
-msgstr ""
+msgstr "កែវ​កក​ក្លែងក្លាយ"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
@@ -1533,27 +1533,27 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:168
 msgid "Velvet bump"
-msgstr ""
+msgstr "ដុំពក​ជរ​ផ្កាភ្ញី"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "ផ្ដល់​ជា​ដុំ​ពក​រលោង​ដូចគ្នា​នឹង​ជរ​ផ្កា​ភ្ញី"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Alpha engraving"
-msgstr ""
+msgstr "ចម្លាក់​អាល់ហ្វា"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Gives a transparent engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Alpha engraving, color"
-msgstr ""
+msgstr "ចម្លាក់​អាល់ហ្វា មាន​ពណ៌"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Gives a transparent color engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​មាន​ពណ៌​ហើយ​ថ្លា ទៅកាន់​ផែនទី​រូបភាព"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -2426,9 +2426,8 @@ msgid "x_1:"
 msgstr "x_1 ៖"
 
 #: ../src/dialogs/export.cpp:318
-#, fuzzy
 msgid "Wid_th:"
-msgstr "​ទទឹង ៖"
+msgstr "​ទទឹង ៖"
 
 #: ../src/dialogs/export.cpp:324
 msgid "_y0:"
@@ -2439,9 +2438,8 @@ msgid "y_1:"
 msgstr "y_1 ៖"
 
 #: ../src/dialogs/export.cpp:334
-#, fuzzy
 msgid "Hei_ght:"
-msgstr "កម្ពស់ ៖"
+msgstr "កម្ពស់ ៖"
 
 #: ../src/dialogs/export.cpp:466
 msgid "<big><b>Bitmap size</b></big>"
@@ -2485,12 +2483,9 @@ msgstr "ចំនួន​នាំចេញ​វត្ថុ​ដែល​ប
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
-msgstr ""
-"នាំចេញ​វត្ថុ​ដែល​បាន​ជ្រើស​នីមួយៗ​ទៅ​ក្នុង​ឯកសារ PNG ផ្ទាល់​របស់​វា ដោយ​ប្រើ​ជំនួយ​នាំចេញ ប្រសិន​បើ​មាន "
-"(ប្រយ័ត្ន សរសេរ​ជាន់​លើ​ដោយ​មិន​បាន​សួរ!)"
+msgstr "នាំចេញ​វត្ថុ​ដែល​បាន​ជ្រើស​នីមួយៗ​ទៅ​ក្នុង​ឯកសារ PNG ផ្ទាល់​របស់​វា ដោយ​ប្រើ​ជំនួយ​នាំចេញ ប្រសិន​បើ​មាន (ប្រយ័ត្ន សរសេរ​ជាន់​លើ​ដោយ​មិន​បាន​សួរ!)"
 
 #: ../src/dialogs/export.cpp:627
-#, fuzzy
 msgid "Hide all except selected"
 msgstr "លាក់ទាំងអស់ លើកលែង​តែ​អ្វី​ដែល​បាន​ជ្រើស"
 
@@ -2785,13 +2780,11 @@ msgstr "ស្លាក​​ទម្រង់​​សេរី​​សម្
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
-#, fuzzy
 msgid "_Title"
 msgstr "ចំណង​ជើង"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:191
-#, fuzzy
 msgid "_Description"
 msgstr "សេចក្ដី​ពិពណ៌នា"
 
@@ -2816,9 +2809,8 @@ msgstr "គូស​ធីក​ដើម្បី​ធ្វើ​ឲ្យ​
 
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:243
-#, fuzzy
 msgid "_Interactivity"
-msgstr "កា​រប្រសព្វ​គ្នា​"
+msgstr "អន្តរសកម្មភាព​"
 
 #: ../src/dialogs/item-properties.cpp:317
 #: ../src/dialogs/item-properties.cpp:324
@@ -2939,82 +2931,77 @@ msgstr "លក្ខណៈសម្បត្តិ %s"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>បាន​បញ្ចប់</b> ដោយ​បាន​បន្ថែម​ពាក្យ​ចំនួន <b>%d</b> ទៅកាន់​វចនានុក្រម"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr ""
+msgstr "<b>បាន​បញ្ចប់</b> ដោយ​គ្មាន​បញ្ហា​អ្វី​ទាំងអស់"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr ""
+msgstr "មិនមាន​ក្នុង​វចនានុក្រម (%s) ៖ <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
 msgid "<i>Checking...</i>"
-msgstr ""
+msgstr "<i>កំពុង​ពិនិត្យ​...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
 msgid "Fix spelling"
 msgstr ""
 
 #: ../src/dialogs/spellcheck.cpp:956
-#, fuzzy
 msgid "Suggestions:"
-msgstr "គុណភាព​បង្ហាញ​ ៖"
+msgstr "សំណើ ៖"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "_Accept"
-msgstr ""
+msgstr "ទទួលយក"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "Accept the chosen suggestion"
-msgstr ""
+msgstr "ទទួល​យក​សំណើ​ដែលបាន​ជ្រើស"
 
 #: ../src/dialogs/spellcheck.cpp:970
-#, fuzzy
 msgid "_Ignore once"
-msgstr "មិន​អើពើ"
+msgstr "មិន​អើពើ​តែ​ម្ដង"
 
 #: ../src/dialogs/spellcheck.cpp:970
 msgid "Ignore this word only once"
-msgstr ""
+msgstr "មិន​អើពើ​នឹង​ពាក្យ​នេះ​តែ​ម្ដងទេ"
 
 #: ../src/dialogs/spellcheck.cpp:972
-#, fuzzy
 msgid "_Ignore"
 msgstr "មិន​អើពើ"
 
 #: ../src/dialogs/spellcheck.cpp:972
 msgid "Ignore this word in this session"
-msgstr ""
+msgstr "មិន​អើពើ​នឹង​ពាក្យ​​នេះ​នៅ​ក្នុង​សម័យ​នេះ"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "A_dd to dictionary:"
-msgstr ""
+msgstr "បន្ថែម​វចនានុក្រម ៖"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "Add this word to the chosen dictionary"
-msgstr ""
+msgstr "បន្ថែម​ពាក្យ​ទាំងនេះ​ទៅកាន់​វចនានុក្រម​ដែលបាន​ជ្រើស"
 
 #: ../src/dialogs/spellcheck.cpp:1012
-#, fuzzy
 msgid "_Stop"
-msgstr "កំណត់​"
+msgstr "បញ្ឈប់"
 
 #: ../src/dialogs/spellcheck.cpp:1012
 msgid "Stop the check"
-msgstr ""
+msgstr "បញ្ឈប់​ការ​ពិនិត្យ"
 
 #: ../src/dialogs/spellcheck.cpp:1014
-#, fuzzy
 msgid "_Start"
 msgstr "ចាប់ផ្ដើម"
 
 #: ../src/dialogs/spellcheck.cpp:1014
 msgid "Start the check"
-msgstr ""
+msgstr "ចាប់ផ្ដើម​ការ​ពិនិត្យ"
 
 #: ../src/dialogs/text-edit.cpp:198
 msgid "Font"
@@ -3298,13 +3285,13 @@ msgstr "កំណត់​ថាតើ​ដើម្បី​ត្រូវ​
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "ខ្ទាស់​ទៅកាន់​តែ​បន្ទាត់​ក្រឡាចត្រង្គ​ដែល​មើលឃើញ"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
-msgstr ""
+msgstr "នៅពេល​ដែល​បាន​បង្រួម វា​នឹង​បង្ហាញ​បន្ទាត់​ក្រឡា​ចត្រង្គ​ទាំងអស់​នោះ​ទេ ។ ក្រឡាចត្រង្គ​ដែល​​មើលឃើញ​នឹង​ត្រូវបាន​ភ្ជាប់"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3342,180 +3329,147 @@ msgstr "ប្រសិន​បើ​បានកំណត់ បង្ហា�
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
 #: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
 msgid "UNDEFINED"
-msgstr ""
+msgstr "មិនបាន​កំណត់"
 
 #: ../src/display/snap-indicator.cpp:66
-#, fuzzy
 msgid "grid line"
-msgstr "គោលការណ៍​​ណែនាំ​"
+msgstr "បន្ទាត់​ក្រឡាចត្រង្គ​"
 
 #: ../src/display/snap-indicator.cpp:69
-#, fuzzy
 msgid "grid intersection"
-msgstr "ខ្ទាស់​ទៅ​ចំណុច​ប្រសព្វ​បន្ទាត់នាំផ្លូវ​ក្រឡាចត្រង្គ"
+msgstr "ចំណុច​ប្រសព្វ​ក្រឡា​ចត្រង្គ"
 
 #: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr "បន្ទាត់​ក្រឹត​"
 
 #: ../src/display/snap-indicator.cpp:75
-#, fuzzy
 msgid "guide intersection"
-msgstr "ខ្ទាស់​ទៅ​ចំណុច​ប្រសព្វ​បន្ទាត់នាំផ្លូវ​ក្រឡាចត្រង្គ"
+msgstr "ចំណុច​ប្រសព្វ​ក្រឡា​ចត្រង្គ"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "grid-guide intersection"
-msgstr "ខ្ទាស់​ទៅ​ចំណុច​ប្រសព្វ​បន្ទាត់នាំផ្លូវ​ក្រឡាចត្រង្គ"
+msgstr "ចំណុច​ប្រសព្វ​បន្ទាត់​ក្រិត​ក្រឡាចត្រង្គ"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "cusp node"
-msgstr "ខ្ទាស់​ទៅ​ថ្នាំង"
+msgstr "ថ្នាំង​អុចៗ"
 
 #: ../src/display/snap-indicator.cpp:84
-#, fuzzy
 msgid "smooth node"
-msgstr "ភាព​រលោង"
+msgstr "ថ្នាំង​រលោង"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "path"
 msgstr "ផ្លូវ"
 
 #: ../src/display/snap-indicator.cpp:90
-#, fuzzy
 msgid "path intersection"
-msgstr "ប្រសព្វ"
+msgstr "ចំណុច​ប្រសព្វ​ផ្លូវ"
 
 #: ../src/display/snap-indicator.cpp:93
-#, fuzzy
 msgid "bounding box corner"
-msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ជ្រុង​ប្រអប់​លោតៗ"
 
 #: ../src/display/snap-indicator.cpp:96
-#, fuzzy
 msgid "bounding box side"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "ចំហៀង​ប្រអប់​លោតៗ"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:102
-#, fuzzy
 msgid "page border"
-msgstr "ពណ៌​ស៊ុម​ទំព័រ"
+msgstr "ស៊ុម​ទំព័រ"
 
 #: ../src/display/snap-indicator.cpp:105
-#, fuzzy
 msgid "line midpoint"
-msgstr "ទទឹង​បន្ទាត់"
+msgstr "ចំណុច​កណ្ដាល​បន្ទាត់"
 
 #: ../src/display/snap-indicator.cpp:108
-#, fuzzy
 msgid "object midpoint"
-msgstr "វត្ថុ​"
+msgstr "ចំណុច​កណ្ដាល​វត្ថុ"
 
 #: ../src/display/snap-indicator.cpp:111
-#, fuzzy
 msgid "object rotation center"
-msgstr "រក​វត្ថុ​ក្នុង​ឯកសារ​"
+msgstr "ចំណុច​កណ្ដាល​សម្រាប់​បង្វិល​វត្ថុ"
 
 #: ../src/display/snap-indicator.cpp:114
-#, fuzzy
 msgid "handle"
-msgstr "ស្រមោល​"
+msgstr "ចំណុច​ទាញ"
 
 #: ../src/display/snap-indicator.cpp:117
-#, fuzzy
 msgid "bounding box side midpoint"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "ចំណុច​កណ្ដាល​ចំហៀង​ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:120
-#, fuzzy
 msgid "bounding box midpoint"
-msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ចំណុច​កណ្ដាល​ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:123
-#, fuzzy
 msgid "page corner"
-msgstr "ពណ៌​ស៊ុម​ទំព័រ"
+msgstr "ជ្រុង​នៃ​ទំព័រ"
 
 #: ../src/display/snap-indicator.cpp:126
 msgid "convex hull corner"
-msgstr ""
+msgstr "ជ្រុង​សំបក​ដែល​មាន​ផ្ទៃ​ខាងក្រៅ​កោង"
 
 #: ../src/display/snap-indicator.cpp:129
-#, fuzzy
 msgid "quadrant point"
-msgstr "ពង្រីក​ចន្លោះ​បន្ទាត់"
+msgstr "ចំណុច​អ័ក្ស ៩០ ដឺក្រេ"
 
 #: ../src/display/snap-indicator.cpp:132
-#, fuzzy
 msgid "center"
 msgstr "កណ្តាល"
 
 #: ../src/display/snap-indicator.cpp:135
-#, fuzzy
 msgid "corner"
 msgstr "ជ្រុង"
 
 #: ../src/display/snap-indicator.cpp:138
-#, fuzzy
 msgid "text baseline"
-msgstr "តម្រឹម​បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
+msgstr "បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
 
 #: ../src/display/snap-indicator.cpp:151
-#, fuzzy
 msgid "Bounding box corner"
-msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ជ្រុង​ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:154
-#, fuzzy
 msgid "Bounding box midpoint"
-msgstr "ជ្រុង​ប្រអប់​ព្រំដែន"
+msgstr "ចំណុច​កណ្ដាល​ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:157
-#, fuzzy
 msgid "Bounding box side midpoint"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "ចំណុច​កណ្ដាល​ចំហៀង​របស់​ប្រអប់​លោត"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Smooth node"
-msgstr "ភាព​រលោង"
+msgstr "ថ្នាំង​រលោង"
 
 #: ../src/display/snap-indicator.cpp:163
-#, fuzzy
 msgid "Cusp node"
-msgstr "របៀប​ចុច"
+msgstr "ថ្នាំង​អុចៗ"
 
 #: ../src/display/snap-indicator.cpp:166
-#, fuzzy
 msgid "Line midpoint"
-msgstr "ទទឹង​បន្ទាត់"
+msgstr "ចំណុច​កណ្ដាល​បន្ទាត់"
 
 #: ../src/display/snap-indicator.cpp:169
-#, fuzzy
 msgid "Object midpoint"
-msgstr "វត្ថុ​"
+msgstr "ចំណុច​កណ្ដាល​វត្ថុ"
 
 #: ../src/display/snap-indicator.cpp:172
-#, fuzzy
 msgid "Object rotation center"
-msgstr "វត្ថុ​ទៅ​លំនាំ​"
+msgstr "ចំណុច​កណ្ដាល​សម្រាប់​បង្វិល​វត្ថុ"
 
 #: ../src/display/snap-indicator.cpp:175
-#, fuzzy
 msgid "Handle"
-msgstr "មុំ"
+msgstr "ចំណុច​ទាញ"
 
 #: ../src/display/snap-indicator.cpp:178
-#, fuzzy
 msgid "Path intersection"
-msgstr "ប្រសព្វ"
+msgstr "ចំណុច​ប្រសព្វ​ផ្លូវ"
 
 #: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
@@ -3523,30 +3477,27 @@ msgstr "បន្ទាត់ក្រឹត​"
 
 #: ../src/display/snap-indicator.cpp:184
 msgid "Convex hull corner"
-msgstr ""
+msgstr "ជ្រុង​សំបក​ដែល​មាន​ផ្ទៃ​កោង"
 
 #: ../src/display/snap-indicator.cpp:187
 msgid "Quadrant point"
-msgstr ""
+msgstr "ចំណុច​អ័ក្ស ៩០ ដឺក្រេ"
 
 #: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6700
 msgid "Center"
 msgstr "កណ្តាល"
 
 #: ../src/display/snap-indicator.cpp:193
-#, fuzzy
 msgid "Corner"
 msgstr "ជ្រុង"
 
 #: ../src/display/snap-indicator.cpp:196
-#, fuzzy
 msgid "Text baseline"
-msgstr "តម្រឹម​បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
+msgstr "បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
 
 #: ../src/display/snap-indicator.cpp:235
-#, fuzzy
 msgid " to "
-msgstr " ពី "
+msgstr " ទៅកាន់ "
 
 #: ../src/document.cpp:445
 #, c-format
@@ -4045,7 +3996,7 @@ msgstr "លៃតម្រូវ"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr ""
+msgstr "បង្កើន ឬ​បន្ថយ​កម្រិត​ពន្លឺ​នៅ​ក្នុង​ផែនទី​រូបភាព"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -4074,14 +4025,12 @@ msgid "Edge"
 msgstr "គែម"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
-msgstr "បន្លិច​គែម​របស់​រូបភាព​ដែល​បាន​ជ្រើស ។"
+msgstr "បន្លិច​គែម​របស់​ផែនទី​រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
-msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ក្រឡោត -- បន្លិច​គែម​ដោយ​បែបផែន​ត្រីមាត្រ ។"
+msgstr "ដាក់​ឲ្យ​ផុស​រូបភាព​ដែល​បាន​ជ្រើស -- បន្លិច​គែម​ជា​បែបផែន​ត្រីមាត្រ ។"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -4160,9 +4109,8 @@ msgid ""
 msgstr "ដាក់​កម្រិត​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ធ្វើ​មាត្រដ្ឋាន​តម្លៃ​ធ្លាក់ចុះ​រវាង​ជួរ​ដែល​បាន​ផ្ដល់​ទៅ​ជួរ​ពណ៌​ពេញលេញ ។"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "មធ្យម"
+msgstr "មេដ្យាន"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 #, fuzzy
@@ -4172,9 +4120,8 @@ msgid ""
 msgstr "ត្រង​រូបភាព​ដែល​បាន​ជ្រើស​ដោយ​ជំនួយ​សមាសភាគ​ភីកសែល​នីមួយៗ​ដោយពណ៌​មេឌីដ្យាន​នៅ​ក្នុង​​ពណ៌​ជិតខាង​ជា​រង្វង់ ។"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
-#, fuzzy
 msgid "HSB Adjust"
-msgstr "លៃ​តម្រូវ​ភាពលាំៗ​នៃពណ៌"
+msgstr "ការ​លៃតម្រូវ HSB"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
@@ -4200,9 +4147,8 @@ msgid "Brightness"
 msgstr "ពន្លឺ"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-#, fuzzy
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
-msgstr "ផ្លាស់ប្ដុរ​ភាពលាំៗ​នៃពណ៌​គិត​ជា​ភាគរយ តិត្ថិភាព និង​ពន្លឺ​របស់​រូបភាព​ដែល​បាន​ជ្រើស ។"
+msgstr "លៃតម្រូវ​​ពណ៌​លាំៗ តិត្ថិភាព និង​ពន្លឺ​នៅ​ក្នុង​រូបភាព​ដែលបាន​ជ្រើស"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -4262,14 +4208,12 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅ​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Resample"
-msgstr "គំរូ"
+msgstr "ធ្វើ​គំរូ"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-#, fuzzy
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "បន្ទាប់​ពីគុណភាព​បង្ហាញ​របស់រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ផ្លាស់ប្ដូរ​ទំហំវា ដោយ​ផ្ដល់​វិមាត្រ​ដែល​បានផ្ដល់ ។"
+msgstr "ឆ្លាស់​គុណភាព​បង្ហាញ​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្ដូរ​ទំហំ​ទៅ​តាម​ទំហំ​ភីកសែល​ដែល​បាន​ផ្ដល់"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -4278,7 +4222,7 @@ msgstr "ស្រមោល​"
 #: ../src/extension/internal/bitmap/shade.cpp:41
 #: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Azimuth"
-msgstr "Azimuth"
+msgstr "មុំ Azimuth"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:955
@@ -4523,9 +4467,8 @@ msgstr "ទម្លាក់​ស្រមោល"
 
 #: ../src/extension/internal/filter/drop-shadow.h:37
 #: ../src/extension/internal/filter/drop-shadow.h:92
-#, fuzzy
 msgid "Blur radius, px"
-msgstr "r - កាំ​ស្ពឺ (ភីកសែល)"
+msgstr "កាំ​ព្រិល គិត​ជា​ភីកសែល"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:93
@@ -4580,7 +4523,7 @@ msgstr "ឈ្មោះ​ថត​ម៉ូឌុល​ខាង​ក្រៅ
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow crest"
-msgstr ""
+msgstr "ពពុះ​ព្រិល"
 
 #: ../src/extension/internal/filter/snow.h:34
 msgid "Drift Size"
@@ -4764,7 +4707,7 @@ msgstr "នាំចូល​អត្ថបទ​ជា​អត្ថបទ​
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "ជំនួស​ពុម្ពអក្សរ PDF ដោយ​ពុម្ព​អក្សរ​ដែល​បាន​ដំឡើង​រួច និង​មាន​ឈ្មោះ​ដូចគ្នា"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -6355,9 +6298,8 @@ msgid "doEffect stack test"
 msgstr "សាកល្បង​ជង់ doEffect"
 
 #: ../src/live_effects/effect.cpp:87
-#, fuzzy
 msgid "Angle bisector"
-msgstr "មុំ​នៅ​ក្នុង​ទិសដៅ X"
+msgstr "បន្ទាត់​ពុះ​មុំ"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
@@ -6371,12 +6313,11 @@ msgstr "រង្វង់ (តាម​ផ្ចិត និង​កាំ)"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "រង្វង់​មាន​បន្ទាត់​ប៉ះ​បី​ចំណុច"
 
 #: ../src/live_effects/effect.cpp:92
-#, fuzzy
 msgid "Dynamic stroke"
-msgstr "ខ្វាច់​ពណ៌​ខ្មៅ​"
+msgstr "គំនូស​វាស​ឌីណាមិក​"
 
 #: ../src/live_effects/effect.cpp:93
 msgid "Lattice Deformation"
@@ -6471,7 +6412,7 @@ msgstr "កែខៃ​ផ្លូវ​រង"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "គំនូស​ឆ្នូត (គ្រើម)"
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Sketch"
@@ -6530,14 +6471,12 @@ msgid "Specifies the right end of the bisector"
 msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​ភាគ​ស្មើ​គ្នា​ទាំងពីរ"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:59
-#, fuzzy
 msgid "Adjust the \"left\" end of the bisector"
-msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​បន្ទាត់​ពុះ​មុន​នៅ​ចុង​ខាង​\"ឆ្វេង\""
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:60
-#, fuzzy
 msgid "Adjust the \"right\" of the bisector"
-msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​បន្ទាត់​ពុះ​មុន​នៅ​ចុង​ខាង​\"ស្ដាំ\""
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
@@ -6570,7 +6509,7 @@ msgstr "បង្វិល​ ៩០ ដឺក្រេ​ដើម មុន​
 
 #: ../src/live_effects/lpe-boolops.cpp:23
 msgid "Null"
-msgstr ""
+msgstr "គ្មាន"
 
 #: ../src/live_effects/lpe-boolops.cpp:24
 msgid "Intersect"
@@ -6648,7 +6587,7 @@ msgstr "មុំ​បង្វិល"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Angle between two successive copies"
-msgstr ""
+msgstr "មុំ​រវាង​ច្បាប់​ចម្លង​ពីរ​បន្ត​គ្នា"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
 msgid "Number of copies"
@@ -6664,7 +6603,7 @@ msgstr "ដើម"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:50
 msgid "Origin of the rotation"
-msgstr ""
+msgstr "ភាព​ដើម​នៃ​ការ​បង្វិល"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:61
 msgid "Adjust the starting angle"
@@ -6819,9 +6758,8 @@ msgid "Choose end capping type"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
-#, fuzzy
 msgid "Grow for"
-msgstr "របៀប​ពង្រីក​"
+msgstr "ពន្លឺ​ភ្លឺ​រយៈ​ពេល​"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Make the stroke thiner near it's start"
@@ -6829,31 +6767,27 @@ msgstr "ធ្វើ​ឲ្យ​គំនូសវាស​កាន់​ត
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Fade for"
-msgstr ""
+msgstr "រសាត់​បាត់​រយៈពេល"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Make the stroke thiner near it's end"
 msgstr "ធ្វើ​ឲ្យ​គំនូសវាស​កាន់តែ​ស្ដើង​ទៅកាន់​ចុង​បញ្ចប់​របស់​វា"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
 msgid "Round ends"
-msgstr "បាន​ធ្វើ​ឲ្យ​មូល"
+msgstr "មូល​នៅ​ខាង​ចុង"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
 msgid "Strokes end with a round end"
-msgstr "បម្រែបម្រួល​ប្រវែង​ស្នាម​គូស"
+msgstr "ចុង​គំនូស​វាស​​គឺ​មូល​នៅ​ខាង​ចុង"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
-#, fuzzy
 msgid "Capping"
-msgstr "ការ​ធ្វើ​ឲ្យ​គម្រប​មូល"
+msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
-#, fuzzy
 msgid "left capping"
-msgstr "បើក​កា​រខ្ទាស់"
+msgstr ""
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -6922,9 +6856,8 @@ msgid ""
 msgstr "មុំ​គាប​ធ្មេញ (តាម​ធម្មតា ២០-២៥ ដឺក្រេ) ។  សមាមាត្រ​របស់​ធ្មេញ​នៅ​ក្នុង​ទំនាក់ទំនង​ទេ ។"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Trajectory"
-msgstr "កត្តា"
+msgstr "គន្លង"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
 #, fuzzy
@@ -6941,9 +6874,8 @@ msgid "Determines the number of steps from start to end path."
 msgstr "កំណត់​ចំនួន​ជំហាន​ពី​ដើម​ផ្លូវ រហូត​ដល់​ចុង ។"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "ពង្រីក​ចន្លោះ​បន្ទាត់"
+msgstr "គម្លាត​ស្មើ​គ្នា"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid ""
@@ -6955,16 +6887,15 @@ msgstr ""
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Interruption width"
-msgstr ""
+msgstr "ទទឹង​បញ្ឈប់"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
-msgstr ""
+msgstr "ទំហំ​តំបន់​ដែល​លាក់​របស់​ខ្សែអក្សរ​ដែល​ទាប"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "unit of stroke width"
-msgstr "លៃ​តម្រូវ​ទទឹង​ស្នាម​គូស"
+msgstr "ឯកតា​ទទឹង​គំនូស​វាស"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
