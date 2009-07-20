@@ -59,11 +59,21 @@ if [[ ! -e "$HOME/.gtkrc-2.0" ]]; then
 	export GTK2_RC_FILES="$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/gtkrc"
 fi
 
-# TODO: Have to add ".UTF-8" to the LANG since ommiting causes Inkscape
+# If the AppleCollationOrder preference doesn't exist, we fall back to using
+# the AppleLocale preference.
+LANGSTR=`defaults read .GlobalPreferences AppleCollationOrder 2>/dev/null`
+if [ "x$LANGSTR" == "x" ]
+then
+    echo "Warning: AppleCollationOrder setting not found, using AppleLocale."
+    LANGSTR=`defaults read .GlobalPreferences AppleLocale 2>/dev/null | \
+            sed 's/_.*//'`
+fi
+
+# NOTE: Have to add ".UTF-8" to the LANG since omitting causes Inkscape
 #       to crash on startup in locale_from_utf8().
-export LANG="`grep \"\`defaults read .GlobalPreferences AppleCollationOrder \
-	2>&1\`_\" /usr/share/locale/locale.alias | tail -n1 | sed 's/\./ /' | \
-	awk '{print $2}'`.UTF-8"
+export LANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
+	tail -n1 | sed 's/\./ /' | awk '{print $2}'`.UTF-8"
+echo "Setting Language: $LANG"
 
 # Handle the case where the directory storing Inkscape has a '#' in the name.
 # This '#' needs to be escaped in pango.modules for Pango to work properly.
