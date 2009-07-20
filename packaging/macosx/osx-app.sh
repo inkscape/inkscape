@@ -1,12 +1,13 @@
 #!/bin/bash
 #
 # USAGE
-# osx-app [-s] [-py /path/to/python/modules] [-l /path/to/libraries] -b /path/to/bin/inkscape -p /path/to/Info.plist
+# osx-app [-s] [-l /path/to/libraries] -py /path/to/python/modules [-l /path/to/libraries] -b /path/to/bin/inkscape -p /path/to/Info.plist
 #
 # This script attempts to build an Inkscape.app package for OS X, resolving
-# dynamic libraries, etc.	 
-# It strips the executable and libraries if '-s' is given.
-# It adds python modules if the '-py option' is given
+# dynamic libraries, etc.
+# 
+# If the '-s' option is given, then the libraries and executable are stripped.
+# 
 # The Info.plist file can be found in the base inkscape directory once
 # configure has been run.
 #
@@ -16,8 +17,8 @@
 #		 Jean-Olivier Irisson <jo.irisson@gmail.com>
 # 
 # Copyright (C) 2005 Kees Cook
-# Copyright (C) 2005-2007 Michael Wybrow
-# Copyright (C) 2007 Jean-Olivier Irisson
+# Copyright (C) 2005-2009 Michael Wybrow
+# Copyright (C) 2007-2009 Jean-Olivier Irisson
 #
 # Released under GNU GPL, read the file 'COPYING' for more information
 #
@@ -49,7 +50,7 @@ echo -e "
 Create an app bundle for OS X
 
 \033[1mUSAGE\033[0m
-	$0 [-s] [-py /path/to/python/modules] [-l /path/to/libraries] -b /path/to/bin/inkscape -p /path/to/Info.plist
+	$0 [-s] [-l /path/to/libraries] -py /path/to/python/modules -b /path/to/bin/inkscape -p /path/to/Info.plist
 
 \033[1mOPTIONS\033[0m
 	\033[1m-h,--help\033[0m 
@@ -109,11 +110,42 @@ done
 echo -e "\n\033[1mCREATE INKSCAPE APP BUNDLE\033[0m\n"
 
 # Safety tests
-if [ ${add_python} = "true" ]; then
-	if [ ! -e "$python_dir" ]; then
-		echo "Cannot find the directory containing python modules: $python_dir" >&2
-		exit 1
-	fi
+
+if [ "x$binary" == "x" ]; then
+	echo "Inkscape binary path not specified." >&2
+	exit 1
+fi
+
+if [ ! -x "$binary" ]; then
+	echo "Inkscape executable not not found at $binary." >&2
+	exit 1
+fi
+
+if [ "x$plist" == "x" ]; then
+	echo "Info.plist file not specified." >&2
+	exit 1
+fi
+
+if [ ! -f "$plist" ]; then
+	echo "Info.plist file not found at $plist." >&2
+	exit 1
+fi
+
+PYTHONPACKURL="http://inkscape.modevia.com/macosx-snap/Python-packages.dmg"
+
+if [ "x$python_dir" == "x" ]; then
+	echo "Python modules directory not specified." >&2
+	echo "Python modules can be downloaded from:" >&2
+	echo "    $PYTHONPACKURL" >&2
+	exit 1
+fi
+
+if [ ! -e "$python_dir/i386" -o ! -e "$python_dir/ppc" ]; then
+	echo "Directory does not appear to contain the i386 and ppc python modules:" >&2
+	echo "    $python_dir" >&2
+	echo "Python modules can be downloaded from:" >&2
+	echo "    $PYTHONPACKURL" >&2
+	exit 1
 fi
 
 if [ ! -e "$LIBPREFIX" ]; then
@@ -134,21 +166,6 @@ fi
 if [ ! -e "$LIBPREFIX/lib/aspell-0.60/en.dat" ]; then
 	echo "Missing aspell en dictionary -- please install at least 'aspell-dict-en', but" >&2
 	echo "preferably all dictionaries ('aspell-dict-*') and try again." >&2
-	exit 1
-fi
-
-if [ ! -f "$binary" ]; then
-	echo "Need Inkscape binary" >&2
-	exit 1
-fi
-
-if [ ! -f "$plist" ]; then
-	echo "Need plist file" >&2
-	exit 1
-fi
-
-if [ ! -x "$binary" ]; then
-	echo "Not executable: $binary" >&2
 	exit 1
 fi
 
