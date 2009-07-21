@@ -21965,7 +21965,7 @@ msgstr ""
 "\n"
 " [: запам’ятати точку\n"
 "\n"
-"]: повернутися до точки"
+"]: повернутися до точки\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
