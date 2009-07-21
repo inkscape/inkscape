@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-20 16:30+0700\n"
+"PO-Revision-Date: 2009-07-21 16:34+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -6903,11 +6903,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
-msgstr ""
+msgstr "បន្ថែម​ទទឹង​គំនូស​វៀស​ទៅកាន់​ទំហំ​បញ្ឈប់"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "បន្ថែម​ទទឹង​​គំនូស​វាស​ទៅកាន់​ទំហំ​បញ្ឈប់ ។"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
@@ -10424,19 +10424,16 @@ msgid "Push path tweak"
 msgstr "រុញ​បង្វិល​ផ្លូវ"
 
 #: ../src/tweak-context.cpp:1282
-#, fuzzy
 msgid "Shrink/grow path tweak"
-msgstr "បង្រួញ​ការ​លៃតម្រូវ"
+msgstr "បង្រួម/​ពង្រីក​ការ​លៃតម្រូវ​ផ្លូវ"
 
 #: ../src/tweak-context.cpp:1286
-#, fuzzy
 msgid "Attract/repel path tweak"
-msgstr "ទាញ​ការ​លៃ​តម្រូវ"
+msgstr "ទាញ​/​ច្រាន​ចេញ​ការ​កែតម្រូវ​ផ្លូវ"
 
 #: ../src/tweak-context.cpp:1290
-#, fuzzy
 msgid "Roughen path tweak"
-msgstr "ធ្វើ​ឲ្យ​ការ​លៃ តម្រូវ​គគ្រើម"
+msgstr "ធ្វើ​ឲ្យ​ការ​កែតម្រូវ​ផ្លូវ​គ្រើម"
 
 #: ../src/tweak-context.cpp:1294
 msgid "Color paint tweak"
@@ -10447,9 +10444,8 @@ msgid "Color jitter tweak"
 msgstr "ច្របល់​ពណ៌​កា​រលៃតម្រូវ"
 
 #: ../src/tweak-context.cpp:1302
-#, fuzzy
 msgid "Blur tweak"
-msgstr "ចុច​ការ​លៃតម្រូវ"
+msgstr "ធ្វើ​ឲ្យ​ការលៃ​តម្រូវ​ព្រិល"
 
 #. check whether something is selected
 #: ../src/ui/clipboard.cpp:255
@@ -13274,13 +13270,10 @@ msgid "Force repeat commands"
 msgstr "បង្ខំ​ពាក្យ​បញ្ជា​ធ្វើ​ម្ដង​ទៀត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1032
-#, fuzzy
 msgid ""
 "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead "
 "of 'L 1,2 3,4')"
-msgstr ""
-"បើ​កំណត់ បង្ខំ​ធ្វើ​ម្ដង​ទៀត​នៃ​ពាក្យ​បញ្ជា​ដូច​គ្នា (ឧ. ទិន្នផល 'L 1,2 L 3,4' ជំនួស​ឲ្យ 'L 1,2 "
-"3,4') ។"
+msgstr "តម្រូវ​ឲ្យ​ប្រើ​ការ​ធ្វើ​ឡើងវិញ​នៃ​ពាក្យ​បញ្ជា​ផ្លូវ​ដដែលៗ (ឧទាហរណ៍ 'L 1,2 L 3,4' ជំនួស​ឲ្យ 'L 1,2 3,4')"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1034
 msgid "Numbers"
@@ -13633,7 +13626,7 @@ msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
 "display objects in their true sizes"
-msgstr ""
+msgstr "លៃ​តម្រូវ​គ្រាប់​រំកិល ទាល់តែ​​ប្រវែង​បន្ទាត់​នៅលើ​អេក្រង់​របស់​អ្នក​ត្រូវគ្នា​នឹង​ប្រវែង​ពិត​របស់​វា ។ ព័ត៌មាន​នេះ​គឺ​ត្រូវបាន​ប្រើ​នៅពេល​ពង្រីក​ទៅ 1:1, 1:2, ។ល។ ដើម្បី​បង្ហាញ​វត្ថុ​តាម​ទំហំ​ពិត​របស់​វា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
 msgid "Interface"
@@ -18212,7 +18205,7 @@ msgstr "ឧបករណ៍​សម្គាល់​ពាក់កណ្ដា
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
-msgstr ""
+msgstr "ចំណុច​សម្គាល់​កណ្ដាល គឺ​ត្រូវបាន​គូរ​នៅលើ​ថ្នាំង​ទាំងអស់​​របស់​ផ្លូវ និង​រូបរាង លើកលែង​តែ​ថ្នាំង​ដំបូង និង​ថ្នាំង​ចុងក្រោយ​ប៉ុណ្ណោះ"
 
 #: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
@@ -18950,11 +18943,11 @@ msgstr "បង្កើតជួរ​របស់​ចម្រៀក​បន
 
 #: ../src/widgets/toolbox.cpp:3848
 msgid "Paraxial"
-msgstr ""
+msgstr "បន្ទាត់​ពុះ​មុំ"
 
 #: ../src/widgets/toolbox.cpp:3849
 msgid "Create a sequence of paraxial line segments"
-msgstr ""
+msgstr "បង្កើត​លំដាប់​ចម្រៀក​បន្ទាត់​ពុះ​មុំ"
 
 #: ../src/widgets/toolbox.cpp:3857 ../src/widgets/toolbox.cpp:4248
 #: ../share/extensions/extrude.inx.h:3
@@ -19278,9 +19271,7 @@ msgstr "ស្តើង​ ៖"
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
-msgstr ""
-"តើ​ភាព​ស្ដើង​រហ័ស​ត្រូវ​ស្នាម​គូស (> 0 ធ្វើ​ឲ្យ​ស្នាម​គូស​លឿន​ហើយ​ស្ដើង​ជាង < 0 ធ្វើ​ឲ្យ​ពួក​វា​មាន​ស៊ុម 0 ធ្វើ​ឲ្យ​មាន​"
-"ទទឹង​ឯករាជ្យ​នៃ​ភាព​លឿន)"
+msgstr "តើ​ភាព​ស្ដើង​រហ័ស​ត្រូវ​ស្នាម​គូស (> 0 ធ្វើ​ឲ្យ​ស្នាម​គូស​លឿន​ហើយ​ស្ដើង​ជាង < 0 ធ្វើ​ឲ្យ​ពួក​វា​មាន​ស៊ុម 0 ធ្វើ​ឲ្យ​មាន​ទទឹង​ឯករាជ្យ​នៃ​ភាព​លឿន)"
 
 #. Angle
 #: ../src/widgets/toolbox.cpp:4743
@@ -19335,6 +19326,8 @@ msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = "
 "fixed angle)"
 msgstr ""
+"ឥរិយាបទ​មុំ (0 = nib គឺ​តែង​តែ​ពុះ​ត្រង់​ទៅកាន់​ទិសដៅ​ខ្វាច់ 100 = "
+"មុំ​ថេរ)"
 
 #. Cap Rounding
 #: ../src/widgets/toolbox.cpp:4777
@@ -19947,7 +19940,7 @@ msgstr "គ្មាន​ទិន្នន័យ​គែម​ដែល​ប
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "រក​មិនឃើញ​ទិន្នន័យ​ផ្ទៃ​ទេ ។ ត្រូវ​ប្រាកដ​ថា ឯកសារ​មាន​ទិន្នន័យ​ផ្ទៃ ហើយ​ពិនិត្យ​មើល​ឯកសារ​ដែល​ត្រូវបាន​នាំចូល​ជា \"ផ្ទៃ​ដែល​បាន​បញ្ជាក់\" នៅ​ក្រោម​ផ្ទាំង \"ឯកសារ​គំរូ\" ។\n"
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
