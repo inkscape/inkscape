@@ -42,7 +42,6 @@
 
 #if HAVE_GNOME
 #include <gconf/gconf-client.h>
-#include <libgnome/gnome-gconf.h>
 #endif
 
 static void gdl_switcher_set_property  (GObject            *object,
