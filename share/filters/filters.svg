@@ -1918,33 +1918,32 @@
 <feGaussianBlur id="feGaussianBlur2968" stdDeviation="0.01" in="result12" result="result7" />
 <feBlend blend="normal" id="feBlend2970" mode="screen" in2="result12" />
 </filter>
-<filter id="MarblInk0" inkscape:label="Marbled ink" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Marbled transparency effect" height="1.4" y="-0.2" width="1.4" x="-0.2">
-<feGaussianBlur id="feGaussianBlur3745" stdDeviation="2" result="result8" />
-<feGaussianBlur id="feGaussianBlur3747" stdDeviation="2" in="SourceGraphic" result="result9" />
-<feTurbulence id="feTurbulence3749" seed="0" result="result7" type="fractalNoise" numOctaves="10" baseFrequency="0.059999999999999998" in="result8" />
-<feColorMatrix id="feColorMatrix3751" type="matrix" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.5 -0.3 " />
-<feComposite id="feComposite3753" in2="result5" result="result6" operator="out" in="result8" />
-<feGaussianBlur stdDeviation="0.5" id="feGaussianBlur3763" result="result10" />
-<feDisplacementMap id="feDisplacementMap3755" in="result5" in2="result10" xChannelSelector="A" yChannelSelector="G" scale="120" result="result4" />
-<feComposite id="feComposite3757" in2="result4" result="result2" operator="in" in="result9" />
-<feComposite id="feComposite3759" result="fbSourceGraphic" in="result2" operator="in" in2="SourceGraphic" />
-<feBlend id="feBlend3761" mode="multiply" in2="result2" blend="normal" />
+<filter x="-0.2" width="1.4" y="-0.2" height="1.4" inkscape:menu-tooltip="Marbled transparency effect which conforms to image detected edges" inkscape:menu="Image effects, transparent" inkscape:label="Marbled ink" id="MarblInk0">
+<feGaussianBlur result="result9" in="SourceGraphic" stdDeviation="2" id="feGaussianBlur3021" />
+<feTurbulence in="result9" baseFrequency="0.059999999999999998" numOctaves="10" type="fractalNoise" result="result7" seed="0" id="feTurbulence3023" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.5 -0.3 " result="result5" type="matrix" id="feColorMatrix3025" />
+<feComposite in="result9" operator="out" result="result6" in2="result5" id="feComposite3027" />
+<feGaussianBlur result="result10" stdDeviation="0.5" id="feGaussianBlur3029" />
+<feDisplacementMap result="result4" scale="120" yChannelSelector="G" xChannelSelector="A" in2="result10" in="result5" id="feDisplacementMap3031" />
+<feComposite in="result9" operator="in" result="result2" in2="result4" id="feComposite3033" />
+<feComposite in2="SourceGraphic" operator="in" in="result2" result="fbSourceGraphic" id="feComposite3035" />
+<feBlend blend="normal" in2="result2" mode="multiply" id="feBlend3037" />
 </filter>
-<filter x="-0.15000001" width="1.3" y="-0.15000001" height="1.3" inkscape:menu-tooltip="Basic specular bevel to use for building textures" inkscape:menu="Bumps" inkscape:label="Thick acrylic" id="ThickAcr0">
-<feGaussianBlur result="result8" stdDeviation="2" id="feGaussianBlur3456" />
-<feGaussianBlur result="result9" in="SourceGraphic" id="feGaussianBlur3458" stdDeviation="1" />
-<feTurbulence in="result8" baseFrequency="0.02" numOctaves="5" type="fractalNoise" result="result7" seed="0" id="feTurbulence3460" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result5" id="feColorMatrix3462" type="matrix" />
-<feComposite in="result8" operator="out" result="result6" in2="result5" id="feComposite3464" />
-<feDisplacementMap result="result4" scale="120" yChannelSelector="G" xChannelSelector="A" in2="result6" in="result5" id="feDisplacementMap3466" />
-<feComposite in="result9" operator="in" result="result2" in2="result4" id="feComposite3468" />
-<feComposite in2="SourceGraphic" operator="in" result="fbSourceGraphic" id="feComposite3470" />
-<feBlend blend="normal" id="feBlend3472" mode="multiply" result="fbSourceGraphic" />
-<feDiffuseLighting diffuseConstant="0.7" surfaceScale="10" in="fbSourceGraphic" result="result10" id="feDiffuseLighting3476">
-<feDistantLight elevation="25" azimuth="235" id="feDistantLight3478" />
+<filter id="ThickAcryl0" x="-0.15000001" width="1.3" y="-0.15000001" height="1.3" inkscape:menu-tooltip="Thick acrylic paint texture with high texture depth" inkscape:menu="Bumps" inkscape:label="Thick acrylic">
+<feGaussianBlur id="feGaussianBlur2947" result="result9" in="SourceGraphic" stdDeviation="1" />
+<feTurbulence id="feTurbulence2949" in="result9" baseFrequency="0.02" numOctaves="5" type="fractalNoise" result="result7" seed="0" />
+<feColorMatrix id="feColorMatrix2951" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result5" type="matrix" />
+<feComposite id="feComposite2953" in="result9" operator="out" result="result6" in2="result5" k1="0.5" k2="1" />
+<feGaussianBlur stdDeviation="0.5" id="feGaussianBlur2971" result="result11" />
+<feDisplacementMap id="feDisplacementMap2955" result="result4" scale="100" yChannelSelector="G" xChannelSelector="A" in2="result11" in="result5" />
+<feComposite id="feComposite2957" in="result9" operator="in" result="result2" in2="result4" />
+<feComposite id="feComposite2959" in2="SourceGraphic" operator="in" result="fbSourceGraphic" />
+<feBlend id="feBlend2961" blend="normal" mode="multiply" result="fbSourceGraphic" />
+<feDiffuseLighting id="feDiffuseLighting2963" diffuseConstant="0.69999999999999996" surfaceScale="10" in="fbSourceGraphic" result="result10">
+<feDistantLight id="feDistantLight2965" elevation="25" azimuth="235" />
 </feDiffuseLighting>
-<feComposite id="feComposite3480" operator="in" result="result2" in="result10" in2="fbSourceGraphic" />
-<feComposite id="feComposite3482" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite2967" operator="in" result="result2" in="result10" in2="fbSourceGraphic" />
+<feComposite id="feComposite2969" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 </filter>
 <filter id="AlphengrB0" inkscape:label="Alpha engraving B" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Gives a controlable roughness engraving effect to bitmaps and materials" height="1" y="0" width="1" x="0">
 <feTurbulence id="feTurbulence3282" numOctaves="1" seed="0" type="fractalNoise" in="SourceGraphic" baseFrequency="0.10000000000000001" result="result1" />
