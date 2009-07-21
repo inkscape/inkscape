@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-11 01:45-0300\n"
-"PO-Revision-Date: 2009-06-27 02:52-0300\n"
-"Last-Translator: Frank Souza <franksouza183@gmail.com>\n"
+"PO-Revision-Date: 2009-07-21 13:32-0300\n"
+"Last-Translator: Valessio Brito <valessio@gmail.com>\n"
 "Language-Team: Português Brasil <inkscape-brasil@listas.softwarelivre.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -575,9 +575,8 @@ msgid "Neon light effect with glow"
 msgstr "Efeito de luz neon com incandescência"
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Molten metal"
-msgstr "Flex metal"
+msgstr "Metal Fundido"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Melting parts of object together, with a glossy bevel and a glow"
@@ -585,22 +584,20 @@ msgstr ""
 "Derrete partes do objeto juntamente com um relevo brilhante e incandescente"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Pressed steel"
-msgstr " R_edefinir "
+msgstr "Aço pressionado"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Pressed metal with a rolled edge"
-msgstr ""
+msgstr "Metal pressionado com borda laminada"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Matte Bevel"
-msgstr "Chanfro pastel"
+msgstr "Emblema Chanfrado"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr "Chanfro desfocado suavemente lembrando pastel colorido"
+msgstr "Chanfro suave lembrando pastel colorido"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Thin Membrane"
@@ -611,9 +608,8 @@ msgid "Thin like a soap membrane"
 msgstr "Borda fina e suave como a superfície de sabão"
 
 #: ../share/filters/filters.svg.h:54
-#, fuzzy
 msgid "Matte ridge"
-msgstr "Borda suave"
+msgstr "Borda cavada"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Soft pastel ridge"
@@ -645,29 +641,26 @@ msgid "Translucent"
 msgstr "Translúcido"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Illuminated translucent plastic or glass effect"
-msgstr "Efeito de plástico translúcido iluminado"
+msgstr "Efeito de plástico ou vidro translúcido e iluminado"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "suave"
+msgstr "Intra-Suavização"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Blur inner borders and intersections"
 msgstr "Desfocar bordas internas e interseções"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Iridescent beeswax"
-msgstr "Iridiscente cera"
+msgstr "Cera iridiscente"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
-"Waxy textura que mantém a sua cor através iridescência preencher mudança"
+"Textura de cera que mantem sua iridescência através da mudança da cor de "
+"preenchimento"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
@@ -686,14 +679,12 @@ msgid "A volcanic texture, a little like leather"
 msgstr "Uma textura vulcânica, lembrando levemente couro"
 
 #: ../share/filters/filters.svg.h:62
-#, fuzzy
 msgid "Bark"
-msgstr "Marca"
+msgstr "Casca de Árvore"
 
 #: ../share/filters/filters.svg.h:62
-#, fuzzy
 msgid "Bark texture, vertical; use with deep colors"
-msgstr "Casca textura, vertical; uso com cores profundas"
+msgstr "Textura de casca vertical; use com cores profundas"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
@@ -712,14 +703,12 @@ msgid "Stone wall texture to use with dark colors"
 msgstr "Textura de parede de pedras para usar com cores escuras"
 
 #: ../share/filters/filters.svg.h:65
-#, fuzzy
 msgid "Silk carpet"
-msgstr "Carpete pintado"
+msgstr "Tapete de seda"
 
 #: ../share/filters/filters.svg.h:65
-#, fuzzy
 msgid "Silk carpet texture, horizontal stripes"
-msgstr "Silk carpete textura, listras horizontais"
+msgstr "textura de tapete de seda, listras horizontais"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Refractive gel A"
@@ -749,44 +738,36 @@ msgstr ""
 "bordas"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Dragee"
-msgstr "Arrastar curva"
+msgstr "Dragée"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Gel Ridge with a pearlescent look"
-msgstr "Gel Ridge pearlescent com um olhar"
+msgstr "Relevo de Gel com aparência perolada"
 
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Raised border"
-msgstr "Levantar nó"
+msgstr "Borda Elevada"
 
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Strongly raised border around a flat surface"
-msgstr "Fortemente levantada em torno de uma superfície plana fronteira"
+msgstr "Borda fortemente levantada em torno de uma superfície plana"
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Metallized ridge"
-msgstr "Metalizada ridge"
+msgstr "Crista metalizada"
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Gel Ridge metallized at its top"
-msgstr "Gel Ridge metalizada em seu topo"
+msgstr "Contorno em relevo com topo metalizado"
 
 #: ../share/filters/filters.svg.h:72
-#, fuzzy
 msgid "Fat oil"
-msgstr "Cor uniforme"
+msgstr "Óleo Gorduroso"
 
 #: ../share/filters/filters.svg.h:72
-#, fuzzy
 msgid "Fat oil with some adjustable turbulence"
-msgstr "Fat óleo com alguma turbulência ajustável"
+msgstr "Óleo gorduroso com alguma turbulência ajustável"
 
 #: ../share/filters/filters.svg.h:73
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -794,14 +775,13 @@ msgid "Colorize"
 msgstr "Colorizar"
 
 #: ../share/filters/filters.svg.h:73
-#, fuzzy
 msgid "Gives the flood color to the dark parts of the image"
-msgstr "Dá a inundação cor escura para a parte da imagem"
+msgstr "Dá uma inundação de cor às partes escuras da imagem"
 
 #: ../share/filters/filters.svg.h:74
 #, fuzzy
 msgid "Parallel hollow"
-msgstr "Tipografia normal"
+msgstr "Canal Paralelo"
 
 #: ../share/filters/filters.svg.h:74 ../share/filters/filters.svg.h:75
 #: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
@@ -827,17 +807,17 @@ msgid "Opens a smooth hole inside the shape"
 msgstr "Cria uma abertura dentro da forma"
 
 #: ../share/filters/filters.svg.h:76
+#, fuzzy
 msgid "Black hole"
-msgstr "Abertura negra"
+msgstr "Buraco negro"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Creates a black light inside and outside"
 msgstr "Cria uma luz negra no interior e exterior"
 
 #: ../share/filters/filters.svg.h:77
-#, fuzzy
 msgid "Smooth outline"
-msgstr "Contorno da caixa"
+msgstr "Contorno suave"
 
 #: ../share/filters/filters.svg.h:77
 #, fuzzy
@@ -950,7 +930,7 @@ msgstr "Air Spray; ajustar o montante Deslocamento Mapa"
 #: ../share/filters/filters.svg.h:88
 #, fuzzy
 msgid "Warm inside"
-msgstr "Warm interior"
+msgstr "Aquecer interior"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, filled inside"
@@ -1368,8 +1348,9 @@ msgid "Burnt edges"
 msgstr "_Cantos de caixas limitadoras"
 
 #: ../share/filters/filters.svg.h:129
+#, fuzzy
 msgid "Torn edges with a dark inner blur"
-msgstr ""
+msgstr "Torn arestas com um interior escuro borrão"
 
 #: ../share/filters/filters.svg.h:130
 #, fuzzy
@@ -1654,8 +1635,9 @@ msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Tiger peles padrão com pregas e chanfro nas bordas"
 
 #: ../share/filters/filters.svg.h:165
+#, fuzzy
 msgid "Shaken liquid"
-msgstr ""
+msgstr "Chacoalhados líquido"
 
 #: ../share/filters/filters.svg.h:165
 #, fuzzy
@@ -1755,14 +1737,18 @@ msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Dá uma cor transparente gravura efeito de bitmaps e materiais"
 
 #: ../share/filters/filters.svg.h:176
+#, fuzzy
 msgid "Chewing gum"
-msgstr ""
+msgstr "Gomas de mascar"
 
 #: ../share/filters/filters.svg.h:176
+#, fuzzy
 msgid ""
 "Creates colourizable blotches which smoothly flow over the edges of the "
 "lines at their crossings"
 msgstr ""
+"Cria colorização em manchas que suavemente fluxo ao longo das bordas das "
+"linhas em suas passagens"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Black outline"
@@ -1788,8 +1774,9 @@ msgid "Inner shadow"
 msgstr "Raio interno:"
 
 #: ../share/filters/filters.svg.h:179
+#, fuzzy
 msgid "Adds a colorizable drop shadow inside"
-msgstr ""
+msgstr "Adiciona uma sombra colorizable queda no interior"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Dark and glow"
@@ -1805,8 +1792,9 @@ msgid "Darken edges"
 msgstr "Escurecer"
 
 #: ../share/filters/filters.svg.h:181
+#, fuzzy
 msgid "Darken the edges with an inner blur"
-msgstr ""
+msgstr "Escurecer as bordas com um interior borrão"
 
 #: ../share/filters/filters.svg.h:182
 #, fuzzy
@@ -1824,8 +1812,9 @@ msgid "Rough and dilate"
 msgstr "Rugoso e brilhante"
 
 #: ../share/filters/filters.svg.h:183
+#, fuzzy
 msgid "Create a turbulent contour around"
-msgstr ""
+msgstr "Criar um contorno em torno turbulento"
 
 #: ../share/filters/filters.svg.h:184
 #, fuzzy
@@ -1848,16 +1837,19 @@ msgid "Highly flexible specular bubbles with transparency"
 msgstr "Relevo especular altamente flexível com transparêcia"
 
 #: ../share/filters/filters.svg.h:186
+#, fuzzy
 msgid "Old postcard"
-msgstr ""
+msgstr "Cartão antigo"
 
 #: ../share/filters/filters.svg.h:186
+#, fuzzy
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "Ligeiramente posterize e chamar arestas como na velha postais impressos"
 
 #: ../share/filters/filters.svg.h:187
+#, fuzzy
 msgid "Fuzzy glow"
-msgstr ""
+msgstr "Fuzzy brilho"
 
 #: ../share/filters/filters.svg.h:188
 #, fuzzy
@@ -1865,8 +1857,9 @@ msgid "Dots transparency"
 msgstr "Ruído transparente"
 
 #: ../share/filters/filters.svg.h:188
+#, fuzzy
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Dá uma pointillist HSL sensíveis transparência"
 
 #: ../share/filters/filters.svg.h:189
 #, fuzzy
@@ -1874,8 +1867,9 @@ msgid "Canvas transparency"
 msgstr "Ruído transparente"
 
 #: ../share/filters/filters.svg.h:189
+#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "Dá uma tela sensível como HSL transparência."
 
 #: ../share/filters/filters.svg.h:190
 #, fuzzy
@@ -1883,9 +1877,10 @@ msgid "Smear transparency"
 msgstr "Ruído transparente"
 
 #: ../share/filters/filters.svg.h:190
+#, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which turn around color edges"
-msgstr ""
+msgstr "Paint objetos transparentes com uma turbulência que virar cor arestas"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
@@ -1893,8 +1888,9 @@ msgid "Thick paint"
 msgstr "Nenhuma pintura"
 
 #: ../share/filters/filters.svg.h:191
+#, fuzzy
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "Espessa pintura com efeito turbulência"
 
 #: ../share/filters/filters.svg.h:192
 #, fuzzy
@@ -1902,8 +1898,9 @@ msgid "Thick paint, glossy"
 msgstr "Rugoso e brilhante"
 
 #: ../share/filters/filters.svg.h:192
+#, fuzzy
 msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr ""
+msgstr "Espessa pintura com efeito turbulência e um verniz brilhante"
 
 # Enevoar, desfocar ou borrar? -- krishna
 # Desfoque, não é um verbo -- Frank
@@ -1913,16 +1910,19 @@ msgid "Burst"
 msgstr "Desfoque"
 
 #: ../share/filters/filters.svg.h:193
+#, fuzzy
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "Burst balão textura amassado e com buracos"
 
 #: ../share/filters/filters.svg.h:194
+#, fuzzy
 msgid "Burst, glossy"
-msgstr ""
+msgstr "Burst, brilhante"
 
 #: ../share/filters/filters.svg.h:194
+#, fuzzy
 msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr ""
+msgstr "Burst balão textura amassado com buracos e brilhante"
 
 #: ../share/filters/filters.svg.h:195
 #, fuzzy
@@ -1930,10 +1930,13 @@ msgid "Embossed leather"
 msgstr "Emboss shader NR"
 
 #: ../share/filters/filters.svg.h:195
+#, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
+"Combinar um HSL arestas detecção bata com um semelhante a couro ou lenhosa e "
+"textura colorizable"
 
 #: ../share/filters/filters.svg.h:196
 #, fuzzy
@@ -1941,8 +1944,9 @@ msgid "Carnaval"
 msgstr "Ciano"
 
 #: ../share/filters/filters.svg.h:196
+#, fuzzy
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "Pontos brancos evocating carnaval máscaras"
 
 #: ../share/filters/filters.svg.h:197
 #, fuzzy
@@ -1950,9 +1954,12 @@ msgid "Plastify"
 msgstr "Justificar"
 
 #: ../share/filters/filters.svg.h:197
+#, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
+"Combinar um HSL arestas detecção bata com uma superfície reflectora efeito "
+"ondulado"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -3368,7 +3375,9 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 #, fuzzy
 msgid ""
-"The id= attribute (only letters, digits, and the characters .-_: allowed)"
+""
+"_:The id= attribute (only letters, digits, and the characters .-_: allowed)"
+""
 msgstr ""
 "_:O id= atributo (apenas letras, dígitos, e caractéres .- são permitidos)"
 
@@ -7422,8 +7431,9 @@ msgid "Enable the left and right deformation paths"
 msgstr "Habilitar a esquerda e direita deformação caminhos"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
+#, fuzzy
 msgid "Enable top & bottom paths"
-msgstr ""
+msgstr "Ativar topo & fundo caminhos"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 #, fuzzy
@@ -7749,20 +7759,27 @@ msgstr ""
 "Aleatoriamente move 'topo' halfsturns para produzir variações magnitude."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "Paralelismo jitter: 1° lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
 msgstr ""
+"Adicionar direção aleatoriedade pelo movimento 'baixo' halfsturns "
+"tangencialmente à fronteira."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
 msgstr ""
+"Adicionar direcção aleatoriedade aleatoriamente pelo movimento 'topo' "
+"halfsturns tangencialmente à fronteira."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
@@ -7801,16 +7818,18 @@ msgid "Thickness: at 1st side"
 msgstr "Espessura: no 1° lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
+#, fuzzy
 msgid "Width at 'bottom' half turns"
-msgstr ""
+msgstr "Largura em 'baixo' meia voltas"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
 msgstr "no 2° lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
+#, fuzzy
 msgid "Width at 'top' halfturns"
-msgstr ""
+msgstr "Largura no 'topo' halfturns"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
@@ -7819,8 +7838,9 @@ msgstr "do 2° para o 1° lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
 msgid "Width of paths from 'top' to 'bottom' halfturns"
-msgstr ""
+msgstr "Largura de caminhos de 'topo' para 'baixo' halfturns"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
@@ -7901,8 +7921,9 @@ msgid "Major steps"
 msgstr "Principais Passos"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
+#, fuzzy
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "Traçar uma marca todos os grandes ... passos"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 #, fuzzy
@@ -7910,8 +7931,9 @@ msgid "Shift marks by"
 msgstr "Definir marcadores"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
+#, fuzzy
 msgid "Shift marks by this many steps"
-msgstr ""
+msgstr "Shift marcas por este muitos passos"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Mark direction"
@@ -7922,8 +7944,9 @@ msgid "Direction of marks (when viewing along the path from start to end)"
 msgstr "Direção das marcas (quando visto ao longo do caminho do início ao fim)"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
+#, fuzzy
 msgid "Offset of first mark"
-msgstr ""
+msgstr "Offset da primeira marca"
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 #, fuzzy
@@ -8075,8 +8098,9 @@ msgid "min curvature"
 msgstr "Curvatura mínima"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
+#, fuzzy
 msgid "k_max"
-msgstr ""
+msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
@@ -9027,10 +9051,13 @@ msgid "Drawing cancelled"
 msgstr "Desenho cancelado"
 
 #: ../src/pencil-context.cpp:565
+#, fuzzy
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
+"<b>Modo mão-livre</b>: exploração <b>Alt</b> interpola entre o caminhos "
+"traçado. Pressione <b>Alt</b> para finalizar."
 
 #: ../src/pencil-context.cpp:593
 #, fuzzy
@@ -11255,15 +11282,13 @@ msgstr "about.pt_BR.svg"
 msgid "translator-credits"
 msgstr ""
 "Contribuíram com esta versão:\n"
-"Fábio Sousa\n"
+"Antônio Fernandes C. Neto\n"
 "Frank Souza\n"
+"Fábio Sousa\n"
 "Frederico G. Guimarães\n"
-"Krishnamurti L. L. V. Nunes\n"
+"Relsi Hur Maron\n"
 "Samy M. Nascimento\n"
-"Thiago Pimentel\n"
-"Vilson Vieira\n"
-"Victor Westmann\n"
-"Comunidade InkscapeBrasil.org, 2008."
+"e toda comunidade InkscapeBrasil.org, 2006-2009."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:787
@@ -13048,7 +13073,7 @@ msgstr ""
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:246
 msgid "> and < scale by:"
-msgstr "Teclas > e < redimensionam em:"
+msgstr "Teclas &gt; e &lt; redimensionam em:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:247
 msgid ""
@@ -17210,7 +17235,7 @@ msgstr "Desagrupa os grupos selecionados"
 
 #: ../src/verbs.cpp:2363
 msgid "_Put on Path"
-msgstr "Aju_star ao caminho"
+msgstr "Aju_star texto ao caminho"
 
 #: ../src/verbs.cpp:2365
 msgid "_Remove from Path"
@@ -17218,13 +17243,14 @@ msgstr "_Remover do caminho"
 
 #: ../src/verbs.cpp:2367
 msgid "Remove Manual _Kerns"
-msgstr "Remover _Kerns Manuais"
+msgstr "Remover _ajustes manuais"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Remover todos kerns manuais e rotações de glyph de um objeto de texto"
+msgstr ""
+"Remove todos espaçamentos manuais e rotações de glifos de um objeto de texto"
 
 #: ../src/verbs.cpp:2372
 msgid "_Union"
@@ -17570,7 +17596,7 @@ msgstr "Converte os objetos selecionados em caminhos"
 
 #: ../src/verbs.cpp:2474
 msgid "_Flow into Frame"
-msgstr "_Fuir em moldura"
+msgstr "_Fluir em molde"
 
 #: ../src/verbs.cpp:2475
 msgid ""
@@ -17578,7 +17604,7 @@ msgid ""
 "frame object"
 msgstr ""
 "Distribui o texto dentro de um caminho ou objeto, criando um texto de "
-"parágrafo fluído e associado à moldura do objeto"
+"parágrafo fluído e associado ao molde do objeto"
 
 #: ../src/verbs.cpp:2476
 msgid "_Unflow"
@@ -17586,7 +17612,7 @@ msgstr "_Retirar do molde"
 
 #: ../src/verbs.cpp:2477
 msgid "Remove text from frame (creates a single-line text object)"
-msgstr "Retira o texto de uma moldura (reposiciona o texto em uma única linha)"
+msgstr "Retira o texto de um molde e o reposiciona em uma única linha"
 
 #: ../src/verbs.cpp:2478
 msgid "_Convert to Text"
@@ -19017,7 +19043,9 @@ msgstr "Alfa (transparência)"
 
 #: ../src/widgets/sp-color-notebook.cpp:330
 #, fuzzy
-msgid "RGBA_:"
+msgid ""
+"_:RGBA_:"
+""
 msgstr "_:RGBA_:"
 
 #: ../src/widgets/sp-color-notebook.cpp:338
@@ -23068,7 +23096,7 @@ msgstr "Tamanho do passo (px)"
 #: ../share/extensions/sk1_input.inx.h:1
 #, fuzzy
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Editor de Imagens Vetoriais Inkscape"
+msgstr "Abrir arquivos salvos com sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
@@ -23079,10 +23107,11 @@ msgstr ""
 msgid "sK1 vector graphics files input"
 msgstr ""
 
+# como não sei a situação de uso desta frase sugiro no infinitivo.
 #: ../share/extensions/sk1_output.inx.h:1
 #, fuzzy
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "Editor de Imagens Vetoriais Inkscape"
+msgstr "Formatar arquivo para abrir com sK1 editor gráfico vetorial "
 
 #: ../share/extensions/sk1_output.inx.h:3
 msgid "sK1 vector graphics files output"
@@ -23104,13 +23133,26 @@ msgstr "Entrada Sketch"
 msgid "Gear Placement"
 msgstr "Localização da Engrenagem"
 
+# Hipotrocóide - é o lugar geométrico de um ponto fixado num círculo que rola ao longo de um outro círculo por dentro deste. Há um tempo atrás havia um brinquedo, um conjunto de de réguas com círculos, estrelas e quadrados, que  eram vendidos nas escolas para fazer este tipo de desenho.
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "Inserir (Hipotrocóide)"
 
+# A epitrocóide é uma roleta descrita por um ponto associado a um círculo de raio r que rola externamente ao redor de outro círculo fixo de raio R. Suas equações paramétricas são:
+# 
+#     x = (R + r)\cos\theta - d\cos\left({R + r \over r}\theta\right),\,
+#     y = (R + r)\sin\theta - d\sin\left({R + r \over r}\theta\right).\,
+# 
+# onde R é o raido do círculo fixo, r é o raio do círculo que gira e d é a distância do ponto ao centro do círculo giratório.
+# 
+# As epitrocóides são uma classe geral de curvas, entre as quais encontramos a epiciclóide (quando d = r, ou seja, quando a curva é determinada por um ponto da circunferência do círculo giratório) e a limaçon (quando R = r, ou seja, quando os dois círculos possuem o mesmo raio).
+# 
+# São epitrocóides, por exemplo, as órbitas dos planetas segundo a teoria geocêntrica de Ptolomeu, e o estator do motor Wankel.
+# 
+# fonte: http://pt.wikipedia.org/wiki/Epitroc%C3%B3ide
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "Retirar (Epitrocóide)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
@@ -23616,4 +23658,3 @@ msgstr "Entrada de Meta-arquivo do Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrada XAML"
-
