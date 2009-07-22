@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-11 09:42+0200\n"
-"PO-Revision-Date: 2009-07-21 23:13+0200\n"
+"PO-Revision-Date: 2009-07-22 23:17+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,9 @@ msgstr "Elmosás"
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "A kijelölt objektumok vízszintes tükrözéseElmosás"
+msgstr ""
+"A kijelölt objektumok vízszintes tükrözéseElmosás "
+"módosítás"
 
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
@@ -105,7 +107,9 @@ msgstr "ElmosásFüggőleges áthelyezés"
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "A kijelölt objektumok függőleges tükrözéseElmosás"
+msgstr ""
+"A kijelölt objektumok függőleges tükrözéseElmosás "
+"módosítás"
 
 #: ../share/filters/filters.svg.h:8
 #, fuzzy
@@ -113,8 +117,9 @@ msgid "Apparition"
 msgstr "Telítettség"
 
 #: ../share/filters/filters.svg.h:8
+#, fuzzy
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:9
 #, fuzzy
@@ -128,14 +133,15 @@ msgstr "nyújtva"
 #: ../share/filters/filters.svg.h:187
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
-#, fuzzy
 msgid "Shadows and Glows"
-msgstr "Vezérlőelemek megjelenítése"
+msgstr "Árnyékok és ragyogások"
 
 #: ../share/filters/filters.svg.h:9
 #, fuzzy
 msgid "Drop shadow under the cut-out of the shape"
-msgstr "alakzat"
+msgstr ""
+"Vetett árnyék "
+"alakzat"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
@@ -160,7 +166,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Durvábbá tevésLekerekített csúcsok átméretezése"
+msgstr ""
+"Durvábbá tevésLekerekített csúcsok átméretezése "
+"szél"
 
 #: ../share/filters/filters.svg.h:12
 #, fuzzy
@@ -208,7 +216,9 @@ msgstr "Fájl"
 #: ../share/filters/filters.svg.h:14
 #, fuzzy
 msgid "Edges of object are on fire"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"szél"
 
 #: ../share/filters/filters.svg.h:15
 #, fuzzy
@@ -244,7 +254,9 @@ msgstr "Osztó"
 #: ../share/filters/filters.svg.h:17
 #, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "A lekerekített csúcsok vízszintes sugara"
+msgstr ""
+"A lekerekített csúcsok vízszintes sugara "
+"szél"
 
 #: ../share/filters/filters.svg.h:18
 #, fuzzy
@@ -286,9 +298,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
 #: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Materials"
-msgstr "Mátrix"
+msgstr "Anyagok"
 
 #: ../share/filters/filters.svg.h:21
 #, fuzzy
@@ -302,7 +313,10 @@ msgstr ""
 #: ../share/filters/filters.svg.h:22
 #, fuzzy
 msgid "Irregular vertical dark stripes (loses object's own color)"
-msgstr "Csíkokobjektum"
+msgstr ""
+"Függőleges "
+"Csíkok "
+"objektum"
 
 #: ../share/filters/filters.svg.h:23
 #, fuzzy
@@ -333,7 +347,9 @@ msgstr "Útvonaleffektusok kezelése"
 #: ../share/filters/filters.svg.h:24
 #, fuzzy
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"szél"
 
 #: ../share/filters/filters.svg.h:25
 #, fuzzy
@@ -343,7 +359,9 @@ msgstr "Élesítés"
 #: ../share/filters/filters.svg.h:25
 #, fuzzy
 msgid "Sharpen edges and boundaries within the object, force=0.3"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"szél"
 
 #: ../share/filters/filters.svg.h:26
 #, fuzzy
@@ -356,34 +374,28 @@ msgid "Simulate oil painting style"
 msgstr "Kimenet szimulálása a képernyőn stílus"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Edge detect"
 msgstr "Élkeresés"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Detect color edges in object"
-msgstr "objektum"
+msgstr "Szín-határok keresése az objektumban"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Horizontal edge detect"
-msgstr "Vízszintes szöveg"
+msgstr "Vízszintes élkeresés"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "objektumA kijelölés vízszintes koordinátája"
+msgstr "Vízszintes szín-határok keresése az objektumban"
 
 #: ../share/filters/filters.svg.h:29
-#, fuzzy
 msgid "Vertical edge detect"
-msgstr "Függőleges szöveg"
+msgstr "Függőleges élkeresés"
 
 #: ../share/filters/filters.svg.h:29
-#, fuzzy
 msgid "Detect vertical color edges in object"
-msgstr "objektum"
+msgstr "Függőleges szín-határok keresése az objektumban"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
@@ -392,8 +404,9 @@ msgid "Pencil"
 msgstr "Ceruza"
 
 #: ../share/filters/filters.svg.h:30
+#, fuzzy
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "élkeresés"
 
 #: ../share/filters/filters.svg.h:31
 #, fuzzy
@@ -401,8 +414,9 @@ msgid "Blueprint"
 msgstr "Az elmosás szélessége"
 
 #: ../share/filters/filters.svg.h:31
+#, fuzzy
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "élkeresés"
 
 #: ../share/filters/filters.svg.h:32
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -503,8 +517,9 @@ msgid "Barbed wire"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:37
+#, fuzzy
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "Vetett árnyék "
 
 #: ../share/filters/filters.svg.h:38
 #, fuzzy
@@ -540,8 +555,9 @@ msgid "Inset"
 msgstr "Zsugorítás"
 
 #: ../share/filters/filters.svg.h:41
+#, fuzzy
 msgid "Shadowy outer bevel"
-msgstr ""
+msgstr "árnyék"
 
 #: ../share/filters/filters.svg.h:42
 #, fuzzy
@@ -655,7 +671,9 @@ msgstr "Visszaállítás"
 #: ../share/filters/filters.svg.h:51
 #, fuzzy
 msgid "Pressed metal with a rolled edge"
-msgstr "Kezdőszegély varianciája"
+msgstr ""
+"Kezdőszegély varianciája "
+"szél"
 
 #: ../share/filters/filters.svg.h:52
 #, fuzzy
@@ -702,7 +720,7 @@ msgstr "Szintbeállítás"
 #: ../share/filters/filters.svg.h:87 ../share/extensions/pathscatter.inx.h:10
 #, fuzzy
 msgid "Scatter"
-msgstr "Minta"
+msgstr "Szétszórás"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Leaves on the ground in Fall, or living foliage"
@@ -759,8 +777,9 @@ msgid "Bark"
 msgstr "Jel"
 
 #: ../share/filters/filters.svg.h:62
+#, fuzzy
 msgid "Bark texture, vertical; use with deep colors"
-msgstr ""
+msgstr "Függőleges"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
@@ -786,7 +805,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Silk carpet texture, horizontal stripes"
-msgstr "Csíkok"
+msgstr ""
+"Vízszintes "
+"Csíkok"
 
 #: ../share/filters/filters.svg.h:66
 #, fuzzy
@@ -816,7 +837,9 @@ msgstr "Illesztés _bekapcsolása"
 #: ../share/filters/filters.svg.h:68
 #, fuzzy
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "effektus"
+msgstr ""
+"effektus "
+"szél"
 
 #: ../share/filters/filters.svg.h:69
 #, fuzzy
@@ -851,8 +874,9 @@ msgid "Fat oil"
 msgstr "Egyenletes szín"
 
 #: ../share/filters/filters.svg.h:72
+#, fuzzy
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "beállítható"
 
 #: ../share/filters/filters.svg.h:73
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -881,7 +905,9 @@ msgstr "Alakítás"
 #: ../share/filters/filters.svg.h:74
 #, fuzzy
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr "Elmosás Párhuzamos"
+msgstr ""
+"Elmosás Párhuzamos "
+"szél"
 
 # Identifies the type of the related resource with an absolute URI
 #: ../share/filters/filters.svg.h:75
@@ -923,8 +949,11 @@ msgid "Cubes"
 msgstr "Csomópontok megszámozása"
 
 #: ../share/filters/filters.svg.h:78
+#, fuzzy
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
+"Szétszórás "
+"módosítás"
 
 #: ../share/filters/filters.svg.h:79
 #, fuzzy
@@ -958,8 +987,9 @@ msgid "Crumpled plastic"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:82
+#, fuzzy
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Enamel jewelry"
@@ -997,7 +1027,9 @@ msgstr "Nincs megrajzolva"
 #: ../share/filters/filters.svg.h:86
 #, fuzzy
 msgid "Inner colorized shadow, outer black shadow"
-msgstr "Fekete"
+msgstr ""
+"árnyék "
+"Fekete"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Air spray"
@@ -1006,7 +1038,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:87
 #, fuzzy
 msgid "Air Spray; adjust the Displacement Map amount"
-msgstr "Elmozdítási leképezés"
+msgstr ""
+"Elmozdítási leképezés "
+"módosítás"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Warm inside"
@@ -1015,7 +1049,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:88
 #, fuzzy
 msgid "Blurred colorized contour, filled inside"
-msgstr "Elmosás"
+msgstr "elmosott"
 
 #: ../share/filters/filters.svg.h:89
 #, fuzzy
@@ -1025,7 +1059,7 @@ msgstr "Téglalap-körvonal"
 #: ../share/filters/filters.svg.h:89
 #, fuzzy
 msgid "Blurred colorized contour, empty inside"
-msgstr "Elmosás"
+msgstr "elmosott"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Electronic microscopy"
@@ -1092,7 +1126,9 @@ msgstr "Szín ejtése"
 #: ../share/filters/filters.svg.h:96
 #, fuzzy
 msgid "Glow of object's own color at the edges"
-msgstr "objektum"
+msgstr ""
+"objektum "
+"szél"
 
 #: ../share/filters/filters.svg.h:97
 #, fuzzy
@@ -1191,17 +1227,19 @@ msgstr "0 (átlátszó)"
 #: ../share/filters/filters.svg.h:106
 #, fuzzy
 msgid "Smooth edges"
-msgstr "Simaság"
+msgstr "Szélek simítása"
 
 #: ../share/filters/filters.svg.h:106
 #, fuzzy
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr "alakzat"
+msgstr "alakzat simítása"
 
 #: ../share/filters/filters.svg.h:107
 #, fuzzy
 msgid "Torn edges"
-msgstr "Csomópontok áthelyezése"
+msgstr ""
+"Csomópontok áthelyezése "
+"szél"
 
 #: ../share/filters/filters.svg.h:107
 #, fuzzy
@@ -1216,7 +1254,9 @@ msgstr "Méter"
 #: ../share/filters/filters.svg.h:108
 #, fuzzy
 msgid "Blurred mask on the edge without altering the contents"
-msgstr "ElmosásMaszk"
+msgstr ""
+"elmosott Maszk "
+"szél"
 
 #: ../share/filters/filters.svg.h:109
 #, fuzzy
@@ -1256,7 +1296,9 @@ msgstr ""
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr "objektumElmosáskontúrátlátszóság"
+msgstr ""
+"objektum Elmosás kontúr átlátszóság "
+"szél"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Chalk and sponge"
@@ -1300,8 +1342,9 @@ msgid "Noise fill"
 msgstr "Nincs kitöltés"
 
 #: ../share/filters/filters.svg.h:117
+#, fuzzy
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "módosítás"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Garden of Delights"
@@ -1407,12 +1450,12 @@ msgstr "Durva"
 #: ../share/filters/filters.svg.h:129
 #, fuzzy
 msgid "Burnt edges"
-msgstr "Határoló téglalap típusa:"
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:129
 #, fuzzy
 msgid "Torn edges with a dark inner blur"
-msgstr "Elmosás"
+msgstr "Elmosás szél"
 
 #: ../share/filters/filters.svg.h:130
 #, fuzzy
@@ -1422,7 +1465,9 @@ msgstr "A segédvonalak színekontúr"
 #: ../share/filters/filters.svg.h:130
 #, fuzzy
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr "kontúr szélességElmosás"
+msgstr ""
+"kontúr szélességElmosás "
+"beállítható"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Liquid"
@@ -1449,8 +1494,9 @@ msgid "Felt"
 msgstr "Láb"
 
 #: ../share/filters/filters.svg.h:133
+#, fuzzy
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:134
 #, fuzzy
@@ -1467,8 +1513,9 @@ msgid "Tinted rainbow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:135
+#, fuzzy
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:136
 #, fuzzy
@@ -1476,8 +1523,9 @@ msgid "Melted rainbow"
 msgstr "Bal-szög"
 
 #: ../share/filters/filters.svg.h:136
+#, fuzzy
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Flex metal"
@@ -1512,7 +1560,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:139
 #, fuzzy
 msgid "Cartoon paint style with some fading at the edges"
-msgstr "stílus"
+msgstr "stílus szél"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:141
@@ -1624,7 +1672,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr "minta Elmozdítás"
+msgstr "minta Elmozdítás szél"
 
 #: ../share/filters/filters.svg.h:161
 msgid "3D marble"
@@ -1659,7 +1707,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr "minta"
+msgstr "minta szél"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
@@ -1708,7 +1756,9 @@ msgstr "Elmosás módosítása"
 #: ../share/filters/filters.svg.h:169
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Lekerekített csúcsok átméretezéseDurvábbá tevésElmosás"
+msgstr ""
+"Lekerekített csúcsok átméretezése Durvábbá tevés Elmosás "
+"szél"
 
 #: ../share/filters/filters.svg.h:170
 #, fuzzy
@@ -1754,7 +1804,9 @@ msgstr "Alfa"
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr "effektusbitképek"
+msgstr ""
+"rajz "
+"effektus bitképek"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Alpha draw, color"
@@ -1777,7 +1829,8 @@ msgid ""
 msgstr ""
 "létrehozása "
 "vonalak "
-"kereszteződés"
+"kereszteződés "
+"szél"
 
 #: ../share/filters/filters.svg.h:177
 #, fuzzy
@@ -1802,11 +1855,12 @@ msgstr "rajzolásakontúr"
 #: ../share/filters/filters.svg.h:179
 #, fuzzy
 msgid "Inner shadow"
-msgstr "Belső sugár"
+msgstr "Belső árnyék"
 
 #: ../share/filters/filters.svg.h:179
+#, fuzzy
 msgid "Adds a colorizable drop shadow inside"
-msgstr ""
+msgstr "Vetett árnyék "
 
 #: ../share/filters/filters.svg.h:180
 msgid "Dark and glow"
@@ -1815,17 +1869,23 @@ msgstr ""
 #: ../share/filters/filters.svg.h:180
 #, fuzzy
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr "Elmosás"
+msgstr ""
+"Elmosás "
+"szél"
 
 #: ../share/filters/filters.svg.h:181
 #, fuzzy
 msgid "Darken edges"
-msgstr "Sötétítés"
+msgstr ""
+"szél "
+"Sötétítés"
 
 #: ../share/filters/filters.svg.h:181
 #, fuzzy
 msgid "Darken the edges with an inner blur"
-msgstr "Elmosás"
+msgstr ""
+"szél "
+"Elmosás"
 
 #: ../share/filters/filters.svg.h:182
 #, fuzzy
@@ -1833,8 +1893,9 @@ msgid "Warped rainbow"
 msgstr "Bal-szög"
 
 #: ../share/filters/filters.svg.h:182
+#, fuzzy
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr ""
+msgstr "szél "
 
 #: ../share/filters/filters.svg.h:183
 #, fuzzy
@@ -1871,8 +1932,9 @@ msgid "Old postcard"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:186
+#, fuzzy
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Fuzzy glow"
@@ -1906,7 +1968,9 @@ msgstr "átlátszóság"
 #: ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Paint objects with a transparent turbulence which turn around color edges"
-msgstr "Objektumok megrajzolása"
+msgstr ""
+"Objektumok megrajzolása "
+"szél"
 
 #: ../share/filters/filters.svg.h:191
 #, fuzzy
@@ -1957,10 +2021,11 @@ msgid "Embossed leather"
 msgstr "Nincs effektus"
 
 #: ../share/filters/filters.svg.h:195
+#, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:196
 #, fuzzy
@@ -1977,8 +2042,9 @@ msgid "Plastify"
 msgstr "Sorkizárás"
 
 #: ../share/filters/filters.svg.h:197
+#, fuzzy
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
@@ -1986,8 +2052,9 @@ msgid "Plaster"
 msgstr "Beillesztés"
 
 #: ../share/filters/filters.svg.h:198
+#, fuzzy
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr ""
+msgstr "szél"
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
@@ -1995,8 +2062,9 @@ msgid "Rough transparency"
 msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:199
+#, fuzzy
 msgid "Adds a turbulent transparency which displace pixels at the same time"
-msgstr ""
+msgstr "Képpont"
 
 #: ../share/filters/filters.svg.h:200
 #, fuzzy
@@ -4438,12 +4506,15 @@ msgid "Deactivated"
 msgstr "Deaktiválva"
 
 #: ../src/extension/extension.cpp:756
-#, fuzzy
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
 "this extension."
-msgstr "kiterjesztés"
+msgstr ""
+"Jelenleg nincs elérhető segítség ehhez a kiterjesztéshez. "
+"Ha kérdései vannak ezzel a kiterjesztéssel kapcsolatban, keresse fel "
+"az Inkscape weblapját, vagy tegye fel a kérdéseit a "
+"levelezőlistákon."
 
 #: ../src/extension/implementation/script.cpp:1058
 msgid ""
@@ -4685,14 +4756,12 @@ msgid "Contrast"
 msgstr "Kontraszt"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:41
-#, fuzzy
 msgid "Adjust"
-msgstr "Árnyalat módosítása"
+msgstr "Beállítás"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
-#, fuzzy
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr "bitképek"
+msgstr "Bitkép(ek) kontrasztjának növelése vagy csökkentése"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -4718,18 +4787,16 @@ msgstr "A kijelölt bitkép(ek) folt-zajának csökkentése"
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
-msgstr "Szél"
+msgstr "Él"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
-msgstr "A kijelölt bitkép(ek) széleinek kiemelése"
+msgstr "Élek kiemelése a kijelölt bitkép(ek)en"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr ""
-"A kijelölt bitkép(ek) domborítása - szélek kiemelése háromdimenziós "
+"A kijelölt bitkép(ek) domborítása - élek kiemelése háromdimenziós "
 "effektussal"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
@@ -4815,19 +4882,16 @@ msgid "Median"
 msgstr "Medián"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid ""
 "Replace each pixel component with the median color in a circular "
 "neighborhood."
 msgstr ""
-"A kijelölt bitkép(ek) szűrése úgy, hogy minden képpont-komponens "
-"helyettesítésre kerül az annak (kör alakú) környezetében levő színek "
-"mediánértékével"
+"Minden képpont-komponens helyettesítése az annak (kör alakú) környezetében "
+"levő színek mediánértékével"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
-#, fuzzy
 msgid "HSB Adjust"
-msgstr "Árnyalat módosítása"
+msgstr "Árnyalat, telítettség és fényesség módosítása"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
@@ -4853,11 +4917,10 @@ msgid "Brightness"
 msgstr "Fényesség"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-#, fuzzy
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr ""
 "A kijelölt bitkép(ek) árnyalatának, telítettségének és fényességének "
-"százalékos szabályzása"
+"szabályzása"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -4923,14 +4986,12 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr "Zaj csökkentése a kijelölt bitkép(ek)ben egy zajcsúcs-eltávolítási szűrővel"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Resample"
-msgstr "Mintakészítés"
+msgstr "Újramintavételezés"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-#, fuzzy
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "A kijelölt kép felbontásának módosítása adott méretekre való átméretezéssel"
+msgstr "A kijelölt kép felbontásának módosítása az adott képpontméretre való átméretezéssel"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -4969,13 +5030,12 @@ msgid "Dither"
 msgstr "Színszórás"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
 msgstr ""
-"A kijelölt bitkép(ek) képpontjainak véletlenszerű szétterjesztése a megadott "
-"mennyiség által meghatározott sugáron belül"
+"A kijelölt bitkép(ek) képpontjainak véletlenszerű szétszórása az eredeti "
+"pozíció megadott sugarú környezetében"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -5051,14 +5111,13 @@ msgstr "Létrehozás útvonal alapján"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:274
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "PostScript"
-msgstr "PostScript 3"
+msgstr "PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:276
 #: ../src/extension/internal/cairo-ps-out.cpp:313
 msgid "Restrict to PS level"
-msgstr "Adott PS szintre korlátozás"
+msgstr "Adott PS-szintre korlátozás"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:277
 #: ../src/extension/internal/cairo-ps-out.cpp:314
@@ -5072,15 +5131,13 @@ msgstr "PostScript, 2-es szint"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-#, fuzzy
 msgid "Export area is whole canvas"
 msgstr "Az exportált terület a teljes rajzvászon"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:283
 #: ../src/extension/internal/cairo-ps-out.cpp:320
-#, fuzzy
 msgid "Export area is the drawing"
-msgstr "Az exportált terület a teljes rajzvászon"
+msgstr "Az exportált terület a rajz"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
@@ -5092,23 +5149,20 @@ msgstr "Szövegek átalakítása útvonalakká"
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-#, fuzzy
 msgid "Rasterize filter effects"
 msgstr "Szűrőeffektusok raszterizálása"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
-#, fuzzy
 msgid "Resolution for rasterization (dpi)"
-msgstr "raszterizálásaFelbontás (pont/hüvelykben)"
+msgstr "Raszterizálási felbontás (pont/hüvelykben)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
-#, fuzzy
 msgid "Limit export to the object with ID"
-msgstr "objektum"
+msgstr "Csak ezen azonosítójú objektum legyen exportálva"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:291
 #: ../share/extensions/ps_input.inx.h:2
@@ -5121,38 +5175,33 @@ msgstr "PostScript-fájl"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:311
 #: ../share/extensions/eps_input.inx.h:2
-#, fuzzy
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../share/extensions/eps_input.inx.h:3
-#, fuzzy
 msgid "Encapsulated PostScript (*.eps)"
 msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
-#, fuzzy
 msgid "Encapsulated PostScript File"
 msgstr "Encapsulated PostScript-fájl"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
-msgstr "Adott PDF verzióra korlátozás"
+msgstr "Adott PDF-verzióra korlátozás"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-#, fuzzy
 msgid "Export drawing, not page"
-msgstr "Exportálás folyamatban"
+msgstr "A rajz exportálása a lap helyett"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-#, fuzzy
 msgid "Export canvas"
-msgstr "Szerkesztés a rajzvásznon"
+msgstr "Rajzvászon exportálása"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2400
 msgid "EMF Input"
@@ -5191,15 +5240,13 @@ msgid "Enhanced Metafile"
 msgstr "Továbbfejlesztett metafájl"
 
 #: ../src/extension/internal/filter/drop-shadow.h:35
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "SVG ejtése"
+msgstr "Vetett árnyék"
 
 #: ../src/extension/internal/filter/drop-shadow.h:37
 #: ../src/extension/internal/filter/drop-shadow.h:92
-#, fuzzy
 msgid "Blur radius, px"
-msgstr "Elmosássugár (px)"
+msgstr "Elmosási sugár, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:93
@@ -5211,15 +5258,13 @@ msgstr "Átlátszatlanság, %"
 
 #: ../src/extension/internal/filter/drop-shadow.h:39
 #: ../src/extension/internal/filter/drop-shadow.h:94
-#, fuzzy
 msgid "Horizontal offset, px"
-msgstr "Vízszintes eltolás"
+msgstr "Vízszintes eltolás, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:40
 #: ../src/extension/internal/filter/drop-shadow.h:95
-#, fuzzy
 msgid "Vertical offset, px"
-msgstr "Függőleges eltolás"
+msgstr "Függőleges eltolás, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
@@ -5231,35 +5276,30 @@ msgid "Filters"
 msgstr "Szűrők"
 
 #: ../src/extension/internal/filter/drop-shadow.h:48
-#, fuzzy
 msgid "Black, blurred drop shadow"
-msgstr "FeketeElmosás"
+msgstr "Fekete, elmosott vetett árnyék"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
-#, fuzzy
 msgid "Drop Glow"
-msgstr "Szín ejtése"
+msgstr "Vetett ragyogás"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
-#, fuzzy
 msgid "White, blurred drop glow"
-msgstr "fehérElmosás"
+msgstr "Fehér, elmosott vetett ragyogás"
 
 # TODO: ellenőrizni
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "Lekerekítettség"
+msgstr "Beépített"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
-msgstr ""
+msgstr "Személyes"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
-#, fuzzy
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
-"A külső modulok könyvtárának neve nincs megadva. A modulok nem lesznek "
+"A külső modulok könyvtárának neve nincs megadva. A szűrők nem lesznek "
 "betöltve."
 
 #: ../src/extension/internal/filter/snow.h:32
@@ -5349,12 +5389,11 @@ msgstr "JavaFX-kimenet"
 
 #: ../src/extension/internal/javafx-out.cpp:970
 msgid "JavaFX (*.fx)"
-msgstr ""
+msgstr "JavaFX (*.fx)"
 
 #: ../src/extension/internal/javafx-out.cpp:971
-#, fuzzy
 msgid "JavaFX Raytracer File"
-msgstr "PovRay Raytracer-fájl"
+msgstr "JavaFX Raytracer-fájl"
 
 #: ../src/extension/internal/latex-pstricks.cpp:337
 msgid "LaTeX Print"
@@ -5453,9 +5492,10 @@ msgid "Import text as text"
 msgstr "Szöveg importálása szövegként"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
-#, fuzzy
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr "Betűtípus"
+msgstr ""
+"PDF-betűtípusok helyettesítése a legközelebbi nevű telepített "
+"betűtípussal"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -12186,9 +12226,8 @@ msgstr "A szűrőeffektus-terület felső sarkainak Y-koordinátája"
 #. default width:
 #. default height:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2162
-#, fuzzy
 msgid "Dimensions:"
-msgstr "Méretek"
+msgstr "Méretek:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
@@ -12217,20 +12256,17 @@ msgstr ""
 "végrehajtani bizonyos gyakran használt színműveleteket."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2169
-#, fuzzy
 msgid "Value(s):"
-msgstr "Érték(ek)"
+msgstr "Érték(ek):"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2223
-#, fuzzy
 msgid "Operator:"
-msgstr "Operátor"
+msgstr "Operátor:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-#, fuzzy
 msgid "K1:"
-msgstr "K1"
+msgstr "K1:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
@@ -12246,19 +12282,16 @@ msgstr ""
 "i1 és i2 az első, illetve a második bemenet képpont-értéke."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-#, fuzzy
 msgid "K2:"
-msgstr "K2"
+msgstr "K2:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-#, fuzzy
 msgid "K3:"
-msgstr "K3"
+msgstr "K3:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2187
-#, fuzzy
 msgid "K4:"
-msgstr "K4"
+msgstr "K4:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 #: ../src/ui/dialog/tracedialog.cpp:581
@@ -12292,9 +12325,8 @@ msgstr ""
 # kernel: konvolúciós mátrix
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
-#, fuzzy
 msgid "Kernel:"
-msgstr "Kernel"
+msgstr "Kernel:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid ""
@@ -12313,9 +12345,8 @@ msgstr ""
 "normál elmosást."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-#, fuzzy
 msgid "Divisor:"
-msgstr "Osztó"
+msgstr "Osztó:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid ""
@@ -12330,9 +12361,8 @@ msgstr ""
 "eredmény színintenzitására."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-#, fuzzy
 msgid "Bias:"
-msgstr "Eltolódás"
+msgstr "Eltolódás:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid ""
@@ -12343,9 +12373,8 @@ msgstr ""
 "(konstans) a szűrő alaphatásaként."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
-#, fuzzy
 msgid "Edge Mode:"
-msgstr "Szél-üzemmód"
+msgstr "Szél-üzemmód:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid ""
@@ -12369,9 +12398,8 @@ msgstr ""
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#, fuzzy
 msgid "Diffuse Color:"
-msgstr "Szórt szín"
+msgstr "Szórt szín:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -12380,9 +12408,8 @@ msgstr "A fényforrás színét adja meg"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-#, fuzzy
 msgid "Surface Scale:"
-msgstr "Felületméretezés"
+msgstr "Felületméretezés:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -12395,9 +12422,8 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#, fuzzy
 msgid "Constant:"
-msgstr "Konstans"
+msgstr "Konstans:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
@@ -12406,32 +12432,28 @@ msgstr "Ez a konstans a Phong világítási modellre van hatással"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2204
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2238
-#, fuzzy
 msgid "Kernel Unit Length:"
-msgstr "Kernelegység-hossz"
+msgstr "Kernelegység-hossz:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-#, fuzzy
 msgid "Scale:"
-msgstr "Méretezés"
+msgstr "Méretezés:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr "Az elmozdítási effektus intenzitását adja meg"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#, fuzzy
 msgid "X displacement:"
-msgstr "X-elmozdítás"
+msgstr "X-elmozdítás:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Az X irányú elmozdítást megadó színkomponens"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#, fuzzy
 msgid "Y displacement:"
-msgstr "Y-elmozdítás"
+msgstr "Y-elmozdítás:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
@@ -12439,9 +12461,8 @@ msgstr "Az Y irányú elmozdítást megadó színkomponens"
 
 #. default: black
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
-#, fuzzy
 msgid "Flood Color:"
-msgstr "Területkitöltési szín"
+msgstr "Területkitöltési szín:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
@@ -12453,9 +12474,8 @@ msgid "Opacity:"
 msgstr "Átlátszatlanság:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
-#, fuzzy
 msgid "Standard Deviation:"
-msgstr "Szórás"
+msgstr "Szórás:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
@@ -12470,28 +12490,24 @@ msgstr ""
 "a nyújtás pedig \"kövérebbé\""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2224
-#, fuzzy
 msgid "Radius:"
-msgstr "Sugár"
+msgstr "Sugár:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2227
-#, fuzzy
 msgid "Source of Image:"
-msgstr "A kép forrása"
+msgstr "A kép forrása:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-#, fuzzy
 msgid "Delta X:"
-msgstr "X változása"
+msgstr "X változása:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Ilyen messzire lesz eltolva jobbra a bemeneti kép"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2231
-#, fuzzy
 msgid "Delta Y:"
-msgstr "Y változása"
+msgstr "Y változása:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
@@ -12499,14 +12515,12 @@ msgstr "Ilyen messzire lesz eltolva lefelé a bemeneti kép"
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-#, fuzzy
 msgid "Specular Color:"
-msgstr "Tükröződési szín"
+msgstr "Tükröződési szín:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-#, fuzzy
 msgid "Exponent:"
-msgstr "Kitevő"
+msgstr "Kitevő:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
@@ -12521,19 +12535,16 @@ msgid ""
 msgstr "Azt adja meg, hogy a szűrőprimitív zaj- vagy örvényeffektust hozzon létre"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-#, fuzzy
 msgid "Base Frequency:"
-msgstr "Alapfrekvencia"
+msgstr "Alapfrekvencia:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
-#, fuzzy
 msgid "Octaves:"
-msgstr "Oktávok"
+msgstr "Oktávok:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
-#, fuzzy
 msgid "Seed:"
-msgstr "Sebesség:"
+msgstr "Kezdőérték:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
@@ -12575,7 +12586,6 @@ msgstr ""
 "fényesség- és kontrasztállítás, színegyensúly, valamint küszöb alkalmazása."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2290
-#, fuzzy
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
@@ -20999,8 +21009,9 @@ msgid "No face data found in specified file\n"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:335
+#, fuzzy
 msgid "No edge data found in specified file\n"
-msgstr ""
+msgstr "szél"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
@@ -22080,7 +22091,9 @@ msgstr ""
 #: ../share/extensions/guides_creator.inx.h:19
 #, fuzzy
 msgid "Start from edges"
-msgstr "a középpontból indul"
+msgstr ""
+"szél "
+"a középpontból indul"
 
 #: ../share/extensions/guides_creator.inx.h:20
 #, fuzzy
@@ -22728,8 +22741,9 @@ msgid "Draw Back-Facing Polygons"
 msgstr "sokszögek"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
+#, fuzzy
 msgid "Edge-Specified"
-msgstr ""
+msgstr "szél"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 #, fuzzy
@@ -22979,7 +22993,7 @@ msgstr "Jel"
 #: ../share/extensions/printing-marks.inx.h:10
 #, fuzzy
 msgid "Page Information"
-msgstr "Információ"
+msgstr "Lapinformáció"
 
 #: ../share/extensions/printing-marks.inx.h:11
 #, fuzzy
@@ -23300,40 +23314,37 @@ msgid "Automatically set size and position"
 msgstr "automatikusan"
 
 #: ../share/extensions/svgcalendar.inx.h:4
-#, fuzzy
 msgid "Calendar"
-msgstr "_Törlés"
+msgstr "Naptár"
 
 #: ../share/extensions/svgcalendar.inx.h:5
-#, fuzzy
 msgid "Char Encoding"
-msgstr "Vonalvég-lekerekítés"
+msgstr "Karakterkódolás"
 
 #: ../share/extensions/svgcalendar.inx.h:7
-#, fuzzy
 msgid "Configuration"
-msgstr "Nyomtatási beállítások"
+msgstr "Beállítás"
 
 #: ../share/extensions/svgcalendar.inx.h:8
-#, fuzzy
 msgid "Day color"
-msgstr "Szín ejtése"
+msgstr "Napok színe"
 
 #: ../share/extensions/svgcalendar.inx.h:9
-#, fuzzy
 msgid "Day names"
-msgstr "A réteg neve:"
+msgstr "Napok nevei"
 
 #: ../share/extensions/svgcalendar.inx.h:10
 #, fuzzy
 msgid "Fill empty day boxes with next month's days"
-msgstr "kitöltés"
+msgstr "Az üres nap-     kitöltése a következő hónap napjaival"
 
 #: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
 "January February March April May June July August September October November "
 "December"
 msgstr ""
+"Január Február Március Április Május Június Július Augusztus Szeptember Október November "
+"December"
 
 #: ../share/extensions/svgcalendar.inx.h:13
 #, fuzzy
