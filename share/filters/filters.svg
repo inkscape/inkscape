@@ -1988,5 +1988,9 @@
 <feComposite id="feComposite2885" k2="2" k3="0" in="fbSourceGraphic" result="result2" operator="out" />
 <feBlend id="feBlend2887" blend="normal" mode="multiply" in="result2" in2="result2" />
 </filter>
+<filter id="Repaint0" inkscape:menu="ABCs" inkscape:label="Repaint" inkscape:menu-tooltip="Repaint anything monochrome" height="1" width="1" y="0" x="0">
+<feFlood id="feFlood3056" flood-color="rgb(255,0,105)" result="result1" />
+<feComposite id="feComposite3058" operator="in" in2="SourceGraphic" result="result2" />
+</filter>
 </defs>
 </svg>
