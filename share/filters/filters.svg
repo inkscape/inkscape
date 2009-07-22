@@ -1988,9 +1988,25 @@
 <feComposite id="feComposite2885" k2="2" k3="0" in="fbSourceGraphic" result="result2" operator="out" />
 <feBlend id="feBlend2887" blend="normal" mode="multiply" in="result2" in2="result2" />
 </filter>
-<filter id="Repaint0" inkscape:menu="ABCs" inkscape:label="Repaint" inkscape:menu-tooltip="Repaint anything monochrome" height="1" width="1" y="0" x="0">
+<filter id="Repaint0" inkscape:menu="ABCs" inkscape:label="Repaint" inkscape:menu-tooltip="Repaint anything monochrome">
 <feFlood id="feFlood3056" flood-color="rgb(255,0,105)" result="result1" />
 <feComposite id="feComposite3058" operator="in" in2="SourceGraphic" result="result2" />
+</filter>
+<filter id="SubtrNeg0" inkscape:menu-tooltip="Subtract a transparent negative out of a colorizable opaque area" inkscape:menu="Transparency utilities" height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:label="Subtract negative">
+<feColorMatrix id="feColorMatrix2937" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " in="SourceGraphic" result="result1" />
+<feColorMatrix id="feColorMatrix2939" type="luminanceToAlpha" />
+<feComposite id="feComposite2941" operator="in" in2="result1" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix2943" values="1" in="fbSourceGraphic" type="saturate" result="result2" />
+<feFlood id="feFlood2945" flood-color="rgb(0,0,0)" flood-opacity="1" result="result1" />
+<feComposite id="feComposite2947" in2="fbSourceGraphic" operator="out" in="result1" />
+</filter>
+<filter id="SubtrPos0" x="-0.1" y="-0.1" width="1.2" height="1.2" inkscape:menu-tooltip="Subtract a transparent positive out of a colorizable opaque area" inkscape:menu="Transparency utilities" inkscape:label="Subtract positive">
+<feColorMatrix id="feColorMatrix2962" type="luminanceToAlpha" result="result1" in="SourceGraphic" />
+<feComposite id="feComposite2964" result="fbSourceGraphic" in2="SourceGraphic" in="result1" operator="in" />
+<feColorMatrix id="feColorMatrix2966" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
+<feColorMatrix id="feColorMatrix2968" result="result2" type="saturate" in="fbSourceGraphic" values="1" />
+<feFlood id="feFlood2970" result="result1" flood-opacity="1" flood-color="rgb(0,0,0)" />
+<feComposite id="feComposite2972" operator="out" in2="fbSourceGraphicAlpha" in="result1" />
 </filter>
 </defs>
 </svg>
