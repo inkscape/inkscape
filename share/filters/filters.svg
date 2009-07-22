@@ -1124,12 +1124,11 @@
 <feComposite k3="1" k2="1" operator="arithmetic" result="result4" in="result2" id="feComposite3087" in2="result2" />
 <feBlend blend="normal" mode="multiply" id="feBlend3089" in="result4" in2="result4" />
 </filter>
-<filter id="Smoothedg0" inkscape:label="Smooth edges" inkscape:menu="Morphology" inkscape:menu-tooltip="Smooth the outside of shapes and pictures without altering their contents">
-<feGaussianBlur id="feGaussianBlur2930" stdDeviation="2" result="result1" />
-<feDisplacementMap id="feDisplacementMap2932" scale="0" result="result5" in="SourceGraphic" />
-<feComposite id="feComposite2934" operator="arithmetic" k2="2" k3="0" k1="0" k4="-1" in="result1" result="result2" in2="SourceGraphic" />
-<feColorMatrix id="feColorMatrix2936" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -6 " result="result3" />
-<feComposite id="feComposite2938" in="SourceGraphic" operator="in" in2="result3" />
+<filter id="SmooEdg0" inkscape:label="Smooth edges" inkscape:menu="Morphology" inkscape:menu-tooltip="Smooth the outside of shapes and pictures without altering their contents">
+<feGaussianBlur id="feGaussianBlur3201" stdDeviation="3" result="result1" />
+<feComposite id="feComposite3205" operator="arithmetic" k2="2" k3="0" k1="0" k4="-1" in="result1" result="result2" in2="SourceGraphic" />
+<feColorMatrix id="feColorMatrix3207" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -6 " result="result3" />
+<feComposite id="feComposite3209" in="SourceGraphic" operator="in" in2="result3" />
 </filter>
 <filter id="filter2853" inkscape:label="Torn edges" inkscape:menu="Distort" inkscape:menu-tooltip="Displace the outside of shapes and pictures without altering their content" height="1.4" y="-0.2" width="1.4" x="-0.2">
 <feTurbulence id="feTurbulence2865" baseFrequency="0.050000000000000003" numOctaves="5" type="fractalNoise" />
