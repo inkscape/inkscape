@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-21 16:34+0700\n"
+"PO-Revision-Date: 2009-07-22 15:33+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1403,7 +1403,7 @@ msgstr "ស្រមោល​ទម្លាក់​អាលុយមីញ៉
 
 #: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
-msgstr ""
+msgstr "គំនូរ​ទឹក"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Fluid brushed cartoon drawing"
@@ -1415,7 +1415,7 @@ msgstr "ក្រូម NR"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "ស្រមោល​ក្រូម ដោយ​មាន​ការ​គួច​ខ្លាំង"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
@@ -1423,7 +1423,7 @@ msgstr "ក្រូម​ងងឹត NR"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "ស្រមោល​ក្រូម​ងងឹត ដោយមានចំណាំង​ឡង​ពី​ក្រោម"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
@@ -4113,11 +4113,10 @@ msgid "Median"
 msgstr "មេដ្យាន"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid ""
 "Replace each pixel component with the median color in a circular "
 "neighborhood."
-msgstr "ត្រង​រូបភាព​ដែល​បាន​ជ្រើស​ដោយ​ជំនួយ​សមាសភាគ​ភីកសែល​នីមួយៗ​ដោយពណ៌​មេឌីដ្យាន​នៅ​ក្នុង​​ពណ៌​ជិតខាង​ជា​រង្វង់ ។"
+msgstr "ជំនួស​​សមាសភាគ​ភីកសែល​នីមួយៗ ដោយ​ពណ៌​មេដ្យាន​នៅ​ក្នុង​រង្វង់​ជិត​ខាង ។"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -4246,16 +4245,14 @@ msgid "Solarize selected bitmap(s), like overexposing photographic film."
 msgstr "ធ្វើ​រូបភាព​ដែល​បាន​ជ្រើស​ដូច​ពន្លឺ​ព្រះអាទិត្យ ដូច​ជាការ​ធ្វើ​ឲ្យ​ហ្វីល​រូបថត​ត្រូវ​ពន្លឺ​យូរពេក ។​"
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Dither"
-msgstr "ផ្សេងៗ"
+msgstr "រំញ័រ"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
-msgstr "លាត​ត្រដាង​​ភីកសែល​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស​ដោយ​ចៃដន្យ នៅ​ក្នុង​កាំ​នៃ '​ចំនួន​សរុប' ។"
+msgstr "ចែក​ចំនួន​ភីកសែល​ដោយ​ចៃដន្យ​នៅ​​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស នៅ​ក្នុង​កាំ​ដែល​បាន​ផ្ដល់​​របស់​ទីតាំង​ដើម"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -4369,16 +4366,14 @@ msgstr "បម្លែង​អត្ថបទ​ទៅ​ផ្លូវ​"
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-#, fuzzy
 msgid "Rasterize filter effects"
-msgstr "គ្រប់គ្រង​បែបផែន​តម្រង SVG"
+msgstr "បម្លែង​រូបភាព​បែបផែន​តម្រង"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
-#, fuzzy
 msgid "Resolution for rasterization (dpi)"
-msgstr "គុណភាព​បង្ហាញ (ចំណុច​ក្នុង​អិន្ឈ៍)"
+msgstr "គុណភាព​បង្ហាញ​សម្រាប់​ការ​បម្លែង​រូបភាព​ទៅ​ជា​ចំណុច (dpi)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -6303,9 +6298,8 @@ msgstr "បន្ទាត់​ពុះ​មុំ"
 
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
-#, fuzzy
 msgid "Boolops"
-msgstr "ឧបករណ៍"
+msgstr ""
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
@@ -6637,7 +6631,7 @@ msgstr "ចាប់ផ្ដើម​អថេរ​គែម​"
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
-msgstr ""
+msgstr "ចំនួន​បម្លាស់ទី​ចៃដន្យ ដែលត្រូវ​​ផ្លាស់ទី​ចំណុច​ចាប់ផ្ដើម​របស់​ស្នាម​ថ្នេរ​នៅ​ខាង​ក្នុង និង​ខាងក្រៅ​ផ្លូវ​បន្ទាត់​ក្រិត"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
@@ -6746,7 +6740,7 @@ msgstr "ចាប់ផ្ដើម"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:80
 msgid "Choose start capping type"
-msgstr ""
+msgstr "ជ្រើស​ប្រភេទ​សញ្ញា​ប្រសព្វ​ចាប់ផ្ដើម"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:81
 #: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
@@ -6755,7 +6749,7 @@ msgstr "បញ្ចប់"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:81
 msgid "Choose end capping type"
-msgstr ""
+msgstr "ជ្រើស​ប្រភេទ​សញ្ញា​ប្រសព្វ​ចុង​បញ្ចប់"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Grow for"
@@ -6783,11 +6777,11 @@ msgstr "ចុង​គំនូស​វាស​​គឺ​មូល​នៅ
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 msgid "Capping"
-msgstr ""
+msgstr "ដាក់​សញ្ញា​ប្រសព្វ"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 msgid "left capping"
-msgstr ""
+msgstr "ដាក់​សញ្ញា​ប្រសព្វ​នៅ​ខាង​ឆ្វេង"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -6860,9 +6854,8 @@ msgid "Trajectory"
 msgstr "គន្លង"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "ផ្លូវ​ដែល​កោង​ទៅនឹង​ផ្លូវ​ដើម"
+msgstr "ផ្លូវ​ដែល​ត្រូវ​បង្កើត​ជំហាន​មធ្យមអន្តរការី"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
@@ -6918,9 +6911,8 @@ msgid "Add crossed stroke width to the interruption size."
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Switcher size"
-msgstr "រចនាប័ទ្ម​កម្មវិធី​ប្ដូរ"
+msgstr "ចនាប័ទ្ម​កម្មវិធី​ប្ដូរ"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
