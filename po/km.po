@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-22 15:33+0700\n"
+"PO-Revision-Date: 2009-07-23 16:41+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1529,7 +1529,7 @@ msgstr "ស្នូល​ខ្មៅ​ដៃ"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
-msgstr ""
+msgstr "ផ្ដល់​ជា​បែបផែន​បណ្ដូល​ខ្មៅដៃ ឬ​ពណ៌​ថ្ម ឬ​ចម្លាក់ ឬ​បែបផែន​ផ្សេងទៀត"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Velvet bump"
@@ -6539,17 +6539,16 @@ msgid "2nd path"
 msgstr "ផ្លូវ​ទី ២"
 
 #: ../src/live_effects/lpe-boolops.cpp:36
-#, fuzzy
 msgid "Path to which the original path will be boolop'ed."
-msgstr "ផ្លូវ​ដែល​កោង​ទៅនឹង​ផ្លូវ​ដើម"
+msgstr "ផ្លូវ​ទៅកាន់​ផ្លូវដើម​ណាមួយ​ដែល​ត្រូវ​ធ្វើ​បាន​ដាក់​ជា​ថ្នាំង​ខាង​ក្នុង ។"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Boolop type"
-msgstr ""
+msgstr "ប្រភេទ​ថ្នាំង​ខាង​ក្នុង"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Determines which kind of boolop will be performed."
-msgstr ""
+msgstr "គិត​រក​ប្រភេទ​ថ្នាំង​ខាង​ក្នុង​ដែល​នឹង​ត្រូវ​បាន​ដំណើរការ ។"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
@@ -6875,7 +6874,7 @@ msgid ""
 "If true, the spacing between intermediates is constant along the length of "
 "the path. If false, the distance depends on the location of the nodes of the "
 "trajectory path."
-msgstr ""
+msgstr "ប្រសិន​បើ true នោះ​គម្លាត​រវាង​មធ្យម​អន្តរការី​គឺ​នឹង​នៅ​ថេរ​ទៅតាម​ប្រវែង​របស់​ផ្លូវ ។ ប្រសិន​បើ false នោះ​ចម្ងាយ​របស់​វា​នឹង​អាស្រ័យ​លើ​ទីតាំង​របស់​ថ្នាំង​របស់​គន្លង​ផ្លូវ ។"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
@@ -6892,7 +6891,7 @@ msgstr "ឯកតា​ទទឹង​គំនូស​វាស"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr ""
+msgstr "ចាត់ទុក 'ទទឹង​បញ្ឈប់' ជា​សមាមាត្រ​ទទឹង​គូសវាស ។"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
@@ -6904,11 +6903,11 @@ msgstr "បន្ថែម​ទទឹង​​គំនូស​វាស​ទ
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "បន្ថែម​ទទឹង​គំនូសវាស​ផ្សេងទៀត ទៅកាន់​ទំហំ​បញ្ឈប់"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size."
-msgstr ""
+msgstr "បន្ថែម​ទទឹង​គំនូសវាស​​ដែល​កាត់ ទៅកាន់​ទទឹង​បញ្ឈប់ ។"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
@@ -6916,19 +6915,19 @@ msgstr "ចនាប័ទ្ម​កម្មវិធី​ប្ដូរ"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "ទំហំ​កម្មវិធី​ប្ដូរ/បង្ហាញ​ទិស"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
-msgstr ""
+msgstr "សញ្ញា​ខ្វែង"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
-msgstr ""
+msgstr "សញ្ញា​ខ្វែង"
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "អូស​ដើម្បី​ជ្រើស​សញ្ញា​ខ្វែង ចុច​ដើម្បី​ត្រឡប់​វា"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:47
@@ -6996,40 +6995,36 @@ msgid "Control handle 15"
 msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១៥"
 
 #: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5507
-#, fuzzy
 msgid "Closed"
 msgstr "បិទ"
 
 #: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5509
-#, fuzzy
 msgid "Open start"
-msgstr "បើក​ធ្នូរ​"
+msgstr "បើក ចាប់ផ្ដើម"
 
 #: ../src/live_effects/lpe-line_segment.cpp:29 ../src/widgets/toolbox.cpp:5511
-#, fuzzy
 msgid "Open end"
-msgstr "អ្វី​បាន​បើក​ថ្មីៗ"
+msgstr "បើក ​បញ្ចប់"
 
 #: ../src/live_effects/lpe-line_segment.cpp:30 ../src/widgets/toolbox.cpp:5513
 msgid "Open both"
-msgstr ""
+msgstr "បើក​ទាំងពីរ"
 
 #: ../src/live_effects/lpe-line_segment.cpp:36
-#, fuzzy
 msgid "End type"
-msgstr "  ប្រភេទ ​​​៖"
+msgstr "ប្រភេទ បញ្ចប់"
 
 #: ../src/live_effects/lpe-line_segment.cpp:36
 msgid "Determines on which side the line or line segment is infinite."
-msgstr ""
+msgstr "កំណត់​​ជ្រុង​ណាមួយ​នៃ​បន្ទាត់ ឬ​ចម្រៀក​បន្ទាត់​មិន​កំណត់ ។"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Discard original path?"
-msgstr ""
+msgstr "បោះបង់​ផ្លូវ​ដើម​ឬ ?"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
+msgstr "ធីក​វា គឺ​ដើម្បី​ទុក​ផ្នែក​ដែល​ចាំង​​របស់​ផ្លូវ"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:31
 msgid "Reflection line"
@@ -7041,32 +7036,27 @@ msgstr "បន្ទាត់​ដែល​មាន​តួ​នាទី​
 
 #: ../src/live_effects/lpe-offset.cpp:30
 msgid "Handle to control the distance of the offset from the curve"
-msgstr ""
+msgstr "ចំណុច​ទាញ សម្រាប់​គ្រប់គ្រង​ចម្ងាយ​របស់​អុហ្វសិត​ពី​ខ្សែកោង"
 
 #: ../src/live_effects/lpe-parallel.cpp:46
-#, fuzzy
 msgid "Adjust the offset"
-msgstr "លៃតម្រូវ​<b>ចម្ងាយ​អុហ្វសិត​</b>"
+msgstr "លៃ​តម្រូវ​អុហ្វសិត"
 
 #: ../src/live_effects/lpe-parallel.cpp:47
-#, fuzzy
 msgid "Specifies the left end of the parallel"
-msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​នៃចំណុច​ប៉ះ"
+msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​របស់​ជ្រុង​ស្រប​គ្នា"
 
 #: ../src/live_effects/lpe-parallel.cpp:48
-#, fuzzy
 msgid "Specifies the right end of the parallel"
-msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​ចំណុច​ប៉ះ"
+msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​របស់​ជ្រុង​ស្រប​គ្នា"
 
 #: ../src/live_effects/lpe-parallel.cpp:56
-#, fuzzy
 msgid "Adjust the \"left\" end of the parallel"
-msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​ចុង​\"ខាង​ឆ្វេង\" របស់​ជ្រុង​ស្របគ្នា"
 
 #: ../src/live_effects/lpe-parallel.cpp:57
-#, fuzzy
 msgid "Adjust the \"right\" end of the parallel"
-msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​ចុង​\"ខាង​ស្ដាំ\" របស់​ជ្រុង​ស្របគ្នា"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
@@ -7077,19 +7067,16 @@ msgid "Scale"
 msgstr "មាត្រដ្ឋាន"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#, fuzzy
 msgid "Scaling factor"
 msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
-#, fuzzy
 msgid "Display unit"
-msgstr "បង្ហាញ​ការ​លៃតម្រូវ"
+msgstr "ឯកតា​បង្ហាញ"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
-#, fuzzy
 msgid "Print unit after path length"
-msgstr "ទទឹង​ក្នុង​ឯកតា​របស់​ប្រវែង"
+msgstr "បោះពុម្ព​ឯកតា​បន្ទាប់​ពី​ប្រវែង​ផ្លូវ"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7180,21 +7167,19 @@ msgstr "ត្រឡប់​លំនាំ ៩០ ដឺក្រេ មុន
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "បញ្ចូល​ចុង​ដែល​នៅ​ជិត​ចូល​គ្នា"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "បញ្ចូល​ចុង​ដែល​នៅ​ជិត​ជាង​តម្លៃ​នេះ​ចូល​គ្នា ។ ០ មានន័យ​ថា មិន​បញ្ចូល ។"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:113
-#, fuzzy
 msgid "Adjust the bisector's \"left\" end"
-msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​ចុង​\"ខាង​ឆ្វេង\"​របស់​បន្ទាត់​ពុះ​មុំ"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:114
-#, fuzzy
 msgid "Adjust the bisector's \"right\" end"
-msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​ចំណុច​ប៉ះ"
+msgstr "លៃតម្រូវ​ចុង​\"ខាង​ស្ដាំ\"​របស់​បន្ទាត់​ពុះ​មុំ"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:41
@@ -7240,130 +7225,134 @@ msgid ""
 msgstr "បើ​ពិត ដាក់​ផ្លូវ​នៅ​ខាង​ឆ្វេង​នៃ​ប្រអប់​មនោគតិ មិន​ដូច្នោះ​ទេ​នៅ​ខាង​ស្ដាំ"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:54
-#, fuzzy
 msgid "Adjust the origin"
-msgstr "លៃ​តម្រូវ​ភាពលាំៗ​នៃពណ៌"
+msgstr "លៃតម្រូវ​​ដើម"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-#, fuzzy
 msgid "Iterations"
-msgstr "ប្រសព្វ"
+msgstr "ការ​ធ្វើ​ឡើងវិញ"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
 msgid "recursivity"
-msgstr ""
+msgstr "ការ​ហៅ​ខ្លួន​ឯង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
-msgstr ""
+msgstr "ភាព​ចៃដន្យ​នៃ​ប្រេកង់"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
-msgstr ""
+msgstr "ភាព​ខុស​គ្នា​នៃ​ចម្ងាយ​រវាង​ឆ្នូត​នីមួយៗ នៅ​ក្នុង % ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth"
-msgstr "ពង្រីក​ការ​លៃតម្រូវ"
+msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
-msgstr ""
+msgstr "ការ​កើន​ចម្ងាយ​រវាង​ឆ្នូត​នីមួយៗ ។"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half turns smoothness: 1st side, in"
-msgstr ""
+msgstr "រលោង​ពាក់​កណ្ដាល​ត្រឡប់ ៖ ផ្នែក​ទី ១ ខាង​ក្នុង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
+"កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ដល់​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ 0= ច្បាស់ "
+"1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr ""
+msgstr "ផ្នែក​ទី ១ ខាងក្រៅ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
+"កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ "
+"0= ច្បាស់ "
+"1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
-msgstr "ថ្នាំង​ចុង​"
+msgstr "ផ្នែក​ទី ២ ខាង​ក្នុង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
+"កំណត់​ភាព​រលោង​/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ដល់​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ។ 0= ច្បាស់ "
+"1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr ""
+msgstr "ផ្នែក​ទី ២ ខាងក្រៅ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
+"កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ។ "
+"0= ច្បាស់"
+"1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "បម្លាស់​ប្ដូរ​ទំហំ ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "ផ្លាស់ទី​​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ដោយ​ចៃដន្យ ដើម្បី​ធ្វើ​ឲ្យ​មាន​បម្លាស់​ប្ដូរ​ទំហំ ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-#, fuzzy
 msgid "2nd side"
-msgstr "ថ្នាំង​ចុង​"
+msgstr "ផ្នែក​ទី ២"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ដើម្បី​ធ្វើ​ឲ្យ​មាន​បម្លាស់​ប្ដូរ​ទំហំ ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "បម្លាស់​ប្ដូរ​បន្ទាត់​ស្រប​គ្នា ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
-msgstr ""
+msgstr "បន្ថែម​ទិស​ដោយចៃដន្យ ដោយ​ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ​បន្តិចបន្តួច​ទៅកាន់​ព្រំដែន ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
-msgstr ""
+msgstr "បន្ថែម​ទិស​ដោយចៃដន្យ ដោយ​ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ​បន្តិចបន្តួច​ទៅកាន់​ព្រំដែន ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
-msgstr ""
+msgstr "វ៉ារ្យ៉ង់ ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr ""
+msgstr "ភាព​ចៃដន្យ​នៃ​ពាក់​កណ្ដាល​ត្រឡប់​រលោង 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr ""
+msgstr "ភាព​ចៃដន្យ​នៃ​ពាក់​កណ្ដាល​ត្រឡប់​រលោង 'កំពូល'"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Generate thick/thin path"
-msgstr "បង្កើត​ផ្លូវ"
+msgstr "បង្កើត​ផ្លូវ​ក្រាស់/​ស្ដើង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
@@ -7381,7 +7370,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
-msgstr ""
+msgstr "កម្រាស់ ៖ នៅ​ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half turns"
