@@ -1566,12 +1566,11 @@
 <feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
 <feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
 </filter>
-<filter inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent" inkscape:menu="Transparency utilities" height="1" width="1" y="0" x="0" inkscape:label="Light eraser" id="LightEras0">
-<feColorMatrix result="fbSourceGraphic" values="1" type="saturate" id="feColorMatrix2957" />
-<feColorMatrix type="luminanceToAlpha" result="result1" in="fbSourceGraphic" id="feColorMatrix2959" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " id="feColorMatrix2961" />
-<feComposite operator="out" result="result2" in="fbSourceGraphic" k3="0" k2="2" id="feComposite2963" />
-<feBlend in="result2" mode="normal" blend="normal" id="feBlend2965" />
+<filter inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent" inkscape:menu="Transparency utilities" inkscape:label="Light eraser" id="LightEr0">
+<feColorMatrix in="SourceGraphic" type="matrix" result="result3" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " id="feColorMatrix3106" />
+<feColorMatrix result="result14" type="luminanceToAlpha" id="feColorMatrix3108" in="result3" />
+<feComposite in="SourceGraphic" in2="result14" result="fbSourceGraphic" operator="in" id="feComposite3110" />
+<feBlend mode="normal" in2="fbSourceGraphic" result="result15" id="feBlend3112" blend="normal" />
 </filter>
 <filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Blurs" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content" x="-0.25" width="1.5" y="-0.25" height="1.5">
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3241" result="result1" />
@@ -1963,40 +1962,28 @@
 <feGaussianBlur stdDeviation="2" id="feGaussianBlur2924" result="result2" />
 <feDisplacementMap id="feDisplacementMap2922" numOctaves="2" scale="50" yChannelSelector="B" xChannelSelector="R" in="SourceGraphic" in2="result2" />
 </filter>
-<filter x="0" y="0" width="1" height="1" inkscape:menu-tooltip="Convert to a colorizable transparent positive" inkscape:menu="Transparency utilities" inkscape:label="Monochrome positive" id="MonochrPos0">
-<feColorMatrix result="fbSourceGraphic" type="luminanceToAlpha" id="feColorMatrix2939" />
-<feFlood flood-opacity="1" in="fbSourceGraphic" result="result1" flood-color="rgb(124,17,0)" id="feFlood2941" />
-<feComposite result="result2" in2="fbSourceGraphic" operator="out" id="feComposite2943" />
+<filter id="MonoPos0" inkscape:menu-tooltip="Convert to a Clorizable transparent positive" inkscape:menu="Transparency utilities" height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:label="Monochrome positive">
+<feColorMatrix id="feColorMatrix2981" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " in="SourceGraphic" result="result1" type="matrix" />
+<feColorMatrix id="feColorMatrix2983" type="luminanceToAlpha" />
+<feComposite id="feComposite2985" operator="in" in2="result1" result="fbSourceGraphic" />
+<feFlood id="feFlood2987" flood-color="rgb(124,17,0)" flood-opacity="1" result="result1" in="fbSourceGraphic" />
+<feComposite id="feComposite2989" in2="fbSourceGraphic" operator="in" in="result1" />
 </filter>
-<filter id="MonochrNeg0" inkscape:label="Monochrome negative" inkscape:menu="Transparency utilities" inkscape:menu-tooltip="Convert to a colorizable transparent negative" height="1" width="1" y="0" x="0">
-<feColorMatrix id="feColorMatrix2929" type="luminanceToAlpha" result="fbSourceGraphic" />
-<feFlood id="feFlood2933" flood-color="rgb(2,82,116)" result="result1" in="fbSourceGraphic" flood-opacity="1" />
-<feComposite id="feComposite2935" operator="in" in2="fbSourceGraphic" result="result2" />
+<filter id="MonoNeg0" inkscape:label="Monochrome negative" inkscape:menu="Transparency utilities" inkscape:menu-tooltip="Convert to a colorizable transparent negative" height="1.2" width="1.2" y="-0.1" x="-0.1">
+<feColorMatrix id="feColorMatrix3003" type="luminanceToAlpha" result="fbSourceGraphic" />
+<feFlood id="feFlood3005" flood-color="rgb(2,82,116)" result="result1" in="fbSourceGraphic" flood-opacity="1" />
+<feComposite id="feComposite3007" operator="in" in2="fbSourceGraphic" result="result2" />
 </filter>
-<filter id="LightErNeg0" inkscape:label="Light eraser, negative" x="0" y="0" width="1" height="1" inkscape:menu="Transparency utilities" inkscape:menu-tooltip="Invert and make the lightest parts of the object progressively transparent">
-<feColorMatrix id="feColorMatrix2877" type="saturate" values="1" result="result4" />
-<feColorMatrix id="feColorMatrix2879" in="result4" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " result="fbSourceGraphic" />
-<feColorMatrix id="feColorMatrix2881" in="fbSourceGraphic" result="result1" type="luminanceToAlpha" />
-<feColorMatrix id="feColorMatrix2883" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result3" />
-<feComposite id="feComposite2885" k2="2" k3="0" in="fbSourceGraphic" result="result2" operator="out" />
-<feBlend id="feBlend2887" blend="normal" mode="multiply" in="result2" in2="result2" />
+<filter id="LightErNeg0" inkscape:label="Light eraser, negative" inkscape:menu="Transparency utilities" inkscape:menu-tooltip="Invert and make the lightest parts of the object progressively transparent">
+<feColorMatrix id="feColorMatrix3196" in="SourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix3198" in="fbSourceGraphic" result="result1" type="luminanceToAlpha" />
+<feColorMatrix id="feColorMatrix3200" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result3" />
+<feComposite id="feComposite3202" k2="2" k3="0" in="fbSourceGraphic" result="result2" operator="out" />
+<feBlend id="feBlend3204" blend="normal" mode="multiply" in="result2" in2="result2" />
 </filter>
 <filter id="Repaint0" inkscape:menu="ABCs" inkscape:label="Repaint" inkscape:menu-tooltip="Repaint anything monochrome">
 <feFlood id="feFlood3056" flood-color="rgb(255,0,105)" result="result1" />
 <feComposite id="feComposite3058" operator="in" in2="SourceGraphic" result="result2" />
-</filter>
-<filter id="SbtrNeg0" inkscape:menu-tooltip="Subtract a transparent negative out of a colorizable opaque area" inkscape:menu="Transparency utilities" height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:label="Subtract negative">
-<feColorMatrix id="feColorMatrix2993" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " in="SourceGraphic" result="result1" type="matrix" />
-<feColorMatrix id="feColorMatrix2995" type="luminanceToAlpha" />
-<feComposite id="feComposite2997" operator="in" in2="result1" result="fbSourceGraphic" />
-<feFlood id="feFlood3001" flood-color="rgb(0,0,0)" flood-opacity="1" result="result1" in="fbSourceGraphic" />
-<feComposite id="feComposite3003" in2="fbSourceGraphic" operator="out" in="result1" />
-</filter>
-<filter inkscape:label="Subtract positive" inkscape:menu="Transparency utilities" inkscape:menu-tooltip="Subtract a transparent positive out of a colorizable opaque area" height="1.2" width="1.2" y="-0.1" x="-0.1" id="SubtrPos0">
-<feColorMatrix in="SourceGraphic" result="result1" type="luminanceToAlpha" id="feColorMatrix3007" />
-<feComposite operator="in" in="result1" in2="SourceGraphic" result="fbSourceGraphic" id="feComposite3009" />
-<feFlood in="fbSourceGraphic" flood-color="rgb(0,0,0)" flood-opacity="1" result="result1" id="feFlood3013" />
-<feComposite in="result1" in2="fbSourceGraphic" operator="out" id="feComposite3015" />
 </filter>
 <filter id="PunchHol0" inkscape:menu="Transparency utilities" inkscape:label="Punch hole" inkscape:menu-tooltip="Punch object out of a colorizable opaque area">
 <feFlood id="feFlood2961" flood-color="rgb(0,0,0)" result="result1" />
