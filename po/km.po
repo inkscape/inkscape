@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-23 16:41+0700\n"
+"PO-Revision-Date: 2009-07-24 15:43+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -2427,7 +2427,7 @@ msgstr "x_1 ៖"
 
 #: ../src/dialogs/export.cpp:318
 msgid "Wid_th:"
-msgstr "​ទទឹង ៖"
+msgstr "ទំហំ ៖"
 
 #: ../src/dialogs/export.cpp:324
 msgid "_y0:"
@@ -7360,13 +7360,12 @@ msgid "Simulate a stroke of varrying width"
 msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ស្នាម​គូស​"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
-#, fuzzy
 msgid "Bend hatches"
-msgstr "ផ្លូវ​កោង​"
+msgstr "ឆ្នូត​កោង​"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "បន្ថែម​ភាព​កោង​ជា​សកល​ទៅកាន់​ឆ្នូត (យឺត)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
@@ -7374,11 +7373,11 @@ msgstr "កម្រាស់ ៖ នៅ​ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half turns"
-msgstr ""
+msgstr "ទទឹង​នៅ​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
-msgstr "នៅ​ចំហៀង​ទី ២"
+msgstr "​ចំហៀង​ទី ២"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' halfturns"
@@ -7399,25 +7398,24 @@ msgid "from 1st to 2nd side"
 msgstr "ពី​ចំហៀង​ទី ១ ទៅ​ជំហាន​ទី ២"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
-#, fuzzy
 msgid "Hatches width and dir"
-msgstr "ចាក់សោ​ទទឹង និង​កម្ពស់"
+msgstr "ទទឹង និង​ថត​ឆ្នូត"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "កំណត់​ប្រេកង់ និង​ទិស​ឆ្នូត"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
-msgstr ""
+msgstr "ភាព​កោង​ជា​សកល"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
-msgstr ""
+msgstr "ទីតាំង​ដែល​ទាក់​ទង​ទៅនឹង​ចំណុច​យោង កំណត់​ទិស និង​ចំនួន​សរុប​​នៃ​ភាព​កោង​សកល"
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
@@ -7573,9 +7571,8 @@ msgid "Tremble frequency"
 msgstr "ប្រេកង់​ញ័រ"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
-#, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr "ចំនួន​មធ្យម​នៃ​កំឡុង​ពេល​ញ័រ​ក្នុង​ស្នាម​គូស​ប៉ានស្មាន"
+msgstr "ចំនួន​កំឡុង​ពេល​ញ័រ​ជា​មធ្យម​នៅ​ក្នុង​ពេល​គូស​វាស​ម្ដង"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -7589,7 +7586,7 @@ msgstr "ចំនួន​បន្ទាត់​សំណង់​ដែល​
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
-msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដែល​ទាក់ទង​និង​កំណោង និង​ប្រវែង​នៃ​បន្ទាត់​សំណង់ (សាកល្បង 5*offset)"
+msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដែល​ទាក់ទង​និង​កំណោង និង​ប្រវែង​នៃ​បន្ទាត់​សំណង់ (សាកល្បង​អុហ្វសិត 5*)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
@@ -7608,31 +7605,28 @@ msgid "Random variation of the length of construction lines"
 msgstr "បម្រែបម្រួល​ប្រវែង​ចៃដន្យ​នៃ​បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "Placement randomness"
-msgstr "មិន​បាន​ធ្វើ​ឲ្យ​មូល​"
+msgstr "ភាព​ចៃដន្យ​របស់​ទីតាំង​"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min"
-msgstr "ផ្សំ"
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
-msgstr ""
+msgstr "កំណោង​អប្បបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
-msgstr ""
+msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
-msgstr "អូស​ខ្សែកោង​"
+msgstr "កំណោង​អតិបរមា"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -7712,7 +7706,7 @@ msgstr "ផ្លូវ​ដែល​ភាគ​របស់​វា​កំ
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Use uniform transforms only"
-msgstr ""
+msgstr "ប្រើ​តែ​​ការ​ប្រែធាតុ​ដែល​មិន​ផ្លាស់ប្ដូរ​ប៉ុណ្ណោះ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid ""
@@ -10378,23 +10372,23 @@ msgstr "<b>គ្មាន​អ្វី​បានជ្រើស !</b> ជ�
 
 #: ../src/tweak-context.cpp:1254
 msgid "Move tweak"
-msgstr ""
+msgstr "ផ្លាស់ទី​វត្ថុ​ដែល​បាន​លៃតម្រូវ"
 
 #: ../src/tweak-context.cpp:1258
 msgid "Move in/out tweak"
-msgstr ""
+msgstr "ផ្លាស់ទី​វត្ថុ​ដែល​បាន​លៃតម្រូវ​ចូល​/​ចេញ"
 
 #: ../src/tweak-context.cpp:1262
 msgid "Move jitter tweak"
-msgstr ""
+msgstr "ផ្លាស់ទី​វត្ថុដែល​បាន​លៃតម្រូវ​ដែល​បាន​ផ្លាស់ប្ដូរ"
 
 #: ../src/tweak-context.cpp:1266
 msgid "Scale tweak"
-msgstr ""
+msgstr "ធ្វើ​មាត្រដ្ឋាន​វត្ថុ​ដែល​បាន​លៃតម្រូវ"
 
 #: ../src/tweak-context.cpp:1270
 msgid "Rotate tweak"
-msgstr ""
+msgstr "បង្វិល​វត្ថុ​ដែល​បាន​លៃតម្រូវ"
 
 #: ../src/tweak-context.cpp:1274
 msgid "Duplicate/delete tweak"
@@ -10917,14 +10911,11 @@ msgid "_Snap guides while dragging"
 msgstr "ខ្ទាស់​បន្ទាត់នាំផ្លូវ​ខណៈពេល​អូស"
 
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('Snap "
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
 "part of the guide near the cursor will snap)"
-msgstr ""
-"ខណៈពេល​អូស​បន្ទាត់នាំផ្លូវ ខ្ទាស់​ទៅ​ថ្នាំង​វត្ថុ ឬ​ជ្រុង​ប្រអប់​ចង ('ខ្ទាស់​ទៅ​ថ្នាំង' ឬ 'ខ្ទាស់​ទៅ​ជ្រុង​ប្រអប់​"
-"ចង' ត្រូវ​តែ​បាន​បើក​នៅ​ក្នុង​ផ្ទាំង 'ខ្ទាស់')"
+msgstr "នៅពេល​ដែល​បាន​អូស​បន្ទាត់​ក្រិត នោះ​វា​នឹង​ខ្ទាស់​ទៅកាន់​ថ្នាំង​វត្ថុ ឬ​ជ្រុង​របស់​ប្រអប់​លោត ('ខ្ទាស់​ទៅកាន់​ថ្នាំង' ឬ 'ខ្ទាស់ទៅ​កាន់​ជ្រុង​ប្រអប់​លោត' ត្រូវ​តែ​បើក ។ មាន​តែ​ផ្នែក​តូច​របស់​បន្ទាត់​ក្រិត​ដែល​នៅ​ជិត​នឹង​ទស្សន៍ទ្រនិច​ប៉ុណ្ណោះ​ដែល​ត្រូវ​ខ្ទាស់​) ។"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -11835,16 +11826,12 @@ msgstr ""
 "រលៃតម្រូវ​កម្រិត​ពន្លឺ តុល្យភាព​ពណ៌ និង​កម្រិត​ពន្លឺ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
-#, fuzzy
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
-msgstr ""
-"តម្រង <b>feComposite</b> ជា​បំបូងផ្សំ​រូបភាព​ពីរ​ ដោយ​ប្រើ​របៀប​លាយ​មួយ​ក្នុង​ចំណោម​របៀប​លាយរបស់ "
-"Porter-Duff ឬ​របៀប aritmetic ដែល​បាន​បរិយាយ​នៅ​ក្នុង​ស្តង់ដារ SVG  ។ របៀប​លាយ Porter-"
-"Duff វា​សំខាន់​សម្រាប់​ប្រតិបត្តិការ​ឡូជីខល​រវាង​តម្លៃ​ភីកសែល​ដែល​ទាក់ទង​របស់​រូបភាព ។"
+msgstr "តម្រង <b>feComposite</b> ជា​បំបូងផ្សំ​រូបភាព​ពីរ​ ដោយ​ប្រើ​របៀប​លាយ​មួយ​ក្នុង​ចំណោម​របៀប​លាយរបស់ Porter-Duff ឬ​របៀប aritmetic ដែល​បាន​បរិយាយ​នៅ​ក្នុង​ស្តង់ដារ SVG  ។ របៀប​លាយ Porter-Duff វា​សំខាន់​សម្រាប់​ប្រតិបត្តិការ​ឡូជីខល​រវាង​តម្លៃ​ភីកសែល​ដែល​ទាក់ទង​របស់​រូបភាព ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid ""
@@ -11853,7 +11840,7 @@ msgid ""
 "sharpening, embossing and edge detection. Note that while gaussian blur can "
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
-msgstr ""
+msgstr "<b>feConvolveMatrix</b> អនុញ្ញាត​ឲ្យ​អ្នក​បញ្ជាក់ Convolution ដែល​ត្រូវ​អនុវត្ត​លើ​រូបភាព ។ បែបផែន​សាមញ្ញ ត្រូវបាន​បង្កើត​ដោយប្រើម៉ាទ្រីស convolution នៅពេល​រកឃើញ​ព្រិល ភ្លឺ​ច្បាស់ ផុស និង​គែម ។ ចាំថា​នៅពេល​ដែល​អាច​បង្កើត​ភាព​ព្រិល​ហ្គូសៀន​ដោយប្រើ​តម្រង​ដំបូង ជា​ពិសេស​ភាព​ព្រិល​ហ្គូសៀន​ដំបូង គឺ​លឿន​ជាង និង​មាន​គុណភាព​បង្ហាញ​ជា​ឯករាជ្យ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2297
 msgid ""
@@ -11992,7 +11979,7 @@ msgstr "កណ្ដុរ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:171
 msgid "Grab sensitivity:"
-msgstr ""
+msgstr "ការ​ដឹង​នៃ​ការ​ចាប់យក ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:171
 #: ../src/ui/dialog/inkscape-preferences.cpp:174
@@ -12136,6 +12123,8 @@ msgid ""
 "additional fraction of a second. This additional delay is specified here. "
 "When set to zero or to a very small number, snapping will be immediate"
 msgstr ""
+"ផ្អាក​ការ​ចាប់យក នៅពេល​ដែល​កណ្ដរ​ផ្លាស់ទី ហើយ​បន្ទាប់​មក​ត្រូវ​រងចាំ​បន្តិច ។ ការ​ពន្យាពេល​រង់ចាំ គឺ​អាច​កំណត់​បាន​នៅ​ទីនេះ ។ "
+"នៅពេល​ដែល​បាន​កំណត់​ទៅ​សូន្យ ឬ​ទៅតម្លៃ​ដែល​ទាប​ណាមួយ នោះ​ការ​ចាប់យក​នឹង​ធ្វើ​បន្ត​ភ្លាមៗ​ដោយ​មិន​បាច់​រង់ចាំ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:225
 msgid "Only snap the node closest to the pointer"
@@ -12154,7 +12143,7 @@ msgid ""
 "When multiple snap solutions are found, then Inkscape can either prefer the "
 "closest transformation (when set to 0), or prefer the node that was "
 "initially the closest to the pointer (when set to 1)"
-msgstr ""
+msgstr "នៅពេល​ដែលបាន​រកឃើញ​ពហុ​ដំណោះស្រាយ​ក្នុង​ការ​ចាប់យក​រួចមក នោះ Inkscape អាច​នឹង​យក​ការ​បម្លែង​ដែល​នៅ​ជិត​ជាងគេ (នៅពេល​កំណត់​ទៅ ០) ឬ​យក​ថ្នាំង​ដែល​នៅ​ជិត និង​ដើម​គេ​ជាប់​នឹង​ទស្សន៍ទ្រនិច (នៅពេល​ដែល​កំណត់​ទៅ ១)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snapping"
@@ -13800,7 +13789,7 @@ msgstr "(តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុ�
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
-msgstr ""
+msgstr "ដាក់​កត្តា​តាម​នាឡិកា​ព្រឹត្តការណ៍​​ណាមួយ​ដែល​ធ្វើ​ឲ្យ​វៀង​ពី​ពេលវេលា​ពិត (0.9766 នៅ​លើ​ប្រព័ន្ធ​មួយ​ចំនួន) ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid "Pre-render named icons"
@@ -14696,6 +14685,11 @@ msgid ""
 "\n"
 "http://potrace.sourceforge.net"
 msgstr ""
+"ដាន​រូបភាព Inkscape\n"
+"គឺ​មាន​មូលដ្ឋាន​លើ​កម្មវិធី Potrace\n"
+"ដែល​បង្កើត​ដោយ Peter Selinger\n"
+"\n"
+"http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -19008,11 +19002,11 @@ msgstr "(បង្ខំ​អតិបរមា)"
 
 #: ../src/widgets/toolbox.cpp:4139
 msgid "Force"
-msgstr "បង្ខំ"
+msgstr "កម្លាំង​ទាញ"
 
 #: ../src/widgets/toolbox.cpp:4139
 msgid "Force:"
-msgstr "បង្ខំ ៖"
+msgstr "កម្លាំង​ទាញ ៖"
 
 #: ../src/widgets/toolbox.cpp:4139
 msgid "The force of the tweak action"
@@ -19079,9 +19073,8 @@ msgid "Shrink/grow mode"
 msgstr "របៀប​បង្រួម/ពង្រីក"
 
 #: ../src/widgets/toolbox.cpp:4207
-#, fuzzy
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "បង្រួម (ដើម) ផ្នែក​របស់​ផ្លូវ"
+msgstr "បង្រួម​ផ្នែក​របស់​ផ្លូវ (ចូល​ក្នុង) ។ ចុច ប្ដូរ​(Shift) ដើម្បី​ទាញ​ (ចេញ​ក្រៅ)"
 
 #: ../src/widgets/toolbox.cpp:4213
 msgid "Attract/repel mode"
@@ -20263,7 +20256,7 @@ msgstr "គូរ​ចំណុច​ច្រាស"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
-msgstr ""
+msgstr "គូរ Isotomic Conjugate"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
@@ -20303,7 +20296,7 @@ msgstr "ចំណុច​ប្រសព្វ​ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Nine-Point Centre"
-msgstr ""
+msgstr "ចំណុច​កណ្ដាល​នៃ​រង្វង់​មាន​ចំណុច​ប៉ះ​ត្រីកោណ ៩"
 
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Nine-Point Circle"
@@ -20311,11 +20304,11 @@ msgstr "រង្វង់​ដែល​មាន​ចំណុច​ប៉ះ
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
 msgid "Orthic Triangle"
-msgstr ""
+msgstr "ត្រីកោណ​អូហ្ស៊ីក (Orthic)"
 
 #: ../share/extensions/draw_from_triangle.inx.h:27
 msgid "Orthocentre"
-msgstr ""
+msgstr "អូហ្សូសិនទ្រិក"
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
 msgid "Point At"
@@ -20331,7 +20324,7 @@ msgstr "រាយការណ៍​លក្ខណៈ​សម្បត្តិ
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 msgid "Symmedial Triangle"
-msgstr ""
+msgstr "ត្រីកោណ​ក្នុង​មានចំណុច​ប្រសព្វ​នឹង​ត្រីកោណ​ក្រៅ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
 msgid "Symmedian Point"
@@ -20876,7 +20869,7 @@ msgstr "កំណត់​ជា​មុន"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "ចែក​ជា​បី​ជួរឈរ និង​បី​ជួរដេក"
 
 #: ../share/extensions/guides_creator.inx.h:19
 msgid "Start from edges"
@@ -21073,17 +21066,13 @@ msgid "Step length (px)"
 msgstr "ប្រវែង​ជំហាន (ភីកសែល)"
 
 #: ../share/extensions/lindenmayer.inx.h:15
-#, fuzzy
 msgid ""
 "The path is generated by applying the substitutions of Rules to the Axiom, "
 "Order times. The following commands are recognized in Axiom and Rules: Any "
 "of A,B,C,D,E,F: draw forward Any of G,H,I,J,K,L: move forward +: turn left "
 "-: turn right |: turn 180 degrees [: remember point ]: return to remembered "
 "point"
-msgstr ""
-"ផ្លូវ​ត្រូវ​បាន​បង្កើត​ឡើង​ដោយ​អនុវត្ត​ការ​ជំនួស​នៃ​ច្បាប់​និង Axiom, លំដាប់​ពេល​វេលា ។ ពាក្យ​បញ្ជា​ខាងក្រោម​"
-"ត្រូវ​បាន​ទទួល​ស្គាល់​ក្នុង Axiom និង Rules ៖ A,B,C,D,E,F ៖ ទាញ​ទៅ​មុខ G,H,I,J,K,L ៖ ផ្លាស់ទី​ទៅ​"
-"មុខ + ៖ បត់​ឆ្វេង - ៖ បត់​ស្ដាំ | ៖ បត់ ១៨០ ដឺក្រេ [ ៖ ចំណុច​ចងចាំ ] ៖ ត្រឡប់​ទៅ​ចំណុច​ដែល​ចងចាំ"
+msgstr "ផ្លូវ​ត្រូវបាន​បង្កើត​ដោយ​អនុវត្ត​ការ​ជំនួស​របស់​ Rule ទៅ​ពេលវេលា Axiom និង​តាម​លំដាប់ ។ ពាក្យ​បញ្ជា​ខាងក្រោម គឺ​ត្រូវបាន​ទទួល​ស្គាល់​នៅ​ក្នុង Axiom និង Rules ។ អក្សរ​ A,B,C,D,E,F ណាមួយ ៖ គូរ​ទៅកាន់អក្សរ G,H,I,J,K,L ណាមួយ ៖ ផ្លាស់ទី​ទៅកាន់ + ៖ ត្រឡប់​ទៅ​ឆ្វេង - ៖ ត្រឡប់​ទៅ​ស្ដាំ | ៖ ត្រឡប់ 180 ដឺក្រេ [ ៖ ចងចាំ​ចំណុច ] ៖ ត្រឡប់​ចំណុច​ដែល​បាន​ចាំ"
 
 #: ../share/extensions/lorem_ipsum.inx.h:1
 msgid "Lorem ipsum"
@@ -21673,7 +21662,7 @@ msgstr "ប្រើ​ការ​ចែកចាយ​ធម្មតា​"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "សំឡ​មាន​តួអក្សរ"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
