@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-18 11:56+0200\n"
+"POT-Creation-Date: 2009-07-24 15:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,6 +139,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:211
 msgid "ABCs"
 msgstr ""
 
@@ -1076,7 +1077,7 @@ msgstr ""
 msgid "Specular light"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:110
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
@@ -1498,6 +1499,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:208
 #: ../share/filters/filters.svg.h:209 ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:212
 msgid "Transparency utilities"
 msgstr ""
 
@@ -1793,11 +1795,15 @@ msgid "Marbled ink"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:204
-msgid "Marbled transparency effect"
+msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:205
 msgid "Thick acrylic"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:205
+msgid "Thick acrylic paint texture with high texture depth"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:206
@@ -1805,7 +1811,7 @@ msgid "Alpha engraving B"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:206
-msgid "Gives a rough engraving effect to bitmaps and materials"
+msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:207
@@ -1821,7 +1827,7 @@ msgid "Monochrome positive"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:208
-msgid "Convert to a colorizable transparent positive"
+msgid "Convert to a Clorizable transparent positive"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:209
@@ -1839,6 +1845,22 @@ msgstr ""
 #: ../share/filters/filters.svg.h:210
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Repaint"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Repaint anything monochrome"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Punch hole"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Punch object out of a colorizable opaque area"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -2005,45 +2027,45 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
-#: ../src/arc-context.cpp:304
+#: ../src/arc-context.cpp:303
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 
-#: ../src/arc-context.cpp:305 ../src/rect-context.cpp:346
+#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:456
+#: ../src/arc-context.cpp:455
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:458
+#: ../src/arc-context.cpp:457
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:484
+#: ../src/arc-context.cpp:483
 msgid "Create ellipse"
 msgstr ""
 
-#: ../src/box3d-context.cpp:413 ../src/box3d-context.cpp:420
-#: ../src/box3d-context.cpp:427 ../src/box3d-context.cpp:434
-#: ../src/box3d-context.cpp:441 ../src/box3d-context.cpp:448
+#: ../src/box3d-context.cpp:412 ../src/box3d-context.cpp:419
+#: ../src/box3d-context.cpp:426 ../src/box3d-context.cpp:433
+#: ../src/box3d-context.cpp:440 ../src/box3d-context.cpp:447
 msgid "Change perspective (angle of PLs)"
 msgstr ""
 
 #. status text
-#: ../src/box3d-context.cpp:606
+#: ../src/box3d-context.cpp:605
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
 
-#: ../src/box3d-context.cpp:630
+#: ../src/box3d-context.cpp:629
 msgid "Create 3D box"
 msgstr ""
 
@@ -2055,40 +2077,40 @@ msgstr ""
 msgid "Creating new connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:777
+#: ../src/connector-context.cpp:775
 msgid "Connector endpoint drag cancelled."
 msgstr ""
 
-#: ../src/connector-context.cpp:826
+#: ../src/connector-context.cpp:824
 msgid "Reroute connector"
 msgstr ""
 
 #. Flush pending updates
-#: ../src/connector-context.cpp:990
+#: ../src/connector-context.cpp:988
 msgid "Create connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:1014
+#: ../src/connector-context.cpp:1012
 msgid "Finishing connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:1157
+#: ../src/connector-context.cpp:1154
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:1230
+#: ../src/connector-context.cpp:1227
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 
-#: ../src/connector-context.cpp:1342
+#: ../src/connector-context.cpp:1339
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1347 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1348 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -2108,20 +2130,20 @@ msgstr ""
 msgid "No next zoom."
 msgstr ""
 
-#: ../src/desktop-events.cpp:205
+#: ../src/desktop-events.cpp:187
 msgid "Create guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:431
+#: ../src/desktop-events.cpp:412
 msgid "Move guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:438 ../src/desktop-events.cpp:485
+#: ../src/desktop-events.cpp:419 ../src/desktop-events.cpp:466
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:465
+#: ../src/desktop-events.cpp:446
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr ""
@@ -3518,7 +3540,7 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1496
+#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1493
 msgid "Set text style"
 msgstr ""
 
@@ -4064,7 +4086,7 @@ msgstr ""
 msgid "Draw eraser stroke"
 msgstr ""
 
-#: ../src/event-context.cpp:612
+#: ../src/event-context.cpp:618
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr ""
 
@@ -5838,30 +5860,30 @@ msgstr ""
 msgid "Create default gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:589
+#: ../src/gradient-context.cpp:588
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/gradient-context.cpp:687
+#: ../src/gradient-context.cpp:686
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/gradient-context.cpp:688
+#: ../src/gradient-context.cpp:687
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/gradient-context.cpp:808
+#: ../src/gradient-context.cpp:807
 msgid "Invert gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:925
+#: ../src/gradient-context.cpp:924
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:929
+#: ../src/gradient-context.cpp:928
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
@@ -6276,7 +6298,7 @@ msgstr ""
 msgid "Failed to execute helper program (%s)"
 msgstr ""
 
-#: ../src/knot.cpp:443
+#: ../src/knot.cpp:431
 msgid "Node or handle drag canceled."
 msgstr ""
 
@@ -6284,20 +6306,20 @@ msgstr ""
 msgid "Change handle"
 msgstr ""
 
-#: ../src/knotholder.cpp:215
+#: ../src/knotholder.cpp:213
 msgid "Move handle"
 msgstr ""
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
-#: ../src/knotholder.cpp:236
+#: ../src/knotholder.cpp:234
 msgid "<b>Move</b> the pattern fill inside the object"
 msgstr ""
 
-#: ../src/knotholder.cpp:239
+#: ../src/knotholder.cpp:237
 msgid "<b>Scale</b> the pattern fill uniformly"
 msgstr ""
 
-#: ../src/knotholder.cpp:242
+#: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
@@ -6488,11 +6510,11 @@ msgid ""
 "0, all are unlocked; -1 indicates inconsistency among the items"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:707
+#: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:706
 msgid "Switcher Style"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:708
+#: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:707
 msgid "Switcher buttons style"
 msgstr ""
 
@@ -7535,7 +7557,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:489 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8029,7 +8051,7 @@ msgstr ""
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:582
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
 msgid "Stamp"
 msgstr ""
 
@@ -8042,7 +8064,7 @@ msgid "Move nodes horizontally"
 msgstr ""
 
 #: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
-#: ../src/nodepath.cpp:3615
+#: ../src/nodepath.cpp:3613
 msgid "Move nodes"
 msgstr ""
 
@@ -8126,15 +8148,15 @@ msgstr ""
 msgid "Delete node"
 msgstr ""
 
-#: ../src/nodepath.cpp:3861
+#: ../src/nodepath.cpp:3859
 msgid "Retract handle"
 msgstr ""
 
-#: ../src/nodepath.cpp:3916
+#: ../src/nodepath.cpp:3914
 msgid "Move node handle"
 msgstr ""
 
-#: ../src/nodepath.cpp:4101
+#: ../src/nodepath.cpp:4099
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8142,80 +8164,80 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:4295
+#: ../src/nodepath.cpp:4293
 msgid "Rotate nodes"
 msgstr ""
 
-#: ../src/nodepath.cpp:4410
+#: ../src/nodepath.cpp:4408
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4436
+#: ../src/nodepath.cpp:4434
 msgid "Scale nodes"
 msgstr ""
 
-#: ../src/nodepath.cpp:4480
+#: ../src/nodepath.cpp:4478
 msgid "Flip nodes"
 msgstr ""
 
-#: ../src/nodepath.cpp:4649
+#: ../src/nodepath.cpp:4647
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4882
+#: ../src/nodepath.cpp:4880
 msgid "end node"
 msgstr ""
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4887
+#: ../src/nodepath.cpp:4885
 msgid "cusp"
 msgstr ""
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4890
+#: ../src/nodepath.cpp:4888
 msgid "smooth"
 msgstr ""
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4890
 msgid "auto"
 msgstr ""
 
-#: ../src/nodepath.cpp:4894
+#: ../src/nodepath.cpp:4892
 msgid "symmetric"
 msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4900
+#: ../src/nodepath.cpp:4898
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4900
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4905
+#: ../src/nodepath.cpp:4903
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4917
+#: ../src/nodepath.cpp:4915
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
 
-#: ../src/nodepath.cpp:4918
+#: ../src/nodepath.cpp:4916
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 
-#: ../src/nodepath.cpp:4944 ../src/nodepath.cpp:4956
+#: ../src/nodepath.cpp:4942 ../src/nodepath.cpp:4954
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 
-#: ../src/nodepath.cpp:4948
+#: ../src/nodepath.cpp:4946
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8226,18 +8248,18 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4954
+#: ../src/nodepath.cpp:4952
 msgid "Drag the handles of the object to modify it."
 msgstr ""
 
-#: ../src/nodepath.cpp:4962
+#: ../src/nodepath.cpp:4960
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4969
+#: ../src/nodepath.cpp:4967
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8246,7 +8268,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4975
+#: ../src/nodepath.cpp:4973
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -8408,94 +8430,94 @@ msgstr ""
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
-#: ../src/pencil-context.cpp:262 ../src/pen-context.cpp:495
+#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:270 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:273 ../src/pen-context.cpp:507
+#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:374
+#: ../src/pencil-context.cpp:373
 msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
-#: ../src/pencil-context.cpp:380
+#: ../src/pencil-context.cpp:379
 msgid "Drawing a freehand path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:385
+#: ../src/pencil-context.cpp:384
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr ""
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:458
+#: ../src/pencil-context.cpp:455
 msgid "Finishing freehand"
 msgstr ""
 
-#: ../src/pencil-context.cpp:515 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr ""
 
-#: ../src/pencil-context.cpp:565
+#: ../src/pencil-context.cpp:561
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:593
+#: ../src/pencil-context.cpp:589
 msgid "Finishing freehand sketch"
 msgstr ""
 
-#: ../src/pen-context.cpp:667
+#: ../src/pen-context.cpp:665
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 
-#: ../src/pen-context.cpp:677
+#: ../src/pen-context.cpp:675
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 
-#: ../src/pen-context.cpp:1273
+#: ../src/pen-context.cpp:1271
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1274
+#: ../src/pen-context.cpp:1272
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1292
+#: ../src/pen-context.cpp:1290
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
 
-#: ../src/pen-context.cpp:1314
+#: ../src/pen-context.cpp:1312
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1315
+#: ../src/pen-context.cpp:1313
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1362
+#: ../src/pen-context.cpp:1360
 msgid "Drawing finished"
 msgstr ""
 
@@ -8746,41 +8768,41 @@ msgstr ""
 msgid "XML fragment for the RDF 'License' section."
 msgstr ""
 
-#: ../src/rect-context.cpp:345
+#: ../src/rect-context.cpp:344
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
 msgstr ""
 
-#: ../src/rect-context.cpp:492
+#: ../src/rect-context.cpp:491
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:495
+#: ../src/rect-context.cpp:494
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:497
+#: ../src/rect-context.cpp:496
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:501
+#: ../src/rect-context.cpp:500
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:526
+#: ../src/rect-context.cpp:525
 msgid "Create rectangle"
 msgstr ""
 
@@ -8792,32 +8814,32 @@ msgstr ""
 msgid "Selection canceled."
 msgstr ""
 
-#: ../src/select-context.cpp:559
+#: ../src/select-context.cpp:555
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:561
+#: ../src/select-context.cpp:557
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:725
+#: ../src/select-context.cpp:721
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:726
+#: ../src/select-context.cpp:722
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:727
+#: ../src/select-context.cpp:723
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 
-#: ../src/select-context.cpp:902
+#: ../src/select-context.cpp:898
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
@@ -8829,7 +8851,7 @@ msgstr ""
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:998
+#: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
 #: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
@@ -8985,7 +9007,7 @@ msgstr ""
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:492
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr ""
@@ -9007,7 +9029,7 @@ msgid "Move horizontally"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:486 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr ""
 
@@ -9359,73 +9381,73 @@ msgstr[1] ""
 msgid "%s%s. %s."
 msgstr ""
 
-#: ../src/seltrans.cpp:495 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr ""
 
-#: ../src/seltrans.cpp:507
+#: ../src/seltrans.cpp:503
 msgid "Set center"
 msgstr ""
 
-#: ../src/seltrans.cpp:604
+#: ../src/seltrans.cpp:600
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:631
+#: ../src/seltrans.cpp:627
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:628
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:636
+#: ../src/seltrans.cpp:632
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:637
+#: ../src/seltrans.cpp:633
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:771
+#: ../src/seltrans.cpp:767
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:1016 ../src/seltrans.cpp:1115
+#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1227
+#: ../src/seltrans.cpp:1223
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1287
+#: ../src/seltrans.cpp:1283
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1329
+#: ../src/seltrans.cpp:1325
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1499
+#: ../src/seltrans.cpp:1495
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9529,21 +9551,21 @@ msgstr ""
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
 
-#: ../src/spiral-context.cpp:304
+#: ../src/spiral-context.cpp:303
 msgid "<b>Ctrl</b>: snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:306
+#: ../src/spiral-context.cpp:305
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr ""
 
-#: ../src/spiral-context.cpp:438
+#: ../src/spiral-context.cpp:437
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:464
+#: ../src/spiral-context.cpp:463
 msgid "Create spiral"
 msgstr ""
 
@@ -9826,22 +9848,22 @@ msgstr ""
 msgid "<b>Orphaned clone</b>"
 msgstr ""
 
-#: ../src/star-context.cpp:317
+#: ../src/star-context.cpp:316
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr ""
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:447
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:449
+#: ../src/star-context.cpp:448
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:478
+#: ../src/star-context.cpp:477
 msgid "Create star"
 msgstr ""
 
@@ -9924,146 +9946,146 @@ msgstr ""
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr ""
 
-#: ../src/text-context.cpp:444
+#: ../src/text-context.cpp:441
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:446
+#: ../src/text-context.cpp:443
 msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:501
+#: ../src/text-context.cpp:498
 msgid "Create text"
 msgstr ""
 
-#: ../src/text-context.cpp:525
+#: ../src/text-context.cpp:522
 msgid "Non-printable character"
 msgstr ""
 
-#: ../src/text-context.cpp:540
+#: ../src/text-context.cpp:537
 msgid "Insert Unicode character"
 msgstr ""
 
-#: ../src/text-context.cpp:575
+#: ../src/text-context.cpp:572
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr ""
 
-#: ../src/text-context.cpp:577 ../src/text-context.cpp:852
+#: ../src/text-context.cpp:574 ../src/text-context.cpp:849
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr ""
 
-#: ../src/text-context.cpp:652
+#: ../src/text-context.cpp:649
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:684
+#: ../src/text-context.cpp:681
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:697
+#: ../src/text-context.cpp:694
 msgid "Flowed text is created."
 msgstr ""
 
-#: ../src/text-context.cpp:699
+#: ../src/text-context.cpp:696
 msgid "Create flowed text"
 msgstr ""
 
-#: ../src/text-context.cpp:701
+#: ../src/text-context.cpp:698
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:837
+#: ../src/text-context.cpp:834
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:839
+#: ../src/text-context.cpp:836
 msgid "Insert no-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:876
+#: ../src/text-context.cpp:873
 msgid "Make bold"
 msgstr ""
 
-#: ../src/text-context.cpp:894
+#: ../src/text-context.cpp:891
 msgid "Make italic"
 msgstr ""
 
-#: ../src/text-context.cpp:933
+#: ../src/text-context.cpp:930
 msgid "New line"
 msgstr ""
 
-#: ../src/text-context.cpp:967
+#: ../src/text-context.cpp:964
 msgid "Backspace"
 msgstr ""
 
-#: ../src/text-context.cpp:1015
+#: ../src/text-context.cpp:1012
 msgid "Kern to the left"
 msgstr ""
 
-#: ../src/text-context.cpp:1040
+#: ../src/text-context.cpp:1037
 msgid "Kern to the right"
 msgstr ""
 
-#: ../src/text-context.cpp:1065
+#: ../src/text-context.cpp:1062
 msgid "Kern up"
 msgstr ""
 
-#: ../src/text-context.cpp:1091
+#: ../src/text-context.cpp:1088
 msgid "Kern down"
 msgstr ""
 
-#: ../src/text-context.cpp:1168
+#: ../src/text-context.cpp:1165
 msgid "Rotate counterclockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1189
+#: ../src/text-context.cpp:1186
 msgid "Rotate clockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1206
+#: ../src/text-context.cpp:1203
 msgid "Contract line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1214
+#: ../src/text-context.cpp:1211
 msgid "Contract letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1233
+#: ../src/text-context.cpp:1230
 msgid "Expand line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1241
+#: ../src/text-context.cpp:1238
 msgid "Expand letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1371
+#: ../src/text-context.cpp:1368
 msgid "Paste text"
 msgstr ""
 
-#: ../src/text-context.cpp:1605
+#: ../src/text-context.cpp:1602
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1607
+#: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:1615 ../src/tools-switch.cpp:190
+#: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1725
+#: ../src/text-context.cpp:1722
 msgid "Type text"
 msgstr ""
 

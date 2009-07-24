@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.46+devel\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-19 22:11+0200\n"
+"POT-Creation-Date: 2009-07-24 15:35+0200\n"
 "PO-Revision-Date: 2009-07-18 22:56+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -160,6 +160,7 @@ msgstr "Агрубіць"
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:211
 msgid "ABCs"
 msgstr "Азбучныя"
 
@@ -1113,7 +1114,7 @@ msgstr "Размыць зьмесьціва абʼектаў, захоўваюч
 msgid "Specular light"
 msgstr "Адбітае сьвятло"
 
-#: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:110
 msgid "Basic specular bevel to use for building textures"
 msgstr "Базавы адбіваючы скос, які выкарыстоўваецца пры пабудове тэкстур"
 
@@ -1549,6 +1550,7 @@ msgstr "Зьнішчальнік сьвятла"
 
 #: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:208
 #: ../share/filters/filters.svg.h:209 ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:212
 msgid "Transparency utilities"
 msgstr "Утыліты празрыстасьці"
 
@@ -1861,12 +1863,16 @@ msgid "Marbled ink"
 msgstr "Мармуровае чарніла"
 
 #: ../share/filters/filters.svg.h:204
-msgid "Marbled transparency effect"
-msgstr "Эфэкты мармуровай празрыстасьці"
+msgid "Marbled transparency effect which conforms to image detected edges"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:205
 msgid "Thick acrylic"
 msgstr "Густы акрыл"
+
+#: ../share/filters/filters.svg.h:205
+msgid "Thick acrylic paint texture with high texture depth"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:206
 msgid "Alpha engraving B"
@@ -1890,7 +1896,8 @@ msgid "Monochrome positive"
 msgstr "Аднаколерны пазытыў"
 
 #: ../share/filters/filters.svg.h:208
-msgid "Convert to a colorizable transparent positive"
+#, fuzzy
+msgid "Convert to a Clorizable transparent positive"
 msgstr "Ператварыць у празрысты пазытыў, які можна расфарбоўваць"
 
 #: ../share/filters/filters.svg.h:209
@@ -1910,6 +1917,25 @@ msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr ""
 "Інвэртаваць і зрабіць найсьвятлейшыя часткі абʼекта павелічальна празрыстымі"
+
+#: ../share/filters/filters.svg.h:211
+#, fuzzy
+msgid "Repaint"
+msgstr "Паўтарэньне:"
+
+#: ../share/filters/filters.svg.h:211
+msgid "Repaint anything monochrome"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+#, fuzzy
+msgid "Punch hole"
+msgstr "Рэжым выштурхваньня"
+
+#: ../share/filters/filters.svg.h:212
+#, fuzzy
+msgid "Punch object out of a colorizable opaque area"
+msgstr "Ператварыць у празрысты нэґатыў, які можна расфарбоўваць"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -6716,11 +6742,11 @@ msgstr ""
 "Калі 1, то ўсе докавыя элемэнты, прывязаныя да галоўнага, замкнутыя; калі 0, "
 "то адамкнутыя; -1 абазначае несуладнасьць элемэнтаў"
 
-#: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:707
+#: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:706
 msgid "Switcher Style"
 msgstr "Стыль пераключальніка"
 
-#: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:708
+#: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:707
 msgid "Switcher buttons style"
 msgstr "Стыль кнопак пераключальніка"
 
@@ -23205,6 +23231,9 @@ msgstr "Чытаньне Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Чытаньне XAML"
+
+#~ msgid "Marbled transparency effect"
+#~ msgstr "Эфэкты мармуровай празрыстасьці"
 
 #~ msgid "Mask and transparency effects"
 #~ msgstr "Эфэкты масак і празрыстасьці"
