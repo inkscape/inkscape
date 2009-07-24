@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-07-24 15:43+0700\n"
+"PO-Revision-Date: 2009-07-24 16:58+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -7842,7 +7842,7 @@ msgstr "នាំចេញ​ឯកសារ​ទៅ​ជា​ឯកសារ
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
-msgstr ""
+msgstr "គុណភាព​បង្ហាញ​សម្រាប់​ការ​នាំចេញ​រូបភាព និង​សម្រាប់​ការ​បម្លែង​របស់​តម្រង​នៅ​ក្នុង PS/EPS/PDF (លំនាំដើម 90)"
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -7953,6 +7953,8 @@ msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr ""
+"បង្ហាញ​វត្ថុ​ដែលបាន​ត្រង​ដោយ​មិន​មាន​តម្រង ជំនួស​ឲ្យ​ការ​បម្លែង (PS, EPS, "
+"PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:394
