@@ -404,20 +404,21 @@
 <feComposite id="feComposite3521" in="result2" result="result4" operator="arithmetic" k2="2" k3="2" in2="fbSourceGraphic" />
 <feBlend id="feBlend3523" mode="screen" blend="normal" in="result4" in2="result4" />
 </filter>
-<filter id="filter2905" inkscape:label="HSL bubbles" inkscape:menu="Textures" inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance">
-<feGaussianBlur result="result0" in="SourceGraphic" stdDeviation="0.69999999999999996" id="feGaussianBlur2907" />
-<feTurbulence baseFrequency="0.20000000000000001" seed="300" numOctaves="10" result="result1" id="feTurbulence2909" type="fractalNoise" />
-<feComposite result="result2" operator="in" in2="result1" in="result0" id="feComposite388" />
-<feComposite k1="0" k4="0" k3="3" k2="0" in2="result2" in="result0" operator="arithmetic" id="feComposite2913" />
-<feBlend result="fbSourceGraphic" mode="multiply" id="feBlend2915" blend="normal" in2="result2" />
-<feColorMatrix type="matrix" id="feColorMatrix2917" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
-<feGaussianBlur stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" id="feGaussianBlur2919" />
-<feSpecularLighting in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="-2" specularConstant="0.69999999999999996" specularExponent="15" id="feSpecularLighting2921">
-<fePointLight x="-5000" y="-10000" z="20000" id="fePointLight2923" />
+<filter id="BubBump0" inkscape:label="Bubbly Bumps" inkscape:menu="Bumps" inkscape:menu-tooltip="Flexible bubbles effect with some displacement">
+<feGaussianBlur id="feGaussianBlur2971" result="result0" in="SourceGraphic" stdDeviation="0.5" />
+<feTurbulence id="feTurbulence2973" baseFrequency="0.20000000000000001" seed="300" numOctaves="10" result="result1" type="fractalNoise" />
+<feGaussianBlur stdDeviation="4" id="feGaussianBlur3023" result="result8" />
+<feDisplacementMap id="feDisplacementMap2993" result="result7" in2="result8" scale="5" in="SourceGraphic" xChannelSelector="R" />
+<feComposite id="feComposite2975" result="result2" operator="in" in2="result1" in="result7" />
+<feComposite id="feComposite2977" k1="0" k4="0" k3="3" k2="0" in2="result2" in="result0" operator="arithmetic" />
+<feBlend id="feBlend2979" result="fbSourceGraphic" mode="multiply" blend="normal" in2="result2" />
+<feColorMatrix id="feColorMatrix2981" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
+<feGaussianBlur id="feGaussianBlur2983" stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" />
+<feSpecularLighting id="feSpecularLighting2985" result="result6" surfaceScale="5" specularExponent="5">
+<feDistantLight id="feDistantLight2987" azimuth="225" elevation="25" />
 </feSpecularLighting>
-<feComposite in2="fbSourceGraphicAlpha" in="result1" result="result2" operator="in" id="feComposite2925" />
-<feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="1.5" id="feComposite2927" />
-<feBlend mode="multiply" id="feBlend2929" blend="normal" />
+<feComposite id="feComposite2989" in2="fbSourceGraphicAlpha" in="result6" result="result2" operator="in" />
+<feComposite id="feComposite2991" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.9" k3="0.7" />
 </filter>
 <filter id="Glowbub0" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refraction and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feGaussianBlur id="feGaussianBlur3365" stdDeviation="1" result="result1" />
@@ -1097,29 +1098,31 @@
 <feComposite id="feComposite2948" operator="atop" in="result5" />
 <feBlend id="feBlend2950" blend="normal" mode="multiply" />
 </filter>
-<filter id="Hslbumpal0" inkscape:menu-tooltip="Same than HSL bumps but with an alpha added for combination with transparency depending filters" inkscape:menu="Image effects, transparent" inkscape:label="HSL Bumps, alpha">
-<feGaussianBlur id="feGaussianBlur2932" result="result0" in="SourceGraphic" stdDeviation="0.5" />
-<feColorMatrix id="feColorMatrix2934" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4.4 -2.9 " in="result0" result="fbSourceGraphicAlpha" />
-<feGaussianBlur id="feGaussianBlur2936" stdDeviation="0.69999999999999996" in="fbSourceGraphicAlpha" result="result0" />
-<feSpecularLighting id="feSpecularLighting2938" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="-2" specularConstant="1.5" specularExponent="10">
-<feDistantLight id="feDistantLight2940" elevation="50" azimuth="235" />
+<filter id="HSLBumAl0" inkscape:menu-tooltip="Same than HSL Bumps but with transparent highlights" inkscape:menu="Image effects, transparent" inkscape:label="HSL Bumps alpha">
+<feGaussianBlur id="feGaussianBlur3105" result="result0" in="SourceGraphic" stdDeviation="0.5" />
+<feColorMatrix id="feColorMatrix3107" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4.4 -2.9 " in="result0" result="fbSourceGraphicAlpha" />
+<feGaussianBlur id="feGaussianBlur3109" stdDeviation="0.69999999999999996" in="fbSourceGraphicAlpha" result="result0" />
+<feSpecularLighting id="feSpecularLighting3111" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="-2" specularConstant="1.5" specularExponent="10">
+<feDistantLight id="feDistantLight3113" elevation="50" azimuth="235" />
 </feSpecularLighting>
-<feComposite id="feComposite2942" result="result4" operator="in" k2="1.5" k3="0.59999999999999998" in="SourceGraphic" in2="result1" />
+<feComposite id="feComposite3115" result="result4" operator="in" k2="1.5" k3="0.59999999999999998" in="SourceGraphic" in2="result1" />
+<feComposite id="feComposite3117" operator="arithmetic" k2="1" k3="1" />
 </filter>
-<filter inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance" inkscape:menu="Image effects, transparent" inkscape:label="HSL bubbles, alpha" id="Hslbubblal0">
-<feGaussianBlur stdDeviation="0.69999999999999996" in="SourceGraphic" result="result0" id="feGaussianBlur3067" />
-<feTurbulence type="fractalNoise" result="result1" numOctaves="10" seed="300" baseFrequency="0.20000000000000001" id="feTurbulence3069" />
-<feComposite in="result0" in2="result1" operator="in" result="result2" id="feComposite3071" />
-<feComposite operator="arithmetic" in="result0" in2="result2" k2="0" k3="3" k4="0" k1="0" id="feComposite3073" result="result5" />
-<feBlend in2="result2" blend="normal" mode="multiply" result="fbSourceGraphic" id="feBlend3075" />
-<feColorMatrix result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " type="matrix" id="feColorMatrix3077" />
-<feGaussianBlur result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" id="feGaussianBlur3079" />
-<feSpecularLighting specularExponent="15" specularConstant="0.69999999999999996" surfaceScale="-2" lighting-color="rgb(255,255,255)" result="result1" in="result0" id="feSpecularLighting3081">
-<fePointLight z="20000" y="-10000" x="-5000" id="fePointLight3083" />
+<filter id="BubBumAl0" inkscape:label="Bubbly Bumps alpha" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Same than Bubbly Bumps but with transparent highlights">
+<feGaussianBlur id="feGaussianBlur2903" result="result0" in="SourceGraphic" stdDeviation="0.5" />
+<feTurbulence id="feTurbulence2905" baseFrequency="0.20000000000000001" seed="300" numOctaves="10" result="result1" type="fractalNoise" />
+<feGaussianBlur id="feGaussianBlur2907" stdDeviation="4" result="result8" />
+<feDisplacementMap id="feDisplacementMap2909" result="result7" in2="result8" scale="5" in="SourceGraphic" xChannelSelector="R" />
+<feComposite id="feComposite2912" result="result2" operator="in" in2="result1" in="result7" />
+<feComposite id="feComposite2914" k1="0" k4="0" k3="3" k2="0" in2="result2" in="result0" operator="arithmetic" />
+<feBlend id="feBlend2916" result="fbSourceGraphic" mode="multiply" blend="normal" in2="result2" />
+<feColorMatrix id="feColorMatrix2918" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
+<feGaussianBlur id="feGaussianBlur2920" stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" />
+<feSpecularLighting id="feSpecularLighting2922" result="result6" surfaceScale="-5" specularExponent="5">
+<feDistantLight id="feDistantLight2924" azimuth="225" elevation="25" />
 </feSpecularLighting>
-<feComposite operator="in" result="result2" in="SourceGraphic" in2="result1" id="feComposite3085" />
-<feComposite k3="1" k2="1" operator="arithmetic" result="result4" in="result2" id="feComposite3087" in2="result2" />
-<feBlend blend="normal" mode="multiply" id="feBlend3089" in="result4" in2="result4" />
+<feComposite id="feComposite2926" in2="result6" in="SourceGraphic" result="result2" operator="in" />
+<feComposite id="feComposite2928" in="result2" result="result4" operator="arithmetic" k2="1" k3="1" />
 </filter>
 <filter id="SmooEdg0" inkscape:label="Smooth edges" inkscape:menu="Morphology" inkscape:menu-tooltip="Smooth the outside of shapes and pictures without altering their contents">
 <feGaussianBlur id="feGaussianBlur3201" stdDeviation="3" result="result1" />
@@ -1231,7 +1234,7 @@
 <feComposite id="feComposite2854" in2="SourceGraphic" operator="in" in="result10" result="result9" />
 <feBlend id="feBlend2856" mode="normal" blend="normal" in2="result9" in="result8" />
 </filter>
-<filter id="HSLBumpDiff0" inkscape:label="HSL Bumps, diffuse" inkscape:menu="Bumps" inkscape:menu-tooltip="Same than HSL bumps but with a diffuse reflexion instead of a specular one">
+<filter id="HSLBumpMat0" inkscape:label="HSL Bumps, matte" inkscape:menu="Bumps" inkscape:menu-tooltip="Same than HSL bumps but with a diffuse reflexion instead of a specular one">
 <feGaussianBlur id="feGaussianBlur3141" stdDeviation="0.01" in="SourceGraphic" result="result0" />
 <feColorMatrix id="feColorMatrix3145" result="fbSourceGraphicAlpha" in="result0" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4 -2.5 " type="matrix" />
 <feGaussianBlur id="feGaussianBlur3147" result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" />
@@ -1254,17 +1257,21 @@
 <filter id="filter2838a" inkscape:label="Simple blur" inkscape:menu="ABCs" inkscape:menu-tooltip="Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog">
 <feGaussianBlur stdDeviation="3" id="feGaussianBlur2840" />
 </filter>
-<filter id="HslBubDif0" inkscape:label="HSL bubbles, diffuse" inkscape:menu="Textures" inkscape:menu-tooltip="Same than HSL bubbles but with a diffuse light instead of a specular one">
-<feGaussianBlur id="feGaussianBlur3373" result="result0" in="SourceGraphic" stdDeviation="0.5" />
-<feTurbulence id="feTurbulence3375" baseFrequency="0.40000000000000002" seed="300" numOctaves="3" result="result1" type="fractalNoise" />
-<feBlend id="feBlend3379" result="fbSourceGraphic" mode="multiply" blend="normal" in2="SourceGraphic" in="result1" />
-<feColorMatrix id="feColorMatrix3381" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4 -2.5 " result="fbSourceGraphicAlpha" />
-<feGaussianBlur id="feGaussianBlur3383" stdDeviation="0.69999999999999996" in="fbSourceGraphicAlpha" result="result0" />
-<feDiffuseLighting id="feDiffuseLighting3385" result="result5" surfaceScale="15" diffuseConstant="0.40000000000000002">
-<feDistantLight id="feDistantLight3387" azimuth="235" elevation="25" />
+<filter id="BubBumpMat0" inkscape:menu-tooltip="Same than Bubbly Bumps but with a diffuse light instead of a specular one" inkscape:menu="Bumps" inkscape:label="Bubbly Bumps, matte">
+<feGaussianBlur id="feGaussianBlur2997" stdDeviation="0.5" in="SourceGraphic" result="result0" />
+<feTurbulence id="feTurbulence2999" type="fractalNoise" result="result1" numOctaves="10" seed="300" baseFrequency="0.14999999999999999" />
+<feGaussianBlur stdDeviation="4" id="feGaussianBlur3021" />
+<feDisplacementMap id="feDisplacementMap3019" in="SourceGraphic" result="result6" scale="15" xChannelSelector="R" />
+<feComposite id="feComposite3001" in="result6" in2="result1" operator="in" result="result2" />
+<feComposite id="feComposite3003" operator="arithmetic" in="result0" in2="result2" k2="0" k3="3" k4="0" k1="0" />
+<feBlend id="feBlend3005" in2="result2" blend="normal" mode="multiply" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix3007" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " type="matrix" />
+<feGaussianBlur id="feGaussianBlur3009" result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" />
+<feDiffuseLighting id="feDiffuseLighting3011" diffuseConstant="0.40000000000000002" surfaceScale="20" result="result5">
+<feDistantLight id="feDistantLight3013" elevation="25" azimuth="225" />
 </feDiffuseLighting>
-<feComposite id="feComposite3389" in2="SourceGraphic" in="result5" result="result2" operator="in" />
-<feComposite id="feComposite3391" in="result2" result="result4" operator="arithmetic" k2="0.80000000000000004" k3="0.80000000000000004" in2="SourceGraphic" />
+<feComposite id="feComposite3015" operator="in" result="result2" in="result5" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite3017" k3="0.7" k2="0.9" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 </filter>
 <filter inkscape:menu-tooltip="Emboss effect : Colors of the original images are preserved or modified by Blend" inkscape:menu="Bumps" height="1" width="1" y="0" x="0" inkscape:label="Emboss" id="Emboss0">
 <feColorMatrix result="result2" type="luminanceToAlpha" id="feColorMatrix3047" />
@@ -1691,20 +1698,6 @@
 <feDisplacementMap result="result4" scale="300" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap4526" />
 <feComposite in="result8" operator="arithmetic" result="result2" in2="result4" k1="3.5" k3="0" id="feComposite4528" k2="0" />
 </filter>
-<filter id="HslBubTrans0" inkscape:menu-tooltip="Highly flexible specular bubbles with transparency" inkscape:menu="Textures" inkscape:label="HSL bubbles, transparent">
-<feGaussianBlur id="feGaussianBlur3233" result="result0" in="SourceGraphic" stdDeviation="0.5" />
-<feTurbulence id="feTurbulence3365" numOctaves="5" seed="300" result="result6" baseFrequency="0.20000000000000001" type="fractalNoise" />
-<feComposite id="feComposite3235" k3="0.5" k2="0" k1="0.5" in2="result6" in="result0" result="result2" operator="out" />
-<feComposite id="feComposite3367" operator="arithmetic" k3="3" in="result0" />
-<feBlend blend="normal" id="feBlend3369" mode="multiply" in2="result2" result="result7" />
-<feColorMatrix id="feColorMatrix3237" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="result7" result="fbSourceGraphicAlpha" />
-<feGaussianBlur id="feGaussianBlur3239" stdDeviation="1" in="fbSourceGraphicAlpha" result="result0" />
-<feSpecularLighting id="feSpecularLighting3241" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="-8" specularConstant="1.3999999999999999" specularExponent="25" in="result0">
-<feDistantLight id="feDistantLight3243" elevation="50" azimuth="235" />
-</feSpecularLighting>
-<feBlend id="feBlend3245" in="result1" in2="SourceGraphic" result="result5" mode="screen" blend="normal" />
-<feComposite id="feComposite3247" in2="fbSourceGraphicAlpha" result="result4" operator="in" k2="1" k3="1.5" />
-</filter>
 <filter id="OldPostcard" inkscape:label="Old postcard" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Slightly posterize and draw edges like on old printed postcards">
 <feConvolveMatrix id="feConvolveMatrix2895" targetY="1" targetX="1" in="SourceGraphic" divisor="1" kernelMatrix="0 -0.4 0 -0.4 2.6 -0.4 0 -0.4 0 " order="3 3" result="result1" />
 <feGaussianBlur stdDeviation="1" id="feGaussianBlur2897" result="result2" />
@@ -1990,6 +1983,28 @@
 </feSpecularLighting>
 <feComposite in2="fbSourceGraphic" in="result12" result="result2" operator="in" id="feComposite3332" />
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.99999999999999989" k3="0.99999999999999989" id="feComposite3334" />
+</filter>
+<filter inkscape:menu-tooltip="Canvas texture with an HSL sensitive height map" inkscape:menu="Bumps" inkscape:label="Canvas Bumps" id="Canbum0">
+<feTurbulence in="SourceGraphic" type="turbulence" result="result1" numOctaves="7" seed="300" baseFrequency="0.20000000000000001" id="feTurbulence3296" />
+<feBlend in="result1" in2="SourceGraphic" blend="normal" mode="screen" result="fbSourceGraphic" id="feBlend3298" />
+<feColorMatrix result="fbSourceGraphicAlpha" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4 -2.5 " type="matrix" id="feColorMatrix3300" />
+<feGaussianBlur result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" id="feGaussianBlur3302" />
+<feSpecularLighting id="feSpecularLighting3312" result="result6" surfaceScale="5" specularConstant="1" specularExponent="5">
+<feDistantLight id="feDistantLight3316" azimuth="225" elevation="35" />
+</feSpecularLighting>
+<feComposite operator="in" result="result2" in="result6" in2="SourceGraphic" id="feComposite3308" />
+<feComposite in2="SourceGraphic" k3="1" k2="0.5" operator="arithmetic" result="result4" in="result2" id="feComposite3310" />
+</filter>
+<filter id="CanvBumDif0" inkscape:label="Canvas Bumps, matte" inkscape:menu="Bumps" inkscape:menu-tooltip="Same than Canvas Bumps but with a diffuse light instead of a specular one">
+<feTurbulence id="feTurbulence3183" baseFrequency="0.20000000000000001" seed="300" numOctaves="7" result="result1" type="turbulence" in="SourceGraphic" />
+<feBlend id="feBlend3185" result="fbSourceGraphic" mode="screen" blend="normal" in2="SourceGraphic" in="result1" />
+<feColorMatrix id="feColorMatrix3187" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4 -2.5 " result="fbSourceGraphicAlpha" />
+<feGaussianBlur id="feGaussianBlur3189" stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" />
+<feDiffuseLighting id="feDiffuseLighting3191" result="result5" surfaceScale="15" diffuseConstant="0.40000000000000002">
+<feDistantLight id="feDistantLight3193" azimuth="235" elevation="25" />
+</feDiffuseLighting>
+<feComposite id="feComposite3195" in2="SourceGraphic" in="result5" result="result2" operator="in" />
+<feComposite id="feComposite3197" in="result2" result="result4" operator="arithmetic" k2="0.90000000000000002" k3="0.90000000000000002" in2="SourceGraphic" />
 </filter>
 </defs>
 </svg>
