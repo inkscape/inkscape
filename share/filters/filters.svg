@@ -2006,5 +2006,16 @@
 <feComposite id="feComposite3195" in2="SourceGraphic" in="result5" result="result2" operator="in" />
 <feComposite id="feComposite3197" in="result2" result="result4" operator="arithmetic" k2="0.90000000000000002" k3="0.90000000000000002" in2="SourceGraphic" />
 </filter>
+<filter id="CanBumAl0" inkscape:menu-tooltip="Same than Canvas Bumps but with transparent highlights" inkscape:menu="Image effects, transparent" inkscape:label="Canvas Bumps alpha">
+<feTurbulence id="feTurbulence2934" in="SourceGraphic" type="turbulence" result="result1" numOctaves="7" seed="300" baseFrequency="0.20000000000000001" />
+<feBlend id="feBlend2936" in="result1" in2="SourceGraphic" blend="normal" mode="screen" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix2938" result="fbSourceGraphicAlpha" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4 -2.5 " type="matrix" />
+<feGaussianBlur id="feGaussianBlur2940" result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" />
+<feSpecularLighting id="feSpecularLighting2942" result="result6" surfaceScale="-5" specularConstant="1" specularExponent="5">
+<feDistantLight id="feDistantLight2944" azimuth="225" elevation="35" />
+</feSpecularLighting>
+<feComposite id="feComposite2946" operator="in" result="result2" in="SourceGraphic" in2="result6" />
+<feComposite id="feComposite2948" in2="result2" k3="1" k2="1" operator="arithmetic" result="result4" in="result2" />
+</filter>
 </defs>
 </svg>
