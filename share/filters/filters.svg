@@ -1826,15 +1826,17 @@
 <feBlend id="feBlend3044" blend="normal" mode="screen" result="result9" in2="SourceGraphic" />
 <feComposite id="feComposite3046" operator="in" in2="SourceGraphic" result="result11" in="result9" k1="1" k2="1" k3="0" />
 </filter>
-<filter height="1.2" width="1.2" y="-0.1" x="-0.1" inkscape:menu-tooltip="Adds a turbulent transparency which displace pixels at the same time" inkscape:menu="Image effects, transparent" inkscape:label="Rough transparency" id="RoughTrans0">
-<feTurbulence result="result3" baseFrequency="0.10000000000000001" in="SourceAlpha" type="fractalNoise" seed="0" numOctaves="5" id="feTurbulence3328" />
-<feDisplacementMap result="fbSourceGraphic" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="20" numOctaves="2" id="feDisplacementMap3330" />
-<feColorMatrix type="luminanceToAlpha" in="fbSourceGraphic" result="result0" id="feColorMatrix3332" />
-<feColorMatrix result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " id="feColorMatrix3334" />
-<feComposite in2="result2" operator="over" in="result3" id="feComposite3336" result="result4" />
-<feDisplacementMap id="feDisplacementMap3342" scale="90" xChannelSelector="R" in="result4" in2="result3" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -14" id="feColorMatrix3338" />
-<feComposite in="fbSourceGraphic" operator="out" id="feComposite3340" />
+<filter id="RghTr0" inkscape:menu-tooltip="Adds a turbulent transparency which displace pixels at the same time" inkscape:menu="Image effects, transparent" inkscape:label="Rough transparency">
+<feTurbulence id="feTurbulence3302" result="result3" baseFrequency="0.29999999999999999" in="SourceGraphic" type="fractalNoise" seed="0" numOctaves="3" />
+<feGaussianBlur stdDeviation="1.5" id="feGaussianBlur3318" />
+<feDisplacementMap id="feDisplacementMap3304" result="fbSourceGraphic" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="30" numOctaves="2" />
+<feColorMatrix id="feColorMatrix3306" type="luminanceToAlpha" in="fbSourceGraphic" result="result0" />
+<feColorMatrix id="feColorMatrix3308" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
+<feComposite id="feComposite3310" in2="result2" operator="over" in="result3" result="result4" />
+<feGaussianBlur stdDeviation="2" id="feGaussianBlur3320" result="result5" />
+<feDisplacementMap id="feDisplacementMap3312" scale="100" xChannelSelector="R" in="result5" in2="result3" yChannelSelector="G" />
+<feColorMatrix id="feColorMatrix3314" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6.5 -4.5 " type="matrix" />
+<feComposite id="feComposite3316" in="fbSourceGraphic" operator="out" />
 </filter>
 <filter inkscape:menu-tooltip="Partly opaque water color effect with bleed" inkscape:menu="Textures" inkscape:label="Gouache" id="Gouach0">
 <feGaussianBlur stdDeviation="3" id="feGaussianBlur2954" result="result5" in="SourceGraphic" />
