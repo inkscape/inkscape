@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-24 15:35+0200\n"
+"POT-Creation-Date: 2009-07-26 18:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
 #: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -139,7 +139,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 msgid "ABCs"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:193
 msgid "Overlays"
 msgstr ""
 
@@ -210,7 +210,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:204
 msgid "Distort"
 msgstr ""
 
@@ -287,7 +287,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:200
 msgid "Image effects"
 msgstr ""
 
@@ -419,19 +419,18 @@ msgid "Organic"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:210
 msgid "Textures"
 msgstr ""
 
@@ -507,13 +506,15 @@ msgstr ""
 msgid "HSL Bumps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:122 ../share/filters/filters.svg.h:124
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:195 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:211 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213
 msgid "Bumps"
 msgstr ""
 
@@ -530,13 +531,11 @@ msgid "Under a cracked glass"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
-msgid "HSL bubbles"
+msgid "Bubbly Bumps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:105
-msgid ""
-"Highly flexible bubbles effect depending on color hue saturation and "
-"luminance"
+#: ../share/filters/filters.svg.h:47
+msgid "Flexible bubbles effect with some displacement"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:48
@@ -559,7 +558,7 @@ msgid "Neon"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:49
-msgid "Neon light effect with glow"
+msgid "Neon light effect"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:50
@@ -579,7 +578,7 @@ msgid "Pressed metal with a rolled edge"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:52
-msgid "Matte Bevel"
+msgid "Matte bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:52
@@ -607,7 +606,7 @@ msgid "Glowing metal"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:55
-msgid "Bright and glowing metal texture"
+msgid "Glowing metal texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:56
@@ -684,7 +683,7 @@ msgid "Stone wall"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:64
-msgid "Stone wall texture to use with dark colors"
+msgid "Stone wall texture to use with not too saturated colors"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:65
@@ -1017,26 +1016,29 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:104
-msgid "HSL Bumps, alpha"
+msgid "HSL Bumps alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:189
-#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:199
-#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:204 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:189 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:198 ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:214
 msgid "Image effects, transparent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:104
-msgid ""
-"Same than HSL bumps but with an alpha added for combination with "
-"transparency depending filters"
+msgid "Same than HSL Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-msgid "HSL bubbles, alpha"
+msgid "Bubbly Bumps alpha"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:105
+msgid "Same than Bubbly Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:106
@@ -1160,12 +1162,12 @@ msgstr ""
 msgid "Cutout Glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:186
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:121
-msgid "HSL Bumps, diffuse"
+msgid "HSL Bumps, matte"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:121
@@ -1190,12 +1192,12 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL bubbles, diffuse"
+msgid "Bubbly Bumps, matte"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
 msgid ""
-"Same than HSL bubbles but with a diffuse light instead of a specular one"
+"Same than Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:125
@@ -1497,9 +1499,9 @@ msgstr ""
 msgid "Light eraser"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:208
-#: ../share/filters/filters.svg.h:209 ../share/filters/filters.svg.h:210
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:209
 msgid "Transparency utilities"
 msgstr ""
 
@@ -1638,229 +1640,246 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
-msgid "HSL bubbles, transparent"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:185
-msgid "Highly flexible specular bubbles with transparency"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:186
 msgid "Old postcard"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:185
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 msgid "Fuzzy glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Dots transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 msgid "Canvas transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr ""
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid "Smear transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid ""
 "Paint objects with a transparent turbulence which turn around color edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Thick paint"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Thick painting effect with turbulence"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:192
-msgid "Thick paint, glossy"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:192
-msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:191
 msgid "Burst"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:191
 msgid "Burst balloon texture crumpled and with holes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:194
-msgid "Burst, glossy"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:194
-msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:192
 msgid "Embossed leather"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:192
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:193
 msgid "Carnaval"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:193
 msgid "White splotches evocating carnaval masks"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:194
 msgid "Plastify"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:194
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:195
 msgid "Plaster"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:195
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:196
 msgid "Rough transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:196
 msgid "Adds a turbulent transparency which displace pixels at the same time"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:197
 msgid "Gouache"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:197
 msgid "Partly opaque water color effect with bleed"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:198
 msgid "Alpha engraving"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:198
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:199
 msgid "Alpha draw, liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:199
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:200
 msgid "Liquid drawing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:200
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:201
 msgid "Marbled ink"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:201
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:202
 msgid "Thick acrylic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:202
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:203
 msgid "Alpha engraving B"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:203
 msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:204
 msgid "Lapping"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:204
 msgid "Something like a water noise"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:205
 msgid "Monochrome positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:208
-msgid "Convert to a Clorizable transparent positive"
+#: ../share/filters/filters.svg.h:205
+msgid "Convert to a Colorizable transparent positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:206
 msgid "Monochrome negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:206
 msgid "Convert to a colorizable transparent negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:207
 msgid "Light eraser, negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:207
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 msgid "Repaint"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 msgid "Repaint anything monochrome"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:209
 msgid "Punch hole"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:209
 msgid "Punch object out of a colorizable opaque area"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:210
+msgid "Riddled"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:210
+msgid "Riddle the surface and add bump to images"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Wrinkled varnish"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Thick glossy and translucent paint texture with high depth"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Canvas Bumps"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Canvas texture with an HSL sensitive height map"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid "Canvas Bumps, matte"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid ""
+"Same than Canvas Bumps but with a diffuse light instead of a specular one"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+msgid "Canvas Bumps alpha"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
