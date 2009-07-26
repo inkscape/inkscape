@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-24 15:35+0200\n"
-"PO-Revision-Date: 2009-07-23 23:09+0200\n"
+"POT-Creation-Date: 2009-07-26 18:21+0200\n"
+"PO-Revision-Date: 2009-07-26 22:50+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -42,9 +42,8 @@ msgstr "Matt-csatorna"
 #: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:102
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "Bevels"
-msgstr "Szintbeállítás"
+msgstr "Rézsútos szegélyek"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
@@ -72,21 +71,21 @@ msgid "Metal casting"
 msgstr "Illesztés _bekapcsolása"
 
 #: ../share/filters/filters.svg.h:5
+#, fuzzy
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:6
 #, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "ElmosásVízszintes"
+msgstr "Elmozdításos elmosás, vízszintes"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
 #: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Blurs"
-msgstr "Elmosás"
+msgstr "Elmosások"
 
 #: ../share/filters/filters.svg.h:6
 #, fuzzy
@@ -98,7 +97,7 @@ msgstr "A kijelölt objektumok vízszintes tükrözéseElmosás módosítás"
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
 msgid "Motion blur, vertical"
-msgstr "ElmosásFüggőleges áthelyezés"
+msgstr "Elmozdításos elmosás, függőleges"
 
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
@@ -115,7 +114,7 @@ msgstr "Telítettség"
 #: ../share/filters/filters.svg.h:8
 #, fuzzy
 msgid "Edges are partly feathered out"
-msgstr "szél"
+msgstr "Lágy szél"
 
 #: ../share/filters/filters.svg.h:9
 #, fuzzy
@@ -126,7 +125,7 @@ msgstr "nyújtva"
 #: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
 #: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -142,11 +141,11 @@ msgid "Jigsaw piece"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:10
+#, fuzzy
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Roughen"
 msgstr "Durvábbá tevés"
 
@@ -154,7 +153,7 @@ msgstr "Durvábbá tevés"
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 msgid "ABCs"
 msgstr ""
 
@@ -175,10 +174,9 @@ msgstr "Gumiszerű nyújtás"
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:196
-#, fuzzy
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:193
 msgid "Overlays"
-msgstr "Felett"
+msgstr "Burkolatok"
 
 #: ../share/filters/filters.svg.h:12
 #, fuzzy
@@ -186,15 +184,13 @@ msgid "Random whiteouts inside"
 msgstr "fehérPozíciók véletlenszerűsítése"
 
 #: ../share/filters/filters.svg.h:13
-#, fuzzy
 msgid "Ink bleed"
-msgstr "Keverés"
+msgstr "Tintafolyás"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:176
-#, fuzzy
 msgid "Protrusions"
-msgstr "Pozíció"
+msgstr "Nyúlványok"
 
 #: ../share/filters/filters.svg.h:13
 #, fuzzy
@@ -202,9 +198,8 @@ msgid "Inky splotches underneath the object"
 msgstr "objektum"
 
 #: ../share/filters/filters.svg.h:14
-#, fuzzy
 msgid "Fire"
-msgstr "Fájl"
+msgstr "Tűz"
 
 #: ../share/filters/filters.svg.h:14
 #, fuzzy
@@ -217,18 +212,19 @@ msgid "Bloom"
 msgstr "Nagyítás"
 
 #: ../share/filters/filters.svg.h:15
+#, fuzzy
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:16
 #, fuzzy
 msgid "Ridged border"
-msgstr "keret"
+msgstr "gerinc keret"
 
 #: ../share/filters/filters.svg.h:16
 #, fuzzy
 msgid "Ridged border with inner bevel"
-msgstr "keret"
+msgstr "gerinc keret Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:17
 #, fuzzy
@@ -238,10 +234,9 @@ msgstr "Lecserélés"
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:207
-#, fuzzy
+#: ../share/filters/filters.svg.h:204
 msgid "Distort"
-msgstr "Osztó"
+msgstr "Torzítás"
 
 #: ../share/filters/filters.svg.h:17
 #, fuzzy
@@ -326,10 +321,9 @@ msgstr "Élesítés"
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:203
-#, fuzzy
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:200
 msgid "Image effects"
-msgstr "Útvonaleffektusok kezelése"
+msgstr "Képeffektusok"
 
 #: ../share/filters/filters.svg.h:24
 #, fuzzy
@@ -473,22 +467,20 @@ msgid "Organic"
 msgstr "X-origó"
 
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:200
-#, fuzzy
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:210
 msgid "Textures"
-msgstr "Szövegek"
+msgstr "Textúrák"
 
 #: ../share/filters/filters.svg.h:36
 #, fuzzy
@@ -502,7 +494,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:37
 #, fuzzy
 msgid "Gray bevelled wires with drop shadows"
-msgstr "Vetett árnyék "
+msgstr "Rézsútos szegély Vetett árnyék "
 
 #: ../share/filters/filters.svg.h:38
 #, fuzzy
@@ -512,7 +504,7 @@ msgstr "Kapcsolóstílus"
 #: ../share/filters/filters.svg.h:38
 #, fuzzy
 msgid "Random inner-bevel holes"
-msgstr "véletlenszerű"
+msgstr "véletlenszerű Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:39
 #, fuzzy
@@ -529,8 +521,9 @@ msgid "Button"
 msgstr "Alulra"
 
 #: ../share/filters/filters.svg.h:40
+#, fuzzy
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:41
 #, fuzzy
@@ -540,12 +533,11 @@ msgstr "Zsugorítás"
 #: ../share/filters/filters.svg.h:41
 #, fuzzy
 msgid "Shadowy outer bevel"
-msgstr "árnyék"
+msgstr "árnyékos Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Dripping"
-msgstr "Szkript"
+msgstr "Csepegés"
 
 #: ../share/filters/filters.svg.h:42
 #, fuzzy
@@ -576,20 +568,23 @@ msgstr "Elmosási effektusok átalakítása bitképekké"
 msgid "HSL Bumps"
 msgstr "Bitkép"
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:122 ../share/filters/filters.svg.h:124
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:195 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:211 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213
 #, fuzzy
 msgid "Bumps"
 msgstr "Bitkép"
 
 #: ../share/filters/filters.svg.h:45
+#, fuzzy
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "Tükröződő "
 
 #: ../share/filters/filters.svg.h:46
 msgid "Cracked glass"
@@ -600,15 +595,12 @@ msgid "Under a cracked glass"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
-msgid "HSL bubbles"
+msgid "Bubbly Bumps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:105
-#, fuzzy
-msgid ""
-"Highly flexible bubbles effect depending on color hue saturation and "
-"luminance"
-msgstr "effektus"
+#: ../share/filters/filters.svg.h:47
+msgid "Flexible bubbles effect with some displacement"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:48
 msgid "Glowing bubble"
@@ -618,9 +610,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:66
 #: ../share/filters/filters.svg.h:67 ../share/filters/filters.svg.h:69
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Ridges"
-msgstr "Szél"
+msgstr "Gerincek"
 
 #: ../share/filters/filters.svg.h:48
 #, fuzzy
@@ -634,7 +625,7 @@ msgstr "Nincs"
 
 #: ../share/filters/filters.svg.h:49
 #, fuzzy
-msgid "Neon light effect with glow"
+msgid "Neon light effect"
 msgstr "effektus"
 
 #: ../share/filters/filters.svg.h:50
@@ -645,7 +636,7 @@ msgstr "Továbbfejlesztett metafájl"
 #: ../share/filters/filters.svg.h:50
 #, fuzzy
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr "objektum"
+msgstr "objektum Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:51
 #, fuzzy
@@ -659,13 +650,13 @@ msgstr "Kezdőszegély varianciája szél"
 
 #: ../share/filters/filters.svg.h:52
 #, fuzzy
-msgid "Matte Bevel"
-msgstr "Méret beillesztése"
+msgid "Matte bevel"
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:52
 #, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr "Elmosás"
+msgstr "Elmosás Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Thin Membrane"
@@ -678,20 +669,21 @@ msgstr ""
 #: ../share/filters/filters.svg.h:54
 #, fuzzy
 msgid "Matte ridge"
-msgstr "Reflektorszerű fényforrás"
+msgstr "gerinc"
 
 #: ../share/filters/filters.svg.h:54
 #, fuzzy
 msgid "Soft pastel ridge"
-msgstr "Lapméret beállítása"
+msgstr "gerinc"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Glowing metal"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:55
-msgid "Bright and glowing metal texture"
-msgstr ""
+#, fuzzy
+msgid "Glowing metal texture"
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:56
 #, fuzzy
@@ -700,7 +692,6 @@ msgstr "Szintbeállítás"
 
 #: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:78
 #: ../share/filters/filters.svg.h:87 ../share/extensions/pathscatter.inx.h:10
-#, fuzzy
 msgid "Scatter"
 msgstr "Szétszórás"
 
@@ -733,8 +724,9 @@ msgid "Iridescent beeswax"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:59
+#, fuzzy
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr ""
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:60
 #, fuzzy
@@ -742,16 +734,18 @@ msgid "Eroded metal"
 msgstr "Továbbfejlesztett metafájl"
 
 #: ../share/filters/filters.svg.h:60
+#, fuzzy
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Textúra gerinc"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:61
+#, fuzzy
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:62
 #, fuzzy
@@ -761,15 +755,16 @@ msgstr "Jel"
 #: ../share/filters/filters.svg.h:62
 #, fuzzy
 msgid "Bark texture, vertical; use with deep colors"
-msgstr "Függőleges"
+msgstr "Textúra Függőleges"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Lizard skin"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:63
+#, fuzzy
 msgid "Stylized reptile skin texture"
-msgstr ""
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:64
 #, fuzzy
@@ -777,8 +772,9 @@ msgid "Stone wall"
 msgstr "Minden törlése"
 
 #: ../share/filters/filters.svg.h:64
-msgid "Stone wall texture to use with dark colors"
-msgstr ""
+#, fuzzy
+msgid "Stone wall texture to use with not too saturated colors"
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Silk carpet"
@@ -787,7 +783,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Silk carpet texture, horizontal stripes"
-msgstr "Vízszintes Csíkok"
+msgstr "Textúra Vízszintes Csíkok"
 
 #: ../share/filters/filters.svg.h:66
 #, fuzzy
@@ -826,8 +822,9 @@ msgid "Dragee"
 msgstr "Ív húzása"
 
 #: ../share/filters/filters.svg.h:69
+#, fuzzy
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "gerinc"
 
 #: ../share/filters/filters.svg.h:70
 #, fuzzy
@@ -840,12 +837,14 @@ msgid "Strongly raised border around a flat surface"
 msgstr "keret"
 
 #: ../share/filters/filters.svg.h:71
+#, fuzzy
 msgid "Metallized ridge"
-msgstr ""
+msgstr "gerinc"
 
 #: ../share/filters/filters.svg.h:71
+#, fuzzy
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "gerinc"
 
 #: ../share/filters/filters.svg.h:72
 #, fuzzy
@@ -863,8 +862,9 @@ msgid "Colorize"
 msgstr "Színezés"
 
 #: ../share/filters/filters.svg.h:73
+#, fuzzy
 msgid "Gives the flood color to the dark parts of the image"
-msgstr ""
+msgstr "Területkitöltés"
 
 #: ../share/filters/filters.svg.h:74
 #, fuzzy
@@ -898,9 +898,8 @@ msgid "Opens a smooth hole inside the shape"
 msgstr "alakzat"
 
 #: ../share/filters/filters.svg.h:76
-#, fuzzy
 msgid "Black hole"
-msgstr "Fekete körvonal"
+msgstr "Fekete lyuk"
 
 #: ../share/filters/filters.svg.h:76
 #, fuzzy
@@ -968,8 +967,9 @@ msgid "Enamel jewelry"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:83
+#, fuzzy
 msgid "Slightly cracked enameled texture"
-msgstr ""
+msgstr "Textúra"
 
 #: ../share/filters/filters.svg.h:84
 #, fuzzy
@@ -1035,9 +1035,10 @@ msgid "Electronic microscopy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:90
+#, fuzzy
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:91
 #, fuzzy
@@ -1168,30 +1169,34 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "effektus"
 
 #: ../share/filters/filters.svg.h:104
-msgid "HSL Bumps, alpha"
-msgstr ""
+#, fuzzy
+msgid "HSL Bumps alpha"
+msgstr "Bitkép"
 
 #: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:189
-#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:199
-#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:204 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:189 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:198 ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:214
 #, fuzzy
 msgid "Image effects, transparent"
-msgstr "Útvonaleffektusok kezelése"
+msgstr "Képeffektusok"
 
 #: ../share/filters/filters.svg.h:104
 #, fuzzy
-msgid ""
-"Same than HSL bumps but with an alpha added for combination with "
-"transparency depending filters"
+msgid "Same than HSL Bumps but with transparent highlights"
 msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:105
 #, fuzzy
-msgid "HSL bubbles, alpha"
+msgid "Bubbly Bumps alpha"
 msgstr "0 (átlátszó)"
+
+#: ../share/filters/filters.svg.h:105
+msgid "Same than Bubbly Bumps but with transparent highlights"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:106
 #, fuzzy
@@ -1216,9 +1221,8 @@ msgid ""
 msgstr "alakzat Elmozdítás"
 
 #: ../share/filters/filters.svg.h:108
-#, fuzzy
 msgid "Feather"
-msgstr "Méter"
+msgstr "Lágy szél"
 
 #: ../share/filters/filters.svg.h:108
 #, fuzzy
@@ -1236,13 +1240,13 @@ msgid "Blur the contents of objects, preserving the outline"
 msgstr "objektumElmosáskontúr"
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Specular light"
 msgstr "Tükröződő fény"
 
 #: ../share/filters/filters.svg.h:110
+#, fuzzy
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "Tükröződő Rézsútos szegély Textúra "
 
 #: ../share/filters/filters.svg.h:111
 #, fuzzy
@@ -1292,24 +1296,22 @@ msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "Noise transparency"
-msgstr "átlátszóság"
+msgstr "Átlátszóság zajosítása"
 
 #: ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "Basic noise transparency texture"
-msgstr "átlátszóság"
+msgstr "Alapvető \"Átlátszóság zajosítása\" textúra"
 
 #: ../share/filters/filters.svg.h:117
-#, fuzzy
 msgid "Noise fill"
-msgstr "Nincs kitöltés"
+msgstr "Zajjal való kitöltés"
 
 #: ../share/filters/filters.svg.h:117
-#, fuzzy
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr "módosítás"
+msgstr ""
+"Alapvető \"Zajjal való kitöltés\" textúra; a szín a területkitöltési "
+"effektusnál módosítható"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Garden of Delights"
@@ -1321,31 +1323,34 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:119
-#, fuzzy
 msgid "Diffuse light"
 msgstr "Szórt (diffúz) fény"
 
 #: ../share/filters/filters.svg.h:119
+#, fuzzy
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:120
 #, fuzzy
 msgid "Cutout Glow"
 msgstr "nyújtva"
 
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:186
+#, fuzzy
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
+msgstr "Területkitöltés"
 
 #: ../share/filters/filters.svg.h:121
-msgid "HSL Bumps, diffuse"
-msgstr ""
+#, fuzzy
+msgid "HSL Bumps, matte"
+msgstr "Bitkép"
 
 #: ../share/filters/filters.svg.h:121
+#, fuzzy
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr ""
+msgstr "Tükröződő "
 
 #: ../share/filters/filters.svg.h:122
 #, fuzzy
@@ -1358,9 +1363,8 @@ msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "effektusfehérFekete"
 
 #: ../share/filters/filters.svg.h:123
-#, fuzzy
 msgid "Simple blur"
-msgstr "Elmosás"
+msgstr "Egyszerű elmosás"
 
 #: ../share/filters/filters.svg.h:123
 #, fuzzy
@@ -1368,14 +1372,14 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Elmosáscsúszkakitöltéskörvonalpárbeszédablak"
 
 #: ../share/filters/filters.svg.h:124
-#, fuzzy
-msgid "HSL bubbles, diffuse"
-msgstr "0 (átlátszó)"
+msgid "Bubbly Bumps, matte"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:124
+#, fuzzy
 msgid ""
-"Same than HSL bubbles but with a diffuse light instead of a specular one"
-msgstr ""
+"Same than Bubbly Bumps but with a diffuse light instead of a specular one"
+msgstr "Tükröződő"
 
 #: ../share/filters/filters.svg.h:125
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1514,7 +1518,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:166
 msgid "Non realistic 3D shaders"
-msgstr ""
+msgstr "Nem realisztikus 3D árnyalók (shader)"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Draft painted cartoon shading with a glassy look"
@@ -1533,7 +1537,7 @@ msgstr "stílus szél"
 #: ../share/filters/filters.svg.h:141
 #, fuzzy
 msgid "Smooth shader NR"
-msgstr "Simaság"
+msgstr "Simaság árnyaló Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:141
 #, fuzzy
@@ -1542,8 +1546,9 @@ msgstr "Ceruza"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:143
+#, fuzzy
 msgid "Emboss shader NR"
-msgstr ""
+msgstr "árnyaló Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Combination of smooth shading and embossing"
@@ -1551,8 +1556,9 @@ msgstr ""
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:145
+#, fuzzy
 msgid "Smooth shader dark NR"
-msgstr ""
+msgstr "árnyaló Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Dark version of non realistic smooth shading"
@@ -1572,7 +1578,7 @@ msgstr "Fekete-fehér területek invertálása"
 #: ../share/filters/filters.svg.h:148
 #, fuzzy
 msgid "Satin NR"
-msgstr "Kezdet"
+msgstr "Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
@@ -1580,8 +1586,9 @@ msgstr ""
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:150
+#, fuzzy
 msgid "Frosted glass NR"
-msgstr ""
+msgstr "Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Non realistic frosted glass imitation"
@@ -1589,21 +1596,25 @@ msgstr ""
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:152
+#, fuzzy
 msgid "Smooth shader contour NR"
-msgstr ""
+msgstr "árnyaló Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:152
+#, fuzzy
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "árnyaló"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:154
+#, fuzzy
 msgid "Aluminium NR"
-msgstr ""
+msgstr "Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:154
+#, fuzzy
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "árnyaló"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
@@ -1616,17 +1627,20 @@ msgstr "A lap illesztése a rajzhoz"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:157
+#, fuzzy
 msgid "Chrome NR"
-msgstr ""
+msgstr "Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:157
+#, fuzzy
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "árnyaló Tükröződő"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:159
+#, fuzzy
 msgid "Chrome dark NR"
-msgstr ""
+msgstr "Nem realisztikus"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1639,7 +1653,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr "minta Elmozdítás szél"
+msgstr "minta Elmozdítás Rézsútos szegély szél"
 
 #: ../share/filters/filters.svg.h:161
 msgid "3D marble"
@@ -1674,7 +1688,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr "minta szél"
+msgstr "minta Rézsútos szegély szél"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
@@ -1692,7 +1706,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "Comics shader with creamy waves transparency"
-msgstr "átlátszóság"
+msgstr "árnyaló átlátszóság"
 
 #: ../share/filters/filters.svg.h:167
 #, fuzzy
@@ -1702,16 +1716,16 @@ msgstr "Feketepont"
 #: ../share/filters/filters.svg.h:167
 #, fuzzy
 msgid "Light areas turn to black"
-msgstr "Fekete"
+msgstr "Terület Fekete"
 
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Light eraser"
 msgstr "Fényesség"
 
-#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:208
-#: ../share/filters/filters.svg.h:209 ../share/filters/filters.svg.h:210
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:209
 msgid "Transparency utilities"
 msgstr ""
 
@@ -1743,7 +1757,7 @@ msgstr "0 (átlátszó)"
 #: ../share/filters/filters.svg.h:171
 #, fuzzy
 msgid "Highly flexible specular bump with transparency"
-msgstr "átlátszóság"
+msgstr "Tükröződő átlátszóság"
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
@@ -1797,7 +1811,6 @@ msgid ""
 msgstr "létrehozása vonalak kereszteződés szél"
 
 #: ../share/filters/filters.svg.h:177
-#, fuzzy
 msgid "Black outline"
 msgstr "Fekete kontúr"
 
@@ -1876,266 +1889,283 @@ msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "átlátszóság"
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
-msgid "HSL bubbles, transparent"
-msgstr "0 (átlátszó)"
-
-#: ../share/filters/filters.svg.h:185
-#, fuzzy
-msgid "Highly flexible specular bubbles with transparency"
-msgstr "átlátszóság"
-
-#: ../share/filters/filters.svg.h:186
 msgid "Old postcard"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:185
 #, fuzzy
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "szél"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 msgid "Fuzzy glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 #, fuzzy
 msgid "Dots transparency"
 msgstr "átlátszóság"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 #, fuzzy
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "átlátszóság"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 #, fuzzy
 msgid "Canvas transparency"
 msgstr "rajzvászonátlátszóság"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 #, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "átlátszóság rajzvászon"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 #, fuzzy
 msgid "Smear transparency"
 msgstr "átlátszóság"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 #, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which turn around color edges"
 msgstr "Objektumok megrajzolása szél"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Thick paint"
 msgstr "VastagNincs megrajzolva"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Thick painting effect with turbulence"
 msgstr "Vastageffektus"
 
-#: ../share/filters/filters.svg.h:192
-#, fuzzy
-msgid "Thick paint, glossy"
-msgstr "Vastag"
-
-#: ../share/filters/filters.svg.h:192
-#, fuzzy
-msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr "Vastageffektus"
-
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:191
 #, fuzzy
 msgid "Burst"
 msgstr "Elmosás"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:191
 msgid "Burst balloon texture crumpled and with holes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:194
-msgid "Burst, glossy"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:194
-msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:192
 #, fuzzy
 msgid "Embossed leather"
 msgstr "Nincs effektus"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:192
 #, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr "szél"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:193
 #, fuzzy
 msgid "Carnaval"
 msgstr "Rajzvászon"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:193
 msgid "White splotches evocating carnaval masks"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:194
 #, fuzzy
 msgid "Plastify"
 msgstr "Sorkizárás"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:194
 #, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr "szél"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:195
 #, fuzzy
 msgid "Plaster"
 msgstr "Beillesztés"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:195
 #, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr "szél"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:196
 #, fuzzy
 msgid "Rough transparency"
 msgstr "átlátszóság"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:196
 #, fuzzy
 msgid "Adds a turbulent transparency which displace pixels at the same time"
 msgstr "Képpont"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:197
 #, fuzzy
 msgid "Gouache"
 msgstr "Forrás"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:197
 #, fuzzy
 msgid "Partly opaque water color effect with bleed"
-msgstr "effektus"
+msgstr "átlátszatlan effektus"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:198
 #, fuzzy
 msgid "Alpha engraving"
 msgstr "Alfa"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:198
 #, fuzzy
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "rajz effektus bitképek"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:199
 #, fuzzy
 msgid "Alpha draw, liquid"
 msgstr "Alfa"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:199
 #, fuzzy
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "rajz effektus bitképek"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Liquid drawing"
 msgstr "rajz%s"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "rajz effektus bitképek"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:201
 msgid "Marbled ink"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:201
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:202
 #, fuzzy
 msgid "Thick acrylic"
 msgstr "VastagNincs megrajzolva"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:202
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:203
 msgid "Alpha engraving B"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:203
 #, fuzzy
 msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
 msgstr "rajz effektus bitképek"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:204
 #, fuzzy
 msgid "Lapping"
-msgstr "Vonalvég-lekerekítés"
+msgstr "Illesztés"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:204
 msgid "Something like a water noise"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:205
 msgid "Monochrome positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:208
-msgid "Convert to a Clorizable transparent positive"
+#: ../share/filters/filters.svg.h:205
+msgid "Convert to a Colorizable transparent positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:206
 msgid "Monochrome negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:206
 msgid "Convert to a colorizable transparent negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:207
 msgid "Light eraser, negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:207
 #, fuzzy
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr "objektum"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 #, fuzzy
 msgid "Repaint"
 msgstr "Ismétlődés:"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:208
 msgid "Repaint anything monochrome"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:209
 #, fuzzy
 msgid "Punch hole"
 msgstr "Eltolási üzemmód"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:209
 msgid "Punch object out of a colorizable opaque area"
+msgstr ""
+
+# May contain a short, human readable description of the resource as plain, unmarked text.
+#: ../share/filters/filters.svg.h:210
+#, fuzzy
+msgid "Riddled"
+msgstr "Közép"
+
+#: ../share/filters/filters.svg.h:210
+msgid "Riddle the surface and add bump to images"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Wrinkled varnish"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:211
+msgid "Thick glossy and translucent paint texture with high depth"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+#, fuzzy
+msgid "Canvas Bumps"
+msgstr "Rajzvászon"
+
+#: ../share/filters/filters.svg.h:212
+msgid "Canvas texture with an HSL sensitive height map"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid "Canvas Bumps, matte"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+#, fuzzy
+msgid ""
+"Same than Canvas Bumps but with a diffuse light instead of a specular one"
+msgstr "Tükröződő"
+
+#: ../share/filters/filters.svg.h:214
+msgid "Canvas Bumps alpha"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -2344,7 +2374,7 @@ msgstr "Perspektíva módosítása (perspektívavonalak szöge)"
 #. status text
 #: ../src/box3d-context.cpp:605
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
-msgstr "<b>3D téglatest</b>. Kihúzás a Z-tengely mentén: <b>Shift</b>."
+msgstr "<b>3D téglatest</b>. Kihúzás a Z tengely mentén: <b>Shift</b>."
 
 #: ../src/box3d-context.cpp:629
 msgid "Create 3D box"
@@ -4010,7 +4040,7 @@ msgstr "X-_origó:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 #: ../src/ui/dialog/inkscape-preferences.cpp:995
 msgid "X coordinate of grid origin"
-msgstr "A rács origójának X-koordinátája"
+msgstr "A rács origójának X koordinátája"
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
 msgid "O_rigin Y:"
@@ -4020,7 +4050,7 @@ msgstr "Y-o_rigó:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
 msgid "Y coordinate of grid origin"
-msgstr "A rács origójának Y-koordinátája"
+msgstr "A rács origójának Y koordinátája"
 
 #: ../src/display/canvas-axonomgrid.cpp:402 ../src/display/canvas-grid.cpp:678
 msgid "Spacing _Y:"
@@ -4029,7 +4059,7 @@ msgstr "_Y-távolság:"
 #: ../src/display/canvas-axonomgrid.cpp:402
 #: ../src/ui/dialog/inkscape-preferences.cpp:998
 msgid "Base length of z-axis"
-msgstr "A z-tengely alaphosszúsága"
+msgstr "A z tengely alaphosszúsága"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
 #: ../src/ui/dialog/inkscape-preferences.cpp:1001
@@ -4040,7 +4070,7 @@ msgstr "X-szög:"
 #: ../src/display/canvas-axonomgrid.cpp:404
 #: ../src/ui/dialog/inkscape-preferences.cpp:1001
 msgid "Angle of x-axis"
-msgstr "Az x-tengely szöge"
+msgstr "Az x tengely szöge"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
 #: ../src/ui/dialog/inkscape-preferences.cpp:1002
@@ -4051,7 +4081,7 @@ msgstr "Z-szög:"
 #: ../src/display/canvas-axonomgrid.cpp:406
 #: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Angle of z-axis"
-msgstr "A z-tengely szöge"
+msgstr "A z tengely szöge"
 
 #: ../src/display/canvas-axonomgrid.cpp:410 ../src/display/canvas-grid.cpp:682
 msgid "Grid line _color:"
@@ -6850,7 +6880,7 @@ msgstr "X, lebegő"
 
 #: ../src/libgdl/gdl-dock.c:207
 msgid "X coordinate for a floating dock"
-msgstr "Lebegő dokkolóelem X-koordinátája"
+msgstr "Lebegő dokkolóelem X koordinátája"
 
 #: ../src/libgdl/gdl-dock.c:214
 msgid "Float Y"
@@ -6858,7 +6888,7 @@ msgstr "Y, lebegő"
 
 #: ../src/libgdl/gdl-dock.c:215
 msgid "Y coordinate for a floating dock"
-msgstr "Lebegő dokkolóelem Y-koordinátája"
+msgstr "Lebegő dokkolóelem Y koordinátája"
 
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
@@ -7185,19 +7215,19 @@ msgstr "A helykitöltő egy lebegő felsőszintű dokkolóelemet helyettesít-e"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
-msgstr "X-koordináta"
+msgstr "X koordináta"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
 msgid "X coordinate for dock when floating"
-msgstr "A dokkolóelem X-koordinátája, amikor lebeg"
+msgstr "A dokkolóelem X koordinátája, amikor lebeg"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
 msgid "Y-Coordinate"
-msgstr "Y-koordináta"
+msgstr "Y koordináta"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
 msgid "Y coordinate for dock when floating"
-msgstr "A dokkolóelem Y-koordinátája, amikor lebeg"
+msgstr "A dokkolóelem Y koordinátája, amikor lebeg"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
@@ -8492,7 +8522,7 @@ msgid ""
 "query-id"
 msgstr ""
 "A rajz (illetve, ha az meg van adva, a --query-id opcióval megadott "
-"objektum) X-koordinátájának lekérdezése"
+"objektum) X koordinátájának lekérdezése"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:400
@@ -8501,7 +8531,7 @@ msgid ""
 "query-id"
 msgstr ""
 "A rajz (illetve, ha az meg van adva, a --query-id opcióval megadott "
-"objektum) Y-koordinátájának lekérdezése"
+"objektum) Y koordinátájának lekérdezése"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:406
@@ -8969,7 +8999,7 @@ msgid ""
 "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
-"A téglatest átméretezése X/Y irányban. A Z-tengely mentén: <b>Shift</b>. Az "
+"A téglatest átméretezése X/Y irányban. A Z tengely mentén: <b>Shift</b>. Az "
 "élek vagy átlók irányára való korlátozás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:697 ../src/object-edit.cpp:700
@@ -8978,7 +9008,7 @@ msgid ""
 "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
-"A téglatest átméretezése a Z-tengely mentén. X/Y irányban: <b>Shift</b>. Az "
+"A téglatest átméretezése a Z tengely mentén. X/Y irányban: <b>Shift</b>. Az "
 "élek vagy átlók irányára való korlátozás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:709
@@ -12249,19 +12279,19 @@ msgstr "Hely"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
-msgstr "X-koordináta"
+msgstr "X koordináta"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Y coordinate"
-msgstr "Y-koordináta"
+msgstr "Y koordináta"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
-msgstr "Z-koordináta"
+msgstr "Z koordináta"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
@@ -12370,11 +12400,11 @@ msgstr "Koordináták:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
-msgstr "A szűrőeffektus-terület bal oldali sarkainak X-koordinátája"
+msgstr "A szűrőeffektus-terület bal oldali sarkainak X koordinátája"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
-msgstr "A szűrőeffektus-terület felső sarkainak Y-koordinátája"
+msgstr "A szűrőeffektus-terület felső sarkainak Y koordinátája"
 
 #. default width:
 #. default height:
@@ -12464,7 +12494,7 @@ msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
-"A célpont X-koordinátája a konvolúciós mátrixban. A konvolúció ezen pont "
+"A célpont X koordinátája a konvolúciós mátrixban. A konvolúció ezen pont "
 "körül lesz alkalmazva a képpontokra."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
@@ -12472,7 +12502,7 @@ msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
-"A célpont Y-koordinátája a konvolúciós mátrixban. A konvolúció ezen pont "
+"A célpont Y koordinátája a konvolúciós mátrixban. A konvolúció ezen pont "
 "körül lesz alkalmazva a képpontokra."
 
 # kernel: konvolúciós mátrix
@@ -19584,19 +19614,19 @@ msgstr "Az objektum maszkjának szerkesztése"
 
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X coordinate:"
-msgstr "X-koordináta:"
+msgstr "X koordináta:"
 
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X coordinate of selected node(s)"
-msgstr "A kijelölt csomópont(ok) X-koordinátája"
+msgstr "A kijelölt csomópont(ok) X koordinátája"
 
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y coordinate:"
-msgstr "Y-koordináta:"
+msgstr "Y koordináta:"
 
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y coordinate of selected node(s)"
-msgstr "A kijelölt csomópont(ok) Y-koordinátája"
+msgstr "A kijelölt csomópont(ok) Y koordinátája"
 
 #: ../src/widgets/toolbox.cpp:2028
 msgid "Enable snapping"
@@ -21047,62 +21077,70 @@ msgstr ""
 #: ../share/extensions/dimension.py:99
 #, fuzzy
 msgid "Unable to process this object.  Try changing it into a path first."
-msgstr "objektum útvonal"
+msgstr "Az objektum nem dolgozható fel. Alakítsa először útvonallá."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
 #, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "oldalLépéshossz (px)"
+msgstr "Az \"a\" oldal hossza (px): "
 
 #: ../share/extensions/draw_from_triangle.py:176
 #, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "oldalLépéshossz (px)"
+msgstr "A \"b\" oldal hossza (px): "
 
 #: ../share/extensions/draw_from_triangle.py:177
 #, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "oldalLépéshossz (px)"
+msgstr "A \"c\" oldal hossza (px): "
 
 #: ../share/extensions/draw_from_triangle.py:178
+#, fuzzy
 msgid "Angle 'A'/radians:"
-msgstr ""
+msgstr "Az \"A\" szög (radián): "
 
 #: ../share/extensions/draw_from_triangle.py:179
+#, fuzzy
 msgid "Angle 'B'/radians: "
-msgstr ""
+msgstr "A \"B\" szög (radián): "
 
 #: ../share/extensions/draw_from_triangle.py:180
+#, fuzzy
 msgid "Angle 'C'/radians: "
-msgstr ""
+msgstr "A \"C\" szög (radián): "
 
 #: ../share/extensions/draw_from_triangle.py:181
+#, fuzzy
 msgid "Semiperimeter/px: "
-msgstr ""
+msgstr "Félkerület (px): "
 
 #: ../share/extensions/draw_from_triangle.py:182
+#, fuzzy
 msgid "Area /px^2: "
-msgstr ""
+msgstr "Terület"
 
 #: ../share/extensions/dxf_outlines.py:33
-#, fuzzy
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
-msgstr "Nem sikerültkiterjesztés"
+msgstr ""
+"Nem sikerült importálni a numpy vagy a numpy.linalg modult. Ez a "
+"kiterjesztés igényli ezen modulokat. Telepítse ezeket, majd próbálkozzon "
+"újra."
 
 #: ../share/extensions/embedimage.py:74
-#, fuzzy
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
-msgstr "Létező"
+msgstr ""
+"Nem található xlink:href vagy sodipodi:absref attribútum, vagy egy nem "
+"létező fájlra mutatnak. Képbeágyazás nem végezhető."
 
 #: ../share/extensions/embedimage.py:76
 #, python-format
 msgid "Sorry we could not locate %s"
-msgstr ""
+msgstr "\"%s\" nem található"
 
 #: ../share/extensions/embedimage.py:101
 #, python-format
@@ -21110,16 +21148,20 @@ msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
 "or image/x-icon"
 msgstr ""
+"\"%s\" típusa nem ezek közül való: image/png, image/jpeg, image/bmp, image/"
+"gif, image/tiff, image/x-icon"
 
 #: ../share/extensions/export_gimp_palette.py:14
 msgid ""
 "The export_gpl.py module requires PyXML.  Please download the latest version "
 "from http://pyxml.sourceforge.net/."
 msgstr ""
+"Az export_gpl.py modul igényli a PyXML-t. Az aktuális verzió letölthető "
+"innen: http://pyxml.sourceforge.net/"
 
 #: ../share/extensions/extractimage.py:66
 msgid "Difficulty finding the image data."
-msgstr ""
+msgstr "A képadat nem található."
 
 #: ../share/extensions/inkex.py:66
 #, fuzzy
@@ -21128,96 +21170,112 @@ msgid ""
 "this extension. Please download and install the latest version from http://"
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
-msgstr "kiterjesztés"
+msgstr ""
+"Az inkex.py - és vele együtt ez a kiterjesztés - igényli az lxml nevű ... "
+"libxml2-wrappert. Töltse le és telepítse az aktuális verziót a http://"
+"cheeseshop.python.org/pypi/lxml/ oldalról, vagy telepítse a "
+"csomagkezelőjével (például a \"sudo apt-get install python-lxml\" vagy "
+"hasonló paranccsal)."
 
 #: ../share/extensions/inkex.py:213
 #, fuzzy, python-format
 msgid "No matching node for expression: %s"
-msgstr "Csomópont"
+msgstr "Csomópont kifejezés"
 
 #: ../share/extensions/markers_strokepaint.py:41
 #, fuzzy, python-format
 msgid "No style attribute found for id: %s"
-msgstr "stílus"
+msgstr "Nem található stílusattribútum    for id: %s"
 
 #: ../share/extensions/markers_strokepaint.py:56
 #, fuzzy, python-format
 msgid "unable to locate marker: %s"
-msgstr "jelölőelem"
+msgstr "jelölőelem Nem található"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
 #: ../share/extensions/summersnight.py:36
-#, fuzzy
 msgid "This extension requires two selected paths."
-msgstr "A kijelölt útvonalak uniójának létrehozásakiterjesztés"
+msgstr "Ennek a kiterjesztésnek szüksége van két kijelölt útvonalra."
 
 #: ../share/extensions/pathmodifier.py:229
 #, fuzzy, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr "Objektumok útvonal"
+msgstr "Először alakítsa útvonalakká az objektumokat. (Hiba: [%s].)"
 
 #: ../share/extensions/perspective.py:29
-#, fuzzy
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again.  On a Debian-"
 "like system this can be done with the command, sudo apt-get install python-"
 "numpy."
-msgstr "Nem sikerültkiterjesztés"
+msgstr ""
+"Nem sikerült importálni a numpy vagy a numpy.linalg modult. Ez a "
+"kiterjesztés igényli ezen modulokat. Telepítse ezeket, majd próbálkozzon "
+"újra. Debian-szerű rendszer esetén a telepítés elvégezhető a \"sudo apt-get "
+"install python-numpy\" paranccsal."
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
-msgstr "objektum útvonal"
+msgstr ""
+"Az első kijelölt objektum \"%s\" típusú.\n"
+"Próbálkozzon az \"Útvonal | Objektum átalakítása útvonallá\" funkcióval."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
-#, fuzzy
 msgid ""
 "This extension requires that the second selected path be four nodes long."
-msgstr "kiterjesztésútvonalCsomópont"
+msgstr ""
+"Ez a kiterjesztés igényli, hogy a második kijelölt útvonal 4 csomópont "
+"hosszúságú legyen."
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
-#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
-msgstr "objektumcsoport útvonal"
+msgstr ""
+"A második kijelölt objektum egy csoport, nem egy útvonal.\n"
+"Próbálkozzon az \"Objektum | Csoport szétbontása\" funkcióval."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
-#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
-msgstr "objektum útvonal"
+msgstr ""
+"A második kijelölt objektum nem egy útvonal.\n"
+"Próbálkozzon az \"Útvonal | Objektum átalakítása útvonallá\" funkcióval."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
-#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
-msgstr "objektum útvonal"
+msgstr ""
+"Az első kijelölt objektum nem egy útvonal.\n"
+"Próbálkozzon az \"Útvonal | Objektum átalakítása útvonallá\" funkcióval."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
-msgstr "Nem sikerültkiterjesztés"
+msgstr ""
+"Nem sikerült importálni a numpy modult. Ez a kiterjesztés igényli ezt a "
+"modult. Telepítse a modult, majd próbálkozzon újra. Debian-szerű rendszer "
+"esetén a telepítés elvégezhető a \"sudo apt-get install python-numpy\" "
+"paranccsal."
 
 #: ../share/extensions/polyhedron_3d.py:331
 #, fuzzy
 msgid "No face data found in specified file."
-msgstr "szél"
+msgstr "Nem található"
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
@@ -21226,7 +21284,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.py:338
 #, fuzzy
 msgid "No edge data found in specified file."
-msgstr "szél"
+msgstr "szél Nem található"
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
@@ -21234,48 +21292,46 @@ msgstr ""
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
+#, fuzzy
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "Nem található"
 
 #: ../share/extensions/polyhedron_3d.py:516
+#, fuzzy
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "Belső hiba. Nincs kijelölve view type\n"
 
 #: ../share/extensions/summersnight.py:38
-#, fuzzy
 msgid "The second path must be exactly four nodes long."
-msgstr "útvonalCsomópont"
+msgstr "A második útvonalnak pontosan 4 csomópont hosszúságúnak kell lennie."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, fuzzy, python-format
 msgid "Could not locate file: %s"
-msgstr "Nem sikerült \"%s\" nevű fájlba exportálni.\n"
+msgstr "Nem található a fájl: %s"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
 msgid "You must select at least two elements."
-msgstr ""
+msgstr "Legalább 2 elemet ki kell jelölni."
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "Csomópontok felvétele"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "By max. segment length"
-msgstr "Maximális szakaszhossz (px)"
+msgstr "Maximális szakaszhossz alapján"
 
 #: ../share/extensions/addnodes.inx.h:3
-#, fuzzy
 msgid "By number of segments"
-msgstr "szakaszFogak száma"
+msgstr "Szakaszok száma alapján"
 
 #: ../share/extensions/addnodes.inx.h:4
-#, fuzzy
 msgid "Division method"
-msgstr "Felosztás"
+msgstr "Felosztási módszer"
 
 #: ../share/extensions/addnodes.inx.h:5
 msgid "Maximum segment length (px)"
@@ -21296,9 +21352,8 @@ msgid "Modify Path"
 msgstr "Útvonal módosítása"
 
 #: ../share/extensions/addnodes.inx.h:7
-#, fuzzy
 msgid "Number of segments"
-msgstr "szakaszLépések száma"
+msgstr "Szakaszok száma"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI 8.0 Input"
@@ -21311,8 +21366,7 @@ msgstr "Adobe Illustrator 8.0 és az alatt (*.ai)"
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
 msgstr ""
-"Az Adobe Illustrator 8.0-s vagy korábbi verziójával létrehozott fájlok "
-"megnyitása"
+"Az Adobe Illustrator 8.0-s vagy korábbi verziójával mentett fájlok megnyitása"
 
 #: ../share/extensions/ai_output.inx.h:1
 msgid "AI 8.0 Output"
@@ -21348,9 +21402,8 @@ msgid "Corel DRAW Compressed Exchange files input"
 msgstr "Bemenet: Corel DRAW-féle tömörített fájlok"
 
 #: ../share/extensions/ccx_input.inx.h:3
-#, fuzzy
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr "Corel DRAW-féle tömörített fájlok (.ccx)"
+msgstr "Corel DRAW-val mentett tömörített fájlok megnyitása"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
@@ -21385,9 +21438,8 @@ msgid "Computer Graphics Metafile files input"
 msgstr "Bemenet: Computer Graphics Metafile-fájlok"
 
 #: ../share/extensions/cgm_input.inx.h:3
-#, fuzzy
 msgid "Open Computer Graphics Metafile files"
-msgstr "fájlok"
+msgstr "Computer Graphics Metafile-fájlok megnyitása"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
@@ -21398,9 +21450,8 @@ msgid "Corel DRAW Presentation Exchange files input"
 msgstr "Bemenet: Corel DRAW Presentation Exchange-fájlok"
 
 #: ../share/extensions/cmx_input.inx.h:3
-#, fuzzy
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr "fájlok"
+msgstr "Corel DRAW-val mentett prezentációs fájlok megnyitása"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -21487,10 +21538,11 @@ msgstr "Ezen szín cserélése (VVZZKK hexa):"
 msgid "RGB Barrel"
 msgstr "RGB-csatornák forgatása"
 
+# This extension converts a path into a dashed line
+#  using 'stroke-dasharray'
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "Szöveggé való _konvertálás"
+msgstr "Szaggatott vonallá alakítás"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21566,14 +21618,12 @@ msgid "Centroid"
 msgstr "Középre igazítás"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "Dokumentum"
+msgstr "Köréírt kör középpontja"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
-#, fuzzy
 msgid "Circumcircle"
-msgstr "Kör"
+msgstr "Köréírt kör"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
 #, fuzzy
@@ -21599,9 +21649,8 @@ msgid "Draw Circle About This Point"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
-#, fuzzy
 msgid "Draw From Triangle"
-msgstr "háromszög"
+msgstr "Rajzolás háromszög alapján"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
@@ -21622,14 +21671,12 @@ msgid "Excentral Triangle"
 msgstr "háromszög"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
-#, fuzzy
 msgid "Excentres"
-msgstr "Kihúzás"
+msgstr "Hozzáírt körök középpontjai"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
-#, fuzzy
 msgid "Excircles"
-msgstr "kör"
+msgstr "Hozzáírt körök"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 #, fuzzy
@@ -21642,14 +21689,12 @@ msgid "Gergonne Point"
 msgstr "Körvonalrajzolat"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "Csomópontot egy szinttel beljebb"
+msgstr "Beírt kör középpontja"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
-#, fuzzy
 msgid "Incircle"
-msgstr "kör"
+msgstr "Beírt kör"
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
 #, fuzzy
@@ -21719,9 +21764,8 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "Character Encoding"
-msgstr "Vonalvég-lekerekítés"
+msgstr "Karakterkódolás"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
@@ -21732,13 +21776,14 @@ msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Az AutoCAD-féle \"Document Exchange Format\" formátum importálása"
 
 #: ../share/extensions/dxf_input.inx.h:5
+#, fuzzy
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Vagy használjon kézi méretezési tényezőt"
 
 #: ../share/extensions/dxf_input.inx.h:6
 #, fuzzy
 msgid "Use automatic scaling to size A4"
-msgstr "automatikus méretezés"
+msgstr "Automatikus méretezés használata "
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -21875,28 +21920,24 @@ msgid "Flatten Beziers"
 msgstr "Bézier-görbék lapítása"
 
 #: ../share/extensions/foldablebox.inx.h:1
-#, fuzzy
 msgid "Add Guide Lines"
-msgstr "Segédvonal"
+msgstr "Segédvonalak felvétele"
 
 #: ../share/extensions/foldablebox.inx.h:2
-#, fuzzy
 msgid "Depth"
-msgstr "Fogak"
+msgstr "Mélység"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr ""
+msgstr "Hajtogatható doboz"
 
 #: ../share/extensions/foldablebox.inx.h:5
-#, fuzzy
 msgid "Paper Thickness"
-msgstr "A papír vastagságának mértéke"
+msgstr "Papírvastagság"
 
 #: ../share/extensions/foldablebox.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "Arányos átméretezés"
+msgstr "Fülarány"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -21964,7 +22005,6 @@ msgid "Remove rectangle"
 msgstr "Téglalap eltávolítása"
 
 #: ../share/extensions/funcplot.inx.h:14
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension,\n"
 "it will determine X and Y scales.\n"
@@ -21975,16 +22015,18 @@ msgid ""
 "   Isotropic scaling is disabled.\n"
 "   First derivative is always determined numerically."
 msgstr ""
-"A kiterjesztés használata előtt jelöljön ki egy téglalapot. A téglalap adja "
-"meg az x és y irányú méretezést. Polárkoordináták esetén az x kezdő- és "
-"végértéke adja meg a szögtartományt radiánban. Az x irányú méretezés úgy "
-"lesz beállítva, hogy a téglalap bal, illetve jobb oldali széle +/-1 értéknél "
-"legyen. Az izotropikus méretezés ki van kapcsolva. Az első derivált mindig "
-"numerikus módon van kiszámítva."
+"A kiterjesztés használata előtt jelöljön ki egy téglalapot.\n"
+"A téglalap fogja megadni az X és Y irányú méretezést.\n"
+"\n"
+"Polárkoordináták esetén:\n"
+"   Az X kezdő- és végértéke adja meg a szögtartományt radiánban.\n"
+"   Az X irányú méretezés úgy lesz beállítva, hogy a téglalap bal, illetve "
+"jobb oldali széle +/-1 értéknél legyen.\n"
+"   Az izotropikus méretezés ki van kapcsolva.\n"
+"   Az első derivált mindig numerikus módon van meghatározva."
 
 #: ../share/extensions/funcplot.inx.h:22
 #: ../share/extensions/param_curves.inx.h:15
-#, fuzzy
 msgid ""
 "Standard Python math functions are available:\n"
 "\n"
@@ -21996,11 +22038,15 @@ msgid ""
 "\n"
 "The constants pi and e are also available."
 msgstr ""
-"A Python szabványos matematikai függvényei használhatók: ceil(x); fabs(x); "
-"floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, alap]); "
-"log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,"
-"y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh"
-"(x). Használható a \"pi\" és az \"e\" konstans is."
+"A Python szabványos matematikai függvényei használhatók:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, alap]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"Használható a \"pi\" és az \"e\" konstans is."
 
 #: ../share/extensions/funcplot.inx.h:31
 msgid "Start X value"
@@ -22052,22 +22098,21 @@ msgstr "GIMP-XCF a rétegek megtartásával (*.XCF)"
 #: ../share/extensions/gimp_xcf.inx.h:3
 #, fuzzy
 msgid "Save Grid:"
-msgstr "Rács"
+msgstr "Rács mentése:"
 
 #: ../share/extensions/gimp_xcf.inx.h:4
 #, fuzzy
 msgid "Save Guides:"
-msgstr "Segédvonalak"
+msgstr "Segédvonalak mentése:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 #, fuzzy
 msgid "Border Thickness [px]"
-msgstr "keret Vastagság"
+msgstr "Keretvastagság (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
-#, fuzzy
 msgid "Cartesian Grid"
-msgstr "Új rács létrehozása"
+msgstr "Descartes-rács"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 #, fuzzy
@@ -22156,11 +22201,12 @@ msgstr ""
 #: ../share/extensions/grid_polar.inx.h:1
 #, fuzzy
 msgid "Angle Divisions"
-msgstr "Felosztás"
+msgstr "szög Felosztás"
 
 #: ../share/extensions/grid_polar.inx.h:2
+#, fuzzy
 msgid "Angle Divisions at Centre"
-msgstr ""
+msgstr "szög "
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
@@ -22203,8 +22249,9 @@ msgid "Major Circular Divisions"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:13
+#, fuzzy
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "szög "
 
 #: ../share/extensions/grid_polar.inx.h:14
 #, fuzzy
@@ -22217,9 +22264,8 @@ msgid "Minor Circular Division Thickness [px]"
 msgstr "Vastagság"
 
 #: ../share/extensions/grid_polar.inx.h:17
-#, fuzzy
 msgid "Polar Grid"
-msgstr "Rács"
+msgstr "Poláris rács"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
@@ -22231,62 +22277,59 @@ msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
-msgstr ""
+msgstr "1/10"
 
 #: ../share/extensions/guides_creator.inx.h:2
 msgid "1/2"
-msgstr ""
+msgstr "1/2"
 
 #: ../share/extensions/guides_creator.inx.h:3
 msgid "1/3"
-msgstr ""
+msgstr "1/3"
 
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "1/4"
-msgstr ""
+msgstr "1/4"
 
 #: ../share/extensions/guides_creator.inx.h:5
 msgid "1/5"
-msgstr ""
+msgstr "1/5"
 
 #: ../share/extensions/guides_creator.inx.h:6
 msgid "1/6"
-msgstr ""
+msgstr "1/6"
 
 #: ../share/extensions/guides_creator.inx.h:7
 msgid "1/7"
-msgstr ""
+msgstr "1/7"
 
 #: ../share/extensions/guides_creator.inx.h:8
 msgid "1/8"
-msgstr ""
+msgstr "1/8"
 
 #: ../share/extensions/guides_creator.inx.h:9
 msgid "1/9"
-msgstr ""
+msgstr "1/9"
 
 #: ../share/extensions/guides_creator.inx.h:10
 msgid "Custom..."
 msgstr "Egyéni..."
 
 #: ../share/extensions/guides_creator.inx.h:11
-#, fuzzy
 msgid "Delete existing guides"
 msgstr "Létező segédvonalak eltávolítása"
 
 #: ../share/extensions/guides_creator.inx.h:12
-#, fuzzy
 msgid "Golden ratio"
-msgstr "Ágarány"
+msgstr "Aranymetszés"
 
 #: ../share/extensions/guides_creator.inx.h:13
 msgid "Guides creator"
 msgstr "Segédvonal-készítő"
 
 #: ../share/extensions/guides_creator.inx.h:14
-#, fuzzy
 msgid "Horizontal guide each"
-msgstr "Vízszintes szövegSegédvonal"
+msgstr "Vízszintes segédvonal ekkora részenként:"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
@@ -22294,17 +22337,15 @@ msgstr "Előbeállítás"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "Harmadolóvonalak"
 
 #: ../share/extensions/guides_creator.inx.h:19
-#, fuzzy
 msgid "Start from edges"
-msgstr "szél a középpontból indul"
+msgstr "Kezdés a szélekről"
 
 #: ../share/extensions/guides_creator.inx.h:20
-#, fuzzy
 msgid "Vertical guide each"
-msgstr "Függőleges helykihagyásSegédvonal"
+msgstr "Függőleges segédvonal ekkora részenként:"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -22312,7 +22353,7 @@ msgstr "Vezérlőelemek megrajzolása"
 
 #: ../share/extensions/hpgl_output.inx.h:1
 msgid "Export to an HP Graphics Language file"
-msgstr ""
+msgstr "Exportálás HP Graphics Language-fájlba"
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid "HP Graphics Language file (*.hpgl)"
@@ -22323,21 +22364,24 @@ msgid "HPGL Output"
 msgstr "HPGL-kimenet"
 
 #: ../share/extensions/hpgl_output.inx.h:4
+#, fuzzy
 msgid "Mirror Y-axis"
-msgstr ""
+msgstr "Y tengely tükrözése"
 
 #: ../share/extensions/hpgl_output.inx.h:5
 #, fuzzy
 msgid "Plot invisible layers"
-msgstr "Kijelölés az összes rétegben"
+msgstr "láthatatlan rétegek"
 
 #: ../share/extensions/hpgl_output.inx.h:6
+#, fuzzy
 msgid "X-origin (px)"
-msgstr ""
+msgstr "X-origó (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:7
+#, fuzzy
 msgid "Y-origin (px)"
-msgstr ""
+msgstr "Y-origó (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 #, fuzzy
@@ -22377,58 +22421,52 @@ msgid "SVG 1.1 Specification"
 msgstr "SVG 1.1-specifikáció"
 
 #: ../share/extensions/interp_att_g.inx.h:1
-#, fuzzy
 msgid "Attribute to Interpolate"
-msgstr "Tulajdonságnév"
+msgstr "Interpolálandó tulajdonság"
 
 #: ../share/extensions/interp_att_g.inx.h:3
-#, fuzzy
 msgid "End Value"
-msgstr "X-végérték"
+msgstr "Végérték"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "Effektus-paraméterek"
+msgstr "Lebegőpontos szám"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid ""
 "If you select \"Other\", you must know the SVG attributes to identify here "
 "this \"other\":"
 msgstr ""
+"Ha az \"Egyéb\" lehetőséget választja, akkor meg kell adnia a megfelelő SVG-"
+"attribútumokat:"
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
-msgstr ""
+msgstr "Egész szám"
 
 #: ../share/extensions/interp_att_g.inx.h:9
-#, fuzzy
 msgid "Interpolate Attribute in a group"
-msgstr "csoport"
+msgstr "Tulajdonság interpolálása egy csoportban"
 
 #: ../share/extensions/interp_att_g.inx.h:11
-#, fuzzy
 msgid "No Unit"
-msgstr "Mértékegység"
+msgstr "Nincs mértékegység"
 
 #: ../share/extensions/interp_att_g.inx.h:13
 msgid "Other"
 msgstr "Egyéb"
 
 #: ../share/extensions/interp_att_g.inx.h:14
-#, fuzzy
 msgid "Other Attribute"
-msgstr "Tulajdonság"
+msgstr "Egyéb tulajdonság"
 
 #: ../share/extensions/interp_att_g.inx.h:15
-#, fuzzy
 msgid "Other Attribute type"
-msgstr "Tulajdonságnév"
+msgstr "Egyéb tulajdonság típusa"
 
 #: ../share/extensions/interp_att_g.inx.h:17
-#, fuzzy
 msgid "Start Value"
-msgstr "X-kezdőérték"
+msgstr "Kezdőérték"
 
 #: ../share/extensions/interp_att_g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
@@ -22436,43 +22474,40 @@ msgid "Style"
 msgstr "Stílus"
 
 #: ../share/extensions/interp_att_g.inx.h:19
-#, fuzzy
 msgid "Tag"
-msgstr "Cél"
+msgstr "Címke"
 
 #: ../share/extensions/interp_att_g.inx.h:20
-#, fuzzy
 msgid ""
 "This effect applies a value for any interpolatable attribute for all "
 "elements inside the selected group or for all elements in a multiple "
 "selection"
-msgstr "Ez az effektuscsoportkijelölés"
+msgstr ""
+"Ez az effektus a kijelölt csoportban levő összes elem, illetve egy "
+"többszörös kijelölésben levő összes elem minden interpolálható "
+"tulajdonságára alkalmaz egy értéket."
 
 #: ../share/extensions/interp_att_g.inx.h:21
-#, fuzzy
 msgid "Transformation"
-msgstr "Transzformáció átalakítás"
+msgstr "Transzformáció"
 
 #: ../share/extensions/interp_att_g.inx.h:22
-#, fuzzy
 msgid "Translate X"
-msgstr "_Fordítók"
+msgstr "X irányú eltolás"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Translate Y"
-msgstr "_Fordítók"
+msgstr "Y irányú eltolás"
 
 #: ../share/extensions/interp_att_g.inx.h:25
-#, fuzzy
 msgid "Where to apply?"
-msgstr "alkalmazása"
+msgstr "Mire legyen alkalmazva?"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
-msgstr ""
+msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -22487,9 +22522,8 @@ msgid "Interpolate"
 msgstr "Interpolálás"
 
 #: ../share/extensions/interp.inx.h:5
-#, fuzzy
 msgid "Interpolate style"
-msgstr "stílusInterpolálás"
+msgstr "Stílus interpolálása"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -22500,7 +22534,6 @@ msgid "Interpolation steps"
 msgstr "Interpolációs lépések"
 
 #: ../share/extensions/lindenmayer.inx.h:1
-#, fuzzy
 msgid ""
 "\n"
 "The path is generated by applying the \n"
@@ -22521,7 +22554,26 @@ msgid ""
 "[: remember point\n"
 "\n"
 "]: return to remembered point\n"
-msgstr "útvonalalkalmazása"
+msgstr ""
+"\n"
+"Az útvonal úgy jön létre, hogy a szabályok \n"
+"helyettesítései alkalmazásra kerülnek az axiómára \n"
+"a rend által megadott alkalommal. Az axiómában és \n"
+"a szabályokban a következő parancsok használhatók:\n"
+"\n"
+"A, B, C, D, E vagy F: rajzolás előre \n"
+"\n"
+"G, H, I, J, K vagy L: haladás előre \n"
+"\n"
+"+: elfordulás balra\n"
+"\n"
+"-: elfordulás jobbra\n"
+"\n"
+"|: 180 fokos elfordulás\n"
+"\n"
+"[: pont megjegyzése\n"
+"\n"
+"]: visszatérés a megjegyzett pontra\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
@@ -22529,7 +22581,7 @@ msgstr "Axióma"
 
 #: ../share/extensions/lindenmayer.inx.h:22
 msgid "Axiom and rules"
-msgstr ""
+msgstr "Axióma és szabályok"
 
 # L: Lindenmayer
 #: ../share/extensions/lindenmayer.inx.h:24
@@ -22651,9 +22703,8 @@ msgid "Magnitude"
 msgstr "Nagyság"
 
 #: ../share/extensions/motion.inx.h:4
-#, fuzzy
 msgid "Motion"
-msgstr "Pozíció"
+msgstr "Mozgás"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
@@ -22668,79 +22719,70 @@ msgid "Text Outline Input"
 msgstr "Szöveges kontúr-bemenet"
 
 #: ../share/extensions/param_curves.inx.h:2
-#, fuzzy
 msgid "End t-value"
-msgstr "X-végérték"
+msgstr "t-végérték"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr ""
-"Izotropikus méretezés (a legkisebbet használja: szélesség/X-tartomány vagy "
-"magasság/Y-tartomány)"
+"Izotropikus méretezés (a legkisebbet használja: szélesség/x-tartomány vagy "
+"magasság/y-tartomány)"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "X-tartomány szorzása 2*pi-vel"
+msgstr "t-tartomány szorzása 2*pi-vel"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "Paraméteres ívek"
+msgstr "Paraméteres görbék"
 
 #: ../share/extensions/param_curves.inx.h:7
-#, fuzzy
 msgid "Range and Sampling"
-msgstr "Tartomány és minták"
+msgstr "Tartomány és mintavétel"
 
 #: ../share/extensions/param_curves.inx.h:10
 msgid "Samples"
 msgstr "Minták"
 
 #: ../share/extensions/param_curves.inx.h:11
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension,\n"
 "it will determine X and Y scales.\n"
 "\n"
 "First derivatives are always determined numerically."
-msgstr "kiterjesztés"
+msgstr ""
+"A kiterjesztés használata előtt jelöljön ki egy téglalapot.\n"
+"A téglalap fogja megadni az X és Y irányú méretezést.\n"
+"\n"
+"Az első deriváltak mindig numerikus módon vannak meghatározva."
 
 #: ../share/extensions/param_curves.inx.h:24
-#, fuzzy
 msgid "Start t-value"
-msgstr "X-kezdőérték"
+msgstr "t-kezdőérték"
 
 #: ../share/extensions/param_curves.inx.h:26
-#, fuzzy
 msgid "x-Function"
-msgstr "Függvény"
+msgstr "x-függvény"
 
 #: ../share/extensions/param_curves.inx.h:27
-#, fuzzy
 msgid "x-value of rectangle's left"
-msgstr "A téglalap tetejének Y-értéke"
+msgstr "A téglalap bal oldalának x-értéke"
 
 #: ../share/extensions/param_curves.inx.h:28
-#, fuzzy
 msgid "x-value of rectangle's right"
-msgstr "A téglalap tetejének Y-értéke"
+msgstr "A téglalap jobb oldalának x-értéke"
 
 #: ../share/extensions/param_curves.inx.h:29
-#, fuzzy
 msgid "y-Function"
-msgstr "Függvény"
+msgstr "y-függvény"
 
 #: ../share/extensions/param_curves.inx.h:30
-#, fuzzy
 msgid "y-value of rectangle's bottom"
-msgstr "A téglalap aljának Y-értéke"
+msgstr "A téglalap aljának y-értéke"
 
 #: ../share/extensions/param_curves.inx.h:31
-#, fuzzy
 msgid "y-value of rectangle's top"
-msgstr "A téglalap tetejének Y-értéke"
+msgstr "A téglalap tetejének y-értéke"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -22783,45 +22825,38 @@ msgstr ""
 "Útvonalak, alakzatok, klónok stb. csoportjai is használhatók."
 
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Cloned"
-msgstr "Klónok"
+msgstr "Klónozódik"
 
 #: ../share/extensions/pathscatter.inx.h:2
-#, fuzzy
 msgid "Copied"
-msgstr "Együttesen"
+msgstr "Másolódik"
 
 #: ../share/extensions/pathscatter.inx.h:4
-#, fuzzy
 msgid "Follow path orientation"
-msgstr "útvonalLaptájolás:"
+msgstr "Útvonal-tájolás követése"
 
 #: ../share/extensions/pathscatter.inx.h:6
-#, fuzzy
 msgid "Moved"
-msgstr "Áthelyezés"
+msgstr "Áthelyeződik"
 
 #: ../share/extensions/pathscatter.inx.h:8
-#, fuzzy
 msgid "Original pattern will be:"
-msgstr "Az eredeti minta"
+msgstr "Az eredeti minta:"
 
 #: ../share/extensions/pathscatter.inx.h:12
-#, fuzzy
 msgid "Stretch spaces to fit skeleton length"
-msgstr "váz hossz"
+msgstr "Üres helyek nyújtása, hogy illeszkedjen a váz hosszához"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern is the top most object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
-"Ez az effektus egy mintaként használt objektumot hajlít rá tetszőleges, "
-"vázként használt útvonalakra. A minta a kijelölés legfelső objektuma. "
-"Útvonalak, alakzatok, klónok stb. csoportjai is használhatók."
+"Ez az effektus szétszór egy mintát tetszőleges, vázként használt útvonalak "
+"mentén. A minta a kijelölés legfelső objektuma. Útvonalak, alakzatok, klónok "
+"stb. csoportjai is használhatók."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22877,9 +22912,8 @@ msgid "Paper Thickness Measurement"
 msgstr "A papír vastagságának mértéke"
 
 #: ../share/extensions/perfectboundcover.inx.h:14
-#, fuzzy
 msgid "Perfect-Bound Cover Template"
-msgstr "Borító \"Perfect Bind\" könyvkötéshezsablon"
+msgstr "Sablon \"Perfect Bind\" könyvkötéshez"
 
 #: ../share/extensions/perfectboundcover.inx.h:16
 msgid "Remove existing guides"
@@ -22917,9 +22951,8 @@ msgid "Save a file for plotters"
 msgstr "Adjon meg egy fájlnevet az exportáláshoz"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
-#, fuzzy
 msgid "3D Polyhedron"
-msgstr "Sokszög"
+msgstr "3D poliéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 #, fuzzy
@@ -23124,111 +23157,96 @@ msgid "Truncated Tetrahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
-#, fuzzy
 msgid "Vertices"
-msgstr "Fü_ggőleges"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
-msgstr "_Nézet"
+msgstr "Nézet"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 #, fuzzy
 msgid "X-Axis"
-msgstr "X-tengely"
+msgstr "X tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
 #, fuzzy
 msgid "Y-Axis"
-msgstr "Y-tengely"
+msgstr "Y tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
 #, fuzzy
 msgid "Z-Axis"
-msgstr "Z-tengely"
+msgstr "Z tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:1
-#, fuzzy
 msgid "Bleed Margin"
-msgstr "Kifutó (bleed) (hüvelykben)"
+msgstr "Kifutó-margó"
 
 #: ../share/extensions/printing-marks.inx.h:2
-#, fuzzy
 msgid "Bleed Marks"
-msgstr "Közép jelölése:"
+msgstr "Kifutó-jelek"
 
 #: ../share/extensions/printing-marks.inx.h:3
-#, fuzzy
 msgid "Bottom:"
-msgstr "Alulra"
+msgstr "Alsó:"
 
 #: ../share/extensions/printing-marks.inx.h:4
-#, fuzzy
 msgid "Canvas"
 msgstr "Rajzvászon"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Colour Bars"
-msgstr "Színek"
+msgstr "Színoszlopok"
 
 #: ../share/extensions/printing-marks.inx.h:6
 msgid "Crop Marks"
-msgstr ""
+msgstr "Vágási (crop) jelek"
 
 #: ../share/extensions/printing-marks.inx.h:7
-#, fuzzy
 msgid "Left:"
-msgstr "ft"
+msgstr "Bal oldali:"
 
 #: ../share/extensions/printing-marks.inx.h:8
-#, fuzzy
 msgid "Marks"
-msgstr "Jel"
+msgstr "Jelek"
 
 #: ../share/extensions/printing-marks.inx.h:10
-#, fuzzy
 msgid "Page Information"
 msgstr "Lapinformáció"
 
 #: ../share/extensions/printing-marks.inx.h:11
-#, fuzzy
 msgid "Positioning"
-msgstr "Pozíció"
+msgstr "Elhelyezés"
 
 #: ../share/extensions/printing-marks.inx.h:12
-#, fuzzy
 msgid "Printing Marks"
-msgstr "Nyomtatás PDF-műveletekkel"
+msgstr "Nyomtatási jelek"
 
 #: ../share/extensions/printing-marks.inx.h:13
 msgid "Registration Marks"
-msgstr ""
+msgstr "Regisztrációs (igazítási) jelek"
 
 #: ../share/extensions/printing-marks.inx.h:15
-#, fuzzy
 msgid "Right:"
-msgstr "Jogok:"
+msgstr "Jobb oldali:"
 
 #: ../share/extensions/printing-marks.inx.h:17
-#, fuzzy
 msgid "Set crop marks to"
-msgstr "Jelölőelemek beállítása"
+msgstr "Vágási jelek beállítása erre:"
 
 #: ../share/extensions/printing-marks.inx.h:18
-#, fuzzy
 msgid "Star Target"
-msgstr "Cél"
+msgstr "Csillag-jel"
 
 #: ../share/extensions/printing-marks.inx.h:19
-#, fuzzy
 msgid "Top:"
-msgstr "Felülre"
+msgstr "Felső:"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "PostScript Input"
@@ -23239,14 +23257,12 @@ msgid "Jitter nodes"
 msgstr "Csomópontok véletlenszerű szétszórása"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement in X, px"
-msgstr "Maximális elmozdítás képpontban"
+msgstr "Maximális elmozdítás X irányban, képpontban"
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Maximum displacement in Y, px"
-msgstr "Maximális elmozdítás képpontban"
+msgstr "Maximális elmozdítás Y irányban, képpontban"
 
 # TODO: ellenőrizni
 #: ../share/extensions/radiusrand.inx.h:5
@@ -23271,13 +23287,12 @@ msgstr "Normál eloszlás használata"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Betűtészta"
 
 # TODO: ellenőrizni
 #: ../share/extensions/render_alphabetsoup.inx.h:2
-#, fuzzy
 msgid "Random Seed"
-msgstr "Véletlenszerű fa"
+msgstr "Véletlenszám-generátor kezdőértéke"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
@@ -23296,71 +23311,61 @@ msgid "Barcode Type:"
 msgstr "Vonalkód-típus:"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Arbitrary Angle:"
-msgstr "Elrendezés"
+msgstr "Tetszőleges szög:"
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Arrange"
 msgstr "Elrendezés"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Alulra"
+msgstr "Alsó"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr ""
+msgstr "Alulról felfelé (90)"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal Point:"
-msgstr "Vízszintes szöveg"
+msgstr "Vízszintes pont:"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr ""
+msgstr "Balról jobbra (0)"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Csempézés"
+msgstr "Közép"
 
 #: ../share/extensions/restack.inx.h:10
-#, fuzzy
 msgid "Radial Inward"
-msgstr "Sugárirányú színátmenet"
+msgstr "Sugárirányban befelé"
 
 #: ../share/extensions/restack.inx.h:11
-#, fuzzy
 msgid "Radial Outward"
-msgstr "Sugárirányú színátmenet"
+msgstr "Sugárirányban kifelé"
 
 #: ../share/extensions/restack.inx.h:12
-#, fuzzy
 msgid "Restack"
-msgstr "Visszaállítás"
+msgstr "Egymásra rakás"
 
 #: ../share/extensions/restack.inx.h:13
-#, fuzzy
 msgid "Restack Direction:"
-msgstr "Leírás:"
+msgstr "Az egymásra rakás iránya:"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
-msgstr ""
+msgstr "Jobbról balra (180)"
 
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "Top to Bottom (270)"
-msgstr "Al_ulra helyezés"
+msgstr "Felülről lefelé (270)"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "Függőleges szöveg"
+msgstr "Függőleges pont:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23504,15 +23509,16 @@ msgid ""
 "(Select your system encoding. More information at http://docs.python.org/"
 "library/codecs.html#standard-encodings)"
 msgstr ""
+"(Válassza ki a rendszerében használt kódolást. További információ: http://"
+"docs.python.org/library/codecs.html#standard-encodings)"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
-msgstr ""
+msgstr "(A napnevek listájának vasárnappal kell kezdődnie)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
-#, fuzzy
 msgid "Automatically set size and position"
-msgstr "automatikusan"
+msgstr "Méret és pozíció beállítása automatikusan"
 
 #: ../share/extensions/svgcalendar.inx.h:4
 msgid "Calendar"
@@ -23535,9 +23541,8 @@ msgid "Day names"
 msgstr "Napok nevei"
 
 #: ../share/extensions/svgcalendar.inx.h:10
-#, fuzzy
 msgid "Fill empty day boxes with next month's days"
-msgstr "Az üres nap-     kitöltése a következő hónap napjaival"
+msgstr "Az üres naphelyek kitöltése a következő hónap napjaival"
 
 #: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
@@ -23548,101 +23553,88 @@ msgstr ""
 "Október November December"
 
 #: ../share/extensions/svgcalendar.inx.h:13
-#, fuzzy
 msgid "Localization"
-msgstr "Hely"
+msgstr "Honosítás"
 
 #: ../share/extensions/svgcalendar.inx.h:14
 msgid "Monday"
-msgstr ""
+msgstr "Hétfő"
 
 #: ../share/extensions/svgcalendar.inx.h:15
 msgid "Month (0 for all)"
-msgstr ""
+msgstr "Hónap (összes: 0)"
 
 #: ../share/extensions/svgcalendar.inx.h:16
-#, fuzzy
 msgid "Month Margin"
-msgstr "Szín ejtése"
+msgstr "Hónapok közti hely"
 
 #: ../share/extensions/svgcalendar.inx.h:17
-#, fuzzy
 msgid "Month Width"
-msgstr "Tollszélesség"
+msgstr "Egy hónap szélessége"
 
 #: ../share/extensions/svgcalendar.inx.h:18
-#, fuzzy
 msgid "Month color"
-msgstr "Szín ejtése"
+msgstr "Hónapok színe"
 
 #: ../share/extensions/svgcalendar.inx.h:19
-#, fuzzy
 msgid "Month names"
-msgstr "Hosszú név"
+msgstr "Hónapok nevei"
 
 #: ../share/extensions/svgcalendar.inx.h:20
-#, fuzzy
 msgid "Months per line"
-msgstr "Sorok igazítása középre"
+msgstr "Hónapok száma soronként"
 
 #: ../share/extensions/svgcalendar.inx.h:21
 msgid "Next month day color"
-msgstr ""
+msgstr "Következő hónap napjainak színe"
 
 #: ../share/extensions/svgcalendar.inx.h:23
-#, fuzzy
 msgid "Saturday"
-msgstr "Telítés"
+msgstr "Szombat"
 
 #: ../share/extensions/svgcalendar.inx.h:24
 msgid "Saturday and Sunday"
-msgstr ""
+msgstr "Szombat és vasárnap"
 
 #: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
-msgstr ""
+msgstr "V   H   K   Sze Cs  P   Szo"
 
 #: ../share/extensions/svgcalendar.inx.h:26
-#, fuzzy
 msgid "Sunday"
-msgstr "Illesztés"
+msgstr "Vasárnap"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options below have no influence when the above is checked."
-msgstr ""
+msgstr "A lenti beállításoknak nincs hatásuk, ha a fenti be van jelölve."
 
 #: ../share/extensions/svgcalendar.inx.h:28
-#, fuzzy
 msgid "Week start day"
-msgstr "félútról indul"
+msgstr "A hét első napja"
 
 #: ../share/extensions/svgcalendar.inx.h:29
-#, fuzzy
 msgid "Weekday name color "
-msgstr "Leolvasott szín beállítása"
+msgstr "Hét napjainak neveinek színe"
 
 #: ../share/extensions/svgcalendar.inx.h:30
 msgid "Weekend"
-msgstr ""
+msgstr "Hétvége"
 
 #: ../share/extensions/svgcalendar.inx.h:31
-#, fuzzy
 msgid "Weekend day color"
-msgstr "Leolvasott szín beállítása"
+msgstr "Hétvégi napok színe"
 
 #: ../share/extensions/svgcalendar.inx.h:32
-#, fuzzy
 msgid "Year (0 for current)"
-msgstr "Az aktuális alatt"
+msgstr "Év (az aktuális használata: 0)"
 
 #: ../share/extensions/svgcalendar.inx.h:33
-#, fuzzy
 msgid "Year color"
-msgstr "Szín ejtése"
+msgstr "Év színe"
 
 #: ../share/extensions/svgcalendar.inx.h:34
 msgid "You may change the names for other languages:"
-msgstr ""
+msgstr "Módosíthatók a nevek a kívánt nyelvnek megfelelően:"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -23686,62 +23678,50 @@ msgid "UPPERCASE"
 msgstr "NAGYBETŰS"
 
 #: ../share/extensions/triangle.inx.h:1
-#, fuzzy
 msgid "Angle a / deg"
-msgstr "Szög (fokban):"
+msgstr "\"a\" szög (fokban)"
 
 #: ../share/extensions/triangle.inx.h:2
-#, fuzzy
 msgid "Angle b / deg"
-msgstr "Szög (fokban):"
+msgstr "\"b\" szög (fokban)"
 
 #: ../share/extensions/triangle.inx.h:3
-#, fuzzy
 msgid "Angle c / deg"
-msgstr "Szög (fokban):"
+msgstr "\"c\" szög (fokban)"
 
 #: ../share/extensions/triangle.inx.h:4
-#, fuzzy
 msgid "From Side a and Angles a, b"
-msgstr "oldal"
+msgstr "\"a\" oldalból, valamint \"a\" és \"b\" szögből"
 
 #: ../share/extensions/triangle.inx.h:5
-#, fuzzy
 msgid "From Side c and Angles a, b"
-msgstr "oldal"
+msgstr "\"c\" oldalból, valamint \"a\" és \"b\" szögből"
 
 #: ../share/extensions/triangle.inx.h:6
-#, fuzzy
 msgid "From Sides a, b and Angle a"
-msgstr "oldal"
+msgstr "\"a\" és \"b\" oldalból, valamint \"a\" szögből"
 
 #: ../share/extensions/triangle.inx.h:7
-#, fuzzy
 msgid "From Sides a, b and Angle c"
-msgstr "oldal"
+msgstr "\"a\" és \"b\" oldalból, valamint \"c\" szögből"
 
 #: ../share/extensions/triangle.inx.h:8
-#, fuzzy
 msgid "From Three Sides"
-msgstr "oldal"
+msgstr "Három oldalból"
 
 #: ../share/extensions/triangle.inx.h:11
-#, fuzzy
 msgid "Side Length a / px"
-msgstr "oldalLépéshossz (px)"
+msgstr "\"a\" oldal hossza (px)"
 
 #: ../share/extensions/triangle.inx.h:12
-#, fuzzy
 msgid "Side Length b / px"
-msgstr "oldalLépéshossz (px)"
+msgstr "\"b\" oldal hossza (px)"
 
 #: ../share/extensions/triangle.inx.h:13
-#, fuzzy
 msgid "Side Length c / px"
-msgstr "oldalLépéshossz (px)"
+msgstr "\"c\" oldal hossza (px)"
 
 #: ../share/extensions/triangle.inx.h:14
-#, fuzzy
 msgid "Triangle"
 msgstr "Háromszög"
 
@@ -23761,13 +23741,12 @@ msgstr "Szöveg-bemenet"
 #, fuzzy
 msgid "All selected ones set an attribute in the last one"
 msgstr ""
-"Az összes kijelölt objektum bal felső sarkában megjelenik egy gyémánt alakú "
-"jel"
+"beállítása Az összes kijelölt objektum bal felső sarkában megjelenik egy "
+"gyémánt alakú jel"
 
 #: ../share/extensions/web-set-att.inx.h:2
-#, fuzzy
 msgid "Attribute to set"
-msgstr "Tulajdonságnév"
+msgstr "Beállítandó tulajdonság"
 
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
@@ -23775,10 +23754,11 @@ msgid "Compatibility with previews code to this event"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
 "If you want to set more then one attribute, you must separate this with a "
 "space, and only with a space."
-msgstr ""
+msgstr "beállítása "
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
@@ -23791,17 +23771,18 @@ msgid "Run it before"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:8
-#, fuzzy
 msgid "Set Attributes"
-msgstr "Tulajdonság beállítása"
+msgstr "Tulajdonságok beállítása"
 
 #: ../share/extensions/web-set-att.inx.h:9
+#, fuzzy
 msgid "Source and destination of setting"
-msgstr ""
+msgstr "beállítása "
 
 #: ../share/extensions/web-set-att.inx.h:10
+#, fuzzy
 msgid "The first selected set an attribute in all others"
-msgstr ""
+msgstr "első kijelölt beállítása"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
@@ -23825,12 +23806,11 @@ msgstr "Ez az effektuslátható"
 msgid ""
 "This effect sets one or more attributes in the second selected element, when "
 "a defined event occurs on the first selected element."
-msgstr "Ez az effektus"
+msgstr "Ez az effektus beállítása első kijelölt második kijelölt "
 
 #: ../share/extensions/web-set-att.inx.h:15
-#, fuzzy
 msgid "Value to set"
-msgstr "Érték(ek)"
+msgstr "Beállítandó érték"
 
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
@@ -23839,7 +23819,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
-msgstr ""
+msgstr "Mikor kell elvégezni a beállítást?"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
@@ -23898,43 +23878,43 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:1
 #, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "Több kijelölt objektum egyforma körvonallal rendelkezik"
+msgstr "átvisz Több kijelölt objektum egyforma körvonallal rendelkezik"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
-#, fuzzy
 msgid "Attribute to transmit"
-msgstr "Tulajdonságnév"
+msgstr "Átviendő tulajdonság"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
+#, fuzzy
 msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
-msgstr ""
+msgstr "átvisz "
 
 #: ../share/extensions/web-transmit-att.inx.h:8
+#, fuzzy
 msgid "Source and destination of transmitting"
-msgstr ""
+msgstr "átvisz "
 
 #: ../share/extensions/web-transmit-att.inx.h:9
+#, fuzzy
 msgid "The first selected transmits to all others"
-msgstr ""
+msgstr "első kijelölt átvisz"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
 #, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when a event occurs."
-msgstr "Ez az effektus"
+msgstr "Ez az effektus átvisz első kijelölt "
 
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "Transmit Attributes"
-msgstr "Tulajdonság beállítása"
+msgstr "Tulajdonságok átvitele"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
-#, fuzzy
 msgid "When to transmit"
-msgstr "Alávágás jobbra"
+msgstr "Mikor kell átvinni"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
@@ -23968,1334 +23948,33 @@ msgid "XAML Input"
 msgstr "XAML-bemenet"
 
 #, fuzzy
+#~ msgid ""
+#~ "Highly flexible bubbles effect depending on color hue saturation and "
+#~ "luminance"
+#~ msgstr "effektus"
+
 #~ msgid "Mask and transparency effects"
-#~ msgstr "Maszkátlátszóság effektus"
+#~ msgstr "Maszkeffektusok és átlátszósági effektusok"
+
+#, fuzzy
+#~ msgid "HSL bubbles, diffuse"
+#~ msgstr "0 (átlátszó)"
+
+#, fuzzy
+#~ msgid "HSL bubbles, transparent"
+#~ msgstr "0 (átlátszó)"
+
+#, fuzzy
+#~ msgid "Highly flexible specular bubbles with transparency"
+#~ msgstr "Tükröződő átlátszóság"
+
+#, fuzzy
+#~ msgid "Thick paint, glossy"
+#~ msgstr "Vastag"
+
+#, fuzzy
+#~ msgid "Thick painting effect with turbulence and a glossy varnish"
+#~ msgstr "Vastageffektus"
 
 #~ msgid "draw-geometry-inactive"
 #~ msgstr "rajzolás-geometria-inaktív"
-
-#, fuzzy
-#~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "Elmosási effektusok átalakítása bitképekké"
-
-#~ msgid "Target"
-#~ msgstr "Cél"
-
-#~ msgid "Seed"
-#~ msgstr "Kezdőérték"
-
-#, fuzzy
-#~ msgid "Melt and glow"
-#~ msgstr "Bal-szög"
-
-#, fuzzy
-#~ msgid "Badge"
-#~ msgstr "Szél"
-
-#, fuzzy
-#~ msgid "Ghost outline"
-#~ msgstr "Téglalap-körvonal"
-
-#, fuzzy
-#~ msgid "Flow inside"
-#~ msgstr "Durvábbá tevési mód"
-
-#~ msgid "_Write session file:"
-#~ msgstr "Munkamenet-_fájl készítése:"
-
-#~ msgid "Shared SVG whiteboard tool."
-#~ msgstr "Megosztott SVG-rajztábla."
-
-#~ msgid "Based on the Pedro XMPP client"
-#~ msgstr "A Pedro XMPP-kliens alapján"
-
-#~ msgid "Select a location and filename"
-#~ msgstr "Válasszon egy helyet és egy fájlnevet"
-
-#~ msgid "Set filename"
-#~ msgstr "Fájlnév beállítása"
-
-#~ msgid "<b>%1</b> has invited you to a whiteboard session."
-#~ msgstr "\"<b>%1</b>\" meghívta Önt egy rajztábla-munkamenetre."
-
-#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-#~ msgstr "Elfogadja \"<b>%1</b>\" rajztábla-munkamenetre szóló meghívását?"
-
-#~ msgid "Accept invitation"
-#~ msgstr "Meghívás elfogadása"
-
-#~ msgid "Decline invitation"
-#~ msgstr "Meghívás elutasítása"
-
-#~ msgid "Inkboard session (%1 to %2)"
-#~ msgstr "Inkboard-munkamenet (%1 - %2)"
-
-#, fuzzy
-#~ msgid "Length left"
-#~ msgstr "Alávágás balra"
-
-#, fuzzy
-#~ msgid "Specifies the left end of the bisector"
-#~ msgstr "A fényforrás színét adja meg"
-
-#, fuzzy
-#~ msgid "Length right"
-#~ msgstr "Hossz-egység "
-
-#, fuzzy
-#~ msgid "Specifies the right end of the bisector"
-#~ msgstr "A szín fényességének leolvasása"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the bisector"
-#~ msgstr "A színátmenet fázisainak szerkesztése"
-
-#, fuzzy
-#~ msgid "Adjust the \"right\" of the bisector"
-#~ msgstr "A szín fényességének leolvasása"
-
-#, fuzzy
-#~ msgid "Intersect"
-#~ msgstr "Metszet"
-
-#, fuzzy
-#~ msgid "Identity A"
-#~ msgstr "Azonosság"
-
-#, fuzzy
-#~ msgid "Identity B"
-#~ msgstr "Azonosság"
-
-# node-ok és szakaszok száma nem változik
-#, fuzzy
-#~ msgid "2nd path"
-#~ msgstr "Lánc hajlítása"
-
-#, fuzzy
-#~ msgid "Path to which the original path will be boolop'ed."
-#~ msgstr "Azon lánc, amely mentén az eredeti lánc hajlítandó"
-
-#, fuzzy
-#~ msgid "Boolop type"
-#~ msgstr "Az összes típus"
-
-#, fuzzy
-#~ msgid "Starting"
-#~ msgstr "Kezdet"
-
-#, fuzzy
-#~ msgid "Rotation angle"
-#~ msgstr "El_forgatási középpont"
-
-#, fuzzy
-#~ msgid "Number of copies"
-#~ msgstr "A sorok száma"
-
-#, fuzzy
-#~ msgid "Number of copies of the original path"
-#~ msgstr "A sokszög illetve csillag csúcsainak száma"
-
-#, fuzzy
-#~ msgid "Origin"
-#~ msgstr "X-origó"
-
-#, fuzzy
-#~ msgid "Origin of the rotation"
-#~ msgstr "Tájolás"
-
-#, fuzzy
-#~ msgid "Adjust the starting angle"
-#~ msgstr "Telítettség módosítása"
-
-#, fuzzy
-#~ msgid "Adjust the rotation angle"
-#~ msgstr "Telítettség módosítása"
-
-#, fuzzy
-#~ msgid "Elliptic Pen"
-#~ msgstr "Ellipszis"
-
-#, fuzzy
-#~ msgid "Sharp"
-#~ msgstr "Élesítés"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Round"
-#~ msgstr "Lekerekítettség"
-
-#, fuzzy
-#~ msgid "Method"
-#~ msgstr "Méter"
-
-#, fuzzy
-#~ msgid "Choose pen type"
-#~ msgstr "Szakasztípus módosítása"
-
-#, fuzzy
-#~ msgid "Pen width"
-#~ msgstr "Tollszélesség"
-
-#, fuzzy
-#~ msgid "Maximal stroke width"
-#~ msgstr "Körvonalszélesség átméretezése"
-
-#, fuzzy
-#~ msgid "Pen roundness"
-#~ msgstr "nem lekerekített"
-
-#, fuzzy
-#~ msgid "angle"
-#~ msgstr "Szög"
-
-#, fuzzy
-#~ msgid "Grow for"
-#~ msgstr "Nyújtási mód"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Round ends"
-#~ msgstr "Lekerekítettség"
-
-#, fuzzy
-#~ msgid "left capping"
-#~ msgstr "Illesztés _bekapcsolása"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 0"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 1"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 2"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 3"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 4"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 5"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 6"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 7"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 8"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 9"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 10"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 11"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 12"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 13"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 14"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-# TODO: ellenőrizni
-#, fuzzy
-#~ msgid "Control handle 15"
-#~ msgstr "Csomópont-vezérlőelem áthelyezése"
-
-#, fuzzy
-#~ msgid "End type"
-#~ msgstr "  típus: "
-
-#, fuzzy
-#~ msgid "Reflection line"
-#~ msgstr "Kijelölés"
-
-#, fuzzy
-#~ msgid "Adjust the offset"
-#~ msgstr "A <b>peremtávolság</b> beállítása"
-
-#, fuzzy
-#~ msgid "Specifies the left end of the parallel"
-#~ msgstr "A fényforrás színét adja meg"
-
-#, fuzzy
-#~ msgid "Specifies the right end of the parallel"
-#~ msgstr "A szín fényességének leolvasása"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the parallel"
-#~ msgstr "A színátmenet fázisainak szerkesztése"
-
-#, fuzzy
-#~ msgid "Adjust the \"right\" end of the parallel"
-#~ msgstr "A színátmenet fázisainak szerkesztése"
-
-#, fuzzy
-#~ msgid "Scaling factor"
-#~ msgstr "Ferdítési tényező"
-
-#, fuzzy
-#~ msgid "Display unit"
-#~ msgstr "Képernyőbeállítás"
-
-#, fuzzy
-#~ msgid "Print unit after path length"
-#~ msgstr "Szélesség a hossz arányában megadva"
-
-#, fuzzy
-#~ msgid "Adjust the bisector's \"left\" end"
-#~ msgstr "A színátmenet fázisainak szerkesztése"
-
-#, fuzzy
-#~ msgid "Scale x"
-#~ msgstr "Méretezés"
-
-#, fuzzy
-#~ msgid "Scale factor in x direction"
-#~ msgstr "Az X irányú távlatpont állapota"
-
-#, fuzzy
-#~ msgid "Scale y"
-#~ msgstr "Méretezés"
-
-#, fuzzy
-#~ msgid "Scale factor in y direction"
-#~ msgstr "Az X irányú távlatpont állapota"
-
-#, fuzzy
-#~ msgid "Offset x"
-#~ msgstr "Eltolás"
-
-#, fuzzy
-#~ msgid "Offset in x direction"
-#~ msgstr "X iránybeli szög"
-
-#, fuzzy
-#~ msgid "Offset y"
-#~ msgstr "Eltolás"
-
-#, fuzzy
-#~ msgid "Offset in y direction"
-#~ msgstr "X iránybeli szög"
-
-#, fuzzy
-#~ msgid "Adjust the origin"
-#~ msgstr "Árnyalat módosítása"
-
-#, fuzzy
-#~ msgid "Iterations"
-#~ msgstr "Metszet"
-
-#, fuzzy
-#~ msgid "Float parameter"
-#~ msgstr "Effektus-paraméterek"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the tangent"
-#~ msgstr "A színátmenet fázisainak szerkesztése"
-
-#~ msgid "Stack step"
-#~ msgstr "Veremlépés"
-
-#, fuzzy
-#~ msgid "point param"
-#~ msgstr "pentagram"
-
-#, fuzzy
-#~ msgid "path param"
-#~ msgstr "pentagram"
-
-#, fuzzy
-#~ msgid "Label"
-#~ msgstr "_Címke"
-
-#, fuzzy
-#~ msgid "All Image Files"
-#~ msgstr "Az összes kép"
-
-#, fuzzy
-#~ msgid "Path:"
-#~ msgstr "Lánc"
-
-#, fuzzy
-#~ msgid "Session file"
-#~ msgstr "Munkamenet-_fájl készítése:"
-
-#, fuzzy
-#~ msgid "Message information"
-#~ msgstr "Információ a memóriahasználatról"
-
-#, fuzzy
-#~ msgid "Active session file:"
-#~ msgstr "Munkamenet-_fájl készítése:"
-
-#, fuzzy
-#~ msgid "Close file"
-#~ msgstr "Bezárás"
-
-#, fuzzy
-#~ msgid "Open new file"
-#~ msgstr "Szűrő átnevezése"
-
-#, fuzzy
-#~ msgid "Set delay"
-#~ msgstr "Alfa beállítása"
-
-#, fuzzy
-#~ msgid "Rewind"
-#~ msgstr "Megjelenítés"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "Beillesztés"
-
-#, fuzzy
-#~ msgid "Open session file"
-#~ msgstr "Munkamenet-_fájl készítése:"
-
-#, fuzzy
-#~ msgid "_Register"
-#~ msgstr "Raszter"
-
-#, fuzzy
-#~ msgid "_Server:"
-#~ msgstr "Megfo_rdítás"
-
-#, fuzzy
-#~ msgid "_Username:"
-#~ msgstr "Felhasználónév:"
-
-#, fuzzy
-#~ msgid "_Password:"
-#~ msgstr "Jelszó:"
-
-#, fuzzy
-#~ msgid "P_ort:"
-#~ msgstr "_Exportálás"
-
-#, fuzzy
-#~ msgid "Connect"
-#~ msgstr "Kapocs"
-
-#, fuzzy
-#~ msgid "Chatroom _name:"
-#~ msgstr "A réteg neve:"
-
-#, fuzzy
-#~ msgid "Chatroom _handle:"
-#~ msgstr "Vezérlőelem módosítása"
-
-#, fuzzy
-#~ msgid "Connect to chatroom"
-#~ msgstr "Kapocs"
-
-#, fuzzy
-#~ msgid "_Cancel"
-#~ msgstr "Mégsem"
-
-#~ msgid "Previous Effect"
-#~ msgstr "Előző effektus"
-
-#, fuzzy
-#~ msgid "Organization"
-#~ msgstr "Tájolás"
-
-#, fuzzy
-#~ msgid "Comics rounded"
-#~ msgstr "nem lekerekített"
-
-#~ msgid "Preferred resolution (DPI) of bitmaps"
-#~ msgstr "A kívánt bitkép-felbontás (DPI, azaz pont/hüvelyk)"
-
-#, fuzzy
-#~ msgid "Deactivate knotholder?"
-#~ msgstr "Deaktiválva"
-
-#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
-#~ msgstr ""
-#~ "Az SVG-dokumentum bitképbe való exportálásához használt felbontás "
-#~ "(alapértelmezés: 90)"
-
-#, fuzzy
-#~ msgid "Unicode"
-#~ msgstr "Nincs betöltve"
-
-#, fuzzy
-#~ msgid "gradient level"
-#~ msgstr "Nincs kijelölve színátmenet"
-
-#, fuzzy
-#~ msgid "Render object in black and white"
-#~ msgstr "Csak fekete és fehér"
-
-#, fuzzy
-#~ msgid "Specular bump"
-#~ msgstr "Tükröződési kitevő"
-
-#, fuzzy
-#~ msgid "Under glass effect for bitmaps"
-#~ msgstr "Elmosási effektusok átalakítása bitképekké"
-
-#, fuzzy
-#~ msgid "HSL-sensitive Bubbles effect for bitmaps"
-#~ msgstr "Elmosási effektusok átalakítása bitképekké"
-
-# May contain a short, human readable description of the resource as plain, unmarked text.
-#, fuzzy
-#~ msgid "Kilt"
-#~ msgstr "Dőlés"
-
-#, fuzzy
-#~ msgid "Bump for bitmaps"
-#~ msgstr "Bitkép"
-
-#, fuzzy
-#~ msgid "Diffuse light bump"
-#~ msgstr "Szórt (diffúz) fény"
-
-#, fuzzy
-#~ msgid "Path Effects"
-#~ msgstr "Lánceffektusok..."
-
-#~ msgid "Biggest item"
-#~ msgstr "Legnagyobb elem"
-
-#~ msgid "Smallest item"
-#~ msgstr "Legkisebb elem"
-
-#~ msgid "Enhance intensity differences in selected bitmap(s)."
-#~ msgstr "Intenzitáskülönbségek erősítése a kijelölt bitkép(ek)ben"
-
-#~ msgid "Median Filter"
-#~ msgstr "Mediánszűrő"
-
-#~ msgid "Effe_cts"
-#~ msgstr "_Effektusok"
-
-#~ msgid "Center on vertical axis"
-#~ msgstr "Középre igazítás a függőleges tengelyhez"
-
-#, fuzzy
-#~ msgid "el Greek"
-#~ msgstr "Zöld"
-
-#, fuzzy
-#~ msgid "Commands bar icon size"
-#~ msgstr "Parancssáv"
-
-#, fuzzy
-#~ msgid "Snap nodes"
-#~ msgstr "Csomó_pontokhoz való illesztés"
-
-#, fuzzy
-#~ msgid "Snap to intersections of a grid with a guide"
-#~ msgstr "<b>Ezek metszéspontjaihoz való illesztés:</b>"
-
-#~ msgid "Embed All Images"
-#~ msgstr "Az összes kép beágyazása"
-
-#, fuzzy
-#~ msgid "Major Y Division Spacing"
-#~ msgstr "Vízszintes helykihagyás"
-
-#~ msgid "Convolve"
-#~ msgstr "Konvolúció (elmosás)"
-
-# kernel: konvolúciós mátrix
-#, fuzzy
-#~ msgid "Kernel Array"
-#~ msgstr "Kernel"
-
-#, fuzzy
-#~ msgid "Apply Convolve Effect"
-#~ msgstr "Új effektus alkalmazása"
-
-#~ msgid "Modulate"
-#~ msgstr "Színszabályzás"
-
-#~ msgid "Cairo PDF Output"
-#~ msgstr "PDF-kimenet, Cairo"
-
-#~ msgid "PDF via Cairo (*.pdf)"
-#~ msgstr "PDF a Cairóval (*.pdf)"
-
-#~ msgid "PDF File"
-#~ msgstr "PDF-fájl"
-
-#~ msgid "Cairo PS Output"
-#~ msgstr "PS-kimenet, Cairo"
-
-#~ msgid "PostScript via Cairo (*.ps)"
-#~ msgstr "PostScript a Cairóval (*.ps)"
-
-#~ msgid "Encapsulated Postscript Output"
-#~ msgstr "Encapsulated PostScript-kimenet"
-
-#~ msgid "Make bounding box around full page"
-#~ msgstr "A határoló téglalap a teljes lap köré kerüljön"
-
-#~ msgid "Embed fonts (Type 1 only)"
-#~ msgstr "Betűtípusok beágyazása (csak Type 1 esetén)"
-
-#, fuzzy
-#~ msgid "Yes, more descriptions"
-#~ msgstr "Objektumleírás beállítása"
-
-#, fuzzy
-#~ msgid "Crystal"
-#~ msgstr "Szürkeárnyalatok"
-
-#, fuzzy
-#~ msgid "Artist text"
-#~ msgstr "Függőleges szöveg"
-
-#, fuzzy
-#~ msgid "Amount of Blur"
-#~ msgstr "Csavarás mennyisége"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "_Szűrő"
-
-#, fuzzy
-#~ msgid "I hate text"
-#~ msgstr "Szöveg beillesztése"
-
-#, fuzzy
-#~ msgid "Melt effect"
-#~ msgstr "Aktuális effektus"
-
-#, fuzzy
-#~ msgid "Metal"
-#~ msgstr "Bíbor"
-
-#, fuzzy
-#~ msgid "Iron Man vector objects"
-#~ msgstr "A kijelölt objektumok elrendezése"
-
-#, fuzzy
-#~ msgid "PatternedGlass"
-#~ msgstr "Minta"
-
-#, fuzzy
-#~ msgid "Snow"
-#~ msgstr "Megjelenítés (show):"
-
-#~ msgid "Print Destination"
-#~ msgstr "Nyomtatási cél"
-
-#~ msgid "Print properties"
-#~ msgstr "Nyomtatási tulajdonságok"
-
-#~ msgid ""
-#~ "Use PDF vector operators. The resulting image is usually smaller in file "
-#~ "size and can be arbitrarily scaled, but patterns will be lost."
-#~ msgstr ""
-#~ "A PDF vektorműveleteinek használata. Az így készített kép általában "
-#~ "kisebb fájlméretű és tetszőlegesen méretezhető, viszont a minták "
-#~ "elvesznek."
-
-#~ msgid ""
-#~ "Print everything as bitmap. The resulting image is usually larger in file "
-#~ "size and cannot be arbitrarily scaled without quality loss, but all "
-#~ "objects will be rendered exactly as displayed."
-#~ msgstr ""
-#~ "Minden objektum bitképként való nyomtatása. Az így készített kép "
-#~ "általában nagyobb fájlméretű, továbbá nem lehet tetszőlegesen nagyítani "
-#~ "minőségveszteség nélkül, viszont az objektumok megjelenése megegyezik a "
-#~ "képernyőn látottal."
-
-#~ msgid "Preferred resolution (dots per inch) of bitmap"
-#~ msgstr "A kívánt bitkép-felbontás (pont/hüvelykben)"
-
-#~ msgid "Print destination"
-#~ msgstr "Nyomtatási cél"
-
-#~ msgid ""
-#~ "Printer name (as given by lpstat -p);\n"
-#~ "leave empty to use the system default printer.\n"
-#~ "Use '> filename' to print to file.\n"
-#~ "Use '| prog arg...' to pipe to a program."
-#~ msgstr ""
-#~ "Nyomtatónév (az \"lpstat -p\" paranccsal lekérdezhetők a\n"
-#~ "lehetséges értékek). Üresen hagyás esetén a rendszer\n"
-#~ "alapértelmezett nyomtatója lesz használva.\n"
-#~ "Fájlba való nyomtatáshoz használja a \"> fájlnév\" konstrukciót,\n"
-#~ "a kimenetnek egy program számára való átadásához pedig a\n"
-#~ "következőt: \"| programnév argumentum ...\"."
-
-#~ msgid "PDF Print"
-#~ msgstr "PDF-nyomtatás"
-
-#~ msgid "Print using PostScript operators"
-#~ msgstr "Nyomtatás PostScript-műveletekkel"
-
-#~ msgid ""
-#~ "Use PostScript vector operators. The resulting image is usually smaller "
-#~ "in file size and can be arbitrarily scaled, but alpha transparency and "
-#~ "patterns will be lost."
-#~ msgstr ""
-#~ "A PostScript vektorműveleteinek használata. Az így készített kép "
-#~ "általában kisebb fájlméretű és tetszőlegesen méretezhető, viszont az "
-#~ "átlátszóság és a minták elvesznek."
-
-#~ msgid "Postscript Print"
-#~ msgstr "PostScript-nyomtatás"
-
-#~ msgid "Postscript Output"
-#~ msgstr "PostScript-kimenet"
-
-#~ msgid ""
-#~ "Cannot create file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Nem sikerült létrehozni %s nevű fájlt.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Cannot write file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Nem sikerült írni a(z) %s fájlba.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Although Inkscape will run, it will use default settings,\n"
-#~ "and any changes made in preferences will not be saved."
-#~ msgstr ""
-#~ "Az Inkscape ugyan működni fog, de az alapértelmezett beállításokat\n"
-#~ "fogja használni. A beállításokon végzett módosítások nem lesznek elmentve."
-
-#~ msgid ""
-#~ "%s not a valid XML file, or\n"
-#~ "you don't have read permissions on it.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Vagy nem érvényes XML-fájl a(z) \"%s\",\n"
-#~ "vagy Önnek nincs olvasási engedélye a fájlra.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "%s is not a valid menus file.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "A(z) %s nem egy érvényes menüfájl.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Inkscape will run with default menus.\n"
-#~ "New menus will not be saved."
-#~ msgstr ""
-#~ "Az Inkscape az alapértelmezett menüket fogja használni.\n"
-#~ "Az új menük nem kerülnek mentésre."
-
-#, fuzzy
-#~ msgid "Mirror reflection"
-#~ msgstr "<b>PM</b>: tükrözés"
-
-#, fuzzy
-#~ msgid "Gap width"
-#~ msgstr "Azonos szélesség"
-
-#, fuzzy
-#~ msgid "Lala"
-#~ msgstr "_Címke"
-
-#, fuzzy
-#~ msgid "Lolo"
-#~ msgstr "Szín"
-
-#, fuzzy
-#~ msgid "Last gen. segment"
-#~ msgstr "Szakasz törlése"
-
-#, fuzzy
-#~ msgid "Reference"
-#~ msgstr "Különbség"
-
-#, fuzzy
-#~ msgid "Change LPE point parameter"
-#~ msgstr "Pontparaméter módosítása"
-
-#~ msgid "Embed fonts on export (Type 1 only) (EPS)"
-#~ msgstr ""
-#~ "Betűtípusok beágyazása az exportálás közben (csak Type 1 esetén) (EPS)"
-
-#~ msgid "Export files with the bounding box set to the page size (EPS)"
-#~ msgstr "Exportáláskor a határoló téglalap a lapméretre legyen állítva (EPS)"
-
-#~ msgid "Select <b>at least two objects</b> to combine."
-#~ msgstr "Jelöljön ki <b>legalább 2 objektumot</b> az összevonáshoz."
-
-#~ msgid "Fit page to selection"
-#~ msgstr "Lap illesztése a kijelölésre"
-
-#~ msgid "<b>Pushing %d</b> selected object"
-#~ msgid_plural "<b>Pushing %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>eltolása</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>eltolása</b>"
-
-#~ msgid "<b>Shrinking %d</b> selected object"
-#~ msgid_plural "<b>Shrinking %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>zsugorítása</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>zsugorítása</b>"
-
-#~ msgid "<b>Growing %d</b> selected object"
-#~ msgid_plural "<b>Growing %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>nyújtása</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>nyújtása</b>"
-
-#~ msgid "<b>Attracting %d</b> selected object"
-#~ msgid_plural "<b>Attracting %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>vonzása</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>vonzása</b>"
-
-#~ msgid "<b>Repelling %d</b> selected object"
-#~ msgid_plural "<b>Repelling %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>taszítása</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>taszítása</b>"
-
-#~ msgid "<b>Roughening %d</b> selected object"
-#~ msgid_plural "<b>Roughening %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>durvábbá tevése</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>durvábbá tevése</b>"
-
-#~ msgid "<b>Painting %d</b> selected object"
-#~ msgid_plural "<b>Painting %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> kijelölt objektum <b>festése</b>"
-#~ msgstr[1] "<b>%d</b> kijelölt objektum <b>festése</b>"
-
-#~ msgid "<b>Jittering colors in %d</b> selected object"
-#~ msgid_plural "<b>Jittering colors in %d</b> selected objects"
-#~ msgstr[0] ""
-#~ "<b>%d</b> kijelölt objektum <b>színeinek véletlenszerű módosítása</b>"
-#~ msgstr[1] ""
-#~ "<b>%d</b> kijelölt objektum <b>színeinek véletlenszerű módosítása</b>"
-
-#~ msgid "Repel tweak"
-#~ msgstr "Taszításos manipulálás"
-
-#~ msgid ""
-#~ "Only available in the selector tool: snap bounding box corners to guides, "
-#~ "to grids, and to other bounding boxes (but not to nodes or paths)"
-#~ msgstr ""
-#~ "Csak a kijelölőeszközben érhető el: határoló téglalapok sarkainak "
-#~ "illesztése a segédvonalakhoz, a rácsokhoz és a többi határoló téglalaphoz "
-#~ "(viszont a csomópontokhoz és a láncokhoz nem)"
-
-#~ msgid "_Nodes"
-#~ msgstr "_Csomópontok"
-
-#~ msgid ""
-#~ "Snap nodes (e.g. path nodes, special points in shapes, gradient handles, "
-#~ "text base points, transformation origins, etc.) to guides, to grids, to "
-#~ "paths and to other nodes"
-#~ msgstr ""
-#~ "Csomópontok (például lánc-csomópontok, alakzatok speciális pontjai, "
-#~ "színátmenet-vezérlőelemek, szöveg-alappontok és transzformációs origók) "
-#~ "illesztése a segédvonalakhoz, a rácsokhoz, a láncokhoz és a többi "
-#~ "csomóponthoz"
-
-#~ msgid "Snap nodes to object paths"
-#~ msgstr "Csomópontok illesztése az objektumláncokhoz"
-
-#, fuzzy
-#~ msgid "Snap bounding box corners and nodes to the page border"
-#~ msgstr ""
-#~ "A határoló téglalapok sarkainak és a segédvonalaknak az illesztése a "
-#~ "határoló téglalapok széleihez"
-
-#~ msgid "Consider the rotation center of an object when snapping"
-#~ msgstr ""
-#~ "Illesztéskor legyen figyelembe véve az objektum elforgatási középpontja"
-
-#~ msgid "_Grid with guides"
-#~ msgstr "_Rács és segédvonal"
-
-#~ msgid ""
-#~ "Snap to intersections of line segments ('snap to paths' must be enabled, "
-#~ "see the previous tab)"
-#~ msgstr ""
-#~ "Vonalszakaszok metszéspontjaihoz való illesztés (a \"Láncokhoz való "
-#~ "illesztés\" beállításnak bekapcsolt állapotban kell lennie - további "
-#~ "információ az előző lapon)"
-
-#~ msgid "<b>Snapping</b>"
-#~ msgstr "<b>Illesztés</b>"
-
-#~ msgid "<b>What snaps</b>"
-#~ msgstr "<b>Mi illeszkedik</b>"
-
-#, fuzzy
-#~ msgid "<b>Special points to consider</b>"
-#~ msgstr "<b>Segédvonalakhoz való illesztés</b>"
-
-#~ msgid "Export"
-#~ msgstr "Exportálás"
-
-#~ msgid ""
-#~ "This value affects the amount of smoothing applied to freehand lines; "
-#~ "lower values produce more uneven paths with more nodes"
-#~ msgstr ""
-#~ "Ez az érték megszabja, hogy mekkora mértékű simítás legyen alkalmazva a "
-#~ "szabadkézi vonalakra; alacsonyabb érték esetén a láncok kevésbé lesznek "
-#~ "egyenletesek és több csomópontot fognak tartalmazni"
-
-#~ msgid "Grid units"
-#~ msgstr "Rács-mértékegység"
-
-#~ msgid "Origin Y"
-#~ msgstr "Y-origó"
-
-#~ msgid "Spacing X"
-#~ msgstr "X-távolság"
-
-#~ msgid "Spacing Y"
-#~ msgstr "Y-távolság"
-
-#~ msgid "Selects the color used for major (highlighted) grid lines."
-#~ msgstr ""
-#~ "A fő-rácsvonalakhoz (kiemelt rácsvonalakhoz) használt szín kiválasztása"
-
-#~ msgid "Major grid line every"
-#~ msgstr "Minden ennyiedik rácsvonal fő-rácsvonal"
-
-#~ msgid "Angle X"
-#~ msgstr "X-szög"
-
-#~ msgid "Angle Z"
-#~ msgstr "Z-szög"
-
-#, fuzzy
-#~ msgid "Inline the XML attributes"
-#~ msgstr "Tulajdonság törlése"
-
-#, fuzzy
-#~ msgid "Enable auto-save of document"
-#~ msgstr "Vektorizálás: nincs aktív dokumentum"
-
-#, fuzzy
-#~ msgid "<b>Mode:</b>"
-#~ msgstr "<b>Keret</b>"
-
-#, fuzzy
-#~ msgid "Spiro splines mode"
-#~ msgstr "Zsugorítási mód"
-
-#~ msgid "Grow (outset) parts of paths"
-#~ msgstr "Láncok részeinek nyújtása (széthúzása)"
-
-#~ msgid "Repel mode"
-#~ msgstr "Taszítási mód"
-
-#~ msgid "Repel parts of paths from cursor"
-#~ msgstr "Láncok részeinek taszítása a kurzortól"
-
-#, fuzzy
-#~ msgid "Change calligraphic profile"
-#~ msgstr "Művészi vonal rajzolása"
-
-#, fuzzy
-#~ msgid "Save current settings as new profile"
-#~ msgstr "Dokumentum mentése új névvel"
-
-#~ msgid ""
-#~ "dxf2svg may come with Inkscape, but is also at http://dxf-svg-convert."
-#~ "sourceforge.net/"
-#~ msgstr ""
-#~ "A Dxf2svg benne van az Inkscape-ben, de megtalálható a következő webcímen "
-#~ "is: http://dxf-svg-convert.sourceforge.net/"
-
-#~ msgid "Generate Template"
-#~ msgstr "Sablonkészítés"
-
-#, fuzzy
-#~ msgid "Report Normal Vector Information"
-#~ msgstr "Információ a memóriahasználatról"
-
-#~ msgid "Postscript"
-#~ msgstr "PostScript"
-
-#~ msgid "Postscript (*.ps)"
-#~ msgstr "PostScript (*.ps)"
-
-#~ msgid ""
-#~ "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
-#~ msgstr ""
-#~ "\"<b>%s</b>\" nem állítható be: már létezik \"<b>%s</b>\" értékkel "
-#~ "rendelkező elem."
-
-# node-ok és szakaszok száma nem változik
-#~ msgid "Bend Path"
-#~ msgstr "Lánc hajlítása"
-
-#~ msgid "Stroke path"
-#~ msgstr "Körvonal-lánc"
-
-#~ msgid "Space between copies of the pattern"
-#~ msgstr "Helykihagyás a minta-másolatok között"
-
-#~ msgid "y = y + x*(slant factor)"
-#~ msgstr "y = y + x*(ferdítési tényező)"
-
-#~ msgid "The x-coord of this point is around which the slant will happen"
-#~ msgstr "Ezen pont X-koordinátája, amely körül a ferdítés történik"
-
-#~ msgid "This effect does not support arcs yet, try to convert to path."
-#~ msgstr ""
-#~ "Ez az effektus még nem támogatja az ellipszisíveket - próbálkozzon lánccá "
-#~ "való átalakítással."
-
-#~ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-#~ msgstr "Egy vagy több objektum <b>nem lánc</b>; összevonás nem végezhető."
-
-#~ msgid ""
-#~ "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-#~ msgstr ""
-#~ "<b>Eltérő csoportban</b> illetve <b>rétegben</b> levő objektumok nem "
-#~ "vonhatók össze."
-
-#~ msgid "Nothing in the clipboard."
-#~ msgstr "A vágólap üres."
-
-#~ msgid "Nothing on the style clipboard."
-#~ msgstr "A stílus-vágólap üres."
-
-#~ msgid "Clipboard does not contain a live path effect."
-#~ msgstr "A vágólapon nincs élő lánceffektus."
-
-#~ msgid "<b>Snapping to special nodes</b>"
-#~ msgstr "<b>Speciális csomópontokhoz való illesztés</b>"
-
-#~ msgid "Dialogs stay on top (experimental!)"
-#~ msgstr "A párbeszédablakok legfelül maradnak (kísérleti funkció)"
-
-#~ msgid ""
-#~ "Whether dialogs should stay on top of document windows. Read the "
-#~ "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
-#~ "'Restore' to bring back a minimized document window)"
-#~ msgstr ""
-#~ "A párbeszédablakok a dokumentumablakok felett maradjanak-e. Ezzel "
-#~ "kapcsolatban olvassa el a Kiadási Megjegyzéseket (Release Notes). (Egy "
-#~ "minimalizált dokumentumablak visszahozásához kattintson a jobb oldali "
-#~ "egérgombbal a feladatlistában levő gombra, majd válassza a \"Visszaállítás"
-#~ "\" funkciót.)"
-
-#~ msgid "Make the commands toolbar icons smaller"
-#~ msgstr "A parancssáv ikonjai kisebbek legyenek"
-
-#~ msgid ""
-#~ "Make the commands toolbar use the 'secondary' toolbar size (requires "
-#~ "restart)"
-#~ msgstr ""
-#~ "A parancssáv a másodlagos eszköztár-méretet használja (újraindítást "
-#~ "igényel)"
-
-#~ msgid "_Apply"
-#~ msgstr "_Alkalmazás"
-
-#~ msgid "Apply chosen effect to selection"
-#~ msgstr "A kiválasztott effektus alkalmazása a kijelölésre"
-
-# May contain a short, human readable description of the resource as plain, unmarked text.
-#~ msgid "Tall"
-#~ msgstr "Magas"
-
-#~ msgid "Square"
-#~ msgstr "Négyzetszerű"
-
-#~ msgid "Wide"
-#~ msgstr "Széles"
-
-#~ msgid "Delete Segment"
-#~ msgstr "Szakasz törlése"
-
-#~ msgid "Node Break"
-#~ msgstr "Elvágás a csomópontnál"
-
-#~ msgid "Reset all parameters to defaults"
-#~ msgstr "Az összes paraméter visszaállítása az alapértelmezésekre"
-
-#~ msgid "Interpolate style (experimental)"
-#~ msgstr "Stílus interpolálása (kísérleti funkció)"
-
-#~ msgid "Developer Examples"
-#~ msgstr "Fejlesztői példák"
-
-#~ msgid "RadioButton example"
-#~ msgstr "Rádiógomb-példa"
-
-#~ msgid "Select option: "
-#~ msgstr "Válasszon egy értéket: "
-
-#~ msgid "Select second option: "
-#~ msgstr "Válasszon egy második értéket: "
-
-#~ msgid "Random Point"
-#~ msgstr "Véletlenszerű pont"
-
-#~ msgid "Random Position"
-#~ msgstr "Véletlenszerű pozíció"
-
-#~ msgid "medium"
-#~ msgstr "közepes"
-
-#~ msgid "X Channel"
-#~ msgstr "X-csatorna"
-
-#~ msgid "Y Channel"
-#~ msgstr "Y-csatorna"
-
-#~ msgid "Stitch Tiles"
-#~ msgstr "Csempék összevarrása"
-
-#~ msgid "Preferred resolution (dpi) of bitmaps"
-#~ msgstr "A kívánt bitkép-felbontás (DPI, azaz pont/hüvelyk)"
-
-#~ msgid "%s selected out of %d gradient handles on %d selected object"
-#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-#~ msgstr[0] ""
-#~ "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
-#~ msgstr[1] ""
-#~ "%s kijelölve %d színátmenet-vezérlőelemből %d kijelölt objektumon"
-
-#~ msgid "Search Tag"
-#~ msgstr "Keresendő címke"
-
-#~ msgid "PLACEHOLDER, DO NOT TRANSLATE"
-#~ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
-
-#~ msgid "Measure unit:"
-#~ msgstr "Mérési egység:"
-
-#~ msgid "Degrees:"
-#~ msgstr "Fok:"
-
-#~ msgid "Gri_d Arrange..."
-#~ msgstr "Rácsra való i_gazítás..."
-
-#~ msgid "Start point jitter"
-#~ msgstr "Kezdőpont szórása"
-
-#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
-#~ msgstr ""
-#~ "Csomópontok illesztése rácsvonalakra, segédvonalakra, láncokra és más "
-#~ "csomópontokra"
-
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "_Illesztés megadott távolságnál"
-
-#~ msgid "Snap di_stance"
-#~ msgstr "Illesztési tá_volság"
-
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Ill_esztés megadott távolságnál"
-
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Illesztés megadott távolság_nál"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Egyéb</b>"
-
-#~ msgid "Slope"
-#~ msgstr "Meredekség"
-
-#~ msgid "Default metadata that will be used for new documents:"
-#~ msgstr "Új dokumentumokhoz használt alapértelmezett metaadatok:"
-
-#~ msgid "These values will be used as default metadata for new documents"
-#~ msgstr ""
-#~ "Új dokumentumokhoz ezen értékek lesznek használva alapértelmezett "
-#~ "metaadatokként"
-
-#~ msgid "Date:"
-#~ msgstr "Dátum:"
-
-#~ msgid "Format:"
-#~ msgstr "Formátum:"
-
-#~ msgid "Creator:"
-#~ msgstr "Készítő:"
-
-#~ msgid "Publisher:"
-#~ msgstr "Kiadó:"
-
-#~ msgid "Identifier:"
-#~ msgstr "Azonosító:"
-
-#~ msgid "Source:"
-#~ msgstr "Forrás:"
-
-#~ msgid "Relation:"
-#~ msgstr "Kapcsolat:"
-
-#~ msgid "Subject:"
-#~ msgstr "Tárgy:"
-
-#~ msgid "Coverage:"
-#~ msgstr "Hely/idő:"
-
-#~ msgid "Contributor:"
-#~ msgstr "Közreműködő:"
-
-#~ msgid "Default Metadata"
-#~ msgstr "Alapértelmezett metaadatok"
-
-#~ msgid "Creative Commons By 3.0"
-#~ msgstr "Creative Commons By 3.0"
-
-#~ msgid "Creative Commons By Sa 3.0"
-#~ msgstr "Creative Commons By Sa 3.0"
-
-#~ msgid "Creative Commons By Nd 3.0"
-#~ msgstr "Creative Commons By Nd 3.0"
-
-#~ msgid "Creative Commons By Nc 3.0"
-#~ msgstr "Creative Commons By Nc 3.0"
-
-#~ msgid "Creative Commons By Nc Sa 3.0"
-#~ msgstr "Creative Commons By Nc Sa 3.0"
-
-#~ msgid "Creative Commons By Nc Nd 3.0"
-#~ msgstr "Creative Commons By Nc Nd 3.0"
-
-#~ msgid "Default Licensing for new documents:"
-#~ msgstr "Alaplicenc az új dokumentumokhoz:"
-
-#~ msgid "All Rights Reserved"
-#~ msgstr "Minden jog fenntartva"
-
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "Creative Commons: Attribution"
-
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "Creative Commons: Attribution-ShareAlike (így adja tovább)"
-
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "Creative Commons: Attribution-NoDerivatives (ne változtassa)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "Creative Commons: Attribution-NonCommercial (ne adja el)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr ""
-#~ "Creative Commons: Attribution-NonCommercial-ShareAlike (ne adja el - így "
-#~ "adja tovább)"
-
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr ""
-#~ "Creative Commons: Attribution-NonCommercial-NoDerivatives (ne adja el - "
-#~ "ne változtassa)"
-
-#~ msgid "Free Art License"
-#~ msgstr "Free Art licenc"
-
-#~ msgid "Default License"
-#~ msgstr "Alapértelmezett licenc"
-
-#~ msgid "3D Box: Toggle VP"
-#~ msgstr "3D téglatest: távlatpont átkapcsolása"
-
-#~ msgid "Angle Y"
-#~ msgstr "Y-szög"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s, pozíció: %s"
-
-#~ msgid "Move by:"
-#~ msgstr "Áthelyezés ennyivel:"
-
-#~ msgid "Move to:"
-#~ msgstr "Áthelyezés ide:"
-
-#~ msgid "Moving %s %s"
-#~ msgstr "Áthelyezés - %s %s"
-
-#~ msgid "Change layer opacity"
-#~ msgstr "Réteg-átlátszatlanság módosítása"
-
-#~ msgid "Opacity, %:"
-#~ msgstr "Átlátszatlanság, %:"
-
-#~ msgid "Pattern along path"
-#~ msgstr "Minta a lánc mentén"
-
-#~ msgid "unknown error"
-#~ msgstr "ismeretlen hiba"
-
-#~ msgid "Print Preview not available"
-#~ msgstr "Nyomtatási kép nem elérhető"
-
-#~ msgid "Snap details"
-#~ msgstr "Illesztés részletei"
-
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "Ha az opció be van jelölve, akkor az objektumok a legközelebbi "
-#~ "rácsvonalhoz vannak illesztve - függetlenül a távolságtól"
-
-#~ msgid "Gridtype"
-#~ msgstr "Rácstípus"
-
-#~ msgid "Print _Direct"
-#~ msgstr "Kö_zvetlen nyomtatás"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr ""
-#~ "Nyomtatás közvetlenül (megerősítés-kérés nélkül) fájlba vagy egy program "
-#~ "felé (csővezetékbe)"
-
-#~ msgid "Gradients"
-#~ msgstr "Színátmenetek"
-
-#~ msgid "Spacing between letters"
-#~ msgstr "Helykihagyás a betűk között"
-
-#~ msgid "Spacing between lines"
-#~ msgstr "Helykihagyás a sorok között"
-
-#~ msgid "Horizontal kerning"
-#~ msgstr "Vízszintes alávágás"
-
-#~ msgid "Vertical kerning"
-#~ msgstr "Függőleges alávágás"
