@@ -420,50 +420,48 @@
 <feComposite id="feComposite2989" in2="fbSourceGraphicAlpha" in="result6" result="result2" operator="in" />
 <feComposite id="feComposite2991" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.9" k3="0.7" />
 </filter>
-<filter id="Glowbub0" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refraction and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feGaussianBlur id="feGaussianBlur3365" stdDeviation="1" result="result1" />
-<feBlend id="feBlend3369" blend="normal" in="result1" mode="screen" result="result5" in2="result1" />
-<feGaussianBlur id="feGaussianBlur3371" stdDeviation="10" result="result6" />
-<feComposite id="feComposite3373" operator="atop" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3375" operator="xor" result="fbSourceGraphic" in="result6" k1="0" k2="0" k3="0" k4="0" />
-<feColorMatrix id="feColorMatrix3377" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
-<feGaussianBlur id="feGaussianBlur3379" result="result0" in="fbSourceGraphicAlpha" stdDeviation="1" />
-<feSpecularLighting id="feSpecularLighting3381" specularExponent="35" specularConstant="1.5" surfaceScale="-2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<feDistantLight id="feDistantLight3383" azimuth="230" elevation="60" />
+<filter id="GlowBub0" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refraction and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<feGaussianBlur id="feGaussianBlur3789" stdDeviation="1" result="result1" />
+<feGaussianBlur id="feGaussianBlur3793" stdDeviation="10" result="result6" in="result1" />
+<feComposite id="feComposite3795" operator="atop" in="result6" in2="result1" result="result8" />
+<feComposite id="feComposite3797" operator="xor" result="fbSourceGraphic" in="result6" k1="0" k2="0" k3="0" k4="0" />
+<feColorMatrix id="feColorMatrix3799" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
+<feGaussianBlur id="feGaussianBlur3801" result="result0" in="fbSourceGraphicAlpha" stdDeviation="1" />
+<feSpecularLighting id="feSpecularLighting3803" specularExponent="35" specularConstant="1.5" surfaceScale="-2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight id="feDistantLight3805" azimuth="230" elevation="60" />
 </feSpecularLighting>
-<feComposite id="feComposite3385" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
-<feComposite id="feComposite3387" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3389" operator="atop" in="result9" in2="result4" />
-<feBlend id="feBlend3391" blend="normal" mode="multiply" />
+<feComposite id="feComposite3807" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite3809" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3811" operator="atop" in="result9" in2="result4" />
+<feBlend id="feBlend3813" blend="normal" mode="multiply" />
 </filter>
 <filter id="Neon0" inkscape:label="Neon" inkscape:menu="Bevels" inkscape:menu-tooltip="Neon light effect with glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feGaussianBlur id="feGaussianBlur3167" stdDeviation="1" result="result1" />
-<feComposite id="feComposite3171" in="result1" in2="result1" result="result4" operator="in" />
-<feBlend id="feBlend3173" blend="normal" in="result1" mode="screen" result="result5" />
-<feGaussianBlur id="feGaussianBlur3177" stdDeviation="6" result="result6" in="result5" />
-<feComposite id="feComposite3179" operator="over" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3181" operator="in" result="fbSourceGraphic" in="result6" />
-<feSpecularLighting id="feSpecularLighting3187" specularExponent="45" specularConstant="2" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="fbSourceGraphic">
-<fePointLight id="fePointLight3189" z="20000" y="-10000" x="-5000" />
+<feGaussianBlur id="feGaussianBlur3620" stdDeviation="3" result="result1" />
+<feComposite id="feComposite3622" in="result1" in2="result1" result="result4" operator="in" />
+<feGaussianBlur id="feGaussianBlur3626" stdDeviation="7" result="result6" in="result4" />
+<feComposite id="feComposite3628" operator="over" in="result6" in2="result4" result="result8" />
+<feComposite id="feComposite3630" operator="in" result="fbSourceGraphic" in="result6" />
+<feSpecularLighting id="feSpecularLighting3632" specularExponent="45" specularConstant="2" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="fbSourceGraphic">
+<fePointLight id="fePointLight3634" z="20000" y="-10000" x="-5000" />
 </feSpecularLighting>
-<feComposite id="feComposite3191" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
-<feComposite id="feComposite3193" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3195" operator="over" in="result9" in2="result4" />
-<feBlend id="feBlend3197" blend="normal" mode="screen" />
+<feComposite id="feComposite3636" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
+<feComposite id="feComposite3638" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3640" operator="atop" in="result9" in2="result4" result="result9" />
+<feBlend id="feBlend3642" blend="normal" mode="screen" in2="result9" />
 </filter>
 <filter id="MoltMet0" inkscape:label="Molten metal" inkscape:menu="Bevels" inkscape:menu-tooltip="Melting parts of object together, with a glossy bevel and a glow">
-<feGaussianBlur id="feGaussianBlur3131" stdDeviation="5" result="result1" />
-<feComposite id="feComposite3135" in="result1" in2="result1" result="result4" operator="in" />
-<feComposite id="feComposite3143" operator="atop" in="result4" in2="result4" result="result8" />
-<feComposite id="feComposite3145" operator="in" result="fbSourceGraphic" in="result4" />
-<feGaussianBlur id="feGaussianBlur3149" result="result0" in="fbSourceGraphic" stdDeviation="2" />
-<feSpecularLighting id="feSpecularLighting3151" specularExponent="55" specularConstant="2.5" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<fePointLight id="fePointLight3153" z="20000" y="-10000" x="-5000" />
+<feGaussianBlur id="feGaussianBlur3370" stdDeviation="5" result="result1" />
+<feColorMatrix id="feColorMatrix3394" result="result10" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -4 " />
+<feComposite id="feComposite3374" operator="atop" in="result10" in2="result10" result="result8" />
+<feComposite id="feComposite3376" operator="in" result="fbSourceGraphic" in="result1" />
+<feGaussianBlur id="feGaussianBlur3378" result="result0" in="fbSourceGraphic" stdDeviation="5" />
+<feSpecularLighting id="feSpecularLighting3380" specularExponent="55" specularConstant="2.5" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight id="feDistantLight3392" azimuth="225" elevation="60" />
 </feSpecularLighting>
-<feComposite id="feComposite3155" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
-<feComposite id="feComposite3157" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3159" operator="in" in="result9" in2="result4" />
-<feBlend id="feBlend3161" blend="normal" mode="multiply" />
+<feComposite id="feComposite3384" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
+<feComposite id="feComposite3386" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3388" operator="in" in="result9" in2="result4" result="result9" />
+<feBlend id="feBlend3390" blend="normal" mode="multiply" in="result9" in2="result9" />
 </filter>
 <filter inkscape:menu-tooltip="Pressed metal with a rolled edge" inkscape:menu="Bevels" inkscape:label="Pressed steel" id="PressSteel0">
 <feGaussianBlur result="result1" stdDeviation="3" id="feGaussianBlur2874" />
@@ -479,70 +477,64 @@
 <feComposite in2="result4" in="result9" operator="in" id="feComposite2894" />
 <feBlend mode="darken" blend="normal" id="feBlend2896" />
 </filter>
-<filter id="MattBev0" inkscape:label="Matte Bevel" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, pastel-colored, blurry bevel" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feGaussianBlur id="feGaussianBlur3201" stdDeviation="1" result="result6" />
-<feComposite id="feComposite3205" operator="in" in="result6" in2="result6" />
-<feBlend id="feBlend3207" blend="normal" mode="multiply" in="result6" result="result2" />
-<feGaussianBlur id="feGaussianBlur3211" stdDeviation="8" result="result3" in="result2" />
-<feComposite id="feComposite3213" in2="result2" />
-<feComposite id="feComposite3215" operator="in" in="result3" result="result5" />
-<feColorMatrix id="feColorMatrix3217" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " result="result4" />
-<feSpecularLighting id="feSpecularLighting3221" surfaceScale="3" specularConstant="2" specularExponent="45" in="result4">
-<fePointLight id="fePointLight3223" x="-5000" y="-10000" z="20000" />
+<filter id="MatBev0" inkscape:label="Matte bevel" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, pastel-colored, blurry bevel" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<feGaussianBlur id="feGaussianBlur2864" stdDeviation="1" result="result6" />
+<feComposite id="feComposite2866" operator="in" in="result6" in2="result6" result="result7" />
+<feGaussianBlur id="feGaussianBlur2870" stdDeviation="8" result="result3" in="result7" />
+<feComposite id="feComposite2872" in2="result7" operator="over" />
+<feComposite id="feComposite2874" operator="in" in="result3" result="result5" />
+<feColorMatrix id="feColorMatrix2876" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " result="result4" />
+<feSpecularLighting id="feSpecularLighting2878" surfaceScale="3" specularConstant="2" specularExponent="45" in="result4" result="result11">
+<fePointLight id="fePointLight2880" x="-5000" y="-10000" z="20000" />
 </feSpecularLighting>
-<feComposite id="feComposite3225" operator="arithmetic" k1="1" in2="result4" />
-<feComposite id="feComposite3227" operator="arithmetic" k2="0.5" k3="1" in="result5" />
-<feComposite id="feComposite3229" />
-<feBlend id="feBlend3231" blend="normal" mode="screen" />
+<feComposite id="feComposite2882" operator="arithmetic" k1="1" in2="result4" result="result10" />
+<feComposite id="feComposite2884" operator="arithmetic" k2="0.5" k3="1" in="result5" result="result8" />
+<feComposite id="feComposite2886" result="result9" />
+<feBlend id="feBlend2888" blend="normal" mode="normal" in2="result9" />
 </filter>
-<filter id="Thinmemb0" inkscape:label="Thin Membrane" inkscape:menu="Ridges" inkscape:menu-tooltip="Thin like a soap membrane" x="-0.050000001" y="-0.050000001" width="1.1" height="1.1">
-<feGaussianBlur id="feGaussianBlur3461" stdDeviation="5" result="result1" />
-<feComposite id="feComposite3465" in="result1" in2="result1" result="result4" operator="xor" />
-<feGaussianBlur id="feGaussianBlur3467" stdDeviation="5" result="result6" />
-<feComposite id="feComposite3469" operator="atop" in="result4" in2="SourceGraphic" result="result8" />
-<feComposite id="feComposite3471" operator="in" result="fbSourceGraphic" in="result6" />
-<feColorMatrix id="feColorMatrix3473" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
-<feGaussianBlur id="feGaussianBlur3475" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2" />
-<feSpecularLighting id="feSpecularLighting3477" specularExponent="25" specularConstant="2" surfaceScale="-5" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<fePointLight id="fePointLight3479" z="20000" y="-10000" x="-5000" />
+<filter id="ThinMembr0" inkscape:label="Thin Membrane" inkscape:menu="Ridges" inkscape:menu-tooltip="Thin like a soap membrane" x="-0.050000001" y="-0.050000001" width="1.1" height="1.1">
+<feGaussianBlur id="feGaussianBlur3905" stdDeviation="5" result="result1" />
+<feComposite id="feComposite3907" in="result1" in2="result1" result="result4" operator="xor" />
+<feGaussianBlur id="feGaussianBlur3909" stdDeviation="8" result="result6" />
+<feComposite id="feComposite3911" operator="atop" in="result6" in2="SourceGraphic" result="result8" />
+<feComposite id="feComposite3913" operator="in" result="fbSourceGraphic" in="result6" />
+<feColorMatrix id="feColorMatrix3915" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
+<feGaussianBlur id="feGaussianBlur3917" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2" />
+<feSpecularLighting id="feSpecularLighting3919" specularExponent="25" specularConstant="2" surfaceScale="-5" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<fePointLight id="fePointLight3921" z="20000" y="-10000" x="-5000" />
 </feSpecularLighting>
-<feComposite id="feComposite3481" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
-<feComposite id="feComposite3483" k3="2" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3485" operator="in" in="result9" />
-<feBlend id="feBlend3487" blend="normal" mode="multiply" />
+<feComposite id="feComposite3923" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite3925" k3="2" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3927" operator="in" in="result9" result="result9" />
+<feBlend id="feBlend3929" blend="normal" mode="multiply" in="result9" in2="result4" />
 </filter>
 <filter id="MatRidg0" inkscape:label="Matte ridge" inkscape:menu="Ridges" inkscape:menu-tooltip="Soft pastel ridge">
-<feGaussianBlur id="feGaussianBlur3143" stdDeviation="0.5" result="result1" />
-<feComposite id="feComposite3145" in="result1" in2="result1" result="result4" operator="out" />
-<feBlend id="feBlend3147" blend="normal" in="result1" mode="screen" result="result5" />
-<feGaussianBlur id="feGaussianBlur3149" stdDeviation="4" result="result6" in="result5" />
-<feComposite id="feComposite3151" operator="xor" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3153" operator="in" result="fbSourceGraphic" in="result6" k2="1" k3="1" k1="-1" k4="0" />
-<feColorMatrix id="feColorMatrix3155" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " />
-<feGaussianBlur id="feGaussianBlur3157" result="result0" in="fbSourceGraphic" stdDeviation="0.5" />
-<feSpecularLighting id="feSpecularLighting3159" specularExponent="55" specularConstant="2" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<fePointLight id="fePointLight3161" z="20000" y="-10000" x="-5000" />
+<feGaussianBlur id="feGaussianBlur3817" stdDeviation="0.5" result="result1" />
+<feBlend id="feBlend3821" blend="normal" in="SourceGraphic" mode="normal" result="result5" in2="result1" />
+<feGaussianBlur id="feGaussianBlur3823" stdDeviation="3" result="result6" in="result5" />
+<feComposite id="feComposite3825" operator="xor" in="result6" in2="result6" result="result8" />
+<feComposite id="feComposite3827" operator="in" result="fbSourceGraphic" in="result6" k2="1" k3="1" k1="-1" k4="0" />
+<feColorMatrix id="feColorMatrix3829" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " type="matrix" />
+<feGaussianBlur id="feGaussianBlur3831" result="result0" in="fbSourceGraphic" stdDeviation="0.5" />
+<feSpecularLighting id="feSpecularLighting3833" specularExponent="55" specularConstant="2" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<fePointLight id="fePointLight3835" z="20000" y="-10000" x="-5000" />
 </feSpecularLighting>
-<feComposite id="feComposite3163" operator="arithmetic" result="result2" in="result1" in2="fbSourceGraphicAlpha" k2="0" k1="1" k3="0" k4="0" />
-<feComposite id="feComposite3165" k3="0.99999999999999989" k2="0.5" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3167" operator="over" in="result9" in2="result4" />
-<feBlend id="feBlend3169" blend="normal" mode="screen" />
+<feComposite id="feComposite3837" operator="arithmetic" result="result2" in="result1" in2="fbSourceGraphicAlpha" k2="0" k1="1" k3="0" k4="0" />
+<feComposite id="feComposite3839" k3="0.99999999999999989" k2="0.5" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3841" operator="over" in="result9" in2="result4" />
+<feBlend id="feBlend3843" blend="normal" mode="screen" />
 </filter>
-<filter id="filter2870" inkscape:label="Glowing metal" inkscape:menu="Bevels" inkscape:menu-tooltip="Bright and glowing metal texture" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feGaussianBlur id="feGaussianBlur2872" stdDeviation="0.5" result="result1" />
-<feComposite id="feComposite2874" in="result1" in2="result1" result="result4" operator="atop" />
-<feBlend id="feBlend2876" blend="normal" in="result1" mode="multiply" result="result5" />
-<feColorMatrix id="feColorMatrix2878" result="result7" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 0 " />
-<feGaussianBlur id="feGaussianBlur2880" stdDeviation="4" result="result6" />
-<feComposite id="feComposite2882" operator="xor" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite2884" operator="over" result="fbSourceGraphic" in="result6" />
-<feSpecularLighting id="feSpecularLighting2886" specularExponent="35" specularConstant="2.2000000000000002" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="fbSourceGraphic">
-<fePointLight id="fePointLight2888" z="20000" y="-10000" x="-5000" />
+<filter id="GlowMet0" inkscape:menu-tooltip="Bright and glowing metal texture" inkscape:menu="Bevels" inkscape:label="Glowing metal">
+<feGaussianBlur stdDeviation="3" id="feGaussianBlur3194" result="result10" />
+<feBlend id="feBlend3158" in2="SourceGraphic" result="result5" mode="multiply" in="result10" blend="normal" />
+<feComposite id="feComposite3160" in2="SourceGraphic" in="result5" result="fbSourceGraphic" operator="over" />
+<feGaussianBlur id="feGaussianBlur3162" result="result9" stdDeviation="5" />
+<feSpecularLighting id="feSpecularLighting3164" in="result9" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="1" specularConstant="2.2000000000000002" specularExponent="45">
+<fePointLight id="fePointLight3166" x="-5000" y="-10000" z="20000" />
 </feSpecularLighting>
-<feComposite id="feComposite2890" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
-<feComposite id="feComposite2892" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite2894" operator="in" in="result9" in2="result4" />
-<feBlend id="feBlend2896" blend="normal" mode="multiply" />
+<feComposite id="feComposite3168" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
+<feComposite id="feComposite3170" in="result2" result="result4" operator="arithmetic" k2="2" k3="0.5" in2="fbSourceGraphic" />
+<feBlend id="feBlend3172" in="result4" in2="result4" mode="multiply" blend="normal" />
 </filter>
 <filter id="Leaves0" inkscape:label="Leaves" inkscape:menu="Scatter" inkscape:menu-tooltip="Leaves on the ground in Fall, or living foliage" height="1.5" width="1.5" y="-0.25" x="-0.25">
 <feTurbulence id="feTurbulence6838" baseFrequency="0.089999999999999997" numOctaves="5" type="fractalNoise" />
@@ -728,65 +720,62 @@
 <feBlend id="feBlend3332" blend="normal" mode="multiply" />
 </filter>
 <filter id="Dragee0" inkscape:label="Dragee" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel Ridge with a pearlescent look" height="1.5" width="1.5" y="-0.25" x="-0.25">
-<feGaussianBlur id="feGaussianBlur3113" stdDeviation="0.01" result="result1" />
-<feComposite id="feComposite3115" in="result1" in2="result1" result="result4" operator="over" />
-<feBlend id="feBlend3117" blend="normal" in="result1" mode="screen" result="result5" />
-<feGaussianBlur id="feGaussianBlur3119" stdDeviation="8" result="result6" />
-<feComposite id="feComposite3121" operator="atop" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3123" operator="xor" result="fbSourceGraphic" in="result6" />
-<feColorMatrix id="feColorMatrix3125" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
-<feGaussianBlur id="feGaussianBlur3127" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2" />
-<feSpecularLighting id="feSpecularLighting3129" specularExponent="35" specularConstant="1" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<feDistantLight id="feDistantLight3131" azimuth="235" elevation="55" />
+<feGaussianBlur id="feGaussianBlur3759" stdDeviation="0.01" result="result1" />
+<feBlend id="feBlend3763" blend="normal" in="result1" mode="screen" result="result5" in2="result1" />
+<feGaussianBlur id="feGaussianBlur3765" stdDeviation="6" result="result6" />
+<feComposite id="feComposite3769" operator="xor" result="fbSourceGraphic" in="result6" in2="result6" />
+<feColorMatrix id="feColorMatrix3771" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " type="matrix" />
+<feGaussianBlur id="feGaussianBlur3773" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2" />
+<feSpecularLighting id="feSpecularLighting3775" specularExponent="35" specularConstant="1" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight id="feDistantLight3777" azimuth="235" elevation="55" />
 </feSpecularLighting>
-<feComposite id="feComposite3133" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
-<feComposite id="feComposite3135" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3137" operator="out" in="result9" in2="result4" />
-<feBlend id="feBlend3139" blend="normal" mode="multiply" />
+<feComposite id="feComposite3779" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite3781" k3="1" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3783" operator="out" in="result9" in2="result4" />
+<feBlend id="feBlend3785" blend="normal" mode="multiply" />
 </filter>
-<filter id="Raisbord0" inkscape:label="Raised border" inkscape:menu="Bevels" inkscape:menu-tooltip="Strongly raised border around a flat surface" height="1.5" width="1.5" y="-0.25" x="-0.25">
-<feGaussianBlur id="feGaussianBlur3055" stdDeviation="4" result="result1" />
-<feComposite id="feComposite3057" in="result1" in2="result1" result="result4" operator="in" />
-<feBlend id="feBlend3059" blend="normal" in="result4" mode="multiply" result="result5" />
-<feGaussianBlur id="feGaussianBlur3061" stdDeviation="2" result="result6" />
-<feComposite id="feComposite3063" operator="xor" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3065" operator="atop" result="fbSourceGraphic" in="result5" />
-<feSpecularLighting id="feSpecularLighting3067" specularExponent="10" specularConstant="1.3" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="fbSourceGraphic">
-<feDistantLight id="feDistantLight3069" azimuth="235" elevation="55" />
+<filter id="RaisBord0" inkscape:label="Raised border" inkscape:menu="Bevels" inkscape:menu-tooltip="Strongly raised border around a flat surface" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<feGaussianBlur id="feGaussianBlur3646" stdDeviation="4" result="result1" />
+<feComposite id="feComposite3648" in="result1" in2="result1" result="result4" operator="in" />
+<feGaussianBlur id="feGaussianBlur3652" stdDeviation="2" result="result6" in="result4" />
+<feComposite id="feComposite3654" operator="xor" in="result6" in2="result4" result="result8" />
+<feComposite id="feComposite3656" operator="atop" result="fbSourceGraphic" in="result4" />
+<feSpecularLighting id="feSpecularLighting3658" specularExponent="10" specularConstant="1.3" surfaceScale="3" lighting-color="rgb(255,255,255)" result="result1" in="fbSourceGraphic">
+<feDistantLight id="feDistantLight3660" azimuth="235" elevation="55" />
 </feSpecularLighting>
-<feComposite id="feComposite3071" operator="atop" result="result2" in="result1" in2="fbSourceGraphic" />
-<feComposite id="feComposite3073" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3075" operator="over" in="result9" in2="SourceGraphic" />
-<feBlend id="feBlend3077" blend="normal" mode="darken" />
+<feComposite id="feComposite3662" operator="atop" result="result2" in="result1" in2="fbSourceGraphic" />
+<feComposite id="feComposite3664" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3666" operator="over" in="result4" in2="SourceGraphic" />
+<feBlend id="feBlend3668" blend="normal" mode="multiply" in2="result2" />
 </filter>
-<filter id="Metridg0" inkscape:label="Metallized ridge" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel Ridge metallized at its top" height="2" y="-0.5" width="2" x="-0.5">
-<feGaussianBlur id="feGaussianBlur3395" stdDeviation="1" result="result1" />
-<feBlend id="feBlend3399" blend="normal" in="result1" mode="darken" result="result5" in2="result1" />
-<feGaussianBlur id="feGaussianBlur3401" stdDeviation="8" result="result6" />
-<feComposite id="feComposite3403" operator="atop" in="result6" in2="result5" result="result8" />
-<feComposite id="feComposite3405" operator="xor" result="fbSourceGraphic" in="result6" k1="0" k2="0" k3="0" k4="0" />
-<feColorMatrix id="feColorMatrix3407" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " />
-<feGaussianBlur id="feGaussianBlur3409" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2.5" />
-<feSpecularLighting id="feSpecularLighting3411" specularExponent="35" specularConstant="1" surfaceScale="4" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<fePointLight id="fePointLight3413" z="20000" y="-10000" x="-5000" />
+<filter id="MetalRidg0" inkscape:label="Metallized ridge" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel Ridge metallized at its top" height="2" y="-0.5" width="2" x="-0.5">
+<feGaussianBlur id="feGaussianBlur3877" stdDeviation="1" result="result1" />
+<feGaussianBlur id="feGaussianBlur3881" stdDeviation="8" result="result6" in="result1" />
+<feComposite id="feComposite3883" operator="atop" in="result6" in2="result1" result="result8" />
+<feComposite id="feComposite3885" operator="xor" result="fbSourceGraphic" in="result6" k1="0" k2="0" k3="0" k4="0" />
+<feColorMatrix id="feColorMatrix3887" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 2 0 " type="matrix" />
+<feGaussianBlur id="feGaussianBlur3889" result="result0" in="fbSourceGraphicAlpha" stdDeviation="2.5" />
+<feSpecularLighting id="feSpecularLighting3891" specularExponent="35" specularConstant="1" surfaceScale="4" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<fePointLight id="fePointLight3893" z="20000" y="-10000" x="-5000" />
 </feSpecularLighting>
-<feComposite id="feComposite3415" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
-<feComposite id="feComposite3417" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
-<feComposite id="feComposite3419" operator="atop" in="result9" in2="result4" />
-<feBlend id="feBlend3421" blend="normal" mode="multiply" />
+<feComposite id="feComposite3895" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite3897" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3899" operator="atop" in="result9" in2="result4" />
+<feBlend id="feBlend3901" blend="normal" mode="multiply" />
 </filter>
 <filter id="FatOil0" inkscape:label="Fat oil" inkscape:menu="Bevels" inkscape:menu-tooltip="Fat oil with some adjustable turbulence" height="1.4" width="1.4" y="-0.2" x="-0.2">
-<feTurbulence id="feTurbulence3641" numOctaves="2" seed="55" type="fractalNoise" in="SourceAlpha" baseFrequency="0.02" />
-<feDisplacementMap id="feDisplacementMap3643" numOctaves="2" scale="15" yChannelSelector="A" xChannelSelector="A" in="SourceGraphic" />
-<feGaussianBlur id="feGaussianBlur3645" stdDeviation="1.5" />
-<feComposite id="feComposite3647" result="fbSourceGraphic" k4="-0.29999999999999999" k1="0" k3="1" k2="1" operator="arithmetic" />
-<feGaussianBlur id="feGaussianBlur3649" stdDeviation="3.5" in="fbSourceGraphic" result="result0" />
-<feSpecularLighting id="feSpecularLighting3651" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="3" specularConstant="1" specularExponent="55">
-<feDistantLight id="feDistantLight3653" azimuth="235" elevation="65" />
+<feTurbulence id="feTurbulence3735" numOctaves="3" seed="55" type="fractalNoise" in="SourceAlpha" baseFrequency="0.02" />
+<feGaussianBlur stdDeviation="1" id="feGaussianBlur3755" />
+<feDisplacementMap id="feDisplacementMap3737" numOctaves="2" scale="15" yChannelSelector="G" xChannelSelector="R" in="SourceGraphic" />
+<feGaussianBlur id="feGaussianBlur3739" stdDeviation="1.5" />
+<feComposite id="feComposite3741" result="fbSourceGraphic" k4="-0.29999999999999999" k1="0" k3="1" k2="1" operator="arithmetic" />
+<feGaussianBlur id="feGaussianBlur3743" stdDeviation="3.5" in="fbSourceGraphic" result="result0" />
+<feSpecularLighting id="feSpecularLighting3745" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="3" specularConstant="1" specularExponent="55">
+<feDistantLight id="feDistantLight3747" azimuth="235" elevation="65" />
 </feSpecularLighting>
-<feComposite id="feComposite3655" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
-<feComposite id="feComposite3657" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.40000000000000002" k3="1.7" />
-<feBlend id="feBlend3659" blend="normal" result="fbSourceGraphic" mode="normal" in2="result2" />
+<feComposite id="feComposite3749" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
+<feComposite id="feComposite3751" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.40000000000000002" k3="1.7" />
+<feBlend id="feBlend3753" blend="normal" result="fbSourceGraphic" mode="normal" in2="result2" />
 </filter>
 <filter id="filter3790" inkscape:label="Colorize" inkscape:menu="Color" inkscape:menu-tooltip="Gives the flood color to the dark parts of the image" x="0" y="0" width="1" height="1">
 <feColorMatrix id="feColorMatrix864" values="1" in="SourceGraphic" type="saturate" result="result2" />
@@ -1067,36 +1056,34 @@
 <feBlend id="feBlend2940" in2="result1" result="result5" blend="normal" mode="screen" in="SourceGraphic" />
 <feBlend id="feBlend2942" blend="normal" mode="darken" in="result5" result="result6" />
 </filter>
-<filter id="Stainglas0" inkscape:label="Stained glass" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated stained glass effect" height="1.5" width="1.5" y="-0.25" x="-0.25">
-<feBlend id="feBlend2977" result="result1" mode="screen" blend="normal" />
-<feGaussianBlur id="feGaussianBlur2979" stdDeviation="5" result="result6" />
-<feComposite id="feComposite2981" operator="xor" in="result6" in2="result6" result="result7" />
-<feGaussianBlur id="feGaussianBlur2983" result="result2" stdDeviation="4" />
-<feComposite id="feComposite2985" in2="result1" operator="atop" in="result7" />
-<feComposite id="feComposite2987" result="result4" in="result2" operator="xor" />
-<feGaussianBlur id="feGaussianBlur2989" result="result3" stdDeviation="1" in="result4" />
-<feSpecularLighting id="feSpecularLighting2991" result="result5" specularExponent="55" specularConstant="1.5" surfaceScale="4">
-<fePointLight id="fePointLight2993" z="20000" y="-8000" x="-5000" />
+<filter id="StainGlas0" inkscape:label="Stained glass" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated stained glass effect" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<feBlend id="feBlend3556" result="result1" mode="screen" blend="normal" />
+<feGaussianBlur id="feGaussianBlur3558" stdDeviation="5" result="result6" />
+<feComposite id="feComposite3560" operator="xor" in="result6" in2="result6" result="result7" />
+<feGaussianBlur id="feGaussianBlur3562" result="result2" stdDeviation="4" />
+<feComposite id="feComposite3564" in2="result1" operator="atop" in="result7" />
+<feComposite id="feComposite3566" result="result4" in="result2" operator="xor" />
+<feGaussianBlur id="feGaussianBlur3568" result="result3" stdDeviation="1" in="result4" />
+<feSpecularLighting id="feSpecularLighting3570" result="result5" specularExponent="55" specularConstant="1.5" surfaceScale="4">
+<fePointLight id="fePointLight3572" z="20000" y="-8000" x="-5000" />
 </feSpecularLighting>
-<feComposite id="feComposite2995" in2="result3" operator="in" />
-<feComposite id="feComposite2997" in="result4" k3="1" k2="1" operator="arithmetic" in2="SourceGraphic" />
-<feComposite id="feComposite2999" in="result5" operator="atop" />
-<feBlend id="feBlend3001" mode="multiply" blend="normal" />
+<feComposite id="feComposite3576" in="result4" k3="1" k2="1" operator="arithmetic" in2="SourceGraphic" />
+<feComposite id="feComposite3578" in="result5" operator="atop" />
+<feBlend id="feBlend3580" mode="multiply" blend="normal" />
 </filter>
-<filter id="Darkglas0" inkscape:label="Dark glass" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated glass effect with light coming from beneath" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feBlend id="feBlend2928" blend="normal" mode="screen" result="result1" />
-<feGaussianBlur id="feGaussianBlur2930" stdDeviation="5" result="result6" />
-<feComposite id="feComposite2932" operator="over" in="result6" in2="result6" result="result7" />
-<feComposite id="feComposite2934" operator="atop" in2="result1" in="result7" />
-<feComposite id="feComposite2936" operator="xor" in="result7" result="result4" />
-<feGaussianBlur id="feGaussianBlur2938" stdDeviation="1.5" result="result3" in="result4" />
-<feSpecularLighting id="feSpecularLighting2940" surfaceScale="2" specularConstant="1.5" specularExponent="55" result="result5">
-<fePointLight id="fePointLight2942" x="-5000" y="-8000" z="20000" />
+<filter id="DarkGlas0" inkscape:label="Dark glass" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated glass effect with light coming from beneath" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<feBlend id="feBlend3420" blend="normal" mode="screen" result="result1" />
+<feGaussianBlur id="feGaussianBlur3422" stdDeviation="2" result="result6" />
+<feComposite id="feComposite3424" operator="atop" in="result6" in2="result6" result="result7" />
+<feComposite id="feComposite3428" operator="xor" in="result7" result="result4" />
+<feGaussianBlur id="feGaussianBlur3430" stdDeviation="3" result="result3" in="result4" />
+<feSpecularLighting id="feSpecularLighting3432" surfaceScale="5" specularConstant="1.5" specularExponent="55" result="result5">
+<fePointLight id="fePointLight3434" x="-5000" y="-8000" z="20000" />
 </feSpecularLighting>
-<feComposite id="feComposite2944" operator="in" in2="result3" />
-<feComposite id="feComposite2946" in2="SourceGraphic" operator="arithmetic" k2="1" k3="1" in="result4" />
-<feComposite id="feComposite2948" operator="atop" in="result5" />
-<feBlend id="feBlend2950" blend="normal" mode="multiply" />
+<feComposite id="feComposite3436" operator="in" in2="result3" result="result10" />
+<feComposite id="feComposite3438" in2="SourceGraphic" operator="arithmetic" k2="1" k3="1" in="result4" result="result8" />
+<feComposite id="feComposite3440" operator="atop" in="result5" result="result9" />
+<feBlend id="feBlend3442" blend="normal" mode="multiply" in2="result9" />
 </filter>
 <filter id="HSLBumAl0" inkscape:menu-tooltip="Same than HSL Bumps but with transparent highlights" inkscape:menu="Image effects, transparent" inkscape:label="HSL Bumps alpha">
 <feGaussianBlur id="feGaussianBlur3105" result="result0" in="SourceGraphic" stdDeviation="0.5" />
