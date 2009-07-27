@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-26 18:21+0200\n"
-"PO-Revision-Date: 2009-07-26 22:50+0200\n"
+"PO-Revision-Date: 2009-07-27 23:12+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -155,7 +155,7 @@ msgstr "Durvábbá tevés"
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
 #: ../share/filters/filters.svg.h:208
 msgid "ABCs"
-msgstr ""
+msgstr "Alapvető"
 
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
@@ -348,7 +348,7 @@ msgstr "Olajfestés"
 #: ../share/filters/filters.svg.h:26
 #, fuzzy
 msgid "Simulate oil painting style"
-msgstr "Kimenet szimulálása a képernyőn stílus"
+msgstr "stílus szimulálása "
 
 #: ../share/filters/filters.svg.h:27
 msgid "Edge detect"
@@ -566,7 +566,7 @@ msgstr "Elmosási effektusok átalakítása bitképekké"
 #: ../share/filters/filters.svg.h:45
 #, fuzzy
 msgid "HSL Bumps"
-msgstr "Bitkép"
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
 #: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:121
@@ -577,14 +577,13 @@ msgstr "Bitkép"
 #: ../share/filters/filters.svg.h:195 ../share/filters/filters.svg.h:202
 #: ../share/filters/filters.svg.h:211 ../share/filters/filters.svg.h:212
 #: ../share/filters/filters.svg.h:213
-#, fuzzy
 msgid "Bumps"
-msgstr "Bitkép"
+msgstr "Buckák"
 
 #: ../share/filters/filters.svg.h:45
 #, fuzzy
 msgid "Highly flexible specular bump"
-msgstr "Tükröződő "
+msgstr "Tükröződő Bucka"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Cracked glass"
@@ -595,8 +594,9 @@ msgid "Under a cracked glass"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
+#, fuzzy
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Flexible bubbles effect with some displacement"
@@ -736,7 +736,7 @@ msgstr "Továbbfejlesztett metafájl"
 #: ../share/filters/filters.svg.h:60
 #, fuzzy
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr "Textúra gerinc"
+msgstr "Textúra gerinc Bucka"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Cracked Lava"
@@ -1171,7 +1171,7 @@ msgstr "effektus"
 #: ../share/filters/filters.svg.h:104
 #, fuzzy
 msgid "HSL Bumps alpha"
-msgstr "Bitkép"
+msgstr "Bucka alfa"
 
 #: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
@@ -1187,16 +1187,17 @@ msgstr "Képeffektusok"
 #: ../share/filters/filters.svg.h:104
 #, fuzzy
 msgid "Same than HSL Bumps but with transparent highlights"
-msgstr "átlátszóság"
+msgstr "Bucka átlátszóság"
 
 #: ../share/filters/filters.svg.h:105
 #, fuzzy
 msgid "Bubbly Bumps alpha"
-msgstr "0 (átlátszó)"
+msgstr "Bucka alfa"
 
 #: ../share/filters/filters.svg.h:105
+#, fuzzy
 msgid "Same than Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:106
 #, fuzzy
@@ -1329,7 +1330,7 @@ msgstr "Szórt (diffúz) fény"
 #: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Basic diffuse bevel to use for building textures"
-msgstr "Rézsútos szegély"
+msgstr "Szórt Rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:120
 #, fuzzy
@@ -1344,13 +1345,13 @@ msgstr "Területkitöltés"
 #: ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid "HSL Bumps, matte"
-msgstr "Bitkép"
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr "Tükröződő "
+msgstr "Bucka Szórt Tükröződő "
 
 #: ../share/filters/filters.svg.h:122
 #, fuzzy
@@ -1372,14 +1373,15 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Elmosáscsúszkakitöltéskörvonalpárbeszédablak"
 
 #: ../share/filters/filters.svg.h:124
+#, fuzzy
 msgid "Bubbly Bumps, matte"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:124
 #, fuzzy
 msgid ""
 "Same than Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Tükröződő"
+msgstr "Bucka Szórt Tükröződő"
 
 #: ../share/filters/filters.svg.h:125
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1727,7 +1729,7 @@ msgstr "Fényesség"
 #: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
 #: ../share/filters/filters.svg.h:209
 msgid "Transparency utilities"
-msgstr ""
+msgstr "Átlátszósági funkciók"
 
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
@@ -1752,12 +1754,12 @@ msgstr "Kitöltési rajzolat"
 #: ../share/filters/filters.svg.h:171
 #, fuzzy
 msgid "HSL Bumps, transparent"
-msgstr "0 (átlátszó)"
+msgstr "Bucka átlátszó"
 
 #: ../share/filters/filters.svg.h:171
 #, fuzzy
 msgid "Highly flexible specular bump with transparency"
-msgstr "Tükröződő átlátszóság"
+msgstr "Tükröződő Bucka átlátszóság"
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
@@ -1773,12 +1775,14 @@ msgid ""
 msgstr "Ceruza effektusobjektum"
 
 #: ../share/filters/filters.svg.h:173
+#, fuzzy
 msgid "Velvet bump"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:173
+#, fuzzy
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
@@ -1791,8 +1795,9 @@ msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "rajz effektus bitképek"
 
 #: ../share/filters/filters.svg.h:175
+#, fuzzy
 msgid "Alpha draw, color"
-msgstr ""
+msgstr "alfa"
 
 #: ../share/filters/filters.svg.h:175
 #, fuzzy
@@ -1961,7 +1966,7 @@ msgstr "Nincs effektus"
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
-msgstr "szél"
+msgstr "szél Bucka"
 
 #: ../share/filters/filters.svg.h:193
 #, fuzzy
@@ -1981,7 +1986,7 @@ msgstr "Sorkizárás"
 #, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr "szél"
+msgstr "szél Bucka"
 
 #: ../share/filters/filters.svg.h:195
 #, fuzzy
@@ -1992,7 +1997,7 @@ msgstr "Beillesztés"
 #, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr "szél"
+msgstr "szél Bucka"
 
 #: ../share/filters/filters.svg.h:196
 #, fuzzy
@@ -2062,8 +2067,9 @@ msgid "Thick acrylic paint texture with high texture depth"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:203
+#, fuzzy
 msgid "Alpha engraving B"
-msgstr ""
+msgstr "alfa"
 
 #: ../share/filters/filters.svg.h:203
 #, fuzzy
@@ -2130,8 +2136,9 @@ msgid "Riddled"
 msgstr "Közép"
 
 #: ../share/filters/filters.svg.h:210
+#, fuzzy
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "Bucka"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Wrinkled varnish"
@@ -2144,29 +2151,33 @@ msgstr ""
 #: ../share/filters/filters.svg.h:212
 #, fuzzy
 msgid "Canvas Bumps"
-msgstr "Rajzvászon"
+msgstr "Rajzvászon Bucka"
 
 #: ../share/filters/filters.svg.h:212
+#, fuzzy
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "rajzvászon "
 
 #: ../share/filters/filters.svg.h:213
+#, fuzzy
 msgid "Canvas Bumps, matte"
-msgstr ""
+msgstr "rajzvászon Bucka"
 
 #: ../share/filters/filters.svg.h:213
 #, fuzzy
 msgid ""
 "Same than Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr "Tükröződő"
+msgstr "rajzvászon Bucka Szórt Tükröződő"
 
 #: ../share/filters/filters.svg.h:214
+#, fuzzy
 msgid "Canvas Bumps alpha"
-msgstr ""
+msgstr "rajzvászon Bucka alfa"
 
 #: ../share/filters/filters.svg.h:214
+#, fuzzy
 msgid "Same than Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "rajzvászon Bucka"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -10332,28 +10343,27 @@ msgid "Guides Around Page"
 msgstr "Segédvonalak a lap köré"
 
 #: ../src/sp-guide.cpp:421
-#, fuzzy
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
-"áthelyezés: <b>húzással</b>, elforgatás: <b>Shift+húzással</b>, törlés: "
-"<b>Ctrl</b>+kattintással"
+"elforgatás: <b>Shift+húzással</b>, origó áthelyezése: <b>Ctrl+húzással</b>, "
+"törlés: <b>Del</b>"
 
 #: ../src/sp-guide.cpp:426
-#, fuzzy, c-format
+#, c-format
 msgid "vertical, at %s"
-msgstr "függőleges, pozíció: %s; %s"
+msgstr "függőleges, pozíció: %s"
 
 #: ../src/sp-guide.cpp:429
-#, fuzzy, c-format
+#, c-format
 msgid "horizontal, at %s"
-msgstr "vízszintes, pozíció: %s; %s"
+msgstr "vízszintes, pozíció: %s"
 
 #: ../src/sp-guide.cpp:434
-#, fuzzy, c-format
+#, c-format
 msgid "at %d degrees, through (%s,%s)"
-msgstr "%d fokos szög, áthalad itt: (%s,%s); %s"
+msgstr "%d fokos szög, áthalad itt: (%s,%s)"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
@@ -16103,9 +16113,10 @@ msgstr "A rajz nagyításának módosítása az ablak méretének változásakor
 msgid "Cursor coordinates"
 msgstr "Kurzorkoordináták"
 
+# zoom
 #: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:516
 msgid "Z:"
-msgstr ""
+msgstr "N:"
 
 #: ../src/ui/view/edit-widget.cpp:1089
 msgid ""
@@ -22364,29 +22375,24 @@ msgid "HPGL Output"
 msgstr "HPGL-kimenet"
 
 #: ../share/extensions/hpgl_output.inx.h:4
-#, fuzzy
 msgid "Mirror Y-axis"
 msgstr "Y tengely tükrözése"
 
 #: ../share/extensions/hpgl_output.inx.h:5
-#, fuzzy
 msgid "Plot invisible layers"
-msgstr "láthatatlan rétegek"
+msgstr "Láthatatlan rétegek megjelenítése"
 
 #: ../share/extensions/hpgl_output.inx.h:6
-#, fuzzy
 msgid "X-origin (px)"
 msgstr "X-origó (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:7
-#, fuzzy
 msgid "Y-origin (px)"
 msgstr "Y-origó (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
-#, fuzzy
 msgid "hpgl output flatness"
-msgstr "kimenet"
+msgstr "HPGL-kimenet lapossága"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -22937,18 +22943,16 @@ msgid "AutoCAD Plot drawing files (*.plt)"
 msgstr "AutoCAD-plot-rajzfájlok (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved for plotters"
-msgstr "Az XFIG-gel mentett fájlok megnyitása"
+msgstr "Plotterfájlok megnyitása"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
 msgstr "AutoCAD-plot-kimenet"
 
 #: ../share/extensions/plt_output.inx.h:3
-#, fuzzy
 msgid "Save a file for plotters"
-msgstr "Adjon meg egy fájlnevet az exportáláshoz"
+msgstr "Mentés plotterfájlba"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
 msgid "3D Polyhedron"
@@ -23408,13 +23412,12 @@ msgid "sK1 vector graphics files input"
 msgstr "Bemenet: sK1-féle vektorgrafikai fájlok"
 
 #: ../share/extensions/sk1_output.inx.h:1
-#, fuzzy
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "Inkscape - vektorgrafikai szerkesztő"
+msgstr "Az sK1 vektorgrafikai szerkesztő fájlformátuma"
 
 #: ../share/extensions/sk1_output.inx.h:3
 msgid "sK1 vector graphics files output"
-msgstr "vektorgrafikai fájlok-kimenet"
+msgstr "Kimenet: sK1-féle vektorgrafikai fájlok"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -23738,11 +23741,8 @@ msgid "Text Input"
 msgstr "Szöveg-bemenet"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr ""
-"beállítása Az összes kijelölt objektum bal felső sarkában megjelenik egy "
-"gyémánt alakú jel"
+msgstr "Az összes kijelölt az utolsóban állít be egy tulajdonságot"
 
 #: ../share/extensions/web-set-att.inx.h:2
 msgid "Attribute to set"
@@ -23751,62 +23751,65 @@ msgstr "Beállítandó tulajdonság"
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
-msgstr ""
+msgstr "Kompatibilitás az eseményhez tartozó korábbi kóddal"
 
 #: ../share/extensions/web-set-att.inx.h:4
-#, fuzzy
 msgid ""
 "If you want to set more then one attribute, you must separate this with a "
 "space, and only with a space."
-msgstr "beállítása "
+msgstr ""
+"Ha több tulajdonságot kíván beállítani, (egyetlen) szóközzel válassza el "
+"azokat."
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Run it after"
-msgstr ""
+msgstr "Futtatás utána"
 
 #: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Run it before"
-msgstr ""
+msgstr "Futtatás előtte"
 
 #: ../share/extensions/web-set-att.inx.h:8
 msgid "Set Attributes"
 msgstr "Tulajdonságok beállítása"
 
 #: ../share/extensions/web-set-att.inx.h:9
-#, fuzzy
 msgid "Source and destination of setting"
-msgstr "beállítása "
+msgstr "A beállítás forrása és célja"
 
 #: ../share/extensions/web-set-att.inx.h:10
-#, fuzzy
 msgid "The first selected set an attribute in all others"
-msgstr "első kijelölt beállítása"
+msgstr "Az első kijelölt az összes többiben állít be egy tulajdonságot"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
 msgstr ""
+"Az értékek listájában ugyanannyi bejegyzés kell legyen, mint a tulajdonságok "
+"listájában."
 
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr ""
+msgstr "A következő paraméter akkor hasznos, ha kettőnél több elemet jelöl ki."
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
-#, fuzzy
 msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
-msgstr "Ez az effektuslátható"
+msgstr ""
+"Ez az effektus olyan funkciót valósít meg, amely csak SVG-képes "
+"webböngészőkben (például Firefox) jeleníthető meg (illetve használható)."
 
 #: ../share/extensions/web-set-att.inx.h:14
-#, fuzzy
 msgid ""
 "This effect sets one or more attributes in the second selected element, when "
 "a defined event occurs on the first selected element."
-msgstr "Ez az effektus beállítása első kijelölt második kijelölt "
+msgstr ""
+"Ez az effektus beállít egy vagy több tulajdonságot a második kijelölt "
+"elemre, amikor egy megadott esemény bekövetkezik az első kijelölt elemen."
 
 #: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
@@ -23815,7 +23818,7 @@ msgstr "Beállítandó érték"
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
@@ -23823,90 +23826,86 @@ msgstr "Mikor kell elvégezni a beállítást?"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
-#, fuzzy
 msgid "on activate"
-msgstr "Deaktiválva"
+msgstr "aktiváláskor"
 
+# On focus and on blur are the opposites of each other.
+# On blur is triggered whenever you leave a field.
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
-#, fuzzy
 msgid "on blur"
-msgstr "Elmosás módosítása"
+msgstr "fókuszból való kikerüléskor"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
 msgid "on click"
-msgstr ""
+msgstr "kattintáskor"
 
 #: ../share/extensions/web-set-att.inx.h:21
 #: ../share/extensions/web-transmit-att.inx.h:19
-#, fuzzy
 msgid "on element loaded"
-msgstr "Új elemcsomópont"
+msgstr "amikor az elem betöltődött"
 
 #: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
 msgid "on focus"
-msgstr ""
+msgstr "fókusz esetén"
 
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse down"
-msgstr ""
+msgstr "egérgomb lenyomásakor"
 
 #: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "on mouse move"
-msgstr ""
+msgstr "az egér elmozdításakor"
 
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
-#, fuzzy
 msgid "on mouse out"
-msgstr "Nagyítás és kicsinyítés"
+msgstr "amikor az egérkurzor nincs felette"
 
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
-msgstr ""
+msgstr "amikor az egérkurzor felette van"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "on mouse up"
-msgstr ""
+msgstr "egérgomb felengedésekor"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "átvisz Több kijelölt objektum egyforma körvonallal rendelkezik"
+msgstr "Az összes kijelölt az utolsóra visz át"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
 msgstr "Átviendő tulajdonság"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
-#, fuzzy
 msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
-msgstr "átvisz "
+msgstr ""
+"Ha több tulajdonságot kíván átvinni, (egyetlen) szóközzel válassza el azokat."
 
 #: ../share/extensions/web-transmit-att.inx.h:8
-#, fuzzy
 msgid "Source and destination of transmitting"
-msgstr "átvisz "
+msgstr "Az átvitel forrása és célja"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
-#, fuzzy
 msgid "The first selected transmits to all others"
-msgstr "első kijelölt átvisz"
+msgstr "Az első kijelölt az összes többire visz át"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when a event occurs."
-msgstr "Ez az effektus átvisz első kijelölt "
+msgstr ""
+"Ez az effektus átvisz egy vagy több tulajdonságot az első kijelölt elemről a "
+"másodikra, amikor egy megadott esemény bekövetkezik."
 
 #: ../share/extensions/web-transmit-att.inx.h:13
 msgid "Transmit Attributes"
