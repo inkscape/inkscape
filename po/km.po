@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-24 15:35+0200\n"
-"PO-Revision-Date: 2009-07-27 11:15+0700\n"
+"PO-Revision-Date: 2009-07-27 15:47+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1667,53 +1667,48 @@ msgid "Gives a canvas like HSL sensitive transparency."
 msgstr ""
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Smear transparency"
-msgstr "ភាព​ថ្លា​មិន​ច្បាស់"
+msgstr "ស្នាម​ប្រឡាក់​ថ្លា"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Paint objects with a transparent turbulence which turn around color edges"
-msgstr ""
+msgstr "គូរ​វត្ថុ​ដោយ​ដាក់​គួច​ថ្លា​ ដែល​ត្រឡប់​គែម​ពណ៌"
 
 #: ../share/filters/filters.svg.h:191
-#, fuzzy
 msgid "Thick paint"
-msgstr "គំនូរ​ទឹក​ថ្នាំ​ពណ៌​ខ្មៅ"
+msgstr "គូរ​ក្រាស់ៗ"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "បែបផែន​គូរ​ក្រាស់ៗ​ដោយមាន​គួច"
 
 #: ../share/filters/filters.svg.h:192
-#, fuzzy
 msgid "Thick paint, glossy"
-msgstr "គ្រើម និង​រលោង"
+msgstr "គូរ​ក្រាស់ៗ និង​រលោង"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr ""
+msgstr "បែបផែន​គូរ​ក្រាស់ៗ​ដោយមាន​គួច និង​ថ្នាំលាប​រលោង"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid "Burst"
-msgstr "ព្រិល"
+msgstr "បែកខ្ញែក"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "វាយនភាព​បាឡុង​ដែល​ផ្ទះ​បែកខ្ញែក និង​មាន​រន្ធ"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst, glossy"
-msgstr ""
+msgstr "បែកខ្ញែក ហើយ​រលោង"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr ""
+msgstr "វាយនភាព​បាឡុង​ផ្ទុះ​បែកខ្ញែក​ដោយ​មាន​រន្ធ ហើយ​រលោង"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Embossed leather"
-msgstr "NR មាន​ស្រមោល​ផុស​ក្រឡោត"
+msgstr "ស្បែក​ដែល​ផុស​ក្រឡោត"
 
 #: ../share/filters/filters.svg.h:195
 msgid ""
@@ -1722,13 +1717,12 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Carnaval"
-msgstr "ផ្ទាំង​កំណាត់"
+msgstr "ខាណាវ៉ាល់"
 
 #: ../share/filters/filters.svg.h:196
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "ស្នាម​ប្រឡាក់​ពណ៌​ស​"
 
 #: ../share/filters/filters.svg.h:197
 #, fuzzy
@@ -1749,23 +1743,20 @@ msgid "Combine a HSL edges detection bump with a matte and crumpled surface effe
 msgstr ""
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Rough transparency"
-msgstr "ភាព​ថ្លា​មិន​ច្បាស់"
+msgstr "គ្រើម​ថ្លា"
 
 #: ../share/filters/filters.svg.h:199
 msgid "Adds a turbulent transparency which displace pixels at the same time"
-msgstr ""
+msgstr "បន្ថែម​ភាព​ថ្លា​គួច ដែល​ដាក់​ភីកសែល​នៅពេល​តែ​មួយ"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Gouache"
-msgstr "ប្រភព"
+msgstr "ពណ៌​ទឹក​ស្រអាប់ៗ"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Partly opaque water color effect with bleed"
-msgstr "បែបផែន​ពពក​ថ្នាំ​ពណ៌​ទឹក"
+msgstr "បែបផែន​ពណ៌​ទឹក​ស្រអាប់​ដាច់​ពី​គ្នា​ដោយមាន​ដំណក់​ស្រក់"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Alpha engraving"
@@ -1778,17 +1769,15 @@ msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​
 
 #: ../share/filters/filters.svg.h:202
 msgid "Alpha draw, liquid"
-msgstr ""
+msgstr "គំនូរ​អាល់ហ្វា ទឹក"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
+msgstr "ផ្ដល់​នូវ​បែបផែន​គំនូរ​ទឹក​ថ្លា ដែល​មាន​ផ្ទៃ និង​បន្ទាត់​គ្រើម"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Liquid drawing"
-msgstr "គំនូរ %s"
+msgstr "គំនូរ​ទឹក"
 
 #: ../share/filters/filters.svg.h:203
 #, fuzzy
@@ -1796,9 +1785,8 @@ msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
 
 #: ../share/filters/filters.svg.h:204
-#, fuzzy
 msgid "Marbled ink"
-msgstr "បន្លា"
+msgstr "ទឹក​ខ្មៅ​ថ្ម​ម៉ាប"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Marbled transparency effect which conforms to image detected edges"
