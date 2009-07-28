@@ -98,6 +98,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
 
 static GtkTargetEntry *completeDropTargets = 0;
 static int completeDropTargetsCount = 0;
+static bool temporarily_block_actions = false;
 
 #define ENTRIES_SIZE(n) sizeof(n)/sizeof(n[0])
 static guint nui_drop_target_entries = ENTRIES_SIZE(ui_drop_target_entries);
@@ -364,7 +365,9 @@ sp_ui_close_all(void)
 static void
 sp_ui_menu_activate(void */*object*/, SPAction *action)
 {
-    sp_action_perform(action, NULL);
+    if (!temporarily_block_actions) {
+    	sp_action_perform(action, NULL);
+    }
 }
 
 static void
@@ -615,9 +618,8 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
             sp_ui_menuitem_add_icon(item, action->image);
         }
         gtk_widget_set_events(item, GDK_KEY_PRESS_MASK);
-        g_signal_connect( G_OBJECT(item), "activate",
-                          G_CALLBACK(sp_ui_menu_activate), action );
-
+        g_object_set_data(G_OBJECT(item), "view", (gpointer) view);
+        g_signal_connect( G_OBJECT(item), "activate", G_CALLBACK(sp_ui_menu_activate), action );
         g_signal_connect( G_OBJECT(item), "select", G_CALLBACK(sp_ui_menu_select_action), action );
         g_signal_connect( G_OBJECT(item), "deselect", G_CALLBACK(sp_ui_menu_deselect_action), action );
     }
@@ -680,6 +682,44 @@ checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     return FALSE;
 }
 
+/**
+ *  \brief Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline)
+ */
+
+static gboolean
+update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_data)
+{
+	SPAction *action = (SPAction *) user_data;
+	g_assert(action->id != NULL);
+
+	Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(widget), "view");
+    SPDesktop *dt = static_cast<SPDesktop*>(view);
+	Inkscape::RenderMode mode = dt->getMode();
+
+	bool new_state = false;
+	if (!strcmp(action->id, "ViewModeNormal")) {
+    	new_state = mode == Inkscape::RENDERMODE_NORMAL;
+	} else if (!strcmp(action->id, "ViewModeNoFilters")) {
+    	new_state = mode == Inkscape::RENDERMODE_NO_FILTERS;
+    } else if (!strcmp(action->id, "ViewModeOutline")) {
+    	new_state = mode == Inkscape::RENDERMODE_OUTLINE;
+    } else {
+    	g_warning("update_view_menu does not handle this verb");
+    }
+
+	if (new_state) { //only one of the radio buttons has to be activated; the others will automatically be deactivated
+		if (!gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (widget))) {
+			// When the GtkMenuItem version of the "activate" signal has been emitted by a GtkRadioMenuItem, there is a second
+			// emission as the most recently active item is toggled to inactive. This is dealt with before the original signal is handled.
+			// This emission however should not invoke any actions, hence we block it here:
+			temporarily_block_actions = true;
+			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), TRUE);
+			temporarily_block_actions = false;
+		}
+	}
+
+	return FALSE;
+}
 
 void
 sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *view, gchar const *label, gchar const *tip, gchar const *pref,
@@ -870,7 +910,7 @@ private:
     a couple of submenus, it is unlikely this will go more than two or
     three times.
 
-    In the case of an unreconginzed verb, a menu item is made to identify
+    In the case of an unrecognized verb, a menu item is made to identify
     the verb that is missing, and display that.  The menu item is also made
     insensitive.
 */
@@ -902,6 +942,10 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
                     group = gtk_radio_menu_item_get_group( GTK_RADIO_MENU_ITEM(item));
                     if (menu_pntr->attribute("default") != NULL) {
                         gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+                    }
+                    if (verb->get_code() != SP_VERB_NONE) {
+                    	SPAction *action = verb->get_action(view);
+                    	g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) update_view_menu, (void *) action);
                     }
                 } else {
                     sp_ui_menu_append_item_from_verb(GTK_MENU(menu), verb, view);

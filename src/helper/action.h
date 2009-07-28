@@ -26,7 +26,7 @@
 #include "forward.h"
 
 #include <glibmm/ustring.h>
-//class Inkscape::UI::View::View; 
+//class Inkscape::UI::View::View;
 
 namespace Inkscape {
 class Verb;
