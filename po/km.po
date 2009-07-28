@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-24 15:35+0200\n"
-"PO-Revision-Date: 2009-07-27 15:47+0700\n"
+"PO-Revision-Date: 2009-07-28 14:45+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -1794,16 +1794,15 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:205
 msgid "Thick acrylic"
-msgstr ""
+msgstr "ថ្នាំលាប​ក្រាស់ៗ"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Thick acrylic paint texture with high texture depth"
-msgstr ""
+msgstr "វាយនភាព​ថ្នាំលាប​ក្រាស់ៗ​ដោយមាន​ជម្រៅ​វាយនភាព​ខ្ពស់"
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Alpha engraving B"
-msgstr "ចម្លាក់​អាល់ហ្វា"
+msgstr "ចម្លាក់​អាល់ហ្វា B"
 
 #: ../share/filters/filters.svg.h:206
 #, fuzzy
@@ -1811,34 +1810,32 @@ msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
 msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
 
 #: ../share/filters/filters.svg.h:207
-#, fuzzy
 msgid "Lapping"
-msgstr "ដាក់​សញ្ញា​ប្រសព្វ"
+msgstr "ជាន់គ្នា"
 
 #: ../share/filters/filters.svg.h:207
-#, fuzzy
 msgid "Something like a water noise"
-msgstr "ស្ដើង​ដូច​ភ្នាស​សាប៊ូ​ដុំ"
+msgstr "ដូច​នឹង​សំឡេង​ទឹក"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Monochrome positive"
-msgstr ""
+msgstr "រូប​មួយ​ពណ៌"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Convert to a Clorizable transparent positive"
-msgstr ""
+msgstr "បម្លែង​ទៅ​ជា​រូបភាព​មួយ​ពណ៌​ថ្លា"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Monochrome negative"
-msgstr ""
+msgstr "រូបភាព​មួយ​ពណ៌​ឆ្លាស់​ពណ៌​ដើម"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Convert to a colorizable transparent negative"
-msgstr ""
+msgstr "បម្លែង​ទៅ​ជា​រូបភាព​មួយ​ពណ៌​ឆ្លាស់​ពណ៌​ដើម​ថ្លា"
 
 #: ../share/filters/filters.svg.h:210
 msgid "Light eraser, negative"
-msgstr ""
+msgstr "លុប​ពន្លឺ ដោយ​ឆ្លាស់​ពណ៌​ដើម"
 
 #: ../share/filters/filters.svg.h:210
 #, fuzzy
@@ -1846,18 +1843,16 @@ msgid "Invert and make the lightest parts of the object progressively transparen
 msgstr "ធ្វើ​​ផ្នែក​ដែល​ស្រាល​ជាង​គេ​របស់​វត្ថុ​ទៅ​ជា​ថ្លា​ជា​លំដាប់"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Repaint"
-msgstr "ធ្វើ​ម្តង​ទៀត​ ៖"
+msgstr "គូរ​ឡើងវិញ"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Repaint anything monochrome"
-msgstr ""
+msgstr "គូរ​គំនូរ​ដែល​មាន​តែ​មួយ​ពណ៌​ឡើងវិញ"
 
 #: ../share/filters/filters.svg.h:212
-#, fuzzy
 msgid "Punch hole"
-msgstr "របៀប​ចុច"
+msgstr "ឮ"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Punch object out of a colorizable opaque area"
@@ -1865,141 +1860,139 @@ msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១"
 
 #: ../share/patterns/patterns.svg.h:3
 msgid "Stripes 1:1 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:4
 msgid "Stripes 1:1.5"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១,៥"
 
 #: ../share/patterns/patterns.svg.h:5
 msgid "Stripes 1:1.5 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១,៥ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:6
 msgid "Stripes 1:2"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ២"
 
 #: ../share/patterns/patterns.svg.h:7
 msgid "Stripes 1:2 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ២ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:8
 msgid "Stripes 1:3"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៣"
 
 #: ../share/patterns/patterns.svg.h:9
 msgid "Stripes 1:3 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៣ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:10
 msgid "Stripes 1:4"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៤"
 
 #: ../share/patterns/patterns.svg.h:11
 msgid "Stripes 1:4 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៤ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:12
 msgid "Stripes 1:5"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៥"
 
 #: ../share/patterns/patterns.svg.h:13
 msgid "Stripes 1:5 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៥ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:14
 msgid "Stripes 1:8"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៨"
 
 #: ../share/patterns/patterns.svg.h:15
 msgid "Stripes 1:8 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៨ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:16
 msgid "Stripes 1:10"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១០"
 
 #: ../share/patterns/patterns.svg.h:17
 msgid "Stripes 1:10 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១០ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:18
 msgid "Stripes 1:16"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១៦"
 
 #: ../share/patterns/patterns.svg.h:19
 msgid "Stripes 1:16 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ១៦ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:20
 msgid "Stripes 1:32"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៣២"
 
 #: ../share/patterns/patterns.svg.h:21
 msgid "Stripes 1:32 white"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៣២ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:22
 msgid "Stripes 1:64"
-msgstr ""
+msgstr "ឆ្នូត ១ ៖ ៦៤"
 
 #: ../share/patterns/patterns.svg.h:23
 msgid "Stripes 2:1"
-msgstr ""
+msgstr "ឆ្នូត ២ ៖ ១"
 
 #: ../share/patterns/patterns.svg.h:24
 msgid "Stripes 2:1 white"
-msgstr ""
+msgstr "ឆ្នូត ២ ៖ ១ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:25
 msgid "Stripes 4:1"
-msgstr ""
+msgstr "ឆ្នូត ៤ ៖ ១"
 
 #: ../share/patterns/patterns.svg.h:26
 msgid "Stripes 4:1 white"
-msgstr ""
+msgstr "ឆ្នូត ៤ ៖ ១ ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:27
-#, fuzzy
 msgid "Checkerboard"
-msgstr "ក្តារ​ខៀន​"
+msgstr "ក្ដារ​ក្រឡា​"
 
 #: ../share/patterns/patterns.svg.h:28
 msgid "Checkerboard white"
-msgstr ""
+msgstr "ក្ដារ​ក្រឡា​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:29
-#, fuzzy
 msgid "Packed circles"
-msgstr "រង្វង់​ក្រៅ​ត្រីកោណ​"
+msgstr "បណ្ដុំ​រង្វង់​តម្រៀប​គ្នា​"
 
 #: ../share/patterns/patterns.svg.h:30
 msgid "Polka dots, small"
-msgstr ""
+msgstr "ចំណុច Polka តូចៗ"
 
 #: ../share/patterns/patterns.svg.h:31
 msgid "Polka dots, small white"
-msgstr ""
+msgstr "ចំណុច Polka តូចៗ​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:32
 msgid "Polka dots, medium"
-msgstr ""
+msgstr "ចំណុច Polka មធ្យម"
 
 #: ../share/patterns/patterns.svg.h:33
 msgid "Polka dots, medium white"
-msgstr ""
+msgstr "ចំណុច Polka មធ្យម​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:34
 msgid "Polka dots, large"
-msgstr ""
+msgstr "ចំណុច Polka ធំៗ"
 
 #: ../share/patterns/patterns.svg.h:35
 msgid "Polka dots, large white"
-msgstr ""
+msgstr "ចំណុច Polka ធំៗ​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:36
 #, fuzzy
