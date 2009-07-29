@@ -608,9 +608,12 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
 
             if(pImpl->_path_string[0] == 0)
             {
+                WCHAR* noFileText=(WCHAR*)g_utf8_to_utf16(_("No file selected"),
+                    -1, NULL, NULL, NULL);
                 FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
-                DrawText(dc, _("No file selected"), -1, &rcClient,
+                DrawTextW(dc,  noFileText, -1, &rcClient, 
                     DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+                g_free(noFileText);
             }
             else if(pImpl->_preview_bitmap != NULL)
             {
