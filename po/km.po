@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-24 15:35+0200\n"
-"PO-Revision-Date: 2009-07-28 14:45+0700\n"
+"PO-Revision-Date: 2009-07-29 16:47+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -488,11 +488,11 @@ msgstr "គូរ​​ស្នាម​ឆូត​ចុះក្រោម​
 
 #: ../share/filters/filters.svg.h:43
 msgid "Jam spread"
-msgstr ""
+msgstr "ប៉ាត​ដំណាប់"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
-msgstr ""
+msgstr "ប៉ាត​ដំណាប់​ច្រើន​ឃើញ​រលោង"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
@@ -632,7 +632,7 @@ msgstr "បែបផែន​ប្លាស្ទិក ឬ​កែវ​ថ�
 
 #: ../share/filters/filters.svg.h:58
 msgid "Cross-smooth"
-msgstr ""
+msgstr "កាត់​រលោង"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Blur inner borders and intersections"
@@ -644,7 +644,7 @@ msgstr "ពណ៌​ក្រមួន​ឃ្មុំ​ថ្លា"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr ""
+msgstr "​វាយនភាព​រីក​ធំឡើង ដែល​រក្សា​នូវ​ការ​ផ្លាស់​ប្ដូរ​របស់​វា​តាម​ការ​ប្ដូរ​ពណ៌​ផ្ទៃ​របស់​វា"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
@@ -720,7 +720,7 @@ msgstr "បែបផែន​ជា​លក្ខណៈ​លោហៈ ដែ�
 
 #: ../share/filters/filters.svg.h:69
 msgid "Dragee"
-msgstr ""
+msgstr "Dragee"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Gel Ridge with a pearlescent look"
@@ -831,7 +831,7 @@ msgstr "កំហាប់​ពណ៌​មាស"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr ""
+msgstr "កំហាប់​លោហៈ ដោយ​មាន​ពន្លឺ​បន្លិច​ភ្លឺ​ពណ៌​មាស"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
@@ -1449,7 +1449,7 @@ msgstr "មេ​គុជ​​ខ្យង​ត្រីមាត្រ"
 
 #: ../share/filters/filters.svg.h:163
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "កោង​ត្រីមាត្រ វាយនភាព​ពណ៌​គុជ​ខ្យង"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
@@ -1524,11 +1524,10 @@ msgid "Drawing"
 msgstr "គំនូរ"
 
 #: ../share/filters/filters.svg.h:172
-#, fuzzy
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
-msgstr "ផ្ដល់​ជា​បែបផែន​បណ្ដូល​ខ្មៅដៃ ឬ​ពណ៌​ថ្ម ឬ​ចម្លាក់ ឬ​បែបផែន​ផ្សេងទៀត"
+msgstr "ផ្ដល់​ជា​បែបផែន​បណ្ដូល​ខ្មៅដៃ ឬ​ពណ៌​ថ្ម ឬ​ចម្លាក់ ឬ​បែបផែន​ផ្សេងទៀត​ទៅកាន់​រូបភាព និង​វត្ថុ​ដែល​មាន​ផ្ទៃ"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Velvet bump"
@@ -1562,7 +1561,7 @@ msgstr "ស្ករ​កៅស៊ូ"
 msgid ""
 "Creates colourizable blotches which smoothly flow over the edges of the "
 "lines at their crossings"
-msgstr ""
+msgstr "បង្កើត​ចំណុច​ដែល​អាច​ប្ដូរ​ពណ៌​បាន ដោយ​មាន​ភាព​រលោង​នៅ​លើ​គែម​បន្ទាត់​ដែល​កាត់"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Black outline"
@@ -1594,7 +1593,7 @@ msgstr "ងងឹត និង​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត ដោយ​មាន​ភាព​ព្រិល​នៅ​ខាង​ក្នុង និង​បន្ថែម​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Darken edges"
@@ -1622,25 +1621,23 @@ msgstr "បង្កើត​វណ្ឌវង្គ​គួច​នៅ​ជ
 
 #: ../share/filters/filters.svg.h:184
 msgid "Gelatine"
-msgstr ""
+msgstr "ចាហួយ"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid "Colorizable filling with gelatin like turbulence and transparency"
-msgstr "ការ​បំពេញ​ផ្ទៃ​ដែល​អាច​ប្ដូរ​ពណ៌​បាន ដោយមាន​លំហូរ​នៅ​ក្នុង​ថ្លា"
+msgstr "ផ្ទៃ​ចាហួយ​ប្ដូរ​ពណ៌​បាន ដែល​មាន​លក្ខណៈ​គួច និង​ថ្លា"
 
 #: ../share/filters/filters.svg.h:185
 msgid "HSL bubbles, transparent"
 msgstr "ពពុះ HSL ថ្លា"
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "Highly flexible specular bubbles with transparency"
-msgstr "ដុំពក​ខ្ពស់​ថ្លា"
+msgstr "ពពុះ​គួច​ថ្លា​មាន​ភាព​បត់បែន​ខ្ពស់"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Old postcard"
-msgstr "បណ្ណ​ប្រៃសណីយ៍​ចាស់1"
+msgstr "បណ្ណ​ប្រៃសណីយ៍​ចាស់"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Slightly posterize and draw edges like on old printed postcards"
@@ -1664,7 +1661,7 @@ msgstr "ផ្ទាំង​កំណាត់​ថ្លា"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "ផ្ដល់​នូវ​ផ្ទាំង​កំណាត់​ដូចជា HSL ថ្លា ។"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Smear transparency"
@@ -1714,7 +1711,7 @@ msgstr "ស្បែក​ដែល​ផុស​ក្រឡោត"
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
-msgstr ""
+msgstr "បញ្ចូល​ដុំពក​គែម HSL ជា​មួយ​នឹង​បែបផែន​ពណ៌​ស្បែក ឬ​ឈើ"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Carnaval"
@@ -1725,18 +1722,16 @@ msgid "White splotches evocating carnaval masks"
 msgstr "ស្នាម​ប្រឡាក់​ពណ៌​ស​"
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
 msgid "Plastify"
-msgstr "ចាក់"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:197
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr ""
+msgstr "បញ្ចូល​ដុំពក​គែម HSL ជាមួយ​នឹង​បែបផែន​ដែល​ចាំង​ឡើង​ផ្ទៃ​រលក"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Plaster"
-msgstr "បិទភ្ជាប់​"
+msgstr "កំបោរ​បាយ​អ​"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
@@ -1763,9 +1758,8 @@ msgid "Alpha engraving"
 msgstr "ចម្លាក់​អាល់ហ្វា"
 
 #: ../share/filters/filters.svg.h:201
-#, fuzzy
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
+msgstr "ផ្ដល់​បែបផែន​​ចម្លាក់​ថ្លា ជាមួយ​នឹង​បន្ទាត់ និង​ផ្ទៃ​គ្រើមៗ"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Alpha draw, liquid"
@@ -1780,9 +1774,8 @@ msgid "Liquid drawing"
 msgstr "គំនូរ​ទឹក"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
+msgstr "ផ្ដល់​បែបផែន​គំនូរ​​ជា​រលក​ទឹក​ដល់​រូបភាព"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Marbled ink"
@@ -1790,7 +1783,7 @@ msgstr "ទឹក​ខ្មៅ​ថ្ម​ម៉ាប"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr ""
+msgstr "បែបផែន​ថ្មម៉ាប​ថ្លា ដែល​ធ្វើតាម​គែម​រូបភាព"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Thick acrylic"
@@ -1805,9 +1798,8 @@ msgid "Alpha engraving B"
 msgstr "ចម្លាក់​អាល់ហ្វា B"
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
-msgstr "ផ្ដល់​ជា​បែបផែន​ចម្លាក់​ថ្លា​ទៅកាន់​ផែនទី​រូបភាព"
+msgstr "ផ្ដល់​នូវ​បែបផែន​ចម្លាក់​​គ្រើម​ទៅកាន់​រូបភាព"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Lapping"
@@ -1838,9 +1830,8 @@ msgid "Light eraser, negative"
 msgstr "លុប​ពន្លឺ ដោយ​ឆ្លាស់​ពណ៌​ដើម"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Invert and make the lightest parts of the object progressively transparent"
-msgstr "ធ្វើ​​ផ្នែក​ដែល​ស្រាល​ជាង​គេ​របស់​វត្ថុ​ទៅ​ជា​ថ្លា​ជា​លំដាប់"
+msgstr "ត្រឡប់ និង​ធ្វើ​ឲ្យ​ផ្នែក​ដែល​ភ្លឺ​បំផុត​របស់​វត្ថុ​ថ្លា​បន្ត​គ្នា"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Repaint"
@@ -1995,14 +1986,12 @@ msgid "Polka dots, large white"
 msgstr "ចំណុច Polka ធំៗ​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:36
-#, fuzzy
 msgid "Wavy"
 msgstr "រលក"
 
 #: ../share/patterns/patterns.svg.h:37
-#, fuzzy
 msgid "Wavy white"
-msgstr "ពណ៌​ស"
+msgstr "រលក​ពណ៌​ស"
 
 #: ../share/patterns/patterns.svg.h:38
 msgid "Camouflage"
