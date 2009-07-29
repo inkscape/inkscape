@@ -653,7 +653,7 @@ void DocumentProperties::removeExternalScript(){
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         SPScript* script = (SPScript*) obj;
-        if (!name.compare(script->xlinkhref)){
+        if (name == script->xlinkhref){
             sp_repr_unparent(obj->repr);
             sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
         }
@@ -671,8 +671,12 @@ void DocumentProperties::populate_external_scripts_box(){
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         SPScript* script = (SPScript*) obj;
-        Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
-        row[_ExternalScriptsListColumns.filenameColumn] = script->xlinkhref;
+        if (script->xlinkhref)
+        {
+            Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
+            row[_ExternalScriptsListColumns.filenameColumn] = script->xlinkhref;
+        }
+
         current = g_slist_next(current);
     }
 }
