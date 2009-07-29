@@ -311,7 +311,7 @@ CanvasAxonomGrid::readRepr()
     if ( (value = repr->attribute("spacingy")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &lengthy, &gridunit);
         lengthy = sp_units_get_pixels(lengthy, *(gridunit));
-        if (lengthy < 1.0) lengthy = 1.0;
+        if (lengthy < 0.0500) lengthy = 0.0500;
     }
 
     if ( (value = repr->attribute("gridanglex")) ) {
