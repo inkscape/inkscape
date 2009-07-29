@@ -240,14 +240,13 @@
 <feColorMatrix id="feColorMatrix2896" type="saturate" values="1" result="fbSourceGraphic" />
 <feColorMatrix id="feColorMatrix2900" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
 </filter>
-<filter id="filter2811" inkscape:label="Sepia" x="0" y="0" width="1" height="1" inkscape:menu="Color" inkscape:menu-tooltip="Render in warm sepia tones">
-<feColorMatrix id="feColorMatrix2813" values="0" in="SourceGraphic" type="saturate" result="result2" />
-<feFlood id="feFlood2823" flood-color="rgb(160,67,0)" flood-opacity="1" result="result1" />
-<feColorMatrix id="feColorMatrix2817" in="SourceGraphic" type="saturate" values="0" />
-<feColorMatrix id="feColorMatrix2821" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -1" result="result3" />
-<feBlend blend="normal" id="feBlend2819" in2="result2" mode="multiply" in="result1" />
-<feBlend blend="normal" id="feBlend2825" in2="result3" mode="screen" />
-<feComposite id="feComposite2827" in2="SourceAlpha" operator="in" />
+<filter id="Sepia0" inkscape:label="Sepia" x="0" y="0" width="1" height="1" inkscape:menu="Color" inkscape:menu-tooltip="Render in warm sepia tones">
+<feColorMatrix id="feColorMatrix3359" values="0" in="SourceGraphic" type="saturate" result="result2" />
+<feFlood id="feFlood3361" flood-color="rgb(160,67,0)" flood-opacity="1" result="result1" />
+<feColorMatrix id="feColorMatrix3363" in="SourceGraphic" type="saturate" values="0" result="result4" />
+<feBlend id="feBlend3367" blend="normal" in2="result2" mode="multiply" in="result1" />
+<feBlend id="feBlend3369" blend="normal" in2="result4" mode="screen" />
+<feComposite id="feComposite3371" in2="SourceAlpha" operator="in" />
 </filter>
 <filter inkscape:label="Age" id="filter2756" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Imitate aged photograph">
 <feColorMatrix type="saturate" id="feColorMatrix2758" in="SourceGraphic" values="0" />
