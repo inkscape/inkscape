@@ -428,7 +428,9 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal)
 
     // We won't snap to grids, what's the use?
 
-    Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false);
+    // Including snapping to intersections of curves, but not to the curves themself! (see _snapTranslatingGuideToNodes in object-snapper.cpp)
+    Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false, true);
+
     s.getPoint(p);
 }
 
@@ -900,13 +902,15 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreference
  * \param source_type Detailed description of the source type, will be used by the snap indicator
  * \param sc A structure holding all snap targets that have been found so far
  * \param constrained True if the snap is constrained, e.g. for stretching or for purely horizontal translation.
+ * \param noCurves If true, then do consider snapping to intersections of curves, but not to the curves themself
  * \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics
  */
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p,
 											     Inkscape::SnapSourceType const source_type,
 											     SnappedConstraints &sc,
-											     bool constrained) const
+											     bool constrained,
+											     bool noCurves) const
 {
 
     /*
@@ -928,9 +932,11 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p,
     }
 
     // search for the closest snapped curve
-    Inkscape::SnappedCurve closestCurve;
-    if (getClosestCurve(sc.curves, closestCurve)) {
-        sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
+    if (!noCurves) {
+		Inkscape::SnappedCurve closestCurve;
+		if (getClosestCurve(sc.curves, closestCurve)) {
+			sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
+		}
     }
 
     if (snapprefs.getSnapIntersectionCS()) {

@@ -193,7 +193,7 @@ private:
 
     void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, std::pair<Geom::Point, int> const &p) const;
 
-    Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, Inkscape::SnapSourceType const source_type, SnappedConstraints &sc, bool constrained) const;
+    Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, Inkscape::SnapSourceType const source_type, SnappedConstraints &sc, bool constrained, bool noCurves = false) const;
 };
 
 #endif /* !SEEN_SNAP_H */
