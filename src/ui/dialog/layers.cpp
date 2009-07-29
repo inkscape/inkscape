@@ -642,9 +642,7 @@ LayersPanel::LayersPanel() :
     _layersPage.pack_end(_compositeSettings, Gtk::PACK_SHRINK);
     _layersPage.pack_end(_buttonsRow, Gtk::PACK_SHRINK);
 
-    _notebook.append_page(_layersPage, _("Layers"));
-
-    _getContents()->pack_start(_notebook, Gtk::PACK_EXPAND_WIDGET);
+    _getContents()->pack_start(_layersPage, Gtk::PACK_EXPAND_WIDGET);
 
     SPDesktop* targetDesktop = getDesktop();
 
