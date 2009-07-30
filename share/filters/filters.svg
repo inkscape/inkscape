@@ -775,11 +775,13 @@
 <feComposite id="feComposite3751" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.40000000000000002" k3="1.7" />
 <feBlend id="feBlend3753" blend="normal" result="fbSourceGraphic" mode="normal" in2="result2" />
 </filter>
-<filter id="filter3790" inkscape:label="Colorize" inkscape:menu="Color" inkscape:menu-tooltip="Gives the flood color to the dark parts of the image" x="0" y="0" width="1" height="1">
-<feColorMatrix id="feColorMatrix864" values="1" in="SourceGraphic" type="saturate" result="result2" />
-<feFlood id="feFlood2872" flood-color="rgb(255,102,0)" flood-opacity="1" result="result1" />
-<feBlend id="feBlend867" blend="normal" in2="result2" mode="multiply" in="result1" />
-<feComposite id="feComposite869" in2="SourceAlpha" operator="in" />
+<filter id="Colori0" inkscape:label="Colorize" inkscape:menu="Color" inkscape:menu-tooltip="Blend image or object with a flood color and set lightness and contrast" x="0" y="0" width="1" height="1">
+<feColorMatrix id="feColorMatrix3068" values="1" in="SourceGraphic" type="saturate" result="result2" />
+<feFlood id="feFlood3070" flood-color="rgb(254,102,0)" flood-opacity="1" result="result1" />
+<feBlend id="feBlend3072" blend="normal" in2="result2" mode="multiply" in="result1" result="result3" />
+<feComposite in2="result2" id="feComposite3076" operator="arithmetic" k2="1" k1="-1.9428902930940239e-16" result="result4" />
+<feBlend blend="normal" id="feBlend3078" mode="normal" in2="result4" />
+<feComposite id="feComposite3074" in2="SourceAlpha" operator="in" />
 </filter>
 <filter id="Paralhol0" inkscape:label="Parallel hollow" inkscape:menu="Morphology" inkscape:menu-tooltip="A blurry hollow going parallel to the edge on the inside">
 <feGaussianBlur id="feGaussianBlur3582" stdDeviation="7.5" in="SourceAlpha" result="result1" />
