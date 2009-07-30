@@ -240,13 +240,12 @@
 <feColorMatrix id="feColorMatrix2896" type="saturate" values="1" result="fbSourceGraphic" />
 <feColorMatrix id="feColorMatrix2900" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
 </filter>
-<filter id="Sepia0" inkscape:label="Sepia" x="0" y="0" width="1" height="1" inkscape:menu="Color" inkscape:menu-tooltip="Render in warm sepia tones">
-<feColorMatrix id="feColorMatrix3359" values="0" in="SourceGraphic" type="saturate" result="result2" />
-<feFlood id="feFlood3361" flood-color="rgb(160,67,0)" flood-opacity="1" result="result1" />
-<feColorMatrix id="feColorMatrix3363" in="SourceGraphic" type="saturate" values="0" result="result4" />
-<feBlend id="feBlend3367" blend="normal" in2="result2" mode="multiply" in="result1" />
-<feBlend id="feBlend3369" blend="normal" in2="result4" mode="screen" />
-<feComposite id="feComposite3371" in2="SourceAlpha" operator="in" />
+<filter id="Sep0" inkscape:label="Sepia" x="0" y="0" width="1" height="1" inkscape:menu="Color" inkscape:menu-tooltip="Render in warm sepia tones">
+<feColorMatrix id="feColorMatrix2854" values="0" in="SourceGraphic" type="saturate" result="result2" />
+<feFlood id="feFlood2856" flood-color="rgb(160,67,0)" flood-opacity="1" result="result1" />
+<feBlend id="feBlend2860" blend="normal" in2="result1" mode="multiply" in="result2" />
+<feBlend id="feBlend2862" blend="normal" in2="result2" mode="screen" result="result3" />
+<feComposite id="feComposite2864" in2="SourceAlpha" operator="in" in="result3" />
 </filter>
 <filter inkscape:label="Age" id="filter2756" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Imitate aged photograph">
 <feColorMatrix type="saturate" id="feColorMatrix2758" in="SourceGraphic" values="0" />
@@ -991,9 +990,10 @@
 </feMerge>
 <feComposite result="result4" in="SourceGraphic" operator="in" in2="result2" id="feComposite2438" />
 </filter>
-<filter id="InvertHue0" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
-<feColorMatrix id="feColorMatrix2867" type="hueRotate" values="180" />
-<feBlend blend="normal" id="feBlend2869" mode="normal" in2="SourceGraphic" />
+<filter id="InvHue0" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
+<feColorMatrix id="feColorMatrix3102" type="hueRotate" values="180" />
+<feBlend id="feBlend3104" blend="normal" mode="normal" in2="SourceGraphic" />
+<feComposite id="feComposite3106" in2="SourceGraphic" operator="in" />
 </filter>
 <filter id="InnerOutlin0" inkscape:label="Inner outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
 <feGaussianBlur id="feGaussianBlur2915" result="result1" in="SourceAlpha" stdDeviation="3" />
@@ -1036,18 +1036,20 @@
 <feComposite in2="SourceGraphic" operator="in" id="feComposite3079" />
 <feComposite in2="SourceGraphic" operator="in" id="feComposite3081" />
 </filter>
-<filter id="Solarize0" inkscape:label="Solarize" inkscape:menu="Color" inkscape:menu-tooltip="Classical photographic solarization effect" y="0" x="0" height="1" width="1">
-<feColorMatrix id="feColorMatrix3492" type="hueRotate" values="0" result="fbSourceGraphic" />
-<feColorMatrix id="feColorMatrix3494" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
-<feBlend id="feBlend3496" blend="normal" mode="darken" in="fbSourceGraphic" />
-<feBlend id="feBlend3498" blend="normal" mode="screen" />
+<filter id="Solar0" inkscape:label="Solarize" inkscape:menu="Color" inkscape:menu-tooltip="Classical photographic solarization effect" y="0" x="0" height="1" width="1">
+<feColorMatrix id="feColorMatrix2912" type="hueRotate" values="0" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix2914" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
+<feBlend id="feBlend2916" blend="normal" mode="darken" in="fbSourceGraphic" />
+<feBlend id="feBlend2918" blend="normal" mode="screen" />
+<feComposite id="feComposite2920" operator="in" in2="SourceGraphic" />
 </filter>
-<filter id="filter2910u" inkscape:label="Moonarize" inkscape:menu="Color" inkscape:menu-tooltip="An effect between solarize and invert which often preserves sky and water lights" y="0" x="0" height="1" width="1">
-<feColorMatrix id="feColorMatrix3504" type="hueRotate" values="180" result="fbSourceGraphic" />
-<feColorMatrix id="feColorMatrix3506" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
-<feBlend id="feBlend3508" blend="normal" mode="screen" in="fbSourceGraphic" />
-<feBlend id="feBlend3510" blend="normal" mode="multiply" />
-<feBlend id="feBlend3512" blend="normal" mode="multiply" />
+<filter id="MoonA0" inkscape:label="Moonarize" inkscape:menu="Color" inkscape:menu-tooltip="An effect between solarize and invert which often preserves sky and water lights" y="0" x="0" height="1" width="1">
+<feColorMatrix id="feColorMatrix3124" type="hueRotate" values="180" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix3126" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
+<feBlend id="feBlend3128" blend="normal" mode="screen" in="fbSourceGraphic" />
+<feBlend id="feBlend3130" blend="normal" mode="multiply" />
+<feBlend id="feBlend3132" blend="normal" mode="multiply" />
+<feComposite id="feComposite3134" operator="in" in2="SourceGraphic" />
 </filter>
 <filter id="Softfoc0" inkscape:label="Soft focus lens" inkscape:menu="Image effects" inkscape:menu-tooltip="Glowing image content without blurring it" height="1" y="0" width="1" x="0">
 <feGaussianBlur id="feGaussianBlur2936" stdDeviation="5" result="result3" />
@@ -1549,10 +1551,11 @@
 <feComposite in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" id="feComposite3366" k1="1" k3="0" />
 <feComposite in2="result2" operator="out" in="SourceGraphic" result="fbSourceGraphic" id="feComposite3368" />
 </filter>
-<filter id="Blacklight0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
-<feColorMatrix id="feColorMatrix2916" type="luminanceToAlpha" result="result2" />
-<feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
-<feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
+<filter id="BlLigh0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
+<feColorMatrix id="feColorMatrix3023" type="luminanceToAlpha" result="result2" />
+<feComposite id="feComposite3025" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
+<feBlend id="feBlend3027" blend="normal" in="result2" mode="multiply" result="result3" />
+<feComposite id="feComposite3029" in2="SourceGraphic" operator="in" />
 </filter>
 <filter inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent" inkscape:menu="Transparency utilities" inkscape:label="Light eraser" id="LightEr0">
 <feColorMatrix in="SourceGraphic" type="matrix" result="result3" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " id="feColorMatrix3106" />
