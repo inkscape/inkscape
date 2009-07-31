@@ -799,12 +799,13 @@
 <feComposite id="feComposite2868" in="SourceGraphic" operator="out" in2="result2" />
 <feBlend id="feBlend2870" blend="normal" mode="darken" />
 </filter>
-<filter id="BlacLi0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
-<feColorMatrix id="feColorMatrix2854" type="luminanceToAlpha" result="result2" />
-<feComposite id="feComposite2856" in2="SourceGraphic" operator="arithmetic" in="result2" k3="2" result="result4" />
-<feBlend id="feBlend2858" blend="normal" in="result4" mode="multiply" result="result3" in2="result2" />
-<feComposite id="feComposite2862" operator="arithmetic" k2="1" />
-<feComposite id="feComposite2860" in2="SourceGraphic" operator="in" />
+<filter id="BlackHol0" inkscape:label="Black hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Creates a black light inside and outside" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<feGaussianBlur id="feGaussianBlur2860" stdDeviation="5" in="SourceAlpha" result="result1" />
+<feComposite id="feComposite2862" operator="arithmetic" k2="3.2000000000000002" k3="0" k1="-1" k4="-2" result="result3" />
+<feColorMatrix id="feColorMatrix2864" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " result="result2" />
+<feComposite id="feComposite2866" result="fbSourceGraphic" in="SourceGraphic" operator="out" />
+<feBlend id="feBlend2872" blend="normal" mode="multiply" in="result1" in2="fbSourceGraphic" />
+<feBlend id="feBlend2874" blend="normal" mode="screen" in="fbSourceGraphic" />
 </filter>
 <filter id="Smoutlin0" inkscape:label="Smooth outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Outlining the lines and smoothing their crossings">
 <feGaussianBlur id="feGaussianBlur3142" stdDeviation="4" />
@@ -1554,11 +1555,12 @@
 <feComposite in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" id="feComposite3366" k1="1" k3="0" />
 <feComposite in2="result2" operator="out" in="SourceGraphic" result="fbSourceGraphic" id="feComposite3368" />
 </filter>
-<filter id="BlLigh0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
-<feColorMatrix id="feColorMatrix3023" type="luminanceToAlpha" result="result2" />
-<feComposite id="feComposite3025" in2="SourceGraphic" operator="arithmetic" in="result2" k3="2" result="result4" />
-<feBlend id="feBlend3027" blend="normal" in="result2" mode="multiply" result="result3" />
-<feComposite id="feComposite3029" in2="SourceGraphic" operator="in" />
+<filter id="BlacLi0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
+<feColorMatrix id="feColorMatrix2854" type="luminanceToAlpha" result="result2" />
+<feComposite id="feComposite2856" in2="SourceGraphic" operator="arithmetic" in="result2" k3="2" result="result4" />
+<feBlend id="feBlend2858" blend="normal" in="result4" mode="multiply" result="result3" in2="result2" />
+<feComposite id="feComposite2862" operator="arithmetic" k2="1" />
+<feComposite id="feComposite2860" in2="SourceGraphic" operator="in" />
 </filter>
 <filter inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent" inkscape:menu="Transparency utilities" inkscape:label="Light eraser" id="LightEr0">
 <feColorMatrix in="SourceGraphic" type="matrix" result="result3" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " id="feColorMatrix3106" />
