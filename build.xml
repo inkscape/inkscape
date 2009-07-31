@@ -103,7 +103,7 @@
           
     <makefile file="${src}/inkscape-version.cpp">
         namespace Inkscape {
-            char const *version_string = "${version} r${svn.revision}";
+            char const *version_string = "${version} ${svn.revision}";
         }
     </makefile>
     <makefile file="config.h">

@@ -4704,6 +4704,12 @@ bool MakeBase::lookupProperty(const String &propertyName, String &result)
         varname = varname.substr(svnPrefix.size());
         String val;
         SvnInfo svnInfo;
+        if (varname == "revision")
+	    {
+            if (!svnInfo.query(varname, val))
+                return "";
+            result = "r"+val;
+            }
         if (!svnInfo.query(varname, val))
             return false;
         result = val;
