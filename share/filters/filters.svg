@@ -1402,63 +1402,63 @@
 </filter>
 <filter id="Embossshdnr0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Combination of smooth shading and embossing" inkscape:label="Emboss shader NR">
 <feGaussianBlur id="feGaussianBlur4488" result="result8" stdDeviation="5" />
-<feComposite id="feComposite4490" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feComposite id="feComposite4490" in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap id="feDisplacementMap4492" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result8" />
-<feComposite id="feComposite4494" k2="0" k3="0" k1="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
+<feComposite id="feComposite4494" k1="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
 <feComposite id="feComposite4496" in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
 </filter>
 <filter id="Smoothshddnr0" inkscape:label="Smooth shader dark NR" inkscape:menu-tooltip="Dark version of non realistic smooth shading" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur3192" stdDeviation="7" result="result8" />
-<feComposite id="feComposite3194" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feComposite id="feComposite3194" in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap id="feDisplacementMap3196" in="result8" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" />
-<feComposite id="feComposite3198" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="2" k3="0" k2="0" />
+<feComposite id="feComposite3198" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="2" />
 </filter>
 <filter id="Comicsnr0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Comics">
 <feGaussianBlur id="feGaussianBlur3216" result="result8" stdDeviation="7" />
-<feComposite id="feComposite3218" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feComposite id="feComposite3218" in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap id="feDisplacementMap3220" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="SourceGraphic" />
-<feComposite id="feComposite3222" k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
+<feComposite id="feComposite3222" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
 <feComposite id="feComposite3224" in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
 </filter>
 <filter x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Silky close to mother of pearl shading" inkscape:label="Satin NR" id="Satinnr0">
 <feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur2925" />
-<feComposite k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" id="feComposite2927" />
+<feComposite in="result8" operator="xor" result="result6" in2="result8" id="feComposite2927" />
 <feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap2929" />
-<feComposite k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite2931" />
+<feComposite k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite2931" />
 <feComposite in2="result2" operator="in" in="result8" result="fbSourceGraphic" id="feComposite2933" />
 </filter>
 <filter x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic frosted glass imitation" inkscape:label="Frosted glass NR" id="Frglassnr">
 <feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur3072" />
 <feComposite k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" id="feComposite3074" />
 <feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap3076" />
-<feComposite k2="0" k3="0" k1="2" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite3078" />
+<feComposite k1="2" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite3078" />
 <feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" id="feComposite3080" />
 </filter>
 <filter id="Smoothctrnr0" inkscape:label="Smooth shader contour NR" inkscape:menu-tooltip="Contouring version of smooth shader" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur2956" stdDeviation="7" result="result8" />
-<feComposite id="feComposite2958" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feComposite id="feComposite2958" in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap id="feDisplacementMap2960" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" in="result8" />
-<feComposite id="feComposite2962" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" />
+<feComposite id="feComposite2962" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
 <feComposite id="feComposite2964" result="fbSourceGraphic" in="result6" operator="in" in2="result2" />
 </filter>
 <filter id="Alunr0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Brushed aluminium shader" inkscape:label="Aluminium NR">
 <feGaussianBlur id="feGaussianBlur2943" result="result8" stdDeviation="7" />
-<feComposite id="feComposite2945" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="SourceGraphic" />
+<feComposite id="feComposite2945" in="result8" operator="xor" result="result6" in2="SourceGraphic" />
 <feDisplacementMap id="feDisplacementMap2947" result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
-<feComposite id="feComposite2949" k2="0" k3="0" k1="1" in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" />
+<feComposite id="feComposite2949" k1="1" in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" />
 </filter>
 <filter id="Comfldnr0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Fluid brushed cartoon drawing" inkscape:label="Comics fluid">
 <feGaussianBlur id="feGaussianBlur2984" result="result8" stdDeviation="4" />
-<feComposite id="feComposite2986" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feComposite id="feComposite2986" in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap id="feDisplacementMap2988" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
-<feComposite id="feComposite2990" k2="0" k3="0" k1="5" in="result8" operator="arithmetic" result="result2" in2="result4" />
+<feComposite id="feComposite2990" k1="5" in="result8" operator="arithmetic" result="result2" in2="result4" />
 <feComposite id="feComposite2992" in2="result2" operator="in" in="result6" result="fbSourceGraphic" />
 </filter>
 <filter id="Chromnr0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic chrome shader with strong speculars" inkscape:label="Chrome NR">
 <feGaussianBlur id="feGaussianBlur2984-8" result="result8" stdDeviation="4" />
 <feComposite id="feComposite2986-5" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap id="feDisplacementMap2988-0" result="result4" scale="80" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
-<feComposite id="feComposite2990-9" k2="0" k3="0" k1="3" in="result8" operator="arithmetic" result="result2" in2="result4" />
+<feComposite id="feComposite2990-9" k1="3" in="result8" operator="arithmetic" result="result2" in2="result4" />
 <feComposite id="feComposite2992-6" in2="result2" operator="in" in="result2" result="fbSourceGraphic" />
 </filter>
 <filter inkscape:label="Chrome dark NR" inkscape:menu-tooltip="Dark version of chrome shading with a ground reflection simulation" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" id="Chromdrknr0">
@@ -1489,22 +1489,22 @@
 <feComposite id="feComposite2988" in="result2" operator="atop" in2="SourceGraphic" result="result9" />
 <feBlend id="feBlend2990" result="fbSourceGraphic" mode="darken" in2="result9" blend="normal" />
 <feGaussianBlur id="feGaussianBlur2994" stdDeviation="5" in="fbSourceGraphic" result="result0" />
-<feSpecularLighting id="feSpecularLighting2996" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="8" specularConstant="0.80000000000000004" specularExponent="30">
+<feSpecularLighting id="feSpecularLighting2996" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="8" specularConstant="0.8" specularExponent="30">
 <feDistantLight id="feDistantLight2998" elevation="55" azimuth="235" />
 </feSpecularLighting>
 <feComposite id="feComposite3000" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
-<feComposite id="feComposite3002" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.99999999999999989" k3="0.99999999999999989" />
+<feComposite id="feComposite3002" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="1" />
 </filter>
 <filter id="3DWood0" inkscape:menu-tooltip="3D warped, fibered wood texture" inkscape:menu="Materials" inkscape:label="3D wood" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur4901" result="result8" stdDeviation="4" />
-<feTurbulence id="feTurbulence4903" baseFrequency="0.025000000000000001 0.20000000000000001" numOctaves="3" type="fractalNoise" result="result7" seed="22" />
+<feTurbulence id="feTurbulence4903" baseFrequency="0.025 0.2" numOctaves="3" type="fractalNoise" result="result7" seed="22" />
 <feComposite id="feComposite4907" in2="result8" operator="in" in="SourceGraphic" result="result6" />
 <feDisplacementMap id="feDisplacementMap4909" in2="result6" result="result4" scale="50" yChannelSelector="A" xChannelSelector="A" in="result7" />
 <feFlood id="feFlood4911" flood-color="rgb(230,211,138)" flood-opacity="1" in="result4" />
 <feComposite id="feComposite4913" in2="result4" operator="atop" result="result2" />
 <feComposite id="feComposite4915" in2="SourceGraphic" operator="atop" in="result2" result="result9" />
 <feGaussianBlur id="feGaussianBlur4917" result="result0" in="result9" stdDeviation="8" />
-<feSpecularLighting id="feSpecularLighting4919" specularExponent="15" specularConstant="0.69999999999999996" surfaceScale="5" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feSpecularLighting id="feSpecularLighting4919" specularExponent="15" specularConstant="0.7" surfaceScale="5" lighting-color="rgb(255,255,255)" result="result1" in="result0">
 <feDistantLight id="feDistantLight4921" azimuth="235" elevation="50" />
 </feSpecularLighting>
 <feComposite id="feComposite4923" operator="in" result="result2" in="result1" in2="result9" />
@@ -1514,7 +1514,7 @@
 </filter>
 <filter id="Mothofprl0" inkscape:menu-tooltip="3D warped, iridescent pearly shell texture" inkscape:menu="Materials" inkscape:label="3D mother of pearl" width="1.5" x="-0.25" height="1.5" y="-0.25">
 <feGaussianBlur id="feGaussianBlur3257" result="result8" stdDeviation="3" />
-<feTurbulence id="feTurbulence3259" baseFrequency="0.029999999999999999 0.029999999999999999" numOctaves="8" type="fractalNoise" result="result7" seed="77" />
+<feTurbulence id="feTurbulence3259" baseFrequency="0.03 0.03" numOctaves="8" type="fractalNoise" result="result7" seed="77" />
 <feColorMatrix id="feColorMatrix3261" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.6 -0.6 " result="result5" />
 <feComposite id="feComposite3263" in2="result8" operator="in" in="result7" result="result6" />
 <feDisplacementMap id="feDisplacementMap3265" in2="result6" result="result4" scale="60" yChannelSelector="A" xChannelSelector="A" in="result5" />
@@ -1526,10 +1526,10 @@
 <feDistantLight id="feDistantLight3281" azimuth="235" elevation="60" />
 </feSpecularLighting>
 <feComposite id="feComposite3283" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
-<feComposite id="feComposite3285" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite id="feComposite3285" k3="1" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 </filter>
 <filter id="Tigrfur0" inkscape:label="Tiger fur" inkscape:menu="Overlays" inkscape:menu-tooltip="Tiger fur pattern with folds and bevel around the edges" height="1.5" y="-0.25" width="1.5" x="-0.25">
-<feTurbulence id="feTurbulence2908" type="turbulence" result="result0" seed="57" numOctaves="2" baseFrequency="0.10000000000000001 0.014999999999999999" />
+<feTurbulence id="feTurbulence2908" type="turbulence" result="result0" seed="57" numOctaves="2" baseFrequency="0.1 0.015" />
 <feComposite id="feComposite2912" result="result1" operator="over" in2="result0" in="result0" />
 <feComposite id="feComposite2914" result="fbSourceGraphic" in="SourceGraphic" operator="arithmetic" in2="result1" k1="1" />
 <feGaussianBlur id="feGaussianBlur2916" stdDeviation="10" result="result8" in="fbSourceGraphic" />
@@ -1540,7 +1540,7 @@
 </filter>
 <filter id="ShakenLiq0" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Textures" inkscape:label="Shaken liquid">
 <feGaussianBlur id="feGaussianBlur4731" result="result8" stdDeviation="4" />
-<feTurbulence id="feTurbulence4733" baseFrequency="0.050000000000000003" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
+<feTurbulence id="feTurbulence4733" baseFrequency="0.05" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
 <feColorMatrix id="feColorMatrix4735" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -0.75 " result="result5" />
 <feComposite id="feComposite4737" in="result8" operator="out" result="result6" in2="result7" />
 <feDisplacementMap id="feDisplacementMap4739" result="result4" scale="120" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result5" />
@@ -1611,7 +1611,7 @@
 <feGaussianBlur id="feGaussianBlur2905" result="result8" stdDeviation="0.6" />
 <feConvolveMatrix id="feConvolveMatrix2907" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix2909" values="1" in="result0" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite2911" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
+<feComposite id="feComposite2911" k2="10" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
 <feGaussianBlur id="feGaussianBlur2913" result="result7" in="result2" stdDeviation="0.01" />
 <feColorMatrix id="feColorMatrix2915" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " />
 <feFlood id="feFlood2917" flood-opacity="1" result="result10" flood-color="rgb(0,0,0)" />
@@ -1623,7 +1623,7 @@
 <feConvolveMatrix id="feConvolveMatrix3726" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3728" in="result0" type="matrix" result="result3" values="0 -20 0 0 1 0 -20 0 0 1 0 -20 0 0 1 0 0 0 1 0 " />
 <feColorMatrix id="feColorMatrix3730" values="1" in="result3" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite3732" in2="result1" k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" />
+<feComposite id="feComposite3732" in2="result1" k2="2" in="SourceGraphic" result="result2" operator="out" />
 <feGaussianBlur id="feGaussianBlur3734" result="result7" in="result2" stdDeviation="0.01" />
 <feColorMatrix id="feColorMatrix3736" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " type="matrix" result="result9" />
 <feComposite id="feComposite3738" operator="arithmetic" k2="1.25" />
@@ -1837,7 +1837,7 @@
 <feGaussianBlur id="feGaussianBlur3015" result="result8" stdDeviation="0.7" in="result4" />
 <feConvolveMatrix id="feConvolveMatrix3017" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3019" values="1" in="result0" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite3021" result="result11" operator="arithmetic" k2="5" k3="0" k1="0" />
+<feComposite id="feComposite3021" result="result11" operator="arithmetic" k2="5" />
 <feGaussianBlur id="feGaussianBlur3023" result="result7" in="result11" stdDeviation="0.5" />
 <feColorMatrix id="feColorMatrix3025" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 3 0 " />
 <feFlood id="feFlood3027" flood-opacity="1" result="result10" flood-color="rgb(157,87,40)" in="result9" />
@@ -1947,7 +1947,7 @@
 </filter>
 <filter id="Riddl0" inkscape:label="Riddled" inkscape:menu="Textures" inkscape:menu-tooltip="Riddle the surface and add bump to images" height="1.3" y="-0.15" width="1.3" x="-0.15">
 <feGaussianBlur stdDeviation="0.5" in="SourceGraphic" result="result1" id="feGaussianBlur3170" />
-<feTurbulence type="fractalNoise" baseFrequency="0.040000000000000001" numOctaves="10" result="result0" id="feTurbulence3172" />
+<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="10" result="result0" id="feTurbulence3172" />
 <feGaussianBlur result="result8" id="feGaussianBlur3174" stdDeviation="1" />
 <feDisplacementMap in2="result0" in="result1" xChannelSelector="R" yChannelSelector="B" scale="20" result="result2" id="feDisplacementMap3176" />
 <feComposite result="result7" operator="in" in="result2" id="feComposite3178" in2="result8" />
@@ -2009,11 +2009,16 @@
 <feComposite id="feComposite2946" operator="in" result="result2" in="SourceGraphic" in2="result6" />
 <feComposite id="feComposite2948" in2="result2" k3="1" k2="1" operator="arithmetic" result="result4" in="result2" />
 </filter>
-<filter id="fLigCon0" x="0" y="0" width="1" height="1" inkscape:label="Lightness-Contrast" inkscape:menu="Color" inkscape:menu-tooltip="Increase or decrease lightness and contrast">
-<feFlood id="feFlood2909" result="result1" flood-opacity="0" />
-<feBlend mode="normal" id="feBlend2905" blend="normal" in2="SourceGraphic" result="result2" />
-<feComposite k2="1" operator="arithmetic" id="feComposite2903" in2="SourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" id="feComposite2907" />
+<filter id="LigCon0" x="0" y="0" width="1" height="1" inkscape:label="Lightness-Contrast" inkscape:menu="Color" inkscape:menu-tooltip="Increase or decrease lightness and contrast">
+<feFlood id="feFlood2854" result="result1" flood-opacity="0" flood-color="rgb(128,128,128)" />
+<feBlend id="feBlend2856" mode="normal" blend="normal" in2="SourceGraphic" result="result2" />
+<feComposite id="feComposite2858" k2="1" operator="arithmetic" in2="SourceGraphic" />
+<feComposite id="feComposite2860" operator="in" in2="SourceGraphic" />
+</filter>
+<filter id="CleEdg0" inkscape:label="Clean edges" inkscape:menu="ABCs" inkscape:menu-tooltip="Removes or decreases glows and jaggeries around objects edges after applying some filters" height="1" width="1" y="0" x="0">
+<feGaussianBlur id="feGaussianBlur2880" result="result6" stdDeviation="0.4" />
+<feComposite id="feComposite2882" in2="result6" operator="in" in="SourceGraphic" result="result7" />
+<feComposite id="feComposite2884" operator="in" in2="result7" result="result8" in="result7" />
 </filter>
 </defs>
 </svg>
