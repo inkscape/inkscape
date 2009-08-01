@@ -52,6 +52,7 @@ static void sp_star_context_init (SPStarContext * star_context);
 static void sp_star_context_dispose (GObject *object);
 
 static void sp_star_context_setup (SPEventContext *ec);
+static void sp_star_context_finish(SPEventContext *ec);
 static void sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_star_context_root_handler (SPEventContext *ec, GdkEvent *event);
 
@@ -92,6 +93,7 @@ sp_star_context_class_init (SPStarContextClass * klass)
     object_class->dispose = sp_star_context_dispose;
 
     event_context_class->setup = sp_star_context_setup;
+    event_context_class->finish = sp_star_context_finish;
     event_context_class->set = sp_star_context_set;
     event_context_class->root_handler = sp_star_context_root_handler;
 }
@@ -118,6 +120,21 @@ sp_star_context_init (SPStarContext * star_context)
 
     new (&star_context->sel_changed_connection) sigc::connection();
 }
+
+static void sp_star_context_finish(SPEventContext *ec)
+{
+    SPStarContext *sc = SP_STAR_CONTEXT(ec);
+	SPDesktop *desktop = ec->desktop;
+
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+	sp_star_finish(sc);
+    sc->sel_changed_connection.disconnect();
+
+    if (((SPEventContextClass *) parent_class)->finish) {
+		((SPEventContextClass *) parent_class)->finish(ec);
+	}
+}
+
 
 static void
 sp_star_context_dispose (GObject *object)

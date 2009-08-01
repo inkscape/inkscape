@@ -54,6 +54,7 @@ static void sp_box3d_context_init(Box3DContext *box3d_context);
 static void sp_box3d_context_dispose(GObject *object);
 
 static void sp_box3d_context_setup(SPEventContext *ec);
+static void sp_box3d_context_finish(SPEventContext *ec);
 
 static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
@@ -92,6 +93,7 @@ static void sp_box3d_context_class_init(Box3DContextClass *klass)
     object_class->dispose = sp_box3d_context_dispose;
 
     event_context_class->setup = sp_box3d_context_setup;
+    event_context_class->finish = sp_box3d_context_finish;
     event_context_class->root_handler  = sp_box3d_context_root_handler;
     event_context_class->item_handler  = sp_box3d_context_item_handler;
 }
@@ -118,6 +120,21 @@ static void sp_box3d_context_init(Box3DContext *box3d_context)
 
     new (&box3d_context->sel_changed_connection) sigc::connection();
 }
+
+static void sp_box3d_context_finish(SPEventContext *ec)
+{
+	Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
+	SPDesktop *desktop = ec->desktop;
+
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+	sp_box3d_finish(bc);
+    bc->sel_changed_connection.disconnect();
+
+    if (((SPEventContextClass *) parent_class)->finish) {
+		((SPEventContextClass *) parent_class)->finish(ec);
+	}
+}
+
 
 static void sp_box3d_context_dispose(GObject *object)
 {

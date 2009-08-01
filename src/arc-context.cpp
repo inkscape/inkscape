@@ -50,6 +50,7 @@ static void sp_arc_context_init(SPArcContext *arc_context);
 static void sp_arc_context_dispose(GObject *object);
 
 static void sp_arc_context_setup(SPEventContext *ec);
+static void sp_arc_context_finish(SPEventContext *ec);
 static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
@@ -89,6 +90,7 @@ static void sp_arc_context_class_init(SPArcContextClass *klass)
     object_class->dispose = sp_arc_context_dispose;
 
     event_context_class->setup = sp_arc_context_setup;
+    event_context_class->finish = sp_arc_context_finish;
     event_context_class->root_handler = sp_arc_context_root_handler;
     event_context_class->item_handler = sp_arc_context_item_handler;
 }
@@ -109,6 +111,20 @@ static void sp_arc_context_init(SPArcContext *arc_context)
     arc_context->item = NULL;
 
     new (&arc_context->sel_changed_connection) sigc::connection();
+}
+
+static void sp_arc_context_finish(SPEventContext *ec)
+{
+    SPArcContext *ac = SP_ARC_CONTEXT(ec);
+	SPDesktop *desktop = ec->desktop;
+
+	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+	sp_arc_finish(ac);
+    ac->sel_changed_connection.disconnect();
+
+    if (((SPEventContextClass *) parent_class)->finish) {
+		((SPEventContextClass *) parent_class)->finish(ec);
+	}
 }
 
 static void sp_arc_context_dispose(GObject *object)
