@@ -63,7 +63,7 @@ namespace Extension {
 namespace Implementation {
 
 /** \brief  Make GTK+ events continue to come through a little bit
-	
+
 	This just keeps coming the events through so that we'll make the GUI
 	update and look pretty.
 */
@@ -604,6 +604,7 @@ Script::open(Inkscape::Extension::Input *module,
     \param    module    Extention to be used
     \param    doc       Document to be saved
     \param    filename  The name to save the final file as
+    \return   false in case of any failure writing the file, otherwise true
 
     Well, at some point people need to save - it is really what makes
     the entire application useful.  And, it is possible that someone
@@ -634,7 +635,7 @@ Script::save(Inkscape::Extension::Output *module,
         tempfd_in = Inkscape::IO::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX.svg");
     } catch (...) {
         /// \todo Popup dialog here
-        return;
+        throw Inkscape::Extension::Output::save_failed();
     }
 
     if (helper_extension.size() == 0) {
@@ -652,12 +653,16 @@ Script::save(Inkscape::Extension::Output *module,
     execute(command, params, tempfilename_in, fileout);
 
     std::string lfilename = Glib::filename_from_utf8(filenameArg);
-    fileout.toFile(lfilename);
+    bool success = fileout.toFile(lfilename);
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_in);
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
     unlink(tempfilename_in.c_str());
+
+    if(success == false) {
+        throw Inkscape::Extension::Output::save_failed();
+    }
 
     return;
 }
@@ -840,7 +845,7 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
 
     {
         using Inkscape::Util::List;
-        using Inkscape::XML::AttributeRecord;        
+        using Inkscape::XML::AttributeRecord;
         std::vector<gchar const *> attribs;
 
         // Make a list of all attributes of the old root node.
@@ -1007,7 +1012,7 @@ Script::execute (const std::list<std::string> &in_command,
     for (std::list<std::string>::const_iterator i = in_params.begin();
             i != in_params.end(); i++) {
     	//g_message("Script parameter: %s",(*i)g.c_str());
-        argv.push_back(*i);        
+        argv.push_back(*i);
     }
 
     if (!(filein.empty())) {

@@ -135,7 +135,7 @@ private:
     /**
      *
      */
-    void checkStderr (const Glib::ustring &filename, 
+    void checkStderr (const Glib::ustring &filename,
                       Gtk::MessageType type,
                       const Glib::ustring &message);
 
@@ -146,7 +146,7 @@ private:
         Glib::RefPtr<Glib::IOChannel> _channel;
         Glib::RefPtr<Glib::MainLoop> _main_loop;
         bool _dead;
-        
+
     public:
         file_listener () : _dead(false) { };
         virtual ~file_listener () {
@@ -187,11 +187,15 @@ private:
         // Note, doing a copy here, on purpose
         Glib::ustring string (void) { return _string; };
 
-        void toFile (const Glib::ustring &name) {
+        bool toFile (const Glib::ustring &name) {
+            try {
             Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
             stdout_file->set_encoding();
             stdout_file->write(_string);
-            return;
+            } catch (Glib::FileError &e) {
+                return false;
+            }
+            return true;
         };
     };
 

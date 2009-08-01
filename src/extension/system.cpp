@@ -277,7 +277,19 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         doc->setModifiedSinceSave(false);
     }
 
-    omod->save(doc, fileName);
+    try {
+        omod->save(doc, fileName);
+    }
+    catch(...) {
+        // free used ressources
+        if ( !official) {
+            g_free(saved_output_extension);
+            g_free(saved_dataloss);
+        }
+        g_free(fileName);
+
+        throw Inkscape::Extension::Output::save_failed();
+    }
 
     // If it is an unofficial save, set the modified attributes back to what they were.
     if ( !official) {

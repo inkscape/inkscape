@@ -218,7 +218,7 @@ Output::save(SPDocument *doc, gchar const *filename)
             imp->save(this, doc, filename);
         }
         catch (...) {
-            g_warning("There was an error saving the file.");
+            throw Inkscape::Extension::Output::save_failed();
         }
 
 	return;
