@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-26 18:21+0200\n"
-"PO-Revision-Date: 2009-07-31 23:32+0200\n"
+"PO-Revision-Date: 2009-08-01 23:01+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -169,9 +169,8 @@ msgid "Overlays"
 msgstr "Burkolatok"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "Véletlenszerű ... belül"
+msgstr "Véletlenszerű fehér foltok belül"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Ink bleed"
@@ -211,7 +210,6 @@ msgid "Ridged border with inner bevel"
 msgstr "Gerincszerű szegély belső rézsútos szegéllyel"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Ripple"
 msgstr "Fodrozódás"
 
@@ -223,7 +221,6 @@ msgid "Distort"
 msgstr "Torzítás"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Horizontal rippling of edges"
 msgstr "A szélek vízszintes fodrozódása"
 
@@ -482,9 +479,8 @@ msgid "Soft bevel, slightly depressed middle"
 msgstr "Finom rézsútos szegély, kissé bemélyedő közép"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Inset"
-msgstr "Zsugorítás"
+msgstr "Beillesztett objektum"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
@@ -499,22 +495,18 @@ msgid "Random paint streaks downwards"
 msgstr "Véletlenszerű festékcsíkok lefelé"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Jam spread"
-msgstr "Szétterjesztés"
+msgstr "Lekvár"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Glossy clumpy jam spread"
-msgstr "fényes "
+msgstr "Fényes, csomós lekvár"
 
 #: ../share/filters/filters.svg.h:44
-#, fuzzy
 msgid "Pixel smear"
-msgstr "Képpont"
+msgstr "Képpont-foltosítás"
 
 #: ../share/filters/filters.svg.h:44
-#, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Van Gogh-szerű festési effektus bitképekhez"
 
@@ -539,12 +531,10 @@ msgid "Highly flexible specular bump"
 msgstr "Rugalmas tükröződő bucka"
 
 #: ../share/filters/filters.svg.h:46
-#, fuzzy
 msgid "Cracked glass"
 msgstr "Törött üveg"
 
 #: ../share/filters/filters.svg.h:46
-#, fuzzy
 msgid "Under a cracked glass"
 msgstr "Törött üveg alatt"
 
@@ -568,9 +558,8 @@ msgid "Ridges"
 msgstr "Gerincek"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
 msgid "Bubble effect with refraction and glow"
-msgstr "Buborékeffektus fénytöréssel ... visszaverődés      és ragyogással"
+msgstr "Buborékeffektus fénytöréssel és ragyogással"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Neon"
@@ -593,9 +582,8 @@ msgid "Pressed steel"
 msgstr "Préselt acél"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Pressed metal with a rolled edge"
-msgstr "Préselt fém          széllel"
+msgstr "Préselt fém nyújtott széllel"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Matte bevel"
@@ -651,14 +639,10 @@ msgid "Illuminated translucent plastic or glass effect"
 msgstr "\"Megvilágított áttetsző műanyag vagy üveg\" effektus"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Cross-smooth"
-msgstr ""
-"íves "
-"Sima Finom"
+msgstr "Kereszt-simítás"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Blur inner borders and intersections"
 msgstr "Belső szegélyek és metszések elmosása"
 
@@ -667,9 +651,10 @@ msgid "Iridescent beeswax"
 msgstr "Szivárványszínekben játszó méhviasz"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr "Viaszos textúra, amely a színes kitöltés ... módosítása esetén is megőrzi a többszínűségét"
+msgstr ""
+"Viaszos textúra, amely a színkitöltés módosítása esetén is "
+"megőrzi a többszínűségét"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
@@ -720,22 +705,18 @@ msgid "Silk carpet texture, horizontal stripes"
 msgstr "Selyemszőnyeg-textúra, vízszintes csíkok"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Refractive gel A"
-msgstr "Fénytörő      visszaverő gél A"
+msgstr "Fénytörő gél A"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Gel effect with light refraction"
 msgstr "Géleffektus gyenge fénytöréssel"
 
 #: ../share/filters/filters.svg.h:67
-#, fuzzy
 msgid "Refractive gel B"
-msgstr "Fénytörő      visszaverő gél B"
+msgstr "Fénytörő gél B"
 
 #: ../share/filters/filters.svg.h:67
-#, fuzzy
 msgid "Gel effect with strong refraction"
 msgstr "Géleffektus erős fénytöréssel"
 
@@ -748,12 +729,10 @@ msgid "Metallized effect with a soft lighting, slightly translucent at the edges
 msgstr "Fémes effektus finom megvilágítással, kissé áttetsző a széleknél"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Dragee"
-msgstr "Ív húzása"
+msgstr "Drazsé"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Géles gerinc gyöngyszerű kinézettel"
 
@@ -858,14 +837,12 @@ msgid "Splattered cast metal, with golden highlights"
 msgstr "Foltos öntöttfém arany részekkel"
 
 #: ../share/filters/filters.svg.h:81
-#, fuzzy
 msgid "Gold paste"
-msgstr "Arany"
+msgstr "Aranypaszta"
 
 #: ../share/filters/filters.svg.h:81
-#, fuzzy
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr "öntöttfém arany részekkel"
+msgstr "Bevont öntöttfém arany részekkel"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Crumpled plastic"
@@ -908,16 +885,12 @@ msgid "Inner colorized shadow, outer black shadow"
 msgstr "Belső színezett árnyék, külső fekete árnyék"
 
 #: ../share/filters/filters.svg.h:87
-#, fuzzy
 msgid "Air spray"
-msgstr "Festékszóró ...."
+msgstr "Festékszóró"
 
 #: ../share/filters/filters.svg.h:87
-#, fuzzy
 msgid "Air Spray; adjust the Displacement Map amount"
-msgstr ""
-"Festékszóró -    "
-"Elmozdítási leképezés módosítás"
+msgstr "Festékszóró - az erősség az Elmozdítási leképezésnél módosítható"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Warm inside"
@@ -1033,12 +1006,10 @@ msgstr ""
 "a víz fényeit"
 
 #: ../share/filters/filters.svg.h:101
-#, fuzzy
 msgid "Soft focus lens"
-msgstr "Finom ...  lencse"
+msgstr "Életlen (soft focus) lencse"
 
 #: ../share/filters/filters.svg.h:101
-#, fuzzy
 msgid "Glowing image content without blurring it"
 msgstr "Ragyogó képtartalom elmosás nélkül"
 
@@ -1352,9 +1323,8 @@ msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Finom szivárványszínek a szélek mentén kissé megolvadva"
 
 #: ../share/filters/filters.svg.h:137
-#, fuzzy
 msgid "Flex metal"
-msgstr "fém "
+msgstr "Rugalmas fém"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -1458,14 +1428,12 @@ msgid "Brushed aluminium shader"
 msgstr "\"Csiszolt alumínium\" árnyaló"
 
 #: ../share/filters/filters.svg.h:155
-#, fuzzy
 msgid "Comics fluid"
-msgstr "Képregény"
+msgstr "Képregény, folyadékszerű"
 
 #: ../share/filters/filters.svg.h:155
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "A lap illesztése a rajzhoz"
+msgstr "Folyadékszerű, ecsettel készített rajzfilmszerű rajz"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
 #: ../share/filters/filters.svg.h:157
@@ -1482,12 +1450,8 @@ msgid "Chrome dark NR"
 msgstr "Króm, sötét, nem realisztikus"
 
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
-"A krómos árnyalás sötét változata "
-"tükröz "
-"szimulálás"
+msgstr "A krómos árnyalás sötét változata talajról való visszaverődés szimulálásával"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Wavy tartan"
@@ -1510,56 +1474,40 @@ msgid "3D wood"
 msgstr "3D faanyag"
 
 #: ../share/filters/filters.svg.h:162
-#, fuzzy
 msgid "3D warped, fibered wood texture"
-msgstr ""
-"Görbített  "
-"fa-textúra "
+msgstr "3D görbített, rostos fa-textúra"
 
 #: ../share/filters/filters.svg.h:163
 msgid "3D mother of pearl"
 msgstr "3D gyöngyház"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
-"Görbített "
-"gyöngyszerű"
-"Textúra "
+msgstr "\"3D görbített, szivárványszínekben játszó, gyöngyszerű burok\" textúra"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Tiger fur"
-msgstr ""
+msgstr "Tigrisszőrme"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr "minta Rézsútos szegély szél az objektum köré"
+msgstr "Tigrisszőrme-minta redőkkel, a szélek körül rézsútos szegély"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Shaken liquid"
-msgstr ""
+msgstr "Felrázott folyadék"
 
 #: ../share/filters/filters.svg.h:165
-#, fuzzy
 msgid "Colorizable filling with flow inside like transparency"
-msgstr ""
-"Színezhető kitöltés "
-"belül "
-"átlátszóság"
+msgstr "Színezhető kitöltés, folyadékszerű belső, átlátszóság"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Comics cream"
-msgstr "Képregény"
+msgstr "Képregény, krémes"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
-"Képregény "
-"árnyaló átlátszóság"
+msgstr "Képregényszerű árnyaló krémes hullámokkal és átlátszósággal"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black Light"
@@ -1570,9 +1518,8 @@ msgid "Light areas turn to black"
 msgstr "A világos területek feketék lesznek"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Light eraser"
-msgstr "Fényesség"
+msgstr "Fényradír"
 
 #: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:205
 #: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
@@ -1581,26 +1528,20 @@ msgid "Transparency utilities"
 msgstr "Átlátszósági funkciók"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr "objektum átlátszó"
+msgstr "Az objektum legvilágosabb részeinek progresszívan átlátszóvá tevése"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Noisy blur"
-msgstr "Elmosás módosítása"
+msgstr "Zajos elmosás"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr ""
-"kismértékű durvítása "
-"Lekerekített csúcsok átméretezése Durvábbá tevés Elmosás szél tartalom"
+msgstr "A szélek és a tartalom kismértékű durvítása és elmosása"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Film grain"
-msgstr "Kitöltési rajzolat"
+msgstr "Szemcsés réteg"
 
 #: ../share/filters/filters.svg.h:171
 msgid "HSL Bumps, transparent"
@@ -1617,49 +1558,36 @@ msgid "Drawing"
 msgstr "Rajz"
 
 #: ../share/filters/filters.svg.h:172
-#, fuzzy
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
-msgstr "Ceruza effektus kitöltés objektum"
+msgstr ""
+"Grafitceruza, kromolitográfia, gravírozás és egyéb effektusok "
+"a képekre és az anyaggal kitöltött objektumokra"
 
 #: ../share/filters/filters.svg.h:173
-#, fuzzy
 msgid "Velvet bump"
-msgstr "Bucka"
+msgstr "Bársonybucka"
 
 #: ../share/filters/filters.svg.h:173
-#, fuzzy
 msgid "Gives a smooth bump velvet like"
-msgstr ""
-"Sima Finom"
-"Bucka"
+msgstr "Finom, bársonyszerű bucka"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Alpha draw"
-msgstr "Alfa"
+msgstr "Alfa-rajzolás"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr ""
-"átlátszó "
-"rajz effektus bitképek"
+msgstr "Átlátszó rajzolási effektus a bitképekhez és az anyagokhoz"
 
 #: ../share/filters/filters.svg.h:175
-#, fuzzy
 msgid "Alpha draw, color"
-msgstr ""
-"alfa "
-"szín "
+msgstr "Alfa-rajzolás, színes"
 
 #: ../share/filters/filters.svg.h:175
-#, fuzzy
 msgid "Gives a transparent color fill effect to bitmaps and materials"
-msgstr ""
-"átlátszó szín kitöltés "
-"effektus bitképek"
+msgstr "Átlátszó színkitöltési effektus a bitképekhez és az anyagokhoz"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Chewing gum"
@@ -1714,293 +1642,224 @@ msgid "Darken the edges with an inner blur"
 msgstr "A szélek sötétítése belső elmosással"
 
 #: ../share/filters/filters.svg.h:182
-#, fuzzy
 msgid "Warped rainbow"
-msgstr ""
-"Görbített  "
-"Szivárvány"
+msgstr "Görbített szivárvány"
 
 #: ../share/filters/filters.svg.h:182
-#, fuzzy
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr ""
-"Sima Finom Szivárványszínek "
-"szél Görbített "
-"Színezhető"
+msgstr "Finom szivárványszínek a szélek mentén görbítve, színezhető"
 
 #: ../share/filters/filters.svg.h:183
-#, fuzzy
 msgid "Rough and dilate"
-msgstr "Durvábbá tevés"
+msgstr "Durva és nyújtott"
 
 #: ../share/filters/filters.svg.h:183
-#, fuzzy
 msgid "Create a turbulent contour around"
-msgstr ""
-"örvénylés kontúr "
-"létrehozása az objektum köré"
+msgstr "Örvénylő kontúr létrehozása az objektum köré"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid "Gelatine"
-msgstr "Kapcsolat"
+msgstr "Zselatin"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid "Colorizable filling with gelatin like turbulence and transparency"
-msgstr ""
-"Színezhető kitöltés "
-"örvénylés "
-"átlátszóság"
+msgstr "Színezhető kitöltés zselatinszerű örvényléssel és átlátszósággal"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Old postcard"
-msgstr ""
+msgstr "Régi képeslap"
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
-"kissé"
-"szél"
+"Enyhe posztereffektus, valamint régi nyomtatott képeslapokat "
+"idéző szélek rajzolása"
 
 #: ../share/filters/filters.svg.h:186
-#, fuzzy
 msgid "Fuzzy glow"
-msgstr "ragyogás "
+msgstr "Homályos ragyogás"
 
 #: ../share/filters/filters.svg.h:187
-#, fuzzy
 msgid "Dots transparency"
-msgstr "átlátszóság"
+msgstr "Pontok és átlátszóság"
 
 #: ../share/filters/filters.svg.h:187
-#, fuzzy
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr "átlátszóság"
+msgstr "Pontfestészet-szerű HSL-érzékeny átlátszóságot ad"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid "Canvas transparency"
-msgstr "rajzvászonátlátszóság"
+msgstr "Rajzvászon-átlátszóság"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr "átlátszóság rajzvászon"
+msgstr "Rajzvászon-szerű HSL-érzékeny átlátszóságot ad"
 
 #: ../share/filters/filters.svg.h:189
-#, fuzzy
 msgid "Smear transparency"
-msgstr "átlátszóság"
+msgstr "Foltok és átlátszóság"
 
 #: ../share/filters/filters.svg.h:189
-#, fuzzy
 msgid "Paint objects with a transparent turbulence which turn around color edges"
 msgstr ""
-"Objektumok megrajzolása "
-"átlátszó "
-"örvénylés "
-"szél "
-"szín "
+"Objektumok befestése átlátszó örvényléssel, amely a színes "
+"éleknél elfordul"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Thick paint"
-msgstr "VastagNincs megrajzolva"
+msgstr "Vastag festés"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Thick painting effect with turbulence"
-msgstr "Vastag effektus örvénylés"
+msgstr "Vastag festési effektus örvényléssel"
 
 #: ../share/filters/filters.svg.h:191
-#, fuzzy
 msgid "Burst"
-msgstr "Elmosás"
+msgstr "Kipukkadás"
 
 #: ../share/filters/filters.svg.h:191
-#, fuzzy
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
-"Gyűrődött "
-"Textúra Lyuk"
+msgstr "\"Kipukkadt léggömb\" textúra - gyűrődések és lyukak"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Embossed leather"
 msgstr "Domborított bőr"
 
 #: ../share/filters/filters.svg.h:192
-#, fuzzy
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
-"szél Bucka "
-"Színezhető "
-"bőrszerű "
-"fa "
-"Textúra "
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy bőrszerű "
+"vagy faanyag-szerű színezhető textúrával"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid "Carnaval"
-msgstr "Rajzvászon"
+msgstr "Karnevál"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid "White splotches evocating carnaval masks"
-msgstr "Pacák "
+msgstr "Karneváli maszkokat idéző fehér foltok"
 
 #: ../share/filters/filters.svg.h:194
-#, fuzzy
+# Definition: To soften a thermoplastic resin or compound
+#  by means of heat alone. Not similar to plasticize or plasticate.
 msgid "Plastify"
-msgstr "Sorkizárás"
+msgstr "Lágyítás hővel"
 
 #: ../share/filters/filters.svg.h:194
-#, fuzzy
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr "szél Bucka Hullámos tükröz felület effektus"
+msgstr ""
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy hullámos, "
+"tükröző felületet adó effektussal"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Plaster"
-msgstr "Beillesztés"
+msgstr "Vakolat"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
-msgstr "szél Bucka Gyűrődött felület effektus"
+msgstr ""
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy matt, "
+"gyűrődött felületet adó effektussal"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Rough transparency"
-msgstr "átlátszóság"
+msgstr "Durva átlátszóság"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Adds a turbulent transparency which displace pixels at the same time"
-msgstr ""
-"örvénylés "
-"átlátszóság "
-"Elmozdítás "
-"Képpont"
+msgstr "Örvénylő átlátszóság, amely a képpontokat el is mozdítja"
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
 msgid "Gouache"
-msgstr "Forrás"
+msgstr "Fedőfesték (gouache)"
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
 msgid "Partly opaque water color effect with bleed"
-msgstr "átlátszatlan vízfesték-effektus"
+msgstr "Részben átlátszatlan vízfesték-effektus elfolyással"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Alpha engraving"
-msgstr "Alfa"
+msgstr "Alfa-gravírozás"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr ""
-"átlátszó "
-"effektus kitöltés "
+msgstr "Átlátszó gravírozási effektus durva vonalakkal és kitöltéssel"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Alpha draw, liquid"
-msgstr "Alfa"
+msgstr "Alfa-rajzolás, folyadékszerű"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr ""
-"átlátszó "
-"rajz effektus kitöltés"
+msgstr "Átlátszó folyadékszerű rajzeffektus durva vonalakkal és kitöltéssel"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Liquid drawing"
-msgstr "rajz%s"
+msgstr "Folyadékszerű rajz"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr ""
-"Hullámos "
-"rajz effektus bitképek"
+msgstr "Folyadékszerű, hullámos, expresszionista rajzeffektust ad a képekhez"
 
 #: ../share/filters/filters.svg.h:201
-#, fuzzy
 msgid "Marbled ink"
-msgstr "Márvány Tinta"
+msgstr "Márványszerű tinta"
 
 #: ../share/filters/filters.svg.h:201
-#, fuzzy
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr "Márvány átlátszóság effektus "
+msgstr "Márványszerű átlátszósági effektus, alkalmazkodik a kép éleihez"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Thick acrylic"
-msgstr "VastagNincs megrajzolva"
+msgstr "Vastag akril"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Thick acrylic paint texture with high texture depth"
-msgstr "Textúra mélység "
+msgstr "\"Vastag akrilfestés\" textúra nagy textúramélységgel"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Alpha engraving B"
-msgstr "alfa"
+msgstr "Alfa-gravírozás B"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
-msgstr "rajz effektus bitképek"
+msgstr "Állítható durvaságú gravírozási effektus a bitképekhez és az anyagokhoz"
 
 #: ../share/filters/filters.svg.h:204
-#, fuzzy
 msgid "Lapping"
-msgstr "Illesztés"
+msgstr "Partot nyaldosó víz"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Something like a water noise"
-msgstr ""
+msgstr "Egyfajta vízszerű zaj"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Monochrome positive"
-msgstr ""
+msgstr "Monokróm pozitív"
 
 #: ../share/filters/filters.svg.h:205
-#, fuzzy
 msgid "Convert to a Colorizable transparent positive"
-msgstr ""
-"Színezhető "
-"átlátszó"
+msgstr "Átalakítás színezhető átlátszó pozitívvá"
 
 #: ../share/filters/filters.svg.h:206
 msgid "Monochrome negative"
-msgstr ""
+msgstr "Monokróm negatív"
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Convert to a colorizable transparent negative"
-msgstr ""
-"Színezhető "
-"átlátszó"
+msgstr "Átalakítás színezhető átlátszó negatívvá"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Light eraser, negative"
-msgstr ""
+msgstr "Fényradír, negatív"
 
 #: ../share/filters/filters.svg.h:207
-#, fuzzy
 msgid "Invert and make the lightest parts of the object progressively transparent"
-msgstr "objektum átlátszó"
+msgstr ""
+"Invertálás, majd az objektum legvilágosabb részeinek progresszívan "
+"átlátszóvá tevése"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Repaint"
@@ -2020,56 +1879,42 @@ msgstr "Az objektum kivágása egy színezhető átlátszatlan területből"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Riddled"
-msgstr "Közép"
+msgstr "Lyuggatott"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Riddle the surface and add bump to images"
-msgstr "felület Bucka"
+msgstr "A felület lyuggatása és buckák hozzáadása a képekhez"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Wrinkled varnish"
-msgstr ""
+msgstr "Redőzött fényezés"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr ""
-"fényes "
-"áttetsző "
-"Textúra mélység "
+msgstr "Vastag, fényes, áttetsző festési textúra nagy mélységgel"
 
 #: ../share/filters/filters.svg.h:212
-#, fuzzy
 msgid "Canvas Bumps"
 msgstr "Rajzvászon-buckák"
 
 #: ../share/filters/filters.svg.h:212
-#, fuzzy
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
-"rajzvászon "
-"Textúra "
+msgstr "Rajzvászon-textúra HSL-érzékeny magassági leképezéssel"
 
 #: ../share/filters/filters.svg.h:213
-#, fuzzy
 msgid "Canvas Bumps, matte"
 msgstr "Rajzvászon-buckák, matt"
 
 #: ../share/filters/filters.svg.h:213
-#, fuzzy
 msgid "Same than Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de tükröződő helyett szórt fénnyel"
 
 #: ../share/filters/filters.svg.h:214
-#, fuzzy
 msgid "Canvas Bumps alpha"
 msgstr "Rajzvászon-buckák, alfa"
 
 #: ../share/filters/filters.svg.h:214
-#, fuzzy
 msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de átlátszó részekkel"
 
@@ -20840,7 +20685,6 @@ msgstr ""
 "funkcióval lehetséges)"
 
 #: ../share/extensions/dimension.py:99
-#, fuzzy
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr "Az objektum nem dolgozható fel. Alakítsa először útvonallá."
 
@@ -20921,33 +20765,32 @@ msgid "Difficulty finding the image data."
 msgstr "A képadat nem található."
 
 #: ../share/extensions/inkex.py:66
-#, fuzzy
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
 "this extension. Please download and install the latest version from http://"
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
-"Az inkex.py - és vele együtt ez a kiterjesztés - igényli az lxml nevű ... "
-"libxml2-csomagolót (wrapper). Töltse le és telepítse az aktuális verziót a http://"
-"cheeseshop.python.org/pypi/lxml/ oldalról, vagy telepítse a "
+"Az inkex.py - és vele együtt ez a kiterjesztés - igényli az lxml nevű "
+"libxml2-csomagolót (wrapper). Töltse le és telepítse az aktuális verziót "
+"a http://cheeseshop.python.org/pypi/lxml/ oldalról, vagy telepítse a "
 "csomagkezelőjével (például a \"sudo apt-get install python-lxml\" vagy "
 "hasonló paranccsal)."
 
 #: ../share/extensions/inkex.py:213
-#, fuzzy, python-format
+#, python-format
 msgid "No matching node for expression: %s"
-msgstr "Csomópont kifejezés"
+msgstr "Nincs illeszkedő csomópont ehhez a kifejezéshez: %s"
 
 #: ../share/extensions/markers_strokepaint.py:41
-#, fuzzy, python-format
+#, python-format
 msgid "No style attribute found for id: %s"
-msgstr "Nem található stílusattribútum    for id: %s"
+msgstr "Nem található stílusattribútum ehhez az azonosítóhoz: %s"
 
 #: ../share/extensions/markers_strokepaint.py:56
-#, fuzzy, python-format
+#, python-format
 msgid "unable to locate marker: %s"
-msgstr "jelölőelem Nem található"
+msgstr "nem található ilyen jelölőelem: %s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
@@ -20957,9 +20800,9 @@ msgid "This extension requires two selected paths."
 msgstr "Ennek a kiterjesztésnek szüksége van két kijelölt útvonalra."
 
 #: ../share/extensions/pathmodifier.py:229
-#, fuzzy, python-format
+#, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr "Először alakítsa útvonalakká az objektumokat. (Hiba: [%s].)"
+msgstr "Először alakítsa útvonalakká az objektumokat. (Típus: [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid ""
@@ -21064,9 +20907,9 @@ msgid "The second path must be exactly four nodes long."
 msgstr "A második útvonalnak pontosan 4 csomópont hosszúságúnak kell lennie."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
-#, fuzzy, python-format
+#, python-format
 msgid "Could not locate file: %s"
-msgstr "Nem található a fájl: %s"
+msgstr "Nem található \"%s\" nevű fájl"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -21402,14 +21245,12 @@ msgid "Draw From Triangle"
 msgstr "Rajzolás háromszög alapján"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
-#, fuzzy
 msgid "Draw Isogonal Conjugate"
 msgstr "Izogonális konjugált rajzolása"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
-#, fuzzy
 msgid "Draw Isotomic Conjugate"
-msgstr "konjugált rajzolása"
+msgstr "Izotom konjugált rajzolása"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
@@ -21488,14 +21329,12 @@ msgid "Symmedians"
 msgstr "Szimmediánok"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid "Triangle Function"
 msgstr "Háromszög-függvény"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "Koordináták"
+msgstr "Trilineáris koordináták"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -21515,14 +21354,12 @@ msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Az AutoCAD-féle \"Document Exchange Format\" formátum importálása"
 
 #: ../share/extensions/dxf_input.inx.h:5
-#, fuzzy
 msgid "Or, use manual scale factor"
-msgstr "Vagy használjon kézi méretezési tényezőt"
+msgstr "Vagy használja ezt a méretezési tényezőt"
 
 #: ../share/extensions/dxf_input.inx.h:6
-#, fuzzy
 msgid "Use automatic scaling to size A4"
-msgstr "Automatikus méretezés használata "
+msgstr "Automatikus méretezés A4 méretre"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -21835,12 +21672,10 @@ msgid "GIMP XCF maintaining layers (*.XCF)"
 msgstr "GIMP-XCF a rétegek megtartásával (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
-#, fuzzy
 msgid "Save Grid:"
 msgstr "Rács mentése:"
 
 #: ../share/extensions/gimp_xcf.inx.h:4
-#, fuzzy
 msgid "Save Guides:"
 msgstr "Segédvonalak mentése:"
 
@@ -22707,7 +22542,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.inx.h:6
 #, fuzzy
 msgid "Draw Back-Facing Polygons"
-msgstr "sokszögek"
+msgstr "sokszögek rajzolása"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 #, fuzzy
