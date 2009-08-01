@@ -302,6 +302,8 @@ parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", opt
 parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
 parser.add_option("--encoding", action="store", type="string", dest="input_encode", default="latin_1")
+parser.add_option("--tab", action="store", type="string", dest="tab", default="Options")
+parser.add_option("--inputhelp", action="store", type="string", dest="inputhelp", default="")
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
 desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
