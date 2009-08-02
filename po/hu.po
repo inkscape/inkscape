@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-26 18:21+0200\n"
-"PO-Revision-Date: 2009-08-01 23:01+0200\n"
+"PO-Revision-Date: 2009-08-02 18:20+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -4838,7 +4838,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
-msgstr "Árnyékolás"
+msgstr "Árnyalás"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
 #: ../src/ui/dialog/filter-effects-dialog.cpp:955
@@ -4852,11 +4852,11 @@ msgstr "Emelkedési szög (eleváció)"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
 msgid "Colored Shading"
-msgstr "Színes árnyékolás"
+msgstr "Színes árnyalás"
 
 #: ../src/extension/internal/bitmap/shade.cpp:49
 msgid "Shade selected bitmap(s) simulating distant light source."
-msgstr "A kijelölt bitkép(ek) árnyékolása távoli fényforrást szimulálva"
+msgstr "A kijelölt bitkép(ek) árnyalása távoli fényforrást szimulálva"
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
 msgid "Sharpen selected bitmap(s)."
@@ -12463,7 +12463,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 "Az <b>feDiffuseLighting</b> (szórt (diffúz) fény) és az feSpecularLighting "
-"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyékolás hozható "
+"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható "
 "létre. A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
 "átlátszatlanságú területek kiemelkednek a szemlélő felé, a kisebb "
 "átlátszatlanságúak pedig hátrébb helyezkednek el."
@@ -12549,7 +12549,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 "Az feDiffuseLighting (szórt (diffúz) fény) és az <b>feSpecularLighting</b> "
-"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyékolás hozható "
+"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható "
 "létre. A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
 "átlátszatlanságú területek kiemelkednek a szemlélő felé, a kisebb "
 "átlátszatlanságúak pedig hátrébb helyezkednek el."
@@ -20872,35 +20872,34 @@ msgstr ""
 "paranccsal."
 
 #: ../share/extensions/polyhedron_3d.py:331
-#, fuzzy
 msgid "No face data found in specified file."
-msgstr "Nem található"
+msgstr "A megadott fájlban nem találhatók oldaladatok."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Válassza az \"Élekkel megadott\" opciót a Modellfájl lapon.\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
-#, fuzzy
 msgid "No edge data found in specified file."
-msgstr "szél Nem található"
+msgstr "A megadott fájlban nem találhatók éladatok."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Válassza az \"Oldalakkal megadott\" opciót a Modellfájl lapon.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
-#, fuzzy
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr "Nem található"
+msgstr ""
+"Oldaladatok nem találhatók. Olyan fájlt adjon meg, amely oldaladatokat "
+"tartalmaz, és ellenőrizze, hogy a fájl \"Oldalakkal megadott\" módban "
+"van-e importálva (Modellfájl lap).\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
-#, fuzzy
 msgid "Internal Error. No view type selected\n"
-msgstr "Belső hiba. Nincs kijelölve ... view type\n"
+msgstr "Belső hiba. Nincs kijelölve nézettípus.\n"
 
 #: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
@@ -21680,164 +21679,140 @@ msgid "Save Guides:"
 msgstr "Segédvonalak mentése:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
-#, fuzzy
 msgid "Border Thickness [px]"
-msgstr ""
-"szegély "
-"Keretvastagság (px)"
+msgstr "Keretvastagság (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
 msgstr "Descartes-rács"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
-#, fuzzy
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "frekvencia"
+msgstr "X-al-alcellák frekvenciájának felezése \"n\" alcella után (csak logaritmus)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
-#, fuzzy
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "frekvencia"
+msgstr "Y-al-alcellák frekvenciájának felezése \"n\" alcella után (csak logaritmus)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "X-alcella: logaritmikus (az alap a fenti bejegyzés)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Y-alcella: logaritmikus (az alap a fenti bejegyzés)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
-#, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr "Vízszintes helykihagyás"
+msgstr "X-főcellák mérete (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "Felosztás Vastagság"
+msgstr "X-főcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
-#, fuzzy
 msgid "Major X Divisions"
-msgstr "Felosztás"
+msgstr "X-főcellák száma"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing [px]"
-msgstr "Vízszintes helykihagyás"
+msgstr "Y-főcellák mérete (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "Felosztás Vastagság"
+msgstr "Y-főcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions"
-msgstr "Felosztás"
+msgstr "Y-főcellák száma"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "Felosztás Vastagság"
+msgstr "X-alcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "Felosztás Vastagság"
+msgstr "Y-alcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
-msgstr ""
+msgstr "X-főcellánkénti alcellák száma"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 msgid "Subdivisions per Major Y Division"
-msgstr ""
+msgstr "Y-főcellánkénti alcellák száma"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
-#, fuzzy
 msgid "Subminor X Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "X-al-alcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
-#, fuzzy
 msgid "Subminor Y Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "Y-al-alcellák közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
-msgstr ""
+msgstr "X-alcellánkénti al-alcellák száma"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "Y-alcellánkénti al-alcellák száma"
 
 #: ../share/extensions/grid_polar.inx.h:1
-#, fuzzy
 msgid "Angle Divisions"
-msgstr "szög Felosztás"
+msgstr "Fö-körcikkek száma"
 
 #: ../share/extensions/grid_polar.inx.h:2
-#, fuzzy
 msgid "Angle Divisions at Centre"
-msgstr "szög "
+msgstr "Körcikkek száma a középpontnál"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
-msgstr ""
+msgstr "Középpontot jelző kör átmérője (px)"
 
 #: ../share/extensions/grid_polar.inx.h:4
-#, fuzzy
 msgid "Circumferential Label Outset [px]"
-msgstr "nyújtás"
+msgstr "Kerületi címkék távolsága a rácstól (px)"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr ""
+msgstr "Kerületi címkék mérete (px)"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "Kerületi címkék"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Al-körszekció: logaritmikus (az alap a fenti bejegyzés)"
 
 #: ../share/extensions/grid_polar.inx.h:9
-#, fuzzy
 msgid "Major Angular Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "Fö-körcikkek közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_polar.inx.h:10
-#, fuzzy
 msgid "Major Circular Division Spacing [px]"
-msgstr "Vízszintes helykihagyás"
+msgstr "Fő-körszekciók mérete (px)"
 
 #: ../share/extensions/grid_polar.inx.h:11
-#, fuzzy
 msgid "Major Circular Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "Fö-körszekciók közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
-msgstr ""
+msgstr "Fő-körszekciók száma"
 
 #: ../share/extensions/grid_polar.inx.h:13
-#, fuzzy
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr "szög "
+msgstr "Az al-körcikkek közti vonal ennyi fő-körszekcióval a középpont előtt végződik"
 
 #: ../share/extensions/grid_polar.inx.h:14
-#, fuzzy
 msgid "Minor Angular Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "Al-körcikkek közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_polar.inx.h:15
-#, fuzzy
 msgid "Minor Circular Division Thickness [px]"
-msgstr "Vastagság"
+msgstr "Al-körszekciók közti vonal vastagsága (px)"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -21845,11 +21820,11 @@ msgstr "Poláris rács"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "Fő-körcikkenkénti al-körcikkek száma"
 
 #: ../share/extensions/grid_polar.inx.h:20
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "Fő-körszekciónkénti al-körszekciók száma"
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
@@ -22523,237 +22498,206 @@ msgid "3D Polyhedron"
 msgstr "3D poliéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise Wound Object"
-msgstr "Objektum feloldása"
+msgstr "Az objektum körüljárási iránya az óramutató járásának iránya"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
-msgstr ""
+msgstr "Kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Cuboctohedron"
-msgstr ""
+msgstr "Kuboktaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
-msgstr ""
+msgstr "Dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw Back-Facing Polygons"
-msgstr "sokszögek rajzolása"
+msgstr "Hátrafelé néző sokszögek rajzolása"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
-#, fuzzy
 msgid "Edge-Specified"
-msgstr "szél"
+msgstr "Élekkel megadott"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
-#, fuzzy
 msgid "Edges"
-msgstr "Szél"
+msgstr "Élek"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "Oldalakkal megadott"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
-#, fuzzy
 msgid "Faces"
-msgstr "Laposság"
+msgstr "Oldalak"
 
 #: ../share/extensions/polyhedron_3d.inx.h:11
-#, fuzzy
 msgid "Filename:"
 msgstr "Fájlnév:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill Colour (Blue)"
 msgstr "Kitöltési szín (kék)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill Colour (Green)"
 msgstr "Kitöltési szín (zöld)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill Colour (Red)"
 msgstr "Kitöltési szín (vörös)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
 #, no-c-format
-#, fuzzy
 msgid "Fill Opacity/ %"
 msgstr "Kitöltés átlátszatlansága (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
-msgstr ""
+msgstr "Nagy dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:18
 msgid "Great Stellated Dodecahedron"
-msgstr ""
+msgstr "Nagy csillag-dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
-msgstr ""
+msgstr "Ikozaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light x-Position"
 msgstr "A fény x-pozíciója"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light y-Position"
 msgstr "A fény y-pozíciója"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light z-Position"
 msgstr "A fény z-pozíciója"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Line Thickness / px"
 msgstr "Vonalvastagság (px)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
-#, fuzzy
 msgid "Load From File"
 msgstr "Betöltés fájlból"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
-#, fuzzy
 msgid "Maximum"
-msgstr "Közepes"
+msgstr "Maximum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Mean"
-msgstr ""
+msgstr "Középérték"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Minimum"
-msgstr "Minimális méret"
+msgstr "Minimum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28
-#, fuzzy
 msgid "Model File"
-msgstr "Az összes fájl"
+msgstr "Modellfájl"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
-#, fuzzy
 msgid "Object Type"
 msgstr "Objektumtípus"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
-#, fuzzy
 msgid "Object:"
-msgstr "Objektum"
+msgstr "Objektum:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
-#, fuzzy
 msgid "Octahedron"
-msgstr "Egyéb"
+msgstr "Oktaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotate Around:"
-msgstr "elforgatás "
+msgstr "Elforgatás ezen tengely körül:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Rotation / Degrees"
 msgstr "Elforgatás (fok)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Scaling Factor"
 msgstr "Méretezési tényező"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Shading"
-msgstr "Árnyékolás"
+msgstr "Árnyalás"
 
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "Kis triambikus ikozaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
-msgstr ""
+msgstr "Pisze kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "Pisze dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
-#, fuzzy
 msgid "Stroke Opacity/ %"
 msgstr "Körvonal átlátszatlansága (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
-msgstr ""
+msgstr "Tetraéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then Rotate Around:"
-msgstr "nem lekerekített"
+msgstr "Majd elforgatás ezen tengely körül:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
-msgstr ""
+msgstr "Csonkított kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "Csonkított dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "Csonkított ikozaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
-msgstr ""
+msgstr "Csonkított oktaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "Csonkított tetraéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
-msgstr ""
+msgstr "Csúcsok"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
-#, fuzzy
 msgid "View"
 msgstr "Nézet"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
-#, fuzzy
 msgid "X-Axis"
 msgstr "X tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
-#, fuzzy
 msgid "Y-Axis"
 msgstr "Y tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
-#, fuzzy
 msgid "Z-Axis"
 msgstr "Z tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "Oldalak z-rendezése ez alapján:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -23511,36 +23455,3 @@ msgstr "Windows Metafile-bemenet"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML-bemenet"
-
-#, fuzzy
-#~ msgid ""
-#~ "Highly flexible bubbles effect depending on color hue saturation and "
-#~ "luminance"
-#~ msgstr "effektus"
-
-#~ msgid "Mask and transparency effects"
-#~ msgstr "Maszkeffektusok és átlátszósági effektusok"
-
-#, fuzzy
-#~ msgid "HSL bubbles, diffuse"
-#~ msgstr "0 (átlátszó)"
-
-#, fuzzy
-#~ msgid "HSL bubbles, transparent"
-#~ msgstr "0 (átlátszó)"
-
-#, fuzzy
-#~ msgid "Highly flexible specular bubbles with transparency"
-#~ msgstr "Tükröződő átlátszóság"
-
-#, fuzzy
-#~ msgid "Thick paint, glossy"
-#~ msgstr "Vastag"
-
-#, fuzzy
-#~ msgid "Thick painting effect with turbulence and a glossy varnish"
-#~ msgstr "Vastageffektus"
-
-#~ msgid "draw-geometry-inactive"
-#~ msgstr "rajzolás-geometria-inaktív"
-
