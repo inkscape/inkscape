@@ -405,7 +405,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
  *  \param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred
  *  \param guide_normal Vector normal to the guide line
  */
-void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal) const
+void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const
 {
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
         return;
@@ -415,21 +415,26 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal)
         return;
     }
 
+    Inkscape::SnapSourceType source_type = Inkscape::SNAPSOURCE_GUIDE_ORIGIN;
+    if (drag_type == SP_DRAG_ROTATE) {
+    	source_type = Inkscape::SNAPSOURCE_GUIDE;
+    }
+
     // Snap to nodes
     SnappedConstraints sc;
     if (object.GuidesMightSnap()) {
         object.guideFreeSnap(sc, p, guide_normal);
     }
 
-    // Snap to guides
-    if (snapprefs.getSnapToGuides()) {
-        guide.freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE, true, Geom::OptRect(), NULL, NULL);
-    }
+    // Snap to guides & grid lines
+    SnapperList snappers = getGridSnappers();
+    snappers.push_back(&guide);
+	for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+		(*i)->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, true, Geom::OptRect(), NULL, NULL);
+	}
 
-    // We won't snap to grids, what's the use?
-
-    // Including snapping to intersections of curves, but not to the curves themself! (see _snapTranslatingGuideToNodes in object-snapper.cpp)
-    Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false, true);
+    // Snap to intersections of curves, but not to the curves themselves! (see _snapTranslatingGuideToNodes in object-snapper.cpp)
+    Inkscape::SnappedPoint const s = findBestSnap(p, source_type, sc, false, true);
 
     s.getPoint(p);
 }
@@ -458,21 +463,23 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
         return;
     }
 
+    Inkscape::SnapSourceType source_type = Inkscape::SNAPSOURCE_GUIDE_ORIGIN;
+
     // Snap to nodes or paths
     SnappedConstraints sc;
     Inkscape::Snapper::ConstraintLine cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
     if (object.ThisSnapperMightSnap()) {
-        object.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, true, Geom::OptRect(), cl, NULL);
+        object.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, true, Geom::OptRect(), cl, NULL);
     }
 
-    // Snap to guides
-    if (snapprefs.getSnapToGuides()) {
-        guide.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, true, Geom::OptRect(), cl, NULL);
-    }
+    // Snap to guides & grid lines
+	SnapperList snappers = getGridSnappers();
+	snappers.push_back(&guide);
+	for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+		(*i)->constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, true, Geom::OptRect(), cl, NULL);
+	}
 
-    // We won't snap to grids, what's the use?
-
-    Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false);
+    Inkscape::SnappedPoint const s = findBestSnap(p, source_type, sc, false);
     s.getPoint(p);
 }
 

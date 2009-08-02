@@ -150,7 +150,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 // We only have a temporary guide which is not stored in our document yet.
                 // Because the guide snapper only looks in the document for guides to snap to,
                 // we don't have to worry about a guide snapping to itself here
-                m.guideFreeSnap(event_dt, normal);
+                m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
                 desktop->set_coordinate_status(to_2geom(event_dt));
@@ -168,7 +168,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 // We only have a temporary guide which is not stored in our document yet.
                 // Because the guide snapper only looks in the document for guides to snap to,
                 // we don't have to worry about a guide snapping to itself here
-                m.guideFreeSnap(event_dt, normal);
+                m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
 
                 dragging = false;
 
@@ -212,15 +212,6 @@ int sp_dt_vruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
 {
     return sp_dt_ruler_event(widget, event, dtw, false);
 }
-
-/* Guides */
-enum SPGuideDragType {
-    SP_DRAG_TRANSLATE,
-    SP_DRAG_TRANSLATE_CONSTRAINED, // Is not being used currently!
-    SP_DRAG_ROTATE,
-    SP_DRAG_MOVE_ORIGIN,
-    SP_DRAG_NONE
-};
 
 static Geom::Point drag_origin;
 static SPGuideDragType drag_type = SP_DRAG_NONE;
@@ -303,19 +294,13 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     motion_dt = line.pointAt(t);
                     m.guideConstrainedSnap(motion_dt, *guide);
                 } else {
-                    m.guideFreeSnap(motion_dt, guide->normal_to_line);
+                    m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
                 }
 
                 switch (drag_type) {
                     case SP_DRAG_TRANSLATE:
                     {
                         sp_guide_moveto(*guide, motion_dt, false);
-                        break;
-                    }
-                    case SP_DRAG_TRANSLATE_CONSTRAINED: // Is not being used currently!
-                    {
-                        Geom::Point pt_constr = Geom::constrain_angle(guide->point_on_line, motion_dt);
-                        sp_guide_moveto(*guide, pt_constr, false);
                         break;
                     }
                     case SP_DRAG_ROTATE:
@@ -368,7 +353,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         event_dt = line.pointAt(t);
                     	m.guideConstrainedSnap(event_dt, *guide);
                     } else {
-                        m.guideFreeSnap(event_dt, guide->normal_to_line);
+                        m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
                     }
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
@@ -376,12 +361,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             case SP_DRAG_TRANSLATE:
                             {
                                 sp_guide_moveto(*guide, event_dt, true);
-                                break;
-                            }
-                            case SP_DRAG_TRANSLATE_CONSTRAINED: // Is not being used currently!
-                            {
-                                Geom::Point pt_constr = Geom::constrain_angle(guide->point_on_line, event_dt);
-                                sp_guide_moveto(*guide, pt_constr, true);
                                 break;
                             }
                             case SP_DRAG_ROTATE:
