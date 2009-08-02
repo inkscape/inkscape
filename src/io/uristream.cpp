@@ -429,7 +429,10 @@ void UriOutputStream::put(int ch) throw(StreamException)
             if (!outf)
                 return;
             uch = (unsigned char)(ch & 0xff);
-            fputc(uch, outf);
+            if (fputc(uch, outf) == EOF) {
+                Glib::ustring err = "ERROR writing to file ";
+                throw StreamException(err);
+            }
             //fwrite(uch, 1, 1, outf);
         break;
 
