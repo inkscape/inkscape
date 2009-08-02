@@ -247,15 +247,16 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
-    // remember attributes in case this is an unofficial save
+
+    // remember attributes in case this is an unofficial save and/or overwrite fails
+    gchar *saved_uri = g_strdup(doc->uri);
     bool saved_modified = false;
     gchar *saved_output_extension = NULL;
     gchar *saved_dataloss = NULL;
-    if (!official) {
-        saved_modified = doc->isModifiedSinceSave();
-        saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
-        saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
-    } else {
+    saved_modified = doc->isModifiedSinceSave();
+    saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
+    saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
+    if (official) {
         /* The document is changing name/uri. */
         sp_document_change_uri_and_hrefs(doc, fileName);
     }
@@ -281,11 +282,23 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         omod->save(doc, fileName);
     }
     catch(...) {
-        // free used ressources
-        if ( !official) {
-            g_free(saved_output_extension);
-            g_free(saved_dataloss);
+        // revert attributes in case of official and overwrite
+        if(check_overwrite && official) {
+            bool const saved = sp_document_get_undo_sensitive(doc);
+            sp_document_set_undo_sensitive(doc, false);
+            {
+                repr->setAttribute("inkscape:output_extension", saved_output_extension);
+                repr->setAttribute("inkscape:dataloss", saved_dataloss);
+            }
+            sp_document_set_undo_sensitive(doc, saved);
+            sp_document_change_uri_and_hrefs(doc, saved_uri);
         }
+        doc->setModifiedSinceSave(saved_modified);
+        // free used ressources
+        g_free(saved_output_extension);
+        g_free(saved_dataloss);
+        g_free(saved_uri);
+
         g_free(fileName);
 
         throw Inkscape::Extension::Output::save_failed();
