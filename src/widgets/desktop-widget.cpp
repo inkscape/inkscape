@@ -112,6 +112,7 @@ static void sp_dtw_zoom_200 (GtkMenuItem *item, gpointer data);
 static void sp_dtw_zoom_page (GtkMenuItem *item, gpointer data);
 static void sp_dtw_zoom_drawing (GtkMenuItem *item, gpointer data);
 static void sp_dtw_zoom_selection (GtkMenuItem *item, gpointer data);
+static void sp_dtw_sticky_zoom_toggled (GtkMenuItem *item, gpointer data);
 
 SPViewWidgetClass *dtw_parent_class;
 
@@ -379,6 +380,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
                                                  dtw->tt);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->sticky_zoom, FALSE, FALSE, 0);
+    g_signal_connect (G_OBJECT (dtw->sticky_zoom), "toggled", G_CALLBACK (sp_dtw_sticky_zoom_toggled), dtw);
     dtw->vadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
     dtw->vscrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (dtw->vadj));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
@@ -659,7 +661,9 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
             /* Find new visible area */
             Geom::Rect newarea = dtw->desktop->get_display_area();
             /* Calculate adjusted zoom */
-            zoom *= sqrt(newarea.area() / area.area());
+            double oldshortside = MIN(   area.width(),    area.height());
+            double newshortside = MIN(newarea.width(), newarea.height());
+            zoom *= newshortside / oldshortside;
         }
         dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
 
@@ -1613,6 +1617,13 @@ sp_dtw_zoom_selection (GtkMenuItem */*item*/, gpointer data)
     static_cast<SPDesktop*>(data)->zoom_selection();
 }
 
+static void
+sp_dtw_sticky_zoom_toggled (GtkMenuItem *, gpointer data)
+{
+    SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/options/stickyzoom/value", SP_BUTTON_IS_DOWN(dtw->sticky_zoom));
+}
 
 
 void
