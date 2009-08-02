@@ -7,7 +7,7 @@
  *
  *    Authors:
  *      Carl Hetherington <inkscape@carlh.net>
- * 		Diederik van Lierop <mail@diedenrezi.nl>
+ *      Diederik van Lierop <mail@diedenrezi.nl>
  *
  * 	  Copyright (C) 1999-2008 Authors
  *
@@ -55,6 +55,10 @@ private:
   virtual LineList _getSnapLines(Geom::Point const &p) const = 0;
 
   virtual void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, Geom::Point const normal_to_line, Geom::Point const point_on_line) const = 0;
+
+  // Will only be implemented for guide lines, because grid lines don't have an origin
+  virtual void _addSnappedLinesOrigin(SnappedConstraints &sc, Geom::Point const origin, Geom::Coord const snapped_distance, SnapSourceType const &source) const;
+
   virtual void _addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source) const = 0;
 };
 

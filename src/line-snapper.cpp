@@ -14,7 +14,7 @@
 #include <2geom/line.h>
 #include "line-snapper.h"
 #include "snapped-line.h"
-#include <gtk/gtk.h>
+//#include <gtk/gtk.h>
 #include "snap.h"
 
 Inkscape::LineSnapper::LineSnapper(SnapManager *sm, Geom::Coord const d) : Snapper(sm, d)
@@ -30,7 +30,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
                                                     std::vector<SPItem const *> const */*it*/,
                                                     std::vector<std::pair<Geom::Point, int> > */*unselected_nodes*/) const
 {
-	if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(t)) ) {
+    if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(t)) ) {
         return;
     }
 
@@ -50,6 +50,15 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
         //Store any line that's within snapping range
         if (dist < getSnapperTolerance()) {
             _addSnappedLine(sc, p_proj, dist, source_type, i->first, i->second);
+            // For any line that's within range, we will also look at it's "point on line" p1. For guides
+            // this point coincides with its origin; for grids this is of no use, but we cannot
+            // discern between grids and guides here
+            Geom::Coord const dist_p1 = Geom::L2(p1 - p);
+            if (dist_p1 < getSnapperTolerance()) {
+                _addSnappedLinesOrigin(sc, p1, dist_p1, source_type);
+                // Only relevant for guides; grids don't have an origin per line
+                // Therefore _addSnappedLinesOrigin() will only be implemented for guides
+            }
             // std::cout << " -> distance = " << dist;
         }
         // std::cout << std::endl;
@@ -75,33 +84,54 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
 
     for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
         if (Geom::L2(c.getDirection()) > 0) { // Can't do a constrained snap without a constraint
-        	Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p;
+            // constraint line
+            Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p;
             Geom::Line line1(point_on_line, point_on_line + c.getDirection());
-            Geom::Line line2(i->second, i->second + Geom::rot90(i->first));
+
+            // grid/guide line
+            Geom::Point const p1 = i->second; // point at guide/grid line
+            Geom::Point const p2 = p1 + Geom::rot90(i->first); // 2nd point at guide/grid line
+            Geom::Line line2(p1, p2);
+
             Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
             try
             {
-            	inters = Geom::intersection(line1, line2);
+                inters = Geom::intersection(line1, line2);
             }
             catch (Geom::InfiniteSolutions e)
             {
-            	// We're probably dealing with parallel lines, so snapping doesn't make any sense here
-            	continue; // jump to the next iterator in the for-loop
+                // We're probably dealing with parallel lines, so snapping doesn't make any sense here
+                continue; // jump to the next iterator in the for-loop
             }
 
-			if (inters) {
-				Geom::Point t = line1.pointAt((*inters).ta);
-            	const Geom::Coord dist = Geom::L2(t - p);
+            if (inters) {
+                Geom::Point t = line1.pointAt((*inters).ta);
+                const Geom::Coord dist = Geom::L2(t - p);
                 if (dist < getSnapperTolerance()) {
-    				// When doing a constrained snap, we're already at an intersection.
+                    // When doing a constrained snap, we're already at an intersection.
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
                     _addSnappedPoint(sc, t, dist, source_type);
+                    // For any line that's within range, we will also look at it's "point on line" p1. For guides
+                    // this point coincides with its origin; for grids this is of no use, but we cannot
+                    // discern between grids and guides here
+                    Geom::Coord const dist_p1 = Geom::L2(p1 - p);
+                    if (dist_p1 < getSnapperTolerance()) {
+                        _addSnappedLinesOrigin(sc, p1, dist_p1, source_type);
+                        // Only relevant for guides; grids don't have an origin per line
+                        // Therefore _addSnappedLinesOrigin() will only be implemented for guides
+                    }
                 }
             }
         }
     }
+}
+
+// Will only be overridden in the guide-snapper class, because grid lines don't have an origin; the
+// grid-snapper classes will use this default empty method
+void Inkscape::LineSnapper::_addSnappedLinesOrigin(SnappedConstraints &/*sc*/, Geom::Point const /*origin*/, Geom::Coord const /*snapped_distance*/, SnapSourceType const &/*source_type*/) const
+{
 }
 
 /*
