@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-26 18:21+0200\n"
+"POT-Creation-Date: 2009-08-03 17:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:216
 msgid "ABCs"
 msgstr ""
 
@@ -362,7 +362,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:73
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:167
-#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:215 ../src/dialogs/clonetiler.cpp:2607
+#: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -757,7 +758,7 @@ msgid "Colorize"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:73
-msgid "Gives the flood color to the dark parts of the image"
+msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:74
@@ -1531,7 +1532,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr ""
 
@@ -1882,6 +1883,24 @@ msgstr ""
 msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr ""
 
+#: ../share/filters/filters.svg.h:215
+msgid "Lightness-Contrast"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:215
+msgid "Increase or decrease lightness and contrast"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:216
+msgid "Clean edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:216
+msgid ""
+"Removes or decreases glows and jaggeries around objects edges after applying "
+"some filters"
+msgstr ""
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr ""
@@ -2046,45 +2065,45 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:319
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 
-#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:455
+#: ../src/arc-context.cpp:471
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:457
+#: ../src/arc-context.cpp:473
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/arc-context.cpp:483
+#: ../src/arc-context.cpp:499
 msgid "Create ellipse"
 msgstr ""
 
-#: ../src/box3d-context.cpp:412 ../src/box3d-context.cpp:419
-#: ../src/box3d-context.cpp:426 ../src/box3d-context.cpp:433
-#: ../src/box3d-context.cpp:440 ../src/box3d-context.cpp:447
+#: ../src/box3d-context.cpp:429 ../src/box3d-context.cpp:436
+#: ../src/box3d-context.cpp:443 ../src/box3d-context.cpp:450
+#: ../src/box3d-context.cpp:457 ../src/box3d-context.cpp:464
 msgid "Change perspective (angle of PLs)"
 msgstr ""
 
 #. status text
-#: ../src/box3d-context.cpp:605
+#: ../src/box3d-context.cpp:622
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
 
-#: ../src/box3d-context.cpp:629
+#: ../src/box3d-context.cpp:646
 msgid "Create 3D box"
 msgstr ""
 
@@ -2153,16 +2172,16 @@ msgstr ""
 msgid "Create guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:412
+#: ../src/desktop-events.cpp:391
 msgid "Move guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:419 ../src/desktop-events.cpp:466
+#: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:445
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:446
+#: ../src/desktop-events.cpp:425
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr ""
@@ -3399,14 +3418,14 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:502
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:504
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:505
+#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:507
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr ""
@@ -3825,7 +3844,7 @@ msgstr ""
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
-#: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
+#: ../src/display/snap-indicator.cpp:148 ../src/display/snap-indicator.cpp:151
 msgid "UNDEFINED"
 msgstr ""
 
@@ -3846,158 +3865,162 @@ msgid "guide intersection"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:78
-msgid "grid-guide intersection"
+msgid "guide origin"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:81
-msgid "cusp node"
+msgid "grid-guide intersection"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:84
-msgid "smooth node"
+msgid "cusp node"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:87
-msgid "path"
+msgid "smooth node"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:90
-msgid "path intersection"
+msgid "path"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:93
-msgid "bounding box corner"
+msgid "path intersection"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:96
-msgid "bounding box side"
+msgid "bounding box corner"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:99
-msgid "bounding box"
+msgid "bounding box side"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:102
-msgid "page border"
+msgid "bounding box"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:105
-msgid "line midpoint"
+msgid "page border"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:108
-msgid "object midpoint"
+msgid "line midpoint"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:111
-msgid "object rotation center"
+msgid "object midpoint"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:114
-msgid "handle"
+msgid "object rotation center"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:117
-msgid "bounding box side midpoint"
+msgid "handle"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:120
-msgid "bounding box midpoint"
+msgid "bounding box side midpoint"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:123
-msgid "page corner"
+msgid "bounding box midpoint"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:126
-msgid "convex hull corner"
+msgid "page corner"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:129
-msgid "quadrant point"
+msgid "convex hull corner"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:132
-msgid "center"
+msgid "quadrant point"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:135
-msgid "corner"
+msgid "center"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:138
+msgid "corner"
+msgstr ""
+
+#: ../src/display/snap-indicator.cpp:141
 msgid "text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:151
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:154
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:157
+#: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:166
 msgid "Cusp node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:169
 msgid "Line midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:175
 msgid "Object rotation center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:175
+#: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:178
+#: ../src/display/snap-indicator.cpp:181
 msgid "Path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:181
+#: ../src/display/snap-indicator.cpp:184
 msgid "Guide"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:184
+#: ../src/display/snap-indicator.cpp:187
 msgid "Guide origin"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:187
+#: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:190
+#: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
 msgid "Center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:199
+#: ../src/display/snap-indicator.cpp:202
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:238
+#: ../src/display/snap-indicator.cpp:241
 msgid " to "
 msgstr ""
 
@@ -4239,7 +4262,7 @@ msgid ""
 "this extension."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:1058
+#: ../src/extension/implementation/script.cpp:1063
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -6170,95 +6193,95 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Commands Bar"
 msgstr ""
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Snap Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Tool Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "_Toolbox"
 msgstr ""
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "_Palette"
 msgstr ""
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "_Statusbar"
 msgstr ""
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/interface.cpp:912
+#: ../src/interface.cpp:956
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr ""
 
-#: ../src/interface.cpp:951
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1052
+#: ../src/interface.cpp:1096
 #, c-format
 msgid "Enter group #%s"
 msgstr ""
 
-#: ../src/interface.cpp:1063
+#: ../src/interface.cpp:1107
 msgid "Go to parent"
 msgstr ""
 
-#: ../src/interface.cpp:1154 ../src/interface.cpp:1240
-#: ../src/interface.cpp:1343 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1198 ../src/interface.cpp:1284
+#: ../src/interface.cpp:1387 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr ""
 
-#: ../src/interface.cpp:1193 ../src/interface.cpp:1303
+#: ../src/interface.cpp:1237 ../src/interface.cpp:1347
 msgid "Drop color on gradient"
 msgstr ""
 
-#: ../src/interface.cpp:1356
+#: ../src/interface.cpp:1400
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1395
+#: ../src/interface.cpp:1439
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1451
+#: ../src/interface.cpp:1495
 msgid "Drop bitmap image"
 msgstr ""
 
-#: ../src/interface.cpp:1543
+#: ../src/interface.cpp:1587
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6267,7 +6290,7 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1550 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1594 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr ""
@@ -6565,7 +6588,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1559
+#: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr ""
 
@@ -8787,41 +8810,41 @@ msgstr ""
 msgid "XML fragment for the RDF 'License' section."
 msgstr ""
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:361
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
 msgstr ""
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:508
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:494
+#: ../src/rect-context.cpp:511
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:496
+#: ../src/rect-context.cpp:513
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:500
+#: ../src/rect-context.cpp:517
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
-#: ../src/rect-context.cpp:525
+#: ../src/rect-context.cpp:542
 msgid "Create rectangle"
 msgstr ""
 
@@ -9570,21 +9593,21 @@ msgstr ""
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:319
 msgid "<b>Ctrl</b>: snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:321
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr ""
 
-#: ../src/spiral-context.cpp:437
+#: ../src/spiral-context.cpp:453
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:463
+#: ../src/spiral-context.cpp:479
 msgid "Create spiral"
 msgstr ""
 
@@ -9867,22 +9890,22 @@ msgstr ""
 msgid "<b>Orphaned clone</b>"
 msgstr ""
 
-#: ../src/star-context.cpp:316
+#: ../src/star-context.cpp:333
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr ""
 
-#: ../src/star-context.cpp:447
+#: ../src/star-context.cpp:464
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:465
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:477
+#: ../src/star-context.cpp:494
 msgid "Create star"
 msgstr ""
 
@@ -10754,7 +10777,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr ""
@@ -11128,15 +11151,15 @@ msgstr ""
 msgid "Remove external script"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:735
+#: ../src/ui/dialog/document-properties.cpp:739
 msgid "<b>Creation</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:736
+#: ../src/ui/dialog/document-properties.cpp:740
 msgid "<b>Defined grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:946
+#: ../src/ui/dialog/document-properties.cpp:950
 msgid "Remove grid"
 msgstr ""
 
@@ -11146,6 +11169,7 @@ msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
+#: ../share/extensions/dxf_input.inx.h:5
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11278,7 +11302,7 @@ msgstr ""
 msgid "Show Preview"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:611
 msgid "No file selected"
 msgstr ""
 
@@ -12434,7 +12458,7 @@ msgstr ""
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
-#: ../src/widgets/desktop-widget.cpp:481
+#: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr ""
 
@@ -13890,31 +13914,27 @@ msgstr ""
 msgid "Unlock layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:645
-msgid "Layers"
-msgstr ""
-
-#: ../src/ui/dialog/layers.cpp:654
+#: ../src/ui/dialog/layers.cpp:652
 msgid "New"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
 msgid "Top"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:665
+#: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:671
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Dn"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:677
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Bot"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:687
+#: ../src/ui/dialog/layers.cpp:685
 msgid "X"
 msgstr ""
 
@@ -14587,6 +14607,7 @@ msgstr ""
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Options"
 msgstr ""
 
@@ -14797,15 +14818,15 @@ msgstr ""
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:378
+#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:501
+#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:503
 msgid "Cursor coordinates"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:516
+#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:518
 msgid "Z:"
 msgstr ""
 
@@ -14815,7 +14836,7 @@ msgid ""
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -14825,11 +14846,11 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:896
+#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -14838,7 +14859,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:899
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
 msgid "_Save as SVG"
 msgstr ""
 
@@ -17293,28 +17314,28 @@ msgid "Pattern offset"
 msgstr ""
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:549
+#: ../src/widgets/desktop-widget.cpp:551
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:611
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:617
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s - Inkscape"
 msgstr ""
@@ -20144,27 +20165,34 @@ msgid "Trilinear Coordinates"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:1
-#: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
+msgid ""
+"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
+"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
+"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
+"instead, if needed."
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
-msgid "Character Encoding"
+msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:3
-msgid "DXF Input"
+msgid "Character Encoding"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:4
-msgid "Import AutoCAD's Document Exchange Format"
-msgstr ""
-
-#: ../share/extensions/dxf_input.inx.h:5
-msgid "Or, use manual scale factor"
+msgid "DXF Input"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:6
+msgid "Import AutoCAD's Document Exchange Format"
+msgstr ""
+
+#: ../share/extensions/dxf_input.inx.h:8
+msgid "Or, use manual scale factor"
+msgstr ""
+
+#: ../share/extensions/dxf_input.inx.h:9
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
@@ -20173,11 +20201,15 @@ msgid "Desktop Cutting Plotter"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.DXF)"
+msgid "Desktop Cutting Plotter (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
+msgstr ""
+
+#: ../share/extensions/dxf_output.inx.h:1
+msgid "AutoCAD DXF (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:2
@@ -20451,7 +20483,7 @@ msgid "GIMP XCF"
 msgstr ""
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-msgid "GIMP XCF maintaining layers (*.XCF)"
+msgid "GIMP XCF maintaining layers (*.xcf)"
 msgstr ""
 
 #: ../share/extensions/gimp_xcf.inx.h:3
@@ -21211,11 +21243,11 @@ msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-msgid "AutoCAD Plot drawing files (*.plt)"
+msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
 msgstr ""
 
 #: ../share/extensions/plt_input.inx.h:3
-msgid "Open files saved for plotters"
+msgid "Open HPGL plotter files"
 msgstr ""
 
 #: ../share/extensions/plt_output.inx.h:1

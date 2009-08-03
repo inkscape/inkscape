@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-26 18:21+0200\n"
-"PO-Revision-Date: 2009-07-26 20:44+0100\n"
+"POT-Creation-Date: 2009-08-03 17:44+0200\n"
+"PO-Revision-Date: 2009-08-03 18:12+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -169,6 +169,7 @@ msgstr "Agitation"
 #: ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:177
 #: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:216
 msgid "ABCs"
 msgstr "ABC"
 
@@ -423,6 +424,7 @@ msgstr "Désaturer"
 #: ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:215
 #: ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
@@ -845,8 +847,8 @@ msgid "Colorize"
 msgstr "Colorer"
 
 #: ../share/filters/filters.svg.h:73
-msgid "Gives the flood color to the dark parts of the image"
-msgstr "Applique un remplissage aux zones sombres de l'image"
+msgid "Blend image or object with a flood color and set lightness and contrast"
+msgstr "Mélange un image ou un objet avec une couleur de remplissage, et définit sa luminosité et son contraste"
 
 #: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
@@ -1627,7 +1629,7 @@ msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "Dessin"
 
@@ -1948,9 +1950,8 @@ msgid "Canvas Bumps"
 msgstr "Bosselage toilé"
 
 #: ../share/filters/filters.svg.h:212
-#, fuzzy
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr "Texture toilée avec "
+msgstr "Texture toilée superposée à un bosselage TSL"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Canvas Bumps, matte"
@@ -1967,6 +1968,22 @@ msgstr "Masque de bosselage toilé"
 #: ../share/filters/filters.svg.h:214
 msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr "Identique à Bosselage toilé, mais avec des reflets transparents"
+
+#: ../share/filters/filters.svg.h:215
+msgid "Lightness-Contrast"
+msgstr "Luminosité et contraste"
+
+#: ../share/filters/filters.svg.h:215
+msgid "Increase or decrease lightness and contrast"
+msgstr "Augmente ou diminue la luminosité et le contraste"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Clean edges"
+msgstr "Nettoie-pourtour"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Removes or decreases glows and jaggeries around objects edges after applying some filters"
+msgstr "Supprime ou diminue l'éclat et l'agitation qui apparaissent autour des bords lors de l'application de certains effets"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2132,44 +2149,44 @@ msgstr "Textile (bitmap)"
 msgid "Old paint (bitmap)"
 msgstr "Peinture vieillie (bitmap)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:319
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b> : dessiner des cercles ou des ellipses de ratio entier, forcer la modification des angles des arcs/camemberts par incréments"
 
-#: ../src/arc-context.cpp:304
-#: ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:320
+#: ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Maj</b> : dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:455
+#: ../src/arc-context.cpp:471
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellipse</b> : %s &#215; %s; (contrainte de ratio %d:%d); <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:457
+#: ../src/arc-context.cpp:473
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Ellipse</b> : %s &#215; %s; <b>Ctrl</b> pour dessiner des cercles ou des ellipses de ratio entier, <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/arc-context.cpp:483
+#: ../src/arc-context.cpp:499
 msgid "Create ellipse"
 msgstr "Créer une ellipse"
 
-#: ../src/box3d-context.cpp:412
-#: ../src/box3d-context.cpp:419
-#: ../src/box3d-context.cpp:426
-#: ../src/box3d-context.cpp:433
-#: ../src/box3d-context.cpp:440
-#: ../src/box3d-context.cpp:447
+#: ../src/box3d-context.cpp:429
+#: ../src/box3d-context.cpp:436
+#: ../src/box3d-context.cpp:443
+#: ../src/box3d-context.cpp:450
+#: ../src/box3d-context.cpp:457
+#: ../src/box3d-context.cpp:464
 msgid "Change perspective (angle of PLs)"
 msgstr "Changer la perspective (angle des LP)"
 
 #. status text
-#: ../src/box3d-context.cpp:605
+#: ../src/box3d-context.cpp:622
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>Boîte 3D</b>. Utiliser <b>Maj</b> pour extruder suivant Z"
 
-#: ../src/box3d-context.cpp:629
+#: ../src/box3d-context.cpp:646
 msgid "Create 3D box"
 msgstr "Créer une boîte 3D"
 
@@ -2242,17 +2259,17 @@ msgstr "Plus de zoom suivant."
 msgid "Create guide"
 msgstr "Créer un guide"
 
-#: ../src/desktop-events.cpp:412
+#: ../src/desktop-events.cpp:391
 msgid "Move guide"
 msgstr "Déplacer le guide"
 
-#: ../src/desktop-events.cpp:419
-#: ../src/desktop-events.cpp:466
+#: ../src/desktop-events.cpp:398
+#: ../src/desktop-events.cpp:445
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Supprimer le guide"
 
-#: ../src/desktop-events.cpp:446
+#: ../src/desktop-events.cpp:425
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Ligne de guide</b> : %s"
@@ -3546,7 +3563,7 @@ msgstr "URL :"
 #: ../src/dialogs/object-attributes.cpp:59
 #: ../src/ui/dialog/guides.cpp:43
 #: ../src/ui/view/edit-widget.cpp:1074
-#: ../src/widgets/desktop-widget.cpp:502
+#: ../src/widgets/desktop-widget.cpp:504
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X :"
@@ -3555,7 +3572,7 @@ msgstr "X :"
 #: ../src/dialogs/object-attributes.cpp:60
 #: ../src/ui/dialog/guides.cpp:44
 #: ../src/ui/view/edit-widget.cpp:1075
-#: ../src/widgets/desktop-widget.cpp:505
+#: ../src/widgets/desktop-widget.cpp:507
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y :"
@@ -3996,8 +4013,8 @@ msgstr "Cocher pour afficher des points sur les points entiers de la grille au l
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:60
 #: ../src/display/snap-indicator.cpp:63
-#: ../src/display/snap-indicator.cpp:145
 #: ../src/display/snap-indicator.cpp:148
+#: ../src/display/snap-indicator.cpp:151
 msgid "UNDEFINED"
 msgstr "INDÉFINI"
 
@@ -4018,159 +4035,163 @@ msgid "guide intersection"
 msgstr "intersections de guide"
 
 #: ../src/display/snap-indicator.cpp:78
+msgid "guide origin"
+msgstr "origine du guide"
+
+#: ../src/display/snap-indicator.cpp:81
 msgid "grid-guide intersection"
 msgstr "intersections grille-guides"
 
-#: ../src/display/snap-indicator.cpp:81
+#: ../src/display/snap-indicator.cpp:84
 msgid "cusp node"
 msgstr "nœud dur"
 
-#: ../src/display/snap-indicator.cpp:84
+#: ../src/display/snap-indicator.cpp:87
 msgid "smooth node"
 msgstr "nœud doux"
 
-#: ../src/display/snap-indicator.cpp:87
+#: ../src/display/snap-indicator.cpp:90
 msgid "path"
 msgstr "chemin"
 
-#: ../src/display/snap-indicator.cpp:90
+#: ../src/display/snap-indicator.cpp:93
 msgid "path intersection"
 msgstr "Intersection de chemin"
 
-#: ../src/display/snap-indicator.cpp:93
+#: ../src/display/snap-indicator.cpp:96
 msgid "bounding box corner"
 msgstr "coins de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:96
+#: ../src/display/snap-indicator.cpp:99
 msgid "bounding box side"
 msgstr "bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:99
+#: ../src/display/snap-indicator.cpp:102
 msgid "bounding box"
 msgstr "boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:102
+#: ../src/display/snap-indicator.cpp:105
 msgid "page border"
 msgstr "bord de page"
 
-#: ../src/display/snap-indicator.cpp:105
+#: ../src/display/snap-indicator.cpp:108
 msgid "line midpoint"
 msgstr "milieu de ligne"
 
-#: ../src/display/snap-indicator.cpp:108
+#: ../src/display/snap-indicator.cpp:111
 msgid "object midpoint"
 msgstr "centre d'objet"
 
-#: ../src/display/snap-indicator.cpp:111
+#: ../src/display/snap-indicator.cpp:114
 msgid "object rotation center"
 msgstr "centre de rotation d'objet"
 
-#: ../src/display/snap-indicator.cpp:114
+#: ../src/display/snap-indicator.cpp:117
 msgid "handle"
 msgstr "poignée"
 
-#: ../src/display/snap-indicator.cpp:117
+#: ../src/display/snap-indicator.cpp:120
 msgid "bounding box side midpoint"
 msgstr "milieu de bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:120
+#: ../src/display/snap-indicator.cpp:123
 msgid "bounding box midpoint"
 msgstr "centre de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:123
+#: ../src/display/snap-indicator.cpp:126
 msgid "page corner"
 msgstr "coin de page"
 
-#: ../src/display/snap-indicator.cpp:126
+#: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
 msgstr "coin de l'enveloppe convexe"
 
-#: ../src/display/snap-indicator.cpp:129
+#: ../src/display/snap-indicator.cpp:132
 msgid "quadrant point"
 msgstr "point de quadrant"
 
-#: ../src/display/snap-indicator.cpp:132
+#: ../src/display/snap-indicator.cpp:135
 msgid "center"
 msgstr "centre"
 
-#: ../src/display/snap-indicator.cpp:135
+#: ../src/display/snap-indicator.cpp:138
 msgid "corner"
 msgstr "coin"
 
-#: ../src/display/snap-indicator.cpp:138
+#: ../src/display/snap-indicator.cpp:141
 msgid "text baseline"
 msgstr "ligne de base de texte"
 
-#: ../src/display/snap-indicator.cpp:151
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box corner"
 msgstr "Coin de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:154
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box midpoint"
 msgstr "Centre de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:157
+#: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box side midpoint"
 msgstr "Milieu de bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
 msgstr "Nœuds doux"
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:166
 msgid "Cusp node"
 msgstr "Nœud dur"
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:169
 msgid "Line midpoint"
 msgstr "Milieu de ligne"
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object midpoint"
 msgstr "Centre d'objet"
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:175
 msgid "Object rotation center"
 msgstr "Centre de rotation d'objet"
 
-#: ../src/display/snap-indicator.cpp:175
+#: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
 msgstr "Poignée"
 
-#: ../src/display/snap-indicator.cpp:178
+#: ../src/display/snap-indicator.cpp:181
 msgid "Path intersection"
 msgstr "Intersections de chemin"
 
-#: ../src/display/snap-indicator.cpp:181
+#: ../src/display/snap-indicator.cpp:184
 msgid "Guide"
 msgstr "Guide"
 
-#: ../src/display/snap-indicator.cpp:184
+#: ../src/display/snap-indicator.cpp:187
 msgid "Guide origin"
 msgstr "Origine du guide"
 
-#: ../src/display/snap-indicator.cpp:187
+#: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
 msgstr "Coin de l'enveloppe convexe"
 
-#: ../src/display/snap-indicator.cpp:190
+#: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
 msgstr "Point de quadrant"
 
-#: ../src/display/snap-indicator.cpp:193
+#: ../src/display/snap-indicator.cpp:196
 #: ../src/widgets/toolbox.cpp:6709
 msgid "Center"
 msgstr "Centre"
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Corner"
 msgstr "Coin"
 
-#: ../src/display/snap-indicator.cpp:199
+#: ../src/display/snap-indicator.cpp:202
 msgid "Text baseline"
 msgstr "Ligne de base de texte"
 
-#: ../src/display/snap-indicator.cpp:238
+#: ../src/display/snap-indicator.cpp:241
 msgid " to "
 msgstr " à "
 
@@ -4408,7 +4429,7 @@ msgstr "Désactivée"
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Aucune aide n'est actuellement disponible pour cette extension. Veuillez vous référer au site internet d'Inkscape ou aux listes de diffusion pour toute question relative à celle-ci."
 
-#: ../src/extension/implementation/script.cpp:1058
+#: ../src/extension/implementation/script.cpp:1063
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Inkscape a reçu des données additionnelles du script exécuté. Le script n'a pas retourné d'erreur, mais ceci peut indiquer que les résultats ne sont pas ceux attendus."
 
@@ -5085,7 +5106,7 @@ msgstr "Métafichier Windows (*.wmf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2420
 msgid "Windows Metafiles"
-msgstr "Métafichier Windows (*.wmf)"
+msgstr "Métafichier Windows"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2428
 msgid "EMF Output"
@@ -5093,7 +5114,7 @@ msgstr "Sortie EMF"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2434
 msgid "Enhanced Metafile (*.emf)"
-msgstr "Métafichier amélioré (*.wmf)"
+msgstr "Métafichier amélioré (*.emf)"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2435
 msgid "Enhanced Metafile"
@@ -6358,98 +6379,98 @@ msgstr "Les enregistrements automatiques des documents suivants ont échoué :\
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Commands Bar"
 msgstr "Barre des commandes"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Afficher ou non la barre des commandes (sous le menu)"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Snap Controls Bar"
 msgstr "Barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Show or hide the snapping controls"
 msgstr "Afficher ou non la barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Tool Controls Bar"
 msgstr "Barre des contrôles des outils"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Show or hide the Tool Controls bar"
 msgstr "Afficher ou non la barre des contrôles des outils"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "_Toolbox"
 msgstr "Boîte à _outils"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Afficher ou non la boîte à outils principale (à gauche)"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "_Palette"
 msgstr "_Palette"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "Show or hide the color palette"
 msgstr "Afficher ou non la palette de couleurs"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "_Statusbar"
 msgstr "Barre d'_état"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Afficher ou non la barre d'état (en bas de la fenêtre)"
 
-#: ../src/interface.cpp:912
+#: ../src/interface.cpp:956
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Verbe « %s » inconnu"
 
-#: ../src/interface.cpp:951
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr "Documents _récents"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1052
+#: ../src/interface.cpp:1096
 #, c-format
 msgid "Enter group #%s"
 msgstr "Entrer dans le groupe #%s"
 
-#: ../src/interface.cpp:1063
+#: ../src/interface.cpp:1107
 msgid "Go to parent"
 msgstr "Sélectionner le parent"
 
-#: ../src/interface.cpp:1154
-#: ../src/interface.cpp:1240
-#: ../src/interface.cpp:1343
+#: ../src/interface.cpp:1198
+#: ../src/interface.cpp:1284
+#: ../src/interface.cpp:1387
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Déposer la couleur"
 
-#: ../src/interface.cpp:1193
-#: ../src/interface.cpp:1303
+#: ../src/interface.cpp:1237
+#: ../src/interface.cpp:1347
 msgid "Drop color on gradient"
 msgstr "Déposer la couleur dans le dégradé"
 
-#: ../src/interface.cpp:1356
+#: ../src/interface.cpp:1400
 msgid "Could not parse SVG data"
 msgstr "Impossible de parcourir les données SVG"
 
-#: ../src/interface.cpp:1395
+#: ../src/interface.cpp:1439
 msgid "Drop SVG"
 msgstr "Déposer un SVG"
 
-#: ../src/interface.cpp:1451
+#: ../src/interface.cpp:1495
 msgid "Drop bitmap image"
 msgstr "Déposer une image bitmap"
 
-#: ../src/interface.cpp:1543
+#: ../src/interface.cpp:1587
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -6461,7 +6482,7 @@ msgstr ""
 "\n"
 "Le fichier existe déjà dans « %s ». Le remplacer écrase son contenu."
 
-#: ../src/interface.cpp:1550
+#: ../src/interface.cpp:1594
 #: ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
@@ -6757,7 +6778,7 @@ msgstr "Le nouveau contrôleur d'attache %p est automatique. Seuls les ojbets d'
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1559
+#: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Page"
 
@@ -8895,31 +8916,31 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Fragment XML pour la section « Licence » (RDF)."
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:361
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr "<b>Ctrl</b> : forcer un rectangle carré ou de ratio entier, préserver le rayon d'arrondi d'un coin"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:508
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint de ratio %d:%d) ; <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:494
+#: ../src/rect-context.cpp:511
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1.618 : 1) ; <b>Maj</b> dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:496
+#: ../src/rect-context.cpp:513
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1 : 1.618) ; <b>Maj</b> pour dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:500
+#: ../src/rect-context.cpp:517
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Rectangle</b> : %s &#215; %s; <b>Ctrl</b> forcer un rectangle carré ou de ratio entier; <b>Maj</b> dessiner autour du point de départ"
 
-#: ../src/rect-context.cpp:525
+#: ../src/rect-context.cpp:542
 msgid "Create rectangle"
 msgstr "Créer un rectangle"
 
@@ -9663,20 +9684,20 @@ msgstr "<b>Image avec une mauvaise référence</b> : %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Image</b> %d &#215; %d : %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:319
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b> : pour tourner par incréments"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:321
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b> : verrouiller le rayon de la spirale"
 
-#: ../src/spiral-context.cpp:437
+#: ../src/spiral-context.cpp:453
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Spirale</b> : rayon %s, angle %5g&#176;; avec <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/spiral-context.cpp:463
+#: ../src/spiral-context.cpp:479
 msgid "Create spiral"
 msgstr "Créer une spirale"
 
@@ -9962,21 +9983,21 @@ msgstr "<b>Clone</b> de : %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Clone orphelin</b>"
 
-#: ../src/star-context.cpp:316
+#: ../src/star-context.cpp:333
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b> pour tourner par incréments; forcer la radialité des branches"
 
-#: ../src/star-context.cpp:447
+#: ../src/star-context.cpp:464
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Polygone</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:465
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Étoile</b> : rayon %s, angle %5g&#176;; <b>Ctrl</b> pour tourner/incliner par incréments"
 
-#: ../src/star-context.cpp:477
+#: ../src/star-context.cpp:494
 msgid "Create star"
 msgstr "Créer une étoile"
 
@@ -10823,7 +10844,7 @@ msgstr "Objet le plus petit"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Sélection"
@@ -11191,15 +11212,15 @@ msgstr "Ajouter un programme externe..."
 msgid "Remove external script"
 msgstr "Supprimer un programme externe"
 
-#: ../src/ui/dialog/document-properties.cpp:735
+#: ../src/ui/dialog/document-properties.cpp:739
 msgid "<b>Creation</b>"
 msgstr " <b>Création</b> "
 
-#: ../src/ui/dialog/document-properties.cpp:736
+#: ../src/ui/dialog/document-properties.cpp:740
 msgid "<b>Defined grids</b>"
 msgstr "<b>Grilles définies</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:946
+#: ../src/ui/dialog/document-properties.cpp:950
 msgid "Remove grid"
 msgstr "Supprimer la grille"
 
@@ -11209,6 +11230,7 @@ msgstr "Information"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
+#: ../share/extensions/dxf_input.inx.h:5
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11341,7 +11363,7 @@ msgstr "Destination"
 msgid "Show Preview"
 msgstr "Aperçu"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:611
 msgid "No file selected"
 msgstr "Aucun fichier sélectionné"
 
@@ -12365,7 +12387,7 @@ msgstr "Peindre les objets avec :"
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 #: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2526
-#: ../src/widgets/desktop-widget.cpp:481
+#: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -13759,32 +13781,28 @@ msgstr "Verrouiller le calque"
 msgid "Unlock layer"
 msgstr "Déverrouiller le calque"
 
-#: ../src/ui/dialog/layers.cpp:645
-msgid "Layers"
-msgstr "Calques"
-
-#: ../src/ui/dialog/layers.cpp:654
+#: ../src/ui/dialog/layers.cpp:652
 msgid "New"
 msgstr "Nouveau"
 
-#: ../src/ui/dialog/layers.cpp:659
+#: ../src/ui/dialog/layers.cpp:657
 #: ../share/extensions/restack.inx.h:16
 msgid "Top"
 msgstr "Devant"
 
-#: ../src/ui/dialog/layers.cpp:665
+#: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
 msgstr "Haut"
 
-#: ../src/ui/dialog/layers.cpp:671
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Dn"
 msgstr "Bas"
 
-#: ../src/ui/dialog/layers.cpp:677
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Bot"
 msgstr "Fond"
 
-#: ../src/ui/dialog/layers.cpp:687
+#: ../src/ui/dialog/layers.cpp:685
 msgid "X"
 msgstr "X"
 
@@ -14454,6 +14472,7 @@ msgstr "Tolérance :"
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617
 #: ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Options"
 msgstr "Options"
 
@@ -14667,17 +14686,17 @@ msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1051
-#: ../src/widgets/desktop-widget.cpp:378
+#: ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
 msgstr "Zoomer le dessin si les dimensions de la fenêtre sont modifiées"
 
 #: ../src/ui/view/edit-widget.cpp:1072
-#: ../src/widgets/desktop-widget.cpp:501
+#: ../src/widgets/desktop-widget.cpp:503
 msgid "Cursor coordinates"
 msgstr "Coordonnées du curseur"
 
 #: ../src/ui/view/edit-widget.cpp:1082
-#: ../src/widgets/desktop-widget.cpp:516
+#: ../src/widgets/desktop-widget.cpp:518
 msgid "Z:"
 msgstr "Z :"
 
@@ -14686,7 +14705,7 @@ msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects;
 msgstr "<b>Bienvenue dans Inkscape !</b> Utilisez les outils de formes ou de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
 #: ../src/ui/view/edit-widget.cpp:1200
-#: ../src/widgets/desktop-widget.cpp:832
+#: ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -14699,13 +14718,13 @@ msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1211
 #: ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:839
-#: ../src/widgets/desktop-widget.cpp:896
+#: ../src/widgets/desktop-widget.cpp:843
+#: ../src/widgets/desktop-widget.cpp:900
 msgid "Close _without saving"
 msgstr "Fermer _sans enregistrer"
 
 #: ../src/ui/view/edit-widget.cpp:1247
-#: ../src/widgets/desktop-widget.cpp:888
+#: ../src/widgets/desktop-widget.cpp:892
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
@@ -14717,7 +14736,7 @@ msgstr ""
 "Voulez-vous enregistrer ce fichier au format Inkscape SVG ?"
 
 #: ../src/ui/view/edit-widget.cpp:1262
-#: ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:903
 msgid "_Save as SVG"
 msgstr "Enregi_strer comme SVG"
 
@@ -17157,26 +17176,26 @@ msgid "Pattern offset"
 msgstr "Décalage du motif"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:549
+#: ../src/widgets/desktop-widget.cpp:551
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Bienvenue dans Inkscape!</b> Utilisez les formes ou l'outil de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
-#: ../src/widgets/desktop-widget.cpp:611
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (contour) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:617
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (contour) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -19987,27 +20006,30 @@ msgid "Trilinear Coordinates"
 msgstr "Coordonnées trilinéaires"
 
 #: ../share/extensions/dxf_input.inx.h:1
-#: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
-msgstr "DXF AutoCAD (*.dxf)"
+msgid "- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
+msgstr "Pour AutoCAD version R13 ou plus récente./n- Le dessin dxf doit être en mm./n- Le dessin svg est en pixels, à 90 ppp./n- Les calques sont préservées par l'utilisation du menu Fichier&gt;Ouvrir, mais pas par Fichier&gt;Import./n- Le support des BLOCKS est limité. Préférez l'utilisation de AutoCAD Explode Blocks si nécessaire."
 
 #: ../share/extensions/dxf_input.inx.h:2
+msgid "AutoCAD DXF R13 (*.dxf)"
+msgstr "DXF AutoCAD R13 (*.dxf)"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
 msgstr "Encodage de caractère"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "DXF Input"
 msgstr "Entrée DXF"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Importer depuis le format Document Exchange d'AutaCAD"
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "Or, use manual scale factor"
 msgstr "Ou utiliser un facteur d'échelle manuel"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:9
 msgid "Use automatic scaling to size A4"
 msgstr "Utilise un redimensionnement automatique vers la taille A4"
 
@@ -20016,12 +20038,16 @@ msgid "Desktop Cutting Plotter"
 msgstr "Table traçante/coupante"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.DXF)"
-msgstr "Table traçante/coupante (*.DXF)"
+msgid "Desktop Cutting Plotter (*.dxf)"
+msgstr "Table traçante/coupante (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
 msgstr "Sortie ROBO-Master"
+
+#: ../share/extensions/dxf_output.inx.h:1
+msgid "AutoCAD DXF (*.dxf)"
+msgstr "DXF AutoCAD (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -20310,8 +20336,8 @@ msgid "GIMP XCF"
 msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-msgid "GIMP XCF maintaining layers (*.XCF)"
-msgstr "GIMP XCF avec conservation des calques (*.XCF)"
+msgid "GIMP XCF maintaining layers (*.xcf)"
+msgstr "GIMP XCF avec conservation des calques (*.xcf)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
@@ -21066,12 +21092,12 @@ msgstr "Entrée AutoCAD Plot"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-msgid "AutoCAD Plot drawing files (*.plt)"
-msgstr "Fichier dessin AutoCAD Plot (*.plt)"
+msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
+msgstr "Fichier HP Graphics Language pour table traçante (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
-msgid "Open files saved for plotters"
-msgstr "Ouvrir des fichiers enregistrés pour tables traçantes"
+msgid "Open HPGL plotter files"
+msgstr "Ouvrir des fichiers HPGL pour table traçante"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
@@ -22003,6 +22029,14 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "AutoCAD Plot drawing files (*.plt)"
+#~ msgstr "Fichier dessin AutoCAD Plot (*.plt)"
+#~ msgid "Open files saved for plotters"
+#~ msgstr "Ouvrir des fichiers enregistrés pour tables traçantes"
+#~ msgid "Gives the flood color to the dark parts of the image"
+#~ msgstr "Applique un remplissage aux zones sombres de l'image"
+#~ msgid "Layers"
+#~ msgstr "Calques"
 #~ msgid "HSL bubbles"
 #~ msgstr "Bulles TSL"
 #~ msgid ""
@@ -22341,8 +22375,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Délai (millisecondes) :"
 #~ msgid "Close file"
 #~ msgstr "Fermer le fichier"
-#~ msgid "Open new file"
-#~ msgstr "Ouvrir un nouveau fichier"
 #~ msgid "Set delay"
 #~ msgstr "Définir une temporisation"
 #~ msgid "Rewind"
