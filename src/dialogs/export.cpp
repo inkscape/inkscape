@@ -60,6 +60,11 @@
 
 #include "helper/png-write.h"
 
+#ifdef WIN32
+#include <windows.h>
+#include <COMMDLG.h>
+#include <gdk/gdkwin32.h>
+#endif
 
 #define SP_EXPORT_MIN_SIZE 1.0
 
@@ -167,7 +172,7 @@ sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /
 
     if (x<0) x=0;
     if (y<0) y=0;
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(prefs_path + "x", x);
     prefs->setInt(prefs_path + "y", y);
@@ -1290,6 +1295,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 } // end of sp_export_export_clicked()
 
 /// Called when Browse button is clicked
+/// @todo refactor this code to use ui/dialogs/filedialog.cpp
 static void
 sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
 {
@@ -1318,11 +1324,55 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
     filename = gtk_entry_get_text (GTK_ENTRY (fe));
 
     if (*filename == '\0') {
-        filename = homedir_path(NULL);
+        filename = create_filepath_from_id(NULL, NULL);
     }
 
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs), filename);
 
+#ifdef WIN32
+	// code in this section is borrowed from ui/dialogs/filedialogimpl-win32.cpp
+	OPENFILENAMEW opf;
+	WCHAR* filter_string = (WCHAR*)g_utf8_to_utf16("PNG\0*.png\0\0", 12, NULL, NULL, NULL);
+	WCHAR* title_string = (WCHAR*)g_utf8_to_utf16(_("Select a filename for exporting"), -1, NULL, NULL, NULL);
+	WCHAR* extension_string = (WCHAR*)g_utf8_to_utf16("*.png", -1, NULL, NULL, NULL);
+	// Copy the selected file name, converting from UTF-8 to UTF-16
+	WCHAR _filename[_MAX_PATH + 1];
+    memset(_filename, 0, sizeof(_filename));
+    gunichar2* utf16_path_string = g_utf8_to_utf16(filename, -1, NULL, NULL, NULL);
+    wcsncpy(_filename, (wchar_t*)utf16_path_string, _MAX_PATH);
+    g_free(utf16_path_string);
+
+	opf.hwndOwner = (HWND)(GDK_WINDOW_HWND(GTK_WIDGET(dlg)->window));
+	opf.lpstrFilter = filter_string;
+	opf.lpstrCustomFilter = 0;
+	opf.nMaxCustFilter = 0L;
+	opf.nFilterIndex = 1L;
+	opf.lpstrFile = _filename;
+	opf.nMaxFile = _MAX_PATH;
+	opf.lpstrFileTitle = NULL;
+	opf.nMaxFileTitle=0;
+	opf.lpstrInitialDir = 0;
+	opf.lpstrTitle = title_string;
+	opf.nFileOffset = 0;
+	opf.nFileExtension = 2;
+	opf.lpstrDefExt = extension_string;
+	opf.lpfnHook = NULL;
+	opf.lCustData = 0;
+	opf.Flags = OFN_PATHMUSTEXIST;
+	opf.lStructSize = sizeof(OPENFILENAMEW);
+	if (GetSaveFileNameW(&opf) != 0)
+	{
+		// Copy the selected file name, converting from UTF-16 to UTF-8
+		gchar *utf8string = g_utf16_to_utf8((const gunichar2*)opf.lpstrFile, _MAX_PATH, NULL, NULL, NULL);
+		gtk_entry_set_text (GTK_ENTRY (fe), utf8string);
+        g_object_set_data (G_OBJECT (dlg), "filename", fe);
+		g_free(utf8string);
+
+	}
+	g_free(extension_string);
+	g_free(title_string);
+	g_free(filter_string);
+#else
     if (gtk_dialog_run (GTK_DIALOG (fs)) == GTK_RESPONSE_ACCEPT)
     {
         gchar *file;
@@ -1337,6 +1387,7 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
         g_free(utf8file);
         g_free(file);
     }
+#endif
 
     gtk_widget_destroy (fs);
 
