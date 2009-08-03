@@ -9,6 +9,7 @@ tutorial_DATA = \
     potrace.png \
     potrace-de.png \
     potrace-fr.png \
+    potrace-hu.png \
     potrace-ru.png \
     tutorial-advanced.svg \
     tutorial-advanced.ca.svg \
@@ -16,6 +17,7 @@ tutorial_DATA = \
     tutorial-advanced.de.svg \
     tutorial-advanced.es.svg \
     tutorial-advanced.fr.svg \
+    tutorial-advanced.hu.svg \
     tutorial-advanced.it.svg \
     tutorial-advanced.ja.svg \
     tutorial-advanced.pt_BR.svg \
@@ -31,6 +33,7 @@ tutorial_DATA = \
     tutorial-basic.de.svg \
     tutorial-basic.es.svg \
     tutorial-basic.fr.svg \
+    tutorial-basic.hu.svg \
     tutorial-basic.it.svg \
     tutorial-basic.ja.svg \
     tutorial-basic.nn.svg \
@@ -47,6 +50,7 @@ tutorial_DATA = \
     tutorial-calligraphy.de.svg \
     tutorial-calligraphy.es.svg \
     tutorial-calligraphy.fr.svg \
+    tutorial-calligraphy.hu.svg \
     tutorial-calligraphy.pt_BR.svg \
     tutorial-calligraphy.ru.svg \
     tutorial-calligraphy.sl.svg \
@@ -56,15 +60,18 @@ tutorial_DATA = \
     tutorial-elements.de.svg \
     tutorial-elements.es.svg \
     tutorial-elements.fr.svg \
+    tutorial-elements.hu.svg \
     tutorial-elements.pt_BR.svg \
     tutorial-elements.ru.svg \
     tutorial-elements.sl.svg \
+    tutorial-interpolate.hu.svg \
     tutorial-shapes.svg \
     tutorial-shapes.ca.svg \
     tutorial-shapes.cs.svg \
     tutorial-shapes.de.svg \
     tutorial-shapes.es.svg \
     tutorial-shapes.fr.svg \
+    tutorial-shapes.hu.svg \
     tutorial-shapes.it.svg \
     tutorial-shapes.ja.svg \
     tutorial-shapes.pt_BR.svg \
@@ -77,6 +84,7 @@ tutorial_DATA = \
     tutorial-tips.de.svg \
     tutorial-tips.es.svg \
     tutorial-tips.fr.svg \
+    tutorial-tips.hu.svg \
     tutorial-tips.it.svg \
     tutorial-tips.pt_BR.svg \
     tutorial-tips.ru.svg \
@@ -87,6 +95,7 @@ tutorial_DATA = \
     tutorial-tracing.de.svg \
     tutorial-tracing.es.svg \
     tutorial-tracing.fr.svg \
+    tutorial-tracing.hu.svg \
     tutorial-tracing.pt_BR.svg \
     tutorial-tracing.ru.svg \
     tutorial-tracing.sl.svg \
