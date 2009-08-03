@@ -6,8 +6,8 @@
     <input>
         <extension>.plt</extension>
         <mimetype>image/x-plt</mimetype>
-        <_filetypename>AutoCAD Plot drawing files (*.plt)</_filetypename>
-        <_filetypetooltip>Open files saved for plotters</_filetypetooltip>
+        <_filetypename>HP Graphics Language Plot file [AutoCAD] (*.plt)</_filetypename>
+        <_filetypetooltip>Open HPGL plotter files</_filetypetooltip>
         <output_extension>org.inkscape.output.plt</output_extension>
     </input>
     <script>

@@ -9,7 +9,7 @@
     <output>
                 <extension>.dxf</extension>
 	        <mimetype>image/dxf</mimetype>
-                <_filetypename>Desktop Cutting Plotter (*.DXF)</_filetypename>
+                <_filetypename>Desktop Cutting Plotter (*.dxf)</_filetypename>
                 <_filetypetooltip>Desktop Cutting Plotter</_filetypetooltip>
                 <dataloss>true</dataloss>
     </output>

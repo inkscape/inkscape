@@ -12,8 +12,8 @@
     <output>
                 <extension>.xcf</extension>
                 <mimetype>application/x-xcf</mimetype>
-                <_filetypename>GIMP XCF maintaining layers (*.XCF)</_filetypename>
-                <_filetypetooltip>GIMP XCF maintaining layers (*.XCF)</_filetypetooltip>
+                <_filetypename>GIMP XCF maintaining layers (*.xcf)</_filetypename>
+                <_filetypetooltip>GIMP XCF maintaining layers (*.xcf)</_filetypetooltip>
                 <dataloss>true</dataloss>
     </output>
     <script>
