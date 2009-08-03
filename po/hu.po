@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-26 18:21+0200\n"
-"PO-Revision-Date: 2009-08-02 18:20+0200\n"
+"POT-Creation-Date: 2009-08-03 17:44+0200\n"
+"PO-Revision-Date: 2009-08-03 23:46+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "Durvábbá tevés"
 #: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:216
 msgid "ABCs"
 msgstr "Alapvető"
 
@@ -368,7 +368,8 @@ msgstr "Telítetlenné tevés"
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:73
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:167
-#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:215 ../src/dialogs/clonetiler.cpp:2607
+#: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -395,8 +396,8 @@ msgstr "Szín"
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:170
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr ""
-"Megjelenítés a szürke szín árnyalataival a telítettség "
-"nullára való csökkentése által"
+"Megjelenítés a szürke szín árnyalataival a telítettség nullára való "
+"csökkentése által"
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
@@ -575,7 +576,9 @@ msgstr "Olvadt fém"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr "Az objektum részeinek egybeolvasztása, fényes rézsútos szegéllyel és ragyogással"
+msgstr ""
+"Az objektum részeinek egybeolvasztása, fényes rézsútos szegéllyel és "
+"ragyogással"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Pressed steel"
@@ -653,8 +656,8 @@ msgstr "Szivárványszínekben játszó méhviasz"
 #: ../share/filters/filters.svg.h:59
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
-"Viaszos textúra, amely a színkitöltés módosítása esetén is "
-"megőrzi a többszínűségét"
+"Viaszos textúra, amely a színkitöltés módosítása esetén is megőrzi a "
+"többszínűségét"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Eroded metal"
@@ -766,8 +769,8 @@ msgid "Colorize"
 msgstr "Színezés"
 
 #: ../share/filters/filters.svg.h:73
-msgid "Gives the flood color to the dark parts of the image"
-msgstr "A kép sötét részeit beszínezi a területkitöltési színnel"
+msgid "Blend image or object with a flood color and set lightness and contrast"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
@@ -915,8 +918,8 @@ msgstr "Elektronmikroszkóp"
 #: ../share/filters/filters.svg.h:90
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
-"Rézsútos szegély, durva fény, színtelenedés és ragyogás, "
-"mint az elektronmikroszkópokban"
+"Rézsútos szegély, durva fény, színtelenedés és ragyogás, mint az "
+"elektronmikroszkópokban"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Tartan"
@@ -982,7 +985,9 @@ msgstr "Színes domborítás"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
-msgstr "Klasszikus vagy színezett domborítási effektus: szürkeárnyalatos, színes és 3D dombormű"
+msgstr ""
+"Klasszikus vagy színezett domborítási effektus: szürkeárnyalatos, színes és "
+"3D dombormű"
 
 #: ../share/filters/filters.svg.h:99
 #: ../src/extension/internal/bitmap/solarize.cpp:36
@@ -1002,8 +1007,8 @@ msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr ""
-"A Nap-effektus és az invertálás közötti effektus; gyakran megőrzi az ég és "
-"a víz fényeit"
+"A Nap-effektus és az invertálás közötti effektus; gyakran megőrzi az ég és a "
+"víz fényeit"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Soft focus lens"
@@ -1112,8 +1117,8 @@ msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
-"Objektumok tartalmának elmosása, megőrizve a kontúrt és progresszív átlátszóságot "
-"adva a széleknél"
+"Objektumok tartalmának elmosása, megőrizve a kontúrt és progresszív "
+"átlátszóságot adva a széleknél"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Chalk and sponge"
@@ -1121,9 +1126,7 @@ msgstr "Kréta és szivacs"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
-"Kismértékű örvénylés szivacsos kinézetet ad, nagymértékű pedig "
-"krétaszerűt"
+msgstr "Kismértékű örvénylés szivacsos kinézetet ad, nagymértékű pedig krétaszerűt"
 
 #: ../share/filters/filters.svg.h:114
 msgid "People"
@@ -1166,8 +1169,8 @@ msgstr "A gyönyörök kertje"
 #: ../share/filters/filters.svg.h:118
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
-"Képzeletbeli örvénylő füstgomolyagok, mint a Hieronymus Bosch-féle "
-"\"A gyönyörök kertje\" festményen"
+"Képzeletbeli örvénylő füstgomolyagok, mint a Hieronymus Bosch-féle \"A "
+"gyönyörök kertje\" festményen"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Diffuse light"
@@ -1199,9 +1202,7 @@ msgstr "Sötét domborítás"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
-"Domborítási effektus: 3D dombormű, amelyben a fehér le van cserélve "
-"feketére"
+msgstr "Domborítási effektus: 3D dombormű, amelyben a fehér le van cserélve feketére"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Simple blur"
@@ -1553,7 +1554,7 @@ msgstr "Rugalmas \"tükröződő bucka\" effektus átlátszósággal"
 
 #: ../share/filters/filters.svg.h:172
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "Rajz"
 
@@ -1562,8 +1563,8 @@ msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
 msgstr ""
-"Grafitceruza, kromolitográfia, gravírozás és egyéb effektusok "
-"a képekre és az anyaggal kitöltött objektumokra"
+"Grafitceruza, kromolitográfia, gravírozás és egyéb effektusok a képekre és "
+"az anyaggal kitöltött objektumokra"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Velvet bump"
@@ -1598,8 +1599,8 @@ msgid ""
 "Creates colourizable blotches which smoothly flow over the edges of the "
 "lines at their crossings"
 msgstr ""
-"Színezhető foltok létrehozása, amelyek finoman ráfolynak a vonalak "
-"széleire azok kereszteződéseinél"
+"Színezhető foltok létrehozása, amelyek finoman ráfolynak a vonalak széleire "
+"azok kereszteződéseinél"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Black outline"
@@ -1672,8 +1673,8 @@ msgstr "Régi képeslap"
 #: ../share/filters/filters.svg.h:185
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
-"Enyhe posztereffektus, valamint régi nyomtatott képeslapokat "
-"idéző szélek rajzolása"
+"Enyhe posztereffektus, valamint régi nyomtatott képeslapokat idéző szélek "
+"rajzolása"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Fuzzy glow"
@@ -1701,9 +1702,7 @@ msgstr "Foltok és átlátszóság"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Paint objects with a transparent turbulence which turn around color edges"
-msgstr ""
-"Objektumok befestése átlátszó örvényléssel, amely a színes "
-"éleknél elfordul"
+msgstr "Objektumok befestése átlátszó örvényléssel, amely a színes éleknél elfordul"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Thick paint"
@@ -1730,8 +1729,8 @@ msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
-"Egy HSL-es élkeresési buckaeffektus kombinálása egy bőrszerű "
-"vagy faanyag-szerű színezhető textúrával"
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy bőrszerű vagy faanyag-"
+"szerű színezhető textúrával"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Carnaval"
@@ -1741,17 +1740,17 @@ msgstr "Karnevál"
 msgid "White splotches evocating carnaval masks"
 msgstr "Karneváli maszkokat idéző fehér foltok"
 
-#: ../share/filters/filters.svg.h:194
 # Definition: To soften a thermoplastic resin or compound
 #  by means of heat alone. Not similar to plasticize or plasticate.
+#: ../share/filters/filters.svg.h:194
 msgid "Plastify"
 msgstr "Lágyítás hővel"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
-"Egy HSL-es élkeresési buckaeffektus kombinálása egy hullámos, "
-"tükröző felületet adó effektussal"
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy hullámos, tükröző "
+"felületet adó effektussal"
 
 #: ../share/filters/filters.svg.h:195
 msgid "Plaster"
@@ -1760,8 +1759,8 @@ msgstr "Vakolat"
 #: ../share/filters/filters.svg.h:195
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
-"Egy HSL-es élkeresési buckaeffektus kombinálása egy matt, "
-"gyűrődött felületet adó effektussal"
+"Egy HSL-es élkeresési buckaeffektus kombinálása egy matt, gyűrődött "
+"felületet adó effektussal"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Rough transparency"
@@ -1917,6 +1916,27 @@ msgstr "Rajzvászon-buckák, alfa"
 #: ../share/filters/filters.svg.h:214
 msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de átlátszó részekkel"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Lightness-Contrast"
+msgstr "Fényesség"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Increase or decrease lightness and contrast"
+msgstr "Bitkép(ek) kontrasztjának növelése vagy csökkentése"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Clean edges"
+msgstr "Szélek sötétítése"
+
+#: ../share/filters/filters.svg.h:216
+msgid ""
+"Removes or decreases glows and jaggeries around objects edges after applying "
+"some filters"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2082,17 +2102,17 @@ msgstr "Ruha (bitkép)"
 msgid "Old paint (bitmap)"
 msgstr "Régi festés (bitkép)"
 
-#: ../src/arc-context.cpp:303
+#: ../src/arc-context.cpp:319
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: kör vagy egész-arányú ellipszis rajzolása; ellipszisív illetve -"
 "cikk szöghöz való illesztése"
 
-#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: rajzolás a kezdőpont köré"
 
-#: ../src/arc-context.cpp:455
+#: ../src/arc-context.cpp:471
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
@@ -2101,7 +2121,7 @@ msgstr ""
 "<b>Ellipszis</b>: %s &#215; %s (%d:%d arányúra korlátozva). Rajzolás a "
 "kezdőpont köré: <b>Shift</b>."
 
-#: ../src/arc-context.cpp:457
+#: ../src/arc-context.cpp:473
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -2110,22 +2130,22 @@ msgstr ""
 "<b>Ellipszis</b>: %s &#215; %s. Négyzetes vagy egész-arányú ellipszis: "
 "<b>Ctrl</b>; rajzolás a kezdőpont köré: <b>Shift</b>."
 
-#: ../src/arc-context.cpp:483
+#: ../src/arc-context.cpp:499
 msgid "Create ellipse"
 msgstr "Ellipszis létrehozása"
 
-#: ../src/box3d-context.cpp:412 ../src/box3d-context.cpp:419
-#: ../src/box3d-context.cpp:426 ../src/box3d-context.cpp:433
-#: ../src/box3d-context.cpp:440 ../src/box3d-context.cpp:447
+#: ../src/box3d-context.cpp:429 ../src/box3d-context.cpp:436
+#: ../src/box3d-context.cpp:443 ../src/box3d-context.cpp:450
+#: ../src/box3d-context.cpp:457 ../src/box3d-context.cpp:464
 msgid "Change perspective (angle of PLs)"
 msgstr "Perspektíva módosítása (perspektívavonalak szöge)"
 
 #. status text
-#: ../src/box3d-context.cpp:605
+#: ../src/box3d-context.cpp:622
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D téglatest</b>. Kihúzás a Z tengely mentén: <b>Shift</b>."
 
-#: ../src/box3d-context.cpp:629
+#: ../src/box3d-context.cpp:646
 msgid "Create 3D box"
 msgstr "3D téglatest létrehozása"
 
@@ -2200,16 +2220,16 @@ msgstr "Nincs következő nagyítás."
 msgid "Create guide"
 msgstr "Segédvonal létrehozása"
 
-#: ../src/desktop-events.cpp:412
+#: ../src/desktop-events.cpp:391
 msgid "Move guide"
 msgstr "Segédvonal áthelyezése"
 
-#: ../src/desktop-events.cpp:419 ../src/desktop-events.cpp:466
+#: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:445
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Segédvonal törlése"
 
-#: ../src/desktop-events.cpp:446
+#: ../src/desktop-events.cpp:425
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Segédvonal</b>: %s"
@@ -3488,14 +3508,14 @@ msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:502
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:504
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:505
+#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:507
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y:"
@@ -3926,7 +3946,7 @@ msgstr ""
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
-#: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
+#: ../src/display/snap-indicator.cpp:148 ../src/display/snap-indicator.cpp:151
 msgid "UNDEFINED"
 msgstr "DEFINIÁLATLAN"
 
@@ -3947,158 +3967,162 @@ msgid "guide intersection"
 msgstr "segédvonal-metszet"
 
 #: ../src/display/snap-indicator.cpp:78
+msgid "guide origin"
+msgstr "segédvonal-origó"
+
+#: ../src/display/snap-indicator.cpp:81
 msgid "grid-guide intersection"
 msgstr "rács-segédvonal-metszet"
 
-#: ../src/display/snap-indicator.cpp:81
+#: ../src/display/snap-indicator.cpp:84
 msgid "cusp node"
 msgstr "csúcs-csomópont"
 
-#: ../src/display/snap-indicator.cpp:84
+#: ../src/display/snap-indicator.cpp:87
 msgid "smooth node"
 msgstr "íves csomópont"
 
-#: ../src/display/snap-indicator.cpp:87
+#: ../src/display/snap-indicator.cpp:90
 msgid "path"
 msgstr "útvonal"
 
-#: ../src/display/snap-indicator.cpp:90
+#: ../src/display/snap-indicator.cpp:93
 msgid "path intersection"
 msgstr "útvonal-metszet"
 
-#: ../src/display/snap-indicator.cpp:93
+#: ../src/display/snap-indicator.cpp:96
 msgid "bounding box corner"
 msgstr "határoló téglalap sarka"
 
-#: ../src/display/snap-indicator.cpp:96
+#: ../src/display/snap-indicator.cpp:99
 msgid "bounding box side"
 msgstr "határoló téglalap oldala"
 
-#: ../src/display/snap-indicator.cpp:99
+#: ../src/display/snap-indicator.cpp:102
 msgid "bounding box"
 msgstr "határoló téglalap"
 
-#: ../src/display/snap-indicator.cpp:102
+#: ../src/display/snap-indicator.cpp:105
 msgid "page border"
 msgstr "lapkeret"
 
-#: ../src/display/snap-indicator.cpp:105
+#: ../src/display/snap-indicator.cpp:108
 msgid "line midpoint"
 msgstr "vonal-középpont"
 
-#: ../src/display/snap-indicator.cpp:108
+#: ../src/display/snap-indicator.cpp:111
 msgid "object midpoint"
 msgstr "objektum-középpont"
 
-#: ../src/display/snap-indicator.cpp:111
+#: ../src/display/snap-indicator.cpp:114
 msgid "object rotation center"
 msgstr "objektum forgatási középpontja"
 
-#: ../src/display/snap-indicator.cpp:114
+#: ../src/display/snap-indicator.cpp:117
 msgid "handle"
 msgstr "vezérlőelem"
 
-#: ../src/display/snap-indicator.cpp:117
+#: ../src/display/snap-indicator.cpp:120
 msgid "bounding box side midpoint"
 msgstr "határoló téglalap oldalának középpontja"
 
-#: ../src/display/snap-indicator.cpp:120
+#: ../src/display/snap-indicator.cpp:123
 msgid "bounding box midpoint"
 msgstr "határoló téglalap középpontja"
 
-#: ../src/display/snap-indicator.cpp:123
+#: ../src/display/snap-indicator.cpp:126
 msgid "page corner"
 msgstr "lapsarok"
 
-#: ../src/display/snap-indicator.cpp:126
+#: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
 msgstr "konvex burok sarka"
 
-#: ../src/display/snap-indicator.cpp:129
+#: ../src/display/snap-indicator.cpp:132
 msgid "quadrant point"
 msgstr "negyedelőpont"
 
-#: ../src/display/snap-indicator.cpp:132
+#: ../src/display/snap-indicator.cpp:135
 msgid "center"
 msgstr "középpont"
 
-#: ../src/display/snap-indicator.cpp:135
+#: ../src/display/snap-indicator.cpp:138
 msgid "corner"
 msgstr "sarok"
 
-#: ../src/display/snap-indicator.cpp:138
+#: ../src/display/snap-indicator.cpp:141
 msgid "text baseline"
 msgstr "szöveg-alapvonal"
 
-#: ../src/display/snap-indicator.cpp:151
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box corner"
 msgstr "Határoló téglalap sarka"
 
-#: ../src/display/snap-indicator.cpp:154
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box midpoint"
 msgstr "Határoló téglalap középpontja"
 
-#: ../src/display/snap-indicator.cpp:157
+#: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box side midpoint"
 msgstr "Határoló téglalap oldalának középpontja"
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
 msgstr "Íves csomópont"
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:166
 msgid "Cusp node"
 msgstr "Csúcs-csomópont"
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:169
 msgid "Line midpoint"
 msgstr "Vonal-középpont"
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object midpoint"
 msgstr "Objektum-középpont"
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:175
 msgid "Object rotation center"
 msgstr "Objektum forgatási középpontja"
 
-#: ../src/display/snap-indicator.cpp:175
+#: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
 msgstr "Vezérlőelem"
 
-#: ../src/display/snap-indicator.cpp:178
+#: ../src/display/snap-indicator.cpp:181
 msgid "Path intersection"
 msgstr "Útvonal-metszet"
 
-#: ../src/display/snap-indicator.cpp:181
+#: ../src/display/snap-indicator.cpp:184
 msgid "Guide"
 msgstr "Segédvonal"
 
-#: ../src/display/snap-indicator.cpp:184
+#: ../src/display/snap-indicator.cpp:187
 msgid "Guide origin"
 msgstr "Segédvonal-origó"
 
-#: ../src/display/snap-indicator.cpp:187
+#: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
 msgstr "Konvex burok sarka"
 
-#: ../src/display/snap-indicator.cpp:190
+#: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
 msgstr "Negyedelőpont"
 
-#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
 msgid "Center"
 msgstr "Középre igazítás"
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Corner"
 msgstr "Sarok"
 
-#: ../src/display/snap-indicator.cpp:199
+#: ../src/display/snap-indicator.cpp:202
 msgid "Text baseline"
 msgstr "Szöveg-alapvonal"
 
-#: ../src/display/snap-indicator.cpp:238
+#: ../src/display/snap-indicator.cpp:241
 msgid " to "
 msgstr " ehhez: "
 
@@ -4359,7 +4383,7 @@ msgstr ""
 "ezzel a kiterjesztéssel kapcsolatban, keresse fel az Inkscape weblapját, "
 "vagy tegye fel a kérdéseit a levelezőlistákon."
 
-#: ../src/extension/implementation/script.cpp:1058
+#: ../src/extension/implementation/script.cpp:1063
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -6365,95 +6389,95 @@ msgstr "Nem sikerült automatikus mentést készíteni a következő dokumentumo
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Commands Bar"
 msgstr "Parancssáv"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "A parancssáv megjelenítése (a menü alatt) vagy elrejtése"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Snap Controls Bar"
 msgstr "Illesztésvezérlő-sáv"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Show or hide the snapping controls"
 msgstr "Az illesztésvezérlők megjelenítése vagy elrejtése"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Tool Controls Bar"
 msgstr "Eszközvezérlő-sáv"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Show or hide the Tool Controls bar"
 msgstr "Az eszközvezérlőket tartalmazó eszköztár megjelenítése vagy elrejtése"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "_Toolbox"
 msgstr "_Eszköztár"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "A fő eszköztár megjelenítése (a bal oldalon) vagy elrejtése"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "_Palette"
 msgstr "_Paletta"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "Show or hide the color palette"
 msgstr "A színpaletta megjelenítése vagy elrejtése"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "_Statusbar"
 msgstr "Á_llapotsor"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Az állapotsor megjelenítése (az ablak alján) vagy elrejtése"
 
-#: ../src/interface.cpp:912
+#: ../src/interface.cpp:956
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Ismeretlen funkció: \"%s\""
 
-#: ../src/interface.cpp:951
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr "Leg_utóbbi megnyitása"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1052
+#: ../src/interface.cpp:1096
 #, c-format
 msgid "Enter group #%s"
 msgstr "Belépés a \"#%s\" csoportba"
 
-#: ../src/interface.cpp:1063
+#: ../src/interface.cpp:1107
 msgid "Go to parent"
 msgstr "Ugrás a szülőre"
 
-#: ../src/interface.cpp:1154 ../src/interface.cpp:1240
-#: ../src/interface.cpp:1343 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1198 ../src/interface.cpp:1284
+#: ../src/interface.cpp:1387 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Szín ejtése"
 
-#: ../src/interface.cpp:1193 ../src/interface.cpp:1303
+#: ../src/interface.cpp:1237 ../src/interface.cpp:1347
 msgid "Drop color on gradient"
 msgstr "Szín ejtése a színátmenetre"
 
-#: ../src/interface.cpp:1356
+#: ../src/interface.cpp:1400
 msgid "Could not parse SVG data"
 msgstr "Nem sikerült értelmezni az SVG-adatokat"
 
-#: ../src/interface.cpp:1395
+#: ../src/interface.cpp:1439
 msgid "Drop SVG"
 msgstr "SVG ejtése"
 
-#: ../src/interface.cpp:1451
+#: ../src/interface.cpp:1495
 msgid "Drop bitmap image"
 msgstr "Bitkép ejtése"
 
-#: ../src/interface.cpp:1543
+#: ../src/interface.cpp:1587
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6467,7 +6491,7 @@ msgstr ""
 "A megadott nevű fájl már létezik itt: \"%s\". A lecserélés felül fogja írni "
 "annak tartalmát."
 
-#: ../src/interface.cpp:1550 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1594 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Lecserélés"
@@ -6789,7 +6813,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1559
+#: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Lap"
 
@@ -9208,7 +9232,7 @@ msgstr "Rész"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Az RDF szerinti \"Licenc\" szakaszt tartalmazó XML-rész."
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:361
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
@@ -9216,7 +9240,7 @@ msgstr ""
 "<b>Ctrl</b>: négyzet vagy egész-arányú téglalap rajzolása; lekerekített "
 "csúcs körívessé tétele"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:508
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
@@ -9225,7 +9249,7 @@ msgstr ""
 "<b>Téglalap</b>: %s &#215; %s (%d:%d arányúra korlátozva). Rajzolás a "
 "kezdőpont köré: <b>Shift</b>."
 
-#: ../src/rect-context.cpp:494
+#: ../src/rect-context.cpp:511
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
@@ -9234,7 +9258,7 @@ msgstr ""
 "<b>Téglalap</b>: %s &#215; %s (aranymetszési 1,618 : 1 arányúra korlátozva). "
 "Rajzolás a kezdőpont köré: <b>Shift</b>."
 
-#: ../src/rect-context.cpp:496
+#: ../src/rect-context.cpp:513
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
@@ -9243,7 +9267,7 @@ msgstr ""
 "<b>Téglalap</b>: %s &#215; %s (aranymetszési 1 : 1,618 arányúra korlátozva). "
 "Rajzolás a kezdőpont köré: <b>Shift</b>."
 
-#: ../src/rect-context.cpp:500
+#: ../src/rect-context.cpp:517
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -9252,7 +9276,7 @@ msgstr ""
 "<b>Téglalap</b>: %s &#215; %s. Négyzet vagy egész-arányú téglalap: <b>Ctrl</"
 "b>; rajzolás a kezdőpont köré: <b>Shift</b>."
 
-#: ../src/rect-context.cpp:525
+#: ../src/rect-context.cpp:542
 msgid "Create rectangle"
 msgstr "Téglalap létrehozása"
 
@@ -10047,22 +10071,22 @@ msgstr "<b>Helytelen képhivatkozás</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "%d &#215; %d méretű <b>kép</b>: %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:319
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b>: szöghöz való illesztés"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:321
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: a spirál sugarának megőrzése"
 
-#: ../src/spiral-context.cpp:437
+#: ../src/spiral-context.cpp:453
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Spirál</b>. Sugár: %s, szög: %5g&#176;. Szöghöz való illesztés: <b>Ctrl</"
 "b>."
 
-#: ../src/spiral-context.cpp:463
+#: ../src/spiral-context.cpp:479
 msgid "Create spiral"
 msgstr "Spirál létrehozása"
 
@@ -10352,25 +10376,25 @@ msgstr "\"%s\" <b>klónja</b>"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Elárvult klón</b>"
 
-#: ../src/star-context.cpp:316
+#: ../src/star-context.cpp:333
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: szöghöz való illesztés; ágak sugárirányban való tartása"
 
-#: ../src/star-context.cpp:447
+#: ../src/star-context.cpp:464
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Sokszög</b>. Sugár: %s, szög: %5g&#176;. Szöghöz való illesztés: <b>Ctrl</"
 "b>."
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:465
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Csillag</b>. Sugár: %s, szög: %5g&#176;. Szöghöz való illesztés: <b>Ctrl</"
 "b>."
 
-#: ../src/star-context.cpp:477
+#: ../src/star-context.cpp:494
 msgid "Create star"
 msgstr "Csillag létrehozása"
 
@@ -11317,7 +11341,7 @@ msgstr "Legkisebb objektum"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Kijelölés"
@@ -11714,15 +11738,15 @@ msgstr "Külső szkript felvétele..."
 msgid "Remove external script"
 msgstr "Külső szkript eltávolítása"
 
-#: ../src/ui/dialog/document-properties.cpp:735
+#: ../src/ui/dialog/document-properties.cpp:739
 msgid "<b>Creation</b>"
 msgstr "<b>Létrehozás</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:736
+#: ../src/ui/dialog/document-properties.cpp:740
 msgid "<b>Defined grids</b>"
 msgstr "<b>Létrehozott rácsok</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:946
+#: ../src/ui/dialog/document-properties.cpp:950
 msgid "Remove grid"
 msgstr "Rács eltávolítása"
 
@@ -11732,6 +11756,7 @@ msgstr "Információ"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
+#: ../share/extensions/dxf_input.inx.h:5
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11864,7 +11889,7 @@ msgstr "Cél"
 msgid "Show Preview"
 msgstr "Előnézet megjelenítése"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:611
 msgid "No file selected"
 msgstr "Nincs kijelölve fájl"
 
@@ -12463,8 +12488,8 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 "Az <b>feDiffuseLighting</b> (szórt (diffúz) fény) és az feSpecularLighting "
-"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható "
-"létre. A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
+"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható létre. "
+"A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
 "átlátszatlanságú területek kiemelkednek a szemlélő felé, a kisebb "
 "átlátszatlanságúak pedig hátrébb helyezkednek el."
 
@@ -12549,8 +12574,8 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 "Az feDiffuseLighting (szórt (diffúz) fény) és az <b>feSpecularLighting</b> "
-"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható "
-"létre. A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
+"(tükröződő fény) szűrőprimitívekkel \"domborított\" árnyalás hozható létre. "
+"A bemenet alfa-csatornája adja a mélységi információt: a nagyobb "
 "átlátszatlanságú területek kiemelkednek a szemlélő felé, a kisebb "
 "átlátszatlanságúak pedig hátrébb helyezkednek el."
 
@@ -13207,7 +13232,7 @@ msgstr "Objektumok megrajzolása ezzel:"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
-#: ../src/widgets/desktop-widget.cpp:481
+#: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "Nagyítás"
 
@@ -14784,31 +14809,27 @@ msgstr "Réteg zárolása"
 msgid "Unlock layer"
 msgstr "Réteg feloldása"
 
-#: ../src/ui/dialog/layers.cpp:645
-msgid "Layers"
-msgstr "Rétegek"
-
-#: ../src/ui/dialog/layers.cpp:654
+#: ../src/ui/dialog/layers.cpp:652
 msgid "New"
 msgstr "Új"
 
-#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
 msgid "Top"
 msgstr "Felülre"
 
-#: ../src/ui/dialog/layers.cpp:665
+#: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
 msgstr "Feljebb"
 
-#: ../src/ui/dialog/layers.cpp:671
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Dn"
 msgstr "Lejjebb"
 
-#: ../src/ui/dialog/layers.cpp:677
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Bot"
 msgstr "Alulra"
 
-#: ../src/ui/dialog/layers.cpp:687
+#: ../src/ui/dialog/layers.cpp:685
 msgid "X"
 msgstr "X"
 
@@ -15498,6 +15519,7 @@ msgstr "Tűrés:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Options"
 msgstr "Opciók"
 
@@ -15727,16 +15749,16 @@ msgstr "Transzformációs mátrix módosítása"
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
-#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:378
+#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
 msgstr "A rajz nagyításának módosítása az ablak méretének változásakor"
 
-#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:501
+#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:503
 msgid "Cursor coordinates"
 msgstr "Kurzorkoordináták"
 
 # zoom
-#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:516
+#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:518
 msgid "Z:"
 msgstr "N:"
 
@@ -15749,7 +15771,7 @@ msgstr ""
 "alakzateszközöket és a rajzolóeszközöket, áthelyezéshez/módosításhoz pedig a "
 "kijelölőeszközt (nyilat)."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15763,11 +15785,11 @@ msgstr ""
 "Ha mentés nélkül végez bezárást, akkor az összes módosítás elvész."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:896
+#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
 msgid "Close _without saving"
 msgstr "_Bezárás mentés nélkül"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15780,7 +15802,7 @@ msgstr ""
 "\n"
 "El kívánja menteni a dokumentumot Inkscape SVG formátumban?"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:899
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
 msgid "_Save as SVG"
 msgstr "_Mentés SVG-ként"
 
@@ -18317,7 +18339,7 @@ msgid "Pattern offset"
 msgstr "A minta eltolása"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:549
+#: ../src/widgets/desktop-widget.cpp:551
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -18326,22 +18348,22 @@ msgstr ""
 "alakzateszközöket és a szabadkézi eszközöket, áthelyezéshez/módosításhoz "
 "pedig a kijelölőeszközt (nyilat)."
 
-#: ../src/widgets/desktop-widget.cpp:611
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (drótváz) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:617
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (drótváz) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -20772,8 +20794,8 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 "Az inkex.py - és vele együtt ez a kiterjesztés - igényli az lxml nevű "
-"libxml2-csomagolót (wrapper). Töltse le és telepítse az aktuális verziót "
-"a http://cheeseshop.python.org/pypi/lxml/ oldalról, vagy telepítse a "
+"libxml2-csomagolót (wrapper). Töltse le és telepítse az aktuális verziót a "
+"http://cheeseshop.python.org/pypi/lxml/ oldalról, vagy telepítse a "
 "csomagkezelőjével (például a \"sudo apt-get install python-lxml\" vagy "
 "hasonló paranccsal)."
 
@@ -20894,8 +20916,8 @@ msgid ""
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
 "Oldaladatok nem találhatók. Olyan fájlt adjon meg, amely oldaladatokat "
-"tartalmaz, és ellenőrizze, hogy a fájl \"Oldalakkal megadott\" módban "
-"van-e importálva (Modellfájl lap).\n"
+"tartalmaz, és ellenőrizze, hogy a fájl \"Oldalakkal megadott\" módban van-e "
+"importálva (Modellfájl lap).\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
@@ -21336,27 +21358,35 @@ msgid "Trilinear Coordinates"
 msgstr "Trilineáris koordináták"
 
 #: ../share/extensions/dxf_input.inx.h:1
-#: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgid ""
+"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
+"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
+"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
+"instead, if needed."
+msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "AutoCAD DXF R13 (*.dxf)"
+msgstr "AutoCAD DXF (*.dxf)"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
 msgstr "Karakterkódolás"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "DXF Input"
 msgstr "DXF-bemenet"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Az AutoCAD-féle \"Document Exchange Format\" formátum importálása"
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "Or, use manual scale factor"
 msgstr "Vagy használja ezt a méretezési tényezőt"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:9
 msgid "Use automatic scaling to size A4"
 msgstr "Automatikus méretezés A4 méretre"
 
@@ -21365,12 +21395,17 @@ msgid "Desktop Cutting Plotter"
 msgstr "Asztali vágóplotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.DXF)"
+#, fuzzy
+msgid "Desktop Cutting Plotter (*.dxf)"
 msgstr "Asztali vágóplotter (*.DXF)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
 msgstr "ROBO-Master-kimenet"
+
+#: ../share/extensions/dxf_output.inx.h:1
+msgid "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -21667,8 +21702,8 @@ msgid "GIMP XCF"
 msgstr "GIMP-XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-msgid "GIMP XCF maintaining layers (*.XCF)"
-msgstr "GIMP-XCF a rétegek megtartásával (*.XCF)"
+msgid "GIMP XCF maintaining layers (*.xcf)"
+msgstr "GIMP-XCF a rétegek megtartásával (*.xcf)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
@@ -22478,12 +22513,13 @@ msgstr "AutoCAD-plot-bemenet"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-msgid "AutoCAD Plot drawing files (*.plt)"
-msgstr "AutoCAD-plot-rajzfájlok (*.plt)"
+#, fuzzy
+msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
+msgstr "HP Graphics Language-fájl (*.hpgl)"
 
 #: ../share/extensions/plt_input.inx.h:3
-msgid "Open files saved for plotters"
-msgstr "Plotterfájlok megnyitása"
+msgid "Open HPGL plotter files"
+msgstr "HPGL-plotterfájlok megnyitása"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
@@ -23455,3 +23491,16 @@ msgstr "Windows Metafile-bemenet"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML-bemenet"
+
+#~ msgid "Gives the flood color to the dark parts of the image"
+#~ msgstr "A kép sötét részeit beszínezi a területkitöltési színnel"
+
+#~ msgid "Layers"
+#~ msgstr "Rétegek"
+
+#~ msgid "AutoCAD Plot drawing files (*.plt)"
+#~ msgstr "AutoCAD-plot-rajzfájlok (*.plt)"
+
+#~ msgid "Open files saved for plotters"
+#~ msgstr "Plotterfájlok megnyitása"
+
