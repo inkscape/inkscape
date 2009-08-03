@@ -47,7 +47,7 @@ EXTRA_DIST = \
 	HACKING.txt HACKING.de.txt HACKING.fr.txt HACKING.it.txt	\
 	TRANSLATORS \
 	inkscape.png \
-	inkscape.ico inkscape16.ico inkscape32-16.ico inkscape32.ico inkscape64.ico \
+	inkscape.ico \
 	src/helper/sp-marshal.cpp.mingw src/helper/sp-marshal.h.mingw \
 	src/2geom/angle.h \
 	src/inkscape-manifest.xml src/inkview-manifest.xml \
