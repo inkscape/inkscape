@@ -10,7 +10,7 @@
 !define PRODUCT_VERSION "0.46+devel"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-;!define DUMMYINSTALL ; define this to make it build quickly, not including any of the files or proper sections, for quick testing of pre-install features of the installer
+;!define DUMMYINSTALL ; Define this to make it build quickly, not including any of the files or code in the sections, for quick testing of features of the installer and development thereof.
 
 ; #######################################
 ; MUI   SETTINGS
@@ -88,22 +88,23 @@ ShowUninstDetails hide
 ; default language first
 
 ; Language files
-!include "english.nsh"
-!include "breton.nsh"
-!include "catalan.nsh"
-!include "czech.nsh"
-!include "finnish.nsh"
-!include "french.nsh"
-!include "galician.nsh"
-!include "german.nsh"
-!include "italian.nsh"
-!include "japanese.nsh"
-!include "polish.nsh"
-!include "russian.nsh"
-!include "slovak.nsh"
-!include "slovenian.nsh"
-!include "spanish.nsh"
-!include "tradchinese.nsh"
+!insertmacro MUI_RESERVEFILE_LANGDLL
+!include English.nsh
+!include Breton.nsh
+!include Catalan.nsh
+!include Czech.nsh
+!include Finnish.nsh
+!include French.nsh
+!include Galician.nsh
+!include German.nsh
+!include Italian.nsh
+!include Japanese.nsh
+!include Polish.nsh
+!include Russian.nsh
+!include Slovak.nsh
+!include Slovenian.nsh
+!include Spanish.nsh
+!include TradChinese.nsh
 
 ReserveFile "inkscape.nsi.uninstall"
 ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
@@ -130,7 +131,6 @@ Var CMDARGS
 ;  I N S T A L L E R    S E C T I O N S
 ; #######################################
 
-!ifndef DUMMYINSTALL
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -162,6 +162,7 @@ Var CMDARGS
 ;--------------------------------
 ; Installer Sections
 Section -removeInkscape
+!ifndef DUMMYINSTALL
   ; check for an old installation and clean its DLLs etc.
   FindFirst $0 $1 $INSTDIR\*.*
   ${Do}
@@ -189,10 +190,12 @@ Section -removeInkscape
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
   Delete "$SMPROGRAMS\Inkscape.lnk"
+!endif
 SectionEnd
 
 Section $(lng_Core) SecCore
   SectionIn 1 2 3 RO
+!ifndef DUMMYINSTALL
   DetailPrint "Installing Inkscape Core Files ..."
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -234,10 +237,12 @@ Section $(lng_Core) SecCore
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r "..\..\inkscape\python\*.*"
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
 SectionEnd
 
 Section $(lng_GTKFiles) SecGTK
   SectionIn 1 2 3 RO
+!ifndef DUMMYINSTALL
   DetailPrint "Installing GTK Files ..."
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -246,37 +251,47 @@ Section $(lng_GTKFiles) SecGTK
   File /a /r /x "locale" "..\..\inkscape\lib"
   File /a /r "..\..\inkscape\etc"
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
 SectionEnd
 
 Section -SetCurrentUserOnly
+!ifndef DUMMYINSTALL
   StrCpy $MultiUser 0
   SetShellVarContext current
+!endif
 SectionEnd
 
 Section $(lng_Alluser) SecAlluser
-  ; disable this option in Win95/Win98/WinME
   SectionIn 1 2 3
+!ifndef DUMMYINSTALL
+  ; disable this option in Win95/Win98/WinME
   StrCpy $MultiUser 1
   DetailPrint "admin mode, registry root will be HKLM"
   SetShellVarContext all
+!endif
 SectionEnd
 
 SectionGroup $(lng_Shortcuts) SecShortcuts
 
-Section /o $(lng_Desktop) SecDesktop
+Section $(lng_Desktop) SecDesktop
+!ifndef DUMMYINSTALL
   ClearErrors
   CreateShortCut "$DESKTOP\Inkscape.lnk" "$INSTDIR\inkscape.exe"
   ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating desktop shortcuts" ${|}
+!endif
 SectionEnd
 
-Section /o $(lng_Quicklaunch) SecQuicklaunch
+Section $(lng_Quicklaunch) SecQuicklaunch
+!ifndef DUMMYINSTALL
   ClearErrors
   ${IfThen} $QUICKLAUNCH != $TEMP ${|} CreateShortCut "$QUICKLAUNCH\Inkscape.lnk" "$INSTDIR\inkscape.exe" ${|}
   ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating quicklaunch shortcuts" ${|}
+!endif
 SectionEnd
 
 Section $(lng_SVGWriter) SecSVGWriter
   SectionIn 1 2 3
+!ifndef DUMMYINSTALL
   ; create file associations, test before if needed
   DetailPrint "creating file associations"
   ClearErrors
@@ -299,10 +314,12 @@ Section $(lng_SVGWriter) SecSVGWriter
   ReadRegStr $0 HKCR ".svgz" ""
   WriteRegStr HKCR "$0\shell\edit\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
   ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating default editor" ${|}
+!endif
 SectionEnd
 
 Section $(lng_ContextMenu) SecContextMenu
   SectionIn 1 2 3
+!ifndef DUMMYINSTALL
   ; create file associations, test before if needed
   DetailPrint "creating file associations"
   ClearErrors
@@ -327,38 +344,46 @@ Section $(lng_ContextMenu) SecContextMenu
   ReadRegStr $0 HKCR ".svgz" ""
   WriteRegStr HKCR "$0\shell\${PRODUCT_NAME}\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
   ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating context menue integration" ${|}
+!endif
 SectionEnd
 
 SectionGroupEnd
 
 Section /o $(lng_DeletePrefs) SecPrefs
+!ifndef DUMMYINSTALL
   !insertmacro delprefs
+!endif
 SectionEnd
 
 SectionGroup $(lng_Addfiles) SecAddfiles
 
 Section $(lng_Examples) SecExamples
   SectionIn 1 2
+!ifndef DUMMYINSTALL
   SetOutPath $INSTDIR\share
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r /x "*.??*.???*" "..\..\inkscape\share\examples"
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
 SectionEnd
 
 Section $(lng_Tutorials) SecTutorials
   SectionIn 1 2
+!ifndef DUMMYINSTALL
   SetOutPath $INSTDIR\share
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /nonfatal /a /r /x "*.??*.???*" "..\..\inkscape\share\tutorials"
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
 SectionEnd
 
 SectionGroupEnd
 
 SectionGroup $(lng_Languages) SecLanguages
   !macro Language SecName lng
-    Section $(lng_${lng}) Sec${SecName}
-      SectionIn 1 2 3
+    Section /o $(lng_${lng}) Sec${SecName}
+      ;SectionIn 1 2 3
+!ifndef DUMMYINSTALL
       SetOutPath $INSTDIR
       !insertmacro UNINSTALL.LOG_OPEN_INSTALL
       File /nonfatal /a "..\..\inkscape\*.${lng}.txt" ; FIXME: remove this?  No such files.
@@ -397,6 +422,7 @@ SectionGroup $(lng_Languages) SecLanguages
         File /nonfatal /a "..\..\inkscape\share\tutorials\*.${lng}.*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       ${EndIf}
+    !endif
     SectionEnd
   !macroend
 
@@ -465,6 +491,7 @@ SectionGroupEnd
 
 
 Section -FinalizeInstallation
+!ifndef DUMMYINSTALL
   DetailPrint "finalize installation"
   ${If} $MultiUser = 1
     DetailPrint "admin mode, registry root will be HKLM"
@@ -527,6 +554,7 @@ Section -FinalizeInstallation
   FileClose $9
   ; Not needed any more
   Delete $INSTDIR\Uninstall.dat
+!endif
 SectionEnd
 
 ; Last the Descriptions
@@ -562,6 +590,33 @@ SectionEnd
 !macroend
 
 Function .onInit
+  !insertmacro MUI_LANGDLL_DISPLAY
+
+  !macro LanguageAutoSelect SecName LocaleID
+    ${If} $LANGUAGE = ${LocaleID}
+      SectionGetFlags ${Sec${SecName}} $0
+      IntOp $0 $0 | ${SF_SELECTED}
+      SectionSetFlags ${Sec${SecName}} $0
+    ${EndIf}
+  !macroend
+
+  ;!insertmacro LanguageAutoSelect English 1033
+  !insertmacro LanguageAutoSelect Breton 1150
+  !insertmacro LanguageAutoSelect Catalan 1027
+  !insertmacro LanguageAutoSelect Czech 1029
+  !insertmacro LanguageAutoSelect Finnish 1035
+  !insertmacro LanguageAutoSelect French 1036
+  !insertmacro LanguageAutoSelect Gallegan 1110 ; Galician, but section is called Gallegan
+  !insertmacro LanguageAutoSelect German 1031
+  !insertmacro LanguageAutoSelect Italian 1040
+  !insertmacro LanguageAutoSelect Japanese 1041
+  !insertmacro LanguageAutoSelect Polish 1045
+  !insertmacro LanguageAutoSelect Russian 1049
+  !insertmacro LanguageAutoSelect Slovak 1051
+  !insertmacro LanguageAutoSelect Slovenian 1060
+  !insertmacro LanguageAutoSelect Spanish 1034
+  !insertmacro LanguageAutoSelect ChineseTaiwan 1028 ; TradChinese, but section is called ChineseTaiwan
+
   ${GetParameters} $CMDARGS
   ;prepare log always within .onInit function
   !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
@@ -782,6 +837,7 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+!ifndef DUMMYINSTALL
   ; remove personal settings
   Delete "$APPDATA\Inkscape\extension-errors.log"
   ${If} $MultiUser = 0
@@ -927,8 +983,5 @@ Section Uninstall
   RMDir "$INSTDIR\plugins"
   RMDir $INSTDIR
   SetAutoClose false
-SectionEnd
-!else
-Section "This is a dummy section, which doesn't do anything" null
-SectionEnd
 !endif
+SectionEnd
