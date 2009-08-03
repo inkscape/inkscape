@@ -87,6 +87,7 @@ extensions = \
 	pathmodifier.py\
 	perfectboundcover.py \
 	perspective.py \
+	plt_output.py \
 	polyhedron_3d.py \
 	printing-marks.py \
 	ps2dxf.sh \
@@ -105,6 +106,7 @@ extensions = \
 	simplepath.rb \
 	simplestyle.py \
 	simpletransform.py \
+	sk1_output.py \
 	sk2svg.sh \
 	SpSVG.pm \
 	spirograph.py\
@@ -123,9 +125,11 @@ extensions = \
 	triangle.py \
 	txt2svg.pl \
 	uniconv-ext.py \
+	uniconv_output.py \
 	web-set-att.py \
 	web-transmit-att.py \
-	whirl.py
+	whirl.py \
+	wmf_output.py
 
 otherstuff = \
 	aisvg.xslt \

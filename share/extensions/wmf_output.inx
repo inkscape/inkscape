@@ -2,7 +2,7 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Windows Metafile Input</_name>
     <id>org.inkscape.output.wmf</id>
-    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
+    <dependency type="executable" location="extensions">wmf_output.py</dependency>
     <output>
         <extension>.wmf</extension>
         <mimetype>application/x-wmf</mimetype>
@@ -10,6 +10,6 @@
         <_filetypetooltip>A popular graphics file format for clipart</_filetypetooltip>
     </output>
     <script>
-        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
+        <command reldir="extensions" interpreter="python">wmf_output.py</command>
     </script>
 </inkscape-extension>
