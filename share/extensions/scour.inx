@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Scoured SVG Output</_name>
+    <id>org.inkscape.output.scour</id>
+    <dependency type="executable" location="extensions">scour.py</dependency>
+    <dependency type="executable" location="extensions">svg_regex.py</dependency>
+    <output>
+        <extension>.svg</extension>
+        <mimetype>image/svg+xml</mimetype>
+        <_filetypename>Scoured SVG (*.svg)</_filetypename>
+        <_filetypetooltip>Scalable Vector Graphics</_filetypetooltip>
+    </output>
+    <script>
+        <command reldir="extensions" interpreter="python">scour.inkscape.py</command>
+    </script>
+</inkscape-extension>
