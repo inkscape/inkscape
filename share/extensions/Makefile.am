@@ -102,6 +102,8 @@ extensions = \
 	rtree.py \
 	rubberstretch.py\
 	run_command.py \
+	scour.py \
+	scour.inkscape.py \
 	simplepath.py \
 	simplepath.rb \
 	simplestyle.py \
@@ -113,6 +115,7 @@ extensions = \
 	straightseg.py \
 	summersnight.py \
 	svgcalendar.py \
+	svg_regex.py \
 	svg_and_media_zip_output.py \
 	text_uppercase.py \
 	text_lowercase.py \
@@ -225,6 +228,7 @@ modules = \
 	restack.inx \
 	rubberstretch.inx \
 	rtree.inx \
+	scour.inx \
 	sk_input.inx \
 	sk1_input.inx \
 	sk1_output.inx \

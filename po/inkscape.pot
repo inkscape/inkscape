@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-03 17:44+0200\n"
+"POT-Creation-Date: 2009-08-04 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2897,154 +2897,154 @@ msgid ""
 "to zero"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2623
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2627
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2627
 msgid "_Drawing"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2629
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2629
 msgid "_Selection"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:141
+#: ../src/dialogs/export.cpp:146
 msgid "_Custom"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:266
+#: ../src/dialogs/export.cpp:271
 msgid "<big><b>Export area</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:280
+#: ../src/dialogs/export.cpp:285
 msgid "Units:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:308
+#: ../src/dialogs/export.cpp:313
 msgid "_x0:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:313
+#: ../src/dialogs/export.cpp:318
 msgid "x_1:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:323
 msgid "Wid_th:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:324
+#: ../src/dialogs/export.cpp:329
 msgid "_y0:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:329
+#: ../src/dialogs/export.cpp:334
 msgid "y_1:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:334
+#: ../src/dialogs/export.cpp:339
 msgid "Hei_ght:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:466
+#: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:479 ../src/dialogs/export.cpp:493
+#: ../src/dialogs/export.cpp:484 ../src/dialogs/export.cpp:498
 msgid "pixels at"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:487
+#: ../src/dialogs/export.cpp:492
 msgid "dp_i"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
+#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:504 ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "dpi"
 msgstr ""
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:515
+#: ../src/dialogs/export.cpp:520
 msgid "<big><b>_Filename</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:586
+#: ../src/dialogs/export.cpp:591
 msgid "_Browse..."
 msgstr ""
 
-#: ../src/dialogs/export.cpp:615
+#: ../src/dialogs/export.cpp:620
 msgid "Batch export all selected objects"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:619
+#: ../src/dialogs/export.cpp:624
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:627
+#: ../src/dialogs/export.cpp:632
 msgid "Hide all except selected"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:631
+#: ../src/dialogs/export.cpp:636
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:648
+#: ../src/dialogs/export.cpp:653
 msgid "_Export"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:652
+#: ../src/dialogs/export.cpp:657
 msgid "Export the bitmap file with these settings"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:678
+#: ../src/dialogs/export.cpp:683
 #, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/dialogs/export.cpp:1009
+#: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1079
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1119 ../src/dialogs/export.cpp:1192
+#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1148
+#: ../src/dialogs/export.cpp:1153
 msgid "You have to enter a filename"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1158
 msgid "The chosen area to be exported is invalid"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1162
+#: ../src/dialogs/export.cpp:1167
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1178
+#: ../src/dialogs/export.cpp:1183
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:1299
+#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
 msgid "Select a filename for exporting"
 msgstr ""
 
@@ -20209,7 +20209,7 @@ msgid "ROBO-Master output"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
+msgid "AutoCAD DXF R12 (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:2
@@ -21666,6 +21666,18 @@ msgstr ""
 #: ../share/extensions/rubberstretch.inx.h:6
 #, no-c-format
 msgid "Strength (%):"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:1
+msgid "Scalable Vector Graphics"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:2
+msgid "Scoured SVG (*.svg)"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:3
+msgid "Scoured SVG Output"
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:1

@@ -380,6 +380,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
 [type: gettext/xml] share/extensions/rubberstretch.inx
+[type: gettext/xml] share/extensions/scour.inx
 [type: gettext/xml] share/extensions/sk1_input.inx
 [type: gettext/xml] share/extensions/sk1_output.inx
 [type: gettext/xml] share/extensions/sk_input.inx
