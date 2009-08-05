@@ -235,7 +235,7 @@
 #define INKSCAPE_ICON_IMAGE_FILTER_TURBULENCE \
     "image-filter-turbulence"
 #define INKSCAPE_ICON_INKSCAPE \
-    "inkscape"
+    "inkscape-logo"
 #define INKSCAPE_ICON_LAYER_BOTTOM \
     "layer-bottom"
 #define INKSCAPE_ICON_LAYER_DELETE \

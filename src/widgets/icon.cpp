@@ -381,7 +381,7 @@ static void setupLegacyNaming() {
     legacyNames["text-unkern"] ="remove_manual_kerns";
     legacyNames["help-keyboard-shortcuts"] ="help_keys";
     legacyNames["help-contents"] ="help_tutorials";
-    legacyNames["inkscape"] ="inkscape_options";
+    legacyNames["inkscape-logo"] ="inkscape_options";
     legacyNames["dialog-memory"] ="about_memory";
     legacyNames["tool-pointer"] ="draw_select";
     legacyNames["tool-node-editor"] ="draw_node";

@@ -113,7 +113,7 @@
   <!-- help menu -->
   <remap id='help_keys' newid='help-keyboard-shortcuts'/>
   <remap id='help_tutorials' newid='help-contents'/>
-  <remap id='inkscape_options' newid='inkscape'/>
+  <remap id='inkscape_options' newid='inkscape-logo'/>
   <remap id='about_memory' newid='dialog-memory'/>
   
   <!-- tools -->
