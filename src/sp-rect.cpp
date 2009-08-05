@@ -36,7 +36,7 @@
 static void sp_rect_class_init(SPRectClass *klass);
 static void sp_rect_init(SPRect *rect);
 
-static void sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_rect_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_rect_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_rect_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_rect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -108,7 +108,7 @@ sp_rect_init(SPRect */*rect*/)
 }
 
 static void
-sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_rect_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build(object, document, repr);

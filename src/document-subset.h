@@ -17,7 +17,7 @@
 #include "gc-anchored.h"
 
 class SPObject;
-class SPDocument;
+class Document;
 
 namespace Inkscape {
 

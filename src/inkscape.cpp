@@ -105,7 +105,7 @@ static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape
 struct Inkscape::Application {
     GObject object;
     Inkscape::XML::Document *menus;
-    std::map<SPDocument *, int> document_set;
+    std::map<Document *, int> document_set;
     GSList *desktops;
     gchar *argv0;
     gboolean dialogs_toggle;
@@ -126,7 +126,7 @@ struct Inkscape::ApplicationClass {
     void (* set_eventcontext) (Inkscape::Application * inkscape, SPEventContext * eventcontext);
     void (* activate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
     void (* deactivate_desktop) (Inkscape::Application * inkscape, SPDesktop * desktop);
-    void (* destroy_document) (Inkscape::Application *inkscape, SPDocument *doc);
+    void (* destroy_document) (Inkscape::Application *inkscape, Document *doc);
     void (* color_set) (Inkscape::Application *inkscape, SPColor *color, double opacity);
     void (* shut_down) (Inkscape::Application *inkscape);
     void (* dialogs_hide) (Inkscape::Application *inkscape);
@@ -326,11 +326,11 @@ static gint inkscape_autosave(gpointer)
     gint docnum = 0;
 
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Autosaving documents..."));
-    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+    for (std::map<Document*,int>::iterator iter = inkscape->document_set.begin();
           iter != inkscape->document_set.end();
           ++iter) {
 
-        SPDocument *doc = iter->first;
+        Document *doc = iter->first;
 
         ++docnum;
 
@@ -463,7 +463,7 @@ inkscape_init (SPObject * object)
         g_assert_not_reached ();
     }
 
-    new (&inkscape->document_set) std::map<SPDocument *, int>();
+    new (&inkscape->document_set) std::map<Document *, int>();
 
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
     inkscape->desktops = NULL;
@@ -597,10 +597,10 @@ inkscape_crash_handler (int /*signum*/)
     gint count = 0;
     GSList *savednames = NULL;
     GSList *failednames = NULL;
-    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+    for (std::map<Document*,int>::iterator iter = inkscape->document_set.begin();
           iter != inkscape->document_set.end();
           ++iter) {
-        SPDocument *doc = iter->first;
+        Document *doc = iter->first;
         Inkscape::XML::Node *repr;
         repr = sp_document_repr_root (doc);
         if (doc->isModifiedSinceSave()) {
@@ -1219,7 +1219,7 @@ inkscape_external_change ()
  * fixme: These need probably signals too
  */
 void
-inkscape_add_document (SPDocument *document)
+inkscape_add_document (Document *document)
 {
     g_return_if_fail (document != NULL);
 
@@ -1228,7 +1228,7 @@ inkscape_add_document (SPDocument *document)
         // try to insert the pair into the list
         if (!(inkscape->document_set.insert(std::make_pair(document, 1)).second)) {
             //insert failed, this key (document) is already in the list
-            for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+            for (std::map<Document*,int>::iterator iter = inkscape->document_set.begin();
                    iter != inkscape->document_set.end();
                    ++iter) {
                 if (iter->first == document) {
@@ -1247,13 +1247,13 @@ inkscape_add_document (SPDocument *document)
 
 // returns true if this was last reference to this document, so you can delete it
 bool
-inkscape_remove_document (SPDocument *document)
+inkscape_remove_document (Document *document)
 {
     g_return_val_if_fail (document != NULL, false);
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+        for (std::map<Document*,int>::iterator iter = inkscape->document_set.begin();
                   iter != inkscape->document_set.end();
                   ++iter) {
             if (iter->first == document) {
@@ -1290,7 +1290,7 @@ inkscape_active_desktop (void)
     return (SPDesktop *) inkscape->desktops->data;
 }
 
-SPDocument *
+Document *
 inkscape_active_document (void)
 {
     if (Inkscape::NSApplication::Application::getNewGui())
@@ -1304,13 +1304,13 @@ inkscape_active_document (void)
 }
 
 bool inkscape_is_sole_desktop_for_document(SPDesktop const &desktop) {
-    SPDocument const* document = desktop.doc();
+    Document const* document = desktop.doc();
     if (!document) {
         return false;
     }
     for ( GSList *iter = inkscape->desktops ; iter ; iter = iter->next ) {
         SPDesktop *other_desktop=(SPDesktop *)iter->data;
-        SPDocument *other_document=other_desktop->doc();
+        Document *other_document=other_desktop->doc();
         if ( other_document == document && other_desktop != &desktop ) {
             return false;
         }

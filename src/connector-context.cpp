@@ -686,7 +686,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
     if ( revent.button == 1 && !event_context->space_panning ) {
 
     	SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-        SPDocument *doc = sp_desktop_document(desktop);
+        Document *doc = sp_desktop_document(desktop);
 
         SnapManager &m = desktop->namedview->snap_manager;
 		m.setup(desktop);
@@ -763,7 +763,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
             if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
 
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-                SPDocument *doc = sp_desktop_document(desktop);
+                Document *doc = sp_desktop_document(desktop);
 
                 cc_connector_rerouting_finish(cc, NULL);
 
@@ -794,7 +794,7 @@ static void
 cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
 
     // Clear the temporary path:
     cc->red_curve->reset();
@@ -936,7 +936,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     c->transform(SP_EVENT_CONTEXT_DESKTOP(cc)->dt2doc());
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     if ( c && !c->is_empty() ) {
@@ -1311,7 +1311,7 @@ void cc_selection_set_avoid(bool const set_avoid)
         return;
     }
 
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 

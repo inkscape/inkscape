@@ -47,7 +47,7 @@ public:
 
     void doRescale (bool event);
 
-    virtual void setDocument (SPDocument*);
+    virtual void setDocument (Document*);
     virtual void mouseover();
     virtual void mouseout();
     virtual bool shutdown() { return true; }

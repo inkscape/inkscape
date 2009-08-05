@@ -747,7 +747,7 @@ sp_psel_pattern_change(GtkWidget *widget,  SPPaintSelector *psel)
  *  Returns NULL if there are no patterns in the document.
  */
 GSList *
-ink_pattern_list_get (SPDocument *source)
+ink_pattern_list_get (Document *source)
 {
     if (source == NULL)
         return NULL;
@@ -768,7 +768,7 @@ ink_pattern_list_get (SPDocument *source)
  * Adds menu items for pattern list - derived from marker code, left hb etc in to make addition of previews easier at some point.
  */
 static void
-sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*/)
+sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, Document */*source*/)
 {
 
     for (; pattern_list != NULL; pattern_list = pattern_list->next) {
@@ -813,7 +813,7 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
  *
  */
 static void
-sp_pattern_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *pattern_doc)
+sp_pattern_list_from_doc (GtkWidget *m, Document *current_doc, Document *source, Document *pattern_doc)
 {
     (void)current_doc;
     (void)pattern_doc;
@@ -838,9 +838,9 @@ sp_pattern_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *sou
 
 
 static void
-ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
+ink_pattern_menu_populate_menu(GtkWidget *m, Document *doc)
 {
-    static SPDocument *patterns_doc = NULL;
+    static Document *patterns_doc = NULL;
 
     // find and load patterns.svg
     if (patterns_doc == NULL) {
@@ -878,7 +878,7 @@ ink_pattern_menu(GtkWidget *mnu)
    /* Create new menu widget */
     GtkWidget *m = gtk_menu_new();
     gtk_widget_show(m);
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
 
     if (!doc) {
         GtkWidget *i;

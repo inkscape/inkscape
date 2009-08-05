@@ -44,9 +44,9 @@
 #include <errno.h>
 #endif
 
-#if HAVE_SYS_STAT_H
+//--tullarisc #if HAVE_SYS_STAT_H
 #include <sys/stat.h>
-#endif
+//#endif
 
 #include "javabind.h"
 #include "javabind-private.h"

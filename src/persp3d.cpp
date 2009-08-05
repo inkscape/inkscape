@@ -26,7 +26,7 @@
 static void persp3d_class_init(Persp3DClass *klass);
 static void persp3d_init(Persp3D *stop);
 
-static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void persp3d_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void persp3d_release(SPObject *object);
 static void persp3d_set(SPObject *object, unsigned key, gchar const *value);
 static void persp3d_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -103,7 +103,7 @@ persp3d_init(Persp3D *persp)
 /**
  * Virtual build: set persp3d attributes from its associated XML node.
  */
-static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void persp3d_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) persp3d_parent_class)->build)
         (* ((SPObjectClass *) persp3d_parent_class)->build)(object, document, repr);
@@ -201,7 +201,7 @@ persp3d_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 Persp3D *
-persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is given, copy the attributes over
+persp3d_create_xml_element (Document *document, Persp3D *dup) {// if dup is given, copy the attributes over
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *repr;
@@ -240,7 +240,7 @@ persp3d_create_xml_element (SPDocument *document, Persp3D *dup) {// if dup is gi
 }
 
 Persp3D *
-persp3d_document_first_persp (SPDocument *document) {
+persp3d_document_first_persp (Document *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
     Inkscape::XML::Node *repr;
     for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {
@@ -653,7 +653,7 @@ persp3d_print_debugging_info (Persp3D *persp) {
 }
 
 void
-persp3d_print_debugging_info_all(SPDocument *document) {
+persp3d_print_debugging_info_all(Document *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
     Inkscape::XML::Node *repr;
     for (SPObject *child = sp_object_first_child(defs); child != NULL; child = SP_OBJECT_NEXT(child) ) {

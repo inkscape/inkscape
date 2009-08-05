@@ -126,12 +126,12 @@ LayerManager::LayerManager(SPDesktop *desktop)
 {
     _layer_connection = desktop->connectCurrentLayerChanged( sigc::mem_fun(*this, &LayerManager::_selectedLayerChanged) );
 
-    sigc::bound_mem_functor1<void, Inkscape::LayerManager, SPDocument*> first = sigc::mem_fun(*this, &LayerManager::_setDocument);
+    sigc::bound_mem_functor1<void, Inkscape::LayerManager, Document*> first = sigc::mem_fun(*this, &LayerManager::_setDocument);
 
     // This next line has problems on gcc 4.0.2
-    sigc::slot<void, SPDocument*> base2 = first;
+    sigc::slot<void, Document*> base2 = first;
 
-    sigc::slot<void,SPDesktop*,SPDocument*> slot2 = sigc::hide<0>( base2 );
+    sigc::slot<void,SPDesktop*,Document*> slot2 = sigc::hide<0>( base2 );
     _document_connection = desktop->connectDocumentReplaced( slot2 );
 
     _setDocument(desktop->doc());
@@ -211,7 +211,7 @@ void LayerManager::renameLayer( SPObject* obj, gchar const *label, bool uniquify
 
 
 
-void LayerManager::_setDocument(SPDocument *document) {
+void LayerManager::_setDocument(Document *document) {
     if (_document) {
         _resource_connection.disconnect();
     }

@@ -37,7 +37,7 @@
 static void sp_metadata_class_init (SPMetadataClass *klass);
 static void sp_metadata_init (SPMetadata *metadata);
 
-static void sp_metadata_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
+static void sp_metadata_build (SPObject * object, Document * document, Inkscape::XML::Node * repr);
 static void sp_metadata_release (SPObject *object);
 static void sp_metadata_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -109,7 +109,7 @@ void strip_ids_recursively(Inkscape::XML::Node *node) {
  *        sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_metadata_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_metadata_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     using Inkscape::XML::NodeSiblingIterator;
 
@@ -207,7 +207,7 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
  * \brief Retrieves the metadata object associated with a document
  */
 SPMetadata *
-sp_document_metadata (SPDocument *document)
+sp_document_metadata (Document *document)
 {
     SPObject *nv;
 

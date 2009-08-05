@@ -1,5 +1,5 @@
 /**
- * Aggregates undo stack observers for convenient management and triggering in SPDocument
+ * Aggregates undo stack observers for convenient management and triggering in Document
  *
  * Heavily inspired by Inkscape::XML::CompositeNodeObserver.
  *

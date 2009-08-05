@@ -366,7 +366,7 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
 static void sp_ellipse_class_init(SPEllipseClass *klass);
 static void sp_ellipse_init(SPEllipse *ellipse);
 
-static void sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_ellipse_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_ellipse_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_ellipse_set(SPObject *object, unsigned int key, gchar const *value);
 static gchar *sp_ellipse_description(SPItem *item);
@@ -416,7 +416,7 @@ sp_ellipse_init(SPEllipse */*ellipse*/)
 }
 
 static void
-sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_ellipse_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) ellipse_parent_class)->build)
         (* ((SPObjectClass *) ellipse_parent_class)->build) (object, document, repr);
@@ -513,7 +513,7 @@ sp_ellipse_position_set(SPEllipse *ellipse, gdouble x, gdouble y, gdouble rx, gd
 static void sp_circle_class_init(SPCircleClass *klass);
 static void sp_circle_init(SPCircle *circle);
 
-static void sp_circle_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_circle_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_circle_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_circle_set(SPObject *object, unsigned int key, gchar const *value);
 static gchar *sp_circle_description(SPItem *item);
@@ -564,7 +564,7 @@ sp_circle_init(SPCircle */*circle*/)
 }
 
 static void
-sp_circle_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_circle_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) circle_parent_class)->build)
         (* ((SPObjectClass *) circle_parent_class)->build)(object, document, repr);
@@ -635,7 +635,7 @@ static gchar *sp_circle_description(SPItem */*item*/)
 static void sp_arc_class_init(SPArcClass *klass);
 static void sp_arc_init(SPArc *arc);
 
-static void sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_arc_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_arc_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_arc_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_arc_modified(SPObject *object, guint flags);
@@ -689,7 +689,7 @@ sp_arc_init(SPArc */*arc*/)
 }
 
 static void
-sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_arc_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) arc_parent_class)->build)
         (* ((SPObjectClass *) arc_parent_class)->build) (object, document, repr);

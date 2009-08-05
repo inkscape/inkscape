@@ -225,6 +225,9 @@ ink_common_sources +=	\
 	star-context.cpp star-context.h		\
 	streq.h					\
 	strneq.h				\
+	streams-handles.h streams-handles.cpp   \
+	streams-ftp.h streams-ftp.cpp   \
+        streams-http.h streams-http.cpp \
 	style.cpp style.h			\
 	svg-profile.h				\
 	svg-view.cpp svg-view.h			\

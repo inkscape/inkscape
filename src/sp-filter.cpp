@@ -43,7 +43,7 @@ using std::pair;
 static void sp_filter_class_init(SPFilterClass *klass);
 static void sp_filter_init(SPFilter *filter);
 
-static void sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_filter_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_filter_release(SPObject *object);
 static void sp_filter_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_filter_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -129,7 +129,7 @@ sp_filter_init(SPFilter *filter)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_filter_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) filter_parent_class)->build) {
         ((SPObjectClass *) filter_parent_class)->build(object, document, repr);

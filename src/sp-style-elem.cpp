@@ -9,7 +9,7 @@ using Inkscape::XML::TEXT_NODE;
 
 static void sp_style_elem_init(SPStyleElem *style_elem);
 static void sp_style_elem_class_init(SPStyleElemClass *klass);
-static void sp_style_elem_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
+static void sp_style_elem_build(SPObject *object, Document *doc, Inkscape::XML::Node *repr);
 static void sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value);
 static void sp_style_elem_read_content(SPObject *);
 static Inkscape::XML::Node *sp_style_elem_write(SPObject *, Inkscape::XML::Document *, Inkscape::XML::Node *, guint flags);
@@ -385,7 +385,7 @@ rec_add_listener(Inkscape::XML::Node &repr,
 }
 
 static void
-sp_style_elem_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_style_elem_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     sp_style_elem_read_content(object);
 

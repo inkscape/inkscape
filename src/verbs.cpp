@@ -607,7 +607,7 @@ Verb::get_action(Inkscape::UI::View::View *view)
 }
 
 void
-Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
+Verb::sensitive(Document *in_doc, bool in_sensitive)
 {
     // printf("Setting sensitivity of \"%s\" to %d\n", _name, in_sensitive);
     if (_actions != NULL) {
@@ -635,7 +635,7 @@ Verb::get_tip (void)
 }
 
 void
-Verb::name(SPDocument *in_doc, Glib::ustring in_name)
+Verb::name(Document *in_doc, Glib::ustring in_name)
 {
     if (_actions != NULL) {
         for (ActionTable::iterator cur_action = _actions->begin();
@@ -759,7 +759,7 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
     /* These aren't used, but are here to remind people not to use
        the CURRENT_DOCUMENT macros unless they really have to. */
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
-    SPDocument *current_document = current_view->doc();
+    Document *current_document = current_view->doc();
 #endif
 
     SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
@@ -1605,7 +1605,7 @@ TextVerb::perform(SPAction *action, void */*data*/, void */*pdata*/)
     if (!dt)
         return;
 
-    SPDocument *doc = sp_desktop_document(dt);
+    Document *doc = sp_desktop_document(dt);
     (void)doc;
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
     (void)repr;
@@ -1620,7 +1620,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         return;
     SPEventContext *ec = dt->event_context;
 
-    SPDocument *doc = sp_desktop_document(dt);
+    Document *doc = sp_desktop_document(dt);
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
 
@@ -2066,7 +2066,7 @@ EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
     /* These aren't used, but are here to remind people not to use
        the CURRENT_DOCUMENT macros unless they really have to. */
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
-    // SPDocument *current_document = SP_VIEW_DOCUMENT(current_view);
+    // Document *current_document = SP_VIEW_DOCUMENT(current_view);
     Inkscape::Extension::Effect *effect = Inkscape::Extension::Effect::get_last_effect();
 
     if (effect == NULL) return;
@@ -2134,7 +2134,7 @@ FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
-    SPDocument *doc = sp_desktop_document(dt);
+    Document *doc = sp_desktop_document(dt);
     if (!doc) return;
 
     switch ((long) data) {
@@ -2203,7 +2203,7 @@ LockAndHideVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt) return;
-    SPDocument *doc = sp_desktop_document(dt);
+    Document *doc = sp_desktop_document(dt);
     if (!doc) return;
 
     switch ((long) data) {

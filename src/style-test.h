@@ -11,7 +11,7 @@
 class StyleTest : public CxxTest::TestSuite
 {
 public:
-    SPDocument* _doc;
+    Document* _doc;
 
     StyleTest() :
         _doc(0)

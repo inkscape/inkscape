@@ -1,8 +1,8 @@
-#ifndef __SP_DOCUMENT_H__
-#define __SP_DOCUMENT_H__
+#ifndef __DOCUMENT_H__
+#define __DOCUMENT_H__
 
 /** \file
- * SPDocument: Typed SVG document implementation
+ * Document: Typed SVG document implementation
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -60,10 +60,10 @@ namespace Proj {
     class TransfMat3x4;
 }
 
-class SPDocumentPrivate;
+class DocumentPrivate;
 
 /// Typed SVG document implementation.
-struct SPDocument : public Inkscape::GC::Managed<>,
+class Document : public Inkscape::GC::Managed<>,
                     public Inkscape::GC::Finalized,
                     public Inkscape::GC::Anchored
 {
@@ -76,8 +76,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     typedef sigc::signal<void> ReconstructionFinish;
     typedef sigc::signal<void> CommitSignal;
 
-    SPDocument();
-    virtual ~SPDocument();
+    Document();
+    virtual ~Document();
 
     unsigned int keepalive : 1;
     unsigned int virgin    : 1; ///< Has the document never been touched?
@@ -92,7 +92,7 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     gchar *base;  ///< To be used for resolving relative hrefs.
     gchar *name;  ///< basename(uri) or other human-readable label for the document.
 
-    SPDocumentPrivate *priv;
+    DocumentPrivate *priv;
 
     /// Last action key
     const gchar *actionkey;
@@ -148,8 +148,8 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
     }
 
 private:
-    SPDocument(SPDocument const &); // no copy
-    void operator=(SPDocument const &); // no assign
+    Document(Document const &); // no copy
+    void operator=(Document const &); // no assign
 
 public:
     sigc::connection connectReconstructionStart(ReconstructionStart::slot_type slot);
@@ -165,14 +165,14 @@ public:
     void fitToRect(Geom::Rect const &rect);
 };
 
-SPDocument *sp_document_new(const gchar *uri, unsigned int keepalive, bool make_new = false);
-SPDocument *sp_document_new_from_mem(const gchar *buffer, gint length, unsigned int keepalive);
+Document *sp_document_new(const gchar *uri, unsigned int keepalive, bool make_new = false);
+Document *sp_document_new_from_mem(const gchar *buffer, gint length, unsigned int keepalive);
 
-SPDocument *sp_document_ref(SPDocument *doc);
-SPDocument *sp_document_unref(SPDocument *doc);
+Document *sp_document_ref(Document *doc);
+Document *sp_document_unref(Document *doc);
 
 
-SPDocument *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, gchar const *base, gchar const *name, unsigned int keepalive);
+Document *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, gchar const *base, gchar const *name, unsigned int keepalive);
 
 /*
  * Access methods
@@ -183,14 +183,14 @@ SPDocument *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, 
 #define sp_document_root(d) (d->root)
 #define SP_DOCUMENT_ROOT(d) (d->root)
 
-gdouble sp_document_width(SPDocument *document);
-gdouble sp_document_height(SPDocument *document);
-Geom::Point sp_document_dimensions(SPDocument *document);
+gdouble sp_document_width(Document *document);
+gdouble sp_document_height(Document *document);
+Geom::Point sp_document_dimensions(Document *document);
 
 struct SPUnit;
 
-void sp_document_set_width(SPDocument *document, gdouble width, const SPUnit *unit);
-void sp_document_set_height(SPDocument *document, gdouble height, const SPUnit *unit);
+void sp_document_set_width(Document *document, gdouble width, const SPUnit *unit);
+void sp_document_set_height(Document *document, gdouble height, const SPUnit *unit);
 
 #define SP_DOCUMENT_URI(d)  (d->uri)
 #define SP_DOCUMENT_NAME(d) (d->name)
@@ -204,39 +204,39 @@ void sp_document_set_height(SPDocument *document, gdouble height, const SPUnit *
  * Undo & redo
  */
 
-void sp_document_set_undo_sensitive(SPDocument *document, bool sensitive);
-bool sp_document_get_undo_sensitive(SPDocument const *document);
+void sp_document_set_undo_sensitive(Document *document, bool sensitive);
+bool sp_document_get_undo_sensitive(Document const *document);
 
-void sp_document_clear_undo(SPDocument *document);
-void sp_document_clear_redo(SPDocument *document);
+void sp_document_clear_undo(Document *document);
+void sp_document_clear_redo(Document *document);
 
-void sp_document_child_added(SPDocument *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-void sp_document_child_removed(SPDocument *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-void sp_document_attr_changed(SPDocument *doc, SPObject *object, const gchar *key, const gchar *oldval, const gchar *newval);
-void sp_document_content_changed(SPDocument *doc, SPObject *object, const gchar *oldcontent, const gchar *newcontent);
-void sp_document_order_changed(SPDocument *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *oldref, Inkscape::XML::Node *newref);
+void sp_document_child_added(Document *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+void sp_document_child_removed(Document *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+void sp_document_attr_changed(Document *doc, SPObject *object, const gchar *key, const gchar *oldval, const gchar *newval);
+void sp_document_content_changed(Document *doc, SPObject *object, const gchar *oldcontent, const gchar *newcontent);
+void sp_document_order_changed(Document *doc, SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *oldref, Inkscape::XML::Node *newref);
 
 /* Object modification root handler */
-void sp_document_request_modified(SPDocument *doc);
-gint sp_document_ensure_up_to_date(SPDocument *doc);
+void sp_document_request_modified(Document *doc);
+gint sp_document_ensure_up_to_date(Document *doc);
 
 /* Save all previous actions to stack, as one undo step */
-void sp_document_done(SPDocument *document, unsigned int event_type, Glib::ustring event_description);
-void sp_document_maybe_done(SPDocument *document, const gchar *keyconst, unsigned int event_type, Glib::ustring event_description);
+void sp_document_done(Document *document, unsigned int event_type, Glib::ustring event_description);
+void sp_document_maybe_done(Document *document, const gchar *keyconst, unsigned int event_type, Glib::ustring event_description);
 void sp_document_reset_key(Inkscape::Application *inkscape, SPDesktop *desktop, GtkObject *base);
 
 /* Cancel (and revert) current unsaved actions */
-void sp_document_cancel(SPDocument *document);
+void sp_document_cancel(Document *document);
 
 /* Undo and redo */
-gboolean sp_document_undo(SPDocument *document);
-gboolean sp_document_redo(SPDocument *document);
+gboolean sp_document_undo(Document *document);
+gboolean sp_document_redo(Document *document);
 
 /* Resource management */
-gboolean sp_document_add_resource(SPDocument *document, const gchar *key, SPObject *object);
-gboolean sp_document_remove_resource(SPDocument *document, const gchar *key, SPObject *object);
-const GSList *sp_document_get_resource_list(SPDocument *document, const gchar *key);
-sigc::connection sp_document_resources_changed_connect(SPDocument *document, const gchar *key, SPDocument::ResourcesChangedSignal::slot_type slot);
+gboolean sp_document_add_resource(Document *document, const gchar *key, SPObject *object);
+gboolean sp_document_remove_resource(Document *document, const gchar *key, SPObject *object);
+const GSList *sp_document_get_resource_list(Document *document, const gchar *key);
+sigc::connection sp_document_resources_changed_connect(Document *document, const gchar *key, Document::ResourcesChangedSignal::slot_type slot);
 
 
 /*
@@ -257,19 +257,19 @@ sigc::connection sp_document_resources_changed_connect(SPDocument *document, con
  * Misc
  */
 
-GSList *sp_document_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box);
-GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box);
+GSList *sp_document_items_in_box(Document *document, unsigned int dkey, Geom::Rect const &box);
+GSList *sp_document_partial_items_in_box(Document *document, unsigned int dkey, Geom::Rect const &box);
 SPItem *sp_document_item_from_list_at_point_bottom(unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const p, bool take_insensitive = false);
-SPItem *sp_document_item_at_point  (SPDocument *document, unsigned int key, Geom::Point const p, gboolean into_groups, SPItem *upto = NULL);
-GSList *sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points);
-SPItem *sp_document_group_at_point (SPDocument *document, unsigned int key,  Geom::Point const p);
+SPItem *sp_document_item_at_point  (Document *document, unsigned int key, Geom::Point const p, gboolean into_groups, SPItem *upto = NULL);
+GSList *sp_document_items_at_points(Document *document, unsigned const key, std::vector<Geom::Point> points);
+SPItem *sp_document_group_at_point (Document *document, unsigned int key,  Geom::Point const p);
 
-void sp_document_set_uri(SPDocument *document, gchar const *uri);
-void sp_document_change_uri_and_hrefs(SPDocument *document, gchar const *uri);
+void sp_document_set_uri(Document *document, gchar const *uri);
+void sp_document_change_uri_and_hrefs(Document *document, gchar const *uri);
 
-void sp_document_resized_signal_emit(SPDocument *doc, gdouble width, gdouble height);
+void sp_document_resized_signal_emit(Document *doc, gdouble width, gdouble height);
 
-unsigned int vacuum_document(SPDocument *document);
+unsigned int vacuum_document(Document *document);
 
 
 #endif

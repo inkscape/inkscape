@@ -178,7 +178,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     namedview = nv;
     canvas = aCanvas;
 
-    SPDocument *document = SP_OBJECT_DOCUMENT (namedview);
+    Document *document = SP_OBJECT_DOCUMENT (namedview);
     /* Kill flicker */
     sp_document_ensure_up_to_date (document);
 
@@ -577,7 +577,7 @@ SPDesktop::activate_guides(bool activate)
  * Make desktop switch documents.
  */
 void
-SPDesktop::change_document (SPDocument *theDocument)
+SPDesktop::change_document (Document *theDocument)
 {
     g_return_if_fail (theDocument != NULL);
 
@@ -1492,7 +1492,7 @@ SPDesktop::updateCanvasNow()
  * Associate document with desktop.
  */
 void
-SPDesktop::setDocument (SPDocument *doc)
+SPDesktop::setDocument (Document *doc)
 {
     if (this->doc() && doc) {
         namedview->hide(this);

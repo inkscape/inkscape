@@ -415,7 +415,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
         GSList *items = g_slist_prepend (NULL, item);
         GSList *selected = NULL;
         GSList *to_select = NULL;
-        SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+        Document *doc = SP_OBJECT_DOCUMENT(item);
         sp_item_list_to_curves (items, &selected, &to_select);
         g_slist_free (items);
         SPObject* newObj = doc->getObjectByRepr((Inkscape::XML::Node *) to_select->data);
@@ -524,7 +524,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                             SP_OBJECT(item)->deleteObject(true, true);
                             sp_object_unref(SP_OBJECT(item), NULL);
                         } else { // duplicate
-                            SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                            Document *doc = SP_OBJECT_DOCUMENT(item);
                             Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
                             Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
                             SPObject *old_obj = doc->getObjectByRepr(old_repr);

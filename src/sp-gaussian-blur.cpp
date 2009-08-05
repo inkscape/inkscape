@@ -36,7 +36,7 @@
 static void sp_gaussianBlur_class_init(SPGaussianBlurClass *klass);
 static void sp_gaussianBlur_init(SPGaussianBlur *gaussianBlur);
 
-static void sp_gaussianBlur_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_gaussianBlur_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_gaussianBlur_release(SPObject *object);
 static void sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -94,7 +94,7 @@ sp_gaussianBlur_init(SPGaussianBlur */*gaussianBlur*/)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_gaussianBlur_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_gaussianBlur_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) gaussianBlur_parent_class)->build) {
         ((SPObjectClass *) gaussianBlur_parent_class)->build(object, document, repr);

@@ -27,7 +27,7 @@
  * propagate to the SPRepr layer. This is important for implementation of
  * the undo stack, animations and other features.
  *
- * SPObjects are bound to the higher-level container SPDocument, which
+ * SPObjects are bound to the higher-level container Document, which
  * provides document level functionality such as the undo stack,
  * dictionary and so on. Source: doc/architecture.txt
  */
@@ -84,7 +84,7 @@ static void sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
 static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 
 static void sp_object_release(SPObject *object);
-static void sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_object_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 
 static void sp_object_private_set(SPObject *object, unsigned int key, gchar const *value);
 static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -783,11 +783,11 @@ static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child
  * the document and repr; implementation then will parse all of the attributes,
  * generate the children objects and so on.  Invoking build on the SPRoot
  * object results in creation of the whole document tree (this is, what
- * SPDocument does after the creation of the XML tree).
+ * Document does after the creation of the XML tree).
  * \see sp_object_release()
  */
 static void
-sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_object_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     /* Nothing specific here */
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
@@ -809,7 +809,7 @@ sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 }
 
 void
-sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned)
+sp_object_invoke_build(SPObject *object, Document *document, Inkscape::XML::Node *repr, unsigned int cloned)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
 
@@ -960,7 +960,7 @@ sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
     switch (key) {
         case SP_ATTR_ID:
             if ( !SP_OBJECT_IS_CLONED(object) && object->repr->type() == Inkscape::XML::ELEMENT_NODE ) {
-                SPDocument *document=object->document;
+                Document *document=object->document;
                 SPObject *conflict=NULL;
 
                 gchar const *new_id = value;

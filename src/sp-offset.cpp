@@ -42,7 +42,7 @@
 
 #include "xml/repr.h"
 
-class SPDocument;
+class Document;
 
 #define noOFFSET_VERBOSE
 
@@ -73,7 +73,7 @@ static void sp_offset_class_init (SPOffsetClass * klass);
 static void sp_offset_init (SPOffset * offset);
 static void sp_offset_finalize(GObject *obj);
 
-static void sp_offset_build (SPObject * object, SPDocument * document,
+static void sp_offset_build (SPObject * object, Document * document,
                              Inkscape::XML::Node * repr);
 static Inkscape::XML::Node *sp_offset_write (SPObject * object, Inkscape::XML::Document *doc, Inkscape::XML::Node * repr,
                                 guint flags);
@@ -212,7 +212,7 @@ sp_offset_finalize(GObject *obj)
  * Virtual build: set offset attributes from corresponding repr.
  */
 static void
-sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_offset_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);

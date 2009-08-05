@@ -31,7 +31,7 @@ sp_desktop_selection (SPDesktop const * desktop)
 	return desktop->selection;
 }
 
-SPDocument *
+Document *
 sp_desktop_document (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);

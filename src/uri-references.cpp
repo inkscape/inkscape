@@ -32,7 +32,7 @@ URIReference::URIReference(SPObject *owner)
     /* FIXME !!! attach to owner's destroy signal to clean up in case */
 }
 
-URIReference::URIReference(SPDocument *owner_document)
+URIReference::URIReference(Document *owner_document)
     : _owner(NULL), _owner_document(owner_document), _obj(NULL), _uri(NULL)
 {
     g_assert(_owner_document != NULL);
@@ -45,7 +45,7 @@ URIReference::~URIReference()
 
 void URIReference::attach(const URI &uri) throw(BadURIException)
 {
-    SPDocument *document;
+    Document *document;
     if (_owner) {
         document = SP_OBJECT_DOCUMENT(_owner);
     } else if (_owner_document) {
@@ -142,7 +142,7 @@ void URIReference::_release(SPObject *obj)
 
 
 
-SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri )
+SPObject* sp_css_uri_reference_resolve( Document *document, const gchar *uri )
 {
     SPObject* ref = 0;
 
@@ -158,7 +158,7 @@ SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri )
 }
 
 SPObject *
-sp_uri_reference_resolve (SPDocument *document, const gchar *uri)
+sp_uri_reference_resolve (Document *document, const gchar *uri)
 {
     SPObject* ref = 0;
 

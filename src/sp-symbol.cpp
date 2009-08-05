@@ -31,7 +31,7 @@
 static void sp_symbol_class_init (SPSymbolClass *klass);
 static void sp_symbol_init (SPSymbol *symbol);
 
-static void sp_symbol_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_symbol_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_symbol_release (SPObject *object);
 static void sp_symbol_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_symbol_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -102,7 +102,7 @@ sp_symbol_init (SPSymbol *symbol)
 }
 
 static void
-sp_symbol_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_symbol_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     SPGroup *group;
     SPSymbol *symbol;

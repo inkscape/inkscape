@@ -44,7 +44,7 @@
 static void sp_skeleton_class_init(SPSkeletonClass *klass);
 static void sp_skeleton_init(SPSkeleton *skeleton);
 
-static void sp_skeleton_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_skeleton_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_skeleton_release(SPObject *object);
 static void sp_skeleton_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_skeleton_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -100,7 +100,7 @@ sp_skeleton_init(SPSkeleton *skeleton)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_skeleton_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_skeleton_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     debug("0x%p",object);
     if (((SPObjectClass *) skeleton_parent_class)->build) {

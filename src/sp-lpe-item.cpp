@@ -44,7 +44,7 @@ static void sp_lpe_item_class_init(SPLPEItemClass *klass);
 static void sp_lpe_item_init(SPLPEItem *lpe_item);
 static void sp_lpe_item_finalize(GObject *object);
 
-static void sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_lpe_item_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_lpe_item_release(SPObject *object);
 static void sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -137,7 +137,7 @@ sp_lpe_item_finalize(GObject *object)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_lpe_item_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     sp_object_read_attr(object, "inkscape:path-effect");
 

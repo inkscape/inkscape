@@ -8,7 +8,7 @@ class SPObject;
 class SPFilterReference : public Inkscape::URIReference {
 public:
     SPFilterReference(SPObject *obj) : URIReference(obj) {}
-    SPFilterReference(SPDocument *doc) : URIReference(doc) {}
+    SPFilterReference(Document *doc) : URIReference(doc) {}
 
     SPFilter *getObject() const {
         return (SPFilter *)URIReference::getObject();

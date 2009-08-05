@@ -23,7 +23,7 @@
 static void sp_polyline_class_init (SPPolyLineClass *klass);
 static void sp_polyline_init (SPPolyLine *polyline);
 
-static void sp_polyline_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
+static void sp_polyline_build (SPObject * object, Document * document, Inkscape::XML::Node * repr);
 static void sp_polyline_set (SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_polyline_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
@@ -81,7 +81,7 @@ sp_polyline_init (SPPolyLine * /*polyline*/)
 }
 
 static void
-sp_polyline_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
+sp_polyline_build (SPObject * object, Document * document, Inkscape::XML::Node * repr)
 {
 
 	if (((SPObjectClass *) parent_class)->build)

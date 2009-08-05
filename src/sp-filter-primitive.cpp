@@ -32,7 +32,7 @@
 static void sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass);
 static void sp_filter_primitive_init(SPFilterPrimitive *filter_primitive);
 
-static void sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_filter_primitive_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_filter_primitive_release(SPObject *object);
 static void sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -93,7 +93,7 @@ sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_filter_primitive_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) filter_primitive_parent_class)->build) {
         ((SPObjectClass *) filter_primitive_parent_class)->build(object, document, repr);

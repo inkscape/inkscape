@@ -84,10 +84,10 @@ static void sp_style_read_istring(SPIString *val, gchar const *str);
 static void sp_style_read_ilength(SPILength *val, gchar const *str);
 static void sp_style_read_ilengthornormal(SPILengthOrNormal *val, gchar const *str);
 static void sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *str);
-static void sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
-static void sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
+static void sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, Document *document);
+static void sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, Document *document);
 static void sp_style_read_ifontsize(SPIFontSize *val, gchar const *str);
-static void sp_style_read_ifilter(gchar const *str, SPStyle *style, SPDocument *document);
+static void sp_style_read_ifilter(gchar const *str, SPStyle *style, Document *document);
 
 static void sp_style_read_penum(SPIEnum *val, Inkscape::XML::Node *repr, gchar const *key, SPStyleEnum const *dict, bool can_explicitly_inherit);
 static void sp_style_read_plength(SPILength *val, Inkscape::XML::Node *repr, gchar const *key);
@@ -443,7 +443,7 @@ sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPSty
  * Returns a new SPStyle object with settings as per sp_style_clear().
  */
 SPStyle *
-sp_style_new(SPDocument *document)
+sp_style_new(Document *document)
 {
     SPStyle *const style = g_new0(SPStyle, 1);
 
@@ -1086,7 +1086,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
         }
         case SP_PROP_MARKER:
-            /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
+            /* TODO:  Call sp_uri_reference_resolve(Document *document, guchar const *uri) */
             /* style->marker[SP_MARKER_LOC] = g_quark_from_string(val); */
             if (!style->marker[SP_MARKER_LOC].set) {
                 g_free(style->marker[SP_MARKER_LOC].value);
@@ -1097,7 +1097,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
 
         case SP_PROP_MARKER_START:
-            /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
+            /* TODO:  Call sp_uri_reference_resolve(Document *document, guchar const *uri) */
             if (!style->marker[SP_MARKER_LOC_START].set) {
                 g_free(style->marker[SP_MARKER_LOC_START].value);
                 style->marker[SP_MARKER_LOC_START].value = g_strdup(val);
@@ -1106,7 +1106,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             }
             break;
         case SP_PROP_MARKER_MID:
-            /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
+            /* TODO:  Call sp_uri_reference_resolve(Document *document, guchar const *uri) */
             if (!style->marker[SP_MARKER_LOC_MID].set) {
                 g_free(style->marker[SP_MARKER_LOC_MID].value);
                 style->marker[SP_MARKER_LOC_MID].value = g_strdup(val);
@@ -1115,7 +1115,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             }
             break;
         case SP_PROP_MARKER_END:
-            /* TODO:  Call sp_uri_reference_resolve(SPDocument *document, guchar const *uri) */
+            /* TODO:  Call sp_uri_reference_resolve(Document *document, guchar const *uri) */
             if (!style->marker[SP_MARKER_LOC_END].set) {
                 g_free(style->marker[SP_MARKER_LOC_END].value);
                 style->marker[SP_MARKER_LOC_END].value = g_strdup(val);
@@ -2111,7 +2111,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
 
 static void
-sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI *uri, SPDocument *document)
+sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI *uri, Document *document)
 {
     // it may be that this style's SPIPaint has not yet created its URIReference;
     // now that we have a document, we can create it here
@@ -2561,7 +2561,7 @@ sp_style_clear(SPStyle *style)
 
     /** \todo fixme: Do that text manipulation via parents */
     SPObject *object = style->object;
-    SPDocument *document = style->document;
+    Document *document = style->document;
     gint const refcount = style->refcount;
     SPTextStyle *text = style->text;
     unsigned const text_private = style->text_private;
@@ -3089,7 +3089,7 @@ sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *str)
  * \param document Ignored
  */
 static void
-sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document)
+sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, Document *document)
 {
     (void)style; // TODO
     (void)document; // TODO
@@ -3114,7 +3114,7 @@ sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
  * \pre paint == \&style.fill || paint == \&style.stroke.
  */
 static void
-sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document)
+sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, Document *document)
 {
     while (g_ascii_isspace(*str)) {
         ++str;
@@ -3248,7 +3248,7 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
  * Set SPIFilter object from string.
  */
 static void
-sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
+sp_style_read_ifilter(gchar const *str, SPStyle * style, Document *document)
 {
     SPIFilter *f = &(style->filter);
     /* Try all possible values: inherit, none, uri */

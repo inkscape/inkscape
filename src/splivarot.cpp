@@ -602,7 +602,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 static
 void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix marker_transform,
                                           Geom::Scale stroke_scale, Geom::Matrix transform,
-                                          Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc )
+                                          Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, Document * doc )
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker_object));
@@ -813,7 +813,7 @@ sp_selected_path_outline(SPDesktop *desktop)
         
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
-            SPDocument * doc = sp_desktop_document(desktop);
+            Document * doc = sp_desktop_document(desktop);
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 

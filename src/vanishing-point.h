@@ -158,14 +158,14 @@ public:
 
 struct VPDrag {
 public:
-    VPDrag(SPDocument *document);
+    VPDrag(Document *document);
     ~VPDrag();
 
     VPDragger *getDraggerFor (VanishingPoint const &vp);
 
     bool dragging;
 
-    SPDocument *document;
+    Document *document;
     GList *draggers;
     GSList *lines;
 

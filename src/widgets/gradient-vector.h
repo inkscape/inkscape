@@ -31,7 +31,7 @@ struct SPGradientVectorSelector {
 
     guint idlabel : 1;
 
-    SPDocument *doc;
+    Document *doc;
     SPGradient *gr;
 
     /* Vector menu */
@@ -50,11 +50,11 @@ struct SPGradientVectorSelectorClass {
 
 GType sp_gradient_vector_selector_get_type(void);
 
-GtkWidget *sp_gradient_vector_selector_new (SPDocument *doc, SPGradient *gradient);
+GtkWidget *sp_gradient_vector_selector_new (Document *doc, SPGradient *gradient);
 
-void sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, SPDocument *doc, SPGradient *gr);
+void sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, Document *doc, SPGradient *gr);
 
-SPDocument *sp_gradient_vector_selector_get_document (SPGradientVectorSelector *gvs);
+Document *sp_gradient_vector_selector_get_document (SPGradientVectorSelector *gvs);
 SPGradient *sp_gradient_vector_selector_get_gradient (SPGradientVectorSelector *gvs);
 
 /* fixme: rethink this (Lauris) */

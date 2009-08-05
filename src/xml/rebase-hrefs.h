@@ -4,14 +4,14 @@
 #include <glib/gtypes.h>
 #include "util/list.h"
 #include "xml/attribute-record.h"
-struct SPDocument;
+struct Document;
 
 namespace Inkscape {
 namespace XML {
 
 gchar *calc_abs_doc_base(gchar const *doc_base);
 
-void rebase_hrefs(SPDocument *doc, gchar const *new_base, bool spns);
+void rebase_hrefs(Document *doc, gchar const *new_base, bool spns);
 
 Inkscape::Util::List<AttributeRecord const> rebase_href_attrs(
     gchar const *old_abs_base,

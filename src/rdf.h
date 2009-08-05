@@ -94,17 +94,17 @@ struct rdf_t {
 
 struct rdf_work_entity_t * rdf_find_entity(gchar const * name);
 
-const gchar * rdf_get_work_entity(SPDocument * doc,
+const gchar * rdf_get_work_entity(Document * doc,
                                   struct rdf_work_entity_t * entity);
-unsigned int  rdf_set_work_entity(SPDocument * doc,
+unsigned int  rdf_set_work_entity(Document * doc,
                                   struct rdf_work_entity_t * entity,
                                   const gchar * text);
 
-struct rdf_license_t * rdf_get_license(SPDocument * doc);
-void                   rdf_set_license(SPDocument * doc,
+struct rdf_license_t * rdf_get_license(Document * doc);
+void                   rdf_set_license(Document * doc,
                                        struct rdf_license_t const * license);
 
-void rdf_set_defaults ( SPDocument * doc );
+void rdf_set_defaults ( Document * doc );
 
 #endif // _RDF_H_
 

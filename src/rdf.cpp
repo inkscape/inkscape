@@ -531,7 +531,7 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
 
     // set document's title element to the RDF title
     if (!strcmp(entity->name, "title")) {
-        SPDocument *doc = SP_ACTIVE_DOCUMENT;
+        Document *doc = SP_ACTIVE_DOCUMENT;
         if(doc && doc->root) doc->root->setTitle(text);
     }
 
@@ -644,7 +644,7 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
 }
 
 Inkscape::XML::Node *
-rdf_get_rdf_root_repr ( SPDocument * doc, bool build )
+rdf_get_rdf_root_repr ( Document * doc, bool build )
 {
     g_return_val_if_fail (doc        != NULL, NULL);
     g_return_val_if_fail (doc->rroot != NULL, NULL);
@@ -705,7 +705,7 @@ rdf_get_rdf_root_repr ( SPDocument * doc, bool build )
 }
 
 Inkscape::XML::Node *
-rdf_get_xml_repr( SPDocument * doc, gchar const * name, bool build )
+rdf_get_xml_repr( Document * doc, gchar const * name, bool build )
 {
     g_return_val_if_fail (name       != NULL, NULL);
     g_return_val_if_fail (doc        != NULL, NULL);
@@ -735,7 +735,7 @@ rdf_get_xml_repr( SPDocument * doc, gchar const * name, bool build )
 }
 
 Inkscape::XML::Node *
-rdf_get_work_repr( SPDocument * doc, gchar const * name, bool build )
+rdf_get_work_repr( Document * doc, gchar const * name, bool build )
 {
     g_return_val_if_fail (name       != NULL, NULL);
     g_return_val_if_fail (doc        != NULL, NULL);
@@ -771,7 +771,7 @@ rdf_get_work_repr( SPDocument * doc, gchar const * name, bool build )
  *  
  */
 const gchar *
-rdf_get_work_entity(SPDocument * doc, struct rdf_work_entity_t * entity)
+rdf_get_work_entity(Document * doc, struct rdf_work_entity_t * entity)
 {
     g_return_val_if_fail (doc    != NULL, NULL);
     if ( entity == NULL ) return NULL;
@@ -802,7 +802,7 @@ rdf_get_work_entity(SPDocument * doc, struct rdf_work_entity_t * entity)
  *  
  */
 unsigned int
-rdf_set_work_entity(SPDocument * doc, struct rdf_work_entity_t * entity,
+rdf_set_work_entity(Document * doc, struct rdf_work_entity_t * entity,
                     const gchar * text)
 {
     g_return_val_if_fail ( entity != NULL, 0 );
@@ -918,7 +918,7 @@ rdf_match_license(Inkscape::XML::Node const *repr, struct rdf_license_t const *l
  *  
  */
 struct rdf_license_t *
-rdf_get_license(SPDocument * document)
+rdf_get_license(Document * document)
 {
     Inkscape::XML::Node const *repr = rdf_get_xml_repr ( document, XML_TAG_NAME_LICENSE, FALSE );
     if (repr) {
@@ -942,7 +942,7 @@ rdf_get_license(SPDocument * document)
  *  
  */
 void
-rdf_set_license(SPDocument * doc, struct rdf_license_t const * license)
+rdf_set_license(Document * doc, struct rdf_license_t const * license)
 {
     // drop old license section
     Inkscape::XML::Node * repr = rdf_get_xml_repr ( doc, XML_TAG_NAME_LICENSE, FALSE );
@@ -981,7 +981,7 @@ struct rdf_entity_default_t rdf_defaults[] = {
 };
 
 void
-rdf_set_defaults ( SPDocument * doc )
+rdf_set_defaults ( Document * doc )
 {
     g_assert ( doc != NULL );
 

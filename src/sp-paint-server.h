@@ -63,7 +63,7 @@ SPPainter *sp_painter_free (SPPainter *painter);
 class SPPaintServerReference : public Inkscape::URIReference {
 public:
         SPPaintServerReference (SPObject *obj) : URIReference(obj) {}
-        SPPaintServerReference (SPDocument *doc) : URIReference(doc) {}
+        SPPaintServerReference (Document *doc) : URIReference(doc) {}
         SPPaintServer *getObject() const {
                 return (SPPaintServer *)URIReference::getObject();
         }

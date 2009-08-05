@@ -820,7 +820,7 @@ SPDesktopWidget::shutdown()
     g_assert(desktop != NULL);
 
     if (inkscape_is_sole_desktop_for_document(*desktop)) {
-        SPDocument *doc = desktop->doc();
+        Document *doc = desktop->doc();
         if (doc->isModifiedSinceSave()) {
             GtkWidget *dialog;
 
@@ -1721,7 +1721,7 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
     dtw->update = 1;
 
     /* The desktop region we always show unconditionally */
-    SPDocument *doc = dtw->desktop->doc();
+    Document *doc = dtw->desktop->doc();
     Geom::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
                      Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
     SPObject* root = doc->root;

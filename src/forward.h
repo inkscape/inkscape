@@ -43,11 +43,11 @@ GType sp_event_context_get_type ();
 
 /* Document tree */
 
-class SPDocument;
+class Document;
 class SPDocumentClass;
 
 #define SP_TYPE_DOCUMENT (sp_document_get_type ())
-#define SP_DOCUMENT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_DOCUMENT, SPDocument))
+#define SP_DOCUMENT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_DOCUMENT, Document))
 #define SP_IS_DOCUMENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DOCUMENT))
 
 GType sp_document_get_type ();

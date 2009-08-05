@@ -1092,7 +1092,7 @@ void SnapManager::setup(SPDesktop const *desktop,
     _guide_to_ignore = guide_to_ignore;
 }
 
-SPDocument *SnapManager::getDocument() const
+Document *SnapManager::getDocument() const
 {
     return _named_view->document;
 }

@@ -60,6 +60,6 @@ void sp_mask_hide (SPMask *mask, unsigned int key);
 
 void sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox);
 
-const gchar *sp_mask_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform);
+const gchar *sp_mask_create (GSList *reprs, Document *document, Geom::Matrix const* applyTransform);
 
 #endif

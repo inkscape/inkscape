@@ -422,7 +422,7 @@ lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::Effe
 }
 
 void
-lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B) {
+lpetool_get_limiting_bbox_corners(Document *document, Geom::Point &A, Geom::Point &B) {
     Geom::Coord w = sp_document_width(document);
     Geom::Coord h = sp_document_height(document);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -452,7 +452,7 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
     if (!prefs->getBool("/tools/lpetool/show_bbox", true))
         return;
 
-    SPDocument *document = sp_desktop_document(lc->desktop);
+    Document *document = sp_desktop_document(lc->desktop);
 
     Geom::Point A, B;
     lpetool_get_limiting_bbox_corners(document, A, B);

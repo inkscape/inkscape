@@ -168,7 +168,7 @@ public:
                                const Glib::ustring &name);
 
 	/**
-	 * Returns whether or not the given node is the root node of the SPDocument associated
+	 * Returns whether or not the given node is the root node of the Document associated
 	 * with an XMLNodeTracker's SessionManager.
 	 *
 	 * \param Reference to an XML::Node to test.

@@ -13,7 +13,7 @@
 #include "gc-finalized.h"
 #include <vector>
 
-class SPDocument;
+class Document;
 
 namespace Inkscape {
 
@@ -23,7 +23,7 @@ class ProfileManager : public DocumentSubset,
                        public GC::Finalized
 {
 public:
-    ProfileManager(SPDocument *document);
+    ProfileManager(Document *document);
     ~ProfileManager();
 
     ColorProfile* find(gchar const* name);
@@ -34,7 +34,7 @@ private:
 
     void _resourcesChanged();
 
-    SPDocument* _doc;
+    Document* _doc;
     sigc::connection _resource_connection;
     std::vector<SPObject*> _knownProfiles;
 };

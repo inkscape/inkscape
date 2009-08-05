@@ -86,7 +86,7 @@ SPPattern *pattern_chain (SPPattern *pattern);
 SPPattern *sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *property);
 void sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool set);
 
-const gchar *pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move);
+const gchar *pattern_tile (GSList *reprs, Geom::Rect bounds, Document *document, Geom::Matrix transform, Geom::Matrix move);
 
 SPPattern *pattern_getroot (SPPattern *pat);
 

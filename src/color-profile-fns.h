@@ -13,7 +13,7 @@
 #include <lcms.h>
 #endif // ENABLE_LCMS
 
-class SPDocument;
+class Document;
 
 namespace Inkscape {
 
@@ -27,7 +27,7 @@ GType colorprofile_get_type();
 
 #if ENABLE_LCMS
 
-cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name );
+cmsHPROFILE colorprofile_get_handle( Document* document, guint* intent, gchar const* name );
 cmsHTRANSFORM colorprofile_get_display_transform();
 
 Glib::ustring colorprofile_get_display_id( int screen, int monitor );

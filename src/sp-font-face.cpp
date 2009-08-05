@@ -295,7 +295,7 @@ static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const 
 static void sp_fontface_class_init(SPFontFaceClass *fc);
 static void sp_fontface_init(SPFontFace *font);
 
-static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_fontface_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_fontface_release(SPObject *object);
 static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -398,7 +398,7 @@ static void sp_fontface_init(SPFontFace *face)
 */
 }
 
-static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_fontface_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);

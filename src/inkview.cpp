@@ -84,7 +84,7 @@ struct SPSlideShow {
     int size;
     int length;
     int current;
-    SPDocument *doc;
+    Document *doc;
     GtkWidget *view;
     GtkWidget *window;
     bool fullscreen;
@@ -441,7 +441,7 @@ sp_svgview_normal_cursor(struct SPSlideShow *ss)
 }
 
 static void
-sp_svgview_set_document(struct SPSlideShow *ss, SPDocument *doc, int current)
+sp_svgview_set_document(struct SPSlideShow *ss, Document *doc, int current)
 {
     if (doc && doc != ss->doc) {
         sp_document_ensure_up_to_date (doc);
@@ -459,7 +459,7 @@ sp_svgview_show_next (struct SPSlideShow *ss)
 {
     sp_svgview_waiting_cursor(ss);
 
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     int current = ss->current;
     while (!doc && (current < ss->length - 1)) {
         doc = sp_document_new (ss->slides[++current], TRUE, false);
@@ -475,7 +475,7 @@ sp_svgview_show_prev (struct SPSlideShow *ss)
 {
     sp_svgview_waiting_cursor(ss);
 
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     int current = ss->current;
     while (!doc && (current > 0)) {
         doc = sp_document_new (ss->slides[--current], TRUE, false);
@@ -491,7 +491,7 @@ sp_svgview_goto_first (struct SPSlideShow *ss)
 {
     sp_svgview_waiting_cursor(ss);
 
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     int current = 0;
     while ( !doc && (current < ss->length - 1)) {
         if (current == ss->current)
@@ -509,7 +509,7 @@ sp_svgview_goto_last (struct SPSlideShow *ss)
 {
     sp_svgview_waiting_cursor(ss);
 
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     int current = ss->length - 1;
     while (!doc && (current >= 0)) {
         if (current == ss->current)
@@ -555,8 +555,8 @@ static void usage()
 Inkscape::Application *inkscape_get_instance() { return NULL; }
 void inkscape_ref (void) {}
 void inkscape_unref (void) {}
-void inkscape_add_document (SPDocument *document) {}
-void inkscape_remove_document (SPDocument *document) {}
+void inkscape_add_document (Document *document) {}
+void inkscape_remove_document (Document *document) {}
 #endif
 
 

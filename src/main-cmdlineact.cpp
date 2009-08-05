@@ -55,7 +55,7 @@ CmdLineAction::doIt (Inkscape::UI::View::View * view) {
 		SPDesktop * desktop = dynamic_cast<SPDesktop *>(view);
 		if (desktop == NULL) { return; }
 
-		SPDocument * doc = view->doc();
+		Document * doc = view->doc();
 		SPObject * obj = doc->getObjectById(_arg);
 		if (obj == NULL) {
 			printf(_("Unable to find node ID: '%s'\n"), _arg);

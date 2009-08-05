@@ -3,7 +3,7 @@
 
 #include "document.h"
 
-void prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc);
+void prevent_id_clashes(Document *imported_doc, Document *current_doc);
 
 #endif /* !SEEN_ID_CLASH_H */
 

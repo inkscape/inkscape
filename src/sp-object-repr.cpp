@@ -94,7 +94,7 @@ static GType name_to_gtype(NameType name_type, gchar const *name);
  * Construct an SPRoot and all its descendents from the given repr.
  */
 SPObject *
-sp_object_repr_build_tree(SPDocument *document, Inkscape::XML::Node *repr)
+sp_object_repr_build_tree(Document *document, Inkscape::XML::Node *repr)
 {
     g_assert(document != NULL);
     g_assert(repr != NULL);

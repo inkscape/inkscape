@@ -104,11 +104,11 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip);
 
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 
-void sp_undo (SPDesktop *desktop, SPDocument *doc);
-void sp_redo (SPDesktop *desktop, SPDocument *doc);
+void sp_undo (SPDesktop *desktop, Document *doc);
+void sp_redo (SPDesktop *desktop, Document *doc);
 
 void sp_selection_get_export_hints (Inkscape::Selection *selection, const char **filename, float *xdpi, float *ydpi);
-void sp_document_get_export_hints (SPDocument * doc, const char **filename, float *xdpi, float *ydpi);
+void sp_document_get_export_hints (Document * doc, const char **filename, float *xdpi, float *ydpi);
 
 void sp_selection_create_bitmap_copy (SPDesktop *desktop);
 
@@ -117,7 +117,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path);
 
 bool fit_canvas_to_selection(SPDesktop *);
 void verb_fit_canvas_to_selection(SPDesktop *);
-bool fit_canvas_to_drawing(SPDocument *);
+bool fit_canvas_to_drawing(Document *);
 void verb_fit_canvas_to_drawing(SPDesktop *);
 void fit_canvas_to_selection_or_drawing(SPDesktop *);
 

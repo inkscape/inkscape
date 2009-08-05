@@ -139,7 +139,7 @@ void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::D
     g_slist_free((GSList *) sorted_items);
 }
 
-GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip)
+GSList *sp_selection_paste_impl(Document *doc, SPObject *parent, GSList **clip)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
@@ -240,7 +240,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = desktop->doc();
+    Document *doc = desktop->doc();
     Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -326,7 +326,7 @@ void sp_edit_clear_all(SPDesktop *dt)
     if (!dt)
         return;
 
-    SPDocument *doc = sp_desktop_document(dt);
+    Document *doc = sp_desktop_document(dt);
     sp_desktop_selection(dt)->clear();
 
     g_return_if_fail(SP_IS_GROUP(dt->currentLayer()));
@@ -454,7 +454,7 @@ void sp_selection_group(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -741,7 +741,7 @@ void sp_selection_raise_to_top(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -839,7 +839,7 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -882,14 +882,14 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop)
 }
 
 void
-sp_undo(SPDesktop *desktop, SPDocument *)
+sp_undo(SPDesktop *desktop, Document *)
 {
         if (!sp_document_undo(sp_desktop_document(desktop)))
             desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to undo."));
 }
 
 void
-sp_redo(SPDesktop *desktop, SPDocument *)
+sp_redo(SPDesktop *desktop, Document *)
 {
         if (!sp_document_redo(sp_desktop_document(desktop)))
             desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));
@@ -1672,7 +1672,7 @@ sp_selection_item_next(SPDesktop *desktop)
 void
 sp_selection_item_prev(SPDesktop *desktop)
 {
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     g_return_if_fail(document != NULL);
     g_return_if_fail(desktop != NULL);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2114,7 +2114,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2211,7 +2211,7 @@ void sp_selection_to_guides(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     // we need to copy the list because it gets reset when objects are deleted
     GSList *items = g_slist_copy((GSList *) selection->itemList());
@@ -2238,7 +2238,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2342,7 +2342,7 @@ sp_selection_untile(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2457,7 +2457,7 @@ sp_selection_get_export_hints(Inkscape::Selection *selection, char const **filen
 }
 
 void
-sp_document_get_export_hints(SPDocument *doc, char const **filename, float *xdpi, float *ydpi)
+sp_document_get_export_hints(Document *doc, char const **filename, float *xdpi, float *ydpi)
 {
     Inkscape::XML::Node * repr = sp_document_repr_root(doc);
     gchar const *dpi_string;
@@ -2483,7 +2483,7 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (desktop == NULL)
         return;
 
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2697,7 +2697,7 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -2824,7 +2824,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     if (desktop == NULL)
         return;
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -2915,7 +2915,7 @@ bool
 fit_canvas_to_selection(SPDesktop *desktop)
 {
     g_return_val_if_fail(desktop != NULL, false);
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
 
     g_return_val_if_fail(doc != NULL, false);
     g_return_val_if_fail(desktop->selection != NULL, false);
@@ -2946,7 +2946,7 @@ verb_fit_canvas_to_selection(SPDesktop *const desktop)
 }
 
 bool
-fit_canvas_to_drawing(SPDocument *doc)
+fit_canvas_to_drawing(Document *doc)
 {
     g_return_val_if_fail(doc != NULL, false);
 
@@ -2972,7 +2972,7 @@ verb_fit_canvas_to_drawing(SPDesktop *desktop)
 
 void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
     g_return_if_fail(desktop != NULL);
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
 
     g_return_if_fail(doc != NULL);
     g_return_if_fail(desktop->selection != NULL);

@@ -248,7 +248,7 @@ sp_gradient_selector_get_spread (SPGradientSelector *sel)
 }
 
 void
-sp_gradient_selector_set_vector (SPGradientSelector *sel, SPDocument *doc, SPGradient *vector)
+sp_gradient_selector_set_vector (SPGradientSelector *sel, Document *doc, SPGradient *vector)
 {
     g_return_if_fail (sel != NULL);
     g_return_if_fail (SP_IS_GRADIENT_SELECTOR (sel));
@@ -307,7 +307,7 @@ sp_gradient_selector_edit_vector_clicked (GtkWidget */*w*/, SPGradientSelector *
 static void
 sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *sel)
 {
-    SPDocument *doc = sp_gradient_vector_selector_get_document (
+    Document *doc = sp_gradient_vector_selector_get_document (
                                                                 SP_GRADIENT_VECTOR_SELECTOR (sel->vectors));
 
     if (!doc)

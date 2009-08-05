@@ -62,7 +62,7 @@ static void sp_text_class_init (SPTextClass *classname);
 static void sp_text_init (SPText *text);
 static void sp_text_release (SPObject *object);
 
-static void sp_text_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_text_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_text_set (SPObject *object, unsigned key, gchar const *value);
 static void sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Inkscape::XML::Node *ref);
 static void sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch);
@@ -147,7 +147,7 @@ sp_text_release (SPObject *object)
 }
 
 static void
-sp_text_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
+sp_text_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr)
 {
     sp_object_read_attr(object, "x");
     sp_object_read_attr(object, "y");

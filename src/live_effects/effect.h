@@ -23,7 +23,7 @@
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
-struct SPDocument;
+struct Document;
 struct SPDesktop;
 struct SPItem;
 class SPNodeContext;
@@ -56,8 +56,8 @@ enum LPEPathFlashType {
 class Effect {
 public:
     static Effect* New(EffectType lpenr, LivePathEffectObject *lpeobj);
-    static void createAndApply(const char* name, SPDocument *doc, SPItem *item);
-    static void createAndApply(EffectType type, SPDocument *doc, SPItem *item);
+    static void createAndApply(const char* name, Document *doc, SPItem *item);
+    static void createAndApply(EffectType type, Document *doc, SPItem *item);
 
     virtual ~Effect();
 
@@ -111,7 +111,7 @@ public:
 
     Glib::ustring          getName();
     Inkscape::XML::Node *  getRepr();
-    SPDocument *           getSPDoc();
+    Document *           getSPDoc();
     LivePathEffectObject * getLPEObj() {return lpeobj;};
     Parameter *            getParameter(const char * key);
 

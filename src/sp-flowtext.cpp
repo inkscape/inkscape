@@ -43,7 +43,7 @@ static void sp_flowtext_remove_child(SPObject *object, Inkscape::XML::Node *chil
 static void sp_flowtext_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_flowtext_modified(SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_flowtext_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 
 static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
@@ -220,7 +220,7 @@ sp_flowtext_modified(SPObject *object, guint flags)
 }
 
 static void
-sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_flowtext_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     object->_requireSVGVersion(Inkscape::Version(1, 2));
 
@@ -677,7 +677,7 @@ bool SPFlowtext::has_internal_frame()
 
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0, Geom::Point p1)
 {
-    SPDocument *doc = sp_desktop_document (desktop);
+    Document *doc = sp_desktop_document (desktop);
 
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::XML::Node *root_repr = xml_doc->createElement("svg:flowRoot");

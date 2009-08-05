@@ -20,9 +20,9 @@
 #ifdef HAVE_INTTYPES_H
 # include <inttypes.h>
 #else
-# ifdef HAVE_STDINT_H
+//--tullarisc # ifdef HAVE_STDINT_H
 #  include <stdint.h>
-# endif
+//# endif
 #endif
 
 // error codes (mostly obsolete)

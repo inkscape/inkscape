@@ -346,7 +346,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
 static void
 sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
 {
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     GrDrag *drag = rc->_grdrag;
 
     GSList *these_stops = NULL;
@@ -403,7 +403,7 @@ double sqr(double x) {return x*x;}
 static void
 sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 {
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     GrDrag *drag = rc->_grdrag;
 
     GSList *these_stops = NULL;
@@ -861,7 +861,7 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {

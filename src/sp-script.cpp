@@ -23,7 +23,7 @@ static void sp_script_release(SPObject *object);
 static void sp_script_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_script_modified(SPObject *object, guint flags);
 static void sp_script_set(SPObject *object, unsigned int key, gchar const *value);
-static void sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_script_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_script_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *parent_class;
@@ -76,7 +76,7 @@ static void sp_script_init(SPScript */*script*/)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_script_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build(object, document, repr);

@@ -43,7 +43,7 @@
 static void box3d_class_init(SPBox3DClass *klass);
 static void box3d_init(SPBox3D *box3d);
 
-static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void box3d_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void box3d_release(SPObject *object);
 static void box3d_set(SPObject *object, unsigned int key, const gchar *value);
 static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -110,7 +110,7 @@ box3d_init(SPBox3D *box)
 }
 
 static void
-box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+box3d_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
@@ -126,7 +126,7 @@ box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 
     // TODO: Create/link to the correct perspective
 
-    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    Document *doc = SP_OBJECT_DOCUMENT(box);
     if (!doc) {
         g_print ("No document for the box!!!!\n");
         return;
@@ -272,7 +272,7 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Documen
             repr->setAttribute("inkscape:perspectiveID", box->persp_href);
         } else {
             /* box is not yet linked to a perspective; use the document's current perspective */
-            SPDocument *doc = SP_OBJECT_DOCUMENT(object);
+            Document *doc = SP_OBJECT_DOCUMENT(object);
             if (box->persp_ref->getURI()) {
                 gchar *uri_string = box->persp_ref->getURI()->toString();
                 repr->setAttribute("inkscape:perspectiveID", uri_string);
@@ -1378,7 +1378,7 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
    the original box and deletes the latter */
 SPGroup *
 box3d_convert_to_group(SPBox3D *box) {
-    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
+    Document *doc = SP_OBJECT_DOCUMENT(box);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     // remember position of the box

@@ -153,7 +153,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
 
     sp_document_ensure_up_to_date (document);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

@@ -437,8 +437,8 @@ public:
     static void delete_all_view (Inkscape::UI::View::View * view);
     void delete_view (Inkscape::UI::View::View * view);
 
-    void sensitive (SPDocument * in_doc = NULL, bool in_sensitive = true);
-    void name (SPDocument * in_doc = NULL, Glib::ustring in_name = "");
+    void sensitive (Document * in_doc = NULL, bool in_sensitive = true);
+    void name (Document * in_doc = NULL, Glib::ustring in_name = "");
 
 // Yes, multiple public, protected and private sections are bad. We'll clean that up later
 protected:

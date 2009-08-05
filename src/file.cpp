@@ -1,3 +1,4 @@
+
 /** @file
  * @brief File/Print operations
  */
@@ -65,6 +66,14 @@
 #include "uri.h"
 #include "xml/rebase-hrefs.h"
 
+#include "streams-handles.h"
+#include "streams-webdav.h"
+#include "streams-ftp.h"
+#include "streams-http.h"
+
+//#include "buffersystem.h"
+#include <cstring>
+
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
 #endif
@@ -119,7 +128,7 @@ sp_file_new(const Glib::ustring &templ)
     char *templName = NULL;
     if (templ.size()>0)
         templName = (char *)templ.c_str();
-    SPDocument *doc = sp_document_new(templName, TRUE, true);
+    Document *doc = sp_document_new(templName, TRUE, true);
     g_return_val_if_fail(doc != NULL, NULL);
 
     SPDesktop *dt;
@@ -201,7 +210,7 @@ sp_file_open(const Glib::ustring &uri,
     if (desktop)
         desktop->setWaitingCursor();
 
-    SPDocument *doc = NULL;
+    Document *doc = NULL;
     try {
         doc = Inkscape::Extension::open(key, uri.c_str());
     } catch (Inkscape::Extension::Input::no_extension_found &e) {
@@ -214,7 +223,7 @@ sp_file_open(const Glib::ustring &uri,
         desktop->clearWaitingCursor();
 
     if (doc) {
-        SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
+        Document *existing = desktop ? sp_desktop_document(desktop) : NULL;
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
@@ -254,6 +263,137 @@ sp_file_open(const Glib::ustring &uri,
     }
 }
 
+
+
+
+//NOTE1
+bool
+sp_file_open_uri(const Inkscape::URI &uri,
+             Inkscape::Extension::Extension *key,
+             bool add_to_recent, bool replace_empty)
+{
+    Document *doc = NULL;
+    try {
+        doc = Inkscape::Extension::open(key, uri.toNativeFilename());
+    } catch (Inkscape::Extension::Input::no_extension_found &e) {
+        doc = NULL;
+    } catch (Inkscape::Extension::Input::open_failed &e) {
+        doc = NULL;
+    }
+  
+    //FIXME1 KLUDGE switch
+
+    //WebDAV
+    /*
+      if (std::strstr(uri.toString(), "http") != NULL)
+      {
+      if (strcmp(uri.toString(), "/http") >= 5//FIXME3 skip begining '/'
+      || 
+      strcmp(uri.toString(), "http") >= 4
+      )
+        {
+        
+        std::cout<<"+++ 'http' uri.toString->"<<uri.toString()<<std::endl;
+        
+        Inkscape::WebDAVBuffer wbuf;
+        Inkscape::iwebdavstream *iws = new Inkscape::iwebdavstream(wbuf);
+        Inkscape::BufferSystem bs(iws);
+        bs.onInputStream();       
+        }
+        
+        } else*/
+    std::cout<<"--> FTP , HTTP etc."<<std::endl;
+
+    //FTP
+    if (std::strstr(uri.toString(), "ftp") != NULL)
+    {
+        if (strcmp(uri.toString(), "/ftp") >= 4//FIXME3 skip begining '/'
+            || 
+            strcmp(uri.toString(), "ftp") >= 3
+            )
+        {
+             std::cout<<"+++ 'ftp' uri.toString->"<<uri.toString()<<std::endl;
+            
+            Inkscape::FTPBuffer wbuf;
+            Inkscape::iftpstream *iws = new Inkscape::iftpstream(wbuf);
+            char *buf = new char[8192]; 
+            *iws >> buf;
+            std::cout<<"buf->"<<buf<<std::endl;
+
+            //Inkscape::BufferSystem bs(iws);
+            //bs.onInputStream(); 
+        }
+        //HTTP
+    }  else if (std::strstr(uri.toString(), "http") != NULL)
+    {
+        if (strcmp(uri.toString(), "/http") >= 5//FIXME3 skip begining '/'
+            || 
+            strcmp(uri.toString(), "http") >= 4
+            )
+        {
+             std::cout<<"+++ 'http' uri.toString->"<<uri.toString()<<std::endl;
+            
+/*            Inkscape::HTTPBuffer wbuf;
+            Inkscape::ihttpstream *iws = new Inkscape::ihttpstream(wbuf);
+            char *buf = new char[8192]; 
+            *iws >> buf;
+            std::cout<<"buf->"<<buf<<std::endl;
+*/
+            //Inkscape::BufferSystem bs(iws);
+            //bs.onInputStream(); 
+        }
+
+    } /*else  if ()
+    {
+    
+    } */
+   
+
+
+    if (doc) {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        Document *existing = desktop ? sp_desktop_document(desktop) : NULL;
+
+        if (existing && existing->virgin && replace_empty) {
+            // If the current desktop is empty, open the document there
+            sp_document_ensure_up_to_date (doc);
+            desktop->change_document(doc);
+            sp_document_resized_signal_emit (doc, sp_document_width(doc), sp_document_height(doc));
+        } else {
+            if (!Inkscape::NSApplication::Application::getNewGui()) {
+                // create a whole new desktop and window
+                SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+                sp_create_window(dtw, TRUE);
+                desktop = static_cast<SPDesktop*>(dtw->view);
+            } else {
+                desktop = Inkscape::NSApplication::Editor::createDesktop (doc);
+            }
+        }
+
+        doc->virgin = FALSE;
+        // everyone who cares now has a reference, get rid of ours
+        sp_document_unref(doc);
+        // resize the window to match the document properties
+        sp_namedview_window_from_document(desktop);
+        sp_namedview_update_layers_from_document(desktop);
+
+        if (add_to_recent) {
+//--tullarisc            prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
+        }
+
+        return TRUE;
+    } else {
+        //FIXME 1
+        //gchar *safeUri = Inkscape::IO::sanitizeString(uri.toNativeFilename());
+        //gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), safeUri);
+        //sp_ui_error_dialog(text);
+        //g_free(text);
+        //g_free(safeUri);
+        return FALSE;
+    }
+}
+
+
 /**
  *  Handle prompting user for "do you want to revert"?  Revert on "OK"
  */
@@ -263,7 +403,7 @@ sp_file_revert_dialog()
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = sp_desktop_document(desktop);
+    Document *doc = sp_desktop_document(desktop);
     g_assert(doc != NULL);
 
     Inkscape::XML::Node     *repr = sp_document_repr_root(doc);
@@ -397,6 +537,7 @@ void dump_ustr(Glib::ustring const &ustr)
 /**
  *  Display an file Open selector.  Open a document if OK is pressed.
  *  Can select single or multiple files for opening.
+ * NOTE1
  */
 void
 sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*data*/)
@@ -521,7 +662,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
         open_path.append(G_DIR_SEPARATOR_S);
         prefs->setString("/dialogs/open/path", open_path);
 
-        sp_file_open(fileName, selection);
+        sp_file_open_uri(Inkscape::URI(fileName.c_str()), selection);
     }
 
     return;
@@ -540,7 +681,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 void
 sp_file_vacuum()
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
 
     unsigned int diff = vacuum_document (doc);
 
@@ -572,7 +713,7 @@ sp_file_vacuum()
  *                     document; is true for normal save, false for temporary saves
  */
 static bool
-file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
+file_save(Gtk::Window &parentWindow, Document *doc, const Glib::ustring &uri,
           Inkscape::Extension::Extension *key, bool saveas, bool official)
 {
     if (!doc || uri.size()<1) //Safety check
@@ -614,7 +755,7 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
  * Used only for remote saving using VFS and a specific uri. Gets the file at the /tmp.
  */
 bool
-file_save_remote(SPDocument */*doc*/,
+file_save_remote(Document */*doc*/,
     #ifdef WITH_GNOME_VFS
                  const Glib::ustring &uri,
     #else
@@ -702,7 +843,7 @@ file_save_remote(SPDocument */*doc*/,
  * \param    ascopy  (optional) wether to set the documents->uri to the new filename or not
  */
 bool
-sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
+sp_file_save_dialog(Gtk::Window &parentWindow, Document *doc, bool is_copy)
 {
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
@@ -837,7 +978,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
  * Save a document, displaying a SaveAs dialog if necessary.
  */
 bool
-sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
+sp_file_save_document(Gtk::Window &parentWindow, Document *doc)
 {
     bool success = true;
 
@@ -913,13 +1054,13 @@ sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
  *  Import a resource.  Called by sp_file_import()
  */
 void
-file_import(SPDocument *in_doc, const Glib::ustring &uri,
+file_import(Document *in_doc, const Glib::ustring &uri,
                Inkscape::Extension::Extension *key)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     //DEBUG_MESSAGE( fileImport, "file_import( in_doc:%p uri:[%s], key:%p", in_doc, uri, key );
-    SPDocument *doc;
+    Document *doc;
     try {
         doc = Inkscape::Extension::open(key, uri.c_str());
     } catch (Inkscape::Extension::Input::no_extension_found &e) {
@@ -1050,7 +1191,7 @@ sp_file_import(Gtk::Window &parentWindow)
 {
     static Glib::ustring import_path;
 
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if (!doc)
         return;
 
@@ -1133,7 +1274,7 @@ bool
 sp_file_export_dialog(void *widget)
 {
     //# temp hack for 'doc' until we can switch to this dialog
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
 
     Glib::ustring export_path;
     Glib::ustring export_loc;
@@ -1269,7 +1410,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
    if (!SP_ACTIVE_DOCUMENT)
         return false;
 
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
 
     Glib::ustring export_path;
     Glib::ustring export_loc;
@@ -1427,7 +1568,7 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
 {
     static Glib::ustring import_path;
 
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if (!doc)
         return;
 
@@ -1485,7 +1626,7 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
 void
 sp_file_print(Gtk::Window& parentWindow)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if (doc)
         sp_print_document(parentWindow, doc);
 }
@@ -1498,7 +1639,7 @@ void
 sp_file_print_preview(gpointer /*object*/, gpointer /*data*/)
 {
 
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if (doc)
         sp_print_preview_document(doc);
 

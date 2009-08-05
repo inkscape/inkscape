@@ -28,7 +28,7 @@
 static void sp_font_class_init(SPFontClass *fc);
 static void sp_font_init(SPFont *font);
 
-static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_font_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_font_release(SPObject *object);
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -90,7 +90,7 @@ static void sp_font_init(SPFont *font)
     font->vert_adv_y = 0;
 }
 
-static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_font_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);

@@ -440,7 +440,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 case GDK_KP_Delete:
                 case GDK_BackSpace:
                 {
-                    SPDocument *doc = SP_OBJECT_DOCUMENT(guide);
+                    Document *doc = SP_OBJECT_DOCUMENT(guide);
                     sp_guide_remove(guide);
                     sp_document_done(doc, SP_VERB_NONE, _("Delete guide"));
                     ret = TRUE;

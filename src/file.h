@@ -21,8 +21,15 @@
 
 #include "extension/extension-forward.h"
 
+#include <iostream>
+#include <fstream>
+#include <glibmm/i18n.h>
+
+#include "uri.h"
+#include "streams-webdav.h"
+
 struct SPDesktop;
-struct SPDocument;
+struct Document;
 
 namespace Inkscape {
     namespace Extension {
@@ -64,6 +71,17 @@ bool sp_file_open(
     bool replace_empty = true
     );
 
+//NOTE1
+/*
+ * Opens a new file and window from the given URI (class)
+ */
+bool sp_file_open_uri(
+    const Inkscape::URI &uri,
+    Inkscape::Extension::Extension *key,
+    bool add_to_recent = true,
+    bool replace_empty = true
+    );
+
 /**
  * Displays a file open dialog. Calls sp_file_open on
  * an OK.
@@ -83,7 +101,7 @@ void sp_file_revert_dialog ();
  * Added to make only the remote savings.
  */
 
-bool file_save_remote(SPDocument *doc, const Glib::ustring &uri,
+bool file_save_remote(Document *doc, const Glib::ustring &uri,
 		 Inkscape::Extension::Extension *key, bool saveas, bool official);
 
 /**
@@ -108,10 +126,10 @@ bool sp_file_save_a_copy (Gtk::Window &parentWindow, gpointer object, gpointer d
  *  Saves the given document.  Displays a file select dialog
  *  if needed.
  */
-bool sp_file_save_document (Gtk::Window &parentWindow, SPDocument *document);
+bool sp_file_save_document (Gtk::Window &parentWindow, Document *document);
 
 /* Do the saveas dialog with a document as the parameter */
-bool sp_file_save_dialog (Gtk::Window &parentWindow, SPDocument *doc, bool bAsCopy = FALSE);
+bool sp_file_save_dialog (Gtk::Window &parentWindow, Document *doc, bool bAsCopy = FALSE);
 
 
 /*######################
@@ -127,7 +145,7 @@ void sp_file_import (Gtk::Window &parentWindow);
 /**
  * Imports a resource
  */
-void file_import(SPDocument *in_doc, const Glib::ustring &uri,
+void file_import(Document *in_doc, const Glib::ustring &uri,
                  Inkscape::Extension::Extension *key);
 
 /*######################
@@ -198,6 +216,15 @@ void sp_file_vacuum ();
 
 #endif
 
+
+//namespace Inkscape {
+//namespace Net {
+
+
+
+//}
+//}
+// #endif
 
 /*
   Local Variables:

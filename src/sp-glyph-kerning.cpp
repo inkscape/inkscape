@@ -28,7 +28,7 @@
 static void sp_glyph_kerning_class_init(SPGlyphKerningClass *gc);
 static void sp_glyph_kerning_init(SPGlyphKerning *glyph);
 
-static void sp_glyph_kerning_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_glyph_kerning_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_glyph_kerning_release(SPObject *object);
 static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_glyph_kerning_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -105,7 +105,7 @@ static void sp_glyph_kerning_init(SPGlyphKerning *glyph)
     glyph->k = 0;
 }
 
-static void sp_glyph_kerning_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_glyph_kerning_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);

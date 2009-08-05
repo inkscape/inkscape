@@ -205,7 +205,7 @@ sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View */*v
  * Constructs new SPSVGSPViewWidget object and returns pointer to it.
  */
 GtkWidget *
-sp_svg_view_widget_new (SPDocument *doc)
+sp_svg_view_widget_new (Document *doc)
 {
 	GtkWidget *widget;
 

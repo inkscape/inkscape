@@ -68,7 +68,7 @@ GtkWidget *sp_gradient_selector_new (void);
 void sp_gradient_selector_set_mode (SPGradientSelector *sel, guint mode);
 void sp_gradient_selector_set_units (SPGradientSelector *sel, guint units);
 void sp_gradient_selector_set_spread (SPGradientSelector *sel, guint spread);
-void sp_gradient_selector_set_vector (SPGradientSelector *sel, SPDocument *doc, SPGradient *vector);
+void sp_gradient_selector_set_vector (SPGradientSelector *sel, Document *doc, SPGradient *vector);
 void sp_gradient_selector_set_bbox (SPGradientSelector *sel, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
 
 SPGradientUnits sp_gradient_selector_get_units (SPGradientSelector *sel);

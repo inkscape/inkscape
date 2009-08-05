@@ -12,7 +12,7 @@
 class SPStyleElemTest : public CxxTest::TestSuite
 {
 public:
-    SPDocument* _doc;
+    Document* _doc;
 
     SPStyleElemTest() :
         _doc(0)

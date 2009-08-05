@@ -185,7 +185,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
 
 /* create a default perspective in document defs if none is present
    (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */
-static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
+static void sp_box3d_context_check_for_persp_in_defs(Document *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
     bool has_persp = false;

@@ -165,13 +165,13 @@ enum {
 
 int sp_main_gui(int argc, char const **argv);
 int sp_main_console(int argc, char const **argv);
-static void sp_do_export_png(SPDocument *doc);
-static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime);
+static void sp_do_export_png(Document *doc);
+static void do_export_ps_pdf(Document* doc, gchar const* uri, char const *mime);
 #ifdef WIN32
-static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
+static void do_export_emf(Document* doc, gchar const* uri, char const *mime);
 #endif //WIN32
-static void do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id);
-static void do_query_all (SPDocument *doc);
+static void do_query_dimension (Document *doc, bool extent, Geom::Dim2 const axis, const gchar *id);
+static void do_query_all (Document *doc);
 static void do_query_all_recurse (SPObject *o);
 
 static gchar *sp_global_printer = NULL;
@@ -962,7 +962,7 @@ void sp_process_file_list(GSList *fl)
 {
     while (fl) {
         const gchar *filename = (gchar *)fl->data;
-        SPDocument *doc = Inkscape::Extension::open(NULL, filename);
+        Document *doc = Inkscape::Extension::open(NULL, filename);
         if (doc == NULL) {
             doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), filename);
         }
@@ -1127,7 +1127,7 @@ int sp_main_console(int argc, char const **argv)
 }
 
 static void
-do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id)
+do_query_dimension (Document *doc, bool extent, Geom::Dim2 const axis, const gchar *id)
 {
     SPObject *o = NULL;
 
@@ -1167,7 +1167,7 @@ do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const g
 }
 
 static void
-do_query_all (SPDocument *doc)
+do_query_all (Document *doc)
 {
     SPObject *o = NULL;
 
@@ -1205,7 +1205,7 @@ do_query_all_recurse (SPObject *o)
 
 
 static void
-sp_do_export_png(SPDocument *doc)
+sp_do_export_png(Document *doc)
 {
     const gchar *filename = NULL;
     gdouble dpi = 0.0;
@@ -1417,7 +1417,7 @@ sp_do_export_png(SPDocument *doc)
  *  \param mime MIME type to export as.
  */
 
-static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
+static void do_export_ps_pdf(Document* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
@@ -1507,7 +1507,7 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
  *  \param mime MIME type to export as (should be "image/x-emf")
  */
 
-static void do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
+static void do_export_emf(Document* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);

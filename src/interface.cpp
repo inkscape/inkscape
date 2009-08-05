@@ -271,7 +271,7 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 void
 sp_ui_new_view()
 {
-    SPDocument *document;
+    Document *document;
     SPViewWidget *dtw;
 
     document = SP_ACTIVE_DOCUMENT;
@@ -290,7 +290,7 @@ sp_ui_new_view()
 void
 sp_ui_new_view_preview()
 {
-    SPDocument *document;
+    Document *document;
     SPViewWidget *dtw;
 
     document = SP_ACTIVE_DOCUMENT;
@@ -1125,7 +1125,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          guint /*event_time*/,
                          gpointer /*user_data*/)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     switch (info) {
@@ -1508,7 +1508,7 @@ void sp_ui_drag_motion( GtkWidget */*widget*/,
                         guint /*event_time*/,
                         gpointer /*user_data*/)
 {
-//     SPDocument *doc = SP_ACTIVE_DOCUMENT;
+//     Document *doc = SP_ACTIVE_DOCUMENT;
 //     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
 
@@ -1546,7 +1546,7 @@ sp_ui_import_one_file_with_check(gpointer filename, gpointer /*unused*/)
 static void
 sp_ui_import_one_file(char const *filename)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if (!doc) return;
 
     if (filename == NULL) return;

@@ -254,7 +254,7 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
 {
     // Don't count this as changes to the document,
     // it is basically just late initialisation.
-    SPDocument *document = sp_desktop_document(desktop);
+    Document *document = sp_desktop_document(desktop);
     bool saved = sp_document_get_undo_sensitive(document);
     sp_document_set_undo_sensitive(document, false);
     

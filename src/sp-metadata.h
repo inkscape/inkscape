@@ -33,7 +33,7 @@ struct SPMetadataClass {
 
 GType sp_metadata_get_type (void);
 
-SPMetadata * sp_document_metadata (SPDocument *document);
+SPMetadata * sp_document_metadata (Document *document);
 
 #endif
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

@@ -167,7 +167,7 @@ gr_prepare_label (SPObject *obj)
 GtkWidget *
 gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
 {
-    SPDocument *document = sp_desktop_document (desktop);
+    Document *document = sp_desktop_document (desktop);
 
     GtkWidget *om = gtk_option_menu_new ();
     GtkWidget *m = gtk_menu_new ();
@@ -435,7 +435,7 @@ GtkWidget *
 gr_change_widget (SPDesktop *desktop)
 {
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    SPDocument *document = sp_desktop_document (desktop);
+    Document *document = sp_desktop_document (desktop);
     SPEventContext *ev = sp_desktop_event_context (desktop);
 
     SPGradient *gr_selected = NULL;

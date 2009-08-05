@@ -177,7 +177,7 @@ find_references(SPObject *elem, refmap_type *refmap)
  *  a list of those changes that will require fixing up references.
  */
 static void
-change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
+change_clashing_ids(Document *imported_doc, Document *current_doc,
                     SPObject *elem, const refmap_type *refmap,
                     id_changelist_type *id_changes)
 {
@@ -259,7 +259,7 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
  *  those IDs are updated accordingly.
  */
 void
-prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
+prevent_id_clashes(Document *imported_doc, Document *current_doc)
 {
     refmap_type *refmap = new refmap_type;
     id_changelist_type id_changes;
