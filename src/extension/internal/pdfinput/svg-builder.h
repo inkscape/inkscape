@@ -18,7 +18,7 @@
 
 #ifdef HAVE_POPPLER
 
-class SPDocument;
+class Document;
 namespace Inkscape {
     namespace XML {
         class Document;
@@ -95,7 +95,7 @@ struct SvgGlyph {
  */
 class SvgBuilder {
 public:
-    SvgBuilder(SPDocument *document, gchar *docname, XRef *xref);
+    SvgBuilder(Document *document, gchar *docname, XRef *xref);
     SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root);
     virtual ~SvgBuilder();
 
@@ -220,7 +220,7 @@ private:
     std::vector<std::string> _availableFontNames; // Full names, used for matching font names (Bug LP #179589).
 
     bool _is_top_level;  // Whether this SvgBuilder is the top-level one
-    SPDocument *_doc;
+    Document *_doc;
     gchar *_docname;    // Basename of the URI from which this document is created
     XRef *_xref;    // Cross-reference table from the PDF doc we're converting from
     Inkscape::XML::Document *_xml_doc;
