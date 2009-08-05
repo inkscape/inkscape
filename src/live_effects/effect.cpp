@@ -246,7 +246,7 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 }
 
 void
-Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
+Effect::createAndApply(const char* name, Document *doc, SPItem *item)
 {
     // Path effect definition
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
@@ -263,7 +263,7 @@ Effect::createAndApply(const char* name, SPDocument *doc, SPItem *item)
 }
 
 void
-Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
+Effect::createAndApply(EffectType type, Document *doc, SPItem *item)
 {
     createAndApply(LPETypeConverter.get_key(type).c_str(), doc, item);
 }
@@ -576,7 +576,7 @@ Effect::getRepr()
     return SP_OBJECT_REPR(lpeobj);
 }
 
-SPDocument *
+Document *
 Effect::getSPDoc()
 {
     if (SP_OBJECT_DOCUMENT(lpeobj) == NULL) g_message("Effect::getSPDoc() returns NULL");

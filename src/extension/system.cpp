@@ -59,7 +59,7 @@ static Extension *build_from_reprdoc(Inkscape::XML::Document *doc, Implementatio
  *
  * Lastly, the open function is called in the module itself.
  */
-SPDocument *
+Document *
 open(Extension *key, gchar const *filename)
 {
     Input *imod = NULL;
@@ -91,7 +91,7 @@ open(Extension *key, gchar const *filename)
     if (!imod->prefs(filename))
         return NULL;
 
-    SPDocument *doc = imod->open(filename);
+    Document *doc = imod->open(filename);
     if (!doc) {
         throw Input::open_failed();
     }
@@ -184,7 +184,7 @@ open_internal(Extension *in_plug, gpointer in_data)
  * Lastly, the save function is called in the module itself.
  */
 void
-save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, bool check_overwrite, bool official)
+save(Extension *key, Document *doc, gchar const *filename, bool setextension, bool check_overwrite, bool official)
 {
     Output *omod;
     if (key == NULL) {

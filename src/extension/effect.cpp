@@ -358,7 +358,7 @@ void
 Effect::EffectVerb::perform( SPAction *action, void * data, void */*pdata*/ )
 {
     Inkscape::UI::View::View * current_view = sp_action_get_view(action);
-//  SPDocument * current_document = current_view->doc;
+//  Document * current_document = current_view->doc;
     Effect::EffectVerb * ev = reinterpret_cast<Effect::EffectVerb *>(data);
     Effect * effect = ev->_effect;
 

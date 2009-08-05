@@ -742,7 +742,7 @@ jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, js
     /*
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     String s = getString(env, jstr);
-    SPDocument *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
+    Document *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
     */
     return JNI_TRUE;
 }

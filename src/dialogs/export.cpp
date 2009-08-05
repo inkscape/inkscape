@@ -538,7 +538,7 @@ sp_export_dialog (void)
             if (SP_ACTIVE_DOCUMENT && SP_DOCUMENT_URI (SP_ACTIVE_DOCUMENT))
             {
                 gchar *name;
-                SPDocument * doc = SP_ACTIVE_DOCUMENT;
+                Document * doc = SP_ACTIVE_DOCUMENT;
                 const gchar *uri = SP_DOCUMENT_URI (doc);
                 Inkscape::XML::Node * repr = sp_document_repr_root(doc);
                 const gchar * text_extension = repr->attribute("inkscape:output_extension");
@@ -779,7 +779,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
     switch (current_key) {
         case SELECTION_DRAWING:
             if ( SP_ACTIVE_DESKTOP ) {
-                SPDocument *doc;
+                Document *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
                 Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
                 if (bbox) {
@@ -839,7 +839,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
 
     if ( SP_ACTIVE_DESKTOP )
     {
-        SPDocument *doc;
+        Document *doc;
         Geom::OptRect bbox;
         doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
@@ -906,7 +906,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
         switch (key) {
             case SELECTION_PAGE:
             case SELECTION_DRAWING: {
-                SPDocument * doc = SP_ACTIVE_DOCUMENT;
+                Document * doc = SP_ACTIVE_DOCUMENT;
                 sp_document_get_export_hints (doc, &filename, &xdpi, &ydpi);
 
                 if (filename == NULL) {
@@ -1213,7 +1213,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
     switch ((selection_type)(GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(base), "selection-type")))) {
         case SELECTION_PAGE:
         case SELECTION_DRAWING: {
-            SPDocument * doc = SP_ACTIVE_DOCUMENT;
+            Document * doc = SP_ACTIVE_DOCUMENT;
             Inkscape::XML::Node * repr = sp_document_repr_root(doc);
             bool modified = false;
             const gchar * temp_string;
@@ -1245,7 +1245,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
         }
         case SELECTION_SELECTION: {
             const GSList * reprlst;
-            SPDocument * doc = SP_ACTIVE_DOCUMENT;
+            Document * doc = SP_ACTIVE_DOCUMENT;
             bool modified = false;
 
             bool saved = sp_document_get_undo_sensitive(doc);
@@ -1466,7 +1466,7 @@ sp_export_detect_size(GtkObject * base) {
                 }
                 break;
             case SELECTION_DRAWING: {
-                SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+                Document *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
                 Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
 
@@ -1478,7 +1478,7 @@ sp_export_detect_size(GtkObject * base) {
             }
 
             case SELECTION_PAGE: {
-                SPDocument *doc;
+                Document *doc;
 
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 

@@ -120,7 +120,7 @@ void PngTextList::add(gchar const* key, gchar const* text)
 }
 
 static bool
-sp_png_write_rgba_striped(SPDocument *doc,
+sp_png_write_rgba_striped(Document *doc,
                           gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
                           int (* get_rows)(guchar const **rows, int row, int num_rows, void *data),
                           void *data)
@@ -388,7 +388,7 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
  *
  * \return true if succeeded (or if no action was taken), false if an error occurred.
  */
-bool sp_export_png_file (SPDocument *doc, gchar const *filename,
+bool sp_export_png_file (Document *doc, gchar const *filename,
                    double x0, double y0, double x1, double y1,
                    unsigned long int width, unsigned long int height, double xdpi, double ydpi,
                    unsigned long bgcolor,
@@ -400,7 +400,7 @@ bool sp_export_png_file (SPDocument *doc, gchar const *filename,
                               width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only);
 }
 bool
-sp_export_png_file(SPDocument *doc, gchar const *filename,
+sp_export_png_file(Document *doc, gchar const *filename,
                    Geom::Rect const &area,
                    unsigned long width, unsigned long height, double xdpi, double ydpi,
                    unsigned long bgcolor,

@@ -841,7 +841,7 @@ static NRArena const *trace_arena = NULL;
 static unsigned trace_visionkey;
 static NRArenaItem *trace_root;
 static gdouble trace_zoom;
-static SPDocument *trace_doc;
+static Document *trace_doc;
 
 static void
 clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
@@ -857,7 +857,7 @@ clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
 }
 
 static void
-clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
+clonetiler_trace_setup (Document *doc, gdouble zoom, SPItem *original)
 {
     trace_arena = NRArena::create();
     /* Create ArenaItem and set transform */

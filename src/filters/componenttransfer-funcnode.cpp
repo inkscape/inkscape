@@ -36,7 +36,7 @@
 static void sp_fefuncnode_class_init(SPFeFuncNodeClass *klass);
 static void sp_fefuncnode_init(SPFeFuncNode *fefuncnode);
 
-static void sp_fefuncnode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_fefuncnode_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_fefuncnode_release(SPObject *object);
 static void sp_fefuncnode_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fefuncnode_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -161,7 +161,7 @@ sp_fefuncnode_init(SPFeFuncNode *fefuncnode)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_fefuncnode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_fefuncnode_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feFuncNode_parent_class)->build) {
         ((SPObjectClass *) feFuncNode_parent_class)->build(object, document, repr);

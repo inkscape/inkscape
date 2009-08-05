@@ -442,7 +442,7 @@ void Tracer::traceThread()
         engine = NULL;
         return;
         }
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     sp_document_ensure_up_to_date(doc);
 
 

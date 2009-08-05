@@ -132,7 +132,7 @@ public:
     {
         _addProperty(share_static_string("timestamp"), timestamp());
         if (action->view) {
-            SPDocument *document = action->view->doc();
+            Document *document = action->view->doc();
             if (document) {
                 _addProperty(share_static_string("document"), document->serial());
             }

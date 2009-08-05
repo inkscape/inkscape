@@ -30,7 +30,7 @@
 static void sp_feOffset_class_init(SPFeOffsetClass *klass);
 static void sp_feOffset_init(SPFeOffset *feOffset);
 
-static void sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_feOffset_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_feOffset_release(SPObject *object);
 static void sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -90,7 +90,7 @@ sp_feOffset_init(SPFeOffset *feOffset)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_feOffset_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feOffset_parent_class)->build) {
         ((SPObjectClass *) feOffset_parent_class)->build(object, document, repr);

@@ -29,7 +29,7 @@
 static void sp_feComposite_class_init(SPFeCompositeClass *klass);
 static void sp_feComposite_init(SPFeComposite *feComposite);
 
-static void sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_feComposite_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_feComposite_release(SPObject *object);
 static void sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -93,7 +93,7 @@ sp_feComposite_init(SPFeComposite *feComposite)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_feComposite_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feComposite_parent_class)->build) {
         ((SPObjectClass *) feComposite_parent_class)->build(object, document, repr);

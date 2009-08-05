@@ -126,13 +126,13 @@ private:
     void _copyTextPath(SPTextPath *);
     Inkscape::XML::Node *_copyNode(Inkscape::XML::Node *, Inkscape::XML::Document *, Inkscape::XML::Node *);
 
-    void _pasteDocument(SPDocument *, bool in_place);
-    void _pasteDefs(SPDocument *);
+    void _pasteDocument(Document *, bool in_place);
+    void _pasteDefs(Document *);
     bool _pasteImage();
     bool _pasteText();
     SPCSSAttr *_parseColor(const Glib::ustring &);
     void _applyPathEffect(SPItem *, gchar const *);
-    SPDocument *_retrieveClipboard(Glib::ustring = "");
+    Document *_retrieveClipboard(Glib::ustring = "");
 
     // clipboard callbacks
     void _onGet(Gtk::SelectionData &, guint);
@@ -149,7 +149,7 @@ private:
     void _userWarn(SPDesktop *, char const *);
 
     // private properites
-    SPDocument *_clipboardSPDoc; ///< Document that stores the clipboard until someone requests it
+    Document *_clipboardSPDoc; ///< Document that stores the clipboard until someone requests it
     Inkscape::XML::Node *_defs; ///< Reference to the clipboard document's defs node
     Inkscape::XML::Node *_root; ///< Reference to the clipboard's root node
     Inkscape::XML::Node *_clipnode; ///< The node that holds extra information
@@ -311,7 +311,7 @@ bool ClipboardManagerImpl::paste(bool in_place)
     if ( target == CLIPBOARD_TEXT_TARGET ) return _pasteText();
 
     // otherwise, use the import extensions
-    SPDocument *tempdoc = _retrieveClipboard(target);
+    Document *tempdoc = _retrieveClipboard(target);
     if ( tempdoc == NULL ) {
         _userWarn(desktop, _("Nothing on the clipboard."));
         return false;
@@ -328,7 +328,7 @@ bool ClipboardManagerImpl::paste(bool in_place)
  */
 const gchar *ClipboardManagerImpl::getFirstObjectID()
 {
-    SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
+    Document *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
     if ( tempdoc == NULL ) {
         return NULL;
     }
@@ -373,7 +373,7 @@ bool ClipboardManagerImpl::pasteStyle()
         return false;
     }
 
-    SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
+    Document *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
     if ( tempdoc == NULL ) {
         // no document, but we can try _text_style
         if (_text_style) {
@@ -425,7 +425,7 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
     }
 
     // FIXME: actually, this should accept arbitrary documents
-    SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
+    Document *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
     if ( tempdoc == NULL ) {
         _userWarn(desktop, _("No size on the clipboard."));
         return false;
@@ -482,7 +482,7 @@ bool ClipboardManagerImpl::pastePathEffect()
         return false;
     }
 
-    SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
+    Document *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
     if ( tempdoc ) {
         Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
         Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
@@ -513,7 +513,7 @@ bool ClipboardManagerImpl::pastePathEffect()
  */
 Glib::ustring ClipboardManagerImpl::getPathParameter()
 {
-    SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
+    Document *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
         _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
         return "";
@@ -537,7 +537,7 @@ Glib::ustring ClipboardManagerImpl::getPathParameter()
  */
 Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId()
 {
-    SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
+    Document *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
         _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
         return "";
@@ -769,10 +769,10 @@ Inkscape::XML::Node *ClipboardManagerImpl::_copyNode(Inkscape::XML::Node *node, 
  * @param in_place Whether to paste the selection where it was when copied
  * @pre @c clipdoc is not empty and items can be added to the current layer
  */
-void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
+void ClipboardManagerImpl::_pasteDocument(Document *clipdoc, bool in_place)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPDocument *target_document = sp_desktop_document(desktop);
+    Document *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node
         *root = sp_document_repr_root(clipdoc),
         *target_parent = SP_OBJECT_REPR(desktop->currentLayer());
@@ -839,11 +839,11 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
  * @param clipdoc The document to paste
  * @pre @c clipdoc != NULL and pasting into the active document is possible
  */
-void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
+void ClipboardManagerImpl::_pasteDefs(Document *clipdoc)
 {
     // boilerplate vars copied from _pasteDocument
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPDocument *target_document = sp_desktop_document(desktop);
+    Document *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node
         *root = sp_document_repr_root(clipdoc),
         *defs = sp_repr_lookup_name(root, "svg:defs", 1),
@@ -863,7 +863,7 @@ void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
  */
 bool ClipboardManagerImpl::_pasteImage()
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+    Document *doc = SP_ACTIVE_DOCUMENT;
     if ( doc == NULL ) return false;
 
     // retrieve image data
@@ -993,9 +993,9 @@ void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
 
 /**
  * @brief Retrieve the clipboard contents as a document
- * @return Clipboard contents converted to SPDocument, or NULL if no suitable content was present
+ * @return Clipboard contents converted to Document, or NULL if no suitable content was present
  */
-SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_target)
+Document *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_target)
 {
     Glib::ustring best_target;
     if ( required_target == "" )
@@ -1061,7 +1061,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
     if ( in == inlist.end() )
         return NULL; // this shouldn't happen unless _getBestTarget returns something bogus
 
-    SPDocument *tempdoc = NULL;
+    Document *tempdoc = NULL;
     try {
         tempdoc = (*in)->open(filename);
     } catch (...) {

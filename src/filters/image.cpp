@@ -34,7 +34,7 @@
 static void sp_feImage_class_init(SPFeImageClass *klass);
 static void sp_feImage_init(SPFeImage *feImage);
 
-static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_feImage_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_feImage_release(SPObject *object);
 static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -92,7 +92,7 @@ sp_feImage_init(SPFeImage */*feImage*/)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_feImage_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     // Save document reference so we can load images with relative paths.
     SPFeImage *feImage = SP_FEIMAGE(object);

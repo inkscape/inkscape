@@ -49,7 +49,7 @@ Print::set_preview (void)
 }
 
 unsigned int
-Print::begin (SPDocument *doc)
+Print::begin (Document *doc)
 {
     return imp->begin(this, doc);
 }

@@ -34,7 +34,7 @@
 static void sp_feTurbulence_class_init(SPFeTurbulenceClass *klass);
 static void sp_feTurbulence_init(SPFeTurbulence *feTurbulence);
 
-static void sp_feTurbulence_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_feTurbulence_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_feTurbulence_release(SPObject *object);
 static void sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feTurbulence_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -93,7 +93,7 @@ sp_feTurbulence_init(SPFeTurbulence *feTurbulence)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feTurbulence_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+sp_feTurbulence_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feTurbulence_parent_class)->build) {
         ((SPObjectClass *) feTurbulence_parent_class)->build(object, document, repr);

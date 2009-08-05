@@ -26,7 +26,7 @@
 static void sp_feMergeNode_class_init(SPFeMergeNodeClass *klass);
 static void sp_feMergeNode_init(SPFeMergeNode *skeleton);
 
-static void sp_feMergeNode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_feMergeNode_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
 static void sp_feMergeNode_release(SPObject *object);
 static void sp_feMergeNode_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMergeNode_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -82,7 +82,7 @@ sp_feMergeNode_init(SPFeMergeNode *feMergeNode)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feMergeNode_build(SPObject *object, SPDocument */*document*/, Inkscape::XML::Node */*repr*/)
+sp_feMergeNode_build(SPObject *object, Document */*document*/, Inkscape::XML::Node */*repr*/)
 {
     sp_object_read_attr(object, "in");
 }

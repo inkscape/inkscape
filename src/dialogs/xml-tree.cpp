@@ -69,7 +69,7 @@ static SPXMLViewContent *content = NULL;
 
 static gint blocked = 0;
 static SPDesktop *current_desktop = NULL;
-static SPDocument *current_document = NULL;
+static Document *current_document = NULL;
 static gint selected_attr = 0;
 static Inkscape::XML::Node *selected_repr = NULL;
 
@@ -77,7 +77,7 @@ static void sp_xmltree_desktop_activate( Inkscape::Application *inkscape,  SPDes
 static void sp_xmltree_desktop_deactivate( Inkscape::Application *inkscape,  SPDesktop *desktop, GtkWidget *dialog );
 
 static void set_tree_desktop(SPDesktop *desktop);
-static void set_tree_document(SPDocument *document);
+static void set_tree_document(Document *document);
 static void set_tree_repr(Inkscape::XML::Node *repr);
 
 static void set_tree_select(Inkscape::XML::Node *repr);
@@ -119,8 +119,8 @@ static void on_attr_unselect_row_clear_text(GtkCList *list, gint row, gint colum
 static void on_editable_changed_enable_if_valid_xml_name(GtkEditable *editable, gpointer data);
 
 static void on_desktop_selection_changed(Inkscape::Selection *selection);
-static void on_document_replaced(SPDesktop *dt, SPDocument *document);
-static void on_document_uri_set(gchar const *uri, SPDocument *document);
+static void on_document_replaced(SPDesktop *dt, Document *document);
+static void on_document_uri_set(gchar const *uri, Document *document);
 
 static void on_clicked_get_editable_text(GtkWidget *widget, gpointer data);
 
@@ -666,7 +666,7 @@ void set_tree_desktop(SPDesktop *desktop)
 
 
 
-void set_tree_document(SPDocument *document)
+void set_tree_document(Document *document)
 {
     if (document == current_document) {
         return;
@@ -1262,7 +1262,7 @@ void on_desktop_selection_changed(Inkscape::Selection */*selection*/)
     blocked--;
 }
 
-static void on_document_replaced(SPDesktop *dt, SPDocument *doc)
+static void on_document_replaced(SPDesktop *dt, Document *doc)
 {
     if (current_desktop)
         sel_changed_connection.disconnect();
@@ -1271,7 +1271,7 @@ static void on_document_replaced(SPDesktop *dt, SPDocument *doc)
     set_tree_document(doc);
 }
 
-void on_document_uri_set(gchar const */*uri*/, SPDocument *document)
+void on_document_uri_set(gchar const */*uri*/, Document *document)
 {
     gchar title[500];
     sp_ui_dialog_title_string(Inkscape::Verb::get(SP_VERB_DIALOG_XML_EDITOR), title);

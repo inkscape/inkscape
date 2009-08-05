@@ -423,7 +423,7 @@ param_shared (const gchar * name, GSList * list)
     found parameter.
 */
 const gchar *
-Extension::get_param_string (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_string (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -432,7 +432,7 @@ Extension::get_param_string (const gchar * name, const SPDocument * doc, const I
 }
 
 const gchar *
-Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_enum (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter* param = param_shared(name, parameters);
     return param->get_enum(doc, node);
@@ -450,7 +450,7 @@ Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Ink
     found parameter.
 */
 bool
-Extension::get_param_bool (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_bool (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -470,7 +470,7 @@ Extension::get_param_bool (const gchar * name, const SPDocument * doc, const Ink
     found parameter.
 */
 int
-Extension::get_param_int (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_int (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -490,7 +490,7 @@ Extension::get_param_int (const gchar * name, const SPDocument * doc, const Inks
     found parameter.
 */
 float
-Extension::get_param_float (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_float (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -509,7 +509,7 @@ Extension::get_param_float (const gchar * name, const SPDocument * doc, const In
     found parameter.
 */
 guint32
-Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_color (const gchar * name, const Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter* param = param_shared(name, parameters);
     return param->get_color(doc, node);
@@ -528,7 +528,7 @@ Extension::get_param_color (const gchar * name, const SPDocument * doc, const In
     found parameter.
 */
 bool
-Extension::set_param_bool (const gchar * name, bool value, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::set_param_bool (const gchar * name, bool value, Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -548,7 +548,7 @@ Extension::set_param_bool (const gchar * name, bool value, SPDocument * doc, Ink
     found parameter.
 */
 int
-Extension::set_param_int (const gchar * name, int value, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::set_param_int (const gchar * name, int value, Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -568,7 +568,7 @@ Extension::set_param_int (const gchar * name, int value, SPDocument * doc, Inksc
     found parameter.
 */
 float
-Extension::set_param_float (const gchar * name, float value, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::set_param_float (const gchar * name, float value, Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -588,7 +588,7 @@ Extension::set_param_float (const gchar * name, float value, SPDocument * doc, I
     found parameter.
 */
 const gchar *
-Extension::set_param_string (const gchar * name, const gchar * value, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::set_param_string (const gchar * name, const gchar * value, Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -608,7 +608,7 @@ Extension::set_param_string (const gchar * name, const gchar * value, SPDocument
     found parameter.
 */
 guint32
-Extension::set_param_color (const gchar * name, guint32 color, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::set_param_color (const gchar * name, guint32 color, Document * doc, Inkscape::XML::Node * node)
 {
     Parameter* param = param_shared(name, parameters);
     return param->set_color(color, doc, node);
@@ -671,7 +671,7 @@ public:
     If all parameters are gui_visible = false NULL is returned as well.    
 */
 Gtk::Widget *
-Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+Extension::autogui (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     if (param_visible_count() == 0) return NULL;
 

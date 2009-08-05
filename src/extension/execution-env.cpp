@@ -179,7 +179,7 @@ ExecutionEnv::commit (void) {
 void
 ExecutionEnv::reselect (void) {
     if (_doc == NULL) { return; }
-    SPDocument * doc = _doc->doc();
+    Document * doc = _doc->doc();
     if (doc == NULL) { return; }
 
     SPDesktop *desktop = (SPDesktop *)_doc;

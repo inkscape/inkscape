@@ -190,7 +190,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
     }
 }
 
-CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
+CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, Document * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

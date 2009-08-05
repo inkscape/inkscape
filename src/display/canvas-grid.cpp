@@ -155,7 +155,7 @@ grid_canvasitem_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned
         NULL  /* order_changed */
     };
 
-CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type)
+CanvasGrid::CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, Document *in_doc, GridType type)
     : visible(true), gridtype(type)
 {
     repr = in_repr;
@@ -240,7 +240,7 @@ CanvasGrid::getGridTypeFromName(char const *typestr)
 *  writes an <inkscape:grid> child to repr.
 */
 void
-CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype)
+CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, Document * doc, GridType gridtype)
 {
     if (!repr) return;
     if (gridtype > GRID_MAXTYPENR) return;
@@ -262,7 +262,7 @@ CanvasGrid::writeNewGridToRepr(Inkscape::XML::Node * repr, SPDocument * doc, Gri
 * Creates a new CanvasGrid object of type gridtype
 */
 CanvasGrid*
-CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, SPDocument * doc, GridType gridtype)
+CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, Document * doc, GridType gridtype)
 {
     if (!repr) return NULL;
     if (!doc) {
@@ -420,7 +420,7 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
     }
 }
 
-CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
+CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, Document * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
