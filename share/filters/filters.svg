@@ -15,8 +15,8 @@
 <filter id="f001" inkscape:label="Matte jelly" x="0" y="0" width="1" height="1" inkscape:menu="Bevels" inkscape:menu-tooltip="Bulging, matte jelly covering">
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0" result="result0" in="SourceGraphic" />
 <feGaussianBlur in="SourceAlpha" stdDeviation="7" />
-<feSpecularLighting surfaceScale="10" specularConstant="0.8" specularExponent="8">
-<feDistantLight elevation="17" azimuth="225" />
+<feSpecularLighting surfaceScale="5" specularConstant="0.9" specularExponent="25">
+<feDistantLight elevation="60" azimuth="225" />
 </feSpecularLighting>
 <feComposite operator="atop" in2="result0" />
 </filter>
@@ -436,7 +436,7 @@
 <feBlend blend="normal" mode="multiply" />
 </filter>
 <filter id="f048" inkscape:label="Neon" inkscape:menu="Bevels" inkscape:menu-tooltip="Neon light effect" x="-0.25" y="-0.25" width="1.5" height="1.5">
-<feGaussianBlur stdDeviation="3" result="result1" />
+<feGaussianBlur stdDeviation="1" result="result1" />
 <feComposite in="result1" in2="result1" result="result4" operator="in" />
 <feGaussianBlur stdDeviation="7" result="result6" in="result4" />
 <feComposite operator="over" in="result6" in2="result4" result="result8" />
@@ -2021,6 +2021,32 @@
 <feGaussianBlur result="result6" stdDeviation="0.4" />
 <feComposite in2="result6" operator="in" in="SourceGraphic" result="result7" />
 <feComposite operator="in" in2="result7" result="result8" in="result7" />
+</filter>
+<filter id="f207" inkscape:menu-tooltip="Bright metallic effect for any color" inkscape:menu="Bevels" inkscape:label="Bright metal">
+<feGaussianBlur result="result6" stdDeviation="8" in="SourceGraphic" />
+<feComposite in2="SourceGraphic" in="result6" operator="xor" result="result10" />
+<feGaussianBlur result="result2" stdDeviation="8" />
+<feComposite in2="SourceGraphic" operator="atop" in="result10" />
+<feComposite result="result4" in="result2" operator="xor" />
+<feGaussianBlur in="result4" result="result3" stdDeviation="4" />
+<feSpecularLighting result="result5" specularExponent="5" specularConstant="1.1" surfaceScale="18">
+<feDistantLight azimuth="235" elevation="55" />
+</feSpecularLighting>
+<feComposite in="result3" k3="1.1" k2="0.5" operator="arithmetic" result="result7" in2="result5" k1="0.5" />
+<feComposite in="result7" operator="atop" in2="SourceGraphic" result="result8" />
+</filter>
+<filter id="f208" inkscape:menu-tooltip="Transparent plastic with deep colors" inkscape:menu="Bevels" inkscape:label="Deep colors plastic">
+<feGaussianBlur in="SourceGraphic" result="result6" stdDeviation="10" />
+<feComposite in2="SourceGraphic" in="result6" operator="xor" />
+<feGaussianBlur result="result2" stdDeviation="10" />
+<feComposite in2="SourceGraphic" operator="atop" />
+<feComposite result="result4" in="result2" operator="xor" />
+<feGaussianBlur in="result4" result="result3" stdDeviation="5" />
+<feSpecularLighting lighting-color="rgb(255,255,255)" in="result3" result="result5" specularExponent="35" specularConstant="3" surfaceScale="12">
+<feDistantLight elevation="45" azimuth="235" />
+</feSpecularLighting>
+<feComposite in2="result5" in="SourceGraphic" k3="0.7" k2="0.8" operator="arithmetic" result="result7" />
+<feComposite in="result7" operator="in" in2="SourceGraphic" />
 </filter>
 </defs>
 </svg>
