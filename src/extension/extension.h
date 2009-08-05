@@ -72,7 +72,7 @@
 #define INKSCAPE_EXTENSION_NS_NC "extension"
 #define INKSCAPE_EXTENSION_NS    "extension:"
 
-struct SPDocument;
+struct Document;
 
 namespace Inkscape {
 namespace Extension {
@@ -173,42 +173,42 @@ private:
 #endif
 public:
     bool             get_param_bool   (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     int              get_param_int    (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     float            get_param_float  (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     const gchar *    get_param_string (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     guint32          get_param_color  (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     const gchar *    get_param_enum   (const gchar * name,
-                                       const SPDocument *   doc = NULL,
+                                       const Document *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
     bool             set_param_bool   (const gchar * name,
                                        bool          value,
-                                       SPDocument *   doc = NULL,
+                                       Document *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
     int              set_param_int    (const gchar * name,
                                        int           value,
-                                       SPDocument *   doc = NULL,
+                                       Document *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
     float            set_param_float  (const gchar * name,
                                        float         value,
-                                       SPDocument *   doc = NULL,
+                                       Document *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
     const gchar *    set_param_string (const gchar * name,
                                        const gchar * value,
-                                       SPDocument *   doc = NULL,
+                                       Document *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
     guint32          set_param_color  (const gchar * name,
                                        guint32 color,
-                                       SPDocument *   doc = NULL,
+                                       Document *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
 
     /* Error file handling */
@@ -217,7 +217,7 @@ public:
     static void      error_file_close (void);
 
 public:
-    Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal = NULL);
+    Gtk::Widget *    autogui (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal = NULL);
     void paramListString (std::list <std::string> & retlist);
 
     /* Extension editor dialog stuff */

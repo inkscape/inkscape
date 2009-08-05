@@ -31,7 +31,7 @@ namespace UI {
  * @brief System-wide clipboard manager
  *
  * ClipboardManager takes care of manipulating the system clipboard in response
- * to user actions. It holds a complete SPDocument as the contents. This document
+ * to user actions. It holds a complete Document as the contents. This document
  * is exported using output extensions when other applications request data.
  * Copying to another instance of Inkscape is special-cased, because of the extra
  * data required (i.e. style, size, Live Path Effects parameters, etc.)

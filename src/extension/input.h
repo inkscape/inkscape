@@ -37,7 +37,7 @@ public:
                                         Implementation::Implementation * in_imp);
     virtual      ~Input                (void);
     virtual bool  check                (void);
-    SPDocument *  open                 (gchar const *uri);
+    Document *  open                 (gchar const *uri);
     gchar *       get_mimetype         (void);
     gchar *       get_extension        (void);
     gchar *       get_filetypename     (void);

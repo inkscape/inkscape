@@ -36,7 +36,7 @@ public:
     unsigned int  setup       (void);
     unsigned int  set_preview (void);
 
-    unsigned int  begin       (SPDocument *doc);
+    unsigned int  begin       (Document *doc);
     unsigned int  finish      (void);
 
     /* Rendering methods */

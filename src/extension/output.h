@@ -15,7 +15,7 @@
 
 #include <gtk/gtkdialog.h>
 #include "extension.h"
-struct SPDocument;
+struct Document;
 
 namespace Inkscape {
 namespace Extension {
@@ -36,7 +36,7 @@ public:
                          Implementation::Implementation * in_imp);
     virtual     ~Output (void);
     virtual bool check                (void);
-    void         save (SPDocument *doc,
+    void         save (Document *doc,
                        gchar const *uri);
     bool         prefs (void);
     gchar *      get_mimetype(void);

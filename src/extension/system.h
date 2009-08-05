@@ -21,8 +21,8 @@
 namespace Inkscape {
 namespace Extension {
 
-SPDocument *open(Extension *key, gchar const *filename);
-void save(Extension *key, SPDocument *doc, gchar const *filename,
+Document *open(Extension *key, gchar const *filename);
+void save(Extension *key, Document *doc, gchar const *filename,
           bool setextension, bool check_overwrite, bool official);
 Print *get_print(gchar const *key);
 Extension *build_from_file(gchar const *filename);
