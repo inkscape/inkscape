@@ -12,7 +12,7 @@ baseada em RPM, então por favor considere atualizar as linhas de Requires/Build
 (Requerimentos) para ajudar outros usuários de sua distribuição. Se você não
 tem acesso de escrita ao SVN, então você pode submeter uma correção pra o
 patch tracker
-<http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
+<https://bugs.launchpad.net/inkscape>.
 
 
 Visite http://wiki.inkscape.org/wiki/index.php/CompilingInkscape para observações

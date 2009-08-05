@@ -11,7 +11,7 @@ Al momento, questa lista contiene un solo pacchetto; se usi usa distribuzione
 basata su RPM, sei pregato di aggiornare le linee Requires/BuildRequires in modo
 da aiutare gli altri utenti della tua stessa distribuzione. Se non hai accesso in
 scrittura al SVN, puoi inviare una patch al sistema di gestione delle patch
-<http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
+<https://bugs.launchpad.net/inkscape>.
 
 Consulta http://wiki.inkscape.org/wiki/index.php/CompilingInkscape per informazioni
 più generali sulla compilazione, incluso come trovare i pacchetti necessari per la 

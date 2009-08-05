@@ -3,16 +3,16 @@
 grep Build-Depends debian/control permet d'afficher une liste de paquets
 (Debian) nécessaires à la compilation.
 
-inkscape.spec.in contient une liste partielle de spécifications : 
+inkscape.spec.in contient une liste partielle de spécifications : 
 
   grep Requires inkscape.spec.in
 
-Au moment où ce texte est écrit, il n'y a qu'un paquet; si vous utilisez une
-distribution basée sur des RPMs, pensez à mettre à jour les lignes
+Au moment où ce texte est écrit, il n'y a qu'un paquet ; si vous utilisez une
+distribution basée sur des RPM, pensez à mettre à jour les lignes
 Requires/BuildRequires afin d'aider les autres utilisateurs de votre
 distribution. Si vous n'avez pas d'accès en écriture au SVN, vous pouvez
 soumettre un patch auprès de 
-<http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
+<https://bugs.launchpad.net/inkscape>.
 
 
 Consulter http://wiki.inkscape.org/wiki/index.php/CompilingInkscape pour des
@@ -31,7 +31,7 @@ Alors que beaucoup de développeurs travaillent sur la correction de bugs et la
 création de nouvelles fonctionnalités, il est important de noter que même les
 non-programmeurs peuvent contribuer à la puissance et au succès d'Inkscape.
 Vous avez probablement une idée d'une chose sur laquelle vous aimeriez
-travailler. Sinon, voivi quelques façons d'apporter votre aide :
+travailler. Sinon, voivi quelques façons d'apporter votre aide :
 
    * Sélectionner un bug, le corriger et envoyer un path ("diff -uNrp" ou
    "cvs diff -up")
@@ -51,7 +51,7 @@ Consultez http://inkscape.org/svn.php pour voir comment accéder au SVN, y
 compris depuis un navigateur web.
 Nous donnons un accès en écriture au SVN à toute personne ayant démontré une
 motivation pour aider à développer le code. Prouver votre motivation est très
-simple : fournir deux contributions et demander un accès.
+simple : fournir deux contributions et demander un accès.
 
 
 Décisions de patch

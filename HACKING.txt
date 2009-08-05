@@ -10,8 +10,8 @@ inkscape.spec.in has a partial list of requirements:
 At the time of writing, it contains only one package; if you use an RPM-based
 distribution, then please consider updating the Requires/BuildRequires lines to
 help other users of your distribution.  If you don't have SVN write access,
-then you can submit a patch to the patch tracker
-<http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
+then you can submit a patch to the bug tracker
+<https://bugs.launchpad.net/inkscape>.
 
 
 See http://wiki.inkscape.org/wiki/index.php/CompilingInkscape for more general

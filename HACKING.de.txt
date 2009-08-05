@@ -16,7 +16,7 @@ Patches
 =======
 
 Wenn Sie keinen SVN Zugang haben, benutzen Sie bitte den Patch Tracker
-<http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
+<https://bugs.launchpad.net/inkscape>.
 
 Wiki
 ====
