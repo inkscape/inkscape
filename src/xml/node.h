@@ -80,6 +80,8 @@ public:
      * @{
      */
 
+
+
     /**
      * @brief Get the type of the node
      * @return NodeType enumeration member corresponding to the type of the node.

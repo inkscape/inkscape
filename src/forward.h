@@ -20,6 +20,10 @@
 namespace Inkscape {
 struct Application;
 struct ApplicationClass;
+namespace XML {
+class Document;
+class DocumentTree;
+}
 }
 
 /* Editing window */
@@ -43,7 +47,6 @@ GType sp_event_context_get_type ();
 
 /* Document tree */
 
-class Document;
 class SPDocumentClass;
 
 #define SP_TYPE_DOCUMENT (sp_document_get_type ())
