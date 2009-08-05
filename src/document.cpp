@@ -638,7 +638,7 @@ do_change_uri(Document *const document, gchar const *const filename, bool const 
     sp_document_set_undo_sensitive(document, false);
 
     if (rebase) {
-        Inkscape::XML::rebase_hrefs(document, new_base, true);
+        Inkscape::XML::rebase_hrefs((Inkscape::XML::Document *)document, new_base, true);
     }
 
     repr->setAttribute("sodipodi:docname", document->name);

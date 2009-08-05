@@ -19,7 +19,7 @@ namespace Internal {
 Document *
 GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
 {
-    PDocument *doc = NULL;
+    Document *doc = NULL;
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
 
     if (pb) {         /* We are readable */
