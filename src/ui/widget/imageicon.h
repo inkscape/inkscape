@@ -16,7 +16,7 @@
 #include <gtkmm/box.h>
 
 
-class SPDocument;
+class Document;
 
 namespace Inkscape
 {
@@ -62,7 +62,7 @@ public:
     /**
      *
      */
-    bool showSvgDocument(const SPDocument *doc);
+    bool showSvgDocument(const Document *doc);
 
     /**
      *
@@ -99,7 +99,7 @@ private:
     /**
      * The svg document we are currently showing
      */
-    SPDocument *document;
+    Document *document;
 
     /**
      * The sp_svg_view widget

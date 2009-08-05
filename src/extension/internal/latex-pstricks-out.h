@@ -27,7 +27,7 @@ public:
     bool check(Inkscape::Extension::Extension *module); //Can this module load (always yes for now)
 
     void save(Inkscape::Extension::Output *mod, // Save the given document to the given filename
-              SPDocument *doc,
+              Document *doc,
               gchar const *filename);
 
     static void init(void);//Initialize the class

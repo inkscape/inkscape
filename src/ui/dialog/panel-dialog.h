@@ -50,7 +50,7 @@ protected:
         static_cast<PanelDialogBase *>(data)->_propagateDesktopActivated(application, desktop);
     }
 
-    inline virtual void _propagateDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    inline virtual void _propagateDocumentReplaced(SPDesktop* desktop, Document *document);
     inline virtual void _propagateDesktopActivated(Inkscape::Application *, SPDesktop *);
     inline virtual void _propagateDesktopDeactivated(Inkscape::Application *, SPDesktop *);
 
@@ -106,7 +106,7 @@ private:
 
 
 void
-PanelDialogBase::_propagateDocumentReplaced(SPDesktop *desktop, SPDocument *document)
+PanelDialogBase::_propagateDocumentReplaced(SPDesktop *desktop, Document *document)
 {
     _panel.signalDocumentReplaced().emit(desktop, document);
 }

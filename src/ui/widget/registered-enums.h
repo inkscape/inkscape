@@ -32,7 +32,7 @@ public:
                 const Util::EnumDataConverter<E>& c,
                 Registry& wr,
                 Inkscape::XML::Node* repr_in = NULL,
-                SPDocument *doc_in = NULL )
+                Document *doc_in = NULL )
         : RegisteredWidget< LabelledComboBoxEnum<E> >(label, tip, c)
     {
         RegisteredWidget< LabelledComboBoxEnum<E> >::init_parent(key, wr, repr_in, doc_in);

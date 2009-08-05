@@ -27,7 +27,7 @@ namespace Internal {
 class PdfInputCairo: public Inkscape::Extension::Implementation::Implementation {
     PdfInputCairo () { };
 public:
-    SPDocument *open( Inkscape::Extension::Input *mod,
+    Document *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
     static void         init( void );
 

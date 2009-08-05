@@ -39,11 +39,11 @@ private:
 public:
     ParamComboBox(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamComboBox(void);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
 
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    const gchar * get (const Document * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    const gchar * set (const gchar * in, Document * doc, Inkscape::XML::Node * node);
 
     void changed (void);
 }; /* class ParamComboBox */

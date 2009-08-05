@@ -70,13 +70,13 @@ public:
     virtual Gtk::Widget *prefs_input(Inkscape::Extension::Input *module,
                              gchar const *filename);
 
-    virtual SPDocument *open(Inkscape::Extension::Input *module,
+    virtual Document *open(Inkscape::Extension::Input *module,
                              gchar const *filename);
 
     /* ----- Output functions ----- */
     /** Find out information about the file. */
     virtual Gtk::Widget *prefs_output(Inkscape::Extension::Output *module);
-    virtual void save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename);
+    virtual void save(Inkscape::Extension::Output *module, Document *doc, gchar const *filename);
 
     /* ----- Effect functions ----- */
     /** Find out information about the file. */
@@ -93,7 +93,7 @@ public:
     virtual unsigned set_preview(Inkscape::Extension::Print *module);
 
     virtual unsigned begin(Inkscape::Extension::Print *module,
-                           SPDocument *doc);
+                           Document *doc);
     virtual unsigned finish(Inkscape::Extension::Print *module);
     virtual bool     textToPath(Inkscape::Extension::Print *ext);
     virtual bool     fontEmbedded(Inkscape::Extension::Print * ext);

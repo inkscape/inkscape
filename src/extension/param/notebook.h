@@ -40,11 +40,11 @@ private:
 public:
     ParamNotebook(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamNotebook(void);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::list <std::string> &list);
 
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    const gchar * set (const int in, SPDocument * doc, Inkscape::XML::Node * node);
+    const gchar * get (const Document * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    const gchar * set (const int in, Document * doc, Inkscape::XML::Node * node);
 }; /* class ParamNotebook */
 
 

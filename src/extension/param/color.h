@@ -23,9 +23,9 @@ public:
     ParamColor(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamColor(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
-    guint32 get( const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/ ) { return _value; }
-    guint32 set (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    guint32 get( const Document * /*doc*/, const Inkscape::XML::Node * /*node*/ ) { return _value; }
+    guint32 set (guint32 in, Document * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
     sigc::signal<void> * _changeSignal;
 }; /* class ParamColor */

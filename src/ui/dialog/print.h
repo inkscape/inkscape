@@ -30,7 +30,7 @@
  */
 struct workaround_gtkmm
 {
-    SPDocument *_doc;
+    Document *_doc;
     SPItem     *_base;
     Inkscape::UI::Widget::RenderingOptions *_tab;
 };
@@ -41,14 +41,14 @@ namespace Dialog {
 
 class Print {
 public:
-    Print(SPDocument *doc, SPItem *base);
+    Print(Document *doc, SPItem *base);
     Gtk::PrintOperationResult run(Gtk::PrintOperationAction, Gtk::Window &parent_window);
 
 protected:
 
 private:
     GtkPrintOperation *_printop;
-    SPDocument *_doc;
+    Document *_doc;
     SPItem     *_base;
     Inkscape::UI::Widget::RenderingOptions _tab;
 

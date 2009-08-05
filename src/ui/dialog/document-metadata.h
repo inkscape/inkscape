@@ -49,7 +49,7 @@ protected:
     void  build_metadata();
     void  init();
 
-    void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
+    void _handleDocumentReplaced(SPDesktop* desktop, Document *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 

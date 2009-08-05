@@ -50,9 +50,9 @@ public:
     void applyMask(CairoRenderContext *ctx, SPMask const *mask);
 
     /** Initializes the CairoRenderContext according to the specified
-    SPDocument. A set*Target function can only be called on the context
+    Document. A set*Target function can only be called on the context
     before setupDocument. */
-    bool setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool pageBoundingBox, SPItem *base);
+    bool setupDocument(CairoRenderContext *ctx, Document *doc, bool pageBoundingBox, SPItem *base);
 
     /** Traverses the object tree and invokes the render methods. */
     void renderItem(CairoRenderContext *ctx, SPItem *item);

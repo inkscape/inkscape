@@ -99,7 +99,7 @@ public:
 
     ~SVGPreview();
 
-    bool setDocument(SPDocument *doc);
+    bool setDocument(Document *doc);
 
     bool setFileName(Glib::ustring &fileName);
 
@@ -128,7 +128,7 @@ private:
     /**
      * The svg document we are currently showing
      */
-    SPDocument *document;
+    Document *document;
 
     /**
      * The sp_svg_view widget

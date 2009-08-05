@@ -68,7 +68,7 @@ protected:
     /* **** funcs **** */
     gchar *               pref_name (void);
     Inkscape::XML::Node * find_child (Inkscape::XML::Node * adult);
-    Inkscape::XML::Node * document_param_node (SPDocument * doc);
+    Inkscape::XML::Node * document_param_node (Document * doc);
     Inkscape::XML::Node * new_child (Inkscape::XML::Node * parent);
 
 public:
@@ -85,29 +85,29 @@ public:
                       Parameter(name, guitext, NULL, Parameter::SCOPE_USER, false, NULL, ext);
                   };
     virtual      ~Parameter  (void);
-    bool          get_bool   (const SPDocument * doc,
+    bool          get_bool   (const Document * doc,
                               const Inkscape::XML::Node * node);
-    int           get_int    (const SPDocument * doc,
+    int           get_int    (const Document * doc,
                               const Inkscape::XML::Node * node);
-    float         get_float  (const SPDocument * doc,
+    float         get_float  (const Document * doc,
                               const Inkscape::XML::Node * node);
-    const gchar * get_string (const SPDocument * doc,
+    const gchar * get_string (const Document * doc,
                               const Inkscape::XML::Node * node);
-    guint32       get_color  (const SPDocument * doc,
+    guint32       get_color  (const Document * doc,
                               const Inkscape::XML::Node * node);
-    const gchar * get_enum   (const SPDocument * doc,
+    const gchar * get_enum   (const Document * doc,
                               const Inkscape::XML::Node * node);
 
-    bool          set_bool   (bool in,          SPDocument * doc, Inkscape::XML::Node * node);
-    int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
-    float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
-    const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
-    guint32       set_color  (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
+    bool          set_bool   (bool in,          Document * doc, Inkscape::XML::Node * node);
+    int           set_int    (int  in,          Document * doc, Inkscape::XML::Node * node);
+    float         set_float  (float in,         Document * doc, Inkscape::XML::Node * node);
+    const gchar * set_string (const gchar * in, Document * doc, Inkscape::XML::Node * node);
+    guint32       set_color  (guint32 in, Document * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
-    virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    virtual Gtk::Widget * get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
 
     gchar const * get_tooltip (void) { return _desc; }
 

@@ -23,7 +23,7 @@
 #include "util/list.h"
 
 class SPDesktop;
-class SPDocument;
+class Document;
 class SPObject;
 namespace Inkscape {
 namespace XML {

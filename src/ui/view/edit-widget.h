@@ -36,7 +36,7 @@
 #include "ui/widget/zoom-status.h"
 
 struct SPDesktop;
-struct SPDocument;
+struct Document;
 struct SPNamedView;
 
 namespace Inkscape {
@@ -46,14 +46,14 @@ namespace View {
 class EditWidget : public Gtk::Window,
                    public EditWidgetInterface {
 public:
-    EditWidget (SPDocument*);
+    EditWidget (Document*);
     ~EditWidget();
 
     // Initialization
     void initActions();
     void initUIManager();
     void initLayout();
-    void initEdit (SPDocument*);
+    void initEdit (Document*);
     void destroyEdit();
 
     // Actions

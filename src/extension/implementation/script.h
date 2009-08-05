@@ -73,7 +73,7 @@ public:
     /**
      *
      */
-    virtual SPDocument *open(Inkscape::Extension::Input *module,
+    virtual Document *open(Inkscape::Extension::Input *module,
                              gchar const *filename);
 
     /**
@@ -85,7 +85,7 @@ public:
      *
      */
     virtual void save(Inkscape::Extension::Output *module,
-                      SPDocument *doc,
+                      Document *doc,
                       gchar const *filename);
 
     /**
