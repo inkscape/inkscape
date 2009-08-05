@@ -71,7 +71,7 @@ namespace Inkscape {
 namespace UI {
 namespace View {
 
-EditWidget::EditWidget (SPDocument *doc)
+EditWidget::EditWidget (Document *doc)
     : _main_window_table(4),
       _viewport_table(3,3),
       _act_grp(Gtk::ActionGroup::create()),
@@ -1191,7 +1191,7 @@ EditWidget::shutdown()
     if (Inkscape::NSApplication::Editor::isDuplicatedView (_desktop))
         return false;
 
-    SPDocument *doc = _desktop->doc();
+    Document *doc = _desktop->doc();
     if (doc->isModifiedSinceSave()) {
         gchar *markup;
         /// \todo FIXME !!! obviously this will have problems if the document
@@ -1389,7 +1389,7 @@ EditWidget::updateScrollbars (double scale)
     _update_s_f = true;
 
     /* The desktop region we always show unconditionally */
-    SPDocument *doc = _desktop->doc();
+    Document *doc = _desktop->doc();
     Geom::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
                      Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
     SPObject* root = doc->root;
@@ -1548,7 +1548,7 @@ void EditWidget::_namedview_modified (SPObject *obj, guint flags) {
 }
 
 void
-EditWidget::initEdit (SPDocument *doc)
+EditWidget::initEdit (Document *doc)
 {
     _desktop = new SPDesktop();
     _desktop->registerEditWidget (this);

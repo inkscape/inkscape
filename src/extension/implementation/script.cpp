@@ -545,7 +545,7 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     the incoming filename (so that it's not the temporary filename).
     That document is then returned from this function.
 */
-SPDocument *
+Document *
 Script::open(Inkscape::Extension::Input *module,
              const gchar *filenameArg)
 {
@@ -567,7 +567,7 @@ Script::open(Inkscape::Extension::Input *module,
     int data_read = execute(command, params, lfilename, fileout);
     fileout.toFile(tempfilename_out);
 
-    SPDocument * mydoc = NULL;
+    Document * mydoc = NULL;
     if (data_read > 10) {
         if (helper_extension.size()==0) {
             mydoc = Inkscape::Extension::open(
@@ -623,7 +623,7 @@ Script::open(Inkscape::Extension::Input *module,
 */
 void
 Script::save(Inkscape::Extension::Output *module,
-             SPDocument *doc,
+             Document *doc,
              const gchar *filenameArg)
 {
     std::list<std::string> params;
@@ -757,7 +757,7 @@ Script::effect(Inkscape::Extension::Effect *module,
 
     pump_events();
 
-    SPDocument * mydoc = NULL;
+    Document * mydoc = NULL;
     if (data_read > 10) {
         mydoc = Inkscape::Extension::open(
               Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),

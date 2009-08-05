@@ -589,7 +589,7 @@ void PdfImportDialog::_setPreviewPage(int page) {
 /**
  * Parses the selected page of the given PDF document using PdfParser.
  */
-SPDocument *
+Document *
 PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     // Initialize the globalParams variable for poppler
@@ -661,7 +661,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     Catalog *catalog = pdf_doc->getCatalog();
     Page *page = catalog->getPage(page_num);
 
-    SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
+    Document *doc = sp_document_new(NULL, TRUE, TRUE);
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false); // No need to undo in this temporary document
 

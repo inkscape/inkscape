@@ -1222,7 +1222,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 
     if(iter) {
         SPDesktop *desktop = _dialog.getDesktop();
-        SPDocument *doc = sp_desktop_document(desktop);
+        Document *doc = sp_desktop_document(desktop);
         SPFilter* filter = (*iter)[_columns.filter];
         Inkscape::Selection *sel = sp_desktop_selection(desktop);
 
@@ -1255,7 +1255,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
 void FilterEffectsDialog::FilterModifier::update_filters()
 {
     SPDesktop* desktop = _dialog.getDesktop();
-    SPDocument* document = sp_desktop_document(desktop);
+    Document* document = sp_desktop_document(desktop);
     const GSList* filters = sp_document_get_resource_list(document, "filter");
 
     _model->clear();
@@ -1310,7 +1310,7 @@ void FilterEffectsDialog::FilterModifier::filter_list_button_release(GdkEventBut
 
 void FilterEffectsDialog::FilterModifier::add_filter()
 {
-    SPDocument* doc = sp_desktop_document(_dialog.getDesktop());
+    Document* doc = sp_desktop_document(_dialog.getDesktop());
     SPFilter* filter = new_filter(doc);
 
     const int count = _model->children().size();
@@ -1330,7 +1330,7 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
     SPFilter *filter = get_selected_filter();
 
     if(filter) {
-        SPDocument* doc = filter->document;
+        Document* doc = filter->document;
         sp_repr_unparent(filter->repr);
 
         sp_document_done(doc, SP_VERB_DIALOG_FILTER_EFFECTS, _("Remove filter"));

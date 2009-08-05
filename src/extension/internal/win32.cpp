@@ -215,7 +215,7 @@ PrintWin32::setup (Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
+PrintWin32::begin (Inkscape::Extension::Print *mod, Document *doc)
 {
     DOCINFO di = {
         sizeof (DOCINFO),

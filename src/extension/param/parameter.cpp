@@ -156,7 +156,7 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter::get_bool (const Document * doc, const Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
@@ -166,7 +166,7 @@ Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::get_int (const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter::get_int (const Document * doc, const Inkscape::XML::Node * node)
 {
     ParamInt * intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
@@ -176,7 +176,7 @@ Parameter::get_int (const SPDocument * doc, const Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::get_float (const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter::get_float (const Document * doc, const Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
@@ -186,7 +186,7 @@ Parameter::get_float (const SPDocument * doc, const Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::get_string (const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter::get_string (const Document * doc, const Inkscape::XML::Node * node)
 {
     ParamString * stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
@@ -196,7 +196,7 @@ Parameter::get_string (const SPDocument * doc, const Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::get_enum (const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter::get_enum (const Document * doc, const Inkscape::XML::Node * node)
 {
     ParamComboBox * param = dynamic_cast<ParamComboBox *>(this);
     if (param == NULL)
@@ -205,7 +205,7 @@ Parameter::get_enum (const SPDocument * doc, const Inkscape::XML::Node * node)
 }
 
 guint32
-Parameter::get_color(const SPDocument* doc, const Inkscape::XML::Node* node)
+Parameter::get_color(const Document* doc, const Inkscape::XML::Node* node)
 {
     ParamColor* param = dynamic_cast<ParamColor *>(this);
     if (param == NULL)
@@ -215,7 +215,7 @@ Parameter::get_color(const SPDocument* doc, const Inkscape::XML::Node* node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::set_bool (bool in, SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::set_bool (bool in, Document * doc, Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
@@ -225,7 +225,7 @@ Parameter::set_bool (bool in, SPDocument * doc, Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::set_int (int in, SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::set_int (int in, Document * doc, Inkscape::XML::Node * node)
 {
     ParamInt * intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
@@ -235,7 +235,7 @@ Parameter::set_int (int in, SPDocument * doc, Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::set_float (float in, SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::set_float (float in, Document * doc, Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr;
     floatpntr = dynamic_cast<ParamFloat *>(this);
@@ -246,7 +246,7 @@ Parameter::set_float (float in, SPDocument * doc, Inkscape::XML::Node * node)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::set_string (const gchar * in, Document * doc, Inkscape::XML::Node * node)
 {
     ParamString * stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
@@ -255,7 +255,7 @@ Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node *
 }
 /** \brief  Wrapper to cast to the object and use it's function.  */
 guint32
-Parameter::set_color (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)
+Parameter::set_color (guint32 in, Document * doc, Inkscape::XML::Node * node)
 {
     ParamColor* param = dynamic_cast<ParamColor *>(this);
     if (param == NULL)
@@ -323,7 +323,7 @@ Parameter::new_child (Inkscape::XML::Node * parent)
 }
 
 Inkscape::XML::Node *
-Parameter::document_param_node (SPDocument * doc)
+Parameter::document_param_node (Document * doc)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
     Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
@@ -353,7 +353,7 @@ Parameter::document_param_node (SPDocument * doc)
 
 /** \brief  Basically, if there is no widget pass a NULL. */
 Gtk::Widget *
-Parameter::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
+Parameter::get_widget (Document * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * /*changeSignal*/)
 {
     return NULL;
 }

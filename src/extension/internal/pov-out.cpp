@@ -417,7 +417,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
 /**
  *  Descend the svg tree recursively, translating data
  */
-bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
+bool PovOutput::doTreeRecursive(Document *doc, SPObject *obj)
 {
 
     String id;
@@ -454,7 +454,7 @@ bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
 /**
  *  Output the curve data to buffer
  */
-bool PovOutput::doTree(SPDocument *doc)
+bool PovOutput::doTree(Document *doc)
 {
     double bignum = 1000000.0;
     minx  =  bignum;
@@ -576,7 +576,7 @@ void PovOutput::reset()
 /**
  * Saves the Shapes of an Inkscape SVG file as PovRay spline definitions
  */
-void PovOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
+void PovOutput::saveDocument(Document *doc, gchar const *filename_utf8)
 {
     reset();
 
@@ -641,7 +641,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 */
 void
 PovOutput::save(Inkscape::Extension::Output */*mod*/,
-                        SPDocument *doc, gchar const *filename_utf8)
+                        Document *doc, gchar const *filename_utf8)
 {
     /* See comments in JavaFSOutput::save re the name `filename_utf8'. */
     saveDocument(doc, filename_utf8);

@@ -129,7 +129,7 @@ ParamComboBox::~ParamComboBox (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamComboBox::set (const gchar * in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -177,7 +177,7 @@ ParamComboBox::string (std::string &string)
 class ParamComboBoxEntry : public Gtk::ComboBoxText {
 private:
     ParamComboBox * _pref;
-    SPDocument * _doc;
+    Document * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
@@ -185,7 +185,7 @@ public:
         \param  pref  Where to get the string from, and where to put it
                       when it changes.
     */
-    ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+    ParamComboBoxEntry (ParamComboBox * pref, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
         Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->signal_changed().connect(sigc::mem_fun(this, &ParamComboBoxEntry::changed));
     };
@@ -211,7 +211,7 @@ ParamComboBoxEntry::changed (void)
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamComboBox::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 

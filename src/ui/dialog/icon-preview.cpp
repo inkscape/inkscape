@@ -36,7 +36,7 @@
 extern "C" {
 // takes doc, root, icon, and icon name to produce pixels
 guchar *
-sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
+sp_icon_doc_icon( Document *doc, NRArenaItem *root,
                   const gchar *name, unsigned int psize );
 }
 
@@ -247,7 +247,7 @@ void IconPreviewPanel::modeToggled()
 
 void IconPreviewPanel::renderPreview( SPObject* obj )
 {
-    SPDocument * doc = SP_OBJECT_DOCUMENT(obj);
+    Document * doc = SP_OBJECT_DOCUMENT(obj);
     gchar * id = SP_OBJECT_ID(obj);
 
 //    g_message(" setting up to render '%s' as the icon", id );

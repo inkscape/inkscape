@@ -887,7 +887,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
 
     gchar *utf8string = g_utf16_to_utf8((const gunichar2*)_path_string,
         _MAX_PATH, NULL, NULL, NULL);
-    SPDocument *svgDoc = sp_document_new (utf8string, true);
+    Document *svgDoc = sp_document_new (utf8string, true);
     g_free(utf8string);
 
     // Check the document loaded properly

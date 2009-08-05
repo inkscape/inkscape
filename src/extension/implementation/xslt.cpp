@@ -136,7 +136,7 @@ XSLT::unload(Inkscape::Extension::Extension *module)
     return;
 }
 
-SPDocument *
+Document *
 XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
 {
     xmlDocPtr filein = xmlParseFile(filename);
@@ -174,7 +174,7 @@ XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
     }
     g_free(s);
 
-    SPDocument * doc = sp_document_create(rdoc, filename, base, name, true);
+    Document * doc = sp_document_create(rdoc, filename, base, name, true);
 
     g_free(base); g_free(name);
 
@@ -182,7 +182,7 @@ XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
 }
 
 void
-XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const *filename)
+XSLT::save(Inkscape::Extension::Output */*module*/, Document *doc, gchar const *filename)
 {
     /* TODO: Should we assume filename to be in utf8 or to be a raw filename?
      * See JavaFXOutput::save for discussion. */

@@ -77,7 +77,7 @@ struct SvgTransparencyGroup {
  * 
  */
 
-SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
+SvgBuilder::SvgBuilder(Document *document, gchar *docname, XRef *xref) {
     _is_top_level = true;
     _doc = document;
     _docname = docname;

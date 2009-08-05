@@ -701,7 +701,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 /**
  *  Output the tree data to buffer
  */
-bool JavaFXOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
+bool JavaFXOutput::doTreeRecursive(Document *doc, SPObject *obj)
 {
     /**
      * Check the type of node and process
@@ -749,7 +749,7 @@ bool JavaFXOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
 /**
  *  Output the curve data to buffer
  */
-bool JavaFXOutput::doTree(SPDocument *doc)
+bool JavaFXOutput::doTree(Document *doc)
 {
 
     double bignum = 1000000.0;
@@ -767,7 +767,7 @@ bool JavaFXOutput::doTree(SPDocument *doc)
 }
 
 
-bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
+bool JavaFXOutput::doBody(Document *doc, SPObject *obj)
 {
     /**
      * Check the type of node and process
@@ -842,7 +842,7 @@ void JavaFXOutput::reset()
 /**
  * Saves the <paths> of an Inkscape SVG file as JavaFX spline definitions
  */
-bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
+bool JavaFXOutput::saveDocument(Document *doc, gchar const *filename_utf8)
 {
     reset();
 
@@ -918,7 +918,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 */
 void
 JavaFXOutput::save(Inkscape::Extension::Output */*mod*/,
-                        SPDocument *doc, gchar const *filename_utf8)
+                        Document *doc, gchar const *filename_utf8)
 {
     /* N.B. The name `filename_utf8' represents the fact that we want it to be in utf8; whereas in
      * fact we know that some callers of Extension::save pass something in the filesystem's

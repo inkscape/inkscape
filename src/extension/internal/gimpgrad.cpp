@@ -95,7 +95,7 @@ stop_svg(ColorRGBA const in_color, double const location)
 }
 
 /**
-    \brief  Actually open the gradient and turn it into an SPDocument
+    \brief  Actually open the gradient and turn it into an Document
     \param  module    The input module being used
     \param  filename  The filename of the gradient to be opened
     \return A Document with the gradient in it.
@@ -129,7 +129,7 @@ stop_svg(ColorRGBA const in_color, double const location)
     document using the \c sp_document_from_mem.  That is then returned
     to Inkscape.
 */
-SPDocument *
+Document *
 GimpGrad::open (Inkscape::Extension::Input */*module*/, gchar const *filename)
 {
     Inkscape::IO::dump_fopen_call(filename, "I");

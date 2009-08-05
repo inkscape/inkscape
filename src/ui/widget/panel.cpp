@@ -566,7 +566,7 @@ Panel::setResponseSensitive(int response_id, bool setting)
         _response_map[response_id]->set_sensitive(setting);
 }
 
-sigc::signal<void, SPDesktop *, SPDocument *> &
+sigc::signal<void, SPDesktop *, Document *> &
 Panel::signalDocumentReplaced()
 {
     return _signal_document_replaced;

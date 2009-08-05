@@ -207,7 +207,7 @@ DocumentMetadata::update()
 }
 
 void 
-DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *)
+DocumentMetadata::_handleDocumentReplaced(SPDesktop* desktop, Document *)
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
     repr->addListener (&_repr_events, this);

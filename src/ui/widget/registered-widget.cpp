@@ -50,7 +50,7 @@ RegisteredCheckButton::~RegisteredCheckButton()
     _toggled_connection.disconnect();
 }
 
-RegisteredCheckButton::RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredCheckButton::RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, Document *doc_in)
     : RegisteredWidget<Gtk::CheckButton>()
 {
     init_parent(key, wr, repr_in, doc_in);
@@ -108,7 +108,7 @@ RegisteredUnitMenu::~RegisteredUnitMenu()
     _changed_connection.disconnect();
 }
 
-RegisteredUnitMenu::RegisteredUnitMenu (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredUnitMenu::RegisteredUnitMenu (const Glib::ustring& label, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, Document *doc_in)
     :  RegisteredWidget<Labelled> (label, "" /*tooltip*/, new UnitMenu())
 {
     init_parent(key, wr, repr_in, doc_in);
@@ -149,7 +149,7 @@ RegisteredScalarUnit::~RegisteredScalarUnit()
     _value_changed_connection.disconnect();
 }
 
-RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, const RegisteredUnitMenu &rum, Registry& wr, Inkscape::XML::Node* repr_in, Document *doc_in)
     : RegisteredWidget<ScalarUnit>(label, tip, UNIT_TYPE_LINEAR, "", "", rum.getUnitMenu()),
       _um(0)
 {
@@ -200,7 +200,7 @@ RegisteredScalar::~RegisteredScalar()
 
 RegisteredScalar::RegisteredScalar ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
-                         SPDocument * doc_in )
+                         Document * doc_in )
     : RegisteredWidget<Scalar>(label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
@@ -248,7 +248,7 @@ RegisteredText::~RegisteredText()
 
 RegisteredText::RegisteredText ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
-                         SPDocument * doc_in )
+                         Document * doc_in )
     : RegisteredWidget<Text>(label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
@@ -296,7 +296,7 @@ RegisteredColorPicker::RegisteredColorPicker(const Glib::ustring& label,
                                              const Glib::ustring& akey,
                                              Registry& wr,
                                              Inkscape::XML::Node* repr_in,
-                                             SPDocument *doc_in)
+                                             Document *doc_in)
     : RegisteredWidget<ColorPicker> (title, tip, 0, true)
 {
     init_parent("", wr, repr_in, doc_in);
@@ -337,7 +337,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
     // Use local repr here. When repr is specified, use that one, but
     // if repr==NULL, get the repr of namedview of active desktop.
     Inkscape::XML::Node *local_repr = repr;
-    SPDocument *local_doc = doc;
+    Document *local_doc = doc;
     if (!local_repr) {
         // no repr specified, use active desktop's namedview's repr
         SPDesktop *dt = SP_ACTIVE_DESKTOP;
@@ -372,7 +372,7 @@ RegisteredSuffixedInteger::~RegisteredSuffixedInteger()
     _changed_connection.disconnect();
 }
 
-RegisteredSuffixedInteger::RegisteredSuffixedInteger (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+RegisteredSuffixedInteger::RegisteredSuffixedInteger (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& suffix, const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, Document *doc_in)
     : RegisteredWidget<Scalar>(label, tip, 0, suffix),
       setProgrammatically(false)
 {
@@ -419,7 +419,7 @@ RegisteredRadioButtonPair::~RegisteredRadioButtonPair()
 RegisteredRadioButtonPair::RegisteredRadioButtonPair (const Glib::ustring& label,
         const Glib::ustring& label1, const Glib::ustring& label2,
         const Glib::ustring& tip1, const Glib::ustring& tip2,
-        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
+        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, Document *doc_in)
     : RegisteredWidget<Gtk::HBox>(),
       _rb1(NULL),
       _rb2(NULL)
@@ -486,7 +486,7 @@ RegisteredPoint::~RegisteredPoint()
 
 RegisteredPoint::RegisteredPoint ( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
-                        SPDocument* doc_in )
+                        Document* doc_in )
     : RegisteredWidget<Point> (label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
@@ -531,7 +531,7 @@ RegisteredTransformedPoint::~RegisteredTransformedPoint()
 
 RegisteredTransformedPoint::RegisteredTransformedPoint ( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
-                        SPDocument* doc_in )
+                        Document* doc_in )
     : RegisteredWidget<Point> (label, tip),
       to_svg(Geom::identity())
 {
@@ -598,7 +598,7 @@ RegisteredRandom::~RegisteredRandom()
 
 RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ustring& tip,
                          const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
-                         SPDocument * doc_in )
+                         Document * doc_in )
     : RegisteredWidget<Random> (label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);

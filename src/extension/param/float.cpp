@@ -75,7 +75,7 @@ ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar *
     and \c pref_name() are used.
 */
 float
-ParamFloat::set (float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamFloat::set (float in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -103,13 +103,13 @@ ParamFloat::string (std::string &string)
 class ParamFloatAdjustment : public Gtk::Adjustment {
     /** The parameter to adjust */
     ParamFloat * _pref;
-    SPDocument * _doc;
+    Document * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamFloatAdjustment (ParamFloat * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+    ParamFloatAdjustment (ParamFloat * param, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 0.1, 0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamFloatAdjustment::val_changed));
@@ -142,7 +142,7 @@ ParamFloatAdjustment::val_changed (void)
     Builds a hbox with a label and a float adjustment in it.
 */
 Gtk::Widget *
-ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamFloat::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 

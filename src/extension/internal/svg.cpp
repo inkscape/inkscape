@@ -138,13 +138,13 @@ _load_uri (const gchar *uri)
 /**
     \return    A new document just for you!
     \brief     This function takes in a filename of a SVG document and
-               turns it into a SPDocument.
+               turns it into a Document.
     \param     mod   Module to use
     \param     uri   The path to the file (UTF-8)
 
     This function is really simple, it just calls sp_document_new...
 */
-SPDocument *
+Document *
 Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
 {
 #ifdef WITH_GNOME_VFS
@@ -157,7 +157,7 @@ Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
         g_warning("Error:  Could not open file '%s' with VFS\n", uri);
         return NULL;
     }
-    SPDocument * doc = sp_document_new_from_mem(buffer, strlen(buffer), 1);
+    Document * doc = sp_document_new_from_mem(buffer, strlen(buffer), 1);
 
     g_free(buffer);
     return doc;
@@ -191,7 +191,7 @@ Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
     all of this code.  I just stole it.
 */
 void
-Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
+Svg::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
 {
     g_return_if_fail(doc != NULL);
     g_return_if_fail(filename != NULL);

@@ -53,7 +53,7 @@ ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * d
     and \c pref_name() are used.
 */
 bool
-ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
+ParamBool::set( bool in, Document * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 
@@ -67,7 +67,7 @@ ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 
 /** \brief  Returns \c _value */
 bool 
-ParamBool::get (const SPDocument * doc, const Inkscape::XML::Node * node)
+ParamBool::get (const Document * doc, const Inkscape::XML::Node * node)
 {
 	return _value; 
 }
@@ -79,7 +79,7 @@ class ParamBoolCheckButton : public Gtk::CheckButton {
 private:
     /** \brief  Param to change */
     ParamBool * _pref;
-    SPDocument * _doc;
+    Document * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
@@ -89,7 +89,7 @@ public:
         This function sets the value of the checkbox to be that of the
         parameter, and then sets up a callback to \c on_toggle.
     */
-    ParamBoolCheckButton (ParamBool * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+    ParamBoolCheckButton (ParamBool * param, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::CheckButton(), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_active(_pref->get(NULL, NULL) /**\todo fix */);
         this->signal_toggled().connect(sigc::mem_fun(this, &ParamBoolCheckButton::on_toggle));
@@ -132,7 +132,7 @@ ParamBool::string (std::string &string)
     Builds a hbox with a label and a check button in it.
 */
 Gtk::Widget *
-ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamBool::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));

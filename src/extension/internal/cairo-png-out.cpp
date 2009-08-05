@@ -48,7 +48,7 @@ CairoRendererOutput::check (Inkscape::Extension::Extension * module)
 }
 
 static bool
-png_render_document_to_file(SPDocument *doc, gchar const *filename)
+png_render_document_to_file(Document *doc, gchar const *filename)
 {
     CairoRenderer *renderer;
     CairoRenderContext *ctx;
@@ -92,7 +92,7 @@ png_render_document_to_file(SPDocument *doc, gchar const *filename)
     \param  uri   Filename to save to (probably will end in .png)
 */
 void
-CairoRendererOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
+CairoRendererOutput::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
 {
     if (!png_render_document_to_file(doc, filename))
         throw Inkscape::Extension::Output::save_failed();

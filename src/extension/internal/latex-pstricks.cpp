@@ -64,7 +64,7 @@ PrintLatex::setup (Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
+PrintLatex::begin (Inkscape::Extension::Print *mod, Document *doc)
 {
     Inkscape::SVGOStringStream os;
     int res;

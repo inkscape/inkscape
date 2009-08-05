@@ -357,7 +357,7 @@ LivePathEffectEditor::onApply()
     if ( sel && !sel->isEmpty() ) {
         SPItem *item = sel->singleItem();
         if ( item && SP_IS_LPE_ITEM(item) ) {
-            SPDocument *doc = current_desktop->doc();
+            Document *doc = current_desktop->doc();
 
             const Util::EnumData<LivePathEffect::EffectType>* data = combo_effecttype.get_active_data();
             if (!data) return;

@@ -32,7 +32,7 @@ namespace Internal {
 
 static cairo_status_t _write_ustring_cb(void *closure, const unsigned char *data, unsigned int length);
 
-SPDocument *
+Document *
 PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
     printf("Attempting to open using PdfInputCairo\n");
@@ -58,7 +58,7 @@ PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
 
-    SPDocument * doc = sp_document_new_from_mem(output->c_str(), output->length(), TRUE);
+    Document * doc = sp_document_new_from_mem(output->c_str(), output->length(), TRUE);
 
     delete output;
     g_object_unref(page);

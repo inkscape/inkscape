@@ -149,7 +149,7 @@ ParamRadioButton::~ParamRadioButton (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamRadioButton::set (const gchar * in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -189,7 +189,7 @@ ParamRadioButton::string (std::string &string)
 class ParamRadioButtonWdg : public Gtk::RadioButton {
 private:
     ParamRadioButton * _pref;
-    SPDocument * _doc;
+    Document * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
@@ -197,12 +197,12 @@ public:
         \param  pref  Where to put the radiobutton's string when it is selected.
     */
     ParamRadioButtonWdg ( Gtk::RadioButtonGroup& group, const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal ) :
+                          ParamRadioButton * pref, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal ) :
         Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         add_changesignal();
     };
     ParamRadioButtonWdg ( const Glib::ustring& label,
-                          ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node , sigc::signal<void> * changeSignal) :
+                          ParamRadioButton * pref, Document * doc, Inkscape::XML::Node * node , sigc::signal<void> * changeSignal) :
         Gtk::RadioButton(label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         add_changesignal();
     };
@@ -232,7 +232,7 @@ ParamRadioButtonWdg::changed (void)
 
 class ComboWdg : public Gtk::ComboBoxText {
 public:
-    ComboWdg(ParamRadioButton* base, SPDocument * doc, Inkscape::XML::Node * node) :
+    ComboWdg(ParamRadioButton* base, Document * doc, Inkscape::XML::Node * node) :
         Gtk::ComboBoxText(),
         base(base),
         doc(doc),
@@ -243,7 +243,7 @@ public:
 
 protected:
     ParamRadioButton* base;
-    SPDocument* doc;
+    Document* doc;
     Inkscape::XML::Node* node;
 
     virtual void on_changed() {
@@ -257,7 +257,7 @@ protected:
     \brief  Creates a combobox widget for an enumeration parameter
 */
 Gtk::Widget *
-ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamRadioButton::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     if (_gui_hidden) return NULL;
 
