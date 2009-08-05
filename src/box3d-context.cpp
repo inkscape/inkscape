@@ -561,7 +561,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
         }
 
         /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
+        Inkscape::XML::DocumentTree *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:g");
         repr->setAttribute("sodipodi:type", "inkscape:box3d");
 

@@ -25,6 +25,7 @@
 #include "display/sp-canvas.h"
 #include "sp-ellipse.h"
 #include "document.h"
+#include "xml/document.h"
 #include "sp-namedview.h"
 #include "selection.h"
 #include "desktop-handles.h"
@@ -403,7 +404,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         }
 
         /* Create object */
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::DocumentTree *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "arc");
 

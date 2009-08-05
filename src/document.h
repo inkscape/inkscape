@@ -31,6 +31,8 @@
 #include <vector>
 #include <set>
 
+#include "xml/document.h"
+
 namespace Avoid {
 class Router;
 }
@@ -84,7 +86,7 @@ public:
     unsigned int virgin    : 1; ///< Has the document never been touched?
     unsigned int modified_since_save : 1;
 
-    Inkscape::XML::Document *rdoc; ///< Our Inkscape::XML::Document
+    Inkscape::XML::DocumentTree *rdoc; ///< Our Inkscape::XML::Document
     Inkscape::XML::Node *rroot; ///< Root element of Inkscape::XML::Document
     SPObject *root;             ///< Our SPRoot
     CRCascade *style_cascade;

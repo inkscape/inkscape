@@ -22,15 +22,15 @@ using Inkscape::XML::NodeType;
 
 struct SPCSSAttrImpl : public SimpleNode, public SPCSSAttr {
 public:
-    SPCSSAttrImpl(Document *doc)
+    SPCSSAttrImpl(Inkscape::XML::Document *doc)
     : SimpleNode(g_quark_from_static_string("css"), doc) {}
-    SPCSSAttrImpl(SPCSSAttrImpl const &other, Document *doc)
-    : SimpleNode(other, doc) {}
+    SPCSSAttrImpl(SPCSSAttrImpl const &other, Inkscape::XML::Document *doc)
+    : SimpleNode(other, (Inkscape::XML::Document *)doc) {}
 
     NodeType type() const { return Inkscape::XML::ELEMENT_NODE; }
 
 protected:
-    SimpleNode *_duplicate(Inkscape::XML::Document* doc) const { return new SPCSSAttrImpl(*this, doc); }
+    SimpleNode *_duplicate(Inkscape::XML::Document* doc) const { return new SPCSSAttrImpl(*this, (Inkscape::XML::Document *)doc); }
 };
 
 static void sp_repr_css_add_components(SPCSSAttr *css, Node *repr, gchar const *attr);

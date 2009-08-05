@@ -148,7 +148,7 @@ Inkscape::XML::Node *sp_repr_lookup_child(Inkscape::XML::Node *repr,
                                           gchar const *value);
 
 
-inline Inkscape::XML::Node *sp_repr_document_first_child(Inkscape::XML::Document const *doc) {
+inline Inkscape::XML::Node *sp_repr_document_first_child(Inkscape::XML::DocumentTree const *doc) {
     return const_cast<Inkscape::XML::Node *>(doc->firstChild());
 }
 
