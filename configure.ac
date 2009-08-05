@@ -29,7 +29,7 @@ AC_PROG_CXX
 AM_PROG_CC_STDC
 AM_PROG_AS
 AC_PROG_RANLIB
-#--tullarisc AC_PROG_INTLTOOL(0.22)
+AC_PROG_INTLTOOL(0.22)
 AC_HEADER_STDC
 INK_SVN_SNAPSHOT_BUILD
 
@@ -130,7 +130,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[Translation domain used])
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="am ar az be bg bn br ca ca@valencia cs da de dz el en_AU en_CA en_GB en_US@piglatin eo es_MX es et eu fi fr ga gl he hr hu hy id it ja km ko lt mk mn nb ne nl nn pa pl pt_BR pt ro ru rw sk sl sq sr@latin sr sv th tr uk vi zh_CN zh_TW"
-#//--tullariscAM_GLIB_GNU_GETTEXT
+AM_GLIB_GNU_GETTEXT
 
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test "x$PKG_CONFIG" = "xno"; then
@@ -155,7 +155,7 @@ fi
 dnl ******************************
 dnl Check for libpng 
 dnl ******************************
-AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=yes)], png_ok=yes, -lz -lm)
+AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=yes)], png_ok=no, -lz -lm)
 if test "x$png_ok" != "xyes"; then
 	AC_MSG_ERROR([libpng >= 1.2 is needed to compile inkscape])
 fi
@@ -805,11 +805,11 @@ AC_TYPE_SIGNAL
 
 dnl Work around broken gcc 3.3 (seen on OSX) where "ENABLE_NLS" isn't
 dnl set correctly because the gettext function isn't noticed.
-#--tullariscif test "$ac_cv_header_libintl_h" = "yes" &&
-#   test "$ac_cv_func_bind_textdomain_codeset" = "yes"  &&
-#   test "$gt_cv_func_have_gettext" != "yes"; then
-#    AC_DEFINE(ENABLE_NLS)
-#fi
+if test "$ac_cv_header_libintl_h" = "yes" &&
+   test "$ac_cv_func_bind_textdomain_codeset" = "yes"  &&
+   test "$gt_cv_func_have_gettext" != "yes"; then
+    AC_DEFINE(ENABLE_NLS)
+fi
 
 dnl ******************************
 dnl   Compilation warnings
