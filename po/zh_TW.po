@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-03 17:44+0200\n"
+"POT-Creation-Date: 2009-08-06 22:55+0200\n"
 "PO-Revision-Date: 2009-08-04 17:54+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -32,340 +32,334 @@ msgstr "Inkscape 向量繪圖軟體"
 msgid "Matte jelly"
 msgstr "霧面果凍"
 
-#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
-#: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
-#: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
-#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:50
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:72
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
-msgid "Bevels"
-msgstr "斜角"
+#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:215
+msgid "ABCs"
+msgstr "基本"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
 msgstr "凸出、霧面果凍表面"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Glossy jelly"
-msgstr "光滑果凍"
+#, fuzzy
+msgid "Smart jelly"
+msgstr "霧面果凍"
+
+#: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
+#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:15 ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:217
+msgid "Bevels"
+msgstr "斜角"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Bulging, glossy jelly covering"
-msgstr "凸出、光滑果凍表面"
+msgid "Same as Matte jelly but with more controls"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:4
-msgid "Glossy jelly, backlit"
-msgstr "光滑果凍, 背光"
-
-#: ../share/filters/filters.svg.h:4
-msgid "Bulging, glossy jelly covering; two light sources"
-msgstr "凸出、光滑果凍表面；兩個光源"
-
-#: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
 msgstr "金屬鑄造"
 
-#: ../share/filters/filters.svg.h:5
+#: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
 msgstr "平滑類似下落斜角，帶有金屬光澤"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
 msgstr "動態模糊, 水平"
 
-#: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:168
 msgid "Blurs"
 msgstr "模糊"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
 msgstr "彷彿物件在水平飛行的模糊；調整標準差以改變作用力"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
 msgstr "動態模糊, 垂直"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
 msgstr "彷彿物件在垂直飛行的模糊；調整標準差以改變作用力"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Apparition"
 msgstr "幻影"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Edges are partly feathered out"
 msgstr "邊緣部份逐漸消失"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Cutout"
 msgstr "挖剪圖畫"
 
-#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
-#: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:185
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
 msgstr "陰影與光暈"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Drop shadow under the cut-out of the shape"
 msgstr "在形狀的鏤空部位下方加上下落式陰影"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Jigsaw piece"
 msgstr "斷片"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Low, sharp bevel"
 msgstr "低且銳利的斜角"
 
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Roughen"
 msgstr "粗糙化"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:216
-msgid "ABCs"
-msgstr "基本"
-
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Small-scale roughening to edges and content"
 msgstr "套用小比例的粗糙化到邊緣和內容"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Rubber stamp"
 msgstr "橡皮章"
 
-#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
-#: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
-#: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
-#: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:18 ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:38 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:192
 msgid "Overlays"
 msgstr "覆蓋"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
 msgstr "隨機白色內部"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Ink bleed"
 msgstr "墨水暈開"
 
-#: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:175
 msgid "Protrusions"
 msgstr "突出"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Inky splotches underneath the object"
 msgstr "物件底下有墨水的汙點"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Fire"
 msgstr "火燄"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Edges of object are on fire"
 msgstr "使物件邊緣著火"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Bloom"
 msgstr "塊鋼"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
 msgstr "柔和、帶有霧面光澤、類似橡皮軟墊的斜角"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border"
 msgstr "脊形邊框"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border with inner bevel"
 msgstr "帶有內斜角的脊形邊框"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Ripple"
 msgstr "波紋"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:203
 msgid "Distort"
 msgstr "扭曲"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Horizontal rippling of edges"
 msgstr "邊緣的水平波紋"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Speckle"
 msgstr "斑點"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Fill object with sparse translucent specks"
 msgstr "用稀疏半透明的斑紋填入物件"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Oil slick"
 msgstr "浮油"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Rainbow-colored semitransparent oily splotches"
 msgstr "彩虹顏色的半透明油汙"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Frost"
 msgstr "霜"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Flake-like white splotches"
 msgstr "類似薄片的白色斑點"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard fur"
 msgstr "豹紋"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:60 ../share/filters/filters.svg.h:61
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:79 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:20 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:59 ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
 msgid "Materials"
 msgstr "材質"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard spots (loses object's own color)"
 msgstr "豹斑 (會喪失物件原有的顏色)"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Zebra"
 msgstr "斑馬"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr "不規則的垂直黑條紋 (會喪失物件原有的顏色)"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Clouds"
 msgstr "雲"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Airy, fluffy, sparse white clouds"
 msgstr "輕飄飄、蓬鬆、稀疏的白雲"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
 msgid "Sharpen"
 msgstr "銳利化"
 
-#: ../share/filters/filters.svg.h:24 ../share/filters/filters.svg.h:25
-#: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
-#: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
-#: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:23 ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:25 ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:27 ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:29 ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:199
 msgid "Image effects"
 msgstr "影像特效"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr "銳利化物件內部的邊緣和邊框，強度=0.15"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen more"
 msgstr "更銳利化"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
 msgstr "銳利化物件內部的邊緣和邊框，強度=0.3"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Oil painting"
 msgstr "油畫筆觸"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Simulate oil painting style"
 msgstr "模擬油畫筆觸風格"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Edge detect"
 msgstr "邊緣偵測"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
 msgstr "偵測物件的顏色邊緣"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Horizontal edge detect"
 msgstr "水平邊緣偵測"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Detect horizontal color edges in object"
 msgstr "偵測物件的水平顏色邊緣"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Vertical edge detect"
 msgstr "垂直邊緣偵測"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
 msgstr "偵測物件內的垂直顏色邊緣"
 
 #. Pencil
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 #: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "鉛筆"
 
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
 msgstr "偵測顏色邊緣並用灰階重新描繪"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Blueprint"
 msgstr "藍圖"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
 msgstr "偵測顏色邊緣並用藍色重新描繪"
 
-#: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:31
 #: ../share/extensions/color_desaturate.inx.h:2
 msgid "Desaturate"
 msgstr "去飽和"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:73
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:167
-#: ../share/filters/filters.svg.h:215 ../src/dialogs/clonetiler.cpp:2607
+#: ../share/filters/filters.svg.h:31 ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:214 ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -390,1519 +384,1556 @@ msgstr "去飽和"
 msgid "Color"
 msgstr "顏色"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:31
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr "憑藉減少飽和度為零用灰色的明暗來演算"
 
-#: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
+#: ../share/filters/filters.svg.h:32 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "反轉"
 
-#: ../share/filters/filters.svg.h:33
+#: ../share/filters/filters.svg.h:32
 msgid "Invert colors"
 msgstr "反轉色"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Sepia"
 msgstr "復古"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Render in warm sepia tones"
 msgstr "用溫暖復古的色調來演算"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Age"
 msgstr "陳舊"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
 msgstr "模擬陳舊的相片"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Organic"
 msgstr "有機"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
-#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
-#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:197
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:209
 msgid "Textures"
 msgstr "紋理"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
 msgstr "凸出、多節、光滑的立體表面"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
 msgstr "鐵刺絲"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Gray bevelled wires with drop shadows"
 msgstr "帶有下落式陰影的灰暗鐵刺絲"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Swiss cheese"
 msgstr "瑞士乳酪"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Random inner-bevel holes"
 msgstr "隨機內斜角孔洞"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Blue cheese"
 msgstr "藍紋乳酪"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Marble-like bluish speckles"
 msgstr "類似大理石帶有藍色的斑紋"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Button"
 msgstr "按鈕"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Soft bevel, slightly depressed middle"
 msgstr "柔和的斜角，中央輕微凹陷"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Inset"
 msgstr "內凹"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Shadowy outer bevel"
 msgstr "朦朧的外斜角"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Dripping"
 msgstr "淋濕"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Random paint streaks downwards"
 msgstr "隨機向下塗繪條紋"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Jam spread"
 msgstr "果醬塗抹"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Glossy clumpy jam spread"
 msgstr "光滑塊狀果醬塗抹"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Pixel smear"
 msgstr "像素塗抹"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "點陣圖的梵谷風格效果"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
 msgstr "HSL 凹凸"
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:122 ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:190
-#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:194
-#: ../share/filters/filters.svg.h:195 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:211 ../share/filters/filters.svg.h:212
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:212
 msgid "Bumps"
 msgstr "凹凸"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Highly flexible specular bump"
 msgstr "高度彎曲的鏡面凹凸"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
 msgstr "碎裂玻璃"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
 msgstr "在碎裂玻璃底下"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
 msgstr "發泡凹凸"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
 msgstr "帶有些許位移的高度彎曲氣泡效果"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
 msgstr "發光氣泡"
 
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:67 ../share/filters/filters.svg.h:69
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:70
 msgid "Ridges"
 msgstr "脊形"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
 msgstr "伴隨折射和光暈的氣泡效果"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Neon"
 msgstr "霓紅燈"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Neon light effect"
 msgstr "霓紅燈效果"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
 msgstr "熔化金屬"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "物件的一部份一起熔化，帶有光滑斜角和光暈"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed steel"
 msgstr "壓製鋼鐵"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed metal with a rolled edge"
 msgstr "帶有捲邊的被壓縮金屬"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Matte bevel"
 msgstr "霧面斜角"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "柔和、粉色、模糊的斜角"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
 msgstr "薄膜"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin like a soap membrane"
 msgstr "像肥皂膜一樣薄"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Matte ridge"
 msgstr "霧面脊形"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft pastel ridge"
 msgstr "柔和粉蠟脊形"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
 msgstr "發光金屬"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Glowing metal texture"
 msgstr "發光金屬紋理"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves"
 msgstr "樹葉"
 
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:78
-#: ../share/filters/filters.svg.h:87 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:86 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "散佈"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "秋季地上的落葉，或生活中的葉子"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Translucent"
 msgstr "半透明"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "被照亮的半透明塑膠或玻璃效果"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Cross-smooth"
 msgstr "交叉點平滑"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Blur inner borders and intersections"
 msgstr "模糊內部邊框和交叉點"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Iridescent beeswax"
 msgstr "虹彩蜂蠟"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "蠟質紋理通過改變填色來保持它的彩虹色"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal"
 msgstr "腐蝕金屬"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "帶有脊形、溝、孔洞和凹凸的腐蝕金屬紋理"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
 msgstr "破裂火山岩"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "A volcanic texture, a little like leather"
 msgstr "火山岩紋理，有點像皮革"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark"
 msgstr "樹皮"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "樹皮紋理，垂直；伴隨深色使用"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
 msgstr "蜥蜴表皮"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Stylized reptile skin texture"
 msgstr "爬蟲類表皮紋理風格"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stone wall"
 msgstr "石牆"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stone wall texture to use with not too saturated colors"
 msgstr "帶有不太飽和色彩的石牆紋理"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
 msgstr "絲織地毯"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "絲織地毯紋理，水平條紋"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Refractive gel A"
 msgstr "折射凝膠 A"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
 msgstr "有光線折射的凝膠效果"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Refractive gel B"
 msgstr "折射凝膠 B"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
 msgstr "有強烈折射的凝膠效果"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Metallized paint"
 msgstr "金屬筆觸"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "柔和照明的金屬處理效果，邊緣呈現輕微的半透明"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Dragee"
 msgstr "糖衣"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
 msgstr "有珍珠般光澤外觀的凝膠脊形"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Raised border"
 msgstr "邊框隆起"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Strongly raised border around a flat surface"
 msgstr "一個平坦表面周圍邊界強烈隆起"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Metallized ridge"
 msgstr "金屬化脊形"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge metallized at its top"
 msgstr "於凝膠脊形上做金屬噴鍍"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil"
 msgstr "脂肪油"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
 msgstr "一些可調整性紊亂的脂肪油"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "著色"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr "以填滿顏色混合圖像或物件並且設定亮度和對比"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Parallel hollow"
 msgstr "平行空心"
 
-#: ../share/filters/filters.svg.h:74 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:89
-#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:94
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:73 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:177
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "形態"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "一個平行於內部邊緣的模糊空心"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Hole"
 msgstr "洞"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Opens a smooth hole inside the shape"
 msgstr "於形狀內部打開一個平滑的洞"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Black hole"
 msgstr "黑洞"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Creates a black light inside and outside"
 msgstr "於內部和外部建立黑色光線"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Smooth outline"
 msgstr "平滑輪廓"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "描繪線條的輪廓並且平滑它們的交叉點"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Cubes"
 msgstr "方塊"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "散佈的立方體；調整形態基元為不同尺寸"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peel off"
 msgstr "脫落"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peeling painting on a wall"
 msgstr "一道牆上剝落油漆"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Gold splatter"
 msgstr "黃金潑濺"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Splattered cast metal, with golden highlights"
 msgstr "潑濺的金屬鑄造，附帶黃金光澤"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Gold paste"
 msgstr "金箔黏貼"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "貼滿鑄造金屬，帶有黃金亮光"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled plastic"
 msgstr "壓皺的塑膠"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "壓皺的霧面塑膠，附帶融化的邊緣"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Enamel jewelry"
 msgstr "瓷釉珠寶"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Slightly cracked enameled texture"
 msgstr "輕微碎裂的瓷釉紋理"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Rough paper"
 msgstr "草稿紙"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "水彩畫紙效果，可用於圖片 (將物件作為圖片)"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Rough and glossy"
 msgstr "粗糙和光滑"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "揉皺的銅版紙效果，可用於圖片 (將物件作為圖片)"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "In and Out"
 msgstr "內外陰影"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "內部彩色陰影，外部黑色陰影"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Air spray"
 msgstr "空氣噴灑"
 
-#: ../share/filters/filters.svg.h:87
-msgid "Air Spray; adjust the Displacement Map amount"
-msgstr "空氣噴灑；調整位移圖的量"
+#: ../share/filters/filters.svg.h:86
+msgid "Convert to small scattered particles with some thickness"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
 msgstr "內部溫暖"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Blurred colorized contour, filled inside"
 msgstr "模糊、著上色彩的輪廓，內部填滿"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Cool outside"
 msgstr "外部涼爽"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
 msgstr "模糊、著上彩色的輪廓，內部清空"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Electronic microscopy"
 msgstr "電子顯微鏡"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "斜角、天然光線、變色和發光就像在電子顯微鏡裡"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Tartan"
 msgstr "格紋"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Checkered tartan pattern"
 msgstr "方格花紋圖樣"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue"
 msgstr "反相"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue, or rotate it"
 msgstr "反相，或旋轉"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Inner outline"
 msgstr "內部外框"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Draws an outline around"
 msgstr "沿著周圍繪製外框"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Outline, double"
 msgstr "外框, 雙倍"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "於內部繪製一個平滑線條以覆蓋的顏色著上色彩"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Fancy blur"
 msgstr "動感模糊"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "平滑、著上色彩的輪廓，允許去飽和和色相旋轉"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow"
 msgstr "光暈"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow of object's own color at the edges"
 msgstr "於邊緣加上物件顏色的光暈"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Outline"
 msgstr "外框"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
 msgstr "加入光暈狀模糊且移動形狀"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Color emboss"
 msgstr "彩色浮雕"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "標準或著上彩色的浮雕效果：灰階、彩色和立體浮雕"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "曝光"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
 msgstr "標準過度曝光的攝影效果"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Moonarize"
 msgstr "月出"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr "一個介於曝光和反相之間的特效，往往保留天空和水波光線"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
 msgstr "柔焦鏡頭"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
 msgstr "讓圖像內容不模糊化的覆上光暈"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Stained glass"
 msgstr "彩色玻璃"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Illuminated stained glass effect"
 msgstr "被照亮的彩色玻璃效果"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Dark glass"
 msgstr "暗色玻璃"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "光源來自下方，被照亮的玻璃效果"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
 msgstr "HSL 凹凸 (透明)"
 
-#: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:188
-#: ../share/filters/filters.svg.h:189 ../share/filters/filters.svg.h:196
-#: ../share/filters/filters.svg.h:198 ../share/filters/filters.svg.h:199
-#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:203
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:200 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:213
 msgid "Image effects, transparent"
 msgstr "影像特效, 透明"
 
-#: ../share/filters/filters.svg.h:104
-msgid "Same than HSL Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:103
+#, fuzzy
+msgid "Same as HSL Bumps but with transparent highlights"
 msgstr "同於 HSL 凹凸，但帶有透明反光"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
 msgstr "發泡凹凸 (透明)"
 
-#: ../share/filters/filters.svg.h:105
-msgid "Same than Bubbly Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:104
+#, fuzzy
+msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "同於發泡凹凸，但帶有透明反光"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Smooth edges"
 msgstr "平滑邊緣"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "平滑形狀和圖片的外邊，不改變內容"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "Torn edges"
 msgstr "撕裂邊緣"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr "移置形狀和圖片的外邊，不改變內容"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Feather"
 msgstr "羽化"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "邊緣上的模糊遮罩，不改變內容"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur content"
 msgstr "模糊內容"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "模糊物件的內容，保留輪廓"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Specular light"
 msgstr "反射光"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Basic specular bevel to use for building textures"
 msgstr "基本的鏡面斜角用於建築物紋理"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen inside"
 msgstr "內部粗糙化"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
 msgstr "內部的形狀全部粗糙化"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
 msgstr "逐漸消失"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr "模糊物件的內容，保留輪廓並且於邊緣漸進地加上透明"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
 msgstr "粉筆和海綿"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "低紊亂產生海綿外觀而高紊亂為粉筆"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "People"
 msgstr "群眾"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Colorized blotches, like a crowd of people"
 msgstr "彩色斑點，像一群人"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Scotland"
 msgstr "蘇格蘭"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Colorized mountain tops out of the fog"
 msgstr "穿出霧氣的彩色山峰群"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Noise transparency"
 msgstr "雜訊透明度"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
 msgstr "基本的雜訊透明紋理"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Noise fill"
 msgstr "填入雜訊"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "基本雜訊填塗紋理；用油漆桶調整顏色"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
 msgstr "享樂花園"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "變幻無常的紛亂幽光，像希羅尼穆斯‧波希的享樂花園"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Diffuse light"
 msgstr "擴散光"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "基本的擴散斜角用於建築物紋理"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Cutout Glow"
 msgstr "挖剪光暈"
 
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "帶有合理的位移和著色填塗的內外光暈"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
 msgstr "HSL 凹凸, 霧面"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
+#, fuzzy
 msgid ""
-"Same than HSL bumps but with a diffuse reflexion instead of a specular one"
+"Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "同於 HSL 凹凸，但用漫反射而非鏡面"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
 msgstr "暗色浮雕"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "浮雕效果：立體浮雕，黑色取代白色"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
 msgstr "簡單模糊"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "簡單的高斯模糊，同於在填色與邊框對話窗裡的模糊滑動拉桿"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
 msgstr "發泡凹凸, 霧面"
 
-#: ../share/filters/filters.svg.h:124
-msgid ""
-"Same than Bubbly Bumps but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:123
+#, fuzzy
+msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr "同於發泡凹凸，但為擴散光線而非鏡面"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "浮雕"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr "浮雕效果；保留原本圖像的顏色或藉由混合來修改"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
 msgstr "吸墨紙"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Inkblot on blotting paper"
 msgstr "吸墨紙上的墨跡"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print"
 msgstr "蠟染"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print on tissue texture"
 msgstr "棉紙上蠟染的紋理"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
 msgstr "墨跡"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "棉紙或草稿紙上的墨跡"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Burnt edges"
 msgstr "燒焦邊緣"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Torn edges with a dark inner blur"
 msgstr "暗色且內部模糊的撕裂邊緣"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
 msgstr "彩色外框, 內部"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "一個可調整寬度和模糊的可著色內部外框"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Liquid"
 msgstr "液體"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Colorizable filling with liquid transparency"
 msgstr "液態透明物的可著色填塗"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Watercolor"
 msgstr "水彩"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Cloudy watercolor effect"
 msgstr "多雲水彩效果"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Felt"
 msgstr "毛氈"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "帶有顏色紛亂和邊緣輕微變暗的類似毛氈紋理"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
 msgstr "墨水筆觸"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "帶有一些紊亂色彩位移在紙張上的墨水筆觸"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
 msgstr "染色彩虹"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "沿著邊緣和可著色的平滑彩虹色熔化"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
 msgstr "熔化彩虹"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "沿著邊緣的平滑彩虹色輕微熔化"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
 msgstr "彎曲金屬"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "明亮、可著色、拋光的不均勻金屬鑄造"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
 msgstr "漫畫式草圖"
 
-#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:141 ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:165
 msgid "Non realistic 3D shaders"
 msgstr "非逼真立體材質"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "以光滑外觀的卡通明暗法繪製草圖"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Comics fading"
 msgstr "漫畫式褪色"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "邊緣些許褪色的卡通繪畫風格"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shader NR"
 msgstr "平滑材質 (非逼真)"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "帶有炭筆灰的平滑材質"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Emboss shader NR"
 msgstr "浮雕材質 (非逼真)"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Combination of smooth shading and embossing"
 msgstr "平滑材質和浮雕的結合"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader dark NR"
 msgstr "暗色平滑材質 (非逼真)"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Dark version of non realistic smooth shading"
 msgstr "非逼真平滑材質的暗色版本"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Comics"
 msgstr "漫畫"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Imitation of black and white cartoon shading"
 msgstr "模擬黑白漫畫的明暗法"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Satin NR"
 msgstr "綢緞 (非逼真)"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Silky close to mother of pearl shading"
 msgstr "絲綢近似於珍珠母材質"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "毛玻璃 (非逼真)"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "模擬非逼真的毛玻璃"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Smooth shader contour NR"
 msgstr "平滑材質輪廓 (非逼真)"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Contouring version of smooth shader"
 msgstr "平滑材質的輪廓版本"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Aluminium NR"
 msgstr "鋁 (非逼真)"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Brushed aluminium shader"
 msgstr "筆繪的鋁材質"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Comics fluid"
 msgstr "漫畫式流體"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Fluid brushed cartoon drawing"
 msgstr "流體筆刷的卡通繪畫"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Chrome NR"
 msgstr "鉻 (非逼真)"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "帶有強烈斑點的非逼真鉻材質"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Chrome dark NR"
 msgstr "暗色鉻 (非逼真)"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "地面反射模擬的鉻材質暗色版本"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Wavy tartan"
 msgstr "波狀格紋"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "邊緣周圍產生波浪狀位移的格紋圖樣和斜角"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D marble"
 msgstr "立體大理石"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D warped marble texture"
 msgstr "立體、彎曲的大理石紋理"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D wood"
 msgstr "立體木頭"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D warped, fibered wood texture"
 msgstr "立體、彎曲的、纖維狀的木材紋理"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D mother of pearl"
 msgstr "立體珍珠母"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "立體、彎曲的、彩虹色的珍珠殼紋理"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur"
 msgstr "虎皮"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "邊緣周圍有折疊和斜角的虎皮圖樣"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Shaken liquid"
 msgstr "晃動液體"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "內部像透明物流動的可著色填塗"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics cream"
 msgstr "漫畫式奶油"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics shader with creamy waves transparency"
 msgstr "奶油狀波浪透明物的漫畫材質"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Black Light"
 msgstr "黑光"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Light areas turn to black"
 msgstr "光亮區域轉為黑色"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Light eraser"
 msgstr "亮部橡皮擦"
 
-#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:205
-#: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:208
 msgid "Transparency utilities"
 msgstr "透明工具"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "使物件最亮的部份逐次變透明"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Noisy blur"
 msgstr "雜訊模糊"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "邊緣和內容套用小比例的粗糙化和模糊"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:169
 msgid "Film grain"
 msgstr "膠片顆粒"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:169
+msgid "Adds a small scale graininess"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
 msgid "HSL Bumps, transparent"
 msgstr "HSL 凹凸, 透明"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:170
 msgid "Highly flexible specular bump with transparency"
 msgstr "帶透明度的高度彎曲凹凸"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "繪畫"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
 msgstr "使圖像和材料填充物件產生鉛筆、彩色平版印刷、版畫或其他效果"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Velvet bump"
 msgstr "柔軟凹凸"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Gives a smooth bump velvet like"
 msgstr "產生像天鵝絨般柔軟的平滑凹凸"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Alpha draw"
 msgstr "透明繪畫"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生透明繪畫效果"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Alpha draw, color"
 msgstr "透明繪畫, 彩色"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生透明色彩填塗效果"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
 msgid "Chewing gum"
 msgstr "口香糖"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
+#, fuzzy
 msgid ""
-"Creates colourizable blotches which smoothly flow over the edges of the "
-"lines at their crossings"
+"Creates colorizable blotches which smoothly flow over the edges of the lines "
+"at their crossings"
 msgstr "於線條的交叉點上製作柔順流過其邊緣的彩色斑點"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Black outline"
 msgstr "黑色外框"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Draws a black outline around"
 msgstr "於周圍繪製黑色外框"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:177
 msgid "Color outline"
 msgstr "彩色外框"
 
-#: ../share/filters/filters.svg.h:178
-msgid "Draws a coloured outline around"
+#: ../share/filters/filters.svg.h:177
+#, fuzzy
+msgid "Draws a colored outline around"
 msgstr "於周圍繪製彩色外框"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Inner shadow"
 msgstr "內陰影"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Adds a colorizable drop shadow inside"
 msgstr "於內部加入可著色的下落式陰影"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Dark and glow"
 msgstr "暗與光"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "內部模糊且帶有柔和光暈的加深邊緣"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken edges"
 msgstr "加深邊緣"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken the edges with an inner blur"
 msgstr "內部模糊的加深邊緣"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Warped rainbow"
 msgstr "纏繞著彩虹"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "沿著邊緣纏繞的平滑彩虹色"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Rough and dilate"
 msgstr "粗糙和擴大"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Create a turbulent contour around"
 msgstr "於周圍製作紛亂的輪廓"
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:183
 msgid "Gelatine"
 msgstr "凝膠"
 
-#: ../share/filters/filters.svg.h:184
-msgid "Colorizable filling with gelatin like turbulence and transparency"
+#: ../share/filters/filters.svg.h:183
+#, fuzzy
+msgid "Colorizable filling with gelatine like turbulence and transparency"
 msgstr "像紊亂且透明的凝膠的可著色填塗"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:184
 msgid "Old postcard"
 msgstr "舊明信片"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:184
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "輕微色調分離並繪製邊框就像舊式印刷的明信片一樣"
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:185
 msgid "Fuzzy glow"
 msgstr "模糊光暈"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:185
+msgid "Overlays a semi-transparent shifted copy to a blurred one"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:186
 msgid "Dots transparency"
 msgstr "透明圓點"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "產生像 HSL 感光透明的點描畫"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Canvas transparency"
 msgstr "透明畫布"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "產生像 HSL 感光透明的畫布。"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 msgid "Smear transparency"
 msgstr "透明塗抹"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
+#, fuzzy
 msgid ""
-"Paint objects with a transparent turbulence which turn around color edges"
+"Paint objects with a transparent turbulence which turns around color edges"
 msgstr "用透明的紊亂來塗繪物件，扭轉彩色邊緣"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid "Thick paint"
 msgstr "厚塗料"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid "Thick painting effect with turbulence"
 msgstr "伴隨紊亂的厚顏料塗繪效果"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Burst"
 msgstr "脹破"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Burst balloon texture crumpled and with holes"
 msgstr "氣球脹破紋理，被揉皺且帶有破洞"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:191
 msgid "Embossed leather"
 msgstr "壓紋皮革"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:191
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr "皮革或木頭結合 HSL 邊緣偵測凹凸效果之可著色紋理"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:192
 msgid "Carnaval"
 msgstr "狂歡節"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:192
 msgid "White splotches evocating carnaval masks"
 msgstr "白色斑點喚起狂歡節面具"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:193
 msgid "Plastify"
 msgstr "塑膠化"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:193
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr "波狀反射表面結合 HSL 邊緣偵測凹凸效果"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:194
 msgid "Plaster"
 msgstr "石膏"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:194
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr "霧面、壓皺的表面結合 HSL 邊緣偵測凹凸效果"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:195
 msgid "Rough transparency"
 msgstr "透明粗糙"
 
-#: ../share/filters/filters.svg.h:196
-msgid "Adds a turbulent transparency which displace pixels at the same time"
+#: ../share/filters/filters.svg.h:195
+#, fuzzy
+msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr "取代像素的同時加入紊亂透明"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:196
 msgid "Gouache"
 msgstr "不透明水彩"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:196
 msgid "Partly opaque water color effect with bleed"
 msgstr "有溢出情形的局部性不透明水彩效果"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:197
 msgid "Alpha engraving"
 msgstr "透明版畫"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:197
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "產生帶有粗糙線條和填充的透明版畫效果"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:198
 msgid "Alpha draw, liquid"
 msgstr "透明繪畫, 液體"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:198
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "產生帶有粗糙線條和填充的透明流體繪畫效果"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:199
 msgid "Liquid drawing"
 msgstr "液體繪畫"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:199
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "使圖像產生液體和波浪的抽象主義繪畫效果"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled ink"
 msgstr "大理石油墨"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr "按照圖像偵測邊緣產生的大理石透明效果"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic"
 msgstr "厚壓克力顏料"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr "高紋理深度的厚壓克力顏料"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:202
 msgid "Alpha engraving B"
 msgstr "透明版畫 B"
 
-#: ../share/filters/filters.svg.h:203
-msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
+#: ../share/filters/filters.svg.h:202
+#, fuzzy
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生可著色的粗糙版畫效果"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:203
 msgid "Lapping"
 msgstr "研磨"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:203
 msgid "Something like a water noise"
 msgstr "有點像水雜訊"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:204
 msgid "Monochrome positive"
 msgstr "單色正相"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:204
 msgid "Convert to a Colorizable transparent positive"
 msgstr "轉換為可著色的透明正相"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:205
 msgid "Monochrome negative"
 msgstr "單色反相"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:205
 msgid "Convert to a colorizable transparent negative"
 msgstr "轉成可著色的透明負相"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:206
 msgid "Light eraser, negative"
 msgstr "亮部橡皮擦, 反相"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:206
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr "反轉並使物件最亮的部份逐次變透明"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint"
 msgstr "重塗"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint anything monochrome"
 msgstr "重塗任何單色"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:208
 msgid "Punch hole"
 msgstr "鑿洞"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:208
 msgid "Punch object out of a colorizable opaque area"
 msgstr "把物件鑿出一個可著色的不透明區域"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:209
 msgid "Riddled"
 msgstr "佈滿"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:209
 msgid "Riddle the surface and add bump to images"
 msgstr "佈滿表面且將凹凸加入圖像"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:210
 msgid "Wrinkled varnish"
 msgstr "皺紋亮光漆"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:210
 msgid "Thick glossy and translucent paint texture with high depth"
 msgstr "帶有高深度的光滑且稀疏之厚顏料紋理"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:211
 msgid "Canvas Bumps"
 msgstr "畫布凹凸"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:211
 msgid "Canvas texture with an HSL sensitive height map"
 msgstr "帶有 HSL 感光高度貼圖的畫布紋理"
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:212
 msgid "Canvas Bumps, matte"
 msgstr "畫布凹凸, 霧面"
 
-#: ../share/filters/filters.svg.h:213
-msgid ""
-"Same than Canvas Bumps but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:212
+#, fuzzy
+msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr "同於畫布凹凸，但為擴散光線而非鏡面"
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:213
 msgid "Canvas Bumps alpha"
 msgstr "畫布凹凸 (透明)"
 
-#: ../share/filters/filters.svg.h:214
-msgid "Same than Canvas Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:213
+#, fuzzy
+msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "同於畫布凹凸，但帶有透明反光"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Lightness-Contrast"
 msgstr "亮度-對比"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Increase or decrease lightness and contrast"
 msgstr "增加或減少亮度和對比"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:215
 msgid "Clean edges"
 msgstr "邊緣清晰"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:215
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr "套用一些濾鏡後移除或減少物件邊緣周圍的光暈和鋸齒"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Bright metal"
+msgstr "增亮"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bright metallic effect for any color"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+msgid "Deep colors plastic"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Transparent plastic with deep colors"
+msgstr "樹皮紋理，垂直；伴隨深色使用"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2906,93 +2937,93 @@ msgid ""
 "to zero"
 msgstr "重設對話窗中所有的平移﹑縮放﹑旋轉﹑不透明度與顏色變化為零"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2623
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
 msgstr "檢視整頁 (_P)"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2627
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2627
 msgid "_Drawing"
 msgstr "檢視繪圖部份 (_D)"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2629
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2629
 msgid "_Selection"
 msgstr "檢視選取區 (_S)"
 
-#: ../src/dialogs/export.cpp:141
+#: ../src/dialogs/export.cpp:146
 msgid "_Custom"
 msgstr "自訂 (_C)"
 
-#: ../src/dialogs/export.cpp:266
+#: ../src/dialogs/export.cpp:271
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>匯出範圍</b></big>"
 
-#: ../src/dialogs/export.cpp:280
+#: ../src/dialogs/export.cpp:285
 msgid "Units:"
 msgstr "單位："
 
-#: ../src/dialogs/export.cpp:308
+#: ../src/dialogs/export.cpp:313
 msgid "_x0:"
 msgstr "_x0："
 
-#: ../src/dialogs/export.cpp:313
+#: ../src/dialogs/export.cpp:318
 msgid "x_1:"
 msgstr "x_1："
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:323
 msgid "Wid_th:"
 msgstr "寬度 (_T)："
 
-#: ../src/dialogs/export.cpp:324
+#: ../src/dialogs/export.cpp:329
 msgid "_y0:"
 msgstr "_y0："
 
-#: ../src/dialogs/export.cpp:329
+#: ../src/dialogs/export.cpp:334
 msgid "y_1:"
 msgstr "y_1："
 
-#: ../src/dialogs/export.cpp:334
+#: ../src/dialogs/export.cpp:339
 msgid "Hei_ght:"
 msgstr "高度 (_G)："
 
-#: ../src/dialogs/export.cpp:466
+#: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>點陣圖尺寸</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "寬度 (_W)："
 
-#: ../src/dialogs/export.cpp:479 ../src/dialogs/export.cpp:493
+#: ../src/dialogs/export.cpp:484 ../src/dialogs/export.cpp:498
 msgid "pixels at"
 msgstr "像素"
 
-#: ../src/dialogs/export.cpp:487
+#: ../src/dialogs/export.cpp:492
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
+#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "高度 (_H)："
 
-#: ../src/dialogs/export.cpp:504 ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:515
+#: ../src/dialogs/export.cpp:520
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>檔案名稱 (_F)</b></big>"
 
-#: ../src/dialogs/export.cpp:586
+#: ../src/dialogs/export.cpp:591
 msgid "_Browse..."
 msgstr "瀏覽 (_B)..."
 
-#: ../src/dialogs/export.cpp:615
+#: ../src/dialogs/export.cpp:620
 msgid "Batch export all selected objects"
 msgstr "批次匯出所有選取的物件"
 
-#: ../src/dialogs/export.cpp:619
+#: ../src/dialogs/export.cpp:624
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
@@ -3000,62 +3031,62 @@ msgstr ""
 "匯出每個選取的物件到各自的 PNG 檔，如果有任何沒有詢問的警告和覆寫則使用匯出提"
 "示。"
 
-#: ../src/dialogs/export.cpp:627
+#: ../src/dialogs/export.cpp:632
 msgid "Hide all except selected"
 msgstr "選取以外全部隱藏"
 
-#: ../src/dialogs/export.cpp:631
+#: ../src/dialogs/export.cpp:636
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr "在已匯出的圖像中，隱藏所有未被選取的物件"
 
-#: ../src/dialogs/export.cpp:648
+#: ../src/dialogs/export.cpp:653
 msgid "_Export"
 msgstr "匯出 (_E)"
 
-#: ../src/dialogs/export.cpp:652
+#: ../src/dialogs/export.cpp:657
 msgid "Export the bitmap file with these settings"
 msgstr "依照這些設定值匯出點陣圖檔"
 
-#: ../src/dialogs/export.cpp:678
+#: ../src/dialogs/export.cpp:683
 #, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "批次匯出 %d 選取物件"
 msgstr[1] "批次匯出 %d 選取物件"
 
-#: ../src/dialogs/export.cpp:1009
+#: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
 msgstr "進行匯出中"
 
-#: ../src/dialogs/export.cpp:1079
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "正在匯出 %d 檔案"
 
-#: ../src/dialogs/export.cpp:1119 ../src/dialogs/export.cpp:1192
+#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "無法匯出至檔案名稱 %s。\n"
 
-#: ../src/dialogs/export.cpp:1148
+#: ../src/dialogs/export.cpp:1153
 msgid "You have to enter a filename"
 msgstr "你必須輸入檔名"
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1158
 msgid "The chosen area to be exported is invalid"
 msgstr "選取做為匯出的區域無效"
 
-#: ../src/dialogs/export.cpp:1162
+#: ../src/dialogs/export.cpp:1167
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目錄 %s 不存在或者它並不是一個目錄。\n"
 
-#: ../src/dialogs/export.cpp:1178
+#: ../src/dialogs/export.cpp:1183
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "正在匯出 %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1299
+#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
 msgid "Select a filename for exporting"
 msgstr "選擇一個檔名以匯出"
 
@@ -4879,32 +4910,36 @@ msgstr "Postscript 等級2"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-msgid "Export area is whole canvas"
-msgstr "匯出範圍是整個畫布"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:283
-#: ../src/extension/internal/cairo-ps-out.cpp:320
-msgid "Export area is the drawing"
-msgstr "匯出範圍是繪圖部份"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:284
-#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "把文字轉化成路徑"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:285
-#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-ps-out.cpp:283
+#: ../src/extension/internal/cairo-ps-out.cpp:320
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "點陣濾鏡特效"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:286
-#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-ps-out.cpp:284
+#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
 msgid "Resolution for rasterization (dpi)"
 msgstr "點陣化過程的解析度 (dpi)"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:285
+#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#, fuzzy
+msgid "Export area is drawing"
+msgstr "匯出範圍是繪圖部份"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:286
+#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#, fuzzy
+msgid "Export area is page"
+msgstr "匯出範圍是繪圖部份"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -4942,14 +4977,6 @@ msgstr "限制 PDF 版本"
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-msgid "Export drawing, not page"
-msgstr "匯出繪圖部份，而非整個頁面"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-msgid "Export canvas"
-msgstr "匯出整個畫布"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2400
 msgid "EMF Input"
@@ -20531,8 +20558,9 @@ msgid "ROBO-Master output"
 msgstr "ROBO-Master 輸出"
 
 #: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
-msgstr "AutoCAD DXF (*.dfx)"
+#, fuzzy
+msgid "AutoCAD DXF R12 (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -22042,6 +22070,21 @@ msgstr "彈性伸展"
 msgid "Strength (%):"
 msgstr "強度 (%)："
 
+#: ../share/extensions/scour.inx.h:1
+#, fuzzy
+msgid "Scalable Vector Graphics"
+msgstr "可縮放向量圖形 (*.svg)"
+
+#: ../share/extensions/scour.inx.h:2
+#, fuzzy
+msgid "Scoured SVG (*.svg)"
+msgstr "Inkscape SVG (*.svg)"
+
+#: ../share/extensions/scour.inx.h:3
+#, fuzzy
+msgid "Scoured SVG Output"
+msgstr "SVG 輸出"
+
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
 msgstr "開啟用 sK1 向量繪圖軟體儲存的檔案"
@@ -22575,6 +22618,33 @@ msgstr "Windows 後設檔案輸入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid "Glossy jelly"
+#~ msgstr "光滑果凍"
+
+#~ msgid "Bulging, glossy jelly covering"
+#~ msgstr "凸出、光滑果凍表面"
+
+#~ msgid "Glossy jelly, backlit"
+#~ msgstr "光滑果凍, 背光"
+
+#~ msgid "Bulging, glossy jelly covering; two light sources"
+#~ msgstr "凸出、光滑果凍表面；兩個光源"
+
+#~ msgid "Air Spray; adjust the Displacement Map amount"
+#~ msgstr "空氣噴灑；調整位移圖的量"
+
+#~ msgid "Export area is whole canvas"
+#~ msgstr "匯出範圍是整個畫布"
+
+#~ msgid "Export drawing, not page"
+#~ msgstr "匯出繪圖部份，而非整個頁面"
+
+#~ msgid "Export canvas"
+#~ msgstr "匯出整個畫布"
+
+#~ msgid "AutoCAD DXF (*.dxf)"
+#~ msgstr "AutoCAD DXF (*.dfx)"
 
 #~ msgid "Gives the flood color to the dark parts of the image"
 #~ msgstr "將顏色填入至圖像的暗色部份"

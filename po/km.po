@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-07-24 15:35+0200\n"
+"POT-Creation-Date: 2009-08-06 22:55+0200\n"
 "PO-Revision-Date: 2009-07-30 14:10+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
@@ -28,340 +28,335 @@ msgstr "កម្មវិធី​កែ​សម្រួល​ក្រាហ
 msgid "Matte jelly"
 msgstr "Matte jelly"
 
-#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
-#: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
-#: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
-#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:50
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:72
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
-msgid "Bevels"
-msgstr "Bevels"
+#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:215
+msgid "ABCs"
+msgstr "ABCs"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
 msgstr "ចំណោល​មូល គម្រប​ទន់​គ្រើម"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Glossy jelly"
-msgstr "ទន់​ភ្លឺ"
+#, fuzzy
+msgid "Smart jelly"
+msgstr "Matte jelly"
+
+#: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
+#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:15 ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:217
+msgid "Bevels"
+msgstr "Bevels"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Bulging, glossy jelly covering"
-msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ"
+msgid "Same as Matte jelly but with more controls"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:4
-msgid "Glossy jelly, backlit"
-msgstr "ទន់​ភ្លឺ ពន្លឺ​ភ្លឺ"
-
-#: ../share/filters/filters.svg.h:4
-msgid "Bulging, glossy jelly covering; two light sources"
-msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ ។ មាន​ប្រភព​ពន្លឺ​ពីរ"
-
-#: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
 msgstr "ការ​ចាក់​ពុម្ព​លោហៈ"
 
-#: ../share/filters/filters.svg.h:5
+#: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
 msgstr "ជ្រុង​ទេរ​ទម្លាក់​ដោយមាន​ផ្ទៃ​ភ្លឺ​ផ្លេកៗ"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
 msgstr "ចលនា​ព្រិល ផ្ដេក"
 
-#: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:168
 msgid "Blurs"
 msgstr "ព្រិល"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
 msgstr "ព្រិល​នៅពេល​ដែល​វត្ថុ​ហោះ​អណ្ដែត​ផ្ដេក ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
 msgstr "ចលនា​ព្រិល បញ្ឈរ"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
 msgstr "ព្រិល​នៅពេល​​វត្ថុ​ហោះ​អណ្ដែត​បញ្ឈរ ។ លៃតម្រូវ​គម្លាត​គំរូ​ដើម្បី​ធ្វើការ​ផ្សេងៗ"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Apparition"
 msgstr "ការ​លេចឡើង"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Edges are partly feathered out"
 msgstr "គែម​គឺ​ត្រូវបាន​កាត់​ចេញ​ជា​ផ្នែកៗ"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Cutout"
 msgstr "កាត់​ចេញ​"
 
-#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
-#: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:185
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
 msgstr "ស្រមោល និង​ពន្លឺ​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Drop shadow under the cut-out of the shape"
 msgstr "ទម្លាក់​ស្រមោល​នៅ​តាម​ក្រោម​ចំណុច​ដាច់​របស់​​រូបរាង"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Jigsaw piece"
 msgstr "បំណែក​ល្បែង​ផ្គុំ​រូប"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Low, sharp bevel"
 msgstr "ជ្រុង​ទេរ​ស្រួច ទាល"
 
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Roughen"
 msgstr "ធ្វើ​ឲ្យ​គ្រើម"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:211
-msgid "ABCs"
-msgstr "ABCs"
-
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Small-scale roughening to edges and content"
 msgstr "ធ្វើ​មាត្រដ្ឋាន​គ្រើម​តិចតួច​ទៅកាន់​ជ្រុង និង​ផ្នែក​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Rubber stamp"
 msgstr "តែម​​ជ័រ​លុប"
 
-#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
-#: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
-#: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
-#: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:18 ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:38 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:192
 msgid "Overlays"
 msgstr "គ្រប​ពី​លើ"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
 msgstr "ពណ៌​ស​បញ្ចេញ​ពន្លឺ​ចៃដន្យ​ពី​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Ink bleed"
 msgstr "តំណក់​ទឹក​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:175
 msgid "Protrusions"
 msgstr "លយចេញ​ពី​ក្រៅ"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Inky splotches underneath the object"
 msgstr "ស្នាម​ទឹកខ្មៅ​នៅ​ពីក្រោម​វត្ថុ"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Fire"
 msgstr "ភ្លើង"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Edges of object are on fire"
 msgstr "គែម​វត្ថុ​គឺ​ឆេះ​ភ្លើង"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Bloom"
 msgstr "ពង្រីក"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
 msgstr "ទន់ ជ្រុងទេរ​ដូចជា​ទ្រនាប់​ដោយមាន​ការ​បន្លិច​យ៉ាង​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border"
 msgstr "ស៊ុម​មាន​កំពូល"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border with inner bevel"
 msgstr "ស៊ុម​មាន​កំពូល​ដែល​មាន​ជ្រុង​ទេ​ខាងក្នុង"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Ripple"
 msgstr "ជ្រួញ"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:203
 msgid "Distort"
 msgstr "បង្ខូច​ទ្រង់ទ្រាយ"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Horizontal rippling of edges"
 msgstr "រួញ​អង្កាញ់​របស់​គែម"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Speckle"
 msgstr "ចំណុច​អុចៗ"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Fill object with sparse translucent specks"
 msgstr "បំពេញ​វត្ថុ​ដោយ​ចំណុច​ស្រអាប់​តូចៗ"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Oil slick"
 msgstr "ទឹក​មាន​ដំណក់​ប្រេង"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Rainbow-colored semitransparent oily splotches"
 msgstr "ឥន្ទធនូ​មាន​ស្នាម​ពណ៌​ប្រេង​ពាក់កណ្ដាល​ថ្លា"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Frost"
 msgstr "កំណក"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Flake-like white splotches"
 msgstr "ស្នាម​ពណ៌​ស​មានលក្ខណៈ​ដូច​ស្បែក​ស្ដើងៗ"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard fur"
 msgstr "រោម​ខ្លា​ដំបង"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:60 ../share/filters/filters.svg.h:61
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:79 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:20 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:59 ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
 msgid "Materials"
 msgstr "សម្ភារៈ"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard spots (loses object's own color)"
 msgstr "ស្នាម​អុជៗ​លើ​ខ្លួន​ខ្លា​រខិន (បាត់បង់​ពណ៌​ផ្ទាល់ខ្លួន​របស់​វត្ថុ)"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Zebra"
 msgstr "សេះ​បង្កង់"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr "ឆ្នូត​ក្រម៉ៅ​បញ្ឈរ​មិន​ទៀងទាត់ (បាត់​ពណ៌​របស់​វត្ថុ)"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Clouds"
 msgstr "ពពក"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Airy, fluffy, sparse white clouds"
 msgstr "ពពក​ពណ៌​ស​បន្តិចបន្តួច​អណ្ដែត​រសាត់"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
 msgid "Sharpen"
 msgstr "ធ្វើ​ឲ្យ​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:24 ../share/filters/filters.svg.h:25
-#: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
-#: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
-#: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:23 ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:25 ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:27 ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:29 ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:199
 msgid "Image effects"
 msgstr "បែបផែន​រូបភាព"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr "ធ្វើ​ឲ្យ​គែម និង​ព្រំដែន​​កាន់តែ​ច្បាស់​នៅ​ក្នុង​វត្ថុ អនុភាព=0.15"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen more"
 msgstr "កាន់​តែ​ធ្វើ​ឲ្យ​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
 msgstr "ធ្វើ​ឲ្យ​គែម និង​ព្រំដែន​កាន់តែ​ច្បាស់​នៅ​ក្នុង​វត្ថុ អនុភាព=0.3"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Oil painting"
 msgstr "គំនូរ​ប្រេង"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Simulate oil painting style"
 msgstr "ក្លែង​ធ្វើ​តាម​រចនាប័ទ្ម​គំនូរ​ប្រេង"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Edge detect"
 msgstr "រក​ឃើញ​គែម​"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
 msgstr "រកឃើញ​គែម​ពណ៌​នៅ​ក្នុង​វត្ថុ"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Horizontal edge detect"
 msgstr "រកឃើញ​គែម​ផ្ដេក"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Detect horizontal color edges in object"
 msgstr "រកឃើញ​គែម​ពណ៌​ផ្ដេក​នៅ​ក្នុង​វត្ថុ"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Vertical edge detect"
 msgstr "រកឃើញ​គែម​បញ្ឈរ"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
 msgstr "រកឃើញ​គែម​​ពណ៌​បញ្ឈរ​នៅ​ក្នុង​វត្ថុ"
 
 #. Pencil
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 #: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "ខ្មៅដៃ​"
 
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
 msgstr "រកឃើញ​គែម​ពណ៌ ហើយ​គូរ​ពួកវា​ជា​មាត្រដ្ឋាន​ប្រផេះ"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Blueprint"
 msgstr "គំនូរ​ក្រដាស​ពណ៌​ខៀវ"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
 msgstr "រកឃើញ​គែម​ពណ៌ ហើយ​​គូរ​តាម​ពួកវា​ជា​ពណ៌​ខៀវ"
 
-#: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:31
 #: ../share/extensions/color_desaturate.inx.h:2
 msgid "Desaturate"
 msgstr "មិន​ជ្រាប"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:73
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:167
-#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:31 ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:214 ../src/dialogs/clonetiler.cpp:2607
+#: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -385,1469 +380,1569 @@ msgstr "មិន​ជ្រាប"
 msgid "Color"
 msgstr "ពណ៌"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:31
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr "បង្ហាញ​ជា​ស្រមោល​ពណ៌​ប្រផេះ ដោយ​កាត់បន្ថយ​តិត្ថិភាព​ទៅ​សូន្យ"
 
-#: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
+#: ../share/filters/filters.svg.h:32 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "ដាក់​បញ្ច្រាស"
 
-#: ../share/filters/filters.svg.h:33
+#: ../share/filters/filters.svg.h:32
 msgid "Invert colors"
 msgstr "ច្រាស​ពណ៌"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Sepia"
 msgstr "ពណ៌​ប្រផេះ​ចាស់"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Render in warm sepia tones"
 msgstr "បង្ហាញ​ជា​ពណ៌​ប្រផេះ​ក្រហម​ព្រឿងៗ"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Age"
 msgstr "អាយុកាល"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
 msgstr "ធ្វើ​តាម​រូបថត​ដែល​មាន​ច្រើន​អាយុកាល"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Organic"
 msgstr "សរីរាង្គ​មាន​ជីវិត"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
-#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
-#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:209
 msgid "Textures"
 msgstr "វាយនភាព"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
 msgstr "ផ្ទៃ​ត្រីមាត្រ​​ប៉ោង ដុំពកៗ រអិល"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
 msgstr "បន្លា"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Gray bevelled wires with drop shadows"
 msgstr "ខ្សែ​ទ្រេត​ប្រផេះ​​ដែល​មាន​​ស្រមោល​ទម្លាក់"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Swiss cheese"
 msgstr "ហ្វ្រូម៉ា​​ស្វ៊ីស"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Random inner-bevel holes"
 msgstr "រន្ធ​ទេរ​ខាង​ក្នុង​ចៃដន្យ"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Blue cheese"
 msgstr "ហ្វ្រូម៉ា​ខៀវ"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Marble-like bluish speckles"
 msgstr "ថ្មម៉ាប​ដែល​ដូច​នឹង​ចំណុច​ពណ៌​ខៀវ​ប្រឿងៗ"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Button"
 msgstr "ប៊ូតុង"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Soft bevel, slightly depressed middle"
 msgstr "ជ្រុងទេរ​ស្រទន់ មាន​ដំណាក់ៗ​តិចតួច​នៅ​កណ្ដាល"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Inset"
 msgstr "ក្រហូង"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Shadowy outer bevel"
 msgstr "ស្រមោល​ទ្រេត​ចេញ​ក្រៅ"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Dripping"
 msgstr "ស្រក់"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Random paint streaks downwards"
 msgstr "គូរ​​ស្នាម​ឆូត​ចុះក្រោម​ចៃដន្យ"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Jam spread"
 msgstr "ប៉ាត​ដំណាប់"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Glossy clumpy jam spread"
 msgstr "ប៉ាត​ដំណាប់​ច្រើន​ឃើញ​រលោង"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Pixel smear"
 msgstr "ស្នាម​ប្រឡាក់​ជា​ភីកសែល​"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "បែបផែន​​គំនូរ Van Gogh សម្រាប់​ផែនទី​រូបភាព"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
 msgstr "ដុំ​ពក HSL"
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:191
-#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:212
 msgid "Bumps"
 msgstr "ដុំ​ពក"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Highly flexible specular bump"
 msgstr "ដុំពក​ឆ្លុះ​ផ្លាស់ប្ដូរ​ខ្ពស់"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
 msgstr "កែវ​ប្រេះ"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
 msgstr "នៅ​ក្រោម​កែវប្រេះ"
 
+#: ../share/filters/filters.svg.h:46
+msgid "Bubbly Bumps"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:46
+msgid "Flexible bubbles effect with some displacement"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:47
-msgid "HSL bubbles"
-msgstr "ពពុះ HSL"
-
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:105
-msgid ""
-"Highly flexible bubbles effect depending on color hue saturation and "
-"luminance"
-msgstr "បែបផែន​ពពុះ​​បត់បែន ផ្អែក​តិត្ថិភាព​ភាព​លាំៗ​នៃ​ពណ៌ និង​ពន្លឺ"
-
-#: ../share/filters/filters.svg.h:48
 msgid "Glowing bubble"
 msgstr "ពពុះ​មាន​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:67 ../share/filters/filters.svg.h:69
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:70
 msgid "Ridges"
 msgstr "កំពូល"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
 msgstr "បែបផែន​ពពុះ​ដែល​មាន​កាំរស្មី និង​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Neon"
 msgstr "ណេអុង"
 
-#: ../share/filters/filters.svg.h:49
-msgid "Neon light effect with glow"
+#: ../share/filters/filters.svg.h:48
+#, fuzzy
+msgid "Neon light effect"
 msgstr "បែបផែន​ណេអុង​មាន​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
 msgstr "លោហៈ​រលាយ"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "បញ្ចូល​ផ្នែក​របស់​វត្ថុ​បញ្ចូល​គ្នា ដោយ​ជ្រុង​ទេ​រលោង និង​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed steel"
 msgstr "ដែល​ថែប​សំប៉ែត"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed metal with a rolled edge"
 msgstr "លោហៈ​សំប៉ែត​មាន​គែម​មូល"
 
-#: ../share/filters/filters.svg.h:52
-msgid "Matte Bevel"
+#: ../share/filters/filters.svg.h:51
+#, fuzzy
+msgid "Matte bevel"
 msgstr "ជ្រុង​ទេរ​ក្រាស់​"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "ជ្រុង​ទេរ​ស្រទន់ មាន​ពណ៌​ព្រឿងៗ និង​ព្រិល"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
 msgstr "ភ្នាស​ស្ដើង"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin like a soap membrane"
 msgstr "ស្ដើង​ដូច​ភ្នាស​សាប៊ូ​ដុំ"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Matte ridge"
 msgstr "កំពូល​ក្រាស់​​"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft pastel ridge"
 msgstr "កំពូល​ពណ៌​ព្រឿងៗ​ទន់"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
 msgstr "លោហៈ​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:55
-msgid "Bright and glowing metal texture"
-msgstr "វាយនភាព​ពន្លឺ និង​ភ្លឺ"
+#: ../share/filters/filters.svg.h:54
+#, fuzzy
+msgid "Glowing metal texture"
+msgstr "លោហៈ​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves"
 msgstr "ស្លឹក​ឈើ"
 
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:78
-#: ../share/filters/filters.svg.h:87 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:86 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "ពង្រាយ"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "ស្លឹកឈើ​នៅ​លើ​ដី នារដូវ​ស្លឹកឈើជ្រុះ"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Translucent"
 msgstr "ល្អក់"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "បែបផែន​ប្លាស្ទិក ឬ​កែវ​ថ្លា​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Cross-smooth"
 msgstr "កាត់​រលោង"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Blur inner borders and intersections"
 msgstr "ធ្វើ​ឲ្យ​ព្រំដែន និង​ចំណុចប្រសព្វ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Iridescent beeswax"
 msgstr "ពណ៌​ក្រមួន​ឃ្មុំ​ថ្លា"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "​វាយនភាព​រីក​ធំឡើង ដែល​រក្សា​នូវ​ការ​ផ្លាស់​ប្ដូរ​របស់​វា​តាម​ការ​ប្ដូរ​ពណ៌​ផ្ទៃ​របស់​វា"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal"
 msgstr "លោហៈ​ដែល​បាន​កាត់"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "វាយនភាព​លោហៈ​ច្រែះ ដោយមាន​ចង្អូរ ស្នាម​រលក មាន​រន្ធ និង​មាន​ដុំ​ពក"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
 msgstr "ស្នាម​កម្អែ​ភ្នំភ្លើង​ផ្ទុះ"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "A volcanic texture, a little like leather"
 msgstr "វាយនភាព​ភ្នំភ្លើង ដែល​មាន​លក្ខណៈ​ដូច​ស្បែក​តិចតួច"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark"
 msgstr "សំបកឈើ"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "វាយនភាព​សំបកឈើ​បញ្ឈរ ដោយប្រើ​ពណ៌​ឲ្យ​ចាស់"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
 msgstr "ស្បែក​តុកកែ"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Stylized reptile skin texture"
 msgstr "វាយនភាព​ស្បែក​សត្វ​ល្មូន​ដែល​មាន​រចនាប័ទ្ម"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stone wall"
 msgstr "ជញ្ជាំង​ថ្ម"
 
-#: ../share/filters/filters.svg.h:64
-msgid "Stone wall texture to use with dark colors"
+#: ../share/filters/filters.svg.h:63
+#, fuzzy
+msgid "Stone wall texture to use with not too saturated colors"
 msgstr "វាយនភាព​ជញ្ជាំង​ថ្ម​ដែល​ត្រូវប្រើ ដោយ​ប្រើ​ពណ៌​ក្រម៉ៅ"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
 msgstr "ព្រំ​ធ្វើ​ពី​សូត្រ"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "វាយនភាព​ព្រំ​ធ្វើ​ពី​សូត្រ ដែល​មានឆ្នូត​ផ្ដេក"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Refractive gel A"
 msgstr "បែបផែន​អន្ធឹល​មាន​វង្គ​កាំ​ពន្លឺ A"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
 msgstr "បែបផែន​​អន្ធឹល​ដែល​មាន​វង្គ​កាំ​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Refractive gel B"
 msgstr "បែបផែន​អន្ធឹល​មាន​វង្គ​កាំ​ពន្លឺ B"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
 msgstr "បែបផែន​អន្ធឹល ដែល​មាន​វង្គ​កាំ​រស្មី​ខ្លាំង"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Metallized paint"
 msgstr "គំនូរ​លក្ខណៈ​លោហៈ"
 
-#: ../share/filters/filters.svg.h:68
-msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
+#: ../share/filters/filters.svg.h:67
+msgid ""
+"Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "បែបផែន​ជា​លក្ខណៈ​លោហៈ ដែល​មាន​ពន្លឺ​ស្រទន់ មាន​ភាព​ស្រអាប់​បន្តិចបន្តួច​នៅ​គែម"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Dragee"
 msgstr "Dragee"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
 msgstr "កំពូល​អន្ធិលៗ​ដែល​មាន​រូបរាង​ដូច​នឹង​​គុជ​ខ្យង​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Raised border"
 msgstr "ស៊ុម​ដែល​បាន​លើកឡើង"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Strongly raised border around a flat surface"
 msgstr "ស៊ុម​ដែល​បាន​លើក​ឡើង​យ៉ាង​ខ្លាំង​ជុំវិញ​ផ្ទៃ​មុខ​រាបស្មើ"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Metallized ridge"
 msgstr "កំពូល​ដូច​ជា​លក្ខណៈ​លោហៈ"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge metallized at its top"
 msgstr "កំពូល​អន្ធិល​ដូច​លោហៈ​នៅ​ខាង​លើ​វា"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil"
 msgstr "ពណ៌ប្រេង​រាបស្មើ"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
 msgstr "ពណ៌ប្រេង​រាបស្មើ​ដែលមាន​ភាព​គួចវិល​ដែល​អាច​កែសម្រួល​បាន"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "ដាក់​ពណ៌"
 
-#: ../share/filters/filters.svg.h:73
-msgid "Gives the flood color to the dark parts of the image"
-msgstr "ផ្ដល់​ពណ៌​ជោគជាំ​ដល់​ផ្នែក​ដែល​ងងឹត​របស់​រូបភាព"
+#: ../share/filters/filters.svg.h:72
+msgid "Blend image or object with a flood color and set lightness and contrast"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Parallel hollow"
 msgstr "ច្រក​ប៉ារ៉ាឡែល​"
 
-#: ../share/filters/filters.svg.h:74 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:89
-#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:94
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:73 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:177
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "រូបវិទូ"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "ក្រហូង​ដែល​ព្រិល​នឹង​ប៉ារ៉ាឡែល​នឹង​គែម​នៅ​ខាងក្នុង"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Hole"
 msgstr "រន្ធ"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Opens a smooth hole inside the shape"
 msgstr "បើក​រន្ធ​រលោង​នៅ​ខាង​ក្នុង​រូបរាង"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Black hole"
 msgstr "រន្ធ​ពណ៌​ខ្មៅ​"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Creates a black light inside and outside"
 msgstr "បង្កើត​ពន្លឺ​ពណ៌​ខ្មៅ​នៅ​ខាង​ក្នុង និង​ខាងក្រៅ"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Smooth outline"
 msgstr "គ្រោង​រលូន"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "គូស​គ្រោង​បន្ទាត់ និង​ធ្វើ​ឲ្យ​បន្ទាត់​កាត់​ខ្វែង​របស់​ពួកវា​រលោង"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Cubes"
 msgstr "គូប"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "គូប​ដែល​បាន​ពង្រាយ ។ លៃតម្រូវ​ Morphology កម្រិតទាប​ទៅកាន់​ទំហំ​ផ្សេងៗ"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peel off"
 msgstr "​"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peeling painting on a wall"
 msgstr "គំនូរ​សំបក​នៅ​លើ​ជញ្ជាំង"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Gold splatter"
 msgstr "កំទេច​ពណ៌​មាស"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Splattered cast metal, with golden highlights"
 msgstr "កំទេច​លោហៈ​ដែល​ខ្ទាត ដោយមាន​ការ​បន្លិច​ពណ៌​មាស"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Gold paste"
 msgstr "កំហាប់​ពណ៌​មាស"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "កំហាប់​លោហៈ ដោយ​មាន​ពន្លឺ​បន្លិច​ភ្លឺ​ពណ៌​មាស"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled plastic"
 msgstr "ប្លាស្ទិក​ដែល​ខ្ញុកខ្ញី"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "ប្លាស្ទិក​ក្រាស​ដែល​ខ្ញុកខ្ញី ដែល​មាន​គែម​រលាយ"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Enamel jewelry"
 msgstr "គ្រឿង​អលង្ការ​មាន​ពណ៌"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Slightly cracked enameled texture"
 msgstr "វាយនភាព​ស្រអាប់ៗ​ដែល​ប្រេះ​តិចៗ"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Rough paper"
 msgstr "ក្រដាស​គ្រើម"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "បែបផែន​ក្រដាស​ពណ៌​ទឹក ដែល​អាច​ប្រើ​សម្រាប់​រូបភាព​ ដូច​ដែល​ប្រើ​សម្រាប់​វត្ថុ"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Rough and glossy"
 msgstr "គ្រើម និង​រលោង"
 
-#: ../share/filters/filters.svg.h:85
-msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
+#: ../share/filters/filters.svg.h:84
+msgid ""
+"Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "បែបផែន​ក្រដាស់​រលោង​ខ្ញុកខ្ញី ដែល​អាច​ត្រូវបាន​ប្រើ​សម្រាប់​រូបភាព ដូច​គ្នា​នឹង​សម្រាប់​វត្ថុ"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "In and Out"
 msgstr "ក្នុង និង​ក្រៅ"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "ស្រមោល​ពណ៌​ខាង​ក្នុង និង​ស្រមោល​ខ្មៅ​ខាងក្រៅ"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Air spray"
 msgstr "ស្ប៉ាយ​"
 
-#: ../share/filters/filters.svg.h:87
-msgid "Air Spray; adjust the Displacement Map amount"
-msgstr "ស្ប៉ាយ - លៃតម្រូវចំនួន​បម្លាស់ទី​ផែនទី"
+#: ../share/filters/filters.svg.h:86
+msgid "Convert to small scattered particles with some thickness"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
 msgstr "ក្រហម​ព្រឿងៗ​នៅ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Blurred colorized contour, filled inside"
 msgstr "វណ្ឌវង្គ​មាន​ពណ៌​​ព្រិល​ស្រអាប់ និង​មាន​ផ្ទៃ​នៅ​ខាងក្នុង"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Cool outside"
 msgstr "ភ្លឺ​ស្រទន់​ព្រឿងៗ​នៅ​ខាងក្រៅ"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
 msgstr "វណ្ឌវង្គ​​មាន​ពណ៌​​ព្រិល​ស្រអាប់ និងគ្មាន​ផ្ទៃ​នៅ​ខាងក្នុង"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Electronic microscopy"
 msgstr "មីក្រូស្កូពី​អេឡិចត្រូនិក"
 
-#: ../share/filters/filters.svg.h:90
-msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+#: ../share/filters/filters.svg.h:89
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "ជ្រុងទេរ ពន្លឺព្រាងៗ ការ​​ប្ដូរ​ពណ៌ និង​ពន្លឺ​ភ្លឺ​ដូច​មីក្រូស្កូពី​អេឡិចត្រូនិក"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Tartan"
 msgstr "ក្រឡាតាតាន់"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Checkered tartan pattern"
 msgstr "លំនាំក្រឡា checkered tartan"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue"
 msgstr "ដាក់​ពណ៌​លាំៗ​បញ្ច្រាស"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue, or rotate it"
 msgstr "ដាក់​ពណ៌​លាំៗ​បញ្ច្រាស ឬ​បង្វិល​វា"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Inner outline"
 msgstr "គ្រោង​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Draws an outline around"
 msgstr "គូរ​គ្រោង"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Outline, double"
 msgstr "គ្រោង ទ្វេ"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "គូស​បន្ទាត់​រលោង​មួយ​ដោយ​ដាក់​ពណ៌​ដូច​នឹង​ពណ៌​ដែល​វា​ត្រួត​ពី​លើ"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Fancy blur"
 msgstr "ព្រិល​ស្អាត"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "វណ្ឌវង្ក​ដែល​មាន​ពណ៌​រលោង ដែល​អនុញ្ញាត​​ឲ្យ​ផ្លាស់ប្ដូរ​តិត្ថិភាព និង​ការ​បង្វិល​ភាពលាំៗ​ណៃ​ពណ៌"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow"
 msgstr "បញ្ចេញ​ពន្លឺ​"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow of object's own color at the edges"
 msgstr "បញ្ចេញ​ពន្លឺ​ពណ៌​របស់​វត្ថុ​នៅ​គែម"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Outline"
 msgstr "គ្រោង​"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
 msgstr "បន្ថែម​ភាព​ព្រិល​មាន​ពន្លឺ និង​យក​រូបរាង​ចេញ"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Color emboss"
 msgstr "ពណ៌​ផុស"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "បែបផែន​ផុស​ក្លាស៊ីក ឬ​ដាក់​ពណ៌ ៖ មាត្រដ្ឋាន​ប្រផេះ ពណ៌ និង​វត្ថុ​ត្រីមាត្រ​អណ្ដែត"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "ធ្វើដូច​ពន្លឺ​ព្រះអាទិត្យ"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
 msgstr "បែបផែន​ពន្លឺ​ព្រះ​អាទិត្យ​រូបថត​ក្លាស៊ិក"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Moonarize"
 msgstr "ពន្លឺ​ព្រះ​ច័ន្ទ"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr "បែបផែន​រវាង​ពន្លឺ​ព្រះ​អាទិត្យ និង​បញ្ច្រាស ដែល​​រក្សានូវ​ពន្លឺ​មេឃ និង​ទឹក"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
 msgstr "កញ្ចក់​កែវ​ផ្ដោត​ទន់"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
 msgstr "មាតិកា​រូបភាព​ភ្លឺ​ដោយ​មិន​ធ្វើ​ឲ្យ​វា​ព្រិល"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Stained glass"
 msgstr "កែវលាបថ្នាំ"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Illuminated stained glass effect"
 msgstr "បែបផែន​កែវ​លាបថ្នាំ​ភ្លឺ​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Dark glass"
 msgstr "កែវ​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "បែបផែន​កែវ​មាន​ពន្លឺ​ភ្លឺច្បាស់​ដោយមាន​ពន្លឺ​នៅ​ពីក្រោម"
 
-#: ../share/filters/filters.svg.h:104
-msgid "HSL Bumps, alpha"
+#: ../share/filters/filters.svg.h:103
+#, fuzzy
+msgid "HSL Bumps alpha"
 msgstr "ដុំ​ពក HSL អាល់ហ្វា"
 
-#: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:189
-#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:199
-#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:204 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:200 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:213
 msgid "Image effects, transparent"
 msgstr "បែបផែន​រូបភាព​ថ្លា"
 
+#: ../share/filters/filters.svg.h:103
+msgid "Same as HSL Bumps but with transparent highlights"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:104
-msgid ""
-"Same than HSL bumps but with an alpha added for combination with "
-"transparency depending filters"
-msgstr "ដូចគ្នា​នឹង​ដុំ​ពក HSL ប៉ុន្តែ​ត្រូវ​បន្ថែម​អាល់ហ្វា​សម្រាប់​ការ​បន្សំ​ជាមួយ​នឹង​ភាព​ថ្លា ដោយ​ផ្អែក​លើ​តម្រង"
+#, fuzzy
+msgid "Bubbly Bumps alpha"
+msgstr "ដុំ​ពក HSL អាល់ហ្វា"
+
+#: ../share/filters/filters.svg.h:104
+msgid "Same as Bubbly Bumps but with transparent highlights"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:105
-msgid "HSL bubbles, alpha"
-msgstr "ពពុះ HSL អាល់ហ្វា"
-
-#: ../share/filters/filters.svg.h:106
 msgid "Smooth edges"
 msgstr "គែម​​រលោង"
 
-#: ../share/filters/filters.svg.h:106
-msgid "Smooth the outside of shapes and pictures without altering their contents"
+#: ../share/filters/filters.svg.h:105
+msgid ""
+"Smooth the outside of shapes and pictures without altering their contents"
 msgstr "ធ្វើ​ឲ្យ​ខាងក្រៅ​រូបរាង​ និង​រូបភាព​រលោង​ដោយ​មិនផ្លាស់ប្ដូរ​ខាងក្នុង​របស់​ពួកវា"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "Torn edges"
 msgstr "គែម​ស្រក់​"
 
-#: ../share/filters/filters.svg.h:107
-msgid "Displace the outside of shapes and pictures without altering their content"
+#: ../share/filters/filters.svg.h:106
+msgid ""
+"Displace the outside of shapes and pictures without altering their content"
 msgstr "ផ្លាស់ប្ដូរ​ខាងក្រៅ​រូបរាង និង​រូបភាព​ដោយ​មិន​ផ្លាស់ប្ដូរ​ខាងក្នុង​របស់​វា"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Feather"
 msgstr "ស្លាប​សត្វ"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "របាំង​ដែល​ព្រិល​នៅលើ​គែម​ដោយ​មិន​ផ្លាស់ប្ដូរ​ខាងក្នុង"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur content"
 msgstr "ធ្វើ​ឲ្យ​ខាងក្នុង​ព្រិល"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "ធ្វើ​ឲ្យ​មាតិកា​របស់​វត្ថុ​ព្រិល ដែល​រក្សាទុក​នូវ​គ្រោង"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Specular light"
 msgstr "ឆ្លុះ​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Basic specular bevel to use for building textures"
 msgstr "ជ្រុង​ទ្រេត​ឆ្លុះ​មូលដ្ឋាន​ដែលត្រូវប្រើ​សម្រាប់​បង្កើត​វាយនភាព"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen inside"
 msgstr "ធ្វើ​ឲ្យ​គ្រើម​នៅ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
 msgstr "ធ្វើ​ឥ្យ​រូបរាង​ខាង​ក្នុង​ទាំងអស់​គ្រើម"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
 msgstr "មិនស្ថិតស្ថេរ"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr "ធ្វើ​ឲ្យ​ផ្នែក​ខាង​ក្នុង​វត្ថុ​ព្រិល ដោយ​បម្រុង​ទុក​នូវ​គ្រោង និង​បន្ថែមភាព​ថ្លា​បន្តបន្ទាប់​នៅ​គែម"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
 msgstr "ដីស និង​ប៉ុងហ្ស៍​លុប"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "ភាព​​គួចវិល​តិចតួច​ដែល​ធ្វើ​ឲ្យ​មាន​លក្ខណៈ​ដូច​ជា​ប៉ុងហ្ស៍​​លុប និង​ដី​ស​មាន​លក្ខណៈ​គួចខ្ពស់"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "People"
 msgstr "មនុស្ស"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Colorized blotches, like a crowd of people"
 msgstr "ចំណុច​ធំៗ​មាន​ដាក់​ពណ៌ មានលក្ខណៈ​ដូច​នឹង​ហ្វូង​មនុស្ស"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Scotland"
 msgstr "ស្កុតលែន"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Colorized mountain tops out of the fog"
 msgstr "ដាក់​ពណ៌​កំពូល​ភ្នំ​ដែល​ពេញ​ដោយ​អ័ព្ទ"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Noise transparency"
 msgstr "ភាព​ថ្លា​មិន​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
 msgstr "វាយនភាព​ថ្លា​មិនច្បាស់​មូលដ្ឋាន"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Noise fill"
 msgstr "ការ​បំពេញ​ភាព​មិន​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "វាយនភាព​បំពេញ​ភាព​មិនច្បាស់​មូលដ្ឋាន ។ លៃតម្រូវ​ពណ៌​ជា Flood"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
 msgstr "សួន​នៃ​ភាព​រីករាយ"
 
-#: ../share/filters/filters.svg.h:118
-msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
+#: ../share/filters/filters.svg.h:117
+msgid ""
+"Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "បណ្ដុំ​ចលនា​គួច​ស្រមោល​រូបភាព​ព្រិល​ថ្លាៗ ដូចជា​ Hieronymus Bosch's Garden of Delights"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Diffuse light"
 msgstr "សាយ​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "ជ្រុង​ទេ​សាយ ដែល​ត្រូវប្រើ​សម្រាប់​បង្កើត​វាយនភាព"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Cutout Glow"
 msgstr "កាត់បន្ថយ​ភាព​ភ្លឺ​រលោង"
 
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "បញ្ចេញ​ពន្លឺ​ចេញក្រៅ និង​ចូលក្នុង ដោយ​មាន​​អុហ្វសិត​ដែល​អាច​ធ្វើ​បាន និង​អាច​ប្ដូរ​ពណ៌បាន​យ៉ាង​សម្បូរបែប"
 
-#: ../share/filters/filters.svg.h:121
-msgid "HSL Bumps, diffuse"
-msgstr "ដុំ​ពក HSL ដែល​នៅ​រាយប៉ាយ"
+#: ../share/filters/filters.svg.h:120
+#, fuzzy
+msgid "HSL Bumps, matte"
+msgstr "ដុំ​ពក HSL អាល់ហ្វា"
 
-#: ../share/filters/filters.svg.h:121
-msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
+#: ../share/filters/filters.svg.h:120
+#, fuzzy
+msgid ""
+"Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "ដូចគ្នា​នឹង​ដុំពក HSL ប៉ុន្តែ​ខុស​ត្រង់ថា​វា​មាន​ការ​សាយ​ជះ​ត្រឡប់​ ដោយ​មិនមាន​ការ​គួច"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
 msgstr "ផុស​ក្រឡោត​ក្រម៉ៅ"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "បែបផែន​ផុស​ក្រឡោត ៖ ត្រីមាត្រ​អណ្ដែត គឺ​ត្រូវបាន​ជំនួស​ដោយ​ពណ៌​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
 msgstr "ព្រិល​គំរូ"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "ព្រិល​លក្ខណៈ​ហ្គូសៀន​ធម្មតា ដូចគ្នា​នឹងគ្រាប់រំកិល​ព្រិល​នៅ​ក្នុង​ប្រអប់​បំពេញ និង​ស្នាម​គូស"
 
-#: ../share/filters/filters.svg.h:124
-msgid "HSL bubbles, diffuse"
-msgstr "ពពុះ HSL ដែល​នៅ​រាយប៉ាយ"
+#: ../share/filters/filters.svg.h:123
+msgid "Bubbly Bumps, matte"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:124
-msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:123
+#, fuzzy
+msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr "ដូចគ្នា​នឹង​ពពុះ HSL ប៉ុន្តែ​ខុស​ត្រង់ថា​​វា​មានពន្លឺ​សាយ​ចេញ ជំនួស​ការ​គួច"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "ផុស"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr "បែបផែន​ផុស​ក្រឡោត ៖ ពណ៌​រូបភាព​ដើម​គឺ​ត្រូវបាន​បម្រុង​ទុក ឬ​កែប្រែ​ដោយ​ការ​លាយ​បញ្ចូល​គ្នា"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
 msgstr "ដាម​ក្រដាស"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Inkblot on blotting paper"
 msgstr "ដាម​ទឹក​ខ្មៅ​នៅលើ​ក្រដាស​ដាម"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print"
 msgstr "ក្រណាត់ Wax print"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print on tissue texture"
 msgstr "ក្រណាត់ Wax print នៅលើ​វាយនភាព​ក្រដាស​ទន់ៗ"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
 msgstr "ដាម​ទឹកខ្មៅ"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "ដាម​ទឹកខ្មៅ​នៅលើ​ក្រដាស​ទន់ៗ ឬ​ក្រដាស​គគ្រើម"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Burnt edges"
 msgstr "ឆេះ​គែម"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Torn edges with a dark inner blur"
 msgstr "ក្រដាស​ដែល​គេ​ហែក ដោយ​មាន​ភាព​ព្រិល​ងងឹត​នៅ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
 msgstr "គ្រោង​ពណ៌ គិតជា"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "គ្រោង​ដែល​ដាក់​ពណ៌​បាន ដែល​មាន​ទទឹង និង​ភាព​ព្រិល​ដែល​អាច​លៃតម្រូវ​បាន"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Liquid"
 msgstr "វត្ថុ​រាវ"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Colorizable filling with liquid transparency"
 msgstr "ការ​បំពេញ​ដែល​អាច​ដាក់​ពណ៌​បាន​ដោយមាន​វត្ថុ​រាវ​ថ្លា"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Watercolor"
 msgstr "ថ្នាំ​ពណ៌​ទឹក"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Cloudy watercolor effect"
 msgstr "បែបផែន​ពពក​ថ្នាំ​ពណ៌​ទឹក"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Felt"
 msgstr "ក្រណាត់​សំពត់"
 
-#: ../share/filters/filters.svg.h:133
-msgid "Felt like texture with color turbulence and slightly darker at the edges"
+#: ../share/filters/filters.svg.h:132
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "វាយនភាព​ដូច​គ្នា​នឹង​ក្រណាត់​សំពត់ ដោយមាន​ពណ៌ និង​ក្រម៉ៅៗ​នៅ​គែម"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
 msgstr "គំនូរ​ទឹក​ថ្នាំ​ពណ៌​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "គំនូរ​ទឹកខ្មៅ​នៅលើ​ក្រដាស​ដោយមាន​ការ​ប្ដូរ​ពណ៌​គួច"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
 msgstr "ឥន្ទធនូ​ពណ៌​ព្រឿងៗ"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "ពណ៌​ឥន្ធនូ​រលោង​ដែល​រលាយ​ចូល​តាម​គែម និង​អាច​ដាក់​ពណ៌​បាន"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
 msgstr "ឥន្ធនូ​រលាយ"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "ឥន្ធនូ​រលោង​ដាក់ពណ៌​យ៉ាង​ស្រាល ដែល​រលាយ​តាម​គែម"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
 msgstr "លោហៈ​បត់បែន"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "ការ​សាយ​លោហៈ​មាន​ពន្លឺ​ភ្លឺៗ​មិន​ស្មើ​គ្នា ហើយ​អាច​ប្ដូរ​ពណ៌​បាន"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
 msgstr "សេចក្ដី​ព្រៀង​កំប្លែង"
 
-#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:141 ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:165
 msgid "Non realistic 3D shaders"
 msgstr "ស្រមោល​ត្រីមាត្រ​មិន​ពិត"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "តុក្កតា​​ដាក់ពណ៌​ព្រាង ដែល​មាន​ស្រមោល​ភ្លឺៗ​ដូច​កែវ"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Comics fading"
 msgstr "រូប​កំប្លែង​រសាត់​បាត់​បន្តិច​ម្ដងៗ"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "រចនាប័ទ្ម​គំនូរ​តុក្កតា ដោយមាន​គែម​ស្រមោល​ស្រាលៗ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shader NR"
 msgstr "NR មាន​ស្រមោល​រលោង"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "ដាក់ស្រមោល​រលោង ដោយ​ប្រើ​ខ្មៅដៃ​ពណ៌​ប្រផេះ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Emboss shader NR"
 msgstr "NR មាន​ស្រមោល​ផុស​ក្រឡោត"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Combination of smooth shading and embossing"
 msgstr "ការ​បញ្ចូល​គ្នា​រវាង​ការ​ទម្លាក់​ស្រមោល និង​ផុស"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader dark NR"
 msgstr "NR មាន​ស្រមោល​ងងឹត​រលោង"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Dark version of non realistic smooth shading"
 msgstr "ស្រមោល​រលោង​​ដែល​មាន​ពណ៌​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Comics"
 msgstr "ត្លុក​កំប្លែង"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Imitation of black and white cartoon shading"
 msgstr "ដាក់​ពណ៌​ស្រមោល​គំនូរ​ជីវចល​ពណ៌​ស និង​ខ្មៅ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Satin NR"
 msgstr "សាតាំង NR"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Silky close to mother of pearl shading"
 msgstr "ភ្លឺរលោង​ដូច​នឹង​ស្រមោល​​មេ​គុជខ្យង"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "កែវ​មាន​កំណក NR"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "កែវ​កក​ក្លែងក្លាយ"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Smooth shader contour NR"
 msgstr "វណ្ឌវង្គ​ស្រមោល​រលោង NR"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Contouring version of smooth shader"
 msgstr "វណ្ឌវង្គ​ស្រមោល​រលោង"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Aluminium NR"
 msgstr "អាលុយមីញ៉ូម NR"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Brushed aluminium shader"
 msgstr "ស្រមោល​ទម្លាក់​អាលុយមីញ៉ូម​ដែល​បាន​គូស"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Comics fluid"
 msgstr "គំនូរ​ទឹក"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Fluid brushed cartoon drawing"
 msgstr "គំនូរ​តុក្កតា​លាប​ពណ៌​ទឹក"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Chrome NR"
 msgstr "ក្រូម NR"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "ស្រមោល​ក្រូម ដោយ​មាន​ការ​គួច​ខ្លាំង"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Chrome dark NR"
 msgstr "ក្រូម​ងងឹត NR"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "ស្រមោល​ក្រូម​ងងឹត ដោយមានចំណាំង​ឡង​ពី​ក្រោម"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Wavy tartan"
 msgstr "ក្រាឡា​តាតាន់​មាន​ផ្នត់"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "លំនាំ​ក្រឡា​តាតាន់​ដែល​មាន​ផ្នត់ និង​ជ្រុង​ទេរ​នៅ​ជុំវិញ​គែម"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D marble"
 msgstr "ថ្មម៉ាប​ត្រីមាត្រ"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D warped marble texture"
 msgstr "វាយនភាព​ថ្មម៉ាប​ដែល​ប៉ោង ត្រីមាត្រ"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D wood"
 msgstr "ឈើ​ត្រីមាត្រ"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D warped, fibered wood texture"
 msgstr "កោង​ត្រីមាត្រ វាយនភាព​សរសៃ​ឈើ"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D mother of pearl"
 msgstr "មេ​គុជ​​ខ្យង​ត្រីមាត្រ"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "កោង​ត្រីមាត្រ វាយនភាព​ពណ៌​គុជ​ខ្យង"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur"
 msgstr "រោម​ខ្លា​ដំបង"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "លំនាំ​រោម​ខ្លា​ដំបង​ ដោយមាន​ផ្នត់ និង​ជ្រុង​ទេរ​នៅ​ជុំវិញ​គែម"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Shaken liquid"
 msgstr "ទឹក​មាន​រលក"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "ការ​បំពេញ​ផ្ទៃ​ដែល​អាច​ប្ដូរ​ពណ៌​បាន ដោយមាន​លំហូរ​នៅ​ក្នុង​ថ្លា"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics cream"
 msgstr "ពពុះ​សំដី​កំប្លែង"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics shader with creamy waves transparency"
 msgstr "ស្រមោល​រូប​កំប្លែង​ដោយមាន​រលក​ពពុះ​ថ្លា"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Black Light"
 msgstr "ពន្លឺ​ពណ៌​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Light areas turn to black"
 msgstr "ផ្ទៃ​ដែល​មាន​ពន្លឺ​ភ្លឺ ត្រឡប់​ទៅ​ជា​ពណ៌​ខ្មៅ"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Light eraser"
 msgstr "ជ័រ​លុប​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:208
-#: ../share/filters/filters.svg.h:209 ../share/filters/filters.svg.h:210
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:208
 msgid "Transparency utilities"
 msgstr "វត្ថុ​ថ្លា"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "ធ្វើ​​ផ្នែក​ដែល​ស្រាល​ជាង​គេ​របស់​វត្ថុ​ទៅ​ជា​ថ្លា​ជា​លំដាប់"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Noisy blur"
 msgstr "ព្រិល​មិន​ច្បាស់"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "ធ្វើ​មាត្រដ្ឋាន​ឲ្យ​គ្រើម និង​ព្រិល​ទៅកាន់​គែម និង​ផ្ទៃ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:169
 msgid "Film grain"
 msgstr "គ្រាប់​ហ្វ៊ីល"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:169
+msgid "Adds a small scale graininess"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
 msgid "HSL Bumps, transparent"
 msgstr "ដុំ​ពក HSL ថ្លា"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:170
 msgid "Highly flexible specular bump with transparency"
 msgstr "ដុំពក​ខ្ពស់​ថ្លា"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "គំនូរ"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
-msgstr "ផ្ដល់​ជា​បែបផែន​បណ្ដូល​ខ្មៅដៃ ឬ​ពណ៌​ថ្ម ឬ​ចម្លាក់ ឬ​បែបផែន​ផ្សេងទៀត​ទៅកាន់​រូបភាព និង​វត្ថុ​ដែល​មាន​ផ្ទៃ"
+msgstr ""
+"ផ្ដល់​ជា​បែបផែន​បណ្ដូល​ខ្មៅដៃ ឬ​ពណ៌​ថ្ម ឬ​ចម្លាក់ ឬ​បែបផែន​ផ្សេងទៀត​ទៅកាន់​រូបភាព និង​វត្ថុ​ដែល​មាន​ផ្ទៃ"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Velvet bump"
 msgstr "ដុំពក​ជរ​ផ្កាភ្ញី"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Gives a smooth bump velvet like"
 msgstr "ផ្ដល់​ជា​ដុំ​ពក​រលោង​ដូចគ្នា​នឹង​ជរ​ផ្កា​ភ្ញី"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Alpha draw"
 msgstr "គូរ​អាល់ហ្វា"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "ផ្ដល់​បែបផែន​គំនូរ​ថ្លា​ទៅកាន់​រូបភាព"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Alpha draw, color"
 msgstr "គំនូរ​អាល់ហ្វា មាន​ពណ៌"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "ផ្ដល់​បែបផែន​ផ្ទៃ​ពណ៌​ថ្លា​ទៅកាន់​រូបភាព"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
 msgid "Chewing gum"
 msgstr "ស្ករ​កៅស៊ូ"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
+#, fuzzy
 msgid ""
-"Creates colourizable blotches which smoothly flow over the edges of the "
-"lines at their crossings"
+"Creates colorizable blotches which smoothly flow over the edges of the lines "
+"at their crossings"
 msgstr "បង្កើត​ចំណុច​ដែល​អាច​ប្ដូរ​ពណ៌​បាន ដោយ​មាន​ភាព​រលោង​នៅ​លើ​គែម​បន្ទាត់​ដែល​កាត់"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Black outline"
 msgstr "គ្រោង​ពណ៌​ខ្មៅ​"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Draws a black outline around"
 msgstr "គូរ​គ្រោង​ពណ៌​ខ្មៅ​នៅ​ជុំវិញ"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:177
 msgid "Color outline"
 msgstr "គ្រោង​ពណ៌"
 
-#: ../share/filters/filters.svg.h:178
-msgid "Draws a coloured outline around"
+#: ../share/filters/filters.svg.h:177
+#, fuzzy
+msgid "Draws a colored outline around"
 msgstr "គូរ​គ្រោង​មាន​ពណ៌​នៅ​ជុំវិញ"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Inner shadow"
 msgstr "ស្រមោល​នៅ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Adds a colorizable drop shadow inside"
 msgstr "បន្ថែម​ស្រមោល​ទម្លាក់​ដែល​ប្ដូរ​ពណ៌​បាន​នៅ​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Dark and glow"
 msgstr "ងងឹត និង​ភ្លឺ"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត ដោយ​មាន​ភាព​ព្រិល​នៅ​ខាង​ក្នុង និង​បន្ថែម​ពន្លឺ"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken edges"
 msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken the edges with an inner blur"
 msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត ដោយ​ដាក់​ឲ្យ​ព្រឹល​ខាង​ក្នុង"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Warped rainbow"
 msgstr "ឥន្ទធនូ​កោង"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "ពណ៌​ឥន្ទនូ​​រលោង​ ដែល​កោង​តាម​គែម និង​អាច​ប្ដូរ​ពណ៌​បាន"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Rough and dilate"
 msgstr "គ្រើម និង​រីក"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Create a turbulent contour around"
 msgstr "បង្កើត​វណ្ឌវង្គ​គួច​នៅ​ជុំវិញ"
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:183
 msgid "Gelatine"
 msgstr "ចាហួយ"
 
-#: ../share/filters/filters.svg.h:184
-msgid "Colorizable filling with gelatin like turbulence and transparency"
+#: ../share/filters/filters.svg.h:183
+#, fuzzy
+msgid "Colorizable filling with gelatine like turbulence and transparency"
 msgstr "ផ្ទៃ​ចាហួយ​ប្ដូរ​ពណ៌​បាន ដែល​មាន​លក្ខណៈ​គួច និង​ថ្លា"
 
-#: ../share/filters/filters.svg.h:185
-msgid "HSL bubbles, transparent"
-msgstr "ពពុះ HSL ថ្លា"
-
-#: ../share/filters/filters.svg.h:185
-msgid "Highly flexible specular bubbles with transparency"
-msgstr "ពពុះ​គួច​ថ្លា​មាន​ភាព​បត់បែន​ខ្ពស់"
-
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:184
 msgid "Old postcard"
 msgstr "បណ្ណ​ប្រៃសណីយ៍​ចាស់"
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:184
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "ស្រមោល​ប្រផេះ​បន្តិច​បន្តួច និង​គូរ​គែម​ដូចជា​បណ្ណ​ប្រៃសណីយ៍​ដែល​បោះពុម្ព​ចាស់ៗ"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:185
 msgid "Fuzzy glow"
 msgstr "ភ្លឺ​ព្រៀងៗ"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:185
+msgid "Overlays a semi-transparent shifted copy to a blurred one"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:186
 msgid "Dots transparency"
 msgstr "ចំណុច​ថ្លា"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:186
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "ផ្ដល់​នូវ​ចំណុច HSL ថ្លា"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:187
 msgid "Canvas transparency"
 msgstr "ផ្ទាំង​កំណាត់​ថ្លា"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:187
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "ផ្ដល់​នូវ​ផ្ទាំង​កំណាត់​ដូចជា HSL ថ្លា ។"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:188
 msgid "Smear transparency"
 msgstr "ស្នាម​ប្រឡាក់​ថ្លា"
 
-#: ../share/filters/filters.svg.h:190
-msgid "Paint objects with a transparent turbulence which turn around color edges"
+#: ../share/filters/filters.svg.h:188
+#, fuzzy
+msgid ""
+"Paint objects with a transparent turbulence which turns around color edges"
 msgstr "គូរ​វត្ថុ​ដោយ​ដាក់​គួច​ថ្លា​ ដែល​ត្រឡប់​គែម​ពណ៌"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:189
 msgid "Thick paint"
 msgstr "គូរ​ក្រាស់ៗ"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:189
 msgid "Thick painting effect with turbulence"
 msgstr "បែបផែន​គូរ​ក្រាស់ៗ​ដោយមាន​គួច"
 
-#: ../share/filters/filters.svg.h:192
-msgid "Thick paint, glossy"
-msgstr "គូរ​ក្រាស់ៗ និង​រលោង"
-
-#: ../share/filters/filters.svg.h:192
-msgid "Thick painting effect with turbulence and a glossy varnish"
-msgstr "បែបផែន​គូរ​ក្រាស់ៗ​ដោយមាន​គួច និង​ថ្នាំលាប​រលោង"
-
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:190
 msgid "Burst"
 msgstr "បែកខ្ញែក"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:190
 msgid "Burst balloon texture crumpled and with holes"
 msgstr "វាយនភាព​បាឡុង​ដែល​ផ្ទះ​បែកខ្ញែក និង​មាន​រន្ធ"
 
-#: ../share/filters/filters.svg.h:194
-msgid "Burst, glossy"
-msgstr "បែកខ្ញែក ហើយ​រលោង"
-
-#: ../share/filters/filters.svg.h:194
-msgid "Burst balloon texture crumpled with holes and glossy"
-msgstr "វាយនភាព​បាឡុង​ផ្ទុះ​បែកខ្ញែក​ដោយ​មាន​រន្ធ ហើយ​រលោង"
-
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:191
 msgid "Embossed leather"
 msgstr "ស្បែក​ដែល​ផុស​ក្រឡោត"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:191
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr "បញ្ចូល​ដុំពក​គែម HSL ជា​មួយ​នឹង​បែបផែន​ពណ៌​ស្បែក ឬ​ឈើ"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:192
 msgid "Carnaval"
 msgstr "ខាណាវ៉ាល់"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:192
 msgid "White splotches evocating carnaval masks"
 msgstr "ស្នាម​ប្រឡាក់​ពណ៌​ស​"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:193
 msgid "Plastify"
 msgstr "ជ័រ​ឈើ​ប្លាស្ទិក"
 
-#: ../share/filters/filters.svg.h:197
-msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
+#: ../share/filters/filters.svg.h:193
+msgid ""
+"Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr "បញ្ចូល​ដុំពក​គែម HSL ជាមួយ​នឹង​បែបផែន​ដែល​ចាំង​ឡើង​ផ្ទៃ​រលក"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:194
 msgid "Plaster"
 msgstr "កំបោរ​បាយ​អ​"
 
-#: ../share/filters/filters.svg.h:198
-msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+#: ../share/filters/filters.svg.h:194
+msgid ""
+"Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr "បន្សំ​ដុំពក​គែម HSL ចូល​គ្នា​ជាមួយ​នឹង​បែបផែន​ផ្ទៃ​មុខ​ក្រាស់​ និង​ខ្ញុកខ្ញី"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:195
 msgid "Rough transparency"
 msgstr "គ្រើម​ថ្លា"
 
-#: ../share/filters/filters.svg.h:199
-msgid "Adds a turbulent transparency which displace pixels at the same time"
+#: ../share/filters/filters.svg.h:195
+#, fuzzy
+msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr "បន្ថែម​ភាព​ថ្លា​គួច ដែល​ដាក់​ភីកសែល​នៅពេល​តែ​មួយ"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:196
 msgid "Gouache"
 msgstr "ពណ៌​ទឹក​ស្រអាប់ៗ"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:196
 msgid "Partly opaque water color effect with bleed"
 msgstr "បែបផែន​ពណ៌​ទឹក​ស្រអាប់​ដាច់​ពី​គ្នា​ដោយមាន​ដំណក់​ស្រក់"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:197
 msgid "Alpha engraving"
 msgstr "ចម្លាក់​អាល់ហ្វា"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:197
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "ផ្ដល់​បែបផែន​​ចម្លាក់​ថ្លា ជាមួយ​នឹង​បន្ទាត់ និង​ផ្ទៃ​គ្រើមៗ"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:198
 msgid "Alpha draw, liquid"
 msgstr "គំនូរ​អាល់ហ្វា ទឹក"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:198
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "ផ្ដល់​នូវ​បែបផែន​គំនូរ​ទឹក​ថ្លា ដែល​មាន​ផ្ទៃ និង​បន្ទាត់​គ្រើម"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:199
 msgid "Liquid drawing"
 msgstr "គំនូរ​ទឹក"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:199
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "ផ្ដល់​បែបផែន​គំនូរ​​ជា​រលក​ទឹក​ដល់​រូបភាព"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled ink"
 msgstr "ទឹក​ខ្មៅ​ថ្ម​ម៉ាប"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr "បែបផែន​ថ្មម៉ាប​ថ្លា ដែល​ធ្វើតាម​គែម​រូបភាព"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic"
 msgstr "ថ្នាំលាប​ក្រាស់ៗ"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr "វាយនភាព​ថ្នាំលាប​ក្រាស់ៗ​ដោយមាន​ជម្រៅ​វាយនភាព​ខ្ពស់"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:202
 msgid "Alpha engraving B"
 msgstr "ចម្លាក់​អាល់ហ្វា B"
 
-#: ../share/filters/filters.svg.h:206
-msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
+#: ../share/filters/filters.svg.h:202
+#, fuzzy
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr "ផ្ដល់​នូវ​បែបផែន​ចម្លាក់​​គ្រើម​ទៅកាន់​រូបភាព"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:203
 msgid "Lapping"
 msgstr "ជាន់គ្នា"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:203
 msgid "Something like a water noise"
 msgstr "ដូច​នឹង​សំឡេង​ទឹក"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:204
 msgid "Monochrome positive"
 msgstr "រូប​មួយ​ពណ៌"
 
-#: ../share/filters/filters.svg.h:208
-msgid "Convert to a Clorizable transparent positive"
+#: ../share/filters/filters.svg.h:204
+#, fuzzy
+msgid "Convert to a Colorizable transparent positive"
 msgstr "បម្លែង​ទៅ​ជា​រូបភាព​មួយ​ពណ៌​ថ្លា"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:205
 msgid "Monochrome negative"
 msgstr "រូបភាព​មួយ​ពណ៌​ឆ្លាស់​ពណ៌​ដើម"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:205
 msgid "Convert to a colorizable transparent negative"
 msgstr "បម្លែង​ទៅ​ជា​រូបភាព​មួយ​ពណ៌​ឆ្លាស់​ពណ៌​ដើម​ថ្លា"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:206
 msgid "Light eraser, negative"
 msgstr "លុប​ពន្លឺ ដោយ​ឆ្លាស់​ពណ៌​ដើម"
 
-#: ../share/filters/filters.svg.h:210
-msgid "Invert and make the lightest parts of the object progressively transparent"
+#: ../share/filters/filters.svg.h:206
+msgid ""
+"Invert and make the lightest parts of the object progressively transparent"
 msgstr "ត្រឡប់ និង​ធ្វើ​ឲ្យ​ផ្នែក​ដែល​ភ្លឺ​បំផុត​របស់​វត្ថុ​ថ្លា​បន្ត​គ្នា"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint"
 msgstr "គូរ​ឡើងវិញ"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint anything monochrome"
 msgstr "គូរ​គំនូរ​ដែល​មាន​តែ​មួយ​ពណ៌​ឡើងវិញ"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:208
 msgid "Punch hole"
 msgstr "ឮ"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:208
 msgid "Punch object out of a colorizable opaque area"
 msgstr "វត្ថុ​លោត​ចេញ​ក្រៅ​ផ្ទៃ​ស្រអាប់​មាន​ពណ៌"
+
+#: ../share/filters/filters.svg.h:209
+#, fuzzy
+msgid "Riddled"
+msgstr "កណ្ដាល"
+
+#: ../share/filters/filters.svg.h:209
+msgid "Riddle the surface and add bump to images"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:210
+msgid "Wrinkled varnish"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:210
+#, fuzzy
+msgid "Thick glossy and translucent paint texture with high depth"
+msgstr "វាយនភាព​ថ្នាំលាប​ក្រាស់ៗ​ដោយមាន​ជម្រៅ​វាយនភាព​ខ្ពស់"
+
+#: ../share/filters/filters.svg.h:211
+#, fuzzy
+msgid "Canvas Bumps"
+msgstr "ផ្ទាំង​កំណាត់"
+
+#: ../share/filters/filters.svg.h:211
+msgid "Canvas texture with an HSL sensitive height map"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Canvas Bumps, matte"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+#, fuzzy
+msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
+msgstr "ដូចគ្នា​នឹង​ពពុះ HSL ប៉ុន្តែ​ខុស​ត្រង់ថា​​វា​មានពន្លឺ​សាយ​ចេញ ជំនួស​ការ​គួច"
+
+#: ../share/filters/filters.svg.h:213
+#, fuzzy
+msgid "Canvas Bumps alpha"
+msgstr "ដុំ​ពក HSL អាល់ហ្វា"
+
+#: ../share/filters/filters.svg.h:213
+msgid "Same as Canvas Bumps but with transparent highlights"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Lightness-Contrast"
+msgstr "ពន្លឺ"
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Increase or decrease lightness and contrast"
+msgstr "បង្កើន ឬ​បន្ថយ​កម្រិត​ពន្លឺ​នៅ​ក្នុង​ផែនទី​រូបភាព"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Clean edges"
+msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត"
+
+#: ../share/filters/filters.svg.h:215
+msgid ""
+"Removes or decreases glows and jaggeries around objects edges after applying "
+"some filters"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Bright metal"
+msgstr "ភ្លឺជាង"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bright metallic effect for any color"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+msgid "Deep colors plastic"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Transparent plastic with deep colors"
+msgstr "វាយនភាព​សំបកឈើ​បញ្ឈរ ដោយប្រើ​ពណ៌​ឲ្យ​ចាស់"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2013,15 +2108,16 @@ msgstr "ក្រណាត់ (រូបភាព)"
 msgid "Old paint (bitmap)"
 msgstr "គំនូរ​ចាស់ (រូបភាព)"
 
-#: ../src/arc-context.cpp:303
-msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
+#: ../src/arc-context.cpp:319
+msgid ""
+"<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>បញ្ជា(Ctrl)</b> ៖ បង្កើត​រង្វង់ ឬ​ពងក្រពើ​ដែល មានកាំ​ចំនួន​គត់ មុំ​អ័ក្ស/ចម្រៀក​ងាយៗ"
 
-#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>ប្តូរ(Shift)​</b> ៖ គូស​ជុំវិញ​ចំណុច​ចាប់​ផ្តើម​"
 
-#: ../src/arc-context.cpp:455
+#: ../src/arc-context.cpp:471
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
@@ -2030,7 +2126,7 @@ msgstr ""
 "<b>រាង​ពងក្រពើ</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​សមាមាត្រ %d ៖ %d) ដោយ​ប្រើ​<b>ប្ដូរ(Shift)"
 "</b> ដើម្បី​គូរជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/arc-context.cpp:457
+#: ../src/arc-context.cpp:473
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -2039,22 +2135,22 @@ msgstr ""
 "<b>រាង​ពងក្រពើ</b> ៖ %s &#215; %s ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្កើត​ជា​រាង​ការ៉េ ឬ​"
 "រាង​ពងក្រពើ​ដែល​មាន​កាំ​ចំនួនគត់ ដោយ​ប្រើ<b>ប្ដូរ(Shift)</b> ដើម្បី​គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/arc-context.cpp:483
+#: ../src/arc-context.cpp:499
 msgid "Create ellipse"
 msgstr "បង្កើត​​រាង​ពង​ក្រពើ​"
 
-#: ../src/box3d-context.cpp:412 ../src/box3d-context.cpp:419
-#: ../src/box3d-context.cpp:426 ../src/box3d-context.cpp:433
-#: ../src/box3d-context.cpp:440 ../src/box3d-context.cpp:447
+#: ../src/box3d-context.cpp:429 ../src/box3d-context.cpp:436
+#: ../src/box3d-context.cpp:443 ../src/box3d-context.cpp:450
+#: ../src/box3d-context.cpp:457 ../src/box3d-context.cpp:464
 msgid "Change perspective (angle of PLs)"
 msgstr "ផ្លាស់ប្ដូរ​យថាទស្សន៍ (មុំ​របស់ PLs)"
 
 #. status text
-#: ../src/box3d-context.cpp:605
+#: ../src/box3d-context.cpp:622
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>ប្រអប់​ត្រីមាត្រ</b>ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ហូត​តាម​អ័ក្ស Z"
 
-#: ../src/box3d-context.cpp:629
+#: ../src/box3d-context.cpp:646
 msgid "Create 3D box"
 msgstr "បង្កើត​ប្រអប់​ត្រីមាត្រ"
 
@@ -2123,16 +2219,16 @@ msgstr "គ្មាន​ការ​ពង្រីក​បន្ទាប់
 msgid "Create guide"
 msgstr "បង្កើត​បន្ទាត់​ក្រឹត​"
 
-#: ../src/desktop-events.cpp:412
+#: ../src/desktop-events.cpp:391
 msgid "Move guide"
 msgstr "ផ្លាស់ទី​បន្ទាត់​ក្រឹត​"
 
-#: ../src/desktop-events.cpp:419 ../src/desktop-events.cpp:466
+#: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:445
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "លុប​បន្ទាត់​ក្រឹត​"
 
-#: ../src/desktop-events.cpp:446
+#: ../src/desktop-events.cpp:425
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>បន្ទាត់​នាំផ្លូវ</b> ៖ %s"
@@ -2435,8 +2531,10 @@ msgid "<b>Base:</b>"
 msgstr "<b>មូលដ្ឋាន ៖</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2204 ../src/dialogs/clonetiler.cpp:2211
-msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
-msgstr "មូលដ្ឋាន​សម្រាប់​ការ​គួច​លោការីត ៖ មិន​បាន​ប្រើ (០) ប្រសព្វ​គ្នា (&lt;១) ឬ​ញែក​ពីគ្នា (&gt;១)"
+msgid ""
+"Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
+msgstr ""
+"មូលដ្ឋាន​សម្រាប់​ការ​គួច​លោការីត ៖ មិន​បាន​ប្រើ (០) ប្រសព្វ​គ្នា (&lt;១) ឬ​ញែក​ពីគ្នា (&gt;១)"
 
 #: ../src/dialogs/clonetiler.cpp:2225
 msgid "Alternate the sign of scales for each row"
@@ -2745,7 +2843,8 @@ msgstr "តំណាង"
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
-msgstr "ក្លូន​នីមួយៗ​ត្រូវ​បាន​បង្កើត​ជា​មួយ​តម្លៃ​ប្រហាក់ប្រហែល​បាន​កំណត់​ដោយ​តម្លៃ​ដែល​បាន​ជ្រើ​សយក​នៅ​ក្នុង​ចំណុច​៽នោះ"
+msgstr ""
+"ក្លូន​នីមួយៗ​ត្រូវ​បាន​បង្កើត​ជា​មួយ​តម្លៃ​ប្រហាក់ប្រហែល​បាន​កំណត់​ដោយ​តម្លៃ​ដែល​បាន​ជ្រើ​សយក​នៅ​ក្នុង​ចំណុច​៽នោះ"
 
 #: ../src/dialogs/clonetiler.cpp:2744
 msgid "Size"
@@ -2849,93 +2948,93 @@ msgid ""
 "to zero"
 msgstr "កំណត់​ការ​ផ្លាស់ប្ដូរ​​ ការ​ប្ដូរ មាត្រដ្ឋាន បង្វិល ភាព​ស្រអាប់ និង​ពណ៌​នៅ​ក្នុង​ប្រអប់​ទៅ​សូន្យ​ឡើង​វិញ"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2623
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
 msgstr "ទំព័រ​"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2627
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2627
 msgid "_Drawing"
 msgstr "គំនូរ"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2629
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2629
 msgid "_Selection"
 msgstr "ជម្រើស​"
 
-#: ../src/dialogs/export.cpp:141
+#: ../src/dialogs/export.cpp:146
 msgid "_Custom"
 msgstr "ផ្ទាល់ខ្លួន​"
 
-#: ../src/dialogs/export.cpp:266
+#: ../src/dialogs/export.cpp:271
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>នាំ​ផ្ទៃ​ចេញ</b></big>"
 
-#: ../src/dialogs/export.cpp:280
+#: ../src/dialogs/export.cpp:285
 msgid "Units:"
 msgstr "ឯកត្តា ៖"
 
-#: ../src/dialogs/export.cpp:308
+#: ../src/dialogs/export.cpp:313
 msgid "_x0:"
 msgstr "_x0 ៖"
 
-#: ../src/dialogs/export.cpp:313
+#: ../src/dialogs/export.cpp:318
 msgid "x_1:"
 msgstr "x_1 ៖"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:323
 msgid "Wid_th:"
 msgstr "ទំហំ ៖"
 
-#: ../src/dialogs/export.cpp:324
+#: ../src/dialogs/export.cpp:329
 msgid "_y0:"
 msgstr "_y0 ៖"
 
-#: ../src/dialogs/export.cpp:329
+#: ../src/dialogs/export.cpp:334
 msgid "y_1:"
 msgstr "y_1 ៖"
 
-#: ../src/dialogs/export.cpp:334
+#: ../src/dialogs/export.cpp:339
 msgid "Hei_ght:"
 msgstr "កម្ពស់ ៖"
 
-#: ../src/dialogs/export.cpp:466
+#: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>ទំហំ​រូបភាព</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "​ទទឹង ៖"
 
-#: ../src/dialogs/export.cpp:479 ../src/dialogs/export.cpp:493
+#: ../src/dialogs/export.cpp:484 ../src/dialogs/export.cpp:498
 msgid "pixels at"
 msgstr "ភីចសែល​​នៅ"
 
-#: ../src/dialogs/export.cpp:487
+#: ../src/dialogs/export.cpp:492
 msgid "dp_i"
 msgstr "dpi"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
+#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "កម្ពស់ ៖"
 
-#: ../src/dialogs/export.cpp:504 ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:515
+#: ../src/dialogs/export.cpp:520
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>ឈ្មោះ​ឯកសារ​</b></big>"
 
-#: ../src/dialogs/export.cpp:586
+#: ../src/dialogs/export.cpp:591
 msgid "_Browse..."
 msgstr "រកមើល​..."
 
-#: ../src/dialogs/export.cpp:615
+#: ../src/dialogs/export.cpp:620
 msgid "Batch export all selected objects"
 msgstr "ចំនួន​នាំចេញ​វត្ថុ​ដែល​បាន​ជ្រើស​ទាំង​អស់"
 
-#: ../src/dialogs/export.cpp:619
+#: ../src/dialogs/export.cpp:624
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
@@ -2943,61 +3042,61 @@ msgstr ""
 "នាំចេញ​វត្ថុ​ដែល​បាន​ជ្រើស​នីមួយៗ​ទៅ​ក្នុង​ឯកសារ PNG ផ្ទាល់​របស់​វា ដោយ​ប្រើ​ជំនួយ​នាំចេញ ប្រសិន​បើ​មាន "
 "(ប្រយ័ត្ន សរសេរ​ជាន់​លើ​ដោយ​មិន​បាន​សួរ!)"
 
-#: ../src/dialogs/export.cpp:627
+#: ../src/dialogs/export.cpp:632
 msgid "Hide all except selected"
 msgstr "លាក់ទាំងអស់ លើកលែង​តែ​អ្វី​ដែល​បាន​ជ្រើស"
 
-#: ../src/dialogs/export.cpp:631
+#: ../src/dialogs/export.cpp:636
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr "នៅ​ក្នុង​រូបភាព​ដែល​បាន​នាំចេញ លាក់​វត្ថុ​ទាំង​អស់ លើកលែង​តែ​អ្វី​ដែល​ត្រូវ​បាន​ជ្រើស"
 
-#: ../src/dialogs/export.cpp:648
+#: ../src/dialogs/export.cpp:653
 msgid "_Export"
 msgstr "នាំចេញ "
 
-#: ../src/dialogs/export.cpp:652
+#: ../src/dialogs/export.cpp:657
 msgid "Export the bitmap file with these settings"
 msgstr "នាំចេញ​​ឯកសារ​​រូបភាព​​ជា​​មួយ​​ការ​កំណត់​​ទាំងនេះ "
 
-#: ../src/dialogs/export.cpp:678
+#: ../src/dialogs/export.cpp:683
 #, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "បាច់​នាំចេញវត្ថុ​ដែល​បាន​ជ្រើស %d"
 
-#: ../src/dialogs/export.cpp:1009
+#: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
 msgstr "ការ​នាំចេញ​កំពុង​ដំណើរការ"
 
-#: ../src/dialogs/export.cpp:1079
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "នាំចេញ​ឯកសារ %d"
 
-#: ../src/dialogs/export.cpp:1119 ../src/dialogs/export.cpp:1192
+#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "មិន​អាច​នាំចេញ​ទៅ​ឈ្មោះ​ឯកសារ %s ។\n"
 
-#: ../src/dialogs/export.cpp:1148
+#: ../src/dialogs/export.cpp:1153
 msgid "You have to enter a filename"
 msgstr "អ្នក​ត្រូវ​តែ​បញ្ចូល​ឈ្មោះ​ឯកសារ"
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1158
 msgid "The chosen area to be exported is invalid"
 msgstr "ផ្ទៃ​ដែល​បាន​ជ្រើស​​ត្រូវ​នាំចេញ​មិន​ត្រឹមត្រូវ"
 
-#: ../src/dialogs/export.cpp:1162
+#: ../src/dialogs/export.cpp:1167
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "មិន​ទាន់​មាន​ថត %s នៅ​ឡើយ​ទេ ឬ​វា​មិន​មែន​ជាថត ។\n"
 
-#: ../src/dialogs/export.cpp:1178
+#: ../src/dialogs/export.cpp:1183
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "នាំចេញ %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1299
+#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
 msgid "Select a filename for exporting"
 msgstr "ជ្រើស​​ឈ្មោះ​​ឯកសារ​​សម្រាប់​​នាំចេញ​"
 
@@ -3149,7 +3248,8 @@ msgid "_Style: "
 msgstr "រចនាប័ទ្ម ៖ "
 
 #: ../src/dialogs/find.cpp:689 ../src/ui/dialog/find.cpp:62
-msgid "Find objects by the value of the style attribute (exact or partial match)"
+msgid ""
+"Find objects by the value of the style attribute (exact or partial match)"
 msgstr "រក​​វត្ថុ​​តាម​​តម្លៃ​​នៃ​​គុណលក្ខណៈ​រចនាប័ទ្ម​ (ផ្គួរផ្គងភាព​​ត្រឹមត្រូវ ឬ​លំអៀង​)"
 
 #: ../src/dialogs/find.cpp:690 ../src/ui/dialog/find.cpp:63
@@ -3220,7 +3320,8 @@ msgid "_Id"
 msgstr "លេខសម្គាល់​"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgid ""
+"The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "លេខ​សម្គាល់= គុណលក្ខណៈ (តែអក្សរ តួលេខ និងតួអក្សរ .-_: បាន​អនុញ្ញត)"
 
 #. Button for setting the object's id, label, title and description.
@@ -3368,14 +3469,14 @@ msgstr "URL ៖"
 
 #: ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:502
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:504
 #: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X ៖"
 
 #: ../src/dialogs/object-attributes.cpp:52
 #: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
-#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:505
+#: ../src/ui/view/edit-widget.cpp:1075 ../src/widgets/desktop-widget.cpp:507
 #: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y ៖"
@@ -3750,7 +3851,8 @@ msgstr "បាន​បើក "
 msgid ""
 "Determines whether to snap to this grid or not. Can be 'on' for invisible "
 "grids."
-msgstr "កំណត់​ថាតើ​ដើម្បី​ត្រូវ​ខ្ទាស់​ទៅ​​ក្រឡាចត្រង្គ ​ឬ​ក៏អត់ ។ អាច​ 'បើក' សម្រាប់​ក្រឡាចត្រ​ដែល​មើលមិន​ឃើញ ។"
+msgstr ""
+"កំណត់​ថាតើ​ដើម្បី​ត្រូវ​ខ្ទាស់​ទៅ​​ក្រឡាចត្រង្គ ​ឬ​ក៏អត់ ។ អាច​ 'បើក' សម្រាប់​ក្រឡាចត្រ​ដែល​មើលមិន​ឃើញ ។"
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
@@ -3772,7 +3874,8 @@ msgstr "ដែល​មើល​ឃើញ "
 msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
-msgstr "កំណត់​ថាតើ​ក្រឡាចត្រង្គ​ត្រូវ​បាន​បង្ហាញ ឬ​ក៏អត់ ។ វត្ថុ​នៅតែ​ត្រូវ​បាន​ខ្ទាស់​ទៅ​ក្រឡាចត្រង្គ​ដែល​មើល​មិន​ឃើញ ។"
+msgstr ""
+"កំណត់​ថាតើ​ក្រឡាចត្រង្គ​ត្រូវ​បាន​បង្ហាញ ឬ​ក៏អត់ ។ វត្ថុ​នៅតែ​ត្រូវ​បាន​ខ្ទាស់​ទៅ​ក្រឡាចត្រង្គ​ដែល​មើល​មិន​ឃើញ ។"
 
 #: ../src/display/canvas-grid.cpp:676
 msgid "Spacing _X:"
@@ -3798,7 +3901,7 @@ msgstr "ប្រសិន​បើ​បានកំណត់ បង្ហា�
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
-#: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
+#: ../src/display/snap-indicator.cpp:148 ../src/display/snap-indicator.cpp:151
 msgid "UNDEFINED"
 msgstr "មិនបាន​កំណត់"
 
@@ -3819,158 +3922,163 @@ msgid "guide intersection"
 msgstr "ចំណុច​ប្រសព្វ​ក្រឡា​ចត្រង្គ"
 
 #: ../src/display/snap-indicator.cpp:78
+#, fuzzy
+msgid "guide origin"
+msgstr "បន្ទាត់​ក្រឹត​ដើម"
+
+#: ../src/display/snap-indicator.cpp:81
 msgid "grid-guide intersection"
 msgstr "ចំណុច​ប្រសព្វ​បន្ទាត់​ក្រិត​ក្រឡាចត្រង្គ"
 
-#: ../src/display/snap-indicator.cpp:81
+#: ../src/display/snap-indicator.cpp:84
 msgid "cusp node"
 msgstr "ថ្នាំង​អុចៗ"
 
-#: ../src/display/snap-indicator.cpp:84
+#: ../src/display/snap-indicator.cpp:87
 msgid "smooth node"
 msgstr "ថ្នាំង​រលោង"
 
-#: ../src/display/snap-indicator.cpp:87
+#: ../src/display/snap-indicator.cpp:90
 msgid "path"
 msgstr "ផ្លូវ"
 
-#: ../src/display/snap-indicator.cpp:90
+#: ../src/display/snap-indicator.cpp:93
 msgid "path intersection"
 msgstr "ចំណុច​ប្រសព្វ​ផ្លូវ"
 
-#: ../src/display/snap-indicator.cpp:93
+#: ../src/display/snap-indicator.cpp:96
 msgid "bounding box corner"
 msgstr "ជ្រុង​ប្រអប់​លោតៗ"
 
-#: ../src/display/snap-indicator.cpp:96
+#: ../src/display/snap-indicator.cpp:99
 msgid "bounding box side"
 msgstr "ចំហៀង​ប្រអប់​លោតៗ"
 
-#: ../src/display/snap-indicator.cpp:99
+#: ../src/display/snap-indicator.cpp:102
 msgid "bounding box"
 msgstr "ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:102
+#: ../src/display/snap-indicator.cpp:105
 msgid "page border"
 msgstr "ស៊ុម​ទំព័រ"
 
-#: ../src/display/snap-indicator.cpp:105
+#: ../src/display/snap-indicator.cpp:108
 msgid "line midpoint"
 msgstr "ចំណុច​កណ្ដាល​បន្ទាត់"
 
-#: ../src/display/snap-indicator.cpp:108
+#: ../src/display/snap-indicator.cpp:111
 msgid "object midpoint"
 msgstr "ចំណុច​កណ្ដាល​វត្ថុ"
 
-#: ../src/display/snap-indicator.cpp:111
+#: ../src/display/snap-indicator.cpp:114
 msgid "object rotation center"
 msgstr "ចំណុច​កណ្ដាល​សម្រាប់​បង្វិល​វត្ថុ"
 
-#: ../src/display/snap-indicator.cpp:114
+#: ../src/display/snap-indicator.cpp:117
 msgid "handle"
 msgstr "ចំណុច​ទាញ"
 
-#: ../src/display/snap-indicator.cpp:117
+#: ../src/display/snap-indicator.cpp:120
 msgid "bounding box side midpoint"
 msgstr "ចំណុច​កណ្ដាល​ចំហៀង​ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:120
+#: ../src/display/snap-indicator.cpp:123
 msgid "bounding box midpoint"
 msgstr "ចំណុច​កណ្ដាល​ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:123
+#: ../src/display/snap-indicator.cpp:126
 msgid "page corner"
 msgstr "ជ្រុង​នៃ​ទំព័រ"
 
-#: ../src/display/snap-indicator.cpp:126
+#: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
 msgstr "ជ្រុង​សំបក​ដែល​មាន​ផ្ទៃ​ខាងក្រៅ​កោង"
 
-#: ../src/display/snap-indicator.cpp:129
+#: ../src/display/snap-indicator.cpp:132
 msgid "quadrant point"
 msgstr "ចំណុច​អ័ក្ស ៩០ ដឺក្រេ"
 
-#: ../src/display/snap-indicator.cpp:132
+#: ../src/display/snap-indicator.cpp:135
 msgid "center"
 msgstr "កណ្តាល"
 
-#: ../src/display/snap-indicator.cpp:135
+#: ../src/display/snap-indicator.cpp:138
 msgid "corner"
 msgstr "ជ្រុង"
 
-#: ../src/display/snap-indicator.cpp:138
+#: ../src/display/snap-indicator.cpp:141
 msgid "text baseline"
 msgstr "បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
 
-#: ../src/display/snap-indicator.cpp:151
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box corner"
 msgstr "ជ្រុង​ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:154
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box midpoint"
 msgstr "ចំណុច​កណ្ដាល​ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:157
+#: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box side midpoint"
 msgstr "ចំណុច​កណ្ដាល​ចំហៀង​របស់​ប្រអប់​លោត"
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
 msgstr "ថ្នាំង​រលោង"
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:166
 msgid "Cusp node"
 msgstr "ថ្នាំង​អុចៗ"
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:169
 msgid "Line midpoint"
 msgstr "ចំណុច​កណ្ដាល​បន្ទាត់"
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object midpoint"
 msgstr "ចំណុច​កណ្ដាល​វត្ថុ"
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:175
 msgid "Object rotation center"
 msgstr "ចំណុច​កណ្ដាល​សម្រាប់​បង្វិល​វត្ថុ"
 
-#: ../src/display/snap-indicator.cpp:175
+#: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
 msgstr "ចំណុច​ទាញ"
 
-#: ../src/display/snap-indicator.cpp:178
+#: ../src/display/snap-indicator.cpp:181
 msgid "Path intersection"
 msgstr "ចំណុច​ប្រសព្វ​ផ្លូវ"
 
-#: ../src/display/snap-indicator.cpp:181
+#: ../src/display/snap-indicator.cpp:184
 msgid "Guide"
 msgstr "បន្ទាត់ក្រឹត​"
 
-#: ../src/display/snap-indicator.cpp:184
+#: ../src/display/snap-indicator.cpp:187
 msgid "Guide origin"
 msgstr "បន្ទាត់​ក្រឹត​ដើម"
 
-#: ../src/display/snap-indicator.cpp:187
+#: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
 msgstr "ជ្រុង​សំបក​ដែល​មាន​ផ្ទៃ​កោង"
 
-#: ../src/display/snap-indicator.cpp:190
+#: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
 msgstr "ចំណុច​អ័ក្ស ៩០ ដឺក្រេ"
 
-#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
 msgid "Center"
 msgstr "កណ្តាល"
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Corner"
 msgstr "ជ្រុង"
 
-#: ../src/display/snap-indicator.cpp:199
+#: ../src/display/snap-indicator.cpp:202
 msgid "Text baseline"
 msgstr "បន្ទាត់​មូលដ្ឋាន​អត្ថបទ"
 
-#: ../src/display/snap-indicator.cpp:238
+#: ../src/display/snap-indicator.cpp:241
 msgid " to "
 msgstr " ទៅកាន់ "
 
@@ -4049,7 +4157,8 @@ msgid "Set picked color"
 msgstr "កំណត់​ពណ៌​ដែល​បាន​ជ្រើស​"
 
 #: ../src/dyna-draw-context.cpp:615
-msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
+msgid ""
+"<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr "<b>បាន​ជ្រើស​ផ្លូវ​បន្ទាត់​ក្រឹត</b>; ចាប់ផ្ដើម​គូរ​បន្ទាត់​ក្រឹត​ដោយ​ប្រើ<b>បញ្ជា(Ctrl)</b>"
 
 #: ../src/dyna-draw-context.cpp:617
@@ -4223,7 +4332,7 @@ msgstr ""
 "បច្ចុប្បន្ន គ្មាន​ជំនួយ​សម្រាប់​ផ្នែក​បន្ថែម​នេះ​ទេ ។  សូម​មើល​លើ​តំបន់​បណ្ដាញ Inkscape ឬ​សួរ​លើ​បញ្ជី​សំបុត្រ​"
 "រួម បើ​អ្នក​មាន​សំណួរ​ទាក់ទង​និង​ផ្នែក​បន្ថែម​នេះ ។"
 
-#: ../src/extension/implementation/script.cpp:1058
+#: ../src/extension/implementation/script.cpp:1063
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -4574,7 +4683,8 @@ msgstr "កម្រិត"
 msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range."
-msgstr "ដាក់​កម្រិត​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ធ្វើ​មាត្រដ្ឋាន​តម្លៃ​ធ្លាក់ចុះ​រវាង​ជួរ​ដែល​បាន​ផ្ដល់​ទៅ​ជួរ​ពណ៌​ពេញលេញ ។"
+msgstr ""
+"ដាក់​កម្រិត​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ធ្វើ​មាត្រដ្ឋាន​តម្លៃ​ធ្លាក់ចុះ​រវាង​ជួរ​ដែល​បាន​ផ្ដល់​ទៅ​ជួរ​ពណ៌​ពេញលេញ ។"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median"
@@ -4614,7 +4724,8 @@ msgid "Brightness"
 msgstr "ពន្លឺ"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
+msgid ""
+"Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr "លៃតម្រូវ​​ពណ៌​លាំៗ តិត្ថិភាព និង​ពន្លឺ​នៅ​ក្នុង​រូបភាព​ដែលបាន​ជ្រើស"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
@@ -4671,7 +4782,8 @@ msgid "Order"
 msgstr "លំដាប់"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
-msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
+msgid ""
+"Reduce noise in selected bitmap(s) using a noise peak elimination filter."
 msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅ​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
@@ -4679,7 +4791,8 @@ msgid "Resample"
 msgstr "ធ្វើ​គំរូ"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-msgid "Alter the resolution of selected image by resizing it to the given pixel size"
+msgid ""
+"Alter the resolution of selected image by resizing it to the given pixel size"
 msgstr "ឆ្លាស់​គុណភាព​បង្ហាញ​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្ដូរ​ទំហំ​ទៅ​តាម​ទំហំ​ភីកសែល​ដែល​បាន​ផ្ដល់"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
@@ -4816,32 +4929,36 @@ msgstr "PostScript កម្រិត ២"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-msgid "Export area is whole canvas"
-msgstr "នាំចេញ​ផ្ទៃ គឺ​ផ្ទាំង​កំណាត់​ទាំងមូល"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:283
-#: ../src/extension/internal/cairo-ps-out.cpp:320
-msgid "Export area is the drawing"
-msgstr "នាំចេញ​ផ្ទៃ គឺ​ជា​ការ​គូរ"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:284
-#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "បម្លែង​អត្ថបទ​ទៅ​ផ្លូវ​"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:285
-#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-ps-out.cpp:283
+#: ../src/extension/internal/cairo-ps-out.cpp:320
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "បម្លែង​រូបភាព​បែបផែន​តម្រង"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:286
-#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-ps-out.cpp:284
+#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
 msgid "Resolution for rasterization (dpi)"
 msgstr "គុណភាព​បង្ហាញ​សម្រាប់​ការ​បម្លែង​រូបភាព​ទៅ​ជា​ចំណុច (dpi)"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:285
+#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#, fuzzy
+msgid "Export area is drawing"
+msgstr "នាំចេញ​ផ្ទៃ គឺ​ជា​ការ​គូរ"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:286
+#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#, fuzzy
+msgid "Export area is page"
+msgstr "នាំចេញ​ផ្ទៃ គឺ​ជា​ការ​គូរ"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -4879,14 +4996,6 @@ msgstr "ដាក់​កម្រិត​ទៅ​កំណែ​របស់
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-msgid "Export drawing, not page"
-msgstr "នាំចេញ​គំនូរ មិន​មែន​ទំព័រ​ទេ"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-msgid "Export canvas"
-msgstr "កែ​សម្រួល​លើ​ផ្ទាំង​ក្រណាត់"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2400
 msgid "EMF Input"
@@ -5151,7 +5260,8 @@ msgstr "ភាព​ត្រឹមត្រូវ​ប្រហែល​ជា
 msgid ""
 "<b>Note</b>: setting the precision too high may result in a large SVG file "
 "and slow performance."
-msgstr "<b>ចំណាំ</b> ៖ ការ​កំណត់​ភាព​ត្រឹមត្រូវ​​ខ្ពស់ពេក អាច​មាន​លទ្ធផល​ក្នុង​ឯកសារ SVG ធំ ហើយ​អនុវត្ត​យឺត ។"
+msgstr ""
+"<b>ចំណាំ</b> ៖ ការ​កំណត់​ភាព​ត្រឹមត្រូវ​​ខ្ពស់ពេក អាច​មាន​លទ្ធផល​ក្នុង​ឯកសារ SVG ធំ ហើយ​អនុវត្ត​យឺត ។"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:393
@@ -5737,8 +5847,10 @@ msgstr "<b>ភ្ជាប់​ច្រើន​ពេក</b> លទ្ធផ�
 
 #: ../src/flood-context.cpp:509
 #, c-format
-msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
-msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
+msgid ""
+"Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural ""
+"Area filled, path with <b>%d</b> nodes created and unioned with selection."
 msgstr[0] "បានបំពេញ​ផ្ទៃ ផ្លូវ​ដោយថ្នាំង <b>%d</b> បានបង្កើត និង​មិន​ភ្ជាប់​ជា​មួយ​​ជម្រើស ។"
 
 #: ../src/flood-context.cpp:513
@@ -5827,9 +5939,12 @@ msgstr[0] " នៅ​លើ​វត្ថុ​ដែល​បាន​ជ្�
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
-msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
-msgstr[0] "ការ​បញ្ចូល​កា​របញ្ឈប់​ដំណោះស្រាយ​មួយ​ចូល​គ្នា %d (​អូស​ដោយ​ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក) បាន​ជ្រើស"
+msgid ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural ""
+"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgstr[0] ""
+"ការ​បញ្ចូល​កា​របញ្ឈប់​ដំណោះស្រាយ​មួយ​ចូល​គ្នា %d (​អូស​ដោយ​ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក) បាន​ជ្រើស"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
 #: ../src/gradient-context.cpp:182
@@ -5842,7 +5957,8 @@ msgstr[0] "<b>%d</b> ចំណុច​ទាញ​ជម្រាល​បា�
 #: ../src/gradient-context.cpp:189
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
-msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgid_plural ""
+"<b>No</b> gradient handles selected out of %d on %d selected objects"
 msgstr[0] "<b>គ្មាន</b> ចំណុច​ទាញ​ជម្រាល​បាន​ជ្រើស​ពី %d នៅ​លើ %d"
 
 #: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
@@ -5936,7 +6052,8 @@ msgid ""
 msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr[0] "ចំណុច​ជម្រាល​បាន​ចែករំលែក​ដោយ​ជម្រាល <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
+msgstr[0] ""
+"ចំណុច​ជម្រាល​បាន​ចែករំលែក​ដោយ​ជម្រាល <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បំបែក"
 
 #: ../src/gradient-drag.cpp:1823
 msgid "Move gradient handle(s)"
@@ -6154,95 +6271,95 @@ msgstr "បម្រុង​ទុក​ដោយស្វ័យ​ប្រវ
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Commands Bar"
 msgstr "របារ​ពាក្យ​បញ្ជា​"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:868
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "បង្ហាញ ឬលាក់​របារ​ពាក្យ​បញ្ជា (ក្រោម​ម៉ឺនុយ)"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Snap Controls Bar"
 msgstr "របារ​គ្រប់គ្រង​ការ​ចាប់យក"
 
-#: ../src/interface.cpp:830
+#: ../src/interface.cpp:870
 msgid "Show or hide the snapping controls"
 msgstr "បង្ហាញ ឬ​លាក់​ការ​គ្រប់គ្រង​ការ​ចាប់យក"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Tool Controls Bar"
 msgstr "របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
 
-#: ../src/interface.cpp:832
+#: ../src/interface.cpp:872
 msgid "Show or hide the Tool Controls bar"
 msgstr "បង្ហាញ ឬ​លាក់​របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "_Toolbox"
 msgstr "ប្រអប់​ឧបករណ៍"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:874
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "បង្ហាញ ឬ​លាក់​ប្រអប់​ឧបករណ៍​ចម្បង (នៅ​ខាង​ឆ្វេង)"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "_Palette"
 msgstr "ក្ដារលាយ"
 
-#: ../src/interface.cpp:840
+#: ../src/interface.cpp:880
 msgid "Show or hide the color palette"
 msgstr "បង្ហាញ ឬ​លាក់​ក្ដារលាយ​ពណ៌"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "_Statusbar"
 msgstr "របារ​ស្ថានភាព"
 
-#: ../src/interface.cpp:842
+#: ../src/interface.cpp:882
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "បង្ហាញ ឬ​លាក់​របារ​ស្ថានភាព (នៅ​បាត​របស់​វីនដូ)"
 
-#: ../src/interface.cpp:912
+#: ../src/interface.cpp:956
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "មិន​ស្គាល់​កិរិយាស័ព្ទ \"%s\""
 
-#: ../src/interface.cpp:951
+#: ../src/interface.cpp:995
 msgid "Open _Recent"
 msgstr "អ្វី​បាន​បើក​ថ្មីៗ"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1052
+#: ../src/interface.cpp:1096
 #, c-format
 msgid "Enter group #%s"
 msgstr "បញ្ចូល​ក្រុម #%s"
 
-#: ../src/interface.cpp:1063
+#: ../src/interface.cpp:1107
 msgid "Go to parent"
 msgstr "ទៅ​កាន់​មេ​"
 
-#: ../src/interface.cpp:1154 ../src/interface.cpp:1240
-#: ../src/interface.cpp:1343 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1198 ../src/interface.cpp:1284
+#: ../src/interface.cpp:1387 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "ទម្លាក់​ពណ៌​"
 
-#: ../src/interface.cpp:1193 ../src/interface.cpp:1303
+#: ../src/interface.cpp:1237 ../src/interface.cpp:1347
 msgid "Drop color on gradient"
 msgstr "ទម្លាក់​ពណ៌​នៅ​លើ​ជម្រាល"
 
-#: ../src/interface.cpp:1356
+#: ../src/interface.cpp:1400
 msgid "Could not parse SVG data"
 msgstr "មិន​អាច​ញែក​ទិន្នន័យ SVG"
 
-#: ../src/interface.cpp:1395
+#: ../src/interface.cpp:1439
 msgid "Drop SVG"
 msgstr "ទម្លាក់ SVG"
 
-#: ../src/interface.cpp:1451
+#: ../src/interface.cpp:1495
 msgid "Drop bitmap image"
 msgstr "ទម្លាក់​រូបភាព"
 
-#: ../src/interface.cpp:1543
+#: ../src/interface.cpp:1587
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6255,7 +6372,7 @@ msgstr ""
 "\n"
 "ឯកសារ​មាន​នៅ​ក្នុង \"%s\" រួច​ហើយ ។ ការ​ជំនួស​វា​នឹង​សរសរ​ជាន់​លើ​មាតិកា​របស់​វា ។"
 
-#: ../src/interface.cpp:1550 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1594 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "ជំនួស"
@@ -6423,7 +6540,8 @@ msgid "Locked"
 msgstr "បាន​ចាក់សោ​"
 
 #: ../src/libgdl/gdl-dock-item.c:321
-msgid "If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgid ""
+"If set, the dock item cannot be dragged around and it doesn't show a grip"
 msgstr "ប្រសិន​បើ​បាន​កំណត់ ធាតុ​ចូលចត​មិនអាច​ត្រូវ​បាន​អូស​ជុំវិញទេ ហើយ​វា​មិន​បង្ហាញ​ដៃ​ទេ"
 
 #: ../src/libgdl/gdl-dock-item.c:329
@@ -6545,7 +6663,8 @@ msgstr "អនុញ្ញាត​ឲ្យ​ធាតុ​ចូលចត​
 msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
-msgstr "មេ %p ៖ មិនអាច​បន្ថែម​វត្ថុ %p[%s] ទៅ​សញ្ញា (/) ។  មាន​ធាតុ​មួយ​រួច​ហើយ​ដែល​មាន​ឈ្មោះ (%p) ។"
+msgstr ""
+"មេ %p ៖ មិនអាច​បន្ថែម​វត្ថុ %p[%s] ទៅ​សញ្ញា (/) ។  មាន​ធាតុ​មួយ​រួច​ហើយ​ដែល​មាន​ឈ្មោះ (%p) ។"
 
 #: ../src/libgdl/gdl-dock-master.c:969
 #, c-format
@@ -6560,7 +6679,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1559
+#: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "ទំព័រ"
 
@@ -6613,7 +6732,8 @@ msgstr "ចត​មេ​វត្ថុ​ចត​នេះ​ត្រូ​
 msgid ""
 "Call to gdl_dock_object_dock in a dock object %p (object type is %s) which "
 "hasn't implemented this method"
-msgstr "ហៅ​ gdl_dock_object_dock នៅ​ក្នុងវត្ថុ​ចត %p (ប្រភេទ​វត្ថុ​គឺ %s) ដែល​មិន​បាន​ប្រតិបត្តិ​វិធីសាស្ត្រ​នេះ"
+msgstr ""
+"ហៅ​ gdl_dock_object_dock នៅ​ក្នុងវត្ថុ​ចត %p (ប្រភេទ​វត្ថុ​គឺ %s) ដែល​មិន​បាន​ប្រតិបត្តិ​វិធីសាស្ត្រ​នេះ"
 
 #: ../src/libgdl/gdl-dock-object.c:563
 #, c-format
@@ -6629,7 +6749,8 @@ msgstr "មិន​អាច​ចត %p ទៅ %p ពីព្រោះ​ព�
 
 #: ../src/libgdl/gdl-dock-object.c:612
 #, c-format
-msgid "Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgid ""
+"Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr "ប៉ុនប៉ងចង %p មាន​វត្ថុ​ចត​ដែល​បាន​ចង​រួចហើយ %p (មេ​បច្ចុប្បន្ន ៖ %p)"
 
 #: ../src/libgdl/gdl-dock-paned.c:132
@@ -6648,7 +6769,8 @@ msgstr "ស្អិត"
 msgid ""
 "Whether the placeholder will stick to its host or move up the hierarchy when "
 "the host is redocked"
-msgstr "ថាតើ​កន្លែង​ដាក់​នៅ​តែ​ជាប់​​នឹង​ម៉ាស៊ីន​របស់​វា ឬ​ផ្លាស់ទី​ឡើង​លើ​​ក្នុងឋានានុក្រម​នៅ​ពេល​ម៉ាស៊ីន​ត្រូវ​បាន​ចត​ម្ដង​ទៀត"
+msgstr ""
+"ថាតើ​កន្លែង​ដាក់​នៅ​តែ​ជាប់​​នឹង​ម៉ាស៊ីន​របស់​វា ឬ​ផ្លាស់ទី​ឡើង​លើ​​ក្នុងឋានានុក្រម​នៅ​ពេល​ម៉ាស៊ីន​ត្រូវ​បាន​ចត​ម្ដង​ទៀត"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
 msgid "Host"
@@ -6945,7 +7067,8 @@ msgstr "ចាប់ផ្ដើម​អថេរ​គែម​"
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
-msgstr "ចំនួន​បម្លាស់ទី​ចៃដន្យ ដែលត្រូវ​​ផ្លាស់ទី​ចំណុច​ចាប់ផ្ដើម​របស់​ស្នាម​ថ្នេរ​នៅ​ខាង​ក្នុង និង​ខាងក្រៅ​ផ្លូវ​បន្ទាត់​ក្រិត"
+msgstr ""
+"ចំនួន​បម្លាស់ទី​ចៃដន្យ ដែលត្រូវ​​ផ្លាស់ទី​ចំណុច​ចាប់ផ្ដើម​របស់​ស្នាម​ថ្នេរ​នៅ​ខាង​ក្នុង និង​ខាងក្រៅ​ផ្លូវ​បន្ទាត់​ក្រិត"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
@@ -7195,7 +7318,8 @@ msgstr "ការ​ដាក់​ចន្លោះ"
 msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
 "limited to -90% of pattern width."
-msgstr "ចន្លោះ​រវាង​ច្បាប់​ចម្លង​នៃ​លំនាំ ។ តម្លៃ​អវិជ្ជមាន​អនុញ្ញាត ប៉ុន្តែ​ត្រូវ​បាន​កំណត់​ដល់ -90% នៃ​ទទឹង​លំនាំ ។"
+msgstr ""
+"ចន្លោះ​រវាង​ច្បាប់​ចម្លង​នៃ​លំនាំ ។ តម្លៃ​អវិជ្ជមាន​អនុញ្ញាត ប៉ុន្តែ​ត្រូវ​បាន​កំណត់​ដល់ -90% នៃ​ទទឹង​លំនាំ ។"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -7272,7 +7396,8 @@ msgstr "ផ្នែក​ទី ១ ខាងក្រៅ"
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
 "1=default"
-msgstr "កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ 0= ច្បាស់ 1= លំនាំដើម"
+msgstr ""
+"កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ 0= ច្បាស់ 1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in"
@@ -7649,8 +7774,8 @@ msgid ""
 "2 consecutive segments are used to reverse/preserve orientation only "
 "(otherwise, they define a general transform)."
 msgstr ""
-"ចម្រៀក ២ តៗ​គ្នាគឺ​ត្រូវបាន​ប្រើ​ដើម្បី​តែ​ដាក់​ច្រាស/​បម្រុង​ទុក​ទិស​ប៉ុណ្ណោះ "
-"(បើ​មិន​ដូចនោះ​ទេ វា​នឹង​កំណត់​ការ​បម្លែង​ទូទៅ​មួយ) ។"
+"ចម្រៀក ២ តៗ​គ្នាគឺ​ត្រូវបាន​ប្រើ​ដើម្បី​តែ​ដាក់​ច្រាស/​បម្រុង​ទុក​ទិស​ប៉ុណ្ណោះ (បើ​មិន​ដូចនោះ​ទេ វា​នឹង​កំណត់​ការ​"
+"បម្លែង​ទូទៅ​មួយ) ។"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Draw all generations"
@@ -7837,8 +7962,10 @@ msgstr "លេខ​សម្គាល់"
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
 #: ../src/main.cpp:336
-msgid "Export just the object with export-id, hide all others (only with export-id)"
-msgstr "នាំចេញ​តែ​វត្ថុ​ដែល​មាន​លេខសម្គាល់​នាំចេញ លាក់​វត្ថុផ្សេងៗ​ទាំង​អស់ (តែ​ជា​មួយ​លេខសម្គាល់​នាំចេញ​ប៉ុណ្ណោះ)"
+msgid ""
+"Export just the object with export-id, hide all others (only with export-id)"
+msgstr ""
+"នាំចេញ​តែ​វត្ថុ​ដែល​មាន​លេខសម្គាល់​នាំចេញ លាក់​វត្ថុផ្សេងៗ​ទាំង​អស់ (តែ​ជា​មួយ​លេខសម្គាល់​នាំចេញ​ប៉ុណ្ណោះ)"
 
 #: ../src/main.cpp:341
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
@@ -8068,7 +8195,8 @@ msgstr ""
 "</b> ៖ ផ្លាស់ទី​តាម​ចំណុច​ទាញ"
 
 #: ../src/node-context.cpp:224
-msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
+msgid ""
+"<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr "<b>ប្ដូរ(Shift)</b>​ ៖ បិទ/បើក​ការ​ជ្រើស​ថ្នាំង បិទ​ការ​ខ្ទាស់ បង្វិល​ចំណុច​ទាញ​ទាំង​ពីរ"
 
 #: ../src/node-context.cpp:225
@@ -8296,9 +8424,12 @@ msgstr[0] "<b>%i</b> របស់​ថ្នាំង <b>%i</b> បាន​ជ
 
 #: ../src/nodepath.cpp:4967
 #, c-format
-msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើស​នៅ​ក្នុង <b>%i</b> របស់<b>%i</b>ផ្លូវ​រង ។ %s ។"
+msgid ""
+"<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural ""
+"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgstr[0] ""
+"<b>%i</b> នៃ​ថ្នាំង <b>%i</b> បាន​ជ្រើស​នៅ​ក្នុង <b>%i</b> របស់<b>%i</b>ផ្លូវ​រង ។ %s ។"
 
 #: ../src/nodepath.cpp:4973
 #, c-format
@@ -8529,7 +8660,8 @@ msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្បី​បិទ​ និង​បញ្ចប់​ផ្លូវ ។"
 
 #: ../src/pen-context.cpp:675
-msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
+msgid ""
+"<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr "<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្បី​បន្ត​ផ្លូវ​ពី​ចំណុច​នេះ ។"
 
 #: ../src/pen-context.cpp:1271
@@ -8590,7 +8722,8 @@ msgid "Toggle multiple vanishing points"
 msgstr "បិទ/បើក​ការ​បំបាត់​ចំណុច​ច្រើន"
 
 #: ../src/preferences.cpp:101
-msgid "Inkscape will run with default settings, and new settings will not be saved. "
+msgid ""
+"Inkscape will run with default settings, and new settings will not be saved. "
 msgstr "Inkscape នឹង​រត់​ដោយ​ប្រើការ​កំណត់​លំនាំ​ដើម ហើយ​ការ​កំណត់​ថ្មី​នឹង​មិន​ត្រូវ​បាន​រក្សា​ទុក​ទេ ។"
 
 #. the creation failed
@@ -8714,7 +8847,8 @@ msgid "Creator"
 msgstr "អ្នក​បង្កើត"
 
 #: ../src/rdf.cpp:243
-msgid "Name of entity primarily responsible for making the content of this document."
+msgid ""
+"Name of entity primarily responsible for making the content of this document."
 msgstr "ឈ្ម៾​របស់ធាតុ​ទទួល​ខុសត្រូវ​ក្នុងការ​បង្កើត​មាតិកា​របស់​ឯកសារ​នេះ"
 
 #: ../src/rdf.cpp:245
@@ -8722,7 +8856,8 @@ msgid "Rights"
 msgstr "សិទ្ធិ"
 
 #: ../src/rdf.cpp:246
-msgid "Name of entity with rights to the Intellectual Property of this document."
+msgid ""
+"Name of entity with rights to the Intellectual Property of this document."
 msgstr "ឈ្មោះ​របស់​ធាតុ​មានកម្មសិទ្ធិ​បញ្ញា​នៃ​ឯកសារ​​នេះ ។"
 
 #: ../src/rdf.cpp:248
@@ -8825,13 +8960,13 @@ msgstr "បំណែក​"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "បំណែក XML សម្រាប់ភាគ​អាជ្ញាបណ្ណ​របស់​​ RDF ។"
 
-#: ../src/rect-context.cpp:344
+#: ../src/rect-context.cpp:361
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
 msgstr "<b>បញ្ជា(Ctrl)</b> ៖ បង្កើត​ការ៉េ ឬ​ចតុកោណកែង​កាំ​ចំនួន​គត់ ចាក់សោ​រង្វង់​ជ្រុង​មូល"
 
-#: ../src/rect-context.cpp:491
+#: ../src/rect-context.cpp:508
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
@@ -8840,7 +8975,7 @@ msgstr ""
 "<b>ចតុកោណ​កែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ %d:%d) ដោយ​ប្រើ<b>ប្ដូរ (Shift)</b> "
 "ដើម្បី​គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/rect-context.cpp:494
+#: ../src/rect-context.cpp:511
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
@@ -8849,7 +8984,7 @@ msgstr ""
 "<b>ចតុកោណកែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ​ពណ៌​មាស ១.៦១៨ ៖ ១) ដោយ​ប្រើ<b>ប្ដូរ"
 "(Shift)</b> ដើម្បី​គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/rect-context.cpp:496
+#: ../src/rect-context.cpp:513
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with "
@@ -8858,7 +8993,7 @@ msgstr ""
 "<b>ចតុកោណកែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ​ពណ៌​មាស ១ ៖ ១ .៦១៨) ដោយ​ប្រើ<b>ប្ដូរ"
 "(Shift)</b> ដើម្បី​គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/rect-context.cpp:500
+#: ../src/rect-context.cpp:517
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -8867,7 +9002,7 @@ msgstr ""
 "<b>ចតុកោណកែង</b> ៖ %s &#215; %s ដោយ​ប្រើ <b>បញ្ជា(Ctrl)​</b> ដើម្បី​បង្កើត​ការ៉េ ឬ​"
 "ចតុកោណកែង​កាំ​ចំនួន​គត់ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​៿គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
-#: ../src/rect-context.cpp:525
+#: ../src/rect-context.cpp:542
 msgid "Create rectangle"
 msgstr "បង្កើត​ចតុកោណកែង​"
 
@@ -8900,7 +9035,8 @@ msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr "<b>ប្ដូរ(Shift)</b> ៖ ចុច​ដើម្បីបិទបើក​ការ​ជ្រើស អូស​សម្រាប់​ជម្រើស​ជ័រលុប"
 
 #: ../src/select-context.cpp:723
-msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
+msgid ""
+"<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr "<b>ជំនួស(Alt)</b> ៖ ចុច​ដើម្បីជ្រើស​​ខាង​ក្រោម អូដ​ដើម្បី​ផ្លាស់ទី​អ្វី​ដែល​បាន​ជ្រើស ឬ​ជ្រើស​ដោយ​ប៉ះ"
 
 #: ../src/select-context.cpp:898
@@ -8955,7 +9091,8 @@ msgstr "ជ្រើស <b>វត្ថុ</b> ដើម្បី​លើកឡ
 
 #: ../src/selection-chemistry.cpp:694 ../src/selection-chemistry.cpp:756
 #: ../src/selection-chemistry.cpp:790 ../src/selection-chemistry.cpp:854
-msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
+msgid ""
+"You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "អ្នក​មិន​អាច​លើក​វត្ថុ​ឡើង​លើ/ដាក់​ចុះ​ពី​<b>ក្រុម</b> ឬ <b>ស្រទាប់</b>ផ្សេង ​​។"
 
 #. TRANSLATORS: only translate "string" in "context|string".
@@ -9343,7 +9480,8 @@ msgstr "ចុច​ជម្រើស​ដើម្បី​បិទ/បើ�
 
 #. no items
 #: ../src/selection-describer.cpp:130
-msgid "No objects selected. Click, Shift+click, or drag around objects to select."
+msgid ""
+"No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr "គ្មាន​វត្ថុ​បាន​ជ្រើស ។ ចុច ប្ដូរ(Shift)+ចុច ឬ​អូស​ជុំវិញ​វត្ថុ​ដើម្បី​ជ្រើស ។"
 
 #: ../src/selection-describer.cpp:139
@@ -9494,7 +9632,8 @@ msgstr "កំណត់​ចំណុច​កណ្តាល​ឡើង​វ
 #: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>មាត្រដ្ឋាន</b> ៖ %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ចាក់សោ​កាំ"
+msgstr ""
+"<b>មាត្រដ្ឋាន</b> ៖ %0.2f%% x %0.2f%%; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ចាក់សោ​កាំ"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
@@ -9588,7 +9727,9 @@ msgstr "បន្ទាត់​ក្រឹត​នៅជុំវិញ​​
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
-msgstr "<b>អូស</b> ដើម្បី​បង្កើត​រាងពងក្រពើ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​បង្កើត​ធ្នូ ឬ​ចម្រៀក ។ <b>ចុច</b> ដើម្បី​ជ្រើស ។"
+msgstr ""
+"<b>អូស</b> ដើម្បី​បង្កើត​រាងពងក្រពើ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​បង្កើត​ធ្នូ ឬ​ចម្រៀក ។ <b>ចុច</"
+"b> ដើម្បី​ជ្រើស ។"
 
 #: ../src/sp-guide.cpp:426
 #, c-format
@@ -9619,20 +9760,21 @@ msgstr "<b>រូបភាព​ដែល​មាន​សេចក្ដី​
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>រូបភាព</b> %d &#215; %d ៖ %s"
 
-#: ../src/spiral-context.cpp:303
+#: ../src/spiral-context.cpp:319
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ខ្ទាស់​មុំ"
 
-#: ../src/spiral-context.cpp:305
+#: ../src/spiral-context.cpp:321
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>ជំនួស(Alt)</b> ៖ ចាក់សោ​កាំគួច"
 
-#: ../src/spiral-context.cpp:437
+#: ../src/spiral-context.cpp:453
 #, c-format
-msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid ""
+"<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>គួច</b> ៖ កាំ %s, មុំ %5g&#176;; ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
-#: ../src/spiral-context.cpp:463
+#: ../src/spiral-context.cpp:479
 msgid "Create spiral"
 msgstr "បង្កើត​គួច​"
 
@@ -9703,7 +9845,8 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "ជ្រើស <b>យ៉ាង​ហោចណាស់​ផ្លូវ ១</b> ដើម្បីអនុវត្ត​សហភាព​ប៊ូលីន ។"
 
 #: ../src/splivarot.cpp:131
-msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
+msgid ""
+"Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr "ជ្រើស<b>ផ្លូវ​ជាក់លាក់ ២</b> ដើម្បី​អនុវត្ត​ភាព​ផ្សេង​គ្នា ការ​ចែក ឬ​ការ​កាត់ផ្លូវ ។"
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
@@ -9715,7 +9858,8 @@ msgstr ""
 "XOR ឡើយ​​ ។"
 
 #: ../src/splivarot.cpp:192
-msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
+msgid ""
+"One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "វត្ថុ​មួយ​ក្នុ​ង​ចំណោម​វត្ថុ​មិន​មែន <b>ជា​ផ្លូវ</b>មិន​អាច​ប្រតិបត្តិ​ប្រតិបត្តិការ​ប៊ូលីន​បាន​ទេ ។"
 
 #: ../src/splivarot.cpp:633
@@ -9909,21 +10053,22 @@ msgstr "<b>ក្លូន</b> នៃ ៖ %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>ក្លូន​កំព្រា</b>"
 
-#: ../src/star-context.cpp:316
+#: ../src/star-context.cpp:333
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>បញ្ជា(Ctrl)</b> ៖ ខ្ទាស់​មុំ រក្សា​កាំ"
 
-#: ../src/star-context.cpp:447
+#: ../src/star-context.cpp:464
 #, c-format
-msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid ""
+"<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>ពហុកោណ</b> ៖ កាំ %s, មុំ %5g&#176;; ដោយប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ"
 
-#: ../src/star-context.cpp:448
+#: ../src/star-context.cpp:465
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>ផ្កាយ​</b> ៖ កាំ​ %s, មុំ %5g&#176;; ប្រើ​ <b>បញ្ជា​(Ctrl)</b>ដើម្បី​ខ្ទាស់​មុំ​"
 
-#: ../src/star-context.cpp:477
+#: ../src/star-context.cpp:494
 msgid "Create star"
 msgstr "បង្កើត​ផ្កាយ"
 
@@ -10013,7 +10158,8 @@ msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr "<b>ចុច</b> ដើម្បី​កែសម្រួល​អត្ថបទ <b>អូស</b> ដើម្បី​ជ្រើស​ផ្លូវ​អត្ថបទ ។"
 
 #: ../src/text-context.cpp:443
-msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
+msgid ""
+"<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr "<b>ចុច</b> ដើម្បី​កែសម្រួល​អត្ថបទ​លំហូរ <b>អូស</b> ដើម្បី​ជ្រើស​ផ្លូវ​របស់​អត្ថបទ ។"
 
 #: ../src/text-context.cpp:498
@@ -10058,7 +10204,8 @@ msgstr "បង្កើត​អត្ថបទ​លំហូរ"
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
-msgstr "ស៊ុម​ជា​ <b>ឧបករណ៍​មួយ​ដ៏តូច​ </b> ប្រើ​សម្រាប់​ទំហំ​ពុម្ពអក្សរ​បច្ចុប្បន្ន​ ។ មិន​បាន​បង្កើត​លំហូរ​អត្ថបទ​បាន​ឡើយ​ ។"
+msgstr ""
+"ស៊ុម​ជា​ <b>ឧបករណ៍​មួយ​ដ៏តូច​ </b> ប្រើ​សម្រាប់​ទំហំ​ពុម្ពអក្សរ​បច្ចុប្បន្ន​ ។ មិន​បាន​បង្កើត​លំហូរ​អត្ថបទ​បាន​ឡើយ​ ។"
 
 #: ../src/text-context.cpp:834
 msgid "No-break space"
@@ -10138,13 +10285,15 @@ msgstr "វាយ ឬ​កែសម្រួល​អត្ថបទ​លំ�
 #: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "វាយ​បញ្ចូល ឬ​កែសម្រួល​អត្ថបទ (%d តួអក្សរ) ។ <b>បញ្ចូល (Enter)</b> ដើម្បី​ចាប់ផ្ដើម​បន្ទាត់​ថ្មី ។"
+msgstr ""
+"វាយ​បញ្ចូល ឬ​កែសម្រួល​អត្ថបទ (%d តួអក្សរ) ។ <b>បញ្ចូល (Enter)</b> ដើម្បី​ចាប់ផ្ដើម​បន្ទាត់​ថ្មី ។"
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
-msgstr "<b>ចុច</b> ដើម្បី​ជ្រើស ឬ​បង្កើត​អត្ថបទ <b>អូស</b> ដើម្បី​បង្កើត​អត្ថបទលំហូរ បន្ទាប់​មក​វាយ ។"
+msgstr ""
+"<b>ចុច</b> ដើម្បី​ជ្រើស ឬ​បង្កើត​អត្ថបទ <b>អូស</b> ដើម្បី​បង្កើត​អត្ថបទលំហូរ បន្ទាប់​មក​វាយ ។"
 
 #: ../src/text-context.cpp:1722
 msgid "Type text"
@@ -10212,26 +10361,35 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected "
 "path, <b>Alt</b> activates sketch mode."
-msgstr "<b>អូស</b> ដើម្បី​គូស​បន្ទាត់ ។ ចាប់ផ្ដើម​គូរ​ដោយ​ចុច <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​ទៅផ្លូវ​ដែល​បាន​ជ្រើស ហើយ​ចុច <b>ឆ្លាស់ (Alt)</b> ដើម្បី​ធ្វើ​ឲ្យ​របៀប​គូសវាស​សកម្ម ។"
+msgstr ""
+"<b>អូស</b> ដើម្បី​គូស​បន្ទាត់ ។ ចាប់ផ្ដើម​គូរ​ដោយ​ចុច <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​ទៅផ្លូវ​ដែល​"
+"បាន​ជ្រើស ហើយ​ចុច <b>ឆ្លាស់ (Alt)</b> ដើម្បី​ធ្វើ​ឲ្យ​របៀប​គូសវាស​សកម្ម ។"
 
 #: ../src/tools-switch.cpp:178
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots (straight "
 "line modes only)."
-msgstr "​<b>ចុច</b> ឬ​<b>ចុច ហើយ​អូស</b> ដើម្បីចាប់ផ្ដើម​គូស ។ ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​ទៅកាន់​ផ្លូវ​ដែល​បាន​ជ្រើស ។ <b>បញ្ជា (Ctrl)+ចុច</b> ដើម្បី​បង្កើត​ចំណុច​ទោល (វិធីនេះ​ប្រើ​បាន​តែ​ការ​គូស​បន្ទាត់​ត្រង់​ប៉ុណ្ណោះ) ។"
+msgstr ""
+"​<b>ចុច</b> ឬ​<b>ចុច ហើយ​អូស</b> ដើម្បីចាប់ផ្ដើម​គូស ។ ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​"
+"ទៅកាន់​ផ្លូវ​ដែល​បាន​ជ្រើស ។ <b>បញ្ជា (Ctrl)+ចុច</b> ដើម្បី​បង្កើត​ចំណុច​ទោល (វិធីនេះ​ប្រើ​បាន​តែ​ការ​"
+"គូស​បន្ទាត់​ត្រង់​ប៉ុណ្ណោះ) ។"
 
 #: ../src/tools-switch.cpp:184
 msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide "
 "path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr "<b>អូស</b> ដើម្បី​គូរ​គូសវាស​ដោយ​ដៃ ។ ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​អូស​តាម​ផ្លូវ​ណែនាំ ។ <b>គ្រាប់ចុច​ព្រួញ</b> សម្រាប់​លៃតម្រូវទទឹង (ឆ្វេង​/ស្ដាំ) និងមុំ (ឡើងលើ/​ចុះក្រោម) ។"
+msgstr ""
+"<b>អូស</b> ដើម្បី​គូរ​គូសវាស​ដោយ​ដៃ ។ ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​អូស​តាម​ផ្លូវ​ណែនាំ ។ "
+"<b>គ្រាប់ចុច​ព្រួញ</b> សម្រាប់​លៃតម្រូវទទឹង (ឆ្វេង​/ស្ដាំ) និងមុំ (ឡើងលើ/​ចុះក្រោម) ។"
 
 #: ../src/tools-switch.cpp:196
 msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
-msgstr "<b>អូស</b> ឬ <b>ចុច​ទ្វេដង</b> ដើម្បី​បង្កើត​ជម្រាល​នៅលើ​វត្ថុ​ដែល​បាន​ជ្រើស <b>អូស​ចំណុច​ទាញ</b> ដើម្បី​លៃតម្រូវ​ជម្រាល ។"
+msgstr ""
+"<b>អូស</b> ឬ <b>ចុច​ទ្វេដង</b> ដើម្បី​បង្កើត​ជម្រាល​នៅលើ​វត្ថុ​ដែល​បាន​ជ្រើស <b>អូស​ចំណុច​ទាញ</b> "
+"ដើម្បី​លៃតម្រូវ​ជម្រាល ។"
 
 #: ../src/tools-switch.cpp:202
 msgid ""
@@ -10248,7 +10406,10 @@ msgid ""
 "<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new "
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
-msgstr "<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​ និងស្នាម​គូស​របស់​វត្ថុ​ដែល​បាន​ចុច​​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
+msgstr ""
+"<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​"
+"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​ និងស្នាម​គូស​របស់​វត្ថុ​ដែល​បាន​ចុច​​ទៅការ​"
+"កំណត់​បច្ចុប្បន្ន ។"
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
@@ -10320,7 +10481,8 @@ msgstr "%s. អូស​ដើម្បី<b>​ផ្លាស់ទី</b> �
 #: ../src/tweak-context.cpp:214
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr "%s. អូស ឬ​ចុច​ដើម្បី​<b>ផ្លាស់ទី​ចូល​ក្នុង</b> ។ ប្រើ​ប្ដូរ (Shift) ដើម្បី​<b>ផ្លាស់ទី​ចេញ​ក្រៅ</b> ។"
+msgstr ""
+"%s. អូស ឬ​ចុច​ដើម្បី​<b>ផ្លាស់ទី​ចូល​ក្នុង</b> ។ ប្រើ​ប្ដូរ (Shift) ដើម្បី​<b>ផ្លាស់ទី​ចេញ​ក្រៅ</b> ។"
 
 #: ../src/tweak-context.cpp:218
 #, c-format
@@ -10380,7 +10542,8 @@ msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>ដាក់​ព�
 
 #: ../src/tweak-context.cpp:266
 #, c-format
-msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
+msgid ""
+"%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បង្កើន​ភាព​ព្រិល</b> ។ ប្រើ​ប្ដូរ(Shift) ដើម្បី​<b>បន្ថយ</b> ។"
 
 #: ../src/tweak-context.cpp:1223
@@ -10816,7 +10979,7 @@ msgstr "វត្ថុ​ដែល​តូច​បំផុត"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "ជម្រើស"
@@ -10921,7 +11084,8 @@ msgid "Background color"
 msgstr "ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​"
 
 #: ../src/ui/dialog/document-properties.cpp:93
-msgid "Color and transparency of the page background (also used for bitmap export)"
+msgid ""
+"Color and transparency of the page background (also used for bitmap export)"
 msgstr "ពណ៌ និង​ភាព​ថ្លា​របស់​ផ្ទៃខាងក្រោយ​ទំព័រ (ក៏​បាន​ប្រើ​សម្រាប់​ការ​នាំចេញ​រូបភាព​ផងដែរ)"
 
 #: ../src/ui/dialog/document-properties.cpp:94
@@ -11073,7 +11237,8 @@ msgstr "ខ្ទាស់​ទៅ​វត្ថុ​ជានិច្ច �
 msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
-msgstr "ប្រសិនបើ​បានកំណត់ វត្ថុ​ខ្ទាស់​តែ​ទៅ​វត្ថុ​ផ្សេង​ប៉ុណ្ណោះ នៅ​ពេល​ដែល​វា​នៅ​ក្នុង​ជួរ​ដែល​បាន​បញ្ជាក់​ខាង​ក្រោម"
+msgstr ""
+"ប្រសិនបើ​បានកំណត់ វត្ថុ​ខ្ទាស់​តែ​ទៅ​វត្ថុ​ផ្សេង​ប៉ុណ្ណោះ នៅ​ពេល​ដែល​វា​នៅ​ក្នុង​ជួរ​ដែល​បាន​បញ្ជាក់​ខាង​ក្រោម"
 
 #. Options for snapping to grids
 #: ../src/ui/dialog/document-properties.cpp:278
@@ -11096,7 +11261,8 @@ msgstr "ខ្ទាស់​ទៅ​ក្រឡា​ចត្រង្គ​
 msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
-msgstr "ប្រសិន​បើបាន​កំណត់ វត្ថ​ខ្ទាស់​តែ​ទៅ​បន្ទាត់​ក្រឡាចត្រង្គ​ប៉ុណ្ណោះ នៅ​ពេល​វា​នៅ​ក្នុង​ជួរ​ដែល​បានបញ្ជាក់​ខាង​ក្រោម"
+msgstr ""
+"ប្រសិន​បើបាន​កំណត់ វត្ថ​ខ្ទាស់​តែ​ទៅ​បន្ទាត់​ក្រឡាចត្រង្គ​ប៉ុណ្ណោះ នៅ​ពេល​វា​នៅ​ក្នុង​ជួរ​ដែល​បានបញ្ជាក់​ខាង​ក្រោម"
 
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:284
@@ -11192,15 +11358,15 @@ msgstr "បន្ថែម​ស្គ្រីប​ខាងក្រៅ..."
 msgid "Remove external script"
 msgstr "យក​ស្គ្រីប​ខាងក្រៅ​ចេញ"
 
-#: ../src/ui/dialog/document-properties.cpp:735
+#: ../src/ui/dialog/document-properties.cpp:739
 msgid "<b>Creation</b>"
 msgstr "<b>ការ​បង្កើត</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:736
+#: ../src/ui/dialog/document-properties.cpp:740
 msgid "<b>Defined grids</b>"
 msgstr "<b>ក្រឡាចត្រង្គ​ដែល​បាន​កំណត់</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:946
+#: ../src/ui/dialog/document-properties.cpp:950
 msgid "Remove grid"
 msgstr "យក​ក្រឡាចត្រង្គ​ចេញ"
 
@@ -11210,6 +11376,7 @@ msgstr "ព័ត៌មាន"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
+#: ../share/extensions/dxf_input.inx.h:5
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11342,7 +11509,7 @@ msgstr "ទិសដៅ​"
 msgid "Show Preview"
 msgstr "បង្ហាញ​មើល​ជា​មុន"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:611
 msgid "No file selected"
 msgstr "គ្មាន​តម្រង​បាន​ជ្រើស"
 
@@ -11627,13 +11794,15 @@ msgstr "កម្ពស់​របស់​ម៉ាទ្រីស​អង្
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
-msgstr "កូអរដោនេ X នៃ​ចំណុច​គោលដៅ​នៅ​ក្នុង​ម៉ាសទ្រីសអង្កាញ់ ។ ចង្វាយ​ត្រូវ​បាន​អនុវត្ត​ទៅ​ភីកសែល​នៅ​ជុំវិញ​ចំណុច​នេះ ។"
+msgstr ""
+"កូអរដោនេ X នៃ​ចំណុច​គោលដៅ​នៅ​ក្នុង​ម៉ាសទ្រីសអង្កាញ់ ។ ចង្វាយ​ត្រូវ​បាន​អនុវត្ត​ទៅ​ភីកសែល​នៅ​ជុំវិញ​ចំណុច​នេះ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
-msgstr "កូអរដោនេ Y នៃ​ចំណុច​គោលដៅ​នៅ​ក្នុង​ម៉ាទ្រីស​អង្កាញ់ ។ ចង្វាយ​ត្រូវ​បាន​អនុវត្ត​ទៅ​ភីកសែល​នៅ​ជុំវិញ​ចំណុច​នេះ ។"
+msgstr ""
+"កូអរដោនេ Y នៃ​ចំណុច​គោលដៅ​នៅ​ក្នុង​ម៉ាទ្រីស​អង្កាញ់ ។ ចង្វាយ​ត្រូវ​បាន​អនុវត្ត​ទៅ​ភីកសែល​នៅ​ជុំវិញ​ចំណុច​នេះ ។"
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
@@ -11860,7 +12029,8 @@ msgstr "បន្ថែម​តម្រង​មុន"
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
-msgstr "តម្រង <b>feBlend</b> ដំបូង​ផ្ដល់​នូវ​របៀប​លាយ​រូបភាព​ចំនួន ៤ ៖ អេក្រង់ ទ្វេគុណ ធ្វើ​ឲ្យ​ងងឹត និង​ភ្លឺ ។"
+msgstr ""
+"តម្រង <b>feBlend</b> ដំបូង​ផ្ដល់​នូវ​របៀប​លាយ​រូបភាព​ចំនួន ៤ ៖ អេក្រង់ ទ្វេគុណ ធ្វើ​ឲ្យ​ងងឹត និង​ភ្លឺ ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid ""
@@ -11992,7 +12162,8 @@ msgstr ""
 "បានលើក​ឡើង​នៅ​ក្នុង​កម្មវិធី​មើល និង​ផ្ទៃស្រទាប់​ទាប​យក​ចេញ​ពី​កម្មវិធី​មើល ។"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid ""
+"The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "តម្រង <b>feTile</b> ជា​ដំបូង​រៀប​តំបន់​ជា​ក្រឡា​ក្បឿង​​ដោយ​ក្រាហ្វិក​បញ្ចូល​របស់​វា"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2338
@@ -12087,7 +12258,8 @@ msgid "Click/drag threshold:"
 msgstr "ចុច/អូស​កម្រិត​ពន្លឺ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:175
-msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
+msgid ""
+"Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr "ការ​អូស​កណ្ដុរ​អតិបរមា (គិត​ជា​ភីកអេក្រង់) ដែល​ត្រូវ​ពិចារណា​ថាចុច មិន​អូស"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:177
@@ -12099,14 +12271,16 @@ msgid ""
 "Use the capabilities of a tablet or other pressure-sensitive device. Disable "
 "this only if you have problems with the tablet (you can still use it as a "
 "mouse)"
-msgstr "ប្រើ​សមត្ថភាព​បន្ទះ ឬ​ឧបករណ៍ ។ បិទ​វា​ក្នុង​ករណី​ដែលអ្នក​មាន​បញ្ហា​ជា​មួយ​បន្ទះ (អ្នក​នៅតែ​អាច​ប្រើ​ជា​កណ្ដុរ)"
+msgstr ""
+"ប្រើ​សមត្ថភាព​បន្ទះ ឬ​ឧបករណ៍ ។ បិទ​វា​ក្នុង​ករណី​ដែលអ្នក​មាន​បញ្ហា​ជា​មួយ​បន្ទះ (អ្នក​នៅតែ​អាច​ប្រើ​ជា​កណ្ដុរ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Switch tool based on tablet device (requires restart)"
 msgstr "ប្ដូរ​ឧបករណ៍​ដែល​មាន​មូលដ្ឋាន​លើ​ឧបករណ៍​តារាង (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
-msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
+msgid ""
+"Change tool as different devices are used on the tablet (pen, eraser, mouse)"
 msgstr "ផ្លាស់ប្ដូរ​ឧបករណ៍​ជា​ឧបករណ៍​ផ្សេងៗ​ត្រូវ​បាន​ប្រើ​នៅ​លើ​តារាង (ប៊ិក ជ័រលុប កណ្ដុរ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
@@ -12143,7 +12317,8 @@ msgstr "ការ​បង្កើន​ល្បឿន ៖"
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
-msgstr "ដោយ​ចុច និងសង្កត់ បញ្ជា(Ctrl)+ព្រួញ នឹង​បង្កើន​ល្បឿន​រមូរ​បន្តិចម្ដងៗ (០ សម្រាប់​គ្មាន​ការ​បង្កើន​ល្បឿន)"
+msgstr ""
+"ដោយ​ចុច និងសង្កត់ បញ្ជា(Ctrl)+ព្រួញ នឹង​បង្កើន​ល្បឿន​រមូរ​បន្តិចម្ដងៗ (០ សម្រាប់​គ្មាន​ការ​បង្កើន​ល្បឿន)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:199
 msgid "Autoscrolling"
@@ -12265,7 +12440,8 @@ msgid "> and < scale by:"
 msgstr "> និង < ធ្វើ​មាត្រដ្ឋាន​តាម ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:247
-msgid "Pressing > or < scales selection up or down by this increment (in px units)"
+msgid ""
+"Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr "ចុច > ឬ < ធ្វើមាត្រ​ដ្ឋាន​ជម្រើស​ឡើង​លើ ឬ​ចុះក្រោម​ដោយ​ការ​បង្កើន​នេះ (គិត​ជា​ឯកតា​ភីកសែល)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:249
@@ -12273,7 +12449,8 @@ msgid "Inset/Outset by:"
 msgstr "ភ្ជាប់/ដើម​ដំបូង​តាម ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:250
-msgid "Inset and Outset commands displace the path by this distance (in px units)"
+msgid ""
+"Inset and Outset commands displace the path by this distance (in px units)"
 msgstr "ពាក្យ​បញ្ជា​ភ្ជាប់ និង​ដើម​ដំបូង​ដាក់ផ្លូវ​តាម​ចម្ងាយ​នេះ (គិត​ជា​ឯកតា​ភីកសែល)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:251
@@ -12318,7 +12495,8 @@ msgid "Show selection cue"
 msgstr "បង្ហាញ​សញ្ញា​ជ្រើស"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
-msgid "Whether selected objects display a selection cue (the same as in selector)"
+msgid ""
+"Whether selected objects display a selection cue (the same as in selector)"
 msgstr "ថាតើ​វត្ថុដែល​បាន​ជ្រើស​បង្ហាញ​សញ្ញា​ជ្រើស (ដូច​ក្នុង​កម្មវិធី​ជ្រើស) ឬទេ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:276
@@ -12572,7 +12750,7 @@ msgstr "គូរ​វត្ថុ​ជាមួយ​នឹង ៖"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
-#: ../src/widgets/desktop-widget.cpp:481
+#: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "ពង្រីក"
 
@@ -12849,7 +13027,8 @@ msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr "នៅ​ពេល​អនុវត្ត ប្រើ​វត្ថុ​ដែល​ជ្រើស​នៅ​កំពូលជា​របាំង/ផ្លូវ​រូបភាព"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:641
-msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
+msgid ""
+"Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr "មិន​បានគូសធីក​វា​ដើម្បីប្រើ​វត្ថុ​ដែល​បាន​ជ្រើស​នៅ​បាត ជា​ផ្លូវ​រូបភាព ឬ​របាំង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:642
@@ -12965,7 +13144,8 @@ msgstr "គុណភាព​ព្រិល​របស់​ហ្គោសៀ
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
-msgstr "គុណភាព​ល្អបំផុត ប៉ុន្តែ​ការ​បង្ហាញ​អាច​យឺត​នៅ​ពេល​ពង្រីក​ខ្ពស់ (រូបភាព​តែងតែ​នាំចេញ​ប្រើ​គុណភាព​ល្អ​បំផុត)"
+msgstr ""
+"គុណភាព​ល្អបំផុត ប៉ុន្តែ​ការ​បង្ហាញ​អាច​យឺត​នៅ​ពេល​ពង្រីក​ខ្ពស់ (រូបភាព​តែងតែ​នាំចេញ​ប្រើ​គុណភាព​ល្អ​បំផុត)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:692
 #: ../src/ui/dialog/inkscape-preferences.cpp:716
@@ -13042,19 +13222,22 @@ msgstr "ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​ជម្
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
-msgstr "ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​ជម្រើស​ក្ដារចុច​ដំណើរករ​លើ​វត្ថុ​នៅ​ក្នុង​ស្រទាប់​បច្ចុប្បន្ន និង​ស្រទាប់​រង​ទាំងអស់​របស់​វា"
+msgstr ""
+"ធ្វើ​ឲ្យ​ពាក្យ​បញ្ជា​ជម្រើស​ក្ដារចុច​ដំណើរករ​លើ​វត្ថុ​នៅ​ក្នុង​ស្រទាប់​បច្ចុប្បន្ន និង​ស្រទាប់​រង​ទាំងអស់​របស់​វា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:750
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
-msgstr "កុំគូស​ធីក​វា ដើម្បី​អាច​ជ្រើស​វត្ថុ​ដែល​ត្រូវ​បាន​លាក់ (ដោយ​ខ្លួន​ពួក​គេ​ផ្ទាល់ ឬ​ដោយ​ក្រុម ឬ​ស្រទាប់​ដែល​បាន​លាក់)"
+msgstr ""
+"កុំគូស​ធីក​វា ដើម្បី​អាច​ជ្រើស​វត្ថុ​ដែល​ត្រូវ​បាន​លាក់ (ដោយ​ខ្លួន​ពួក​គេ​ផ្ទាល់ ឬ​ដោយ​ក្រុម ឬ​ស្រទាប់​ដែល​បាន​លាក់)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
-msgstr "កុំគូស​ធីក​វា ដើម្បី​អាច​ជ្រើស​វត្ថុ​ដែល​ត្រូវ​បាន​​ជាប់សោ (ដោយ​ខ្លួន​ពួកគេ​ផ្ទាល់ ឬ​ដោយ​ក្រុម ឬ​ស្រទាប់​ដែលជាប់សោ)"
+msgstr ""
+"កុំគូស​ធីក​វា ដើម្បី​អាច​ជ្រើស​វត្ថុ​ដែល​ត្រូវ​បាន​​ជាប់សោ (ដោយ​ខ្លួន​ពួកគេ​ផ្ទាល់ ឬ​ដោយ​ក្រុម ឬ​ស្រទាប់​ដែលជាប់សោ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:755
 msgid ""
@@ -13677,7 +13860,8 @@ msgid "Control bar icon size"
 msgstr "គ្រប់គ្រង​ទំហំ​រូបតំណាង​របារ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
-msgid "Set the size for the icons in tools' control bars to use (requires restart)"
+msgid ""
+"Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr "កំណត់​ទំហំ​សម្រាប់​រូបតំណាង​នៅ​ក្នុង​របារ​គ្រប់គ្រង​របស់​ឧបករណ៍​ដែល​ត្រូវ​ប្រើ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
@@ -13685,7 +13869,8 @@ msgid "Secondary toolbar icon size"
 msgstr "ទំហំ​រូបតំណាង​របារ​ឧបករណ៍​ទីពីរ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
+msgid ""
+"Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr "កំណត់​ទំហំ​សម្រាប់រូបតំណាង​នៅ​ក្នុង​របារ​ឧបករណ៍​​បន្ទាប់​បន្សំ​ដែល​ត្រូវ​ប្រើ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
@@ -13765,8 +13950,10 @@ msgid "Maximum number of autosaves:"
 msgstr "ចំនួន​ការ​រក្សាទុក​ដោយស្វ័យប្រវត្តិ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
-msgid "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr "ចំនួន​​ឯកសារ​ដែលបាន​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​អតិបរមា ។ ប្រើ​វា​ដើម្បី​កំណត់​ទំហំ​ឧបករណ៍​ផ្ទុក​ដែល​បាន​ប្រើ"
+msgid ""
+"Maximum number of autosaved files; use this to limit the storage space used"
+msgstr ""
+"ចំនួន​​ឯកសារ​ដែលបាន​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​អតិបរមា ។ ប្រើ​វា​ដើម្បី​កំណត់​ទំហំ​ឧបករណ៍​ផ្ទុក​ដែល​បាន​ប្រើ"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -13931,7 +14118,8 @@ msgstr "(តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុ�
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
-msgstr "ដាក់​កត្តា​តាម​នាឡិកា​ព្រឹត្តការណ៍​​ណាមួយ​ដែល​ធ្វើ​ឲ្យ​វៀង​ពី​ពេលវេលា​ពិត (0.9766 នៅ​លើ​ប្រព័ន្ធ​មួយ​ចំនួន) ។"
+msgstr ""
+"ដាក់​កត្តា​តាម​នាឡិកា​ព្រឹត្តការណ៍​​ណាមួយ​ដែល​ធ្វើ​ឲ្យ​វៀង​ពី​ពេលវេលា​ពិត (0.9766 នៅ​លើ​ប្រព័ន្ធ​មួយ​ចំនួន) ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Pre-render named icons"
@@ -14063,31 +14251,27 @@ msgstr "ចាក់សោ​ស្រទាប់"
 msgid "Unlock layer"
 msgstr "មិន​ចាក់សោ​ស្រទាប់"
 
-#: ../src/ui/dialog/layers.cpp:645
-msgid "Layers"
-msgstr "​ស្រទាប់"
-
-#: ../src/ui/dialog/layers.cpp:654
+#: ../src/ui/dialog/layers.cpp:652
 msgid "New"
 msgstr "ថ្មី"
 
-#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
 msgid "Top"
 msgstr "កំពូល"
 
-#: ../src/ui/dialog/layers.cpp:665
+#: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
 msgstr "លើ"
 
-#: ../src/ui/dialog/layers.cpp:671
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Dn"
 msgstr "ក្រោម"
 
-#: ../src/ui/dialog/layers.cpp:677
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Bot"
 msgstr "បាត"
 
-#: ../src/ui/dialog/layers.cpp:687
+#: ../src/ui/dialog/layers.cpp:685
 msgid "X"
 msgstr "X"
 
@@ -14455,8 +14639,10 @@ msgstr "អត្ថបទ​មើល​ជាមុន ៖"
 
 #: ../src/ui/dialog/swatches.cpp:329
 #, c-format
-msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr "ពណ៌ ៖ <b>%s</b>; <b>ចុច</b> ដើម្បី​កំណត់ បំពេញ <b>ប្ដូរ (Shift) + ចុច</b> ដើម្បី​កំណត់​ស្នាម​គូស"
+msgid ""
+"Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
+msgstr ""
+"ពណ៌ ៖ <b>%s</b>; <b>ចុច</b> ដើម្បី​កំណត់ បំពេញ <b>ប្ដូរ (Shift) + ចុច</b> ដើម្បី​កំណត់​ស្នាម​គូស"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:438
@@ -14696,7 +14882,8 @@ msgstr "ស្កេន​ជង់"
 msgid ""
 "Stack scans on top of one another (no gaps) instead of tiling (usually with "
 "gaps)"
-msgstr "ស្កេន​ជង់​នៅ​កំពូល​របស់​អាមួយ​ផ្សេង​ទៀត (គ្មាន​ចន្លោះ) ជំនួស​ឲ្យ​ការ​រៀប​ជា​ក្បឿង (តាម​ធម្មតា​មាន​ចន្លោះ)"
+msgstr ""
+"ស្កេន​ជង់​នៅ​កំពូល​របស់​អាមួយ​ផ្សេង​ទៀត (គ្មាន​ចន្លោះ) ជំនួស​ឲ្យ​ការ​រៀប​ជា​ក្បឿង (តាម​ធម្មតា​មាន​ចន្លោះ)"
 
 #: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Remove background"
@@ -14763,6 +14950,7 @@ msgstr "ភាព​ស្រដៀង​ពណ៌ ៖"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Options"
 msgstr "ជម្រើស"
 
@@ -14980,15 +15168,15 @@ msgstr "កែសម្រួល​ម៉ាទ្រីស​ប្លែង"
 msgid "PLACEHOLDER, do not translate"
 msgstr "PLACEHOLDER, do not translate"
 
-#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:378
+#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
 msgstr "ពង្រីក​គំនូរ​ប្រសិន​បើ​ផ្លាស់ប្ដូរ​ទំហំ​បង្អួច"
 
-#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:501
+#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:503
 msgid "Cursor coordinates"
 msgstr "កូអរដោនេ​​ទស្សន៍​ទ្រនិច​"
 
-#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:516
+#: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:518
 msgid "Z:"
 msgstr "Z ៖"
 
@@ -15000,7 +15188,7 @@ msgstr ""
 "<b>ស្វាគមន៍​មកកាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​គូរ​ដើម្បី​បង្កើត​វត្ថុ ។ ប្រើ​ឧបករណ៍​ជ្រើ "
 "(ព្រួញ) ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15014,11 +15202,11 @@ msgstr ""
 "ប្រសិន​បើ​​បិទ​ដោយ​មិន​រក្សាទុក ការ​ផ្លាស់ប្ដូរ​របស់អ្នក​នឹង​ត្រូវ​បាន​បដិសេធ ។"
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:896
+#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
 msgid "Close _without saving"
 msgstr "បិទ​ដោយ​មិន​រក្សាទុក"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15031,7 +15219,7 @@ msgstr ""
 "\n"
 "តើ​អ្នក​ចង់​រក្សាទុក​ឯកសារ​នេះ​ជា Inkscape SVG ដែរ​ឬទេ?"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:899
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
 msgid "_Save as SVG"
 msgstr "រក្សា​ទុក​ជា SVG"
 
@@ -15649,11 +15837,13 @@ msgstr[0] "<b>មិន​កំណត់</b> បាត់​ចំណុច​�
 
 #: ../src/vanishing-point.cpp:320
 #, c-format
-msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
+msgid ""
+"shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
-msgstr[0] "បាន​ចែក​រំលែក​ប្រអប់ <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បំបែក​ប្រអប់​ដែល​បាន​ជ្រើស"
+msgstr[0] ""
+"បាន​ចែក​រំលែក​ប្រអប់ <b>%d</b> អូស​ដោយ​ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បំបែក​ប្រអប់​ដែល​បាន​ជ្រើស"
 
 #: ../src/verbs.cpp:1140
 msgid "Switch to next layer"
@@ -16674,7 +16864,8 @@ msgid "Remove mask from selection"
 msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស"
 
 #: ../src/verbs.cpp:2493
-msgid "Apply clipping path to selection (using the topmost object as clipping path)"
+msgid ""
+"Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr "អនុវត្ត​ផ្លូវ​ច្រិប​ទៅ​ជម្រើស (ដោយ​ប្រើ​វត្ថុ​នៅ​កំពូល​បំផុត​ជា​ផ្លូវ​ច្រិប)"
 
 #: ../src/verbs.cpp:2495 ../src/widgets/toolbox.cpp:1446
@@ -17155,7 +17346,8 @@ msgid "_Fill and Stroke..."
 msgstr "បំពេញ និង​ស្នាម​គូស..."
 
 #: ../src/verbs.cpp:2640
-msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
+msgid ""
+"Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr "កែសម្រួល​ពណ៌​របស់វត្ថុ ជម្រាល ទទឹង​ស្នាម​គូស ក្បាលព្រួញ លំនាំ​ដាច់ៗ..."
 
 #. TRANSLATORS: "Swatches" means: color samples
@@ -17449,7 +17641,8 @@ msgid "Fit the page to the drawing"
 msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​នឹង​គំនូរ​"
 
 #: ../src/verbs.cpp:2728
-msgid "Fit the page to the current selection or the drawing if there is no selection"
+msgid ""
+"Fit the page to the current selection or the drawing if there is no selection"
 msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​ទៅ​នឹង​ជម្រើស​បច្ចុប្បន្ន ឬ​គំនូរ ​ប្រសិន​បើ​គ្មាន​ជម្រើស​​"
 
 #. LockAndHide
@@ -17490,7 +17683,7 @@ msgid "Pattern offset"
 msgstr "អុហ្វសិត​លំនាំ​​"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:549
+#: ../src/widgets/desktop-widget.cpp:551
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -17498,22 +17691,22 @@ msgstr ""
 "<b>សូម​ស្វាគមន៍​មក​កាន់ Inkscape !</b> ប្រើ​រូបរាង ឬ​ឧបករណ៍​សេរី​ដើម្បី​វត្ថុ ប្រើ​ឧបករណ៍​ជ្រើស (ព្រួញ) "
 "ដើម្បី​ផ្លាស់ទី ឬ​ប្លែង​ពួកវា ។"
 
-#: ../src/widgets/desktop-widget.cpp:611
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s ៖ %d (គ្រោង) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s ៖ %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:617
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (គ្រោង) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -17739,7 +17932,8 @@ msgstr "ផ្លូវ​ណា​មួយ​ប្រសព្វ​ដោយ
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:214
-msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
+msgid ""
+"Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr "ការ​បំពេញ​គឺ​តាន់ លុះត្រា​តែ​ផ្លូវ​រង​មួយ​ផ្ទុយ​ទិស (ក្បួន​បំពេញ ៖ មិន​សូន្យ)"
 
 #: ../src/widgets/paint-selector.cpp:531
@@ -17769,11 +17963,13 @@ msgstr "ប្លែង​ដោយ​របារ​ឧបករណ៍"
 
 #: ../src/widgets/select-toolbar.cpp:304
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr "ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> ត្រូវ​បាន<b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
+msgstr ""
+"ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> ត្រូវ​បាន<b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
 
 #: ../src/widgets/select-toolbar.cpp:306
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr "ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> មិន​ត្រូវ <b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
+msgstr ""
+"ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> មិន​ត្រូវ <b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
 
 #: ../src/widgets/select-toolbar.cpp:317
 msgid ""
@@ -17896,7 +18092,9 @@ msgstr "បែបផែន ៖"
 msgid ""
 "Control whether or not to scale stroke widths, scale rectangle corners, "
 "transform gradient fills, and transform pattern fills with the object"
-msgstr "ត្រួតពិនិត្យ​ថាតើ​ត្រូវធ្វើ​មាត្រដ្ឋាន​ទទឹង​គូសវាស ធ្វើ​មាត្រដ្ឋាន​ជ្រុង​ចតុកោណ ត្រូវ​បម្លែង​ផ្ទៃ​ជម្រាល និង​បម្លែង​ផ្ទៃ​លំនាំ​ជាមួយ​នឹង​វត្ថុ​ឬ​ក៏​អត់"
+msgstr ""
+"ត្រួតពិនិត្យ​ថាតើ​ត្រូវធ្វើ​មាត្រដ្ឋាន​ទទឹង​គូសវាស ធ្វើ​មាត្រដ្ឋាន​ជ្រុង​ចតុកោណ ត្រូវ​បម្លែង​ផ្ទៃ​ជម្រាល និង​"
+"បម្លែង​ផ្ទៃ​លំនាំ​ជាមួយ​នឹង​វត្ថុ​ឬ​ក៏​អត់"
 
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
@@ -19191,7 +19389,8 @@ msgstr "ត្រឹមត្រូវ ៖"
 msgid ""
 "Low fidelity simplifies paths; high fidelity preserves path features but may "
 "generate a lot of new nodes"
-msgstr "ធ្វើ​ឲ្យ​ផ្លូវ​សាមញ្ញ​ត្រឹមត្រូវ​តិចតួច​ ការពារ​លក្ខណៈ​ពិសេស​ផ្លូវ​​ត្រឹមត្រូវ​ខ្លាំ ប៉ុន្តែ​អាច​បង្កើត​ថ្នាំង​ថ្មី​ជា​ច្រើន"
+msgstr ""
+"ធ្វើ​ឲ្យ​ផ្លូវ​សាមញ្ញ​ត្រឹមត្រូវ​តិចតួច​ ការពារ​លក្ខណៈ​ពិសេស​ផ្លូវ​​ត្រឹមត្រូវ​ខ្លាំ ប៉ុន្តែ​អាច​បង្កើត​ថ្នាំង​ថ្មី​ជា​ច្រើន"
 
 #: ../src/widgets/toolbox.cpp:4362 ../src/widgets/toolbox.cpp:4863
 msgid "Pressure"
@@ -19346,7 +19545,8 @@ msgstr "គម្រប ៖"
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
-msgstr "បង្កើន​ដើម្បីបង្កើត​គម្រប​នៅ​ខាង​ចុងរបស់​ស្នាម​គូស​លយ​ចេញ​ថែម​ទៀត (០ = គ្មានគម្រប ១ = គម្រប​មូល)"
+msgstr ""
+"បង្កើន​ដើម្បីបង្កើត​គម្រប​នៅ​ខាង​ចុងរបស់​ស្នាម​គូស​លយ​ចេញ​ថែម​ទៀត (០ = គ្មានគម្រប ១ = គម្រប​មូល)"
 
 #. Tremor
 #: ../src/widgets/toolbox.cpp:4796
@@ -19526,7 +19726,8 @@ msgid "Assign opacity"
 msgstr "ផ្ដល់​ភាព​ស្រអាប់"
 
 #: ../src/widgets/toolbox.cpp:5320
-msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
+msgid ""
+"If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr "ប្រសិន​បើ​បាន​​ជ្រើស​​យក​អាល់ហ្វា ផ្ដល់​វា​ទៅ​ជម្រើស​ដើម្បី​បំពេញ ឬ​ស្នាម​គូស​ភាព​ថ្លា"
 
 #: ../src/widgets/toolbox.cpp:5323
@@ -19744,7 +19945,8 @@ msgid "Grow/shrink by:"
 msgstr "ពង្រីក/បង្រួម​ដោយ ៖"
 
 #: ../src/widgets/toolbox.cpp:7187
-msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+msgid ""
+"The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "ចំនួន​ត្រូវ​ពង្រីក (វិជ្ជមាន) ឬ​បង្រួម (អវិជ្ជមាន) ផ្លូវ​បំពេញ​ដែល​បានបង្កើត"
 
 #: ../src/widgets/toolbox.cpp:7212
@@ -19759,7 +19961,8 @@ msgstr "ចន្លោះ​បិទ ៖"
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
-msgstr "កំណត់​ប៉ារ៉ាម៉ែត្រ​ធុង​គំនូរ​ទៅ​លំនាំដើម​ឡើង​វិញ (ប្រើ​ចំណូល​ចិត្ត Inkscape > ឧបករណ៍​ ដើម្បី​ផ្លាស់ប្ដូរ​លំនាំដើម)"
+msgstr ""
+"កំណត់​ប៉ារ៉ាម៉ែត្រ​ធុង​គំនូរ​ទៅ​លំនាំដើម​ឡើង​វិញ (ប្រើ​ចំណូល​ចិត្ត Inkscape > ឧបករណ៍​ ដើម្បី​ផ្លាស់ប្ដូរ​លំនាំដើម)"
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -19902,7 +20105,8 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
-msgid "This extension requires that the second selected path be four nodes long."
+msgid ""
+"This extension requires that the second selected path be four nodes long."
 msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារផ្លូវ​ដែល​ជ្រើស​ទីពីរ​ឲ្យ​មាន​ប្រវែង​បួន​ថ្នាំង ។"
 
 #: ../share/extensions/perspective.py:99
@@ -20402,27 +20606,35 @@ msgid "Trilinear Coordinates"
 msgstr "កោអរដោនេ​​លីនេអ៊ែរ​គោលបី"
 
 #: ../share/extensions/dxf_input.inx.h:1
-#: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgid ""
+"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
+"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
+"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
+"instead, if needed."
+msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "AutoCAD DXF R13 (*.dxf)"
+msgstr "AutoCAD DXF (*.dxf)"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
 msgstr "ការ​អ៊ិនកូដ​តួអក្សរ"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "DXF Input"
 msgstr "ការ​បញ្ចូល DXF"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "នាំចូល​ទ្រង់ទ្រាយ​ផ្លាស់ប្ដូរ​ឯកសារ AutoCAD's"
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "Or, use manual scale factor"
 msgstr "ឬ​ប្រើ​កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដោយដៃ"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:9
 msgid "Use automatic scaling to size A4"
 msgstr "ប្រើ​ការ​ធ្វើ​មាត្រដ្ឋាន​ដោយស្វ័យប្រវត្តិ​ទៅ​ទំហំ A4"
 
@@ -20431,12 +20643,18 @@ msgid "Desktop Cutting Plotter"
 msgstr "គ្រោងកាត់​ផ្ទៃតុ"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.DXF)"
+#, fuzzy
+msgid "Desktop Cutting Plotter (*.dxf)"
 msgstr "គ្រោងកាត់​ផ្ទៃតុ (*.DXF)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
 msgstr "លទ្ធផល ROBO-Master"
+
+#: ../share/extensions/dxf_output.inx.h:1
+#, fuzzy
+msgid "AutoCAD DXF R12 (*.dxf)"
+msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -20448,7 +20666,8 @@ msgstr "ឯកសារ DXF បាន​សរសេរ​ដោយ pstoedit"
 
 #: ../share/extensions/dxf_output.inx.h:4
 msgid "pstoedit must be installed to run; see http://www.pstoedit.net/pstoedit"
-msgstr "pstoedit ត្រូវ​តែ​បាន​ដំឡើង​ដើម្បី​រត់​ សូម​​មើល​តំបន់​បណ្តាញ​ http://www.pstoedit.net/pstoedit"
+msgstr ""
+"pstoedit ត្រូវ​តែ​បាន​ដំឡើង​ដើម្បី​រត់​ សូម​​មើល​តំបន់​បណ្តាញ​ http://www.pstoedit.net/pstoedit"
 
 #: ../share/extensions/edge3d.inx.h:1
 msgid "Blur height"
@@ -20726,7 +20945,8 @@ msgid "GIMP XCF"
 msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-msgid "GIMP XCF maintaining layers (*.XCF)"
+#, fuzzy
+msgid "GIMP XCF maintaining layers (*.xcf)"
 msgstr "GIMP XCF ថែទាំ​ស្រទាប់ (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
@@ -21524,12 +21744,13 @@ msgstr "ព័ត៌មាន​បញ្ចូល​គ្រោង AutoCAD"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-msgid "AutoCAD Plot drawing files (*.plt)"
-msgstr "ឯកសារ​គំនូរ​គ្រោង AutoCAD (*.plt)"
+#, fuzzy
+msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
+msgstr "ឯកសារ​ក្រាហ្វិក HP (*.hpgl)"
 
 #: ../share/extensions/plt_input.inx.h:3
-msgid "Open files saved for plotters"
-msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​សម្រាប់​កម្មវិធី​គ្រោង"
+msgid "Open HPGL plotter files"
+msgstr ""
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
@@ -21948,6 +22169,21 @@ msgstr "ជ័រ​លាត​"
 #, no-c-format
 msgid "Strength (%):"
 msgstr "រឹងប៉ឹង (%) ៖"
+
+#: ../share/extensions/scour.inx.h:1
+#, fuzzy
+msgid "Scalable Vector Graphics"
+msgstr "Scalable Vector Graphic (*.svg)"
+
+#: ../share/extensions/scour.inx.h:2
+#, fuzzy
+msgid "Scoured SVG (*.svg)"
+msgstr "Inkscape SVG (*.svg)"
+
+#: ../share/extensions/scour.inx.h:3
+#, fuzzy
+msgid "Scoured SVG Output"
+msgstr "លទ្ធផល SVG"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -22428,7 +22664,8 @@ msgstr "គុណលក្ខណៈ​ដែល​ត្រូវ​បញ្ជ
 msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
-msgstr "ប្រសិន​បើ​អ្នក​ចង់​បញ្ជូន​គុណលក្ខណៈ​ច្រើន អ្នក​គួរតែ​ចែក​គុណលក្ខណៈ​ទាំងនោះ​ដោយ​ដាច់​ពី​គ្នា​ដោយប្រើ​ដកឃ្លា ។"
+msgstr ""
+"ប្រសិន​បើ​អ្នក​ចង់​បញ្ជូន​គុណលក្ខណៈ​ច្រើន អ្នក​គួរតែ​ចែក​គុណលក្ខណៈ​ទាំងនោះ​ដោយ​ដាច់​ពី​គ្នា​ដោយប្រើ​ដកឃ្លា ។"
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
@@ -22485,3 +22722,82 @@ msgstr "ការ​បញ្ចូល​ឯកសារ​មេតា​រប
 msgid "XAML Input"
 msgstr "ការ​បញ្ចូល DXF"
 
+#~ msgid "Glossy jelly"
+#~ msgstr "ទន់​ភ្លឺ"
+
+#~ msgid "Bulging, glossy jelly covering"
+#~ msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ"
+
+#~ msgid "Glossy jelly, backlit"
+#~ msgstr "ទន់​ភ្លឺ ពន្លឺ​ភ្លឺ"
+
+#~ msgid "Bulging, glossy jelly covering; two light sources"
+#~ msgstr "ចំណោល​មូល គម្រប​ទន់​ភ្លឺ ។ មាន​ប្រភព​ពន្លឺ​ពីរ"
+
+#~ msgid "HSL bubbles"
+#~ msgstr "ពពុះ HSL"
+
+#~ msgid ""
+#~ "Highly flexible bubbles effect depending on color hue saturation and "
+#~ "luminance"
+#~ msgstr "បែបផែន​ពពុះ​​បត់បែន ផ្អែក​តិត្ថិភាព​ភាព​លាំៗ​នៃ​ពណ៌ និង​ពន្លឺ"
+
+#~ msgid "Bright and glowing metal texture"
+#~ msgstr "វាយនភាព​ពន្លឺ និង​ភ្លឺ"
+
+#~ msgid "Gives the flood color to the dark parts of the image"
+#~ msgstr "ផ្ដល់​ពណ៌​ជោគជាំ​ដល់​ផ្នែក​ដែល​ងងឹត​របស់​រូបភាព"
+
+#~ msgid "Air Spray; adjust the Displacement Map amount"
+#~ msgstr "ស្ប៉ាយ - លៃតម្រូវចំនួន​បម្លាស់ទី​ផែនទី"
+
+#~ msgid ""
+#~ "Same than HSL bumps but with an alpha added for combination with "
+#~ "transparency depending filters"
+#~ msgstr ""
+#~ "ដូចគ្នា​នឹង​ដុំ​ពក HSL ប៉ុន្តែ​ត្រូវ​បន្ថែម​អាល់ហ្វា​សម្រាប់​ការ​បន្សំ​ជាមួយ​នឹង​ភាព​ថ្លា ដោយ​ផ្អែក​លើ​តម្រង"
+
+#~ msgid "HSL bubbles, alpha"
+#~ msgstr "ពពុះ HSL អាល់ហ្វា"
+
+#~ msgid "HSL Bumps, diffuse"
+#~ msgstr "ដុំ​ពក HSL ដែល​នៅ​រាយប៉ាយ"
+
+#~ msgid "HSL bubbles, diffuse"
+#~ msgstr "ពពុះ HSL ដែល​នៅ​រាយប៉ាយ"
+
+#~ msgid "HSL bubbles, transparent"
+#~ msgstr "ពពុះ HSL ថ្លា"
+
+#~ msgid "Highly flexible specular bubbles with transparency"
+#~ msgstr "ពពុះ​គួច​ថ្លា​មាន​ភាព​បត់បែន​ខ្ពស់"
+
+#~ msgid "Thick paint, glossy"
+#~ msgstr "គូរ​ក្រាស់ៗ និង​រលោង"
+
+#~ msgid "Thick painting effect with turbulence and a glossy varnish"
+#~ msgstr "បែបផែន​គូរ​ក្រាស់ៗ​ដោយមាន​គួច និង​ថ្នាំលាប​រលោង"
+
+#~ msgid "Burst, glossy"
+#~ msgstr "បែកខ្ញែក ហើយ​រលោង"
+
+#~ msgid "Burst balloon texture crumpled with holes and glossy"
+#~ msgstr "វាយនភាព​បាឡុង​ផ្ទុះ​បែកខ្ញែក​ដោយ​មាន​រន្ធ ហើយ​រលោង"
+
+#~ msgid "Export area is whole canvas"
+#~ msgstr "នាំចេញ​ផ្ទៃ គឺ​ផ្ទាំង​កំណាត់​ទាំងមូល"
+
+#~ msgid "Export drawing, not page"
+#~ msgstr "នាំចេញ​គំនូរ មិន​មែន​ទំព័រ​ទេ"
+
+#~ msgid "Export canvas"
+#~ msgstr "កែ​សម្រួល​លើ​ផ្ទាំង​ក្រណាត់"
+
+#~ msgid "Layers"
+#~ msgstr "​ស្រទាប់"
+
+#~ msgid "AutoCAD Plot drawing files (*.plt)"
+#~ msgstr "ឯកសារ​គំនូរ​គ្រោង AutoCAD (*.plt)"
+
+#~ msgid "Open files saved for plotters"
+#~ msgstr "បើក​ឯកសារ​ដែល​បាន​រក្សាទុក​សម្រាប់​កម្មវិធី​គ្រោង"
