@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-03 17:44+0200\n"
-"PO-Revision-Date: 2009-08-03 23:46+0200\n"
+"PO-Revision-Date: 2009-08-06 21:19+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -771,6 +771,8 @@ msgstr "Színezés"
 #: ../share/filters/filters.svg.h:73
 msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr ""
+"Kép vagy objektum keverése egy területkitöltési színnel, továbbá fényesség "
+"és kontraszt beállítása"
 
 #: ../share/filters/filters.svg.h:74
 msgid "Parallel hollow"
@@ -1918,25 +1920,24 @@ msgid "Same than Canvas Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de átlátszó részekkel"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Lightness-Contrast"
-msgstr "Fényesség"
+msgstr "Fényesség és kontraszt"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Increase or decrease lightness and contrast"
-msgstr "Bitkép(ek) kontrasztjának növelése vagy csökkentése"
+msgstr "Fényesség és kontraszt növelése vagy csökkentése"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Clean edges"
-msgstr "Szélek sötétítése"
+msgstr "Szélek tisztítása"
 
 #: ../share/filters/filters.svg.h:216
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr ""
+"Ragyogások és recék eltávolítása vagy csökkentése bizonyos szűrők "
+"alkalmazása után az objektumok szélei körül"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -21364,11 +21365,15 @@ msgid ""
 "Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
 "instead, if needed."
 msgstr ""
+"- AutoCAD Release 13 vagy újabb. - Feltételezi, hogy a dxf-rajz mm-ben van. "
+"- Feltételezi, hogy az svg-rajz képpontban van 90 dpi-s felbontással. - A "
+"rétegeket csak a Fájl-&gt;Megnyitás őrzi meg, az Import nem. - Blokkokhoz "
+"csak korlátozott támogatás van; ha szükséges, használja az AutoCAD-féle "
+"blokkszétrobbantási funkciót."
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
@@ -21395,9 +21400,8 @@ msgid "Desktop Cutting Plotter"
 msgstr "Asztali vágóplotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-#, fuzzy
 msgid "Desktop Cutting Plotter (*.dxf)"
-msgstr "Asztali vágóplotter (*.DXF)"
+msgstr "Asztali vágóplotter (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
@@ -22513,9 +22517,8 @@ msgstr "AutoCAD-plot-bemenet"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
-msgstr "HP Graphics Language-fájl (*.hpgl)"
+msgstr "HP Graphics Language-plotfájl [AutoCAD] (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
 msgid "Open HPGL plotter files"
