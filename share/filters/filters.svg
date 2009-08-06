@@ -20,9 +20,10 @@
 </feSpecularLighting>
 <feComposite operator="atop" in2="result0" />
 </filter>
-<filter id="f002" inkscape:menu-tooltip="Same as Matte jelly but with more controls" inkscape:menu="Bevels" height="1" width="1" y="0" x="0" inkscape:label="Smart jelly">
+<filter id="f002" inkscape:label="Smart jelly" inkscape:menu="Bevels" inkscape:menu-tooltip="Same as Matte jelly but with more controls" height="1" width="1" y="0" x="0">
 <feBlend result="result3" blend="normal" mode="normal" />
-<feColorMatrix in="result3" result="result0" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0 " />
+<feComposite result="result4" operator="arithmetic" k2="1" />
+<feColorMatrix id="feColorMatrix3006" in="result4" result="result0" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.85 0 " />
 <feGaussianBlur stdDeviation="7" in="SourceAlpha" />
 <feSpecularLighting result="result1" specularExponent="25" specularConstant="1" surfaceScale="5">
 <feDistantLight azimuth="225" elevation="60" />
