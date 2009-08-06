@@ -3,40 +3,56 @@ tutorialdir = $(datadir)/inkscape/tutorials
 
 tutorial_DATA = \
     README \
+    edge3d.svg \
     gpl-2.svg \
     making_markers.svg \
     oldguitar.jpg \
-    potrace.png \
+    potrace-ca.png \
     potrace-de.png \
+    potrace-en.png \
+    potrace-es.png \
     potrace-fr.png \
     potrace-hu.png \
+    potrace.png \
+    potrace-pt_BR.png \
     potrace-ru.png \
+    potrace-sl.png \
+    potrace-vi.png \
+    potrace-zh_CN.png \
+    potrace-zh_TW.png \
     tutorial-advanced.svg \
     tutorial-advanced.ca.svg \
     tutorial-advanced.cs.svg \
     tutorial-advanced.de.svg \
     tutorial-advanced.es.svg \
+    tutorial-advanced.eu.svg \
     tutorial-advanced.fr.svg \
     tutorial-advanced.hu.svg \
     tutorial-advanced.it.svg \
     tutorial-advanced.ja.svg \
+    tutorial-advanced.pl.svg \
     tutorial-advanced.pt_BR.svg \
     tutorial-advanced.ru.svg \
+    tutorial-advanced.sk.svg \
     tutorial-advanced.sl.svg \
     tutorial-advanced.vi.svg \
     tutorial-advanced.zh_CN.svg \
+    tutorial-advanced.zh_TW.svg \
     tutorial-basic.svg \
     tutorial-basic.bg.svg \
     tutorial-basic.ca.svg \
     tutorial-basic.cs.svg \
     tutorial-basic.da.svg \
     tutorial-basic.de.svg \
+    tutorial-basic.eo.svg \
     tutorial-basic.es.svg \
+    tutorial-basic.eu.svg \
     tutorial-basic.fr.svg \
     tutorial-basic.hu.svg \
     tutorial-basic.it.svg \
     tutorial-basic.ja.svg \
     tutorial-basic.nn.svg \
+    tutorial-basic.pl.svg \
     tutorial-basic.pt_BR.svg \
     tutorial-basic.ru.svg \
     tutorial-basic.sk.svg \
@@ -44,62 +60,86 @@ tutorial_DATA = \
     tutorial-basic.tr.svg \
     tutorial-basic.vi.svg \
     tutorial-basic.zh_CN.svg \
+    tutorial-basic.zh_TW.svg \
     tutorial-calligraphy.svg \
     tutorial-calligraphy.ca.svg \
     tutorial-calligraphy.cs.svg \
     tutorial-calligraphy.de.svg \
     tutorial-calligraphy.es.svg \
+    tutorial-calligraphy.eu.svg \
     tutorial-calligraphy.fr.svg \
     tutorial-calligraphy.hu.svg \
+    tutorial-calligraphy.pl.svg \
     tutorial-calligraphy.pt_BR.svg \
     tutorial-calligraphy.ru.svg \
+    tutorial-calligraphy.sk.svg \
     tutorial-calligraphy.sl.svg \
     tutorial-calligraphy.vi.svg \
+    tutorial-calligraphy.zh_TW.svg \
     tutorial-elements.svg \
     tutorial-elements.ca.svg \
     tutorial-elements.de.svg \
     tutorial-elements.es.svg \
+    tutorial-elements.eu.svg \
     tutorial-elements.fr.svg \
     tutorial-elements.hu.svg \
+    tutorial-elements.pl.svg \
     tutorial-elements.pt_BR.svg \
     tutorial-elements.ru.svg \
     tutorial-elements.sl.svg \
+    tutorial-elements.zh_TW.svg \
+    tutorial-interpolate.svg \
+    tutorial-interpolate.de.svg \
     tutorial-interpolate.hu.svg \
+    tutorial-interpolate.pl.svg \
+    tutorial-interpolate.sl.svg \
+    tutorial-interpolate.vi.svg \
     tutorial-shapes.svg \
     tutorial-shapes.ca.svg \
     tutorial-shapes.cs.svg \
     tutorial-shapes.de.svg \
     tutorial-shapes.es.svg \
+    tutorial-shapes.eu.svg \
     tutorial-shapes.fr.svg \
     tutorial-shapes.hu.svg \
     tutorial-shapes.it.svg \
     tutorial-shapes.ja.svg \
+    tutorial-shapes.pl.svg \
     tutorial-shapes.pt_BR.svg \
     tutorial-shapes.ru.svg \
+    tutorial-shapes.sk.svg \
     tutorial-shapes.sl.svg \
     tutorial-shapes.vi.svg \
     tutorial-shapes.zh_CN.svg \
+    tutorial-shapes.zh_TW.svg \
     tutorial-tips.svg \
     tutorial-tips.ca.svg \
     tutorial-tips.de.svg \
     tutorial-tips.es.svg \
+    tutorial-tips.eu.svg \
     tutorial-tips.fr.svg \
     tutorial-tips.hu.svg \
     tutorial-tips.it.svg \
+    tutorial-tips.pl.svg \
     tutorial-tips.pt_BR.svg \
     tutorial-tips.ru.svg \
     tutorial-tips.sk.svg \
     tutorial-tips.sl.svg \
+    tutorial-tips.vi.svg \
+    tutorial-tips.zh_TW.svg \
     tutorial-tracing.svg \
     tutorial-tracing.ca.svg \
     tutorial-tracing.de.svg \
     tutorial-tracing.es.svg \
+    tutorial-tracing.eu.svg \
     tutorial-tracing.fr.svg \
     tutorial-tracing.hu.svg \
+    tutorial-tracing.pl.svg \
     tutorial-tracing.pt_BR.svg \
     tutorial-tracing.ru.svg \
     tutorial-tracing.sl.svg \
     tutorial-tracing.vi.svg \
+    tutorial-tracing.zh_TW.svg \
     tux.png
 
 
