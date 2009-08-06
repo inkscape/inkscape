@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-03 17:44+0200\n"
-"PO-Revision-Date: 2009-08-06 21:19+0200\n"
+"POT-Creation-Date: 2009-08-06 22:06+0200\n"
+"PO-Revision-Date: 2009-08-06 22:44+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -31,59 +31,60 @@ msgstr "Inkscape - vektorgrafikai szerkesztő"
 msgid "Matte jelly"
 msgstr "Matt zselé"
 
-#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
-#: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
-#: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
-#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:50
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:72
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
-msgid "Bevels"
-msgstr "Rézsútos szegélyek"
+#: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:215
+msgid "ABCs"
+msgstr "Alapvető"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
 msgstr "Kidomborodó matt zselébevonat"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Glossy jelly"
-msgstr "Fényes zselé"
+msgid "Smart jelly"
+msgstr "Intelligens zselé"
+
+#: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
+#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:15 ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:217
+msgid "Bevels"
+msgstr "Rézsútos szegélyek"
 
 #: ../share/filters/filters.svg.h:3
-msgid "Bulging, glossy jelly covering"
-msgstr "Kidomborodó fényes zselébevonat"
+msgid "Same as Matte jelly but with more controls"
+msgstr "Ugyanaz, mint a Matt zselé, de több beállítással"
 
 #: ../share/filters/filters.svg.h:4
-msgid "Glossy jelly, backlit"
-msgstr "Fényes zselé háttérvilágítással"
-
-#: ../share/filters/filters.svg.h:4
-msgid "Bulging, glossy jelly covering; two light sources"
-msgstr "Kidomborodó fényes zselébevonat, két fényforrás"
-
-#: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
 msgstr "Fémöntvény"
 
-#: ../share/filters/filters.svg.h:5
+#: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
 msgstr "Finom, cseppszerű rézsútos szegély fémes felülettel"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
 msgstr "Elmozdításos elmosás, vízszintes"
 
-#: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:168
 msgid "Blurs"
 msgstr "Elmosások"
 
-#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:5
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
@@ -91,11 +92,11 @@ msgstr ""
 "Elmosás úgy, mintha az objektum vízszintesen repülne - az erő a Szórás "
 "beállításával módosítható"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
 msgstr "Elmozdításos elmosás, függőleges"
 
-#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:6
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
@@ -103,272 +104,264 @@ msgstr ""
 "Elmosás úgy, mintha az objektum függőlegesen repülne - az erő a Szórás "
 "beállításával módosítható"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Apparition"
 msgstr "Kísértet"
 
-#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:7
 msgid "Edges are partly feathered out"
 msgstr "A szélek részlegesen lágyítva vannak"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Cutout"
 msgstr "Kivágás"
 
-#: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:179
-#: ../share/filters/filters.svg.h:180 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:185
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
 msgstr "Árnyékok és ragyogások"
 
-#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:8
 msgid "Drop shadow under the cut-out of the shape"
 msgstr "Vetett árnyék az alakzat kivágása alatt"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Jigsaw piece"
 msgstr "Puzzle darabja"
 
-#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:9
 msgid "Low, sharp bevel"
 msgstr "Alacsony, éles rézsútos szegély"
 
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Roughen"
 msgstr "Durvábbá tevés"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:110 ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:177
-#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:216
-msgid "ABCs"
-msgstr "Alapvető"
-
-#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:10
 msgid "Small-scale roughening to edges and content"
 msgstr "A szélek és a tartalom kismértékű durvítása"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Rubber stamp"
 msgstr "Gumibélyegző"
 
-#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
-#: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
-#: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
-#: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:18 ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:38 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:192
 msgid "Overlays"
 msgstr "Burkolatok"
 
-#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
 msgstr "Véletlenszerű fehér foltok belül"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Ink bleed"
 msgstr "Tintafolyás"
 
-#: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:175
 msgid "Protrusions"
 msgstr "Nyúlványok"
 
-#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:12
 msgid "Inky splotches underneath the object"
 msgstr "Tintapacák az objektum alatt"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Fire"
 msgstr "Tűz"
 
-#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:13
 msgid "Edges of object are on fire"
 msgstr "Az objektum szélei égnek"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Bloom"
 msgstr "Virágzás"
 
-#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
 msgstr "Puha, párnaszerű rézsútos szegély matt részekkel"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border"
 msgstr "Gerincszerű szegély"
 
-#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:15
 msgid "Ridged border with inner bevel"
 msgstr "Gerincszerű szegély belső rézsútos szegéllyel"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Ripple"
 msgstr "Fodrozódás"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:203
 msgid "Distort"
 msgstr "Torzítás"
 
-#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:16
 msgid "Horizontal rippling of edges"
 msgstr "A szélek vízszintes fodrozódása"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Speckle"
 msgstr "Folt"
 
-#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:17
 msgid "Fill object with sparse translucent specks"
 msgstr "Objektum kitöltése ritkás áttetsző foltokkal"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Oil slick"
 msgstr "Olajréteg"
 
-#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:18
 msgid "Rainbow-colored semitransparent oily splotches"
 msgstr "Szivárványszínű, félig átlátszó olajos foltok"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Frost"
 msgstr "Zúzmara"
 
-#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:19
 msgid "Flake-like white splotches"
 msgstr "Pehelyszerű fehér pacák"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard fur"
 msgstr "Leopárdszőrme"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:60 ../share/filters/filters.svg.h:61
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:79 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:20 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:59 ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
 msgid "Materials"
 msgstr "Anyagok"
 
-#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:20
 msgid "Leopard spots (loses object's own color)"
 msgstr "Leopárdfoltok (az objektum saját színe elvész)"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Zebra"
 msgstr "Zebra"
 
-#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:21
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr "Szabálytalan függőleges sötét csíkok (az objektum saját színe elvész)"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Clouds"
 msgstr "Felhők"
 
-#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:22
 msgid "Airy, fluffy, sparse white clouds"
 msgstr "Légies, bolyhos, ritkás fehér felhők"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
 msgid "Sharpen"
 msgstr "Élesítés"
 
-#: ../share/filters/filters.svg.h:24 ../share/filters/filters.svg.h:25
-#: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
-#: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
-#: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:23 ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:25 ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:27 ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:29 ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:199
 msgid "Image effects"
 msgstr "Képeffektusok"
 
-#: ../share/filters/filters.svg.h:24
+#: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr "Szélek és határok élesítése az objektumon belül - erő=0,15"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen more"
 msgstr "Erősebb élesítés"
 
-#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
 msgstr "Szélek és határok élesítése az objektumon belül - erő=0,3"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Oil painting"
 msgstr "Olajfestmény"
 
-#: ../share/filters/filters.svg.h:26
+#: ../share/filters/filters.svg.h:25
 msgid "Simulate oil painting style"
 msgstr "Olajfestmény-stílus szimulálása"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Edge detect"
 msgstr "Élkeresés"
 
-#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
 msgstr "Szín-határok keresése az objektumban"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Horizontal edge detect"
 msgstr "Vízszintes élkeresés"
 
-#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:27
 msgid "Detect horizontal color edges in object"
 msgstr "Vízszintes szín-határok keresése az objektumban"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Vertical edge detect"
 msgstr "Függőleges élkeresés"
 
-#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
 msgstr "Függőleges szín-határok keresése az objektumban"
 
 #. Pencil
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 #: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "Ceruza"
 
-#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
 msgstr "Színes élek megkeresése és szürkeárnyalatos újrarajzolása"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Blueprint"
 msgstr "Tervrajz"
 
-#: ../share/filters/filters.svg.h:31
+#: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
 msgstr "Színes élek megkeresése és kék színnel való újrarajzolása"
 
-#: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:31
 #: ../share/extensions/color_desaturate.inx.h:2
 msgid "Desaturate"
 msgstr "Telítetlenné tevés"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:73
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:167
-#: ../share/filters/filters.svg.h:215 ../src/dialogs/clonetiler.cpp:2607
+#: ../share/filters/filters.svg.h:31 ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:214 ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -393,618 +386,618 @@ msgstr "Telítetlenné tevés"
 msgid "Color"
 msgstr "Szín"
 
-#: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:31
 msgid "Render in shades of gray by reducing saturation to zero"
 msgstr ""
 "Megjelenítés a szürke szín árnyalataival a telítettség nullára való "
 "csökkentése által"
 
-#: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
+#: ../share/filters/filters.svg.h:32 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "Invertálás"
 
-#: ../share/filters/filters.svg.h:33
+#: ../share/filters/filters.svg.h:32
 msgid "Invert colors"
 msgstr "Színek invertálása"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Sepia"
 msgstr "Szépia"
 
-#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:33
 msgid "Render in warm sepia tones"
 msgstr "Megjelenítés meleg szépia-árnyalatokkal"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Age"
 msgstr "Öregítés"
 
-#: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
 msgstr "Régi fotó imitálása"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Organic"
 msgstr "Szerves"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
-#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
-#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
-#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:197
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:209
 msgid "Textures"
 msgstr "Textúrák"
 
-#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
 msgstr "Kidomborodó, csomós, sima 3D felület"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
 msgstr "Szögesdrót"
 
-#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:36
 msgid "Gray bevelled wires with drop shadows"
 msgstr "Szürke, rézsútos szegélyű drótok vetett árnyékokkal"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Swiss cheese"
 msgstr "Svájci sajt"
 
-#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:37
 msgid "Random inner-bevel holes"
 msgstr "Véletlenszerű belső rézsútos szegélyű lyukak"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Blue cheese"
 msgstr "Kék sajt"
 
-#: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:38
 msgid "Marble-like bluish speckles"
 msgstr "Márványszerű kékes foltok"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Button"
 msgstr "Gomb"
 
-#: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:39
 msgid "Soft bevel, slightly depressed middle"
 msgstr "Finom rézsútos szegély, kissé bemélyedő közép"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Inset"
 msgstr "Beillesztett objektum"
 
-#: ../share/filters/filters.svg.h:41
+#: ../share/filters/filters.svg.h:40
 msgid "Shadowy outer bevel"
 msgstr "Árnyékos külső rézsútos szegély"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Dripping"
 msgstr "Csepegés"
 
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:41
 msgid "Random paint streaks downwards"
 msgstr "Véletlenszerű festékcsíkok lefelé"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Jam spread"
 msgstr "Lekvár"
 
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:42
 msgid "Glossy clumpy jam spread"
 msgstr "Fényes, csomós lekvár"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Pixel smear"
 msgstr "Képpont-foltosítás"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Van Gogh-szerű festési effektus bitképekhez"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
 msgstr "HSL-buckák"
 
-#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:122 ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:190
-#: ../share/filters/filters.svg.h:192 ../share/filters/filters.svg.h:194
-#: ../share/filters/filters.svg.h:195 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:211 ../share/filters/filters.svg.h:212
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:212
 msgid "Bumps"
 msgstr "Buckák"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Highly flexible specular bump"
 msgstr "Rugalmas tükröződő bucka"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
 msgstr "Törött üveg"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
 msgstr "Törött üveg alatt"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
 msgstr "Buborékos buckák"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
 msgstr "Rugalmas buborékeffektus némi elmozdítással"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
 msgstr "Ragyogó buborék"
 
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:67 ../share/filters/filters.svg.h:69
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:70
 msgid "Ridges"
 msgstr "Gerincek"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
 msgstr "Buborékeffektus fénytöréssel és ragyogással"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Neon"
 msgstr "Neon"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "Neon light effect"
 msgstr "Neonfény-effektus"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
 msgstr "Olvadt fém"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 "Az objektum részeinek egybeolvasztása, fényes rézsútos szegéllyel és "
 "ragyogással"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed steel"
 msgstr "Préselt acél"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Pressed metal with a rolled edge"
 msgstr "Préselt fém nyújtott széllel"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Matte bevel"
 msgstr "Matt rézsútos szegély"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Finom, pasztellszínű elmosódott rézsútos szegély"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
 msgstr "Vékony hártya"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Thin like a soap membrane"
 msgstr "Vékony, mint egy szappanhártya"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Matte ridge"
 msgstr "Matt gerinc"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft pastel ridge"
 msgstr "Finom, pasztellszínű gerinc"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
 msgstr "Ragyogó fém"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Glowing metal texture"
 msgstr "Ragyogó fémes textúra"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves"
 msgstr "Falevelek"
 
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:78
-#: ../share/filters/filters.svg.h:87 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:86 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "Szétszórás"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Falevelek ősszel a földön, vagy élő lombozat"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Translucent"
 msgstr "Áttetsző"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "\"Megvilágított áttetsző műanyag vagy üveg\" effektus"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Cross-smooth"
 msgstr "Kereszt-simítás"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Blur inner borders and intersections"
 msgstr "Belső szegélyek és metszések elmosása"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Iridescent beeswax"
 msgstr "Szivárványszínekben játszó méhviasz"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
 "Viaszos textúra, amely a színkitöltés módosítása esetén is megőrzi a "
 "többszínűségét"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal"
 msgstr "Erodálódott fém"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "\"Erodálódott fém\" textúra gerincekkel, barázdákkal, lyukakkal és buckákkal"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
 msgstr "Töredezett láva"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "A volcanic texture, a little like leather"
 msgstr "Vulkáni textúra, kissé bőrszerű"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark"
 msgstr "Kéreg"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "Kéregtextúra, függőleges - mély színekkel érdemes használni"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
 msgstr "Gyíkbőr"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Stylized reptile skin texture"
 msgstr "Stilizált hüllőbőr-textúra"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stone wall"
 msgstr "Kőfal"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Stone wall texture to use with not too saturated colors"
 msgstr "Kőfal-textúra nem túlzottan telített színekkel való használatra"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
 msgstr "Selyemszőnyeg"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "Selyemszőnyeg-textúra, vízszintes csíkok"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Refractive gel A"
 msgstr "Fénytörő gél A"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
 msgstr "Géleffektus gyenge fénytöréssel"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Refractive gel B"
 msgstr "Fénytörő gél B"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
 msgstr "Géleffektus erős fénytöréssel"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Metallized paint"
 msgstr "Fémes festés"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "Fémes effektus finom megvilágítással, kissé áttetsző a széleknél"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Dragee"
 msgstr "Drazsé"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Géles gerinc gyöngyszerű kinézettel"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Raised border"
 msgstr "Felemelt szegély"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Strongly raised border around a flat surface"
 msgstr "Erősen felemelt szegély egy sík felület körül"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Metallized ridge"
 msgstr "Fémes gerinc"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge metallized at its top"
 msgstr "Géles gerinc, a tetején fémes"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil"
 msgstr "Vastag olajréteg"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Vastag olajréteg beállítható örvényléssel"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Színezés"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr ""
 "Kép vagy objektum keverése egy területkitöltési színnel, továbbá fényesség "
 "és kontraszt beállítása"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Parallel hollow"
 msgstr "Párhuzamos vájat"
 
-#: ../share/filters/filters.svg.h:74 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:89
-#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:94
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:106
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:73 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:177
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Alakítás"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "Elmosódott vájat, amely belül fut a széllel párhuzamosan"
 
 # Identifies the type of the related resource with an absolute URI
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Hole"
 msgstr "Lyuk"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Opens a smooth hole inside the shape"
 msgstr "Finom lyukat vág az alakzat belsejébe"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Black hole"
 msgstr "Fekete lyuk"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Creates a black light inside and outside"
 msgstr "Fekete fényt hoz létre belül és kívül"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Smooth outline"
 msgstr "Kontúr simítása"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "Vonalak kontúrozása és a kereszteződéseik simítása"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Cubes"
 msgstr "Kockák"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "Elszórt kockák - a méret az Alakítás szűrőprimitív beállításával módosítható"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peel off"
 msgstr "Lepattogzás"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Peeling painting on a wall"
 msgstr "Lemálló festés egy falon"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Gold splatter"
 msgstr "Aranyfoltok"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Foltos öntöttfém arany részekkel"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Gold paste"
 msgstr "Aranypaszta"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Bevont öntöttfém arany részekkel"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled plastic"
 msgstr "Gyűrődött műanyag"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Gyűrődött matt műanyag, olvadt széllel"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Enamel jewelry"
 msgstr "Zománcozott ékszer"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Slightly cracked enameled texture"
 msgstr "Kissé töredezett zománcos textúra"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Rough paper"
 msgstr "Durva papír"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "Akvarellpapír-effektus, képekhez és objektumokhoz használható"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Rough and glossy"
 msgstr "Durva és fényes"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "\"Gyűrődött fényes papír\" effektus, képekhez és objektumokhoz használható"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "In and Out"
 msgstr "Belül és kívül"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "Belső színezett árnyék, külső fekete árnyék"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Air spray"
 msgstr "Festékszóró"
 
-#: ../share/filters/filters.svg.h:87
-msgid "Air Spray; adjust the Displacement Map amount"
-msgstr "Festékszóró - az erősség az Elmozdítási leképezésnél módosítható"
+#: ../share/filters/filters.svg.h:86
+msgid "Convert to small scattered particles with some thickness"
+msgstr "Átalakítás kicsi, elszórt részecskékké, némi vastagsággal"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
 msgstr "Belül meleg"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Blurred colorized contour, filled inside"
 msgstr "Elmosódott színezett kontúr, belül kitöltve"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Cool outside"
 msgstr "Kívül hűvös"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
 msgstr "Elmosódott színezett kontúr, belül üres"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Electronic microscopy"
 msgstr "Elektronmikroszkóp"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Rézsútos szegély, durva fény, színtelenedés és ragyogás, mint az "
 "elektronmikroszkópokban"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Tartan"
 msgstr "Skót minta"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Checkered tartan pattern"
 msgstr "Kockás skót minta"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue"
 msgstr "Árnyalat invertálása"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Invert hue, or rotate it"
 msgstr "Árnyalat invertálása vagy elforgatása"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Inner outline"
 msgstr "Belső kontúr"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Draws an outline around"
 msgstr "Kontúr rajzolása az objektum köré"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Outline, double"
 msgstr "Kontúr, dupla"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "Finom vonal rajzolása belül, azzal a színnel, amelyet befed"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Fancy blur"
 msgstr "Különleges elmosás"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 "Finom színezett kontúr, lehetővé teszi a telítetlenné tevést és az "
 "árnyalatelforgatást"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow"
 msgstr "Ragyogás"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Glow of object's own color at the edges"
 msgstr "Ragyogás az objektum szélein annak saját színével"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Outline"
 msgstr "Kontúr"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Ragyogó elmosást ad az objektumnak és törli az alakzatot"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Color emboss"
 msgstr "Színes domborítás"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
 "Klasszikus vagy színezett domborítási effektus: szürkeárnyalatos, színes és "
 "3D dombormű"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Nap-effektus"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
 msgstr "Klasszikus Nap-effektus fotókhoz"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Moonarize"
 msgstr "Hold-effektus"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
@@ -1012,109 +1005,109 @@ msgstr ""
 "A Nap-effektus és az invertálás közötti effektus; gyakran megőrzi az ég és a "
 "víz fényeit"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
 msgstr "Életlen (soft focus) lencse"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
 msgstr "Ragyogó képtartalom elmosás nélkül"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Stained glass"
 msgstr "Festett üveg"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Illuminated stained glass effect"
 msgstr "\"Megvilágított festett üveg\" effektus"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Dark glass"
 msgstr "Sötét üveg"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "\"Megvilágított üveg\" effektus alulról jövő fénnyel"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
 msgstr "HSL-buckák, alfa"
 
-#: ../share/filters/filters.svg.h:104 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:175
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:188
-#: ../share/filters/filters.svg.h:189 ../share/filters/filters.svg.h:196
-#: ../share/filters/filters.svg.h:198 ../share/filters/filters.svg.h:199
-#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:203
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:200 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:213
 msgid "Image effects, transparent"
 msgstr "Képeffektusok, átlátszó"
 
-#: ../share/filters/filters.svg.h:104
-msgid "Same than HSL Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:103
+msgid "Same as HSL Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a HSL-buckák, de átlátszó részekkel"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
 msgstr "Buborékos buckák, alfa"
 
-#: ../share/filters/filters.svg.h:105
-msgid "Same than Bubbly Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:104
+msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a Buborékos buckák, de átlátszó részekkel"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Smooth edges"
 msgstr "Szélek simítása"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "Alakzatok és képek külső részének simítása a tartalmuk módosítása nélkül"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "Torn edges"
 msgstr "Tépett szélek"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "Alakzatok és képek külső részének elmozdítása a tartalmuk módosítása nélkül"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Feather"
 msgstr "Lágy szél"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Elmosódott maszk a szélen a tartalom módosítása nélkül"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur content"
 msgstr "Tartalom elmosása"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "Objektumok tartalmának elmosása a kontúr megőrzésével"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Specular light"
 msgstr "Tükröződő fény"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Basic specular bevel to use for building textures"
 msgstr "Alapvető tükröződő rézsútos szegély textúrák készítéséhez"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen inside"
 msgstr "Durvábbá tevés belül"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
 msgstr "Az összes belső alakzat durvábbá tevése"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
 msgstr "Tűnékeny"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
@@ -1122,114 +1115,114 @@ msgstr ""
 "Objektumok tartalmának elmosása, megőrizve a kontúrt és progresszív "
 "átlátszóságot adva a széleknél"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
 msgstr "Kréta és szivacs"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Kismértékű örvénylés szivacsos kinézetet ad, nagymértékű pedig krétaszerűt"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "People"
 msgstr "Emberek"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Színezett foltok - mint egy embertömeg"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Scotland"
 msgstr "Skócia"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Colorized mountain tops out of the fog"
 msgstr "Ködből kiemelkedő színezett hegytetők"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Noise transparency"
 msgstr "Átlátszóság zajosítása"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
 msgstr "Alapvető \"Átlátszóság zajosítása\" textúra"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Noise fill"
 msgstr "Zajjal való kitöltés"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr ""
 "Alapvető \"Zajjal való kitöltés\" textúra; a szín a területkitöltési "
 "effektusnál módosítható"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
 msgstr "A gyönyörök kertje"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 "Képzeletbeli örvénylő füstgomolyagok, mint a Hieronymus Bosch-féle \"A "
 "gyönyörök kertje\" festményen"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Diffuse light"
 msgstr "Szórt (diffúz) fény"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Alapvető szórt fényű rézsútos szegély textúrák készítéséhez"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Cutout Glow"
 msgstr "Ragyogó kivágás"
 
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Belső és külső ragyogás esetleges eltolással és színezhető területkitöltéssel"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
 msgstr "HSL-buckák, matt"
 
-#: ../share/filters/filters.svg.h:121
-msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
+#: ../share/filters/filters.svg.h:120
+msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "Ugyanaz, mint a HSL-buckák, de tükröződő helyett szórt visszaverődéssel"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
 msgstr "Sötét domborítás"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Domborítási effektus: 3D dombormű, amelyben a fehér le van cserélve feketére"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
 msgstr "Egyszerű elmosás"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 "Egyszerű Gauss-elmosás; ugyanaz, mint a \"Kitöltés és körvonal\" "
 "párbeszédablakban levő Elmosás csúszka"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
 msgstr "Buborékos buckák, matt"
 
-#: ../share/filters/filters.svg.h:124
-msgid "Same than Bubbly Bumps but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:123
+msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr "Ugyanaz, mint a Buborékos buckák, de tükröződő helyett szórt fénnyel"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Domborítás"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
@@ -1237,330 +1230,334 @@ msgstr ""
 "Domborítási effektus: az eredeti képek színei megőrződnek, vagy a Keverés "
 "funkcióval módosulnak"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
 msgstr "Itatóspapír"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Inkblot on blotting paper"
 msgstr "Tintapaca itatóspapíron"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print"
 msgstr "Viasznyomat"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Wax print on tissue texture"
 msgstr "Viasznyomat selyempapír-textúrán"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
 msgstr "Tintapaca"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "Tintapaca selyempapíron vagy durva papíron"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Burnt edges"
 msgstr "Égett szélek"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Torn edges with a dark inner blur"
 msgstr "Tépett szélek sötét belső elmosással"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
 msgstr "Színes kontúr, belső"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
 msgstr "Színezhető belső kontúr beállítható szélességgel és elmosással"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Liquid"
 msgstr "Folyadék"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Colorizable filling with liquid transparency"
 msgstr "Színezhető kitöltés folyadékszerű átlátszósággal"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Watercolor"
 msgstr "Vízfesték"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Cloudy watercolor effect"
 msgstr "Felhős vízfesték-effektus"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Felt"
 msgstr "Nemez"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Nemezszerű textúra színes örvényléssel, a szélek környékén kissé sötétebb"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
 msgstr "Tintarajzolat"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Tintarajzolat papíron, örvénylő színeltolással"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
 msgstr "Színezett szivárvány"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Finom szivárványszínek a szélek mentén megolvadva, színezhető"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
 msgstr "Olvadt szivárvány"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Finom szivárványszínek a szélek mentén kissé megolvadva"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
 msgstr "Rugalmas fém"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Fényes, csiszolt, egyenetlen fémöntvény, színezhető"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
 msgstr "Képregényvázlat"
 
-#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:141 ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:165
 msgid "Non realistic 3D shaders"
 msgstr "Nem realisztikus 3D árnyalók (shader)"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Vázlatosan megrajzolt rajzfilmszerű árnyalás üvegszerű kinézettel"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Comics fading"
 msgstr "Képregény halványítással"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Rajzfilmszerű rajzolási stílus, a széleknél halványítással"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shader NR"
 msgstr "Finomárnyaló, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Finomárnyalás szürke grafitceruzával"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Emboss shader NR"
 msgstr "Domborításos árnyaló, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Combination of smooth shading and embossing"
 msgstr "Finomárnyalás és domborítás kombinációja"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader dark NR"
 msgstr "Finomárnyaló, sötét, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Dark version of non realistic smooth shading"
 msgstr "A nem realisztikus finomárnyalás sötét változata"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Comics"
 msgstr "Képregény"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Imitation of black and white cartoon shading"
 msgstr "Fekete-fehér rajzfilmszerű árnyalás imitálása"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Satin NR"
 msgstr "Szatén, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Silky close to mother of pearl shading"
 msgstr "Gyöngyházszerű selymes árnyalás"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "Jégvirágos üveg, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "Nem realisztikus jégvirágosüveg-utánzat"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Smooth shader contour NR"
 msgstr "Finomárnyaló, kontúr, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:151
 msgid "Contouring version of smooth shader"
 msgstr "A finomárnyaló kontúrozó változata"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Aluminium NR"
 msgstr "Alumínium, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:153
 msgid "Brushed aluminium shader"
 msgstr "\"Csiszolt alumínium\" árnyaló"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Comics fluid"
 msgstr "Képregény, folyadékszerű"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:154
 msgid "Fluid brushed cartoon drawing"
 msgstr "Folyadékszerű, ecsettel készített rajzfilmszerű rajz"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Chrome NR"
 msgstr "Króm, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Nem realisztikus króm-árnyaló erős tükröződéssel"
 
 #. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Chrome dark NR"
 msgstr "Króm, sötét, nem realisztikus"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:158
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "A krómos árnyalás sötét változata talajról való visszaverődés szimulálásával"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Wavy tartan"
 msgstr "Hullámos skót minta"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:159
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Skót minta hullámos elmozdítással, a szélek körül rézsútos szegéllyel"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D marble"
 msgstr "3D márvány"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:160
 msgid "3D warped marble texture"
 msgstr "\"3D görbített márvány\" textúra"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D wood"
 msgstr "3D faanyag"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:161
 msgid "3D warped, fibered wood texture"
 msgstr "3D görbített, rostos fa-textúra"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D mother of pearl"
 msgstr "3D gyöngyház"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:162
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "\"3D görbített, szivárványszínekben játszó, gyöngyszerű burok\" textúra"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur"
 msgstr "Tigrisszőrme"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:163
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Tigrisszőrme-minta redőkkel, a szélek körül rézsútos szegély"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Shaken liquid"
 msgstr "Felrázott folyadék"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:164
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Színezhető kitöltés, folyadékszerű belső, átlátszóság"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics cream"
 msgstr "Képregény, krémes"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:165
 msgid "Comics shader with creamy waves transparency"
 msgstr "Képregényszerű árnyaló krémes hullámokkal és átlátszósággal"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Black Light"
 msgstr "Fekete fény"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:166
 msgid "Light areas turn to black"
 msgstr "A világos területek feketék lesznek"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Light eraser"
 msgstr "Fényradír"
 
-#: ../share/filters/filters.svg.h:168 ../share/filters/filters.svg.h:205
-#: ../share/filters/filters.svg.h:206 ../share/filters/filters.svg.h:207
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:208
 msgid "Transparency utilities"
 msgstr "Átlátszósági funkciók"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:167
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "Az objektum legvilágosabb részeinek progresszívan átlátszóvá tevése"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Noisy blur"
 msgstr "Zajos elmosás"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:168
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "A szélek és a tartalom kismértékű durvítása és elmosása"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:169
 msgid "Film grain"
 msgstr "Szemcsés réteg"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:169
+msgid "Adds a small scale graininess"
+msgstr "Kismértékű szemcsésség hozzáadása"
+
+#: ../share/filters/filters.svg.h:170
 msgid "HSL Bumps, transparent"
 msgstr "HSL-buckák, átlátszó"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:170
 msgid "Highly flexible specular bump with transparency"
 msgstr "Rugalmas \"tükröződő bucka\" effektus átlátszósággal"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "Rajz"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:171
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
@@ -1568,165 +1565,169 @@ msgstr ""
 "Grafitceruza, kromolitográfia, gravírozás és egyéb effektusok a képekre és "
 "az anyaggal kitöltött objektumokra"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Velvet bump"
 msgstr "Bársonybucka"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:172
 msgid "Gives a smooth bump velvet like"
 msgstr "Finom, bársonyszerű bucka"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Alpha draw"
 msgstr "Alfa-rajzolás"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:173
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Átlátszó rajzolási effektus a bitképekhez és az anyagokhoz"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Alpha draw, color"
 msgstr "Alfa-rajzolás, színes"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:174
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Átlátszó színkitöltési effektus a bitképekhez és az anyagokhoz"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
 msgid "Chewing gum"
 msgstr "Rágógumi"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:175
 msgid ""
-"Creates colourizable blotches which smoothly flow over the edges of the "
-"lines at their crossings"
+"Creates colorizable blotches which smoothly flow over the edges of the lines "
+"at their crossings"
 msgstr ""
 "Színezhető foltok létrehozása, amelyek finoman ráfolynak a vonalak széleire "
 "azok kereszteződéseinél"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Black outline"
 msgstr "Fekete kontúr"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:176
 msgid "Draws a black outline around"
 msgstr "Fekete kontúr rajzolása az objektum köré"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:177
 msgid "Color outline"
 msgstr "Színes kontúr"
 
-#: ../share/filters/filters.svg.h:178
-msgid "Draws a coloured outline around"
+#: ../share/filters/filters.svg.h:177
+msgid "Draws a colored outline around"
 msgstr "Színes kontúr rajzolása az objektum köré"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Inner shadow"
 msgstr "Belső árnyék"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:178
 msgid "Adds a colorizable drop shadow inside"
 msgstr "Színezhető vetett árnyék rajzolása belülre"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Dark and glow"
 msgstr "Sötét és ragyogó"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:179
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "Belső elmosással sötétíti az objektum szélét és rugalmas ragyogást ad ahhoz"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken edges"
 msgstr "Szélek sötétítése"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:180
 msgid "Darken the edges with an inner blur"
 msgstr "A szélek sötétítése belső elmosással"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Warped rainbow"
 msgstr "Görbített szivárvány"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:181
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Finom szivárványszínek a szélek mentén görbítve, színezhető"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Rough and dilate"
 msgstr "Durva és nyújtott"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:182
 msgid "Create a turbulent contour around"
 msgstr "Örvénylő kontúr létrehozása az objektum köré"
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:183
 msgid "Gelatine"
 msgstr "Zselatin"
 
-#: ../share/filters/filters.svg.h:184
-msgid "Colorizable filling with gelatin like turbulence and transparency"
+#: ../share/filters/filters.svg.h:183
+msgid "Colorizable filling with gelatine like turbulence and transparency"
 msgstr "Színezhető kitöltés zselatinszerű örvényléssel és átlátszósággal"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:184
 msgid "Old postcard"
 msgstr "Régi képeslap"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:184
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 "Enyhe posztereffektus, valamint régi nyomtatott képeslapokat idéző szélek "
 "rajzolása"
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:185
 msgid "Fuzzy glow"
 msgstr "Homályos ragyogás"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:185
+msgid "Overlays a semi-transparent shifted copy to a blurred one"
+msgstr "Félig átlátszó, eltolt másolat ráhelyezése egy elmosódottra"
+
+#: ../share/filters/filters.svg.h:186
 msgid "Dots transparency"
 msgstr "Pontok és átlátszóság"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:186
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "Pontfestészet-szerű HSL-érzékeny átlátszóságot ad"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Canvas transparency"
 msgstr "Rajzvászon-átlátszóság"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:187
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "Rajzvászon-szerű HSL-érzékeny átlátszóságot ad"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:188
 msgid "Smear transparency"
 msgstr "Foltok és átlátszóság"
 
-#: ../share/filters/filters.svg.h:189
-msgid "Paint objects with a transparent turbulence which turn around color edges"
+#: ../share/filters/filters.svg.h:188
+msgid "Paint objects with a transparent turbulence which turns around color edges"
 msgstr "Objektumok befestése átlátszó örvényléssel, amely a színes éleknél elfordul"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid "Thick paint"
 msgstr "Vastag festés"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:189
 msgid "Thick painting effect with turbulence"
 msgstr "Vastag festési effektus örvényléssel"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Burst"
 msgstr "Kipukkadás"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:190
 msgid "Burst balloon texture crumpled and with holes"
 msgstr "\"Kipukkadt léggömb\" textúra - gyűrődések és lyukak"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:191
 msgid "Embossed leather"
 msgstr "Domborított bőr"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:191
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
@@ -1734,210 +1735,226 @@ msgstr ""
 "Egy HSL-es élkeresési buckaeffektus kombinálása egy bőrszerű vagy faanyag-"
 "szerű színezhető textúrával"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:192
 msgid "Carnaval"
 msgstr "Karnevál"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:192
 msgid "White splotches evocating carnaval masks"
 msgstr "Karneváli maszkokat idéző fehér foltok"
 
 # Definition: To soften a thermoplastic resin or compound
 #  by means of heat alone. Not similar to plasticize or plasticate.
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:193
 msgid "Plastify"
 msgstr "Lágyítás hővel"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:193
 msgid "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
 "Egy HSL-es élkeresési buckaeffektus kombinálása egy hullámos, tükröző "
 "felületet adó effektussal"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:194
 msgid "Plaster"
 msgstr "Vakolat"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:194
 msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
 "Egy HSL-es élkeresési buckaeffektus kombinálása egy matt, gyűrődött "
 "felületet adó effektussal"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:195
 msgid "Rough transparency"
 msgstr "Durva átlátszóság"
 
-#: ../share/filters/filters.svg.h:196
-msgid "Adds a turbulent transparency which displace pixels at the same time"
+#: ../share/filters/filters.svg.h:195
+msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr "Örvénylő átlátszóság, amely a képpontokat el is mozdítja"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:196
 msgid "Gouache"
 msgstr "Fedőfesték (gouache)"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:196
 msgid "Partly opaque water color effect with bleed"
 msgstr "Részben átlátszatlan vízfesték-effektus elfolyással"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:197
 msgid "Alpha engraving"
 msgstr "Alfa-gravírozás"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:197
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "Átlátszó gravírozási effektus durva vonalakkal és kitöltéssel"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:198
 msgid "Alpha draw, liquid"
 msgstr "Alfa-rajzolás, folyadékszerű"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:198
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "Átlátszó folyadékszerű rajzeffektus durva vonalakkal és kitöltéssel"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:199
 msgid "Liquid drawing"
 msgstr "Folyadékszerű rajz"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:199
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "Folyadékszerű, hullámos, expresszionista rajzeffektust ad a képekhez"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled ink"
 msgstr "Márványszerű tinta"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:200
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr "Márványszerű átlátszósági effektus, alkalmazkodik a kép éleihez"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic"
 msgstr "Vastag akril"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:201
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr "\"Vastag akrilfestés\" textúra nagy textúramélységgel"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:202
 msgid "Alpha engraving B"
 msgstr "Alfa-gravírozás B"
 
-#: ../share/filters/filters.svg.h:203
-msgid "Gives a controlable roughness engraving effect to bitmaps and materials"
+#: ../share/filters/filters.svg.h:202
+msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr "Állítható durvaságú gravírozási effektus a bitképekhez és az anyagokhoz"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:203
 msgid "Lapping"
 msgstr "Partot nyaldosó víz"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:203
 msgid "Something like a water noise"
 msgstr "Egyfajta vízszerű zaj"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:204
 msgid "Monochrome positive"
 msgstr "Monokróm pozitív"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:204
 msgid "Convert to a Colorizable transparent positive"
 msgstr "Átalakítás színezhető átlátszó pozitívvá"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:205
 msgid "Monochrome negative"
 msgstr "Monokróm negatív"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:205
 msgid "Convert to a colorizable transparent negative"
 msgstr "Átalakítás színezhető átlátszó negatívvá"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:206
 msgid "Light eraser, negative"
 msgstr "Fényradír, negatív"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:206
 msgid "Invert and make the lightest parts of the object progressively transparent"
 msgstr ""
 "Invertálás, majd az objektum legvilágosabb részeinek progresszívan "
 "átlátszóvá tevése"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint"
 msgstr "Átfestés"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:207
 msgid "Repaint anything monochrome"
 msgstr "Minden átfestése egyszínűre"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:208
 msgid "Punch hole"
 msgstr "Lyukasztás"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:208
 msgid "Punch object out of a colorizable opaque area"
 msgstr "Az objektum kivágása egy színezhető átlátszatlan területből"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:209
 msgid "Riddled"
 msgstr "Lyuggatott"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:209
 msgid "Riddle the surface and add bump to images"
 msgstr "A felület lyuggatása és buckák hozzáadása a képekhez"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:210
 msgid "Wrinkled varnish"
 msgstr "Redőzött fényezés"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:210
 msgid "Thick glossy and translucent paint texture with high depth"
 msgstr "Vastag, fényes, áttetsző festési textúra nagy mélységgel"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:211
 msgid "Canvas Bumps"
 msgstr "Rajzvászon-buckák"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:211
 msgid "Canvas texture with an HSL sensitive height map"
 msgstr "Rajzvászon-textúra HSL-érzékeny magassági leképezéssel"
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:212
 msgid "Canvas Bumps, matte"
 msgstr "Rajzvászon-buckák, matt"
 
-#: ../share/filters/filters.svg.h:213
-msgid "Same than Canvas Bumps but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:212
+msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de tükröződő helyett szórt fénnyel"
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:213
 msgid "Canvas Bumps alpha"
 msgstr "Rajzvászon-buckák, alfa"
 
-#: ../share/filters/filters.svg.h:214
-msgid "Same than Canvas Bumps but with transparent highlights"
+#: ../share/filters/filters.svg.h:213
+msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "Ugyanaz, mint a Rajzvászon-buckák, de átlátszó részekkel"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Lightness-Contrast"
 msgstr "Fényesség és kontraszt"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Increase or decrease lightness and contrast"
 msgstr "Fényesség és kontraszt növelése vagy csökkentése"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:215
 msgid "Clean edges"
 msgstr "Szélek tisztítása"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:215
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr ""
 "Ragyogások és recék eltávolítása vagy csökkentése bizonyos szűrők "
 "alkalmazása után az objektumok szélei körül"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bright metal"
+msgstr "Fényes fém"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bright metallic effect for any color"
+msgstr "Fényes fémes effektus bármely színhez"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Deep colors plastic"
+msgstr "Mély színek, műanyag"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Transparent plastic with deep colors"
+msgstr "Átlátszó műanyag mély színekkel"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2972,93 +2989,93 @@ msgstr ""
 "Az összes eltolás, átméretezés, elforgatás, átlátszatlanság-módosítás és "
 "színmódosítás visszaállítása nullára a párbeszédablakban"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2623
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
 msgstr "_Lap"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2627
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2627
 msgid "_Drawing"
 msgstr "_Rajz"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2629
+#: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2629
 msgid "_Selection"
 msgstr "_Kijelölés"
 
-#: ../src/dialogs/export.cpp:141
+#: ../src/dialogs/export.cpp:146
 msgid "_Custom"
 msgstr "Egyén_i"
 
-#: ../src/dialogs/export.cpp:266
+#: ../src/dialogs/export.cpp:271
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Exportálási terület</b></big>"
 
-#: ../src/dialogs/export.cpp:280
+#: ../src/dialogs/export.cpp:285
 msgid "Units:"
 msgstr "Mértékegység:"
 
-#: ../src/dialogs/export.cpp:308
+#: ../src/dialogs/export.cpp:313
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:313
+#: ../src/dialogs/export.cpp:318
 msgid "x_1:"
 msgstr "x_1:"
 
-#: ../src/dialogs/export.cpp:318
+#: ../src/dialogs/export.cpp:323
 msgid "Wid_th:"
 msgstr "S_zélesség:"
 
-#: ../src/dialogs/export.cpp:324
+#: ../src/dialogs/export.cpp:329
 msgid "_y0:"
 msgstr "y_0:"
 
-#: ../src/dialogs/export.cpp:329
+#: ../src/dialogs/export.cpp:334
 msgid "y_1:"
 msgstr "_y1:"
 
-#: ../src/dialogs/export.cpp:334
+#: ../src/dialogs/export.cpp:339
 msgid "Hei_ght:"
 msgstr "M_agasság:"
 
-#: ../src/dialogs/export.cpp:466
+#: ../src/dialogs/export.cpp:471
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Bitkép-méret</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "_Szélesség:"
 
-#: ../src/dialogs/export.cpp:479 ../src/dialogs/export.cpp:493
+#: ../src/dialogs/export.cpp:484 ../src/dialogs/export.cpp:498
 msgid "pixels at"
 msgstr "képpont; felbontás:"
 
-#: ../src/dialogs/export.cpp:487
+#: ../src/dialogs/export.cpp:492
 msgid "dp_i"
 msgstr "_DPI"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
+#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "Ma_gasság:"
 
-#: ../src/dialogs/export.cpp:504 ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "dpi"
 msgstr "DPI"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:515
+#: ../src/dialogs/export.cpp:520
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Fájlnév</b></big>"
 
-#: ../src/dialogs/export.cpp:586
+#: ../src/dialogs/export.cpp:591
 msgid "_Browse..."
 msgstr "_Tallózás..."
 
-#: ../src/dialogs/export.cpp:615
+#: ../src/dialogs/export.cpp:620
 msgid "Batch export all selected objects"
 msgstr "Az összes kijelölt objektum kötegelt exportálása"
 
-#: ../src/dialogs/export.cpp:619
+#: ../src/dialogs/export.cpp:624
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
@@ -3067,62 +3084,62 @@ msgstr ""
 "export-információk felhasználásával. Figyelmeztetés: ez a művelet kérdezés "
 "nélküli felülírást végez."
 
-#: ../src/dialogs/export.cpp:627
+#: ../src/dialogs/export.cpp:632
 msgid "Hide all except selected"
 msgstr "Minden elrejtése a kijelöltek kivételével"
 
-#: ../src/dialogs/export.cpp:631
+#: ../src/dialogs/export.cpp:636
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr "A kijelölteken kívül minden objektum elrejtése az exportált képben"
 
-#: ../src/dialogs/export.cpp:648
+#: ../src/dialogs/export.cpp:653
 msgid "_Export"
 msgstr "_Exportálás"
 
-#: ../src/dialogs/export.cpp:652
+#: ../src/dialogs/export.cpp:657
 msgid "Export the bitmap file with these settings"
 msgstr "Exportálás bitkép-fájlba a megadott beállításokkal"
 
-#: ../src/dialogs/export.cpp:678
+#: ../src/dialogs/export.cpp:683
 #, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "%d kijelölt objektum kötegelt exportálása"
 msgstr[1] "%d kijelölt objektum kötegelt exportálása"
 
-#: ../src/dialogs/export.cpp:1009
+#: ../src/dialogs/export.cpp:1014
 msgid "Export in progress"
 msgstr "Exportálás folyamatban"
 
-#: ../src/dialogs/export.cpp:1079
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "%d fájl exportálása"
 
-#: ../src/dialogs/export.cpp:1119 ../src/dialogs/export.cpp:1192
+#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Nem sikerült \"%s\" nevű fájlba exportálni.\n"
 
-#: ../src/dialogs/export.cpp:1148
+#: ../src/dialogs/export.cpp:1153
 msgid "You have to enter a filename"
 msgstr "Meg kell adni egy fájlnevet"
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1158
 msgid "The chosen area to be exported is invalid"
 msgstr "Az exportálásra kijelölt terület érvénytelen"
 
-#: ../src/dialogs/export.cpp:1162
+#: ../src/dialogs/export.cpp:1167
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "\"%s\" nevű könyvtár nem létezik, vagy az objektum nem könyvtár.\n"
 
-#: ../src/dialogs/export.cpp:1178
+#: ../src/dialogs/export.cpp:1183
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Exportálás (%s, %lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1299
+#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
 msgid "Select a filename for exporting"
 msgstr "Adjon meg egy fájlnevet az exportáláshoz"
 
@@ -4999,32 +5016,34 @@ msgstr "PostScript, 2-es szint"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-msgid "Export area is whole canvas"
-msgstr "Az exportált terület a teljes rajzvászon"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:283
-#: ../src/extension/internal/cairo-ps-out.cpp:320
-msgid "Export area is the drawing"
-msgstr "Az exportált terület a rajz"
-
-#: ../src/extension/internal/cairo-ps-out.cpp:284
-#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Szövegek átalakítása útvonalakká"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:285
-#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-ps-out.cpp:283
+#: ../src/extension/internal/cairo-ps-out.cpp:320
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "Szűrőeffektusok raszterizálása"
 
-#: ../src/extension/internal/cairo-ps-out.cpp:286
-#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-ps-out.cpp:284
+#: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
 msgid "Resolution for rasterization (dpi)"
 msgstr "Raszterizálási felbontás (pont/hüvelykben)"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:285
+#: ../src/extension/internal/cairo-ps-out.cpp:322
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+msgid "Export area is drawing"
+msgstr "Az exportált terület a rajz"
+
+#: ../src/extension/internal/cairo-ps-out.cpp:286
+#: ../src/extension/internal/cairo-ps-out.cpp:323
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+msgid "Export area is page"
+msgstr "Az exportált terület a lap"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -5062,14 +5081,6 @@ msgstr "Adott PDF-verzióra korlátozás"
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-msgid "Export drawing, not page"
-msgstr "A rajz exportálása a lap helyett"
-
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-msgid "Export canvas"
-msgstr "Rajzvászon exportálása"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2400
 msgid "EMF Input"
@@ -21408,8 +21419,8 @@ msgid "ROBO-Master output"
 msgstr "ROBO-Master-kimenet"
 
 #: ../share/extensions/dxf_output.inx.h:1
-msgid "AutoCAD DXF (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgid "AutoCAD DXF R12 (*.dxf)"
+msgstr "AutoCAD DXF R12 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -22948,6 +22959,18 @@ msgstr "Gumiszerű nyújtás"
 msgid "Strength (%):"
 msgstr "Erősség (%):"
 
+#: ../share/extensions/scour.inx.h:1
+msgid "Scalable Vector Graphics"
+msgstr "Méretezhető vektorgrafika, SVG"
+
+#: ../share/extensions/scour.inx.h:2
+msgid "Scoured SVG (*.svg)"
+msgstr "Optimalizált (Scour) SVG (*.svg)"
+
+#: ../share/extensions/scour.inx.h:3
+msgid "Scoured SVG Output"
+msgstr "Optimalizált (Scour) SVG-kimenet"
+
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Az sK1 vektorgrafikai szerkesztővel elmentett fájlok megnyitása"
@@ -23494,6 +23517,33 @@ msgstr "Windows Metafile-bemenet"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML-bemenet"
+
+#~ msgid "Glossy jelly"
+#~ msgstr "Fényes zselé"
+
+#~ msgid "Bulging, glossy jelly covering"
+#~ msgstr "Kidomborodó fényes zselébevonat"
+
+#~ msgid "Glossy jelly, backlit"
+#~ msgstr "Fényes zselé háttérvilágítással"
+
+#~ msgid "Bulging, glossy jelly covering; two light sources"
+#~ msgstr "Kidomborodó fényes zselébevonat, két fényforrás"
+
+#~ msgid "Air Spray; adjust the Displacement Map amount"
+#~ msgstr "Festékszóró - az erősség az Elmozdítási leképezésnél módosítható"
+
+#~ msgid "Export area is whole canvas"
+#~ msgstr "Az exportált terület a teljes rajzvászon"
+
+#~ msgid "Export drawing, not page"
+#~ msgstr "A rajz exportálása a lap helyett"
+
+#~ msgid "Export canvas"
+#~ msgstr "Rajzvászon exportálása"
+
+#~ msgid "AutoCAD DXF (*.dxf)"
+#~ msgstr "AutoCAD DXF (*.dxf)"
 
 #~ msgid "Gives the flood color to the dark parts of the image"
 #~ msgstr "A kép sötét részeit beszínezi a területkitöltési színnel"
