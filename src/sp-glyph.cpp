@@ -25,7 +25,7 @@
 static void sp_glyph_class_init(SPGlyphClass *gc);
 static void sp_glyph_init(SPGlyph *glyph);
 
-static void sp_glyph_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_glyph_release(SPObject *object);
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -85,7 +85,7 @@ static void sp_glyph_init(SPGlyph *glyph)
     glyph->vert_adv_y = 0;
 }
 
-static void sp_glyph_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);

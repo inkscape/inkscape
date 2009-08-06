@@ -70,7 +70,7 @@ ParamInt::ParamInt (const gchar * name, const gchar * guitext, const gchar * des
     and \c pref_name() are used.
 */
 int
-ParamInt::set (int in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -88,13 +88,13 @@ ParamInt::set (int in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
 class ParamIntAdjustment : public Gtk::Adjustment {
     /** The parameter to adjust */
     ParamInt * _pref;
-    Document * _doc;
+    SPDocument * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamIntAdjustment (ParamInt * param, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+    ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 1.0, 0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
@@ -127,7 +127,7 @@ ParamIntAdjustment::val_changed (void)
     Builds a hbox with a label and a int adjustment in it.
 */
 Gtk::Widget *
-ParamInt::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 

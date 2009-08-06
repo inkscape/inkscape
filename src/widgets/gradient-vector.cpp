@@ -155,7 +155,7 @@ sp_gradient_vector_selector_destroy (GtkObject *object)
 }
 
 GtkWidget *
-sp_gradient_vector_selector_new (Document *doc, SPGradient *gr)
+sp_gradient_vector_selector_new (SPDocument *doc, SPGradient *gr)
 {
     GtkWidget *gvs;
 
@@ -174,7 +174,7 @@ sp_gradient_vector_selector_new (Document *doc, SPGradient *gr)
 }
 
 void
-sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, Document *doc, SPGradient *gr)
+sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, SPDocument *doc, SPGradient *gr)
 {
     static gboolean suppress = FALSE;
 
@@ -220,7 +220,7 @@ sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, Documen
     /* The case of setting NULL -> NULL is not very interesting */
 }
 
-Document *
+SPDocument *
 sp_gradient_vector_selector_get_document (SPGradientVectorSelector *gvs)
 {
     g_return_val_if_fail (gvs != NULL, NULL);
@@ -1037,7 +1037,7 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 
     // Once the user edits a gradient, it stops being auto-collectable
     if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
-        Document *document = SP_OBJECT_DOCUMENT (gradient);
+        SPDocument *document = SP_OBJECT_DOCUMENT (gradient);
         bool saved = sp_document_get_undo_sensitive(document);
         sp_document_set_undo_sensitive (document, false);
         SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);

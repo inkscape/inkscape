@@ -85,7 +85,7 @@ unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
 /* UI */
 
 void
-sp_print_preview_document(Document *doc)
+sp_print_preview_document(SPDocument *doc)
 {
     Inkscape::Extension::Print *mod;
     unsigned int ret;
@@ -122,7 +122,7 @@ sp_print_preview_document(Document *doc)
 }
 
 void
-sp_print_document(Gtk::Window& parentWindow, Document *doc)
+sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
 {
     sp_document_ensure_up_to_date(doc);
 
@@ -143,7 +143,7 @@ sp_print_document(Gtk::Window& parentWindow, Document *doc)
 }
 
 void
-sp_print_document_to_file(Document *doc, gchar const *filename)
+sp_print_document_to_file(SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Print *mod;
     SPPrintContext context;

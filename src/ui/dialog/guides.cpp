@@ -119,7 +119,7 @@ void GuidelinePropertiesDialog::_onOK()
 
 void GuidelinePropertiesDialog::_onDelete()
 {
-    Document *doc = SP_OBJECT_DOCUMENT(_guide);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(_guide);
     sp_guide_remove(_guide);
     sp_document_done(doc, SP_VERB_NONE, 
                      _("Delete guide"));

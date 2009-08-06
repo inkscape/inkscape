@@ -26,12 +26,12 @@ private:
 public:
     ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    float get (const Document * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    float set (float in, Document * doc, Inkscape::XML::Node * node);
+    float get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
     float precision (void) { return _precision; }
-    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
 };
 

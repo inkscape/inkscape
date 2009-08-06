@@ -149,7 +149,7 @@ struct SPObject : public GObject {
     SPIXmlSpace xml_space;
     unsigned int hrefcount; /* number of xlink:href references */
     unsigned int _total_hrefcount; /* our hrefcount + total descendants */
-    Inkscape::XML::Document *document; /* Document we are part of */
+    SPDocument *document; /* Document we are part of */
     SPObject *parent; /* Our parent (only one allowed) */
     SPObject *children; /* Our children */
     SPObject *_last_child; /* Remembered last child */
@@ -429,7 +429,7 @@ struct SPObject : public GObject {
 
     /** @brief Updates the object's display immediately
      *
-     *  This method is called during the idle loop by Document in order to update the object's
+     *  This method is called during the idle loop by SPDocument in order to update the object's
      *  display.
      *
      *  One additional flag is legal here:
@@ -501,7 +501,7 @@ private:
 struct SPObjectClass {
     GObjectClass parent_class;
 
-    void (* build) (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr);
+    void (* build) (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
     void (* release) (SPObject *object);
 
     /* Virtual handlers of repr signals */
@@ -519,7 +519,7 @@ struct SPObjectClass {
     /* Modification handler */
     void (* modified) (SPObject *object, unsigned int flags);
 
-    Inkscape::XML::Node * (* write) (SPObject *object, Inkscape::XML::DocumentTree *doc, Inkscape::XML::Node *repr, unsigned int flags);
+    Inkscape::XML::Node * (* write) (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags);
 };
 
 
@@ -536,7 +536,7 @@ inline SPObject *sp_object_first_child(SPObject *parent) {
 }
 SPObject *sp_object_get_child_by_repr(SPObject *object, Inkscape::XML::Node *repr);
 
-void sp_object_invoke_build(SPObject *object, Inkscape::XML::Document *document, Inkscape::XML::Node *repr, unsigned int cloned);
+void sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
 
 void sp_object_set(SPObject *object, unsigned int key, gchar const *value);
 

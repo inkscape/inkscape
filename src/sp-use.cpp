@@ -44,7 +44,7 @@ static void sp_use_class_init(SPUseClass *classname);
 static void sp_use_init(SPUse *use);
 static void sp_use_finalize(GObject *obj);
 
-static void sp_use_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_use_release(SPObject *object);
 static void sp_use_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -154,7 +154,7 @@ sp_use_finalize(GObject *obj)
 }
 
 static void
-sp_use_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build) {
         (* ((SPObjectClass *) parent_class)->build)(object, document, repr);
@@ -666,7 +666,7 @@ sp_use_unlink(SPUse *use)
     if (!repr) return NULL;
 
     Inkscape::XML::Node *parent = sp_repr_parent(repr);
-    Document *document = SP_OBJECT(use)->document;
+    SPDocument *document = SP_OBJECT(use)->document;
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Track the ultimate source of a chain of uses.

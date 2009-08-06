@@ -29,7 +29,7 @@
 static void sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass);
 static void sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap);
 
-static void sp_feDisplacementMap_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feDisplacementMap_release(SPObject *object);
 static void sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -90,7 +90,7 @@ sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feDisplacementMap_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feDisplacementMap_parent_class)->build) {
         ((SPObjectClass *) feDisplacementMap_parent_class)->build(object, document, repr);

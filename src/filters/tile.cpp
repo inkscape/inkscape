@@ -28,7 +28,7 @@
 static void sp_feTile_class_init(SPFeTileClass *klass);
 static void sp_feTile_init(SPFeTile *feTile);
 
-static void sp_feTile_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feTile_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feTile_release(SPObject *object);
 static void sp_feTile_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feTile_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -85,7 +85,7 @@ sp_feTile_init(SPFeTile */*feTile*/)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feTile_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feTile_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feTile_parent_class)->build) {
         ((SPObjectClass *) feTile_parent_class)->build(object, document, repr);

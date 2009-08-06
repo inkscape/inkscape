@@ -67,7 +67,7 @@ int lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type);
 int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item);
 bool lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
-void lpetool_get_limiting_bbox_corners(Document *document, Geom::Point &A, Geom::Point &B);
+void lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B);
 void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
 void lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *selection = NULL);
 void lpetool_delete_measuring_items(SPLPEToolContext *lc);

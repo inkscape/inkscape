@@ -88,7 +88,7 @@ static void set_filter_area(Inkscape::XML::Node *repr, gdouble radius,
     }
 }
 
-SPFilter *new_filter(Document *document)
+SPFilter *new_filter(SPDocument *document)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
@@ -184,7 +184,7 @@ filter_add_primitive(SPFilter *filter, const Inkscape::Filters::FilterPrimitiveT
  * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
  */
 SPFilter *
-new_filter_gaussian_blur (Document *document, gdouble radius, double expansion, double expansionX, double expansionY, double width, double height)
+new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double expansionX, double expansionY, double width, double height)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
@@ -238,7 +238,7 @@ new_filter_gaussian_blur (Document *document, gdouble radius, double expansion, 
  * an item with the given matrix expansion, width and height
  */
 SPFilter *
-new_filter_blend_gaussian_blur (Document *document, const char *blendmode, gdouble radius, double expansion,
+new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdouble radius, double expansion,
                                 double expansionX, double expansionY, double width, double height)
 {
     g_return_val_if_fail(document != NULL, NULL);
@@ -317,7 +317,7 @@ new_filter_blend_gaussian_blur (Document *document, const char *blendmode, gdoub
  * specified mode and radius, respectively
  */
 SPFilter *
-new_filter_simple_from_item (Document *document, SPItem *item, const char *mode, gdouble radius)
+new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
     Geom::OptRect const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
 
@@ -345,7 +345,7 @@ new_filter_simple_from_item (Document *document, SPItem *item, const char *mode,
  */
 /* TODO: this should be made more generic, not just for blurs */
 SPFilter *
-modify_filter_gaussian_blur_from_item(Document *document, SPItem *item,
+modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
                                       gdouble radius)
 {
     if (!item->style || !item->style->filter.set) {

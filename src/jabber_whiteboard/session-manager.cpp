@@ -95,7 +95,7 @@ void
 SessionManager::initialiseSession(Glib::ustring const& to, State::SessionType type)
 {
 
-    Document* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);
+    SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);
     InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
     if(inkdoc == NULL) return;
 
@@ -317,7 +317,7 @@ SessionManager::checkInvitationQueue()
         Dialog::DialogReply reply = static_cast< Dialog::DialogReply >(dialog.run());
 
 
-        Document* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
+        SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
 
         InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
         if(inkdoc == NULL) return true;
@@ -350,10 +350,10 @@ SessionManager::checkInvitationQueue()
 //# HELPER FUNCTIONS
 //#########################################################################
 
-Document*
+SPDocument*
 makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, Glib::ustring const& to)
 {
-    Document* doc;
+    SPDocument* doc;
 
     InkboardDocument* rdoc = new InkboardDocument(g_quark_from_static_string("xml"), type, to);
     rdoc->setAttribute("version", "1.0");
@@ -382,7 +382,7 @@ makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, G
 //
 // \see sp_file_new
 SPDesktop*
-makeInkboardDesktop(Document* doc)
+makeInkboardDesktop(SPDocument* doc)
 {
     SPDesktop* dt;
 

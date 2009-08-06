@@ -35,7 +35,7 @@
 #include "sp-namedview.h"
 
 class SPUnit;
-class Document;
+class SPDocument;
 
 namespace Gtk {
     class HScale;
@@ -81,7 +81,7 @@ protected:
 
     virtual ~RegisteredWidget() {};
 
-    void init_parent(const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, Document *doc_in)
+    void init_parent(const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in, SPDocument *doc_in)
     {
         _wr = &wr;
         _key = key;
@@ -96,7 +96,7 @@ protected:
         // Use local repr here. When repr is specified, use that one, but
         // if repr==NULL, get the repr of namedview of active desktop.
         Inkscape::XML::Node *local_repr = repr;
-        Document *local_doc = doc;
+        SPDocument *local_doc = doc;
         if (!local_repr) {
             // no repr specified, use active desktop's namedview's repr
             SPDesktop* dt = SP_ACTIVE_DESKTOP;
@@ -120,7 +120,7 @@ protected:
     Registry * _wr;
     Glib::ustring _key;
     Inkscape::XML::Node * repr;
-    Document * doc;
+    SPDocument * doc;
     unsigned int event_type;
     Glib::ustring event_description;
     bool write_undo;
@@ -139,7 +139,7 @@ private:
 class RegisteredCheckButton : public RegisteredWidget<Gtk::CheckButton> {
 public:
     virtual ~RegisteredCheckButton();
-    RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, Document *doc_in=NULL);
+    RegisteredCheckButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL);
 
     void setActive (bool);
 
@@ -168,7 +168,7 @@ public:
                          const Glib::ustring& key,
                          Registry& wr,
                          Inkscape::XML::Node* repr_in = NULL,
-                         Document *doc_in = NULL );
+                         SPDocument *doc_in = NULL );
 
     void setUnit (const SPUnit*);
     Unit getUnit() const { return static_cast<UnitMenu*>(_widget)->getUnit(); };
@@ -188,7 +188,7 @@ public:
                            const RegisteredUnitMenu &rum,
                            Registry& wr,
                            Inkscape::XML::Node* repr_in = NULL,
-                           Document *doc_in = NULL );
+                           SPDocument *doc_in = NULL );
 
 protected:
     sigc::connection  _value_changed_connection;
@@ -204,7 +204,7 @@ public:
             const Glib::ustring& key,
             Registry& wr,
             Inkscape::XML::Node* repr_in = NULL,
-            Document *doc_in = NULL );
+            SPDocument *doc_in = NULL );
 
 protected:
     sigc::connection  _value_changed_connection;
@@ -219,7 +219,7 @@ public:
             const Glib::ustring& key,
             Registry& wr,
             Inkscape::XML::Node* repr_in = NULL,
-            Document *doc_in = NULL );
+            SPDocument *doc_in = NULL );
 
 protected:
     sigc::connection  _activate_connection;
@@ -237,7 +237,7 @@ public:
                            const Glib::ustring& akey,
                            Registry& wr,
                            Inkscape::XML::Node* repr_in = NULL,
-                           Document *doc_in = NULL);
+                           SPDocument *doc_in = NULL);
 
     void setRgba32 (guint32);
     void closeWindow();
@@ -259,7 +259,7 @@ public:
                                 const Glib::ustring& key,
                                 Registry& wr,
                                 Inkscape::XML::Node* repr_in = NULL,
-                                Document *doc_in = NULL );
+                                SPDocument *doc_in = NULL );
 
     bool setProgrammatically; // true if the value was set by setValue, not changed by the user;
                                 // if a callback checks it, it must reset it back to false
@@ -280,7 +280,7 @@ public:
                                 const Glib::ustring& key,
                                 Registry& wr,
                                 Inkscape::XML::Node* repr_in = NULL,
-                                Document *doc_in = NULL );
+                                SPDocument *doc_in = NULL );
 
     void setValue (bool second);
 
@@ -301,7 +301,7 @@ public:
                       const Glib::ustring& key,
                       Registry& wr,
                       Inkscape::XML::Node* repr_in = NULL,
-                      Document *doc_in = NULL );
+                      SPDocument *doc_in = NULL );
 
 protected:
     sigc::connection  _value_x_changed_connection;
@@ -318,7 +318,7 @@ public:
                                   const Glib::ustring& key,
                                   Registry& wr,
                                   Inkscape::XML::Node* repr_in = NULL,
-                                  Document *doc_in = NULL );
+                                  SPDocument *doc_in = NULL );
 
     // redefine setValue, because transform must be applied
     void setValue(Geom::Point const & p);
@@ -342,7 +342,7 @@ public:
                        const Glib::ustring& key,
                        Registry& wr,
                        Inkscape::XML::Node* repr_in = NULL,
-                       Document *doc_in = NULL);
+                       SPDocument *doc_in = NULL);
 
     void setValue (double val, long startseed);
 

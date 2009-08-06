@@ -17,7 +17,7 @@
 #include <map>
 
 class SPDesktop;
-class Document;
+class SPDocument;
 
 namespace Inkscape {
 
@@ -44,7 +44,7 @@ private:
     class LayerWatcher;
 
     void _objectModified( SPObject* obj, guint flags );
-    void _setDocument(Document *document);
+    void _setDocument(SPDocument *document);
     void _rebuild();
     void _selectedLayerChanged(SPObject *layer);
 
@@ -53,7 +53,7 @@ private:
     sigc::connection _resource_connection;
 
     GC::soft_ptr<SPDesktop> _desktop;
-    Document *_document;
+    SPDocument *_document;
 
     std::vector<LayerWatcher*> _watchers;
 

@@ -28,7 +28,7 @@ class CairoPsOutput : Inkscape::Extension::Implementation::Implementation {
 public:
     bool check(Inkscape::Extension::Extension *module);
     void save(Inkscape::Extension::Output *mod,
-              Document *doc,
+              SPDocument *doc,
               gchar const *filename);
     static void init();
     bool textToPath(Inkscape::Extension::Print *ext);
@@ -40,7 +40,7 @@ class CairoEpsOutput : Inkscape::Extension::Implementation::Implementation {
 public:
     bool check(Inkscape::Extension::Extension *module);
     void save(Inkscape::Extension::Output *mod,
-              Document *doc,
+              SPDocument *doc,
               gchar const *uri);
     static void init();
     bool textToPath(Inkscape::Extension::Print *ext);

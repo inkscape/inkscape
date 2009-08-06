@@ -47,7 +47,7 @@ CairoRendererPdfOutput::check (Inkscape::Extension::Extension * module)
 }
 
 static bool
-pdf_render_document_to_file(Document *doc, gchar const *filename, unsigned int level,
+pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level,
                             bool texttopath, bool filtertobitmap, int resolution,
                             const gchar * const exportId, bool exportDrawing, bool exportCanvas)
 {
@@ -118,7 +118,7 @@ pdf_render_document_to_file(Document *doc, gchar const *filename, unsigned int l
     tell the printing system to save to file.
 */
 void
-CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
+CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;

@@ -1914,7 +1914,7 @@ GrDrag::deleteSelected (bool just_one)
 {
     if (!selected) return;
 
-    Document *document = false;
+    SPDocument *document = false;
 
     struct StructStopInfo {
         SPStop * spstop;

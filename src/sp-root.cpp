@@ -41,7 +41,7 @@ class SPDesktop;
 static void sp_root_class_init(SPRootClass *klass);
 static void sp_root_init(SPRoot *root);
 
-static void sp_root_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_root_release(SPObject *object);
 static void sp_root_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -141,7 +141,7 @@ sp_root_init(SPRoot *root)
  * It then calls the object's parent class object's build function.
  */
 static void
-sp_root_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPGroup *group = (SPGroup *) object;
     SPRoot *root = (SPRoot *) object;

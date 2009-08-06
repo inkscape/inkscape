@@ -46,7 +46,7 @@
 static void sp_namedview_class_init(SPNamedViewClass *klass);
 static void sp_namedview_init(SPNamedView *namedview);
 
-static void sp_namedview_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_namedview_release(SPObject *object);
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value);
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -120,7 +120,7 @@ static void sp_namedview_init(SPNamedView *nv)
     new (&nv->snap_manager) SnapManager(nv);
 }
 
-static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, Document *document, Inkscape::XML::Node *repr) {
+static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, SPDocument *document, Inkscape::XML::Node *repr) {
     bool old_grid_settings_present = false;
 
     // set old settings
@@ -208,7 +208,7 @@ static void sp_namedview_generate_old_grid(SPNamedView * /*nv*/, Document *docum
     }
 }
 
-static void sp_namedview_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPNamedView *nv = (SPNamedView *) object;
     SPObjectGroup *og = (SPObjectGroup *) object;
@@ -777,7 +777,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 void sp_namedview_update_layers_from_document (SPDesktop *desktop)
 {
     SPObject *layer = NULL;
-    Document *document = desktop->doc();
+    SPDocument *document = desktop->doc();
     SPNamedView *nv = desktop->namedview;
     if ( nv->default_layer_id != 0 ) {
         layer = document->getObjectById(g_quark_to_string(nv->default_layer_id));
@@ -878,7 +878,7 @@ static void sp_namedview_show_single_guide(SPGuide* guide, bool show)
 	}
 }
 
-void sp_namedview_toggle_guides(Document *doc, Inkscape::XML::Node *repr)
+void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
 {
     unsigned int v;
     unsigned int set = sp_repr_get_boolean(repr, "showguides", &v);
@@ -900,7 +900,7 @@ void sp_namedview_show_grids(SPNamedView * namedview, bool show, bool dirty_docu
 {
     namedview->grids_visible = show;
 
-    Document *doc = SP_OBJECT_DOCUMENT (namedview);
+    SPDocument *doc = SP_OBJECT_DOCUMENT (namedview);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
 
     bool saved = sp_document_get_undo_sensitive(doc);
@@ -966,7 +966,7 @@ static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
     return TRUE;
 }
 
-SPNamedView *sp_document_namedview(Document *document, const gchar *id)
+SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
 {
     g_return_val_if_fail(document != NULL, NULL);
 

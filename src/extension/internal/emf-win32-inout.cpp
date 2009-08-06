@@ -101,7 +101,7 @@ EmfWin32::check (Inkscape::Extension::Extension * /*module*/)
 
 
 static void
-emf_print_document_to_file(Document *doc, gchar const *filename)
+emf_print_document_to_file(SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Print *mod;
     SPPrintContext context;
@@ -147,7 +147,7 @@ emf_print_document_to_file(Document *doc, gchar const *filename)
 
 
 void
-EmfWin32::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
+EmfWin32::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
 
@@ -2162,7 +2162,7 @@ typedef struct
 #pragma pack( pop )
 
 
-Document *
+SPDocument *
 EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 {
     EMF_CALLBACK_DATA d;
@@ -2365,7 +2365,7 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 
 //    std::cout << "SVG Output: " << std::endl << *(d.outsvg) << std::endl;
 
-    Document *doc = sp_document_new_from_mem(d.outsvg->c_str(), d.outsvg->length(), TRUE);
+    SPDocument *doc = sp_document_new_from_mem(d.outsvg->c_str(), d.outsvg->length(), TRUE);
 
     delete d.outsvg;
     delete d.path;

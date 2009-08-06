@@ -56,7 +56,7 @@
 static void sp_stop_class_init(SPStopClass *klass);
 static void sp_stop_init(SPStop *stop);
 
-static void sp_stop_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_stop_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_stop_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_stop_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
@@ -114,7 +114,7 @@ sp_stop_init(SPStop *stop)
 /**
  * Virtual build: set stop attributes from its associated XML node.
  */
-static void sp_stop_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_stop_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) stop_parent_class)->build)
         (* ((SPObjectClass *) stop_parent_class)->build)(object, document, repr);
@@ -294,7 +294,7 @@ sp_stop_get_color(SPStop const *const stop)
 static void sp_gradient_class_init(SPGradientClass *klass);
 static void sp_gradient_init(SPGradient *gr);
 
-static void sp_gradient_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_gradient_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_gradient_release(SPObject *object);
 static void sp_gradient_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_gradient_child_added(SPObject *object,
@@ -398,7 +398,7 @@ sp_gradient_init(SPGradient *gr)
  * Virtual build: set gradient attributes from its associated repr.
  */
 static void
-sp_gradient_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_gradient_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPGradient *gradient = SP_GRADIENT(object);
 
@@ -1402,7 +1402,7 @@ static void sp_lineargradient_class_init(SPLinearGradientClass *klass);
 static void sp_lineargradient_init(SPLinearGradient *lg);
 
 static void sp_lineargradient_build(SPObject *object,
-                                    Document *document,
+                                    SPDocument *document,
                                     Inkscape::XML::Node *repr);
 static void sp_lineargradient_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_lineargradient_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr,
@@ -1474,7 +1474,7 @@ static void sp_lineargradient_init(SPLinearGradient *lg)
  * Callback: set attributes from associated repr.
  */
 static void sp_lineargradient_build(SPObject *object,
-                                    Document *document,
+                                    SPDocument *document,
                                     Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) lg_parent_class)->build)
@@ -1677,7 +1677,7 @@ static void sp_radialgradient_class_init(SPRadialGradientClass *klass);
 static void sp_radialgradient_init(SPRadialGradient *rg);
 
 static void sp_radialgradient_build(SPObject *object,
-                                    Document *document,
+                                    SPDocument *document,
                                     Inkscape::XML::Node *repr);
 static void sp_radialgradient_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_radialgradient_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr,
@@ -1751,7 +1751,7 @@ sp_radialgradient_init(SPRadialGradient *rg)
  * Set radial gradient attributes from associated repr.
  */
 static void
-sp_radialgradient_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_radialgradient_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) rg_parent_class)->build)
         (* ((SPObjectClass *) rg_parent_class)->build)(object, document, repr);

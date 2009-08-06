@@ -27,7 +27,7 @@ class CairoRendererPdfOutput : Inkscape::Extension::Implementation::Implementati
 public:
     bool check(Inkscape::Extension::Extension *module);
     void save(Inkscape::Extension::Output *mod,
-              Document *doc,
+              SPDocument *doc,
               gchar const *filename);
     static void init();
 };

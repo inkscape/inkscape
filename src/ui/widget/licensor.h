@@ -15,7 +15,7 @@
 
 #include <gtkmm/box.h>
 
-class Document;
+class SPDocument;
 
 namespace Gtk {
     class Tooltips;
@@ -34,7 +34,7 @@ public:
     Licensor();
     virtual ~Licensor();
     void init (Gtk::Tooltips&, Registry&);
-    void update (Document *doc);
+    void update (SPDocument *doc);
 
 protected: 
     EntityEntry          *_eentry;

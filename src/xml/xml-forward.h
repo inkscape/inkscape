@@ -20,7 +20,7 @@ namespace XML {
 struct AttributeRecord;
 struct CommentNode;
 class  CompositeNodeObserver;
-class Document;
+struct Document;
 class  ElementNode;
 class  Event;
 class  EventAdd;

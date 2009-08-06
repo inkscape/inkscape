@@ -460,7 +460,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Geom::Matrix t = t_on_document * t_item.inverse();
 
     // Do the export
-    Document *document = SP_OBJECT(item)->document;
+    SPDocument *document = SP_OBJECT(item)->document;
     GSList *items = NULL;
     items = g_slist_append(items, item);
 
@@ -567,7 +567,7 @@ CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 }
 
 bool
-CairoRenderer::setupDocument(CairoRenderContext *ctx, Document *doc, bool pageBoundingBox, SPItem *base)
+CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool pageBoundingBox, SPItem *base)
 {
     g_assert( ctx != NULL );
 

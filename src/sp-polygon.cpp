@@ -29,7 +29,7 @@
 static void sp_polygon_class_init(SPPolygonClass *pc);
 static void sp_polygon_init(SPPolygon *polygon);
 
-static void sp_polygon_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_polygon_description(SPItem *item);
@@ -78,7 +78,7 @@ static void sp_polygon_init(SPPolygon */*polygon*/)
     /* Nothing here */
 }
 
-static void sp_polygon_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build(object, document, repr);

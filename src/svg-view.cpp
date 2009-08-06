@@ -188,7 +188,7 @@ arena_handler (SPCanvasArena */*arena*/, NRArenaItem *ai, GdkEvent *event, SPSVG
  * Callback connected with set_document signal.
  */
 void
-SPSVGView::setDocument (Document *document)
+SPSVGView::setDocument (SPDocument *document)
 {
     if (doc()) {
         sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), _dkey);

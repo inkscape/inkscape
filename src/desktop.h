@@ -143,7 +143,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     sigc::signal<void, SPObject *>     _layer_changed_signal;
     sigc::signal<bool, const SPCSSAttr *>::accumulated<StopOnTrue> _set_style_signal;
     sigc::signal<int, SPStyle *, int>::accumulated<StopOnNonZero> _query_style_signal;
-    sigc::connection connectDocumentReplaced (const sigc::slot<void,SPDesktop*,Document*> & slot)
+    sigc::connection connectDocumentReplaced (const sigc::slot<void,SPDesktop*,SPDocument*> & slot)
     {
         return _document_replaced_signal.connect (slot);
     }
@@ -219,7 +219,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     bool itemIsHidden(SPItem const *item) const;
 
     void activate_guides (bool activate);
-    void change_document (Document *document);
+    void change_document (SPDocument *document);
 
     void set_event_context (GtkType type, const gchar *config);
     void push_event_context (GtkType type, const gchar *config, unsigned int key);
@@ -315,7 +315,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     Geom::Point doc2dt(Geom::Point const &p) const;
     Geom::Point dt2doc(Geom::Point const &p) const;
 
-    virtual void setDocument (Document* doc);
+    virtual void setDocument (SPDocument* doc);
     virtual bool shutdown();
     virtual void mouseover() {}
     virtual void mouseout() {}
@@ -337,7 +337,7 @@ private:
 
     void push_current_zoom (GList**);
 
-    sigc::signal<void,SPDesktop*,Document*>     _document_replaced_signal;
+    sigc::signal<void,SPDesktop*,SPDocument*>     _document_replaced_signal;
     sigc::signal<void>                 _activate_signal;
     sigc::signal<void>                 _deactivate_signal;
     sigc::signal<void,SPDesktop*,SPEventContext*> _event_context_changed_signal;

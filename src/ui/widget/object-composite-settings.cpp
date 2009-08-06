@@ -117,7 +117,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     if (!desktop) {
         return;
     }
-    Document *document = sp_desktop_document (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
 
     if (_blocked)
         return;

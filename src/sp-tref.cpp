@@ -58,7 +58,7 @@ static void sp_tref_class_init(SPTRefClass *tref_class);
 static void sp_tref_init(SPTRef *tref);
 static void sp_tref_finalize(GObject *obj);
 
-static void sp_tref_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_tref_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_tref_release(SPObject *object);
 static void sp_tref_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_tref_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -148,7 +148,7 @@ sp_tref_finalize(GObject *obj)
  * Reads the Inkscape::XML::Node, and initializes SPTRef variables.
  */
 static void
-sp_tref_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_tref_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) tref_parent_class)->build) {
         ((SPObjectClass *) tref_parent_class)->build(object, document, repr);
@@ -585,7 +585,7 @@ sp_tref_convert_to_tspan(SPObject *obj)
             Inkscape::XML::Node *tref_repr = SP_OBJECT_REPR(tref);
             Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
 
-            Document *document = SP_OBJECT(tref)->document;
+            SPDocument *document = SP_OBJECT(tref)->document;
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
             Inkscape::XML::Node *new_tspan_repr = xml_doc->createElement("svg:tspan");

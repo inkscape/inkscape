@@ -27,7 +27,7 @@ struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
     gchar *href;
     SVGLength x, y, height, width;
-    Document *document;
+    SPDocument *document;
     bool from_element;
     SPItem* SVGElem;
     Inkscape::URIReference* SVGElemRef;

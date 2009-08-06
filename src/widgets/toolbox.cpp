@@ -1886,7 +1886,7 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 
 	SPDesktop *dt = reinterpret_cast<SPDesktop*>(ptr);
 	SPNamedView *nv = sp_desktop_namedview(dt);
-	Document *doc = SP_OBJECT_DOCUMENT(nv);
+	SPDocument *doc = SP_OBJECT_DOCUMENT(nv);
 
 	if (dt == NULL || nv == NULL) {
 		g_warning("No desktop or namedview specified (in toggle_snap_callback)!");
@@ -3327,7 +3327,7 @@ static void
 box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis axis)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
-    Document *document = sp_desktop_document(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
 
     // quit if run by the attr_changed or selection changed listener
     if (g_object_get_data( dataKludge, "freeze" )) {
@@ -3407,7 +3407,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     EgeAdjustmentAction* eact = 0;
-    Document *document = sp_desktop_document (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
     Persp3D *persp = document->current_persp3d;
 
     EgeAdjustmentAction* box3d_angle_x = 0;
@@ -6845,7 +6845,7 @@ static void sp_connector_path_set_ignore(void)
 static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
-    Document *doc = sp_desktop_document(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
 
     if (!sp_document_get_undo_sensitive(doc))
     {

@@ -23,8 +23,8 @@
  * stack. Two methods exist to indicate that the given action is completed:
  *
  * \verbatim
-   void sp_document_done (Document *document);
-   void sp_document_maybe_done (Document *document, const unsigned char *key) \endverbatim
+   void sp_document_done (SPDocument *document);
+   void sp_document_maybe_done (SPDocument *document, const unsigned char *key) \endverbatim
  *
  * Both move the recent action list into the undo stack and clear the
  * list afterwards.  While the first method does an unconditional push,
@@ -85,7 +85,7 @@
         sp_document_set_undo_sensitive(document, saved);  \endverbatim
  */
 void
-sp_document_set_undo_sensitive (Document *doc, bool sensitive)
+sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -112,7 +112,7 @@ sp_document_set_undo_sensitive (Document *doc, bool sensitive)
  * the saved bools in a stack.  Perhaps this is why the above solution is better.
  */
 
-bool sp_document_get_undo_sensitive(Document const *document) {
+bool sp_document_get_undo_sensitive(SPDocument const *document) {
 	g_assert(document != NULL);
 	g_assert(document->priv != NULL);
 
@@ -120,7 +120,7 @@ bool sp_document_get_undo_sensitive(Document const *document) {
 }
 
 void
-sp_document_done (Document *doc, const unsigned int event_type, Glib::ustring event_description)
+sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring event_description)
 {
         sp_document_maybe_done (doc, NULL, event_type, event_description);
 }
@@ -128,7 +128,7 @@ sp_document_done (Document *doc, const unsigned int event_type, Glib::ustring ev
 void
 sp_document_reset_key (Inkscape::Application */*inkscape*/, SPDesktop */*desktop*/, GtkObject *base)
 {
-    Document *doc = (Document *) base;
+    SPDocument *doc = (SPDocument *) base;
     doc->actionkey = NULL;
 }
 
@@ -145,7 +145,7 @@ typedef SimpleEvent<Event::INTERACTION> InteractionEvent;
 class CommitEvent : public InteractionEvent {
 public:
 
-    CommitEvent(Document *doc, const gchar *key, const unsigned int type)
+    CommitEvent(SPDocument *doc, const gchar *key, const unsigned int type)
     : InteractionEvent(share_static_string("commit"))
     {
         _addProperty(share_static_string("timestamp"), timestamp());
@@ -165,7 +165,7 @@ public:
 }
 
 void
-sp_document_maybe_done (Document *doc, const gchar *key, const unsigned int event_type,
+sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int event_type,
                         Glib::ustring event_description)
 {
 	g_assert (doc != NULL);
@@ -209,7 +209,7 @@ sp_document_maybe_done (Document *doc, const gchar *key, const unsigned int even
 }
 
 void
-sp_document_cancel (Document *doc)
+sp_document_cancel (SPDocument *doc)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -226,8 +226,8 @@ sp_document_cancel (Document *doc)
 	sp_repr_begin_transaction (doc->rdoc);
 }
 
-static void finish_incomplete_transaction(Document &doc) {
-	DocumentPrivate &priv=*doc.priv;
+static void finish_incomplete_transaction(SPDocument &doc) {
+	SPDocumentPrivate &priv=*doc.priv;
 	Inkscape::XML::Event *log=sp_repr_commit_undoable(doc.rdoc);
 	if (log || priv.partial) {
 		g_warning ("Incomplete undo transaction:");
@@ -241,7 +241,7 @@ static void finish_incomplete_transaction(Document &doc) {
 }
 
 gboolean
-sp_document_undo (Document *doc)
+sp_document_undo (SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
@@ -287,7 +287,7 @@ sp_document_undo (Document *doc)
 }
 
 gboolean
-sp_document_redo (Document *doc)
+sp_document_redo (SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
@@ -333,7 +333,7 @@ sp_document_redo (Document *doc)
 }
 
 void
-sp_document_clear_undo (Document *doc)
+sp_document_clear_undo (SPDocument *doc)
 {
         if (doc->priv->undo)
                 doc->priv->undoStackObservers.notifyClearUndoEvent();
@@ -351,7 +351,7 @@ sp_document_clear_undo (Document *doc)
 }
 
 void
-sp_document_clear_redo (Document *doc)
+sp_document_clear_redo (SPDocument *doc)
 {
         if (doc->priv->redo)
                 doc->priv->undoStackObservers.notifyClearRedoEvent();

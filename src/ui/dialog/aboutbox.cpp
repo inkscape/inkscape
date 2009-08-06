@@ -147,7 +147,7 @@ Gtk::Widget *build_splash_widget() {
     // should be in UTF-*8..
 
     char *about=g_build_filename(INKSCAPE_SCREENSDIR, _("about.svg"), NULL);
-    Document *doc=sp_document_new (about, TRUE);
+    SPDocument *doc=sp_document_new (about, TRUE);
     g_free(about);
     g_return_val_if_fail(doc != NULL, NULL);
 

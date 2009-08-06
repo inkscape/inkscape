@@ -42,7 +42,7 @@ ParamString::~ParamString(void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamString::set (const gchar * in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamString::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -96,7 +96,7 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
 class ParamStringEntry : public Gtk::Entry {
 private:
     ParamString * _pref;
-    Document * _doc;
+    SPDocument * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
@@ -104,7 +104,7 @@ public:
         \param  pref  Where to get the string from, and where to put it
                       when it changes.
     */
-    ParamStringEntry (ParamString * pref, Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
+    ParamStringEntry (ParamString * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
         Gtk::Entry(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         if (_pref->get(NULL, NULL) != NULL)
             this->set_text(Glib::ustring(_pref->get(NULL, NULL)));
@@ -137,7 +137,7 @@ ParamStringEntry::changed_text (void)
     Builds a hbox with a label and a text box in it.
 */
 Gtk::Widget *
-ParamString::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 

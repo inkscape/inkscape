@@ -94,13 +94,13 @@ void ImageIcon::init()
 }
 
 
-bool ImageIcon::showSvgDocument(const Document *docArg)
+bool ImageIcon::showSvgDocument(const SPDocument *docArg)
 {
 
     if (document)
         sp_document_unref(document);
 
-    Document *doc = (Document *)docArg;
+    SPDocument *doc = (SPDocument *)docArg;
 
     sp_document_ref(doc);
     document = doc;
@@ -127,7 +127,7 @@ bool ImageIcon::showSvgFile(const Glib::ustring &theFileName)
 
     fileName = Glib::filename_to_utf8(fileName);
 
-    Document *doc = sp_document_new (fileName.c_str(), 0);
+    SPDocument *doc = sp_document_new (fileName.c_str(), 0);
     if (!doc) {
         g_warning("SVGView: error loading document '%s'\n", fileName.c_str());
         return false;
@@ -148,7 +148,7 @@ bool ImageIcon::showSvgFromMemory(const char *xmlBuffer)
         return false;
 
     gint len = (gint)strlen(xmlBuffer);
-    Document *doc = sp_document_new_from_mem(xmlBuffer, len, 0);
+    SPDocument *doc = sp_document_new_from_mem(xmlBuffer, len, 0);
     if (!doc) {
         g_warning("SVGView: error loading buffer '%s'\n",xmlBuffer);
         return false;

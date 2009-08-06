@@ -56,7 +56,7 @@ private:
     static void init( ColorProfile *cprof );
 
     static void release( SPObject *object );
-    static void build( SPObject *object, Document *document, Inkscape::XML::Node *repr );
+    static void build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
     static void set( SPObject *object, unsigned key, gchar const *value );
     static Inkscape::XML::Node *write( SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags );
 #if ENABLE_LCMS

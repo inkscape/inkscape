@@ -9,7 +9,7 @@ namespace Internal {
 
 class GdkpixbufInput : Inkscape::Extension::Implementation::Implementation {
 public:
-    Document *open(Inkscape::Extension::Input *mod,
+    SPDocument *open(Inkscape::Extension::Input *mod,
                      gchar const *uri);
     static void init();
 };

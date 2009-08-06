@@ -162,7 +162,7 @@ public:
 
     SPDesktop const *getDesktop() const {return _desktop;}
     SPNamedView const *getNamedView() const {return _named_view;}
-    Document *getDocument() const;
+    SPDocument *getDocument() const;
     SPGuide const *getGuideToIgnore() const {return _guide_to_ignore;}
 
     bool getSnapIndicator() const {return _snapindicator;}

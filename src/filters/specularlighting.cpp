@@ -32,7 +32,7 @@
 static void sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass);
 static void sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting);
 
-static void sp_feSpecularLighting_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feSpecularLighting_release(SPObject *object);
 static void sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -113,7 +113,7 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feSpecularLighting_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feSpecularLighting_parent_class)->build) {
         ((SPObjectClass *) feSpecularLighting_parent_class)->build(object, document, repr);

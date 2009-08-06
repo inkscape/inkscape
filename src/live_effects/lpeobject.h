@@ -49,7 +49,7 @@ public:
 private:
     static void livepatheffect_class_init(LivePathEffectObjectClass *klass);
     static void livepatheffect_init(LivePathEffectObject *stop);
-    static void livepatheffect_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+    static void livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
     static void livepatheffect_release(SPObject *object);
     static void livepatheffect_set(SPObject *object, unsigned key, gchar const *value);
     static Inkscape::XML::Node *livepatheffect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);

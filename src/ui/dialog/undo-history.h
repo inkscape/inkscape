@@ -122,7 +122,7 @@ public:
 
 protected:
 
-    Document *_document;
+    SPDocument *_document;
     EventLog *_event_log;
 
     const EventLog::EventModelColumns *_columns;

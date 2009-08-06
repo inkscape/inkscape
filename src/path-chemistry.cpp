@@ -43,7 +43,7 @@ void
 sp_selected_path_combine(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    Document *doc = sp_desktop_document(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     
     if (g_slist_length((GSList *) selection->itemList()) < 1) {
         sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
@@ -328,7 +328,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
          items = items->next) {
 
         SPItem *item = SP_ITEM(items->data);
-    	Document *document = item->document;
+    	SPDocument *document = item->document;
 
         if (SP_IS_PATH(item) && !SP_PATH(item)->original_curve) {
             continue; // already a path, and no path effect

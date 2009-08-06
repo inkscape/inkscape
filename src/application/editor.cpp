@@ -18,7 +18,7 @@
 #endif
 
 /*
-  TODO:  Replace Document with the new Inkscape::Document
+  TODO:  Replace SPDocument with the new Inkscape::Document
   TODO:  Change 'desktop's to 'view*'s
   TODO:  Add derivation from Inkscape::Application::RunMode
 */
@@ -76,7 +76,7 @@ Editor::init()
     //
     gchar const *tmpl = g_build_filename ((INKSCAPE_TEMPLATESDIR), "default.svg", NULL);
     bool have_default = Inkscape::IO::file_test (tmpl, G_FILE_TEST_IS_REGULAR);
-    Document *doc = sp_document_new (have_default? tmpl:0, true, true);
+    SPDocument *doc = sp_document_new (have_default? tmpl:0, true, true);
     g_return_val_if_fail (doc != 0, false);
     Inkscape::UI::View::EditWidget *ew = new Inkscape::UI::View::EditWidget (doc);
     sp_document_unref (doc);
@@ -96,7 +96,7 @@ Editor::getWindow()
 }
 
 /// Returns the active document
-Document*
+SPDocument*
 Editor::getActiveDocument()
 {
     if (getActiveDesktop()) {
@@ -107,7 +107,7 @@ Editor::getActiveDocument()
 }
 
 void
-Editor::addDocument (Document *doc)
+Editor::addDocument (SPDocument *doc)
 {
     if ( _instance->_document_set.find(doc) == _instance->_document_set.end() ) {
         _instance->_documents = g_slist_append (_instance->_documents, doc);
@@ -116,7 +116,7 @@ Editor::addDocument (Document *doc)
 }
 
 void
-Editor::removeDocument (Document *doc)
+Editor::removeDocument (SPDocument *doc)
 {
     _instance->_document_set.erase(doc);
     if ( _instance->_document_set.find(doc) == _instance->_document_set.end() ) {
@@ -125,7 +125,7 @@ Editor::removeDocument (Document *doc)
 }
 
 SPDesktop* 
-Editor::createDesktop (Document* doc)
+Editor::createDesktop (SPDocument* doc)
 {
     g_assert (doc != 0);
     (new Inkscape::UI::View::EditWidget (doc))->present();
@@ -227,13 +227,13 @@ Editor::reactivateDesktop (SPDesktop* dt)
 bool
 Editor::isDuplicatedView (SPDesktop* dt)
 {
-    Document const* document = dt->doc();
+    SPDocument const* document = dt->doc();
     if (!document) {
         return false;
     }
     for ( GSList *iter = _instance->_desktops ; iter ; iter = iter->next ) {
         SPDesktop *other_desktop=(SPDesktop *)iter->data;
-        Document *other_document=other_desktop->doc();
+        SPDocument *other_document=other_desktop->doc();
         if ( other_document == document && other_desktop != dt ) {
             return true;
         }

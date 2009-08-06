@@ -1,5 +1,5 @@
 /**
- * Aggregates undo stack observers for management and triggering in Document
+ * Aggregates undo stack observers for management and triggering in SPDocument
  *
  * Heavily inspired by Inkscape::XML::CompositeNodeObserver.
  *
@@ -25,7 +25,7 @@ namespace Inkscape {
 class Event;
 
 /**
- * Aggregates UndoStackObservers for management and triggering in an Document's undo/redo
+ * Aggregates UndoStackObservers for management and triggering in an SPDocument's undo/redo
  * system.
  */
 class CompositeUndoStackObserver : public UndoStackObserver {

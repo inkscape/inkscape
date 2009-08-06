@@ -148,7 +148,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Print::Print(Document *doc, SPItem *base) :
+Print::Print(SPDocument *doc, SPItem *base) :
     _doc (doc),
     _base (base)
 {

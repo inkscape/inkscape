@@ -28,10 +28,10 @@ public:
     bool check(Inkscape::Extension::Extension *module); //Can this module load (always yes for now)
 
     void save(Inkscape::Extension::Output *mod, // Save the given document to the given filename
-              Document *doc,
+              SPDocument *doc,
               gchar const *filename);
 
-    virtual Document *open( Inkscape::Extension::Input *mod,
+    virtual SPDocument *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
 
     static void init(void);//Initialize the class

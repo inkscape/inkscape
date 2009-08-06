@@ -43,7 +43,7 @@ public:
         /* Print functions */
         virtual unsigned int setup (Inkscape::Extension::Print * module);
 
-        virtual unsigned int begin (Inkscape::Extension::Print * module, Document *doc);
+        virtual unsigned int begin (Inkscape::Extension::Print * module, SPDocument *doc);
         virtual unsigned int finish (Inkscape::Extension::Print * module);
 
         /* Rendering methods */

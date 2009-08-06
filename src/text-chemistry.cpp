@@ -301,7 +301,7 @@ text_flow_into_shape()
     if (!desktop)
         return;
 
-    Document *doc = sp_desktop_document (desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -393,7 +393,7 @@ text_unflow ()
     if (!desktop)
         return;
 
-    Document *doc = sp_desktop_document (desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);

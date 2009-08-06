@@ -225,7 +225,7 @@ void FilterImage::set_href(const gchar *href){
     feImageHref = (href) ? g_strdup (href) : NULL;
 }
 
-void FilterImage::set_document(Document *doc){
+void FilterImage::set_document(SPDocument *doc){
     document = doc;
 }
 

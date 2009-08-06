@@ -79,7 +79,7 @@ Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const */*f
     return module->autogui(NULL, NULL);
 } /* Implementation::prefs_input */
 
-Document *
+SPDocument *
 Implementation::open(Inkscape::Extension::Input */*module*/, gchar const */*filename*/) {
     /* throw open_failed(); */
     return NULL;
@@ -91,7 +91,7 @@ Implementation::prefs_output(Inkscape::Extension::Output *module) {
 } /* Implementation::prefs_output */
 
 void
-Implementation::save(Inkscape::Extension::Output */*module*/, Document */*doc*/, gchar const */*filename*/) {
+Implementation::save(Inkscape::Extension::Output */*module*/, SPDocument */*doc*/, gchar const */*filename*/) {
     /* throw save_fail */
     return;
 } /* Implementation::save */
@@ -100,7 +100,7 @@ Gtk::Widget *
 Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, ImplementationDocumentCache * docCache) {
     if (module->param_visible_count() == 0) return NULL;
 
-    Document * current_document = view->doc();
+    SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected =
@@ -134,7 +134,7 @@ Implementation::set_preview(Inkscape::Extension::Print */*module*/)
 
 
 unsigned int
-Implementation::begin(Inkscape::Extension::Print */*module*/, Document */*doc*/)
+Implementation::begin(Inkscape::Extension::Print */*module*/, SPDocument */*doc*/)
 {
     return 0;
 }

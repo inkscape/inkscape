@@ -45,7 +45,7 @@ public:
 protected:
     virtual void _updateFromSelection();
     virtual void _handleAction( int setId, int itemId );
-    virtual void _setDocument( Document *document );
+    virtual void _setDocument( SPDocument *document );
     virtual void _rebuild();
 
 private:
@@ -57,7 +57,7 @@ private:
     ColorItem* _remove;
     int _currentIndex;
     SPDesktop*  _currentDesktop;
-    Document* _currentDocument;
+    SPDocument* _currentDocument;
     void* _ptr;
 
     sigc::connection _documentConnection;

@@ -40,7 +40,7 @@ struct SPClipPathView {
 static void sp_clippath_class_init(SPClipPathClass *klass);
 static void sp_clippath_init(SPClipPath *clippath);
 
-static void sp_clippath_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_clippath_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_clippath_release(SPObject * object);
 static void sp_clippath_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_clippath_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -99,7 +99,7 @@ sp_clippath_init(SPClipPath *cp)
 }
 
 static void
-sp_clippath_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_clippath_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build(object, document, repr);
@@ -381,7 +381,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_clippath_create (GSList *reprs, Document *document, Geom::Matrix const* applyTransform)
+sp_clippath_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 

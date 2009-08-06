@@ -23,7 +23,7 @@ static void sp_flowdiv_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowdiv_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowdiv_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_flowdiv_modified (SPObject *object, guint flags);
-static void sp_flowdiv_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr);
+static void sp_flowdiv_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowdiv_set (SPObject *object, unsigned int key, const gchar *value);
 
 static void sp_flowtspan_class_init (SPFlowtspanClass *klass);
@@ -32,7 +32,7 @@ static void sp_flowtspan_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowtspan_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowtspan_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_flowtspan_modified (SPObject *object, guint flags);
-static void sp_flowtspan_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr);
+static void sp_flowtspan_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowtspan_set (SPObject *object, unsigned int key, const gchar *value);
 
 static void sp_flowpara_class_init (SPFlowparaClass *klass);
@@ -41,7 +41,7 @@ static void sp_flowpara_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowpara_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowpara_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_flowpara_modified (SPObject *object, guint flags);
-static void sp_flowpara_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr);
+static void sp_flowpara_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowpara_set (SPObject *object, unsigned int key, const gchar *value);
 
 static void sp_flowline_class_init (SPFlowlineClass *klass);
@@ -177,7 +177,7 @@ sp_flowdiv_modified (SPObject *object, guint flags)
 }
 
 static void
-sp_flowdiv_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr)
+sp_flowdiv_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
 	object->_requireSVGVersion(Inkscape::Version(1, 2));
 
@@ -354,7 +354,7 @@ sp_flowtspan_modified (SPObject *object, guint flags)
 	}
 }
 static void
-sp_flowtspan_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr)
+sp_flowtspan_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
 	if (((SPObjectClass *) flowtspan_parent_class)->build)
 		((SPObjectClass *) flowtspan_parent_class)->build (object, doc, repr);
@@ -525,7 +525,7 @@ sp_flowpara_modified (SPObject *object, guint flags)
 	}
 }
 static void
-sp_flowpara_build (SPObject *object, Document *doc, Inkscape::XML::Node *repr)
+sp_flowpara_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
 	if (((SPObjectClass *) flowpara_parent_class)->build)
 		((SPObjectClass *) flowpara_parent_class)->build (object, doc, repr);

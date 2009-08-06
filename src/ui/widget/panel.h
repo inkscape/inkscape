@@ -71,7 +71,7 @@ public:
     void setDefaultResponse(int response_id);
     void setResponseSensitive(int response_id, bool setting);
 
-    virtual sigc::signal<void, SPDesktop *, Document *> &signalDocumentReplaced();
+    virtual sigc::signal<void, SPDesktop *, SPDocument *> &signalDocumentReplaced();
     virtual sigc::signal<void, Inkscape::Application *, SPDesktop *> &signalActivateDesktop();
     virtual sigc::signal<void, Inkscape::Application *, SPDesktop *> &signalDeactiveDesktop();
 
@@ -100,7 +100,7 @@ protected:
     /** Signals */
     sigc::signal<void, int> _signal_response;
     sigc::signal<void>      _signal_present;
-    sigc::signal<void, SPDesktop *, Document *> _signal_document_replaced;
+    sigc::signal<void, SPDesktop *, SPDocument *> _signal_document_replaced;
     sigc::signal<void, Inkscape::Application *, SPDesktop *> _signal_activate_desktop;
     sigc::signal<void, Inkscape::Application *, SPDesktop *> _signal_deactive_desktop;
 

@@ -908,7 +908,7 @@ GdkPixbuf *sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsi
 
 // takes doc, root, icon, and icon name to produce pixels
 extern "C" guchar *
-sp_icon_doc_icon( Document *doc, NRArenaItem *root,
+sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                   gchar const *name, unsigned psize )
 {
     bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
@@ -1038,7 +1038,7 @@ sp_icon_doc_icon( Document *doc, NRArenaItem *root,
 
 struct svg_doc_cache_t
 {
-    Document *doc;
+    SPDocument *doc;
     NRArenaItem *root;
 };
 
@@ -1081,7 +1081,7 @@ static std::list<gchar*> &icons_svg_paths()
 static guchar *load_svg_pixels(gchar const *name,
                                unsigned /*lsize*/, unsigned psize)
 {
-    Document *doc = NULL;
+    SPDocument *doc = NULL;
     NRArenaItem *root = NULL;
     svg_doc_cache_t *info = NULL;
 

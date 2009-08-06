@@ -44,9 +44,9 @@
 #include <errno.h>
 #endif
 
-//--tullarisc #if HAVE_SYS_STAT_H
+#if HAVE_SYS_STAT_H
 #include <sys/stat.h>
-//#endif
+#endif
 
 #include "javabind.h"
 #include "javabind-private.h"
@@ -742,7 +742,7 @@ jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, js
     /*
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     String s = getString(env, jstr);
-    Document *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
+    SPDocument *doc = sp_document_new_from_mem(s.c_str(), s.size(), true);
     */
     return JNI_TRUE;
 }

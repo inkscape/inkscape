@@ -21,7 +21,7 @@
 #include "prefdialog.h"
 #include "extension.h"
 
-struct Document;
+struct SPDocument;
 
 namespace Inkscape {
 namespace UI {

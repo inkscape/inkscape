@@ -35,7 +35,7 @@
 static void sp_feBlend_class_init(SPFeBlendClass *klass);
 static void sp_feBlend_init(SPFeBlend *feBlend);
 
-static void sp_feBlend_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feBlend_release(SPObject *object);
 static void sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -94,7 +94,7 @@ sp_feBlend_init(SPFeBlend *feBlend)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feBlend_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPFeBlend *blend = SP_FEBLEND(object);
 

@@ -53,7 +53,7 @@ struct StopOnNonZero {
   }
 };
 
-class Document;
+class SPDocument;
 
 namespace Inkscape {
     class MessageContext;
@@ -80,7 +80,7 @@ public:
     void close() { _close(); }
 
     /// Returns a pointer to the view's document.
-    Document *doc() const
+    SPDocument *doc() const
       { return _doc; }
     /// Returns a pointer to the view's message stack.
     Inkscape::MessageStack *messageStack() const
@@ -108,12 +108,12 @@ public:
     virtual void onDocumentResized (double, double) = 0;
 
 protected:
-    Document *_doc;
+    SPDocument *_doc;
     Inkscape::MessageStack *_message_stack;
     Inkscape::MessageContext *_tips_message_context;
 
     virtual void _close();
-    virtual void setDocument(Document *doc);
+    virtual void setDocument(SPDocument *doc);
 
     sigc::signal<void,double,double>   _position_set_signal;
     sigc::signal<void,double,double>   _resized_signal;

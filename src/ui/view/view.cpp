@@ -137,7 +137,7 @@ void View::requestRedraw()
  * 
  * \param doc The new document to connect the view to.
  */
-void View::setDocument(Document *doc) {
+void View::setDocument(SPDocument *doc) {
     g_return_if_fail(doc != NULL);
 
     if (_doc) {

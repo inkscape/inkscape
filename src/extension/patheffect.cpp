@@ -28,14 +28,14 @@ PathEffect::~PathEffect (void)
 }
 
 void
-PathEffect::processPath (Document * /*doc*/, Inkscape::XML::Node * /*path*/, Inkscape::XML::Node * /*def*/)
+PathEffect::processPath (SPDocument * /*doc*/, Inkscape::XML::Node * /*path*/, Inkscape::XML::Node * /*def*/)
 {
 
 
 }
 
 void
-PathEffect::processPathEffects (Document * doc, Inkscape::XML::Node * path)
+PathEffect::processPathEffects (SPDocument * doc, Inkscape::XML::Node * path)
 {
     gchar const * patheffectlist = path->attribute("inkscape:path-effects");
     if (patheffectlist == NULL)

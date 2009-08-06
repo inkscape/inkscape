@@ -24,7 +24,7 @@ namespace Internal {
 class WpgInput : public Inkscape::Extension::Implementation::Implementation {
     WpgInput () { };
 public:
-    Document *open( Inkscape::Extension::Input *mod,
+    SPDocument *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
     static void         init( void );
 

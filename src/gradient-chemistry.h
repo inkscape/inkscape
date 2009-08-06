@@ -41,8 +41,8 @@ SPGradient *sp_item_set_gradient (SPItem *item, SPGradient *gr, SPGradientType t
  * Get default normalized gradient vector of document, create if there is none
  */
 
-SPGradient *sp_document_default_gradient_vector (Document *document, guint32 color = 0);
-SPGradient *sp_gradient_vector_for_object (Document *doc, SPDesktop *desktop, SPObject *o, bool is_fill);
+SPGradient *sp_document_default_gradient_vector (SPDocument *document, guint32 color = 0);
+SPGradient *sp_gradient_vector_for_object (SPDocument *doc, SPDesktop *desktop, SPObject *o, bool is_fill);
 
 void sp_object_ensure_fill_gradient_normalized (SPObject *object);
 void sp_object_ensure_stroke_gradient_normalized (SPObject *object);

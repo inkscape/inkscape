@@ -349,7 +349,7 @@ bool LayersPanel::_checkForSelected(const Gtk::TreePath &path, const Gtk::TreeIt
 void LayersPanel::_layersChanged()
 {
 //    g_message("_layersChanged()");
-    Document* document = _desktop->doc();
+    SPDocument* document = _desktop->doc();
     SPObject* root = document->root;
     if ( root ) {
         _selectedConnection.block();
@@ -366,7 +366,7 @@ void LayersPanel::_layersChanged()
     }
 }
 
-void LayersPanel::_addLayer( Document* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level )
+void LayersPanel::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level )
 {
     if ( layer && (level < _maxNestDepth) ) {
         unsigned int counter = _mgr->childCount(layer);

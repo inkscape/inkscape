@@ -37,7 +37,7 @@ struct SPMaskView {
 static void sp_mask_class_init (SPMaskClass *klass);
 static void sp_mask_init (SPMask *mask);
 
-static void sp_mask_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_mask_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_mask_release (SPObject * object);
 static void sp_mask_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_mask_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -98,7 +98,7 @@ sp_mask_init (SPMask *mask)
 }
 
 static void
-sp_mask_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_mask_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 	if (((SPObjectClass *) parent_class)->build) {
 		((SPObjectClass *) parent_class)->build (object, document, repr);
@@ -270,7 +270,7 @@ sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_mask_create (GSList *reprs, Document *document, Geom::Matrix const* applyTransform)
+sp_mask_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 

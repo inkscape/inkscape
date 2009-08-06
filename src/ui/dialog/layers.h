@@ -86,7 +86,7 @@ private:
     bool _checkForSelected(const Gtk::TreePath& path, const Gtk::TreeIter& iter, SPObject* layer);
 
     void _layersChanged();
-    void _addLayer( Document* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
+    void _addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
 
     SPObject* _selectedLayer();
 

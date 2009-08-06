@@ -151,7 +151,7 @@ void ColorProfile::init( ColorProfile *cprof )
 void ColorProfile::release( SPObject *object )
 {
     // Unregister ourselves
-    Document* document = SP_OBJECT_DOCUMENT(object);
+    SPDocument* document = SP_OBJECT_DOCUMENT(object);
     if ( document ) {
         sp_document_remove_resource (SP_OBJECT_DOCUMENT (object), "iccprofile", SP_OBJECT (object));
     }
@@ -205,7 +205,7 @@ void ColorProfile::_clearProfile()
 /**
  * Callback: set attributes from associated repr.
  */
-void ColorProfile::build( SPObject *object, Document *document, Inkscape::XML::Node *repr )
+void ColorProfile::build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
 {
     ColorProfile *cprof = COLORPROFILE(object);
     g_assert(cprof->href == 0);
@@ -251,7 +251,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //LCMSAPI cmsHPROFILE   LCMSEXPORT cmsOpenProfileFromMem(LPVOID MemPtr, DWORD dwSize);
 
                     // Try to open relative
-                    Document *doc = SP_OBJECT_DOCUMENT(object);
+                    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
                     if (!doc) {
                         doc = SP_ACTIVE_DOCUMENT;
                         g_warning("object has no document.  using active");
@@ -436,7 +436,7 @@ static int getLcmsIntent( guint svgIntent )
     return intent;
 }
 
-static SPObject* bruteFind( Document* document, gchar const* name )
+static SPObject* bruteFind( SPDocument* document, gchar const* name )
 {
     SPObject* result = 0;
     const GSList * current = sp_document_get_resource_list(document, "iccprofile");
@@ -456,7 +456,7 @@ static SPObject* bruteFind( Document* document, gchar const* name )
     return result;
 }
 
-cmsHPROFILE Inkscape::colorprofile_get_handle( Document* document, guint* intent, gchar const* name )
+cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* intent, gchar const* name )
 {
     cmsHPROFILE prof = 0;
 

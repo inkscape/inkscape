@@ -355,7 +355,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
     if (!desktop) {
         return;
     }
-    Document *document = sp_desktop_document (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();

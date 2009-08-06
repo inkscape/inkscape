@@ -69,7 +69,7 @@
 static void sp_image_class_init (SPImageClass * klass);
 static void sp_image_init (SPImage * image);
 
-static void sp_image_build (SPObject * object, Document * document, Inkscape::XML::Node * repr);
+static void sp_image_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_image_release (SPObject * object);
 static void sp_image_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
@@ -625,7 +625,7 @@ static void sp_image_init( SPImage *image )
 }
 
 static void
-sp_image_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_image_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) parent_class)->build) {
         ((SPObjectClass *) parent_class)->build (object, document, repr);
@@ -811,7 +811,7 @@ static void
 sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
     SPImage *image = SP_IMAGE(object);
-    Document *doc = SP_OBJECT_DOCUMENT(object);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
 
     if (((SPObjectClass *) (parent_class))->update) {
         ((SPObjectClass *) (parent_class))->update (object, ctx, flags);

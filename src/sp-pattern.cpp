@@ -64,7 +64,7 @@ struct SPPatPainter {
 static void sp_pattern_class_init (SPPatternClass *klass);
 static void sp_pattern_init (SPPattern *gr);
 
-static void sp_pattern_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_pattern_release (SPObject *object);
 static void sp_pattern_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_pattern_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -151,7 +151,7 @@ sp_pattern_init (SPPattern *pat)
 }
 
 static void
-sp_pattern_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 	if (((SPObjectClass *) pattern_parent_class)->build)
 		(* ((SPObjectClass *) pattern_parent_class)->build) (object, document, repr);
@@ -443,7 +443,7 @@ pattern_users (SPPattern *pattern)
 SPPattern *
 pattern_chain (SPPattern *pattern)
 {
-	Document *document = SP_OBJECT_DOCUMENT (pattern);
+	SPDocument *document = SP_OBJECT_DOCUMENT (pattern);
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
@@ -496,7 +496,7 @@ sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool se
 }
 
 const gchar *
-pattern_tile (GSList *reprs, Geom::Rect bounds, Document *document, Geom::Matrix transform, Geom::Matrix move)
+pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move)
 {
 	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));

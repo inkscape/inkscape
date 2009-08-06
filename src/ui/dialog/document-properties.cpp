@@ -851,7 +851,7 @@ DocumentProperties::on_response (int id)
 }
 
 void
-DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, Document *document)
+DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(desktop));
     repr->addListener(&_repr_events, this);
@@ -915,7 +915,7 @@ DocumentProperties::onNewGrid()
 {
     SPDesktop *dt = getDesktop();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
-    Document *doc = sp_desktop_document(dt);
+    SPDocument *doc = sp_desktop_document(dt);
 
     Glib::ustring typestring = _grids_combo_gridtype.get_active_text();
     CanvasGrid::writeNewGridToRepr(repr, doc, CanvasGrid::getGridTypeFromName(typestring.c_str()));

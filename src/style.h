@@ -243,7 +243,7 @@ struct SPStyle {
     /** Object we are attached to */
     SPObject *object;
     /** Document we are associated with */
-    Document *document;
+    SPDocument *document;
 
     /** Our text style component */
     SPTextStyle *text;
@@ -372,7 +372,7 @@ struct SPStyle {
     const gchar *getStrokeURI() {if (stroke.value.href) return stroke.value.href->getURI()->toString(); else return NULL;}
 };
 
-SPStyle *sp_style_new(Document *document);
+SPStyle *sp_style_new(SPDocument *document);
 
 SPStyle *sp_style_new_from_object(SPObject *object);
 

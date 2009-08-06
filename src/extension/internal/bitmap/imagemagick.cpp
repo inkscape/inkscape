@@ -221,7 +221,7 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 Gtk::Widget *
 ImageMagick::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
-    Document * current_document = view->doc();
+    SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();

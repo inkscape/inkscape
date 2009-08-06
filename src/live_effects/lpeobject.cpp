@@ -93,7 +93,7 @@ LivePathEffectObject::livepatheffect_init(LivePathEffectObject *lpeobj)
  * Virtual build: set livepatheffect attributes from its associated XML node.
  */
 void
-LivePathEffectObject::livepatheffect_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+LivePathEffectObject::livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_message("Build livepatheffect");
@@ -250,7 +250,7 @@ LivePathEffectObject *
 LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users)
 {
     if (SP_OBJECT_HREFCOUNT(this) > nr_of_allowed_users) {
-        Document *doc = SP_OBJECT_DOCUMENT(this);
+        SPDocument *doc = SP_OBJECT_DOCUMENT(this);
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);

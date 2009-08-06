@@ -52,7 +52,7 @@
 static void sp_tspan_class_init(SPTSpanClass *classname);
 static void sp_tspan_init(SPTSpan *tspan);
 
-static void sp_tspan_build(SPObject * object, Document * document, Inkscape::XML::Node * repr);
+static void sp_tspan_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_tspan_release(SPObject *object);
 static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -129,7 +129,7 @@ sp_tspan_release(SPObject *object)
 }
 
 static void
-sp_tspan_build(SPObject *object, Document *doc, Inkscape::XML::Node *repr)
+sp_tspan_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
     //SPTSpan *tspan = SP_TSPAN(object);
 	
@@ -293,7 +293,7 @@ static void sp_textpath_class_init(SPTextPathClass *classname);
 static void sp_textpath_init(SPTextPath *textpath);
 static void sp_textpath_finalize(GObject *obj);
 
-static void sp_textpath_build(SPObject * object, Document * document, Inkscape::XML::Node * repr);
+static void sp_textpath_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_textpath_release(SPObject *object);
 static void sp_textpath_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_textpath_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -388,7 +388,7 @@ sp_textpath_release(SPObject *object)
 }
 
 static void
-sp_textpath_build(SPObject *object, Document *doc, Inkscape::XML::Node *repr)
+sp_textpath_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
     //SPTextPath *textpath = SP_TEXTPATH(object);
 	

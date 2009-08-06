@@ -43,11 +43,11 @@
 static void box3d_class_init(SPBox3DClass *klass);
 static void box3d_init(SPBox3D *box3d);
 
-static void box3d_build(SPObject *object, Inkscape::XML::Document *document, Inkscape::XML::Node *repr);
+static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void box3d_release(SPObject *object);
 static void box3d_set(SPObject *object, unsigned int key, const gchar *value);
 static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
-static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::DocumentTree *doc, Inkscape::XML::Node *repr, guint flags);
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *box3d_description(SPItem *item);
 static Geom::Matrix box3d_set_transform(SPItem *item, Geom::Matrix const &xform);
@@ -110,7 +110,7 @@ box3d_init(SPBox3D *box)
 }
 
 static void
-box3d_build(SPObject *object, Inkscape::XML::Document *document, Inkscape::XML::Node *repr)
+box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         ((SPObjectClass *) (parent_class))->build(object, document, repr);
@@ -126,7 +126,7 @@ box3d_build(SPObject *object, Inkscape::XML::Document *document, Inkscape::XML::
 
     // TODO: Create/link to the correct perspective
 
-    Inkscape::XML::Document *doc = SP_OBJECT_DOCUMENT(box);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     if (!doc) {
         g_print ("No document for the box!!!!\n");
         return;
@@ -256,7 +256,7 @@ box3d_update(SPObject *object, SPCtx *ctx, guint flags)
 }
 
 
-static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::DocumentTree *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPBox3D *box = SP_BOX3D(object);
 
@@ -272,13 +272,13 @@ static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Documen
             repr->setAttribute("inkscape:perspectiveID", box->persp_href);
         } else {
             /* box is not yet linked to a perspective; use the document's current perspective */
-            Inkscape::XML::Document *doc = SP_OBJECT_DOCUMENT(object);
+            SPDocument *doc = SP_OBJECT_DOCUMENT(object);
             if (box->persp_ref->getURI()) {
                 gchar *uri_string = box->persp_ref->getURI()->toString();
                 repr->setAttribute("inkscape:perspectiveID", uri_string);
                 g_free(uri_string);
             } else {
-                Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(doc->current_persp3d);//NOTE1
+                Inkscape::XML::Node *persp_repr = SP_OBJECT_REPR(doc->current_persp3d);
                 const gchar *persp_id = persp_repr->attribute("id");
                 gchar *href = g_strdup_printf("#%s", persp_id);
                 repr->setAttribute("inkscape:perspectiveID", href);
@@ -1378,7 +1378,7 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
    the original box and deletes the latter */
 SPGroup *
 box3d_convert_to_group(SPBox3D *box) {
-    Inkscape::XML::Document *doc = SP_OBJECT_DOCUMENT(box);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(box);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     // remember position of the box

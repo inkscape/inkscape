@@ -26,7 +26,7 @@
 
 #include "gc-alloc.h"
 
-class Document;
+class SPDocument;
 class SPDesktop;
 
 
@@ -118,10 +118,10 @@ private:
 
 };
 
-Document* makeInkboardDocument(int code, gchar const* rootname, 
+SPDocument* makeInkboardDocument(int code, gchar const* rootname, 
     State::SessionType type, Glib::ustring const& to);
 
-SPDesktop*  makeInkboardDesktop(Document* doc);
+SPDesktop*  makeInkboardDesktop(SPDocument* doc);
 
 }  // namespace Whiteboard
 

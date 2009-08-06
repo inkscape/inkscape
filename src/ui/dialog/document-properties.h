@@ -70,7 +70,7 @@ protected:
     void  removeExternalScript();
     void  scripting_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 
-    void _handleDocumentReplaced(SPDesktop* desktop, Document *document);
+    void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 

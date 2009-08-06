@@ -113,7 +113,7 @@ private:
 class PdfInput: public Inkscape::Extension::Implementation::Implementation {
     PdfInput () { };
 public:
-    Document *open( Inkscape::Extension::Input *mod,
+    SPDocument *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
     static void         init( void );
 

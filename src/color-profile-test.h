@@ -14,7 +14,7 @@
 class ColorProfileTest : public CxxTest::TestSuite
 {
 public:
-    Document* _doc;
+    SPDocument* _doc;
 
     ColorProfileTest() :
         _doc(0)

@@ -35,7 +35,7 @@
 static void sp_fepointlight_class_init(SPFePointLightClass *klass);
 static void sp_fepointlight_init(SPFePointLight *fepointlight);
 
-static void sp_fepointlight_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fepointlight_release(SPObject *object);
 static void sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -97,7 +97,7 @@ sp_fepointlight_init(SPFePointLight *fepointlight)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_fepointlight_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) fePointLight_parent_class)->build) {
         ((SPObjectClass *) fePointLight_parent_class)->build(object, document, repr);

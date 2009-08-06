@@ -1,7 +1,7 @@
-#define __DOCUMENT_C__
+#define __SP_DOCUMENT_C__
 
 /** \file
- * Document manipulation
+ * SPDocument manipulation
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -15,17 +15,17 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/** \class Document
- * Document serves as the container of both model trees (agnostic XML
+/** \class SPDocument
+ * SPDocument serves as the container of both model trees (agnostic XML
  * and typed object tree), and implements all of the document-level
  * functionality used by the program. Many document level operations, like
- * load, save, print, export and so on, use Document as their basic datatype.
+ * load, save, print, export and so on, use SPDocument as their basic datatype.
  *
- * Document implements undo and redo stacks and an id-based object
+ * SPDocument implements undo and redo stacks and an id-based object
  * dictionary.  Thanks to unique id attributes, the latter can be used to
  * map from the XML tree back to the object tree.
  *
- * Document performs the basic operations needed for asynchronous
+ * SPDocument performs the basic operations needed for asynchronous
  * update notification (SPObject ::modified virtual method), and implements
  * the 'modified' signal, as well.
  */
@@ -74,7 +74,7 @@ static gint doc_count = 0;
 
 static unsigned long next_serial = 0;
 
-Document::Document() :
+SPDocument::SPDocument() :
     keepalive(FALSE),
     virgin(TRUE),
     modified_since_save(FALSE),
@@ -98,7 +98,7 @@ Document::Document() :
     // Don't use the Consolidate moves optimisation.
     router->ConsolidateMoves = false;
 
-    DocumentPrivate *p = new DocumentPrivate();
+    SPDocumentPrivate *p = new SPDocumentPrivate();
 
     p->serial = next_serial++;
 
@@ -123,7 +123,7 @@ Document::Document() :
     priv->undoStackObservers.add(p->console_output_undo_observer);
 }
 
-Document::~Document() {
+SPDocument::~SPDocument() {
     collectOrphans();
 
     // kill/unhook this first
@@ -204,7 +204,7 @@ Document::~Document() {
 
 }
 
-void Document::add_persp3d (Persp3D * const /*persp*/)
+void SPDocument::add_persp3d (Persp3D * const /*persp*/)
 {
     SPDefs *defs = SP_ROOT(this->root)->defs;
     for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
@@ -217,18 +217,18 @@ void Document::add_persp3d (Persp3D * const /*persp*/)
     persp3d_create_xml_element (this);
 }
 
-void Document::remove_persp3d (Persp3D * const /*persp*/)
+void SPDocument::remove_persp3d (Persp3D * const /*persp*/)
 {
     // TODO: Delete the repr, maybe perform a check if any boxes are still linked to the perspective.
     //       Anything else?
     g_print ("Please implement deletion of perspectives here.\n");
 }
 
-unsigned long Document::serial() const {
+unsigned long SPDocument::serial() const {
     return priv->serial;
 }
 
-void Document::queueForOrphanCollection(SPObject *object) {
+void SPDocument::queueForOrphanCollection(SPObject *object) {
     g_return_if_fail(object != NULL);
     g_return_if_fail(SP_OBJECT_DOCUMENT(object) == this);
 
@@ -236,7 +236,7 @@ void Document::queueForOrphanCollection(SPObject *object) {
     _collection_queue = g_slist_prepend(_collection_queue, object);
 }
 
-void Document::collectOrphans() {
+void SPDocument::collectOrphans() {
     while (_collection_queue) {
         GSList *objects=_collection_queue;
         _collection_queue = NULL;
@@ -249,25 +249,25 @@ void Document::collectOrphans() {
     }
 }
 
-void Document::reset_key (void */*dummy*/)
+void SPDocument::reset_key (void */*dummy*/)
 {
     actionkey = NULL;
 }
 
-Document *
+SPDocument *
 sp_document_create(Inkscape::XML::Document *rdoc,
                    gchar const *uri,
                    gchar const *base,
                    gchar const *name,
                    unsigned int keepalive)
 {
-    Document *document;
+    SPDocument *document;
     Inkscape::XML::Node *rroot;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     rroot = rdoc->root();
 
-    document = new Document();
+    document = new SPDocument();
 
     document->keepalive = keepalive;
 
@@ -389,8 +389,8 @@ sp_document_create(Inkscape::XML::Document *rdoc,
                          G_CALLBACK(sp_document_reset_key), document);
         document->oldSignalsConnected = true;
     } else {
-        document->_selection_changed_connection = Inkscape::NSApplication::Editor::connectSelectionChanged (sigc::mem_fun (*document, &Document::reset_key));
-        document->_desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*document, &Document::reset_key));
+        document->_selection_changed_connection = Inkscape::NSApplication::Editor::connectSelectionChanged (sigc::mem_fun (*document, &SPDocument::reset_key));
+        document->_desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*document, &SPDocument::reset_key));
         document->oldSignalsConnected = false;
     }
 
@@ -401,10 +401,10 @@ sp_document_create(Inkscape::XML::Document *rdoc,
  * Fetches document from URI, or creates new, if NULL; public document
  * appears in document list.
  */
-Document *
+SPDocument *
 sp_document_new(gchar const *uri, unsigned int keepalive, bool make_new)
 {
-    Document *doc;
+    SPDocument *doc;
     Inkscape::XML::Document *rdoc;
     gchar *base = NULL;
     gchar *name = NULL;
@@ -452,10 +452,10 @@ sp_document_new(gchar const *uri, unsigned int keepalive, bool make_new)
     return doc;
 }
 
-Document *
+SPDocument *
 sp_document_new_from_mem(gchar const *buffer, gint length, unsigned int keepalive)
 {
-    Document *doc;
+    SPDocument *doc;
     Inkscape::XML::Document *rdoc;
     Inkscape::XML::Node *rroot;
     gchar *name;
@@ -477,23 +477,23 @@ sp_document_new_from_mem(gchar const *buffer, gint length, unsigned int keepaliv
     return doc;
 }
 
-Document *
-sp_document_ref(Document *doc)
+SPDocument *
+sp_document_ref(SPDocument *doc)
 {
     g_return_val_if_fail(doc != NULL, NULL);
     Inkscape::GC::anchor(doc);
     return doc;
 }
 
-Document *
-sp_document_unref(Document *doc)
+SPDocument *
+sp_document_unref(SPDocument *doc)
 {
     g_return_val_if_fail(doc != NULL, NULL);
     Inkscape::GC::release(doc);
     return NULL;
 }
 
-gdouble sp_document_width(Document *document)
+gdouble sp_document_width(SPDocument *document)
 {
     g_return_val_if_fail(document != NULL, 0.0);
     g_return_val_if_fail(document->priv != NULL, 0.0);
@@ -507,7 +507,7 @@ gdouble sp_document_width(Document *document)
 }
 
 void
-sp_document_set_width (Document *document, gdouble width, const SPUnit *unit)
+sp_document_set_width (SPDocument *document, gdouble width, const SPUnit *unit)
 {
     SPRoot *root = SP_ROOT(document->root);
 
@@ -533,7 +533,7 @@ sp_document_set_width (Document *document, gdouble width, const SPUnit *unit)
     SP_OBJECT (root)->updateRepr();
 }
 
-void sp_document_set_height (Document * document, gdouble height, const SPUnit *unit)
+void sp_document_set_height (SPDocument * document, gdouble height, const SPUnit *unit)
 {
     SPRoot *root = SP_ROOT(document->root);
 
@@ -559,7 +559,7 @@ void sp_document_set_height (Document * document, gdouble height, const SPUnit *
     SP_OBJECT (root)->updateRepr();
 }
 
-gdouble sp_document_height(Document *document)
+gdouble sp_document_height(SPDocument *document)
 {
     g_return_val_if_fail(document != NULL, 0.0);
     g_return_val_if_fail(document->priv != NULL, 0.0);
@@ -572,7 +572,7 @@ gdouble sp_document_height(Document *document)
     return root->height.computed;
 }
 
-Geom::Point sp_document_dimensions(Document *doc)
+Geom::Point sp_document_dimensions(SPDocument *doc)
 {
     return Geom::Point(sp_document_width(doc), sp_document_height(doc));
 }
@@ -582,7 +582,7 @@ Geom::Point sp_document_dimensions(Document *doc)
  * this function fits the canvas to that rect by resizing the canvas
  * and translating the document root into position.
  */
-void Document::fitToRect(Geom::Rect const &rect)
+void SPDocument::fitToRect(Geom::Rect const &rect)
 {
     double const w = rect.width();
     double const h = rect.height();
@@ -606,7 +606,7 @@ void Document::fitToRect(Geom::Rect const &rect)
 }
 
 static void
-do_change_uri(Document *const document, gchar const *const filename, bool const rebase)
+do_change_uri(SPDocument *const document, gchar const *const filename, bool const rebase)
 {
     g_return_if_fail(document != NULL);
 
@@ -638,7 +638,7 @@ do_change_uri(Document *const document, gchar const *const filename, bool const 
     sp_document_set_undo_sensitive(document, false);
 
     if (rebase) {
-        Inkscape::XML::rebase_hrefs((Inkscape::XML::Document *)document, new_base, true);
+        Inkscape::XML::rebase_hrefs(document, new_base, true);
     }
 
     repr->setAttribute("sodipodi:docname", document->name);
@@ -662,7 +662,7 @@ do_change_uri(Document *const document, gchar const *const filename, bool const 
  *
  * \see sp_document_change_uri_and_hrefs
  */
-void sp_document_set_uri(Document *document, gchar const *filename)
+void sp_document_set_uri(SPDocument *document, gchar const *filename)
 {
     g_return_if_fail(document != NULL);
 
@@ -675,7 +675,7 @@ void sp_document_set_uri(Document *document, gchar const *filename)
  *
  * \see sp_document_set_uri
  */
-void sp_document_change_uri_and_hrefs(Document *document, gchar const *filename)
+void sp_document_change_uri_and_hrefs(SPDocument *document, gchar const *filename)
 {
     g_return_if_fail(document != NULL);
 
@@ -683,36 +683,36 @@ void sp_document_change_uri_and_hrefs(Document *document, gchar const *filename)
 }
 
 void
-sp_document_resized_signal_emit(Document *doc, gdouble width, gdouble height)
+sp_document_resized_signal_emit(SPDocument *doc, gdouble width, gdouble height)
 {
     g_return_if_fail(doc != NULL);
 
     doc->priv->resized_signal.emit(width, height);
 }
 
-sigc::connection Document::connectModified(Document::ModifiedSignal::slot_type slot)
+sigc::connection SPDocument::connectModified(SPDocument::ModifiedSignal::slot_type slot)
 {
     return priv->modified_signal.connect(slot);
 }
 
-sigc::connection Document::connectURISet(Document::URISetSignal::slot_type slot)
+sigc::connection SPDocument::connectURISet(SPDocument::URISetSignal::slot_type slot)
 {
     return priv->uri_set_signal.connect(slot);
 }
 
-sigc::connection Document::connectResized(Document::ResizedSignal::slot_type slot)
+sigc::connection SPDocument::connectResized(SPDocument::ResizedSignal::slot_type slot)
 {
     return priv->resized_signal.connect(slot);
 }
 
 sigc::connection
-Document::connectReconstructionStart(Document::ReconstructionStart::slot_type slot)
+SPDocument::connectReconstructionStart(SPDocument::ReconstructionStart::slot_type slot)
 {
     return priv->_reconstruction_start_signal.connect(slot);
 }
 
 void
-Document::emitReconstructionStart(void)
+SPDocument::emitReconstructionStart(void)
 {
     // printf("Starting Reconstruction\n");
     priv->_reconstruction_start_signal.emit();
@@ -720,33 +720,33 @@ Document::emitReconstructionStart(void)
 }
 
 sigc::connection
-Document::connectReconstructionFinish(Document::ReconstructionFinish::slot_type  slot)
+SPDocument::connectReconstructionFinish(SPDocument::ReconstructionFinish::slot_type  slot)
 {
     return priv->_reconstruction_finish_signal.connect(slot);
 }
 
 void
-Document::emitReconstructionFinish(void)
+SPDocument::emitReconstructionFinish(void)
 {
     // printf("Finishing Reconstruction\n");
     priv->_reconstruction_finish_signal.emit();
     return;
 }
 
-sigc::connection Document::connectCommit(Document::CommitSignal::slot_type slot)
+sigc::connection SPDocument::connectCommit(SPDocument::CommitSignal::slot_type slot)
 {
     return priv->commit_signal.connect(slot);
 }
 
 
 
-void Document::_emitModified() {
+void SPDocument::_emitModified() {
     static guint const flags = SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG;
     root->emitModified(0);
     priv->modified_signal.emit(flags);
 }
 
-void Document::bindObjectToId(gchar const *id, SPObject *object) {
+void SPDocument::bindObjectToId(gchar const *id, SPObject *object) {
     GQuark idq = g_quark_from_string(id);
 
     if (object) {
@@ -757,7 +757,7 @@ void Document::bindObjectToId(gchar const *id, SPObject *object) {
         g_hash_table_remove(priv->iddef, GINT_TO_POINTER(idq));
     }
 
-    DocumentPrivate::IDChangedSignalMap::iterator pos;
+    SPDocumentPrivate::IDChangedSignalMap::iterator pos;
 
     pos = priv->id_changed_signals.find(idq);
     if ( pos != priv->id_changed_signals.end() ) {
@@ -770,31 +770,31 @@ void Document::bindObjectToId(gchar const *id, SPObject *object) {
 }
 
 void
-Document::addUndoObserver(Inkscape::UndoStackObserver& observer)
+SPDocument::addUndoObserver(Inkscape::UndoStackObserver& observer)
 {
     this->priv->undoStackObservers.add(observer);
 }
 
 void
-Document::removeUndoObserver(Inkscape::UndoStackObserver& observer)
+SPDocument::removeUndoObserver(Inkscape::UndoStackObserver& observer)
 {
     this->priv->undoStackObservers.remove(observer);
 }
 
-SPObject *Document::getObjectById(gchar const *id) {
+SPObject *SPDocument::getObjectById(gchar const *id) {
     g_return_val_if_fail(id != NULL, NULL);
 
     GQuark idq = g_quark_from_string(id);
     return (SPObject*)g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
 }
 
-sigc::connection Document::connectIdChanged(gchar const *id,
-                                              Document::IDChangedSignal::slot_type slot)
+sigc::connection SPDocument::connectIdChanged(gchar const *id,
+                                              SPDocument::IDChangedSignal::slot_type slot)
 {
     return priv->id_changed_signals[g_quark_from_string(id)].connect(slot);
 }
 
-void Document::bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object) {
+void SPDocument::bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object) {
     if (object) {
         g_assert(g_hash_table_lookup(priv->reprdef, repr) == NULL);
         g_hash_table_insert(priv->reprdef, repr, object);
@@ -804,12 +804,12 @@ void Document::bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object) {
     }
 }
 
-SPObject *Document::getObjectByRepr(Inkscape::XML::Node *repr) {
+SPObject *SPDocument::getObjectByRepr(Inkscape::XML::Node *repr) {
     g_return_val_if_fail(repr != NULL, NULL);
     return (SPObject*)g_hash_table_lookup(priv->reprdef, repr);
 }
 
-Glib::ustring Document::getLanguage() {
+Glib::ustring SPDocument::getLanguage() {
     gchar const *document_language = rdf_get_work_entity(this, rdf_find_entity("language"));
     if (document_language) {
         while (isspace(*document_language))
@@ -841,7 +841,7 @@ Glib::ustring Document::getLanguage() {
 /* Object modification root handler */
 
 void
-sp_document_request_modified(Document *doc)
+sp_document_request_modified(SPDocument *doc)
 {
     if (!doc->modified_id) {
         doc->modified_id = gtk_idle_add_priority(SP_DOCUMENT_UPDATE_PRIORITY, sp_document_idle_handler, doc);
@@ -849,7 +849,7 @@ sp_document_request_modified(Document *doc)
 }
 
 void
-sp_document_setup_viewport (Document *doc, SPItemCtx *ctx)
+sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
 {
     ctx->ctx.flags = 0;
     ctx->i2doc = Geom::identity();
@@ -874,7 +874,7 @@ sp_document_setup_viewport (Document *doc, SPItemCtx *ctx)
  * been brought fully up to date.
  */
 bool
-Document::_updateDocument()
+SPDocument::_updateDocument()
 {
     /* Process updates */
     if (this->root->uflags || this->root->mflags) {
@@ -904,7 +904,7 @@ Document::_updateDocument()
  * since this typically indicates we're stuck in an update loop.
  */
 gint
-sp_document_ensure_up_to_date(Document *doc)
+sp_document_ensure_up_to_date(SPDocument *doc)
 {
     int counter = 32;
     while (!doc->_updateDocument()) {
@@ -930,7 +930,7 @@ sp_document_ensure_up_to_date(Document *doc)
 static gint
 sp_document_idle_handler(gpointer data)
 {
-    Document *doc = static_cast<Document *>(data);
+    SPDocument *doc = static_cast<SPDocument *>(data);
     if (doc->_updateDocument()) {
         doc->modified_id = 0;
         return false;
@@ -1106,7 +1106,7 @@ find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
  *
  */
 
-GSList *sp_document_items_in_box(Document *document, unsigned int dkey, Geom::Rect const &box)
+GSList *sp_document_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1121,7 +1121,7 @@ GSList *sp_document_items_in_box(Document *document, unsigned int dkey, Geom::Re
  *
  */
 
-GSList *sp_document_partial_items_in_box(Document *document, unsigned int dkey, Geom::Rect const &box)
+GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1130,7 +1130,7 @@ GSList *sp_document_partial_items_in_box(Document *document, unsigned int dkey, 
 }
 
 GSList *
-sp_document_items_at_points(Document *document, unsigned const key, std::vector<Geom::Point> points)
+sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points)
 {
     GSList *items = NULL;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1155,7 +1155,7 @@ sp_document_items_at_points(Document *document, unsigned const key, std::vector<
 }
 
 SPItem *
-sp_document_item_at_point(Document *document, unsigned const key, Geom::Point const p,
+sp_document_item_at_point(SPDocument *document, unsigned const key, Geom::Point const p,
                           gboolean const into_groups, SPItem *upto)
 {
     g_return_val_if_fail(document != NULL, NULL);
@@ -1165,7 +1165,7 @@ sp_document_item_at_point(Document *document, unsigned const key, Geom::Point co
 }
 
 SPItem*
-sp_document_group_at_point(Document *document, unsigned int key, Geom::Point const p)
+sp_document_group_at_point(SPDocument *document, unsigned int key, Geom::Point const p)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1177,7 +1177,7 @@ sp_document_group_at_point(Document *document, unsigned int key, Geom::Point con
 /* Resource management */
 
 gboolean
-sp_document_add_resource(Document *document, gchar const *key, SPObject *object)
+sp_document_add_resource(SPDocument *document, gchar const *key, SPObject *object)
 {
     GSList *rlist;
     GQuark q = g_quark_from_string(key);
@@ -1202,7 +1202,7 @@ sp_document_add_resource(Document *document, gchar const *key, SPObject *object)
 }
 
 gboolean
-sp_document_remove_resource(Document *document, gchar const *key, SPObject *object)
+sp_document_remove_resource(SPDocument *document, gchar const *key, SPObject *object)
 {
     GSList *rlist;
     GQuark q = g_quark_from_string(key);
@@ -1228,7 +1228,7 @@ sp_document_remove_resource(Document *document, gchar const *key, SPObject *obje
 }
 
 GSList const *
-sp_document_get_resource_list(Document *document, gchar const *key)
+sp_document_get_resource_list(SPDocument *document, gchar const *key)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(key != NULL, NULL);
@@ -1237,9 +1237,9 @@ sp_document_get_resource_list(Document *document, gchar const *key)
     return (GSList*)g_hash_table_lookup(document->priv->resources, key);
 }
 
-sigc::connection sp_document_resources_changed_connect(Document *document,
+sigc::connection sp_document_resources_changed_connect(SPDocument *document,
                                                        gchar const *key,
-                                                       Document::ResourcesChangedSignal::slot_type slot)
+                                                       SPDocument::ResourcesChangedSignal::slot_type slot)
 {
     GQuark q = g_quark_from_string(key);
     return document->priv->resources_changed_signals[q].connect(slot);
@@ -1267,7 +1267,7 @@ count_objects_recursive(SPObject *obj, unsigned int count)
 }
 
 unsigned int
-objects_in_document(Document *document)
+objects_in_document(SPDocument *document)
 {
     return count_objects_recursive(SP_DOCUMENT_ROOT(document), 0);
 }
@@ -1288,7 +1288,7 @@ vacuum_document_recursive(SPObject *obj)
 }
 
 unsigned int
-vacuum_document(Document *document)
+vacuum_document(SPDocument *document)
 {
     unsigned int start = objects_in_document(document);
     unsigned int end;
@@ -1310,7 +1310,7 @@ vacuum_document(Document *document)
     return start - newend;
 }
 
-bool Document::isSeeking() const {
+bool SPDocument::isSeeking() const {
     return priv->seeking;
 }
 

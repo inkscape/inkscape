@@ -35,9 +35,9 @@
 
 
 
-static SPObject *sp_gradient_load_from_svg(gchar const *name, Document *current_doc);
-static SPObject *sp_marker_load_from_svg(gchar const *name, Document *current_doc);
-static SPObject *sp_gradient_load_from_svg(gchar const *name, Document *current_doc);
+static SPObject *sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc);
+static SPObject *sp_marker_load_from_svg(gchar const *name, SPDocument *current_doc);
+static SPObject *sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc);
 
 
 // FIXME: these should be merged with the icon loading code so they
@@ -45,9 +45,9 @@ static SPObject *sp_gradient_load_from_svg(gchar const *name, Document *current_
 // take the dir to look in, and the file to check for, and cache
 // against that, rather than the existing copy/paste code seen here.
 
-static SPObject * sp_marker_load_from_svg(gchar const *name, Document *current_doc)
+static SPObject * sp_marker_load_from_svg(gchar const *name, SPDocument *current_doc)
 {
-    static Document *doc = NULL;
+    static SPDocument *doc = NULL;
     static unsigned int edoc = FALSE;
     if (!current_doc) {
         return NULL;
@@ -83,9 +83,9 @@ static SPObject * sp_marker_load_from_svg(gchar const *name, Document *current_d
 
 
 static SPObject *
-sp_pattern_load_from_svg(gchar const *name, Document *current_doc)
+sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
 {
-    static Document *doc = NULL;
+    static SPDocument *doc = NULL;
     static unsigned int edoc = FALSE;
     if (!current_doc) {
         return NULL;
@@ -126,9 +126,9 @@ sp_pattern_load_from_svg(gchar const *name, Document *current_doc)
 
 
 static SPObject *
-sp_gradient_load_from_svg(gchar const *name, Document *current_doc)
+sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
 {
-    static Document *doc = NULL;
+    static SPDocument *doc = NULL;
     static unsigned int edoc = FALSE;
     if (!current_doc) {
         return NULL;
@@ -194,7 +194,7 @@ SPObject *get_stock_item(gchar const *urn)
         gchar * base = g_strndup(e, a);
 
         SPDesktop *desktop = inkscape_active_desktop();
-        Document *doc = sp_desktop_document(desktop);
+        SPDocument *doc = sp_desktop_document(desktop);
         SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(doc);
 
         SPObject *object = NULL;
@@ -263,7 +263,7 @@ SPObject *get_stock_item(gchar const *urn)
     else {
         
         SPDesktop *desktop = inkscape_active_desktop();
-        Document *doc = sp_desktop_document(desktop);
+        SPDocument *doc = sp_desktop_document(desktop);
         SPObject *object = doc->getObjectById(urn);
 
         return object;

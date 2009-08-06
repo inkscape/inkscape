@@ -165,7 +165,7 @@ SPObject *previous_layer(SPObject *root, SPObject *layer) {
  *  \pre \a root should be either \a layer or an ancestor of it
  */
 SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition position) {
-    Document *document=SP_OBJECT_DOCUMENT(root);
+    SPDocument *document=SP_OBJECT_DOCUMENT(root);
     
     static int layer_suffix=1;
     gchar *id=NULL;

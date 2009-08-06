@@ -119,7 +119,7 @@ Licensor::init (Gtk::Tooltips& tt, Registry& wr)
 }
 
 void 
-Licensor::update (Document *doc)
+Licensor::update (SPDocument *doc)
 {
     /* identify the license info */
     struct rdf_license_t * license = rdf_get_license (doc);

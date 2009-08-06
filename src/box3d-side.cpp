@@ -28,7 +28,7 @@
 static void box3d_side_class_init (Box3DSideClass *klass);
 static void box3d_side_init (Box3DSide *side);
 
-static void box3d_side_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void box3d_side_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *box3d_side_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void box3d_side_set (SPObject *object, unsigned int key, const gchar *value);
 static void box3d_side_update (SPObject *object, SPCtx *ctx, guint flags);
@@ -94,7 +94,7 @@ box3d_side_init (Box3DSide * side)
 }
 
 static void
-box3d_side_build (SPObject * object, Document * document, Inkscape::XML::Node * repr)
+box3d_side_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
@@ -307,7 +307,7 @@ box3d_side_perspective(Box3DSide *side) {
 Inkscape::XML::Node *
 box3d_side_convert_to_path(Box3DSide *side) {
     // TODO: Copy over all important attributes (see sp_selected_item_to_curved_repr() for an example)
-    Document *doc = SP_OBJECT_DOCUMENT(side);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(side);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");

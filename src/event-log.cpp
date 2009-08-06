@@ -19,7 +19,7 @@
 
 namespace Inkscape {
 
-EventLog::EventLog(Document* document) :
+EventLog::EventLog(SPDocument* document) :
     UndoStackObserver(),
     _connected (false),
     _document (document),

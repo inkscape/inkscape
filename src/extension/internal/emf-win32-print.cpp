@@ -116,7 +116,7 @@ PrintEmfWin32::setup (Inkscape::Extension::Print * /*mod*/)
 
 
 unsigned int
-PrintEmfWin32::begin (Inkscape::Extension::Print *mod, Document *doc)
+PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 {
     gchar const *utf8_fn = mod->get_param_string("destination");
 

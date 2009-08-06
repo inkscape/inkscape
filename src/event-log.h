@@ -44,7 +44,7 @@ public:
     typedef Gtk::TreeModel::iterator iterator;
     typedef Gtk::TreeModel::const_iterator const_iterator;
 
-    EventLog(Document* document);
+    EventLog(SPDocument* document);
     virtual ~EventLog();
 
     /**
@@ -115,7 +115,7 @@ public:
 
 private:
     bool _connected;             //< connected with dialog
-    Document *_document;       //< document that is logged
+    SPDocument *_document;       //< document that is logged
 
     const EventModelColumns _columns;
 

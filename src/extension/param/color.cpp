@@ -41,7 +41,7 @@ ParamColor::~ParamColor(void)
 }
 
 guint32
-ParamColor::set( guint32 in, Document * /*doc*/, Inkscape::XML::Node * /*node*/ )
+ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 
@@ -87,7 +87,7 @@ ParamColor::string (std::string &string)
 }
 
 Gtk::Widget *
-ParamColor::get_widget( Document * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
+ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
 	if (_gui_hidden) return NULL;
 

@@ -185,7 +185,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
 
 /* create a default perspective in document defs if none is present
    (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */
-static void sp_box3d_context_check_for_persp_in_defs(Document *document) {
+static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
     bool has_persp = false;
@@ -561,7 +561,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
         }
 
         /* Create object */
-        Inkscape::XML::DocumentTree *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(SP_EVENT_CONTEXT_DOCUMENT(&bc));
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:g");
         repr->setAttribute("sodipodi:type", "inkscape:box3d");
 

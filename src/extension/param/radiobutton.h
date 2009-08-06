@@ -43,11 +43,11 @@ public:
                      Inkscape::XML::Node * xml,
                      AppearanceMode mode);
     virtual ~ParamRadioButton(void);
-    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
 
-    const gchar * get (const Document * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    const gchar * set (const gchar * in, Document * doc, Inkscape::XML::Node * node);
+    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
 
 private:
     /** \brief  Internal value.  This should point to a string that has

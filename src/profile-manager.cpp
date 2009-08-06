@@ -14,7 +14,7 @@
 
 namespace Inkscape {
 
-ProfileManager::ProfileManager(Document *document) :
+ProfileManager::ProfileManager(SPDocument *document) :
     _doc(document),
     _knownProfiles()
 {

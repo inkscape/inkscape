@@ -120,7 +120,7 @@ findExpanderWidgets(Gtk::Container *parent,
 ### SVG Preview Widget
 #########################################################################*/
 
-bool SVGPreview::setDocument(Document *doc)
+bool SVGPreview::setDocument(SPDocument *doc)
 {
     if (document)
         sp_document_unref(document);
@@ -151,7 +151,7 @@ bool SVGPreview::setFileName(Glib::ustring &theFileName)
      * I don't know why passing false to keepalive is bad.  But it
      * prevents the display of an svg with a non-ascii filename
      */
-    Document *doc = sp_document_new (fileName.c_str(), true);
+    SPDocument *doc = sp_document_new (fileName.c_str(), true);
     if (!doc) {
         g_warning("SVGView: error loading document '%s'\n", fileName.c_str());
         return false;
@@ -172,7 +172,7 @@ bool SVGPreview::setFromMem(char const *xmlBuffer)
         return false;
 
     gint len = (gint)strlen(xmlBuffer);
-    Document *doc = sp_document_new_from_mem(xmlBuffer, len, 0);
+    SPDocument *doc = sp_document_new_from_mem(xmlBuffer, len, 0);
     if (!doc) {
         g_warning("SVGView: error loading buffer '%s'\n",xmlBuffer);
         return false;

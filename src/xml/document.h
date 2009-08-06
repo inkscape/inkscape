@@ -12,8 +12,8 @@
  *
  */
 
-#ifndef SEEN_INKSCAPE_XML_SP_REPR_DOCTREE_H
-#define SEEN_INKSCAPE_XML_SP_REPR_DOCTREE_H
+#ifndef SEEN_INKSCAPE_XML_SP_REPR_DOC_H
+#define SEEN_INKSCAPE_XML_SP_REPR_DOC_H
 
 #include "xml/xml-forward.h"
 #include "xml/node.h"
@@ -41,7 +41,7 @@ namespace XML {
  * "restore point" by calling beginTransaction() again. There can be only one active
  * transaction at a time for a given document.
  */
-class DocumentTree : virtual public Node {
+struct Document : virtual public Node {
 public:
     /**
      * @name Document transactions

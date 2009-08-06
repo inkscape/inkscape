@@ -81,7 +81,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     Geom::Rect bounding_area = Geom::Rect(Geom::Point(0,0), Geom::Point(100,100));
     if (selection->isEmpty()) {
         /* get page size */
-        Document * doc = document->doc();
+        SPDocument * doc = document->doc();
         bounding_area = Geom::Rect(  Geom::Point(0,0),
                                      Geom::Point(sp_document_width(doc), sp_document_height(doc))  );
     } else {
@@ -171,7 +171,7 @@ PrefAdjustment::val_changed (void)
 Gtk::Widget *
 Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view, sigc::signal<void> * changeSignal, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
-    Document * current_document = view->doc();
+    SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
     GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();

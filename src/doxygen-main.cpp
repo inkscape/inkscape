@@ -288,7 +288,7 @@ namespace XML {}
  *   - SPSVGView [\ref svg-view.cpp, \ref svg-view.h]
  *
  * SPDesktopWidget [\ref desktop-widget.h] SPSVGSPViewWidget [\ref svg-view.cpp]
- * Document [\ref document.cpp, \ref document.h]
+ * SPDocument [\ref document.cpp, \ref document.h]
  *
  * SPDrawAnchor [\ref draw-anchor.cpp, \ref draw-anchor.h]
  * SPKnot [\ref knot.cpp, \ref knot.h, \ref knot-enums.h]

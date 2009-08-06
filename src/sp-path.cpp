@@ -56,7 +56,7 @@ static void sp_path_init(SPPath *path);
 static void sp_path_finalize(GObject *obj);
 static void sp_path_release(SPObject *object);
 
-static void sp_path_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_path_set(SPObject *object, unsigned key, gchar const *value);
 
 static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -211,7 +211,7 @@ sp_path_finalize(GObject *obj)
  *  fill & style attributes, markers, and CSS properties.
  */
 static void
-sp_path_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     /* Are these calls actually necessary? */
     sp_object_read_attr(object, "marker");

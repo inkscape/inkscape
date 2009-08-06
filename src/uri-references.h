@@ -41,7 +41,7 @@ public:
      *              is holding a reference to the target object.
      */
     URIReference(SPObject *owner);
-    URIReference(Document *owner_document);
+    URIReference(SPDocument *owner_document);
 
     /**
      * Destructor.  Calls shutdown() if the reference has not been
@@ -114,7 +114,7 @@ public:
         return (bool)_uri;
     }
 
-    Document *getOwnerDocument() { return _owner_document; }
+    SPDocument *getOwnerDocument() { return _owner_document; }
     SPObject   *getOwnerObject()   { return _owner; }
 
 protected:
@@ -125,7 +125,7 @@ protected:
 
 private:
     SPObject *_owner;
-    Document *_owner_document;
+    SPDocument *_owner_document;
     sigc::connection _connection;
     sigc::connection _release_connection;
     SPObject *_obj;
@@ -145,8 +145,8 @@ private:
 /**
  * Resolves an item referenced by a URI in CSS form contained in "url(...)"
  */
-SPObject* sp_css_uri_reference_resolve( Document *document, const gchar *uri );
+SPObject* sp_css_uri_reference_resolve( SPDocument *document, const gchar *uri );
 
-SPObject *sp_uri_reference_resolve (Document *document, const gchar *uri);
+SPObject *sp_uri_reference_resolve (SPDocument *document, const gchar *uri);
 
 #endif

@@ -14,7 +14,7 @@
 class SPGradientTest : public DocumentUsingTest
 {
 public:
-    Document* _doc;
+    SPDocument* _doc;
 
     SPGradientTest() :
         _doc(0)

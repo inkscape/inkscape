@@ -212,7 +212,7 @@ Output::prefs (void)
 	could be changed, and old files will still work properly.
 */
 void
-Output::save(Document *doc, gchar const *filename)
+Output::save(SPDocument *doc, gchar const *filename)
 {
         try {
             imp->save(this, doc, filename);

@@ -35,7 +35,7 @@
 static void sp_fespotlight_class_init(SPFeSpotLightClass *klass);
 static void sp_fespotlight_init(SPFeSpotLight *fespotlight);
 
-static void sp_fespotlight_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fespotlight_release(SPObject *object);
 static void sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -107,7 +107,7 @@ sp_fespotlight_init(SPFeSpotLight *fespotlight)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_fespotlight_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feSpotLight_parent_class)->build) {
         ((SPObjectClass *) feSpotLight_parent_class)->build(object, document, repr);

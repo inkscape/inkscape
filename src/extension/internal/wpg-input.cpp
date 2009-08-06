@@ -59,7 +59,7 @@ namespace Extension {
 namespace Internal {
 
 
-Document *
+SPDocument *
 WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
     WPXInputStream* input = new libwpg::WPGFileStream(uri);
     if (input->isOLEStream()) {
@@ -86,7 +86,7 @@ WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
 
     //printf("I've got a doc: \n%s", painter.document.c_str());
 
-    Document * doc = sp_document_new_from_mem(output.cstr(), strlen(output.cstr()), TRUE);
+    SPDocument * doc = sp_document_new_from_mem(output.cstr(), strlen(output.cstr()), TRUE);
     delete input;
     return doc;
 }

@@ -34,7 +34,7 @@
 static void sp_feColorMatrix_class_init(SPFeColorMatrixClass *klass);
 static void sp_feColorMatrix_init(SPFeColorMatrix *feColorMatrix);
 
-static void sp_feColorMatrix_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feColorMatrix_release(SPObject *object);
 static void sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feColorMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -91,7 +91,7 @@ sp_feColorMatrix_init(SPFeColorMatrix */*feColorMatrix*/)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feColorMatrix_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feColorMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feColorMatrix_parent_class)->build) {
         ((SPObjectClass *) feColorMatrix_parent_class)->build(object, document, repr);

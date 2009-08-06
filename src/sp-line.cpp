@@ -28,7 +28,7 @@
 static void sp_line_class_init (SPLineClass *klass);
 static void sp_line_init (SPLine *line);
 
-static void sp_line_build (SPObject * object, Document * document, Inkscape::XML::Node * repr);
+static void sp_line_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_line_set (SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_line_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
@@ -96,7 +96,7 @@ sp_line_init (SPLine * line)
 
 
 static void
-sp_line_build (SPObject * object, Document * document, Inkscape::XML::Node * repr)
+sp_line_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
         if (((SPObjectClass *) parent_class)->build) {
 		((SPObjectClass *) parent_class)->build (object, document, repr);

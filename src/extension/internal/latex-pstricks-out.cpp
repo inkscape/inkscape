@@ -47,7 +47,7 @@ LatexOutput::check (Inkscape::Extension::Extension * module)
 
 
 void
-LatexOutput::save(Inkscape::Extension::Output *mod2, Document *doc, gchar const *filename)
+LatexOutput::save(Inkscape::Extension::Output *mod2, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Print *mod;
     SPPrintContext context;

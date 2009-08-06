@@ -61,7 +61,7 @@ CairoEpsOutput::check (Inkscape::Extension::Extension * module)
 }
 
 static bool
-ps_print_document_to_file(Document *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
+ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
 {
     sp_document_ensure_up_to_date(doc);
 
@@ -124,7 +124,7 @@ ps_print_document_to_file(Document *doc, gchar const *filename, unsigned int lev
     \param  filename   Filename to save to (probably will end in .ps)
 */
 void
-CairoPsOutput::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
+CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;
@@ -188,7 +188,7 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, Document *doc, gchar const
     \param  filename   Filename to save to (probably will end in .ps)
 */
 void
-CairoEpsOutput::save(Inkscape::Extension::Output *mod, Document *doc, gchar const *filename)
+CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;

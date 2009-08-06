@@ -35,7 +35,7 @@ struct Persp3D : public SPObject {
     // Also write the list of boxes into the xml repr and vice versa link boxes to their persp3d?
     std::vector<SPBox3D *> boxes;
     std::map<SPBox3D *, bool>* boxes_transformed; // TODO: eventually we should merge this with 'boxes'
-    Document *document; // should this rather be the SPDesktop?
+    SPDocument *document; // should this rather be the SPDesktop?
 
     // for debugging only
     int my_counter;
@@ -89,15 +89,15 @@ std::list<SPBox3D *> persp3d_list_of_boxes(Persp3D *persp);
 bool persp3d_perspectives_coincide(const Persp3D *lhs, const Persp3D *rhs);
 void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 
-Persp3D * persp3d_create_xml_element (Document *document, Persp3D *dup = NULL);
-Persp3D * persp3d_document_first_persp (Document *document);
+Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3D *dup = NULL);
+Persp3D * persp3d_document_first_persp (SPDocument *document);
 
 bool persp3d_has_all_boxes_in_selection (Persp3D *persp);
 std::map<Persp3D *, std::list<SPBox3D *> > persp3d_unselected_boxes(Inkscape::Selection *selection);
 void persp3d_split_perspectives_according_to_selection(Inkscape::Selection *selection);
 
 void persp3d_print_debugging_info (Persp3D *persp);
-void persp3d_print_debugging_info_all(Document *doc);
+void persp3d_print_debugging_info_all(SPDocument *doc);
 void persp3d_print_all_selected();
 
 #endif /* __PERSP3D_H__ */

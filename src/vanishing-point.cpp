@@ -462,7 +462,7 @@ VPDragger::printVPs() {
     }
 }
 
-VPDrag::VPDrag (Document *document)
+VPDrag::VPDrag (SPDocument *document)
 {
     this->document = document;
     this->selection = sp_desktop_selection(inkscape_active_desktop());

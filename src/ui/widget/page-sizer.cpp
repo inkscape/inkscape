@@ -346,7 +346,7 @@ PageSizer::setDim (double w, double h, bool changeList)
     _changedh_connection.block();
 
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
-        Document *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         double const old_height = sp_document_height(doc);
         sp_document_set_width (doc, w, &_px_unit);
         sp_document_set_height (doc, h, &_px_unit);

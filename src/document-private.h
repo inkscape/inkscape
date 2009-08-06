@@ -36,9 +36,9 @@ class Event;
 }
 
 
-struct DocumentPrivate {
-	typedef std::map<GQuark, Document::IDChangedSignal> IDChangedSignalMap;
-	typedef std::map<GQuark, Document::ResourcesChangedSignal> ResourcesChangedSignalMap;
+struct SPDocumentPrivate {
+	typedef std::map<GQuark, SPDocument::IDChangedSignal> IDChangedSignalMap;
+	typedef std::map<GQuark, SPDocument::ResourcesChangedSignal> ResourcesChangedSignalMap;
 
 	GHashTable *iddef;	/**< Dictionary of id -> SPObject mappings */
 	GHashTable *reprdef;   /**< Dictionary of Inkscape::XML::Node -> SPObject mappings */
@@ -53,12 +53,12 @@ struct DocumentPrivate {
 	GHashTable *resources;
 	ResourcesChangedSignalMap resources_changed_signals;
 
-	Document::ModifiedSignal modified_signal;
-	Document::URISetSignal uri_set_signal;
-	Document::ResizedSignal resized_signal;
-	Document::ReconstructionStart _reconstruction_start_signal;
-	Document::ReconstructionFinish  _reconstruction_finish_signal;
-  Document::CommitSignal commit_signal;
+	SPDocument::ModifiedSignal modified_signal;
+	SPDocument::URISetSignal uri_set_signal;
+	SPDocument::ResizedSignal resized_signal;
+	SPDocument::ReconstructionStart _reconstruction_start_signal;
+	SPDocument::ReconstructionFinish  _reconstruction_finish_signal;
+  SPDocument::CommitSignal commit_signal;
 
 	/* Undo/Redo state */
 	bool sensitive: true; /* If we save actions to undo stack */

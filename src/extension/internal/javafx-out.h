@@ -56,7 +56,7 @@ public:
      * API call to perform the output to a file
      */
     virtual void save(Inkscape::Extension::Output *mod,
-                      Document *doc, gchar const *filename);
+                      SPDocument *doc, gchar const *filename);
 
     /**
      * Inkscape runtime startup call.
@@ -109,10 +109,10 @@ private:
      * Output the SVG document's curve data as JavaFX geometry types
      */
     bool doCurve(SPItem *item, const String &id);
-    bool doTreeRecursive(Document *doc, SPObject *obj);
-    bool doTree(Document *doc);
+    bool doTreeRecursive(SPDocument *doc, SPObject *obj);
+    bool doTree(SPDocument *doc);
 
-    bool doBody(Document *doc, SPObject *obj);
+    bool doBody(SPDocument *doc, SPObject *obj);
 
     /**
      * Output the file footer
@@ -124,7 +124,7 @@ private:
     /**
      * Actual method to save document
      */
-	bool saveDocument(Document *doc, gchar const *filename);
+	bool saveDocument(SPDocument *doc, gchar const *filename);
 
     //For statistics
     int nrNodes;

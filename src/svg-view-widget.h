@@ -16,7 +16,7 @@
 #include "display/display-forward.h"
 #include "ui/view/view-widget.h"
 
-class Document;
+class SPDocument;
 class SPSVGSPViewWidget;
 class SPSVGSPViewWidgetClass;
 
@@ -28,7 +28,7 @@ class SPSVGSPViewWidgetClass;
 
 GtkType sp_svg_view_widget_get_type (void);
 
-GtkWidget *sp_svg_view_widget_new (Document *doc);
+GtkWidget *sp_svg_view_widget_new (SPDocument *doc);
 
 void sp_svg_view_widget_set_resize (SPSVGSPViewWidget *vw, bool resize, gdouble width, gdouble height);
 

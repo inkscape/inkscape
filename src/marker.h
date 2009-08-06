@@ -89,7 +89,7 @@ NRArenaItem *sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 				      unsigned int key, unsigned int pos,
 				      Geom::Matrix const &base, float linewidth);
 void sp_marker_hide (SPMarker *marker, unsigned int key);
-const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, Document *document, Geom::Matrix transform, Geom::Matrix move);
+const gchar *generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move);
 
 
 #endif

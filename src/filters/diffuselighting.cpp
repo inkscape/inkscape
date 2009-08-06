@@ -32,7 +32,7 @@
 static void sp_feDiffuseLighting_class_init(SPFeDiffuseLightingClass *klass);
 static void sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting);
 
-static void sp_feDiffuseLighting_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feDiffuseLighting_release(SPObject *object);
 static void sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -111,7 +111,7 @@ sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feDiffuseLighting_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->build) {
         ((SPObjectClass *) feDiffuseLighting_parent_class)->build(object, document, repr);

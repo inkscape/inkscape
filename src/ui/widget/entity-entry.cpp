@@ -81,7 +81,7 @@ EntityLineEntry::~EntityLineEntry()
 }
 
 void 
-EntityLineEntry::update (Document *doc)
+EntityLineEntry::update (SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
     static_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
@@ -93,7 +93,7 @@ EntityLineEntry::on_changed()
     if (_wr->isUpdating()) return;
 
     _wr->setUpdating (true);
-    Document *doc = SP_ACTIVE_DOCUMENT;
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
     Glib::ustring text = static_cast<Gtk::Entry*>(_packable)->get_text();
     if (rdf_set_work_entity (doc, _entity, text.c_str()))
         sp_document_done (doc, SP_VERB_NONE, 
@@ -122,7 +122,7 @@ EntityMultiLineEntry::~EntityMultiLineEntry()
 }
 
 void 
-EntityMultiLineEntry::update (Document *doc)
+EntityMultiLineEntry::update (SPDocument *doc)
 {
     const char *text = rdf_get_work_entity (doc, _entity);
     Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
@@ -136,7 +136,7 @@ EntityMultiLineEntry::on_changed()
     if (_wr->isUpdating()) return;
 
     _wr->setUpdating (true);
-    Document *doc = SP_ACTIVE_DOCUMENT;
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
     Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     Glib::ustring text = tv->get_buffer()->get_text();

@@ -2367,7 +2367,7 @@ OdfOutput::reset()
  * Descends into the SVG tree, mapping things to ODF when appropriate
  */
 void
-OdfOutput::save(Inkscape::Extension::Output */*mod*/, Document *doc, gchar const *filename)
+OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gchar const *filename)
 {
     reset();
 

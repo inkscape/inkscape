@@ -145,7 +145,7 @@ Input::check (void)
     Adobe Illustrator file can be transparent (not recommended, but
     transparent).  This is all done with undo being turned off.
 */
-Document *
+SPDocument *
 Input::open (const gchar *uri)
 {
     if (!loaded()) {
@@ -156,7 +156,7 @@ Input::open (const gchar *uri)
     }
     timer->touch();
 
-    Document *const doc = imp->open(this, uri);
+    SPDocument *const doc = imp->open(this, uri);
     if (doc != NULL) {
         Inkscape::XML::Node * repr = sp_document_repr_root(doc);
         bool saved = sp_document_get_undo_sensitive(doc);

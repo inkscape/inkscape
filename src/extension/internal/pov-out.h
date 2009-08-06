@@ -57,7 +57,7 @@ public:
      * API call to perform the output to a file
      */
     void save(Inkscape::Extension::Output *mod,
-              Document *doc, gchar const *filename);
+              SPDocument *doc, gchar const *filename);
 
     /**
      * Inkscape runtime startup call.
@@ -120,13 +120,13 @@ private:
      * Output the SVG document's curve data as POV curves
      */
     bool doCurve(SPItem *item, const String &id);
-    bool doTreeRecursive(Document *doc, SPObject *obj);
-    bool doTree(Document *doc);
+    bool doTreeRecursive(SPDocument *doc, SPObject *obj);
+    bool doTree(SPDocument *doc);
 
     /**
      * Actual method to save document
      */
-    void saveDocument(Document *doc, gchar const *filename);
+    void saveDocument(SPDocument *doc, gchar const *filename);
 
 
     /**

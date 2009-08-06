@@ -22,9 +22,9 @@ private:
     bool _value;
 public:
     ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
-    bool get (const Document * doc, const Inkscape::XML::Node * node);
-    bool set (bool in, Document * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    bool get (const SPDocument * doc, const Inkscape::XML::Node * node);
+    bool set (bool in, SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void string (std::string &string);
 };
 

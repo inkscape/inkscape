@@ -394,7 +394,7 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * \param union_with_selection If true, merge the final SVG path with the current selection.
  */
 static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Matrix transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
-    Document *document = sp_desktop_document(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
 
     unsigned char *trace_t;
 
@@ -770,7 +770,7 @@ static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
  */
 static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *event, bool union_with_selection, bool is_point_fill, bool is_touch_fill) {
     SPDesktop *desktop = event_context->desktop;
-    Document *document = sp_desktop_document(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
 
     /* Create new arena */
     NRArena *arena = NRArena::create();

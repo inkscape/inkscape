@@ -29,7 +29,7 @@
 static void sp_feFlood_class_init(SPFeFloodClass *klass);
 static void sp_feFlood_init(SPFeFlood *feFlood);
 
-static void sp_feFlood_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feFlood_release(SPObject *object);
 static void sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -87,7 +87,7 @@ sp_feFlood_init(SPFeFlood *feFlood)
  * sp-object-repr.cpp's repr_name_entries array.
  */
 static void
-sp_feFlood_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) feFlood_parent_class)->build) {
         ((SPObjectClass *) feFlood_parent_class)->build(object, document, repr);

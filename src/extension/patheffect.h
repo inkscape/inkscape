@@ -22,10 +22,10 @@ public:
                  PathEffect  (Inkscape::XML::Node * in_repr,
                               Implementation::Implementation * in_imp);
     virtual     ~PathEffect  (void);
-    void         processPath (Document * doc,
+    void         processPath (SPDocument * doc,
                               Inkscape::XML::Node * path,
                               Inkscape::XML::Node * def);
-    static void  processPathEffects (Document * doc,
+    static void  processPathEffects (SPDocument * doc,
                                      Inkscape::XML::Node * path);
 }; /* PathEffect */
 

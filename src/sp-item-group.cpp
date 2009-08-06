@@ -51,7 +51,7 @@
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
-static void sp_group_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_group_release(SPObject *object);
 static void sp_group_dispose(GObject *object);
 
@@ -144,7 +144,7 @@ sp_group_init (SPGroup *group)
     new (&group->_display_modes) std::map<unsigned int, SPGroup::LayerMode>();
 }
 
-static void sp_group_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     sp_object_read_attr(object, "inkscape:groupmode");
 
@@ -358,7 +358,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
     g_return_if_fail (group != NULL);
     g_return_if_fail (SP_IS_GROUP (group));
 
-    Document *doc = SP_OBJECT_DOCUMENT (group);
+    SPDocument *doc = SP_OBJECT_DOCUMENT (group);
     SPObject *root = SP_DOCUMENT_ROOT (doc);
     SPObject *defs = SP_OBJECT (SP_ROOT (root)->defs);
 

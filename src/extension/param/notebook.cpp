@@ -54,7 +54,7 @@ public:
 
     ParamNotebookPage(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamNotebookPage(void);
-    Gtk::Widget * get_widget(Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
     void paramString (std::list <std::string> &list);
     gchar * get_guitext (void) {return _text;};
 
@@ -196,7 +196,7 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     Builds a notebook page (a vbox) and puts parameters on it.
 */
 Gtk::Widget *
-ParamNotebookPage::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 
@@ -295,7 +295,7 @@ ParamNotebook::~ParamNotebook (void)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamNotebook::set (const int in, Document * /*doc*/, Inkscape::XML::Node * /*node*/)
+ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     ParamNotebookPage * page = NULL;
     int i = 0;
@@ -347,14 +347,14 @@ ParamNotebook::string (std::list <std::string> &list)
 class ParamNotebookWdg : public Gtk::Notebook {
 private:
     ParamNotebook * _pref;
-    Document * _doc;
+    SPDocument * _doc;
     Inkscape::XML::Node * _node;
 public:
     /** \brief  Build a notebookpage preference for the given parameter
         \param  pref  Where to get the string (pagename) from, and where to put it
                       when it changes.
     */
-    ParamNotebookWdg (ParamNotebook * pref, Document * doc, Inkscape::XML::Node * node) :
+    ParamNotebookWdg (ParamNotebook * pref, SPDocument * doc, Inkscape::XML::Node * node) :
         Gtk::Notebook(), _pref(pref), _doc(doc), _node(node), activated(false) {
         // don't have to set the correct page: this is done in ParamNotebook::get_widget.
         // hook function
@@ -389,7 +389,7 @@ ParamNotebookWdg::changed_page(GtkNotebookPage */*page*/,
     Builds a notebook and puts pages in it.
 */
 Gtk::Widget *
-ParamNotebook::get_widget (Document * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
 	if (_gui_hidden) return NULL;
 

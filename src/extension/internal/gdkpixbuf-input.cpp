@@ -16,10 +16,10 @@ GdkPixbuf* pixbuf_new_from_file( char const *utf8name, GError **error );
 namespace Extension {
 namespace Internal {
 
-Document *
+SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
 {
-    Document *doc = NULL;
+    SPDocument *doc = NULL;
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
 
     if (pb) {         /* We are readable */

@@ -54,7 +54,7 @@ static void sp_guide_init(SPGuide *guide);
 static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 
-static void sp_guide_build(SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_guide_release(SPObject *object);
 static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value);
 
@@ -152,7 +152,7 @@ static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value,
     }
 }
 
-static void sp_guide_build(SPObject *object, Document *document, Inkscape::XML::Node *repr)
+static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
@@ -243,7 +243,7 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
 
 SPGuide *
 sp_guide_create(SPDesktop *desktop, Geom::Point const &pt1, Geom::Point const &pt2) {
-    Document *doc=sp_desktop_document(desktop);
+    SPDocument *doc=sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
@@ -269,7 +269,7 @@ sp_guide_pt_pairs_to_guides(SPDesktop *dt, std::list<std::pair<Geom::Point, Geom
 
 void
 sp_guide_create_guides_around_page(SPDesktop *dt) {
-    Document *doc=sp_desktop_document(dt);
+    SPDocument *doc=sp_desktop_document(dt);
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Point A(0, 0);

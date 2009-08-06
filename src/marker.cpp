@@ -43,7 +43,7 @@ struct SPMarkerView {
 static void sp_marker_class_init (SPMarkerClass *klass);
 static void sp_marker_init (SPMarker *marker);
 
-static void sp_marker_build (SPObject *object, Document *document, Inkscape::XML::Node *repr);
+static void sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_marker_release (SPObject *object);
 static void sp_marker_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_marker_update (SPObject *object, SPCtx *ctx, guint flags);
@@ -133,7 +133,7 @@ sp_marker_init (SPMarker *marker)
  * \see sp_object_build()
  */
 static void
-sp_marker_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 	SPGroup *group;
 	SPMarker *marker;
@@ -723,7 +723,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 }
 
 const gchar *
-generate_marker (GSList *reprs, Geom::Rect bounds, Document *document, Geom::Matrix /*transform*/, Geom::Matrix move)
+generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));

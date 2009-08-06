@@ -92,7 +92,7 @@ sp_gradient_ensure_vector_normalized(SPGradient *gr)
  */
 
 static SPGradient *
-sp_gradient_get_private_normalized(Document *document, SPGradient *vector, SPGradientType type)
+sp_gradient_get_private_normalized(SPDocument *document, SPGradient *vector, SPGradientType type)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(vector != NULL, NULL);
@@ -199,7 +199,7 @@ sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
         return gr;
     }
 
-    Document *doc = SP_OBJECT_DOCUMENT(gr);
+    SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
     SPObject *defs = SP_DOCUMENT_DEFS(doc);
 
     if ((gr->has_stops) ||
@@ -245,7 +245,7 @@ sp_gradient_fork_vector_if_necessary (SPGradient *gr)
         return gr;
 
     if (SP_OBJECT_HREFCOUNT(gr) > 1) {
-        Document *doc = SP_OBJECT_DOCUMENT(gr);
+        SPDocument *doc = SP_OBJECT_DOCUMENT(gr);
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
         Inkscape::XML::Node *repr = SP_OBJECT_REPR (gr)->duplicate(xml_doc);
@@ -1210,7 +1210,7 @@ sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *link)
  */
 
 SPGradient *
-sp_document_default_gradient_vector(Document *document, guint32 color)
+sp_document_default_gradient_vector(SPDocument *document, guint32 color)
 {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
@@ -1271,7 +1271,7 @@ Return the preferred vector for \a o, made from (in order of preference) its cur
 current fill or stroke color, or from desktop style if \a o is NULL or doesn't have style.
 */
 SPGradient *
-sp_gradient_vector_for_object(Document *const doc, SPDesktop *const desktop,
+sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
                               SPObject *const o, bool const is_fill)
 {
     guint32 rgba = 0;

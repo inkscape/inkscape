@@ -377,7 +377,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
     if ( bounceTarget ) {
         SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
         SPDesktop* desktop = swp ? swp->getDesktop() : 0;
-        Document *doc = desktop ? desktop->doc() : 0;
+        SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             std::string targetName(bounceTarget->def.descr);
             const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
@@ -397,7 +397,7 @@ static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
     if ( bounceTarget ) {
         SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
         SPDesktop* desktop = swp ? swp->getDesktop() : 0;
-        Document *doc = desktop ? desktop->doc() : 0;
+        SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
@@ -524,7 +524,7 @@ void ColorItem::_dropDataIn( GtkWidget */*widget*/,
 {
 }
 
-static bool bruteForce( Document* document, Inkscape::XML::Node* node, Glib::ustring const& match, int r, int g, int b )
+static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::ustring const& match, int r, int g, int b )
 {
     bool changed = false;
 
@@ -612,7 +612,7 @@ void ColorItem::_colorDefChanged(void* data)
         {
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             if ( desktop ) {
-                Document* document = sp_desktop_document( desktop );
+                SPDocument* document = sp_desktop_document( desktop );
                 Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
                 if ( rroot ) {
 
@@ -1362,9 +1362,9 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
             _currentDesktop->connectToolSubselectionChanged(
                 sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::_updateFromSelection)));
 
-            sigc::bound_mem_functor1<void, Inkscape::UI::Dialogs::SwatchesPanel, Document*> first = sigc::mem_fun(*this, &SwatchesPanel::_setDocument);
-            sigc::slot<void, Document*> base2 = first;
-            sigc::slot<void,SPDesktop*, Document*> slot2 = sigc::hide<0>( base2 );
+            sigc::bound_mem_functor1<void, Inkscape::UI::Dialogs::SwatchesPanel, SPDocument*> first = sigc::mem_fun(*this, &SwatchesPanel::_setDocument);
+            sigc::slot<void, SPDocument*> base2 = first;
+            sigc::slot<void,SPDesktop*, SPDocument*> slot2 = sigc::hide<0>( base2 );
             _documentConnection = desktop->connectDocumentReplaced( slot2 );
 
             _setDocument( desktop->doc() );
@@ -1374,7 +1374,7 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
     }
 }
 
-void SwatchesPanel::_setDocument( Document *document )
+void SwatchesPanel::_setDocument( SPDocument *document )
 {
     if ( document != _currentDocument ) {
         if ( _currentDocument ) {

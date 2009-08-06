@@ -16,7 +16,7 @@
 #include <glib/gtypes.h>
 
 struct SPDesktop;
-struct Document;
+struct SPDocument;
 struct SPEventContext;
 
 namespace Inkscape {
@@ -46,7 +46,7 @@ Inkscape::Application *inkscape_get_instance();
 SPEventContext * inkscape_active_event_context (void);
 
 #define SP_ACTIVE_DOCUMENT inkscape_active_document ()
-Document * inkscape_active_document (void);
+SPDocument * inkscape_active_document (void);
 
 #define SP_ACTIVE_DESKTOP inkscape_active_desktop ()
 SPDesktop * inkscape_active_desktop (void);

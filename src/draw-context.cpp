@@ -1,4 +1,4 @@
-#define __DRAW_CONTEXT_C__
+#define __SP_DRAW_CONTEXT_C__
 
 /*
  * Generic drawing context
@@ -664,7 +664,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
                             : SP_EVENT_CONTEXT_DESKTOP(dc)->dt2doc() );
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-    Document *doc = sp_desktop_document(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
 
     if ( c && !c->is_empty() ) {

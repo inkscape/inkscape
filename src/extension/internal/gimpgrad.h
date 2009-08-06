@@ -26,7 +26,7 @@ class GimpGrad : public Inkscape::Extension::Implementation::Implementation {
 public:
     bool load(Inkscape::Extension::Extension *module);
     void unload(Inkscape::Extension::Extension *module);
-    Document *open(Inkscape::Extension::Input *module, gchar const *filename);
+    SPDocument *open(Inkscape::Extension::Input *module, gchar const *filename);
 
     static void init();
 };

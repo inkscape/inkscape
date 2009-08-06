@@ -81,7 +81,7 @@ sigc::connection marker_start_menu_connection;
 sigc::connection marker_mid_menu_connection;
 sigc::connection marker_end_menu_connection;
 
-static SPObject *ink_extract_marker_name(gchar const *n, Document *doc);
+static SPObject *ink_extract_marker_name(gchar const *n, SPDocument *doc);
 static void      ink_markers_menu_update(Gtk::Container* spw, SPMarkerLoc const which);
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
@@ -307,7 +307,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
     g_object_set_data (G_OBJECT (spw), "update", GINT_TO_POINTER (TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Document *document = sp_desktop_document (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
@@ -550,7 +550,7 @@ sp_stroke_style_widget_transientize_callback(Inkscape::Application */*inkscape*/
  */
 static Gtk::Image *
 sp_marker_prev_new(unsigned psize, gchar const *mname,
-                   Document *source, Document *sandbox,
+                   SPDocument *source, SPDocument *sandbox,
                    gchar const *menu_id, NRArena const */*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
 {
     // Retrieve the marker named 'mname' from the source SVG document
@@ -617,7 +617,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
  *  Returns NULL if there are no markers in the document.
  */
 GSList *
-ink_marker_list_get (Document *source)
+ink_marker_list_get (SPDocument *source)
 {
     if (source == NULL)
         return NULL;
@@ -641,7 +641,7 @@ ink_marker_list_get (Document *source)
  * Adds previews of markers in marker_list to the given menu widget
  */
 static void
-sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, Document *source, Document *sandbox, gchar const *menu_id)
+sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
 {
     // Do this here, outside of loop, to speed up preview generation:
     NRArena const *arena = NRArena::create();
@@ -695,7 +695,7 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, Document *source, Docum
  *
  */
 static void
-sp_marker_list_from_doc (Gtk::Menu *m, Document */*current_doc*/, Document *source, Document */*markers_doc*/, Document *sandbox, gchar const *menu_id)
+sp_marker_list_from_doc (Gtk::Menu *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
 {
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
@@ -716,7 +716,7 @@ sp_marker_list_from_doc (Gtk::Menu *m, Document */*current_doc*/, Document *sour
 /**
  * Returns a new document containing default start, mid, and end markers.
  */
-Document *
+SPDocument *
 ink_markers_preview_doc ()
 {
 gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\" xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
@@ -749,9 +749,9 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
 }
 
 static void
-ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, Document *doc, Document *sandbox)
+ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, SPDocument *doc, SPDocument *sandbox)
 {
-    static Document *markers_doc = NULL;
+    static SPDocument *markers_doc = NULL;
 
     // add "None"
     Gtk::MenuItem *i = new Gtk::MenuItem();
@@ -804,10 +804,10 @@ ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, Document *doc, D
  * Creates a menu widget to display markers from markers.svg
  */
 static Gtk::OptionMenu *
-ink_marker_menu(Gtk::Widget */*tbl*/, gchar const *menu_id, Document *sandbox)
+ink_marker_menu(Gtk::Widget */*tbl*/, gchar const *menu_id, SPDocument *sandbox)
 {
     SPDesktop *desktop = inkscape_active_desktop();
-    Document *doc = sp_desktop_document(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     Gtk::OptionMenu *mnu = new Gtk::OptionMenu();
 
     /* Create new menu widget */
@@ -850,7 +850,7 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
     }
 
     SPDesktop *desktop = inkscape_active_desktop();
-    Document *document = sp_desktop_document(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
     if (!document) {
         return;
     }
@@ -930,8 +930,8 @@ ink_marker_menu_get_pos(Gtk::Menu *mnu, gchar const *markname)
 static void
 ink_markers_menu_update(Gtk::Container* /*spw*/, SPMarkerLoc const which) {
     SPDesktop  *desktop = inkscape_active_desktop();
-    Document *document = sp_desktop_document(desktop);
-    Document *sandbox = ink_markers_preview_doc ();
+    SPDocument *document = sp_desktop_document(desktop);
+    SPDocument *sandbox = ink_markers_preview_doc ();
     Gtk::Menu  *m;
     int        pos;
 
@@ -1225,7 +1225,7 @@ sp_stroke_style_line_widget_new(void)
     // TODO: this code can be shortened by iterating over the possible menus!
 
     // doing this here once, instead of for each preview, to speed things up
-    Document *sandbox = ink_markers_preview_doc ();
+    SPDocument *sandbox = ink_markers_preview_doc ();
 
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
@@ -1539,7 +1539,7 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
     Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Document *document = sp_desktop_document (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
@@ -1833,7 +1833,7 @@ sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
  * the caller should free the buffer when they no longer need it.
  */
 static SPObject*
-ink_extract_marker_name(gchar const *n, Document *doc)
+ink_extract_marker_name(gchar const *n, SPDocument *doc)
 {
     gchar const *p = n;
     while (*p != '\0' && *p != '#') {

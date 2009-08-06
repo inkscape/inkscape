@@ -56,7 +56,7 @@ static void sp_shape_class_init (SPShapeClass *klass);
 static void sp_shape_init (SPShape *shape);
 static void sp_shape_finalize (GObject *object);
 
-static void sp_shape_build (SPObject * object, Document * document, Inkscape::XML::Node * repr);
+static void sp_shape_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_shape_release (SPObject *object);
 
 static void sp_shape_set(SPObject *object, unsigned key, gchar const *value);
@@ -169,7 +169,7 @@ sp_shape_finalize (GObject *object)
  * \see sp_object_build()
  */
 static void
-sp_shape_build (SPObject *object, Document *document, Inkscape::XML::Node *repr)
+sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) (parent_class))->build) {
        (*((SPObjectClass *) (parent_class))->build) (object, document, repr);

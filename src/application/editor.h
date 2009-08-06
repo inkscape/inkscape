@@ -22,7 +22,7 @@
 #include "app-prototype.h"
 
 class SPDesktop;
-class Document;
+class SPDocument;
 class SPEventContext;
 
 namespace Inkscape {
@@ -52,7 +52,7 @@ public:
     void            refreshDisplay();
     void            exit();
 
-    bool        lastViewOfDocument(Document* doc, SPDesktop* view) const;
+    bool        lastViewOfDocument(SPDocument* doc, SPDesktop* view) const;
 
     bool        addView(SPDesktop* view);
     bool        deleteView(SPDesktop* view);
@@ -60,16 +60,16 @@ public:
     static Inkscape::XML::Document *getPreferences();
     static SPDesktop* getActiveDesktop();
     static bool isDesktopActive (SPDesktop* dt) { return getActiveDesktop()==dt; }
-    static SPDesktop* createDesktop (Document* doc);
+    static SPDesktop* createDesktop (SPDocument* doc);
     static void addDesktop (SPDesktop* dt);
     static void removeDesktop (SPDesktop* dt);
     static void activateDesktop (SPDesktop* dt);
     static void reactivateDesktop (SPDesktop* dt);
     static bool isDuplicatedView (SPDesktop* dt);
 
-    static Document* getActiveDocument();
-    static void addDocument (Document* doc);
-    static void removeDocument (Document* doc);
+    static SPDocument* getActiveDocument();
+    static void addDocument (SPDocument* doc);
+    static void removeDocument (SPDocument* doc);
 
     static void selectionModified (Inkscape::Selection*, guint);
     static void selectionChanged (Inkscape::Selection*);
@@ -96,7 +96,7 @@ protected:
     Editor(Editor const &);
     Editor& operator=(Editor const &);
 
-    std::multiset<Document *> _document_set;
+    std::multiset<SPDocument *> _document_set;
     GSList         *_documents;
     GSList         *_desktops;
     gchar          *_argv0;
