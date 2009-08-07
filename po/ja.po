@@ -13,18 +13,14 @@
 # Kenji Inoue <kenz@oct.zaq.ne.jp>, 2006-2007.
 # Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009.
 #
-# This file has been modified by Josef Vybiral <cwebb at sf.net> to remove
-# wrong plural forms causing fatal errors. 31.8.2006, SVN revision 12994
-# If you find any errors, please go back to revision 12993.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
-"PO-Revision-Date: 2009-07-31 16:40+0900\n"
+"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"PO-Revision-Date: 2009-08-08 02:05+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
-"Language-Team: Japanese <kenz@oct.zaq.ne.jp>\n"
+"Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,7 +67,8 @@ msgstr "パターンフィル"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219
 msgid "Bevels"
 msgstr "ベベル"
 
@@ -307,9 +304,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
-#, fuzzy
 msgid "Sharpen"
-msgstr "シェイプ"
+msgstr "シャープ"
 
 #: ../share/filters/filters.svg.h:23 ../share/filters/filters.svg.h:24
 #: ../share/filters/filters.svg.h:25 ../share/filters/filters.svg.h:26
@@ -820,9 +816,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
-#, fuzzy
 msgid "Colorize"
-msgstr "色"
+msgstr "カラー化"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
@@ -1059,9 +1054,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:36
-#, fuzzy
 msgid "Solarize"
-msgstr "サイズ"
+msgstr "露出過度"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
@@ -1302,7 +1296,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
-msgstr ""
+msgstr "エンボス"
 
 #: ../share/filters/filters.svg.h:124
 msgid ""
@@ -2069,6 +2063,25 @@ msgstr ""
 msgid "Transparent plastic with deep colors"
 msgstr ""
 
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "パターンフィル"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "パターンフィル"
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Glossy bevel with blurred edges"
+msgstr "星形の設定"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr "ストライプ 1:1"
@@ -2291,9 +2304,8 @@ msgid "Create 3D box"
 msgstr "タイルクローンを作成..."
 
 #: ../src/box3d.cpp:315
-#, fuzzy
 msgid "<b>3D Box</b>"
-msgstr "<b>境界線</b>"
+msgstr "<b>3D ボックス</b>"
 
 #: ../src/connector-context.cpp:526
 msgid "Creating new connector"
@@ -3675,9 +3687,9 @@ msgid "Height:"
 msgstr "高さ:"
 
 #: ../src/dialogs/object-attributes.cpp:106
-#, fuzzy, c-format
+#, c-format
 msgid "%s Properties"
-msgstr "リンクのプロパティ(_P)"
+msgstr "%s プロパティ"
 
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
@@ -4469,7 +4481,7 @@ msgstr "スタートアップ ダイアログを表示"
 #: ../src/extension/execution-env.cpp:134
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr ""
+msgstr "'%s' を実行中です。しばらくお待ちください..."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -4553,9 +4565,9 @@ msgid ""
 "did not return an error, but this may indicate the results will not be as "
 "expected."
 msgstr ""
-"Inkscapeは、実行されたスクリプトから追加データを受け取りました。スクリプトは"
-"エラーを返しませんでしたが、実行結果が意図しないものになっていることを示唆し"
-"ている可能性があります。"
+"Inkscapeは、実行したスクリプトから追加データを受け取りました。スクリプトはエ"
+"ラーを返しませんでしたが、実行結果が意図しないものになっていることを示唆して"
+"いる可能性があります。"
 
 #: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
@@ -4573,9 +4585,8 @@ msgstr ""
 "ルはロードされません。"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:38
-#, fuzzy
 msgid "Adaptive Threshold"
-msgstr "閾値"
+msgstr "適応しきい値"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:40
 #: ../src/extension/internal/bitmap/raise.cpp:41
@@ -4644,12 +4655,11 @@ msgstr "ラスター"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップに適応しきい値を適用します。"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
-#, fuzzy
 msgid "Add Noise"
-msgstr "ノードの追加"
+msgstr "ノイズの追加"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
 msgid "Type"
@@ -4657,19 +4667,19 @@ msgstr "タイプ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
 msgid "Uniform Noise"
-msgstr ""
+msgstr "均一ノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:48
 msgid "Gaussian Noise"
-msgstr ""
+msgstr "ガウスノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:49
 msgid "Multiplicative Gaussian Noise"
-msgstr ""
+msgstr "乗法ガウスノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:50
 msgid "Impulse Noise"
-msgstr ""
+msgstr "インパスルノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:51
 #, fuzzy
@@ -4678,11 +4688,11 @@ msgstr "グレースケール"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:52
 msgid "Poisson Noise"
-msgstr ""
+msgstr "ポアソンノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:59
 msgid "Add random noise to selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップにランダムなノイズを追加します。"
 
 #: ../src/extension/internal/bitmap/blur.cpp:37
 msgid "Blur"
@@ -4705,14 +4715,12 @@ msgstr "半径"
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:40
 #: ../src/extension/internal/bitmap/sharpen.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:43
-#, fuzzy
 msgid "Sigma"
-msgstr "小"
+msgstr "標準偏差"
 
 #: ../src/extension/internal/bitmap/blur.cpp:46
-#, fuzzy
 msgid "Blur selected bitmap(s)"
-msgstr "選択オブジェクトをグループ化"
+msgstr "選択したビットマップにぼかしをかけます。"
 
 #: ../src/extension/internal/bitmap/channel.cpp:47
 #: ../src/extension/internal/bitmap/levelChannel.cpp:53
@@ -4729,17 +4737,17 @@ msgstr "レイヤー"
 #: ../src/extension/internal/bitmap/channel.cpp:50
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
 msgid "Red Channel"
-msgstr ""
+msgstr "赤 チャンネル"
 
 #: ../src/extension/internal/bitmap/channel.cpp:51
 #: ../src/extension/internal/bitmap/levelChannel.cpp:55
 msgid "Green Channel"
-msgstr ""
+msgstr "緑 チャンネル"
 
 #: ../src/extension/internal/bitmap/channel.cpp:52
 #: ../src/extension/internal/bitmap/levelChannel.cpp:56
 msgid "Blue Channel"
-msgstr ""
+msgstr "青 チャンネル"
 
 #: ../src/extension/internal/bitmap/channel.cpp:53
 #: ../src/extension/internal/bitmap/levelChannel.cpp:57
@@ -4769,25 +4777,23 @@ msgstr "不透明度 チャンネル"
 #: ../src/extension/internal/bitmap/channel.cpp:58
 #: ../src/extension/internal/bitmap/levelChannel.cpp:62
 msgid "Matte Channel"
-msgstr ""
+msgstr "つや消しチャンネル"
 
 #: ../src/extension/internal/bitmap/channel.cpp:65
 msgid "Extract specific channel from image."
-msgstr ""
+msgstr "イメージから指定されたチャンネルを抽出します。"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:37
-#, fuzzy
 msgid "Charcoal"
-msgstr "Cairo"
+msgstr "木炭画"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:46
-#, fuzzy
 msgid "Apply charcoal stylization to selected bitmap(s)."
-msgstr "変形を選択オブジェクトに適用"
+msgstr "選択したビットマップに木炭画法を適用します。"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:57
 msgid "Colorize selected bitmap(s) with specified color, using given opacity."
-msgstr ""
+msgstr "指定された色や透明度で選択したビットマップをカラー化します。"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:39
 msgid "Contrast"
@@ -4799,62 +4805,57 @@ msgstr "調整"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr ""
+msgstr "ビットマップのコントラストを増減します。"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
-msgstr ""
+msgstr "カラーマップの循環"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:38
 #: ../src/extension/internal/bitmap/spread.cpp:38
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:44
-#, fuzzy
 msgid "Amount"
-msgstr "フォント"
+msgstr "量"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:44
 msgid "Cycle colormap(s) of selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップのカラーマップを循環させます。"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
-#, fuzzy
 msgid "Despeckle"
-msgstr "選択解除(_E)"
+msgstr "輪郭以外をぼかす"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:42
 msgid "Reduce speckle noise of selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップの斑点状ノイズを減少します。"
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
 msgstr "エッジ"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
-msgstr "選択中の画像のみを埋め込む"
+msgstr "選択したビットマップのエッジを強調します。"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
-msgstr ""
+msgstr "選択したビットマップをエンボス加工 (エッジを 3D 効果で強調) します。"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
-#, fuzzy
 msgid "Enhance"
-msgstr "キャンセル"
+msgstr "エンハンス"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s) -- minimize noise."
-msgstr ""
+msgstr "選択したビットマップをエンハンス (ノイズを最小化) します。"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
-#, fuzzy
 msgid "Equalize"
-msgstr "幅を統一"
+msgstr "イコライズ"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s) -- histogram equalization."
-msgstr ""
+msgstr "選択したビットマップをイコライズ (ヒストグラムイコライズ) します。"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
@@ -4864,43 +4865,37 @@ msgstr "ガウスぼかし"
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:39
 #: ../src/extension/internal/bitmap/implode.cpp:38
 #: ../src/extension/internal/bitmap/solarize.cpp:38
-#, fuzzy
 msgid "Factor"
-msgstr "単一色"
+msgstr "係数"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップにガウスぼかしをかけます。"
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
-#, fuzzy
 msgid "Implode"
-msgstr "インポート"
+msgstr "内破"
 
 #: ../src/extension/internal/bitmap/implode.cpp:44
-#, fuzzy
 msgid "Implode selected bitmap(s)."
-msgstr "選択を維持"
+msgstr "選択したビットマップを内破させます。"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
-msgstr ""
+msgstr "レベル (チャンネル)"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:64
 #: ../src/extension/internal/bitmap/level.cpp:42
-#, fuzzy
 msgid "Black Point"
-msgstr "黒"
+msgstr "黒色点"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:65
 #: ../src/extension/internal/bitmap/level.cpp:43
-#, fuzzy
 msgid "White Point"
-msgstr "角結合"
+msgstr "白色点"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
 #: ../src/extension/internal/bitmap/level.cpp:44
-#, fuzzy
 msgid "Gamma Correction"
 msgstr "ガンマ補正"
 
@@ -4909,6 +4904,8 @@ msgid ""
 "Level the specified channel of selected bitmap(s) by scaling values falling "
 "between the given ranges to the full color range."
 msgstr ""
+"選択したビットマップの指定されたチャンネルをフルカラーレンジから所定のレンジ"
+"の間で増減値によるレベルにします。"
 
 #: ../src/extension/internal/bitmap/level.cpp:40
 msgid "Level"
@@ -4919,22 +4916,22 @@ msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range."
 msgstr ""
+"選択したビットマップをフルカラーレンジから所定のレンジの間で増減値によるレベ"
+"ルにします。"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "中"
+msgstr "メディアン"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid ""
 "Replace each pixel component with the median color in a circular "
 "neighborhood."
-msgstr ""
+msgstr "各ピクセルの要素を指定半径内との中央値色で置き換えます。"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
-#, fuzzy
 msgid "HSB Adjust"
-msgstr "曲線をドラッグ"
+msgstr "HSB 調整"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
@@ -4956,86 +4953,83 @@ msgid "Saturation"
 msgstr "彩度"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#, fuzzy
 msgid "Brightness"
-msgstr "明るさ"
+msgstr "明度"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid ""
 "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
-msgstr ""
+msgstr "選択したビットマップの色相、彩度、および明度を調整します。"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
-#, fuzzy
 msgid "Negate"
 msgstr "ネガ"
 
 #: ../src/extension/internal/bitmap/negate.cpp:42
 msgid "Negate (take inverse) selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップの色を反転します。"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
-#, fuzzy
 msgid "Normalize"
-msgstr "標準"
+msgstr "正規化"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid ""
 "Normalize selected bitmap(s), expanding color range to the full possible "
 "range of color."
 msgstr ""
+"選択したビットマップを正規化し、カラーレンジを利用可能なフルレンジまで拡張し"
+"ます。"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
-#, fuzzy
 msgid "Oil Paint"
-msgstr "GNOME印刷"
+msgstr "油絵"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils."
-msgstr ""
+msgstr "選択したビットマップを油絵で描かれたようにします。"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:45
 msgid "Modify opacity channel(s) of selected bitmap(s)."
-msgstr ""
+msgstr "選択したビットマップの不透明度チャンネルを変更します。"
 
 #: ../src/extension/internal/bitmap/raise.cpp:39
 msgid "Raise"
-msgstr "前面へ"
+msgstr "隆起"
 
 #: ../src/extension/internal/bitmap/raise.cpp:43
-#, fuzzy
 msgid "Raised"
-msgstr "前面へ"
+msgstr "隆起する"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid ""
 "Alter lightness the edges of selected bitmap(s) to create a raised "
 "appearance."
-msgstr ""
+msgstr "選択したビットマップのエッジの明度を変更し、隆起したように見せます。"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
-msgstr ""
+msgstr "ノイズの低減"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
 #: ../share/extensions/lindenmayer.inx.h:26
 msgid "Order"
-msgstr "次数"
+msgstr "回数"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid ""
 "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
 msgstr ""
+"選択したビットマップのノイズをノイズピーク除去フィルタを使用して低減します。"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Resample"
-msgstr "サンプル数"
+msgstr "リサンプル"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
 msgid ""
 "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr ""
+msgstr "選択したイメージの解像度を指定されたピクセルのサイズで変更します。"
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -5044,64 +5038,60 @@ msgstr "シェード"
 #: ../src/extension/internal/bitmap/shade.cpp:41
 #: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Azimuth"
-msgstr ""
+msgstr "方位角"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
 #: ../src/ui/dialog/filter-effects-dialog.cpp:956
-#, fuzzy
 msgid "Elevation"
-msgstr "関連"
+msgstr "仰角"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
-#, fuzzy
 msgid "Colored Shading"
-msgstr "影の色"
+msgstr "カラーシェーディング"
 
 #: ../src/extension/internal/bitmap/shade.cpp:49
 msgid "Shade selected bitmap(s) simulating distant light source."
-msgstr ""
+msgstr "光源をシミュレートして、選択されたビットマップにシェードをかけます。"
 
 #: ../src/extension/internal/bitmap/sharpen.cpp:46
-#, fuzzy
 msgid "Sharpen selected bitmap(s)."
-msgstr "選択オブジェクトをグループ化"
+msgstr "選択したビットマップをシャープ化します。"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:44
 msgid "Solarize selected bitmap(s), like overexposing photographic film."
-msgstr ""
+msgstr "選択したビットマップに写真用フィルムの露出過度のような効果をつけます。"
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Dither"
-msgstr "日付"
+msgstr "ディザ"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
 msgstr ""
+"選択したビットマップのピクセルをオリジナルの位置から所定の半径内でランダムに"
+"散らします。"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
-#, fuzzy
 msgid "Swirl"
-msgstr "螺旋"
+msgstr "渦"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:38
 #: ../share/extensions/grid_polar.inx.h:7
-#, fuzzy
 msgid "Degrees"
-msgstr "度"
+msgstr "角度"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:44
 msgid "Swirl selected bitmap(s) around center point."
-msgstr ""
+msgstr "選択したビットマップを中心点から渦巻き状に回転します。"
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:37
 #: ../src/extension/internal/bitmap/threshold.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
 msgid "Threshold"
-msgstr "閾値"
+msgstr "しきい値"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
 #, fuzzy
@@ -5115,24 +5105,23 @@ msgstr "アンシャープマスク"
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
 msgstr ""
+"選択したビットマップをアンシャープマスクアルゴリズムでシャープにします。"
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
-#, fuzzy
 msgid "Wave"
-msgstr "保存(_S)"
+msgstr "波"
 
 #: ../src/extension/internal/bitmap/wave.cpp:39
 msgid "Amplitude"
-msgstr ""
+msgstr "振幅"
 
 #: ../src/extension/internal/bitmap/wave.cpp:40
-#, fuzzy
 msgid "Wavelength"
-msgstr "スケールの長さ"
+msgstr "波長"
 
 #: ../src/extension/internal/bitmap/wave.cpp:46
 msgid "Alter selected bitmap(s) along sine wave."
-msgstr ""
+msgstr "選択したビットマップを正弦波に沿って変形します。"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
@@ -5148,7 +5137,7 @@ msgstr "ステップ数"
 
 #: ../src/extension/internal/bluredge.cpp:137
 msgid "Number of inset/outset copies of the object to make"
-msgstr "作成するためのオブジェクトのインセット/アウトセットコピー数"
+msgstr "作成するオブジェクトのインセット/アウトセットコピー数"
 
 #: ../src/extension/internal/bluredge.cpp:141
 #: ../share/extensions/extrude.inx.h:2 ../share/extensions/interp.inx.h:3
@@ -5723,7 +5712,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "要求されたファイル %s を開くのに失敗しました"
@@ -5786,54 +5775,62 @@ msgstr "ファイル %s を保存できませんでした。"
 msgid "Document saved."
 msgstr "ドキュメントを保存しました。"
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "描画%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "描画-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "コピーを保存するファイルを選択"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "保存するファイルを選択"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "保存が必要な変更がされていません。"
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "ドキュメントを保存しています..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "インポート"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "インポートするファイルを選択"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "エクスポート先のファイルを選択"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "作業コピーの保存でエラーです"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art ログイン"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5841,12 +5838,12 @@ msgid ""
 "didn't forget to choose a license."
 msgstr ""
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 #, fuzzy
 msgid "Document exported..."
 msgstr "ドキュメントを復帰しました。"
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Open Clip Art Library からインポート"
 
@@ -5993,7 +5990,7 @@ msgstr "色フェーズを追加"
 
 #: ../src/filter-enums.cpp:77
 msgid "XOR"
-msgstr ""
+msgstr "XOR"
 
 #: ../src/filter-enums.cpp:78
 msgid "Arithmetic"
@@ -6021,7 +6018,7 @@ msgstr "直線"
 
 #: ../src/filter-enums.cpp:88
 msgid "Gamma"
-msgstr ""
+msgstr "ガンマ"
 
 #: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:316
 #: ../src/widgets/gradient-selector.cpp:139
@@ -6070,7 +6067,7 @@ msgstr "青"
 
 #: ../src/filter-enums.cpp:105 ../src/flood-context.cpp:253
 msgid "Alpha"
-msgstr ""
+msgstr "アルファ"
 
 #: ../src/filter-enums.cpp:111
 #, fuzzy
@@ -6540,6 +6537,8 @@ msgstr "ドキュメントを保存"
 #: ../src/inkscape.cpp:399
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
+"自動保存に失敗しました! 保存するドキュメントに Inkscape エクステンションが見"
+"つかりませんでした。"
 
 #: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
 #, fuzzy, c-format
@@ -6550,22 +6549,22 @@ msgstr "ファイル %s を保存できませんでした。"
 msgid "Autosave complete."
 msgstr "自動保存完了。"
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "無題ドキュメント"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape で内部エラーが発生しました。直ちに終了します。\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "未保存ドキュメントの自動バックアップを次の場所に行いました:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "次のドキュメントの自動バックアップに失敗しました:\n"
 
@@ -6674,14 +6673,13 @@ msgstr ""
 
 #: ../src/interface.cpp:1594 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
-#, fuzzy
 msgid "Replace"
-msgstr "解除(_R)"
+msgstr "置換"
 
 #: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
 #, c-format
 msgid "Failed to read from child pipe (%s)"
-msgstr ""
+msgstr "子プロセスとのパイプからの読み込みに失敗しました (%s)"
 
 #: ../src/io/sys.cpp:444
 #, fuzzy, c-format
@@ -6703,17 +6701,17 @@ msgstr "不正なプログラム名: %s"
 #: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
-msgstr ""
+msgstr "%d の属性ベクターに不正な文字列です: %s"
 
 #: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
 #, c-format
 msgid "Invalid string in environment: %s"
-msgstr ""
+msgstr "環境内に不正な文字列です: %s"
 
 #: ../src/io/sys.cpp:705
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr ""
+msgstr "子プロセスとの通信のためのパイプの生成に失敗しました (%s)"
 
 #: ../src/io/sys.cpp:918
 #, fuzzy, c-format
@@ -6725,7 +6723,7 @@ msgstr ""
 #: ../src/io/sys.cpp:986
 #, c-format
 msgid "Failed to execute helper program (%s)"
-msgstr ""
+msgstr "ヘルパープログラムの実行に失敗しました (%s)"
 
 #: ../src/knot.cpp:431
 msgid "Node or handle drag canceled."
@@ -6884,6 +6882,8 @@ msgid ""
 "You can't add a dock object (%p of type %s) inside a %s. Use a GdlDock or "
 "some other compound dock object."
 msgstr ""
+"%3$s 内に ドックオブジェクト (%2$s タイプの %1$p) を追加できません。GdiDock "
+"または他の複合ドックオブジェクトを使用してください。"
 
 #: ../src/libgdl/gdl-dock-item.c:623
 #, c-format
@@ -6891,11 +6891,16 @@ msgid ""
 "Attempting to add a widget with type %s to a %s, but it can only contain one "
 "widget at a time; it already contains a widget of type %s"
 msgstr ""
+"%s タイプのウィジェットを %s に追加しようとしましたが、これは同時に一つのウィ"
+"ジェットにのみ含めるとこができます。これはすでに %s タイプのウィジェットに含"
+"まれています。"
 
 #: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
 #, c-format
 msgid "Unsupported docking strategy %s in dock object of type %s"
 msgstr ""
+"%2$s タイプのドックオブジェクトはドッキングストラテジ %1$s をサポートしていま"
+"せん"
 
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
@@ -6979,6 +6984,8 @@ msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
 msgstr ""
+"マスター %p: オブジェクト %p[%s] をハッシュに追加できません。すでに %p という"
+"名前のアイテムが存在します。"
 
 #: ../src/libgdl/gdl-dock-master.c:969
 #, c-format
@@ -6986,11 +6993,13 @@ msgid ""
 "The new dock controller %p is automatic.  Only manual dock objects should be "
 "named controller."
 msgstr ""
+"新規ドックコントローラ %p は自動です。名前付きコントローラはマニュアルオブ"
+"ジェクトでなければなりません。"
 
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "ページ"
@@ -7257,9 +7266,8 @@ msgid "Gears"
 msgstr "歯車"
 
 #: ../src/live_effects/effect.cpp:109
-#, fuzzy
 msgid "Pattern Along Path"
-msgstr "パターンをパスに沿わせる"
+msgstr "パスに沿うパターン"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:110
@@ -7288,9 +7296,8 @@ msgid "Envelope Deformation"
 msgstr "エンベロープ変形"
 
 #: ../src/live_effects/effect.cpp:117
-#, fuzzy
 msgid "Interpolate Sub-Paths"
-msgstr "補間"
+msgstr "サブパスの補間"
 
 #: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
@@ -7339,9 +7346,8 @@ msgid "Bend path"
 msgstr "ベンドパス"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Path along which to bend the original path"
-msgstr "オリジナルのパスにリンクするダイナミックオフセットオブジェクトを作成"
+msgstr "オリジナルのパスを曲げるパス"
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
@@ -7463,7 +7469,7 @@ msgstr "上ベンドパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top path along which to bend the original path"
-msgstr "オリジナルのパスを曲げる上側のパスです"
+msgstr "オリジナルのパスを曲げる上側のパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right bend path"
@@ -7471,7 +7477,7 @@ msgstr "右ベンドパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right path along which to bend the original path"
-msgstr "オリジナルのパスを曲げる右側のパスです"
+msgstr "オリジナルのパスを曲げる右側のパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom bend path"
@@ -7479,7 +7485,7 @@ msgstr "下ベンドパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom path along which to bend the original path"
-msgstr "オリジナルのパスを曲げる下側のパスです"
+msgstr "オリジナルのパスを曲げる下側のパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left bend path"
@@ -7487,7 +7493,7 @@ msgstr "左ベンドパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left path along which to bend the original path"
-msgstr "オリジナルのパスを曲げる左側のパスです"
+msgstr "オリジナルのパスを曲げる左側のパス"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
@@ -7503,7 +7509,7 @@ msgstr "上下のパスを有効にする"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable the top and bottom deformation paths"
-msgstr "上下の変形パスを有効にする"
+msgstr "上下の変形パスを有効にします"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -7524,14 +7530,12 @@ msgid ""
 msgstr "歯の圧力角 (通常は 20-25°)。歯の接触しない部分の割合です。"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Trajectory"
-msgstr "単一色"
+msgstr "軌道"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "オリジナルのパスにリンクするダイナミックオフセットオブジェクトを作成"
+msgstr "中間のサブパスが生成される軌道のパス"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
@@ -7540,12 +7544,11 @@ msgstr "変化の間隔"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "始点から終点までのステップ数を指定してください。"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "行送り:"
+msgstr "等距離間隔"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid ""
@@ -7553,6 +7556,8 @@ msgid ""
 "the path. If false, the distance depends on the location of the nodes of the "
 "trajectory path."
 msgstr ""
+"有効にすると、中間のサブパスの間隔は軌道パスの長さの中で一定になります。無効"
+"にすると、距離は軌道パスのノードの場所に依存します。"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
@@ -7612,58 +7617,51 @@ msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
-#, fuzzy
 msgid "Single"
-msgstr "角度"
+msgstr "単独"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Single, stretched"
-msgstr ""
+msgstr "単独、繰り返し"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:54
 #: ../share/extensions/pathalongpath.inx.h:8
-#, fuzzy
 msgid "Repeated"
-msgstr "繰り返し:"
+msgstr "繰り返し"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:55
 #: ../share/extensions/pathalongpath.inx.h:9
 msgid "Repeated, stretched"
-msgstr ""
+msgstr "繰り返し、引き伸ばし"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
-#, fuzzy
 msgid "Pattern source"
-msgstr "パターンストローク"
+msgstr "パターンソース"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Path to put along the skeleton path"
-msgstr ""
+msgstr "スケルトンパスに沿って置くパス"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-#, fuzzy
 msgid "Pattern copies"
-msgstr "パターン"
+msgstr "パターンのコピー"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
-msgstr ""
+msgstr "スケルトンパスに沿ってパターンコピーをどれくらい置くか"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
-#, fuzzy
 msgid "Width of the pattern"
-msgstr "用紙の幅"
+msgstr "パターンの幅"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
-#, fuzzy
 msgid "Scale the width of the pattern in units of its length"
-msgstr "角結合の限界長さ (ストローク幅を基準として)"
+msgstr "パターンの幅を長さの単位で拡縮します"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
-#, fuzzy
 msgid "Spacing"
-msgstr "間隔:"
+msgstr "間隔"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
@@ -7671,50 +7669,48 @@ msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
 "limited to -90% of pattern width."
 msgstr ""
+"パターンのコピー間の間隔。マイナス値も設定できますが、パターンの幅の 90% まで"
+"に制限されます。"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:7
-#, fuzzy
 msgid "Normal offset"
-msgstr "水平オフセット"
+msgstr "通常オフセット"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:73
 #: ../share/extensions/pathalongpath.inx.h:15
 #: ../share/extensions/pathscatter.inx.h:13
-#, fuzzy
 msgid "Tangential offset"
-msgstr "垂直オフセット"
+msgstr "接線オフセット"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "オブジェクトをパターンに"
+msgstr "パターンサイズを単位にオフセットする"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
-msgstr ""
+msgstr "間隔、接線、および通常オフセットを縦横比として表現します。"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
 #: ../share/extensions/pathscatter.inx.h:9
-#, fuzzy
 msgid "Pattern is vertical"
-msgstr "パターンのオフセット"
+msgstr "パターンを縦にする"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Rotate pattern 90 deg before applying"
-msgstr ""
+msgstr "適用前にパターンを 90°回転させます。"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "近接する終点の結合"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "この数値より近い終点を結合します。0 にすると結合しません。"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -8283,8 +8279,9 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "エクスポート領域を SVG ユーザ単位で指定 (既定値はキャンバス全体、0,0 は左下"
@@ -8295,11 +8292,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "エクスポート領域は (キャンバスでなく) 描画全体"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "エクスポート領域はキャンバス全体"
 
 #: ../src/main.cpp:314
@@ -9281,7 +9280,7 @@ msgstr "識別子"
 msgid "Unique URI to reference this document."
 msgstr "このドキュメントを参照する一意的な URI"
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "ソース"
 
@@ -9735,7 +9734,7 @@ msgid ""
 "flowed text?)"
 msgstr ""
 "選択すべきオブジェクトが<b>見つかりませんでした</b> (オリジナルのないクロー"
-"ン、オフセット、パス上のテキスト、流し込みテキストではありませんか?)"
+"ン、オフセット、パス上テキスト、流し込みテキストではありませんか?)"
 
 #: ../src/selection-chemistry.cpp:2078
 msgid ""
@@ -11503,12 +11502,12 @@ msgid "Smallest object"
 msgstr "テキストオブジェクトを検索"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
-msgstr "選択"
+msgstr "選択範囲"
 
 #. TRANSLATORS: calligraphic pen type
 #: ../src/ui/dialog/calligraphic-presets.h:3
@@ -11518,15 +11517,13 @@ msgstr "スクリプト"
 
 #. TRANSLATORS: calligraphic pen type
 #: ../src/ui/dialog/calligraphic-presets.h:5
-#, fuzzy
 msgid "Marker"
-msgstr "暗く"
+msgstr "マーカー"
 
 #. TRANSLATORS: calligraphic pen type
 #: ../src/ui/dialog/calligraphic-presets.h:7
-#, fuzzy
 msgid "Brush"
-msgstr "青"
+msgstr "ブラシ"
 
 #. TRANSLATORS: calligraphic pen type
 #: ../src/ui/dialog/calligraphic-presets.h:9
@@ -11541,9 +11538,8 @@ msgstr ""
 
 #. TRANSLATORS: calligraphic pen type
 #: ../src/ui/dialog/calligraphic-presets.h:13
-#, fuzzy
 msgid "Tracing"
-msgstr "間隔:"
+msgstr "トレーシング"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -11968,55 +11964,55 @@ msgstr "全てのビットマップ画像"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "ファイル拡張子を自動的につける"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 #, fuzzy
 msgid "Guess from extension"
 msgstr "選択オブジェクトから取り込み"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 #, fuzzy
 msgid "Right edge of source"
 msgstr "ソース"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 #, fuzzy
 msgid "Source width"
 msgstr "線の幅"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 #, fuzzy
 msgid "Source height"
 msgstr "高さ:"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 #, fuzzy
 msgid "Destination width"
 msgstr "印刷先"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 #, fuzzy
 msgid "Destination height"
 msgstr "印刷先"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 #, fuzzy
 msgid "Resolution (dots per inch)"
 msgstr "ビットマップ解像度 (インチあたりのドット数)"
@@ -12025,28 +12021,28 @@ msgstr "ビットマップ解像度 (インチあたりのドット数)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "ドキュメント"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "カスタム"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "アンチエイリアス"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "背景"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 #, fuzzy
 msgid "Destination"
 msgstr "印刷先"
@@ -12098,11 +12094,11 @@ msgstr "1つの画像と、その上の1つ以上のシェイプを選択して�
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
-msgstr ""
+msgstr "この SVG フィルタエフェクトにパラメータは必要ありません。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:746
 msgid "This SVG filter effect is not yet implemented in Inkscape."
-msgstr ""
+msgstr "この SVG フィルタエフェクトはまだ Inkscape に実装されていません。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:938
 #, fuzzy
@@ -12128,23 +12124,20 @@ msgstr "場所"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#, fuzzy
 msgid "X coordinate"
-msgstr "カーソル座標"
+msgstr "X 座標"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#, fuzzy
 msgid "Y coordinate"
-msgstr "カーソル座標"
+msgstr "Y 座標"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
-#, fuzzy
 msgid "Z coordinate"
-msgstr "カーソル座標"
+msgstr "Z 座標"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 #, fuzzy
@@ -12175,7 +12168,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
-msgstr ""
+msgstr "新規光源"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1070
 msgid "_Duplicate"
@@ -12294,9 +12287,8 @@ msgstr "値:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2223
-#, fuzzy
 msgid "Operator:"
-msgstr "作成者"
+msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K1:"
@@ -13976,7 +13968,7 @@ msgstr "デバイスのレンダリングインテント:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:886
 msgid "Black point compensation"
-msgstr "黒点を補償する"
+msgstr "黒点補償"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Enables black point compensation."
@@ -14633,8 +14625,8 @@ msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
-"第２のスペルチェック言語を指定してください。チェックは選択された全ての言語で"
-"不明な単語のみ停止します。"
+"第2のスペルチェック言語を指定してください。チェックは選択された全ての言語で不"
+"明な単語のみ停止します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
 msgid "Third language:"
@@ -14700,10 +14692,11 @@ msgid "Simplification threshold:"
 msgstr "パスの簡略化のしきい値:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#, fuzzy
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 "簡略化コマンドがデフォルトでどれだけ強く働くか。このコマンドは素早く複数回実"
 "行されると、徐々に強く働きます。休止をおいて再び実行されると、デフォルトのし"
@@ -14860,7 +14853,7 @@ msgstr "新規"
 
 #: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
 msgid "Top"
-msgstr ""
+msgstr "上"
 
 #: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
@@ -14894,7 +14887,7 @@ msgstr "エフェクトリスト"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:269
 msgid "Unknown effect is applied"
-msgstr ""
+msgstr "未知のエフェクトが適用されました"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:272
 msgid "No effect applied"
@@ -14902,7 +14895,7 @@ msgstr "適用されているエフェクトはありません"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:276
 msgid "Item is not a path or shape"
-msgstr ""
+msgstr "アイテムはパスまたはシェイプではありません"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:280
 msgid "Only one item can be selected"
@@ -14997,7 +14990,7 @@ msgstr "パスワード:"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:404
 msgid "Error while reading the Open Clip Art RSS feed"
-msgstr ""
+msgstr "Open Clip Art RSS フィードの読み込み中にエラーです"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:443
 msgid ""
@@ -15016,7 +15009,7 @@ msgstr "グループを検索"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:549
 msgid "No files matched your search"
-msgstr ""
+msgstr "検索条件にマッチするファイルがありません"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:560
 msgid "Search"
@@ -15028,7 +15021,7 @@ msgstr ""
 
 #: ../src/ui/dialog/print.cpp:92
 msgid "Could not open temporary PNG for bitmap printing"
-msgstr ""
+msgstr "ビットマップ印刷用の一時 PNG を開けませんでした"
 
 #: ../src/ui/dialog/print.cpp:117
 #, fuzzy
@@ -15037,7 +15030,7 @@ msgstr "%s にエクスポートできませんでした。\n"
 
 #: ../src/ui/dialog/print.cpp:121
 msgid "Failed to set CairoRenderContext"
-msgstr ""
+msgstr "CairoRenderContext のセットに失敗しました"
 
 #. set up dialog title, based on document name
 #: ../src/ui/dialog/print.cpp:161
@@ -15119,7 +15112,7 @@ msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
-msgstr ""
+msgstr "SVG フォントダイアログでグリフが選択されていません。"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
@@ -15174,7 +15167,7 @@ msgstr "マッチング文字列"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
-msgstr "グリフの追加"
+msgstr "グリフを追加"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 msgid "Get curves from selection..."
@@ -15793,7 +15786,7 @@ msgstr "変形行列を編集"
 #: ../src/ui/view/edit-widget.cpp:761 ../src/ui/view/edit-widget.cpp:867
 #: ../src/ui/view/edit-widget.cpp:871 ../src/ui/view/edit-widget.cpp:992
 msgid "PLACEHOLDER, do not translate"
-msgstr ""
+msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
@@ -16195,11 +16188,11 @@ msgstr "<b>平</b>"
 
 #: ../src/ui/widget/selected-style.cpp:208
 msgid "Fill is averaged over selected objects"
-msgstr "フィルは、選択された複数のオブジェクトでの平均です"
+msgstr "フィルは選択された複数のオブジェクトでの平均です"
 
 #: ../src/ui/widget/selected-style.cpp:208
 msgid "Stroke is averaged over selected objects"
-msgstr "ストロークは、選択された複数のオブジェクトでの平均です"
+msgstr "ストロークは選択された複数のオブジェクトでの平均です"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:211
@@ -17937,7 +17930,7 @@ msgstr "このドキュメントウインドウを画面全体に引き伸ばす
 
 #: ../src/verbs.cpp:2602
 msgid "Toggle _Focus Mode"
-msgstr ""
+msgstr "フォーカスモードの切り換え(_F)"
 
 #: ../src/verbs.cpp:2602
 msgid "Remove excess toolbars to focus on drawing"
@@ -18123,7 +18116,7 @@ msgstr "ドキュメントからオブジェクトを検索"
 
 #: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
-msgstr ""
+msgstr "文字列の検索と置換(_R)..."
 
 #: ../src/verbs.cpp:2657
 #, fuzzy
@@ -18392,9 +18385,8 @@ msgid "Link an ICC color profile"
 msgstr ""
 
 #: ../src/verbs.cpp:2741
-#, fuzzy
 msgid "Remove Color Profile"
-msgstr "フィルを削除"
+msgstr "カラープロファイルを削除"
 
 #: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
@@ -19193,7 +19185,7 @@ msgstr "カリグラフィ線を描く"
 
 #: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
 msgid "TBD"
-msgstr ""
+msgstr "未定"
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -20070,9 +20062,8 @@ msgid "Move objects towards cursor; with Shift from cursor"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4173
-#, fuzzy
 msgid "Move jitter mode"
-msgstr "ノードをジッタリング"
+msgstr "ノードのジッタリング"
 
 #: ../src/widgets/toolbox.cpp:4174
 msgid "Move objects in random directions"
@@ -20256,9 +20247,8 @@ msgid "No preset"
 msgstr "プレビュー"
 
 #: ../src/widgets/toolbox.cpp:4561
-#, fuzzy
 msgid "Save..."
-msgstr "名前を付けて保存(_A)..."
+msgstr "保存..."
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4712 ../src/widgets/toolbox.cpp:5731
@@ -20803,7 +20793,7 @@ msgstr "レイアウト適用時のコネクタの理想長さ"
 
 #: ../src/widgets/toolbox.cpp:7028
 msgid "Downwards"
-msgstr ""
+msgstr "ダウンロード"
 
 #: ../src/widgets/toolbox.cpp:7029
 msgid "Make connectors with end-markers (arrows) point downwards"
@@ -20868,7 +20858,7 @@ msgstr ""
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
-msgstr ""
+msgstr "このオブジェクトを処理できません。 まずパスに変更してみてください。"
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
@@ -20911,17 +20901,22 @@ msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
 msgstr ""
+"numpy または numpy.linalg モジュールのインポートに失敗しました。このエクステ"
+"ンションにはこれらのモジュールが必要です。インストール後に試してみてくださ"
+"い。"
 
 #: ../share/extensions/embedimage.py:74
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
 msgstr ""
+"xlink:href または sodipodi:absref 属性が見つからないか、既存のファイルを指し"
+"示していません! イメージを埋め込めません。"
 
 #: ../share/extensions/embedimage.py:76
 #, python-format
 msgid "Sorry we could not locate %s"
-msgstr ""
+msgstr "ごめんなさい、%s には配置できません"
 
 #: ../share/extensions/embedimage.py:101
 #, python-format
@@ -20929,12 +20924,16 @@ msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
 "or image/x-icon"
 msgstr ""
+"%s はタイプが image/png、image/jpeg、image/bmp、image/gif、image/tiff、また"
+"は image/x-icon ではありません"
 
 #: ../share/extensions/export_gimp_palette.py:14
 msgid ""
 "The export_gpl.py module requires PyXML.  Please download the latest version "
 "from http://pyxml.sourceforge.net/."
 msgstr ""
+"export_gpl.py モジュールには PyXML が必要です。http://pyxml.sourceforge.net/ "
+"から最新のバージョンをダウンロードしてください。"
 
 #: ../share/extensions/extractimage.py:66
 msgid "Difficulty finding the image data."
@@ -20947,34 +20946,37 @@ msgid ""
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
+"このエクステンションを実行するには、libxml2 用のステキな lxml ラッパーが必要"
+"です。http://cheeseshop.python.org/pypi/lxml/ から最新版をダウンローおよびイ"
+"ンストールするか、パッケージマネージャでインストール (Debian 系ならば apt-"
+"get install python-lxml) してください。"
 
 #: ../share/extensions/inkex.py:213
 #, python-format
 msgid "No matching node for expression: %s"
-msgstr ""
+msgstr "式にマッチするノードがありません: %s"
 
 #: ../share/extensions/markers_strokepaint.py:41
 #, python-format
 msgid "No style attribute found for id: %s"
-msgstr ""
+msgstr "id %s のスタイル属性が見つかりませんでした"
 
 #: ../share/extensions/markers_strokepaint.py:56
 #, python-format
 msgid "unable to locate marker: %s"
-msgstr ""
+msgstr "マーカーを置けません: %s"
 
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
 #: ../share/extensions/summersnight.py:36
-#, fuzzy
 msgid "This extension requires two selected paths."
-msgstr "選択パスを結合したパスを作成"
+msgstr "このエクステンションは 2 つのパスを選択する必要があります。"
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr ""
+msgstr "最初にオブジェクトをパスへ変換してください! (%s)"
 
 #: ../share/extensions/perspective.py:29
 msgid ""
@@ -20991,12 +20993,16 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"最初に選択したオブジェクトのタイプは '%s' です。\n"
+"「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
+"このエクステンションは2番目に選択したパスは4ノードの長さでなければなりませ"
+"ん。"
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
@@ -21004,6 +21010,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
+"2番目に選択されたオブジェクトはグループで、パスではありません。\n"
+"「オブジェクト」メニューの「グループ解除」を試してみてください。"
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
@@ -21011,6 +21019,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"2番目に選択されたオブジェクトはパスではありません。\n"
+"「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
@@ -21018,6 +21028,8 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"最初に選択されたオブジェクトはパスではありません。\n"
+"「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid ""
@@ -21028,7 +21040,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
-msgstr ""
+msgstr "指定されたファイルにフェイスデータがありませんでした。"
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
@@ -21036,7 +21048,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
-msgstr ""
+msgstr "指定されたファイルにエッジデータが見つかりませんでした。"
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
@@ -21051,11 +21063,11 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "内部エラーです。表示タイプが選択されていません\n"
 
 #: ../share/extensions/summersnight.py:38
 msgid "The second path must be exactly four nodes long."
-msgstr ""
+msgstr "2 番目のパスは4ノードの長さがなければなりません。"
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, fuzzy, python-format
@@ -21065,31 +21077,27 @@ msgstr "%s にエクスポートできませんでした。\n"
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
 msgid "You must select at least two elements."
-msgstr ""
+msgstr "少なくとも 2 個の要素を選択してください。"
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "ノードの追加"
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "By max. segment length"
-msgstr "最大セグメント長"
+msgstr "最大セグメント長による"
 
 #: ../share/extensions/addnodes.inx.h:3
-#, fuzzy
 msgid "By number of segments"
-msgstr "ステップ数"
+msgstr "セグメント数による"
 
 #: ../share/extensions/addnodes.inx.h:4
-#, fuzzy
 msgid "Division method"
-msgstr "分離"
+msgstr "除算法"
 
 #: ../share/extensions/addnodes.inx.h:5
-#, fuzzy
 msgid "Maximum segment length (px)"
-msgstr "最大セグメント長"
+msgstr "最大セグメント長 (px)"
 
 #: ../share/extensions/addnodes.inx.h:6
 #: ../share/extensions/convert2dashes.inx.h:2
@@ -21164,12 +21172,11 @@ msgstr "Corel DRAW 7-X4 ファイル (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "Corel DRAW 入力"
 
 #: ../share/extensions/cdr_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "XFIGで保存されたファイルを開く"
+msgstr "Corel DRAW 7-X4 で保存されたファイルを開きます"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
@@ -21177,12 +21184,11 @@ msgstr "Corel DRAW 7-13 テンプレートファイル (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr ""
+msgstr "Corel DRAW テンプレート入力"
 
 #: ../share/extensions/cdt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "XFIGで保存されたファイルを開く"
+msgstr "Corel DRAW 7-13 で保存されたファイルを開きます"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
@@ -21190,11 +21196,11 @@ msgstr "Computer Graphics Metafile ファイル (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr ""
+msgstr "Computer Graphics Metafile ファイル入力"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr ""
+msgstr "Open Computer Graphics Metafile ファイル"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
@@ -21202,7 +21208,7 @@ msgstr "Corel DRAW Presentation Exchange ファイル (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "Corel DRAW Presentation Exchange ファイル入力"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
@@ -21278,7 +21284,7 @@ msgstr "赤色成分を除去"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
-msgstr ""
+msgstr "置換後の色 (RRGGBB hex):"
 
 #: ../share/extensions/color_replace.inx.h:3
 msgid "Replace color"
@@ -21286,16 +21292,15 @@ msgstr "色の置換"
 
 #: ../share/extensions/color_replace.inx.h:4
 msgid "Replace color (RRGGBB hex):"
-msgstr ""
+msgstr "現在の色 (RRGGBB hex):"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "RGB 値の回転"
 
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "テキストに変換(_C)"
+msgstr "破線に変換"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21329,14 +21334,13 @@ msgstr ""
 "何か問題がある可能性があります。"
 
 #: ../share/extensions/dimension.inx.h:1
-#, fuzzy
 msgid "Dimensions"
-msgstr "分離"
+msgstr "寸法線"
 
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
-msgstr "パスを可視化"
+msgstr "パスの可視化"
 
 #: ../share/extensions/dimension.inx.h:3
 msgid "X Offset"
@@ -21348,7 +21352,7 @@ msgstr "Y オフセット"
 
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
-msgstr "ドットのサイズ"
+msgstr "ドットサイズ"
 
 #: ../share/extensions/dots.inx.h:2
 msgid "Font size"
@@ -21359,165 +21363,140 @@ msgid "Number Nodes"
 msgstr "ノードの番号付け"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
-#, fuzzy
 msgid "Altitudes"
-msgstr "ノードを配置"
+msgstr "高さ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
-#, fuzzy
 msgid "Angle Bisectors"
-msgstr "分離"
+msgstr "角の二等分線"
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
-#, fuzzy
 msgid "Centroid"
-msgstr "中央揃え"
+msgstr "重心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "ドキュメント"
+msgstr "外心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
-#, fuzzy
 msgid "Circumcircle"
-msgstr "円"
+msgstr "外接円"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
-#, fuzzy
 msgid "Common Objects"
-msgstr "オブジェクトを表示"
+msgstr "共通オブジェクト"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "角度"
+msgstr "三角形と接触"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
-msgstr ""
+msgstr "カスタムポイントの指定:"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
-#, fuzzy
 msgid "Custom Points and Options"
-msgstr "コマンドライン引数について (英語)"
+msgstr "カスタムポイントとオプション"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle About This Point"
-msgstr ""
+msgstr "このポイントで円を描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
-#, fuzzy
 msgid "Draw From Triangle"
-msgstr "角度"
+msgstr "三角形から描画"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
-msgstr ""
+msgstr "等角共役で描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
-msgstr ""
+msgstr "アイソトミック共役で描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
-msgstr ""
+msgstr "このポイントでマーカーを描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
-#, fuzzy
 msgid "Excentral Triangle"
-msgstr "角度"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
-#, fuzzy
 msgid "Excentres"
-msgstr "押し出し"
+msgstr "傍心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
-#, fuzzy
 msgid "Excircles"
-msgstr "円"
+msgstr "傍接円"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
-#, fuzzy
 msgid "Extouch Triangle"
-msgstr "角度"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
-#, fuzzy
 msgid "Gergonne Point"
-msgstr "ストロークの塗り"
+msgstr "ジェルゴンヌ点"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "ノードをインデント"
+msgstr "内心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
-#, fuzzy
 msgid "Incircle"
-msgstr "円"
+msgstr "内接円"
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
-#, fuzzy
 msgid "Nagel Point"
-msgstr "黒"
+msgstr "ネーゲル点"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Nine-Point Centre"
-msgstr ""
+msgstr "九点円の中心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Nine-Point Circle"
-msgstr ""
+msgstr "九点円"
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
-#, fuzzy
 msgid "Orthic Triangle"
-msgstr "角度"
+msgstr "垂足三角形"
 
 #: ../share/extensions/draw_from_triangle.inx.h:27
 msgid "Orthocentre"
-msgstr ""
+msgstr "垂心"
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
-#, fuzzy
 msgid "Point At"
 msgstr "ポイント"
 
 #: ../share/extensions/draw_from_triangle.inx.h:29
-#, fuzzy
 msgid "Radius / px"
-msgstr "半径"
+msgstr "半径 / px"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
-#, fuzzy
 msgid "Report this triangle's properties"
-msgstr "印刷のプロパティ"
+msgstr "この三角のプロパティを報告する"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
-#, fuzzy
 msgid "Symmedial Triangle"
-msgstr "角度"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
-#, fuzzy
 msgid "Symmedian Point"
-msgstr "縦書"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid "Triangle Function"
-msgstr "青色関数"
+msgstr "三角関数による"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "カーソル座標"
+msgstr "三線座標による"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
@@ -21528,9 +21507,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
@@ -21557,16 +21535,14 @@ msgid "Desktop Cutting Plotter"
 msgstr "デスクトップ カッティングプロッタ"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
-#, fuzzy
 msgid "Desktop Cutting Plotter (*.dxf)"
-msgstr "デスクトップ カッティングプロッタ (*.DXF)"
+msgstr "デスクトップ カッティングプロッタ (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "ROBO-Master output"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:1
-#, fuzzy
 msgid "AutoCAD DXF R12 (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
@@ -21585,27 +21561,24 @@ msgstr ""
 "実行にはpstoeditのインストールが必要、http://www.pstoedit.net/pstoeditを参照"
 
 #: ../share/extensions/edge3d.inx.h:1
-#, fuzzy
 msgid "Blur height"
-msgstr "高さ:"
+msgstr "ぼかしの高さ"
 
 #: ../share/extensions/edge3d.inx.h:2
-#, fuzzy
 msgid "Blur stdDeviation"
-msgstr "印刷先"
+msgstr "ぼかしの標準偏差"
 
 #: ../share/extensions/edge3d.inx.h:3
-#, fuzzy
 msgid "Blur width"
-msgstr "幅を統一"
+msgstr "ぼかしの幅"
 
 #: ../share/extensions/edge3d.inx.h:4
 msgid "Edge 3D"
-msgstr "エッジ 3D"
+msgstr "3D のエッジ"
 
 #: ../share/extensions/edge3d.inx.h:5
 msgid "Illumination Angle"
-msgstr ""
+msgstr "照明角度"
 
 #: ../share/extensions/edge3d.inx.h:7
 msgid "Only black and white"
@@ -21660,13 +21633,12 @@ msgid "GIMP Palette (*.gpl)"
 msgstr "GIMP パレット (*.gpl)"
 
 #: ../share/extensions/extractimage.inx.h:1
-#, fuzzy
 msgid "Extract Image"
-msgstr "画像を1つ抜き出す"
+msgstr "画像の抽出"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Note: The file extension is appended automatically."
-msgstr ""
+msgstr "メモ: ファイル拡張子は自動的に付加されます。"
 
 #: ../share/extensions/extractimage.inx.h:4
 msgid "Path to save image"
@@ -21697,42 +21669,36 @@ msgid "Flatten Beziers"
 msgstr "ベジエ曲線の平坦化"
 
 #: ../share/extensions/foldablebox.inx.h:1
-#, fuzzy
 msgid "Add Guide Lines"
-msgstr "ガイドライン"
+msgstr "ガイドラインを追加する"
 
 #: ../share/extensions/foldablebox.inx.h:2
-#, fuzzy
 msgid "Depth"
-msgstr "テキスト"
+msgstr "深さ"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr ""
+msgstr "折り畳みボックス"
 
 #: ../share/extensions/foldablebox.inx.h:5
 msgid "Paper Thickness"
-msgstr ""
+msgstr "紙の厚さ"
 
 #: ../share/extensions/foldablebox.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "比率を維持して拡大縮小"
+msgstr "タブの比率"
 
 #: ../share/extensions/fractalize.inx.h:1
-#, fuzzy
 msgid "Fractalize"
-msgstr "グレースケール"
+msgstr "フラクタル化"
 
 #: ../share/extensions/fractalize.inx.h:3
-#, fuzzy
 msgid "Smoothness"
-msgstr "平滑化"
+msgstr "滑らかさ"
 
 #: ../share/extensions/fractalize.inx.h:4
-#, fuzzy
 msgid "Subdivisions"
-msgstr "分離"
+msgstr "細分"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -21741,12 +21707,11 @@ msgstr "1 次導関数を数値計算で求める"
 #: ../share/extensions/funcplot.inx.h:2
 #: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
-msgstr "軸を描画"
+msgstr "軸を描画する"
 
 #: ../share/extensions/funcplot.inx.h:3
-#, fuzzy
 msgid "End X value"
-msgstr "終点のX値"
+msgstr "終点の X 値"
 
 #: ../share/extensions/funcplot.inx.h:4
 msgid "First derivative"
@@ -21762,35 +21727,30 @@ msgstr "関数のプロット"
 
 #: ../share/extensions/funcplot.inx.h:7
 #: ../share/extensions/param_curves.inx.h:3
-#, fuzzy
 msgid "Functions"
 msgstr "関数"
 
 #: ../share/extensions/funcplot.inx.h:8
-#, fuzzy
 msgid "Isotropic scaling (uses smallest of width/xrange or height/yrange)"
 msgstr ""
 "等倍率で拡大縮小 (「幅/Xの範囲」もしくは「高さ/Yの範囲」の最小値を使用)"
 
 #: ../share/extensions/funcplot.inx.h:9
-#, fuzzy
 msgid "Multiply X range by 2*pi"
-msgstr "X値の範囲に2πを掛ける"
+msgstr "X 値の範囲に 2πを掛ける"
 
 #: ../share/extensions/funcplot.inx.h:10
-#, fuzzy
 msgid "Number of samples"
-msgstr "ステップ数"
+msgstr "サンプル数"
 
 #: ../share/extensions/funcplot.inx.h:11
-#, fuzzy
 msgid "Range and sampling"
 msgstr "範囲とサンプリング"
 
 #: ../share/extensions/funcplot.inx.h:12
 #: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
-msgstr "境界線を削除"
+msgstr "境界線を削除する"
 
 #: ../share/extensions/funcplot.inx.h:14
 msgid ""
@@ -21803,10 +21763,17 @@ msgid ""
 "   Isotropic scaling is disabled.\n"
 "   First derivative is always determined numerically."
 msgstr ""
+"このエクステンションを呼び出す前に矩形を選択してください。\n"
+"それにより X 軸および Y 軸の尺度を決定します。\n"
+"\n"
+"極座標を使用する場合:\n"
+"   始点および終点の X 値が円弧の角度範囲を決めます。\n"
+"   X 軸の尺度は矩形の左右のエッジを±1 できるように設定されます。\n"
+"   縦横比を維持した拡大縮小は無効になります。\n"
+"   最初の派生物は常に数値的に決定されます。"
 
 #: ../share/extensions/funcplot.inx.h:22
 #: ../share/extensions/param_curves.inx.h:15
-#, fuzzy
 msgid ""
 "Standard Python math functions are available:\n"
 "\n"
@@ -21818,65 +21785,60 @@ msgid ""
 "\n"
 "The constants pi and e are also available."
 msgstr ""
-"以下の関数が使用できます: (使用可能な関数はPythonの標準の数学関数です) ceil"
-"(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log"
-"(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2"
-"(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); "
-"sinh(x); tanh(x). 定数 pi と e も使用できます。"
+"以下の標準 Python 数学関数が使用できます:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"定数 pi と e も使用できます。"
 
 #: ../share/extensions/funcplot.inx.h:31
-#, fuzzy
 msgid "Start X value"
-msgstr "始点のX値"
+msgstr "始点の X 値"
 
 #: ../share/extensions/funcplot.inx.h:32
 #: ../share/extensions/param_curves.inx.h:25
-#, fuzzy
 msgid "Use"
-msgstr "アンセット"
+msgstr "利用法"
 
 #: ../share/extensions/funcplot.inx.h:33
-#, fuzzy
 msgid "Use polar coordinates"
-msgstr "カーソル座標"
+msgstr "極座標を使用する"
 
 #: ../share/extensions/funcplot.inx.h:34
-#, fuzzy
 msgid "Y value of rectangle's bottom"
-msgstr "矩形の下部のY値"
+msgstr "矩形の下部の Y 値"
 
 #: ../share/extensions/funcplot.inx.h:35
-#, fuzzy
 msgid "Y value of rectangle's top"
-msgstr "矩形の上部のY値"
+msgstr "矩形の上部の Y 値"
 
 #: ../share/extensions/gears.inx.h:1
 msgid "Circular pitch, px"
-msgstr ""
+msgstr "円ピッチ, px"
 
 #: ../share/extensions/gears.inx.h:2
-#, fuzzy
 msgid "Gear"
-msgstr "クリア(_C)"
+msgstr "歯車"
 
 #: ../share/extensions/gears.inx.h:3
-#, fuzzy
 msgid "Number of teeth"
-msgstr "ステップ数"
+msgstr "歯の枚数"
 
 #: ../share/extensions/gears.inx.h:4
-#, fuzzy
 msgid "Pressure angle"
-msgstr "存在"
+msgstr "圧力角"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
 msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-#, fuzzy
 msgid "GIMP XCF maintaining layers (*.xcf)"
-msgstr "GIMP XCF レイヤーを保持 (*.XCF)"
+msgstr "GIMP XCF 保持レイヤー (*.xcf)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
@@ -21889,162 +21851,151 @@ msgstr "ガイド(_U)"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
 msgid "Border Thickness [px]"
-msgstr ""
+msgstr "枠の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
-#, fuzzy
 msgid "Cartesian Grid"
-msgstr "ガイドを作成"
+msgstr "デカルトグリッド"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "副グリッド線が n 以降は X 軸副々グリッド線を等分にする (対数のみ) n="
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "副グリッド線が n 以降は Y 軸副々グリッド線を等分にする (対数のみ) n="
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "X 軸副グリッド線を対数にする (上記エントリが基準)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Y 軸副グリッド線を対数にする (上記エントリが基準)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
-#, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr "水平間隔"
+msgstr "X 軸主グリッド線間隔 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "分離"
+msgstr "X 軸主グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
-#, fuzzy
 msgid "Major X Divisions"
-msgstr "分離"
+msgstr "X 軸主グリッド線数"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing [px]"
-msgstr "水平間隔"
+msgstr "Y 軸主グリッド線間隔 [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "分離"
+msgstr "X 軸主グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions"
-msgstr "分離"
+msgstr "Y 軸主グリッド線数"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "分離"
+msgstr "X 軸副グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "分離"
+msgstr "X 軸副グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
-msgstr ""
+msgstr "X 軸主グリッド線間の副グリッド線数"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 msgid "Subdivisions per Major Y Division"
-msgstr ""
+msgstr "Y 軸主グリッド線間の副グリッド線数"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
 msgid "Subminor X Division Thickness [px]"
-msgstr ""
+msgstr "X 軸副々グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
 msgid "Subminor Y Division Thickness [px]"
-msgstr ""
+msgstr "Y 軸副々グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
-msgstr ""
+msgstr "X 軸副グリッド線間の副々グリッド線数"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "Y 軸副グリッド線間の副々グリッド線数"
 
 #: ../share/extensions/grid_polar.inx.h:1
-#, fuzzy
 msgid "Angle Divisions"
-msgstr "分離"
+msgstr "角度グリッド線"
 
 #: ../share/extensions/grid_polar.inx.h:2
 msgid "Angle Divisions at Centre"
-msgstr ""
+msgstr "中心の角度グリッド線"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
-msgstr ""
+msgstr "中心点の直径 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
-msgstr ""
+msgstr "円周ラベルのオフセット [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr ""
+msgstr "円周ラベルのサイズ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "円周ラベル"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "副グリッド線を対数にする (上記エントリが基準)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
-msgstr ""
+msgstr "主角度グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:10
-#, fuzzy
 msgid "Major Circular Division Spacing [px]"
-msgstr "水平間隔"
+msgstr "主円状グリッド線の間隔 [px]"
 
 #: ../share/extensions/grid_polar.inx.h:11
 msgid "Major Circular Division Thickness [px]"
-msgstr ""
+msgstr "主円状グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
-msgstr ""
+msgstr "主円状グリッド線数"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "主グリッド線が n より外側に副角度グリッド線を表示する n="
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
-msgstr ""
+msgstr "副角度グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Circular Division Thickness [px]"
-msgstr ""
+msgstr "主円状グリッド線の太さ [px]"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
-msgstr ""
+msgstr "円形グリッド"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "主角度グリッド線間の副グリッド線数"
 
 #: ../share/extensions/grid_polar.inx.h:20
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "主円状グリッド線間の副グリッド線数"
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
@@ -22087,24 +22038,20 @@ msgid "Custom..."
 msgstr "カスタム..."
 
 #: ../share/extensions/guides_creator.inx.h:11
-#, fuzzy
 msgid "Delete existing guides"
-msgstr "境界線を削除"
+msgstr "既存のガイドを削除する"
 
 #: ../share/extensions/guides_creator.inx.h:12
-#, fuzzy
 msgid "Golden ratio"
-msgstr "スポーク比:"
+msgstr "黄金比"
 
 #: ../share/extensions/guides_creator.inx.h:13
-#, fuzzy
 msgid "Guides creator"
-msgstr "ガイドの色(_L):"
+msgstr "ガイドクリエイタ"
 
 #: ../share/extensions/guides_creator.inx.h:14
-#, fuzzy
 msgid "Horizontal guide each"
-msgstr "横書"
+msgstr "水平ガイド間隔"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
@@ -22112,17 +22059,15 @@ msgstr "プリセット"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "三分割法"
 
 #: ../share/extensions/guides_creator.inx.h:19
-#, fuzzy
 msgid "Start from edges"
-msgstr "中心をリセット"
+msgstr "エッジから開始する"
 
 #: ../share/extensions/guides_creator.inx.h:20
-#, fuzzy
 msgid "Vertical guide each"
-msgstr "垂直間隔"
+msgstr "垂直ガイド間隔"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -22194,57 +22139,50 @@ msgid "SVG 1.1 Specification"
 msgstr "SVG 1.1 仕様書 (英語)"
 
 #: ../share/extensions/interp_att_g.inx.h:1
-#, fuzzy
 msgid "Attribute to Interpolate"
-msgstr "属性名"
+msgstr "挿入する属性"
 
 #: ../share/extensions/interp_att_g.inx.h:3
-#, fuzzy
 msgid "End Value"
-msgstr "終点のX値"
+msgstr "終了値"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "<b>矩形</b>"
+msgstr "浮動小数点数"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid ""
 "If you select \"Other\", you must know the SVG attributes to identify here "
 "this \"other\":"
-msgstr ""
+msgstr "\"その他\" を選択した場合、その SVG 属性をここで指定してください:"
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
-msgstr ""
+msgstr "整数"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
-msgstr ""
+msgstr "グループに属性を挿入"
 
 #: ../share/extensions/interp_att_g.inx.h:11
-#, fuzzy
 msgid "No Unit"
-msgstr "単位"
+msgstr "単位なし"
 
 #: ../share/extensions/interp_att_g.inx.h:13
 msgid "Other"
 msgstr "その他"
 
 #: ../share/extensions/interp_att_g.inx.h:14
-#, fuzzy
 msgid "Other Attribute"
-msgstr "属性"
+msgstr "その他の属性"
 
 #: ../share/extensions/interp_att_g.inx.h:15
-#, fuzzy
 msgid "Other Attribute type"
-msgstr "属性名"
+msgstr "その他の属性のタイプ"
 
 #: ../share/extensions/interp_att_g.inx.h:17
-#, fuzzy
 msgid "Start Value"
-msgstr "始点のX値"
+msgstr "開始値"
 
 #: ../share/extensions/interp_att_g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
@@ -22261,25 +22199,24 @@ msgid ""
 "elements inside the selected group or for all elements in a multiple "
 "selection"
 msgstr ""
+"このエフェクトは選択されたグループ内または複数選択された全ての要素に挿入可能"
+"な属性値を適用します。"
 
 #: ../share/extensions/interp_att_g.inx.h:21
-#, fuzzy
 msgid "Transformation"
-msgstr "情報"
+msgstr "移動/変形"
 
 #: ../share/extensions/interp_att_g.inx.h:22
-#, fuzzy
 msgid "Translate X"
-msgstr "翻訳者(_T)"
+msgstr "X 軸移動"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Translate Y"
-msgstr "翻訳者(_T)"
+msgstr "Y 軸移動"
 
 #: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
-msgstr ""
+msgstr "適用先"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
@@ -22289,7 +22226,7 @@ msgstr "••••••••••••••••••••••••
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
-msgstr "補間終端パスを複製"
+msgstr "補間終端パスを複製する"
 
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
@@ -22300,9 +22237,8 @@ msgid "Interpolate"
 msgstr "補間"
 
 #: ../share/extensions/interp.inx.h:5
-#, fuzzy
 msgid "Interpolate style"
-msgstr "補間"
+msgstr "スタイルを補間する"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
@@ -22334,14 +22270,32 @@ msgid ""
 "\n"
 "]: return to remembered point\n"
 msgstr ""
+"\n"
+"パスは置換規則を初期状態に (指定回数) 適用\n"
+"することによって生成されます。以下のコマンド\n"
+"が初期状態および置換規則で使用できます:\n"
+"\n"
+"A,B,C,D,E,F のいずれか: 前方に描画\n"
+"\n"
+"G,H,I,J,K,L のいずれか: 前方に移動\n"
+"\n"
+"+: 左へ回転\n"
+"\n"
+"-: 右へ回転\n"
+"\n"
+"|: 180°回転\n"
+"\n"
+"[: ポイントを記憶\n"
+"\n"
+"]: 記憶したポイントへ戻る\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
-msgstr "公理"
+msgstr "初期状態"
 
 #: ../share/extensions/lindenmayer.inx.h:22
 msgid "Axiom and rules"
-msgstr ""
+msgstr "初期状態と置換規則"
 
 #: ../share/extensions/lindenmayer.inx.h:24
 msgid "L-system"
@@ -22367,7 +22321,7 @@ msgstr "右角度"
 
 #: ../share/extensions/lindenmayer.inx.h:33
 msgid "Rules"
-msgstr "ルール"
+msgstr "置換規則"
 
 #: ../share/extensions/lindenmayer.inx.h:34
 msgid "Step length (px)"
@@ -22395,10 +22349,14 @@ msgid ""
 "text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a "
 "new flowed text object, the size of the page, is created in a new layer."
 msgstr ""
+"このエフェクトは標準的な \"Lorem Ipsum\" ダミーテキストを生成します。流し込み"
+"テキストが選択されていた場合は、Lorem Ipsum はそれに追加されます。それ以外で"
+"は、そのページのサイズの新しい流し込みテキストオブジェクトが新しいレイヤーに"
+"生成されます。"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr ""
+msgstr "カラーマーカーをマッチストロークへ"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
@@ -22438,6 +22396,11 @@ msgid ""
 "in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
 "real world, Scale must be set to 250."
 msgstr ""
+"このエフェクトは選択されたパスの長さを計測し、それに指定した単位をつけたパス"
+"上テキストオブジェクトを追加します。有効桁数は精度フィールドで指定できます。"
+"オフセットフィールドではパスとテキストとの距離を指定できます。倍率は、計測値"
+"の縮尺比に使用されます。例えば、1cm が現実世界での 2.5m に相当する場合、倍率"
+"を 250 と設定しなければなりません。"
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
 msgid "Angle"
@@ -22456,38 +22419,31 @@ msgid "ASCII Text with outline markup"
 msgstr ""
 
 #: ../share/extensions/outline2svg.inx.h:2
-#, fuzzy
 msgid "Text Outline File (*.outline)"
-msgstr "テキストファイル (*.txt)"
+msgstr "テキストアウトラインファイル (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
-#, fuzzy
 msgid "Text Outline Input"
-msgstr "Text入力"
+msgstr "テキストアウトライン入力"
 
 #: ../share/extensions/param_curves.inx.h:2
-#, fuzzy
 msgid "End t-value"
-msgstr "終点のX値"
+msgstr "終点の t 値"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr ""
 "等倍率で拡大縮小 (「幅/Xの範囲」もしくは「高さ/Yの範囲」の最小値を使用)"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "X値の範囲に2πを掛ける"
+msgstr "t 値の範囲に 2πを掛ける"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "パラメータ"
+msgstr "パラメトリック曲線"
 
 #: ../share/extensions/param_curves.inx.h:7
-#, fuzzy
 msgid "Range and Sampling"
 msgstr "範囲とサンプリング"
 
@@ -22502,41 +22458,38 @@ msgid ""
 "\n"
 "First derivatives are always determined numerically."
 msgstr ""
+"このエクステンションを呼び出す前に矩形を選択してください。\n"
+"それが X 軸および Y 軸の尺度を決定します。\n"
+"\n"
+"最初の派生物は常に数値的に決定されます。"
 
 #: ../share/extensions/param_curves.inx.h:24
-#, fuzzy
 msgid "Start t-value"
-msgstr "始点のX値"
+msgstr "始点の t 値"
 
 #: ../share/extensions/param_curves.inx.h:26
-#, fuzzy
 msgid "x-Function"
-msgstr "関数"
+msgstr "x 関数"
 
 #: ../share/extensions/param_curves.inx.h:27
-#, fuzzy
 msgid "x-value of rectangle's left"
-msgstr "矩形の上部のY値"
+msgstr "矩形の左側の x 値"
 
 #: ../share/extensions/param_curves.inx.h:28
-#, fuzzy
 msgid "x-value of rectangle's right"
-msgstr "矩形の上部のY値"
+msgstr "矩形の右側の x 値"
 
 #: ../share/extensions/param_curves.inx.h:29
-#, fuzzy
 msgid "y-Function"
-msgstr "関数"
+msgstr "y 関数"
 
 #: ../share/extensions/param_curves.inx.h:30
-#, fuzzy
 msgid "y-value of rectangle's bottom"
-msgstr "矩形の下部のY値"
+msgstr "矩形の下部の y 値"
 
 #: ../share/extensions/param_curves.inx.h:31
-#, fuzzy
 msgid "y-value of rectangle's top"
-msgstr "矩形の上部のY値"
+msgstr "矩形の下部の y 値"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -22557,18 +22510,16 @@ msgstr "パターンをパスに沿わせる"
 
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Ribbon"
-msgstr ""
+msgstr "リボン"
 
 #: ../share/extensions/pathalongpath.inx.h:13
-#, fuzzy
 msgid "Snake"
-msgstr "傾斜"
+msgstr "ヘビ"
 
 #: ../share/extensions/pathalongpath.inx.h:14
 #: ../share/extensions/pathscatter.inx.h:11
-#, fuzzy
 msgid "Space between copies:"
-msgstr "コピー間の空き:"
+msgstr "コピー間の間隔"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid ""
@@ -22576,35 +22527,33 @@ msgid ""
 "pattern is the top most object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
+"このエフェクトは任意の \"スケルトン\" パスに沿ってパターンオブジェクトを曲げ"
+"ます。パターンは選択された中の最前面のオブジェクトになります (パス/シェイプ/"
+"クローンなどのグループが指定できます)。"
 
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Cloned"
 msgstr "クローン"
 
 #: ../share/extensions/pathscatter.inx.h:2
-#, fuzzy
 msgid "Copied"
-msgstr "合計"
+msgstr "コピー"
 
 #: ../share/extensions/pathscatter.inx.h:4
-#, fuzzy
 msgid "Follow path orientation"
-msgstr "ページの向き:"
+msgstr "パスの方向に従う"
 
 #: ../share/extensions/pathscatter.inx.h:6
-#, fuzzy
 msgid "Moved"
 msgstr "移動"
 
 #: ../share/extensions/pathscatter.inx.h:8
-#, fuzzy
 msgid "Original pattern will be:"
-msgstr "パターンのオフセット"
+msgstr "オリジナルパターンの扱い:"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "スケルトンパスの長さにあわせて間隔を広げる"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
@@ -22612,100 +22561,94 @@ msgid ""
 "pattern is the top most object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
+"このエフェクトは任意の \"スケルトン\" パスに沿ってパターンを散乱させます。パ"
+"ターンは選択された中の再前面のオブジェクトになります (パス/シェイプ/クローン"
+"などのグループが指定できます)。"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
-#, fuzzy
 msgid "Bleed (in)"
-msgstr "斜結合"
+msgstr "裁ち落とし (インチ)"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Bond Weight #"
-msgstr ""
+msgstr "ボンド紙の重さ #"
 
 #: ../share/extensions/perfectboundcover.inx.h:3
 msgid "Book Height (inches)"
-msgstr ""
+msgstr "本の高さ (インチ)"
 
 #: ../share/extensions/perfectboundcover.inx.h:4
-#, fuzzy
 msgid "Book Properties"
-msgstr "リンクのプロパティ(_P)"
+msgstr "本のプロパティ"
 
 #: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches)"
-msgstr ""
+msgstr "本の幅 (インチ)"
 
 #: ../share/extensions/perfectboundcover.inx.h:6
 msgid "Caliper (inches)"
-msgstr ""
+msgstr "ノギス (インチ)"
 
 #: ../share/extensions/perfectboundcover.inx.h:7
-#, fuzzy
 msgid "Cover"
-msgstr "範囲"
+msgstr "カバー"
 
 #: ../share/extensions/perfectboundcover.inx.h:8
 msgid "Cover Thickness Measurement"
-msgstr ""
+msgstr "カバーの厚さ測定"
 
 #: ../share/extensions/perfectboundcover.inx.h:9
-#, fuzzy
 msgid "Interior Pages"
-msgstr "補間"
+msgstr "内部ページ"
 
 #: ../share/extensions/perfectboundcover.inx.h:10
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
-msgstr ""
+msgstr "メモ: ボンド紙の重さでの計算が最も信頼できる見積りです。"
 
 #: ../share/extensions/perfectboundcover.inx.h:11
-#, fuzzy
 msgid "Number of Pages"
-msgstr "ステップ数"
+msgstr "ページ数"
 
 #: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Pages Per Inch (PPI)"
-msgstr ""
+msgstr "1 インチあたりのページ数 (PPI)"
 
 #: ../share/extensions/perfectboundcover.inx.h:13
 msgid "Paper Thickness Measurement"
-msgstr ""
+msgstr "紙の厚さ測定"
 
 #: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Perfect-Bound Cover Template"
-msgstr ""
+msgstr "無線綴じカバーテンプレート"
 
 #: ../share/extensions/perfectboundcover.inx.h:16
-#, fuzzy
 msgid "Remove existing guides"
-msgstr "境界線を削除"
+msgstr "既存のガイドを削除する"
 
 #: ../share/extensions/perfectboundcover.inx.h:18
-#, fuzzy
 msgid "Specify Width"
-msgstr "ページ幅(_W)"
+msgstr "幅を指定"
 
 #: ../share/extensions/perspective.inx.h:2
 msgid "Perspective"
-msgstr ""
+msgstr "透視図"
 
 #: ../share/extensions/plt_input.inx.h:1
 msgid "AutoCAD Plot Input"
-msgstr ""
+msgstr "AutoCAD プロット入力"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
-msgstr "HP Graphics Language ファイル (*.hpgl)"
+msgstr "HP Graphics Language プロットファイル [AutoCAD] (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
-#, fuzzy
 msgid "Open HPGL plotter files"
-msgstr "フィルを削除"
+msgstr "Open HPGL プロッタ ファイル"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
-msgstr ""
+msgstr "AutoCAD プロット出力"
 
 #: ../share/extensions/plt_output.inx.h:3
 #, fuzzy
@@ -22713,34 +22656,32 @@ msgid "Save a file for plotters"
 msgstr "エクスポートするファイルを選択"
 
 #: ../share/extensions/polyhedron_3d.inx.h:1
-#, fuzzy
 msgid "3D Polyhedron"
-msgstr "ポリゴン"
+msgstr "3D 多面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise Wound Object"
-msgstr "オブジェクトをアンロック"
+msgstr "時計回りのワウンドオブジェクト"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
-msgstr ""
+msgstr "立方体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Cuboctohedron"
-msgstr ""
+msgstr "立法8面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
-msgstr ""
+msgstr "12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
-msgstr ""
+msgstr "背面のポリゴンも描画する"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
-msgstr ""
+msgstr "エッジ指定"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 msgid "Edges"
@@ -22748,12 +22689,11 @@ msgstr "エッジ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "フェイス指定"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
-#, fuzzy
 msgid "Faces"
-msgstr "平坦度"
+msgstr "フェイス"
 
 #: ../share/extensions/polyhedron_3d.inx.h:11
 msgid "Filename:"
@@ -22761,55 +22701,52 @@ msgstr "ファイル名:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
 msgid "Fill Colour (Blue)"
-msgstr ""
+msgstr "フィルの色 (青)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
 msgid "Fill Colour (Green)"
-msgstr ""
+msgstr "フィルの色 (緑)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
 msgid "Fill Colour (Red)"
-msgstr ""
+msgstr "フィルの色 (赤)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill Opacity/ %"
-msgstr "不透明度, %:"
+msgstr "フィルの不透明度/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
-msgstr ""
+msgstr "大12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:18
 msgid "Great Stellated Dodecahedron"
-msgstr ""
+msgstr "星型大12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
-msgstr ""
+msgstr "20面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light x-Position"
-msgstr "位置:"
+msgstr "照明の X 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light y-Position"
-msgstr "位置:"
+msgstr "照明の Y 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light z-Position"
-msgstr "位置:"
+msgstr "照明の Y 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
-msgstr ""
+msgstr "線の厚み / px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Load From File"
-msgstr ""
+msgstr "ファイルから読み込む"
 
 #: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Maximum"
@@ -22817,7 +22754,7 @@ msgstr "最大"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Mean"
-msgstr ""
+msgstr "中間"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
 msgid "Minimum"
@@ -22837,22 +22774,19 @@ msgstr "オブジェクト:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 msgid "Octahedron"
-msgstr ""
+msgstr "8面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotate Around:"
-msgstr "ノードを回転"
+msgstr "回転軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Rotation / Degrees"
-msgstr "回転(_R)"
+msgstr "回転 / 角度"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Scaling Factor"
-msgstr "単一色"
+msgstr "拡縮係数"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Shading"
@@ -22860,59 +22794,56 @@ msgstr "シェーディング"
 
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "小2重3角20・12面体の双対"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
-msgstr ""
+msgstr "ねじれ立方体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "ねじれ12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr "ストロークの塗り(_P)"
+msgstr "ストロークの透明度/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
-msgstr ""
+msgstr "4面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then Rotate Around:"
-msgstr "丸めなし"
+msgstr "その後の回転軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
-msgstr ""
+msgstr "切頂立方体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "切頂12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "切頂20面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
-msgstr ""
+msgstr "切頂8面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "切頂4面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
-#, fuzzy
 msgid "Vertices"
-msgstr "垂直(_H)"
+msgstr "頂点"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
-#, fuzzy
 msgid "View"
-msgstr "表示(_V)"
+msgstr "表示"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
@@ -22928,83 +22859,71 @@ msgstr "Z 軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "フェイスの Z ソート:"
 
 #: ../share/extensions/printing-marks.inx.h:1
-#, fuzzy
 msgid "Bleed Margin"
-msgstr "斜結合"
+msgstr "裁ち落しマージン"
 
 #: ../share/extensions/printing-marks.inx.h:2
-#, fuzzy
 msgid "Bleed Marks"
-msgstr "中間マーカー:"
+msgstr "裁ち落しマーク"
 
 #: ../share/extensions/printing-marks.inx.h:3
-#, fuzzy
 msgid "Bottom:"
-msgstr "枠"
+msgstr "下:"
 
 #: ../share/extensions/printing-marks.inx.h:4
 msgid "Canvas"
 msgstr "キャンバス"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Colour Bars"
-msgstr "色"
+msgstr "カラーバー"
 
 #: ../share/extensions/printing-marks.inx.h:6
 msgid "Crop Marks"
-msgstr ""
+msgstr "トンボ"
 
 #: ../share/extensions/printing-marks.inx.h:7
 msgid "Left:"
 msgstr "左:"
 
 #: ../share/extensions/printing-marks.inx.h:8
-#, fuzzy
 msgid "Marks"
 msgstr "マーク"
 
 #: ../share/extensions/printing-marks.inx.h:10
-#, fuzzy
 msgid "Page Information"
-msgstr "情報"
+msgstr "ページ情報"
 
 #: ../share/extensions/printing-marks.inx.h:11
-#, fuzzy
 msgid "Positioning"
-msgstr "位置:"
+msgstr "位置調整"
 
 #: ../share/extensions/printing-marks.inx.h:12
-#, fuzzy
 msgid "Printing Marks"
-msgstr "PDFオペレータを使用して印刷"
+msgstr "プリントマーク"
 
 #: ../share/extensions/printing-marks.inx.h:13
 msgid "Registration Marks"
-msgstr ""
+msgstr "レジストレーションマーク"
 
 #: ../share/extensions/printing-marks.inx.h:15
-#, fuzzy
 msgid "Right:"
-msgstr "権利者"
+msgstr "右:"
 
 #: ../share/extensions/printing-marks.inx.h:17
-#, fuzzy
 msgid "Set crop marks to"
-msgstr "マスクを設定"
+msgstr "トンボの設定対象"
 
 #: ../share/extensions/printing-marks.inx.h:18
-#, fuzzy
 msgid "Star Target"
-msgstr "ターゲット:"
+msgstr "スターターゲット"
 
 #: ../share/extensions/printing-marks.inx.h:19
-#, fuzzy
 msgid "Top:"
-msgstr "タイプ:"
+msgstr "上:"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "PostScript Input"
@@ -23012,17 +22931,15 @@ msgstr "PostScript 入力"
 
 #: ../share/extensions/radiusrand.inx.h:1
 msgid "Jitter nodes"
-msgstr "ノードをジッタリング"
+msgstr "ノードを揺らす"
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Maximum displacement in X, px"
-msgstr "最大変位量 (ピクセル)"
+msgstr "X 軸の最大移動量 (px)"
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Maximum displacement in Y, px"
-msgstr "最大変位量 (ピクセル)"
+msgstr "Y 軸の最大移動量 (px)"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
@@ -23046,7 +22963,7 @@ msgstr "正規分布を使用"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "アルファベットスープ"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
@@ -23069,69 +22986,60 @@ msgid "Barcode Type:"
 msgstr "バーコードタイプ:"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Arbitrary Angle:"
-msgstr "角度"
+msgstr "任意の角度"
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Arrange"
 msgstr "配置"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "枠"
+msgstr "下"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
-msgstr ""
+msgstr "下→上 (90)"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal Point:"
-msgstr "横書"
+msgstr "水平ポイント:"
 
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
-msgstr ""
+msgstr "左→右 (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "タイトル"
+msgstr "中央"
 
 #: ../share/extensions/restack.inx.h:10
-#, fuzzy
 msgid "Radial Inward"
-msgstr "放射グラデーション"
+msgstr "内側へ放射状"
 
 #: ../share/extensions/restack.inx.h:11
-#, fuzzy
 msgid "Radial Outward"
-msgstr "放射グラデーション"
+msgstr "外側へ放射状"
 
 #: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr " 再スタック"
 
 #: ../share/extensions/restack.inx.h:13
-#, fuzzy
 msgid "Restack Direction:"
-msgstr "詳細"
+msgstr "再スタック方向:"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
-msgstr ""
+msgstr "右→左 (180)"
 
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "Top to Bottom (270)"
-msgstr "最背面へ(_B)"
+msgstr "上→下 (270)"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "縦書"
+msgstr "垂直ポイント:"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23148,27 +23056,24 @@ msgstr "ランダムツリー"
 #: ../share/extensions/rubberstretch.inx.h:2
 #, no-c-format
 msgid "Curve (%):"
-msgstr ""
+msgstr "カーブ (%)"
 
 #: ../share/extensions/rubberstretch.inx.h:4
-#, fuzzy
 msgid "Rubber Stretch"
-msgstr "ステップ数"
+msgstr "ゴム状引き伸ばし"
 
 #: ../share/extensions/rubberstretch.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Strength (%):"
-msgstr "ステップの長さ (ピクセル)"
+msgstr "強さ (%)"
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Scalable Vector Graphics"
-msgstr "スケーラブル ベクター グラフィック (*.svg)"
+msgstr "スケーラブル ベクター グラフィック"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
@@ -23183,11 +23088,11 @@ msgstr "Inkscape SVG ベクター イラストレータ"
 #: ../share/extensions/sk1_input.inx.h:2
 #: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr ""
+msgstr "sK1 ベクターグラフィックファイル (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
-msgstr ""
+msgstr "sK1 ベクターグラフィックファイル入力"
 
 #: ../share/extensions/sk1_output.inx.h:1
 #, fuzzy
@@ -23196,7 +23101,7 @@ msgstr "Inkscape SVG ベクター イラストレータ"
 
 #: ../share/extensions/sk1_output.inx.h:3
 msgid "sK1 vector graphics files output"
-msgstr ""
+msgstr "sK1 ベクターグラフィックファイル出力"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -23212,41 +23117,39 @@ msgstr "Sketch 入力"
 
 #: ../share/extensions/spirograph.inx.h:1
 msgid "Gear Placement"
-msgstr ""
+msgstr "歯車の配置"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "内側 (内トロコイド)"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "外側 (外トロコイド)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
-msgstr ""
+msgstr "品質 (デフォルトは 16)"
 
 #: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
-msgstr ""
+msgstr "R - 円の半径 (px)"
 
 #: ../share/extensions/spirograph.inx.h:7
-#, fuzzy
 msgid "Rotation (deg)"
-msgstr "回転(_R)"
+msgstr "回転 (度)"
 
 #: ../share/extensions/spirograph.inx.h:8
-#, fuzzy
 msgid "Spirograph"
-msgstr "螺旋"
+msgstr "スピログラフ"
 
 #: ../share/extensions/spirograph.inx.h:9
 msgid "d - Pen Radius (px)"
-msgstr ""
+msgstr "d - ペンの半径 (px)"
 
 #: ../share/extensions/spirograph.inx.h:10
 msgid "r - Gear Radius (px)"
-msgstr ""
+msgstr "r - 歯車の半径 (px)"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
@@ -23254,7 +23157,7 @@ msgstr "振る舞い"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Straighten Segments"
-msgstr ""
+msgstr "セグメントの直線化"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
@@ -23292,14 +23195,16 @@ msgid ""
 "(Select your system encoding. More information at http://docs.python.org/"
 "library/codecs.html#standard-encodings)"
 msgstr ""
+"(システムのエンコーディングを選択してください。より詳しい情報は http://docs."
+"python.org/library/codecs.html#standard-encodings を参照してください)"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
-msgstr ""
+msgstr "(曜日名のリストは日曜日から始めなければなりません)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
 msgid "Automatically set size and position"
-msgstr ""
+msgstr "サイズと位置を自動的に設定する"
 
 #: ../share/extensions/svgcalendar.inx.h:4
 msgid "Calendar"
@@ -23323,7 +23228,7 @@ msgstr "曜日名"
 
 #: ../share/extensions/svgcalendar.inx.h:10
 msgid "Fill empty day boxes with next month's days"
-msgstr ""
+msgstr "空の日に翌月の日を表示する"
 
 #: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
@@ -23431,18 +23336,19 @@ msgstr "小文字化"
 msgid "rANdOm CasE"
 msgstr "ランダムで大文字小文字化"
 
+# Strings to replace.
 #: ../share/extensions/text_replace.inx.h:1
-#, fuzzy
 msgid "By:"
-msgstr "垂直半径:"
+msgstr "置換文字列:"
 
 #: ../share/extensions/text_replace.inx.h:2
 msgid "Replace text"
 msgstr "テキストの置換"
 
+# Target to replace.
 #: ../share/extensions/text_replace.inx.h:3
 msgid "Replace:"
-msgstr "置換:"
+msgstr "検索文字列:"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
@@ -23457,59 +23363,52 @@ msgid "UPPERCASE"
 msgstr "大文字化"
 
 #: ../share/extensions/triangle.inx.h:1
-#, fuzzy
 msgid "Angle a / deg"
-msgstr "度"
+msgstr "角度 a (度)"
 
 #: ../share/extensions/triangle.inx.h:2
-#, fuzzy
 msgid "Angle b / deg"
-msgstr "度"
+msgstr "角度 b (度)"
 
 #: ../share/extensions/triangle.inx.h:3
-#, fuzzy
 msgid "Angle c / deg"
-msgstr "度"
+msgstr "角度 c (度)"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
-msgstr ""
+msgstr "辺 a および角 a、b から"
 
 #: ../share/extensions/triangle.inx.h:5
 msgid "From Side c and Angles a, b"
-msgstr ""
+msgstr "辺 c および角 a、b から"
 
 #: ../share/extensions/triangle.inx.h:6
 msgid "From Sides a, b and Angle a"
-msgstr ""
+msgstr "辺 a、b および角 a から"
 
 #: ../share/extensions/triangle.inx.h:7
 msgid "From Sides a, b and Angle c"
-msgstr ""
+msgstr "辺 a、b および角 c から"
 
 #: ../share/extensions/triangle.inx.h:8
 msgid "From Three Sides"
-msgstr ""
+msgstr "三辺から"
 
 #: ../share/extensions/triangle.inx.h:11
-#, fuzzy
 msgid "Side Length a / px"
-msgstr "ステップの長さ (ピクセル)"
+msgstr "辺長 a (px)"
 
 #: ../share/extensions/triangle.inx.h:12
-#, fuzzy
 msgid "Side Length b / px"
-msgstr "ステップの長さ (ピクセル)"
+msgstr "辺長 b (px)"
 
 #: ../share/extensions/triangle.inx.h:13
-#, fuzzy
 msgid "Side Length c / px"
-msgstr "ステップの長さ (ピクセル)"
+msgstr "辺長 c (px)"
 
 #: ../share/extensions/triangle.inx.h:14
-#, fuzzy
 msgid "Triangle"
-msgstr "角度"
+msgstr "三角形"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
@@ -23521,12 +23420,11 @@ msgstr "テキストファイル (*.txt)"
 
 #: ../share/extensions/txt2svg.inx.h:3
 msgid "Text Input"
-msgstr "Text入力"
+msgstr "Text 入力"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr "選択オブジェクトそれぞれの左上隅に菱形マークを表示"
+msgstr "選択した全てが最後の一つに属性を設定"
 
 #: ../share/extensions/web-set-att.inx.h:2
 msgid "Attribute to set"
@@ -23535,44 +23433,45 @@ msgstr "設定する属性"
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
-msgstr ""
+msgstr "このイベントのプレビューコードとの互換性"
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid ""
 "If you want to set more then one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
+"2つ以上の属性を設定する場合は、それぞれを 1個だけのスペースで分けてください。"
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Run it after"
-msgstr ""
+msgstr "後で実行"
 
 #: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Run it before"
-msgstr ""
+msgstr "先に実行"
 
 #: ../share/extensions/web-set-att.inx.h:8
 msgid "Set Attributes"
-msgstr "属性を設定"
+msgstr "属性の設定"
 
 #: ../share/extensions/web-set-att.inx.h:9
 msgid "Source and destination of setting"
-msgstr ""
+msgstr "設定元と設定先"
 
 #: ../share/extensions/web-set-att.inx.h:10
 msgid "The first selected set an attribute in all others"
-msgstr ""
+msgstr "最初の選択がその他全てを設定"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
-msgstr ""
+msgstr "値のリストは属性リストと同じサイズでなければなりません。"
 
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr ""
+msgstr "次のパラメータは 3つ以上の要素を選択した時に役立ちます"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
@@ -23580,12 +23479,16 @@ msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
 msgstr ""
+"このエフェクトは SVG 対応のウェブブラウザ (Firefox など) でのみ見える (または"
+"使える) 機能を追加します。"
 
 #: ../share/extensions/web-set-att.inx.h:14
 msgid ""
 "This effect sets one or more attributes in the second selected element, when "
 "a defined event occurs on the first selected element."
 msgstr ""
+"このエフェクトは最初に選択した要素に指定されたイベントが発生した時、一つ以上"
+"の属性を 2 つ目に選択された要素に設定します。"
 
 #: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
@@ -23598,101 +23501,96 @@ msgstr "ウェブ"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
-msgstr ""
+msgstr "設定を行う時"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
-#, fuzzy
 msgid "on activate"
-msgstr "非アクティベート"
+msgstr "アクティブになった時"
 
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
-#, fuzzy
 msgid "on blur"
-msgstr "フィルを不透明にする"
+msgstr "曖昧な時"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
 msgid "on click"
-msgstr ""
+msgstr "クリックした時"
 
 #: ../share/extensions/web-set-att.inx.h:21
 #: ../share/extensions/web-transmit-att.inx.h:19
-#, fuzzy
 msgid "on element loaded"
-msgstr "要素ノードの新規作成"
+msgstr "要素が読み込まれた時"
 
 #: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
 msgid "on focus"
-msgstr ""
+msgstr "フォーカスした時"
 
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse down"
-msgstr ""
+msgstr "マウスボタンを押した時"
 
 #: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "on mouse move"
-msgstr ""
+msgstr "マウスが移動した時"
 
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
-#, fuzzy
 msgid "on mouse out"
-msgstr "ズームイン/アウト"
+msgstr "マウスポインタがその上から離れた時"
 
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
-msgstr ""
+msgstr "マウスポインタがその上にきた時"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "on mouse up"
-msgstr ""
+msgstr "マウスボタンを離した時"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "複数のオブジェクトは同じストロークを有しています"
+msgstr "選択した全てが最後の一つへ伝送"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
-#, fuzzy
 msgid "Attribute to transmit"
-msgstr "属性名"
+msgstr "伝送する属性"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
 msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
 msgstr ""
+"2つ以上の属性を伝送する場合、それぞれを 1個だけのスペースで分けてください。"
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
-msgstr ""
+msgstr "伝送元と伝送先"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
 msgid "The first selected transmits to all others"
-msgstr ""
+msgstr "最初の選択からその他全てへ伝送"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when a event occurs."
 msgstr ""
+"このエフェクトはイベント発生時に一つ以上の属性を最初に選択された要素から2番目"
+"に選択された要素へ伝送します。"
 
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "Transmit Attributes"
-msgstr "属性を設定"
+msgstr "属性の伝送"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
-#, fuzzy
 msgid "When to transmit"
-msgstr "移動/変形時の表示方法:"
+msgstr "伝送する時"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
