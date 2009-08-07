@@ -1271,7 +1271,7 @@ void InkscapePreferences::initPageMisc()
 
     _misc_simpl.init("/options/simplifythreshold/value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
-                           _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
+                           _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
 
     _misc_latency_skew.init("/debug/latency/skew", 0.5, 2.0, 0.01, 0.10, 1.0, false, false);
     _page_misc.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
