@@ -634,6 +634,7 @@ inkscape_crash_handler (int /*signum*/)
             gchar * location = homedir_path(c);
             Inkscape::IO::dump_fopen_call(location, "E");
             file = Inkscape::IO::fopen_utf8name(location, "w");
+            g_snprintf (c, 1024, "%s", location); // we want the complete path to be stored in c (for reporting purposes)
             g_free(location);
             if (!file) {
                 // try saving to /tmp
@@ -643,9 +644,14 @@ inkscape_crash_handler (int /*signum*/)
             }
             if (!file) {
                 // try saving to the current directory
+                gchar *curdir = g_get_current_dir();
                 g_snprintf (c, 1024, "inkscape-%.256s.%s.%d.svg", docname, sptstr, count);
                 Inkscape::IO::dump_fopen_call(c, "F");
                 file = Inkscape::IO::fopen_utf8name(c, "w");
+                // store the complete path in c so that it can be reported later
+                gchar * location = g_build_filename(curdir, c, NULL);
+                g_snprintf (c, 1024, "%s", location);
+                g_free(location);
             }
             if (file) {
                 sp_repr_save_stream (repr->document(), file, SP_SVG_NS_URI);
