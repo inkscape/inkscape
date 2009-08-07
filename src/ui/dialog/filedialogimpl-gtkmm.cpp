@@ -1234,8 +1234,9 @@ void FileSaveDialogImplGtk::updateNameAndExtension()
 
     Inkscape::Extension::Output* newOut = extension ? dynamic_cast<Inkscape::Extension::Output*>(extension) : 0;
     if ( fileTypeCheckbox.get_active() && newOut ) {
-        // Append the file extension if it's not already present
+        // Append the file extension if it's not already present and display it in the file name entry field
         appendExtension(myFilename, newOut);
+        change_path(myFilename);
     }
 }
 
