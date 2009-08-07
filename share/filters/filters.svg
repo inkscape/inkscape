@@ -1128,12 +1128,12 @@
 <feComposite operator="in" />
 </filter>
 <filter id="f108" inkscape:label="Specular light" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic specular bevel to use for building textures">
-<feGaussianBlur result="result0" in="SourceAlpha" stdDeviation="2.5" />
-<feSpecularLighting specularExponent="35" specularConstant="1" surfaceScale="2" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<feDistantLight azimuth="235" elevation="55" />
+<feGaussianBlur result="result0" in="SourceAlpha" stdDeviation="7" />
+<feSpecularLighting specularExponent="25" specularConstant="1" surfaceScale="10" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight azimuth="235" elevation="45" />
 </feSpecularLighting>
-<feComposite operator="in" result="result2" in="result1" in2="SourceAlpha" />
 <feComposite k3="1" k2="1" operator="arithmetic" result="result4" in="SourceGraphic" />
+<feComposite operator="in" result="result2" in="result4" in2="SourceAlpha" />
 </filter>
 <filter id="f109" inkscape:label="Roughen inside" inkscape:menu="Distort" inkscape:menu-tooltip="Roughen all inside shapes">
 <feTurbulence numOctaves="5" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.08" />
@@ -1200,12 +1200,12 @@
 <feBlend blend="normal" mode="darken" />
 </filter>
 <filter id="f117" inkscape:label="Diffuse light" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic diffuse bevel to use for building textures">
-<feGaussianBlur result="result0" in="SourceGraphic" stdDeviation="3" />
-<feDiffuseLighting result="result5" surfaceScale="10" diffuseConstant="0.3">
-<feDistantLight azimuth="235" elevation="35" />
+<feGaussianBlur result="result0" in="SourceGraphic" stdDeviation="7" />
+<feDiffuseLighting result="result5" surfaceScale="20" diffuseConstant="1.1">
+<feDistantLight azimuth="235" elevation="55" />
 </feDiffuseLighting>
-<feComposite k3="1" k2="1" operator="arithmetic" result="result4" in="result5" in2="SourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" />
+<feComposite operator="in" in2="SourceGraphic" result="result6" />
+<feComposite k3="0.75" k2="0.25" operator="arithmetic" result="result4" in="result6" in2="SourceGraphic" />
 </filter>
 <filter id="f118" inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood" inkscape:menu="Shadows and Glows" inkscape:label="Cutout Glow">
 <feOffset dy="3" dx="3" />
@@ -2037,6 +2037,24 @@
 </feSpecularLighting>
 <feComposite in2="result5" in="SourceGraphic" k3="0.7" k2="0.8" operator="arithmetic" result="result7" />
 <feComposite in="result7" operator="in" in2="SourceGraphic" />
+</filter>
+<filter id="f208" inkscape:label="Melted jelly, matte" inkscape:menu="Bevels" inkscape:menu-tooltip="Matte bevel with blurred edges" height="1.3" y="-0.15" width="1.3" x="-0.15">
+<feComposite operator="arithmetic" in2="SourceGraphic" result="fbSourceGraphic" in="SourceGraphic" k2="0.9" />
+<feGaussianBlur result="result0" in="fbSourceGraphic" stdDeviation="6" />
+<feSpecularLighting specularExponent="15" specularConstant="0.9" surfaceScale="6" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight azimuth="235" elevation="65" />
+</feSpecularLighting>
+<feComposite k3="0.1" k2="0.7" operator="arithmetic" result="result4" in="result1" in2="result0" k1="0.1" />
+<feComposite operator="atop" result="result2" in="result4" in2="result0" />
+</filter>
+<filter id="f209" inkscape:label="Melted jelly" inkscape:menu="Bevels" inkscape:menu-tooltip="Glossy bevel with blurred edges" height="1.3" y="-0.15" width="1.3" x="-0.15">
+<feComposite operator="arithmetic" in2="SourceGraphic" result="fbSourceGraphic" in="SourceGraphic" k2="0.9" />
+<feGaussianBlur result="result0" in="fbSourceGraphic" stdDeviation="6" />
+<feSpecularLighting specularExponent="25" specularConstant="1" surfaceScale="6" lighting-color="rgb(255,255,255)" result="result1" in="result0">
+<feDistantLight azimuth="235" elevation="55" />
+</feSpecularLighting>
+<feComposite k3="1.5" k2="1" operator="arithmetic" result="result4" in="result0" />
+<feComposite operator="atop" result="result2" in="result4" in2="result0" />
 </filter>
 </defs>
 </svg>
