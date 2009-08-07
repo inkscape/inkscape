@@ -156,9 +156,9 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
         new_bitmapResolution = mod->get_param_int("resolution");
     } catch(...) {}
 
-    bool new_areaCanvas  = true;
+    bool new_areaPage  = true;
     try {
-        new_areaCanvas = mod->get_param_bool("areaCanvas");
+        new_areaPage = mod->get_param_bool("areaPage");
     } catch(...) {}
 
     bool new_areaDrawing  = true;
@@ -173,7 +173,7 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", filename);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage);
 	g_free(final_name);
 
 	if (!ret)
@@ -220,9 +220,9 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
         new_bitmapResolution = mod->get_param_int("resolution");
     } catch(...) {}
 
-    bool new_areaCanvas  = true;
+    bool new_areaPage  = true;
     try {
-        new_areaCanvas = mod->get_param_bool("areaCanvas");
+        new_areaPage = mod->get_param_bool("areaPage");
     } catch(...) {}
 
     bool new_areaDrawing  = true;
@@ -237,7 +237,7 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", filename);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas, true);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage, true);
 	g_free(final_name);
 
 	if (!ret)
@@ -283,7 +283,7 @@ CairoPsOutput::init (void)
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"areaCanvas\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
@@ -320,7 +320,7 @@ CairoEpsOutput::init (void)
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"areaCanvas\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.eps</extension>\n"

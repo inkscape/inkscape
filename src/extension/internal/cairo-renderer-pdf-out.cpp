@@ -180,7 +180,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     bool new_exportCanvas  = FALSE;
     try {
-        new_exportCanvas  = mod->get_param_bool("areaCanvas");
+        new_exportCanvas  = mod->get_param_bool("areaPage");
     }
     catch(...) {
         g_warning("Parameter <exportCanvas> might not exist");
@@ -220,7 +220,7 @@ CairoRendererPdfOutput::init (void)
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"areaCanvas\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.pdf</extension>\n"

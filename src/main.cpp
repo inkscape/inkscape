@@ -129,7 +129,7 @@ enum {
     SP_ARG_EXPORT_DPI,
     SP_ARG_EXPORT_AREA,
     SP_ARG_EXPORT_AREA_DRAWING,
-    SP_ARG_EXPORT_AREA_CANVAS,
+    SP_ARG_EXPORT_AREA_PAGE,
     SP_ARG_EXPORT_AREA_SNAP,
     SP_ARG_EXPORT_WIDTH,
     SP_ARG_EXPORT_HEIGHT,
@@ -179,7 +179,7 @@ static gchar *sp_export_png = NULL;
 static gchar *sp_export_dpi = NULL;
 static gchar *sp_export_area = NULL;
 static gboolean sp_export_area_drawing = FALSE;
-static gboolean sp_export_area_canvas = FALSE;
+static gboolean sp_export_area_page = FALSE;
 static gchar *sp_export_width = NULL;
 static gchar *sp_export_height = NULL;
 static gchar *sp_export_id = NULL;
@@ -222,7 +222,7 @@ static void resetCommandlineGlobals() {
         sp_export_dpi = NULL;
         sp_export_area = NULL;
         sp_export_area_drawing = FALSE;
-        sp_export_area_canvas = FALSE;
+        sp_export_area_page = FALSE;
         sp_export_width = NULL;
         sp_export_height = NULL;
         sp_export_id = NULL;
@@ -296,17 +296,17 @@ struct poptOption options[] = {
 
     {"export-area", 'a',
      POPT_ARG_STRING, &sp_export_area, SP_ARG_EXPORT_AREA,
-     N_("Exported area in SVG user units (default is the canvas; 0,0 is lower-left corner)"),
+     N_("Exported area in SVG user units (default is the page; 0,0 is lower-left corner)"),
      N_("x0:y0:x1:y1")},
 
     {"export-area-drawing", 'D',
      POPT_ARG_NONE, &sp_export_area_drawing, SP_ARG_EXPORT_AREA_DRAWING,
-     N_("Exported area is the entire drawing (not canvas)"),
+     N_("Exported area is the entire drawing (not page)"),
      NULL},
 
-    {"export-area-canvas", 'C',
-     POPT_ARG_NONE, &sp_export_area_canvas, SP_ARG_EXPORT_AREA_CANVAS,
-     N_("Exported area is the entire canvas"),
+    {"export-area-page", 'C',
+     POPT_ARG_NONE, &sp_export_area_page, SP_ARG_EXPORT_AREA_PAGE,
+     N_("Exported area is the entire page"),
      NULL},
 
     {"export-area-snap", 0,
@@ -632,7 +632,7 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-i")
             || !strncmp(argv[i], "--export-area-drawing", 21)
             || !strcmp(argv[i], "-D")
-            || !strncmp(argv[i], "--export-area-canvas", 20)
+            || !strncmp(argv[i], "--export-area-page", 20)
             || !strcmp(argv[i], "-C")
             || !strncmp(argv[i], "--export-id", 12)
             || !strcmp(argv[i], "-P")
@@ -1298,8 +1298,8 @@ sp_do_export_png(SPDocument *doc)
             return;
         }
         area = Geom::Rect(Geom::Interval(x0,x1), Geom::Interval(y0,y1));
-    } else if (sp_export_area_canvas || !(sp_export_id || sp_export_area_drawing)) {
-        /* Export the whole canvas */
+    } else if (sp_export_area_page || !(sp_export_id || sp_export_area_drawing)) {
+        /* Export the whole page: note: Inkscape uses 'page' in all menus and dialogs, not 'canvas' */
         sp_document_ensure_up_to_date (doc);
         Geom::Point origin (SP_ROOT(doc->root)->x.computed, SP_ROOT(doc->root)->y.computed);
         area = Geom::Rect(origin, origin + sp_document_dimensions(doc));
@@ -1443,8 +1443,8 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
         (*i)->set_param_string ("exportId", "");
     }
 
-    if (sp_export_area_canvas && sp_export_area_drawing) {
-        g_warning ("You cannot use --export-area-canvas and --export-area-drawing at the same time; only the former will take effect.");
+    if (sp_export_area_page && sp_export_area_drawing) {
+        g_warning ("You cannot use --export-area-page and --export-area-drawing at the same time; only the former will take effect.");
         sp_export_area_drawing = false;
     }
 
@@ -1454,17 +1454,17 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
         (*i)->set_param_bool ("areaDrawing", FALSE);
     }
 
-    if (sp_export_area_canvas) {
+    if (sp_export_area_page) {
         if (sp_export_eps) {
-            g_warning ("EPS cannot have its bounding box extend beyond its content, so if your drawing is smaller than the canvas, --export-area-canvas will clip it to drawing.");
+            g_warning ("EPS cannot have its bounding box extend beyond its content, so if your drawing is smaller than the page, --export-area-page will clip it to drawing.");
         }
-        (*i)->set_param_bool ("areaCanvas", TRUE);
+        (*i)->set_param_bool ("areaPage", TRUE);
     } else {
-        (*i)->set_param_bool ("areaCanvas", FALSE);
+        (*i)->set_param_bool ("areaPage", FALSE);
     }
 
-    if (!sp_export_area_drawing && !sp_export_area_canvas && !sp_export_id) {
-        // neither is set, set canvas as default for ps/pdf and drawing for eps
+    if (!sp_export_area_drawing && !sp_export_area_page && !sp_export_id) {
+        // neither is set, set page as default for ps/pdf and drawing for eps
         if (sp_export_eps) {
             try {
                (*i)->set_param_bool("areaDrawing", TRUE);
