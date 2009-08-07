@@ -122,8 +122,7 @@ public:
     FileOpenDialogImplWin32(Gtk::Window &parent,
                             const Glib::ustring &dir,
                             FileDialogType fileTypes,
-                            const char *title,
-                            const bool save_copy);
+                            const char *title);
 
     /// Destructor
     virtual ~FileOpenDialogImplWin32();
@@ -307,11 +306,12 @@ class FileSaveDialogImplWin32 : public FileSaveDialog, public FileDialogBaseWin3
 
 public:
     FileSaveDialogImplWin32(Gtk::Window &parent,
-                       const Glib::ustring &dir,
-                       FileDialogType fileTypes,
-                       const char *title,
-                       const Glib::ustring &default_key,
-                       const char *docTitle);
+                            const Glib::ustring &dir,
+                            FileDialogType fileTypes,
+                            const char *title,
+                            const Glib::ustring &default_key,
+                            const char *docTitle,
+                            const bool save_copy);
 
     /// Destructor
     virtual ~FileSaveDialogImplWin32();
