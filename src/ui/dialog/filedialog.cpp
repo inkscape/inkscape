@@ -105,16 +105,17 @@ Glib::ustring FileOpenDialog::getFilename()
  * Public factory method.  Used in file.cpp
  */
 FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
-									   const Glib::ustring &path,
+                                       const Glib::ustring &path,
                                        FileDialogType fileTypes,
                                        const char *title,
                                        const Glib::ustring &default_key,
-                                       const gchar *docTitle)
+                                       const gchar *docTitle,
+                                       const bool save_copy)
 {
 #ifdef WIN32
-    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle);
+    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle, save_copy);
 #else
-    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle);
+    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle, save_copy);
 #endif
     return dialog;
 }
@@ -168,8 +169,8 @@ void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::O
 /**
  * Public factory method.  Used in file.cpp
  */
- FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow,
-										   const Glib::ustring &path,
+FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow,
+                                           const Glib::ustring &path,
                                            FileDialogType fileTypes,
                                            const char *title,
                                            const Glib::ustring &default_key)

@@ -711,9 +711,9 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
     //# Get the default extension name
     Glib::ustring default_extension;
-    char *attr = (char *)repr->attribute("inkscape:output_extension");
+    char *attr = (char *)repr->attribute(is_copy ? "inkscape:output_extension_copy" : "inkscape:output_extension");
     if (!attr) {
-        Glib::ustring attr2 = prefs->getString("/dialogs/save_as/default");
+        Glib::ustring attr2 = prefs->getString(is_copy ? "/dialogs/save_copy/default" : "/dialogs/save_as/default");
         if(!attr2.empty()) default_extension = attr2;
     } else {
         default_extension = attr;
@@ -723,18 +723,24 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
     Glib::ustring save_path;
     Glib::ustring save_loc;
 
-    if (doc->uri == NULL) {
-        char formatBuf[256];
-        int i = 1;
-
-        Glib::ustring filename_extension = ".svg";
+    if (!default_extension.empty()) {
         extension = dynamic_cast<Inkscape::Extension::Output *>
               (Inkscape::Extension::db.get(default_extension.c_str()));
+    } else {
+        g_warning ("No default extension!!!! What to do?\n");
+    }
+
+    if (doc->uri && !is_copy) {
+        // Saving as a regular file: recover the filename from the existing doc->uri
+        save_loc = Glib::build_filename(Glib::path_get_dirname(doc->uri),
+                                        Glib::path_get_basename(doc->uri));
+    } else {
+        Glib::ustring filename_extension = ".svg";
         //g_warning("%s: extension ptr: 0x%x", __FUNCTION__, (unsigned int)extension);
         if (extension)
             filename_extension = extension->get_extension();
 
-        Glib::ustring attr3 = prefs->getString("/dialogs/save_as/path");
+        Glib::ustring attr3 = prefs->getString(is_copy ? "/dialogs/save_copy/path" : "/dialogs/save_as/path");
         if (!attr3.empty())
             save_path = attr3;
 
@@ -747,18 +753,30 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
         save_loc = save_path;
         save_loc.append(G_DIR_SEPARATOR_S);
-        snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
-        save_loc.append(formatBuf);
 
-        while (Inkscape::IO::file_test(save_loc.c_str(), G_FILE_TEST_EXISTS)) {
-            save_loc = save_path;
-            save_loc.append(G_DIR_SEPARATOR_S);
-            snprintf(formatBuf, 255, _("drawing-%d%s"), i++, filename_extension.c_str());
+        char formatBuf[256];
+        int i = 1;
+        if (!doc->uri) {
+            // We are saving for the first time; create a unique default filename
+            snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
             save_loc.append(formatBuf);
+
+            while (Inkscape::IO::file_test(save_loc.c_str(), G_FILE_TEST_EXISTS)) {
+                save_loc = save_path;
+                save_loc.append(G_DIR_SEPARATOR_S);
+                snprintf(formatBuf, 255, _("drawing-%d%s"), i++, filename_extension.c_str());
+                save_loc.append(formatBuf);
+            }
+        } else {
+            if (is_copy) {
+                // Use the document uri's base name as the filename but
+                // store in the directory last used for "Save a copy ..."
+                snprintf(formatBuf, 255, _("%s"), Glib::path_get_basename(doc->uri).c_str());
+                save_loc.append(formatBuf);
+            } else {
+                g_assert_not_reached();
+            }
         }
-    } else {
-        save_loc = Glib::build_filename(Glib::path_get_dirname(doc->uri),
-                                        Glib::path_get_basename(doc->uri));
     }
 
     // convert save_loc from utf-8 to locale
@@ -784,7 +802,8 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
             Inkscape::UI::Dialog::SVG_TYPES,
             dialog_title,
             default_extension,
-            doc_title ? doc_title : ""
+            doc_title ? doc_title : "",
+            is_copy
             );
 
     saveDialog->setSelectionType(extension);
@@ -823,7 +842,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
         save_path = Glib::path_get_dirname(fileName);
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("/dialogs/save_as/path", save_path);
+        prefs->setString(is_copy ? "/dialogs/save_copy/path" : "/dialogs/save_as/path", save_path);
 
         return success;
     }
@@ -1144,9 +1163,9 @@ sp_file_export_dialog(void *widget)
 
     //# Get the default extension name
     Glib::ustring default_extension;
-    char *attr = (char *)repr->attribute("inkscape:output_extension");
+    char *attr = (char *)repr->attribute("inkscape:output_extension_export");
     if (!attr) {
-        Glib::ustring attr2 = prefs->getString("/dialogs/save_as/default");
+        Glib::ustring attr2 = prefs->getString("/dialogs/save_export/default");
         if(!attr2.empty()) default_extension = attr2;
     } else {
         default_extension = attr;
@@ -1164,7 +1183,7 @@ sp_file_export_dialog(void *widget)
         if (extension)
             filename_extension = extension->get_extension();
 
-        Glib::ustring attr3 = prefs->getString("/dialogs/save_as/path");
+        Glib::ustring attr3 = prefs->getString("/dialogs/save_export/path");
         if (!attr3.empty())
             export_path = attr3;
 
@@ -1232,7 +1251,7 @@ sp_file_export_dialog(void *widget)
         }
 
         export_path = fileName;
-        prefs->setString("/dialogs/save_as/path", export_path);
+        prefs->setString("/dialogs/save_export/path", export_path);
 
         return success;
     }

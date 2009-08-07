@@ -281,11 +281,12 @@ class FileSaveDialogImplGtk : public FileSaveDialog, public FileDialogBaseGtk
 
 public:
     FileSaveDialogImplGtk(Gtk::Window &parentWindow,
-    		           const Glib::ustring &dir,
-                       FileDialogType fileTypes,
-                       const Glib::ustring &title,
-                       const Glib::ustring &default_key,
-                       const gchar* docTitle);
+                          const Glib::ustring &dir,
+                          FileDialogType fileTypes,
+                          const Glib::ustring &title,
+                          const Glib::ustring &default_key,
+                          const gchar* docTitle,
+                          const bool save_copy);
 
     virtual ~FileSaveDialogImplGtk();
 
@@ -300,6 +301,11 @@ private:
     //void change_title(const Glib::ustring& title);
     void change_path(const Glib::ustring& path);
     void updateNameAndExtension();
+
+    /**
+     * Whether the dialog was invoked by "Save as ..." or "Save a copy ..."
+     */
+    bool is_copy;
 
     /**
      * Fix to allow the user to type the file name

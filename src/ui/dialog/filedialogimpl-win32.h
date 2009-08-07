@@ -120,9 +120,10 @@ public:
     /// @param title The title caption for the dialog in UTF-8
     /// @param type The dialog type
     FileOpenDialogImplWin32(Gtk::Window &parent,
-                       const Glib::ustring &dir,
-                       FileDialogType fileTypes,
-                       const char *title);
+                            const Glib::ustring &dir,
+                            FileDialogType fileTypes,
+                            const char *title,
+                            const bool save_copy);
 
     /// Destructor
     virtual ~FileOpenDialogImplWin32();

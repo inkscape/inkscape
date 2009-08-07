@@ -163,7 +163,8 @@ public:
                                   FileDialogType fileTypes,
                                   const char *title,
                                   const Glib::ustring &default_key,
-                                  const gchar *docTitle);
+                                  const gchar *docTitle,
+                                  const bool save_copy);
 
 
     /**

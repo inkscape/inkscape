@@ -1497,8 +1497,9 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             FileDialogType fileTypes,
             const char *title,
             const Glib::ustring &/*default_key*/,
-            const char *docTitle) :
-    FileDialogBaseWin32(parent, dir, title, fileTypes, "dialogs.save_as"),
+            const char *docTitle,
+            const bool save_copy) :
+    FileDialogBaseWin32(parent, dir, title, fileTypes, save_copy ? "dialogs.save_copy" :  "dialogs.save_as"),
         _title_label(NULL),
         _title_edit(NULL)
 {
