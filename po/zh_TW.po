@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
-"PO-Revision-Date: 2009-08-04 17:54+0800\n"
+"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"PO-Revision-Date: 2009-08-08 00:14+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -46,9 +46,8 @@ msgid "Bulging, matte jelly covering"
 msgstr "凸出、霧面果凍表面"
 
 #: ../share/filters/filters.svg.h:3
-#, fuzzy
 msgid "Smart jelly"
-msgstr "霧面果凍"
+msgstr "智能果凍"
 
 #: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
@@ -59,13 +58,14 @@ msgstr "霧面果凍"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219
 msgid "Bevels"
 msgstr "斜角"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
+msgstr "同於霧面果凍，但有更多控制選項"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -879,7 +879,7 @@ msgstr "空氣噴灑"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Convert to small scattered particles with some thickness"
-msgstr ""
+msgstr "按照厚度轉換成零散的小粒子"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
@@ -1028,7 +1028,6 @@ msgid "Image effects, transparent"
 msgstr "影像特效, 透明"
 
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "Same as HSL Bumps but with transparent highlights"
 msgstr "同於 HSL 凹凸，但帶有透明反光"
 
@@ -1037,7 +1036,6 @@ msgid "Bubbly Bumps alpha"
 msgstr "發泡凹凸 (透明)"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "同於發泡凹凸，但帶有透明反光"
 
@@ -1171,7 +1169,6 @@ msgid "HSL Bumps, matte"
 msgstr "HSL 凹凸, 霧面"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid ""
 "Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "同於 HSL 凹凸，但用漫反射而非鏡面"
@@ -1197,7 +1194,6 @@ msgid "Bubbly Bumps, matte"
 msgstr "發泡凹凸, 霧面"
 
 #: ../share/filters/filters.svg.h:123
-#, fuzzy
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
 msgstr "同於發泡凹凸，但為擴散光線而非鏡面"
 
@@ -1524,7 +1520,7 @@ msgstr "膠片顆粒"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Adds a small scale graininess"
-msgstr ""
+msgstr "加入小比例顆粒"
 
 #: ../share/filters/filters.svg.h:170
 msgid "HSL Bumps, transparent"
@@ -1575,11 +1571,10 @@ msgid "Chewing gum"
 msgstr "口香糖"
 
 #: ../share/filters/filters.svg.h:175
-#, fuzzy
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr "於線條的交叉點上製作柔順流過其邊緣的彩色斑點"
+msgstr "於線條的交叉點上建立柔順流過其邊緣的可著色斑點"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Black outline"
@@ -1594,9 +1589,8 @@ msgid "Color outline"
 msgstr "彩色外框"
 
 #: ../share/filters/filters.svg.h:177
-#, fuzzy
 msgid "Draws a colored outline around"
-msgstr "於周圍繪製彩色外框"
+msgstr "周圍繪製彩色外框"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Inner shadow"
@@ -1643,9 +1637,8 @@ msgid "Gelatine"
 msgstr "凝膠"
 
 #: ../share/filters/filters.svg.h:183
-#, fuzzy
 msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "像紊亂且透明的凝膠的可著色填塗"
+msgstr "紊亂且透明的凝膠之可著色填塗"
 
 #: ../share/filters/filters.svg.h:184
 msgid "Old postcard"
@@ -1661,7 +1654,7 @@ msgstr "模糊光暈"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
-msgstr ""
+msgstr "將一個半透明位移的複本覆蓋到模糊的那一個"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Dots transparency"
@@ -1684,7 +1677,6 @@ msgid "Smear transparency"
 msgstr "透明塗抹"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
 msgstr "用透明的紊亂來塗繪物件，扭轉彩色邊緣"
@@ -1746,7 +1738,6 @@ msgid "Rough transparency"
 msgstr "透明粗糙"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr "取代像素的同時加入紊亂透明"
 
@@ -1803,7 +1794,6 @@ msgid "Alpha engraving B"
 msgstr "透明版畫 B"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr "使點陣圖和材料產生可著色的粗糙版畫效果"
@@ -1886,7 +1876,6 @@ msgid "Canvas Bumps, matte"
 msgstr "畫布凹凸, 霧面"
 
 #: ../share/filters/filters.svg.h:212
-#, fuzzy
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr "同於畫布凹凸，但為擴散光線而非鏡面"
 
@@ -1895,7 +1884,6 @@ msgid "Canvas Bumps alpha"
 msgstr "畫布凹凸 (透明)"
 
 #: ../share/filters/filters.svg.h:213
-#, fuzzy
 msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "同於畫布凹凸，但帶有透明反光"
 
@@ -1918,22 +1906,36 @@ msgid ""
 msgstr "套用一些濾鏡後移除或減少物件邊緣周圍的光暈和鋸齒"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Bright metal"
-msgstr "增亮"
+msgstr "閃亮金屬"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "任何顏色的閃亮金屬效果"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Deep colors plastic"
-msgstr ""
+msgstr "深色塑膠"
 
 #: ../share/filters/filters.svg.h:217
-#, fuzzy
 msgid "Transparent plastic with deep colors"
-msgstr "樹皮紋理，垂直；伴隨深色使用"
+msgstr "深色的透明塑膠"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Melted jelly, matte"
+msgstr "融化的果凍, 霧面"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr "帶有邊緣模糊的霧面斜角"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Melted jelly"
+msgstr "融化的果凍"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Glossy bevel with blurred edges"
+msgstr "帶有捲邊的光滑斜角"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4930,16 +4932,14 @@ msgstr "點陣化過程的解析度 (dpi)"
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-#, fuzzy
 msgid "Export area is drawing"
-msgstr "匯出範圍是繪圖部份"
+msgstr "匯出範圍為繪圖部份"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-#, fuzzy
 msgid "Export area is page"
-msgstr "匯出範圍是繪圖部份"
+msgstr "匯出範圍為頁面"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -5434,7 +5434,7 @@ msgstr "格式自動偵測失敗。此檔案將視為 SVG 來開啟。"
 msgid "default.svg"
 msgstr "default.zh_TW.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "無法載入所要求的檔案 %s"
@@ -5496,54 +5496,62 @@ msgstr "無法儲存檔案 %s。"
 msgid "Document saved."
 msgstr "文件已儲存"
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "繪圖%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "繪圖-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "選取檔案以儲存複本到"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "選擇檔案以儲存到"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "沒有任何改變需要儲存"
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "儲存文件中..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "匯入"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "選擇欲匯入之檔案"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "選取要匯出的檔案"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "儲存暫存複本時錯誤"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "登入開放美工圖庫"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5553,11 +5561,11 @@ msgstr ""
 "匯出文件錯誤。確認伺服器名稱、使用者名稱和密碼是否正確的。這個伺服器是否支援 "
 "webdav 也確認你沒忘記選擇授權。"
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "匯出文件中..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "從開放美工圖庫匯入"
 
@@ -6233,22 +6241,22 @@ msgstr "自動儲存失敗！檔案 %s 無法儲存。"
 msgid "Autosave complete."
 msgstr "自動儲存完成。"
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "未命名文件"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape 發生內部錯誤，將立即結束。\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "已自動備份未儲存的文件於以下的位置:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "自動備份以下文件時失敗:\n"
 
@@ -6659,7 +6667,7 @@ msgstr "此新工具欄控制器 %p 是自動的。只有手動工具欄物件�
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "頁面"
@@ -7885,21 +7893,21 @@ msgstr "DPI"
 
 #: ../src/main.cpp:299
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
-msgstr "以 SVG 使用者單位匯出的區域 (預設為畫布；0,0 表示左下角)"
+msgstr "用 SVG 使用者單元為匯出範圍 (預設是頁面；0,0 為左下角)"
 
 #: ../src/main.cpp:300
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
-msgstr "整個繪圖都是匯出區域 (非畫布)"
+msgid "Exported area is the entire drawing (not page)"
+msgstr "匯出範圍為整個繪圖部份 (不是頁面)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
-msgstr "匯出區域是整個畫布"
+msgid "Exported area is the entire page"
+msgstr "匯出範圍為整個頁面"
 
 #: ../src/main.cpp:314
 msgid ""
@@ -8849,7 +8857,7 @@ msgstr "識別"
 msgid "Unique URI to reference this document."
 msgstr "參考到此文件的唯一 URI"
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "來源"
 
@@ -10950,7 +10958,7 @@ msgid "Smallest object"
 msgstr "最小物件"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11400,49 +11408,49 @@ msgstr "所有點陣圖"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "自動添加副檔名"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "由副檔名判斷"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "來源的左邊界"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "來源的頂部邊緣"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "來源的右邊界"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "來源的底部邊緣"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "來源寬度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "來源高度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "指定範圍寬度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "指定範圍高度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "解析度 (每英寸幾個點)"
 
@@ -11450,28 +11458,28 @@ msgstr "解析度 (每英寸幾個點)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "文件"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "自訂"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "柔化"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "背景"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "指定範圍"
 
@@ -12036,8 +12044,8 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 "此<b>迴旋矩陣</b>讓你指明一個被套用在圖像上的卷積。 使用卷積矩陣來製作的特效"
-"一般有模糊、銳利化，浮雕和邊緣偵測。注意使用這個濾鏡基元可以製作整體的高斯模"
-"糊，特殊高斯模糊基元更快速且不產生鋸齒狀。"
+"一般有模糊、銳利化，浮雕和邊緣偵測。用這個濾鏡基元可以製作整體的高斯模糊，特"
+"殊高斯模糊基元更快速且不產生鋸齒狀。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2298
 msgid ""
@@ -13900,7 +13908,7 @@ msgstr "自動儲存的最大數目："
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr "自動儲存檔案最大數目；使用這個來限制儲存空間的使用"
+msgstr "自動儲存檔案最大數目；用這項來限制使用的儲存空間"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -14039,12 +14047,12 @@ msgstr "簡化臨界值："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"預設的「簡化」命令強度。如果接連調用此命令許多次，它的動作將會愈來愈強烈；短"
-"暫休息之後再調用它會恢復預設臨界值。"
+"預設節點工具的「簡化」指令強度。如果你一連串地執行這個指令許多次，作用將會愈"
+"來愈強烈；短暫停一下後再執行會恢復預設的臨界值。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
@@ -20558,9 +20566,8 @@ msgid "ROBO-Master output"
 msgstr "ROBO-Master 輸出"
 
 #: ../share/extensions/dxf_output.inx.h:1
-#, fuzzy
 msgid "AutoCAD DXF R12 (*.dxf)"
-msgstr "AutoCAD DXF R13 (*.dxf)"
+msgstr "AutoCAD DXF R12 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -22071,19 +22078,16 @@ msgid "Strength (%):"
 msgstr "強度 (%)："
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Scalable Vector Graphics"
-msgstr "可縮放向量圖形 (*.svg)"
+msgstr "可縮放向量圖形"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgstr "清理過的 SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Scoured SVG Output"
-msgstr "SVG 輸出"
+msgstr "清理過的 SVG 輸出"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
