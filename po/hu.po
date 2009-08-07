@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:06+0200\n"
-"PO-Revision-Date: 2009-08-06 23:19+0200\n"
+"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"PO-Revision-Date: 2009-08-08 00:05+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,8 @@ msgstr "Intelligens zselé"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219
 msgid "Bevels"
 msgstr "Rézsútos szegélyek"
 
@@ -1955,6 +1956,22 @@ msgstr "Mély színek, műanyag"
 #: ../share/filters/filters.svg.h:217
 msgid "Transparent plastic with deep colors"
 msgstr "Átlátszó műanyag mély színekkel"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Melted jelly, matte"
+msgstr "Olvadt zselé, matt"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr "Matt rézsútos szegély elmosódott szélekkel"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Melted jelly"
+msgstr "Olvadt zselé"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Glossy bevel with blurred edges"
+msgstr "Fényes rézsútos szegély elmosódott szélekkel"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5547,7 +5564,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.hu.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Nem sikerült betölteni a kért fájlt (%s)"
@@ -5612,54 +5629,62 @@ msgstr "Nem sikerült elmenteni a(z) %s fájlt."
 msgid "Document saved."
 msgstr "A dokumentum elmentve."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "rajz%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "rajz-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Adja meg a példány mentéséhez használandó fájlnevet"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Adja meg a mentési fájlnevet"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "Nincs elmentést igénylő módosítás."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "Dokumentum mentése..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "Importálás"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "Válassza ki az importálandó fájlt"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "Adja meg a fájlt, amelybe exportálni kíván"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Hiba történt egy átmeneti példány mentésekor"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art - bejelentkezés"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5671,11 +5696,11 @@ msgstr ""
 "támogatja-e a Webdav protokollt, továbbá hogy Ön nem feledkezett-e meg a "
 "licencválasztásról."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "A dokumentum exportálva..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importálás az Open Clip Art Libraryből"
 
@@ -6380,22 +6405,22 @@ msgstr "Nem sikerült az automatikus mentés. Nem sikerült elmenteni a(z) %s f�
 msgid "Autosave complete."
 msgstr "Az automatikus mentés befejeződött."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Névtelen dokumentum"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Az Inkscape belső hibába ütközött. A program bezárásra kerül.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "A nem mentett dokumentumokról mentés készült a következő helyekre:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Nem sikerült automatikus mentést készíteni a következő dokumentumokról:\n"
 
@@ -6824,7 +6849,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Lap"
@@ -8132,23 +8157,23 @@ msgstr "DPI"
 
 #: ../src/main.cpp:299
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "Az exportált terület felhasználói SVG-mértékegységben (alapértelmezés: a "
-"rajzvászon, a bal alsó sarok a 0,0 pont)"
+"lap, a bal alsó sarok a 0,0 pont)"
 
 #: ../src/main.cpp:300
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
-msgstr "Az exportált terület a teljes rajz (nem a rajzvászon)"
+msgid "Exported area is the entire drawing (not page)"
+msgstr "Az exportált terület a teljes rajz (nem a lap)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
-msgstr "Az exportált terület a teljes rajzvászon"
+msgid "Exported area is the entire page"
+msgstr "Az exportált terület a teljes lap"
 
 #: ../src/main.cpp:314
 msgid ""
@@ -9154,7 +9179,7 @@ msgstr "Azonosító"
 msgid "Unique URI to reference this document."
 msgstr "A dokumentumra való hivatkozásra használható egyedi URI."
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "Forrás"
 
@@ -11351,7 +11376,7 @@ msgid "Smallest object"
 msgstr "Legkisebb objektum"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11822,49 +11847,49 @@ msgstr "Az összes bitkép"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "Fájlkiterjesztés hozzáfűzése automatikusan"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "A fájlkiterjesztés határozza meg"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "A forrás bal oldali széle"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "A forrás felső széle"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "A forrás jobb oldali széle"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "A forrás alsó széle"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "A forrás szélessége"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "A forrás magassága"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "A cél szélessége"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "A cél magassága"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "Felbontás (pont/hüvelykben)"
 
@@ -11872,28 +11897,28 @@ msgstr "Felbontás (pont/hüvelykben)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "Dokumentum"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "Egyéni"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "Élsimítás"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "Háttér"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "Cél"
 
@@ -14665,14 +14690,15 @@ msgstr "Egyszerűsítési küszöb:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"Az Egyszerűsítés művelet alapértelmezett erőssége. Ha ez a művelet gyors "
-"egymásutánban többször végrehajtásra kerül, akkor egyre erőteljesebb hatást "
-"fog kifejteni; ha viszont egy szünetet követően kerül újra végrehajtásra, "
-"akkor visszaáll az alapértelmezett küszöb."
+"A csomóponteszköz Egyszerűsítés műveletének alapértelmezett erőssége. "
+"Ha ez a művelet gyors egymásutánban többször végrehajtásra kerül, "
+"akkor egyre erőteljesebb hatást fog kifejteni; ha viszont egy "
+"szünetet követően kerül újra végrehajtásra, akkor visszaáll "
+"az alapértelmezett küszöb."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
