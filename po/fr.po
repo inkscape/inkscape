@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 19:30+0200\n"
-"PO-Revision-Date: 2009-08-06 19:57+0100\n"
+"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"PO-Revision-Date: 2009-08-07 15:57+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,6 +82,8 @@ msgstr "Gel tous usages"
 #: ../share/filters/filters.svg.h:102
 #: ../share/filters/filters.svg.h:216
 #: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219
 msgid "Bevels"
 msgstr "Biseaux"
 
@@ -1999,6 +2001,22 @@ msgstr "Plastique coloré"
 #: ../share/filters/filters.svg.h:217
 msgid "Transparent plastic with deep colors"
 msgstr "Plastique transparent avec des couleurs profondes"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Melted jelly, matte"
+msgstr "Gel fondant mat"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr "Biseau mat avec des bords flous"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Melted jelly"
+msgstr "Gel fondant"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Glossy bevel with blurred edges"
+msgstr "Biseau brillant avec des bords flous"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5554,7 +5572,7 @@ msgid "default.svg"
 msgstr "default.fr.svg"
 
 #: ../src/file.cpp:249
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Échec du chargement du fichier %s"
@@ -5615,66 +5633,74 @@ msgstr "Le fichier %s n'a pas pu être enregistré."
 msgid "Document saved."
 msgstr "Document enregistré."
 
-#: ../src/file.cpp:750
-#: ../src/file.cpp:1180
-#: ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761
+#: ../src/file.cpp:1199
+#: ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "dessin%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dessin-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Sélectionner le fichier dans lequel enregistrer une copie"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Sélectionner le fichier dans lequel enregistrer"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "Aucun changement à enregistrer."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "Enregistrement du document..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../src/file.cpp:1201
-#: ../src/file.cpp:1315
+#: ../src/file.cpp:1220
+#: ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "Sélectionner un fichier vers lequel exporter"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "La sauvegarde de la copie temporaire a échoué"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Utilisateur Open Clip Art"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Erreur lors de l'exportation du document. Vérifiez que le nom du serveur, le nom d'utilisateur et le mot de passe soient corrects, que le serveur ait des fonctionnalités webdav et que vous n'ayez pas oublié de choisir une licence."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "Document exporté..."
 
-#: ../src/file.cpp:1442
+#: ../src/file.cpp:1461
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importer depuis la bibliothèque Open Clip Art"
@@ -6370,20 +6396,20 @@ msgstr "Échec de l'enregistrement automatique ! Le fichier %s n'a pas pu être 
 msgid "Autosave complete."
 msgstr "Enregistrement automatique terminé."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Document sans titre"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape a subi une erreur interne et va se fermer maintenant.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Les enregistrements automatiques des documents non enregistrés ont été effectués à cet emplacement :\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Les enregistrements automatiques des documents suivants ont échoué :\n"
 
@@ -6787,7 +6813,7 @@ msgstr "Le nouveau contrôleur d'attache %p est automatique. Seuls les ojbets d'
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Page"
@@ -7970,19 +7996,19 @@ msgid "DPI"
 msgstr "PPP"
 
 #: ../src/main.cpp:299
-msgid "Exported area in SVG user units (default is the canvas; 0,0 is lower-left corner)"
-msgstr "Zone à exporter en unités utilisateur SVG (par défaut, la zone de travail entière; 0, 0 est le coin inférieur gauche)"
+msgid "Exported area in SVG user units (default is the page; 0,0 is lower-left corner)"
+msgstr "Zone à exporter, en unités utilisateur SVG (par défaut, la zone de travail entière ; 0,0 est le coin inférieur gauche)"
 
 #: ../src/main.cpp:300
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+msgid "Exported area is the entire drawing (not page)"
 msgstr "La zone à exporter est le dessin entier (pas la zone de travail)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+msgid "Exported area is the entire page"
 msgstr "La zone à exporter est la zone de travail entière"
 
 #: ../src/main.cpp:314
@@ -8847,7 +8873,7 @@ msgid "Unique URI to reference this document."
 msgstr "URI unique pour référencer ce document."
 
 #: ../src/rdf.cpp:255
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "Source"
 
@@ -10852,7 +10878,7 @@ msgid "Smallest object"
 msgstr "Objet le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11294,49 +11320,49 @@ msgstr "Toutes les images bitmap"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "Ajouter une extension automatiquement"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "Deviner le type de fichier par l'extension"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "Bord gauche de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "Bord supérieur de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "Bord droit de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "Bord inférieur de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "Largeur de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "Hauteur de la source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "Largeur de destination"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "Hauteur de destination"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "Résolution (point par pouce)"
 
@@ -11344,28 +11370,28 @@ msgstr "Résolution (point par pouce)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "Document"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "P_ersonnalisée"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "Antialias"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "Fond"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "Destination"
 
@@ -13646,8 +13672,8 @@ msgid "Simplification threshold:"
 msgstr "Seuil de simplification :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
-msgid "How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."
-msgstr "Force par défaut de la commande Simplifier. En faisant appel à cette commande plusieurs fois de suite, elle agira de façon de plus en plus agressive; un appel après une pause restaurera la valeur par défaut."
+msgid "How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."
+msgstr "Force par défaut de la commande Simplifier. En faisant appel à cette commande plusieurs fois de suite, elle agira de façon de plus en plus agressive ; un appel après une pause restaurera la valeur par défaut."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
