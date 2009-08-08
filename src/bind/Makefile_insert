@@ -6,4 +6,6 @@ ink_common_sources +=	     \
 	bind/javabind.cpp            \
 	bind/dobinding.cpp           \
 	bind/javainc/jni.h           \
-	bind/javainc/linux/jni_md.h
+	bind/javainc/linux/jni_md.h  \
+	bind/javainc/solaris/jni_md.h  \
+	bind/javainc/win32/jni_md.h

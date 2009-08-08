@@ -195,6 +195,7 @@ EXTRA_DIST =	\
 	traits/function.h	\
 	traits/list-copy.h	\
 	traits/reference.h \
+	show-preview.bmp \
 	$(jabber_whiteboard_SOURCES) \
 	$(CXXTEST_TEMPLATE)
 
