@@ -410,7 +410,7 @@
 <feDistantLight azimuth="225" elevation="25" />
 </feSpecularLighting>
 <feComposite in2="fbSourceGraphicAlpha" in="result6" result="result2" operator="in" />
-<feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.9" k3="0.7" />
+<feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="0.7" />
 </filter>
 <filter id="f046" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refraction and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feGaussianBlur stdDeviation="1" result="result1" />
@@ -1252,7 +1252,7 @@
 <feDistantLight elevation="25" azimuth="225" />
 </feDiffuseLighting>
 <feComposite operator="in" result="result2" in="result5" in2="fbSourceGraphicAlpha" />
-<feComposite k3="0.7" k2="0.9" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite k3="0.7" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 </filter>
 <filter id="f123" inkscape:menu-tooltip="Emboss effect : Colors of the original images are preserved or modified by Blend" inkscape:menu="Bumps" height="1" width="1" y="0" x="0" inkscape:label="Emboss">
 <feColorMatrix result="result2" type="luminanceToAlpha" />
@@ -1944,14 +1944,18 @@
 <feGaussianBlur result="result8" stdDeviation="1" />
 <feDisplacementMap in2="result0" in="result1" xChannelSelector="R" yChannelSelector="B" scale="20" result="result2" />
 <feComposite result="result7" operator="in" in="result2" in2="result8" />
-<feComposite in2="result7" result="fbSourceGraphic" k2="0.2" in="result2" k1="1.8" operator="arithmetic" />
-<feColorMatrix values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 3.7 -2.6 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
-<feGaussianBlur stdDeviation="0.5" id="feGaussianBlur3228" result="result9" />
+<feComposite in2="result7" result="fbSourceGraphic" k2="0.15" in="result2" k1="2" operator="arithmetic" />
+<feColorMatrix values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 3.7 -2.6 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" type="matrix" />
+<feGaussianBlur stdDeviation="0.5" result="result9" />
+<feSpecularLighting surfaceScale="10" specularExponent="5" result="result11" specularConstant="0.7">
+<feDistantLight azimuth="235" elevation="55" />
+</feSpecularLighting>
 <feDiffuseLighting in="result9" lighting-color="rgb(255,255,255)" result="result6" diffuseConstant="0.4" surfaceScale="50">
 <feDistantLight elevation="50" azimuth="235" />
 </feDiffuseLighting>
-<feComposite in2="fbSourceGraphic" in="result6" result="result2" operator="in" />
-<feComposite k3="1.2" k2="1.2" operator="arithmetic" in2="fbSourceGraphic" />
+<feBlend blend="normal" id="feBlend3105" result="result10" mode="screen" in2="result11" />
+<feComposite in2="fbSourceGraphic" in="result10" result="result2" operator="in" />
+<feComposite k3="0.9" k2="1" operator="arithmetic" in2="fbSourceGraphic" />
 </filter>
 <filter id="f200" inkscape:label="Wrinkled varnish" inkscape:menu="Bumps" inkscape:menu-tooltip="Thick glossy and translucent paint texture with high depth" height="1.3" y="-0.15" width="1.3" x="-0.15">
 <feGaussianBlur stdDeviation="1" in="SourceGraphic" result="result9" />
