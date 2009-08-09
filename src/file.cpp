@@ -1141,7 +1141,6 @@ sp_file_export_dialog(void *widget)
     Glib::ustring export_path;
     Glib::ustring export_loc;
 
-    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::Extension::Output *extension;
 
