@@ -333,9 +333,9 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         // stroke width. (see get_scale_transform_with_stroke()). This however is currently only implemented for a single bbox.
         // That's why we have both _bbox_points_for_translating and _bbox_points.
         getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, true, emp, mp);
-        if ((_items.size() > 0) && (_items.size() < 50)) { // more than 50 items will produce at least 200 bbox points, which might
-            // make Inkscape crawl (see the comment a few lines above). In that case we will use the bbox of the selection
-            // as a whole
+        if (((_items.size() > 0) && (_items.size() < 50)) || prefs->getBool("/options/snapclosestonly/value", false)) {
+            // More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
+            // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
             for (unsigned i = 0; i < _items.size(); i++) {
                 getBBoxPoints(sp_item_bbox_desktop(_items[i], _snap_bbox_type), &_bbox_points_for_translating, false, true, emp, mp);
             }
