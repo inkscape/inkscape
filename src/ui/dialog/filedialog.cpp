@@ -166,6 +166,8 @@ void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::O
 //# F I L E     E X P O R T
 //########################################################################
 
+#ifdef NEW_EXPORT_DIALOG
+
 /**
  * Public factory method.  Used in file.cpp
  */
@@ -178,6 +180,8 @@ FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow,
     FileExportDialog *dialog = new FileExportDialogImpl(parentWindow, path, fileTypes, title, default_key);
     return dialog;
 }
+
+#endif // NEW_EXPORT_DIALOG
 
 
 } //namespace Dialog

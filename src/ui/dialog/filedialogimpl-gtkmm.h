@@ -357,6 +357,8 @@ private:
 
 
 
+#ifdef NEW_EXPORT_DIALOG
+
 //########################################################################
 //# F I L E     E X P O R T
 //########################################################################
@@ -573,6 +575,7 @@ private:
     Glib::ustring myFilename;
 };
 
+#endif // NEW_EXPORT_DIALOG
 
 } // namespace Dialog
 } // namespace UI

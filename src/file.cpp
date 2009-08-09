@@ -1123,9 +1123,6 @@ sp_file_import(Gtk::Window &parentWindow)
 ## E X P O R T
 ######################*/
 
-//#define NEW_EXPORT_DIALOG
-
-
 
 #ifdef NEW_EXPORT_DIALOG
 
@@ -1192,7 +1189,7 @@ sp_file_export_dialog(void *widget)
     if ( export_path_local.size() > 0)
         export_path = export_path_local;
 
-    //# Show the SaveAs dialog
+    //# Show the Export dialog
     Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance =
         Inkscape::UI::Dialog::FileExportDialog::create(
             export_path,

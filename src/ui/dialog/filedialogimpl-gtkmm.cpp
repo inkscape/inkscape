@@ -1251,6 +1251,8 @@ void FileSaveDialogImplGtk::updateNameAndExtension()
 }
 
 
+#ifdef NEW_EXPORT_DIALOG
+
 //########################################################################
 //# F I L E     E X P O R T
 //########################################################################
@@ -1606,6 +1608,8 @@ FileExportDialogImpl::getFilename()
 {
     return myFilename;
 }
+
+#endif // NEW_EXPORT_DIALOG
 
 
 } //namespace Dialog
