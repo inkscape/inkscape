@@ -892,7 +892,7 @@ SPDesktopWidget::shutdown()
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
                   "Do you want to save this file as an Inkscape SVG?"),
                 SP_DOCUMENT_NAME(doc),
-                Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
+                SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE);
             // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
 
@@ -919,7 +919,7 @@ SPDesktopWidget::shutdown()
 
                 Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
-                if (sp_file_save_dialog(*window, doc)) {
+                if (sp_file_save_dialog(*window, doc, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
                     sp_document_unref(doc);

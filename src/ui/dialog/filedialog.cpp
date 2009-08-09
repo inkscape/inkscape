@@ -110,12 +110,12 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
                                        const char *title,
                                        const Glib::ustring &default_key,
                                        const gchar *docTitle,
-                                       const bool save_copy)
+                                       const Inkscape::Extension::FileSaveMethod save_method)
 {
 #ifdef WIN32
-    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle, save_copy);
+    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
 #else
-    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle, save_copy);
+    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
 #endif
     return dialog;
 }

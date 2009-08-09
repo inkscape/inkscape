@@ -138,12 +138,6 @@ Input::check (void)
     from a file.  The first thing that this does is make sure that the
     file actually exists.  If it doesn't, a NULL is returned.  If the
     file exits, then it is opened using the implmentation of this extension.
-
-    After opening the document the output_extension is set.  What this
-    accomplishes is that save can try to use an extension that supports
-    the same fileformat.  So something like opening and saveing an 
-    Adobe Illustrator file can be transparent (not recommended, but
-    transparent).  This is all done with undo being turned off.
 */
 SPDocument *
 Input::open (const gchar *uri)
@@ -157,13 +151,6 @@ Input::open (const gchar *uri)
     timer->touch();
 
     SPDocument *const doc = imp->open(this, uri);
-    if (doc != NULL) {
-        Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-        bool saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive (doc, false);
-        repr->setAttribute("inkscape:output_extension", output_extension);
-        sp_document_set_undo_sensitive (doc, saved);
-    }
 
     return doc;
 }

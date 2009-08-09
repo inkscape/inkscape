@@ -477,7 +477,7 @@ ScriptDocCache::ScriptDocCache (Inkscape::UI::View::View * view) :
 
     Inkscape::Extension::save(
               Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-              view->doc(), _filename.c_str(), false, false, false);
+              view->doc(), _filename.c_str(), false, false, false, Inkscape::Extension::FILE_SAVE_METHOD_TEMPORARY);
 
     return;
 }
@@ -641,11 +641,13 @@ Script::save(Inkscape::Extension::Output *module,
     if (helper_extension.size() == 0) {
         Inkscape::Extension::save(
                    Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-                   doc, tempfilename_in.c_str(), false, false, false);
+                   doc, tempfilename_in.c_str(), false, false, false,
+                   Inkscape::Extension::FILE_SAVE_METHOD_TEMPORARY);
     } else {
         Inkscape::Extension::save(
                    Inkscape::Extension::db.get(helper_extension.c_str()),
-                   doc, tempfilename_in.c_str(), false, false, false);
+                   doc, tempfilename_in.c_str(), false, false, false,
+                   Inkscape::Extension::FILE_SAVE_METHOD_TEMPORARY);
     }
 
 
@@ -714,8 +716,6 @@ Script::effect(Inkscape::Extension::Effect *module,
     SPDesktop *desktop = (SPDesktop *)doc;
     sp_namedview_document_from_window(desktop);
 
-    gchar * orig_output_extension = g_strdup(sp_document_repr_root(desktop->doc())->attribute("inkscape:output_extension"));
-
     std::list<std::string> params;
     module->paramListString(params);
 
@@ -779,10 +779,7 @@ Script::effect(Inkscape::Extension::Effect *module,
         doc->doc()->emitReconstructionFinish();
         mydoc->release();
         sp_namedview_update_layers_from_document(desktop);
-
-        sp_document_repr_root(desktop->doc())->setAttribute("inkscape:output_extension", orig_output_extension);
     }
-    g_free(orig_output_extension);
 
     return;
 }

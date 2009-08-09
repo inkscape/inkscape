@@ -1247,7 +1247,7 @@ EditWidget::shutdown()
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
                   "Do you want to save this file as an Inkscape SVG?"),
                 SP_DOCUMENT_NAME(doc),
-                Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
+                SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE);
 
         Gtk::MessageDialog dlg (*this,
                        markup,

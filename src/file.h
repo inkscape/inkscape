@@ -20,6 +20,7 @@
 #include <gtk/gtkwidget.h>
 
 #include "extension/extension-forward.h"
+#include "extension/system.h"
 
 struct SPDesktop;
 struct SPDocument;
@@ -29,6 +30,7 @@ namespace Inkscape {
         struct Extension;
     }
 }
+
 
 /*######################
 ## N E W
@@ -111,7 +113,7 @@ bool sp_file_save_a_copy (Gtk::Window &parentWindow, gpointer object, gpointer d
 bool sp_file_save_document (Gtk::Window &parentWindow, SPDocument *document);
 
 /* Do the saveas dialog with a document as the parameter */
-bool sp_file_save_dialog (Gtk::Window &parentWindow, SPDocument *doc, bool bAsCopy = FALSE);
+bool sp_file_save_dialog (Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extension::FileSaveMethod save_method);
 
 
 /*######################

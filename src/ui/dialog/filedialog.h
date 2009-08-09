@@ -21,6 +21,10 @@
 #include <set>
 #include <gtkmm.h>
 
+#include "extension/system.h"
+
+class SPDocument;
+
 namespace Inkscape {
 namespace Extension {
 class Extension;
@@ -164,7 +168,7 @@ public:
                                   const char *title,
                                   const Glib::ustring &default_key,
                                   const gchar *docTitle,
-                                  const bool save_copy);
+                                  const Inkscape::Extension::FileSaveMethod save_method);
 
 
     /**

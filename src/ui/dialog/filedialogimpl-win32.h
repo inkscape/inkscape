@@ -311,7 +311,7 @@ public:
                             const char *title,
                             const Glib::ustring &default_key,
                             const char *docTitle,
-                            const bool save_copy);
+                            const FileSaveMethod save_method);
 
     /// Destructor
     virtual ~FileSaveDialogImplWin32();

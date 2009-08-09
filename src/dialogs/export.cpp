@@ -540,8 +540,7 @@ sp_export_dialog (void)
                 gchar *name;
                 SPDocument * doc = SP_ACTIVE_DOCUMENT;
                 const gchar *uri = SP_DOCUMENT_URI (doc);
-                Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-                const gchar * text_extension = repr->attribute("inkscape:output_extension");
+                const gchar *text_extension = Inkscape::Preferences::get()->getString("/dialogs/save_as/default").c_str();
                 Inkscape::Extension::Output * oextension = NULL;
 
                 if (text_extension != NULL) {

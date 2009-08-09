@@ -884,9 +884,10 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
                                               const Glib::ustring &title,
                                               const Glib::ustring &/*default_key*/,
                                               const gchar* docTitle,
-                                              const bool save_copy) :
-    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, save_copy ? "/dialogs/save_copy" : "/dialogs/save_as"),
-    is_copy(save_copy)
+                                              const Inkscape::Extension::FileSaveMethod save_method) :
+    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes,
+                      (save_method == Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY) ? "/dialogs/save_copy" : "/dialogs/save_as"),
+    save_method(save_method)
 {
     FileSaveDialog::myDocTitle = docTitle;
 
@@ -924,7 +925,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
     //###### Do we want the .xxx extension automatically added?
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
-    if (save_copy) {
+    if (save_method == Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY) {
         fileTypeCheckbox.set_active(prefs->getBool("/dialogs/save_copy/append_extension", true));
     } else {
         fileTypeCheckbox.set_active(prefs->getBool("/dialogs/save_as/append_extension", true));
@@ -1115,18 +1116,13 @@ FileSaveDialogImplGtk::show()
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         
         // Store changes of the "Append filename automatically" checkbox back to preferences.
-        if (is_copy) {
+        if (save_method == Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY) {
             prefs->setBool("/dialogs/save_copy/append_extension", fileTypeCheckbox.get_active());
         } else {
             prefs->setBool("/dialogs/save_as/append_extension", fileTypeCheckbox.get_active());
         }
 
-        // Store the last used save-as filetype to preferences.
-        if (is_copy) {
-            prefs->setString("/dialogs/save_copy/default", ( extension != NULL ? extension->get_id() : "" ));
-        } else {
-            prefs->setString("/dialogs/save_as/default", ( extension != NULL ? extension->get_id() : "" ));
-        }
+        Inkscape::Extension::store_file_extension_in_prefs ((extension != NULL ? extension->get_id() : "" ), save_method);
 
         cleanup( true );
 
