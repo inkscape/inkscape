@@ -141,7 +141,7 @@ void file_import(SPDocument *in_doc, const Glib::ustring &uri,
  * additional type selection, to allow the user to export
  * the a document as a given type.
  */
-bool sp_file_export_dialog (void *widget);
+bool sp_file_export_dialog (Gtk::Window &parentWindow);
 
 
 /*######################

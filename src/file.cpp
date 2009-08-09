@@ -1130,7 +1130,7 @@ sp_file_import(Gtk::Window &parentWindow)
  *  Display an Export dialog, export as the selected type if OK pressed
  */
 bool
-sp_file_export_dialog(void *widget)
+sp_file_export_dialog(Gtk::Window &parentWindow)
 {
     //# temp hack for 'doc' until we can switch to this dialog
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
@@ -1192,6 +1192,7 @@ sp_file_export_dialog(void *widget)
     //# Show the Export dialog
     Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance =
         Inkscape::UI::Dialog::FileExportDialog::create(
+            parentWindow,
             export_path,
             Inkscape::UI::Dialog::EXPORT_TYPES,
             (char const *) _("Select file to export to"),
@@ -1220,7 +1221,7 @@ sp_file_export_dialog(void *widget)
         else
             g_warning( "Error converting save filename to UTF-8." );
 
-        success = file_save(doc, fileName, selectionType, TRUE, FALSE);
+        success = file_save(parentWindow, doc, fileName, selectionType, TRUE, FALSE, Inkscape::Extension::FILE_SAVE_METHOD_EXPORT);
 
         if (success) {
             Glib::RefPtr<Gtk::RecentManager> recent = Gtk::RecentManager::get_default();
@@ -1243,7 +1244,7 @@ sp_file_export_dialog(void *widget)
  *
  */
 bool
-sp_file_export_dialog(void */*widget*/)
+sp_file_export_dialog(Gtk::Window &/*parentWindow*/)
 {
     sp_export_dialog();
     return true;

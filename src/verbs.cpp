@@ -799,7 +799,7 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_file_import(*parent);
             break;
         case SP_VERB_FILE_EXPORT:
-            sp_file_export_dialog(NULL);
+            sp_file_export_dialog(*parent);
             break;
         case SP_VERB_FILE_IMPORT_FROM_OCAL:
             sp_file_import_from_ocal(*parent);
