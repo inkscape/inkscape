@@ -535,7 +535,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                 if (item_at_point && !selection->includes(item_at_point))
                                     selection->set(item_at_point);
                             } // otherwise, do not change selection so that dragging selected-within-group items, as well as alt-dragging, is possible
-                            seltrans->grab(p, -1, -1, FALSE);
+                            seltrans->grab(p, -1, -1, FALSE, TRUE);
                             sc->moved = TRUE;
                         }
                         if (!seltrans->isEmpty())

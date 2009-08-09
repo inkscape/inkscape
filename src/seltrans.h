@@ -53,7 +53,7 @@ public:
     void increaseState();
     void resetState();
     void setCenter(Geom::Point const &p);
-    void grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles);
+    void grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles, bool translating);
     void transform(Geom::Matrix const &rel_affine, Geom::Point const &norm);
     void ungrab();
     void stamp();
@@ -118,7 +118,8 @@ private:
     std::vector<Geom::Point> _items_centers;
 
     std::vector<std::pair<Geom::Point, int> > _snap_points;
-    std::vector<std::pair<Geom::Point, int> > _bbox_points;
+    std::vector<std::pair<Geom::Point, int> > _bbox_points; // the bbox point of the selection as a whole, i.e. max. 4 corners plus optionally some midpoints
+    std::vector<std::pair<Geom::Point, int> > _bbox_points_for_translating; // the bbox points of each selected item, only to be used for translating
 
     Inkscape::SelCue _selcue;
 

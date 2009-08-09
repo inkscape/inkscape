@@ -241,8 +241,10 @@ void Inkscape::SelTrans::setCenter(Geom::Point const &p)
     _updateHandles();
 }
 
-void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles)
+void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles, bool translating)
 {
+    // While dragging a handle, we will either scale, skew, or rotate and the "translating" parameter will be false
+    // When dragging the selected item itself however, we will translate the selection and that parameter will be true
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -273,10 +275,11 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // The selector tool should snap the bbox, special snappoints, and path nodes
     // (The special points are the handles, center, rotation axis, font baseline, ends of spiral, etc.)
 
-    // First, determine the bounding box for snapping ...
+    // First, determine the bounding box
     _bbox = selection->bounds(_snap_bbox_type);
     _approximate_bbox = selection->bounds(SPItem::APPROXIMATE_BBOX); // Used for correctly scaling the strokewidth
     _geometric_bbox = selection->bounds(SPItem::GEOMETRIC_BBOX);
+
     _point = p;
     if (_geometric_bbox) {
         _point_geom = _geometric_bbox->min() + _geometric_bbox->dimensions() * Geom::Scale(x, y);
@@ -286,31 +289,31 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
-	Inkscape::SnapPreferences local_snapprefs = m.snapprefs;
-	local_snapprefs.setSnapToItemNode(true); // We should get at least the cusp nodes here. This might
-	// have been turned off because (for example) the user only want paths as a snap target, not nodes
-	// but as a snap source we still need some nodes though!
+    Inkscape::SnapPreferences local_snapprefs = m.snapprefs;
+    local_snapprefs.setSnapToItemNode(true); // We should get at least the cusp nodes here. This might
+    // have been turned off because (for example) the user only want paths as a snap target, not nodes
+    // but as a snap source we still need some nodes though!
     _snap_points.clear();
-	_snap_points = selection->getSnapPoints(&local_snapprefs);
-	std::vector<std::pair<Geom::Point, int> > snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
-	if (_snap_points.size() > 100) {
-		/* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
-		An average user would rarely ever try to snap such a large number of nodes anyway, because
-		(s)he could hardly discern which node would be snapping */
-		if (prefs->getBool("/options/snapclosestonly/value", false)) {
-			_keepClosestPointOnly(_snap_points, p);
-		} else {
-			_snap_points = snap_points_hull;
-		}
-		// Unfortunately, by now we will have lost the font-baseline snappoints :-(
-	}
+    _snap_points = selection->getSnapPoints(&local_snapprefs);
+    std::vector<std::pair<Geom::Point, int> > snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
+    if (_snap_points.size() > 200) {
+        /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
+        An average user would rarely ever try to snap such a large number of nodes anyway, because
+        (s)he could hardly discern which node would be snapping */
+        if (prefs->getBool("/options/snapclosestonly/value", false)) {
+            _keepClosestPointOnly(_snap_points, p);
+        } else {
+            _snap_points = snap_points_hull;
+        }
+        // Unfortunately, by now we will have lost the font-baseline snappoints :-(
+    }
 
     // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
     // path nodes, for example because a rectangle which has been converted to a path doesn't have
     // any other special points
     Geom::Rect snap_points_bbox;
     if ( snap_points_hull.empty() == false ) {
-    	std::vector<std::pair<Geom::Point, int> >::iterator i = snap_points_hull.begin();
+        std::vector<std::pair<Geom::Point, int> >::iterator i = snap_points_hull.begin();
         snap_points_bbox = Geom::Rect((*i).first, (*i).first);
         i++;
         while (i != snap_points_hull.end()) {
@@ -320,11 +323,29 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     _bbox_points.clear();
+    _bbox_points_for_translating.clear();
+    // Collect the bounding box's corners and midpoints for each selected item
+    if (m.snapprefs.getSnapModeBBox()) {
+        bool mp = m.snapprefs.getSnapBBoxMidpoints();
+        bool emp = m.snapprefs.getSnapBBoxEdgeMidpoints();
+        // Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
+        // this is easy to do, but when snapping the visual bbox while scaling we will have to compensate for the scaling of the
+        // stroke width. (see get_scale_transform_with_stroke()). This however is currently only implemented for a single bbox.
+        // That's why we have both _bbox_points_for_translating and _bbox_points.
+        getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, true, emp, mp);
+        if ((_items.size() > 0) && (_items.size() < 50)) { // more than 50 items will produce at least 200 bbox points, which might
+            // make Inkscape crawl (see the comment a few lines above). In that case we will use the bbox of the selection
+            // as a whole
+            for (unsigned i = 0; i < _items.size(); i++) {
+                getBBoxPoints(sp_item_bbox_desktop(_items[i], _snap_bbox_type), &_bbox_points_for_translating, false, true, emp, mp);
+            }
+        } else {
+            _bbox_points_for_translating = _bbox_points; // use the bbox points of the selection as a whole
+        }
+    }
+
     if (_bbox) {
-    	if (m.snapprefs.getSnapModeBBox()) {
-    		getBBoxPoints(_bbox, &_bbox_points, false, true, m.snapprefs.getSnapBBoxEdgeMidpoints(), m.snapprefs.getSnapBBoxMidpoints());
-    	}
-    	// There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
+        // There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points
         // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
@@ -339,41 +360,65 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // (i.e. when weight == 1), then we will not even try to snap to other points and discard those other
     // points immediately.
 
-	if (prefs->getBool("/options/snapclosestonly/value", false)) {
-    	if (m.snapprefs.getSnapModeNode()) {
-			_keepClosestPointOnly(_snap_points, p);
-    	} else {
-    		_snap_points.clear(); // don't keep any point
-    	}
+    if (prefs->getBool("/options/snapclosestonly/value", false)) {
+        if (m.snapprefs.getSnapModeNode()) {
+            _keepClosestPointOnly(_snap_points, p);
+        } else {
+            _snap_points.clear(); // don't keep any point
+        }
 
-    	if (m.snapprefs.getSnapModeBBox()) {
-			_keepClosestPointOnly(_bbox_points, p);
-		} else {
-			_bbox_points.clear(); // don't keep any point
-		}
+        if (m.snapprefs.getSnapModeBBox()) {
+            _keepClosestPointOnly(_bbox_points, p);
+            _keepClosestPointOnly(_bbox_points_for_translating, p);
+        } else {
+            _bbox_points.clear(); // don't keep any point
+            _bbox_points_for_translating.clear();
+        }
 
-    	g_assert(_bbox_points.size() < 2 && _snap_points.size() < 2);
-    	if (_snap_points.size() == 1 && _bbox_points.size() == 1) { //both vectors can only have either one or zero elements
-    		// So we have exactly one bbox corner and one node left; now find out which is closest and delete the other one
-    		if (Geom::L2((_snap_points.at(0)).first - p) < Geom::L2((_bbox_points.at(0)).first - p)) {
-    			_bbox_points.clear();
-    		} else {
-    			_snap_points.clear();
-    		}
-		}
+        // Each of the three vectors of snappoints now contains either one snappoint or none at all.
+        if (_snap_points.size() > 1 || _bbox_points.size() > 1 || _bbox_points_for_translating.size() > 1) {
+            g_warning("Incorrect assumption encountered while finding the snap source; nothing serious, but please report to Diederik");
+        }
 
-    	// Optionally, show the snap source
-    	if (!(_state == STATE_ROTATE && x != 0.5 && y != 0.5)) { // but not when we're draging a rotation handle, because that won't snap
-			// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
-			g_assert((_bbox_points.size() + _snap_points.size()) < 2);
-			if (m.snapprefs.getSnapEnabledGlobally()) {
-				if (_bbox_points.size() == 1) {
-					_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
-				} else if (_snap_points.size() == 1){
-					_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
-				}
-			}
-    	}
+        // Now let's reduce this to a single closest snappoint
+        Geom::Coord dsp    = _snap_points.size()                 == 1 ? Geom::L2((_snap_points.at(0)).first - p) : NR_HUGE;
+        Geom::Coord dbbp   = _bbox_points.size()                 == 1 ? Geom::L2((_bbox_points.at(0)).first - p) : NR_HUGE;
+        Geom::Coord dbbpft = _bbox_points_for_translating.size() == 1 ? Geom::L2((_bbox_points_for_translating.at(0)).first - p) : NR_HUGE;
+
+        if (translating) {
+            _bbox_points.clear();
+            if (dsp > dbbpft) {
+                _snap_points.clear();
+            } else {
+                _bbox_points_for_translating.clear();
+            }
+        } else {
+            _bbox_points_for_translating.clear();
+            if (dsp > dbbp) {
+                _snap_points.clear();
+            } else {
+                _bbox_points.clear();
+            }
+        }
+
+        if ((_snap_points.size() + _bbox_points.size() + _bbox_points_for_translating.size()) > 1) {
+            g_warning("Checking number of snap sources failed; nothing serious, but please report to Diederik");
+        }
+
+        // Optionally, show the snap source
+        if (!(_state == STATE_ROTATE && x != 0.5 && y != 0.5)) { // but not when we're dragging a rotation handle, because that won't snap
+            // Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
+            g_assert((_snap_points.size() + _bbox_points.size() + _bbox_points_for_translating.size()) == 1);
+            if (m.snapprefs.getSnapEnabledGlobally()) {
+                if (_bbox_points.size() == 1) {
+                    _desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
+                } else if (_bbox_points_for_translating.size() == 1) {
+                    _desktop->snapindicator->set_new_snapsource(_bbox_points_for_translating.at(0));
+                } else if (_snap_points.size() == 1){
+                    _desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+                }
+            }
+        }
     }
 
     if ((x != -1) && (y != -1)) {
@@ -793,7 +838,7 @@ void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint /*state*/, SPSelTransHan
             break;
     }
 
-    grab(sp_knot_position(knot), handle.x, handle.y, FALSE);
+    grab(sp_knot_position(knot), handle.x, handle.y, FALSE, FALSE);
 }
 
 
@@ -1397,17 +1442,17 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-    	m.setup(_desktop, true, _items_const);
-    	m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy, Inkscape::SNAPSOURCE_UNDEFINED);
+        m.setup(_desktop, true, _items_const);
+        m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy, Inkscape::SNAPSOURCE_UNDEFINED);
 
     } else if (shift) {
-    	if (control) { // shift & control: constrained movement without snapping
-    		if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
-				dxy[Geom::Y] = 0;
-			} else {
-				dxy[Geom::X] = 0;
-			}
-    	}
+        if (control) { // shift & control: constrained movement without snapping
+            if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
+                dxy[Geom::Y] = 0;
+            } else {
+                dxy[Geom::X] = 0;
+            }
+        }
     } else { //!shift: with snapping
 
         /* We're snapping to things, possibly with a constraint to horizontal or
@@ -1415,9 +1460,9 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         ** pick the smallest.
         */
 
-    	m.setup(_desktop, false, _items_const);
+        m.setup(_desktop, false, _items_const);
 
-    	/* This will be our list of possible translations */
+        /* This will be our list of possible translations */
         std::list<Inkscape::SnappedPoint> s;
 
         if (control) { // constrained movement with snapping
@@ -1425,36 +1470,36 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
             unsigned int dim = fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y]) ? Geom::X : Geom::Y;
-			// When doing a constrained translation, all points will move in the same direction, i.e.
-			// either horizontally or vertically. Therefore we only have to specify the direction of
-			// the constraint-line once. The constraint lines are parallel, but might not be colinear.
-			// Therefore we will have to set the point through which the constraint-line runs
-			// individually for each point to be snapped; this will be handled however by _snapTransformed()
-			s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
-													 _bbox_points,
-													 _point,
-													 Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
-													 dxy));
+            // When doing a constrained translation, all points will move in the same direction, i.e.
+            // either horizontally or vertically. Therefore we only have to specify the direction of
+            // the constraint-line once. The constraint lines are parallel, but might not be colinear.
+            // Therefore we will have to set the point through which the constraint-line runs
+            // individually for each point to be snapped; this will be handled however by _snapTransformed()
+            s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
+                                                     _bbox_points_for_translating,
+                                                     _point,
+                                                     Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+                                                     dxy));
 
-			s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
-													 _snap_points,
-													 _point,
-													 Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
-													 dxy));
+            s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
+                                                     _snap_points,
+                                                     _point,
+                                                     Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+                                                     dxy));
         } else { // !control
 
             // Let's leave this timer code here for a while. I'll probably need it in the near future (Diederik van Lierop)
             /* GTimeVal starttime;
             GTimeVal endtime;
-    		g_get_current_time(&starttime); */
+            g_get_current_time(&starttime); */
 
             /* Snap to things with no constraint */
-        	s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX, _bbox_points, _point, dxy));
-        	s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE, _snap_points, _point, dxy));
+            s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX, _bbox_points_for_translating, _point, dxy));
+            s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE, _snap_points, _point, dxy));
 
-          	/*g_get_current_time(&endtime);
-          	double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
-          	std::cout << "Time spent snapping: " << elapsed << std::endl; */
+              /*g_get_current_time(&endtime);
+              double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
+              std::cout << "Time spent snapping: " << elapsed << std::endl; */
         }
 
         /* Pick one */
@@ -1592,21 +1637,21 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
 
 void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference)
 {
-	if (points.size() < 2) return;
+    if (points.size() < 2) return;
 
-	std::pair<Geom::Point, int> closest_point = std::make_pair(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED);
-	Geom::Coord closest_dist = NR_HUGE;
+    std::pair<Geom::Point, int> closest_point = std::make_pair(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED);
+    Geom::Coord closest_dist = NR_HUGE;
 
-	for(std::vector<std::pair<Geom::Point, int> >::const_iterator i = points.begin(); i != points.end(); i++) {
-		Geom::Coord dist = Geom::L2((*i).first - reference);
-		if (i == points.begin() || dist < closest_dist) {
-			closest_point = *i;
-			closest_dist = dist;
-		}
+    for(std::vector<std::pair<Geom::Point, int> >::const_iterator i = points.begin(); i != points.end(); i++) {
+        Geom::Coord dist = Geom::L2((*i).first - reference);
+        if (i == points.begin() || dist < closest_dist) {
+            closest_point = *i;
+            closest_dist = dist;
+        }
     }
 
-	points.clear();
-	points.push_back(closest_point);
+    points.clear();
+    points.push_back(closest_point);
 }
 
 /*
