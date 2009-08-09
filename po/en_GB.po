@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2009-06-12 22:15-0000\n"
 "Last-Translator: Tim Sheridan <tim.sheridan@gmail.com>\n"
 "Language-Team: en_GB <en_gb@li.org>\n"
@@ -55,7 +55,8 @@ msgstr "Matte jelly"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "Bevels"
 
@@ -517,8 +518,8 @@ msgid "Bumps"
 msgstr "Bumps"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "Highly flexible specular bump"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1097,7 +1098,7 @@ msgstr "Blur the contents of objects, preserving the outline"
 msgid "Specular light"
 msgstr "Specular light"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "Basic specular bevel to use for building textures"
 
@@ -2006,6 +2007,30 @@ msgstr ""
 #, fuzzy
 msgid "Transparent plastic with deep colors"
 msgstr "Bark texture, vertical; use with deep colours"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "Matte jelly"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "Matte jelly"
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Glossy bevel with blurred edges"
+msgstr "Strokes end with a round end"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "Combined"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5566,7 +5591,7 @@ msgstr "Format autodetect failed. The file is being opened as SVG."
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Failed to load the requested file %s"
@@ -5629,54 +5654,62 @@ msgstr "File %s could not be saved."
 msgid "Document saved."
 msgstr "Document saved."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "drawing%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "drawing-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, fuzzy, c-format
+msgid "%s"
+msgstr "%"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Select file to save a copy to"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Select file to save to"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "No changes need to be saved."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "Saving document..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "Import"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "Select file to import"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "Select file to export to"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Error saving a temporary copy"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art Login"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5687,11 +5720,11 @@ msgstr ""
 "password are correct, if the server has support for webdav and verify if you "
 "didn't forget to choose a license."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "Document exported..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Import From Open Clip Art Library"
 
@@ -6378,16 +6411,16 @@ msgstr "Autosave failed! File %s could not be saved."
 msgid "Autosave complete."
 msgstr "Autosave complete."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Untitled document"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape encountered an internal error and will close now.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -6395,7 +6428,7 @@ msgstr ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Automatic backup of the following documents failed:\n"
 
@@ -6814,7 +6847,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Page"
@@ -7873,7 +7906,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "How many construction lines (tangents) to draw"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8088,8 +8121,9 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
@@ -8100,11 +8134,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "Exported area is the entire drawing (not canvas)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "Exported area is the entire canvas"
 
 #: ../src/main.cpp:314
@@ -8394,7 +8430,7 @@ msgstr ""
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Stamp"
 
@@ -9087,7 +9123,7 @@ msgstr "Identifier"
 msgid "Unique URI to reference this document."
 msgstr "Unique URI to reference this document."
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "Source"
 
@@ -9432,7 +9468,7 @@ msgstr "Rotate 90&#176; CCW"
 msgid "Rotate 90&#176; CW"
 msgstr "Rotate 90&#176; CW"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Rotate"
@@ -9454,7 +9490,7 @@ msgid "Move horizontally"
 msgstr "Move horizontally"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Move"
 
@@ -9814,15 +9850,15 @@ msgstr[1] "<b>%i</b> objects of <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Skew"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "Set centre"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9830,7 +9866,7 @@ msgstr ""
 "<b>Centre</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this centre"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9838,7 +9874,7 @@ msgstr ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation centre"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9846,7 +9882,7 @@ msgstr ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation centre"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9854,7 +9890,7 @@ msgstr ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9862,35 +9898,35 @@ msgstr ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "Reset centre"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Move <b>centre</b> to %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11236,7 +11272,7 @@ msgid "Smallest object"
 msgstr "Smallest object"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11699,49 +11735,49 @@ msgstr "All Bitmaps"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "Append filename extension automatically"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "Guess from extension"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "Left edge of source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "Top edge of source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "Right edge of source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "Bottom edge of source"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "Source width"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "Source height"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "Destination width"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "Destination height"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "Resolution (dots per inch)"
 
@@ -11749,28 +11785,28 @@ msgstr "Resolution (dots per inch)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "Document"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "Custom"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "Antialias"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "Background"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "Destination"
 
@@ -14488,10 +14524,11 @@ msgid "Simplification threshold:"
 msgstr "Simplification threshold:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#, fuzzy
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -23188,6 +23225,9 @@ msgstr "Windows Metafile Input"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML Input"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "Highly flexible specular bump"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "Glossy jelly"

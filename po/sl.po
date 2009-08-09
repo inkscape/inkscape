@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2009-07-11 20:34+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -61,7 +61,8 @@ msgstr "Moten žele"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "Izbokline"
 
@@ -523,8 +524,8 @@ msgid "Bumps"
 msgstr "Izbokline"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "Visoko fleksibilna odsevna izboklina"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1104,7 +1105,7 @@ msgstr "Zabriši vsebino predmetov, ohrani obris"
 msgid "Specular light"
 msgstr "Odbojna svetloba"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "Osnovna izbočenost z odsevom, uporabljena pri gradnji tekstur"
 
@@ -2002,6 +2003,30 @@ msgstr ""
 #, fuzzy
 msgid "Transparent plastic with deep colors"
 msgstr "Tekstura lubja, navpična; uporabite s temnejšimi barvami"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "Moten žele"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "Moten žele"
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Glossy bevel with blurred edges"
+msgstr "Stiskano jeklo z zaobljenim koncem"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "Združeno"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5580,7 +5605,7 @@ msgstr "Vrste datoteke ni mogoče zaznati. Datoteka bo odprta kot SVG."
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Želene datoteke %s ni mogoče naložiti"
@@ -5646,54 +5671,62 @@ msgstr "Datoteke %s ni mogoče shraniti."
 msgid "Document saved."
 msgstr "Dokument shranjen."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "risba%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "risba-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, fuzzy, c-format
+msgid "%s"
+msgstr "%"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Izberite datoteko za shranjevanje kopije"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Izberi datoteko za shranjevanje"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "Ni sprememb za shranjevanje."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "Shranjevanje dokumenta ..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "Uvozi"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Napaka pri shranjevanju začasne kopije"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Prijava v Open Clip Art"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5704,11 +5737,11 @@ msgstr ""
 "in geslo pravilni, če ima strežnik podporo za webdav, preverite pa tudi, če "
 "niste pozabili izbrati licence."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "Dokument izvožen ..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Uvozi iz odprte knjižnice izrezkov (Open Clip Art Library)"
 
@@ -6433,16 +6466,16 @@ msgstr "Samodejno shranjevanje ni uspelo! Datoteke %s ni mogoče shraniti."
 msgid "Autosave complete."
 msgstr "Samodejno shranjevanje dokončano."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Neimenovan dokument"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape je naletel na notranjo napako in se bo zato zaprl.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -6450,7 +6483,7 @@ msgstr ""
 "Samodejno shranjevanje neshranjenih dokumentov je bilo opravljeno, na "
 "sledeče lokacije:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Samodejno shranjevanje sledečih dokumentov ni uspelo:\n"
 
@@ -6873,7 +6906,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Stran"
@@ -7940,7 +7973,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "Koliko konstrukcijskih črt (tangent) naj bo narisanih"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8160,8 +8193,9 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "Območje za izvoz v SVG točkah (privzet je cel dokument, 0.0 pomeni spodnji "
@@ -8172,11 +8206,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "Izvoženo območje je celotna risba (ne platno)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "Izvoženo območje je celotno platno"
 
 #: ../src/main.cpp:314
@@ -8470,7 +8506,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: zakleni dolžino ročice; <b>Ctrl+Alt</b>: premikaj po ročicah"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Ožigosaj"
 
@@ -9178,7 +9214,7 @@ msgstr "Označevalec"
 msgid "Unique URI to reference this document."
 msgstr "Unikatna URI za oznako tega dokumenta."
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "Vir"
 
@@ -9524,7 +9560,7 @@ msgstr "Zasukaj 90&#176; v obratni SUK"
 msgid "Rotate 90&#176; CW"
 msgstr "Zasukaj 90&#176; v SUK"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Zasukaj"
@@ -9546,7 +9582,7 @@ msgid "Move horizontally"
 msgstr "Premakni vodoravno"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Premakni"
 
@@ -9929,15 +9965,15 @@ msgstr[3] "<b>%i</b> predmeti <b>%i</b> vrst"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Nagibaj"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "Nastavi središče"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9945,7 +9981,7 @@ msgstr ""
 "<b>Središče</b> vrtenja ali vlečenja: povlecite za premik središča; tudi "
 "raztegovanje s držanjem Shifta uporablja to središče"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9953,7 +9989,7 @@ msgstr ""
 "<b>Stisni ali raztegni</b> izbrano; s <b>Ctrl</b> razteguj enakomerno; s "
 "<b>Shift</b> razteguj okrog središča vrtenja"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9961,7 +9997,7 @@ msgstr ""
 "<b>Razteguj</b> izbrano; s <b>Ctrl</b> razteguj enakomerno; s <b>Shift</b> "
 "razteguj okrog središča vrtenja"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9969,7 +10005,7 @@ msgstr ""
 "<b>Nagni</b> izbrano; s <b>Ctrl</b> preskakuj po kotih; s <b>Shift</b> "
 "nagiba okrog nasprotne strani"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9977,35 +10013,35 @@ msgstr ""
 "<b>Zavrti</b> izbrano; s <b>Ctrl</b> preskakuj po kotih; s <b>Shift</b> vrti "
 "okrog nasprotnega kota"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "Ponastavi središče"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Razteguj</b>: %0.2f%% x %0.2f%%; s <b>Ctrl</b> zakleni razmerje"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Nagni</b>: %0.2f&#176;; s <b>Ctrl</b> preskakuj po kotih "
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zavrti</b>: %0.2f stopinj;s <b>Ctrl</b> preskakuj po kotih "
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Premakni <b>središče</b> na %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11382,7 +11418,7 @@ msgid "Smallest object"
 msgstr "Najmanjši predmet"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11841,49 +11877,49 @@ msgstr "Vse bitne slike"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "Samodejno pripni končnico datoteke"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "Ugani iz končnice"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "Levi rob vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "Vrhnji rob vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "Desni rob vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "Spodnji rob vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "Širina vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "Višina vira"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "Širina cilja"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "Višina cilja"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "Ločljivost (pik na palec)"
 
@@ -11891,28 +11927,28 @@ msgstr "Ločljivost (pik na palec)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "Dokument"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "Po meri"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "Zgladi robove"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "Ozadje"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "Cilj"
 
@@ -14615,10 +14651,11 @@ msgid "Simplification threshold:"
 msgstr "Doseg poenostavljanja:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#, fuzzy
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 "Kako močen je privzeto ukaz poenostavi. Če ga izberete večkrat zaporedoma, "
 "se bo obnašal agresivneje. Če ga izberete po krajšem premoru, bo spet "
@@ -23370,6 +23407,9 @@ msgstr "Uvoz Metadatoteke Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Uvoz XAML"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "Visoko fleksibilna odsevna izboklina"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "Bleščeči žele"

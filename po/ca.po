@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape.nou\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2008-12-08 17:47+0100\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -62,7 +62,8 @@ msgstr "Mat"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 #, fuzzy
 msgid "Bevels"
 msgstr "Nivell"
@@ -571,7 +572,7 @@ msgid "Bumps"
 msgstr "Mapa de bits"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
+msgid "Highly flexible bump combining diffuse and specular lightings"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:45
@@ -1184,7 +1185,7 @@ msgstr ""
 msgid "Specular light"
 msgstr "Llum especular"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
@@ -2085,6 +2086,29 @@ msgstr ""
 #: ../share/filters/filters.svg.h:217
 msgid "Transparent plastic with deep colors"
 msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "Mat"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "Mat"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Glossy bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "Combinat"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5774,7 +5798,7 @@ msgstr "Ha fallat l'autodetecció de format. El fitxer s'obrirà com a SVG."
 msgid "default.svg"
 msgstr "default.ca.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "No s'ha pogut carregar el fitxer demanat %s"
@@ -5840,54 +5864,62 @@ msgstr "No s'ha pogut desar el document %s."
 msgid "Document saved."
 msgstr "S'ha desat el document."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "dibuix%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dibuix-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, fuzzy, c-format
+msgid "%s"
+msgstr "%"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "Seleccioneu el fitxer per a desar-ne una còpia"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "Seleccioneu el fitxer on desar"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "No hi ha cap canvi per desar."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "S'està desant el document..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "Seleccioneu el fitxer per a importar"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "Seleccioneu el fitxer per a exportar"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "S'ha produït un error en desar una còpia temporal"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Entrada de l'Open Clip Art"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, fuzzy, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5898,11 +5930,11 @@ msgstr ""
 "servidor, el nom d'usuari i la contrasenya siguin correctes, que el servidor "
 "permeti emprar webdav i que heu escollit una llicència."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "S'ha exportat el document..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importa de la biblioteca Open Clip Art"
 
@@ -6602,16 +6634,16 @@ msgstr "No s'ha pogut desar el document %s."
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "Document sense títol"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "L'Inkscape ha trobat un error intern i es tancarà ara.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -6619,7 +6651,7 @@ msgstr ""
 "S'han fet còpies de seguretat automàtiques dels documents sense desar a les "
 "ubicacions següents:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "No s'ha pogut fer còpia de seguretat dels documents següents:\n"
 
@@ -7050,7 +7082,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Pàgina"
@@ -8159,7 +8191,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8382,8 +8414,9 @@ msgid "DPI"
 msgstr "PPP"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "Àrea exportada en unitats d'usuari d'SVG (per defecte el llenç; 0,0 és la "
@@ -8394,11 +8427,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "L'àrea exportada és el dibuix sencer (no el llenç)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "L'àrea exportada és el dibuix sencer"
 
 #: ../src/main.cpp:314
@@ -8700,7 +8735,7 @@ msgstr ""
 "<b>Alt</b>: bloca la longitud del punt de control; <b>Ctrl+Alt</b>: mou els "
 "punts de control"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Duplica"
 
@@ -9422,7 +9457,7 @@ msgstr "Identificador"
 msgid "Unique URI to reference this document."
 msgstr "URI únic per referenciar aquest document."
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "Origen"
 
@@ -9777,7 +9812,7 @@ msgstr "Gira 90&#176; antihoraris"
 msgid "Rotate 90&#176; CW"
 msgstr "Gira 90&#176; horaris"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Gira"
@@ -9799,7 +9834,7 @@ msgid "Move horizontally"
 msgstr "Mou horitzontalment"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Mou"
 
@@ -10178,15 +10213,15 @@ msgstr[1] "<b>%i</b> objectes de <b>%i</b> tipus"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Torç"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "Estableix el centre"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10194,7 +10229,7 @@ msgstr ""
 "<b>Centre</b> de rotació i torsió; arrossegueu per a reposicionar; escalar "
 "amb Maj també usa aquest centre"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10202,7 +10237,7 @@ msgstr ""
 "<b>Estireu o estrenyeu</b> la selecció; amb <b>Ctrl</b> per a escalar "
 "uniformement; amb <b>Maj</b> per a escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10210,7 +10245,7 @@ msgstr ""
 "<b>Escaleu</b> la selecció; amb <b>Ctrl</b> per escalar uniformement; amb "
 "<b>majúscules</b> per escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10218,7 +10253,7 @@ msgstr ""
 "<b>Torceu</b> la selecció; amb <b>Ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10226,11 +10261,11 @@ msgstr ""
 "<b>Gireu</b> la selecció; amb <b>Ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "Reinicialitza el centre"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -10238,24 +10273,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Torceu</b>: %0.2f&#176;; amb <b>Ctrl</b> per ajustar l'angle"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Gira</b>: %0.2f&#176;; amb <b>Ctrl</b> per ajustar l'angle"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Mou el <b>centre</b> a %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11660,7 +11695,7 @@ msgid "Smallest object"
 msgstr "Estableix l'ID de l'objecte"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -12145,49 +12180,49 @@ msgstr "Mapa de bits"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "Afegeix l'extensió al fitxer automàticament"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "Segons l'extensió"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "Vora esquerra de la font"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "Vora superior de la font"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "Vora dreta de la font"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "Vora inferior de la font"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "Amplada d'origen"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "Alçada d'origen"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "Amplada destí"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "Alçada destí"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "Resolució (punts per polzada)"
 
@@ -12195,28 +12230,28 @@ msgstr "Resolució (punts per polzada)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "Document"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "A mida"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "Suavitzat"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "Fons"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "Destí"
 
@@ -15013,10 +15048,11 @@ msgid "Simplification threshold:"
 msgstr "Llindar de simplificació:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#, fuzzy
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 "La força predeterminada que tindrà l'ordre de simplificació. Si invoqueu de "
 "forma successiva i ràpidament aquesta ordre, actuarà cada vegada més "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2009-07-21 20:12+0800\n"
 "Last-Translator: Liu Xiaoqin <liuxqsmile@gmail.com>\n"
 "Language-Team: \n"
@@ -60,7 +60,8 @@ msgstr "不光滑果冻"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "倒角"
 
@@ -518,8 +519,8 @@ msgid "Bumps"
 msgstr "凸凹"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "差异很大的镜面凸凹"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1084,7 +1085,7 @@ msgstr "模糊对象内部, 保持轮廓"
 msgid "Specular light"
 msgstr "镜面高光"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "用来产生纹理的基本高光倒角凸起"
 
@@ -1950,6 +1951,30 @@ msgstr ""
 #, fuzzy
 msgid "Transparent plastic with deep colors"
 msgstr "垂直的树皮纹理; 与深色配合使用"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "不光滑果冻"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "不光滑果冻"
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Glossy bevel with blurred edges"
+msgstr "具有卷边的压制钢"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "组合"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5487,7 +5512,7 @@ msgstr "自动侦测文件格式失败.按照 SVG 打开此文件"
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "请求文件%s加载失败"
@@ -5548,54 +5573,62 @@ msgstr "文件%s不能保存."
 msgid "Document saved."
 msgstr "文档已保存."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "绘图%s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "绘图-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, fuzzy, c-format
+msgid "%s"
+msgstr "%"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "选择要保存拷贝的文件"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "选择要保存的文件"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "没有更改, 不需要保存."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "正在保存文档..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "导入"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "选择要导入的文件"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "选择要导出的文件"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "暂存文件时出错"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "登录Open Clip Art"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5605,11 +5638,11 @@ msgstr ""
 "导出文件时出错.请检查服务器名、用户名和密码.如果服务器支持webdav, 别忘了选择"
 "许可证."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "文档已导出..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "导入Open Clip Art Library"
 
@@ -6285,22 +6318,22 @@ msgstr "自动保存失败! 文件%s不能保存."
 msgid "Autosave complete."
 msgstr "自动保存完成."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "无标题文档"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape 遇到内部错误将要关闭.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "自动备未保存文档已经完成, 在下列位置:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "自动备份下列文档失败:\n"
 
@@ -6707,7 +6740,7 @@ msgstr "新的泊坞控制栏%p是自动的. 只有手动泊坞对象才能作�
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "页面"
@@ -7721,7 +7754,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "结构线的数目 (切线)"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -7930,8 +7963,9 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr "按照 SVG 用户单位到处区域(默认是画布; 0, 0 在左下角)"
 
@@ -7940,11 +7974,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "导出区域是整个绘画(不是画布)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "导出区域是整个画布"
 
 #: ../src/main.cpp:314
@@ -8217,7 +8253,7 @@ msgstr "<b>Shift</b>:切换节点选区, 禁止捕捉, 旋转控制点"
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>:锁定控制点长度; <b>Ctrl+Alt</b>:沿着控制点移动"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "图标"
 
@@ -8884,7 +8920,7 @@ msgstr "标识符"
 msgid "Unique URI to reference this document."
 msgstr "引用本文档的唯一统一资源定位符(URI)"
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "来源"
 
@@ -9214,7 +9250,7 @@ msgstr "旋转 90&#176; 逆时针"
 msgid "Rotate 90&#176; CW"
 msgstr "旋转 90&#176; 顺时针"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "旋转"
@@ -9236,7 +9272,7 @@ msgid "Move horizontally"
 msgstr "水平移动"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "移动"
 
@@ -9590,21 +9626,21 @@ msgstr[1] "<b>%i</b>个对象个<b>%i</b>类型"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "错切"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "选择中心"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr "<b>中心</b>旋转错切:拖动调整位置; 使用 Shift 缩放也使用此中心"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9612,56 +9648,56 @@ msgstr ""
 "<b>收缩或拉伸</b>选区; 按住 <b>Ctrl</b> 统一缩放; 按住 <b>Shift</b> 在旋转中"
 "心缩放"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 "<b>缩放</b>选区; 按住 <b>Ctrl</b> 统一缩放; 按住 <b>Shift</b> 在旋转中心缩放"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 "<b>错切</b>选区; 按住 <b>Ctrl</b> 捕捉角度; 按住 <b>Shift</b> 在另一面错切"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 "<b>旋转</b>选区; 按住 <b>Ctrl</b> 捕捉角度; 按住 <b>Shift</b> 在对角旋转"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "重置中心"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>缩放</b>:%0.2f%% x %0.2f%%; 按住<b>Ctrl</b>锁定比率"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>错切</b>:%0.2f&#176;; 按住 <b>Ctrl</b> 捕捉角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋转</b>:%0.2f&#176;; 按住 <b>Ctrl</b> 捕捉角度"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移动<b>中心</b>到%s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -10964,7 +11000,7 @@ msgid "Smallest object"
 msgstr "最小对象"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11414,49 +11450,49 @@ msgstr "所有位图"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "自动为文件名称添加后缀名"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "根据后缀名判断"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "源的左边"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "源的定边"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "源的右边沿"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "源的底边"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "源宽度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "源高度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "目标宽度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "目标高度"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "分辨率(点/英寸)"
 
@@ -11464,28 +11500,28 @@ msgstr "分辨率(点/英寸)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "文档"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "自定义"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "反锯齿"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "背景"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "目标"
 
@@ -14030,10 +14066,11 @@ msgid "Simplification threshold:"
 msgstr "简化阈值:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#, fuzzy
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 "默认简化有多强.如果快速连续调用此命令数次, 将会越来越强;调用之后暂停一下恢复"
 "默认的阈值."
@@ -22600,6 +22637,9 @@ msgstr "Windows 图元文件输入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 输入"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "差异很大的镜面凸凹"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "平滑凝胶"

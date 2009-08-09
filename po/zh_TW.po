@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2009-08-08 00:14+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -59,7 +59,7 @@ msgstr "智能果凍"
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
 #: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "斜角"
 
@@ -517,8 +517,8 @@ msgid "Bumps"
 msgstr "凹凸"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "高度彎曲的鏡面凹凸"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1077,7 +1077,7 @@ msgstr "模糊物件的內容，保留輪廓"
 msgid "Specular light"
 msgstr "反射光"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "基本的鏡面斜角用於建築物紋理"
 
@@ -1936,6 +1936,11 @@ msgstr "融化的果凍"
 #: ../share/filters/filters.svg.h:219
 msgid "Glossy bevel with blurred edges"
 msgstr "帶有捲邊的光滑斜角"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "結合"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -7683,7 +7688,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "繪製多少條結構線 (切線)"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8182,7 +8187,7 @@ msgstr "<b>Shift</b>：切換節點選擇﹑停用捉取﹑旋轉兩個控柄"
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "圖章"
 
@@ -9188,7 +9193,7 @@ msgstr "旋轉 90&#176; 逆時鐘"
 msgid "Rotate 90&#176; CW"
 msgstr "旋轉 90&#176; 順時鐘"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "旋轉"
@@ -9210,7 +9215,7 @@ msgid "Move horizontally"
 msgstr "水平地移動"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "移動"
 
@@ -9566,15 +9571,15 @@ msgstr[1] "<b>%i</b>個物件個<b>%i</b>類型"
 msgid "%s%s. %s."
 msgstr "%s%s。%s。"
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "傾斜"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "設定中心點"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9582,7 +9587,7 @@ msgstr ""
 "旋轉以及傾斜的<b>中心點</b>：拖曳以改變位置；按著 Shift 以改變物件比例時也是"
 "使用此中心點。"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9590,7 +9595,7 @@ msgstr ""
 "<b>擠壓或伸展</b>選擇區；按著 <b>Ctrl</b> 來均勻地縮放；按著 <b>Shift</b> 來"
 "在旋轉中心四周縮放"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9598,7 +9603,7 @@ msgstr ""
 "<b>縮放</b>選擇區；按著 <b>Ctrl</b> 來均勻地縮放；按著 <b>Shift</b> 來在旋轉"
 "中心四周縮放"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9606,7 +9611,7 @@ msgstr ""
 "<b>傾斜</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 來繞著相對"
 "面傾斜"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9614,35 +9619,35 @@ msgstr ""
 "<b>旋轉</b>選擇區；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Shift</b> 繞著對角旋"
 "轉"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "重設中心點"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>縮放</b>：%0.2f%% x %0.2f%%; 按著 <b>Ctrl</b> 來鎖定長寬比"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>傾斜</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋轉</b>：%0.2f&#176;；按著 <b>Ctrl</b> 來捉取角度"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移動<b>中心點</b>到 %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -22622,6 +22627,9 @@ msgstr "Windows 後設檔案輸入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "高度彎曲的鏡面凹凸"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "光滑果凍"

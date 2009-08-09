@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-07 15:50+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: 2009-08-08 02:05+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -68,7 +68,7 @@ msgstr "パターンフィル"
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
 #: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "ベベル"
 
@@ -561,7 +561,7 @@ msgid "Bumps"
 msgstr "バンプ"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
+msgid "Highly flexible bump combining diffuse and specular lightings"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:45
@@ -1166,7 +1166,7 @@ msgstr ""
 msgid "Specular light"
 msgstr "色フェーズの色"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
@@ -2081,6 +2081,11 @@ msgstr "パターンフィル"
 #, fuzzy
 msgid "Glossy bevel with blurred edges"
 msgstr "星形の設定"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "合計"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8054,7 +8059,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "描画するコンストラクションライン (Tangent) の数"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8587,7 +8592,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: ハンドルの長さをロック。<b>Ctrl+Alt</b>: ハンドルに沿って移動"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 #, fuzzy
 msgid "Stamp"
 msgstr "変化度"
@@ -9630,7 +9635,7 @@ msgstr "90&#176;回転、反時計回り(_9)"
 msgid "Rotate 90&#176; CW"
 msgstr "90&#176;回転、時計回り(_9)"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "回転"
@@ -9652,7 +9657,7 @@ msgid "Move horizontally"
 msgstr "水平方向に移動"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "移動"
 
@@ -10026,15 +10031,15 @@ msgstr[0] "<b>%i</b>個のオブジェクト、種類: <b>%i</b>個"
 msgid "%s%s. %s."
 msgstr "%s%s。%s。"
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "傾斜"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "中心を設定"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10042,7 +10047,7 @@ msgstr ""
 "回転/傾斜の<b>中心</b>: ドラッグで位置を変更。Shiftキーを使った拡大縮小もこの"
 "中心を使います"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10050,7 +10055,7 @@ msgstr ""
 "選択オブジェクトを<b>縮める/伸ばす</b>。<b>Ctrl</b>で縦横比を維持して拡大縮"
 "小、<b>Shift</b>で回転中心に関して拡大縮小"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10058,7 +10063,7 @@ msgstr ""
 "選択オブジェクトを<b>拡大縮小</b>。<b>Ctrl</b>で縦横比を維持してスケール、"
 "<b>Shift</b>で回転中心に関してスケール"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10066,7 +10071,7 @@ msgstr ""
 "選択オブジェクトを<b>傾斜</b>。<b>Ctrl</b>で角度をスナップ、<b>Shift</b>で反"
 "対の端を中心に傾斜"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10074,35 +10079,35 @@ msgstr ""
 "選択オブジェクトを<b>回転</b>。<b>Ctrl</b>: 角度をスナップ、<b>Shift</b>: 反"
 "対の端を中心に回転"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "中心をリセット"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>拡大縮小</b>: %0.2f%% x %0.2f%%。<b>Ctrl</b>で縦横比を固定"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>傾斜</b>: %0.2f&#176;。<b>Ctrl</b>で角度をスナップ"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>回転</b>: %0.2f&#176;。<b>Ctrl</b>で角度をスナップ"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>中心</b>を %s, %s に移動"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-06 22:55+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -49,7 +49,8 @@ msgstr "마테 젤리"
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "경사"
 
@@ -509,8 +510,8 @@ msgid "Bumps"
 msgstr "융기"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "매우 유연한 특수 범프"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1079,7 +1080,7 @@ msgstr "윤곽선이 보존되고 객체 내용 흐리게"
 msgid "Specular light"
 msgstr "특수 광"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "건물 조직에 사용하는 기본 특수 경사"
 
@@ -1964,6 +1965,30 @@ msgstr ""
 #, fuzzy
 msgid "Transparent plastic with deep colors"
 msgstr "수직 방향의 나무껍질; 짙은 색상 사용"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Melted jelly, matte"
+msgstr "마테 젤리"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Matte bevel with blurred edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Melted jelly"
+msgstr "마테 젤리"
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Glossy bevel with blurred edges"
+msgstr "둥긂을 가진 윤곽선 끝"
+
+#: ../share/filters/filters.svg.h:220
+#, fuzzy
+msgid "Combined lighting"
+msgstr "조합"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5480,7 +5505,7 @@ msgstr "파일 형식 자동인식 실패, SVG형식으로 파일을 읽습니�
 msgid "default.svg"
 msgstr "기본.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1036
+#: ../src/file.cpp:249 ../src/file.cpp:1055
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "요청한파일  %s를 읽어오는데 실패"
@@ -5541,54 +5566,62 @@ msgstr "파일 %s가 저장되지 않을 수 있습니다."
 msgid "Document saved."
 msgstr "문서 저장됨."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1180 ../src/file.cpp:1300
+#. We are saving for the first time; create a unique default filename
+#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
 #, c-format
 msgid "drawing%s"
 msgstr "그림 %s"
 
-#: ../src/file.cpp:756
+#: ../src/file.cpp:767
 #, c-format
 msgid "drawing-%d%s"
 msgstr "그림-%d%s"
 
-#: ../src/file.cpp:775
+#. Use the document uri's base name as the filename but
+#. store in the directory last used for "Save a copy ..."
+#: ../src/file.cpp:774
+#, fuzzy, c-format
+msgid "%s"
+msgstr "%"
+
+#: ../src/file.cpp:793
 msgid "Select file to save a copy to"
 msgstr "복사본을 저장하기 위하여 파일 선택"
 
-#: ../src/file.cpp:777
+#: ../src/file.cpp:795
 msgid "Select file to save to"
 msgstr "저장 파일 선택"
 
-#: ../src/file.cpp:857
+#: ../src/file.cpp:876
 msgid "No changes need to be saved."
 msgstr "저장된 변화가 없음."
 
-#: ../src/file.cpp:874
+#: ../src/file.cpp:893
 msgid "Saving document..."
 msgstr "문서 저장..."
 
-#: ../src/file.cpp:1033
+#: ../src/file.cpp:1052
 msgid "Import"
 msgstr "불러오기"
 
-#: ../src/file.cpp:1083
+#: ../src/file.cpp:1102
 msgid "Select file to import"
 msgstr "읽어올 파일 선택"
 
-#: ../src/file.cpp:1201 ../src/file.cpp:1315
+#: ../src/file.cpp:1220 ../src/file.cpp:1334
 msgid "Select file to export to"
 msgstr "내보내기 위한 파일 선택"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1366
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "임시파일 저장 중 오류"
 
-#: ../src/file.cpp:1367
+#: ../src/file.cpp:1386
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art 로그인"
 
-#: ../src/file.cpp:1393
+#: ../src/file.cpp:1412
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5596,11 +5629,11 @@ msgid ""
 "didn't forget to choose a license."
 msgstr "문서 내보내기 오류."
 
-#: ../src/file.cpp:1414
+#: ../src/file.cpp:1433
 msgid "Document exported..."
 msgstr "문서 내보내기..."
 
-#: ../src/file.cpp:1442 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Open Clip Art에서 읽어오기"
 
@@ -6276,22 +6309,22 @@ msgstr "자동 저장 실패! 파일 %s를 저장할 수 없습니다."
 msgid "Autosave complete."
 msgstr "자동 저장 완료."
 
-#: ../src/inkscape.cpp:655
+#: ../src/inkscape.cpp:661
 msgid "Untitled document"
 msgstr "제목없는 문서"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:685
+#: ../src/inkscape.cpp:691
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape 실행 중 내부 오류가 발생하여, 지금 종료합니다.\n"
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:692
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "저장안된 문서의 자동 백업이 다음 위치에서 저장됩니다:\n"
 
-#: ../src/inkscape.cpp:687
+#: ../src/inkscape.cpp:693
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "다음 문서들의 자동 백업 실패:\n"
 
@@ -6699,7 +6732,7 @@ msgstr "새 도크 제어자 %p가 자동임."
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "페이지"
@@ -7719,7 +7752,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "얼마나 많은 작도 선을 그릴 것인가"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -7932,8 +7965,9 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
+#, fuzzy
 msgid ""
-"Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
+"Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 "SVG 사용자 단위에서 내보내기 구간(기본은 캔버스; 0.0은 왼쪽 하단 모서리임)"
@@ -7943,11 +7977,13 @@ msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-msgid "Exported area is the entire drawing (not canvas)"
+#, fuzzy
+msgid "Exported area is the entire drawing (not page)"
 msgstr "내보내기 구간이 전체 그림(캔버스가 아님)"
 
 #: ../src/main.cpp:309
-msgid "Exported area is the entire canvas"
+#, fuzzy
+msgid "Exported area is the entire page"
 msgstr "내보내기 구가이 전체 캔버스"
 
 #: ../src/main.cpp:314
@@ -8225,7 +8261,7 @@ msgstr "<b>Shift</b>: 노드 선택 토글, 붙이기 불가능, 양 핸들 회�
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: 핸들 길이 잠금; <b>Ctrl+Alt</b>: 핸들 따라 이동"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "도장"
 
@@ -8904,7 +8940,7 @@ msgstr "식별자"
 msgid "Unique URI to reference this document."
 msgstr "이 문서를 참조하기 위한 유일한 URI"
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
 msgid "Source"
 msgstr "소스"
 
@@ -9240,7 +9276,7 @@ msgstr "90도 반시계방향 회전"
 msgid "Rotate 90&#176; CW"
 msgstr "90도 시계방향 회전"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "회전"
@@ -9262,7 +9298,7 @@ msgid "Move horizontally"
 msgstr "수평 이동"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "이동"
 
@@ -9618,15 +9654,15 @@ msgstr[1] "<b>%i</b> <b>%i</b> 형태 객체"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "찌그러짐"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "중앙 설정"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9634,7 +9670,7 @@ msgstr ""
 "회전 및 기울이기의 <b>중심점</b>: 재 위치 시키기 위하여 끌기; Shift: 중앙에"
 "서 사용 가능"
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9642,7 +9678,7 @@ msgstr ""
 "선택을 <b>축소 또는 확장</b>; <b>Ctrl</b>: 일정하게 비율 조정; <b>Shift</b>: "
 "회전 중심 주위로 비율 조정"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9650,7 +9686,7 @@ msgstr ""
 "선택 <b>비율 조정</b>: <b>Ctrl</b>: 균일하게 비율 조정; <b>Shift</b>: 회전 중"
 "심 주변 비율 조정"
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9658,7 +9694,7 @@ msgstr ""
 "선택 <b>기울이기</b>: <b>Ctrl</b>: 각도 붙이기 점 조정; <b>Shift</b>: 반대면 "
 "주변 기울이기"
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9666,35 +9702,35 @@ msgstr ""
 "선택 <b>회전</b>; <b>Ctrl</b>: 각도 붙이기 점 조정; <b>Shift</b>: 반대 모서"
 "리 주변 회전"
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "중앙 초기화"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>비율</b>: %0.2f%% x %0.2f%%; <b>Ctrl</b>: 비율 잠금"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>기울이기</b>: %0.2f&#176;; <b>Ctrl</b>: 각도 붙이기 점 조정"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>회전</b>: %0.2f&#176;; <b>Ctrl</b>: 각도 붙이기 점 조정"
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>중앙</b> %s, %s 로 이동"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11036,7 +11072,7 @@ msgid "Smallest object"
 msgstr "가장 작은 객체"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11492,49 +11528,49 @@ msgstr "전체 비트맵"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
 msgid "Append filename extension automatically"
 msgstr "자동으로 파일이름 확장자 붙이기"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
 msgid "Guess from extension"
 msgstr "확장자에서 추측"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1347
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Left edge of source"
 msgstr "소스의 왼쪽 모서리"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1348
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Top edge of source"
 msgstr "소스의 최상단 모서리"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1349
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Right edge of source"
 msgstr "소스의 오른쪽 모서리"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1350
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Bottom edge of source"
 msgstr "소스의 최하위 모서리"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1351
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Source width"
 msgstr "소스 너비"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1352
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Source height"
 msgstr "소스 높이:"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1353
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Destination width"
 msgstr "출력 너비"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1354
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
 msgid "Destination height"
 msgstr "출력 높이"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1355
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
 msgid "Resolution (dots per inch)"
 msgstr "해상도(DPI)"
 
@@ -11542,28 +11578,28 @@ msgstr "해상도(DPI)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1393
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
 msgid "Document"
 msgstr "문서"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1405
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "사용자"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1445
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
 msgid "Cairo"
 msgstr "카이로"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1448
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
 msgid "Antialias"
 msgstr "부드럽게 처리"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1451
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
 msgid "Background"
 msgstr "배경"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1474
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
 msgid "Destination"
 msgstr "출력 방향"
 
@@ -14141,9 +14177,9 @@ msgstr "단순화 허용치:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
-"How strong is the Simplify command by default. If you invoke this command "
-"several times in quick succession, it will act more and more aggressively; "
-"invoking it again after a pause restores the default threshold."
+"How strong is the Node tool's Simplify command by default. If you invoke "
+"this command several times in quick succession, it will act more and more "
+"aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
@@ -22695,6 +22731,9 @@ msgstr "윈도우즈 메타파일 입력"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 입력"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "매우 유연한 특수 범프"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "발광 젤리"
