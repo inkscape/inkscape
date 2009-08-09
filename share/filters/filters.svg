@@ -406,8 +406,8 @@
 <feBlend result="fbSourceGraphic" mode="multiply" blend="normal" in2="result2" />
 <feColorMatrix values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
 <feGaussianBlur stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" />
-<feSpecularLighting result="result6" surfaceScale="5" specularExponent="5">
-<feDistantLight azimuth="225" elevation="25" />
+<feSpecularLighting result="result6" surfaceScale="5" specularExponent="3">
+<feDistantLight azimuth="225" elevation="10" />
 </feSpecularLighting>
 <feComposite in2="fbSourceGraphicAlpha" in="result6" result="result2" operator="in" />
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="0.7" />
@@ -1238,21 +1238,21 @@
 <filter id="f121" inkscape:label="Simple blur" inkscape:menu="ABCs" inkscape:menu-tooltip="Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog">
 <feGaussianBlur stdDeviation="3" />
 </filter>
-<filter id="f122" inkscape:menu-tooltip="Same as Bubbly Bumps but with a diffuse light instead of a specular one" inkscape:menu="Bumps" inkscape:label="Bubbly Bumps, matte">
-<feGaussianBlur stdDeviation="0.5" in="SourceGraphic" result="result0" />
-<feTurbulence type="fractalNoise" result="result1" numOctaves="10" seed="300" baseFrequency="0.15" />
+<filter id="f122" inkscape:label="Bubbly Bumps, matte" inkscape:menu="Bumps" inkscape:menu-tooltip="Same as Bubbly Bumps but with a diffuse light instead of a specular one">
+<feGaussianBlur result="result0" in="SourceGraphic" stdDeviation="0.5" />
+<feTurbulence baseFrequency="0.2" seed="300" numOctaves="10" result="result1" type="fractalNoise" />
 <feGaussianBlur stdDeviation="4" />
-<feDisplacementMap in="SourceGraphic" result="result6" scale="15" xChannelSelector="R" />
-<feComposite in="result6" in2="result1" operator="in" result="result2" />
-<feComposite operator="arithmetic" in="result0" in2="result2" k3="3" />
-<feBlend in2="result2" blend="normal" mode="multiply" result="fbSourceGraphic" />
-<feColorMatrix result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " />
-<feGaussianBlur result="result0" in="fbSourceGraphicAlpha" stdDeviation="0.5" />
-<feDiffuseLighting diffuseConstant="0.4" surfaceScale="20" result="result5">
-<feDistantLight elevation="25" azimuth="225" />
+<feDisplacementMap xChannelSelector="R" scale="15" result="result6" in="SourceGraphic" />
+<feComposite result="result2" operator="in" in2="result1" in="result6" />
+<feComposite k3="3" in2="result2" in="result0" operator="arithmetic" />
+<feBlend result="fbSourceGraphic" mode="multiply" blend="normal" in2="result2" />
+<feColorMatrix values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -1.8 -0.5 0 5.7 -3.5 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" />
+<feGaussianBlur stdDeviation="0.5" in="fbSourceGraphicAlpha" result="result0" />
+<feDiffuseLighting result="result5" surfaceScale="50" diffuseConstant="0.6">
+<feDistantLight azimuth="225" elevation="10" />
 </feDiffuseLighting>
-<feComposite operator="in" result="result2" in="result5" in2="fbSourceGraphicAlpha" />
-<feComposite k3="0.7" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+<feComposite in2="fbSourceGraphicAlpha" in="result5" result="result2" operator="in" />
+<feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="0.7" />
 </filter>
 <filter id="f123" inkscape:menu-tooltip="Emboss effect : Colors of the original images are preserved or modified by Blend" inkscape:menu="Bumps" height="1" width="1" y="0" x="0" inkscape:label="Emboss">
 <feColorMatrix result="result2" type="luminanceToAlpha" />
@@ -1385,21 +1385,21 @@
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
 <feComposite result="fbSourceGraphic" in="result8" operator="in" in2="result2" />
 </filter>
-<filter id="f138" inkscape:label="Smooth shader NR" inkscape:menu-tooltip="Smooth shading with a graphite pencil grey" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<filter id="f138" inkscape:label="Smooth shader" inkscape:menu-tooltip="Smooth shading with a graphite pencil grey" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur stdDeviation="7" result="result8" />
 <feComposite in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap in="result8" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
 <feComposite result="fbSourceGraphic" in="result8" operator="in" in2="result2" />
 </filter>
-<filter id="f139" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Combination of smooth shading and embossing" inkscape:label="Emboss shader NR">
+<filter id="f139" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Combination of smooth shading and embossing" inkscape:label="Emboss shader">
 <feGaussianBlur result="result8" stdDeviation="5" />
 <feComposite in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result8" />
 <feComposite k1="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
 </filter>
-<filter id="f140" inkscape:label="Smooth shader dark NR" inkscape:menu-tooltip="Dark version of non realistic smooth shading" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<filter id="f140" inkscape:label="Smooth shader dark" inkscape:menu-tooltip="Dark version of non realistic smooth shading" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur stdDeviation="7" result="result8" />
 <feComposite in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap in="result8" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" />
@@ -1412,28 +1412,28 @@
 <feComposite k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
 </filter>
-<filter id="f142" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Silky close to mother of pearl shading" inkscape:label="Satin NR">
+<filter id="f142" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Silky close to mother of pearl shading" inkscape:label="Satin">
 <feGaussianBlur result="result8" stdDeviation="7" />
 <feComposite in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
 <feComposite k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result2" operator="in" in="result8" result="fbSourceGraphic" />
 </filter>
-<filter id="f143" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic frosted glass imitation" inkscape:label="Frosted glass NR">
+<filter id="f143" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic frosted glass imitation" inkscape:label="Frosted glass">
 <feGaussianBlur result="result8" stdDeviation="7" />
 <feComposite in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
 <feComposite k1="2" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" />
 </filter>
-<filter id="f144" inkscape:label="Smooth shader contour NR" inkscape:menu-tooltip="Contouring version of smooth shader" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<filter id="f144" inkscape:label="Smooth shader contour" inkscape:menu-tooltip="Contouring version of smooth shader" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur stdDeviation="7" result="result8" />
 <feComposite in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" in="result8" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
 <feComposite result="fbSourceGraphic" in="result6" operator="in" in2="result2" />
 </filter>
-<filter id="f145" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Brushed aluminium shader" inkscape:label="Aluminium NR">
+<filter id="f145" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Brushed aluminium shader" inkscape:label="Aluminium">
 <feGaussianBlur result="result8" stdDeviation="7" />
 <feComposite in="result8" operator="xor" result="result6" in2="SourceGraphic" />
 <feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
@@ -1446,14 +1446,14 @@
 <feComposite k1="5" in="result8" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" />
 </filter>
-<filter id="f147" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic chrome shader with strong speculars" inkscape:label="Chrome NR">
+<filter id="f147" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic chrome shader with strong speculars" inkscape:label="Chrome">
 <feGaussianBlur result="result8" stdDeviation="4" />
 <feComposite in="result8" operator="xor" result="result6" in2="result8" />
 <feDisplacementMap result="result4" scale="80" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" />
 <feComposite k1="3" in="result8" operator="arithmetic" result="result2" in2="result4" />
 <feComposite in2="result2" operator="in" in="result2" result="fbSourceGraphic" />
 </filter>
-<filter id="f148" inkscape:label="Chrome dark NR" inkscape:menu-tooltip="Dark version of chrome shading with a ground reflection simulation" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<filter id="f148" inkscape:label="Chrome dark" inkscape:menu-tooltip="Dark version of chrome shading with a ground reflection simulation" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur stdDeviation="3.5" result="result8" />
 <feComposite in2="result8" result="result6" operator="xor" in="result8" />
 <feDisplacementMap in="result8" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" />
@@ -1947,11 +1947,11 @@
 <feComposite in2="result7" result="fbSourceGraphic" k2="0.15" in="result2" k1="2" operator="arithmetic" />
 <feColorMatrix values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 3.7 -2.6 " in="fbSourceGraphic" result="fbSourceGraphicAlpha" type="matrix" />
 <feGaussianBlur stdDeviation="0.5" result="result9" />
-<feSpecularLighting surfaceScale="10" specularExponent="5" result="result11" specularConstant="0.7">
+<feSpecularLighting surfaceScale="10" specularExponent="3" result="result11" specularConstant="0.7">
 <feDistantLight azimuth="235" elevation="55" />
 </feSpecularLighting>
 <feDiffuseLighting in="result9" lighting-color="rgb(255,255,255)" result="result6" diffuseConstant="0.4" surfaceScale="50">
-<feDistantLight elevation="50" azimuth="235" />
+<feDistantLight elevation="10" azimuth="235" />
 </feDiffuseLighting>
 <feBlend blend="normal" id="feBlend3105" result="result10" mode="screen" in2="result11" />
 <feComposite in2="fbSourceGraphic" in="result10" result="result2" operator="in" />
@@ -2073,6 +2073,22 @@
 </feSpecularLighting>
 <feComposite k3="1" k2="1" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 <feComposite operator="in" result="result2" in2="SourceGraphic" in="result4" />
+</filter>
+<filter id="f211" inkscape:menu-tooltip="Metallic foil effect combining two lighting types" inkscape:menu="Bumps" inkscape:label="Tinfoil" height="1.4" width="1.4" x="-0.2" y="-0.2">
+<feGaussianBlur in="SourceGraphic" result="result14" stdDeviation="0.5" />
+<feFlood in="result14" flood-color="rgb(127,126,123)" result="result15" flood-opacity="1" />
+<feTurbulence in="result15" type="fractalNoise" seed="25" baseFrequency="0.004 0.008" numOctaves="1" result="result5" />
+<feDisplacementMap scale="100" xChannelSelector="R" in="result5" result="result8" yChannelSelector="B" in2="result14" />
+<feSpecularLighting specularExponent="40" specularConstant="1" surfaceScale="12" result="result2" lighting-color="rgb(254,218,71)" in="result8">
+<feDistantLight elevation="70" azimuth="225" />
+</feSpecularLighting>
+<feDiffuseLighting diffuseConstant="0.5" surfaceScale="50" in="result8" lighting-color="rgb(116,245,254)">
+<feDistantLight elevation="55" azimuth="225" />
+</feDiffuseLighting>
+<feBlend in2="SourceGraphic" result="result9" mode="screen" blend="normal" />
+<feComposite k3="1" k2="1" in="result2" result="result11" in2="result9" operator="arithmetic" />
+<feComposite in2="SourceGraphic" operator="in" result="result16" />
+<feBlend blend="normal" mode="multiply" in2="result16" />
 </filter>
 </defs>
 </svg>
