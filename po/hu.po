@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-07 15:50+0200\n"
-"PO-Revision-Date: 2009-08-08 00:05+0200\n"
+"POT-Creation-Date: 2009-08-09 14:41+0200\n"
+"PO-Revision-Date: 2009-08-09 14:52+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr "Intelligens zselé"
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
 #: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
 msgid "Bevels"
 msgstr "Rézsútos szegélyek"
 
@@ -522,8 +522,8 @@ msgid "Bumps"
 msgstr "Buckák"
 
 #: ../share/filters/filters.svg.h:44
-msgid "Highly flexible specular bump"
-msgstr "Rugalmas tükröződő bucka"
+msgid "Highly flexible bump combining diffuse and specular lightings"
+msgstr "Rugalmas bucka, amely kombinálja a szórt és a tükröződő megvilágítást"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1092,7 +1092,7 @@ msgstr "Objektumok tartalmának elmosása a kontúr megőrzésével"
 msgid "Specular light"
 msgstr "Tükröződő fény"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
 msgid "Basic specular bevel to use for building textures"
 msgstr "Alapvető tükröződő rézsútos szegély textúrák készítéséhez"
 
@@ -1972,6 +1972,10 @@ msgstr "Olvadt zselé"
 #: ../share/filters/filters.svg.h:219
 msgid "Glossy bevel with blurred edges"
 msgstr "Fényes rézsútos szegély elmosódott szélekkel"
+
+#: ../share/filters/filters.svg.h:220
+msgid "Combined lighting"
+msgstr "Kombinált megvilágítás"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -7935,7 +7939,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "Megrajzolandó szerkesztővonalak (érintők) száma"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8475,7 +8479,7 @@ msgstr ""
 "<b>Alt</b>: vezérlőelem hosszának megőrzése; <b>Ctrl+Alt</b>: áthelyezés "
 "vezérlőelemek mentén"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:578
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Bélyegzés"
 
@@ -9530,7 +9534,7 @@ msgstr "Elforgatás +90 fokkal"
 msgid "Rotate 90&#176; CW"
 msgstr "Elforgatás -90 fokkal"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:488
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Forgatás"
@@ -9552,7 +9556,7 @@ msgid "Move horizontally"
 msgstr "Vízszintes áthelyezés"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Áthelyezés"
 
@@ -9924,15 +9928,15 @@ msgstr[1] "<b>%i</b> darab objektum (<b>%i</b> féle típusból)"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:491 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Nyírás"
 
-#: ../src/seltrans.cpp:503
+#: ../src/seltrans.cpp:548
 msgid "Set center"
 msgstr "Középpont beállítása"
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:645
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9940,7 +9944,7 @@ msgstr ""
 "Az elforgatás illetve nyírás <b>középpontja</b>. Áthelyezés: húzással. A "
 "Shifttel való átméretezés ugyanezen középpontot használja."
 
-#: ../src/seltrans.cpp:627
+#: ../src/seltrans.cpp:672
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9948,7 +9952,7 @@ msgstr ""
 "A kijelölés <b>zsugorítása vagy nyújtása</b>. Egyenletes átméretezés: "
 "<b>Ctrl</b>; átméretezés a forgatási középpontból: <b>Shift</b>."
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9956,7 +9960,7 @@ msgstr ""
 "A kijelölés <b>átméretezése</b>. Egyenletes átméretezés: <b>Ctrl</b>; "
 "átméretezés a forgatási középpontból: <b>Shift</b>."
 
-#: ../src/seltrans.cpp:632
+#: ../src/seltrans.cpp:677
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9964,7 +9968,7 @@ msgstr ""
 "A kijelölés <b>nyírása</b>. Szöghöz való illesztés: <b>Ctrl</b>; nyírás a "
 "túlsó oldalhoz viszonyítva: <b>Shift</b>."
 
-#: ../src/seltrans.cpp:633
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9972,35 +9976,35 @@ msgstr ""
 "A kijelölés <b>elforgatása</b>. Szöghöz való illesztés: <b>Ctrl</b>; "
 "forgatás a túlsó sarok körül: <b>Shift</b>."
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:812
 msgid "Reset center"
 msgstr "Középpont visszaállítása"
 
-#: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
+#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Átméretezés</b>: %0.2f%% x %0.2f%%. Az arány megőrzése: <b>Ctrl</b>."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1223
+#: ../src/seltrans.cpp:1268
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Nyírás</b>: %0.2f&#176;. Szöghöz való illesztés: <b>Ctrl</b>."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1283
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Elforgatás</b>: %0.2f&#176;. Szöghöz való illesztés: <b>Ctrl</b>."
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1370
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Középpont</b> áthelyezése ide: %s, %s"
 
-#: ../src/seltrans.cpp:1495
+#: ../src/seltrans.cpp:1540
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -14694,11 +14698,10 @@ msgid ""
 "this command several times in quick succession, it will act more and more "
 "aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"A csomóponteszköz Egyszerűsítés műveletének alapértelmezett erőssége. "
-"Ha ez a művelet gyors egymásutánban többször végrehajtásra kerül, "
-"akkor egyre erőteljesebb hatást fog kifejteni; ha viszont egy "
-"szünetet követően kerül újra végrehajtásra, akkor visszaáll "
-"az alapértelmezett küszöb."
+"A csomóponteszköz Egyszerűsítés műveletének alapértelmezett erőssége. Ha ez "
+"a művelet gyors egymásutánban többször végrehajtásra kerül, akkor egyre "
+"erőteljesebb hatást fog kifejteni; ha viszont egy szünetet követően kerül "
+"újra végrehajtásra, akkor visszaáll az alapértelmezett küszöb."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
@@ -23543,6 +23546,9 @@ msgstr "Windows Metafile-bemenet"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML-bemenet"
+
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "Rugalmas tükröződő bucka"
 
 #~ msgid "Glossy jelly"
 #~ msgstr "Fényes zselé"
