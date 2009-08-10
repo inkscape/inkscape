@@ -53,6 +53,8 @@ class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
+        self.OptionParser.add_option("--tab", action="store", type="string", dest="tab")
+        self.OptionParser.add_option("--inputhelp", action="store", type="string", dest="inputhelp")
         self.dxf = []
         self.handle = 255                       # handle for DXF ENTITY
         self.csp_old = [[0.0,0.0]]*4            # previous spline
