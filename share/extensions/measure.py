@@ -116,8 +116,10 @@ class Length(inkex.Effect):
                 self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('text','svg'))
                 
                 t = node.get('transform')
-                if t:
-                    self.group.set('transform', t)
+                # Removed to fix LP #308183 
+                # (Measure Path text shifted when used with a copied object)
+                #if t:
+                #    self.group.set('transform', t)
 
 
                 a =[]
