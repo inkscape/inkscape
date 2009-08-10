@@ -1498,9 +1498,9 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             const char *title,
             const Glib::ustring &/*default_key*/,
             const char *docTitle,
-            const FileSaveMethod save_method) :
+            const Inkscape::Extension::FileSaveMethod save_method) :
     FileDialogBaseWin32(parent, dir, title, fileTypes,
-                        (save_method == FILE_SAVE_METHOD_SAVE_COPY) ? "dialogs.save_copy" :  "dialogs.save_as"),
+                        (save_method == Inkscape::Extension::FILE_SAVE_METHOD_SAVE_COPY) ? "dialogs.save_copy" :  "dialogs.save_as"),
         _title_label(NULL),
         _title_edit(NULL)
 {
