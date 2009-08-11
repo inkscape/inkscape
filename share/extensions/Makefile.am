@@ -91,7 +91,6 @@ extensions = \
 	polyhedron_3d.py \
 	printing-marks.py \
 	ps2dxf.sh \
-	ps2epsi.sh \
 	ps2pdf-ext.py \
 	pturtle.py \
 	radiusrand.py \
@@ -143,7 +142,6 @@ otherstuff = \
 modules = \
 	addnodes.inx \
 	ai_input.inx \
-	ai_output.inx \
 	aisvg.inx \
 	ccx_input.inx \
 	cdr_input.inx\
@@ -179,7 +177,6 @@ modules = \
 	edge3d.inx \
 	embedimage.inx \
 	eps_input.inx \
-	epsi_output.inx \
 	eqtexsvg.inx \
 	export_gimp_palette.inx \
 	extractimage.inx \
