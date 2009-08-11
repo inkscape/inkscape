@@ -32,6 +32,7 @@ struct SPDropperContext {
 
     unsigned int dragging : 1;
 
+	SPCanvasItem *grabbed;
     SPCanvasItem *area;
     Geom::Point centre;
 

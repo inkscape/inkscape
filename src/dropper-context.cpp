@@ -129,6 +129,11 @@ static void sp_dropper_context_finish(SPEventContext *ec)
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
 
     ec->enableGrDrag(false);
+	
+    if (dc->grabbed) {
+        sp_canvas_item_ungrab(dc->grabbed, GDK_CURRENT_TIME);
+        dc->grabbed = NULL;
+    }
 
     if (dc->area) {
         gtk_object_destroy(GTK_OBJECT(dc->area));
@@ -171,6 +176,12 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 dc->dragging = TRUE;
                 ret = TRUE;
             }
+			
+			sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
+								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
+								NULL, event->button.time);
+			dc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+			
             break;
 	case GDK_MOTION_NOTIFY:
             if (event->motion.state & GDK_BUTTON2_MASK) {
@@ -311,6 +322,11 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
             {
                 sp_canvas_item_hide(dc->area);
                 dc->dragging = FALSE;
+				
+				if (dc->grabbed) {
+					sp_canvas_item_ungrab(dc->grabbed, event->button.time);
+					dc->grabbed = NULL;
+				}
 
                 double alpha_to_set = setalpha? dc->alpha : 1.0;
 

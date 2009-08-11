@@ -18,6 +18,7 @@
 
 #include "macros.h"
 #include "rubberband.h"
+#include "display/sp-canvas-util.h"
 #include "desktop.h"
 #include "pixmaps/cursor-zoom.xpm"
 #include "pixmaps/cursor-zoom-out.xpm"
@@ -86,7 +87,14 @@ static void sp_zoom_context_init (SPZoomContext *zoom_context)
 static void
 sp_zoom_context_finish (SPEventContext *ec)
 {
+	SPZoomContext *zc = SP_ZOOM_CONTEXT(ec);
+	
 	ec->enableGrDrag(false);
+	
+    if (zc->grabbed) {
+        sp_canvas_item_ungrab(zc->grabbed, GDK_CURRENT_TIME);
+        zc->grabbed = NULL;
+    }
 }
 
 static void sp_zoom_context_setup(SPEventContext *ec)
@@ -119,6 +127,8 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 {
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	
+	SPZoomContext *zc = SP_ZOOM_CONTEXT(event_context);
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
     double const zoom_inc = prefs->getDoubleLimited("/options/zoomincrement/value", M_SQRT2, 1.01, 10);
 
@@ -147,6 +157,12 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 desktop->zoom_relative_keep_point(button_dt, zoom_rel);
                 ret = TRUE;
             }
+			
+			sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
+								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
+								NULL, event->button.time);
+			zc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+				
             break;
         }
 
@@ -188,6 +204,12 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 ret = TRUE;
             } 
             Inkscape::Rubberband::get(desktop)->stop();
+			
+			if (zc->grabbed) {
+				sp_canvas_item_ungrab(zc->grabbed, event->button.time);
+				zc->grabbed = NULL;
+			}
+			
             xp = yp = 0;
             escaped = false;
             break;

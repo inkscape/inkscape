@@ -24,6 +24,7 @@ class SPZoomContextClass;
 
 struct SPZoomContext {
 	SPEventContext event_context;
+	SPCanvasItem *grabbed;
 };
 
 struct SPZoomContextClass {

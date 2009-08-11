@@ -57,6 +57,7 @@ struct SPNodeContext {
     unsigned int current_state;
  
     SPItem * flashed_item;
+	SPCanvasItem *grabbed;
     Inkscape::Display::TemporaryItem * flash_tempitem;
     int remove_flash_counter;
 };
