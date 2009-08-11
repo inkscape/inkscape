@@ -141,7 +141,7 @@ static JavaFXOutput::String rgba(guint32 rgba)
     unsigned int a = SP_RGBA32_A_U(rgba);
     char buf[80];
     snprintf(buf, 79, "Color.rgb(0x%02x, 0x%02x, 0x%02x, %s)",
-                           r, g, b, DSTR((double)a/256.0));
+                           r, g, b, DSTR((double)a/255.0));
     JavaFXOutput::String s = buf;
     return s;
 }
