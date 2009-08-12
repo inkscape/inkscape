@@ -295,7 +295,6 @@ share/extensions/web-set-att.py
 share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/addnodes.inx
 [type: gettext/xml] share/extensions/ai_input.inx
-[type: gettext/xml] share/extensions/ai_output.inx
 [type: gettext/xml] share/extensions/aisvg.inx
 [type: gettext/xml] share/extensions/ccx_input.inx
 [type: gettext/xml] share/extensions/cdr_input.inx
@@ -331,7 +330,6 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/edge3d.inx
 [type: gettext/xml] share/extensions/embedimage.inx
 [type: gettext/xml] share/extensions/eps_input.inx
-[type: gettext/xml] share/extensions/epsi_output.inx
 [type: gettext/xml] share/extensions/eqtexsvg.inx
 [type: gettext/xml] share/extensions/export_gimp_palette.inx
 [type: gettext/xml] share/extensions/extractimage.inx
