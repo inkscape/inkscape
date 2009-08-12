@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-09 14:41+0200\n"
+"POT-Creation-Date: 2009-08-13 00:00+0200\n"
 "PO-Revision-Date: 2009-08-04 08:31+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig - www.drouizig.org <alan.monfort@free.fr>\n"
@@ -32,8 +32,8 @@ msgstr "Kaotigell dilufr"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:207
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "B.A.-BA"
 
@@ -54,9 +54,9 @@ msgstr "Kaotigell dilufr"
 #: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:56
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
-#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
 msgid "Bevels"
 msgstr "Beskelloù"
 
@@ -79,7 +79,7 @@ msgstr "Ruzed dre zilec'hiañ, a-zremm"
 #: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
 #: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:159
 msgid "Blurs"
 msgstr "Ruzedoù"
 
@@ -117,9 +117,9 @@ msgstr "Didroc'hañ"
 
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:178
-#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:176
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -155,8 +155,8 @@ msgstr "Stampon kaoutchoug"
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38 ../share/filters/filters.svg.h:90
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:159
-#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
 msgid "Overlays"
 msgstr "Gwiskadoù"
 
@@ -169,7 +169,7 @@ msgid "Ink bleed"
 msgstr "Takenn huz"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
-#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:166
 msgid "Protrusions"
 msgstr "Torgennoù"
 
@@ -207,8 +207,8 @@ msgstr "Gwagenniñ"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:182
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:194
 msgid "Distort"
 msgstr "Distummañ"
 
@@ -249,8 +249,8 @@ msgstr "Kreoñ ul loupard"
 #: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
 msgid "Materials"
 msgstr "Dafarioù"
 
@@ -285,8 +285,8 @@ msgstr "Lemmaat"
 #: ../share/filters/filters.svg.h:27 ../share/filters/filters.svg.h:28
 #: ../share/filters/filters.svg.h:29 ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:160 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:190
 msgid "Image effects"
 msgstr "Efedoù war ar skeudenn"
 
@@ -360,8 +360,8 @@ msgstr "Dibeurvec'hiañ"
 #: ../share/filters/filters.svg.h:31 ../share/filters/filters.svg.h:32
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:166
-#: ../share/filters/filters.svg.h:214 ../src/dialogs/clonetiler.cpp:2607
+#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -429,10 +429,10 @@ msgstr "Organek"
 #: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
 #: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:196
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Gwiadezhioù"
 
@@ -511,12 +511,12 @@ msgstr "Koagennoù mod APL"
 #: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:170
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:189
-#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:201
-#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
 msgid "Bumps"
 msgstr "Koagennoù"
 
@@ -775,7 +775,7 @@ msgstr "Kleuz kenstur"
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:88
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:93
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:168
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Neuziadur"
@@ -1037,12 +1037,12 @@ msgid "HSL Bumps alpha"
 msgstr "Alfa war ar c'hoagennoù mod APL"
 
 #: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:200 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:177 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:204
 msgid "Image effects, transparent"
 msgstr "Efedoù war ar skeudenn, treuzwelus"
 
@@ -1100,7 +1100,7 @@ msgstr "Lakaat ruzed war endalc'hadoù an ergorennoù hep kemmañ o zrolinennoù
 msgid "Specular light"
 msgstr "Gouloù skalfadel"
 
-#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:211
 msgid "Basic specular bevel to use for building textures"
 msgstr "Beskell skalfadel diazez da arverañ a-benn sevel gwiadezhioù"
 
@@ -1350,12 +1350,12 @@ msgid "Comics draft"
 msgstr "Brouilhoñs ar bandennoù treset"
 
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:142
-#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:149
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:141 ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:156
 msgid "Non realistic 3D shaders"
 msgstr "Skeudoù 3M diveziadek"
 
@@ -1372,218 +1372,218 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 "Stil pentañ ar bandennoù treset gant un tamm dislivadur war ar riblennoù"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:140
-msgid "Smooth shader NR"
+#: ../share/filters/filters.svg.h:139
+#, fuzzy
+msgid "Smooth shader"
 msgstr "Deouez skeud lenkr diveziadek"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Deouez lenkr gant ur c'hreion dre c'hrafit louet"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:142
-msgid "Emboss shader NR"
+#: ../share/filters/filters.svg.h:140
+#, fuzzy
+msgid "Emboss shader"
 msgstr "Deouez skeud dre goagenniñ diveziadek"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
 msgstr "Kedaozadur eus savadur un deouez lenkr gant ur c'hoagennadur"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:144
-msgid "Smooth shader dark NR"
+#: ../share/filters/filters.svg.h:141
+#, fuzzy
+msgid "Smooth shader dark"
 msgstr "Deouez skeud lenkr ha teñval diveziadek"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
 msgstr "Handelv teñval eus un deouez lenkr diveziadek"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:142
 msgid "Comics"
 msgstr "Bandennoù treset"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:142
 msgid "Imitation of black and white cartoon shading"
 msgstr "Darvanadur deouezioù ar bandennoù treset e gwenn ha du"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:147
-msgid "Satin NR"
+#: ../share/filters/filters.svg.h:143
+#, fuzzy
+msgid "Satin"
 msgstr "Satin"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
 msgstr "Seizek, tost ouzh deouez an nakr"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:149
-msgid "Frosted glass NR"
+#: ../share/filters/filters.svg.h:144
+#, fuzzy
+msgid "Frosted glass"
 msgstr "Gwer skornet diveziadek"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
 msgstr "Darvanadur ar gwer skornet diveziadek"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:151
-msgid "Smooth shader contour NR"
+#: ../share/filters/filters.svg.h:145
+#, fuzzy
+msgid "Smooth shader contour"
 msgstr "Deouez skeud lenkr an drolinenn diveziadek"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
 msgstr "Handelv dre linennoù an deouez skeud lenkr"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:153
-msgid "Aluminium NR"
+#: ../share/filters/filters.svg.h:146
+#, fuzzy
+msgid "Aluminium"
 msgstr "Aluminiom"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
 msgstr "Deouez skeud an aluminom broustet"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:147
 msgid "Comics fluid"
 msgstr "Liñvenn ar bandennoù treset"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:147
 msgid "Fluid brushed cartoon drawing"
 msgstr "Tresadenn ur vandenn treset broustet gant un doare berus"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:156
-msgid "Chrome NR"
+#: ../share/filters/filters.svg.h:148
+#, fuzzy
+msgid "Chrome"
 msgstr "Krom diveziadek"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Deouez skeud krom diveziadek gant disvannadurioù kreñv"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:158
-msgid "Chrome dark NR"
+#: ../share/filters/filters.svg.h:149
+#, fuzzy
+msgid "Chrome dark"
 msgstr "Krom teñval diveziadek"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Handelv teñval un deouez krom gant darvanadur an disvannañ leur"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:150
 msgid "Wavy tartan"
 msgstr "Tartan gwagennek"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:150
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 "Goustur un tartan gant un dilec'hiadur gwagennek ha beskelloù tro dro d'ar "
 "riblennoù"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:151
 msgid "3D marble"
 msgstr "Marbr 3M"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:151
 msgid "3D warped marble texture"
 msgstr "Gwiadezh marbr distummet 3M"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:152
 msgid "3D wood"
 msgstr "Koad 3M"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:152
 msgid "3D warped, fibered wood texture"
 msgstr "Gwiadezh koad neudennek, distummet 3M"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:153
 msgid "3D mother of pearl"
 msgstr "Nakr mod 3D"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:153
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Gwiadezh ur grogenn berlezek splann, distummet 3M"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:154
 msgid "Tiger fur"
 msgstr "Kreoñ un tigr"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:154
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Goustur un tigr gant plegoù ha beskelloù tro dro d'ar riblennoù"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:155
 msgid "Shaken liquid"
 msgstr "Liñvenn hejet"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:155
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Leuniadur hag a vez livet gant ul lanv diabarzh evel an treuzweluster"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:156
 msgid "Comics cream"
 msgstr "Koavon ar bandennoù treset"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:156
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 "Deouez skeud ar bandennoù treset gant un treuzweluster dre wagennoù koavonek"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:157
 msgid "Black Light"
 msgstr "Gouloù du"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:157
 msgid "Light areas turn to black"
 msgstr "Ar maezioù sklaer a ya da deñval"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:158
 msgid "Light eraser"
 msgstr "Diverkell guñv"
 
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:204
-#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:206
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Goulevioù mavek a-fet treuzweluster"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 "Lakaat al lodoù sklaerañ eus an ergorennoù da vezañ treuzwelus tamm ha tamm"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:159
 msgid "Noisy blur"
 msgstr "Ruzed trouzus"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:159
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr ""
 "Rustadur ha lakadur ruzed war ar riblennoù hag an endalc'had dre ur skeul "
 "vihan"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:160
 msgid "Film grain"
 msgstr "Arwe film"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:160
 msgid "Adds a small scale graininess"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
 msgstr "Koagennoù mod APL, treuzwelus"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
 msgstr "Koagenn skalfadel argemmus kenañ gant treuzweluster"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "Tresadenn"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:162
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
@@ -1591,36 +1591,36 @@ msgstr ""
 "Reiñ efed ar c'hreion plom pe ar maendresañ pe engravañ pe efedoù all d'ar "
 "skeudennoù ha d'an ergorennoù leuniet gant danvezioù"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:163
 msgid "Velvet bump"
 msgstr "Bosoù heñvel ouzh ar voulouz"
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:163
 msgid "Gives a smooth bump velvet like"
 msgstr "Reiñ a ra bosoù kuñv heñvel ouzh ar voulouz"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
 msgstr "Tres dre alfa"
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:164
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Reiñ a ra efed un dresadenn dreuzwelus d'ar bitmapoù ha d'an danvezioù"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:165
 msgid "Alpha draw, color"
 msgstr "Tres mod alfa, livañ"
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
 "Reiñ a ra efed ul leuniañ liv treuzwelus d'ar bitmapoù ha d'an danvezioù"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:166
 msgid "Chewing gum"
 msgstr "Gom chaok"
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
@@ -1629,142 +1629,142 @@ msgstr ""
 "Krouiñ a ra introù a vez livet gant ul lanv kuñv dreist riblennoù al "
 "linennoù ma 'z int o kroaziañ"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:167
 msgid "Black outline"
 msgstr "Linenn diavaez du"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
 msgstr "Tresañ a ra ul linenn diavaez du tro-dro dezhi"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:168
 msgid "Color outline"
 msgstr "Liv an drolinenn"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Draws a colored outline around"
 msgstr "Tresañ a ra ul linenn diavaez livet tro-dro dezhi"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:169
 msgid "Inner shadow"
 msgstr "Disheol diabarzh"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:169
 msgid "Adds a colorizable drop shadow inside"
 msgstr "Ouzhpennañ a ra un disheol bannet hag a vez livet enni"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:170
 msgid "Dark and glow"
 msgstr "Teñval ha skleur"
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
 "Teñvalaat a ra ar riblenn gant ur ruzed diabarzh hag ouzhpennañ a ra ur "
 "skleur gweñv"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:171
 msgid "Darken edges"
 msgstr "Teñvalaat ar riblennoù"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:171
 msgid "Darken the edges with an inner blur"
 msgstr "Teñvalaat a ra ar riblennoù gant ur ruzed diabarzh"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:172
 msgid "Warped rainbow"
 msgstr "Kanevedenn distummet"
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:172
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Livioù kuñv ar ganevedenn distummet a-hed ar riblennoù hag a vez livet"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:173
 msgid "Rough and dilate"
 msgstr "Rustaat hag arlediñ"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:173
 msgid "Create a turbulent contour around"
 msgstr "Krouiñ un drolinenn fistoulik tro-dro dezhi"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:174
 msgid "Gelatine"
 msgstr "Kaot-askorn"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:174
 #, fuzzy
 msgid "Colorizable filling with gelatine like turbulence and transparency"
 msgstr ""
 "Leuniadur hag a vez livet gant an treuzweluster hag ar mesk heñvel ouzh ar "
 "gaot-askorn"
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
 msgstr "Kartenn bost kozh"
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 "Skritellaat kuñv ha tresañ riblennoù heñvel ouzh ar c'hartennoù post kozh "
 "moullet"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:176
 msgid "Fuzzy glow"
 msgstr "Skleur dispis"
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:177
 msgid "Dots transparency"
 msgstr "Treuzweluster ar pikennoù"
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "Reiñ a ra un treuzweluster kizidik mod APL heñvel ouzh ar boentegezh"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:178
 msgid "Canvas transparency"
 msgstr "Treuzweluster ar steuennoù"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "Reiñ a ra un treuzweluster kizidik mod APL evel ur steuenn."
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:179
 msgid "Smear transparency"
 msgstr "Treuzweluster ar bastouilhadur "
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:179
 #, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
 msgstr ""
 "Pentañ traoù gant strafuilhoù treuzwelus o treiñ tro-dro d'ar riblennoù livet"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
 msgstr "Pent tev"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:180
 msgid "Thick painting effect with turbulence"
 msgstr "Efed ar pent tev gant strafuilhoù"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:181
 msgid "Burst"
 msgstr "Tarzhañ"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
 msgstr "Gwiadezh ur c'hwezhigell tarzhet ha joget gant toulloù"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:182
 msgid "Embossed leather"
 msgstr "Lêr koagennet"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:182
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
@@ -1772,106 +1772,106 @@ msgstr ""
 "Kedaozañ koagenn dinoadur ar riblennoù mod APL gant ur wiadezh heñvel ouzh "
 "lêr pe goad hag a vez livet"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:183
 msgid "Carnaval"
 msgstr "Meurlajez "
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:183
 msgid "White splotches evocating carnaval masks"
 msgstr "Introù gwenn o lakaat da soñjal e maskloù Meurlarjez"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:184
 msgid "Plastify"
 msgstr "Mezellaat"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:184
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
 "Kedaozañ koagenn dinoadur ar riblennoù mod APL gant efed ur gorre disvannus "
 "ha gwagennek"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185
 msgid "Plaster"
 msgstr "Plastr"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
 "Kedaozañ koagenn dinoadur ar riblennoù mod APL gant efed ur gorre joget ha "
 "dilufr"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:186
 msgid "Rough transparency"
 msgstr "Treuzweluster krai"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:186
 #, fuzzy
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr ""
 "Ouzhpennañ a ra an treuzweluster strafuilhet o tilec'hiañ pikselioù war un "
 "dro"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:187
 msgid "Gouache"
 msgstr "Gouach"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:187
 msgid "Partly opaque water color effect with bleed"
 msgstr "Efed an dourlivañ damdemer gant takennoù"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:188
 msgid "Alpha engraving"
 msgstr "Engravadur mod alfa"
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr ""
 "Reiñ a ra efed un engravadur treuzwelus gant linennoù ha leuniadur krai"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
 msgstr "Tres mod alfa, liñvel"
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
 "Reiñ a ra efed un dresadenn dreuzwelus ha liñvel gant linennoù ha leuniadur "
 "krai"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:190
 msgid "Liquid drawing"
 msgstr "Tresadenn liñvel"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr ""
 "Reiñ a ra efed un dresadenn eztaoloniezhek, gwagennek ha liñvel d'ar "
 "skeudennoù"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
 msgstr "Huz marbret"
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:191
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr ""
 "Efed an treuzweluster marbret o klotañ gant riblennoù bet dinoet ar skeudenn"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic"
 msgstr "Pent akrilik tev"
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr "Gwiadezh pent akrilik tev gant donder uhel ar wiadezh"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:193
 msgid "Alpha engraving B"
 msgstr "Engravadur B mod alfa"
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:193
 #, fuzzy
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
@@ -1879,116 +1879,116 @@ msgstr ""
 "Reiñ a ra efed un engravadur krai a vez mestroniet d'ar bitmapoù ha d'an "
 "danvezioù"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:194
 msgid "Lapping"
 msgstr "Saflik"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:194
 msgid "Something like a water noise"
 msgstr "Un dra bennak evel trubuilh an dour"
 
 # yonenn b. -où : positif
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:195
 msgid "Monochrome positive"
 msgstr "Yonenn unliv"
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:195
 msgid "Convert to a Colorizable transparent positive"
 msgstr "Amdreiñ d'ur yonenn dreuzwelus hag a vez livet"
 
 # ginenn b. -où : négatif
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:196
 msgid "Monochrome negative"
 msgstr "Ginenn unliv"
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:196
 msgid "Convert to a colorizable transparent negative"
 msgstr "Amdreiñ d'ur c'hinenn dreuzwelus hag a vez livet"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Diverkell guñv, ginel"
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:197
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr ""
 "Tuginañ ha lakaat al lodoù sklaerañ eus an ergorenn da vezañ treuzwelus tamm "
 "ha tamm"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:198
 msgid "Repaint"
 msgstr "Adpentañ"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Adpentañ pep tra unliv"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:199
 msgid "Punch hole"
 msgstr "Ober un toull"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:199
 msgid "Punch object out of a colorizable opaque area"
 msgstr "Ober un toull war ur maez demer hag a vez livet"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:200
 msgid "Riddled"
 msgstr "Toullet-didoullet"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:200
 msgid "Riddle the surface and add bump to images"
 msgstr "Toullañ-didoullañ ar c'horre hag ouzhpennañ koagennoù d'ar skeudennoù"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:201
 msgid "Wrinkled varnish"
 msgstr "Gwernis joget"
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:201
 msgid "Thick glossy and translucent paint texture with high depth"
 msgstr "Gwiadezh pent tev, skedus ha damvoull gant un donder uhel"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:202
 msgid "Canvas Bumps"
 msgstr "Koagennoù ar steuenn "
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
 msgstr "Gwiadezh ar steuenn gant ur gartenn he sav gizidik mod APL"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
 msgstr "Bosoù ar steuenn, dilufr"
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:203
 #, fuzzy
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr ""
 "Heñvel ouzh koagennoù ar steuenn met  gant ur gouloù amstrew e-lec'h unan "
 "skalfadel"
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
 msgstr "Koagennoù ar steuenn, alfa"
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:204
 #, fuzzy
 msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "Heñvel ouzh koagennoù ar steuenn met gant usskedoù treuzwelus"
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:205
 msgid "Lightness-Contrast"
 msgstr "Lintr-Dargemm"
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:205
 msgid "Increase or decrease lightness and contrast"
 msgstr "Kreskiñ pe zigreskiñ al lintr pe an dargemm"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:206
 msgid "Clean edges"
 msgstr "Skarzhañ ar riblennoù"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:206
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
@@ -1996,47 +1996,55 @@ msgstr ""
 "Dilemel pe zigreskiñ a ra ar skleurioù hag an neuzioù mod sukr \"jageri\" "
 "tro dro da riblennoù an ergorenn goude bezañ arloet siloù zo"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:207
 #, fuzzy
 msgid "Bright metal"
 msgstr "Sklaeroc'h"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:208
 #, fuzzy
 msgid "Transparent plastic with deep colors"
 msgstr "Gwiadezh ar rusk, a-serzh ; da arverañ gant livioù don"
 
-#: ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:209
 #, fuzzy
 msgid "Melted jelly, matte"
 msgstr "Kaotigell dilufr"
 
-#: ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:210
 #, fuzzy
 msgid "Melted jelly"
 msgstr "Kaotigell dilufr"
 
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:210
 #, fuzzy
 msgid "Glossy bevel with blurred edges"
 msgstr "Metal gwasket gant ur riblenn laonennet"
 
-#: ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:211
 #, fuzzy
 msgid "Combined lighting"
 msgstr "Kedaozet"
+
+#: ../share/filters/filters.svg.h:212
+msgid "Tinfoil"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Metallic foil effect combining two lighting types"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -3154,15 +3162,15 @@ msgstr "pdm"
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Anv restr</b></big>"
 
-#: ../src/dialogs/export.cpp:591
+#: ../src/dialogs/export.cpp:590
 msgid "_Browse..."
 msgstr "_Furchal..."
 
-#: ../src/dialogs/export.cpp:620
+#: ../src/dialogs/export.cpp:619
 msgid "Batch export all selected objects"
 msgstr "Ezporzhiañ a-stroll an holl ergorennoù diuzet"
 
-#: ../src/dialogs/export.cpp:624
+#: ../src/dialogs/export.cpp:623
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
@@ -3170,63 +3178,63 @@ msgstr ""
 "Ezporzhiañ pep ergorenn bet diuzet en he restr PNG dezhi, oc'h arverañ an "
 "tunioù ezporzhiañ mar bez anezho (diwall, skrivañ a ra hep goulenn !)"
 
-#: ../src/dialogs/export.cpp:632
+#: ../src/dialogs/export.cpp:631
 msgid "Hide all except selected"
 msgstr "Kuzhat an holl anezho nemet ar re ziuzet"
 
-#: ../src/dialogs/export.cpp:636
+#: ../src/dialogs/export.cpp:635
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr ""
 "Er skeudenn ezporzhiet, kuzhat an holl ergorennoù nemet ar re a zo bet ziuzet"
 
-#: ../src/dialogs/export.cpp:653
+#: ../src/dialogs/export.cpp:652
 msgid "_Export"
 msgstr "_Ezporzhiañ"
 
-#: ../src/dialogs/export.cpp:657
+#: ../src/dialogs/export.cpp:656
 msgid "Export the bitmap file with these settings"
 msgstr "Ezporzhiañ ar restr bitmap gant an arvetennoù-mañ"
 
-#: ../src/dialogs/export.cpp:683
+#: ../src/dialogs/export.cpp:682
 #, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "Ezporzhiañ a-stroll %d ergorenn diuzet"
 msgstr[1] "Ezporzhiañ a-stroll %d a ergorennoù diuzet"
 
-#: ../src/dialogs/export.cpp:1014
+#: ../src/dialogs/export.cpp:1013
 msgid "Export in progress"
 msgstr "Emañ oc'h ezporzhiañ"
 
-#: ../src/dialogs/export.cpp:1084
+#: ../src/dialogs/export.cpp:1083
 #, c-format
 msgid "Exporting %d files"
 msgstr "O ezporzhiañ %d restr"
 
-#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
+#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "N'haller ket ezporzhiañ dindan anv restr %s.\n"
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1152
 msgid "You have to enter a filename"
 msgstr "Ret eo deoc'h enankañ un anv restr"
 
-#: ../src/dialogs/export.cpp:1158
+#: ../src/dialogs/export.cpp:1157
 msgid "The chosen area to be exported is invalid"
 msgstr "Didalvoudek eo ar maez dibabet da vezañ ezporzhiet"
 
-#: ../src/dialogs/export.cpp:1167
+#: ../src/dialogs/export.cpp:1166
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Ar c'havlec'hiad %s n'eus ket anezhañ pe n'eo ket ur c'havlec'hiad.\n"
 
-#: ../src/dialogs/export.cpp:1183
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Oc'h ezporzhiañ %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
+#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
 msgid "Select a filename for exporting"
 msgstr "Diuzañ un anv restr evit an ezporzhiañ"
 
@@ -4235,7 +4243,7 @@ msgstr "Teul nevez %d"
 msgid "Memory document %d"
 msgstr "Teul kounañ %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:647
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Teul dianv %d"
@@ -4264,28 +4272,28 @@ msgstr "Krouiñ ur pik eeun"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:291
+#: ../src/dropper-context.cpp:302
 #, c-format
 msgid " alpha %.3g"
 msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ", keitad gant ar skin %d"
 
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid " under cursor"
 msgstr " dindan ar reti"
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:295
+#: ../src/dropper-context.cpp:306
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b>Dibouezañ diwar al logodenn</b> evit arventenniñ al liv."
 
-#: ../src/dropper-context.cpp:295 ../src/tools-switch.cpp:208
+#: ../src/dropper-context.cpp:306 ../src/tools-switch.cpp:208
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
@@ -4296,7 +4304,7 @@ msgstr ""
 "<b>Alt</b> evit pakañ al liv gin; <b>Ctrl+C</b> evit eilañ al liv dindan al "
 "logodenn er golver"
 
-#: ../src/dropper-context.cpp:328
+#: ../src/dropper-context.cpp:344
 msgid "Set picked color"
 msgstr "Arventenniñ al liv paket"
 
@@ -4482,7 +4490,7 @@ msgstr ""
 "sell war lec'hienn internet Inkscape pe c'houlennit digant ar \"mailing list"
 "\" mar bez goulennoù a-zivout an askouezh-mañ."
 
-#: ../src/extension/implementation/script.cpp:1063
+#: ../src/extension/implementation/script.cpp:1060
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -5618,7 +5626,7 @@ msgstr "Hag an efed bev zo rakwelet war ar steuenn ?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:104
+#: ../src/extension/system.cpp:106
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 "C'hwitadenn war emzinoiñ ar mentrezh. Digoret e vo ar restr evel ur restr "
@@ -5628,53 +5636,53 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:157
+#: ../src/file.cpp:156
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1055
+#: ../src/file.cpp:248 ../src/file.cpp:1039
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "C'hwitadenn war bellgargañ ar restr goullennet %s"
 
-#: ../src/file.cpp:274
+#: ../src/file.cpp:273
 msgid "Document not saved yet.  Cannot revert."
 msgstr "N'eo ket bet enrollet an tteul c'hoazh. N'hellet ket tuginañ."
 
-#: ../src/file.cpp:280
+#: ../src/file.cpp:279
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Kollet e vo ar c'hemmoù ! Ha sur oc'h e fell deoc'h adkargañ an teul %s ?"
 
-#: ../src/file.cpp:309
+#: ../src/file.cpp:308
 msgid "Document reverted."
 msgstr "Teul tuginet"
 
-#: ../src/file.cpp:311
+#: ../src/file.cpp:310
 msgid "Document not reverted."
 msgstr "Teul ket bet tuginet"
 
-#: ../src/file.cpp:461
+#: ../src/file.cpp:460
 msgid "Select file to open"
 msgstr "Diuzañ ar restr da zigeriñ"
 
-#: ../src/file.cpp:548
+#: ../src/file.cpp:547
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Skarzhañ an &lt;despizadurioù diarver&gt;"
 
-#: ../src/file.cpp:553
+#: ../src/file.cpp:552
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Dilemet ez eus bet <b>%i</b> despizadur e &lt;desps&gt;."
 msgstr[1] "Dilemet ez eus bet <b>%i</b> a zespizadurioù e &lt;desps&gt;."
 
-#: ../src/file.cpp:558
+#: ../src/file.cpp:557
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Despizadur diarver ebe en &lt;desp&gt;."
 
-#: ../src/file.cpp:587
+#: ../src/file.cpp:588
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5683,75 +5691,73 @@ msgstr ""
 "Askouezhadenn Inkscape ebet bet kavet evit enrollañ an teul (%s). Marteze ez "
 "eo degouezhet en abeg d'un askouezhadenn restr dianav."
 
-#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
 msgid "Document not saved."
 msgstr "N'eo ket bet enrollet an teul."
 
-#: ../src/file.cpp:595
+#: ../src/file.cpp:596
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Ne oa ket bet tu enrollañ ar restr %s."
 
-#: ../src/file.cpp:609
+#: ../src/file.cpp:610
 msgid "Document saved."
 msgstr "Teul bet enrollet."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
+#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
 #, c-format
 msgid "drawing%s"
 msgstr "tresadenn%s"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:748
 #, c-format
 msgid "drawing-%d%s"
 msgstr "tresadenn-%d%s"
 
-#. Use the document uri's base name as the filename but
-#. store in the directory last used for "Save a copy ..."
-#: ../src/file.cpp:774
+#: ../src/file.cpp:752
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:793
+#: ../src/file.cpp:767
 msgid "Select file to save a copy to"
 msgstr "Diuzañ ur restr evit enrollañ un eilad enni"
 
-#: ../src/file.cpp:795
+#: ../src/file.cpp:769
 msgid "Select file to save to"
 msgstr "Diuzañ ur restr evit enrollañ enni"
 
-#: ../src/file.cpp:876
+#: ../src/file.cpp:860
 msgid "No changes need to be saved."
 msgstr "Kemm ebet da enrollañ"
 
-#: ../src/file.cpp:893
+#: ../src/file.cpp:877
 msgid "Saving document..."
 msgstr "Oc'h enrollañ an teul..."
 
-#: ../src/file.cpp:1052
+#: ../src/file.cpp:1036
 msgid "Import"
 msgstr "Enporzhiañ"
 
-#: ../src/file.cpp:1102
+#: ../src/file.cpp:1086
 msgid "Select file to import"
 msgstr "Diuzañ ar restr da enporzhiañ"
 
-#: ../src/file.cpp:1220 ../src/file.cpp:1334
+#: ../src/file.cpp:1198 ../src/file.cpp:1312
 msgid "Select file to export to"
 msgstr "Diuzañ ar restr da ezporzhiañ betek"
 
-#: ../src/file.cpp:1366
+#: ../src/file.cpp:1344
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Fazi e-pad ma oa oc'h enrollañ un eilad padennek"
 
-#: ../src/file.cpp:1386
+#: ../src/file.cpp:1364
 msgid "Open Clip Art Login"
 msgstr "Anv tremen Open Clip Art"
 
-#: ../src/file.cpp:1412
+#: ../src/file.cpp:1390
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5762,11 +5768,11 @@ msgstr ""
 "dafariad, an arveriad hag ar ger tremen, mard eo skoret webdav gant an "
 "dafariad ha gwiriañ ma n'eo ket bet ankouaet ganeoc'h da zibab ul lañvaz."
 
-#: ../src/file.cpp:1433
+#: ../src/file.cpp:1411
 msgid "Document exported..."
 msgstr "Teul bet ezporzhiet..."
 
-#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Enprzhiañ diouzh al levraoueg Open Clip Art"
 
@@ -6915,7 +6921,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "Pajenn"
@@ -7479,35 +7485,42 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-msgid "Interruption width"
-msgstr "Led an troc'h"
+#, fuzzy
+msgid "Fixed width"
+msgstr "Led ar c'hreion"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
 msgstr "Ment ar maez kuzh eus an hedad izelañ"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-msgid "unit of stroke width"
+#, fuzzy
+msgid "In units of stroke width"
 msgstr "Unanenn tevder an tres"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-msgid "Consider 'Interruption width' as a ratio of stroke width."
+#, fuzzy
+msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "Gwelout 'Led an troc'hadur' evel ur feur eus ul led tres."
 
-#: ../src/live_effects/lpe-knot.cpp:325
-msgid "add stroke width to interruption size"
-msgstr "ouzhpennañ ul led tres da vent an troc'hadur"
+#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../share/extensions/edge3d.inx.h:9
+msgid "Stroke width"
+msgstr "Led an tres"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-msgid "Add the stroke width to the interruption size."
+#, fuzzy
+msgid "Add the stroke width to the interruption size"
 msgstr "Ouzhpennañ ul led tres da vent an troc'hadur."
 
 #: ../src/live_effects/lpe-knot.cpp:326
-msgid "add other's stroke width to interruption size"
-msgstr "ouzhpennañ led tresoù kroaziet all da vent an troc'hadur"
+#, fuzzy
+msgid "Crossing path stroke width"
+msgstr "Kemmañ led an tres"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-msgid "Add crossed stroke width to the interruption size."
+#, fuzzy
+msgid "Add crossed stroke width to the interruption size"
 msgstr "Ouzhpennañ led tresoù kroaziet da vent an troc'hadur."
 
 #: ../src/live_effects/lpe-knot.cpp:327
@@ -8505,7 +8518,7 @@ msgstr "S_koazell"
 msgid "Tutorials"
 msgstr "Teulioù kelenn"
 
-#: ../src/node-context.cpp:223
+#: ../src/node-context.cpp:228
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -8513,14 +8526,14 @@ msgstr ""
 "<b>Ctrl</b>: trec'haoliñ rizh ar c'hlom, azvuiadañ korn an dornell, "
 "dilec'hiañ a-zre/a-ser ;  <b>Ctrl+Alt</b>: dilec'hiañ an dornelloù a-hed"
 
-#: ../src/node-context.cpp:224
+#: ../src/node-context.cpp:229
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Shift</b>: trec'haoliñ diuzadur ar c'hlomoù, diweredekaat an azvuiadañ, "
 "c'hwelañ an holl zornelloù"
 
-#: ../src/node-context.cpp:225
+#: ../src/node-context.cpp:230
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: prennañ led an dornelloù ; <b>Ctrl+Alt</b>: dilec'hiañ a-hed an "
@@ -9230,7 +9243,7 @@ msgstr "Naoudi"
 msgid "Unique URI to reference this document."
 msgstr "URI nemeti da zaveiñ an teul-mañ."
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
 msgid "Source"
 msgstr "Tarzh"
 
@@ -11422,7 +11435,7 @@ msgid "Smallest object"
 msgstr "Ergorenn vihanañ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -11834,6 +11847,7 @@ msgstr "Stlennoù"
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
 #: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_outlines.inx.h:4
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11887,49 +11901,49 @@ msgstr "An holl vitmapoù"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:927
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1475
 msgid "Append filename extension automatically"
 msgstr "Lakaat askouezhadenn ar restr ent emgefreek"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1085
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1339
 msgid "Guess from extension"
 msgstr "Divinout gant an askouezhadenn"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1360
 msgid "Left edge of source"
 msgstr "Riblenn gleiz an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1361
 msgid "Top edge of source"
 msgstr "Riblenn lein an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 msgid "Right edge of source"
 msgstr "Riblenn dehou an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Bottom edge of source"
 msgstr "Riblenn diaz an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 msgid "Source width"
 msgstr "Led an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 msgid "Source height"
 msgstr "Sav an tarzh"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 msgid "Destination width"
 msgstr "Led an arvoned"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 msgid "Destination height"
 msgstr "Sav an arvoned"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 msgid "Resolution (dots per inch)"
 msgstr "Diarunusted (pikoù dre veutad)"
 
@@ -11937,28 +11951,28 @@ msgstr "Diarunusted (pikoù dre veutad)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1406
 msgid "Document"
 msgstr "Teul"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
 msgstr "Personelaat"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
 msgstr "Kairo"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1461
 msgid "Antialias"
 msgstr "Lenkraat"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1464
 msgid "Background"
 msgstr "Drekva "
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1487
 msgid "Destination"
 msgstr "Arvoned"
 
@@ -15020,29 +15034,29 @@ msgstr "Klask"
 msgid "Files found"
 msgstr "Restr bet kavet"
 
-#: ../src/ui/dialog/print.cpp:92
+#: ../src/ui/dialog/print.cpp:93
 msgid "Could not open temporary PNG for bitmap printing"
 msgstr "N'haller ket digeriñ PNG padennek evit moullañ mod bitmap"
 
-#: ../src/ui/dialog/print.cpp:117
+#: ../src/ui/dialog/print.cpp:136
 msgid "Could not set up Document"
 msgstr "N'haller ket arventennañ an teul"
 
-#: ../src/ui/dialog/print.cpp:121
+#: ../src/ui/dialog/print.cpp:140
 msgid "Failed to set CairoRenderContext"
 msgstr "C'hwitadenn war arventenniñ KendestennDeouezCairo"
 
 #. set up dialog title, based on document name
-#: ../src/ui/dialog/print.cpp:161
+#: ../src/ui/dialog/print.cpp:180
 msgid "SVG Document"
 msgstr "Teul SVG"
 
-#: ../src/ui/dialog/print.cpp:162
+#: ../src/ui/dialog/print.cpp:181
 msgid "Print"
 msgstr "Moullañ"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/print.cpp:189
+#: ../src/ui/dialog/print.cpp:215
 msgid "Rendering"
 msgstr "Deouez"
 
@@ -15563,6 +15577,7 @@ msgstr "Aotrevarz :"
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
 #: ../share/extensions/dxf_input.inx.h:7
+#: ../share/extensions/dxf_outlines.inx.h:5
 msgid "Options"
 msgstr "Dibarzhioù"
 
@@ -15931,7 +15946,7 @@ msgstr ""
 "Admentañ ar bajennad d'he lakaat da genglotañ gant an diuzad bremanel, pe an "
 "dresadenn a-bezh ma n'eus ket un diuzad"
 
-#: ../src/ui/widget/page-sizer.cpp:357
+#: ../src/ui/widget/page-sizer.cpp:369
 msgid "Set page size"
 msgstr "Arventenniñ ment ar bajenn"
 
@@ -18979,10 +18994,6 @@ msgstr "Arventenniñ ar markerioù"
 msgid "StrokeWidth|Width:"
 msgstr "StrokeWidth|Led :"
 
-#: ../src/widgets/stroke-style.cpp:1093 ../share/extensions/edge3d.inx.h:9
-msgid "Stroke width"
-msgstr "Led an tres"
-
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
@@ -20969,18 +20980,6 @@ msgstr "Adobe Illustrator 8.0 ha koshoc'h (*.ai)"
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
 msgstr "Digeriñ ar restroù enrollet gant Adobe Illustrator 8.0 pe nevesoc'h"
 
-#: ../share/extensions/ai_output.inx.h:1
-msgid "AI 8.0 Output"
-msgstr "Ec'hankad AI 8.0"
-
-#: ../share/extensions/ai_output.inx.h:2
-msgid "Adobe Illustrator 8.0 (*.ai)"
-msgstr "Adobe Illustrator 8.0 (*.ai)"
-
-#: ../share/extensions/ai_output.inx.h:3
-msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-msgstr "Skrivañ e mod Adobe Illustrator 8.0 (diazezet war Postscript)"
-
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
 msgstr "Enankad AI SVG"
@@ -21374,15 +21373,25 @@ msgid "Use automatic scaling to size A4"
 msgstr "Arverañ ar skeulaat emgefreek betek ar vent A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+msgid ""
+"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
+"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
+"supported. - ROBO-Master option is a specialized spline readable only by "
+"ROBO-Master and AutoDesk viewers, not Inkscape."
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
-#: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.dxf)"
+#: ../share/extensions/dxf_outlines.inx.h:3
+#, fuzzy
+msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Desktop Cutting Plotter (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
-msgid "ROBO-Master output"
+#: ../share/extensions/dxf_outlines.inx.h:6
+#, fuzzy
+msgid "enable ROBO-Master output"
 msgstr "Ec'hankad ROBO-Master"
 
 #: ../share/extensions/dxf_output.inx.h:1
@@ -21442,18 +21451,6 @@ msgstr "Enkorfañ ar skeudennoù bet diuzet hepken"
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
 msgstr "Enankad EPS"
-
-#: ../share/extensions/epsi_output.inx.h:1
-msgid "EPSI Output"
-msgstr "Ec'hankad EPSI"
-
-#: ../share/extensions/epsi_output.inx.h:2
-msgid "Encapsulated Postscript Interchange (*.epsi)"
-msgstr "Encapsulated Postscript Interchange (*.epsi)"
-
-#: ../share/extensions/epsi_output.inx.h:3
-msgid "Encapsulated Postscript with a thumbnail"
-msgstr "Postscrip bolc'hennet gant ur skeudennig"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
@@ -23476,6 +23473,33 @@ msgstr "Enankad Windows Metafile"
 msgid "XAML Input"
 msgstr "Enankad mod XAML"
 
+#~ msgid "Interruption width"
+#~ msgstr "Led an troc'h"
+
+#~ msgid "add stroke width to interruption size"
+#~ msgstr "ouzhpennañ ul led tres da vent an troc'hadur"
+
+#~ msgid "add other's stroke width to interruption size"
+#~ msgstr "ouzhpennañ led tresoù kroaziet all da vent an troc'hadur"
+
+#~ msgid "AI 8.0 Output"
+#~ msgstr "Ec'hankad AI 8.0"
+
+#~ msgid "Adobe Illustrator 8.0 (*.ai)"
+#~ msgstr "Adobe Illustrator 8.0 (*.ai)"
+
+#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
+#~ msgstr "Skrivañ e mod Adobe Illustrator 8.0 (diazezet war Postscript)"
+
+#~ msgid "EPSI Output"
+#~ msgstr "Ec'hankad EPSI"
+
+#~ msgid "Encapsulated Postscript Interchange (*.epsi)"
+#~ msgstr "Encapsulated Postscript Interchange (*.epsi)"
+
+#~ msgid "Encapsulated Postscript with a thumbnail"
+#~ msgstr "Postscrip bolc'hennet gant ur skeudennig"
+
 #~ msgid "Highly flexible specular bump"
 #~ msgstr "Koagenn skalfadel argemmus kenañ"
 
@@ -23804,9 +23828,6 @@ msgstr "Enankad mod XAML"
 
 #~ msgid "Choose pen type"
 #~ msgstr "Dibab rizh ar c'hreion"
-
-#~ msgid "Pen width"
-#~ msgstr "Led ar c'hreion"
 
 #~ msgid "Maximal stroke width"
 #~ msgstr "Tevder uc'hek an tres"

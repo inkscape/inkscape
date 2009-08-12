@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-09 14:41+0200\n"
+"POT-Creation-Date: 2009-08-13 00:00+0200\n"
 "PO-Revision-Date: 2007-02-21 03:30+0100\n"
 "Last-Translator: Jurmey Rabgay <pemai_jurmey@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -38,8 +38,8 @@ msgstr "དཔེ་གཞི་བཀང་ནི།"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:207
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -60,9 +60,9 @@ msgstr "དཔེ་གཞི་བཀང་ནི།"
 #: ../share/filters/filters.svg.h:54 ../share/filters/filters.svg.h:56
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:216
-#: ../share/filters/filters.svg.h:217 ../share/filters/filters.svg.h:218
-#: ../share/filters/filters.svg.h:219 ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:208 ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
 #, fuzzy
 msgid "Bevels"
 msgstr "འཁོར་ལོ།"
@@ -88,7 +88,7 @@ msgstr "ཐད་སྙོམས་སྦེ་ སྤོ་བཤུད་འ�
 #: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
 #: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:159
 #, fuzzy
 msgid "Blurs"
 msgstr "ཧོནམ།"
@@ -126,9 +126,9 @@ msgstr "ཕྱི་སྒིག"
 
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:178
-#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:180
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:176
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
@@ -167,8 +167,8 @@ msgstr "རིམ་གྲངས་"
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38 ../share/filters/filters.svg.h:90
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:159
-#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
 #, fuzzy
 msgid "Overlays"
 msgstr "གཞན་"
@@ -184,7 +184,7 @@ msgid "Ink bleed"
 msgstr "ཧོནམ།"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
-#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "Protrusions"
 msgstr "གནས་ས:"
@@ -227,8 +227,8 @@ msgstr "རིམ་ལོག་འབད།(_R)"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:182
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:194
 #, fuzzy
 msgid "Distort"
 msgstr "སྡེ་ཚན་"
@@ -274,8 +274,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:62 ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
 #, fuzzy
 msgid "Materials"
 msgstr "མེ་ཊིགསི།(_x)"
@@ -312,8 +312,8 @@ msgstr "དབྱིབས་ཚུ།"
 #: ../share/filters/filters.svg.h:27 ../share/filters/filters.svg.h:28
 #: ../share/filters/filters.svg.h:29 ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:160 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Image effects"
 msgstr "ད་ལྟོའི་བང་རིམ།"
@@ -395,8 +395,8 @@ msgstr "མཐའ་ཚད་མེདཔ་"
 #: ../share/filters/filters.svg.h:31 ../share/filters/filters.svg.h:32
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:166
-#: ../share/filters/filters.svg.h:214 ../src/dialogs/clonetiler.cpp:2607
+#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -466,10 +466,10 @@ msgstr "འགོ་ཐོག་བྱུང་ས་ ཨེགསི:(_O)"
 #: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
 #: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:183
-#: ../share/filters/filters.svg.h:190 ../share/filters/filters.svg.h:196
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "ཚིག་ཡིག་ཚུ།"
@@ -556,12 +556,12 @@ msgstr ""
 #: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:170
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:189
-#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
-#: ../share/filters/filters.svg.h:194 ../share/filters/filters.svg.h:201
-#: ../share/filters/filters.svg.h:210 ../share/filters/filters.svg.h:211
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:182 ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
 #, fuzzy
 msgid "Bumps"
 msgstr "གདོང་ཁེབས་ གཞི་སྒྲིག་འབད་"
@@ -840,7 +840,7 @@ msgstr "སྤྱིར་བཏང་པར་ལེན་"
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:88
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:93
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:168
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr ""
@@ -1111,12 +1111,12 @@ msgid "HSL Bumps alpha"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
 #: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:186 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:200 ../share/filters/filters.svg.h:202
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:177 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:179 ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:188 ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:204
 #, fuzzy
 msgid "Image effects, transparent"
 msgstr "ད་ལྟོའི་བང་རིམ།"
@@ -1176,7 +1176,7 @@ msgstr ""
 msgid "Specular light"
 msgstr "ཚོས་གཞི་བཀག་བཞག"
 
-#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:211
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
@@ -1423,12 +1423,12 @@ msgid "Comics draft"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:142
-#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:149
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:141 ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:156
 msgid "Non realistic 3D shaders"
 msgstr ""
 
@@ -1444,656 +1444,661 @@ msgstr ""
 msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 #, fuzzy
-msgid "Smooth shader NR"
+msgid "Smooth shader"
 msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:142
-msgid "Emboss shader NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:140
+#, fuzzy
+msgid "Emboss shader"
+msgstr "སྤྱིར་བཏང་པར་ལེན་"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:144
-msgid "Smooth shader dark NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:141
+#, fuzzy
+msgid "Smooth shader dark"
+msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:142
 #, fuzzy
 msgid "Comics"
 msgstr "མཉམ་མཐུད་འབད་"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:142
 #, fuzzy
 msgid "Imitation of black and white cartoon shading"
 msgstr " བཤུལ་འཚོལ་རྐྱང་པའི་དོན་ལུ་ གནགཔོ་དང་དཀརཔོ་གི་གནས་ཁོངས་ གནས་ལོག་འབད།"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:143
 #, fuzzy
-msgid "Satin NR"
+msgid "Satin"
 msgstr "འགོ་བཙུགས:"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:149
-msgid "Frosted glass NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:144
+#, fuzzy
+msgid "Frosted glass"
+msgstr "ཁ་བསྡམས།"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:151
-msgid "Smooth shader contour NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:145
+#, fuzzy
+msgid "Smooth shader contour"
+msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:153
-msgid "Aluminium NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:146
+#, fuzzy
+msgid "Aluminium"
+msgstr "ཚད་ཉུང་མཐའ།"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:147
 msgid "Comics fluid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:147
 #, fuzzy
 msgid "Fluid brushed cartoon drawing"
 msgstr "པར་རིས་ལུ་ ཤོག་ལེབ་འདི་ཚུད་སྒྲིག་འབད་"
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:156
-msgid "Chrome NR"
-msgstr ""
+#: ../share/filters/filters.svg.h:148
+#, fuzzy
+msgid "Chrome"
+msgstr "མཉམ་མཐུད་འབད་"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
 msgstr ""
 
-#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
-#: ../share/filters/filters.svg.h:158
-msgid "Chrome dark NR"
+#: ../share/filters/filters.svg.h:149
+msgid "Chrome dark"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:150
 msgid "Wavy tartan"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:150
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:151
 msgid "3D marble"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:151
 msgid "3D warped marble texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:152
 #, fuzzy
 msgid "3D wood"
 msgstr "སྒྲོམ།"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:152
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:153
 #, fuzzy
 msgid "3D mother of pearl"
 msgstr "ཤོག་ལེབ་ཀྱི་རྒྱ་ཚད།"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:153
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:154
 msgid "Tiger fur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:154
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:155
 msgid "Shaken liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:155
 msgid "Colorizable filling with flow inside like transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:156
 msgid "Comics cream"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:156
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:157
 #, fuzzy
 msgid "Black Light"
 msgstr "གནགཔོ་བཀང་ནི་"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:157
 msgid "Light areas turn to black"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:158
 #, fuzzy
 msgid "Light eraser"
 msgstr "འོད་ཡང།"
 
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:204
-#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:206
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:159
 msgid "Noisy blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:159
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Film grain"
 msgstr "པི་ཌི་ཨེཕ་ དཔར་བསྐྲུན།"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:160
 msgid "Adds a small scale graininess"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:161
 #, fuzzy
 msgid "HSL Bumps, transparent"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
 msgstr "པར་རིས།"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:162
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:163
 msgid "Velvet bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:163
 msgid "Gives a smooth bump velvet like"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:164
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:165
 msgid "Alpha draw, color"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:166
 msgid "Chewing gum"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:166
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:167
 #, fuzzy
 msgid "Black outline"
 msgstr "གནགཔོ་སི་ཊོཀ་"
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Color outline"
 msgstr "ལམ་སྟོན་གྲལ་ཐིག་གི་ཚོས་གཞི།"
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:168
 msgid "Draws a colored outline around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:169
 #, fuzzy
 msgid "Inner shadow"
 msgstr "ནང་ན་གི་མཐའ་འཁོར:"
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:169
 msgid "Adds a colorizable drop shadow inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:170
 msgid "Dark and glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:171
 #, fuzzy
 msgid "Darken edges"
 msgstr "གྲིབ་ནག་ཆེ་མི་"
 
-#: ../share/filters/filters.svg.h:180
+#: ../share/filters/filters.svg.h:171
 msgid "Darken the edges with an inner blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:172
 msgid "Warped rainbow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:172
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:173
 #, fuzzy
 msgid "Rough and dilate"
 msgstr "མཇུག་གི་མཐུད་མཚམས།"
 
-#: ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:173
 msgid "Create a turbulent contour around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:174
 #, fuzzy
 msgid "Gelatine"
 msgstr "མཐུན་འབྲེལ།"
 
-#: ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:174
 msgid "Colorizable filling with gelatine like turbulence and transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:184
+#: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:176
 msgid "Fuzzy glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:185
+#: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:177
 #, fuzzy
 msgid "Dots transparency"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
-#: ../share/filters/filters.svg.h:186
+#: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:178
 #, fuzzy
 msgid "Canvas transparency"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
-#: ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr ""
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:179
 #, fuzzy
 msgid "Smear transparency"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
-#: ../share/filters/filters.svg.h:188
+#: ../share/filters/filters.svg.h:179
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:180
 #, fuzzy
 msgid "Thick paint"
 msgstr "ཚོན་གཏང་ནི་མིན་འདུག"
 
-#: ../share/filters/filters.svg.h:189
+#: ../share/filters/filters.svg.h:180
 msgid "Thick painting effect with turbulence"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:181
 #, fuzzy
 msgid "Burst"
 msgstr "ཧོནམ།"
 
-#: ../share/filters/filters.svg.h:190
+#: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:182
 #, fuzzy
 msgid "Embossed leather"
 msgstr "སྤྱིར་བཏང་པར་ལེན་"
 
-#: ../share/filters/filters.svg.h:191
+#: ../share/filters/filters.svg.h:182
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:183
 #, fuzzy
 msgid "Carnaval"
 msgstr "སྔོ་ལྗང།"
 
-#: ../share/filters/filters.svg.h:192
+#: ../share/filters/filters.svg.h:183
 msgid "White splotches evocating carnaval masks"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:184
 #, fuzzy
 msgid "Plastify"
 msgstr "ལྟེམས་བཅོས།"
 
-#: ../share/filters/filters.svg.h:193
+#: ../share/filters/filters.svg.h:184
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185
 #, fuzzy
 msgid "Plaster"
 msgstr "སྦྱར་"
 
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:185
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:186
 #, fuzzy
 msgid "Rough transparency"
 msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
-#: ../share/filters/filters.svg.h:195
+#: ../share/filters/filters.svg.h:186
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:187
 #, fuzzy
 msgid "Gouache"
 msgstr "འབྱུང་ཁུངས།"
 
-#: ../share/filters/filters.svg.h:196
+#: ../share/filters/filters.svg.h:187
 msgid "Partly opaque water color effect with bleed"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:188
 msgid "Alpha engraving"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:198
+#: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:190
 #, fuzzy
 msgid "Liquid drawing"
 msgstr "%s འབྲི་དོ།"
 
-#: ../share/filters/filters.svg.h:199
+#: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:191
 msgid "Marbled transparency effect which conforms to image detected edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:201
+#: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic paint texture with high texture depth"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:193
 msgid "Alpha engraving B"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:202
+#: ../share/filters/filters.svg.h:193
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:194
 #, fuzzy
 msgid "Lapping"
 msgstr "སི་ཊར་: བསྐོར་ཐེངས་བསྒྱུར་བཅོས་འབད་"
 
-#: ../share/filters/filters.svg.h:203
+#: ../share/filters/filters.svg.h:194
 msgid "Something like a water noise"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:195
 msgid "Monochrome positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:204
+#: ../share/filters/filters.svg.h:195
 msgid "Convert to a Colorizable transparent positive"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:196
 msgid "Monochrome negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:205
+#: ../share/filters/filters.svg.h:196
 msgid "Convert to a colorizable transparent negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:197
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:198
 #, fuzzy
 msgid "Repaint"
 msgstr "ཡང་བསྐྱར:"
 
-#: ../share/filters/filters.svg.h:207
+#: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:199
 #, fuzzy
 msgid "Punch hole"
 msgstr "གནགཔོ་སི་ཊོཀ་"
 
-#: ../share/filters/filters.svg.h:208
+#: ../share/filters/filters.svg.h:199
 msgid "Punch object out of a colorizable opaque area"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Riddled"
 msgstr "མགོ་མིང་།"
 
-#: ../share/filters/filters.svg.h:209
+#: ../share/filters/filters.svg.h:200
 msgid "Riddle the surface and add bump to images"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:201
 msgid "Wrinkled varnish"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:210
+#: ../share/filters/filters.svg.h:201
 msgid "Thick glossy and translucent paint texture with high depth"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:202
 #, fuzzy
 msgid "Canvas Bumps"
 msgstr "སྔོ་ལྗང།"
 
-#: ../share/filters/filters.svg.h:211
+#: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:203
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:213
+#: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:205
 #, fuzzy
 msgid "Lightness-Contrast"
 msgstr "འོད་ཡང།"
 
-#: ../share/filters/filters.svg.h:214
+#: ../share/filters/filters.svg.h:205
 msgid "Increase or decrease lightness and contrast"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:206
 #, fuzzy
 msgid "Clean edges"
 msgstr "གྲིབ་ནག་ཆེ་མི་"
 
-#: ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:206
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:207
 #, fuzzy
 msgid "Bright metal"
 msgstr "ཚོན་མདངས་ཆེ་མི་"
 
-#: ../share/filters/filters.svg.h:216
+#: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:217
+#: ../share/filters/filters.svg.h:208
 msgid "Transparent plastic with deep colors"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:209
 #, fuzzy
 msgid "Melted jelly, matte"
 msgstr "དཔེ་གཞི་བཀང་ནི།"
 
-#: ../share/filters/filters.svg.h:218
+#: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:210
 #, fuzzy
 msgid "Melted jelly"
 msgstr "དཔེ་གཞི་བཀང་ནི།"
 
-#: ../share/filters/filters.svg.h:219
+#: ../share/filters/filters.svg.h:210
 #, fuzzy
 msgid "Glossy bevel with blurred edges"
 msgstr "སྐར་མ་གི་དགའ་གདམ་ཚུ།"
 
-#: ../share/filters/filters.svg.h:220
+#: ../share/filters/filters.svg.h:211
 #, fuzzy
 msgid "Combined lighting"
 msgstr "མཉམ་མཐུད་འབད་ཡོདཔ།"
+
+#: ../share/filters/filters.svg.h:212
+msgid "Tinfoil"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:212
+msgid "Metallic foil effect combining two lighting types"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -3234,78 +3239,78 @@ msgstr "ཌི་པི་ཨའི།"
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>ཡིག་སྣོད་ཀྱི་མིང་།</b></big>(_F)"
 
-#: ../src/dialogs/export.cpp:591
+#: ../src/dialogs/export.cpp:590
 msgid "_Browse..."
 msgstr "བརྡ་འཚོལ...(_B)"
 
-#: ../src/dialogs/export.cpp:620
+#: ../src/dialogs/export.cpp:619
 #, fuzzy
 msgid "Batch export all selected objects"
 msgstr "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་འརྫུན་མ་བཟོ།"
 
-#: ../src/dialogs/export.cpp:624
+#: ../src/dialogs/export.cpp:623
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:632
+#: ../src/dialogs/export.cpp:631
 #, fuzzy
 msgid "Hide all except selected"
 msgstr "མཇུག་གི་དེ་སེལ་འཐུ་འབད་བཞག"
 
-#: ../src/dialogs/export.cpp:636
+#: ../src/dialogs/export.cpp:635
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:653
+#: ../src/dialogs/export.cpp:652
 msgid "_Export"
 msgstr "ཕྱིར་འདྲེན།(_E)"
 
-#: ../src/dialogs/export.cpp:657
+#: ../src/dialogs/export.cpp:656
 msgid "Export the bitmap file with these settings"
 msgstr "སྒྲིག་སྟངས་འདི་ཚུ་དང་གཅིག་ཁར་ བིཊི་མེཔ་ཡིག་སྣོད་དེ་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/dialogs/export.cpp:683
+#: ../src/dialogs/export.cpp:682
 #, fuzzy, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
 msgstr[0] "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་འརྫུན་མ་བཟོ།"
 msgstr[1] "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་འརྫུན་མ་བཟོ།"
 
-#: ../src/dialogs/export.cpp:1014
+#: ../src/dialogs/export.cpp:1013
 msgid "Export in progress"
 msgstr "ཡར་འཕེལ་ནང་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/dialogs/export.cpp:1084
+#: ../src/dialogs/export.cpp:1083
 #, fuzzy, c-format
 msgid "Exporting %d files"
 msgstr " %s ཕྱིར་འདྲེན་འབད་དོ།(%d x %d)"
 
-#: ../src/dialogs/export.cpp:1124 ../src/dialogs/export.cpp:1197
+#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "ཡིག་སྣོད་མིང་%sལུ་ཕྱིར་འདྲེན་འབད་མ་ཚུགས།\n"
 
-#: ../src/dialogs/export.cpp:1153
+#: ../src/dialogs/export.cpp:1152
 msgid "You have to enter a filename"
 msgstr "ཁྱོད་ཀྱིས་ཡིག་སྣོད་མིང་ཅིག་ཐོ་བཀོད་འབད་དགོཔ་ཨིན།"
 
-#: ../src/dialogs/export.cpp:1158
+#: ../src/dialogs/export.cpp:1157
 msgid "The chosen area to be exported is invalid"
 msgstr "གདམ་ཁ་བརྐྱབས་ཡོད་པའི་མངའ་ཁོངས་ཕྱིར་འདྲེན་འབད་ནི་དེ་ནུས་མེད་ཨིན་པས།"
 
-#: ../src/dialogs/export.cpp:1167
+#: ../src/dialogs/export.cpp:1166
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "སྣོད་ཐོ་ %s དེ་མེདཔ་ཨིནམ་དང་ ཡང་ན་ དེ་སྣོད་ཐོ་མེན།\n"
 
-#: ../src/dialogs/export.cpp:1183
+#: ../src/dialogs/export.cpp:1182
 #, fuzzy, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr " %s ཕྱིར་འདྲེན་འབད་དོ།(%d x %d)"
 
-#: ../src/dialogs/export.cpp:1305 ../src/dialogs/export.cpp:1336
+#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
 msgid "Select a filename for exporting"
 msgstr "ཕྱིར་འདྲེན་འབད་ནིའི་དོན་ལུ་ ཡིག་སྣོད་མིང་ཅིག་སེལ་འཐུ་འབད།"
 
@@ -4354,7 +4359,7 @@ msgstr "ཡིག་ཆ་གསརཔ་%d"
 msgid "Memory document %d"
 msgstr "དྲན་འཛིན་ཡིག་ཆ་%d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:647
 #, c-format
 msgid "Unnamed document %d"
 msgstr "མིང་མ་བཏགས་པར་ཡོད་མི་ཡིག་ཆ་%d"
@@ -4385,28 +4390,28 @@ msgstr "ཊཡིལཌི་ངོ་འདྲ་ཚུ་ གསར་བས�
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:291
+#: ../src/dropper-context.cpp:302
 #, c-format
 msgid " alpha %.3g"
 msgstr "ཨཱལ་ཕ་%.3g"
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid ", averaged with radius %d"
 msgstr "མཐའ་འཁོར་%d་དང་བཅས་པའི་ཆ་སྙོམས།"
 
-#: ../src/dropper-context.cpp:293
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid " under cursor"
 msgstr "འོས་རྟགས་ཀྱི་འོག་ལུ།"
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:295
+#: ../src/dropper-context.cpp:306
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b> མའུ་སུ་དེ་ ཚོས་གི་ལུ་</b>གསར་བཏོན་འབད།"
 
-#: ../src/dropper-context.cpp:295 ../src/tools-switch.cpp:208
+#: ../src/dropper-context.cpp:306 ../src/tools-switch.cpp:208
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
@@ -4417,7 +4422,7 @@ msgstr ""
 "འཐུ་ནིའི་དོན་ལུ་<b>འདྲུད་</b> མའུསུ་གི་འོག་ལུ་ཡོད་མི་ཚོས་གཞི་འཛིན་པང་ལུ་འདྲ་བཤུས་བརྐྱབ་ནིའི་དོན་ལུ་"
 "<b>ཚད་འཛིན་+C</b> "
 
-#: ../src/dropper-context.cpp:328
+#: ../src/dropper-context.cpp:344
 msgid "Set picked color"
 msgstr "འཐུ་ཡོད་པའི་ཚོས་གཞི་ གཞི་སྒྲིག་འབད་"
 
@@ -4601,7 +4606,7 @@ msgid ""
 "this extension."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:1063
+#: ../src/extension/implementation/script.cpp:1060
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -5806,7 +5811,7 @@ msgstr ""
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:104
+#: ../src/extension/system.cpp:106
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 "རྩ་སྒྲིག་རང་བཞིན་གྱིས་སྐྱོན་འཛིན་འབད་ནི་འཐུས་ཤོས་བྱུང་ཡོདཔ། ཡིག་སྣོད་དེ་ཨེསི་ཉི་སྦེ་ཁ་ཕྱེ་སྟེ་བཞག་ཡོད།"
@@ -5815,42 +5820,42 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:157
+#: ../src/file.cpp:156
 msgid "default.svg"
 msgstr "ཨེསི་ཉི་ཇི་ སྔོན་སྒྲིག་འབད།"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1055
+#: ../src/file.cpp:248 ../src/file.cpp:1039
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "ཞུ་བ་འབད་ཡོད་པའི་ཡིག་སྣོད་%sདེ་མངོན་བསལ་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ནུག"
 
-#: ../src/file.cpp:274
+#: ../src/file.cpp:273
 msgid "Document not saved yet.  Cannot revert."
 msgstr "ཡིག་ཆ་ད་ལྟོ་ཡང་སྲུང་བཞག་མ་འབད་བས། རྒྱབ་ལོག་འབད་མི་བཏུབ།"
 
-#: ../src/file.cpp:280
+#: ../src/file.cpp:279
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "བསྒྱུར་བཅོས་ཚུ་བརླག་གཏོར་ཤོང་འོང! ཁྱོད་ཀྱིས་ཡིག་ཆ་%sདེ་ཡང་བསྐྱར་མངོན་བསལ་འབད་ནི་དེ་ངེས་ཏིག་ཨིན་ན?"
 
-#: ../src/file.cpp:309
+#: ../src/file.cpp:308
 msgid "Document reverted."
 msgstr "ཡིག་ཆ་རྒྱབ་ལོག་འབད་ཡོདཔ།"
 
-#: ../src/file.cpp:311
+#: ../src/file.cpp:310
 msgid "Document not reverted."
 msgstr "ཡིག་ཆ་རྒྱབ་ལོག་མ་འབད་བར་ཡོདཔ།"
 
-#: ../src/file.cpp:461
+#: ../src/file.cpp:460
 msgid "Select file to open"
 msgstr "ཡིག་ཆ་དེ་ཁ་ཕྱེ་ནིའི་དོན་ལུ་སེལ་འཐུ་འབད།"
 
-#: ../src/file.cpp:548
+#: ../src/file.cpp:547
 msgid "Vacuum &lt;defs&gt;"
 msgstr "ནང་སྟོང་ &lt;defs&gt;"
 
-#: ../src/file.cpp:553
+#: ../src/file.cpp:552
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -5858,11 +5863,11 @@ msgstr[0] "རྩ་བསྐྲད་གཏང་ཡོདཔ་<b>%i</b> ལ�
 msgstr[1] ""
 "རྩ་བསྐརད་གཏང་ཡོདཔ་ <b>%i</b> ལག་ལེན་མ་འཐབ་པར་ཡོད་མི་ངེས་ཚིག་ཚུ་ in &lt;defs&gt;"
 
-#: ../src/file.cpp:558
+#: ../src/file.cpp:557
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr " &lt;defs&gt;དེ་ནང་ལུ་ལག་ལེན་མ་འཐབ་པར་ཡོད་མི་ངེས་ཚིག་ཚུ་མེད།"
 
-#: ../src/file.cpp:587
+#: ../src/file.cpp:588
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5871,76 +5876,74 @@ msgstr ""
 "ཡིག་ཆ་(%s)དེ་སྲུང་བཞག་འབད་ནིའི་དོན་ལུ་ ཨིངཀིསི་ཀེབ་རྒྱ་བསྐྱེད་མེད། འ་ནི་འདི་མ་ཤེས་པའི་ཡིག་སྣོད་མིང་གི་རྒྱ་"
 "བསྐྱེད་ཀྱིས་རྒྱུ་རྐྱེན་ལུ་བརྟེན་ཏེ་ཨིནམ་འོང་།"
 
-#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
 msgid "Document not saved."
 msgstr "སྲུང་བཞག་མ་འབད་བར་ཡོད་མི་ཡིག་ཆ།"
 
-#: ../src/file.cpp:595
+#: ../src/file.cpp:596
 #, c-format
 msgid "File %s could not be saved."
 msgstr "ཡིག་སྣོད་%sདེ་སྲུང་བཞག་འབད་མི་ཚུགས།"
 
-#: ../src/file.cpp:609
+#: ../src/file.cpp:610
 msgid "Document saved."
 msgstr "ཡིག་ཆ་སྲུང་བཞག་འབད་ཡོདཔ།"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:761 ../src/file.cpp:1199 ../src/file.cpp:1319
+#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
 #, c-format
 msgid "drawing%s"
 msgstr "%s འབྲི་དོ།"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:748
 #, c-format
 msgid "drawing-%d%s"
 msgstr "%d%s འབྲི་དོ།"
 
-#. Use the document uri's base name as the filename but
-#. store in the directory last used for "Save a copy ..."
-#: ../src/file.cpp:774
+#: ../src/file.cpp:752
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:793
+#: ../src/file.cpp:767
 msgid "Select file to save a copy to"
 msgstr "དེ་ནང་འདྲ་བཤུས་ཅིག་སྲུང་ནིའི་དོན་ལས་ ཡིག་སྣོད་སེལའ་ཐུ་འབད་"
 
-#: ../src/file.cpp:795
+#: ../src/file.cpp:769
 msgid "Select file to save to"
 msgstr "ལུ་ སྲུང་བཞག་འབད་ནིའི་དོན་ལུ་ཡིག་སྣོད་སེལ་འཐུའབད།"
 
-#: ../src/file.cpp:876
+#: ../src/file.cpp:860
 msgid "No changes need to be saved."
 msgstr "བསྒྱུར་བཅོས་ཚུ་ག་ཡང་སྲུང་བཞག་འབད་དགོཔ་མིན་འདུག"
 
-#: ../src/file.cpp:893
+#: ../src/file.cpp:877
 #, fuzzy
 msgid "Saving document..."
 msgstr "ཡིག་ཆ་སྲུང་བཞག་འབད།"
 
-#: ../src/file.cpp:1052
+#: ../src/file.cpp:1036
 msgid "Import"
 msgstr "ནང་འདྲེན་"
 
-#: ../src/file.cpp:1102
+#: ../src/file.cpp:1086
 msgid "Select file to import"
 msgstr "ནང་་འདྲེན་འབད་ནིའི་དོན་ལུ་ཡིག་སྣོད་སྲུང་བཞག་འབད།"
 
-#: ../src/file.cpp:1220 ../src/file.cpp:1334
+#: ../src/file.cpp:1198 ../src/file.cpp:1312
 msgid "Select file to export to"
 msgstr "དེ་ཁར་ཕྱིར་འདྲེན་འབད་ནིའི་དོན་ལུ་ ཡིག་སྣོད་སེལ་འཐུ་འབད་"
 
-#: ../src/file.cpp:1366
+#: ../src/file.cpp:1344
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr ""
 
-#: ../src/file.cpp:1386
+#: ../src/file.cpp:1364
 msgid "Open Clip Art Login"
 msgstr ""
 
-#: ../src/file.cpp:1412
+#: ../src/file.cpp:1390
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5948,12 +5951,12 @@ msgid ""
 "didn't forget to choose a license."
 msgstr ""
 
-#: ../src/file.cpp:1433
+#: ../src/file.cpp:1411
 #, fuzzy
 msgid "Document exported..."
 msgstr "ཡིག་ཆ་རྒྱབ་ལོག་འབད་ཡོདཔ།"
 
-#: ../src/file.cpp:1461 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -7136,7 +7139,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:134
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1412
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Page"
 msgstr "ཤོག་ལེབ།"
@@ -7736,8 +7739,8 @@ msgstr ""
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
 #, fuzzy
-msgid "Interruption width"
-msgstr "བསྐྱར་བསྣོན་ཐབས་ལམ།"
+msgid "Fixed width"
+msgstr "ཤོག་ལེབ་ཀྱི་རྒྱ་ཚད།(_W)"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
@@ -7745,27 +7748,29 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:324
 #, fuzzy
-msgid "unit of stroke width"
+msgid "In units of stroke width"
 msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-msgid "Consider 'Interruption width' as a ratio of stroke width."
+msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325
-msgid "add stroke width to interruption size"
-msgstr ""
+#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../share/extensions/edge3d.inx.h:9
+msgid "Stroke width"
+msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-msgid "Add the stroke width to the interruption size."
+msgid "Add the stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:326
-msgid "add other's stroke width to interruption size"
-msgstr ""
+#, fuzzy
+msgid "Crossing path stroke width"
+msgstr "སིཊོཀ་རྒྱ་ཚད་སོར་"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-msgid "Add crossed stroke width to the interruption size."
+msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:327
@@ -8783,7 +8788,7 @@ msgstr "གྲོགས་རམ། (_H)"
 msgid "Tutorials"
 msgstr "སློབ་སྟོན་པ་ཚུ།"
 
-#: ../src/node-context.cpp:223
+#: ../src/node-context.cpp:228
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -8791,14 +8796,14 @@ msgstr ""
 "<b>ཚད་འཛིན་</b>: ནོཌི་གི་དབྱེ་བ་སོར་སྟོན་འབད། བཤེད་བཟུང་གི་གྲུ་ཟུར་དཔར་བཏབ། ཐད་སྙོམས/ཀེར་ཕྲང་སྦེ་"
 "སྤ་བཤུད་འབད།<b>Ctrl+Alt</b>: བཤེད་བཟུང་ཚུ་བརྒྱུད་དེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/node-context.cpp:224
+#: ../src/node-context.cpp:229
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>སོར་ལྡེ་</b>: ནོཌི་སེལ་འཐུ་འབད་ནི་སོར་སྟོན་འབད། དཔར་བཏབ་ནི་ལྕོགས་མིན་ཅད་བཟོ། བཤེད་བཟུང་གཉིས་"
 "ཆ་རང་བསྒྱིར།"
 
-#: ../src/node-context.cpp:225
+#: ../src/node-context.cpp:230
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>གདམ་ལྡེ་</b>: བཤེད་བཟུང་གི་རིང་ཚད་བསྡམ་བཞག <b>ཚད་འཛིན་+གདམ་ལྡེ་</b>: བཤེད་བཟུང་ཚུ་བརྒྱུད་"
@@ -9525,7 +9530,7 @@ msgstr "ངོས་འཛིན་པ།"
 msgid "Unique URI to reference this document."
 msgstr "ཡིག་ཆ་འདི་གཞི་བསྟུན་འབད་ནིའི་དོན་ལུ་ མཐུན་མོངས་མ་ཡི་ན་པའི་ཡུ་ཨར་ཨའི།"
 
-#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1440
+#: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1438
 msgid "Source"
 msgstr "འབྱུང་ཁུངས།"
 
@@ -11762,7 +11767,7 @@ msgid "Smallest object"
 msgstr "དངོས་པོ་ ཨའི་ཌི་ གཞི་སྒྲིག་འབད་"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:921
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1416
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1571
 #: ../share/extensions/printing-marks.inx.h:16
@@ -12201,6 +12206,7 @@ msgstr "བརྡ་དོན།"
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
 #: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_outlines.inx.h:4
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12261,55 +12267,55 @@ msgstr "གདོང་ཁེབས་ གཞི་སྒྲིག་འབད�
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:926
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1477
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:927
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1475
 msgid "Append filename extension automatically"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1084
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1341
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1085
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1339
 #, fuzzy
 msgid "Guess from extension"
 msgstr "སེལ་འཐུའི་ནང་ལས་འབག"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1360
 msgid "Left edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1361
 msgid "Top edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1362
 #, fuzzy
 msgid "Right edge of source"
 msgstr "འབྱུང་ཁུངས།"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1363
 msgid "Bottom edge of source"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1364
 #, fuzzy
 msgid "Source width"
 msgstr "འབྱུང་ཁུངས་རྒྱ་ཚད་"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1365
 #, fuzzy
 msgid "Source height"
 msgstr "མཐོ་ཚད:"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1366
 #, fuzzy
 msgid "Destination width"
 msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1369
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1367
 #, fuzzy
 msgid "Destination height"
 msgstr "འགྲོ་ཡུལ་གྱི་མཐོ་ཚད་"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1370
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1368
 #, fuzzy
 msgid "Resolution (dots per inch)"
 msgstr "བིཊི་མེཔ་གི་(ཨིནཅི་རེ་ལུ་ཚག་རེ་)དགའ་བའི་ཧུམ་ཆ།"
@@ -12318,32 +12324,32 @@ msgstr "བིཊི་མེཔ་གི་(ཨིནཅི་རེ་ལུ�
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1408
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1406
 #, fuzzy
 msgid "Document"
 msgstr "ཡིག་ཆ་"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1420
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../share/extensions/color_custom.inx.h:3
 #, fuzzy
 msgid "Custom"
 msgstr "སྲོལ་སྒྲིག (_C)"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1460
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 #, fuzzy
 msgid "Cairo"
 msgstr "ཀའི་རོ་"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1463
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1461
 msgid "Antialias"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1466
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1464
 #, fuzzy
 msgid "Background"
 msgstr "རྒྱབ་གཞི:(_g)"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1487
 #, fuzzy
 msgid "Destination"
 msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
@@ -15405,32 +15411,32 @@ msgstr "སྡེ་ཚན་ཚུ་འཚོལ་ཞིབ་འབད།"
 msgid "Files found"
 msgstr ""
 
-#: ../src/ui/dialog/print.cpp:92
+#: ../src/ui/dialog/print.cpp:93
 msgid "Could not open temporary PNG for bitmap printing"
 msgstr ""
 
-#: ../src/ui/dialog/print.cpp:117
+#: ../src/ui/dialog/print.cpp:136
 #, fuzzy
 msgid "Could not set up Document"
 msgstr "ཡིག་སྣོད་མིང་%sལུ་ཕྱིར་འདྲེན་འབད་མ་ཚུགས།\n"
 
-#: ../src/ui/dialog/print.cpp:121
+#: ../src/ui/dialog/print.cpp:140
 msgid "Failed to set CairoRenderContext"
 msgstr ""
 
 #. set up dialog title, based on document name
-#: ../src/ui/dialog/print.cpp:161
+#: ../src/ui/dialog/print.cpp:180
 #, fuzzy
 msgid "SVG Document"
 msgstr "ཡིག་ཆ་"
 
-#: ../src/ui/dialog/print.cpp:162
+#: ../src/ui/dialog/print.cpp:181
 #, fuzzy
 msgid "Print"
 msgstr "ཡིག་ཚད།"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/print.cpp:189
+#: ../src/ui/dialog/print.cpp:215
 #, fuzzy
 msgid "Rendering"
 msgstr "ལྷག་སྟོན་འབད་ནི།"
@@ -15985,6 +15991,7 @@ msgstr "བཟོད་པ:"
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
 #: ../share/extensions/dxf_input.inx.h:7
+#: ../share/extensions/dxf_outlines.inx.h:5
 msgid "Options"
 msgstr "གདམ་ཁ་ཚུ་"
 
@@ -16354,7 +16361,7 @@ msgstr ""
 "དེ་ནང་ལུ་སེལ་འཐུ་འབད་ནི་མེད་པ་ཅིན་ ད་ལྟོའི་སེལ་འཐུ་ནང་ལུ་དང་ ཡང་ན་ པར་རིས་ཧྲིལ་བུའི་ནང་ལུ་ ཚུད་"
 "སྒྲིག་འབད་ནིའི་དོན་ལུ་ ཤོག་ལེབ་ཀྱི་ཚད་བསྐྱར་བཟོ་འབད་ ཡང་ན་ "
 
-#: ../src/ui/widget/page-sizer.cpp:357
+#: ../src/ui/widget/page-sizer.cpp:369
 msgid "Set page size"
 msgstr "ཤོག་ལེབ་ཀྱི་ཚད་ གཞི་སྒྲིག་འབད་"
 
@@ -19491,10 +19498,6 @@ msgstr "རྟགས་བཀོདཔ་ གཞི་སྒྲིག་འབ�
 msgid "StrokeWidth|Width:"
 msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
-#: ../src/widgets/stroke-style.cpp:1093 ../share/extensions/edge3d.inx.h:9
-msgid "Stroke width"
-msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
-
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
@@ -21605,21 +21608,6 @@ msgstr "རི་མོ་མཁན་ ཨེ་ཌོབ་འབད།(*.ai)"
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
 msgstr "ཨེ་ཌོབ་རི་མོ་མཁན་དང་གཅིག་ཁར་སྲུང་བཞག་འབད་དེ་ཡོད་མི་ཡིག་སྣོད་ཚུ་སྲུང་བཞག་འབད།"
 
-#: ../share/extensions/ai_output.inx.h:1
-#, fuzzy
-msgid "AI 8.0 Output"
-msgstr "ཨེ་ཨའི་ ཨའུཊི་པུཊི།"
-
-#: ../share/extensions/ai_output.inx.h:2
-#, fuzzy
-msgid "Adobe Illustrator 8.0 (*.ai)"
-msgstr "རི་མོ་མཁན་ ཨེ་ཌོབ་འབད།(*.ai)"
-
-#: ../share/extensions/ai_output.inx.h:3
-#, fuzzy
-msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-msgstr "ཨེ་ཌོབ་ རི་མོ་མཁན་བྲིས།"
-
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
 msgstr "ཨེ་ཨའི་ ཨེསི་ཝི་ཇི་ ཨིན་པུཊི།"
@@ -22044,16 +22032,24 @@ msgid "Use automatic scaling to size A4"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+msgid ""
+"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
+"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
+"supported. - ROBO-Master option is a specialized spline readable only by "
+"ROBO-Master and AutoDesk viewers, not Inkscape."
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter"
 msgstr "ཌེཀསི་ཊོཔ་བཏོག་ནིའི་ པོ་ལོ་ཊར།"
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:3
 #, fuzzy
-msgid "Desktop Cutting Plotter (*.dxf)"
+msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "ཌེཀསི་ཊོཔ་བཏོག་ནིའི་ པོ་ལོ་ཊར།(*.DXF)"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
-msgid "ROBO-Master output"
+#: ../share/extensions/dxf_outlines.inx.h:6
+msgid "enable ROBO-Master output"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:1
@@ -22121,18 +22117,6 @@ msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་གཟུག
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
 msgstr "ཨི་པི་ཨེསི་ ཨིན་པུཊི།"
-
-#: ../share/extensions/epsi_output.inx.h:1
-msgid "EPSI Output"
-msgstr "ཨི་པི་ཨེསི་ཨའི་ ཨའུཊི་པུཊི།"
-
-#: ../share/extensions/epsi_output.inx.h:2
-msgid "Encapsulated Postscript Interchange (*.epsi)"
-msgstr "མདོར་བསྡུས་ཏེ་ཡོད་པའི་ པོསིཊི་སིཀིརིཔཊི་ ནང་འཁོད་བསྒྱུར་བཅོས།(*.epsi)"
-
-#: ../share/extensions/epsi_output.inx.h:3
-msgid "Encapsulated Postscript with a thumbnail"
-msgstr "མཐེ་གཟེར་དང་གཅིག་ཁར་ཡོད་པའི་ མདོར་བསྡུས་ཏེ་ཡོད་པའི་ པོསིཊི་སིཀིརིཔཊི།"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
@@ -24279,6 +24263,31 @@ msgid "XAML Input"
 msgstr "ཌི་ཨེགསི་ཨེཕི་ ཨིན་པུཊི།"
 
 #, fuzzy
+#~ msgid "Interruption width"
+#~ msgstr "བསྐྱར་བསྣོན་ཐབས་ལམ།"
+
+#, fuzzy
+#~ msgid "AI 8.0 Output"
+#~ msgstr "ཨེ་ཨའི་ ཨའུཊི་པུཊི།"
+
+#, fuzzy
+#~ msgid "Adobe Illustrator 8.0 (*.ai)"
+#~ msgstr "རི་མོ་མཁན་ ཨེ་ཌོབ་འབད།(*.ai)"
+
+#, fuzzy
+#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
+#~ msgstr "ཨེ་ཌོབ་ རི་མོ་མཁན་བྲིས།"
+
+#~ msgid "EPSI Output"
+#~ msgstr "ཨི་པི་ཨེསི་ཨའི་ ཨའུཊི་པུཊི།"
+
+#~ msgid "Encapsulated Postscript Interchange (*.epsi)"
+#~ msgstr "མདོར་བསྡུས་ཏེ་ཡོད་པའི་ པོསིཊི་སིཀིརིཔཊི་ ནང་འཁོད་བསྒྱུར་བཅོས།(*.epsi)"
+
+#~ msgid "Encapsulated Postscript with a thumbnail"
+#~ msgstr "མཐེ་གཟེར་དང་གཅིག་ཁར་ཡོད་པའི་ མདོར་བསྡུས་ཏེ་ཡོད་པའི་ པོསིཊི་སིཀིརིཔཊི།"
+
+#, fuzzy
 #~ msgid "HSL bubbles, transparent"
 #~ msgstr "༠ (དྭངས་གསལ་ཅན།)"
 
@@ -24441,10 +24450,6 @@ msgstr "ཌི་ཨེགསི་ཨེཕི་ ཨིན་པུཊི།"
 #, fuzzy
 #~ msgid "Choose pen type"
 #~ msgstr "ཆ་བགོས་དབྱེ་བ་ བསྒྱུར་བཅོས་རྐྱབས་"
-
-#, fuzzy
-#~ msgid "Pen width"
-#~ msgstr "ཤོག་ལེབ་ཀྱི་རྒྱ་ཚད།(_W)"
 
 #, fuzzy
 #~ msgid "Maximal stroke width"
