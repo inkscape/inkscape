@@ -568,7 +568,6 @@ get_file_save_extension (Inkscape::Extension::FileSaveMethod method) {
             break;
     }
 
-    // this is probably unnecessary, but just to be on the safe side ...
     if(extension.empty())
         extension = SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE;
 
@@ -591,14 +590,17 @@ get_file_save_path (SPDocument *doc, FileSaveMethod method) {
             if (doc->uri) {
                 path = Glib::path_get_dirname(doc->uri);
             } else {
-                // FIXME: should we use the save_as path here or the current directory or even something else?
+                // FIXME: should we use the save_as path here or something else? Maybe we should
+                // leave this as a choice to the user.
                 path = prefs->getString("/dialogs/save_as/path");
             }
     }
 
-    // this is probably unnecessary, but just to be on the safe side ...
     if(path.empty())
-        path = g_get_current_dir(); // is this the most sensible solution?
+        path = g_get_home_dir(); // Is this the most sensible solution? Note that we should avoid
+                                 // g_get_current_dir because this leads to problems on OS X where
+                                 // Inkscape opens the dialog inside application bundle when it is
+                                 // invoked for the first teim.
 
     return path;
 }
