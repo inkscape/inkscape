@@ -572,6 +572,25 @@ gdouble sp_document_height(SPDocument *document)
     return root->height.computed;
 }
 
+void sp_document_set_landscape (SPDocument *document, gboolean landscape)
+{
+    SPRoot *root = SP_ROOT(document->root);
+
+    root->landscape = landscape;
+    SP_OBJECT (root)->updateRepr();
+}
+
+gboolean sp_document_landscape(SPDocument *document)
+{
+    g_return_val_if_fail(document != NULL, 0.0);
+    g_return_val_if_fail(document->priv != NULL, 0.0);
+    g_return_val_if_fail(document->root != NULL, 0.0);
+
+    SPRoot *root = SP_ROOT(document->root);
+
+    return root->landscape;
+}
+
 Geom::Point sp_document_dimensions(SPDocument *doc)
 {
     return Geom::Point(sp_document_width(doc), sp_document_height(doc));

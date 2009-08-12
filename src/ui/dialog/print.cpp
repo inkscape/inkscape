@@ -188,12 +188,19 @@ Print::Print(SPDocument *doc, SPItem *base) :
     GtkPageSetup *page_setup = gtk_page_setup_new();
     gdouble doc_width = sp_document_width(_doc) * PT_PER_PX;
     gdouble doc_height = sp_document_height(_doc) * PT_PER_PX;
-    GtkPaperSize *paper_size = gtk_paper_size_new_custom("custom", "custom",
-                                doc_width, doc_height, GTK_UNIT_POINTS);
+    GtkPaperSize *paper_size;
+    if (sp_document_landscape(_doc)) {
+        gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
+        paper_size = gtk_paper_size_new_custom("custom", "custom",
+                                               doc_height, doc_width, GTK_UNIT_POINTS);
+    } else {
+        gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_PORTRAIT);
+        paper_size = gtk_paper_size_new_custom("custom", "custom",
+                                               doc_width, doc_height, GTK_UNIT_POINTS);
+    }
+
     gtk_page_setup_set_paper_size (page_setup, paper_size);
-#ifndef WIN32
     gtk_print_operation_set_default_page_setup (_printop, page_setup);
-#endif
     gtk_print_operation_set_use_full_page (_printop, TRUE);
 
     // set up signals
