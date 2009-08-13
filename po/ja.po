@@ -1,7 +1,7 @@
 # Japanese translation of Inkscape
 # This file is distributed under the same license as the Inkscape package.
 #
-# Copyright (C) 2000-2007 Free Software Foundation, Inc.
+# Copyright (C) 2000-2009 Free Software Foundation, Inc.
 # Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000-2001.
 # Mitsuru Oka <oka@debian.or.jp>, 2001.
@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 00:00+0200\n"
-"PO-Revision-Date: 2009-08-08 02:05+0900\n"
+"POT-Creation-Date: 2009-08-13 15:43+0900\n"
+"PO-Revision-Date: 2009-08-13 15:42+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -33,12 +33,11 @@ msgstr "スケーラブル ベクター グラフィックス イメージの作
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape SVG ベクターグラフィックエディタ"
+msgstr "Inkscape ベクターグラフィックエディタ"
 
 #: ../share/filters/filters.svg.h:2
-#, fuzzy
 msgid "Matte jelly"
-msgstr "パターンフィル"
+msgstr "つや消しゼリー"
 
 #: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:10
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
@@ -51,12 +50,11 @@ msgstr "ABC"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr "つや消しゼリー状被膜のふくらみをつけます"
+msgstr "つや消しゼリー状被膜のふくらみをつけます。"
 
 #: ../share/filters/filters.svg.h:3
-#, fuzzy
 msgid "Smart jelly"
-msgstr "パターンフィル"
+msgstr "スマートゼリー"
 
 #: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
@@ -74,21 +72,19 @@ msgstr "ベベル"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
+msgstr "つや消しゼリーと同じですが、より調整します。"
 
 #: ../share/filters/filters.svg.h:4
-#, fuzzy
 msgid "Metal casting"
-msgstr "左角度"
+msgstr "鋳金"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "滑らかななドロップ状のベベルをメタリック仕上げでつけます。"
 
 #: ../share/filters/filters.svg.h:5
-#, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "水平方向に移動"
+msgstr "モーションぼかし, 水平"
 
 #: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
@@ -98,37 +94,36 @@ msgid "Blurs"
 msgstr "ぼかし"
 
 #: ../share/filters/filters.svg.h:5
-#, fuzzy
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "選択オブジェクトを水平方向に反転"
+msgstr ""
+"オブジェクトを水平方向に飛ばした時のようなぼかしをつけます。標準偏差を力変化"
+"に合わせます。"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Motion blur, vertical"
-msgstr "垂直方向に移動"
+msgstr "モーションぼかし, 垂直"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "選択オブジェクトを垂直に反転"
+msgstr ""
+"オブジェクトを垂直方向に飛ばした時のようなぼかしをつけます。標準偏差を力変化"
+"に合わせます。"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid "Apparition"
-msgstr "彩度"
+msgstr "幻影"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "エッジを少しフェザーアウトします。"
 
 #: ../share/filters/filters.svg.h:8
-#, fuzzy
 msgid "Cutout"
-msgstr "アウトセット"
+msgstr "切り抜き"
 
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:40
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
@@ -142,30 +137,27 @@ msgstr "陰影と発光"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "シェイプを切り抜いたように影を落とします。"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Jigsaw piece"
-msgstr ""
+msgstr "ジグソーピース"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "低く、シャープなベベルです。"
 
 #: ../share/filters/filters.svg.h:10
-#, fuzzy
 msgid "Roughen"
-msgstr "端点ノード"
+msgstr "ラフ"
 
 #: ../share/filters/filters.svg.h:10
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "矩形の丸められた角を拡大縮小"
+msgstr "エッジと中身を小規模なザラザラ仕上げにします。"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Rubber stamp"
-msgstr "ステップ数"
+msgstr "ゴム印"
 
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:17
 #: ../share/filters/filters.svg.h:18 ../share/filters/filters.svg.h:19
@@ -180,12 +172,11 @@ msgstr "オーバーレイ"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
-msgstr ""
+msgstr "内部をランダムで白抜きします。"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Ink bleed"
-msgstr "青"
+msgstr "インクのにじみ"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:13
 #: ../share/filters/filters.svg.h:41 ../share/filters/filters.svg.h:166
@@ -194,39 +185,35 @@ msgstr "はみ出し"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Inky splotches underneath the object"
-msgstr ""
+msgstr "オブジェクトの下にインクの染みをつけます。"
 
 #: ../share/filters/filters.svg.h:13
-#, fuzzy
 msgid "Fire"
-msgstr "ファイル(_F)"
+msgstr "炎"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Edges of object are on fire"
-msgstr ""
+msgstr "オブジェクトのエッジを炎で燃え上がらせます。"
 
 #: ../share/filters/filters.svg.h:14
-#, fuzzy
 msgid "Bloom"
-msgstr "ズーム"
+msgstr "ブルーム"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "ソフトなクッション状のベベルをつや消し強調でつけます。"
 
 #: ../share/filters/filters.svg.h:15
-#, fuzzy
 msgid "Ridged border"
-msgstr "モード"
+msgstr "リッジ枠"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "内側ベベルのリッジ状の枠をつけます。"
 
 #: ../share/filters/filters.svg.h:16
-#, fuzzy
 msgid "Ripple"
-msgstr "解除(_R)"
+msgstr "波紋"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
@@ -236,36 +223,32 @@ msgid "Distort"
 msgstr "変形"
 
 #: ../share/filters/filters.svg.h:16
-#, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "丸められた角の水平半径"
+msgstr "エッジを水平方向に波紋のようにします。"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Speckle"
-msgstr "選択解除(_E)"
+msgstr "スペックル"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Fill object with sparse translucent specks"
-msgstr ""
+msgstr "オブジェクトを薄く半透明の斑点で塗りつぶします。"
 
 #: ../share/filters/filters.svg.h:18
-#, fuzzy
 msgid "Oil slick"
-msgstr "未使用 (確保済)"
+msgstr "油膜"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Rainbow-colored semitransparent oily splotches"
-msgstr ""
+msgstr "七色で半透明の油の染みをつけます。"
 
 #: ../share/filters/filters.svg.h:19
-#, fuzzy
 msgid "Frost"
-msgstr "フォント"
+msgstr "霜"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Flake-like white splotches"
-msgstr ""
+msgstr "薄片状の白い染みをつけます。"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Leopard fur"
@@ -283,7 +266,7 @@ msgstr "マテリアル"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Leopard spots (loses object's own color)"
-msgstr "ヒョウの斑点柄 (オブジェクトの色は失われます)"
+msgstr "ヒョウの斑点柄にします (オブジェクトの色は失われます)"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Zebra"
@@ -291,16 +274,15 @@ msgstr "ゼブラ"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Irregular vertical dark stripes (loses object's own color)"
-msgstr "不規則な縦の黒い縞模様 (オブジェクトの色は失われます)"
+msgstr "不規則な縦の黒い縞模様にします (オブジェクトの色は失われます)"
 
 #: ../share/filters/filters.svg.h:22
-#, fuzzy
 msgid "Clouds"
-msgstr "閉じる(_C)"
+msgstr "雲"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Airy, fluffy, sparse white clouds"
-msgstr ""
+msgstr "空気のフワフワした薄くて白い雲模様をつけます。"
 
 #: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
@@ -319,72 +301,65 @@ msgstr "イメージエフェクト"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr ""
+msgstr "オブジェクト中のエッジと境界をシャープにします。強さ=0.15"
 
 #: ../share/filters/filters.svg.h:24
-#, fuzzy
 msgid "Sharpen more"
-msgstr "シェイプ"
+msgstr "シャープ (もっと)"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
-msgstr ""
+msgstr "オブジェクト中のエッジと境界をシャープにします。強さ=0.3"
 
 #: ../share/filters/filters.svg.h:25
-#, fuzzy
 msgid "Oil painting"
-msgstr "GNOME印刷"
+msgstr "油絵"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Simulate oil painting style"
-msgstr ""
+msgstr "油絵画法をシミュレートします。"
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Edge detect"
 msgstr "エッジ検出"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "オブジェクトの色の境界を検出します。"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Horizontal edge detect"
-msgstr "横書"
+msgstr "エッジ検出 (水平)"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "選択オブジェクトの水平位置"
+msgstr "オブジェクトの水平方向の色の境界を検出します。"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Vertical edge detect"
-msgstr "縦書"
+msgstr "エッジ検出 (垂直)"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "オブジェクトの垂直方向の色の境界を検出します。"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
 #: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
 msgid "Pencil"
-msgstr "鉛筆 (フリーハンド)"
+msgstr "鉛筆"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "色の境界を検出し、グレースケールでトレースします。"
 
 #: ../share/filters/filters.svg.h:30
-#, fuzzy
 msgid "Blueprint"
-msgstr "幅を統一"
+msgstr "青写真"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "色の境界を検出し、青でトレースします。"
 
 #: ../share/filters/filters.svg.h:31
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -422,16 +397,15 @@ msgstr "色"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "彩度をゼロにし、グレーのシェードでレンダリングします。"
 
 #: ../share/filters/filters.svg.h:32 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
-msgstr "復帰"
+msgstr "反転"
 
 #: ../share/filters/filters.svg.h:32
-#, fuzzy
 msgid "Invert colors"
-msgstr "選択したオブジェクトを統合"
+msgstr "色を反転します。"
 
 #: ../share/filters/filters.svg.h:33
 msgid "Sepia"
@@ -439,21 +413,19 @@ msgstr "セピア"
 
 #: ../share/filters/filters.svg.h:33
 msgid "Render in warm sepia tones"
-msgstr ""
+msgstr "暖色系のセピア調でレンダリングします。"
 
 #: ../share/filters/filters.svg.h:34
-#, fuzzy
 msgid "Age"
-msgstr "角度"
+msgstr "劣化"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
-msgstr ""
+msgstr "退色した古写真を模倣します。"
 
 #: ../share/filters/filters.svg.h:35
-#, fuzzy
 msgid "Organic"
-msgstr "開始位置X(_O):"
+msgstr "オーガニック"
 
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:42
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:61
@@ -473,15 +445,15 @@ msgstr "テクスチャ"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "隆起、もつれ、滑らかな 3D サーフェイスです。"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
-msgstr ""
+msgstr "有刺鉄線"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "影付きのグレーで隆起したワイヤです。"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Swiss cheese"
@@ -489,7 +461,7 @@ msgstr "スイスチーズ"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "ランダムで内側に凹んだ穴です。"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Blue cheese"
@@ -497,7 +469,7 @@ msgstr "ブルーチーズ"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Marble-like bluish speckles"
-msgstr ""
+msgstr "大理石風の青みがかった染みをつけます。"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Button"
@@ -505,7 +477,7 @@ msgstr "ボタン"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "ソフトなベベル、中間を少し押し下げます。"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Inset"
@@ -513,40 +485,35 @@ msgstr "インセット"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Shadowy outer bevel"
-msgstr ""
+msgstr "影のような外側のベベルです。"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Dripping"
-msgstr "スクリプト"
+msgstr "したたり"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Random paint streaks downwards"
-msgstr ""
+msgstr "ランダムで下に塗り線をつけます。"
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Jam spread"
-msgstr "スピード"
+msgstr "ジャム・スプレッド"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Glossy clumpy jam spread"
-msgstr ""
+msgstr "つやのある塊状のジャムを塗ります。"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Pixel smear"
-msgstr "ピクセル"
+msgstr "ピクセル塗りつけ"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
-msgstr "テキストをパスに変換"
+msgstr "ビットマップ用のゴッホの画風のエフェクトです。"
 
 #: ../share/filters/filters.svg.h:44
-#, fuzzy
 msgid "HSL Bumps"
-msgstr "マスクを設定"
+msgstr "HSL バンプ"
 
 #: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
@@ -562,27 +529,27 @@ msgstr "バンプ"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
-msgstr ""
+msgstr "とてもやわらかい鏡面反射バンプです。"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
-msgstr ""
+msgstr "ひび割れたガラス"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
-msgstr ""
+msgstr "ひび割れたガラスの下にあるようにします。"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "泡状バンプ"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "少々の移動を伴うやわらかい泡エフェクトです。"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
-msgstr ""
+msgstr "光る泡"
 
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:52
 #: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:65
@@ -593,76 +560,67 @@ msgstr "リッジ"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "発光と反射のある泡エフェクトです。"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Neon"
 msgstr "ネオン"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
 msgid "Neon light effect"
-msgstr "水平オフセット"
+msgstr "ネオン光のエフェクトです。"
 
 #: ../share/filters/filters.svg.h:49
-#, fuzzy
 msgid "Molten metal"
-msgstr "矩形を作成"
+msgstr "溶けた金属"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "オブジェクトのパーツを光沢とつやありベベルをつけて溶けさせます。"
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Pressed steel"
-msgstr " リセット(_E)"
+msgstr "プレスした鉄"
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Pressed metal with a rolled edge"
-msgstr "星形の設定"
+msgstr "エッジが圧延されプレスされた金属です。"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Matte bevel"
-msgstr "サイズを貼り付け"
+msgstr "つや消しベベル"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "ソフト、パステルカラー、ぼやけたベベルです。"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin Membrane"
-msgstr ""
+msgstr "薄い皮膜"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Thin like a soap membrane"
-msgstr ""
+msgstr "せっけんのような薄い皮膜です。"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Matte ridge"
-msgstr "明度を大きく"
+msgstr "つや消しリッジ"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Soft pastel ridge"
-msgstr "ページサイズ(_A):"
+msgstr "ソフトでパステルのリッジをつけます。"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
-msgstr ""
+msgstr "光沢のある金属"
 
 #: ../share/filters/filters.svg.h:54
-#, fuzzy
 msgid "Glowing metal texture"
-msgstr "横書き"
+msgstr "光沢のある金属のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:55
-#, fuzzy
 msgid "Leaves"
-msgstr "ホイール"
+msgstr "葉っぱ"
 
 #: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:77
 #: ../share/filters/filters.svg.h:86 ../share/extensions/pathscatter.inx.h:10
@@ -671,148 +629,136 @@ msgstr "散乱"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr ""
+msgstr "秋の落ち葉、あるいは生きている枝葉です。"
 
 #: ../share/filters/filters.svg.h:56
-#, fuzzy
 msgid "Translucent"
-msgstr "角度"
+msgstr "半透明"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Illuminated translucent plastic or glass effect"
-msgstr ""
+msgstr "照明を当てた半透明のプラスティックあるいはガラスのエフェクトです。"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "スムーズ"
+msgstr "クロススムーズ"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "ノードをオブジェクトにスナップ(_T)"
+msgstr "境界の内側と交点をぼかします。"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Iridescent beeswax"
-msgstr ""
+msgstr "虹色の蜜ろう"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr ""
+msgstr "フィルの色を変えて玉虫色にしたワックス風のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Eroded metal"
-msgstr "矩形を作成"
+msgstr "腐食した金属"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "突起、溝、穴、あるいは隆起などを伴う腐食した金属風のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
-msgstr ""
+msgstr "割れた溶岩"
 
 #: ../share/filters/filters.svg.h:60
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "皮革に少し似た、火山性のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:61
-#, fuzzy
 msgid "Bark"
-msgstr "マーク"
+msgstr "樹皮"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
-msgstr ""
+msgstr "垂直方向の樹皮のテクスチャです。濃い色を使用します。"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
-msgstr ""
+msgstr "トカゲの皮"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Stylized reptile skin texture"
-msgstr ""
+msgstr "爬虫類の皮膚様式のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:63
-#, fuzzy
 msgid "Stone wall"
-msgstr "全て削除"
+msgstr "石壁"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Stone wall texture to use with not too saturated colors"
-msgstr ""
+msgstr "飽和しすぎた色を使わない石壁のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
-msgstr ""
+msgstr "シルクカーペット"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Silk carpet texture, horizontal stripes"
-msgstr ""
+msgstr "水平方向にストライプの入るシルクのカーペットのテクスチャです、"
 
 #: ../share/filters/filters.svg.h:65
-#, fuzzy
 msgid "Refractive gel A"
-msgstr "相対移動(_T)"
+msgstr "屈折するジェル A"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
-msgstr ""
+msgstr "軽く屈折するジェルのエフェクトです。"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Refractive gel B"
-msgstr "相対移動(_T)"
+msgstr "屈折するジェル B"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
-msgstr ""
+msgstr "強く屈折するジェルのエフェクトです。"
 
 #: ../share/filters/filters.svg.h:67
-#, fuzzy
 msgid "Metallized paint"
-msgstr "左角度"
+msgstr "金属塗装"
 
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "ソフトな照明、エッジが少し半透明な金属化エフェクトです。"
 
 #: ../share/filters/filters.svg.h:68
-#, fuzzy
 msgid "Dragee"
-msgstr "曲線をドラッグ"
+msgstr "ドラジェ"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "真珠光沢のような見ためのジェルリッジです。"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Raised border"
-msgstr "ノードを上げる"
+msgstr "高くした境界"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Strongly raised border around a flat surface"
-msgstr ""
+msgstr "フラットな表面の周囲に強く盛り上げた境界をつけます。"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Metallized ridge"
-msgstr ""
+msgstr "金属のリッジ"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "その頂上を金属調にしたジェルリッジです。"
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Fat oil"
-msgstr "単一色"
+msgstr "脂肪油"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "いくつかの調整可能な乱流のついた脂肪油です。"
 
 #: ../share/filters/filters.svg.h:72
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -822,11 +768,12 @@ msgstr "カラー化"
 #: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr ""
+"イメージまたはオブジェクトに、色をつけ明度とコントラストを設定してブレンドし"
+"ます。"
 
 #: ../share/filters/filters.svg.h:73
-#, fuzzy
 msgid "Parallel hollow"
-msgstr "水平オフセット"
+msgstr "水平ホロー"
 
 #: ../share/filters/filters.svg.h:73 ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
@@ -840,16 +787,15 @@ msgstr "モフォロジー"
 
 #: ../share/filters/filters.svg.h:73
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "エッジと並行して内側にぼかしたへこみをつけます。"
 
 #: ../share/filters/filters.svg.h:74
-#, fuzzy
 msgid "Hole"
-msgstr "ロール:"
+msgstr "穴"
 
 #: ../share/filters/filters.svg.h:74
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "シェイプの内側に滑らかな穴をあけます。"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Black hole"
@@ -857,129 +803,124 @@ msgstr "ブラックホール"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "黒い光を内側と外側に作ります。"
 
 #: ../share/filters/filters.svg.h:76
-#, fuzzy
 msgid "Smooth outline"
-msgstr "外枠のみを表示"
+msgstr "スムーズな外郭線"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "線およびそれらの交点の滑らかな外郭線を生成します。"
 
 #: ../share/filters/filters.svg.h:77
-#, fuzzy
 msgid "Cubes"
-msgstr "ノードの番号付け"
+msgstr "キューブ"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
+"キューブを散らばらせます。モフォロジープリミティヴは様々なサイズに調整されま"
+"す。"
 
 #: ../share/filters/filters.svg.h:78
-#, fuzzy
 msgid "Peel off"
-msgstr "水平オフセット"
+msgstr "はがす"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "壁の塗装をはがします。"
 
 #: ../share/filters/filters.svg.h:79
-#, fuzzy
 msgid "Gold splatter"
-msgstr "パターン"
+msgstr "金のスプラッタ"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "鋳造金属を金色の強調をつけて跳ね飛ばします。"
 
 #: ../share/filters/filters.svg.h:80
-#, fuzzy
 msgid "Gold paste"
-msgstr "スポーク比:"
+msgstr "金のペースト"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr ""
+msgstr "鋳造金属を金色の強調をつけて厚く塗りつけます。"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Crumpled plastic"
-msgstr ""
+msgstr "しわくちゃのプラスティック"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "エッジを溶かした、しわくちゃのつや消しプラスティック調にします。"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Enamel jewelry"
-msgstr ""
+msgstr "エナメルジュエリー"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Slightly cracked enameled texture"
-msgstr ""
+msgstr "少しひび割れたエナメル加工のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:83
-#, fuzzy
 msgid "Rough paper"
-msgstr "端点ノード"
+msgstr "ラフペーパー"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "オブジェクトとしての画像に使うアカレル水彩紙のエフェクトです。"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Rough and glossy"
-msgstr ""
+msgstr "ラフとつや"
 
 #: ../share/filters/filters.svg.h:84
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
+"オブジェクトとしての画像に使うつやのあるしわくちゃの紙のエフェクトです。"
 
 #: ../share/filters/filters.svg.h:85
-#, fuzzy
 msgid "In and Out"
-msgstr "塗りなし"
+msgstr "インアンドアウト"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Inner colorized shadow, outer black shadow"
-msgstr ""
+msgstr "内側に色付きの影を、外側に黒い影を落とします。"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Air spray"
-msgstr ""
+msgstr "エアスプレー"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Convert to small scattered particles with some thickness"
-msgstr ""
+msgstr "いくらかの厚みのついた散乱粒子に変換します。"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
-msgstr ""
+msgstr "中は暖かく"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Blurred colorized contour, filled inside"
-msgstr ""
+msgstr "色付きのぼかした輪郭にし、内側は塗りつぶします。"
 
 #: ../share/filters/filters.svg.h:88
-#, fuzzy
 msgid "Cool outside"
-msgstr "外枠のみを表示"
+msgstr "外は涼しく"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "色付きのぼかした輪郭にし、内側を空にします。"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Electronic microscopy"
-msgstr ""
+msgstr "電子顕微鏡"
 
 #: ../share/filters/filters.svg.h:89
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr ""
+msgstr "電子顕微鏡検査のような、ベベル、粗い光、変色、および光沢をつけます。"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Tartan"
@@ -987,119 +928,112 @@ msgstr "タータン"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Checkered tartan pattern"
-msgstr ""
+msgstr "タータンチェックのパターンです。"
 
 #: ../share/filters/filters.svg.h:91
-#, fuzzy
 msgid "Invert hue"
-msgstr "復帰"
+msgstr "色相反転"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Invert hue, or rotate it"
-msgstr ""
+msgstr "色相を反転、または循環させます。"
 
 #: ../share/filters/filters.svg.h:92
-#, fuzzy
 msgid "Inner outline"
-msgstr "ガイドラインの色"
+msgstr "内側の外郭線"
 
 #: ../share/filters/filters.svg.h:92
-#, fuzzy
 msgid "Draws an outline around"
-msgstr "グリッドになるパスを描く"
+msgstr "輪郭の周りを描画します。"
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Outline, double"
-msgstr "アウトライン(_O)"
+msgstr "外郭線, 二重"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "その色をオーバーレイした滑らかな線を内側に描画します。"
 
 #: ../share/filters/filters.svg.h:94
-#, fuzzy
 msgid "Fancy blur"
-msgstr "フィルを不透明にする"
+msgstr "ファンシーぼかし"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "彩度および色相を循環した滑らかな色付き輪郭にします。"
 
 #: ../share/filters/filters.svg.h:95
-#, fuzzy
 msgid "Glow"
-msgstr "色をコピー"
+msgstr "発光"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Glow of object's own color at the edges"
-msgstr ""
+msgstr "オブジェクトの色でエッジを光らせます。"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Outline"
-msgstr "アウトライン"
+msgstr "外郭線"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
-msgstr ""
+msgstr "光沢のあるぼかしを加え、シェイプを取り除きます。"
 
 #: ../share/filters/filters.svg.h:97
-#, fuzzy
 msgid "Color emboss"
-msgstr "色"
+msgstr "カラーエンボス"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
+"グレースケール、カラー、3D レリーフによる古典的、またはカラー化エンボスエフェ"
+"クトです。"
 
 #: ../share/filters/filters.svg.h:98
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
-msgstr "露出過度"
+msgstr "ソラライズ"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "古典的な、写真を露出過度にするエフェクトです。"
 
 #: ../share/filters/filters.svg.h:99
-#, fuzzy
 msgid "Moonarize"
-msgstr "色"
+msgstr "ムーナライズ"
 
 #: ../share/filters/filters.svg.h:99
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
-msgstr ""
+msgstr "ソラライズと反転の中間のエフェクトです。大抵空と水の色を維持します。"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
-msgstr ""
+msgstr "ソフトフォーカスレンズ"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "ぼかしをつけずに中身のイメージを光らせます。"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Stained glass"
-msgstr ""
+msgstr "ステンドグラス"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Illuminated stained glass effect"
-msgstr ""
+msgstr "照明の当たったステンドグラスエフェクトです。"
 
 #: ../share/filters/filters.svg.h:102
 msgid "Dark glass"
-msgstr ""
+msgstr "サングラス"
 
 #: ../share/filters/filters.svg.h:102
 msgid "Illuminated glass effect with light coming from beneath"
-msgstr ""
+msgstr "下から照明の当たったガラスエフェクトです。"
 
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "HSL Bumps alpha"
-msgstr "マスクを設定"
+msgstr "HSL バンプ・アルファ"
 
 #: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:165
@@ -1113,98 +1047,92 @@ msgstr "イメージエフェクト, 透過"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr ""
+msgstr "HSL バンプと同じですが、透明を強調します。"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
-msgstr ""
+msgstr "泡状バンプ・アルファ"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same as Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "泡状バンプと同じですが、透明を強調します。"
 
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "Smooth edges"
-msgstr "平滑化"
+msgstr "スムーズエッジ"
 
 #: ../share/filters/filters.svg.h:105
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
-msgstr ""
+msgstr "シェイプやイメージの中身を変更せずに外側を滑らかにします。"
 
 #: ../share/filters/filters.svg.h:106
-#, fuzzy
 msgid "Torn edges"
-msgstr "ノードを移動"
+msgstr "破れたエッジ"
 
 #: ../share/filters/filters.svg.h:106
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "シェイプやイメージの中身を変更せずに外側を位置ずれさせます。"
 
 #: ../share/filters/filters.svg.h:107
-#, fuzzy
 msgid "Feather"
-msgstr "メートル"
+msgstr "羽毛"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "中身を変更せずにエッジにぼかしマスクをかけます。"
 
 #: ../share/filters/filters.svg.h:108
-#, fuzzy
 msgid "Blur content"
-msgstr "端点ノード"
+msgstr "中身をぼかす"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "オブジェクトの外郭線を維持して中身をぼかします。"
 
 #: ../share/filters/filters.svg.h:109
-#, fuzzy
 msgid "Specular light"
-msgstr "色フェーズの色"
+msgstr "反射光"
 
 #: ../share/filters/filters.svg.h:109 ../share/filters/filters.svg.h:211
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "テクスチャを使用し、基本的な反射鏡ベベルをつけます。"
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Roughen inside"
-msgstr "端点ノード"
+msgstr "内側をラフに"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
-msgstr ""
+msgstr "シェイプの内側をすべてラフにします。"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
-msgstr ""
+msgstr "はかなさ"
 
 #: ../share/filters/filters.svg.h:111
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
+"オブジェクトの外郭線を維持し、エッジを漸進的に透明にし、中身をぼかします。"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
-msgstr ""
+msgstr "チョークとスポンジ"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "低い乱流がスポンジ風に、高い乱流がチョークに見せます。"
 
 #: ../share/filters/filters.svg.h:113
-#, fuzzy
 msgid "People"
-msgstr "解除(_R)"
+msgstr "ピープル"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Colorized blotches, like a crowd of people"
-msgstr ""
+msgstr "人だかりのような、色付きの斑点をつけます。"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Scotland"
@@ -1212,86 +1140,85 @@ msgstr "スコットランド"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Colorized mountain tops out of the fog"
-msgstr ""
+msgstr "霧から顔を出した山の頂上のようなエフェクトです。"
 
 #: ../share/filters/filters.svg.h:115
-#, fuzzy
 msgid "Noise transparency"
-msgstr "0 (透明)"
+msgstr "透明化ノイズ"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "基本的な透明化ノイズテクスチャです。"
 
 #: ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "Noise fill"
-msgstr "フィルはありません"
+msgstr "フィルノイズ"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "基本的なフィルノイズテクスチャです。色を調節します。"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
-msgstr ""
+msgstr "快楽の園"
 
 #: ../share/filters/filters.svg.h:117
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
+"ヒエロニムス・ボスの『快楽の園』のような、うつろう乱れた細い束を描きます。"
 
 #: ../share/filters/filters.svg.h:118
-#, fuzzy
 msgid "Diffuse light"
-msgstr "色"
+msgstr "拡散光"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "テクスチャ作成のために使う基本的な拡散光ベベルです。"
 
 #: ../share/filters/filters.svg.h:119
-#, fuzzy
 msgid "Cutout Glow"
-msgstr "アウトセット"
+msgstr "切り抜き光沢"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
+"実行可能なオフセットおよび色付け可能なフルードで内側と外側を発光させます。"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "HSL Bumps, matte"
-msgstr "マスクを設定"
+msgstr "HSL バンプ, つや消し"
 
 #: ../share/filters/filters.svg.h:120
 msgid ""
 "Same as HSL bumps but with a diffuse reflection instead of a specular one"
-msgstr ""
+msgstr "HSL バンプと同じですが、反射鏡の代わりに拡散反射光で適用します。"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
-msgstr ""
+msgstr "ダークエンボス"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "エンボスエフェクトです。白い 3D レリーフは黒に置き換えられます。"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
-msgstr ""
+msgstr "シンプルぼかし"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
+"シンプルなガウスぼかしです。「フィル/ストローク」ダイアログのぼかしスライダと"
+"同じです。"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
-msgstr ""
+msgstr "泡状バンプ, つや消し"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "泡状バンプと同じですが、反射鏡の代わりに拡散光で適用されます。"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1303,66 +1230,64 @@ msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr ""
+"エンボスエフェクトです。オリジナルイメージの色は維持されるか、ブレンドにより"
+"変更されます。"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
-msgstr ""
+msgstr "吸い取り紙"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Inkblot on blotting paper"
-msgstr ""
+msgstr "吸い取り紙に落とされたインクの染みです。"
 
 #: ../share/filters/filters.svg.h:126
-#, fuzzy
 msgid "Wax print"
-msgstr "LaTeX印刷"
+msgstr "ワックスプリント"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Wax print on tissue texture"
-msgstr ""
+msgstr "ティッシュテクスチャ上のワックスプリントです。"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
-msgstr ""
+msgstr "インクの染み"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
-msgstr ""
+msgstr "ティッシュまたはラフペーパー上のインクの染みです。"
 
 #: ../share/filters/filters.svg.h:128
-#, fuzzy
 msgid "Burnt edges"
-msgstr "境界枠をガイドにスナップ(_U)"
+msgstr "エッジを焦がす"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Torn edges with a dark inner blur"
-msgstr ""
+msgstr "エッジを破き、内側に黒いぼかしをいれます。"
 
 #: ../share/filters/filters.svg.h:129
-#, fuzzy
 msgid "Color outline, in"
-msgstr "ガイドラインの色"
+msgstr "色付きの外郭線, 内側"
 
 #: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr ""
+msgstr "幅とぼかしを調整可能な色付きの外郭線を内側にいれます。"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Liquid"
-msgstr ""
+msgstr "液体"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Colorizable filling with liquid transparency"
-msgstr ""
+msgstr "液状透明で色変更可能なフィルにします。"
 
 #: ../share/filters/filters.svg.h:131
-#, fuzzy
 msgid "Watercolor"
-msgstr "色を貼り付け"
+msgstr "水彩画"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Cloudy watercolor effect"
-msgstr ""
+msgstr "ぼやけた水彩画エフェクトです。"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Felt"
@@ -1371,45 +1296,44 @@ msgstr "フェルト"
 #: ../share/filters/filters.svg.h:132
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "色の乱れとエッジを少し暗くしたフェルトのようなテクスチャです。"
 
 #: ../share/filters/filters.svg.h:133
-#, fuzzy
 msgid "Ink paint"
-msgstr "塗りなし"
+msgstr "水墨画"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "多少の色のシフトを伴う水墨画のようなテクスチャです。"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
-msgstr ""
+msgstr "淡い虹"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr ""
+"エッジに沿って溶かしたような、色変更可能で滑らかな虹色のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:135
-#, fuzzy
 msgid "Melted rainbow"
-msgstr "左角度"
+msgstr "溶けた虹"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "エッジに沿って少し溶かしたような、滑らかな虹色のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
-msgstr ""
+msgstr "軟らかい金属"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
+msgstr "輝き、磨かれたでこぼこの鋳造金属のエフェクトです。色変更可能です。"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
-msgstr ""
+msgstr "コミック・ドラフト"
 
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
@@ -1423,130 +1347,119 @@ msgstr "非写実的 3D シェーダ"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "ガラス調の見ためのドラフト画のカートゥーンシェーディングです。"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Comics fading"
-msgstr ""
+msgstr "コミック・フェーディング"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "コミック風の画法でエッジを多少フェードします。"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Smooth shader"
-msgstr "平滑化"
+msgstr "スムーズシェーダ"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "グラファイト鉛筆のグレーでスムーズシェーディングを行います。"
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Emboss shader"
-msgstr "水平オフセット"
+msgstr "エンボスシェーダ"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "スムーズシェーディングとエンボス化の組み合わせです。"
 
 #: ../share/filters/filters.svg.h:141
-#, fuzzy
 msgid "Smooth shader dark"
-msgstr "平滑化"
+msgstr "スムーズシェーダ・ダーク"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "非写実的スムーズシェーディングのダークバージョンです。"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics"
 msgstr "コミック"
 
 #: ../share/filters/filters.svg.h:142
-#, fuzzy
 msgid "Imitation of black and white cartoon shading"
-msgstr "黒と白の領域を反転します"
+msgstr "白黒のカートゥーンシェーディングの模倣です。"
 
 #: ../share/filters/filters.svg.h:143
-#, fuzzy
 msgid "Satin"
-msgstr "始点:"
+msgstr "サテン"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "真珠貝シェーディングのシルク生地です。"
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Frosted glass"
-msgstr "閉じる"
+msgstr "曇りガラス"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
-msgstr ""
+msgstr "非写実的曇りガラスの模倣です。"
 
 #: ../share/filters/filters.svg.h:145
-#, fuzzy
 msgid "Smooth shader contour"
-msgstr "平滑化"
+msgstr "スムーズシェーダ・輪郭"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "スムーズシェーダの輪郭バージョンです。"
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Aluminium"
-msgstr "最小"
+msgstr "アルミニウム"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "つや消しアルミニウムシェーダです。"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Comics fluid"
-msgstr ""
+msgstr "コミック・流体"
 
 #: ../share/filters/filters.svg.h:147
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "ページを描画全体に合わせる"
+msgstr "自由なタッチの漫画絵にします。"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Chrome"
-msgstr "連結"
+msgstr "クローム"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "鏡面反射の強い非写実的クロームシェーダです。"
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Chrome dark"
-msgstr "トンボ"
+msgstr "クローム・ダーク"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "地表反射のクロームシェーディング・ダークバージョンです。"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Wavy tartan"
-msgstr ""
+msgstr "波状タータン"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
+msgstr "波状に移動し、エッジのまわりにベベルを作るタータンパターンです。"
 
 #: ../share/filters/filters.svg.h:151
 msgid "3D marble"
-msgstr ""
+msgstr "3D マーブル"
 
 #: ../share/filters/filters.svg.h:151
 msgid "3D warped marble texture"
-msgstr ""
+msgstr "3D の歪んだ大理石調テクスチャです。"
 
 #: ../share/filters/filters.svg.h:152
 msgid "3D wood"
@@ -1554,54 +1467,51 @@ msgstr "3D ウッド"
 
 #: ../share/filters/filters.svg.h:152
 msgid "3D warped, fibered wood texture"
-msgstr ""
+msgstr "3D で歪んだ繊維質の木目調テクスチャです。"
 
 #: ../share/filters/filters.svg.h:153
-#, fuzzy
 msgid "3D mother of pearl"
-msgstr "用紙の幅"
+msgstr "3D 真珠貝"
 
 #: ../share/filters/filters.svg.h:153
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "3D で歪んだ虹色の真珠貝テクスチャです。"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Tiger fur"
-msgstr ""
+msgstr "トラの毛皮"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "エッジに沿って巻きつけベベルをつけるトラの毛皮のパターンです。"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Shaken liquid"
-msgstr ""
+msgstr "震える液体"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Colorizable filling with flow inside like transparency"
-msgstr ""
+msgstr "内部を透明なように流した色変更可能なフィルです。"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Comics cream"
-msgstr ""
+msgstr "コミック・クリーム"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "透明度のあるクリーミーな波のコミックシェーディングです。"
 
 #: ../share/filters/filters.svg.h:157
-#, fuzzy
 msgid "Black Light"
-msgstr "黒"
+msgstr "黒い光"
 
 #: ../share/filters/filters.svg.h:157
 msgid "Light areas turn to black"
-msgstr ""
+msgstr "明るい領域を黒くします。"
 
 #: ../share/filters/filters.svg.h:158
-#, fuzzy
 msgid "Light eraser"
-msgstr "明るさ"
+msgstr "ライトイレイザー"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
 #: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
@@ -1611,487 +1521,459 @@ msgstr "透明化ユーティリティ"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "オブジェクトの最も明るい部分を漸進的に透明にします。"
 
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Noisy blur"
-msgstr "フィルを不透明にする"
+msgstr "ノイズぼかし"
 
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "矩形の丸められた角を拡大縮小"
+msgstr "エッジと中身を小規模にラフおよびぼかします。"
 
 #: ../share/filters/filters.svg.h:160
-#, fuzzy
 msgid "Film grain"
-msgstr "PDF印刷"
+msgstr "フィルム粒子"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Adds a small scale graininess"
-msgstr ""
+msgstr "小規模の粒子状効果を加えます。"
 
 #: ../share/filters/filters.svg.h:161
-#, fuzzy
 msgid "HSL Bumps, transparent"
-msgstr "0 (透明)"
+msgstr "HSL バンプ, 透明"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "透明で非常に軟らかい鏡面反射のバンプをつけます。"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1567
 msgid "Drawing"
-msgstr "描画全体"
+msgstr "描画"
 
 #: ../share/filters/filters.svg.h:162
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
 msgstr ""
+"イメージまたはオブジェクトのフィルのマテリアルに、鉛筆、彩色石版、彫刻その他"
+"のエフェクトを適用します。"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet bump"
-msgstr ""
+msgstr "ベルベットバンプ"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "ベルベットのような滑らかなバンプをつけます。"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
-msgstr ""
+msgstr "アルファ描画"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr ""
+msgstr "ビットマップやマテリアルに透明な描画エフェクトを適用します。"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Alpha draw, color"
-msgstr ""
+msgstr "アルファ描画, 色"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
-msgstr ""
+msgstr "ビットマップやマテリアルに透明色のフィルエフェクトを適用します。"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Chewing gum"
-msgstr ""
+msgstr "チューインガム"
 
 #: ../share/filters/filters.svg.h:166
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr ""
+msgstr "線の交点ではエッジを滑らかに流れる色変更可能な染みを生成します。"
 
 #: ../share/filters/filters.svg.h:167
-#, fuzzy
 msgid "Black outline"
-msgstr "単一色ストローク"
+msgstr "黒い外郭線"
 
 #: ../share/filters/filters.svg.h:167
-#, fuzzy
 msgid "Draws a black outline around"
-msgstr "グリッドになるパスを描く"
+msgstr "周囲に黒い外郭線を描画します。"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Color outline"
-msgstr "ガイドラインの色"
+msgstr "カラーの外郭線"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Draws a colored outline around"
-msgstr "グリッドになるパスを描く"
+msgstr "周囲に色付きの外郭線を描画します。"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Inner shadow"
-msgstr "内半径:"
+msgstr "内側の影"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Adds a colorizable drop shadow inside"
-msgstr ""
+msgstr "内側に色変更可能な影を落とします。"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Dark and glow"
-msgstr ""
+msgstr "闇と輝き"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr ""
+msgstr "エッジを暗く、内側をぼかし、やわらかい輝きを加えます。"
 
 #: ../share/filters/filters.svg.h:171
-#, fuzzy
 msgid "Darken edges"
-msgstr "暗く"
+msgstr "エッジを暗く"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Darken the edges with an inner blur"
-msgstr ""
+msgstr "エッジを暗くし、内側をぼかします。"
 
 #: ../share/filters/filters.svg.h:172
-#, fuzzy
 msgid "Warped rainbow"
-msgstr "左角度"
+msgstr "歪んだ虹"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr ""
+msgstr "エッジに沿って色変更可能な滑らかで色変更可能な虹色をつけます。"
 
 #: ../share/filters/filters.svg.h:173
-#, fuzzy
 msgid "Rough and dilate"
-msgstr "端点ノード"
+msgstr "ラフと拡張"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Create a turbulent contour around"
-msgstr ""
+msgstr "輪郭の周囲に乱流を生成します。"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Gelatine"
-msgstr "関連"
+msgstr "ゼラチン"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+msgstr "色変更可能でゼラチンのような乱流および透明なフィルです。"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
-msgstr ""
+msgstr "古はがき"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "少しポスタライズし、昔印刷されたはがきのようなエッジを描画します。"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Fuzzy glow"
-msgstr ""
+msgstr "曖昧な輝き"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
-msgstr ""
+msgstr "半透明でぼかしたコピーをずらしてオーバーレイします。"
 
 #: ../share/filters/filters.svg.h:177
-#, fuzzy
 msgid "Dots transparency"
-msgstr "0 (透明)"
+msgstr "透明化ドット"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "点描画法で HSL 感知の透明化を行います。"
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Canvas transparency"
-msgstr "0 (透明)"
+msgstr "透明化キャンバス"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "キャンバスのような HSL 感知の透明化を行います。"
 
 #: ../share/filters/filters.svg.h:179
-#, fuzzy
 msgid "Smear transparency"
-msgstr "0 (透明)"
+msgstr "透明化塗りつけ"
 
 #: ../share/filters/filters.svg.h:179
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
-msgstr ""
+msgstr "色付きのエッジを回転差せる透明な乱流とともにオブジェクトを塗ります。"
 
 #: ../share/filters/filters.svg.h:180
-#, fuzzy
 msgid "Thick paint"
-msgstr "塗りなし"
+msgstr "厚塗り"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick painting effect with turbulence"
-msgstr ""
+msgstr "乱流付きの高粘度エフェクトです。"
 
 #: ../share/filters/filters.svg.h:181
-#, fuzzy
 msgid "Burst"
-msgstr "青"
+msgstr "破裂"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "しわくちゃで穴のあいた、割れた風船のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:182
-#, fuzzy
 msgid "Embossed leather"
-msgstr "水平オフセット"
+msgstr "エンボスレザー"
 
 #: ../share/filters/filters.svg.h:182
 msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
+"皮革調または木目調で色変更可能なテクスチャと HSL エッジ検出バンプの組み合わせ"
+"です。"
 
 #: ../share/filters/filters.svg.h:183
-#, fuzzy
 msgid "Carnaval"
-msgstr "シアン"
+msgstr "カーニバル"
 
 #: ../share/filters/filters.svg.h:183
 msgid "White splotches evocating carnaval masks"
-msgstr ""
+msgstr "カーニバルのマスクを喚起する白い染みをつけます。"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid "Plastify"
-msgstr "貼り付け"
+msgstr "プラスティファイ"
 
 #: ../share/filters/filters.svg.h:184
 msgid ""
 "Combine a HSL edges detection bump with a wavy reflective surface effect"
-msgstr ""
+msgstr "波状の反射面エフェクトと HSL エッジ検出バンプの組み合わせです。"
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "Plaster"
-msgstr "貼り付け"
+msgstr "しっくい"
 
 #: ../share/filters/filters.svg.h:185
 msgid ""
 "Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
+"つや消しおよびしわくちゃの表面エフェクトと HSL エッジ検出バンプの組み合わせで"
+"す。"
 
 #: ../share/filters/filters.svg.h:186
-#, fuzzy
 msgid "Rough transparency"
-msgstr "0 (透明)"
+msgstr "透明化ラフ"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
-msgstr ""
+msgstr "同時にピクセルを移動する透明乱流を加えます。"
 
 #: ../share/filters/filters.svg.h:187
-#, fuzzy
 msgid "Gouache"
-msgstr "ソース"
+msgstr "グワッシュ"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Partly opaque water color effect with bleed"
-msgstr ""
+msgstr "にじみを含む一部不透明な水彩色エフェクトです。"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Alpha engraving"
-msgstr ""
+msgstr "アルファ彫刻"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr ""
+msgstr "線とフィルをラフにし透明な彫り込みを行うエフェクトです。"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
-msgstr ""
+msgstr "アルファ描画, 液体"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr ""
+msgstr "線とフィルをラフにし透明な液体描画を行うエフェクトです。"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Liquid drawing"
-msgstr "描画%s"
+msgstr "リキッド描画"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr ""
+msgstr "イメージに液状で波打った表現主義的な描画エフェクトを適用します。"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
-msgstr ""
+msgstr "マーブルインク"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr ""
+msgstr "エッジ検出されたイメージに適合する大理石模様の透明化エフェクトです。"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic"
-msgstr ""
+msgstr "厚いアクリル"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic paint texture with high texture depth"
-msgstr ""
+msgstr "テクスチャ深度が高く高粘度のアクリル塗料のテクスチャです。"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Alpha engraving B"
-msgstr ""
+msgstr "アルファ彫刻 B"
 
 #: ../share/filters/filters.svg.h:193
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
+"ビットマップやマテリアルに調節可能でラフな彫り込みを行うエフェクトです。"
 
 #: ../share/filters/filters.svg.h:194
-#, fuzzy
 msgid "Lapping"
-msgstr "丸めなし"
+msgstr "ラッピング"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Something like a water noise"
-msgstr ""
+msgstr "水のノイズのように滑らかにします。"
 
 #: ../share/filters/filters.svg.h:195
 msgid "Monochrome positive"
-msgstr ""
+msgstr "モノクロポジ"
 
 #: ../share/filters/filters.svg.h:195
 msgid "Convert to a Colorizable transparent positive"
-msgstr ""
+msgstr "色変更可能な単色の透明ポジに変換します。"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Monochrome negative"
-msgstr ""
+msgstr "モノクロネガ"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Convert to a colorizable transparent negative"
-msgstr ""
+msgstr "色変更可能な単色の透明ネガに変換します。"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
-msgstr ""
+msgstr "ライトイレイザ－, ネガ"
 
 #: ../share/filters/filters.svg.h:197
 msgid ""
 "Invert and make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "オブジェクを反転し、最も明るい部分を漸進的に透明にします。"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Repaint"
-msgstr "繰り返し:"
+msgstr "塗りなおし"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
-msgstr ""
+msgstr "全てを単色で塗りなおします。"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Punch hole"
-msgstr "単一色ストローク"
+msgstr "パンチ穴"
 
 #: ../share/filters/filters.svg.h:199
 msgid "Punch object out of a colorizable opaque area"
-msgstr ""
+msgstr "色変更可能領域以外のオブジェクトに穴をあけます。"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Riddled"
-msgstr "タイトル"
+msgstr "なぞなぞ"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "イメージの表面を謎めかせ、バンプを追加します。"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Wrinkled varnish"
-msgstr ""
+msgstr "しわくちゃのニス"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr ""
+msgstr "高粘度のつやで半透明な深度の高いペイントテクスチャです。"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Canvas Bumps"
-msgstr "シアン"
+msgstr "キャンバスバンプ"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "高さのマップが HSL 感度のキャンバステクスチャです。"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
-msgstr ""
+msgstr "キャンバスバンプ, つや消し"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "キャンバスバンプと同じですが、反射鏡の代わりに拡散光になリます。"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
-msgstr ""
+msgstr "キャンバスバンプ・アルファ"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "キャンバスバンプと同じですが、透明強調されます。"
 
 #: ../share/filters/filters.svg.h:205
-#, fuzzy
 msgid "Lightness-Contrast"
-msgstr "明るさ"
+msgstr "明度コントラスト"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Increase or decrease lightness and contrast"
-msgstr ""
+msgstr "明度およびコントラストを増減します。"
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Clean edges"
-msgstr "暗く"
+msgstr "クリーンエッジ"
 
 #: ../share/filters/filters.svg.h:206
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr ""
+"いくつかのフィルタ適用後にオブジェクトのエッジ周囲の光沢およびギザギザを除く"
+"か抑えます。"
 
 #: ../share/filters/filters.svg.h:207
-#, fuzzy
 msgid "Bright metal"
-msgstr "明るく"
+msgstr "輝く金属"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "あらゆる色に光沢のあるメタリックエフェクトをかけます。"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
-msgstr ""
+msgstr "濃い色のプラスティック"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Transparent plastic with deep colors"
-msgstr ""
+msgstr "濃い色の透明プラスティックです。"
 
 #: ../share/filters/filters.svg.h:209
-#, fuzzy
 msgid "Melted jelly, matte"
-msgstr "パターンフィル"
+msgstr "溶けたゼリー, つや消し"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
-msgstr ""
+msgstr "エッジをぼかしたつや消しベベルです。"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Melted jelly"
-msgstr "パターンフィル"
+msgstr "溶けたゼリー"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "星形の設定"
+msgstr "エッジをぼかしたつやありベベルです。"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Combined lighting"
-msgstr "合計"
+msgstr "複合照明"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
-msgstr ""
+msgstr "アルミホイル"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Metallic foil effect combining two lighting types"
-msgstr ""
+msgstr "2種類の照明を組み合わせた金属箔のエフェクトです。"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2202,9 +2084,8 @@ msgid "Checkerboard white"
 msgstr "市松模様 白"
 
 #: ../share/patterns/patterns.svg.h:29
-#, fuzzy
 msgid "Packed circles"
-msgstr "円"
+msgstr "いっぱいの円"
 
 #: ../share/patterns/patterns.svg.h:30
 msgid "Polka dots, small"
@@ -2231,88 +2112,81 @@ msgid "Polka dots, large white"
 msgstr "水玉模様 大・白"
 
 #: ../share/patterns/patterns.svg.h:36
-#, fuzzy
 msgid "Wavy"
-msgstr "保存(_S)"
+msgstr "波状"
 
 #: ../share/patterns/patterns.svg.h:37
-#, fuzzy
 msgid "Wavy white"
-msgstr "白"
+msgstr "波状 (白)"
 
 #: ../share/patterns/patterns.svg.h:38
 msgid "Camouflage"
 msgstr "カモフラージュ"
 
 #: ../share/patterns/patterns.svg.h:39
-#, fuzzy
 msgid "Ermine"
-msgstr "連結"
+msgstr "アーミン"
 
 #: ../share/patterns/patterns.svg.h:40
-#, fuzzy
 msgid "Sand (bitmap)"
-msgstr "ビットマップをトレース"
+msgstr "砂模様 (ビットマップ)"
 
 #: ../share/patterns/patterns.svg.h:41
-#, fuzzy
 msgid "Cloth (bitmap)"
-msgstr "ビットマップを作成"
+msgstr "布地 (ビットマップ)"
 
 #: ../share/patterns/patterns.svg.h:42
-#, fuzzy
 msgid "Old paint (bitmap)"
-msgstr "ビットマップとして印刷"
+msgstr "古絵画 (ビットマップ)"
 
 #: ../src/arc-context.cpp:319
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
-"<b>Ctrl</b>: 真円または縦横が整数比の楕円を作成、または弧/扇形の角度をスナッ"
-"プ"
+"<b>Ctrl</b>: 真円または縦横が整数比の楕円を作成します。弧/扇形の角度はスナッ"
+"プされます。"
 
 #: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
-msgstr "<b>Shift</b>: 始点を中心に描画"
+msgstr "<b>Shift</b>: 始点を中心に描画します。"
 
 #: ../src/arc-context.cpp:471
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
-"<b>円/弧</b>: %s x %s。<b>Ctrl</b>で真円または縦横が整数比の楕円を作成、"
-"<b>Shift</b>で始点を中心に描画"
+"<b>円/弧</b>: %s &#215; %s (縦横比固定 %d:%d); <b>Shift</b> を押しながらで視"
+"点を中心に描画します。"
 
 #: ../src/arc-context.cpp:473
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>円/弧</b>: %s x %s。<b>Ctrl</b>で真円または縦横が整数比の楕円を作成、"
-"<b>Shift</b>で始点を中心に描画"
+"<b>円/弧</b>: %s &#215; %s; <b>Ctrl</b> を押しながらで真円または整数比の円/弧"
+"を作成します。<b>Shift</b> を押しながらで始点を中心に描画します。"
 
 #: ../src/arc-context.cpp:499
 msgid "Create ellipse"
-msgstr "円/弧の作成"
+msgstr "円/弧を作成"
 
 #: ../src/box3d-context.cpp:429 ../src/box3d-context.cpp:436
 #: ../src/box3d-context.cpp:443 ../src/box3d-context.cpp:450
 #: ../src/box3d-context.cpp:457 ../src/box3d-context.cpp:464
-#, fuzzy
 msgid "Change perspective (angle of PLs)"
-msgstr "矩形を作成"
+msgstr "パースペクティブを変更 (パースペクティブ線の角度)"
 
 #. status text
 #: ../src/box3d-context.cpp:622
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
+"<b>3D ボックス</b>; <b>Shift</b> を押しながらで Z 軸に沿って押し出します。"
 
 #: ../src/box3d-context.cpp:646
-#, fuzzy
 msgid "Create 3D box"
-msgstr "タイルクローンを作成..."
+msgstr "3D ボックスを作成..."
 
 #: ../src/box3d.cpp:315
 msgid "<b>3D Box</b>"
@@ -2323,9 +2197,8 @@ msgid "Creating new connector"
 msgstr "新規コネクタを作成"
 
 #: ../src/connector-context.cpp:775
-#, fuzzy
 msgid "Connector endpoint drag cancelled."
-msgstr "ノードまたはハンドルのドラッグはキャンセルされました。"
+msgstr "コネクタ端点のドラッグをキャンセルしました。"
 
 #: ../src/connector-context.cpp:824
 msgid "Reroute connector"
@@ -2342,11 +2215,12 @@ msgstr "コネクタを終了"
 
 #: ../src/connector-context.cpp:1154
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成"
+msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成します。"
 
 #: ../src/connector-context.cpp:1227
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
-msgstr "<b>コネクタ終点</b>: ドラッグで経路変更、または新しいシェイプに接続"
+msgstr ""
+"<b>コネクタ終点</b>: ドラッグで経路変更、または新しいシェイプに接続します。"
 
 #: ../src/connector-context.cpp:1339
 msgid "Select <b>at least one non-connector object</b>."
@@ -2354,11 +2228,11 @@ msgstr "<b>コネクタ以外のオブジェクトを少なくとも1個</b>選�
 
 #: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
 msgid "Make connectors avoid selected objects"
-msgstr "選択オブジェクトをコネクタが迂回するようにする"
+msgstr "選択オブジェクトをコネクタが迂回する"
 
 #: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
 msgid "Make connectors ignore selected objects"
-msgstr "選択したオブジェクトをコネクタが無視するようにする"
+msgstr "選択したオブジェクトをコネクタが無視する"
 
 #: ../src/context-fns.cpp:36 ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2392,9 +2266,9 @@ msgid "Delete guide"
 msgstr "ガイドを削除"
 
 #: ../src/desktop-events.cpp:425
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Guideline</b>: %s"
-msgstr "ガイドライン"
+msgstr "<b>ガイドライン</b>: %s"
 
 #: ../src/dialogs/clonetiler.cpp:155
 msgid "<small>Nothing selected.</small>"
@@ -2417,13 +2291,12 @@ msgstr "<small>オブジェクトはタイルクローンを持っていませ�
 #: ../src/dialogs/clonetiler.cpp:976
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr ""
-"持っているタイルクローンを散らばらせたい<b>1個のオブジェクト</b>を選択して下"
-"さい。"
+"持っているタイルクローンを散らせたい<b>1個のオブジェクト</b>を選択して下さ"
+"い。"
 
 #: ../src/dialogs/clonetiler.cpp:998
-#, fuzzy
 msgid "Unclump tiled clones"
-msgstr "初期のタイルクローンの色"
+msgstr "タイルクローンを散らす"
 
 #: ../src/dialogs/clonetiler.cpp:1028
 msgid "Select <b>one object</b> whose tiled clones to remove."
@@ -2431,9 +2304,8 @@ msgstr ""
 "持っているタイルクローンを削除する<b>1個のオブジェクト</b>を選択して下さい。"
 
 #: ../src/dialogs/clonetiler.cpp:1051
-#, fuzzy
 msgid "Delete tiled clones"
-msgstr "選択したノードを削除"
+msgstr "タイルクローンを削除"
 
 #: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:1883
 msgid "Select an <b>object</b> to clone."
@@ -2448,9 +2320,8 @@ msgstr ""
 "<b>そのグループのクローンを作成</b>して下さい。"
 
 #: ../src/dialogs/clonetiler.cpp:1112
-#, fuzzy
 msgid "<small>Creating tiled clones...</small>"
-msgstr "<small>オブジェクトはタイルクローンを持っていません。</small>"
+msgstr "<small>タイルクローンを作成しています...</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1515
 msgid "Create tiled clones"
@@ -2603,12 +2474,12 @@ msgstr "<b>指数:</b>"
 #: ../src/dialogs/clonetiler.cpp:2034
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
-"行間隔を等しく配置するか(1)、収れんさせるか(<1)、または発散させるか(>1)"
+"行間隔を等しく配置するか (1)、収れんさせるか (<1)、または発散させるか (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2041
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
-"列間隔を等しく配置するか(1)、収れんさせるか(<1)、または発散させるか(>1)"
+"列間隔を等しく配置するか (1)、収れんさせるか (<1)、または発散させるか (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2049 ../src/dialogs/clonetiler.cpp:2219
@@ -2619,42 +2490,38 @@ msgstr "<small>交互にする:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2055
 msgid "Alternate the sign of shifts for each row"
-msgstr "行ごとにシフトの方向を反転させる"
+msgstr "行ごとにシフトの方向を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2060
 msgid "Alternate the sign of shifts for each column"
-msgstr "列ごとにシフトの方向を反転させる"
+msgstr "列ごとにシフトの方向を反転させます"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2067 ../src/dialogs/clonetiler.cpp:2237
 #: ../src/dialogs/clonetiler.cpp:2314
-#, fuzzy
 msgid "<small>Cumulate:</small>"
-msgstr "<small>交互にする:</small>"
+msgstr "<small>累積:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2073
-#, fuzzy
 msgid "Cumulate the shifts for each row"
-msgstr "行ごとにシフトの方向を反転させる"
+msgstr "行ごとにシフトを累積します"
 
 #: ../src/dialogs/clonetiler.cpp:2078
-#, fuzzy
 msgid "Cumulate the shifts for each column"
-msgstr "列ごとにシフトの方向を反転させる"
+msgstr "列ごとにシフトを累積します"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2085
-#, fuzzy
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>交互にする:</small>"
+msgstr "<small>タイルを除外する:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2091
 msgid "Exclude tile height in shift"
-msgstr ""
+msgstr "タイルの高さのシフトを除外します"
 
 #: ../src/dialogs/clonetiler.cpp:2096
 msgid "Exclude tile width in shift"
-msgstr ""
+msgstr "タイルの幅のシフトを除外します"
 
 #: ../src/dialogs/clonetiler.cpp:2105
 msgid "Sc_ale"
@@ -2697,46 +2564,40 @@ msgid "Randomize the vertical scale by this percentage"
 msgstr "垂直方向の拡大縮小をこのパーセンテージでランダム化"
 
 #: ../src/dialogs/clonetiler.cpp:2182
-#, fuzzy
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr ""
-"行間隔を等しく配置するか(1)、収れんさせるか(<1)、または発散させるか(>1)"
+"行の拡縮を等しくするか (1)、収れんさせるか (<1)、または発散させるか (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2189
-#, fuzzy
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
-msgstr ""
-"列間隔を等しく配置するか(1)、収れんさせるか(<1)、または発散させるか(>1)"
+msgstr "列の拡縮を等しくするか(1)、収れんさせるか(<1)、または発散させるか(>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2197
-#, fuzzy
 msgid "<b>Base:</b>"
-msgstr "<b>平</b>"
+msgstr "<b>基準:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2204 ../src/dialogs/clonetiler.cpp:2211
-#, fuzzy
 msgid ""
 "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr ""
-"行間隔を等しく配置するか(1)、収れんさせるか(<1)、または発散させるか(>1)"
+"対数スパイラルの基準を、使用しないか (0)、収れんさせるか (<1)、または発散させ"
+"るか (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2225
 msgid "Alternate the sign of scales for each row"
-msgstr "行ごとに拡大と縮小を切り替える"
+msgstr "行ごとに拡大縮小を切り替えます"
 
 #: ../src/dialogs/clonetiler.cpp:2230
 msgid "Alternate the sign of scales for each column"
-msgstr "列ごとに拡大と縮小を切り替える"
+msgstr "列ごとに拡大縮小を切り替えます"
 
 #: ../src/dialogs/clonetiler.cpp:2243
-#, fuzzy
 msgid "Cumulate the scales for each row"
-msgstr "行ごとに拡大と縮小を切り替える"
+msgstr "行ごとに拡大縮小を累積します"
 
 #: ../src/dialogs/clonetiler.cpp:2248
-#, fuzzy
 msgid "Cumulate the scales for each column"
-msgstr "列ごとに拡大と縮小を切り替える"
+msgstr "列ごとに拡大縮小を累積します"
 
 #: ../src/dialogs/clonetiler.cpp:2257
 msgid "_Rotation"
@@ -2749,12 +2610,12 @@ msgstr "<b>角度:</b>"
 #: ../src/dialogs/clonetiler.cpp:2273
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr "行ごとにこの角度でタイルを回転"
+msgstr "行ごとのタイルの回転角度"
 
 #: ../src/dialogs/clonetiler.cpp:2281
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr "列ごとにこの角度でタイルを回転"
+msgstr "列ごとのタイルの回転角度"
 
 #: ../src/dialogs/clonetiler.cpp:2288
 msgid "Randomize the rotation angle by this percentage"
@@ -2762,21 +2623,19 @@ msgstr "回転角度をこのパーセンテージでランダム化"
 
 #: ../src/dialogs/clonetiler.cpp:2302
 msgid "Alternate the rotation direction for each row"
-msgstr "行ごとに回転方向を反転させる"
+msgstr "行ごとに回転方向を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2307
 msgid "Alternate the rotation direction for each column"
-msgstr "列ごとに回転方向を反転させる"
+msgstr "列ごとに回転方向を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2320
-#, fuzzy
 msgid "Cumulate the rotation for each row"
-msgstr "行ごとに回転方向を反転させる"
+msgstr "行ごとに回転を累積します"
 
 #: ../src/dialogs/clonetiler.cpp:2325
-#, fuzzy
 msgid "Cumulate the rotation for each column"
-msgstr "列ごとに回転方向を反転させる"
+msgstr "列ごとに回転を累積します"
 
 #: ../src/dialogs/clonetiler.cpp:2334
 msgid "_Blur & opacity"
@@ -2787,29 +2646,24 @@ msgid "<b>Blur:</b>"
 msgstr "<b>ぼかし:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2350
-#, fuzzy
 msgid "Blur tiles by this percentage for each row"
-msgstr "行ごとにこのパーセンテージでタイルの不透明度を減少"
+msgstr "行ごとのタイルのぼかし量 (パーセント)"
 
 #: ../src/dialogs/clonetiler.cpp:2357
-#, fuzzy
 msgid "Blur tiles by this percentage for each column"
-msgstr "列ごとにこのパーセンテージでタイルの不透明度を減少"
+msgstr "列ごとのタイルのぼかし量 (パーセント)"
 
 #: ../src/dialogs/clonetiler.cpp:2364
-#, fuzzy
 msgid "Randomize the tile blur by this percentage"
-msgstr "タイルの色相をこのパーセンテージでランダム化"
+msgstr "タイルをランダムでぼかすパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2378
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "行ごとに色の変化する方向を反転させる"
+msgstr "行ごとにぼかしの符号を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2383
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr "列ごとに色の変化する方向を反転させる"
+msgstr "列ごとにぼかしの符号を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2392
 msgid "<b>Fade out:</b>"
@@ -2817,11 +2671,11 @@ msgstr "<b>フェードアウト:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2399
 msgid "Decrease tile opacity by this percentage for each row"
-msgstr "行ごとにこのパーセンテージでタイルの不透明度を減少"
+msgstr "行ごとにタイルの不透明度を減少するパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2406
 msgid "Decrease tile opacity by this percentage for each column"
-msgstr "列ごとにこのパーセンテージでタイルの不透明度を減少"
+msgstr "列ごとにタイルの不透明度を減少するパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2413
 msgid "Randomize the tile opacity by this percentage"
@@ -2829,11 +2683,11 @@ msgstr "タイルの不透明度をこのパーセンテージでランダム化
 
 #: ../src/dialogs/clonetiler.cpp:2427
 msgid "Alternate the sign of opacity change for each row"
-msgstr "行ごとに不透明度の増大/減少を切り替える"
+msgstr "行ごとに不透明度の増大/減少を切り替えます"
 
 #: ../src/dialogs/clonetiler.cpp:2432
 msgid "Alternate the sign of opacity change for each column"
-msgstr "列ごとに不透明度の増大/減少を切り替える"
+msgstr "列ごとに不透明度の増大/減少を切り替えます"
 
 #: ../src/dialogs/clonetiler.cpp:2440
 msgid "Co_lor"
@@ -2845,7 +2699,7 @@ msgstr "初期の色:"
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid "Initial color of tiled clones"
-msgstr "初期のタイルクローンの色"
+msgstr "タイルクローンの最初の色"
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid ""
@@ -2861,11 +2715,11 @@ msgstr "<b>色相:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2471
 msgid "Change the tile hue by this percentage for each row"
-msgstr "行ごとにこのパーセンテージで色相を変化させる"
+msgstr "行ごとに色相を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2478
 msgid "Change the tile hue by this percentage for each column"
-msgstr "列ごとにこのパーセンテージで色相を変化させる"
+msgstr "列ごとに色相を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2485
 msgid "Randomize the tile hue by this percentage"
@@ -2877,11 +2731,11 @@ msgstr "<b>彩度:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2501
 msgid "Change the color saturation by this percentage for each row"
-msgstr "行ごとにこのパーセンテージで彩度を変化させる"
+msgstr "行ごとに彩度を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2508
 msgid "Change the color saturation by this percentage for each column"
-msgstr "列ごとにこのパーセンテージで彩度を変化させる"
+msgstr "列ごとに彩度を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2515
 msgid "Randomize the color saturation by this percentage"
@@ -2893,11 +2747,11 @@ msgstr "<b>明度:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2530
 msgid "Change the color lightness by this percentage for each row"
-msgstr "行ごとにこのパーセンテージで明度を変化させる"
+msgstr "行ごとに明度を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2537
 msgid "Change the color lightness by this percentage for each column"
-msgstr "列ごとにこのパーセンテージで明度を変化させる"
+msgstr "列ごとに明度を変化させるパーセンテージ"
 
 #: ../src/dialogs/clonetiler.cpp:2544
 msgid "Randomize the color lightness by this percentage"
@@ -2905,11 +2759,11 @@ msgstr "明度をこのパーセンテージでランダム化"
 
 #: ../src/dialogs/clonetiler.cpp:2558
 msgid "Alternate the sign of color changes for each row"
-msgstr "行ごとに色の変化する方向を反転させる"
+msgstr "行ごとに色の変化する方向を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2563
 msgid "Alternate the sign of color changes for each column"
-msgstr "列ごとに色の変化する方向を反転させる"
+msgstr "列ごとに色の変化する方向を反転させます"
 
 #: ../src/dialogs/clonetiler.cpp:2571
 msgid "_Trace"
@@ -2925,7 +2779,7 @@ msgid ""
 "apply it to the clone"
 msgstr ""
 "各クローンについて、そのクローンの位置の描画から値を抽出して当該クローンに適"
-"用"
+"用します"
 
 #: ../src/dialogs/clonetiler.cpp:2596
 msgid "1. Pick from the drawing:"
@@ -2933,7 +2787,7 @@ msgstr "1. 描画から抽出するもの:"
 
 #: ../src/dialogs/clonetiler.cpp:2608
 msgid "Pick the visible color and opacity"
-msgstr "表示可能な色と不透明度を抽出"
+msgstr "表示可能な色と不透明度を抽出します"
 
 #: ../src/dialogs/clonetiler.cpp:2615 ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
@@ -2944,7 +2798,7 @@ msgstr "不透明度"
 
 #: ../src/dialogs/clonetiler.cpp:2616
 msgid "Pick the total accumulated opacity"
-msgstr "計算された合計の不透明度を抽出"
+msgstr "計算された合計の不透明度を抽出します"
 
 #: ../src/dialogs/clonetiler.cpp:2623
 msgid "R"
@@ -2952,7 +2806,7 @@ msgstr "R"
 
 #: ../src/dialogs/clonetiler.cpp:2624
 msgid "Pick the Red component of the color"
-msgstr "色の赤成分を抽出"
+msgstr "色の赤成分を抽出します"
 
 #: ../src/dialogs/clonetiler.cpp:2631
 msgid "G"
@@ -2960,7 +2814,7 @@ msgstr "G"
 
 #: ../src/dialogs/clonetiler.cpp:2632
 msgid "Pick the Green component of the color"
-msgstr "色の緑成分を抽出"
+msgstr "色の緑成分を抽出します"
 
 #: ../src/dialogs/clonetiler.cpp:2639
 msgid "B"
@@ -2968,7 +2822,7 @@ msgstr "B"
 
 #: ../src/dialogs/clonetiler.cpp:2640
 msgid "Pick the Blue component of the color"
-msgstr "色の青成分を抽出"
+msgstr "色の青成分を抽出します"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -2978,7 +2832,7 @@ msgstr "色相"
 
 #: ../src/dialogs/clonetiler.cpp:2650
 msgid "Pick the hue of the color"
-msgstr "色の色相を抽出"
+msgstr "色の色相を抽出します"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -2988,7 +2842,7 @@ msgstr "彩度"
 
 #: ../src/dialogs/clonetiler.cpp:2660
 msgid "Pick the saturation of the color"
-msgstr "色の彩度を抽出"
+msgstr "色の彩度を抽出します"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -2998,7 +2852,7 @@ msgstr "明度"
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid "Pick the lightness of the color"
-msgstr "色の明度を抽出"
+msgstr "色の明度を抽出します"
 
 #: ../src/dialogs/clonetiler.cpp:2680
 msgid "2. Tweak the picked value:"
@@ -3026,7 +2880,7 @@ msgstr "反転:"
 
 #: ../src/dialogs/clonetiler.cpp:2718
 msgid "Invert the picked value"
-msgstr "抽出値を反転"
+msgstr "抽出値を反転します"
 
 #: ../src/dialogs/clonetiler.cpp:2724
 msgid "3. Apply the value to the clones':"
@@ -3042,7 +2896,7 @@ msgid ""
 "that point"
 msgstr ""
 "その位置から抽出した値を基に各クローンの存在確率が決定され、それに従って各ク"
-"ローンを作成"
+"ローンを作成します"
 
 #: ../src/dialogs/clonetiler.cpp:2744
 msgid "Size"
@@ -3050,19 +2904,19 @@ msgstr "サイズ"
 
 #: ../src/dialogs/clonetiler.cpp:2747
 msgid "Each clone's size is determined by the picked value in that point"
-msgstr "その位置から抽出した値を基に各クローンのサイズが決定"
+msgstr "その位置から抽出した値を基に各クローンのサイズが決定されます"
 
 #: ../src/dialogs/clonetiler.cpp:2757
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
-"各クローンは、そこで抽出された色で塗られる (オリジナルはフィルまたはストロー"
-"クがアンセットされている必要があります)"
+"各クローンは、そこで抽出された色で塗られます (オリジナルはフィルまたはスト"
+"ロークがアンセットされている必要があります)"
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "その位置から抽出した値を基に各クローンの不透明度が決定"
+msgstr "その位置から抽出した値を基に各クローンの不透明度が決定されます"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3086,7 +2940,7 @@ msgstr "行、列:"
 
 #: ../src/dialogs/clonetiler.cpp:2885
 msgid "Create the specified number of rows and columns"
-msgstr "設定された数の行と列だけ作成"
+msgstr "設定された数の行と列だけ作成します"
 
 #: ../src/dialogs/clonetiler.cpp:2894
 msgid "Width, height: "
@@ -3094,11 +2948,11 @@ msgstr "幅、高さ:"
 
 #: ../src/dialogs/clonetiler.cpp:2895
 msgid "Fill the specified width and height with the tiling"
-msgstr "指定された幅と高さでタイルを敷き詰める"
+msgstr "指定された幅と高さでタイルを敷き詰めます"
 
 #: ../src/dialogs/clonetiler.cpp:2911
 msgid "Use saved size and position of the tile"
-msgstr "保存したタイルのサイズと位置を使用"
+msgstr "保存したタイルのサイズと位置を使用する"
 
 #: ../src/dialogs/clonetiler.cpp:2914
 msgid ""
@@ -3106,7 +2960,7 @@ msgid ""
 "you tiled it (if any), instead of using the current size"
 msgstr ""
 "現在のサイズを使用する代わりに、タイルのサイズと位置は直前にタイルしたとき "
-"(もしあれば) と同じになるようにする"
+"(もしあれば) と同じになるようにします"
 
 #: ../src/dialogs/clonetiler.cpp:2938
 msgid " <b>_Create</b> "
@@ -3114,7 +2968,7 @@ msgstr " <b>作成(_C)</b> "
 
 #: ../src/dialogs/clonetiler.cpp:2940
 msgid "Create and tile the clones of the selection"
-msgstr "選択オブジェクトのタイルクローンを作成"
+msgstr "選択オブジェクトのタイルクローンを作成します"
 
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
@@ -3128,7 +2982,7 @@ msgstr "凝集を緩める(_U)"
 #: ../src/dialogs/clonetiler.cpp:2956
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr ""
-"クローンを、凝集の度合いを弱めるように散らばらせる。繰り返して適用できます"
+"クローンを凝集の度合いを弱めるように散らばらせます。繰り返して適用できます。"
 
 #: ../src/dialogs/clonetiler.cpp:2962
 msgid " Re_move "
@@ -3136,7 +2990,7 @@ msgstr " 削除(_M) "
 
 #: ../src/dialogs/clonetiler.cpp:2963
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr "選択オブジェクトの既存タイルクローンを削除 (兄弟関係のみ)"
+msgstr "選択オブジェクトの既存タイルクローンを削除します (兄弟関係のみ)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
@@ -3148,7 +3002,7 @@ msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
-"ダイアログの全てのシフト、拡大縮小、回転、不透明度、色の変化をゼロに戻す"
+"ダイアログの全てのシフト、拡大縮小、回転、不透明度、色の変化をゼロに戻します"
 
 #: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
@@ -3258,27 +3112,27 @@ msgstr "エクスポート(_E)"
 
 #: ../src/dialogs/export.cpp:656
 msgid "Export the bitmap file with these settings"
-msgstr "この設定でビットマップファイルにエクスポートする"
+msgstr "この設定でビットマップファイルにエクスポートします"
 
 #: ../src/dialogs/export.cpp:682
-#, fuzzy, c-format
+#, c-format
 msgid "Batch export %d selected object"
 msgid_plural "Batch export %d selected objects"
-msgstr[0] "選択オブジェクトを複製"
+msgstr[0] "%d 個の選択オブジェクトのバッチエクスポート"
 
 #: ../src/dialogs/export.cpp:1013
 msgid "Export in progress"
 msgstr "エクスポートの進捗"
 
 #: ../src/dialogs/export.cpp:1083
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %d files"
-msgstr "エクスポート %s (%d x %d)"
+msgstr "%d 個のファイルをエクスポートしています"
 
 #: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
 #, c-format
 msgid "Could not export to filename %s.\n"
-msgstr "%s にエクスポートできませんでした。\n"
+msgstr "ファイル %s にエクスポートできませんでした。\n"
 
 #: ../src/dialogs/export.cpp:1152
 msgid "You have to enter a filename"
@@ -3286,7 +3140,7 @@ msgstr "ファイル名を入力してください"
 
 #: ../src/dialogs/export.cpp:1157
 msgid "The chosen area to be exported is invalid"
-msgstr "指定されたエクスポート領域は正規ではありません"
+msgstr "指定されたエクスポート領域は無効です"
 
 #: ../src/dialogs/export.cpp:1166
 #, c-format
@@ -3294,13 +3148,13 @@ msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s は存在しないか、ディレクトリではありません。\n"
 
 #: ../src/dialogs/export.cpp:1182
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s (%lu x %lu)"
-msgstr "エクスポート %s (%d x %d)"
+msgstr "%s (%lu x %lu) をエクスポートしています"
 
 #: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
 msgid "Select a filename for exporting"
-msgstr "エクスポートするファイルを選択"
+msgstr "エクスポートするファイルの選択"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:362 ../src/ui/dialog/find.cpp:437
@@ -3320,7 +3174,7 @@ msgstr "一部"
 
 #: ../src/dialogs/find.cpp:372 ../src/ui/dialog/find.cpp:447
 msgid "No objects found"
-msgstr "オブジェクトが見付かりませんでした"
+msgstr "オブジェクトが見つかりませんでした"
 
 #: ../src/dialogs/find.cpp:530
 msgid "T_ype: "
@@ -3328,7 +3182,7 @@ msgstr "タイプ(_Y):"
 
 #: ../src/dialogs/find.cpp:537 ../src/ui/dialog/find.cpp:69
 msgid "Search in all object types"
-msgstr "全てのオブジェクトタイプから検索"
+msgstr "全てのオブジェクトタイプから検索します"
 
 #: ../src/dialogs/find.cpp:537 ../src/ui/dialog/find.cpp:69
 msgid "All types"
@@ -3336,7 +3190,7 @@ msgstr "全てのタイプ"
 
 #: ../src/dialogs/find.cpp:548 ../src/ui/dialog/find.cpp:70
 msgid "Search all shapes"
-msgstr "全てのシェイプを検索"
+msgstr "全てのシェイプを検索します"
 
 #: ../src/dialogs/find.cpp:548 ../src/ui/dialog/find.cpp:70
 msgid "All shapes"
@@ -3344,7 +3198,7 @@ msgstr "全てのシェイプ"
 
 #: ../src/dialogs/find.cpp:565 ../src/ui/dialog/find.cpp:71
 msgid "Search rectangles"
-msgstr "矩形を検索"
+msgstr "矩形を検索します"
 
 #: ../src/dialogs/find.cpp:565 ../src/ui/dialog/find.cpp:71
 msgid "Rectangles"
@@ -3352,7 +3206,7 @@ msgstr "矩形"
 
 #: ../src/dialogs/find.cpp:570 ../src/ui/dialog/find.cpp:72
 msgid "Search ellipses, arcs, circles"
-msgstr "円/弧を検索"
+msgstr "円/弧を検索します"
 
 #: ../src/dialogs/find.cpp:570 ../src/ui/dialog/find.cpp:72
 msgid "Ellipses"
@@ -3360,7 +3214,7 @@ msgstr "円/弧"
 
 #: ../src/dialogs/find.cpp:575 ../src/ui/dialog/find.cpp:73
 msgid "Search stars and polygons"
-msgstr "星形やポリゴンを検索"
+msgstr "星形やポリゴンを検索します"
 
 #: ../src/dialogs/find.cpp:575 ../src/ui/dialog/find.cpp:73
 msgid "Stars"
@@ -3368,7 +3222,7 @@ msgstr "星形"
 
 #: ../src/dialogs/find.cpp:580 ../src/ui/dialog/find.cpp:74
 msgid "Search spirals"
-msgstr "螺旋を検索"
+msgstr "螺旋を検索します"
 
 #: ../src/dialogs/find.cpp:580 ../src/ui/dialog/find.cpp:74
 msgid "Spirals"
@@ -3378,7 +3232,7 @@ msgstr "螺旋"
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
 #: ../src/dialogs/find.cpp:593 ../src/ui/dialog/find.cpp:75
 msgid "Search paths, lines, polylines"
-msgstr "パス/直線/ポリラインを検索"
+msgstr "パス/直線/ポリラインを検索します"
 
 #: ../src/dialogs/find.cpp:593 ../src/ui/dialog/find.cpp:75
 #: ../src/widgets/toolbox.cpp:2091
@@ -3387,7 +3241,7 @@ msgstr "パス"
 
 #: ../src/dialogs/find.cpp:598 ../src/ui/dialog/find.cpp:76
 msgid "Search text objects"
-msgstr "テキストオブジェクトを検索"
+msgstr "テキストオブジェクトを検索します"
 
 #: ../src/dialogs/find.cpp:598 ../src/ui/dialog/find.cpp:76
 msgid "Texts"
@@ -3395,7 +3249,7 @@ msgstr "テキスト"
 
 #: ../src/dialogs/find.cpp:603 ../src/ui/dialog/find.cpp:77
 msgid "Search groups"
-msgstr "グループを検索"
+msgstr "グループを検索します"
 
 #: ../src/dialogs/find.cpp:603 ../src/ui/dialog/find.cpp:77
 msgid "Groups"
@@ -3403,7 +3257,7 @@ msgstr "グループ"
 
 #: ../src/dialogs/find.cpp:608 ../src/ui/dialog/find.cpp:82
 msgid "Search clones"
-msgstr "クローンを検索"
+msgstr "クローンを検索します"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -3414,7 +3268,7 @@ msgstr "クローン"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:83
 msgid "Search images"
-msgstr "画像を検索"
+msgstr "画像を検索します"
 
 #: ../src/dialogs/find.cpp:617 ../src/ui/dialog/find.cpp:83
 #: ../share/extensions/embedimage.inx.h:3
@@ -3424,7 +3278,7 @@ msgstr "画像"
 
 #: ../src/dialogs/find.cpp:622 ../src/ui/dialog/find.cpp:84
 msgid "Search offset objects"
-msgstr "オフセットオブジェクトを検索"
+msgstr "オフセットオブジェクトを検索します"
 
 #: ../src/dialogs/find.cpp:622 ../src/ui/dialog/find.cpp:84
 msgid "Offsets"
@@ -3469,7 +3323,7 @@ msgstr "選択オブジェクトから検索(_E)"
 
 #: ../src/dialogs/find.cpp:708 ../src/ui/dialog/find.cpp:64
 msgid "Limit search to the current selection"
-msgstr "現在の選択オブジェクトに限定して検索"
+msgstr "現在の選択オブジェクトに限定して検索します"
 
 #: ../src/dialogs/find.cpp:713 ../src/ui/dialog/find.cpp:65
 msgid "Search in current _layer"
@@ -3477,7 +3331,7 @@ msgstr "現在のレイヤーから検索(_L)"
 
 #: ../src/dialogs/find.cpp:717 ../src/ui/dialog/find.cpp:65
 msgid "Limit search to the current layer"
-msgstr "現在のレイヤーに限定して検索"
+msgstr "現在のレイヤーに限定して検索します"
 
 #: ../src/dialogs/find.cpp:722 ../src/ui/dialog/find.cpp:66
 msgid "Include _hidden"
@@ -3485,7 +3339,7 @@ msgstr "非表示のオブジェクトを含む(_H)"
 
 #: ../src/dialogs/find.cpp:726 ../src/ui/dialog/find.cpp:66
 msgid "Include hidden objects in search"
-msgstr "非表示のオブジェクトを検索対象にする"
+msgstr "非表示のオブジェクトを検索対象にします"
 
 #: ../src/dialogs/find.cpp:731 ../src/ui/dialog/find.cpp:67
 msgid "Include l_ocked"
@@ -3493,7 +3347,7 @@ msgstr "ロックされたオブジェクトを含む(_O)"
 
 #: ../src/dialogs/find.cpp:735 ../src/ui/dialog/find.cpp:67
 msgid "Include locked objects in search"
-msgstr "ロックされたオブジェクトを検索対象にする"
+msgstr "ロックされたオブジェクトを検索対象にします"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/find.cpp:746 ../src/ui/dialog/debug.cpp:75
@@ -3504,7 +3358,7 @@ msgstr "クリア(_C)"
 
 #: ../src/dialogs/find.cpp:746 ../src/ui/dialog/find.cpp:86
 msgid "Clear values"
-msgstr "値をクリア"
+msgstr "値をクリアします"
 
 #: ../src/dialogs/find.cpp:747 ../src/ui/dialog/find.cpp:87
 msgid "_Find"
@@ -3512,7 +3366,7 @@ msgstr "検索(_F)"
 
 #: ../src/dialogs/find.cpp:747 ../src/ui/dialog/find.cpp:87
 msgid "Select objects matching all of the fields you filled in"
-msgstr "入力したすべての項目に一致したオブジェクトを選択"
+msgstr "入力したすべての項目に一致したオブジェクトを選択します"
 
 #. Create the label for the object id
 #: ../src/dialogs/item-properties.cpp:120
@@ -3605,7 +3459,7 @@ msgstr "無効なIDです! "
 
 #: ../src/dialogs/item-properties.cpp:447
 msgid "Id exists! "
-msgstr "存在するIDです! "
+msgstr "ID はすでに存在しています! "
 
 #: ../src/dialogs/item-properties.cpp:454
 msgid "Set object ID"
@@ -3613,7 +3467,7 @@ msgstr "オブジェクト ID を設定"
 
 #: ../src/dialogs/item-properties.cpp:469
 msgid "Set object label"
-msgstr ""
+msgstr "オブジェクトのラベルを設定"
 
 #: ../src/dialogs/item-properties.cpp:477
 msgid "Set object title"
@@ -3705,7 +3559,7 @@ msgstr "%s プロパティ"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>完了。</b><b>%d</b> 個の単語は辞書に追加されました"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
@@ -3723,7 +3577,7 @@ msgstr "<i>チェックしています...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
 msgid "Fix spelling"
-msgstr ""
+msgstr "スペルの修正"
 
 #: ../src/dialogs/spellcheck.cpp:955
 msgid "Suggestions:"
@@ -3839,9 +3693,8 @@ msgid "Set as default"
 msgstr "デフォルトとして設定"
 
 #: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1493
-#, fuzzy
 msgid "Set text style"
-msgstr "ストロークのスタイル(_Y)"
+msgstr "テキストスタイルの設定"
 
 #: ../src/dialogs/xml-tree.cpp:152
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
@@ -3924,9 +3777,8 @@ msgid "Attribute value"
 msgstr "属性値"
 
 #: ../src/dialogs/xml-tree.cpp:874
-#, fuzzy
 msgid "Drag XML subtree"
-msgstr "曲線をドラッグ"
+msgstr "XML サブツリーのドラッグ"
 
 #: ../src/dialogs/xml-tree.cpp:1311
 msgid "New element node..."
@@ -3941,23 +3793,20 @@ msgid "Create"
 msgstr "作成"
 
 #: ../src/dialogs/xml-tree.cpp:1375
-#, fuzzy
 msgid "Create new element node"
 msgstr "要素ノードの新規作成"
 
 #: ../src/dialogs/xml-tree.cpp:1391
-#, fuzzy
 msgid "Create new text node"
-msgstr "新規テキストノード"
+msgstr "テキストノードの新規作成"
 
 #: ../src/dialogs/xml-tree.cpp:1426
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
 msgstr "ノードの削除"
 
 #: ../src/dialogs/xml-tree.cpp:1473
-#, fuzzy
 msgid "Change attribute"
-msgstr "属性を設定"
+msgstr "属性の変更"
 
 #: ../src/display/canvas-axonomgrid.cpp:396 ../src/display/canvas-grid.cpp:670
 msgid "Grid _units:"
@@ -4055,9 +3904,8 @@ msgid "Axonometric grid"
 msgstr "結晶軸グリッド"
 
 #: ../src/display/canvas-grid.cpp:258
-#, fuzzy
 msgid "Create new grid"
-msgstr "ガイドを作成"
+msgstr "グリッドの新規作成"
 
 #: ../src/display/canvas-grid.cpp:324
 msgid "_Enabled"
@@ -4122,62 +3970,55 @@ msgstr ""
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
 #: ../src/display/snap-indicator.cpp:148 ../src/display/snap-indicator.cpp:151
 msgid "UNDEFINED"
-msgstr ""
+msgstr "未定義"
 
 #: ../src/display/snap-indicator.cpp:66
 msgid "grid line"
 msgstr "グリッドライン"
 
 #: ../src/display/snap-indicator.cpp:69
-#, fuzzy
 msgid "grid intersection"
-msgstr "交差"
+msgstr "グリッドの交点"
 
 #: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr "ガイド"
 
 #: ../src/display/snap-indicator.cpp:75
-#, fuzzy
 msgid "guide intersection"
-msgstr "交差"
+msgstr "ガイドの交点"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "guide origin"
-msgstr "ガイドラインの色"
+msgstr "ガイドの原点"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "grid-guide intersection"
-msgstr "交差"
+msgstr "グリッドとガイドの交点"
 
 #: ../src/display/snap-indicator.cpp:84
 msgid "cusp node"
 msgstr "尖端ノード"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "smooth node"
-msgstr "平滑化"
+msgstr "平滑化ノード"
 
 #: ../src/display/snap-indicator.cpp:90
 msgid "path"
 msgstr "パス"
 
 #: ../src/display/snap-indicator.cpp:93
-#, fuzzy
 msgid "path intersection"
-msgstr "交差"
+msgstr "パスの交点"
 
 #: ../src/display/snap-indicator.cpp:96
 msgid "bounding box corner"
 msgstr "境界枠の角"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box side"
-msgstr "境界枠をガイドにスナップ(_U)"
+msgstr "境界枠の辺"
 
 #: ../src/display/snap-indicator.cpp:102
 msgid "bounding box"
@@ -4204,14 +4045,12 @@ msgid "handle"
 msgstr "ハンドル"
 
 #: ../src/display/snap-indicator.cpp:120
-#, fuzzy
 msgid "bounding box side midpoint"
-msgstr "境界枠をガイドにスナップ(_U)"
+msgstr "境界枠辺の中間点"
 
 #: ../src/display/snap-indicator.cpp:123
-#, fuzzy
 msgid "bounding box midpoint"
-msgstr "境界枠をガイドにスナップ(_U)"
+msgstr "境界枠の中間点"
 
 #: ../src/display/snap-indicator.cpp:126
 msgid "page corner"
@@ -4219,12 +4058,11 @@ msgstr "ページの角"
 
 #: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
-msgstr ""
+msgstr "凸包の角"
 
 #: ../src/display/snap-indicator.cpp:132
-#, fuzzy
 msgid "quadrant point"
-msgstr "行送り:"
+msgstr "四分円点"
 
 #: ../src/display/snap-indicator.cpp:135
 msgid "center"
@@ -4247,9 +4085,8 @@ msgid "Bounding box midpoint"
 msgstr "境界枠をの中間点"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Bounding box side midpoint"
-msgstr "境界枠をガイドにスナップ(_U)"
+msgstr "境界枠辺の中間点"
 
 #: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
@@ -4276,26 +4113,24 @@ msgid "Handle"
 msgstr "ハンドル"
 
 #: ../src/display/snap-indicator.cpp:181
-#, fuzzy
 msgid "Path intersection"
-msgstr "交差"
+msgstr "パスの交点"
 
 #: ../src/display/snap-indicator.cpp:184
 msgid "Guide"
 msgstr "ガイド"
 
 #: ../src/display/snap-indicator.cpp:187
-#, fuzzy
 msgid "Guide origin"
-msgstr "ガイドラインの色"
+msgstr "ガイドの原点"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
-msgstr ""
+msgstr "凸包の角"
 
 #: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
-msgstr ""
+msgstr "四分円点"
 
 #: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
 msgid "Center"
@@ -4343,14 +4178,12 @@ msgid "Draw path"
 msgstr "パスを描画"
 
 #: ../src/draw-context.cpp:866
-#, fuzzy
 msgid "Creating single dot"
-msgstr "新規パスを作成"
+msgstr "単一ドットを作成しています"
 
 #: ../src/draw-context.cpp:867
-#, fuzzy
 msgid "Create single dot"
-msgstr "タイルクローンを作成..."
+msgstr "単一ドットの作成"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -4386,9 +4219,8 @@ msgstr ""
 "<b>Ctrl+C</b>でマウス位置の色をクリップボードへコピー"
 
 #: ../src/dropper-context.cpp:344
-#, fuzzy
 msgid "Set picked color"
-msgstr "最後に選択した色"
+msgstr "採取した色を設定"
 
 #: ../src/dyna-draw-context.cpp:615
 msgid ""
@@ -4410,26 +4242,23 @@ msgstr ""
 #: ../src/dyna-draw-context.cpp:755
 #, fuzzy
 msgid "<b>Drawing</b> a calligraphic stroke"
-msgstr "カリグラフィ線を描く"
+msgstr "カリグラフィ線を<b>描きます</b>。"
 
 #: ../src/dyna-draw-context.cpp:1044
-#, fuzzy
 msgid "Draw calligraphic stroke"
 msgstr "カリグラフィ線を描く"
 
 #: ../src/eraser-context.cpp:527
-#, fuzzy
 msgid "<b>Drawing</b> an eraser stroke"
-msgstr "カリグラフィ線を描く"
+msgstr "消しゴムストロークを<b>描きます</b>。"
 
 #: ../src/eraser-context.cpp:830
-#, fuzzy
 msgid "Draw eraser stroke"
-msgstr "カリグラフィ線を描く"
+msgstr "消しゴムで消す"
 
 #: ../src/event-context.cpp:618
 msgid "<b>Space+mouse drag</b> to pan canvas"
-msgstr ""
+msgstr "<b>スペース + マウスドラッグ</b> でキャンバスをパンします。"
 
 #: ../src/event-log.cpp:37
 msgid "[Unchanged]"
@@ -4693,9 +4522,8 @@ msgid "Impulse Noise"
 msgstr "インパスルノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:51
-#, fuzzy
 msgid "Laplacian Noise"
-msgstr "グレースケール"
+msgstr "ラプラスノイズ"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:52
 msgid "Poisson Noise"
@@ -4932,7 +4760,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
 msgid "Median"
-msgstr "メディアン"
+msgstr "色の中央値"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
 msgid ""
@@ -5105,9 +4933,8 @@ msgid "Threshold"
 msgstr "しきい値"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:45
-#, fuzzy
 msgid "Threshold selected bitmap(s)."
-msgstr "選択中の画像のみを埋め込む"
+msgstr "選択したビットマップのしきい値"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:40
 msgid "Unsharp Mask"
@@ -5293,7 +5120,7 @@ msgstr "影を落とす"
 #: ../src/extension/internal/filter/drop-shadow.h:37
 #: ../src/extension/internal/filter/drop-shadow.h:92
 msgid "Blur radius, px"
-msgstr ""
+msgstr "ぼかし半径, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:38
 #: ../src/extension/internal/filter/drop-shadow.h:93
@@ -5305,15 +5132,13 @@ msgstr "不透明度, %"
 
 #: ../src/extension/internal/filter/drop-shadow.h:39
 #: ../src/extension/internal/filter/drop-shadow.h:94
-#, fuzzy
 msgid "Horizontal offset, px"
-msgstr "水平オフセット"
+msgstr "水平オフセット, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:40
 #: ../src/extension/internal/filter/drop-shadow.h:95
-#, fuzzy
 msgid "Vertical offset, px"
-msgstr "垂直オフセット"
+msgstr "垂直オフセット, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
@@ -5326,51 +5151,45 @@ msgstr "フィルタ"
 
 #: ../src/extension/internal/filter/drop-shadow.h:48
 msgid "Black, blurred drop shadow"
-msgstr ""
+msgstr "黒く、ぼかした影を落とします。"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
-#, fuzzy
 msgid "Drop Glow"
-msgstr "色をコピー"
+msgstr "光を落とす"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
 msgid "White, blurred drop glow"
-msgstr ""
+msgstr "白く、ぼかした光を落とします。"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "丸め:"
+msgstr "バンドル"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
-msgstr ""
+msgstr "個人用"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
-#, fuzzy
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
-"外部モジュールのディレクトリ名がNULLです。モジュールはロードされません。"
+"外部モジュールのディレクトリ名が NULL です。フィルタはロードされません。"
 
 #: ../src/extension/internal/filter/snow.h:32
-#, fuzzy
 msgid "Snow crest"
-msgstr "プレビュー"
+msgstr "冠雪"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size"
-msgstr "ドットのサイズ"
+msgstr "吹きだまりのサイズ"
 
 #: ../src/extension/internal/filter/snow.h:42
-#, fuzzy
 msgid "Snow has fallen on object"
-msgstr "パターンをオブジェクトに"
+msgstr "オブジェクトに雪を降らせます。"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
-msgstr ""
+msgstr "%s GDK pixbuf 入力"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -5477,40 +5296,38 @@ msgstr "OpenDocument 図面ファイル"
 #. more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:56
 msgid "media box"
-msgstr ""
+msgstr "メディアボックス"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:57
 msgid "crop box"
-msgstr ""
+msgstr "クロップボックス"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:58
 msgid "trim box"
-msgstr ""
+msgstr "トリムボックス"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:59
 msgid "bleed box"
-msgstr ""
+msgstr "ブリードボックス"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:60
 msgid "art box"
-msgstr ""
+msgstr "アートボックス"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:72
-#, fuzzy
 msgid "Select page:"
-msgstr "テキストを削除"
+msgstr "選択ページ:"
 
 #. Display total number of pages
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:86
-#, fuzzy, c-format
+#, c-format
 msgid "out of %i"
-msgstr "渦の量"
+msgstr "ページ / 全 %i ページ中"
 
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:92
-#, fuzzy
 msgid "Clip to:"
-msgstr "クリップ(_P)"
+msgstr "クリップ先:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:104
 msgid "Page settings"
@@ -5518,39 +5335,38 @@ msgstr "ページ設定"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:106
 msgid "Precision of approximating gradient meshes:"
-msgstr ""
+msgstr "近似グラデーションメッシュの精度"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:107
 msgid ""
 "<b>Note</b>: setting the precision too high may result in a large SVG file "
 "and slow performance."
 msgstr ""
+"<b>メモ</b>: 精度を非常に高くすると、SVG ファイルのサイズが大きくなり、性能も"
+"低下します。"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:393
-#, fuzzy
 msgid "rough"
-msgstr "グループ化"
+msgstr "低い"
 
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:116
-#, fuzzy
 msgid "Text handling:"
-msgstr "間隔を設定:"
+msgstr "テキストの扱い:"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:118
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:119
-#, fuzzy
 msgid "Import text as text"
-msgstr "テキストをパスに変換"
+msgstr "テキストをテキストとしてインポート"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "名前が最も近いインストールフォントで PDF フォントを置き換える"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
-msgstr "画像の埋め込み"
+msgstr "画像を埋め込む"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
@@ -5564,17 +5380,15 @@ msgstr "PDF インポート設定"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "pdfinput|medium"
-msgstr ""
+msgstr "中間"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:397
-#, fuzzy
 msgid "fine"
-msgstr "直線"
+msgstr "高い"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:398
-#, fuzzy
 msgid "very fine"
-msgstr "アンセットフィル"
+msgstr "最高"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:753
 msgid "PDF Input"
@@ -5726,7 +5540,7 @@ msgstr "default.svg"
 #: ../src/file.cpp:248 ../src/file.cpp:1039
 #, c-format
 msgid "Failed to load the requested file %s"
-msgstr "要求されたファイル %s を開くのに失敗しました"
+msgstr "要求されたファイル %s を開くことに失敗しました"
 
 #: ../src/file.cpp:273
 msgid "Document not saved yet.  Cannot revert."
@@ -5846,11 +5660,14 @@ msgid ""
 "password are correct, if the server has support for webdav and verify if you "
 "didn't forget to choose a license."
 msgstr ""
+"ドキュメントのエクスポートでエラーです。サーバ名、ユーザ名、およびパスワード"
+"が正しいことを確認してください。サーバが WebDAV をサポートしている場合、ライ"
+"センスの選択を忘れていないかどうか確認してください。"
 
 #: ../src/file.cpp:1411
 #, fuzzy
 msgid "Document exported..."
-msgstr "ドキュメントを復帰しました。"
+msgstr "ドキュメントをエクスポートしました..."
 
 #: ../src/file.cpp:1439 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
@@ -6700,7 +6517,7 @@ msgstr ""
 #: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
 #, fuzzy, c-format
 msgid "Failed to execute child process (%s)"
-msgstr "要求されたファイル %s を開くのに失敗しました"
+msgstr "要求されたファイル %s を開くことに失敗しました"
 
 #: ../src/io/sys.cpp:623
 #, c-format
@@ -6789,13 +6606,12 @@ msgid "Whether the dock is floating in its own window"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock.c:183 ../src/libgdl/gdl-dock-master.c:144
-#, fuzzy
 msgid "Default title"
-msgstr "デフォルトの単位(_U):"
+msgstr "デフォルトのタイトル"
 
 #: ../src/libgdl/gdl-dock.c:184
 msgid "Default title for the newly created floating docks"
-msgstr ""
+msgstr "新しく作成されたフローティングドックのデフォルトのタイトルです。"
 
 #: ../src/libgdl/gdl-dock.c:191
 msgid "Width for the dock when it's of floating type"
@@ -11160,27 +10976,23 @@ msgstr "リンクを作成(_C)"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
-#, fuzzy
 msgid "Set Mask"
 msgstr "マスクを設定"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
-#, fuzzy
 msgid "Release Mask"
 msgstr "マスクを解除"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
-#, fuzzy
 msgid "Set Clip"
-msgstr "アンセットフィル"
+msgstr "クリップを設定"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
-#, fuzzy
 msgid "Release Clip"
-msgstr "解除(_R)"
+msgstr "クリップを解除"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
@@ -13533,11 +13345,11 @@ msgstr "transform に従って移動"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:609
 msgid "Are unlinked"
-msgstr "リンクを解除する"
+msgstr "リンクを解除"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "Are deleted"
-msgstr "削除する"
+msgstr "削除"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
 msgid "When the original moves, its clones and linked offsets:"
@@ -17330,7 +17142,7 @@ msgstr "ビットマップから1以上のパスをトレースによって作�
 
 #: ../src/verbs.cpp:2423
 msgid "_Make a Bitmap Copy"
-msgstr "ビットマップコピーを作成(_M)"
+msgstr "ビットマップのコピーを作成(_M)"
 
 #: ../src/verbs.cpp:2424
 msgid "Export selection to a bitmap and insert it into document"
@@ -18843,21 +18655,20 @@ msgid ""
 "Control whether or not to scale stroke widths, scale rectangle corners, "
 "transform gradient fills, and transform pattern fills with the object"
 msgstr ""
+"オブジェクトのストローク幅、矩形の角、およびグラデーションまたはパターンフィ"
+"ルの移動の有無を制御します"
 
 #: ../src/widgets/select-toolbar.cpp:555
-#, fuzzy
 msgid "Scale rounded corners"
-msgstr "矩形の丸められた角を拡大縮小"
+msgstr "矩形の丸められた角も拡大縮小"
 
 #: ../src/widgets/select-toolbar.cpp:566
-#, fuzzy
 msgid "Move gradients"
-msgstr "ノードハンドルを移動"
+msgstr "グラデーションも移動"
 
 #: ../src/widgets/select-toolbar.cpp:577
-#, fuzzy
 msgid "Move patterns"
-msgstr "パターン"
+msgstr "パターンも移動"
 
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
@@ -19188,9 +18999,8 @@ msgid "Style of new paths created by Pen"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:201
-#, fuzzy
 msgid "Style of new calligraphic strokes"
-msgstr "カリグラフィ線を描く"
+msgstr "新規カリグラフィ線のスタイル"
 
 #: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
 msgid "TBD"
@@ -19201,59 +19011,52 @@ msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1289
-#, fuzzy
 msgid "Insert node"
-msgstr "ノードをインデント"
+msgstr "ノードを挿入"
 
 #: ../src/widgets/toolbox.cpp:1290
 msgid "Insert new nodes into selected segments"
-msgstr "新しいノードを選択セグメントに挿入"
+msgstr "新しいノードを選択セグメントに挿入します"
 
 #: ../src/widgets/toolbox.cpp:1293
-#, fuzzy
 msgid "Insert"
-msgstr "復帰"
+msgstr "挿入"
 
 #: ../src/widgets/toolbox.cpp:1301
 msgid "Delete selected nodes"
-msgstr "選択したノードを削除"
+msgstr "選択したノードを削除します"
 
 #: ../src/widgets/toolbox.cpp:1311
-#, fuzzy
 msgid "Join endnodes"
-msgstr "ノードを結合"
+msgstr "端点ノードを結合"
 
 #: ../src/widgets/toolbox.cpp:1312
 msgid "Join selected endnodes"
-msgstr "選択した端点ノード同士を連結"
+msgstr "選択した端点ノード同士を連結します"
 
 #: ../src/widgets/toolbox.cpp:1315
-#, fuzzy
 msgid "Join"
-msgstr "結合:"
+msgstr "結合"
 
 #: ../src/widgets/toolbox.cpp:1322
-#, fuzzy
 msgid "Break nodes"
-msgstr "ノードを移動"
+msgstr "ノードを切断"
 
 #: ../src/widgets/toolbox.cpp:1323
 msgid "Break path at selected nodes"
-msgstr "選択ノードでパスを切断"
+msgstr "選択ノードでパスを切断します"
 
 #: ../src/widgets/toolbox.cpp:1333
-#, fuzzy
 msgid "Join with segment"
-msgstr "セグメントでノードを結合"
+msgstr "セグメントで結合"
 
 #: ../src/widgets/toolbox.cpp:1334
 msgid "Join selected endnodes with a new segment"
-msgstr "選択した端点ノード同士を新しいセグメントで連結"
+msgstr "選択した端点ノード同士を新しいセグメントで連結します"
 
 #: ../src/widgets/toolbox.cpp:1344
-#, fuzzy
 msgid "Delete segment between two non-endpoint nodes"
-msgstr "2個の非端点ノードの間でパスを分割"
+msgstr "2個の非端点ノード間のセグメントを削除します"
 
 #: ../src/widgets/toolbox.cpp:1353
 #, fuzzy
@@ -19280,7 +19083,7 @@ msgstr "シンメトリック"
 
 #: ../src/widgets/toolbox.cpp:1374
 msgid "Make selected nodes symmetric"
-msgstr "選択ノードの種類をシンメトリックに"
+msgstr "選択ノードの種類を対称に"
 
 #: ../src/widgets/toolbox.cpp:1383
 #, fuzzy
@@ -19288,9 +19091,8 @@ msgid "Node Auto"
 msgstr "ノード編集"
 
 #: ../src/widgets/toolbox.cpp:1384
-#, fuzzy
 msgid "Make selected nodes auto-smooth"
-msgstr "選択ノードの種類をスムーズに"
+msgstr "選択ノードを自動スムーズに"
 
 #: ../src/widgets/toolbox.cpp:1393
 #, fuzzy
@@ -19325,9 +19127,8 @@ msgid "Show Outline"
 msgstr "アウトライン(_O)"
 
 #: ../src/widgets/toolbox.cpp:1425
-#, fuzzy
 msgid "Show the outline of the path"
-msgstr "用紙の幅"
+msgstr "パスのアウトラインを表示"
 
 #: ../src/widgets/toolbox.cpp:1435
 #, fuzzy
@@ -19340,39 +19141,32 @@ msgid "Show next path effect parameter for editing"
 msgstr "幅を個別貼り付け"
 
 #: ../src/widgets/toolbox.cpp:1447
-#, fuzzy
 msgid "Edit the clipping path of the object"
-msgstr "クリッピングパスを設定"
+msgstr "オブジェクトのクリッピングパスを編集"
 
 #: ../src/widgets/toolbox.cpp:1457
-#, fuzzy
 msgid "Edit mask path"
-msgstr "マスクを設定"
+msgstr "マスクパスを編集"
 
 #: ../src/widgets/toolbox.cpp:1458
-#, fuzzy
 msgid "Edit the mask of the object"
-msgstr "グラデーションの色フェーズを編集"
+msgstr "オブジェクトのマスクを編集"
 
 #: ../src/widgets/toolbox.cpp:1472
-#, fuzzy
 msgid "X coordinate:"
-msgstr "カーソル座標"
+msgstr "X 座標:"
 
 #: ../src/widgets/toolbox.cpp:1472
-#, fuzzy
 msgid "X coordinate of selected node(s)"
-msgstr "選択オブジェクトの垂直位置"
+msgstr "選択ノードの X 座標"
 
 #: ../src/widgets/toolbox.cpp:1490
-#, fuzzy
 msgid "Y coordinate:"
-msgstr "カーソル座標"
+msgstr "Y 座標:"
 
 #: ../src/widgets/toolbox.cpp:1490
-#, fuzzy
 msgid "Y coordinate of selected node(s)"
-msgstr "選択オブジェクトの垂直位置"
+msgstr "選択ノードの Y 座標"
 
 #: ../src/widgets/toolbox.cpp:2028
 msgid "Enable snapping"
@@ -20024,9 +19818,8 @@ msgid "(broad tweak)"
 msgstr "(ストローク)"
 
 #: ../src/widgets/toolbox.cpp:4124
-#, fuzzy
 msgid "The width of the tweak area (relative to the visible canvas area)"
-msgstr "カリグラフィペンの幅 (可視キャンバス領域に対する相対値)"
+msgstr "微調整領域の幅 (可視キャンバス領域に対する相対値)"
 
 #. Force
 #: ../src/widgets/toolbox.cpp:4138
@@ -20038,28 +19831,24 @@ msgid "(maximum force)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4141
-#, fuzzy
 msgid "Force"
-msgstr "ソース"
+msgstr "強さ"
 
 #: ../src/widgets/toolbox.cpp:4141
-#, fuzzy
 msgid "Force:"
-msgstr "ソース"
+msgstr "強さ:"
 
 #: ../src/widgets/toolbox.cpp:4141
 msgid "The force of the tweak action"
-msgstr ""
+msgstr "微調整アクションの強さ"
 
 #: ../src/widgets/toolbox.cpp:4159
-#, fuzzy
 msgid "Move mode"
-msgstr "ノードを移動"
+msgstr "移動モード"
 
 #: ../src/widgets/toolbox.cpp:4160
-#, fuzzy
 msgid "Move objects in any direction"
-msgstr "オブジェクトごとの選択表示をしない"
+msgstr "任意の方向にオブジェクトを移動"
 
 #: ../src/widgets/toolbox.cpp:4166
 #, fuzzy
@@ -20068,7 +19857,7 @@ msgstr "ノードを移動"
 
 #: ../src/widgets/toolbox.cpp:4167
 msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "カーソル方向へオブジェクトを移動; Shift を押しながらで逆方向へ"
 
 #: ../src/widgets/toolbox.cpp:4173
 msgid "Move jitter mode"
@@ -20076,44 +19865,39 @@ msgstr "ノードのジッタリング"
 
 #: ../src/widgets/toolbox.cpp:4174
 msgid "Move objects in random directions"
-msgstr ""
+msgstr "ランダムな方向にオブジェクトを移動"
 
 #: ../src/widgets/toolbox.cpp:4180
-#, fuzzy
 msgid "Scale mode"
-msgstr "ノードを拡大縮小"
+msgstr "拡大縮小モード"
 
 #: ../src/widgets/toolbox.cpp:4181
-#, fuzzy
 msgid "Shrink objects, with Shift enlarge"
-msgstr "属性を設定"
+msgstr "オブジェクトを小さく; Shift を押しながらで大きく"
 
 #: ../src/widgets/toolbox.cpp:4187
-#, fuzzy
 msgid "Rotate mode"
-msgstr "ノードを回転"
+msgstr "回転モード"
 
 #: ../src/widgets/toolbox.cpp:4188
-#, fuzzy
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "選択オブジェクトを90&#176;反時計回りに回転"
+msgstr "オブジェクトを回転; Shift を押しながらで反時計回り"
 
 #: ../src/widgets/toolbox.cpp:4194
-#, fuzzy
 msgid "Duplicate/delete mode"
-msgstr "ノードを複製"
+msgstr "複製/削除モード"
 
 #: ../src/widgets/toolbox.cpp:4195
 msgid "Duplicate objects, with Shift delete"
-msgstr ""
+msgstr "オブジェクトを複製; Shift を押しながらで削除"
 
 #: ../src/widgets/toolbox.cpp:4201
 msgid "Push mode"
-msgstr ""
+msgstr "プッシュモード"
 
 #: ../src/widgets/toolbox.cpp:4202
 msgid "Push parts of paths in any direction"
-msgstr ""
+msgstr "パスのパーツを任意の方向へ押す"
 
 #: ../src/widgets/toolbox.cpp:4208
 #, fuzzy
@@ -20121,9 +19905,9 @@ msgid "Shrink/grow mode"
 msgstr "ノードをずらす"
 
 #: ../src/widgets/toolbox.cpp:4209
-#, fuzzy
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "選択したパスをサブパスに分割"
+msgstr ""
+"パスのパーツを縮める (インセット); Shift を押しながらで広げる (アウトセット)"
 
 #: ../src/widgets/toolbox.cpp:4215
 #, fuzzy
@@ -20132,7 +19916,7 @@ msgstr "属性名"
 
 #: ../src/widgets/toolbox.cpp:4216
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "パスのパーツをカーソル方向へ引っぱる; Shift を押しながらで押し出す"
 
 #: ../src/widgets/toolbox.cpp:4222
 #, fuzzy
@@ -20246,9 +20030,8 @@ msgid "Pressure"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4363
-#, fuzzy
 msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr "ペン幅の変更に入力デバイスの筆圧を使用する"
+msgstr "微調整アクションの強さの調整に入力デバイスの筆圧を使用する"
 
 #: ../src/widgets/toolbox.cpp:4543
 #, fuzzy
@@ -21539,9 +21322,8 @@ msgid "Desktop Cutting Plotter"
 msgstr "デスクトップ カッティングプロッタ"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
-#, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
-msgstr "デスクトップ カッティングプロッタ (*.dxf)"
+msgstr "デスクトップ カッティングプロッタ (R13) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:6
 msgid "enable ROBO-Master output"
@@ -23615,6 +23397,10 @@ msgstr "Windows メタファイル入力"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 入力"
+
+#, fuzzy
+#~ msgid "Highly flexible specular bump"
+#~ msgstr "透明で非常に軟らかい鏡面反射のバンプをつけます。"
 
 #, fuzzy
 #~ msgid "Interruption width"
