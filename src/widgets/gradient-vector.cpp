@@ -793,7 +793,6 @@ sp_gradient_vector_widget_new (SPGradient *gradient, SPStop *select_stop)
     gtk_widget_show (w);
     gtk_box_pack_start (GTK_BOX (vb), w, TRUE, TRUE, PAD);
 
-    gtk_object_set_data (GTK_OBJECT (vb), "gradient", gradient);
     sp_repr_add_listener (SP_OBJECT_REPR(gradient), &grad_edit_dia_repr_events, vb);
     GtkTooltips *tt = gtk_tooltips_new ();
 
@@ -1013,6 +1012,8 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
     g_object_set_data (G_OBJECT (widget), "gradient", gradient);
 
     if (gradient) {
+        gtk_widget_set_sensitive (widget, TRUE);
+
         sp_gradient_ensure_vector (gradient);
 
         GtkOptionMenu *mnu = (GtkOptionMenu *)g_object_get_data (G_OBJECT(widget), "stopmenu");
@@ -1026,22 +1027,23 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
         SPColor color( SP_RGBA32_R_F (c), SP_RGBA32_G_F (c), SP_RGBA32_B_F (c) );
         // set color
         csel->base->setColor( color );
-    }
 
-    /* Fill preview */
-    GtkWidget *w = static_cast<GtkWidget *>(g_object_get_data(G_OBJECT(widget), "preview"));
-    sp_gradient_image_set_gradient (SP_GRADIENT_IMAGE (w), gradient);
+        /* Fill preview */
+        GtkWidget *w = static_cast<GtkWidget *>(g_object_get_data(G_OBJECT(widget), "preview"));
+        sp_gradient_image_set_gradient (SP_GRADIENT_IMAGE (w), gradient);
 
-    GtkWidget *mnu = static_cast<GtkWidget *>(g_object_get_data(G_OBJECT(widget), "stopmenu"));
-    update_stop_list (GTK_WIDGET(mnu), gradient, NULL);
+        update_stop_list (GTK_WIDGET(mnu), gradient, NULL);
 
-    // Once the user edits a gradient, it stops being auto-collectable
-    if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
-        SPDocument *document = SP_OBJECT_DOCUMENT (gradient);
-        bool saved = sp_document_get_undo_sensitive(document);
-        sp_document_set_undo_sensitive (document, false);
-        SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
-        sp_document_set_undo_sensitive (document, saved);
+        // Once the user edits a gradient, it stops being auto-collectable
+        if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
+            SPDocument *document = SP_OBJECT_DOCUMENT (gradient);
+            bool saved = sp_document_get_undo_sensitive(document);
+            sp_document_set_undo_sensitive (document, false);
+            SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
+            sp_document_set_undo_sensitive (document, saved);
+        }
+    } else { // no gradient, disable everything
+        gtk_widget_set_sensitive (widget, FALSE);
     }
 
     blocked = FALSE;
