@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 00:00+0200\n"
+"POT-Creation-Date: 2009-08-13 22:39+0200\n"
 "PO-Revision-Date: 2009-07-18 19:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -125,7 +125,7 @@ msgstr "Вирізка"
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:214
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -213,8 +213,8 @@ msgstr "Пульсація"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:194
 msgid "Distort"
 msgstr "Спотворення"
 
@@ -366,8 +366,8 @@ msgstr "Знебарвлення"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -429,13 +429,12 @@ msgstr "Органіка"
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Текстури"
 
@@ -520,6 +519,7 @@ msgstr "Витискання ВНР"
 #: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
 #: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213 ../share/filters/filters.svg.h:216
 msgid "Bumps"
 msgstr "Горби"
 
@@ -1080,11 +1080,11 @@ msgstr ""
 "Згладжування зовнішньої частини форм і зображень без зміни внутрішньої "
 "частини"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid "Torn edges"
 msgstr "Обірвані краї"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr ""
@@ -1283,15 +1283,6 @@ msgstr "Пляма від чорнила"
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "Пляма від чорнила на пергаменті або грубому папері"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Burnt edges"
-msgstr "Випалені краї"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Torn edges with a dark inner blur"
-msgstr ""
-"Створює ефект розриву країв за допомогою темного внутрішнього розмивання"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
@@ -1602,11 +1593,13 @@ msgstr ""
 "гравіювання зображенням та заповненим матеріалом об’єктам"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Velvet bump"
+#, fuzzy
+msgid "Velvet Bumps"
 msgstr "Оксамитове витискання"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Gives a smooth bump velvet like"
+#, fuzzy
+msgid "Gives Smooth Bumps velvet like"
 msgstr "Створює ефект гладкого витискання, подібного до оксамиту"
 
 #: ../share/filters/filters.svg.h:164
@@ -1656,7 +1649,8 @@ msgid "Draws a colored outline around"
 msgstr "Створює навколо контурів ефект зовнішнього підконтуру"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Inner shadow"
+#, fuzzy
+msgid "Inner Shadow"
 msgstr "Внутрішня тінь"
 
 #: ../share/filters/filters.svg.h:169
@@ -1664,7 +1658,8 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr "Додає однотонні тіні, що відкидаються всередину контуру"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Dark and glow"
+#, fuzzy
+msgid "Dark and Glow"
 msgstr "Темнота і сяйво"
 
 #: ../share/filters/filters.svg.h:170
@@ -1719,7 +1714,8 @@ msgstr ""
 "друкованих листівок"
 
 #: ../share/filters/filters.svg.h:176
-msgid "Fuzzy glow"
+#, fuzzy
+msgid "Fuzzy Glow"
 msgstr "Розмите сяйво"
 
 #: ../share/filters/filters.svg.h:176
@@ -1801,8 +1797,10 @@ msgid "Plastify"
 msgstr "Пластифікація"
 
 #: ../share/filters/filters.svg.h:184
+#, fuzzy
 msgid ""
-"Combine a HSL edges detection bump with a wavy reflective surface effect"
+"HSL edges detection bump with a wavy reflective surface effect and variable "
+"crumple"
 msgstr ""
 "Поєднує рельєфне витискання країв за відтінком-насиченістю-контрастністю з "
 "ефектом відбиття на хвилястій поверхні"
@@ -2057,7 +2055,41 @@ msgid "Tinfoil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:212
-msgid "Metallic foil effect combining two lighting types"
+msgid "Metallic foil effect combining two lighting types and variable crumple"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid "Copper and chocolate"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid ""
+"Specular bump which can be easily converted from metallic to molded plastic "
+"effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Inner Glow"
+msgstr "Внутрішня тінь"
+
+#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Adds a colorizable glow inside"
+msgstr "Додає однотонні тіні, що відкидаються всередину контуру"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Soft colors"
+msgstr "Колір місяців"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Relief print"
+msgstr "Синька"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bevel whith bumps, color flood and complex lighting"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3826,7 +3858,7 @@ msgid "New text node"
 msgstr "Створити вузол з текстом"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2241
 msgid "Duplicate node"
 msgstr "Дублювати вузол"
 
@@ -8554,24 +8586,24 @@ msgstr ""
 "<b>Alt</b>: зафіксувати довжину вуса; <b>Ctrl+Alt</b>: переміщувати вздовж "
 "вусів"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Штамп"
 
-#: ../src/nodepath.cpp:1659 ../src/nodepath.cpp:1685
+#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
 msgid "Move nodes vertically"
 msgstr "Перемістити вузли вертикально"
 
-#: ../src/nodepath.cpp:1661 ../src/nodepath.cpp:1687
+#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
 msgid "Move nodes horizontally"
 msgstr "Перемістити вузли горизонтально"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
-#: ../src/nodepath.cpp:3613
+#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:3617
 msgid "Move nodes"
 msgstr "Перемістити вузли"
 
-#: ../src/nodepath.cpp:1742
+#: ../src/nodepath.cpp:1746
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8580,55 +8612,55 @@ msgstr ""
 "кут; <b>Alt</b> - фіксує довжину; <b>Shift</b> - синхронно повертає обидва "
 "вуса"
 
-#: ../src/nodepath.cpp:1912
+#: ../src/nodepath.cpp:1916
 msgid "Align nodes"
 msgstr "Вирівняти вузли"
 
-#: ../src/nodepath.cpp:1974
+#: ../src/nodepath.cpp:1978
 msgid "Distribute nodes"
 msgstr "Розподілити вузли"
 
-#: ../src/nodepath.cpp:2012
+#: ../src/nodepath.cpp:2016
 msgid "Add nodes"
 msgstr "Додати вузли"
 
-#: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
+#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
 msgid "Add node"
 msgstr "Додати вузол"
 
-#: ../src/nodepath.cpp:2208
+#: ../src/nodepath.cpp:2212
 msgid "Break path"
 msgstr "Розбити контур"
 
-#: ../src/nodepath.cpp:2264
+#: ../src/nodepath.cpp:2268
 msgid "Close subpath"
 msgstr "Закрити контур"
 
-#: ../src/nodepath.cpp:2325
+#: ../src/nodepath.cpp:2329
 msgid "Join nodes"
 msgstr "З'єднати вузли"
 
-#: ../src/nodepath.cpp:2352
+#: ../src/nodepath.cpp:2356
 msgid "Close subpath by segment"
 msgstr "Закрити контур сегментом"
 
-#: ../src/nodepath.cpp:2406
+#: ../src/nodepath.cpp:2410
 msgid "Join nodes by segment"
 msgstr "З'єднати вузли сегментом"
 
-#: ../src/nodepath.cpp:2419 ../src/nodepath.cpp:2434
+#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Щоб з'єднати виберіть <b>два кінцевих вузли</b>."
 
-#: ../src/nodepath.cpp:2591 ../src/nodepath.cpp:2627 ../src/nodepath.cpp:2631
+#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
 msgid "Delete nodes"
 msgstr "Вилучити вузли"
 
-#: ../src/nodepath.cpp:2593
+#: ../src/nodepath.cpp:2597
 msgid "Delete nodes preserving shape"
 msgstr "Вилучити вузли зберігаючи форму"
 
-#: ../src/nodepath.cpp:2650 ../src/nodepath.cpp:2664
+#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -8636,35 +8668,35 @@ msgstr ""
 "Виберіть <b>два не кінцевих вузли</b> у контурі, щоб вилучити сегменти між "
 "ними."
 
-#: ../src/nodepath.cpp:2760
+#: ../src/nodepath.cpp:2764
 msgid "Cannot find path between nodes."
 msgstr "Не вдається знайти контур між вузлами."
 
-#: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "Вилучити сегмент"
 
-#: ../src/nodepath.cpp:2813
+#: ../src/nodepath.cpp:2817
 msgid "Change segment type"
 msgstr "Зміна типу сегмента"
 
-#: ../src/nodepath.cpp:2830 ../src/nodepath.cpp:3567
+#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
 msgid "Change node type"
 msgstr "Змінити тип вузла"
 
-#: ../src/nodepath.cpp:3517 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "Вилучити вузол"
 
-#: ../src/nodepath.cpp:3859
+#: ../src/nodepath.cpp:3863
 msgid "Retract handle"
 msgstr "Вилучити вус"
 
-#: ../src/nodepath.cpp:3914
+#: ../src/nodepath.cpp:3918
 msgid "Move node handle"
 msgstr "Перемістити вус вузла"
 
-#: ../src/nodepath.cpp:4099
+#: ../src/nodepath.cpp:4103
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8675,23 +8707,23 @@ msgstr ""
 "<b>Ctrl</b> - обмежує кут; <b>Alt</b> - фіксує довжину; <b>Shift</b> - "
 "синхронно обертає протилежний вус"
 
-#: ../src/nodepath.cpp:4293
+#: ../src/nodepath.cpp:4297
 msgid "Rotate nodes"
 msgstr "Обертання вузлів"
 
-#: ../src/nodepath.cpp:4408
+#: ../src/nodepath.cpp:4412
 msgid "Cannot scale nodes when all are at the same location."
 msgstr "Неможливо масштабувати вузли, коли вони знаходяться у одному місці."
 
-#: ../src/nodepath.cpp:4434
+#: ../src/nodepath.cpp:4438
 msgid "Scale nodes"
 msgstr "Масштабувати вузли"
 
-#: ../src/nodepath.cpp:4478
+#: ../src/nodepath.cpp:4482
 msgid "Flip nodes"
 msgstr "Віддзеркалити вузли"
 
-#: ../src/nodepath.cpp:4647
+#: ../src/nodepath.cpp:4651
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8700,42 +8732,42 @@ msgstr ""
 "b> - прилипання до горизонталі/вертикалі; з <b>Ctrl+Alt</b> - вздовж вусів"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4880
+#: ../src/nodepath.cpp:4884
 msgid "end node"
 msgstr "кінцевий вузол"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4885
+#: ../src/nodepath.cpp:4889
 msgid "cusp"
 msgstr "гострі"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4888
+#: ../src/nodepath.cpp:4892
 msgid "smooth"
 msgstr "гладкі"
 
-#: ../src/nodepath.cpp:4890
+#: ../src/nodepath.cpp:4894
 msgid "auto"
 msgstr "авто"
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4896
 msgid "symmetric"
 msgstr "симетричні"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4898
+#: ../src/nodepath.cpp:4902
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "кінцевий вузол, вус втягнутий (витягується з <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4900
+#: ../src/nodepath.cpp:4904
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "один вус втягнутий (витягується з <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4903
+#: ../src/nodepath.cpp:4907
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "обидва вуса втягнуто (витягується з <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4919
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -8746,17 +8778,17 @@ msgstr ""
 "пересування вузлів, <b>&lt; &gt;</b> для зміни масштабу, <b>[ ]</b> для "
 "обертання"
 
-#: ../src/nodepath.cpp:4916
+#: ../src/nodepath.cpp:4920
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Перетягуйте</b> вузол або його вуса; <b>клавіші-стрілки</b> переміщують "
 "вузол"
 
-#: ../src/nodepath.cpp:4942 ../src/nodepath.cpp:4954
+#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Позначте об'єкт для редагування його вузлів чи вус."
 
-#: ../src/nodepath.cpp:4946
+#: ../src/nodepath.cpp:4950
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8776,11 +8808,11 @@ msgstr[2] ""
 "<b>клацання</b>, <b>Shift+клацання</b>, чи перетягування рамки навколо "
 "вузлів."
 
-#: ../src/nodepath.cpp:4952
+#: ../src/nodepath.cpp:4956
 msgid "Drag the handles of the object to modify it."
 msgstr "Перетягніть вуса об'єкту, щоб змінити його."
 
-#: ../src/nodepath.cpp:4960
+#: ../src/nodepath.cpp:4964
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -8788,7 +8820,7 @@ msgstr[0] "позначено <b>%i</b> з <b>%i</b> вузла; %s. %s."
 msgstr[1] "позначено <b>%i</b> з <b>%i</b> вузлів; %s. %s."
 msgstr[2] "позначено <b>%i</b> з <b>%i</b> вузлів; %s. %s."
 
-#: ../src/nodepath.cpp:4967
+#: ../src/nodepath.cpp:4971
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8804,7 +8836,7 @@ msgstr[2] ""
 "позначено <b>%i</b> з <b>%i</b> вузлів на <b>%i</b> з <b>%i</b> підконтурів. "
 "%s."
 
-#: ../src/nodepath.cpp:4973
+#: ../src/nodepath.cpp:4977
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -23483,6 +23515,13 @@ msgstr "Імпорт метафайла Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
+
+#~ msgid "Burnt edges"
+#~ msgstr "Випалені краї"
+
+#~ msgid "Torn edges with a dark inner blur"
+#~ msgstr ""
+#~ "Створює ефект розриву країв за допомогою темного внутрішнього розмивання"
 
 #~ msgid "Interruption width"
 #~ msgstr "товщина проміжку"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 15:43+0900\n"
+"POT-Creation-Date: 2009-08-13 22:39+0200\n"
 "PO-Revision-Date: 2009-08-13 15:42+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -129,7 +129,7 @@ msgstr "切り抜き"
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:214
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -217,8 +217,8 @@ msgstr "波紋"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:194
 msgid "Distort"
 msgstr "変形"
 
@@ -370,8 +370,8 @@ msgstr "彩度を除去"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -433,13 +433,12 @@ msgstr "オーガニック"
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "テクスチャ"
 
@@ -524,6 +523,7 @@ msgstr "HSL バンプ"
 #: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
 #: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213 ../share/filters/filters.svg.h:216
 msgid "Bumps"
 msgstr "バンプ"
 
@@ -1066,11 +1066,11 @@ msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "シェイプやイメージの中身を変更せずに外側を滑らかにします。"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid "Torn edges"
 msgstr "破れたエッジ"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr "シェイプやイメージの中身を変更せずに外側を位置ずれさせます。"
@@ -1256,14 +1256,6 @@ msgstr "インクの染み"
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "ティッシュまたはラフペーパー上のインクの染みです。"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Burnt edges"
-msgstr "エッジを焦がす"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Torn edges with a dark inner blur"
-msgstr "エッジを破き、内側に黒いぼかしをいれます。"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
@@ -1562,11 +1554,13 @@ msgstr ""
 "のエフェクトを適用します。"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Velvet bump"
+#, fuzzy
+msgid "Velvet Bumps"
 msgstr "ベルベットバンプ"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Gives a smooth bump velvet like"
+#, fuzzy
+msgid "Gives Smooth Bumps velvet like"
 msgstr "ベルベットのような滑らかなバンプをつけます。"
 
 #: ../share/filters/filters.svg.h:164
@@ -1612,7 +1606,8 @@ msgid "Draws a colored outline around"
 msgstr "周囲に色付きの外郭線を描画します。"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Inner shadow"
+#, fuzzy
+msgid "Inner Shadow"
 msgstr "内側の影"
 
 #: ../share/filters/filters.svg.h:169
@@ -1620,7 +1615,8 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr "内側に色変更可能な影を落とします。"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Dark and glow"
+#, fuzzy
+msgid "Dark and Glow"
 msgstr "闇と輝き"
 
 #: ../share/filters/filters.svg.h:170
@@ -1668,7 +1664,8 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "少しポスタライズし、昔印刷されたはがきのようなエッジを描画します。"
 
 #: ../share/filters/filters.svg.h:176
-msgid "Fuzzy glow"
+#, fuzzy
+msgid "Fuzzy Glow"
 msgstr "曖昧な輝き"
 
 #: ../share/filters/filters.svg.h:176
@@ -1741,8 +1738,10 @@ msgid "Plastify"
 msgstr "プラスティファイ"
 
 #: ../share/filters/filters.svg.h:184
+#, fuzzy
 msgid ""
-"Combine a HSL edges detection bump with a wavy reflective surface effect"
+"HSL edges detection bump with a wavy reflective surface effect and variable "
+"crumple"
 msgstr "波状の反射面エフェクトと HSL エッジ検出バンプの組み合わせです。"
 
 #: ../share/filters/filters.svg.h:185
@@ -1972,8 +1971,43 @@ msgid "Tinfoil"
 msgstr "アルミホイル"
 
 #: ../share/filters/filters.svg.h:212
-msgid "Metallic foil effect combining two lighting types"
+#, fuzzy
+msgid "Metallic foil effect combining two lighting types and variable crumple"
 msgstr "2種類の照明を組み合わせた金属箔のエフェクトです。"
+
+#: ../share/filters/filters.svg.h:213
+msgid "Copper and chocolate"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid ""
+"Specular bump which can be easily converted from metallic to molded plastic "
+"effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Inner Glow"
+msgstr "内側の影"
+
+#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Adds a colorizable glow inside"
+msgstr "内側に色変更可能な影を落とします。"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Soft colors"
+msgstr "月の色"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Relief print"
+msgstr "青写真"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bevel whith bumps, color flood and complex lighting"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -3727,7 +3761,7 @@ msgid "New text node"
 msgstr "新規テキストノード"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2241
 msgid "Duplicate node"
 msgstr "ノードの複製"
 
@@ -8414,25 +8448,25 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: ハンドルの長さをロック。<b>Ctrl+Alt</b>: ハンドルに沿って移動"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
 #, fuzzy
 msgid "Stamp"
 msgstr "変化度"
 
-#: ../src/nodepath.cpp:1659 ../src/nodepath.cpp:1685
+#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
 msgid "Move nodes vertically"
 msgstr "ノードを垂直に移動"
 
-#: ../src/nodepath.cpp:1661 ../src/nodepath.cpp:1687
+#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
 msgid "Move nodes horizontally"
 msgstr "ノードを水平に移動"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
-#: ../src/nodepath.cpp:3613
+#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:3617
 msgid "Move nodes"
 msgstr "ノードを移動"
 
-#: ../src/nodepath.cpp:1742
+#: ../src/nodepath.cpp:1746
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8440,55 +8474,55 @@ msgstr ""
 "<b>ノードハンドル</b>: ドラッグでカーブを編集。<b>Ctrl</b>で角度をスナップ。"
 "<b>Alt</b>で長さを固定。<b>Shift</b>で両方のハンドルを回転"
 
-#: ../src/nodepath.cpp:1912
+#: ../src/nodepath.cpp:1916
 msgid "Align nodes"
 msgstr "ノードを配置"
 
-#: ../src/nodepath.cpp:1974
+#: ../src/nodepath.cpp:1978
 msgid "Distribute nodes"
 msgstr "ノードを配置"
 
-#: ../src/nodepath.cpp:2012
+#: ../src/nodepath.cpp:2016
 msgid "Add nodes"
 msgstr "ノードを追加"
 
-#: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
+#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
 msgid "Add node"
 msgstr "ノードを追加"
 
-#: ../src/nodepath.cpp:2208
+#: ../src/nodepath.cpp:2212
 msgid "Break path"
 msgstr "パスを切断"
 
-#: ../src/nodepath.cpp:2264
+#: ../src/nodepath.cpp:2268
 msgid "Close subpath"
 msgstr "サブパスを閉じる"
 
-#: ../src/nodepath.cpp:2325
+#: ../src/nodepath.cpp:2329
 msgid "Join nodes"
 msgstr "ノードを結合"
 
-#: ../src/nodepath.cpp:2352
+#: ../src/nodepath.cpp:2356
 msgid "Close subpath by segment"
 msgstr "サブパスをセグメントで閉じる"
 
-#: ../src/nodepath.cpp:2406
+#: ../src/nodepath.cpp:2410
 msgid "Join nodes by segment"
 msgstr "セグメントでノードを結合"
 
-#: ../src/nodepath.cpp:2419 ../src/nodepath.cpp:2434
+#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "結合するには、<b>2個の端点ノード</b>を選択する必要があります。"
 
-#: ../src/nodepath.cpp:2591 ../src/nodepath.cpp:2627 ../src/nodepath.cpp:2631
+#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
 msgid "Delete nodes"
 msgstr "ノードを削除"
 
-#: ../src/nodepath.cpp:2593
+#: ../src/nodepath.cpp:2597
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2650 ../src/nodepath.cpp:2664
+#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -8496,35 +8530,35 @@ msgstr ""
 "その間のセグメントを削除する、パス上の<b>2個の非端点ノード</b>を選択して下さ"
 "い。"
 
-#: ../src/nodepath.cpp:2760
+#: ../src/nodepath.cpp:2764
 msgid "Cannot find path between nodes."
 msgstr "選択ノードの間にはパスがありません。"
 
-#: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "セグメントを削除"
 
-#: ../src/nodepath.cpp:2813
+#: ../src/nodepath.cpp:2817
 msgid "Change segment type"
 msgstr "セグメントの種類を変更"
 
-#: ../src/nodepath.cpp:2830 ../src/nodepath.cpp:3567
+#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
 msgid "Change node type"
 msgstr "ノードの種類を変更"
 
-#: ../src/nodepath.cpp:3517 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "ノードを削除"
 
-#: ../src/nodepath.cpp:3859
+#: ../src/nodepath.cpp:3863
 msgid "Retract handle"
 msgstr "ハンドルを引っ込める"
 
-#: ../src/nodepath.cpp:3914
+#: ../src/nodepath.cpp:3918
 msgid "Move node handle"
 msgstr "ノードハンドルを移動"
 
-#: ../src/nodepath.cpp:4099
+#: ../src/nodepath.cpp:4103
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8534,23 +8568,23 @@ msgstr ""
 "<b>ノードハンドル</b>: 角度 %0.2f&#176;、長さ %s。<b>Ctrl</b>で角度をスナッ"
 "プ。<b>Alt</b>で長さを固定。<b>Shift</b>で両方のハンドルを回転"
 
-#: ../src/nodepath.cpp:4293
+#: ../src/nodepath.cpp:4297
 msgid "Rotate nodes"
 msgstr "ノードを回転"
 
-#: ../src/nodepath.cpp:4408
+#: ../src/nodepath.cpp:4412
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4434
+#: ../src/nodepath.cpp:4438
 msgid "Scale nodes"
 msgstr "ノードを拡大縮小"
 
-#: ../src/nodepath.cpp:4478
+#: ../src/nodepath.cpp:4482
 msgid "Flip nodes"
 msgstr "ノードを反転"
 
-#: ../src/nodepath.cpp:4647
+#: ../src/nodepath.cpp:4651
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8559,49 +8593,49 @@ msgstr ""
 "<b>Ctrl+Alt</b>でハンドルの方向にスナップ"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4880
+#: ../src/nodepath.cpp:4884
 msgid "end node"
 msgstr "端点ノード"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4885
+#: ../src/nodepath.cpp:4889
 msgid "cusp"
 msgstr "シャープ"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4888
+#: ../src/nodepath.cpp:4892
 msgid "smooth"
 msgstr "スムーズ"
 
-#: ../src/nodepath.cpp:4890
+#: ../src/nodepath.cpp:4894
 #, fuzzy
 msgid "auto"
 msgstr "レイアウト"
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4896
 msgid "symmetric"
 msgstr "シンメトリック"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4898
+#: ../src/nodepath.cpp:4902
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "端点ノード、ノードハンドルは引っ込められています (<b>Shift</b>を押しながらド"
 "ラッグで引き出し)"
 
-#: ../src/nodepath.cpp:4900
+#: ../src/nodepath.cpp:4904
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "一方のハンドルが引っ込められています (<b>Shift</b>を押しながらドラッグで引き"
 "出し)"
 
-#: ../src/nodepath.cpp:4903
+#: ../src/nodepath.cpp:4907
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "両方のハンドルが引っ込められています (<b>Shift</b>を押しながらドラッグで引き"
 "出し)"
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4919
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -8611,15 +8645,15 @@ msgstr ""
 "整。<b>矢印</b>キーでノードを移動。<b>&lt; &gt;</b>で拡大縮小、 <b>[ ]</b>で"
 "回転"
 
-#: ../src/nodepath.cpp:4916
+#: ../src/nodepath.cpp:4920
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "ノード/ノードハンドルを<b>ドラッグ</b>。<b>矢印</b>キーでノードを移動"
 
-#: ../src/nodepath.cpp:4942 ../src/nodepath.cpp:4954
+#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
 msgid "Select a single object to edit its nodes or handles."
 msgstr "そのノード/ハンドルを編集するオブジェクトを1個選択して下さい。"
 
-#: ../src/nodepath.cpp:4946
+#: ../src/nodepath.cpp:4950
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8631,18 +8665,18 @@ msgstr[0] ""
 "<b>0</b>個のノードが選択されています (<b>%i</b>個の中から) 。ノードを<b>ク"
 "リック</b>、<b>Shift+クリック</b>、または<b>囲むようにドラッグ</b>して選択。"
 
-#: ../src/nodepath.cpp:4952
+#: ../src/nodepath.cpp:4956
 msgid "Drag the handles of the object to modify it."
 msgstr "オブジェクトのハンドルをドラッグして編集。"
 
-#: ../src/nodepath.cpp:4960
+#: ../src/nodepath.cpp:4964
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] ""
 "<b>%i</b>個のノードが選択されています (<b>%i</b>個の中から) 。%s。%s。"
 
-#: ../src/nodepath.cpp:4967
+#: ../src/nodepath.cpp:4971
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8652,7 +8686,7 @@ msgstr[0] ""
 "<b>%i</b>個のノードが選択されています (<b>%i</b>個の中から) 。このノード "
 "(群) は、<b>%i</b>個のサブパス (<b>%i</b>個の中から) に所属。%s。"
 
-#: ../src/nodepath.cpp:4973
+#: ../src/nodepath.cpp:4977
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -23397,6 +23431,12 @@ msgstr "Windows メタファイル入力"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 入力"
+
+#~ msgid "Burnt edges"
+#~ msgstr "エッジを焦がす"
+
+#~ msgid "Torn edges with a dark inner blur"
+#~ msgstr "エッジを破き、内側に黒いぼかしをいれます。"
 
 #, fuzzy
 #~ msgid "Highly flexible specular bump"

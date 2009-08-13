@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 00:00+0200\n"
+"POT-Creation-Date: 2009-08-13 22:39+0200\n"
 "PO-Revision-Date: 2008-12-28 21:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -131,7 +131,7 @@ msgstr "Prilagođeno"
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:214
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
@@ -230,8 +230,8 @@ msgstr "Zamjeni"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:194
 #, fuzzy
 msgid "Distort"
 msgstr "Djelitelj"
@@ -398,8 +398,8 @@ msgstr "U nijanse sive"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -466,13 +466,12 @@ msgstr "Početak X"
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "Tekstovi"
@@ -567,6 +566,7 @@ msgstr "Odstupanje"
 #: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
 #: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213 ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Bumps"
 msgstr "Odstupanje"
@@ -1153,12 +1153,12 @@ msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 #, fuzzy
 msgid "Torn edges"
 msgstr "Pomakni čvor"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr ""
@@ -1349,15 +1349,6 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:128
-#, fuzzy
-msgid "Burnt edges"
-msgstr "_Kutovi graničnog okvira"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Torn edges with a dark inner blur"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:129
@@ -1678,11 +1669,11 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:163
-msgid "Velvet bump"
+msgid "Velvet Bumps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:163
-msgid "Gives a smooth bump velvet like"
+msgid "Gives Smooth Bumps velvet like"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:164
@@ -1734,7 +1725,7 @@ msgstr "Crtanje staze koja je rešetka"
 
 #: ../share/filters/filters.svg.h:169
 #, fuzzy
-msgid "Inner shadow"
+msgid "Inner Shadow"
 msgstr "Unutrašnji polumjer"
 
 #: ../share/filters/filters.svg.h:169
@@ -1742,8 +1733,9 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Dark and glow"
-msgstr ""
+#, fuzzy
+msgid "Dark and Glow"
+msgstr "Prikaži ručice"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
@@ -1794,7 +1786,7 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:176
-msgid "Fuzzy glow"
+msgid "Fuzzy Glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:176
@@ -1873,7 +1865,8 @@ msgstr "Obostrano poravnavanje"
 
 #: ../share/filters/filters.svg.h:184
 msgid ""
-"Combine a HSL edges detection bump with a wavy reflective surface effect"
+"HSL edges detection bump with a wavy reflective surface effect and variable "
+"crumple"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
@@ -2113,7 +2106,40 @@ msgid "Tinfoil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:212
-msgid "Metallic foil effect combining two lighting types"
+msgid "Metallic foil effect combining two lighting types and variable crumple"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid "Copper and chocolate"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid ""
+"Specular bump which can be easily converted from metallic to molded plastic "
+"effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Inner Glow"
+msgstr "Unutrašnji polumjer"
+
+#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+msgid "Adds a colorizable glow inside"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Soft colors"
+msgstr "Odbačena boja"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Relief print"
+msgstr "Širina zamućenja"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bevel whith bumps, color flood and complex lighting"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3995,7 +4021,7 @@ msgid "New text node"
 msgstr "Novi čvor za tekst"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2241
 msgid "Duplicate node"
 msgstr "Udvostruči čvor"
 
@@ -8919,24 +8945,24 @@ msgstr ""
 "<b>Alt</b>: za fiksnu duljinu ručica; <b>Ctrl+Alt</b>: za pomicanje duž "
 "ručica"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "Pečat"
 
-#: ../src/nodepath.cpp:1659 ../src/nodepath.cpp:1685
+#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
 msgid "Move nodes vertically"
 msgstr "Pomakni čvor okomito"
 
-#: ../src/nodepath.cpp:1661 ../src/nodepath.cpp:1687
+#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
 msgid "Move nodes horizontally"
 msgstr "Pomakni čvor vodoravno"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
-#: ../src/nodepath.cpp:3613
+#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:3617
 msgid "Move nodes"
 msgstr "Pomakni čvor"
 
-#: ../src/nodepath.cpp:1742
+#: ../src/nodepath.cpp:1746
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8945,55 +8971,55 @@ msgstr ""
 "poravnanje kuta; <b>Alt</b> za fiksnu duljinu; <b>Shift</b> za rotaciju "
 "obiju ručica"
 
-#: ../src/nodepath.cpp:1912
+#: ../src/nodepath.cpp:1916
 msgid "Align nodes"
 msgstr "Poravnaj čvorove"
 
-#: ../src/nodepath.cpp:1974
+#: ../src/nodepath.cpp:1978
 msgid "Distribute nodes"
 msgstr "Rasporedi čvorove"
 
-#: ../src/nodepath.cpp:2012
+#: ../src/nodepath.cpp:2016
 msgid "Add nodes"
 msgstr "Dodaj čvorove"
 
-#: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
+#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
 msgid "Add node"
 msgstr "Dodaj čvor"
 
-#: ../src/nodepath.cpp:2208
+#: ../src/nodepath.cpp:2212
 msgid "Break path"
 msgstr "Razlomi stazu"
 
-#: ../src/nodepath.cpp:2264
+#: ../src/nodepath.cpp:2268
 msgid "Close subpath"
 msgstr "Zatvori podstazu"
 
-#: ../src/nodepath.cpp:2325
+#: ../src/nodepath.cpp:2329
 msgid "Join nodes"
 msgstr "Spoji čvorove"
 
-#: ../src/nodepath.cpp:2352
+#: ../src/nodepath.cpp:2356
 msgid "Close subpath by segment"
 msgstr "Zatvori podstazu segmentom"
 
-#: ../src/nodepath.cpp:2406
+#: ../src/nodepath.cpp:2410
 msgid "Join nodes by segment"
 msgstr "Spoji čvorove segmentom"
 
-#: ../src/nodepath.cpp:2419 ../src/nodepath.cpp:2434
+#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Za spajanje morate odabrati <b>dva završna čvora</b>."
 
-#: ../src/nodepath.cpp:2591 ../src/nodepath.cpp:2627 ../src/nodepath.cpp:2631
+#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
 msgid "Delete nodes"
 msgstr "Ukloni čvorove"
 
-#: ../src/nodepath.cpp:2593
+#: ../src/nodepath.cpp:2597
 msgid "Delete nodes preserving shape"
 msgstr "Ukloni čvorove zadržavajući oblik"
 
-#: ../src/nodepath.cpp:2650 ../src/nodepath.cpp:2664
+#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -9001,35 +9027,35 @@ msgstr ""
 "Odaberite <b>dva nezavršna čvora</b> staze između kojih će segment biti "
 "uklonjen."
 
-#: ../src/nodepath.cpp:2760
+#: ../src/nodepath.cpp:2764
 msgid "Cannot find path between nodes."
 msgstr "Nije moguće pronaći stazu između čvorova."
 
-#: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "Ukloni segment"
 
-#: ../src/nodepath.cpp:2813
+#: ../src/nodepath.cpp:2817
 msgid "Change segment type"
 msgstr "Promjeni vrstu segmenta"
 
-#: ../src/nodepath.cpp:2830 ../src/nodepath.cpp:3567
+#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
 msgid "Change node type"
 msgstr "Promjeni vrstu čvora"
 
-#: ../src/nodepath.cpp:3517 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "Ukloni čvor"
 
-#: ../src/nodepath.cpp:3859
+#: ../src/nodepath.cpp:3863
 msgid "Retract handle"
 msgstr "Uvuci ručicu"
 
-#: ../src/nodepath.cpp:3914
+#: ../src/nodepath.cpp:3918
 msgid "Move node handle"
 msgstr "Pomakni ručicu čvora"
 
-#: ../src/nodepath.cpp:4099
+#: ../src/nodepath.cpp:4103
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -9039,23 +9065,23 @@ msgstr ""
 "<b>Ručica čvora</b>: kut %0.2f&#176;, duljina %s; <b>Ctrl</b> za poravnanje "
 "kuta; <b>Alt</b> za fiksnu duljinu; <b>Shift</b> za rotiranje obiju ručica"
 
-#: ../src/nodepath.cpp:4293
+#: ../src/nodepath.cpp:4297
 msgid "Rotate nodes"
 msgstr "Rotiraj čvorove"
 
-#: ../src/nodepath.cpp:4408
+#: ../src/nodepath.cpp:4412
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4434
+#: ../src/nodepath.cpp:4438
 msgid "Scale nodes"
 msgstr "Skaliraj čvorove"
 
-#: ../src/nodepath.cpp:4478
+#: ../src/nodepath.cpp:4482
 msgid "Flip nodes"
 msgstr "Preokreni čvorove"
 
-#: ../src/nodepath.cpp:4647
+#: ../src/nodepath.cpp:4651
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -9064,43 +9090,43 @@ msgstr ""
 "poravnanje; <b>Ctrl+Alt</b> za poravnavanje sa smjerom ručica"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4880
+#: ../src/nodepath.cpp:4884
 msgid "end node"
 msgstr "završni čvor"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4885
+#: ../src/nodepath.cpp:4889
 msgid "cusp"
 msgstr "oštro"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4888
+#: ../src/nodepath.cpp:4892
 msgid "smooth"
 msgstr "glatko"
 
-#: ../src/nodepath.cpp:4890
+#: ../src/nodepath.cpp:4894
 #, fuzzy
 msgid "auto"
 msgstr "Raspored"
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4896
 msgid "symmetric"
 msgstr "simetrično"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4898
+#: ../src/nodepath.cpp:4902
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "završni čvor, ručica uvučena (koristite <b>Shift</b> za izvlačenje)"
 
-#: ../src/nodepath.cpp:4900
+#: ../src/nodepath.cpp:4904
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "jedna ručica je uvučena (koristite <b>Shift</b> za izvlačenje)"
 
-#: ../src/nodepath.cpp:4903
+#: ../src/nodepath.cpp:4907
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "obje ručice su uvučene (koristite <b>Shift</b> za izvlačenje ručica)"
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4919
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -9110,16 +9136,16 @@ msgstr ""
 "<b>strelice</b> za pomicanje čvorova, <b>&lt; &gt;</b> za skaliranje, <b>[ ]"
 "</b> za rotaciju"
 
-#: ../src/nodepath.cpp:4916
+#: ../src/nodepath.cpp:4920
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Povucite</b> čvor ili njegove ručice; <b>strelice</b> za pomicanje čvorova"
 
-#: ../src/nodepath.cpp:4942 ../src/nodepath.cpp:4954
+#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Odaberite jedan objekt za uređivanje njegovih čvorova ili ručica."
 
-#: ../src/nodepath.cpp:4946
+#: ../src/nodepath.cpp:4950
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -9137,11 +9163,11 @@ msgstr[2] ""
 "Odabrano je <b>0</b> od <b>%i</b> čvorova. <b>Kliknite</b>, <b>Shift+klik</"
 "b> ili <b>povucite oko</b> čvora za odabir."
 
-#: ../src/nodepath.cpp:4952
+#: ../src/nodepath.cpp:4956
 msgid "Drag the handles of the object to modify it."
 msgstr "Povucite ručice objekta za njegovu izmjenu."
 
-#: ../src/nodepath.cpp:4960
+#: ../src/nodepath.cpp:4964
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -9149,7 +9175,7 @@ msgstr[0] "Odabrano je <b>%i</b> od <b>%i</b> čvora; %s. %s."
 msgstr[1] "Odabrano je <b>%i</b> od <b>%i</b> čvora; %s. %s."
 msgstr[2] "Odabrano je <b>%i</b> od <b>%i</b> čvorova; %s. %s."
 
-#: ../src/nodepath.cpp:4967
+#: ../src/nodepath.cpp:4971
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -9165,7 +9191,7 @@ msgstr[2] ""
 "Odabrano je <b>%i</b> od <b>%i</b> čvorova u <b>%i</b> od <b>%i</b> "
 "podstaza. %s."
 
-#: ../src/nodepath.cpp:4973
+#: ../src/nodepath.cpp:4977
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -24184,6 +24210,10 @@ msgstr "Ulaz za Windows Metafile "
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Ulaz za XAML"
+
+#, fuzzy
+#~ msgid "Burnt edges"
+#~ msgstr "_Kutovi graničnog okvira"
 
 #, fuzzy
 #~ msgid "Interruption width"

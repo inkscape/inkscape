@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 00:00+0200\n"
+"POT-Creation-Date: 2009-08-13 22:39+0200\n"
 "PO-Revision-Date: 2009-08-08 00:14+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -118,7 +118,7 @@ msgstr "挖剪圖畫"
 #: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:171
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:176 ../share/filters/filters.svg.h:214
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -206,8 +206,8 @@ msgstr "波紋"
 
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:194
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:194
 msgid "Distort"
 msgstr "扭曲"
 
@@ -359,8 +359,8 @@ msgstr "去飽和"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:205 ../src/dialogs/clonetiler.cpp:2607
-#: ../src/dialogs/clonetiler.cpp:2754
+#: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -422,13 +422,12 @@ msgstr "有機"
 #: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:132
-#: ../share/filters/filters.svg.h:133 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
-#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
-#: ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
+#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "紋理"
 
@@ -513,6 +512,7 @@ msgstr "HSL 凹凸"
 #: ../share/filters/filters.svg.h:185 ../share/filters/filters.svg.h:192
 #: ../share/filters/filters.svg.h:201 ../share/filters/filters.svg.h:202
 #: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
+#: ../share/filters/filters.svg.h:213 ../share/filters/filters.svg.h:216
 msgid "Bumps"
 msgstr "凹凸"
 
@@ -1048,11 +1048,11 @@ msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "平滑形狀和圖片的外邊，不改變內容"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid "Torn edges"
 msgstr "撕裂邊緣"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr "移置形狀和圖片的外邊，不改變內容"
@@ -1231,14 +1231,6 @@ msgstr "墨跡"
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
 msgstr "棉紙或草稿紙上的墨跡"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Burnt edges"
-msgstr "燒焦邊緣"
-
-#: ../share/filters/filters.svg.h:128
-msgid "Torn edges with a dark inner blur"
-msgstr "暗色且內部模糊的撕裂邊緣"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
@@ -1543,11 +1535,13 @@ msgid ""
 msgstr "使圖像和材料填充物件產生鉛筆、彩色平版印刷、版畫或其他效果"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Velvet bump"
+#, fuzzy
+msgid "Velvet Bumps"
 msgstr "柔軟凹凸"
 
 #: ../share/filters/filters.svg.h:163
-msgid "Gives a smooth bump velvet like"
+#, fuzzy
+msgid "Gives Smooth Bumps velvet like"
 msgstr "產生像天鵝絨般柔軟的平滑凹凸"
 
 #: ../share/filters/filters.svg.h:164
@@ -1593,7 +1587,8 @@ msgid "Draws a colored outline around"
 msgstr "周圍繪製彩色外框"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Inner shadow"
+#, fuzzy
+msgid "Inner Shadow"
 msgstr "內陰影"
 
 #: ../share/filters/filters.svg.h:169
@@ -1601,7 +1596,8 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr "於內部加入可著色的下落式陰影"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Dark and glow"
+#, fuzzy
+msgid "Dark and Glow"
 msgstr "暗與光"
 
 #: ../share/filters/filters.svg.h:170
@@ -1649,7 +1645,8 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "輕微色調分離並繪製邊框就像舊式印刷的明信片一樣"
 
 #: ../share/filters/filters.svg.h:176
-msgid "Fuzzy glow"
+#, fuzzy
+msgid "Fuzzy Glow"
 msgstr "模糊光暈"
 
 #: ../share/filters/filters.svg.h:176
@@ -1720,8 +1717,10 @@ msgid "Plastify"
 msgstr "塑膠化"
 
 #: ../share/filters/filters.svg.h:184
+#, fuzzy
 msgid ""
-"Combine a HSL edges detection bump with a wavy reflective surface effect"
+"HSL edges detection bump with a wavy reflective surface effect and variable "
+"crumple"
 msgstr "波狀反射表面結合 HSL 邊緣偵測凹凸效果"
 
 #: ../share/filters/filters.svg.h:185
@@ -1947,7 +1946,41 @@ msgid "Tinfoil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:212
-msgid "Metallic foil effect combining two lighting types"
+msgid "Metallic foil effect combining two lighting types and variable crumple"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid "Copper and chocolate"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:213
+msgid ""
+"Specular bump which can be easily converted from metallic to molded plastic "
+"effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:214
+#, fuzzy
+msgid "Inner Glow"
+msgstr "內陰影"
+
+#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Adds a colorizable glow inside"
+msgstr "於內部加入可著色的下落式陰影"
+
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Soft colors"
+msgstr "月份顏色"
+
+#: ../share/filters/filters.svg.h:216
+#, fuzzy
+msgid "Relief print"
+msgstr "藍圖"
+
+#: ../share/filters/filters.svg.h:216
+msgid "Bevel whith bumps, color flood and complex lighting"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3667,7 +3700,7 @@ msgid "New text node"
 msgstr "新文字節點"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2241
 msgid "Duplicate node"
 msgstr "再製節點"
 
@@ -8200,24 +8233,24 @@ msgstr "<b>Shift</b>：切換節點選擇﹑停用捉取﹑旋轉兩個控柄"
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
 
-#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
 msgid "Stamp"
 msgstr "圖章"
 
-#: ../src/nodepath.cpp:1659 ../src/nodepath.cpp:1685
+#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
 msgid "Move nodes vertically"
 msgstr "垂直地移動節點"
 
-#: ../src/nodepath.cpp:1661 ../src/nodepath.cpp:1687
+#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
 msgid "Move nodes horizontally"
 msgstr "水平地移動節點"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
-#: ../src/nodepath.cpp:3613
+#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
+#: ../src/nodepath.cpp:3617
 msgid "Move nodes"
 msgstr "移動節點"
 
-#: ../src/nodepath.cpp:1742
+#: ../src/nodepath.cpp:1746
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8225,89 +8258,89 @@ msgstr ""
 "<b>節點控柄</b>：拖曳來形成曲線；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Alt</"
 "b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
-#: ../src/nodepath.cpp:1912
+#: ../src/nodepath.cpp:1916
 msgid "Align nodes"
 msgstr "對齊節點"
 
-#: ../src/nodepath.cpp:1974
+#: ../src/nodepath.cpp:1978
 msgid "Distribute nodes"
 msgstr "分佈節點"
 
-#: ../src/nodepath.cpp:2012
+#: ../src/nodepath.cpp:2016
 msgid "Add nodes"
 msgstr "加入節點"
 
-#: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
+#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
 msgid "Add node"
 msgstr "加入節點"
 
-#: ../src/nodepath.cpp:2208
+#: ../src/nodepath.cpp:2212
 msgid "Break path"
 msgstr "中斷路徑"
 
-#: ../src/nodepath.cpp:2264
+#: ../src/nodepath.cpp:2268
 msgid "Close subpath"
 msgstr "關閉子路徑"
 
-#: ../src/nodepath.cpp:2325
+#: ../src/nodepath.cpp:2329
 msgid "Join nodes"
 msgstr "合併節點"
 
-#: ../src/nodepath.cpp:2352
+#: ../src/nodepath.cpp:2356
 msgid "Close subpath by segment"
 msgstr "依線段關閉子路徑"
 
-#: ../src/nodepath.cpp:2406
+#: ../src/nodepath.cpp:2410
 msgid "Join nodes by segment"
 msgstr "依線段合併節點"
 
-#: ../src/nodepath.cpp:2419 ../src/nodepath.cpp:2434
+#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "為了合併，必需選取<b>兩個末端節點</b>。"
 
-#: ../src/nodepath.cpp:2591 ../src/nodepath.cpp:2627 ../src/nodepath.cpp:2631
+#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
 msgid "Delete nodes"
 msgstr "刪除節點"
 
-#: ../src/nodepath.cpp:2593
+#: ../src/nodepath.cpp:2597
 msgid "Delete nodes preserving shape"
 msgstr "刪除節點時保留形狀"
 
-#: ../src/nodepath.cpp:2650 ../src/nodepath.cpp:2664
+#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr "在將要刪除的線段之間的路徑上，選擇<b>兩個非終點節點</b>。"
 
-#: ../src/nodepath.cpp:2760
+#: ../src/nodepath.cpp:2764
 msgid "Cannot find path between nodes."
 msgstr "找不到節點間的路徑"
 
-#: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "刪除線段"
 
-#: ../src/nodepath.cpp:2813
+#: ../src/nodepath.cpp:2817
 msgid "Change segment type"
 msgstr "變更線段類型"
 
-#: ../src/nodepath.cpp:2830 ../src/nodepath.cpp:3567
+#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
 msgid "Change node type"
 msgstr "變更節點型態"
 
-#: ../src/nodepath.cpp:3517 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "刪除節點"
 
-#: ../src/nodepath.cpp:3859
+#: ../src/nodepath.cpp:3863
 msgid "Retract handle"
 msgstr "取消控柄"
 
-#: ../src/nodepath.cpp:3914
+#: ../src/nodepath.cpp:3918
 msgid "Move node handle"
 msgstr "移動節點控柄"
 
-#: ../src/nodepath.cpp:4099
+#: ../src/nodepath.cpp:4103
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8317,23 +8350,23 @@ msgstr ""
 "<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s; 按著 <b>Ctrl</b> 來捉取角度；按"
 "著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
-#: ../src/nodepath.cpp:4293
+#: ../src/nodepath.cpp:4297
 msgid "Rotate nodes"
 msgstr "旋轉節點"
 
-#: ../src/nodepath.cpp:4408
+#: ../src/nodepath.cpp:4412
 msgid "Cannot scale nodes when all are at the same location."
 msgstr "所有節點在同一個位置時無法縮放節點。"
 
-#: ../src/nodepath.cpp:4434
+#: ../src/nodepath.cpp:4438
 msgid "Scale nodes"
 msgstr "縮放節點"
 
-#: ../src/nodepath.cpp:4478
+#: ../src/nodepath.cpp:4482
 msgid "Flip nodes"
 msgstr "翻轉節點"
 
-#: ../src/nodepath.cpp:4647
+#: ../src/nodepath.cpp:4651
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8342,42 +8375,42 @@ msgstr ""
 "+Alt</b> 來捉取控柄的方向"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4880
+#: ../src/nodepath.cpp:4884
 msgid "end node"
 msgstr "末端節點"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4885
+#: ../src/nodepath.cpp:4889
 msgid "cusp"
 msgstr "尖銳"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4888
+#: ../src/nodepath.cpp:4892
 msgid "smooth"
 msgstr "平滑"
 
-#: ../src/nodepath.cpp:4890
+#: ../src/nodepath.cpp:4894
 msgid "auto"
 msgstr "自動"
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4896
 msgid "symmetric"
 msgstr "對稱"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4898
+#: ../src/nodepath.cpp:4902
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "終端節點，控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4900
+#: ../src/nodepath.cpp:4904
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "一個控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4903
+#: ../src/nodepath.cpp:4907
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "兩個控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4919
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -8386,15 +8419,15 @@ msgstr ""
 "<b>拖曳</b>節點或節點控柄；<b>Alt+拖曳</b>節點以造型； <b>方向</b>鍵移動節"
 "點；<b>&lt; &gt;</b> 縮放，<b>[ ]</b> 旋轉"
 
-#: ../src/nodepath.cpp:4916
+#: ../src/nodepath.cpp:4920
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "<b>拖曳</b>該節點或它的控柄；用<b>方向鍵</b>移動節點"
 
-#: ../src/nodepath.cpp:4942 ../src/nodepath.cpp:4954
+#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
 msgid "Select a single object to edit its nodes or handles."
 msgstr "選擇單一物件以編輯它的節點或控制點。"
 
-#: ../src/nodepath.cpp:4946
+#: ../src/nodepath.cpp:4950
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8409,18 +8442,18 @@ msgstr[1] ""
 "從 <b>%i</b> 個節點中選取了 <b>0</b> 個。<b>點擊</b>﹑<b>Shift+點擊</b> 或在"
 "節點<b>四周拖曳</b>來選取。"
 
-#: ../src/nodepath.cpp:4952
+#: ../src/nodepath.cpp:4956
 msgid "Drag the handles of the object to modify it."
 msgstr "拖曳物件的控制點來變更它。"
 
-#: ../src/nodepath.cpp:4960
+#: ../src/nodepath.cpp:4964
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。%s。"
 msgstr[1] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。%s。"
 
-#: ../src/nodepath.cpp:4967
+#: ../src/nodepath.cpp:4971
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8431,7 +8464,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>%i</b> / <b>%i</b> 節點已選擇在 <b>%i</b> / <b>%i</b> 子路徑中 %s。"
 
-#: ../src/nodepath.cpp:4973
+#: ../src/nodepath.cpp:4977
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -22624,6 +22657,12 @@ msgstr "Windows 後設檔案輸入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid "Burnt edges"
+#~ msgstr "燒焦邊緣"
+
+#~ msgid "Torn edges with a dark inner blur"
+#~ msgstr "暗色且內部模糊的撕裂邊緣"
 
 #~ msgid "Interruption width"
 #~ msgstr "間斷寬度"
