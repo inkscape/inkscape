@@ -6089,8 +6089,8 @@ sp_text_toolbox_family_changed (GtkComboBoxEntry    *,
     // If querying returned nothing, set the default style of the tool (for new texts)
     if (result_fontspec == QUERY_STYLE_NOTHING)
     {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setStyle("/tools/text/style", css);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
         sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace trough a verb
     }
     else
@@ -6164,7 +6164,7 @@ sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
     if (result_numbers == QUERY_STYLE_NOTHING)
     {
     	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setStyle("/tools/text/style", css);
+    	prefs->mergeStyle("/tools/text/style", css);
     }
 
     sp_style_unref(query);
@@ -6243,7 +6243,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
     if (result_fontspec == QUERY_STYLE_NOTHING)
     {
     	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setStyle("/tools/text/style", css);
+    	prefs->mergeStyle("/tools/text/style", css);
     }
 
     sp_style_unref(query);
@@ -6292,7 +6292,7 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
     if (result_numbers == QUERY_STYLE_NOTHING)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setStyle("/tools/text/style", css);
+    	prefs->mergeStyle("/tools/text/style", css);
     }
 
     sp_desktop_set_style (desktop, css, true, true);
@@ -6404,7 +6404,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     if (result_numbers == QUERY_STYLE_NOTHING)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setStyle("/tools/text/style", css);
+    	prefs->mergeStyle("/tools/text/style", css);
     }
 
     sp_style_unref(query);
