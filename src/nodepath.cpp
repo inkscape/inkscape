@@ -1219,6 +1219,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 Radial handle (node->pos - node->p.pos);
                 if (fabs(line.a - handle.a) < 1e-3) { // lined up
                     // already half-smooth; pull opposite handle too making it fully smooth
+                    node->n.other->code = NR_CURVETO;
                     node->n.pos = node->pos + (node->n.other->pos - node->pos) / 3;
                 } else {
                     // do nothing, adjust_handles will line the handle  up, producing a half-smooth node
@@ -1228,6 +1229,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 Radial handle (node->pos - node->n.pos);
                 if (fabs(line.a - handle.a) < 1e-3) { // lined up
                     // already half-smooth; pull opposite handle too making it fully smooth
+                    node->code = NR_CURVETO;
                     node->p.pos = node->pos + (node->p.other->pos - node->pos) / 3;
                 } else {
                     // do nothing, adjust_handles will line the handle  up, producing a half-smooth node
