@@ -298,6 +298,7 @@
             <exclude name="ast/.*"/>
             <exclude name="bonobo/.*"/>
             <exclude name="deptool.cpp"/>
+            <exclude name="cxxtests.cpp"/>
             <!--<exclude name="test-main.cpp"/>-->
             <!--<exclude name="test-src.cpp"/>-->
             <exclude name="display/test-display.cpp"/>
@@ -896,7 +897,6 @@
     <delete file="build.dep"/>
     <delete file="config.h"/>
     <delete file="${src}/inkscape-version.cpp"/>
-
     <delete file="${src}/test-main.cpp"/>
     <delete file="${src}/test-src.cpp"/>
     <delete file="${src}/display/test-display.cpp"/>
