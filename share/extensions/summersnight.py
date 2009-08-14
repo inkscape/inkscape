@@ -42,7 +42,7 @@ class Project(inkex.Effect):
         obj = self.selected[self.options.ids[0]]
         trafo = self.selected[self.options.ids[1]]
         if obj.get(inkex.addNS('type','sodipodi')):
-            inkex.errormsg(_("The first selected object is of type '%s'.\nTry using the procedure Path | Object to Path." % obj.get(inkex.addNS('type','sodipodi'))))
+            inkex.errormsg(_("The first selected object is of type '%s'.\nTry using the procedure Path->Object to Path." % obj.get(inkex.addNS('type','sodipodi'))))
             exit()
         if obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg'):
             if trafo.tag == inkex.addNS('path','svg'):
@@ -81,12 +81,12 @@ class Project(inkex.Effect):
                     self.process_group(obj)
             else:
                 if trafo.tag == inkex.addNS('g','svg'):
-                    inkex.errormsg(_("The second selected object is a group, not a path.\nTry using the procedure Object | Ungroup."))
+                    inkex.errormsg(_("The second selected object is a group, not a path.\nTry using the procedure Object->Ungroup."))
                 else:
-                    inkex.errormsg(_("The second selected object is not a path.\nTry using the procedure Path | Object to Path."))
+                    inkex.errormsg(_("The second selected object is not a path.\nTry using the procedure Path->Object to Path."))
                 exit()
         else:
-            inkex.errormsg(_("The first selected object is not a path.\nTry using the procedure Path | Object to Path."))
+            inkex.errormsg(_("The first selected object is not a path.\nTry using the procedure Path->Object to Path."))
             exit()
 
     def process_group(self,group):
