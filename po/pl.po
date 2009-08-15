@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: 2009-07-20 22:09+0100\n"
 "Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: Polish <inkscapeplteam@gmail.com>\n"
@@ -18712,38 +18712,38 @@ msgid "Change gradient stop offset"
 msgstr "Zmień przesunięcie punktu kontrolnego"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "Dodaj punkt"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "Dodaj kolejny punkt kontrolny do gradientu"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "Usuń punkt"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "Usuń z gradientu wyświetlony powyżej punkt kontrolny"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "Przesunięcie:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "Kolor w punkcie"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "Edytor gradientu"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "Zmień kolor w punkcie kontrolnym"
 
@@ -20982,10 +20982,10 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Pierwszy zaznaczony obiekt jest typu „%s”.\n"
 "Spróbuj zastosować procedurę Ścieżka | Obiekt w ścieżkę."
@@ -20999,27 +20999,30 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
+#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 "Drugi zaznaczony obiekt jest grupą a nie ścieżką.\n"
 "Spróbuj zastosować procedurę Obiekt | Rozdziel grupę."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
+#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Drugi zaznaczony obiekt nie jest ścieżką.\n"
 "Spróbuj zastosować procedurę Ścieżka | Obiekt w ścieżkę."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
+#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Pierwszy zaznaczony obiekt nie jest ścieżką.\n"
 "Spróbuj zastosować procedurę Ścieżka | Obiekt w ścieżkę."

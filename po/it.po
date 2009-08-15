@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: 2009-08-08 17:49+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -18638,38 +18638,38 @@ msgid "Change gradient stop offset"
 msgstr "Cambia offset del passaggio del gradiente"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "Aggiungi passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "Aggiunge un altro passaggio al gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "Cancella passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "Elimina il passaggio corrente dal gradiente"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "Posizione:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "Colore del passaggio"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "Editor di gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "Gradiente lineare di contorno"
 
@@ -20918,10 +20918,10 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Il primo elemento selezionato è del tipo «%s».\n"
 "Provare prima il procedimento Tracciato → Da oggetto a tracciato."
@@ -20936,27 +20936,30 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
+#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 "Il secondo elemento selezionato è un gruppo, non un tracciato.\n"
 "Provare prima il procedimento Oggetto → Dividi."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
+#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Il secondo elemento selezionato non è un tracciato.\n"
 "Provare prima il procedimento Tracciato → Da oggetto a tracciato."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
+#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Il primo elemento selezionato non è un tracciato.\n"
 "Provare prima il procedimento Tracciato → Da oggetto a tracciato."

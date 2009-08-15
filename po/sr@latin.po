@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: 2009-07-09 22:04+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
@@ -18464,38 +18464,38 @@ msgid "Change gradient stop offset"
 msgstr "Promeni poziciju stanice preliva"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "Dodaj stanicu boje"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "Dodavanje još jedne kontrolne stanice boje u preliv"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "Ukloni stanicu boje"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "Uklanjanje trenutne kontrolne stanice boje iz preliva"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "Razmak:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "Stanica boje"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "Uređivač preliva"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "Promenjena boja stanice preliva"
 
@@ -20715,10 +20715,10 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Prvi izabrani objekat je vrste „%s“.\n"
 "Pokušajte sa procedurom Linija | Objekat u liniju."
@@ -20731,27 +20731,30 @@ msgstr "Ovo proširenje zahteva druga izabrana linija sadrži četiri čvora."
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
+#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 "Drugi izabrani objekat je grupa, nije linija.\n"
 "Pokušajte sa procedurom Objekat | Razgrupiši."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
+#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Drugi izabrani objekat nije linija.\n"
 "Pokušajte sa procedurom Linija | Objekat u liniju."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
+#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "Prvi izabrani objekat nije linija.\n"
 "Pokušajte sa procedurom Linija | Objekat u liniju."

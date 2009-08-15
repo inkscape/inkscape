@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: 2007-12-05 21:08+0100\n"
 "Last-Translator: Henrik Larsson <henrik.p.larsson@gmail.com>\n"
 "Language-Team: Svenska <sv@li.org>\n"
@@ -19080,38 +19080,38 @@ msgid "Change gradient stop offset"
 msgstr "Ändra gradient stopp offset"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "Lägg till stopp"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "Lägg till ett styrstopp till gradient"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "Ta bort stopp"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "Ta bort befitligt styrstopp från gradient"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "Offset:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "Stoppfärg"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "Gradient editor"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "Ändra gradient stoppfärg"
 
@@ -21444,7 +21444,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 
 #: ../share/extensions/perspective.py:74
@@ -21457,21 +21457,21 @@ msgstr ""
 #: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:60

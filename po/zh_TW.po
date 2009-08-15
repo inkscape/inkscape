@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: 2009-08-08 00:14+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -17869,38 +17869,38 @@ msgid "Change gradient stop offset"
 msgstr "變更漸層停止點偏移"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "增加停止點"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "增加漸層中的控制停止點"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "刪除停止點"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "從漸層刪除現有控制停止點"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "偏移："
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "停止顏色"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "漸層編輯器"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "變更漸層停止點顏色"
 
@@ -20059,10 +20059,10 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "第一個選取的物件為「%s」類型。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"
@@ -20075,27 +20075,30 @@ msgstr "這個擴充功能需要第二個所選取的路徑為四個節點長。
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
+#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 "第二個選取的物件是一個群組，而不是一個路徑。\n"
 "試著實行「物件 | 解散群組」的這道手續。"
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
+#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "第二個選取的物件不是一個路徑。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
+#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "第一個選取的物件不是一個路徑。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"

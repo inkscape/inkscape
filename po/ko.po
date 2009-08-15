@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-13 22:39+0200\n"
+"POT-Creation-Date: 2009-08-15 14:35+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -17987,38 +17987,38 @@ msgid "Change gradient stop offset"
 msgstr "그라디언트 조절점 옵셋 변경"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:812
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add stop"
 msgstr "조절점 더하기"
 
-#: ../src/widgets/gradient-vector.cpp:815
+#: ../src/widgets/gradient-vector.cpp:814
 msgid "Add another control stop to gradient"
 msgstr "다른 제어 조절점을 그라디언트에 더하기"
 
-#: ../src/widgets/gradient-vector.cpp:817
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete stop"
 msgstr "조절점 삭제"
 
-#: ../src/widgets/gradient-vector.cpp:820
+#: ../src/widgets/gradient-vector.cpp:819
 msgid "Delete current control stop from gradient"
 msgstr "그라디언트에서 현재 제어 조절점을 삭제"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:831
+#: ../src/widgets/gradient-vector.cpp:830
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
 msgstr "옵셋:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:875
 msgid "Stop Color"
 msgstr "조절점 색상"
 
-#: ../src/widgets/gradient-vector.cpp:906
+#: ../src/widgets/gradient-vector.cpp:905
 msgid "Gradient editor"
 msgstr "그라디언트 편집기"
 
-#: ../src/widgets/gradient-vector.cpp:1182
+#: ../src/widgets/gradient-vector.cpp:1184
 msgid "Change gradient stop color"
 msgstr "그라디언트 조절점 색상 변경"
 
@@ -20191,11 +20191,13 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
+"처음 선택된 객체는 경로가 아닙니다.\n"
+"진행 경로 | 객체를 객체로 사용하시오."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
@@ -20205,27 +20207,30 @@ msgstr "이 확장은 두번째 선택된 노드가 4개의 노드보다 길어�
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
+#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
-"Try using the procedure Object | Ungroup."
+"Try using the procedure Object->Ungroup."
 msgstr ""
 "두번째 선택 객체가 경로가 아니고 그룹입니다.\n"
 "T진행 객체 | 구릅해제를 사용하세요."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
+#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "두번째 선택된 객체가 경로는 아닙니다.\n"
 "진행 경로/ 객체를 경로로 사용하세요."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
+#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
-"Try using the procedure Path | Object to Path."
+"Try using the procedure Path->Object to Path."
 msgstr ""
 "처음 선택된 객체는 경로가 아닙니다.\n"
 "진행 경로 | 객체를 객체로 사용하시오."
