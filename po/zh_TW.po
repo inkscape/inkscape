@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-15 14:35+0200\n"
-"PO-Revision-Date: 2009-08-08 00:14+0800\n"
+"PO-Revision-Date: 2009-08-15 23:09+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -518,7 +518,7 @@ msgstr "凹凸"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
-msgstr ""
+msgstr "高度彎曲凹凸結合擴散和反射光"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -1324,27 +1324,24 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "邊緣些許褪色的卡通繪畫風格"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Smooth shader"
-msgstr "平滑材質 (非逼真)"
+msgstr "平滑材質"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "帶有炭筆灰的平滑材質"
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Emboss shader"
-msgstr "浮雕材質 (非逼真)"
+msgstr "浮雕材質"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
 msgstr "平滑材質和浮雕的結合"
 
 #: ../share/filters/filters.svg.h:141
-#, fuzzy
 msgid "Smooth shader dark"
-msgstr "暗色平滑材質 (非逼真)"
+msgstr "暗色平滑材質"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
@@ -1359,36 +1356,32 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "模擬黑白漫畫的明暗法"
 
 #: ../share/filters/filters.svg.h:143
-#, fuzzy
 msgid "Satin"
-msgstr "綢緞 (非逼真)"
+msgstr "綢緞"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
 msgstr "絲綢近似於珍珠母材質"
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Frosted glass"
-msgstr "毛玻璃 (非逼真)"
+msgstr "毛玻璃"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
 msgstr "模擬非逼真的毛玻璃"
 
 #: ../share/filters/filters.svg.h:145
-#, fuzzy
 msgid "Smooth shader contour"
-msgstr "平滑材質輪廓 (非逼真)"
+msgstr "平滑材質輪廓"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
 msgstr "平滑材質的輪廓版本"
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Aluminium"
-msgstr "鋁 (非逼真)"
+msgstr "鋁"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
@@ -1403,18 +1396,16 @@ msgid "Fluid brushed cartoon drawing"
 msgstr "流體筆刷的卡通繪畫"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Chrome"
-msgstr "鉻 (非逼真)"
+msgstr "鉻"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "帶有強烈斑點的非逼真鉻材質"
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Chrome dark"
-msgstr "暗色鉻 (非逼真)"
+msgstr "暗色鉻"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1535,12 +1526,10 @@ msgid ""
 msgstr "使圖像和材料填充物件產生鉛筆、彩色平版印刷、版畫或其他效果"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Velvet Bumps"
 msgstr "柔軟凹凸"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Gives Smooth Bumps velvet like"
 msgstr "產生像天鵝絨般柔軟的平滑凹凸"
 
@@ -1587,7 +1576,6 @@ msgid "Draws a colored outline around"
 msgstr "周圍繪製彩色外框"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Inner Shadow"
 msgstr "內陰影"
 
@@ -1596,7 +1584,6 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr "於內部加入可著色的下落式陰影"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Dark and Glow"
 msgstr "暗與光"
 
@@ -1645,7 +1632,6 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "輕微色調分離並繪製邊框就像舊式印刷的明信片一樣"
 
 #: ../share/filters/filters.svg.h:176
-#, fuzzy
 msgid "Fuzzy Glow"
 msgstr "模糊光暈"
 
@@ -1717,11 +1703,10 @@ msgid "Plastify"
 msgstr "塑膠化"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid ""
 "HSL edges detection bump with a wavy reflective surface effect and variable "
 "crumple"
-msgstr "波狀反射表面結合 HSL 邊緣偵測凹凸效果"
+msgstr "波狀反射表面效果和多變壓皺結合 HSL 邊緣偵測凹凸效果"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Plaster"
@@ -1937,51 +1922,46 @@ msgid "Glossy bevel with blurred edges"
 msgstr "帶有捲邊的光滑斜角"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Combined lighting"
-msgstr "結合"
+msgstr "混合光"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
-msgstr ""
+msgstr "錫箔"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Metallic foil effect combining two lighting types and variable crumple"
-msgstr ""
+msgstr "混合兩種光照類型和多變壓皺的金屬錫效果"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Copper and chocolate"
-msgstr ""
+msgstr "銅和巧克力"
 
 #: ../share/filters/filters.svg.h:213
 msgid ""
 "Specular bump which can be easily converted from metallic to molded plastic "
 "effects"
-msgstr ""
+msgstr "能輕易地從金屬轉成模壓塑膠效果的反射凹凸"
 
 #: ../share/filters/filters.svg.h:214
-#, fuzzy
 msgid "Inner Glow"
-msgstr "內陰影"
+msgstr "內光暈"
 
 #: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Adds a colorizable glow inside"
-msgstr "於內部加入可著色的下落式陰影"
+msgstr "於內部加入可著色光暈"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Soft colors"
-msgstr "月份顏色"
+msgstr "柔和色彩"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Relief print"
-msgstr "藍圖"
+msgstr "凸版版畫"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bevel whith bumps, color flood and complex lighting"
-msgstr ""
+msgstr "帶有凹凸、填滿顏色和複雜光照的斜角"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -6981,7 +6961,7 @@ msgstr "結構格線"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Spiro spline"
-msgstr "螺旋樣條線"
+msgstr "螺旋雲形線"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Envelope Deformation"
@@ -7246,23 +7226,20 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Fixed width"
-msgstr "筆尖寬度"
+msgstr "固定寬度"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
 msgstr "較低字串的隱藏區域大小"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "In units of stroke width"
 msgstr "邊框寬度的單位"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "Consider 'Interruption width' as a ratio of stroke width"
-msgstr "判斷「間斷寬度」作為邊框寬度的比值。"
+msgstr "把「中斷寬度」視為邊框寬度的比例。"
 
 #: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
@@ -7270,19 +7247,16 @@ msgid "Stroke width"
 msgstr "邊框寬度"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "Add the stroke width to the interruption size"
-msgstr "加入此邊框寬度到間斷大小。"
+msgstr "將此邊框寬度加入到中斷大小。"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Crossing path stroke width"
-msgstr "變更邊框寬度"
+msgstr "交叉路徑的邊框寬度"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Add crossed stroke width to the interruption size"
-msgstr "加入交叉的邊框寬度到間斷大小。"
+msgstr "將交叉的邊框寬度加入到中斷大小。"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
@@ -20059,13 +20033,13 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "第一個選取的物件為「%s」類型。\n"
-"試著實行「路徑 | 物件轉成路徑」的手續。"
+"試著執行「路徑 -> 物件轉成路徑」的步驟。"
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
@@ -20075,33 +20049,30 @@ msgstr "這個擴充功能需要第二個所選取的路徑為四個節點長。
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
-#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
-"第二個選取的物件是一個群組，而不是一個路徑。\n"
-"試著實行「物件 | 解散群組」的這道手續。"
+"第二個選取的物件是一個群組，而不是路徑。\n"
+"試著執行「物件->解散群組」的步驟。"
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
-#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "第二個選取的物件不是一個路徑。\n"
-"試著實行「路徑 | 物件轉成路徑」的手續。"
+"試著執行「路徑->物件轉成路徑」的步驟。"
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
-#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "第一個選取的物件不是一個路徑。\n"
-"試著實行「路徑 | 物件轉成路徑」的手續。"
+"試著執行「路徑->物件轉成路徑」的步驟。"
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid ""
@@ -20565,9 +20536,9 @@ msgid ""
 "Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
 "instead, if needed."
 msgstr ""
-"- AutoCAD 版本 13 及更新版本。- 假設 dxf 以 mm 單位繪製。- 假設 svg 以像素單"
-"位繪製。於 90 dpi 時。- 圖層只保存在 檔案-&gt;開啟上，而不會匯入。- 僅限支援"
-"圖塊，需要時改為使用 AutoCAD 分解圖塊。"
+"- AutoCAD 版本 13 及更新版本。- 假設 dxf 以 mm 單位繪製。- 假設 svg 於 90 "
+"dpi 以像素單位繪製。- 圖層只保存在 檔案-&gt;開啟上，而不會匯入。- 僅限支援圖"
+"塊，需要時改為使用 AutoCAD 分解圖塊。"
 
 #: ../share/extensions/dxf_input.inx.h:2
 msgid "AutoCAD DXF R13 (*.dxf)"
@@ -20600,20 +20571,21 @@ msgid ""
 "supported. - ROBO-Master option is a specialized spline readable only by "
 "ROBO-Master and AutoDesk viewers, not Inkscape."
 msgstr ""
+"- AutoCAD 版本 13 格式。- 假設 svg 於 90 dpi 以像素單位繪製。- 假設 dxf 以 "
+"mm 單位繪製。- 只支援「多折線」和「雲形線」元件。- ROBO-Master 選項只有 "
+"AutoCAD 和 AutoDesk 檢視程式能讀取的專用雲形線，Inkscape 無法讀取。"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter"
 msgstr "繪圖交換格式"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
-#, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
-msgstr "繪圖交換格式 (*.dxf)"
+msgstr "繪圖交換格式 (R13) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:6
-#, fuzzy
 msgid "enable ROBO-Master output"
-msgstr "ROBO-Master 輸出"
+msgstr "啟用 ROBO-Master 輸出"
 
 #: ../share/extensions/dxf_output.inx.h:1
 msgid "AutoCAD DXF R12 (*.dxf)"
