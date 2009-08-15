@@ -15,7 +15,7 @@ ink_common_sources +=	\
 	libnr/nr-blit.h	\
 	libnr/nr-compose-transform.cpp	\
 	libnr/nr-compose-transform.h	\
-	libnr/nr-compose-reference.h
+	libnr/nr-compose-reference.h	\
 	libnr/nr-compose.cpp	\
 	libnr/nr-compose.h	\
 	libnr/nr-convert2geom.h	\
