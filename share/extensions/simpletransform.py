@@ -55,6 +55,7 @@ def parseTransform(transf,mat=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]):
         else:
             cx,cy=map(float,args[1:])
         matrix=[[math.cos(a),-math.sin(a),cx],[math.sin(a),math.cos(a),cy]]
+        matrix=composeTransform(matrix,[[1,0,-cx],[0,1,-cy]])
 #-- skewX --
     if result.group(1)=="skewX":
         a=float(result.group(2))*math.pi/180
@@ -147,25 +148,39 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
         m = parseTransform(node.get('transform'))
         m = composeTransform(mat,m)
         #TODO: text not supported!
+        d = None
         if node.get("d"):
             d = node.get('d')
+        elif node.get('points'):
+            d = 'M' + node.get('points')
+        elif node.tag in [ inkex.addNS('rect','svg'), 'rect' ]:
+            d = 'M' + node.get('x', '0') + ',' + node.get('y', '0') + \
+                'h' + node.get('width') + 'v' + node.get('height') + \
+                'h-' + node.get('width')
+        elif node.tag in [ inkex.addNS('line','svg'), 'line' ]:
+            d = 'M' + node.get('x1') + ',' + node.get('y1') + \
+                ' ' + node.get('x2') + ',' + node.get('y2')
+        elif node.tag in [ inkex.addNS('circle','svg'), 'circle', \
+                            inkex.addNS('ellipse','svg'), 'ellipse' ]:
+            rx = node.get('r')
+            if rx is not None:
+                ry = rx
+            else:
+                rx = node.get('rx')
+                ry = node.get('ry')
+            cx = float(node.get('cx', '0'))
+            cy = float(node.get('cy', '0'))
+            x1 = cx - float(rx)
+            x2 = cx + float(rx)
+            d = 'M %f %f ' % (x1, cy) + \
+                'A' + rx + ',' + ry + ' 0 1 0 %f,%f' % (x2, cy) + \
+                'A' + rx + ',' + ry + ' 0 1 0 %f,%f' % (x1, cy)
+ 
+        if d is not None:
             p = cubicsuperpath.parsePath(d)
             applyTransformToPath(m,p)
             bbox=boxunion(roughBBox(p),bbox)
 
-        elif node.tag == inkex.addNS('rect','svg') or node.tag=='rect':
-            w = float(node.get('width'))/2.
-            h = float(node.get('height'))/2.
-            x = float(node.get('x'))
-            y = float(node.get('y'))
-            C = [x + w , y + h ]
-            applyTransformToPoint(mat,C)
-            xmin = C[0] - abs(m[0][0]) * w - abs(m[0][1]) * h
-            xmax = C[0] + abs(m[0][0]) * w + abs(m[0][1]) * h
-            ymin = C[1] - abs(m[1][0]) * w - abs(m[1][1]) * h
-            ymax = C[1] + abs(m[1][0]) * w + abs(m[1][1]) * h
-            bbox = xmin,xmax,ymin,ymax
-            
         elif node.tag == inkex.addNS('use','svg') or node.tag=='use':
             refid=node.get(inkex.addNS('href','xlink'))
             path = '//*[@id="%s"]' % refid[1:]
