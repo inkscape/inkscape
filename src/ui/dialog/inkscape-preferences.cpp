@@ -321,7 +321,7 @@ void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatch *swat
     if (!css) return;
 
     // only store text style for the text tool
-    if (prefs_path == "/tools/text") {
+    if (prefs_path != "/tools/text") {
         css = sp_css_attr_unset_text (css);
     }
 
