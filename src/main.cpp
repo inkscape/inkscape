@@ -91,6 +91,7 @@
 #include <extension/system.h>
 #include <extension/db.h>
 #include <extension/output.h>
+#include <extension/input.h>
 
 #ifdef WIN32
 //#define REPLACEARGS_ANSI
@@ -628,13 +629,13 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-e")
             || !strncmp(argv[i], "--export-png", 12)
             || !strcmp(argv[i], "-l")
-            || !strncmp(argv[i], "--export-plain-svg", 12)
+            || !strncmp(argv[i], "--export-plain-svg", 18)
             || !strcmp(argv[i], "-i")
             || !strncmp(argv[i], "--export-area-drawing", 21)
             || !strcmp(argv[i], "-D")
-            || !strncmp(argv[i], "--export-area-page", 20)
+            || !strncmp(argv[i], "--export-area-page", 18)
             || !strcmp(argv[i], "-C")
-            || !strncmp(argv[i], "--export-id", 12)
+            || !strncmp(argv[i], "--export-id", 11)
             || !strcmp(argv[i], "-P")
             || !strncmp(argv[i], "--export-ps", 11)
             || !strcmp(argv[i], "-E")
@@ -652,11 +653,11 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-S")
             || !strncmp(argv[i], "--query-all", 11)
             || !strcmp(argv[i], "-X")
-            || !strncmp(argv[i], "--query-x", 13)
+            || !strncmp(argv[i], "--query-x", 9)
             || !strcmp(argv[i], "-Y")
-            || !strncmp(argv[i], "--query-y", 14)
+            || !strncmp(argv[i], "--query-y", 9)
             || !strcmp(argv[i], "--vacuum-defs")
-            || !strncmp(argv[i], "--shell", 7)
+            || !strcmp(argv[i], "--shell")
            )
         {
             /* main_console handles any exports -- not the gui */
@@ -962,12 +963,27 @@ void sp_process_file_list(GSList *fl)
 {
     while (fl) {
         const gchar *filename = (gchar *)fl->data;
-        SPDocument *doc = Inkscape::Extension::open(NULL, filename);
+
+        SPDocument *doc = NULL;
+        try {
+            doc = Inkscape::Extension::open(NULL, filename);
+        } catch (Inkscape::Extension::Input::no_extension_found &e) {
+            doc = NULL;
+        } catch (Inkscape::Extension::Input::open_failed &e) {
+            doc = NULL;
+        }
+
         if (doc == NULL) {
-            doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), filename);
+            try {
+                doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), filename);
+            } catch (Inkscape::Extension::Input::no_extension_found &e) {
+                doc = NULL;
+            } catch (Inkscape::Extension::Input::open_failed &e) {
+                doc = NULL;
+            }
         }
         if (doc == NULL) {
-            g_warning("Specified document %s cannot be opened (is it a valid SVG file?)", filename);
+            g_warning("Specified document %s cannot be opened (does not exist or not a valid SVG file)", filename);
         } else {
             if (sp_vacuum_defs) {
                 vacuum_document(doc);
@@ -979,7 +995,7 @@ void sp_process_file_list(GSList *fl)
             if (sp_global_printer) {
                 sp_print_document_to_file(doc, sp_global_printer);
             }
-            if (sp_export_png) {
+            if (sp_export_png || (sp_export_id && sp_export_use_hints)) {
                 sp_do_export_png(doc);
             }
             if (sp_export_svg) {
@@ -1208,6 +1224,7 @@ static void
 sp_do_export_png(SPDocument *doc)
 {
     const gchar *filename = NULL;
+    bool filename_from_hint = false;
     gdouble dpi = 0.0;
 
     if (sp_export_use_hints && (!sp_export_id && !sp_export_area_drawing)) {
@@ -1254,6 +1271,7 @@ sp_do_export_png(SPDocument *doc)
                         filename = sp_export_png;
                     } else {
                         filename = fn_hint;
+                        filename_from_hint = true;
                     }
                 } else {
                     g_warning ("Export filename hint not found for the object.");
@@ -1393,6 +1411,23 @@ sp_do_export_png(SPDocument *doc)
         }
     }
 
+    gchar *path = 0;
+    if (filename_from_hint) {
+        //Make relative paths go from the document location, if possible:
+        if (!g_path_is_absolute(filename) && doc->uri) {
+            gchar *dirname = g_path_get_dirname(doc->uri);
+            if (dirname) {
+                path = g_build_filename(dirname, filename, NULL);
+                g_free(dirname);
+            }
+        }
+        if (!path) {
+            path = g_strdup(filename);
+        }
+    } else {
+        path = g_strdup(filename);
+    }
+
     g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
     g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
@@ -1400,11 +1435,12 @@ sp_do_export_png(SPDocument *doc)
     g_print("Bitmap saved as: %s\n", filename);
 
     if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
-        sp_export_png_file(doc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+        sp_export_png_file(doc, path, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
     } else {
         g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
     }
 
+    g_free (path);
     g_slist_free (items);
 }
 

@@ -414,20 +414,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     g_return_val_if_fail(height >= 1, false);
     g_return_val_if_fail(!area.hasZeroArea(), false);
 
-    //Make relative paths absolute, if possible:
-    gchar *path = 0;
-    if (!g_path_is_absolute(filename) && doc->uri) {
-        gchar *dirname = g_path_get_dirname(doc->uri);
-        if (dirname) {
-            path = g_build_filename(dirname, filename, NULL);
-            g_free(dirname);
-        }
-    }
-    if (!path) {
-        path = g_strdup(filename);
-    }
-
-    if (!force_overwrite && !sp_ui_overwrite_file(path)) {
+    if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
         /* Remark: We return true so as not to invoke an error dialog in case export is cancelled
            by the user; currently this is safe because the callers only act when false is returned.
            If this changes in the future we need better distinction of return types (e.g., use int)
@@ -493,12 +480,12 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     if ((width < 256) || ((width * height) < 32768)) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = 65536 / (4 * width);
-        write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
         ebp.sheight = 64;
         ebp.px = g_try_new(guchar, 4 * ebp.sheight * width);
-        write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
 
@@ -507,8 +494,6 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Free arena */
     nr_object_unref((NRObject *) arena);
-
-    g_free(path);
 
     return write_status;
 }

@@ -1067,6 +1067,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
     if (!SP_ACTIVE_DESKTOP) return;
 
     SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
+    SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
     GtkWidget *be = (GtkWidget *)gtk_object_get_data(base, "batch_checkbox");
     GtkWidget *he = (GtkWidget *)gtk_object_get_data(base, "hide_checkbox");
@@ -1088,10 +1089,24 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
              i != NULL;
              i = i->next) {
             SPItem *item = (SPItem *) i->data;
+
             // retrieve export filename hint
-            const gchar *fn = SP_OBJECT_REPR(item)->attribute("inkscape:export-filename");
-            if (!fn) {
-                fn = create_filepath_from_id (SP_OBJECT_ID(item), NULL);
+            const gchar *filename = SP_OBJECT_REPR(item)->attribute("inkscape:export-filename");
+            gchar *path = 0;
+            if (!filename) {
+                path = create_filepath_from_id (SP_OBJECT_ID(item), NULL);
+            } else {
+                //Make relative paths go from the document location, if possible:
+                if (!g_path_is_absolute(filename) && doc->uri) {
+                    gchar *dirname = g_path_get_dirname(doc->uri);
+                    if (dirname) {
+                        path = g_build_filename(dirname, filename, NULL);
+                        g_free(dirname);
+                    }
+                }
+                if (!path) {
+                    path = g_strdup(filename);
+                }
             }
 
             // retrieve export dpi hints
@@ -1112,14 +1127,14 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 
                 if (width > 1 && height > 1) {
                     /* Do export */
-                    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn,
+                    if (!sp_export_png_file (doc, path,
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
                                              NULL, NULL, TRUE,  // overwrite without asking
                                              hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
                             )) {
                         gchar * error;
-                        gchar * safeFile = Inkscape::IO::sanitizeString(fn);
+                        gchar * safeFile = Inkscape::IO::sanitizeString(path);
                         error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
                         sp_ui_error_dialog(error);
                         g_free(safeFile);
@@ -1128,6 +1143,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                 }
             }
             n++;
+            g_free(path);
             sp_export_progress_callback((float)n/num, base);
         }
 
@@ -1178,9 +1194,9 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
     gtk_entry_set_text(GTK_ENTRY(fe), filename_ext);
 
     gchar *fn = g_path_get_basename (filename_ext);
-
     gchar *progress_text = g_strdup_printf (_("Exporting %s (%lu x %lu)"), fn, width, height);
     g_free (fn);
+
     GtkWidget *prog_dlg = create_progress_dialog (base, progress_text);
     g_free (progress_text);
 
