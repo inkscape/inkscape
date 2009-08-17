@@ -489,7 +489,7 @@ groups) with the same effect as Alt+click.)</note>
 <note>On Linux, Alt+click and Alt+drag may be reserved by the window manager. Reconfigure it so you can use them in Inkscape.</note>
 <mouse><key><ctrl/><left-drag/></key> <action>restrict movement to horizontal or vertical</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>temporarily disable snapping</action></mouse>
-<note>This temporaily disables snapping to grid or guides when you are dragging with grid or guides on.</note>
+<note>This temporarily disables snapping to grid or guides when you are dragging with grid or guides on.</note>
 <mouse><key><left-drag/><misc-wide f="Space"/></key> <action>drop a copy</action></mouse>
 <note>When dragging or transforming with mouse, each Space leaves a copy of the selected object.</note> 
 <note>You can press and hold Space while dragging for a nice "trail."</note>
@@ -976,7 +976,7 @@ with the segment; another Shift+S will expand a second handle</note>
 *<section title="Ellipse tool" color="ffece8">
 <group>
 <title>Draw</title>
-<note>Without Alt the starting end ending point of the mouse drag mark the corners of the bounding box.</note>
+<note>Without Alt the starting and ending point of the mouse drag mark the corners of the bounding box.</note>
 <note>With Alt the ellipse is enlarged so that its circumference passes through these two points (Ctrl+Alt is a special case; see below).</note>
 <mouse><key><left-drag/></key> <action>draw an ellipse</action></mouse>
 <mouse><key><ctrl/><left-drag/></key>	<action>make circle or integer-ratio ellipse</action></mouse>
@@ -1096,7 +1096,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><shift/><left-drag/></key> <action>add to selected path</action></mouse>
 <note>If a path is selected, Shift+dragging anywhere creates a new subpath instead of a new independent path.</note>
 <mouse><key><shift/><left-drag/></key> <action>temporarily disable snapping</action></mouse>
-<note>Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</note>
+<note>Shift also temporarily disables snapping to grid or guides when you are drawing with grid or guides on.</note>
 <mouse><key><alt/><left-drag/></key> <action>averaging draw (sketch mode)</action></mouse>
 </group>
 </section>
