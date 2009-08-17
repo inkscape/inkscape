@@ -332,6 +332,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                          event->button.y);
                 Geom::Point const button_dt(desktop->w2d(button_w));
                 Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
+
+                if (nc->grabbed) {
+                    sp_canvas_item_ungrab(nc->grabbed, event->button.time);
+                    nc->grabbed = NULL;
+                }
 				
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
@@ -471,6 +476,10 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         desktop->updateNow();
                     }
                     Inkscape::Rubberband::get(desktop)->stop();
+                    if (nc->grabbed) {
+                        sp_canvas_item_ungrab(nc->grabbed, event->button.time);
+                        nc->grabbed = NULL;
+                    }
                     ret = TRUE;
                     break;
                 }
