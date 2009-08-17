@@ -555,6 +555,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status_eventbox, TRUE, TRUE, 0);
 
     gtk_widget_show_all (dtw->vbox);
+
+    gtk_widget_grab_focus (GTK_WIDGET(dtw->canvas));
 }
 
 /**
