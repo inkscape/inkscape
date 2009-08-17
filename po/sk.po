@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-15 14:35+0200\n"
-"PO-Revision-Date: 2009-07-24 16:00+0100\n"
+"PO-Revision-Date: 2009-08-17 14:02+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -46,9 +46,8 @@ msgid "Bulging, matte jelly covering"
 msgstr "Pokrytie vydutým matným želé"
 
 #: ../share/filters/filters.svg.h:3
-#, fuzzy
 msgid "Smart jelly"
-msgstr "Matné želé"
+msgstr "Inteligentné želé"
 
 #: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:4
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:14
@@ -66,7 +65,7 @@ msgstr "Vrstvenie"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
+msgstr "Rovnaké ako matné želé, ale s viacerými parametrami"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -524,6 +523,7 @@ msgstr "Hrče"
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
 msgstr ""
+"Veľmi flexibilné zrkadlové hrče kombinujúce difúzne a zrkadlové osvetlenie"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
@@ -535,11 +535,11 @@ msgstr "Pod popraskaným sklom"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "Bublinové hrče"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "Efekt flexibilných bublín s určitým posunutím"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
@@ -561,9 +561,8 @@ msgid "Neon"
 msgstr "Neón"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
 msgid "Neon light effect"
-msgstr "Efekt neónového svetla so žiarou"
+msgstr "Efekt neónového svetla"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
@@ -582,7 +581,6 @@ msgid "Pressed metal with a rolled edge"
 msgstr "Lisovaná oceľ s valcovaným okrajom"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Matte bevel"
 msgstr "Matné vrstvenie"
 
@@ -611,9 +609,8 @@ msgid "Glowing metal"
 msgstr "Žiariaci kov"
 
 #: ../share/filters/filters.svg.h:54
-#, fuzzy
 msgid "Glowing metal texture"
-msgstr "Žiariaci kov"
+msgstr "Žiariaca kovová textúra"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Leaves"
@@ -689,9 +686,8 @@ msgid "Stone wall"
 msgstr "Kamenný múr"
 
 #: ../share/filters/filters.svg.h:63
-#, fuzzy
 msgid "Stone wall texture to use with not too saturated colors"
-msgstr "Textúra kamenného múru na použitie s tmavými farbami"
+msgstr "Textúra kamenného múru na použitie s nie príliš nasýtenými farbami"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Silk carpet"
@@ -766,6 +762,7 @@ msgstr "Vyfarbiť"
 #: ../share/filters/filters.svg.h:72
 msgid "Blend image or object with a flood color and set lightness and contrast"
 msgstr ""
+"Zmiešať obrázok alebo objekt s farbou výplne a daným jasom a kontrastom"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Parallel hollow"
@@ -892,7 +889,7 @@ msgstr "Sprej"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Convert to small scattered particles with some thickness"
-msgstr ""
+msgstr "Previesť na malé roztrúsené častice s určitou hrúbkou"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Warm inside"
@@ -1030,7 +1027,6 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Efekt osvieteného skla, svetlo prichádza zospodu"
 
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "HSL Bumps alpha"
 msgstr "HSL hrče, priesvitnosť"
 
@@ -1046,16 +1042,15 @@ msgstr "Obrazové efekty, priesvitné"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr ""
+msgstr "Rovnaké ako HSL hrče, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Bubbly Bumps alpha"
-msgstr "HSL hrče, priesvitnosť"
+msgstr "Bublinové hrče, priesvitnosť"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same as Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "Rovnaké ako Bublinové hrče, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Smooth edges"
@@ -1187,12 +1182,10 @@ msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Vnútorná a vonkajšia žiara s možným posunutím a zafarbiteľnou výplňou"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "HSL Bumps, matte"
-msgstr "HSL hrče, priesvitnosť"
+msgstr "HSL hrče, matné"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid ""
 "Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "Rovnaké ako HSL hrče ale s difúznym odrazom namiesto zrkadlového"
@@ -1217,12 +1210,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
-msgstr ""
+msgstr "Bublinové hrče, matné"
 
 #: ../share/filters/filters.svg.h:123
-#, fuzzy
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Rovnaké ako HSL bubliny ale s difúznym svetlom namiesto zrkadlového"
+msgstr "Rovnaké ako Bublinové hrče ale s difúznym svetlom namiesto zrkadlového"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1352,27 +1344,24 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "Komiksový štýl maľby na okrajoch do stratena"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Smooth shader"
-msgstr "Hladké tieňovanie NR"
+msgstr "Hladké tieňovanie"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Jemné tieňovanie šedou grafitovou ceruzkou"
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Emboss shader"
-msgstr "Reliéfne tieňovanie NR"
+msgstr "Reliéfne tieňovanie"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
 msgstr "Kombinácia hladkého tieňovania a reliéfu"
 
 #: ../share/filters/filters.svg.h:141
-#, fuzzy
 msgid "Smooth shader dark"
-msgstr "Hladné tieňovanie tmavé NR"
+msgstr "Hladné tieňovanie tmavé"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
@@ -1387,36 +1376,32 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "Imitácia čiernobieleho komiksového tieňovania"
 
 #: ../share/filters/filters.svg.h:143
-#, fuzzy
 msgid "Satin"
-msgstr "Satén NR"
+msgstr "Satén"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
 msgstr "Hodvábne tieňovanie blízke perleti"
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Frosted glass"
-msgstr "Zamrznuté sklo NR"
+msgstr "Zamrznuté sklo"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
 msgstr "Nerealistická imitácia zamrznutého skla"
 
 #: ../share/filters/filters.svg.h:145
-#, fuzzy
 msgid "Smooth shader contour"
-msgstr "Hladké tieňovanie kontúr NR"
+msgstr "Hladké tieňovanie kontúr"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
 msgstr "Kontúrujúca verzia hladkého tieňovania"
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Aluminium"
-msgstr "Hliník NR"
+msgstr "Hliník"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
@@ -1431,18 +1416,16 @@ msgid "Fluid brushed cartoon drawing"
 msgstr "Tekuté komiksové tieňovanie štetcom"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Chrome"
-msgstr "Chróm NR"
+msgstr "Chróm"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Nerealistické chrómové tieňovanie so silným zrkadlením"
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Chrome dark"
-msgstr "Tmavý chróm NR"
+msgstr "Tmavý chróm"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1540,7 +1523,7 @@ msgstr "Filmové zrno"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Adds a small scale graininess"
-msgstr ""
+msgstr "Pridáva zrnitosť v malej miere"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
@@ -1548,7 +1531,7 @@ msgstr "HSL hrče, priesvitnosť"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
-msgstr "Vysoko flexibilná hrča s prisevitnosťou"
+msgstr "Vysoko flexibilná hrča s priesvitnosťou"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
@@ -1565,12 +1548,10 @@ msgstr ""
 "chromolitografie, rytiny alebo iné"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Velvet Bumps"
 msgstr "Zamatové hrče"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Gives Smooth Bumps velvet like"
 msgstr "Dáva jemné akoby zamatové hrče"
 
@@ -1595,7 +1576,6 @@ msgid "Chewing gum"
 msgstr "Žuvačka"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
@@ -1616,12 +1596,10 @@ msgid "Color outline"
 msgstr "Farebný obrys"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Draws a colored outline around"
 msgstr "Nakreslí okolo vyfarbené obtiahnutie"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Inner Shadow"
 msgstr "Vnútorný tieň"
 
@@ -1630,7 +1608,6 @@ msgid "Adds a colorizable drop shadow inside"
 msgstr "Pridáva dovnútra vyfarbiteľný vrhaný tieň"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Dark and Glow"
 msgstr "Tma a žiara"
 
@@ -1667,11 +1644,8 @@ msgid "Gelatine"
 msgstr "Želatína"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
-"Vyfarbiteľná výplň s vnútornou turbulenciou a priesvitnosťou podobnou "
-"želatíne"
+msgstr "Vyfarbiteľná výplň s turbulenciou a priesvitnosťou podobnou želatíne"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1683,13 +1657,12 @@ msgstr ""
 "Jemná posterizácia a nakreslenie okrajov aké majú staré tlačené fotografie"
 
 #: ../share/filters/filters.svg.h:176
-#, fuzzy
 msgid "Fuzzy Glow"
 msgstr "Fuzzy žiara"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
-msgstr ""
+msgstr "Prekladá polopriesvitnú posunutú kópiu na rozostrenú"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Dots transparency"
@@ -1712,11 +1685,11 @@ msgid "Smear transparency"
 msgstr "Rozmazaná priesvitnosť"
 
 #: ../share/filters/filters.svg.h:179
-#, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which turns around color edges"
 msgstr ""
-"Vymaľovať objekty prisvitnou turbulenciou so zatočením okolo okrajov farieb"
+"Vymaľovať objekty priesvitnou turbulenciou, ktorá sa zatáča okolo okrajov "
+"farieb"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
@@ -1758,11 +1731,12 @@ msgid "Plastify"
 msgstr "Plastifikovať"
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid ""
 "HSL edges detection bump with a wavy reflective surface effect and variable "
 "crumple"
-msgstr "Kombinácia HSL detekcie hrán s efektom vlnitého reflektívneho povrchu"
+msgstr ""
+"Kombinácia HSL detekcie hrán s efektom vlnitého reflektívneho povrchu a "
+"variabilného pokrčenia"
 
 #: ../share/filters/filters.svg.h:185
 msgid "Plaster"
@@ -1778,7 +1752,6 @@ msgid "Rough transparency"
 msgstr "Hrubá priesvitnosť"
 
 #: ../share/filters/filters.svg.h:186
-#, fuzzy
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr "Pridáva turbulentnú priesvitnosť, ktorá zároveň posúva pixle"
 
@@ -1836,7 +1809,6 @@ msgid "Alpha engraving B"
 msgstr "Alfa rytina B"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr "Dáva bitmapám a materiálom efekt rytiny s ovládateľnou hrubosťou"
@@ -1854,7 +1826,6 @@ msgid "Monochrome positive"
 msgstr "Monochromatický pozitív"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Convert to a Colorizable transparent positive"
 msgstr "Previesť na zafarbiteľný priesvitný pozitív"
 
@@ -1892,154 +1863,141 @@ msgid "Punch object out of a colorizable opaque area"
 msgstr "Vydierovať objekt zo zafarbiteľnej nepriesvitnej oblasti"
 
 #: ../share/filters/filters.svg.h:200
-#, fuzzy
 msgid "Riddled"
-msgstr "Stred"
+msgstr "Prederavený"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddle the surface and add bump to images"
-msgstr ""
+msgstr "Prederaviť povrch a pridať obrazu hrče"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Wrinkled varnish"
-msgstr ""
+msgstr "Vrásčitá glazúra"
 
 #: ../share/filters/filters.svg.h:201
-#, fuzzy
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr "Hrubá akrylová textúra kresby s vysokou hĺbkou textúry"
+msgstr "Hrubá lesklá a priesvitná textúra kresby s vysokou hĺbkou textúry"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Canvas Bumps"
-msgstr "Plátno"
+msgstr "Hrče plátna"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "Textúra plátna s výškovou mapou citlivou na HSL"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
-msgstr ""
+msgstr "Hrče plátna, matné"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr "Rovnaké ako HSL bubliny ale s difúznym svetlom namiesto zrkadlového"
+msgstr "Rovnaké ako Hrče plátna ale s difúznym svetlom namiesto zrkadlového"
 
 #: ../share/filters/filters.svg.h:204
-#, fuzzy
 msgid "Canvas Bumps alpha"
-msgstr "HSL hrče, priesvitnosť"
+msgstr "Hrče plátna, priesvitnosť"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "Rovnaké ako Hrče plátna, ale s priesvitným zvýraznením"
 
 #: ../share/filters/filters.svg.h:205
-#, fuzzy
 msgid "Lightness-Contrast"
-msgstr "Jas"
+msgstr "Jas-kontrast"
 
 #: ../share/filters/filters.svg.h:205
-#, fuzzy
 msgid "Increase or decrease lightness and contrast"
-msgstr "Zvýšiť alebo znížiť kontrast v bitmape"
+msgstr "Zvýšiť alebo znížiť jas a kontrast"
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Clean edges"
-msgstr "Stmaviť okraje"
+msgstr "Čisté okraje"
 
 #: ../share/filters/filters.svg.h:206
 msgid ""
 "Removes or decreases glows and jaggeries around objects edges after applying "
 "some filters"
 msgstr ""
+"Odstráni alebo zvýši žiaru a zúbkovitosť okolo hrán objektov po aplikácii "
+"niekoľkých filtrov"
 
 #: ../share/filters/filters.svg.h:207
-#, fuzzy
 msgid "Bright metal"
-msgstr "Svetlejšie"
+msgstr "Svetlý kov"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Jasný kovový efekt pre ľubovoľnú farbu"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
-msgstr ""
+msgstr "Plast s hlbokými farbami"
 
 #: ../share/filters/filters.svg.h:208
-#, fuzzy
 msgid "Transparent plastic with deep colors"
-msgstr "Textúra kôry, zvislá; použite s hlbokými farbami"
+msgstr "Priesvitný plast s hlbokými farbami"
 
 #: ../share/filters/filters.svg.h:209
-#, fuzzy
 msgid "Melted jelly, matte"
-msgstr "Matné želé"
+msgstr "Roztopené želé, matné"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
-msgstr ""
+msgstr "Matné vrstvenie s rozostrenými okrajmi"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Melted jelly"
-msgstr "Matné želé"
+msgstr "Roztopené želé"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "Lisovaná oceľ s valcovaným okrajom"
+msgstr "Lesklé vrstvenie s rozostrenými okrajmi"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Combined lighting"
-msgstr "Kombinácia"
+msgstr "Kombinované osvetlenie"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
-msgstr ""
+msgstr "Staniol"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Metallic foil effect combining two lighting types and variable crumple"
 msgstr ""
+"Efekt kovovej fólie kombinujúci dva typy osvetlenia a variabilné pokrčenie"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Copper and chocolate"
-msgstr ""
+msgstr "Meď a čokoláda"
 
 #: ../share/filters/filters.svg.h:213
 msgid ""
 "Specular bump which can be easily converted from metallic to molded plastic "
 "effects"
 msgstr ""
+"Zrkadlová hrča, ktorú možno jednoducho previesť z kovových efektov na "
+"tvarovaný plast"
 
 #: ../share/filters/filters.svg.h:214
-#, fuzzy
 msgid "Inner Glow"
-msgstr "Vnútorný tieň"
+msgstr "Vnútorná žiara"
 
 #: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Adds a colorizable glow inside"
-msgstr "Pridáva dovnútra vyfarbiteľný vrhaný tieň"
+msgstr "Pridáva dovnútra vyfarbiteľnú žiaru"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Soft colors"
-msgstr "Farba mesiaca"
+msgstr "Mäkké farby"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Relief print"
-msgstr "Návrh"
+msgstr "Reliéfny odtlačok"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bevel whith bumps, color flood and complex lighting"
-msgstr ""
+msgstr "Vrstvenie s hrčami, vyplnenie farbou a komplexné osvetlenie"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4060,9 +4018,8 @@ msgid "guide intersection"
 msgstr "priesečníky vodidiel"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "guide origin"
-msgstr "Začiatok vodidla"
+msgstr "začiatok vodidla"
 
 #: ../src/display/snap-indicator.cpp:81
 msgid "grid-guide intersection"
@@ -5107,16 +5064,14 @@ msgstr "Rozlíšenie pre rasterizáciu (dpi)"
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-#, fuzzy
 msgid "Export area is drawing"
 msgstr "Exportovaná oblasť je kresba"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-#, fuzzy
 msgid "Export area is page"
-msgstr "Exportovaná oblasť je kresba"
+msgstr "Exportovaná oblasť je stránka"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -5691,9 +5646,9 @@ msgid "drawing-%d%s"
 msgstr "kresba-%d%s"
 
 #: ../src/file.cpp:752
-#, fuzzy, c-format
+#, c-format
 msgid "%s"
-msgstr "%"
+msgstr "%s"
 
 #: ../src/file.cpp:767
 msgid "Select file to save a copy to"
@@ -7455,23 +7410,20 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Fixed width"
-msgstr "Šírka pera"
+msgstr "Pevná šírka"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
 msgstr "Veľkosť skrytej oblasti spodného reťazca"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "In units of stroke width"
-msgstr "jednotka šírky ťahu"
+msgstr "V jednotkách šírky ťahu"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "Consider 'Interruption width' as a ratio of stroke width"
-msgstr "Určiť „Šírku prerušenia“ pomerom k šírke ťahu."
+msgstr "Považovať „Šírku prerušenia“ v pomere k šírke ťahu"
 
 #: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
@@ -7479,19 +7431,16 @@ msgid "Stroke width"
 msgstr "Šírka ťahu"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "Add the stroke width to the interruption size"
-msgstr "Pridať šírku ťahu k šírke prerušenia."
+msgstr "Pridať šírku ťahu k šírke prerušenia"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Crossing path stroke width"
-msgstr "Zmeniť šírku ťahu"
+msgstr "Zmeniť šírku pretínajúcej cesty"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Add crossed stroke width to the interruption size"
-msgstr "Pridať šírku iného ťahu k šírke prerušenia."
+msgstr "Pridať šírku pretínajúceho ťahu k šírke prerušenia"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
@@ -8180,27 +8129,24 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:299
-#, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
-"Exportovať oblasť v používateľom definovaných SVG bodoch (štandardne je to "
-"plátno, 0,0 je ľavý dolný roh)"
+"Exportovať oblasť v používateľom definovaných jednotkách SVG (štandardne je "
+"to plátno, 0,0 je ľavý dolný roh)"
 
 #: ../src/main.cpp:300
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:304
-#, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr "Exportovaná oblasť je celá kresba (nie plátno)"
 
 #: ../src/main.cpp:309
-#, fuzzy
 msgid "Exported area is the entire page"
-msgstr "Exportovaná oblasť je celé plátno"
+msgstr "Exportovaná oblasť je celá stránka"
 
 #: ../src/main.cpp:314
 msgid ""
@@ -14629,15 +14575,14 @@ msgid "Simplification threshold:"
 msgstr "Prah zjednodušenia"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
-#, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
 "aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"Aký silný je štandardne príkaz Zjednodušenie. Ak vyvoláte tento príkaz "
-"niekoľko krát rýchlo za sebou, bude sa správať viac a viac agresívne; "
-"vyvolanie po pauze obnoví štandardný prah."
+"Aký silný je štandardne príkaz Zjednodušenie nástroja Uzol. Ak vyvoláte "
+"tento príkaz niekoľkokrát rýchlo za sebou, bude sa správať viac a viac "
+"agresívne; vyvolanie po pauze obnoví štandardný prah."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Latency skew:"
@@ -20719,13 +20664,13 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:45
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "Prvý vybraný objekt je typu „%s“.\n"
-"Skúste použiť postup Cesta | Objekt na cestu."
+"Skúste použiť postup Cesta -> Objekt na cestu."
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:52
@@ -20735,33 +20680,30 @@ msgstr "Toto rozšírenie vyžaduje, aby druhá zvolená cesta mala štyri uzly.
 
 #: ../share/extensions/perspective.py:99
 #: ../share/extensions/summersnight.py:84
-#, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
 "Druhý vybraný objekt je skupina, nie cesta.\n"
-"Skúste použiť postup Objekt | Zrušiť zoskupenie."
+"Skúste použiť postup Objekt -> Zrušiť zoskupenie."
 
 #: ../share/extensions/perspective.py:101
 #: ../share/extensions/summersnight.py:86
-#, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "Druhý vybraný objekt nie je cesta.\n"
-"Skúste použiť postup Cesta | Objekt na cestu."
+"Skúste použiť postup Cesta -> Objekt na cestu."
 
 #: ../share/extensions/perspective.py:104
 #: ../share/extensions/summersnight.py:89
-#, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 "Prvý vybraný objekt nie je cesta.\n"
-"Skúste použiť postup Cesta | Objekt na cestu."
+"Skúste použiť postup Cesta -> Objekt na cestu."
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid ""
@@ -21233,11 +21175,14 @@ msgid ""
 "Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
 "instead, if needed."
 msgstr ""
+"- AutoCAD Release 13 a novší. - predpokládá, že DXF kresba je v mm. - "
+"predpokladá, že SVG kresba je v pixloch pri 90 dpi. - vrstvy sa zachovajú "
+"iba pri Súbor-&gt;Otvoriť, nie pri Importovať. - obmedzená podpora BLOCKS, "
+"ak to potrebujete použite namiesto toho AutoCAD Explode Blocks."
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Character Encoding"
@@ -21266,25 +21211,27 @@ msgid ""
 "supported. - ROBO-Master option is a specialized spline readable only by "
 "ROBO-Master and AutoDesk viewers, not Inkscape."
 msgstr ""
+"- Formát AutoCAD Release 13 format. - predpokladá, že SVG kresba je v "
+"pixloch pri 90 dpi. - predpokladá, že DXF kresba je v mm. - sú podporované "
+"iba elementy LWPOLYLINE a SPLINE. - voľba ROBO-Master je špecializovaná "
+"krivka, ktorú dokážu prečítať iba prehliadače ROBO-Master a AutoDesk "
+"viewers, nie Inkscape."
 
 #: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
-#, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
-msgstr "Desktop Cutting Plotter (*.DXF)"
+msgstr "Desktop Cutting Plotter (R13) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:6
-#, fuzzy
 msgid "enable ROBO-Master output"
-msgstr "Výstup ROBO-Master"
+msgstr "povoliť výstup ROBO-Master"
 
 #: ../share/extensions/dxf_output.inx.h:1
-#, fuzzy
 msgid "AutoCAD DXF R12 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R12 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -21567,9 +21514,8 @@ msgid "GIMP XCF"
 msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-#, fuzzy
 msgid "GIMP XCF maintaining layers (*.xcf)"
-msgstr "GIMP XCF so zachovaním vrstiev (*.XCF)"
+msgstr "GIMP XCF so zachovaním vrstiev (*.xcf)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
@@ -22371,14 +22317,12 @@ msgstr "Vstup AutoCAD Plot"
 
 #: ../share/extensions/plt_input.inx.h:2
 #: ../share/extensions/plt_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
-msgstr "HP Graphics Language súbor (*.hpgl)"
+msgstr "Súbor HP Graphics Language Plot [AutoCAD] (*.plt)"
 
 #: ../share/extensions/plt_input.inx.h:3
-#, fuzzy
 msgid "Open HPGL plotter files"
-msgstr "Otvoriť nový súbor"
+msgstr "Otvoriť súbory plotra HPGL"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
@@ -22801,19 +22745,16 @@ msgid "Strength (%):"
 msgstr "Sila (%)"
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Scalable Vector Graphics"
-msgstr "Scalable Vector Graphic (*.svg)"
+msgstr "Scalable Vector Graphic"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgstr "Optimalizované SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Scoured SVG Output"
-msgstr "Výstup SVG"
+msgstr "Optimalizovaný výstup SVG"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
