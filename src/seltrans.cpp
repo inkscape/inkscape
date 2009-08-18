@@ -525,10 +525,10 @@ void Inkscape::SelTrans::ungrab()
         if (_current_relative_affine.isTranslation()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Move"));
-        } else if (_current_relative_affine.isScale()) {
+        } else if (_current_relative_affine.without_translation().isScale()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Scale"));
-        } else if (_current_relative_affine.isRotation()) {
+        } else if (_current_relative_affine.without_translation().isRotation()) {
             sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
                              _("Rotate"));
         } else {
