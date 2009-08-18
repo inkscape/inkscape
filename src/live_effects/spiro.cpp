@@ -731,6 +731,8 @@ spiro_iter(spiro_seg *s, bandmat *m, int *perm, double *v, int n)
 	add_mat_line(m, v, derivs[1][1], -ends[1][1], 1, j, jk0r, jinc, nmat);
 	add_mat_line(m, v, derivs[2][1], -ends[1][2], 1, j, jk1r, jinc, nmat);
 	add_mat_line(m, v, derivs[3][1], -ends[1][3], 1, j, jk2r, jinc, nmat);
+	v[jthl] = mod_2pi(v[jthl]);
+	v[jthr] = mod_2pi(v[jthr]);
 	j += jinc;
     }
     if (cyclic) {
