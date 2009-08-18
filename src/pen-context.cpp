@@ -538,9 +538,6 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 p = event_dt;
                                 spdc_endpoint_snap(pc, p, bevent.state); /* Snap node only if not hitting anchor. */
                                 spdc_pen_set_subsequent_point(pc, p, true);
-                                if (pc->polylines_only) {
-                                    spdc_pen_finish_segment(pc, p, bevent.state);
-                                }
                             }
                         }
 
@@ -784,10 +781,8 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
                 switch (pc->state) {
                     case SP_PEN_CONTEXT_POINT:
                     case SP_PEN_CONTEXT_CONTROL:
-                        if (!pc->polylines_only) {
-                            spdc_endpoint_snap(pc, p, revent.state);
-                            spdc_pen_finish_segment(pc, p, revent.state);
-                        }
+                        spdc_endpoint_snap(pc, p, revent.state);
+                        spdc_pen_finish_segment(pc, p, revent.state);
                         break;
                     case SP_PEN_CONTEXT_CLOSE:
                         spdc_endpoint_snap(pc, p, revent.state);
