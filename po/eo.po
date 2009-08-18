@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-15 14:35+0200\n"
+"POT-Creation-Date: 2009-08-18 11:37+0200\n"
 "PO-Revision-Date: 2008-08-04 17:53+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team:  <it@li.org>\n"
@@ -177,6 +177,7 @@ msgstr "Stampo"
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:217
 #, fuzzy
 msgid "Overlays"
 msgstr "Super"
@@ -1660,7 +1661,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1569
 msgid "Drawing"
 msgstr "Desegno"
 
@@ -2128,7 +2129,7 @@ msgstr ""
 msgid "Inner Glow"
 msgstr "Interna radiuso"
 
-#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
 msgstr ""
 
@@ -2137,13 +2138,26 @@ msgstr ""
 msgid "Soft colors"
 msgstr "Glutigu koloron"
 
+#: ../share/filters/filters.svg.h:215
+msgid "Adds a colorizable edges glow inside objects and pictures"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Relief print"
 msgstr "Larĝo de malfokuso"
 
 #: ../share/filters/filters.svg.h:216
-msgid "Bevel whith bumps, color flood and complex lighting"
+msgid "Bumps effect with a bevel, color flood and complex lighting"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Growing cells"
+msgstr "Desegno forigita"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3310,35 +3324,35 @@ msgstr[1] "La komando eksportas %d elektitajn objektojn"
 msgid "Export in progress"
 msgstr "Eksportante"
 
-#: ../src/dialogs/export.cpp:1083
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "Eksportante %d dosierojn"
 
-#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
+#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Estas neeble eksporti per %s dosiernomo. \n"
 
-#: ../src/dialogs/export.cpp:1152
+#: ../src/dialogs/export.cpp:1168
 msgid "You have to enter a filename"
 msgstr "Estas necese enigi dosiernomon"
 
-#: ../src/dialogs/export.cpp:1157
+#: ../src/dialogs/export.cpp:1173
 msgid "The chosen area to be exported is invalid"
 msgstr "La eletkita areo por eksporto ne estas valida"
 
-#: ../src/dialogs/export.cpp:1166
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "La %s dosierujo ne ekzistas aŭ ĝi ne estas dosierujo.\n"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Eksportante %s (%lu x %lu) "
 
-#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
+#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
 msgid "Select a filename for exporting"
 msgstr "Elektu dosiernomon por eksporto"
 
@@ -7084,7 +7098,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1565
 msgid "Page"
 msgstr "Paĝo"
 
@@ -8344,48 +8358,48 @@ msgstr "Estas neeble trovi ID-n de verbo '%s' difinitan en komandlinio.\n"
 msgid "Unable to find node ID: '%s'\n"
 msgstr "Estas neeble trovi ID-n de nodo: '%s'\n"
 
-#: ../src/main.cpp:264
+#: ../src/main.cpp:265
 msgid "Print the Inkscape version number"
 msgstr "Montru la numeron de Inkscape-versio"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:270
 msgid "Do not use X server (only process files from console)"
 msgstr "Ne uzu X servilon (procezumu dosierojn nur per konzolo)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:275
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Provu uzi X servilon (ankaŭ se $DISPLAY ne estas agordita)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:280
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Malfermu specifita(j)n dokumento(j)n (la opcioj estas preterlaseblaj)"
 
-#: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
-#: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
-#: ../src/main.cpp:372 ../src/main.cpp:378
+#: ../src/main.cpp:281 ../src/main.cpp:286 ../src/main.cpp:291
+#: ../src/main.cpp:358 ../src/main.cpp:363 ../src/main.cpp:368
+#: ../src/main.cpp:373 ../src/main.cpp:379
 msgid "FILENAME"
 msgstr "DOSIERNOMO"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:285
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "Printu la dokumento(j)n en specifita eligodosiero (uzu'|·programo' por dukto)"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid "Export document to a PNG file"
 msgstr "Eksportu dokumenton kiel PNG dosiero"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:296 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 #, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -8394,21 +8408,21 @@ msgstr ""
 "La eksportita areo en SVG unitoj de la uzanto (defaŭlte ĝi estas tuta tolo; "
 "0,0 estas suba-maldekstra angulo)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 #, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr "La eksportita areo estas la tuta desegno (kaj ne la tolo)"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 #, fuzzy
 msgid "Exported area is the entire page"
 msgstr "La eksportita areo estas la tuta tolo"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -8416,97 +8430,97 @@ msgstr ""
 "Ĝi agrafas la areon de bitmapa eksportado al plej apuda entjera valoro (en "
 "unitoj de uzanto SVG)"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "La larĝo de eksportita bitmapo en bilderoj (ĝi anstataŭas export-dpi)"
 
-#: ../src/main.cpp:320
+#: ../src/main.cpp:321
 msgid "WIDTH"
 msgstr "LARĜO"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "La alto de eksportita bitmapo en bilderoj (ĝi anstataŭas export-dpi)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:326
 msgid "HEIGHT"
 msgstr "ALTO"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:330
 msgid "The ID of the object to export"
 msgstr "La ID de eksportenda objekto"
 
-#: ../src/main.cpp:330 ../src/main.cpp:423
+#: ../src/main.cpp:331 ../src/main.cpp:424
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Eksportu nur la objekto kun export-id, kaŝu la ceterojn (nur kun export-id)"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Uzu konservitan dosiernomon kaj DPI polurojn dum eksportado (nur kun export-"
 "id)"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 "Fona koloro de eksportita bitmapo (ĉiu ĉeno de koloro subtenita de SVG)"
 
-#: ../src/main.cpp:347
+#: ../src/main.cpp:348
 msgid "COLOR"
 msgstr "KOLORO"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:352
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "Fona opakeco de eksportita bitmapo (kaj el 0.0 ĝis 1.0, kaj el 1 ĝis 255)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid "VALUE"
 msgstr "VALORO"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:357
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Eksportu dokumenton kiel simpla SVG dosiero (sen nomspacoj de sodipodi aŭ de "
 "inkscape)"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:362
 msgid "Export document to a PS file"
 msgstr "Eksportu dokumenton kiel PS dosiero"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:367
 msgid "Export document to an EPS file"
 msgstr "Eksportu dokumenton kiel EPS dosiero"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:372
 msgid "Export document to a PDF file"
 msgstr "Eksportu dokumenton kiel PDF dosiero"
 
-#: ../src/main.cpp:377
+#: ../src/main.cpp:378
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Eksportu dokumenton al Riĉigita Metadosier-Dosiero (EMF)"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:384
 #, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "Konvertu tekstan objekton en strekoj dum eksportado (EPS)"
 
-#: ../src/main.cpp:388
+#: ../src/main.cpp:389
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:394
+#: ../src/main.cpp:395
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8515,7 +8529,7 @@ msgstr ""
 "la objekto per --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:400
+#: ../src/main.cpp:401
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8524,7 +8538,7 @@ msgstr ""
 "la objekto per --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -8533,7 +8547,7 @@ msgstr ""
 "per --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:412
+#: ../src/main.cpp:413
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
@@ -8541,48 +8555,48 @@ msgstr ""
 "Informmendu la alton de la desegno aŭ, se ĝi estas specifita, de la objekto "
 "per --query-id"
 
-#: ../src/main.cpp:417
+#: ../src/main.cpp:418
 msgid "List id,x,y,w,h for all objects"
 msgstr "Listigu id,x,y,a,l de ĉiuj objektoj"
 
-#: ../src/main.cpp:422
+#: ../src/main.cpp:423
 msgid "The ID of the object whose dimensions are queried"
 msgstr "La ID de la objekto kies dimensioj estas informenditaj"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:428
+#: ../src/main.cpp:429
 msgid "Print out the extension directory and exit"
 msgstr "Printu la dosierujo de etendiloj kaj eliru"
 
-#: ../src/main.cpp:433
+#: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Formovu neuzatajn difinojn el defs sesio de la dokumento"
 
-#: ../src/main.cpp:438
+#: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Listo pri ID de ĉiuj verboj en Inkscape"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:444
 msgid "Verb to call when Inkscape opens."
 msgstr "Vokenda verbo dum malfermado de Inkscape"
 
-#: ../src/main.cpp:444
+#: ../src/main.cpp:445
 msgid "VERB-ID"
 msgstr "ID de verbo"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:449
 msgid "Object ID to select when Inkscape opens."
 msgstr "Elektenda ID de objekto dum malfermado de Inkscape"
 
-#: ../src/main.cpp:449
+#: ../src/main.cpp:450
 msgid "OBJECT-ID"
 msgstr "ID de objekto"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:454
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:761 ../src/main.cpp:1072
+#: ../src/main.cpp:762 ../src/main.cpp:1088
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11620,7 +11634,7 @@ msgstr "Agordu ID de objekto"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1571
+#: ../src/widgets/desktop-widget.cpp:1573
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Elekto"
@@ -16096,7 +16110,7 @@ msgstr ""
 "<b>Bonvenon al Inkscape!</b> Uzu formojn au libermanajn ilojn por krei "
 "objektojn; uzu la indikilon (sago) por movi aŭ transformi ilin."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:838
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -16110,11 +16124,11 @@ msgstr ""
 "Fermante sen konservi, la modifoj estos perditaj."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr "_Fermu sen konservi"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:894
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -16127,7 +16141,7 @@ msgstr ""
 "\n"
 "Ĉu vi volas konservi ĝin kiel SVG de Inkscape?"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr "Kon_servu kiel SVG"
 
@@ -18668,22 +18682,22 @@ msgstr ""
 "<b>Bonvenon al Inkscape!</b> Uzu formojn au libermanajn ilojn por krei "
 "objektojn; uzu la indikilon (sago) por movi aŭ transformi ilin."
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (aspekto) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:615
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (aspekto) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:621
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -23301,18 +23315,18 @@ msgstr "Forto (%):"
 
 #: ../share/extensions/scour.inx.h:1
 #, fuzzy
-msgid "Scalable Vector Graphics"
-msgstr "Scalable Vector Graphics (*.svg)"
+msgid "Optimized SVG (*.svg)"
+msgstr "Inkscape SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
 #, fuzzy
-msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgid "Optimized SVG Output"
+msgstr "SVG Eligo"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
-msgid "Scoured SVG Output"
-msgstr "SVG Eligo"
+msgid "Scalable Vector Graphics"
+msgstr "Scalable Vector Graphics (*.svg)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-15 14:35+0200\n"
+"POT-Creation-Date: 2009-08-18 11:37+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -149,6 +149,7 @@ msgstr "고무 도장"
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:217
 msgid "Overlays"
 msgstr "중첩"
 
@@ -1531,7 +1532,7 @@ msgstr "투명한 매우 유연한 특수 융기"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1569
 msgid "Drawing"
 msgstr "그림"
 
@@ -2011,7 +2012,7 @@ msgstr ""
 msgid "Inner Glow"
 msgstr "안쪽 음영"
 
-#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
 msgstr ""
 
@@ -2020,13 +2021,26 @@ msgstr ""
 msgid "Soft colors"
 msgstr "월 색상"
 
+#: ../share/filters/filters.svg.h:215
+msgid "Adds a colorizable edges glow inside objects and pictures"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Relief print"
 msgstr "청사진"
 
 #: ../share/filters/filters.svg.h:216
-msgid "Bevel whith bumps, color flood and complex lighting"
+msgid "Bumps effect with a bevel, color flood and complex lighting"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Growing cells"
+msgstr "발광 금속"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3166,35 +3180,35 @@ msgstr[1] "%d 선택 객체 일괄작업 내보내기"
 msgid "Export in progress"
 msgstr "생성 중"
 
-#: ../src/dialogs/export.cpp:1083
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "%d 파일 내보내는 중"
 
-#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
+#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "%s 파일명으로 생성할 수 없습니다.\n"
 
-#: ../src/dialogs/export.cpp:1152
+#: ../src/dialogs/export.cpp:1168
 msgid "You have to enter a filename"
 msgstr "파일명 입력(필수)"
 
-#: ../src/dialogs/export.cpp:1157
+#: ../src/dialogs/export.cpp:1173
 msgid "The chosen area to be exported is invalid"
 msgstr "내보내기 위해 선택된 지역이 잘못됨"
 
-#: ../src/dialogs/export.cpp:1166
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s 폴더존제하지 않거나 폴더아닙니다.\n"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "%s (%lu x %lu) 내보내는 중"
 
-#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
+#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
 msgid "Select a filename for exporting"
 msgstr "내보내기 위한 파일명 선택"
 
@@ -6770,7 +6784,7 @@ msgstr "새 도크 제어자 %p가 자동임."
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1565
 msgid "Page"
 msgstr "페이지"
 
@@ -7966,37 +7980,37 @@ msgstr "명령어 줄에서 지정한 '%s' ID 찾을 수 없음.\n"
 msgid "Unable to find node ID: '%s'\n"
 msgstr "노드 ID 찾을 수 없음: '%s'\n"
 
-#: ../src/main.cpp:264
+#: ../src/main.cpp:265
 msgid "Print the Inkscape version number"
 msgstr "Inkscape 버전 숫자를 출력"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:270
 msgid "Do not use X server (only process files from console)"
 msgstr "X 서버를 이용하지 않음(콘솔에서 파일 작업만 진행)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:275
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "X 서버 사용하기 위하여 시도($DISPLAY 가 지정 되있지 않더라도)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:280
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "지정된 문서를 열음 (아마도 설정 문자열은 제외)"
 
-#: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
-#: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
-#: ../src/main.cpp:372 ../src/main.cpp:378
+#: ../src/main.cpp:281 ../src/main.cpp:286 ../src/main.cpp:291
+#: ../src/main.cpp:358 ../src/main.cpp:363 ../src/main.cpp:368
+#: ../src/main.cpp:373 ../src/main.cpp:379
 msgid "FILENAME"
 msgstr "파일명"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:285
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "문서를 지정 출력 파일로 출력( 파이프로 '| program' 사용)"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid "Export document to a PNG file"
 msgstr "문서를 PNG로 내보내기"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
@@ -8004,11 +8018,11 @@ msgstr ""
 "비트맵으로 내보내기 위한 그리고 PS/EPS/PDF에서 필터의 래스터화를 위한 해상도"
 "(기본 90)"
 
-#: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:296 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 #, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -8016,179 +8030,179 @@ msgid ""
 msgstr ""
 "SVG 사용자 단위에서 내보내기 구간(기본은 캔버스; 0.0은 왼쪽 하단 모서리임)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 #, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr "내보내기 구간이 전체 그림(캔버스가 아님)"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 #, fuzzy
 msgid "Exported area is the entire page"
 msgstr "내보내기 구가이 전체 캔버스"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
 "비트맵 내보내기 구역 밖을 가장 근접한 정수값으로 붙이기(SVG 사용자 단위에서)"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "내보낼 비트맵 너비(화소)"
 
-#: ../src/main.cpp:320
+#: ../src/main.cpp:321
 msgid "WIDTH"
 msgstr "너비"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "내보낼 비트맵 높이(화소)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:326
 msgid "HEIGHT"
 msgstr "높이"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:330
 msgid "The ID of the object to export"
 msgstr "내보낼 객체 ID"
 
-#: ../src/main.cpp:330 ../src/main.cpp:423
+#: ../src/main.cpp:331 ../src/main.cpp:424
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr "내보내기-ID를 가진 객체만 내보내기, 전체 다른 객체는 숨기기"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "내보낼 때 저장된 파일명과 DPI 힌트를 사용(내보내기-ID있을 때만)"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "내보내기 비트맵의 배경 색상(임의 SVG지원 색상 문자열)"
 
-#: ../src/main.cpp:347
+#: ../src/main.cpp:348
 msgid "COLOR"
 msgstr "색상"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:352
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "내보내기 비트맵의 배경 불투명도(0.0에서 1.0 또는 1에서 255"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid "VALUE"
 msgstr "값"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:357
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "문서를 단순 SVG 파일로 내보내기 (sodipodi나 Inkscape 네임스페이스 없음)"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:362
 msgid "Export document to a PS file"
 msgstr "문서를 PS 파일로 내보내기"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:367
 msgid "Export document to an EPS file"
 msgstr "문서를 EPS 파일로 내보내기"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:372
 msgid "Export document to a PDF file"
 msgstr "문서를 PDF 파일로 내보내기"
 
-#: ../src/main.cpp:377
+#: ../src/main.cpp:378
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "문서를 EMF 파일로 내보내기"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:384
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "문자열 객체를 내보낼 경로로 변환 (PS, EPS, PDF)"
 
-#: ../src/main.cpp:388
+#: ../src/main.cpp:389
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr "래스터작업 대신 필터없이 필터된 객체를 렌더(PS,EPS,PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:394
+#: ../src/main.cpp:395
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "그림의 X 좌표 질의"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:400
+#: ../src/main.cpp:401
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "그림의 Y 좌표 질의"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "그림의 너비 질의"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:412
+#: ../src/main.cpp:413
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "그림의 높이 질의"
 
-#: ../src/main.cpp:417
+#: ../src/main.cpp:418
 msgid "List id,x,y,w,h for all objects"
 msgstr "전체 객체의 ID, X, Y, W, H 나열"
 
-#: ../src/main.cpp:422
+#: ../src/main.cpp:423
 msgid "The ID of the object whose dimensions are queried"
 msgstr "크기를 질의한 객체의 ID"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:428
+#: ../src/main.cpp:429
 msgid "Print out the extension directory and exit"
 msgstr "확장 폴더로 출력 후 종료"
 
-#: ../src/main.cpp:433
+#: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "문서의 정의 부분에서 미사용 정의를 제거"
 
-#: ../src/main.cpp:438
+#: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Inkscape에서 전체 동사의 ID 나열"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:444
 msgid "Verb to call when Inkscape opens."
 msgstr "Inkscape 열 때 호출할 동사"
 
-#: ../src/main.cpp:444
+#: ../src/main.cpp:445
 msgid "VERB-ID"
 msgstr "동사-ID"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:449
 msgid "Object ID to select when Inkscape opens."
 msgstr "Inkscape 열 때 선택할 객체 ID"
 
-#: ../src/main.cpp:449
+#: ../src/main.cpp:450
 msgid "OBJECT-ID"
 msgstr "객체-ID"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:454
 msgid "Start Inkscape in interactive shell mode."
 msgstr "상호작용 쉘 모드에서 Inkscape 시작"
 
-#: ../src/main.cpp:761 ../src/main.cpp:1072
+#: ../src/main.cpp:762 ../src/main.cpp:1088
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11118,7 +11132,7 @@ msgstr "가장 작은 객체"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1571
+#: ../src/widgets/desktop-widget.cpp:1573
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "선택"
@@ -15308,7 +15322,7 @@ msgstr ""
 "<b>Inkscape에 어서 오세요!</b> 객체를 생성하기 위하여 모양이나 그리기 도구를 "
 "사용하세요; 이들을 이동이나 변형하기 위하여 선택자(화살표)를 사용하세요."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:838
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15322,11 +15336,11 @@ msgstr ""
 "저장 없이 닫기를 하면, 변경된 내용이 무시됩니다."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr "저장하지 않고 닫기(_W)"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:894
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15335,7 +15349,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr "SVG 저장(_S)"
 
@@ -17810,22 +17824,22 @@ msgstr ""
 "<b>Inkscape에 어서 오세요!</b> 객체를 생성하기 위하여 모양이나 자유곡선을 사"
 "용하세요; 이들을 이동이나 변형하기 위하여 선택자(화살표)를 사용하세요."
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (윤곽선) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:615
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (윤곽선) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:621
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -22211,18 +22225,18 @@ msgstr "힘 (%):"
 
 #: ../share/extensions/scour.inx.h:1
 #, fuzzy
-msgid "Scalable Vector Graphics"
-msgstr "SVG (*.svg)"
+msgid "Optimized SVG (*.svg)"
+msgstr "Inkscape·SVG·(*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
 #, fuzzy
-msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape·SVG·(*.svg)"
+msgid "Optimized SVG Output"
+msgstr "SVG 출력"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
-msgid "Scoured SVG Output"
-msgstr "SVG 출력"
+msgid "Scalable Vector Graphics"
+msgstr "SVG (*.svg)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"

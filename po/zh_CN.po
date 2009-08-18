@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-15 14:35+0200\n"
+"POT-Creation-Date: 2009-08-18 11:37+0200\n"
 "PO-Revision-Date: 2009-07-21 20:12+0800\n"
 "Last-Translator: Liu Xiaoqin <liuxqsmile@gmail.com>\n"
 "Language-Team: \n"
@@ -158,6 +158,7 @@ msgstr "橡皮图章"
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:217
 msgid "Overlays"
 msgstr "覆盖"
 
@@ -1536,7 +1537,7 @@ msgstr "透明的差异很大的镜面凸凹"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1569
 msgid "Drawing"
 msgstr "绘图"
 
@@ -1997,7 +1998,7 @@ msgstr ""
 msgid "Inner Glow"
 msgstr "内部投影"
 
-#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 #, fuzzy
 msgid "Adds a colorizable glow inside"
 msgstr "在内部投射彩色阴影"
@@ -2007,13 +2008,27 @@ msgstr "在内部投射彩色阴影"
 msgid "Soft colors"
 msgstr "月份颜色"
 
+#: ../share/filters/filters.svg.h:215
+#, fuzzy
+msgid "Adds a colorizable edges glow inside objects and pictures"
+msgstr "在内部投射彩色阴影"
+
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Relief print"
 msgstr "蓝图"
 
 #: ../share/filters/filters.svg.h:216
-msgid "Bevel whith bumps, color flood and complex lighting"
+msgid "Bumps effect with a bevel, color flood and complex lighting"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Growing cells"
+msgstr "辉光金属"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3135,35 +3150,35 @@ msgstr[1] "成批导出%d个选择对象"
 msgid "Export in progress"
 msgstr "正在导出"
 
-#: ../src/dialogs/export.cpp:1083
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "正在导出%d个文件"
 
-#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
+#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "不能导出到文件 %s.\n"
 
-#: ../src/dialogs/export.cpp:1152
+#: ../src/dialogs/export.cpp:1168
 msgid "You have to enter a filename"
 msgstr "必须输入文件名"
 
-#: ../src/dialogs/export.cpp:1157
+#: ../src/dialogs/export.cpp:1173
 msgid "The chosen area to be exported is invalid"
 msgstr "要导出的已选择区域无效"
 
-#: ../src/dialogs/export.cpp:1166
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目录%s不存在或者不是目录.\n"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "导出中%s(%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
+#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
 msgid "Select a filename for exporting"
 msgstr "选择一个文件名导出"
 
@@ -6779,7 +6794,7 @@ msgstr "新的泊坞控制栏%p是自动的. 只有手动泊坞对象才能作�
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1565
 msgid "Page"
 msgstr "页面"
 
@@ -7967,224 +7982,224 @@ msgstr "找不到命令行中制定的动作, ID为'%s'.\n"
 msgid "Unable to find node ID: '%s'\n"
 msgstr "找不到ID为 '%s' 的的节点\n"
 
-#: ../src/main.cpp:264
+#: ../src/main.cpp:265
 msgid "Print the Inkscape version number"
 msgstr "打印 Inkscape 版本号"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:270
 msgid "Do not use X server (only process files from console)"
 msgstr "不使用 X 服务 (只通过控制台处理文件)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:275
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "试着使用 X 服务(即使 $DISPLAY 没有设置)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:280
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "打开指定文档(可选字符串可能排除)"
 
-#: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
-#: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
-#: ../src/main.cpp:372 ../src/main.cpp:378
+#: ../src/main.cpp:281 ../src/main.cpp:286 ../src/main.cpp:291
+#: ../src/main.cpp:358 ../src/main.cpp:363 ../src/main.cpp:368
+#: ../src/main.cpp:373 ../src/main.cpp:379
 msgid "FILENAME"
 msgstr "文件名"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:285
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "打印文档到指定输出文件(使用管道“| program”)"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid "Export document to a PNG file"
 msgstr "把文档导出到 PNG 文件"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr "导出到位图或者在PS/EPS/PDF等中对滤镜进行栅格化时的分辨率(缺省为 90)"
 
-#: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:296 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 #, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr "按照 SVG 用户单位到处区域(默认是画布; 0, 0 在左下角)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 #, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr "导出区域是整个绘画(不是画布)"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 #, fuzzy
 msgid "Exported area is the entire page"
 msgstr "导出区域是整个画布"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr "捕捉位图导出区域到靠外的最接近的整数(按照 SVG 用户单位)"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "导出位图的像素宽度(覆盖导出 dpi)"
 
-#: ../src/main.cpp:320
+#: ../src/main.cpp:321
 msgid "WIDTH"
 msgstr "宽度"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "导出位图的像素高度(覆盖导出 dpi)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:326
 msgid "HEIGHT"
 msgstr "高度"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:330
 msgid "The ID of the object to export"
 msgstr "要导出的对象的 ID"
 
-#: ../src/main.cpp:330 ../src/main.cpp:423
+#: ../src/main.cpp:331 ../src/main.cpp:424
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr "只导出有导出 id 的对象, 隐藏其它的(只包括导出 id)"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "导出时使用保存的文件名和 DPI (只包括导出 id)"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "导出位图的背景色(SVG 导出颜色字符串)"
 
-#: ../src/main.cpp:347
+#: ../src/main.cpp:348
 msgid "COLOR"
 msgstr "颜色"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:352
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "导出位图的背景不透明度(0.0到1.0, 或者1到255)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid "VALUE"
 msgstr "值"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:357
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr "把文档导出到普通 SVG 文件(没有 sodipodi 或者 inkscape 名字空间)"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:362
 msgid "Export document to a PS file"
 msgstr "导出文档到 PS 文件"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:367
 msgid "Export document to an EPS file"
 msgstr "导出文档到 EPS 文件"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:372
 msgid "Export document to a PDF file"
 msgstr "导出文档到 PDF 文件"
 
-#: ../src/main.cpp:377
+#: ../src/main.cpp:378
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "导出文档到 EMF 文件"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:384
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "导出时将文字转化成路径(PS, EPS, PDF)"
 
-#: ../src/main.cpp:388
+#: ../src/main.cpp:389
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr "渲染滤镜对象时不包括滤镜效果, 代替 栅格化 (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:394
+#: ../src/main.cpp:395
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "查询绘图的 X 坐标, 如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:400
+#: ../src/main.cpp:401
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "查询绘图的 Y 坐标, 如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "查询绘图的宽度, 如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:412
+#: ../src/main.cpp:413
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "查询绘图的高度, 如果指定查询对象的 --query-id"
 
-#: ../src/main.cpp:417
+#: ../src/main.cpp:418
 msgid "List id,x,y,w,h for all objects"
 msgstr "列表显示所有对象的id, x, y, w, h"
 
-#: ../src/main.cpp:422
+#: ../src/main.cpp:423
 msgid "The ID of the object whose dimensions are queried"
 msgstr "对象 ID 的尺寸被查询"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:428
+#: ../src/main.cpp:429
 msgid "Print out the extension directory and exit"
 msgstr "打印扩展路径然后退出"
 
-#: ../src/main.cpp:433
+#: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "从文档的定义段去除未使用的定义"
 
-#: ../src/main.cpp:438
+#: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "列出Inkscape中所有动作的标识符(ID)"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:444
 msgid "Verb to call when Inkscape opens."
 msgstr "Inkscape启动时调用的命令."
 
-#: ../src/main.cpp:444
+#: ../src/main.cpp:445
 msgid "VERB-ID"
 msgstr "动作-ID"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:449
 msgid "Object ID to select when Inkscape opens."
 msgstr "Inkscape启动时选择的对象ID."
 
-#: ../src/main.cpp:449
+#: ../src/main.cpp:450
 msgid "OBJECT-ID"
 msgstr "对象-ID"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:454
 msgid "Start Inkscape in interactive shell mode."
 msgstr "以交互式的shell模式启动Inkscape."
 
-#: ../src/main.cpp:761 ../src/main.cpp:1072
+#: ../src/main.cpp:762 ../src/main.cpp:1088
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11047,7 +11062,7 @@ msgstr "最小对象"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1571
+#: ../src/widgets/desktop-widget.cpp:1573
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "选择"
@@ -15196,7 +15211,7 @@ msgstr ""
 "<b>欢迎使用 Inkscape！</b> 使用形状或手绘工具创建对象; 使用选择器(箭头)移动或"
 "者变换对象."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:838
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15210,11 +15225,11 @@ msgstr ""
 "如果没有保存关闭文档, 所作的更改将会丢失."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr "关闭而不保存(_W)"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:894
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15227,7 +15242,7 @@ msgstr ""
 "\n"
 "要将此文件保存为Inkscape SVG吗？"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr "另存为SVG(_S)"
 
@@ -17704,22 +17719,22 @@ msgstr ""
 "<b>欢迎来到 Inkscape ！</b> 使用形状或手绘工具创建对象; 使用选择器(方向)移动"
 "或者变换对象"
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (轮廓)- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:615
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (轮廓)- Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:621
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -22123,18 +22138,18 @@ msgstr "强度 (%):"
 
 #: ../share/extensions/scour.inx.h:1
 #, fuzzy
-msgid "Scalable Vector Graphics"
-msgstr "可缩放矢量图形 (*.svg)"
+msgid "Optimized SVG (*.svg)"
+msgstr "Inkscape SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
 #, fuzzy
-msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgid "Optimized SVG Output"
+msgstr "SVG 输出"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
-msgid "Scoured SVG Output"
-msgstr "SVG 输出"
+msgid "Scalable Vector Graphics"
+msgstr "可缩放矢量图形 (*.svg)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"

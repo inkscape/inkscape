@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-15 14:35+0200\n"
+"POT-Creation-Date: 2009-08-18 11:37+0200\n"
 "PO-Revision-Date: 2009-07-26 03:24+0100\n"
 "Last-Translator: Alexander Senger <neutronenspalter@freenet.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -172,6 +172,7 @@ msgstr "Stempel"
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:217
 msgid "Overlays"
 msgstr "Überlagerung"
 
@@ -1605,7 +1606,7 @@ msgstr "Gut einstellbare glänzende Erhebung mit Transparenz"
 # not sure here -cm-
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1569
 msgid "Drawing"
 msgstr "Zeichnung"
 
@@ -2094,7 +2095,7 @@ msgstr ""
 msgid "Inner Glow"
 msgstr "Innerer Radius"
 
-#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
 msgstr ""
 
@@ -2104,13 +2105,26 @@ msgstr ""
 msgid "Soft colors"
 msgstr "Monatsfarbe"
 
+#: ../share/filters/filters.svg.h:215
+msgid "Adds a colorizable edges glow inside objects and pictures"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Relief print"
 msgstr "Blaupause"
 
 #: ../share/filters/filters.svg.h:216
-msgid "Bevel whith bumps, color flood and complex lighting"
+msgid "Bumps effect with a bevel, color flood and complex lighting"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Growing cells"
+msgstr "Glühendes Metall"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3318,35 +3332,35 @@ msgstr[1] "%d gewählte Objekte auf einmal exportieren"
 msgid "Export in progress"
 msgstr "Exportieren läuft"
 
-#: ../src/dialogs/export.cpp:1083
+#: ../src/dialogs/export.cpp:1084
 #, c-format
 msgid "Exporting %d files"
 msgstr "Exportiere %d Dateien"
 
-#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
+#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Konnte nicht als Datei %s exportieren.\n"
 
-#: ../src/dialogs/export.cpp:1152
+#: ../src/dialogs/export.cpp:1168
 msgid "You have to enter a filename"
 msgstr "Sie müssen einen Dateinamen angeben"
 
-#: ../src/dialogs/export.cpp:1157
+#: ../src/dialogs/export.cpp:1173
 msgid "The chosen area to be exported is invalid"
 msgstr "Der zum Exportieren gewählte Bereich ist ungültig"
 
-#: ../src/dialogs/export.cpp:1166
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Das Verzeichnis %s existiert nicht oder ist kein Verzeichnis.\n"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1197
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Exportiere %s (%lu × %lu)"
 
-#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
+#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
 msgid "Select a filename for exporting"
 msgstr "Wählen Sie einen Namen für die zu exportierende Datei"
 
@@ -7053,7 +7067,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1565
 msgid "Page"
 msgstr "Seite"
 
@@ -8303,42 +8317,42 @@ msgstr ""
 msgid "Unable to find node ID: '%s'\n"
 msgstr "Kann Knoten-Kennung »%s« nicht finden.\n"
 
-#: ../src/main.cpp:264
+#: ../src/main.cpp:265
 msgid "Print the Inkscape version number"
 msgstr "Versionsnummer von Inkscape ausgeben"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:270
 msgid "Do not use X server (only process files from console)"
 msgstr "X-Server nicht verwenden (Dateien nur mittels Konsole verarbeiten)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:275
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr ""
 "Versuche, den X-Server zu verwenden (auch wenn die Umgebungsvariable "
 "»$DISPLAY« nicht gesetzt wurde)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:280
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr ""
 "Angegebene Dokumente öffnen (Optionszeichenkette muss nicht übergeben werden)"
 
-#: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
-#: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
-#: ../src/main.cpp:372 ../src/main.cpp:378
+#: ../src/main.cpp:281 ../src/main.cpp:286 ../src/main.cpp:291
+#: ../src/main.cpp:358 ../src/main.cpp:363 ../src/main.cpp:368
+#: ../src/main.cpp:373 ../src/main.cpp:379
 msgid "FILENAME"
 msgstr "DATEINAME"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:285
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "Dokumente in angegebene Ausgabedatei drucken (verwenden Sie »| Programm« zur "
 "Weiterleitung)"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid "Export document to a PNG file"
 msgstr "Das Dokument in eine PNG-Datei exportieren"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
@@ -8346,11 +8360,11 @@ msgstr ""
 "Auflösung beim Exportieren von Bitmaps und Rasterisierung von Filtern in PS/"
 "EPS/PDF (Vorgabe ist 90)"
 
-#: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:296 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 #, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -8359,22 +8373,22 @@ msgstr ""
 "Exportierter Bereich in SVG-Benutzereinheiten (Vorgabe: gesamte "
 "Zeichenfläche, »0,0« ist die untere linke Ecke)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "x0:y0:x1:y1"
 msgstr "X0:Y0:X1:Y1"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 #, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr ""
 "Exportierter Bereich ist die gesamte Zeichnung, nicht die Zeichenfläche"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 #, fuzzy
 msgid "Exported area is the entire page"
 msgstr "Exportierter Bereich ist die gesamte Zeichenfläche"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -8382,99 +8396,99 @@ msgstr ""
 "Die Fläche für den Export einer Bitmap nach außen auf die nächsten "
 "Ganzzahlen aufrunden (in SVG-Benutzereinheiten)"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Breite der erzeugten Bitmap in Pixeln (überschreibt Export-dpi)"
 
-#: ../src/main.cpp:320
+#: ../src/main.cpp:321
 msgid "WIDTH"
 msgstr "BREITE"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "Höhe der erzeugten Bitmap in Pixeln (überschreibt Export-dpi)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:326
 msgid "HEIGHT"
 msgstr "HÖHE"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:330
 msgid "The ID of the object to export"
 msgstr "Kennung des zu exportierenden Objektes"
 
-#: ../src/main.cpp:330 ../src/main.cpp:423
+#: ../src/main.cpp:331 ../src/main.cpp:424
 msgid "ID"
 msgstr "Kennung"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Nur das Objekt mit der angegebenen Export-ID exportieren, alle anderen "
 "auslassen"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Verwende gespeicherten Dateinamen und DPI-Hinweise zum Exportieren (nur mit "
 "Export-ID)"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 "Hintergrundfarbe der exportierten Bitmap (jede von SVG unterstützte "
 "Farbzeichenkette)"
 
-#: ../src/main.cpp:347
+#: ../src/main.cpp:348
 msgid "COLOR"
 msgstr "FARBE"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:352
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "Hintergrunddeckkraft der exportierten Bitmap (0,0 bis 1,0 oder 1 bis 255)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid "VALUE"
 msgstr "WERT"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:357
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Dokument in reine SVG-Datei exportieren (ohne Sodipodi- oder Inkscape-"
 "Namensräume)"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:362
 msgid "Export document to a PS file"
 msgstr "Das Dokument in eine PS-Datei exportieren"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:367
 msgid "Export document to an EPS file"
 msgstr "Das Dokument in eine EPS-Datei exportieren"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:372
 msgid "Export document to a PDF file"
 msgstr "Das Dokument in eine PDF-Datei exportieren"
 
-#: ../src/main.cpp:377
+#: ../src/main.cpp:378
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Das Dokument in eine EMF-Datei exportieren"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:384
 #, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "Textelemente beim EPS-Export in Pfade umwandeln "
 
-#: ../src/main.cpp:388
+#: ../src/main.cpp:389
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr "Objekte ohne Filter zeichnen, statt Rasterisierung (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:394
+#: ../src/main.cpp:395
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8483,7 +8497,7 @@ msgstr ""
 "Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:400
+#: ../src/main.cpp:401
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8492,7 +8506,7 @@ msgstr ""
 "Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -8501,55 +8515,55 @@ msgstr ""
 "Objektes"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:412
+#: ../src/main.cpp:413
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 "Abfragen der Höhe der Zeichnung oder des mit --query-id angegebenen Objektes"
 
-#: ../src/main.cpp:417
+#: ../src/main.cpp:418
 msgid "List id,x,y,w,h for all objects"
 msgstr "id, x, y, w und h für alle Objekte auflisten"
 
-#: ../src/main.cpp:422
+#: ../src/main.cpp:423
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Objekt-ID-Kennung, dessen Abmessungen abgefragt werden"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:428
+#: ../src/main.cpp:429
 msgid "Print out the extension directory and exit"
 msgstr "Erweiterungsverzeichnis ausgeben und beenden"
 
-#: ../src/main.cpp:433
+#: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Unbenutzte Elemente aus den &lt;defs&gt; des Dokuments entfernen"
 
-#: ../src/main.cpp:438
+#: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Liste die Kennungen von allen Verben in Inkscape"
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:444
 msgid "Verb to call when Inkscape opens."
 msgstr "Aufzurufendes Verb wenn Inkscape startet."
 
-#: ../src/main.cpp:444
+#: ../src/main.cpp:445
 msgid "VERB-ID"
 msgstr "VERB-ID"
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:449
 msgid "Object ID to select when Inkscape opens."
 msgstr "Auszuwählende Objekt-Kennung wenn Inkscape startet."
 
-#: ../src/main.cpp:449
+#: ../src/main.cpp:450
 msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:454
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Inkscape in interaktivem Konsolenmodus starten."
 
-#: ../src/main.cpp:761 ../src/main.cpp:1072
+#: ../src/main.cpp:762 ../src/main.cpp:1088
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11683,7 +11697,7 @@ msgstr "Kleinstes Objekt"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1571
+#: ../src/widgets/desktop-widget.cpp:1573
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Auswahl"
@@ -16049,7 +16063,7 @@ msgstr ""
 "<b>Willkommen zu Inkscape!</b> Formen- und Freihandwerkzeuge erstellen "
 "Objekte; das Auswahlwerkzeug (Pfeil) verschiebt und bearbeitet."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:838
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -16063,11 +16077,11 @@ msgstr ""
 "Wenn Sie schließen, ohne zu speichern, dann gehen Ihre Änderungen verloren."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr "Schließen, _ohne zu speichern"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:894
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -16080,7 +16094,7 @@ msgstr ""
 "\n"
 "Möchten Sie das Dokument als ein Inkscape SVG speichern?"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr "Als _SVG speichern"
 
@@ -18636,22 +18650,22 @@ msgstr ""
 "<b>Willkommen zu Inkscape!</b> Formen- und Freihandwerkzeuge erstellen "
 "Objekte; das Auswahlwerkzeug (Pfeil) verschiebt und bearbeitet."
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (Umriss) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:615
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (Umriss) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:621
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -23250,18 +23264,18 @@ msgstr "Stärke (%):"
 
 #: ../share/extensions/scour.inx.h:1
 #, fuzzy
-msgid "Scalable Vector Graphics"
-msgstr "Skalierbare Vektorgrafik (*.svg)"
+msgid "Optimized SVG (*.svg)"
+msgstr "Inkscape-SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
 #, fuzzy
-msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape-SVG (*.svg)"
+msgid "Optimized SVG Output"
+msgstr "SVG-Ausgabe"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
-msgid "Scoured SVG Output"
-msgstr "SVG-Ausgabe"
+msgid "Scalable Vector Graphics"
+msgstr "Skalierbare Vektorgrafik (*.svg)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 #, fuzzy

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-15 14:35+0200\n"
+"POT-Creation-Date: 2009-08-18 11:37+0200\n"
 "PO-Revision-Date: 2006-11-05 17:47+0100\n"
 "Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -171,6 +171,7 @@ msgstr "चरणहरुको सङ्ख्या"
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
+#: ../share/filters/filters.svg.h:217
 #, fuzzy
 msgid "Overlays"
 msgstr "मिटर"
@@ -1657,7 +1658,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1567
+#: ../src/widgets/desktop-widget.cpp:1569
 msgid "Drawing"
 msgstr "रेखाचित्र"
 
@@ -2124,7 +2125,7 @@ msgstr ""
 msgid "Inner Glow"
 msgstr "भित्रि अर्धव्यास:"
 
-#: ../share/filters/filters.svg.h:214 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
 msgstr ""
 
@@ -2133,13 +2134,26 @@ msgstr ""
 msgid "Soft colors"
 msgstr "रङ प्रतिलिपि बनाउनुहोस्"
 
+#: ../share/filters/filters.svg.h:215
+msgid "Adds a colorizable edges glow inside objects and pictures"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
 msgid "Relief print"
 msgstr "बराबर चौडाइ"
 
 #: ../share/filters/filters.svg.h:216
-msgid "Bevel whith bumps, color flood and complex lighting"
+msgid "Bumps effect with a bevel, color flood and complex lighting"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:217
+#, fuzzy
+msgid "Growing cells"
+msgstr "रेखाचित्र रद्द गरियो"
+
+#: ../share/filters/filters.svg.h:217
+msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -3323,35 +3337,35 @@ msgstr[1] "चयन गरिएको वस्तुहरू नक्कल
 msgid "Export in progress"
 msgstr "निर्यात प्रगतिमा"
 
-#: ../src/dialogs/export.cpp:1083
+#: ../src/dialogs/export.cpp:1084
 #, fuzzy, c-format
 msgid "Exporting %d files"
 msgstr "निर्यात गर्दै %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1123 ../src/dialogs/export.cpp:1196
+#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "फाइलनाम %s मा निर्यात गर्न सकेन ।\n"
 
-#: ../src/dialogs/export.cpp:1152
+#: ../src/dialogs/export.cpp:1168
 msgid "You have to enter a filename"
 msgstr "तपाईँलाई फाइलनाम प्रविष्ट गर्नु पर्दछ"
 
-#: ../src/dialogs/export.cpp:1157
+#: ../src/dialogs/export.cpp:1173
 msgid "The chosen area to be exported is invalid"
 msgstr "निर्यात गर्नका लागि रोजिएको क्षेत्र अवैध हो"
 
-#: ../src/dialogs/export.cpp:1166
+#: ../src/dialogs/export.cpp:1182
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s डाइरेक्टरी अवस्थित छैन वा यो डाइरेक्टरी होइन ।\n"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1197
 #, fuzzy, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "निर्यात गर्दै %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1304 ../src/dialogs/export.cpp:1335
+#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
 msgid "Select a filename for exporting"
 msgstr "निर्यात गर्नका लागि फाइलनाम चयन गर्नुहोस्"
 
@@ -7206,7 +7220,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1563
+#: ../src/widgets/desktop-widget.cpp:1565
 msgid "Page"
 msgstr "पृष्ठ"
 
@@ -8513,49 +8527,49 @@ msgstr ""
 msgid "Unable to find node ID: '%s'\n"
 msgstr ""
 
-#: ../src/main.cpp:264
+#: ../src/main.cpp:265
 msgid "Print the Inkscape version number"
 msgstr "Inkscape संस्करण नम्बर मुद्रण गर्नुहोस्"
 
-#: ../src/main.cpp:269
+#: ../src/main.cpp:270
 msgid "Do not use X server (only process files from console)"
 msgstr "एक्स सर्भर प्रयोग नगर्नुहोस् (कन्सोल बाट केवल प्रक्रिया फाइलहरू मात्र)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:275
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "X सर्भर प्रयोग गर्न प्रयास गर्नुहोस् ( यदि $DISPLAY सेट छैन भने पनि)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:280
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "निर्दृष्ट गरिएको कागजात(हरू) खोल्नुहोस् (विकल्प स्ट्रिङ्हरू छोडिन सक्दछ)"
 
-#: ../src/main.cpp:280 ../src/main.cpp:285 ../src/main.cpp:290
-#: ../src/main.cpp:357 ../src/main.cpp:362 ../src/main.cpp:367
-#: ../src/main.cpp:372 ../src/main.cpp:378
+#: ../src/main.cpp:281 ../src/main.cpp:286 ../src/main.cpp:291
+#: ../src/main.cpp:358 ../src/main.cpp:363 ../src/main.cpp:368
+#: ../src/main.cpp:373 ../src/main.cpp:379
 msgid "FILENAME"
 msgstr "FILENAME"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:285
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "निर्दृष्ट गरिएको निर्गत फाइलमा कागजात(हरू) मुद्रण गर्नुहोस् (पाइपका लागि '| कार्यक्रम' "
 "प्रयोग गर्नुहोस्)"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:290
 msgid "Export document to a PNG file"
 msgstr "PNG फाइलमा कागजात निर्यात गर्नुहोस्"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:295
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:296 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:300
 #, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -8564,21 +8578,21 @@ msgstr ""
 "SVG प्रयोगकर्ता एकाईमा निर्यात गरिएको क्षेत्र (क्यानभास पूर्वनिर्धारित हो; 0,0 तल्लो-"
 "बायाँ कुना हो)"
 
-#: ../src/main.cpp:300
+#: ../src/main.cpp:301
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:305
 #, fuzzy
 msgid "Exported area is the entire drawing (not page)"
 msgstr "निर्यात गरिएको क्षेत्र सम्पूर्ण रेखाचित्र हो (क्यानभास होइन)"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:310
 #, fuzzy
 msgid "Exported area is the entire page"
 msgstr "निर्यात गरिएको क्षेत्र सम्पूर्ण क्यानभास हो"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:315
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -8586,98 +8600,98 @@ msgstr ""
 "नजिकको इन्टिजर मान बाहिरपट्टीको बिटम्याप निर्यात क्षेत्र सटाउनुहोस् (SVG प्रयोगकर्ता "
 "एकाईमा)"
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:320
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "पिक्सेलमा निर्यात गरिएको बिटम्यापको चौडाई (export-dpi अधिलेखन गर्दछ)"
 
-#: ../src/main.cpp:320
+#: ../src/main.cpp:321
 msgid "WIDTH"
 msgstr "WIDTH"
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:325
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "पिक्सेलहरुमा निर्यात गरिएको बिटम्यापको उचाई (export-dpi अधिलेखन गर्दछ)"
 
-#: ../src/main.cpp:325
+#: ../src/main.cpp:326
 msgid "HEIGHT"
 msgstr "HEIGHT"
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:330
 msgid "The ID of the object to export"
 msgstr "निर्यात गर्नका लागि वस्तुको ID"
 
-#: ../src/main.cpp:330 ../src/main.cpp:423
+#: ../src/main.cpp:331 ../src/main.cpp:424
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:336
+#: ../src/main.cpp:337
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "export-id संग केबल वस्तु मात्र निर्यात गर्नुहोस्, अन्य सबै लुकाउनुहोस् (के बल export-id संग "
 "मात्र)"
 
-#: ../src/main.cpp:341
+#: ../src/main.cpp:342
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "निर्यात गर्दा भण्डारण गरिएको फाइलनाम र DPI संकेतहरू प्रयोग गर्नुहोस् (केबल export-id संग "
 "मात्र)"
 
-#: ../src/main.cpp:346
+#: ../src/main.cpp:347
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "निर्यात गरिएको बिटम्यापको पृष्ठभूमिको रङ (कुनै SVG-समर्थित रङ स्ट्रिङ्)"
 
-#: ../src/main.cpp:347
+#: ../src/main.cpp:348
 msgid "COLOR"
 msgstr "रङ"
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:352
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "निर्यात गरिएको बिटम्यापको अस्पष्टता पृष्ठभूमि (या ०.० देखि १.०, वा १ देखि २५५ सम्म)"
 
-#: ../src/main.cpp:352
+#: ../src/main.cpp:353
 msgid "VALUE"
 msgstr "VALUE"
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:357
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "SVG फाइल सादा पार्न कागजात निर्यात गर्नुहोस् (sodipodi वा inkscape नेमस्पेसहरू होइन)"
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:362
 msgid "Export document to a PS file"
 msgstr "PS फाइलमा कागजात निर्यात गर्नुहोस्"
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:367
 msgid "Export document to an EPS file"
 msgstr "EPS फाइलमा कागजात निर्यात गर्नुहोस्"
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:372
 #, fuzzy
 msgid "Export document to a PDF file"
 msgstr "PS फाइलमा कागजात निर्यात गर्नुहोस्"
 
-#: ../src/main.cpp:377
+#: ../src/main.cpp:378
 #, fuzzy
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "EPS फाइलमा कागजात निर्यात गर्नुहोस्"
 
-#: ../src/main.cpp:383
+#: ../src/main.cpp:384
 #, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr "(EPS) निर्यातमा पाठ वस्तुहरुलाई बाटोहरुमा रुपान्तरण गर्नुहोस्"
 
-#: ../src/main.cpp:388
+#: ../src/main.cpp:389
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:394
+#: ../src/main.cpp:395
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8685,7 +8699,7 @@ msgstr ""
 "रेखाचित्रको X समन्वय क्वेरि गर्नुहोस् वा, यदि निर्दृष्ट गरिएमा, वस्तुको --query-id संग"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:400
+#: ../src/main.cpp:401
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -8693,61 +8707,61 @@ msgstr ""
 "रेखाचित्रको Y समन्वय क्वेरि गर्नुहोस् वा, यदि निर्दृष्ट गरिएमा, वस्तुको --query-id संग"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:406
+#: ../src/main.cpp:407
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "रेखाचित्रको चौडाइ क्वेरि गर्नुहोस् वा, यदि निर्दृष्ट गरिएमा, वस्तुको --query-id संग"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:412
+#: ../src/main.cpp:413
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "रेखाचित्रको उचाइ क्वेरि गर्नुहोस् वा, यदि निर्दृष्ट गरिएमा, वस्तुको --query-id संग"
 
-#: ../src/main.cpp:417
+#: ../src/main.cpp:418
 msgid "List id,x,y,w,h for all objects"
 msgstr ""
 
-#: ../src/main.cpp:422
+#: ../src/main.cpp:423
 msgid "The ID of the object whose dimensions are queried"
 msgstr "वस्तुको ID जसको आयामहरू क्वेरि गरियो"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:428
+#: ../src/main.cpp:429
 msgid "Print out the extension directory and exit"
 msgstr "विस्तार डाइरेक्टरी मुद्रण गर्नुहोस् र निस्कनुहोस्"
 
-#: ../src/main.cpp:433
+#: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "कागजातको defs सेक्सन(हरू) बाट प्रयोग नगरिएको परिभाषाहरू हटाउनुहोस्"
 
-#: ../src/main.cpp:438
+#: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr ""
 
-#: ../src/main.cpp:443
+#: ../src/main.cpp:444
 msgid "Verb to call when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:444
+#: ../src/main.cpp:445
 msgid "VERB-ID"
 msgstr ""
 
-#: ../src/main.cpp:448
+#: ../src/main.cpp:449
 msgid "Object ID to select when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:449
+#: ../src/main.cpp:450
 msgid "OBJECT-ID"
 msgstr ""
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:454
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:761 ../src/main.cpp:1072
+#: ../src/main.cpp:762 ../src/main.cpp:1088
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11870,7 +11884,7 @@ msgstr "पाठ वस्तुहरू खोजी गर्नुहोस
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1571
+#: ../src/widgets/desktop-widget.cpp:1573
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "चयन"
@@ -16275,7 +16289,7 @@ msgstr ""
 "<b>Inkscape मा स्वागत छ !</b> वस्तुहरू सिर्जना गर्न आकार वा फ्रिह्यान्ड उपकरणहरू प्रयोग "
 "गर्नुहोस्; तिनिहरुलाई रुपान्तरण गर्न वा सार्न चयनकर्ता (बाँण) प्रयोग गर्नुहोस् ।"
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:838
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -16289,11 +16303,11 @@ msgstr ""
 "यदि तपाईँले बचत नगरिकन बन्द गर्नु भएमा, तपाईँको परिवर्तनहरू छोडिने छन् ।"
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:902
 msgid "Close _without saving"
 msgstr "बचत नगरिकन बन्द गर्नुहोस्"
 
-#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:894
 #, fuzzy, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -16306,7 +16320,7 @@ msgstr ""
 "\n"
 "के तपाईँले सो फाइल अन्य ढाँचामा बचत गर्न चाहनुहुन्छ ?"
 
-#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:905
 msgid "_Save as SVG"
 msgstr ""
 
@@ -18925,22 +18939,22 @@ msgstr ""
 "<b>Inkscape मा स्वागत छ !</b> वस्तुहरू सिर्जना गर्न आकार वा फ्रिह्यान्ड उपकरणहरू प्रयोग "
 "गर्नुहोस्; तिनिहरुलाई रुपान्तरण गर्न वा सार्न चयनकर्ता (बाँण) प्रयोग गर्नुहोस् ।"
 
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:615
 #, fuzzy, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:615
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:619
+#: ../src/widgets/desktop-widget.cpp:621
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:621
+#: ../src/widgets/desktop-widget.cpp:623
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -23714,18 +23728,18 @@ msgstr "चरण लम्बाई (px)"
 
 #: ../share/extensions/scour.inx.h:1
 #, fuzzy
-msgid "Scalable Vector Graphics"
-msgstr "मापनयोग्य भेक्टर ग्राफिक (*.svg)"
+msgid "Optimized SVG (*.svg)"
+msgstr "Inkscape SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
 #, fuzzy
-msgid "Scoured SVG (*.svg)"
-msgstr "Inkscape SVG (*.svg)"
+msgid "Optimized SVG Output"
+msgstr "SVG निर्गत"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
-msgid "Scoured SVG Output"
-msgstr "SVG निर्गत"
+msgid "Scalable Vector Graphics"
+msgstr "मापनयोग्य भेक्टर ग्राफिक (*.svg)"
 
 #: ../share/extensions/sk1_input.inx.h:1
 #, fuzzy
