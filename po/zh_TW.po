@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-18 11:37+0200\n"
-"PO-Revision-Date: 2009-08-15 23:09+0800\n"
+"PO-Revision-Date: 2009-08-19 06:22+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1957,27 +1957,24 @@ msgid "Soft colors"
 msgstr "柔和色彩"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Adds a colorizable edges glow inside objects and pictures"
-msgstr "於內部加入可著色光暈"
+msgstr "於物件和圖片內部加入可著色的邊緣光暈"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Relief print"
 msgstr "凸版版畫"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr "帶有凹凸、填滿顏色和複雜光照的斜角"
+msgstr "帶有斜角、填滿顏色和複雜光照的凹凸效果"
 
 #: ../share/filters/filters.svg.h:217
-#, fuzzy
 msgid "Growing cells"
-msgstr "發光金屬"
+msgstr "成長中的細胞"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
-msgstr ""
+msgstr "隨機圓形的活細胞外觀填充"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -12799,7 +12796,7 @@ msgstr ""
 msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
-msgstr "如果開啟，每一個新被建立的物件將會被選取 (會取消上一個選取區)"
+msgstr "如果開啟，每一個新被建立的物件將會被選取 (會取消選取上一個選取區)"
 
 #. Paint Bucket
 #: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
@@ -13210,7 +13207,7 @@ msgstr "忽略已鎖定的物件和圖層"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Deselect upon layer change"
-msgstr "取消圖層的變更"
+msgstr "取消即將進行的圖層變更"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:742
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -16385,7 +16382,7 @@ msgstr "取消選取 (_E)"
 
 #: ../src/verbs.cpp:2343
 msgid "Deselect any selected objects or nodes"
-msgstr "刪除任何所選之物件或節點"
+msgstr "取消選取任何所選物件或節點"
 
 #: ../src/verbs.cpp:2344
 msgid "_Guides Around Page"
@@ -22104,14 +22101,12 @@ msgid "Strength (%):"
 msgstr "強度 (%)："
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Optimized SVG (*.svg)"
-msgstr "清理過的 SVG (*.svg)"
+msgstr "最佳化的 SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Optimized SVG Output"
-msgstr "清理過的 SVG 輸出"
+msgstr "最佳化的 SVG 輸出"
 
 #: ../share/extensions/scour.inx.h:3
 msgid "Scalable Vector Graphics"
