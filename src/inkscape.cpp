@@ -805,8 +805,10 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
         }
     }
 
-    inkscape_load_menus(inkscape);
-    sp_input_load_from_preferences();
+    if (use_gui) {
+        inkscape_load_menus(inkscape);
+        sp_input_load_from_preferences();
+    }
 
     /* set language for user interface according setting in preferences */
     Glib::ustring ui_language = prefs->getString("/ui/language");
