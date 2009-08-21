@@ -1201,7 +1201,9 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 // pull opposite handle in line with the existing one
             }
         } else if (no_handles) {
-            if (both_segments_are_lines OR both_segments_are_curves) {
+            if (both_segments_are_lines 
+                  OR both_segments_are_curves 
+                  OR one_is_line_but_the_curveside_node_is_selected_and_has_two_handles) {
                 //pull both handles
             } else {
                 // pull the handle opposite to line segment, making node half-smooth
@@ -1212,6 +1214,10 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
         bool n_has_handle = (Geom::L2(node->pos  - node->n.pos) > 1e-6);
         bool p_is_line = sp_node_side_is_line(node, &node->p);
         bool n_is_line = sp_node_side_is_line(node, &node->n);
+
+#define NODE_HAS_P_HANDLE(node) ((Geom::L2(node->pos  - node->p.pos) > 1e-6))
+#define NODE_HAS_N_HANDLE(node) ((Geom::L2(node->pos  - node->n.pos) > 1e-6))
+#define NODE_HAS_BOTH_HANDLES(node) ((Geom::L2(node->pos  - node->n.pos) > 1e-6) && (Geom::L2(node->pos  - node->p.pos) > 1e-6))
 
         if (p_has_handle && n_has_handle) {
             // do nothing, adjust_handles will line them up
@@ -1252,9 +1258,13 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 node->p.pos = node->pos - (len / Geom::L2(node->n.pos - node->pos)) * (node->n.pos - node->pos);
             }
         } else if (!p_has_handle && !n_has_handle) {
-            if ((p_is_line && n_is_line) || (!p_is_line && node->p.other && !n_is_line && node->n.other)) {
-                // no handles, but both segments are either lnes or curves:
-                //pull both handles
+            if ((p_is_line && n_is_line) || (!p_is_line && node->p.other && !n_is_line && node->n.other) || 
+                (n_is_line && node->p.other && node->p.other->selected && NODE_HAS_BOTH_HANDLES(node->p.other)) ||
+                (p_is_line && node->n.other && node->n.other->selected && NODE_HAS_BOTH_HANDLES(node->n.other)) 
+            ) {
+                // no handles, but: both segments are either lines or curves; or: one is line and the
+                // node at the other side is selected (so it was just smoothed too!) and now has both
+                // handles: then pull both handles here
 
                 // convert both to curves:
                 node->code = NR_CURVETO;
