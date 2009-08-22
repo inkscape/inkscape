@@ -28,6 +28,7 @@
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
+#include <2geom/pathvector.h>
 
 #include "document.h"
 #include "sp-ellipse.h"
@@ -184,6 +185,18 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
 /* Can't we use arcto in this method? */
 static void sp_genericellipse_set_shape(SPShape *shape)
 {
+    if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
+        g_warning ("The ellipse shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as ellipse will remove the bad LPE");
+        if (SP_OBJECT_REPR(shape)->attribute("d")) {
+            // unconditionally read the curve from d, if any, to preserve appearance
+            Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
+            SPCurve *cold = new SPCurve(pv);
+            sp_shape_set_curve_insync (shape, cold, TRUE);
+            cold->unref();
+        }
+        return;
+    }
+
     double rx, ry, s, e;
     double x0, y0, x1, y1, x2, y2, x3, y3;
     double len;

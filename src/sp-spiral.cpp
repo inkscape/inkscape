@@ -20,6 +20,7 @@
 #include "svg/svg.h"
 #include "attributes.h"
 #include <2geom/bezier-utils.h>
+#include <2geom/pathvector.h>
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
@@ -418,10 +419,22 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 static void
 sp_spiral_set_shape (SPShape *shape)
 {
+	SPSpiral *spiral = SP_SPIRAL(shape);
+
+    if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
+        g_warning ("The spiral shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as spiral will remove the bad LPE");
+        if (SP_OBJECT_REPR(shape)->attribute("d")) {
+            // unconditionally read the curve from d, if any, to preserve appearance
+            Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
+            SPCurve *cold = new SPCurve(pv);
+            sp_shape_set_curve_insync (shape, cold, TRUE);
+            cold->unref();
+        }
+        return;
+    }
+
 	Geom::Point darray[SAMPLE_SIZE + 1];
 	double t;
-
-	SPSpiral *spiral = SP_SPIRAL(shape);
 
 	SP_OBJECT (spiral)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 

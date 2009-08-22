@@ -598,6 +598,24 @@ void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
     sp_lpe_item_cleanup_original_path_recursive(lpeitem);
 }
 
+/** used for shapes so they can see if they should also disable shape calculation and read from d= */
+bool sp_lpe_item_has_broken_path_effect(SPLPEItem *lpeitem)
+{
+    if (lpeitem->path_effect_list->empty())
+        return false;
+
+    // go through the list; if some are unknown or invalid, return true
+    PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+    {
+        LivePathEffectObject *lpeobj = (*it)->lpeobject;
+        if (!lpeobj || !lpeobj->get_lpe())
+            return true;
+    }
+
+    return false;
+}
+
 
 bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem)
 {

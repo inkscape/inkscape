@@ -28,6 +28,8 @@
 #include "xml/repr.h"
 #include "document.h"
 
+#include <2geom/pathvector.h>
+
 #include "sp-star.h"
 
 static void sp_star_class_init (SPStarClass *klass);
@@ -428,6 +430,21 @@ sp_star_set_shape (SPShape *shape)
 {
 	SPStar *star = SP_STAR (shape);
 
+    // perhaps we should convert all our shapes into LPEs without source path
+    // and with knotholders for parameters, then this situation will be handled automatically
+    // by disabling the entire stack (including the shape LPE)
+    if (sp_lpe_item_has_broken_path_effect(SP_LPE_ITEM(shape))) {
+        g_warning ("The star shape has unknown LPE on it! Convert to path to make it editable preserving the appearance; editing it as star will remove the bad LPE");
+        if (SP_OBJECT_REPR(shape)->attribute("d")) {
+            // unconditionally read the curve from d, if any, to preserve appearance
+            Geom::PathVector pv = sp_svg_read_pathv(SP_OBJECT_REPR(shape)->attribute("d"));
+            SPCurve *cold = new SPCurve(pv);
+            sp_shape_set_curve_insync (shape, cold, TRUE);
+            cold->unref();
+        }
+        return;
+    }
+
 	SPCurve *c = new SPCurve ();
 
 	gint sides = star->sides;
@@ -500,7 +517,7 @@ sp_star_set_shape (SPShape *shape)
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
         if (success) {
             sp_shape_set_curve_insync (shape, c_lpe, TRUE);
-        }
+        } 
         c_lpe->unref();
     }
     c->unref();
@@ -587,3 +604,13 @@ sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized)
 	}
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
