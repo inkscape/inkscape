@@ -1084,10 +1084,18 @@ sp_gradient_vector_widget_destroy (GtkObject *object, gpointer /*data*/)
 
     gradient = (GObject*)g_object_get_data (G_OBJECT (object), "gradient");
 
-    if (gradient && SP_OBJECT_REPR(gradient)) {
-        /* Remove signals connected to us */
-        /* fixme: may use _connect_while_alive as well */
+    sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_release_connection");
+    sigc::connection *modified_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_modified_connection");
+
+    if (gradient) {
+        g_assert( release_connection != NULL );
+        g_assert( modified_connection != NULL );
+        release_connection->disconnect();
+        modified_connection->disconnect();
         sp_signal_disconnect_by_data (gradient, object);
+    }
+
+    if (gradient && SP_OBJECT_REPR(gradient)) {
         sp_repr_remove_listener_by_data (SP_OBJECT_REPR(gradient), object);
     }
 }
