@@ -711,11 +711,14 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
             sp_style_read_dash(style, val);
         }
     }
+
     if (!style->stroke_dashoffset_set) {
-        /* fixme */
         val = repr->attribute("stroke-dashoffset");
         if (sp_svg_number_read_d(val, &style->stroke_dash.offset)) {
             style->stroke_dashoffset_set = TRUE;
+        } else if (val && !strcmp(val, "inherit")) {
+            style->stroke_dashoffset_set = TRUE;
+            style->stroke_dashoffset_inherit = TRUE;
         } else {
             style->stroke_dashoffset_set = FALSE;
         }
@@ -1146,9 +1149,11 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
         case SP_PROP_STROKE_DASHOFFSET:
             if (!style->stroke_dashoffset_set) {
-                /* fixme */
                 if (sp_svg_number_read_d(val, &style->stroke_dash.offset)) {
                     style->stroke_dashoffset_set = TRUE;
+                } else if (val && !strcmp(val, "inherit")) {
+                    style->stroke_dashoffset_set = TRUE;
+                    style->stroke_dashoffset_inherit = TRUE;
                 } else {
                     style->stroke_dashoffset_set = FALSE;
                 }
@@ -1526,11 +1531,7 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
         style->stroke_miterlimit.value = parent->stroke_miterlimit.value;
     }
 
-    if (!style->stroke_dasharray_set && parent->stroke_dasharray_set) {
-        /** \todo
-         * This code looks wrong.  Why does the logic differ from the
-         * above properties? Similarly dashoffset below.
-         */
+    if (!style->stroke_dasharray_set || style->stroke_dasharray_inherit) {
         style->stroke_dash.n_dash = parent->stroke_dash.n_dash;
         if (style->stroke_dash.n_dash > 0) {
             style->stroke_dash.dash = g_new(gdouble, style->stroke_dash.n_dash);
@@ -1538,7 +1539,7 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
         }
     }
 
-    if (!style->stroke_dashoffset_set && parent->stroke_dashoffset_set) {
+    if (!style->stroke_dashoffset_set || style->stroke_dashoffset_inherit) {
         style->stroke_dash.offset = parent->stroke_dash.offset;
     }
 
@@ -2100,10 +2101,11 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     }
 
     /* Note: this will need length handling once dasharray_offset supports units. */
-    if (!style->stroke_dashoffset_set && parent->stroke_dashoffset_set) {
+    if ((!style->stroke_dashoffset_set || style->stroke_dashoffset_inherit) && parent->stroke_dashoffset_set && !parent->stroke_dashoffset_inherit) {
         style->stroke_dash.offset = parent->stroke_dash.offset;
         style->stroke_dashoffset_set = parent->stroke_dashoffset_set;
-        /* fixme: we don't currently allow stroke-dashoffset to be `inherit'.  TODO: Try to
+        style->stroke_dashoffset_inherit = parent->stroke_dashoffset_inherit;
+        /* TODO: Try to
          * represent it as a normal SPILength; though will need to do something about existing
          * users of stroke_dash.offset and stroke_dashoffset_set. */
     }
@@ -2326,9 +2328,13 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
 
         /** \todo fixme: */
         if (style->stroke_dashoffset_set) {
-            Inkscape::CSSOStringStream os;
-            os << "stroke-dashoffset:" << style->stroke_dash.offset << ";";
-            p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+            if (style->stroke_dashoffset_inherit) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dashoffset:inherit;");
+            } else {
+                Inkscape::CSSOStringStream os;
+                os << "stroke-dashoffset:" << style->stroke_dash.offset << ";";
+                p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+            }
         } else if (flags == SP_STYLE_FLAG_ALWAYS) {
             p += g_snprintf(p, c + BMAX - p, "stroke-dashoffset:0;");
         }
@@ -2478,9 +2484,13 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
         }
         /* fixme: */
         if (from->stroke_dashoffset_set) {
-            Inkscape::CSSOStringStream os;
-            os << "stroke-dashoffset:" << from->stroke_dash.offset << ";";
-            p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+            if (from->stroke_dashoffset_inherit) {
+                p += g_snprintf(p, c + BMAX - p, "stroke-dashoffset:inherit;");
+            } else {
+                Inkscape::CSSOStringStream os;
+                os << "stroke-dashoffset:" << from->stroke_dash.offset << ";";
+                p += g_strlcpy(p, os.str().c_str(), c + BMAX - p);
+            }
         }
         p += sp_style_write_iscale24(p, c + BMAX - p, "stroke-opacity", &from->stroke_opacity, &to->stroke_opacity, SP_STYLE_FLAG_IFDIFF);
     }
@@ -2558,6 +2568,9 @@ sp_style_clear(SPStyle *style)
     if (style->stroke_dash.dash) {
         g_free(style->stroke_dash.dash);
     }
+
+    style->stroke_dasharray_inherit = FALSE;
+    style->stroke_dashoffset_inherit = FALSE;
 
     /** \todo fixme: Do that text manipulation via parents */
     SPObject *object = style->object;

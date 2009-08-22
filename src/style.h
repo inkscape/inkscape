@@ -336,6 +336,7 @@ struct SPStyle {
     unsigned stroke_dasharray_set : 1;
     unsigned stroke_dasharray_inherit : 1;
     unsigned stroke_dashoffset_set : 1;
+    unsigned stroke_dashoffset_inherit : 1;
     /** stroke-opacity */
     SPIScale24 stroke_opacity;
 
