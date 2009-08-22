@@ -1111,7 +1111,7 @@ public:
  *   [control] constrain inner arg to round per PI/4
  */
 void
-SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
+SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
@@ -1121,10 +1121,16 @@ SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &/
     gdouble   dx = p[Geom::X] - spiral->cx;
     gdouble   dy = p[Geom::Y] - spiral->cy;
 
+    gdouble   moved_y = p[Geom::Y] - origin[Geom::Y];
+
     if (state & GDK_MOD1_MASK) {
         // adjust divergence by vertical drag, relative to rad
-        double new_exp = (spiral->rad + dy)/(spiral->rad);
-        spiral->exp = new_exp > 0? new_exp : 0;
+        if (spiral->rad > 0) {
+            double exp_delta = 0.1*moved_y/(spiral->rad); // arbitrary multiplier to slow it down
+            spiral->exp += exp_delta;
+            if (spiral->exp < 1e-3)
+                spiral->exp = 1e-3;
+        }
     } else {
         // roll/unroll from inside
         gdouble   arg_t0;
