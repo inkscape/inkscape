@@ -201,6 +201,9 @@ Inkscape::XML::calc_abs_doc_base(gchar const *const doc_base)
  */
 void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_base, bool const spns)
 {
+    if (!doc->base)
+        return;
+
     gchar *const old_abs_base = calc_abs_doc_base(doc->base);
     gchar *const new_abs_base = calc_abs_doc_base(new_base);
 
