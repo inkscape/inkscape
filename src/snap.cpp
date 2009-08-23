@@ -393,7 +393,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
         delete items_to_ignore;
     }
 
-    return findBestSnap(p, source_type, sc, true);
+    return findBestSnap(pp, source_type, sc, true);
 }
 
 /**

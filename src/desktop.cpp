@@ -226,11 +226,18 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
         setDisplayModeNormal();
     }
 
+    // The order in which these canvas items are added determines the z-order. It's therefore
+    // important to add the tempgroup (which will contain the snapindicator) before adding the
+    // controls. Only this way one will be able to quickly (before the snap indicator has
+    // disappeared) reselect a node after snapping it. If the z-order is wrong however, this
+    // will not work (the snap indicator is on top of the node handler; is the snapindicator
+    // being selected? or does it intercept some of the events that should have gone to the
+    // node handler? see bug https://bugs.launchpad.net/inkscape/+bug/414142)
     gridgroup = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     guides = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     sketch = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
-    controls = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     tempgroup = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
+    controls = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
 
     /* Push select tool to the bottom of stack */
     /** \todo
