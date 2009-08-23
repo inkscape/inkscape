@@ -161,8 +161,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                             // This item is within snapping range, so record it as a candidate
                             _candidates->push_back(SnapCandidate(item, clip_or_mask, additional_affine));
                             // For debugging: print the id of the candidate to the console
-                            // SPObject *obj = (SPObject*)item;
-                            // std::cout << "Snap candidate added: " << obj->id << std::endl;
+                            //SPObject *obj = (SPObject*)item;
+                            //std::cout << "Snap candidate added: " << obj->id << std::endl;
                         }
                     }
                 }
@@ -554,7 +554,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     // The intersection point of the constraint line with any path,
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
     // The distance between those points is twice the snapping tolerance
-    Geom::Point const p_proj_on_cl = c.projection(p);
+    Geom::Point const p_proj_on_cl = p; // projection has already been taken care of in constrainedSnap in the snapmanager;
     Geom::Point const p_min_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);
     Geom::Point const p_max_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
 

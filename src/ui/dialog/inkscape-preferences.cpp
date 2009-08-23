@@ -230,6 +230,10 @@ void InkscapePreferences::initPageSnapping()
     _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
                              _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
 
+    _snap_mouse_pointer.init( _("Snap the mouse pointer when dragging a constrained knot"), "/options/snapmousepointer/value", false);
+    _page_snapping.add_line( false, "", _snap_mouse_pointer, "",
+                             _("When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"));
+
     this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
 }
 

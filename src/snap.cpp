@@ -378,7 +378,10 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
         items_to_ignore = _items_to_ignore;
     }
 
+
+    // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p);
+    // Then try to snap the projected point
 
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
