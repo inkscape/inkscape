@@ -205,7 +205,7 @@ struct rdf_license_t rdf_licenses [] = {
     },
 
     { N_("FreeArt"),
-      "http://artlibre.org/licence.php/lalgb.html",
+      "http://artlibre.org/licence/lal",
       rdf_license_freeart,
     },
 
