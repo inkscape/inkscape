@@ -8,6 +8,7 @@
 ; #######################################
 !define PRODUCT_NAME "Inkscape"
 !define PRODUCT_VERSION "0.46+devel"
+!define PRODUCT_REVISION 1
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 ;!define DUMMYINSTALL ; Define this to make it build quickly, not including any of the files or code in the sections, for quick testing of features of the installer and development thereof.
@@ -17,6 +18,7 @@
 ; #######################################
 ; MUI 1.67 compatible ------
 SetCompressor /SOLID lzma
+SetCompressorDictSize 32
 RequestExecutionLevel highest
 !include "MUI.nsh"
 !include "LogicLib.nsh"
@@ -117,7 +119,11 @@ ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
 Name              "${PRODUCT_NAME}"
 Caption           "$(lng_Caption)"
 BrandingText      "$(lng_Caption)"
-OutFile           "Inkscape-${PRODUCT_VERSION}-1.win32.exe"
+!ifndef PRODUCT_REVISION
+OutFile           "Inkscape-${PRODUCT_VERSION}.exe"
+!else
+OutFile           "Inkscape-${PRODUCT_VERSION}-${PRODUCT_REVISION}.exe"
+!endif
 InstallDir        "$PROGRAMFILES\Inkscape"
 InstallDirRegKey  HKLM "${PRODUCT_DIR_REGKEY}" ""
 
