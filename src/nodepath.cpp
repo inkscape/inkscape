@@ -1215,8 +1215,6 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
         bool p_is_line = sp_node_side_is_line(node, &node->p);
         bool n_is_line = sp_node_side_is_line(node, &node->n);
 
-#define NODE_HAS_P_HANDLE(node) ((Geom::L2(node->pos  - node->p.pos) > 1e-6))
-#define NODE_HAS_N_HANDLE(node) ((Geom::L2(node->pos  - node->n.pos) > 1e-6))
 #define NODE_HAS_BOTH_HANDLES(node) ((Geom::L2(node->pos  - node->n.pos) > 1e-6) && (Geom::L2(node->pos  - node->p.pos) > 1e-6))
 
         if (p_has_handle && n_has_handle) {
@@ -1319,7 +1317,7 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
     Inkscape::NodePath::Node *node_n = NULL;
 
     if (node->p.other) {
-        if (node->code == NR_LINETO) {
+        if (sp_node_side_is_line(node, &node->p)) {
             sp_node_adjust_handle(node, 1);
             sp_node_adjust_handle(node->p.other, -1);
             node_p = node->p.other;
@@ -1330,7 +1328,7 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
         }
     }
     if (node->n.other) {
-        if (node->n.other->code == NR_LINETO) {
+        if (sp_node_side_is_line(node, &node->n)) {
             sp_node_adjust_handle(node, -1);
             sp_node_adjust_handle(node->n.other, 1);
             node_n = node->n.other;
