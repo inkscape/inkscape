@@ -773,6 +773,7 @@ spiro_iter(spiro_seg *s, bandmat *m, int *perm, double *v, int n)
 	    s[i].ks[k] += dk;
 	    norm += dk * dk;
 	}
+        s[i].ks[0] = 2.0*mod_2pi(s[i].ks[0]/2.0);
     }
     return norm;
 }
