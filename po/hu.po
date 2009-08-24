@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-24 20:59+0200\n"
-"PO-Revision-Date: 2009-08-18 21:10+0200\n"
+"PO-Revision-Date: 2009-08-24 22:57+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -13037,7 +13037,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snap the mouse pointer when dragging a constrained knot"
-msgstr ""
+msgstr "Az egérmutató illesztése korlátozott csomó húzásakor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
@@ -13045,6 +13045,9 @@ msgid ""
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
 msgstr ""
+"Egy csomónak egy korlátozóvonal mentén való húzásakor az egérmutató "
+"pozíciója legyen illesztve - ne a csomónak a korlátozóvonalra eső vetülete "
+"legyen illesztve"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
 msgid "Snapping"
@@ -21162,7 +21165,7 @@ msgstr "Nem található \"%s\" nevű fájl"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
-msgstr ""
+msgstr "Telepítenie kell a UniConvertor programot.\n"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
