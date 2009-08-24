@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-18 11:37+0200\n"
+"POT-Creation-Date: 2009-08-24 20:59+0200\n"
 "PO-Revision-Date: 2008-08-04 17:53+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team:  <it@li.org>\n"
@@ -374,7 +374,7 @@ msgstr ""
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
-#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
+#: ../src/ui/dialog/inkscape-preferences.cpp:486 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "Krajono"
 
@@ -2434,11 +2434,11 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>Nuna tavolo estas blokita</b>. Igu ĝin malblokita por desegni sur ĝi."
 
-#: ../src/desktop.cpp:819
+#: ../src/desktop.cpp:826
 msgid "No previous zoom."
 msgstr "Neniu antaŭa zomo."
 
-#: ../src/desktop.cpp:844
+#: ../src/desktop.cpp:851
 msgid "No next zoom."
 msgstr "Neniu sekva zomo."
 
@@ -3270,8 +3270,8 @@ msgstr "pp_c"
 msgid "_Height:"
 msgstr "Al_to:"
 
-#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "dpi"
 msgstr "ppc"
 
@@ -3324,35 +3324,35 @@ msgstr[1] "La komando eksportas %d elektitajn objektojn"
 msgid "Export in progress"
 msgstr "Eksportante"
 
-#: ../src/dialogs/export.cpp:1084
+#: ../src/dialogs/export.cpp:1101
 #, c-format
 msgid "Exporting %d files"
 msgstr "Eksportante %d dosierojn"
 
-#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
+#: ../src/dialogs/export.cpp:1145 ../src/dialogs/export.cpp:1222
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Estas neeble eksporti per %s dosiernomo. \n"
 
-#: ../src/dialogs/export.cpp:1168
+#: ../src/dialogs/export.cpp:1175
 msgid "You have to enter a filename"
 msgstr "Estas necese enigi dosiernomon"
 
-#: ../src/dialogs/export.cpp:1173
+#: ../src/dialogs/export.cpp:1180
 msgid "The chosen area to be exported is invalid"
 msgstr "La eletkita areo por eksporto ne estas valida"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1195
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "La %s dosierujo ne ekzistas aŭ ĝi ne estas dosierujo.\n"
 
-#: ../src/dialogs/export.cpp:1197
+#: ../src/dialogs/export.cpp:1207
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Eksportante %s (%lu x %lu) "
 
-#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
 msgid "Select a filename for exporting"
 msgstr "Elektu dosiernomon por eksporto"
 
@@ -3876,7 +3876,7 @@ msgstr "Liniointerspaco:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:375 ../src/selection-describer.cpp:69
-#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2522
+#: ../src/ui/dialog/inkscape-preferences.cpp:522 ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/text_braille.inx.h:2
@@ -3928,7 +3928,7 @@ msgid "New text node"
 msgstr "Nova tektonodo"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2241
+#: ../src/nodepath.cpp:2249
 msgid "Duplicate node"
 msgstr "Duplikatu nodon"
 
@@ -4018,8 +4018,8 @@ msgid "_Origin X:"
 msgstr "_Origino X:"
 
 #: ../src/display/canvas-axonomgrid.cpp:398 ../src/display/canvas-grid.cpp:672
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
 msgid "X coordinate of grid origin"
 msgstr "X koordinato de origino de la krado"
 
@@ -4028,8 +4028,8 @@ msgid "O_rigin Y:"
 msgstr "O_rigino Y:"
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
-#: ../src/ui/dialog/inkscape-preferences.cpp:975
-#: ../src/ui/dialog/inkscape-preferences.cpp:996
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
 msgid "Y coordinate of grid origin"
 msgstr "Y koordinato de origino de la krado"
 
@@ -4038,29 +4038,29 @@ msgid "Spacing _Y:"
 msgstr "Interspaco _Y:"
 
 #: ../src/display/canvas-axonomgrid.cpp:402
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Base length of z-axis"
 msgstr "Bazolongo de z-akso"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/widgets/toolbox.cpp:3422
 msgid "Angle X:"
 msgstr "Angulo X:"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 msgid "Angle of x-axis"
 msgstr "Angulo de x-akso"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 #: ../src/widgets/toolbox.cpp:3501
 msgid "Angle Z:"
 msgstr "Angulo Z:"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 msgid "Angle of z-axis"
 msgstr "Angulo de z-akso"
 
@@ -4147,12 +4147,12 @@ msgid "Spacing _X:"
 msgstr "Interspaco _X:"
 
 #: ../src/display/canvas-grid.cpp:676
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 msgid "Distance between vertical grid lines"
 msgstr "Distanco inter vertikalaj linioj de la krado"
 
 #: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
 msgid "Distance between horizontal grid lines"
 msgstr "Distanco inter horizontalaj linioj de la krado"
 
@@ -5035,7 +5035,7 @@ msgid "Hue"
 msgstr "Nuanco"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:830
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:429
@@ -5419,7 +5419,7 @@ msgstr "Vertikala Projekcio"
 #: ../src/extension/internal/filter/filter.cpp:206
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Filters"
 msgstr "Filtriloj"
 
@@ -6134,11 +6134,11 @@ msgstr "Envolvo"
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
-#: ../src/ui/dialog/inkscape-preferences.cpp:255
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:422
+#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6205,7 +6205,7 @@ msgstr "Videblaj Koloroj"
 msgid "Lightness"
 msgstr "Lumeco"
 
-#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Small"
 msgstr "Eta"
 
@@ -6213,7 +6213,7 @@ msgstr "Eta"
 msgid "Medium"
 msgstr "Meza"
 
-#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Large"
 msgstr "Granda"
 
@@ -6517,9 +6517,9 @@ msgstr "Cc"
 msgid "Pixel"
 msgstr "Bildero"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:242
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 #: ../src/ui/widget/selected-style.cpp:289
 msgid "px"
 msgstr "bl"
@@ -6537,7 +6537,7 @@ msgstr "Bl"
 msgid "Percent"
 msgstr "Procento"
 
-#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "%"
 msgstr "%"
 
@@ -6873,8 +6873,8 @@ msgstr "Stilo de dokostango"
 msgid "Dockbar style to show items on it"
 msgstr "La stilo de dokostango por vidigi erojn en ĝi"
 
-#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:545
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Floating"
 msgstr "Flosanta"
 
@@ -7646,7 +7646,7 @@ msgid "Path along which intermediate steps are created."
 msgstr "Strio laŭlonge de kiu estas kurbigenda la originala streko"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#: ../src/ui/dialog/inkscape-preferences.cpp:238
+#: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Steps"
 msgstr "Paŝoj"
 
@@ -8722,20 +8722,20 @@ msgstr ""
 msgid "Stamp"
 msgstr "Stampilo"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
+#: ../src/nodepath.cpp:1671 ../src/nodepath.cpp:1697
 msgid "Move nodes vertically"
 msgstr "Movu vertikale nodojn"
 
-#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
+#: ../src/nodepath.cpp:1673 ../src/nodepath.cpp:1699
 msgid "Move nodes horizontally"
 msgstr "Movu horizontale nodojn"
 
-#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
-#: ../src/nodepath.cpp:3617
+#: ../src/nodepath.cpp:1675 ../src/nodepath.cpp:1701 ../src/nodepath.cpp:1716
+#: ../src/nodepath.cpp:3625
 msgid "Move nodes"
 msgstr "Movu nodoj"
 
-#: ../src/nodepath.cpp:1746
+#: ../src/nodepath.cpp:1754
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8744,55 +8744,55 @@ msgstr ""
 "elklikigi angulon; kun <b>Alt</b> por bloki longon; kun <b>Ŝvkl</b> por "
 "turni ambaŭ prenilojn"
 
-#: ../src/nodepath.cpp:1916
+#: ../src/nodepath.cpp:1924
 msgid "Align nodes"
 msgstr "Alliniigu nodojn"
 
-#: ../src/nodepath.cpp:1978
+#: ../src/nodepath.cpp:1986
 msgid "Distribute nodes"
 msgstr "Distribuo de nodoj"
 
-#: ../src/nodepath.cpp:2016
+#: ../src/nodepath.cpp:2024
 msgid "Add nodes"
 msgstr "Aldonu nodojn"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
+#: ../src/nodepath.cpp:2026 ../src/nodepath.cpp:2128
 msgid "Add node"
 msgstr "Aldonu nodon"
 
-#: ../src/nodepath.cpp:2212
+#: ../src/nodepath.cpp:2220
 msgid "Break path"
 msgstr "Dispecigu strekon"
 
-#: ../src/nodepath.cpp:2268
+#: ../src/nodepath.cpp:2276
 msgid "Close subpath"
 msgstr "Fermo de sub-streko"
 
-#: ../src/nodepath.cpp:2329
+#: ../src/nodepath.cpp:2337
 msgid "Join nodes"
 msgstr "Kunigu nodojn"
 
-#: ../src/nodepath.cpp:2356
+#: ../src/nodepath.cpp:2364
 msgid "Close subpath by segment"
 msgstr "Fermu sub-strekon per segmento"
 
-#: ../src/nodepath.cpp:2410
+#: ../src/nodepath.cpp:2418
 msgid "Join nodes by segment"
 msgstr "Kunigu nodojn per segmento"
 
-#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
+#: ../src/nodepath.cpp:2431 ../src/nodepath.cpp:2446
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Estas necese elekti <b>du finajn nodojn</b> por unuigi."
 
-#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
+#: ../src/nodepath.cpp:2603 ../src/nodepath.cpp:2639 ../src/nodepath.cpp:2643
 msgid "Delete nodes"
 msgstr "Forigu nodojn"
 
-#: ../src/nodepath.cpp:2597
+#: ../src/nodepath.cpp:2605
 msgid "Delete nodes preserving shape"
 msgstr "Forigu nodojn konservante la formon"
 
-#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
+#: ../src/nodepath.cpp:2662 ../src/nodepath.cpp:2676
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -8800,35 +8800,35 @@ msgstr ""
 "Elektu <b>du ne-finajn nodojn</b> en la streko por forigi la rezultantan "
 "segmenton."
 
-#: ../src/nodepath.cpp:2764
+#: ../src/nodepath.cpp:2772
 msgid "Cannot find path between nodes."
 msgstr "Estas neeble trovi strekon inter nodoj."
 
-#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2804 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "Forigu segmenton"
 
-#: ../src/nodepath.cpp:2817
+#: ../src/nodepath.cpp:2825
 msgid "Change segment type"
 msgstr "Ŝanĝu segmentospecon"
 
-#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
+#: ../src/nodepath.cpp:2842 ../src/nodepath.cpp:3579
 msgid "Change node type"
 msgstr "Ŝanĝu nodospecon"
 
-#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3529 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "Forigu nodon"
 
-#: ../src/nodepath.cpp:3863
+#: ../src/nodepath.cpp:3871
 msgid "Retract handle"
 msgstr "Retiru prenilon"
 
-#: ../src/nodepath.cpp:3918
+#: ../src/nodepath.cpp:3926
 msgid "Move node handle"
 msgstr "Movu prenilon de nodo"
 
-#: ../src/nodepath.cpp:4103
+#: ../src/nodepath.cpp:4111
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8839,23 +8839,23 @@ msgstr ""
 "por elklikigi angulon; kun <b>Alt</b> por bloki longon; kun <b>Ŝvkl</b> por "
 "turni ambaŭ prenilojn"
 
-#: ../src/nodepath.cpp:4297
+#: ../src/nodepath.cpp:4305
 msgid "Rotate nodes"
 msgstr "Turnu nodojn"
 
-#: ../src/nodepath.cpp:4412
+#: ../src/nodepath.cpp:4420
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4438
+#: ../src/nodepath.cpp:4446
 msgid "Scale nodes"
 msgstr "Skalu nodojn"
 
-#: ../src/nodepath.cpp:4482
+#: ../src/nodepath.cpp:4490
 msgid "Flip nodes"
 msgstr "Renversu nodojn"
 
-#: ../src/nodepath.cpp:4651
+#: ../src/nodepath.cpp:4659
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8864,43 +8864,43 @@ msgstr ""
 "vertikale elklikigi; kun <b>Strkl+Alt</b> por elklikigi direkton de preniloj"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4884
+#: ../src/nodepath.cpp:4892
 msgid "end node"
 msgstr "fina nodo"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4897
 msgid "cusp"
 msgstr "angula"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4900
 msgid "smooth"
 msgstr "malakra"
 
-#: ../src/nodepath.cpp:4894
+#: ../src/nodepath.cpp:4902
 #, fuzzy
 msgid "auto"
 msgstr "Aranĝo"
 
-#: ../src/nodepath.cpp:4896
+#: ../src/nodepath.cpp:4904
 msgid "symmetric"
 msgstr "simetria"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4910
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "fina nodo, retiriĝita prenilo (trenu kun <b>Ŝvkl</b> por etendi ĝin)"
 
-#: ../src/nodepath.cpp:4904
+#: ../src/nodepath.cpp:4912
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "unu retiriĝita prenilo (trenu kun <b>Ŝvkl</b> por etendi ĝin)"
 
-#: ../src/nodepath.cpp:4907
+#: ../src/nodepath.cpp:4915
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "ambaŭ retiriĝitaj preniloj (trenu kun <b>Ŝvkl</b> por etendi ilin)"
 
-#: ../src/nodepath.cpp:4919
+#: ../src/nodepath.cpp:4927
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -8910,16 +8910,16 @@ msgstr ""
 "por skulpti; uzu <b>sago</b>klavojn por movi nodojn, <b>&lt; &gt;</b> por "
 "skali kaj <b>[ ]</b> por rotacio"
 
-#: ../src/nodepath.cpp:4920
+#: ../src/nodepath.cpp:4928
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Trenu</b> nodon aŭ ĝiaj preniloj; uzu <b>sagoklavoj</b> por movi nodon"
 
-#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
+#: ../src/nodepath.cpp:4954 ../src/nodepath.cpp:4966
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Elektu unuopan objekton por redakti ĝiajn nodojn aŭ prenilojn."
 
-#: ../src/nodepath.cpp:4950
+#: ../src/nodepath.cpp:4958
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8934,18 +8934,18 @@ msgstr[1] ""
 "<b>0</b> de <b>%i</b> elektitaj nodoj. <b>Klaku</b>, premu <b>Ŝvkl kaj "
 "klaku</b> aŭ <b>trenu ĉirkaŭ</b> elektendaj nodoj."
 
-#: ../src/nodepath.cpp:4956
+#: ../src/nodepath.cpp:4964
 msgid "Drag the handles of the object to modify it."
 msgstr "Trenu prenilojn de la objekto por modifi ĝin."
 
-#: ../src/nodepath.cpp:4964
+#: ../src/nodepath.cpp:4972
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> el <b>%i</b> elektita nodo; %s. %s."
 msgstr[1] "<b>%i</b> el <b>%i</b> elektitaj nodoj; %s. %s."
 
-#: ../src/nodepath.cpp:4971
+#: ../src/nodepath.cpp:4979
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8958,7 +8958,7 @@ msgstr[1] ""
 "<b>%i</b> de <b>%i</b> elektitaj nodoj en <b>%i</b> de <b>%i</b> substrekoj. "
 "%s."
 
-#: ../src/nodepath.cpp:4977
+#: ../src/nodepath.cpp:4985
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -9058,7 +9058,7 @@ msgstr ""
 "por teni direkton de radiusoj (sen deformo); uzu <b>Ŝvkl</b> por rondigi; "
 "uzu <b>Alt</b> por aleatorigi"
 
-#: ../src/object-edit.cpp:1266
+#: ../src/object-edit.cpp:1272
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -9066,7 +9066,7 @@ msgstr ""
 "Volvu/malvolvu spiralon <b>interne</b>; uzu <b>Strkl</b> por eklikigi "
 "angulon; uzu <b>Alt</b> por konverĝi/diverĝi"
 
-#: ../src/object-edit.cpp:1269
+#: ../src/object-edit.cpp:1275
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
@@ -9074,11 +9074,11 @@ msgstr ""
 "Volvu/malvolvu spiralon <b>ekstere</b>; uzu <b>Strkl</b> por eklikigi "
 "angulon; uzu <b>Ŝvkl</b> por readapti/rotacii"
 
-#: ../src/object-edit.cpp:1313
+#: ../src/object-edit.cpp:1319
 msgid "Adjust the <b>offset distance</b>"
 msgstr "Aranĝu <b>distanzo de projekcio</b>"
 
-#: ../src/object-edit.cpp:1349
+#: ../src/object-edit.cpp:1355
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Trenu por readapti <b>fakon de moviĝanta teksto</b>"
 
@@ -9191,17 +9191,17 @@ msgstr ""
 msgid "Finishing freehand sketch"
 msgstr "Libermane fino"
 
-#: ../src/pen-context.cpp:665
+#: ../src/pen-context.cpp:662
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por fermi kaj fini la strekon."
 
-#: ../src/pen-context.cpp:675
+#: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "<b>Klaku</b> aŭ <b>klaku kaj trenu</b> por daŭrigi strekon el ĉi punkto."
 
-#: ../src/pen-context.cpp:1271
+#: ../src/pen-context.cpp:1266
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -9210,7 +9210,7 @@ msgstr ""
 "<b>Segmento de kurbo</b>: angulo %3.2f&#176;, distanco %s; kun <b>Strkl</b> "
 "por eklikigi angulojn kun <b>Enigoklavo</b> por fini strekon"
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1267
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -9219,7 +9219,7 @@ msgstr ""
 "<b>Segmento de linio</b>: angulo %3.2f&#176;, distanco %s; kun <b>Strkl</b> "
 "por eklikigi angulojn, kun <b>Enigoklavo</b> por fini strekon"
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1285
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -9228,7 +9228,7 @@ msgstr ""
 "<b>Kurboprenilo</b>: angulo %3.2f&#176; longo %s; kun <b>Strkl</b> por "
 "eklikigi angulojn"
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1307
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
@@ -9237,7 +9237,7 @@ msgstr ""
 "<b>Kurboprenilo, simetria</b>: angulo %3.2f&#176;, longo %s; kun <b>Strkl</"
 "b> por eklikigi angulojn, kun <b>Ŝvkl</b> por movi nur ĉi tiun prenilon"
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1308
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -9246,7 +9246,7 @@ msgstr ""
 "<b>Kurboprenilo</b>: angulo %3.2f&#176;, longo %s; kun <b>Strkl</b> por "
 "eklikigi angulojn, kun <b>Ŝvkl</b> por movi nur ĉi tiun prenilon"
 
-#: ../src/pen-context.cpp:1360
+#: ../src/pen-context.cpp:1355
 msgid "Drawing finished"
 msgstr "Desegno finita"
 
@@ -9992,7 +9992,7 @@ msgstr "Cirklo"
 
 #. ellipse
 #: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:76
-#: ../src/ui/dialog/inkscape-preferences.cpp:470 ../src/verbs.cpp:2510
+#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2510
 #: ../src/widgets/toolbox.cpp:3890
 msgid "Ellipse"
 msgstr "Elipse"
@@ -10019,13 +10019,13 @@ msgstr "Plurlinio"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:65
-#: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2506
+#: ../src/ui/dialog/inkscape-preferences.cpp:464 ../src/verbs.cpp:2506
 msgid "Rectangle"
 msgstr "Rektangulo"
 
 #. 3D box
 #: ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:465 ../src/verbs.cpp:2508
+#: ../src/ui/dialog/inkscape-preferences.cpp:469 ../src/verbs.cpp:2508
 msgid "3D Box"
 msgstr "3D Fako"
 
@@ -10042,13 +10042,13 @@ msgstr "Konturstreko"
 
 #. spiral
 #: ../src/selection-describer.cpp:80
-#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2514
+#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2514
 msgid "Spiral"
 msgstr "Spiralo"
 
 #. star
 #: ../src/selection-describer.cpp:82
-#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2512
+#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2512
 #: ../src/widgets/toolbox.cpp:2733
 msgid "Star"
 msgstr "Stelo"
@@ -10263,19 +10263,19 @@ msgstr "<b>Kunligo</b> al %s"
 msgid "<b>Link</b> without URI"
 msgstr "<b>Kunligo</b> sen URI"
 
-#: ../src/sp-ellipse.cpp:489 ../src/sp-ellipse.cpp:866
+#: ../src/sp-ellipse.cpp:502 ../src/sp-ellipse.cpp:879
 msgid "<b>Ellipse</b>"
 msgstr "<b>Elipso</b>"
 
-#: ../src/sp-ellipse.cpp:630
+#: ../src/sp-ellipse.cpp:643
 msgid "<b>Circle</b>"
 msgstr "<b>Cirklo</b>"
 
-#: ../src/sp-ellipse.cpp:861
+#: ../src/sp-ellipse.cpp:874
 msgid "<b>Segment</b>"
 msgstr "<b>Segmento</b>"
 
-#: ../src/sp-ellipse.cpp:863
+#: ../src/sp-ellipse.cpp:876
 msgid "<b>Arc</b>"
 msgstr "<b>Arko</b>"
 
@@ -10585,19 +10585,19 @@ msgstr "<b>Rektangulo</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
-#: ../src/sp-spiral.cpp:324
+#: ../src/sp-spiral.cpp:325
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spiralo</b> je %3f turnoj"
 
-#: ../src/sp-star.cpp:307
+#: ../src/sp-star.cpp:309
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>Stelo</b> je %d vertico"
 msgstr[1] "<b>Stelo</b> je %d verticoj"
 
-#: ../src/sp-star.cpp:311
+#: ../src/sp-star.cpp:313
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -11639,41 +11639,6 @@ msgstr "Agordu ID de objekto"
 msgid "Selection"
 msgstr "Elekto"
 
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:3
-#, fuzzy
-msgid "Dip pen"
-msgstr "Skripto"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:5
-#, fuzzy
-msgid "Marker"
-msgstr "Malheligu plue"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:7
-#, fuzzy
-msgid "Brush"
-msgstr "Malfokuso"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:9
-#, fuzzy
-msgid "Wiggly"
-msgstr "Svingiĝo:"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:11
-msgid "Splotchy"
-msgstr ""
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:13
-#, fuzzy
-msgid "Tracing"
-msgstr "Interspaco"
-
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
 msgstr "Profilnomo:"
@@ -11842,7 +11807,7 @@ msgid "Guides"
 msgstr "Gvidreloj"
 
 #: ../src/ui/dialog/document-properties.cpp:120
-#: ../src/ui/dialog/inkscape-preferences.cpp:1010
+#: ../src/ui/dialog/inkscape-preferences.cpp:1014
 #: ../src/widgets/toolbox.cpp:2163
 msgid "Grids"
 msgstr "Kradoj"
@@ -13176,16 +13141,27 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
+msgid "Snap the mouse pointer when dragging a constrained knot"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
+msgid ""
+"When dragging a knot along a constraint line, then snap the position of the "
+"mouse pointer instead of snapping the projection of the knot onto the "
+"constraint line"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:237
 #, fuzzy
 msgid "Snapping"
 msgstr "Punktoj de elklikiĝo"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:242
+#: ../src/ui/dialog/inkscape-preferences.cpp:246
 msgid "Arrow keys move by:"
 msgstr "La sagoklavoj movas je:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:243
+#: ../src/ui/dialog/inkscape-preferences.cpp:247
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -13194,32 +13170,32 @@ msgstr ""
 "(en bilderoj)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
 msgid "> and < scale by:"
 msgstr "> kaj < skalita je:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:247
+#: ../src/ui/dialog/inkscape-preferences.cpp:251
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "Per premo de > aŭ < vi povas laŭskale aranĝi elekton je ĉi kvanto (en "
 "bilderoj)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 msgid "Inset/Outset by:"
 msgstr "Entrudu/Eltrudu je:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:254
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "La komandoj Entrudu/Eltrudu delokas la strekon je ĉi distanco (en bilderoj)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:251
+#: ../src/ui/dialog/inkscape-preferences.cpp:255
 msgid "Compass-like display of angles"
 msgstr "Kompasoforma vido de anguloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:253
+#: ../src/ui/dialog/inkscape-preferences.cpp:257
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -13229,15 +13205,15 @@ msgstr ""
 "dektroĝira progresio per intervalo 0-360; aliakaze, ili estas videbligitaj "
 "kun 0 al easto kaj kun kontraŭmontrila progresio per intervalo -180~180"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "Rotation snaps every:"
 msgstr "Rotacio elklikiĝas je ĉiu:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "degrees"
 msgstr "gradoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:260
+#: ../src/ui/dialog/inkscape-preferences.cpp:264
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -13245,11 +13221,11 @@ msgstr ""
 "La rotacio per premita Stirklavo elklikiĝas je ĉiu kvanto de gradoj; krome, "
 "per la premo de [ aŭo ] ĝi rotacias je ĉi kvanto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "Zoom in/out by:"
 msgstr "Zomu/Malzomu je:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:263
+#: ../src/ui/dialog/inkscape-preferences.cpp:267
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -13257,29 +13233,29 @@ msgstr ""
 "Zomanta alklako: la +/- klavoj kaj klako de mezobutono zomas kaj malzomasje "
 "ĉi tiu kvanto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:269
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Show selection cue"
 msgstr "Montru sugeston pri elekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "Iu ajn elektita objekto montru sugeston pri elekto (la samo de selektilo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:276
+#: ../src/ui/dialog/inkscape-preferences.cpp:280
 msgid "Enable gradient editing"
 msgstr "Ebligu redaktadon de gradiento"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:281
 msgid "Whether selected objects display gradient editing controls"
 msgstr "La elektita objekto montras regojn por la redaktado de gradiento"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:286
 msgid "Conversion to guides uses edges instead of bounding box"
 msgstr "Konvertado en gvidreloj uzas randojn anstataŭ agrafantaj fakoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:283
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box."
@@ -13288,25 +13264,25 @@ msgstr ""
 "la objekto (imitante la formon de la objekto), kaj ne laŭlonge de la "
 "agrafanta fako."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 msgid "Ctrl+click dot size:"
 msgstr "Strkl+alklaku punktograndon:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 msgid "times current stroke width"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:291
+#: ../src/ui/dialog/inkscape-preferences.cpp:295
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
 "Grando de la punktoj kiuj estas kreitaj per Strkl+alklako (laŭ la nuna larĝo "
 "de streko)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:310
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>Neniu elektita objekto</b> por preni ĝian stilon."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
@@ -13314,23 +13290,23 @@ msgstr ""
 "<b>Pli ol unu elektitaj objektoj.</b> Estas neeble preni stilon el pluraj "
 "objektoj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:348
+#: ../src/ui/dialog/inkscape-preferences.cpp:352
 msgid "Create new objects with:"
 msgstr "Kreu novajn objektojn per:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:350
+#: ../src/ui/dialog/inkscape-preferences.cpp:354
 msgid "Last used style"
 msgstr "Lasta uzata stilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:352
+#: ../src/ui/dialog/inkscape-preferences.cpp:356
 msgid "Apply the style you last set on an object"
 msgstr "Apliku la lastan agorditan stilo de objekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:357
+#: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "This tool's own style:"
 msgstr "Propra stilo de ĉi ilo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:361
+#: ../src/ui/dialog/inkscape-preferences.cpp:365
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -13339,52 +13315,52 @@ msgstr ""
 "estos kreitaj. Uzu suban butonon por agordi tion."
 
 #. style swatch
-#: ../src/ui/dialog/inkscape-preferences.cpp:365
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid "Take from selection"
 msgstr "Prenu el la elekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:370
+#: ../src/ui/dialog/inkscape-preferences.cpp:374
 msgid "This tool's style of new objects"
 msgstr "Stilo de tiu ĉi ilo por novaj objektoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:377
+#: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "Memorigu la stilon de (unua) elektita objekto kiel stilo de ĉi tiu ilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:382
+#: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid "Tools"
 msgstr "Iloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:385
+#: ../src/ui/dialog/inkscape-preferences.cpp:389
 msgid "Bounding box to use:"
 msgstr "Uzenda agrafanta fako:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:386
+#: ../src/ui/dialog/inkscape-preferences.cpp:390
 msgid "Visual bounding box"
 msgstr "Vida agrafanta fako"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:388
+#: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
 msgstr ""
 "Tiu ĉi agrafanta fako entenas strek-larĝon, markilojn, filtrilradojn, ktp."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:389
+#: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "Geometric bounding box"
 msgstr "Geometria agrafanta fako"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:391
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "This bounding box includes only the bare path"
 msgstr "Tiu ĉi agrafanta fako entenas nur simplan strekon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:393
+#: ../src/ui/dialog/inkscape-preferences.cpp:397
 msgid "Conversion to guides:"
 msgstr "Konvertado en gvidrelo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:398
 msgid "Keep objects after conversion to guides"
 msgstr "Tenu <b>objektojn</b> post la konvertado en gvidreloj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion."
@@ -13392,123 +13368,123 @@ msgstr ""
 "Kiam oni konvertas objekton en gvidrelo, la objekto mem ne estos forigita "
 "post la konvertado."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:397
+#: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Treat groups as a single object"
 msgstr "Tenu grupojn kiel sola objekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:399
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:401
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 #, fuzzy
 msgid "Average all sketches"
 msgstr "Meza kvalito"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:402
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Width is in absolute units"
 msgstr "Larĝo estas en absolutaj unitoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Select new path"
 msgstr "Elektu novan strekon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Don't attach connectors to text objects"
 msgstr "Ĝi ne aldonas la konektilojn al tekstaj objektoj"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Selector"
 msgstr "Elektilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:410
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid "When transforming, show:"
 msgstr "Dum la transformo, montru:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/ui/dialog/inkscape-preferences.cpp:415
 msgid "Objects"
 msgstr "Objektoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:413
+#: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Show the actual objects when moving or transforming"
 msgstr "Montru nunan objekton dum la movo aŭ la transformo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid "Box outline"
 msgstr "Fako"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "Montru nur la fakon de la objekton dum la movo aŭ la transformo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:417
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Per-object selection cue:"
 msgstr "Sugesto pri elektado de objekto:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:420
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "No per-object selection indication"
 msgstr "Neniu indiko pri elektado de objekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Mark"
 msgstr "Segno"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr ""
 "Ĉiuj elektitaj objektoj havas diamantoforman segnon en la supra-maldekstra "
 "angulo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:424
+#: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Box"
 msgstr "Fako"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:426
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Each selected object displays its bounding box"
 msgstr "Ĉiuj elektitaj objektoj montras sian fakon"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:429
+#: ../src/ui/dialog/inkscape-preferences.cpp:433
 msgid "Node"
 msgstr "Nodo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Path outline:"
 msgstr "Konturo de la streko:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Path outline color"
 msgstr "Koloro de la konturoj de la streko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Selects the color used for showing the path outline."
 msgstr "Gxi elektas la koloron kiu estos uzata por videbligi la konturojn."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:435
+#: ../src/ui/dialog/inkscape-preferences.cpp:439
 msgid "Path outline flash on mouse-over"
 msgstr "La konturo de la streko brilas kiam la muso estas sur ĝi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "When hovering over a path, briefly flash its outline."
 msgstr "Suerflugante strekon, la konturoj de la streko mallonge brilas."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Suppress path outline flash when one path selected"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Flash time"
 msgstr "Bril-tempo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds). Specify 0 to have the outline shown until mouse leaves the "
@@ -13519,49 +13495,49 @@ msgstr ""
 "brilo kaj la foriron de la muso."
 
 #. Tweak
-#: ../src/ui/dialog/inkscape-preferences.cpp:443 ../src/verbs.cpp:2504
+#: ../src/ui/dialog/inkscape-preferences.cpp:447 ../src/verbs.cpp:2504
 msgid "Tweak"
 msgstr "Korektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:444
+#: ../src/ui/dialog/inkscape-preferences.cpp:448
 #, fuzzy
 msgid "Paint objects with:"
 msgstr "Kreu novajn objektojn per:"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
 #: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "Zomo"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Shapes"
 msgstr "Formoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
 #, fuzzy
 msgid "Sketch mode"
 msgstr "Skizo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch."
 msgstr ""
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:491 ../src/verbs.cpp:2518
+#: ../src/ui/dialog/inkscape-preferences.cpp:495 ../src/verbs.cpp:2518
 msgid "Pen"
 msgstr "Plumo"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:497 ../src/verbs.cpp:2520
+#: ../src/ui/dialog/inkscape-preferences.cpp:501 ../src/verbs.cpp:2520
 msgid "Calligraphy"
 msgstr "Grifelo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -13570,7 +13546,7 @@ msgstr ""
 "sendependaj de zomo; alie la larĝo de plumo dependas de zomo tial ke ĝi "
 "ŝajnas sama por ĉiu zomo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:503
+#: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
@@ -13579,88 +13555,88 @@ msgstr ""
 "antaŭan elektaĵon)"
 
 #. Paint Bucket
-#: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
+#: ../src/ui/dialog/inkscape-preferences.cpp:509 ../src/verbs.cpp:2532
 msgid "Paint Bucket"
 msgstr "Farbujo"
 
 #. Eraser
-#: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
+#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Gumo"
 
 #. LPETool
-#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2538
+#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2538
 #, fuzzy
 msgid "LPE Tool"
 msgstr "Iloj"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:524 ../src/verbs.cpp:2524
+#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2524
 msgid "Gradient"
 msgstr "Gradiento"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2530
+#: ../src/ui/dialog/inkscape-preferences.cpp:532 ../src/verbs.cpp:2530
 msgid "Connector"
 msgstr "Konektilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
 "Se ĝi estas ebligita, la aldonpunktoj de konektilo ne estos montritaj por "
 "tekstobjektoj"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:533 ../src/verbs.cpp:2528
+#: ../src/ui/dialog/inkscape-preferences.cpp:537 ../src/verbs.cpp:2528
 msgid "Dropper"
 msgstr "Eltirilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:540
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
 msgstr "Konservu kaj restarigu dimensiojn de la fenestro por ĉiu dokumento"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:541
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Remember and use last window's geometry"
 msgstr "Konservu kaj uzu dimensiojn de la lastuzita fenestro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:542
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Don't save window geometry"
 msgstr "Ne konservu dimensiojn de la fenestro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:544
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "Dockable"
 msgstr "Alkroĉebla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Dialogs are hidden in taskbar"
 msgstr "Dialogofenestroj estas kaŝitaj en la taskostango"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:552
 msgid "Zoom when window is resized"
 msgstr "Zomu se la fenestro estas readaptita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:553
 msgid "Show close button on dialogs"
 msgstr "Montru fermbutonon en fenestroj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:551
+#: ../src/ui/dialog/inkscape-preferences.cpp:555
 msgid "Normal"
 msgstr "Normala"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:556
 msgid "Aggressive"
 msgstr "Agresiva"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Saving window geometry (size and position):"
 msgstr "Konservu grandon kaj lokiĝon de la fenestro:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:556
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Let the window manager determine placement of all windows"
 msgstr "Lasu fenestradministrilon lokigi ĉiujn fenestrojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
@@ -13668,7 +13644,7 @@ msgstr ""
 "Tenu kaj uzu dimensiojn de la lastuzita fenestro (konservu ilin en la "
 "agordoj de la uzanto)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:564
 msgid ""
 "Save and restore window geometry for each document (saves geometry in the "
 "document)"
@@ -13676,55 +13652,55 @@ msgstr ""
 "Konservu kaj restarigu dimensiojn de la fenestro por ĉiu dokumento (konservu "
 "ilin en la dokumento)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:562
+#: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "Dialog behavior (requires restart):"
 msgstr "Agordilo de agmaniero (estas necese restarti):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "Dialogs on top:"
 msgstr "Fenestroj supre:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:576
 msgid "Dialogs are treated as regular windows"
 msgstr "Dialogfenestroj estas enetenitaj en normalaj fenestroj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:574
+#: ../src/ui/dialog/inkscape-preferences.cpp:578
 msgid "Dialogs stay on top of document windows"
 msgstr "Dialogfenestroj restas super la fenestroj de dokumento"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:576
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "Egale al Normala sed ĝi povus labori pli bone kun kelkaj fenestradministriloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:580
+#: ../src/ui/dialog/inkscape-preferences.cpp:584
 msgid "Dialog Transparency:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:582
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 #, fuzzy
 msgid "Opacity when focused:"
 msgstr "Opakeca kanalo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:584
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 #, fuzzy
 msgid "Opacity when unfocused:"
 msgstr "Opakeca kanalo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:586
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Time of opacity change animation:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:589
+#: ../src/ui/dialog/inkscape-preferences.cpp:593
 msgid "Miscellaneous:"
 msgstr "Diversaĵoj:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:592
+#: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr ""
 "La dialogofenestroj estos kaŝitaj en la taskostango de fenestradministilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:595
+#: ../src/ui/dialog/inkscape-preferences.cpp:599
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -13734,47 +13710,47 @@ msgstr ""
 "areo videbla (ĉi tiu estas defaŭlto kiu estas ŝanĝebla en ĉiu fenestro per "
 "butono supre la dekstra rulumstango)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:597
+#: ../src/ui/dialog/inkscape-preferences.cpp:601
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "Ĉiam dialogfenestroj havas fermbuton (estas necese restarti)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:598
+#: ../src/ui/dialog/inkscape-preferences.cpp:602
 msgid "Windows"
 msgstr "Fenestroj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:603
+#: ../src/ui/dialog/inkscape-preferences.cpp:607
 msgid "Move in parallel"
 msgstr "movitaj paralele"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:605
+#: ../src/ui/dialog/inkscape-preferences.cpp:609
 msgid "Stay unmoved"
 msgstr "Restu senmova"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:607
+#: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "Move according to transform"
 msgstr "Movu rilate al transformo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:609
+#: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid "Are unlinked"
 msgstr "Malkonektitaj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:611
+#: ../src/ui/dialog/inkscape-preferences.cpp:615
 msgid "Are deleted"
 msgstr "Forigitaj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Kiam la originalo moviĝas, la klonoj kaj kunligaĵoj estas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Clones are translated by the same vector as their original."
 msgstr "Klonoj estas transportitaj per la sama vektoro de la originalo."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 msgid "Clones preserve their positions when their original is moved."
 msgstr "Klonoj tenas la iliajn lokiĝojn kiam la originalo estas movita."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:620
+#: ../src/ui/dialog/inkscape-preferences.cpp:624
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -13783,28 +13759,28 @@ msgstr ""
 "Ĉiu klono estas movita rilate al valoro de sia eco transform=. Ekzemple, "
 "rotacita klono estos movita en malsama direkto kompare al sia originalo."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "When the original is deleted, its clones:"
 msgstr "Kiam la originalo estas forigita, la klonoj estas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Orphaned clones are converted to regular objects."
 msgstr "La orfaj klonoj estas konvertitaj en normalaj objektoj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Orphaned clones are deleted along with their original."
 msgstr "La orfaj klonoj estas forigitaj kune kun la iliaj originaloj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "When duplicating original+clones:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 #, fuzzy
 msgid "Relink duplicated clones"
 msgstr "Forigu seriajn klonojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -13812,28 +13788,28 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid "Clones"
 msgstr "Klonoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:639
+#: ../src/ui/dialog/inkscape-preferences.cpp:643
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
 "Kiam ĝi estas ebligita, ĝi uzas pintajn elektitajn objektojn kiel klipa "
 "streko aŭ masko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:641
+#: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Malmarku ĉi tiun por uzi fundajn elektitajn objektojn kiel klipa streko aŭ "
 "masko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:642
+#: ../src/ui/dialog/inkscape-preferences.cpp:646
 msgid "Remove clippath/mask object after applying"
 msgstr "Formovu alkroĉantaj strekojn aŭ maskojn post la aplikado"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -13841,61 +13817,61 @@ msgstr ""
 "Post la aplikado, ĝi formovas el desegno objekton uzatan kiel klipa streko "
 "aŭ masko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:645
+#: ../src/ui/dialog/inkscape-preferences.cpp:649
 msgid "Clippaths and masks"
 msgstr "Alkroĉantaj strekoj kaj maskoj:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 #: ../src/widgets/select-toolbar.cpp:544
 msgid "Scale stroke width"
 msgstr "Skalu larĝon de strekoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:651
+#: ../src/ui/dialog/inkscape-preferences.cpp:655
 msgid "Scale rounded corners in rectangles"
 msgstr "Skalu rondajn angulojn de rektanguloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Transform gradients"
 msgstr "Transformu gradientojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "Transform patterns"
 msgstr "Transformu motivojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:654
+#: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Optimized"
 msgstr "Optimumigita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Preserved"
 msgstr "Protektata"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:658
+#: ../src/ui/dialog/inkscape-preferences.cpp:662
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "Skalante objektojn, ĝi laŭskale aranĝas larĝon de strekoj per sama proporcio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:660
+#: ../src/ui/dialog/inkscape-preferences.cpp:664
 #: ../src/widgets/select-toolbar.cpp:556
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "Skalante rektangulojn, ĝi laŭskale aranĝas radiusojn de rondaj anguloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:662
+#: ../src/ui/dialog/inkscape-preferences.cpp:666
 #: ../src/widgets/select-toolbar.cpp:567
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Transformu gradientojn (de plenigo aŭ de streko) kune kun objektoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:664
+#: ../src/ui/dialog/inkscape-preferences.cpp:668
 #: ../src/widgets/select-toolbar.cpp:578
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Transformu motivojn (de plenigo aŭ de streko) kune kun objektoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:665
+#: ../src/ui/dialog/inkscape-preferences.cpp:669
 msgid "Store transformation:"
 msgstr "Konvervo de transformo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:667
+#: ../src/ui/dialog/inkscape-preferences.cpp:671
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -13903,47 +13879,47 @@ msgstr ""
 "Se estas eble, ĝi aplikas transformojn al objekto sen aldono de la eco "
 "transfom="
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:669
+#: ../src/ui/dialog/inkscape-preferences.cpp:673
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "Ĝi konservas ĉiam transformojn kiel eco transform= de objekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:671
+#: ../src/ui/dialog/inkscape-preferences.cpp:675
 msgid "Transforms"
 msgstr "Transformoj"
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:677
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:681
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Best quality (slowest)"
 msgstr "Plejbona kvalito (plej malrapida)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:679
-#: ../src/ui/dialog/inkscape-preferences.cpp:703
+#: ../src/ui/dialog/inkscape-preferences.cpp:683
+#: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Better quality (slower)"
 msgstr "Plibona kvalito (pli malrapida)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:681
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid "Average quality"
 msgstr "Meza kvalito"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:707
+#: ../src/ui/dialog/inkscape-preferences.cpp:687
+#: ../src/ui/dialog/inkscape-preferences.cpp:711
 msgid "Lower quality (faster)"
 msgstr "Plimalbona kvalito (pli rapida)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 msgid "Lowest quality (fastest)"
 msgstr "Plejmalbona kvalito (plej rapida)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:688
+#: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "Gaussian blur quality for display:"
 msgstr "Kvalito de gaŭsa malfokuso por montri:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:690
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:694
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -13951,38 +13927,38 @@ msgstr ""
 "La plej bona kvalito, tamen la bildigo povus esti tre malrapida kun grandaj "
 "zomoj (la eksportado de bitmapoj uzas ĉiam la plej bonan kvaliton)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:692
-#: ../src/ui/dialog/inkscape-preferences.cpp:716
+#: ../src/ui/dialog/inkscape-preferences.cpp:696
+#: ../src/ui/dialog/inkscape-preferences.cpp:720
 msgid "Better quality, but slower display"
 msgstr "Plibona kvalito, sed pli malrapida bildigo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:694
-#: ../src/ui/dialog/inkscape-preferences.cpp:718
+#: ../src/ui/dialog/inkscape-preferences.cpp:698
+#: ../src/ui/dialog/inkscape-preferences.cpp:722
 msgid "Average quality, acceptable display speed"
 msgstr "Meza kvalito, sed tolerebla rapideco de bildigo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:696
-#: ../src/ui/dialog/inkscape-preferences.cpp:720
+#: ../src/ui/dialog/inkscape-preferences.cpp:700
+#: ../src/ui/dialog/inkscape-preferences.cpp:724
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "Plimalbona kvalito (kelkaj artefaktoj), sed bildigo estas pli rapida"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:698
-#: ../src/ui/dialog/inkscape-preferences.cpp:722
+#: ../src/ui/dialog/inkscape-preferences.cpp:702
+#: ../src/ui/dialog/inkscape-preferences.cpp:726
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 "Plejmalbona kvalito (multaj artefaktoj), sed bildigo estas la plej rapida"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 #, fuzzy
 msgid "Filter effects quality for display:"
 msgstr "Kvalito de gaŭsa malfokuso por montri:"
 
 #. show infobox
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
 msgid "Show filter primitives infobox"
 msgstr "Vidigu ecojn de prafunkcion de filtrilo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid ""
 "Show icons and descriptions for the filter primitives available at the "
 "filter effects dialog."
@@ -13990,43 +13966,43 @@ msgstr ""
 "Ĝi vidigas ikonojn kaj priskribojn por la disponeblaj prafunkcioj de "
 "filtrilo en la fenestro pri filtril-artifikoj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Select in all layers"
 msgstr "Elektu en Ĉiuj tavoloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:736
+#: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Select only within current layer"
 msgstr "Elektu nur en nuna tabulo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:737
+#: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Select in current layer and sublayers"
 msgstr "Elektu en nuna tabulo kaj sub-tavoloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:738
+#: ../src/ui/dialog/inkscape-preferences.cpp:742
 msgid "Ignore hidden objects and layers"
 msgstr "Ignoru kaŝitajn objektojn kaj tavolojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:739
+#: ../src/ui/dialog/inkscape-preferences.cpp:743
 msgid "Ignore locked objects and layers"
 msgstr "Ignoru blokitajn objektojn kaj tavolojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Deselect upon layer change"
 msgstr "Malelektu post ŝanĝo de tavolo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:742
+#: ../src/ui/dialog/inkscape-preferences.cpp:746
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Strkl+A, Tab, Ŝvkl+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Igu la elekton per klavaro labori super objektoj en ĉiuj tavoloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:746
+#: ../src/ui/dialog/inkscape-preferences.cpp:750
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "Igu la elekton per klavaro labori super objektoj nur en ĉi tavolo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -14034,7 +14010,7 @@ msgstr ""
 "Igu la elekton per klavaro labori super objektoj en nuna tavolo kaj ĝiaj sub-"
 "tavoloj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
@@ -14042,7 +14018,7 @@ msgstr ""
 "Malmarku ĉi opcio por ebligi la elekton de kaŝitaj objektoj (pro propra "
 "kaŝiĝo aŭ pro subordo al kaŝita tavolo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
@@ -14050,7 +14026,7 @@ msgstr ""
 "Malmarku ĉi opcio por ebligi la elekton de blokitaj objektoj (pro propra "
 "blokiĝo aŭ pro subordo al blokita tavolo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:755
+#: ../src/ui/dialog/inkscape-preferences.cpp:759
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -14058,24 +14034,24 @@ msgstr ""
 "Malmarku ĉi opcio por teni elektitaj nunajn objektojn dum la ŝanĝoj de nuna "
 "tavolo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Selecting"
 msgstr "Elekto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "Default export resolution:"
 msgstr "Defaŭlta difino por eksporto:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:765
+#: ../src/ui/dialog/inkscape-preferences.cpp:769
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Defaŭlta difino (en punktoj por colo) de bitmapoj en Eksportu dialogfenestro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:767
+#: ../src/ui/dialog/inkscape-preferences.cpp:771
 msgid "Open Clip Art Library Server Name:"
 msgstr "Servilnomo de Biblioteko de Open Clip Art:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:772
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
@@ -14083,157 +14059,157 @@ msgstr ""
 "La nomo de la servilo de la biblioteko de Open Clip Art. Tio estas uzita far "
 "de funkcio -> Importu and Eksportu al OCAL."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:770
+#: ../src/ui/dialog/inkscape-preferences.cpp:774
 msgid "Open Clip Art Library Username:"
 msgstr "Uzantnomo por Biblioteko de Open Clip Art:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
+#: ../src/ui/dialog/inkscape-preferences.cpp:775
 msgid "The username used to log into Open Clip Art Library."
 msgstr "La nomo de la uzanto por aliri la Bibliotekon de Open Clip Art"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:773
+#: ../src/ui/dialog/inkscape-preferences.cpp:777
 msgid "Open Clip Art Library Password:"
 msgstr "Pasvorto por Biblioteko de Open Clip Art:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 msgid "The password used to log into Open Clip Art Library."
 msgstr "La pasvorto uzita por aliri la Bibliotekon de Open Clip Art"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:776
+#: ../src/ui/dialog/inkscape-preferences.cpp:780
 msgid "Import/Export"
 msgstr "Importu/Eksportu"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Perceptual"
 msgstr "Procenta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Relative Colorimetric"
 msgstr "Relativa Kolorimetrio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Absolute Colorimetric"
 msgstr "Absoluta Kolorimetrio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(Notu: la mastrumado de Koloro estis malebligita en tiu ĉi versio)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:834
+#: ../src/ui/dialog/inkscape-preferences.cpp:838
 msgid "Display adjustment"
 msgstr "Aranĝo de la ekrano"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 #, fuzzy, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
 msgstr "La ICC agordaĵo uzenda por kalibrigi la eligon de la ekrano."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:845
+#: ../src/ui/dialog/inkscape-preferences.cpp:849
 msgid "Display profile:"
 msgstr "Agordaĵo de la ekrano:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:854
 msgid "Retrieve profile from display"
 msgstr "Havigu agordaĵon el ekrano"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr "Havigu agordaĵojn el tio kio estas kunigita al ekranoj pere de XICC."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:859
 msgid "Retrieve profiles from those attached to displays."
 msgstr "Havigu agordaĵojn el tio kio estas kunigita al ekranoj."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
 msgid "Display rendering intent:"
 msgstr "Tempro de la ekrano:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "The rendering intent to use to calibrate display output."
 msgstr ""
 "La tempro de bildiĝo kiu estas uzenda por kalibrigi la eligon de la ekrano."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 msgid "Proofing"
 msgstr "Provo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:869
 msgid "Simulate output on screen"
 msgstr "Ŝajnigu eligon en la ekrano"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Simulates output of target device."
 msgstr "Ŝajnigu eligon de cel-aparato."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 msgid "Mark out of gamut colors"
 msgstr "Emfazigu ekster-kolorgamajn kolorojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr "Ĝi emfazigas la kolorojn kiuj estas ekster la kolorgamo de la aparato."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:876
+#: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Out of gamut warning color:"
 msgstr "Averto pri ekster-kolorgamo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:877
+#: ../src/ui/dialog/inkscape-preferences.cpp:881
 msgid "Selects the color used for out of gamut warning."
 msgstr "Ĝi elektas la koloron uzatan por la averto pri ekster-kolorgamo."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:879
+#: ../src/ui/dialog/inkscape-preferences.cpp:883
 msgid "Device profile:"
 msgstr "Agordaĵo de aparato:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "The ICC profile to use to simulate device output."
 msgstr "La ICC agordaĵo uzenda por simuli la eligon de aparato."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:883
+#: ../src/ui/dialog/inkscape-preferences.cpp:887
 msgid "Device rendering intent:"
 msgstr "Tempro de aparato:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid "Black point compensation"
 msgstr "Kompensado de la nigra punkto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Enables black point compensation."
 msgstr "Tio ebligas kompensadon de nigra punkto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:890
+#: ../src/ui/dialog/inkscape-preferences.cpp:894
 msgid "Preserve black"
 msgstr "Tenu la nigron"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(estas necesa LittleCMS 1.15 aŭ pli nova versio)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:897
+#: ../src/ui/dialog/inkscape-preferences.cpp:901
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Tenu K kanalon en trasformadoj CMYK -> CMYK"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:910
+#: ../src/ui/dialog/inkscape-preferences.cpp:914
 msgid "<none>"
 msgstr "<nenio>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:955
+#: ../src/ui/dialog/inkscape-preferences.cpp:959
 msgid "Color management"
 msgstr "Mastrumado de koloro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:960
+#: ../src/ui/dialog/inkscape-preferences.cpp:964
 msgid "Major grid line emphasizing"
 msgstr "Emfazo de majora linio de krado"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:962
+#: ../src/ui/dialog/inkscape-preferences.cpp:966
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr "Ne emfazigu la gvidliniojn kiam oni malzomas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:963
+#: ../src/ui/dialog/inkscape-preferences.cpp:967
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
@@ -14241,87 +14217,87 @@ msgstr ""
 "Se ĝi estas ebligita kaj se oni malzomas, la gvidlinioj aspektos ordinara "
 "anstataŭ emfazita."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:965
+#: ../src/ui/dialog/inkscape-preferences.cpp:969
 msgid "Default grid settings"
 msgstr "Defaŭltaj agordoj de la krado"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:971
-#: ../src/ui/dialog/inkscape-preferences.cpp:992
-#, fuzzy
-msgid "Grid units:"
-msgstr "_Unitoj de la krado:"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
-#, fuzzy
-msgid "Origin X:"
-msgstr "_Origino X:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
 #, fuzzy
+msgid "Grid units:"
+msgstr "_Unitoj de la krado:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
+#, fuzzy
+msgid "Origin X:"
+msgstr "_Origino X:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
+#, fuzzy
 msgid "Origin Y:"
 msgstr "O_rigino Y:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 #, fuzzy
 msgid "Spacing X:"
 msgstr "Interspaco _X:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 #, fuzzy
 msgid "Spacing Y:"
 msgstr "Interspaco _Y:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:981
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1003
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:985
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1007
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 #, fuzzy
 msgid "Grid line color:"
 msgstr "_Koloro de la krado:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 #, fuzzy
 msgid "Color used for normal grid lines"
 msgstr "Koloro uzata por la normalaj linioj de la krado"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:983
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1005
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1009
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 #, fuzzy
 msgid "Major grid line color:"
 msgstr "Koloro de ma_joraj linioj de la krado:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 #, fuzzy
 msgid "Color used for major (highlighted) grid lines"
 msgstr "Koloro de majoraj (emfazitaj) linioj de la krado"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:986
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:990
+#: ../src/ui/dialog/inkscape-preferences.cpp:1012
 #, fuzzy
 msgid "Major grid line every:"
 msgstr "_Majora linio de krado je ĉiu:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:991
 msgid "Show dots instead of lines"
 msgstr "Vidigu punktojn anstataŭ linioj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:992
 #, fuzzy
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr "Se ĝi estas ebligita, ĝi vidigas kradon per punktoj anstataŭ linioj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1015
+#: ../src/ui/dialog/inkscape-preferences.cpp:1019
 msgid "Use named colors"
 msgstr "Uzu nomitajn kolorojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1016
+#: ../src/ui/dialog/inkscape-preferences.cpp:1020
 #, fuzzy
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
@@ -14330,49 +14306,49 @@ msgstr ""
 "Se ĝi estas ebligita, oni skribas la CSS-nomon de la koloro anstataŭ ĝia "
 "nombra valoro."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1018
+#: ../src/ui/dialog/inkscape-preferences.cpp:1022
 #, fuzzy
 msgid "XML formatting"
 msgstr "Informoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1020
+#: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid "Inline attributes"
 msgstr "Entekstigitaj ecoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1021
+#: ../src/ui/dialog/inkscape-preferences.cpp:1025
 msgid "Put attributes on the same line as the element tag"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 #, fuzzy
 msgid "Indent, spaces:"
 msgstr "Spacetoj de alineo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 #, fuzzy
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
 msgstr "La nombro da spacetoj kiuj estos uzataj por la alineo."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1026
+#: ../src/ui/dialog/inkscape-preferences.cpp:1030
 #, fuzzy
 msgid "Path data"
 msgstr "Enmetu strekon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1028
+#: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid "Allow relative coordinates"
 msgstr "Ebligu relativajn koordinatojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1029
+#: ../src/ui/dialog/inkscape-preferences.cpp:1033
 msgid "If set, relative coordinates may be used in path data"
 msgstr "Se ĝi estas ebligita, oni povus uzi relativajn koordinatojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1031
+#: ../src/ui/dialog/inkscape-preferences.cpp:1035
 msgid "Force repeat commands"
 msgstr "Devigu ripeti komandojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1032
+#: ../src/ui/dialog/inkscape-preferences.cpp:1036
 #, fuzzy
 msgid ""
 "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead "
@@ -14381,26 +14357,26 @@ msgstr ""
 "Se ĝi estas ebligita, ĝi devigas ripetadon de la sama komando (nome eligo 'L "
 "1,2 L 3,4' anstataŭe de 'L 1,2 3,4')."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1034
+#: ../src/ui/dialog/inkscape-preferences.cpp:1038
 #, fuzzy
 msgid "Numbers"
 msgstr "Nombro da Nodoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 #, fuzzy
 msgid "Numeric precision:"
 msgstr "Nombra precizeco"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 msgid "How many digits to write after the decimal dot"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 #, fuzzy
 msgid "Minimum exponent:"
 msgstr "Minimuma eksponento"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 #, fuzzy
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
@@ -14409,371 +14385,371 @@ msgstr ""
 "La minimuma grandeco de nombro (10 potencigita je ĉi tiu eksponento), pli "
 "etaj nombroj estos skribitaj kiel nulo."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1042
+#: ../src/ui/dialog/inkscape-preferences.cpp:1046
 #, fuzzy
 msgid "SVG output"
 msgstr "SVG Eligo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 #, fuzzy
 msgid "System default"
 msgstr "Agordu kiel defaŭlto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Albanian (sq)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Amharic (am)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Arabic (ar)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Armenian (hy)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Azerbaijani (az)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 #, fuzzy
 msgid "Basque (eu)"
 msgstr "Mezuro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Belarusian (be)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bulgarian (bg)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bengali (bn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Breton (br)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Catalan (ca)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Valencian Catalan (ca@valencia)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Chinese/China (zh_CN)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Chinese/Taiwan (zh_TW)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Croatian (hr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Czech (cs)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Danish (da)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dutch (nl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dzongkha (dz)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "German (de)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 #, fuzzy
 msgid "Greek (el)"
 msgstr "Verda kanalo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 #, fuzzy
 msgid "English (en)"
 msgstr "Angulo de Plumo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "English/Australia (en_AU)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Canada (en_CA)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Great Britain (en_GB)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Pig Latin (en_US@piglatin)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 #, fuzzy
 msgid "Esperanto (eo)"
 msgstr "Operacisimbolo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Estonian (et)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Finnish (fi)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "French (fr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Irish (ga)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Galician (gl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hebrew (he)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hungarian (hu)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Indonesian (id)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 #, fuzzy
 msgid "Italian (it)"
 msgstr "Kursiva"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Japanese (ja)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Khmer (km)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Kinyarwanda (rw)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Korean (ko)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Lithuanian (lt)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Macedonian (mk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Mongolian (mn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 #, fuzzy
 msgid "Nepali (ne)"
 msgstr "Nova linio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Bokmål (nb)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Nynorsk (nn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Panjabi (pa)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Polish (pl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese (pt)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese/Brazil (pt_BR)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Romanian (ro)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 #, fuzzy
 msgid "Russian (ru)"
 msgstr "Gaŭsa Malfokuso"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian (sr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian in Latin script (sr@latin)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovak (sk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovenian (sl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish (es)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish/Mexico (es_MX)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Swedish (sv)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Thai (th)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Turkish (tr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Ukrainian (uk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Vietnamese (vi)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
+#: ../src/ui/dialog/inkscape-preferences.cpp:1069
 #, fuzzy
 msgid "Language (requires restart):"
 msgstr "Agordilo de agmaniero (estas necese restarti):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1066
+#: ../src/ui/dialog/inkscape-preferences.cpp:1070
 msgid "Set the language for menus and number formats"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
 #, fuzzy
 msgid "Smaller"
 msgstr "Eta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1072
+#: ../src/ui/dialog/inkscape-preferences.cpp:1076
 #, fuzzy
 msgid "Toolbox icon size"
 msgstr "Grandeco de la ikonoj de la ĉefa ilarstango"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1073
+#: ../src/ui/dialog/inkscape-preferences.cpp:1077
 #, fuzzy
 msgid "Set the size for the tool icons (requires restart)"
 msgstr "Ĝi agordas la grandecon de la ĉefa ilarstango (necesas re-startigo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1076
+#: ../src/ui/dialog/inkscape-preferences.cpp:1080
 #, fuzzy
 msgid "Control bar icon size"
 msgstr "Grandeco de la ikonoj de la regilostango"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1077
+#: ../src/ui/dialog/inkscape-preferences.cpp:1081
 #, fuzzy
 msgid ""
 "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr "Ĝi agordas la grandecon de la komandostango (necesas re-startigo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1080
+#: ../src/ui/dialog/inkscape-preferences.cpp:1084
 #, fuzzy
 msgid "Secondary toolbar icon size"
 msgstr "Grandeco de la ikonoj de la ĉefa ilarstango"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1081
+#: ../src/ui/dialog/inkscape-preferences.cpp:1085
 #, fuzzy
 msgid ""
 "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr "Ĝi agordas la grandecon de la dua ilarstango (necesas re-startigo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1084
+#: ../src/ui/dialog/inkscape-preferences.cpp:1088
 msgid "Work-around color sliders not drawing."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1086
+#: ../src/ui/dialog/inkscape-preferences.cpp:1090
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1092
+#: ../src/ui/dialog/inkscape-preferences.cpp:1096
 #, fuzzy
 msgid "Clear list"
 msgstr "Vakigu valorojn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1097
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 #, fuzzy
 msgid "Maximum documents in Open Recent:"
 msgstr "Maks. nombro de ĵusaj dokumentoj:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1098
+#: ../src/ui/dialog/inkscape-preferences.cpp:1102
 #, fuzzy
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
 msgstr "La maksimuma longo de Malfermu Ĵusaj listo en Dosiero menuo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
 msgid "Zoom correction factor (in %):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
+#: ../src/ui/dialog/inkscape-preferences.cpp:1106
 msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
 "display objects in their true sizes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
+#: ../src/ui/dialog/inkscape-preferences.cpp:1108
 #, fuzzy
 msgid "Interface"
 msgstr "Interpolu"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1111
+#: ../src/ui/dialog/inkscape-preferences.cpp:1115
 #, fuzzy
 msgid "Enable autosave (requires restart)"
 msgstr "Agordilo de agmaniero (estas necese restarti):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1112
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
 #, fuzzy
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
@@ -14782,11 +14758,11 @@ msgstr ""
 "Aŭtomata konservado de la nuna dokumento en la disko laŭ difinita "
 "tempointervalo, por redukti perdojn de datumoj en okazo de kraŝoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Interval (in minutes):"
 msgstr "Tempointervalo (en minutoj):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 #, fuzzy
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
@@ -14795,22 +14771,22 @@ msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "filesystem|Path:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 #, fuzzy
 msgid "The directory where autosaves will be written"
 msgstr ""
 "Ĝi agordas la dosierujon en kiu estos skribitaj la mem-konservataj dosieroj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 #, fuzzy
 msgid "Maximum number of autosaves:"
 msgstr "Maks. nombro de aŭtomataj konservoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
@@ -14827,115 +14803,115 @@ msgstr ""
 #. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
 #.
 #. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1136
+#: ../src/ui/dialog/inkscape-preferences.cpp:1140
 #, fuzzy
 msgid "Autosave"
 msgstr "_Aŭtoroj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1150
 msgid "Oversample bitmaps:"
 msgstr "Supersamplado de bitmapoj:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Automatically reload bitmaps"
 msgstr "Mem-reŝargado de bitmapoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 #, fuzzy
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 "Ĝi ebligas la aŭtomatan reŝargon de kunligitaj bildoj kiam ili ŝanĝiĝas en "
 "la disko."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1169
 msgid "Bitmap editor:"
 msgstr "Redaktilo por bitmapo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "Resolution for Create Bitmap Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1172
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 #, fuzzy
 msgid "Bitmaps"
 msgstr "Bitmapo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1230
 #, fuzzy
 msgid "Language:"
 msgstr "Linvo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1234
 msgid "Second language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1238
 #, fuzzy
 msgid "Third language:"
 msgstr "Linvo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1237
+#: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 #, fuzzy
 msgid "Spellcheck"
 msgstr "Elektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "Add label comments to printing output"
 msgstr "Aldonu komentojn al eligo de preso"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14943,11 +14919,11 @@ msgstr ""
 "Kiam ĝi estas aktiva, komento aldoniĝos al eligo de kruda preso, tiel ke la "
 "eligo de preso por objekto estos havos ĝia propra etikedo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Prevent sharing of gradient definitions"
 msgstr "Malhelpu kunhavon de difinoj de gradientoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14958,11 +14934,11 @@ msgstr ""
 "gradientoj tial ke la ŝanĝado de unu objekto efikas ankaŭ por la aliaj kiuj "
 "uzas la saman gradienton"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Simplification threshold:"
 msgstr "Sojlo por simpligo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1278
 #, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
@@ -14973,83 +14949,83 @@ msgstr ""
 "plurfoje per rapida sinsekvo, ĝi agos pli kaj pli agrese; alvokante ĝin "
 "ankoraŭ post paŭzo, tio restarigos defaŭltan sojlon."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 msgid "Latency skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 #, fuzzy
 msgid "(requires restart)"
 msgstr "Agordilo de agmaniero (estas necese restarti):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1280
+#: ../src/ui/dialog/inkscape-preferences.cpp:1284
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1288
+#: ../src/ui/dialog/inkscape-preferences.cpp:1292
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
 #, fuzzy
 msgid "User data: "
 msgstr "Nombra datumo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 #, fuzzy
 msgid "User cache: "
 msgstr "Uzantonomo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "System config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1307
 #, fuzzy
 msgid "System data: "
 msgstr "Agordu kiel defaŭlto"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1306
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "PIXMAP: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1314
 msgid "DATA: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
 #, fuzzy
 msgid "UI: "
 msgstr "_ID: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1323
+#: ../src/ui/dialog/inkscape-preferences.cpp:1327
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 #, fuzzy
 msgid "System info"
 msgstr "Sistemo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 #, fuzzy
 msgid "General system information"
 msgstr "Informoj pri mesaĝoj"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Misc"
 msgstr "Diversaĵoj"
 
@@ -18892,7 +18868,7 @@ msgstr "Koloro de kontrolhalto"
 msgid "Gradient editor"
 msgstr "Redaktilo de gradiento"
 
-#: ../src/widgets/gradient-vector.cpp:1184
+#: ../src/widgets/gradient-vector.cpp:1192
 msgid "Change gradient stop color"
 msgstr "Ŝanĝu koloron de halto de gradiento"
 
@@ -21249,6 +21225,10 @@ msgstr "La dua streko devas havi longecon ĝuste je kvar nodoj."
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "Estas neeble loki dosieron: %s"
+
+#: ../share/extensions/uniconv_output.py:118
+msgid "You need to install the UniConvertor software.\n"
+msgstr ""
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -23895,6 +23875,26 @@ msgstr "Enigo de Vindoza Metadosiero"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Enigo de XAML"
+
+#, fuzzy
+#~ msgid "Dip pen"
+#~ msgstr "Skripto"
+
+#, fuzzy
+#~ msgid "Marker"
+#~ msgstr "Malheligu plue"
+
+#, fuzzy
+#~ msgid "Brush"
+#~ msgstr "Malfokuso"
+
+#, fuzzy
+#~ msgid "Wiggly"
+#~ msgstr "Svingiĝo:"
+
+#, fuzzy
+#~ msgid "Tracing"
+#~ msgstr "Interspaco"
 
 #, fuzzy
 #~ msgid "Burnt edges"

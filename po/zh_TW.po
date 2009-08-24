@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-18 11:37+0200\n"
+"POT-Creation-Date: 2009-08-24 20:59+0200\n"
 "PO-Revision-Date: 2009-08-19 06:22+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -335,7 +335,7 @@ msgstr "偵測物件內的垂直顏色邊緣"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
-#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
+#: ../src/ui/dialog/inkscape-preferences.cpp:486 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "鉛筆"
 
@@ -2239,11 +2239,11 @@ msgstr "<b>目前圖層已隱藏</b>。解除它的隱藏才可以於其上繪�
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>目前圖層已鎖定</b>。解除它的鎖定才可以於其上繪圖。"
 
-#: ../src/desktop.cpp:819
+#: ../src/desktop.cpp:826
 msgid "No previous zoom."
 msgstr "無上一個畫面縮放。"
 
-#: ../src/desktop.cpp:844
+#: ../src/desktop.cpp:851
 msgid "No next zoom."
 msgstr "無下一個畫面縮放。"
 
@@ -3046,8 +3046,8 @@ msgstr "dp_i"
 msgid "_Height:"
 msgstr "高度 (_H)："
 
-#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "dpi"
 msgstr "dpi"
 
@@ -3099,35 +3099,35 @@ msgstr[1] "批次匯出 %d 選取物件"
 msgid "Export in progress"
 msgstr "進行匯出中"
 
-#: ../src/dialogs/export.cpp:1084
+#: ../src/dialogs/export.cpp:1101
 #, c-format
 msgid "Exporting %d files"
 msgstr "正在匯出 %d 檔案"
 
-#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
+#: ../src/dialogs/export.cpp:1145 ../src/dialogs/export.cpp:1222
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "無法匯出至檔案名稱 %s。\n"
 
-#: ../src/dialogs/export.cpp:1168
+#: ../src/dialogs/export.cpp:1175
 msgid "You have to enter a filename"
 msgstr "你必須輸入檔名"
 
-#: ../src/dialogs/export.cpp:1173
+#: ../src/dialogs/export.cpp:1180
 msgid "The chosen area to be exported is invalid"
 msgstr "選取做為匯出的區域無效"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1195
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目錄 %s 不存在或者它並不是一個目錄。\n"
 
-#: ../src/dialogs/export.cpp:1197
+#: ../src/dialogs/export.cpp:1207
 #, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr "正在匯出 %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
 msgid "Select a filename for exporting"
 msgstr "選擇一個檔名以匯出"
 
@@ -3643,7 +3643,7 @@ msgstr "行距："
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:375 ../src/selection-describer.cpp:69
-#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2522
+#: ../src/ui/dialog/inkscape-preferences.cpp:522 ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/text_braille.inx.h:2
@@ -3693,7 +3693,7 @@ msgid "New text node"
 msgstr "新文字節點"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2241
+#: ../src/nodepath.cpp:2249
 msgid "Duplicate node"
 msgstr "再製節點"
 
@@ -3783,8 +3783,8 @@ msgid "_Origin X:"
 msgstr "原點 X (_O)："
 
 #: ../src/display/canvas-axonomgrid.cpp:398 ../src/display/canvas-grid.cpp:672
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
 msgid "X coordinate of grid origin"
 msgstr "格線原點的 X 坐標"
 
@@ -3793,8 +3793,8 @@ msgid "O_rigin Y:"
 msgstr "原點 Y (_R)："
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
-#: ../src/ui/dialog/inkscape-preferences.cpp:975
-#: ../src/ui/dialog/inkscape-preferences.cpp:996
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
 msgid "Y coordinate of grid origin"
 msgstr "格線原點的 Y 坐標"
 
@@ -3803,29 +3803,29 @@ msgid "Spacing _Y:"
 msgstr "間隔 _Y："
 
 #: ../src/display/canvas-axonomgrid.cpp:402
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Base length of z-axis"
 msgstr "z-軸的基本長度"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/widgets/toolbox.cpp:3422
 msgid "Angle X:"
 msgstr "角度 X："
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 msgid "Angle of x-axis"
 msgstr "x-軸的角度"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 #: ../src/widgets/toolbox.cpp:3501
 msgid "Angle Z:"
 msgstr "角度 Z："
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 msgid "Angle of z-axis"
 msgstr "z-軸的角度"
 
@@ -3908,12 +3908,12 @@ msgid "Spacing _X:"
 msgstr "間隔 _X："
 
 #: ../src/display/canvas-grid.cpp:676
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 msgid "Distance between vertical grid lines"
 msgstr "垂直格線之間的距離"
 
 #: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
 msgid "Distance between horizontal grid lines"
 msgstr "水平格線之間的距離"
 
@@ -4732,7 +4732,7 @@ msgid "Hue"
 msgstr "色相"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:830
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:429
@@ -5085,7 +5085,7 @@ msgstr "垂直偏移, px"
 #: ../src/extension/internal/filter/filter.cpp:206
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Filters"
 msgstr "濾鏡"
 
@@ -5782,11 +5782,11 @@ msgstr "盤繞"
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
-#: ../src/ui/dialog/inkscape-preferences.cpp:255
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:422
+#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -5853,7 +5853,7 @@ msgstr "可見色"
 msgid "Lightness"
 msgstr "亮度"
 
-#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Small"
 msgstr "小"
 
@@ -5861,7 +5861,7 @@ msgstr "小"
 msgid "Medium"
 msgstr "中"
 
-#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Large"
 msgstr "大"
 
@@ -6145,9 +6145,9 @@ msgstr "Pc"
 msgid "Pixel"
 msgstr "像素"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:242
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 #: ../src/ui/widget/selected-style.cpp:289
 msgid "px"
 msgstr "px"
@@ -6165,7 +6165,7 @@ msgstr "Px"
 msgid "Percent"
 msgstr "百分比"
 
-#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "%"
 msgstr "%"
 
@@ -6491,8 +6491,8 @@ msgstr "工具欄列的樣式"
 msgid "Dockbar style to show items on it"
 msgstr "顯示項目在工具欄列樣式"
 
-#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:545
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Floating"
 msgstr "浮動式"
 
@@ -7216,7 +7216,7 @@ msgid "Path along which intermediate steps are created."
 msgstr "沿著中間步驟建立路徑。"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#: ../src/ui/dialog/inkscape-preferences.cpp:238
+#: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Steps"
 msgstr "階層數"
 
@@ -8224,20 +8224,20 @@ msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
 msgid "Stamp"
 msgstr "圖章"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
+#: ../src/nodepath.cpp:1671 ../src/nodepath.cpp:1697
 msgid "Move nodes vertically"
 msgstr "垂直地移動節點"
 
-#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
+#: ../src/nodepath.cpp:1673 ../src/nodepath.cpp:1699
 msgid "Move nodes horizontally"
 msgstr "水平地移動節點"
 
-#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
-#: ../src/nodepath.cpp:3617
+#: ../src/nodepath.cpp:1675 ../src/nodepath.cpp:1701 ../src/nodepath.cpp:1716
+#: ../src/nodepath.cpp:3625
 msgid "Move nodes"
 msgstr "移動節點"
 
-#: ../src/nodepath.cpp:1746
+#: ../src/nodepath.cpp:1754
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8245,89 +8245,89 @@ msgstr ""
 "<b>節點控柄</b>：拖曳來形成曲線；按著 <b>Ctrl</b> 來捉取角度；按著 <b>Alt</"
 "b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
-#: ../src/nodepath.cpp:1916
+#: ../src/nodepath.cpp:1924
 msgid "Align nodes"
 msgstr "對齊節點"
 
-#: ../src/nodepath.cpp:1978
+#: ../src/nodepath.cpp:1986
 msgid "Distribute nodes"
 msgstr "分佈節點"
 
-#: ../src/nodepath.cpp:2016
+#: ../src/nodepath.cpp:2024
 msgid "Add nodes"
 msgstr "加入節點"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
+#: ../src/nodepath.cpp:2026 ../src/nodepath.cpp:2128
 msgid "Add node"
 msgstr "加入節點"
 
-#: ../src/nodepath.cpp:2212
+#: ../src/nodepath.cpp:2220
 msgid "Break path"
 msgstr "中斷路徑"
 
-#: ../src/nodepath.cpp:2268
+#: ../src/nodepath.cpp:2276
 msgid "Close subpath"
 msgstr "關閉子路徑"
 
-#: ../src/nodepath.cpp:2329
+#: ../src/nodepath.cpp:2337
 msgid "Join nodes"
 msgstr "合併節點"
 
-#: ../src/nodepath.cpp:2356
+#: ../src/nodepath.cpp:2364
 msgid "Close subpath by segment"
 msgstr "依線段關閉子路徑"
 
-#: ../src/nodepath.cpp:2410
+#: ../src/nodepath.cpp:2418
 msgid "Join nodes by segment"
 msgstr "依線段合併節點"
 
-#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
+#: ../src/nodepath.cpp:2431 ../src/nodepath.cpp:2446
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "為了合併，必需選取<b>兩個末端節點</b>。"
 
-#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
+#: ../src/nodepath.cpp:2603 ../src/nodepath.cpp:2639 ../src/nodepath.cpp:2643
 msgid "Delete nodes"
 msgstr "刪除節點"
 
-#: ../src/nodepath.cpp:2597
+#: ../src/nodepath.cpp:2605
 msgid "Delete nodes preserving shape"
 msgstr "刪除節點時保留形狀"
 
-#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
+#: ../src/nodepath.cpp:2662 ../src/nodepath.cpp:2676
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr "在將要刪除的線段之間的路徑上，選擇<b>兩個非終點節點</b>。"
 
-#: ../src/nodepath.cpp:2764
+#: ../src/nodepath.cpp:2772
 msgid "Cannot find path between nodes."
 msgstr "找不到節點間的路徑"
 
-#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2804 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "刪除線段"
 
-#: ../src/nodepath.cpp:2817
+#: ../src/nodepath.cpp:2825
 msgid "Change segment type"
 msgstr "變更線段類型"
 
-#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
+#: ../src/nodepath.cpp:2842 ../src/nodepath.cpp:3579
 msgid "Change node type"
 msgstr "變更節點型態"
 
-#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3529 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "刪除節點"
 
-#: ../src/nodepath.cpp:3863
+#: ../src/nodepath.cpp:3871
 msgid "Retract handle"
 msgstr "取消控柄"
 
-#: ../src/nodepath.cpp:3918
+#: ../src/nodepath.cpp:3926
 msgid "Move node handle"
 msgstr "移動節點控柄"
 
-#: ../src/nodepath.cpp:4103
+#: ../src/nodepath.cpp:4111
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8337,23 +8337,23 @@ msgstr ""
 "<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s; 按著 <b>Ctrl</b> 來捉取角度；按"
 "著 <b>Alt</b> 來鎖定長度；按著 <b>Shift</b> 來旋轉兩個控柄"
 
-#: ../src/nodepath.cpp:4297
+#: ../src/nodepath.cpp:4305
 msgid "Rotate nodes"
 msgstr "旋轉節點"
 
-#: ../src/nodepath.cpp:4412
+#: ../src/nodepath.cpp:4420
 msgid "Cannot scale nodes when all are at the same location."
 msgstr "所有節點在同一個位置時無法縮放節點。"
 
-#: ../src/nodepath.cpp:4438
+#: ../src/nodepath.cpp:4446
 msgid "Scale nodes"
 msgstr "縮放節點"
 
-#: ../src/nodepath.cpp:4482
+#: ../src/nodepath.cpp:4490
 msgid "Flip nodes"
 msgstr "翻轉節點"
 
-#: ../src/nodepath.cpp:4651
+#: ../src/nodepath.cpp:4659
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8362,42 +8362,42 @@ msgstr ""
 "+Alt</b> 來捉取控柄的方向"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4884
+#: ../src/nodepath.cpp:4892
 msgid "end node"
 msgstr "末端節點"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4897
 msgid "cusp"
 msgstr "尖銳"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4900
 msgid "smooth"
 msgstr "平滑"
 
-#: ../src/nodepath.cpp:4894
+#: ../src/nodepath.cpp:4902
 msgid "auto"
 msgstr "自動"
 
-#: ../src/nodepath.cpp:4896
+#: ../src/nodepath.cpp:4904
 msgid "symmetric"
 msgstr "對稱"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4910
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "終端節點，控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4904
+#: ../src/nodepath.cpp:4912
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "一個控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4907
+#: ../src/nodepath.cpp:4915
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "兩個控柄已縮回 (按著 <b>Shift</b> 並拖曳來延伸)"
 
-#: ../src/nodepath.cpp:4919
+#: ../src/nodepath.cpp:4927
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -8406,15 +8406,15 @@ msgstr ""
 "<b>拖曳</b>節點或節點控柄；<b>Alt+拖曳</b>節點以造型； <b>方向</b>鍵移動節"
 "點；<b>&lt; &gt;</b> 縮放，<b>[ ]</b> 旋轉"
 
-#: ../src/nodepath.cpp:4920
+#: ../src/nodepath.cpp:4928
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "<b>拖曳</b>該節點或它的控柄；用<b>方向鍵</b>移動節點"
 
-#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
+#: ../src/nodepath.cpp:4954 ../src/nodepath.cpp:4966
 msgid "Select a single object to edit its nodes or handles."
 msgstr "選擇單一物件以編輯它的節點或控制點。"
 
-#: ../src/nodepath.cpp:4950
+#: ../src/nodepath.cpp:4958
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8429,18 +8429,18 @@ msgstr[1] ""
 "從 <b>%i</b> 個節點中選取了 <b>0</b> 個。<b>點擊</b>﹑<b>Shift+點擊</b> 或在"
 "節點<b>四周拖曳</b>來選取。"
 
-#: ../src/nodepath.cpp:4956
+#: ../src/nodepath.cpp:4964
 msgid "Drag the handles of the object to modify it."
 msgstr "拖曳物件的控制點來變更它。"
 
-#: ../src/nodepath.cpp:4964
+#: ../src/nodepath.cpp:4972
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。%s。"
 msgstr[1] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。%s。"
 
-#: ../src/nodepath.cpp:4971
+#: ../src/nodepath.cpp:4979
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8451,7 +8451,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>%i</b> / <b>%i</b> 節點已選擇在 <b>%i</b> / <b>%i</b> 子路徑中 %s。"
 
-#: ../src/nodepath.cpp:4977
+#: ../src/nodepath.cpp:4985
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -8542,7 +8542,7 @@ msgstr ""
 "調整星形的<b>基本半徑</b>；按著 <b>Ctrl</b> 以維持星形光芒為放射狀 (無傾斜)；"
 "按著 <b>Shift</b> 使其圓滑；按著 <b>Alt</b> 使其隨機變化"
 
-#: ../src/object-edit.cpp:1266
+#: ../src/object-edit.cpp:1272
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -8550,7 +8550,7 @@ msgstr ""
 "從<b>內部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來捉取角度；按 <b>Alt</b> 來收"
 "斂/發散"
 
-#: ../src/object-edit.cpp:1269
+#: ../src/object-edit.cpp:1275
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
@@ -8558,11 +8558,11 @@ msgstr ""
 "從<b>外部</b>捲動/反捲螺旋形；按 <b>Ctrl</b> 來捉取角度；按 <b>Shift</b> 來縮"
 "放/旋轉"
 
-#: ../src/object-edit.cpp:1313
+#: ../src/object-edit.cpp:1319
 msgid "Adjust the <b>offset distance</b>"
 msgstr "調整<b>偏移距離</b>"
 
-#: ../src/object-edit.cpp:1349
+#: ../src/object-edit.cpp:1355
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "拖曳以改變<b>流動文字框</b>的大小"
 
@@ -8675,16 +8675,16 @@ msgstr ""
 msgid "Finishing freehand sketch"
 msgstr "完成手繪草圖"
 
-#: ../src/pen-context.cpp:665
+#: ../src/pen-context.cpp:662
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>點選</b>或<b>拖曳</b>以關閉與結束路徑。"
 
-#: ../src/pen-context.cpp:675
+#: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr "<b>點選</b>或<b>拖曳</b>以自此點起接續路徑。"
 
-#: ../src/pen-context.cpp:1271
+#: ../src/pen-context.cpp:1266
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -8693,7 +8693,7 @@ msgstr ""
 "<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來捉取角度，"
 "<b>Enter</b> 來結束路徑"
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1267
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -8702,7 +8702,7 @@ msgstr ""
 "<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 來捉取角度，"
 "<b>Enter</b> 來結束路徑"
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1285
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8710,7 +8710,7 @@ msgid ""
 msgstr ""
 "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按 <b>Ctrl</b> 來捉取角度"
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1307
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
@@ -8719,7 +8719,7 @@ msgstr ""
 "<b>曲線控制點，對稱的</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來捉取"
 "角度， 按著 <b>Shift</b> 來只移動這個控制點"
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1308
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8728,7 +8728,7 @@ msgstr ""
 "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 來捉取角度， "
 "按著 <b>Shift</b> 來只移動這個控制點"
 
-#: ../src/pen-context.cpp:1360
+#: ../src/pen-context.cpp:1355
 msgid "Drawing finished"
 msgstr "繪製完成"
 
@@ -9433,7 +9433,7 @@ msgstr "圓"
 
 #. ellipse
 #: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:76
-#: ../src/ui/dialog/inkscape-preferences.cpp:470 ../src/verbs.cpp:2510
+#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2510
 #: ../src/widgets/toolbox.cpp:3890
 msgid "Ellipse"
 msgstr "橢圓"
@@ -9460,13 +9460,13 @@ msgstr "折線"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:65
-#: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2506
+#: ../src/ui/dialog/inkscape-preferences.cpp:464 ../src/verbs.cpp:2506
 msgid "Rectangle"
 msgstr "矩形"
 
 #. 3D box
 #: ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:465 ../src/verbs.cpp:2508
+#: ../src/ui/dialog/inkscape-preferences.cpp:469 ../src/verbs.cpp:2508
 msgid "3D Box"
 msgstr "立方體"
 
@@ -9483,13 +9483,13 @@ msgstr "偏移路徑"
 
 #. spiral
 #: ../src/selection-describer.cpp:80
-#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2514
+#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2514
 msgid "Spiral"
 msgstr "螺旋"
 
 #. star
 #: ../src/selection-describer.cpp:82
-#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2512
+#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2512
 #: ../src/widgets/toolbox.cpp:2733
 msgid "Star"
 msgstr "星形"
@@ -9702,19 +9702,19 @@ msgstr "<b>連結</b> 到 %s"
 msgid "<b>Link</b> without URI"
 msgstr "<b>連結</b>不具 URI"
 
-#: ../src/sp-ellipse.cpp:489 ../src/sp-ellipse.cpp:866
+#: ../src/sp-ellipse.cpp:502 ../src/sp-ellipse.cpp:879
 msgid "<b>Ellipse</b>"
 msgstr "<b>橢圓形</b>"
 
-#: ../src/sp-ellipse.cpp:630
+#: ../src/sp-ellipse.cpp:643
 msgid "<b>Circle</b>"
 msgstr "<b>圓形</b>"
 
-#: ../src/sp-ellipse.cpp:861
+#: ../src/sp-ellipse.cpp:874
 msgid "<b>Segment</b>"
 msgstr "<b>線段</b>"
 
-#: ../src/sp-ellipse.cpp:863
+#: ../src/sp-ellipse.cpp:876
 msgid "<b>Arc</b>"
 msgstr "<b>弧</b>"
 
@@ -10011,19 +10011,19 @@ msgstr "<b>矩形</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
-#: ../src/sp-spiral.cpp:324
+#: ../src/sp-spiral.cpp:325
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "%3f 個彎的<b>螺旋形</b>"
 
-#: ../src/sp-star.cpp:307
+#: ../src/sp-star.cpp:309
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>星形</b>具備 %d 個頂點"
 msgstr[1] "<b>星形</b>具備 %d 個頂點"
 
-#: ../src/sp-star.cpp:311
+#: ../src/sp-star.cpp:313
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -11003,36 +11003,6 @@ msgstr "最小物件"
 msgid "Selection"
 msgstr "選取區"
 
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:3
-msgid "Dip pen"
-msgstr "沾水筆"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:5
-msgid "Marker"
-msgstr "麥克筆"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:7
-msgid "Brush"
-msgstr "筆刷"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:9
-msgid "Wiggly"
-msgstr "波浪"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:11
-msgid "Splotchy"
-msgstr "弄髒"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:13
-msgid "Tracing"
-msgstr "描繪"
-
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
 msgstr "設定檔名稱："
@@ -11195,7 +11165,7 @@ msgid "Guides"
 msgstr "參考線"
 
 #: ../src/ui/dialog/document-properties.cpp:120
-#: ../src/ui/dialog/inkscape-preferences.cpp:1010
+#: ../src/ui/dialog/inkscape-preferences.cpp:1014
 #: ../src/widgets/toolbox.cpp:2163
 msgid "Grids"
 msgstr "格線"
@@ -12424,44 +12394,55 @@ msgstr ""
 "游標的節點優先 (設定為 1 時)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
+msgid "Snap the mouse pointer when dragging a constrained knot"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
+msgid ""
+"When dragging a knot along a constraint line, then snap the position of the "
+"mouse pointer instead of snapping the projection of the knot onto the "
+"constraint line"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:237
 msgid "Snapping"
 msgstr "捉取"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:242
+#: ../src/ui/dialog/inkscape-preferences.cpp:246
 msgid "Arrow keys move by:"
 msgstr "方向鍵移動單位："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:243
+#: ../src/ui/dialog/inkscape-preferences.cpp:247
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
 msgstr "按方向鍵移動選擇物件或節點時用此距離為單位 (單位 px)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
 msgid "> and < scale by:"
 msgstr "> 和 < 縮放增量:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:247
+#: ../src/ui/dialog/inkscape-preferences.cpp:251
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr "按 > 或 < 來依照此增量將選擇區作伸展或縮減 (單位 px)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 msgid "Inset/Outset by:"
 msgstr "內縮/外擴："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:254
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr "內縮與外擴命令以此距離來移置路徑 (單位 px)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:251
+#: ../src/ui/dialog/inkscape-preferences.cpp:255
 msgid "Compass-like display of angles"
 msgstr "類似指南針的角度顯示"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:253
+#: ../src/ui/dialog/inkscape-preferences.cpp:257
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -12470,52 +12451,52 @@ msgstr ""
 "開啟時，會顯示角度 0 於北方﹑0 到 360 的範圍﹑順時鐘為正向；否則會以東方為 0"
 "﹑-180 到 180 的範圍﹑逆時鐘為正向"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "Rotation snaps every:"
 msgstr "每次旋轉捉取幾度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "degrees"
 msgstr "度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:260
+#: ../src/ui/dialog/inkscape-preferences.cpp:264
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
 msgstr "旋轉中按著 Ctrl 每次捉取這麼多角度；同時，按下 [ 或 ] 會以這個量來旋轉"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "Zoom in/out by:"
 msgstr "畫面縮放增加倍數："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:263
+#: ../src/ui/dialog/inkscape-preferences.cpp:267
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
 msgstr "依照這個倍數來點擊畫面縮放工具﹑+/- 鍵以及中鍵的放大與縮小"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:269
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Show selection cue"
 msgstr "顯示選取區提示"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr "是否選取的物件會顯示選擇提示 (如同在選取器之中)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:276
+#: ../src/ui/dialog/inkscape-preferences.cpp:280
 msgid "Enable gradient editing"
 msgstr "啟用漸層編輯"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:281
 msgid "Whether selected objects display gradient editing controls"
 msgstr "是否選取的物件會顯示漸層編輯控制項"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:286
 msgid "Conversion to guides uses edges instead of bounding box"
 msgstr "使用邊緣轉換成參考線而非邊界"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:283
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box."
@@ -12523,45 +12504,45 @@ msgstr ""
 "轉換一個物件為參考線並沿著此物件的之真實邊緣放置 (模仿此物件的形狀)，而非沿著"
 "邊界。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 msgid "Ctrl+click dot size:"
 msgstr "Ctrl+點擊 點的大小："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 msgid "times current stroke width"
 msgstr "乘上邊框寬度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:291
+#: ../src/ui/dialog/inkscape-preferences.cpp:295
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr "按著 Ctrl+點擊 來建立點的大小 (相對於目前的邊框寬度)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:310
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>無選取物件</b>可做為樣式取得來源。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
 msgstr "<b>選取超過一個物件。</b>無法從數個物件取得樣式。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:348
+#: ../src/ui/dialog/inkscape-preferences.cpp:352
 msgid "Create new objects with:"
 msgstr "建立新物件："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:350
+#: ../src/ui/dialog/inkscape-preferences.cpp:354
 msgid "Last used style"
 msgstr "最後使用的風格"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:352
+#: ../src/ui/dialog/inkscape-preferences.cpp:356
 msgid "Apply the style you last set on an object"
 msgstr "套用最近設定物件的風格"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:357
+#: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "This tool's own style:"
 msgstr "此工具的專屬樣式："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:361
+#: ../src/ui/dialog/inkscape-preferences.cpp:365
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -12569,170 +12550,170 @@ msgstr ""
 "每個工具可以儲存它本身的樣式，以套用至新建立的物件。利用下方的按鈕去設定它。"
 
 #. style swatch
-#: ../src/ui/dialog/inkscape-preferences.cpp:365
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid "Take from selection"
 msgstr "從選取區取得"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:370
+#: ../src/ui/dialog/inkscape-preferences.cpp:374
 msgid "This tool's style of new objects"
 msgstr "使用這個工具建立新物件的樣式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:377
+#: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "記住 (第一次) 所選物件的樣式做為此工具的樣式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:382
+#: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid "Tools"
 msgstr "工具"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:385
+#: ../src/ui/dialog/inkscape-preferences.cpp:389
 msgid "Bounding box to use:"
 msgstr "邊界框模式："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:386
+#: ../src/ui/dialog/inkscape-preferences.cpp:390
 msgid "Visual bounding box"
 msgstr "可視邊界框"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:388
+#: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
 msgstr "這個邊界框包含邊框寬度、標記、濾鏡邊界等。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:389
+#: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "Geometric bounding box"
 msgstr "幾何邊界框"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:391
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "This bounding box includes only the bare path"
 msgstr "這個邊界框只包含路徑"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:393
+#: ../src/ui/dialog/inkscape-preferences.cpp:397
 msgid "Conversion to guides:"
 msgstr "轉換成參考線："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:398
 msgid "Keep objects after conversion to guides"
 msgstr "轉成參考線後仍保留物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion."
 msgstr "轉換一個物件成參考線時，轉換之後不要刪除此物件。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:397
+#: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Treat groups as a single object"
 msgstr "將群組視為一個單一物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:399
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately."
 msgstr "在轉換成參考線期間將群組視為一個單一物件比轉換每個分離的子集更精確。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:401
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Average all sketches"
 msgstr "均分全部草圖"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:402
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Width is in absolute units"
 msgstr "寬度為絕對單位"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Select new path"
 msgstr "選取新路徑"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Don't attach connectors to text objects"
 msgstr "不要在文字物件上附加連線器"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Selector"
 msgstr "選取器"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:410
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid "When transforming, show:"
 msgstr "變形時，顯示："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/ui/dialog/inkscape-preferences.cpp:415
 msgid "Objects"
 msgstr "物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:413
+#: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Show the actual objects when moving or transforming"
 msgstr "移動或變形時顯示實際的物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid "Box outline"
 msgstr "外框"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "移動或變形時只顯示物件的外框"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:417
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Per-object selection cue:"
 msgstr "每一物件的選取提示："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:420
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "No per-object selection indication"
 msgstr "沒有每一物件的選取提示"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Mark"
 msgstr "標示"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr "每個選取的物件會有一個菱形的標示在左上角"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:424
+#: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Box"
 msgstr "方框"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:426
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Each selected object displays its bounding box"
 msgstr "每個選取的物件會顯示它的邊界框"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:429
+#: ../src/ui/dialog/inkscape-preferences.cpp:433
 msgid "Node"
 msgstr "節點"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Path outline:"
 msgstr "路徑輪廓："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Path outline color"
 msgstr "路徑輪廓顏色"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Selects the color used for showing the path outline."
 msgstr "顯示路徑輪廓的顏色。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:435
+#: ../src/ui/dialog/inkscape-preferences.cpp:439
 msgid "Path outline flash on mouse-over"
 msgstr "滑鼠經過時路徑輪廓閃爍"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "When hovering over a path, briefly flash its outline."
 msgstr "停留在路徑上時，短暫地閃爍路徑的輪廓。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Suppress path outline flash when one path selected"
 msgstr "選擇一個路徑時禁止路徑外框閃爍"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
 msgstr "如果選擇一個路徑，不會繼續閃爍路徑外框。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Flash time"
 msgstr "閃爍時間"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds). Specify 0 to have the outline shown until mouse leaves the "
@@ -12742,31 +12723,31 @@ msgstr ""
 "輪廓直到滑鼠離開路徑。"
 
 #. Tweak
-#: ../src/ui/dialog/inkscape-preferences.cpp:443 ../src/verbs.cpp:2504
+#: ../src/ui/dialog/inkscape-preferences.cpp:447 ../src/verbs.cpp:2504
 msgid "Tweak"
 msgstr "微調"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:444
+#: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Paint objects with:"
 msgstr "填塗物件："
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
 #: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "縮放畫面"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Shapes"
 msgstr "形狀"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Sketch mode"
 msgstr "草圖模式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch."
@@ -12775,16 +12756,16 @@ msgstr ""
 "果。"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:491 ../src/verbs.cpp:2518
+#: ../src/ui/dialog/inkscape-preferences.cpp:495 ../src/verbs.cpp:2518
 msgid "Pen"
 msgstr "筆"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:497 ../src/verbs.cpp:2520
+#: ../src/ui/dialog/inkscape-preferences.cpp:501 ../src/verbs.cpp:2520
 msgid "Calligraphy"
 msgstr "書法"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -12792,148 +12773,148 @@ msgstr ""
 "如果開啟，筆尖寬度是與畫面縮放無關的絕對單位 (像素)；否則筆尖寬度取決於畫面縮"
 "放以便在不同縮放比例下看起來一樣"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:503
+#: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
 msgstr "如果開啟，每一個新被建立的物件將會被選取 (會取消選取上一個選取區)"
 
 #. Paint Bucket
-#: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
+#: ../src/ui/dialog/inkscape-preferences.cpp:509 ../src/verbs.cpp:2532
 msgid "Paint Bucket"
 msgstr "油漆桶"
 
 #. Eraser
-#: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
+#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "橡皮擦"
 
 #. LPETool
-#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2538
+#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2538
 msgid "LPE Tool"
 msgstr "即時路徑特效工具"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:524 ../src/verbs.cpp:2524
+#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2524
 msgid "Gradient"
 msgstr "漸層"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2530
+#: ../src/ui/dialog/inkscape-preferences.cpp:532 ../src/verbs.cpp:2530
 msgid "Connector"
 msgstr "連接器"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "如果開啟，對於文字物件連線器的附著點將不顯示"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:533 ../src/verbs.cpp:2528
+#: ../src/ui/dialog/inkscape-preferences.cpp:537 ../src/verbs.cpp:2528
 msgid "Dropper"
 msgstr "滴管"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:540
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
 msgstr "針對每一個文件儲存和恢復視窗位置"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:541
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Remember and use last window's geometry"
 msgstr "記住並使用上次的視窗位置"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:542
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Don't save window geometry"
 msgstr "不儲存視窗位置"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:544
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "Dockable"
 msgstr "工具欄式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Dialogs are hidden in taskbar"
 msgstr "對話窗隱藏於工作列"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:552
 msgid "Zoom when window is resized"
 msgstr "隨視窗大小而縮放畫面"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:553
 msgid "Show close button on dialogs"
 msgstr "對話方塊上顯示關閉按鈕"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:551
+#: ../src/ui/dialog/inkscape-preferences.cpp:555
 msgid "Normal"
 msgstr "一般模式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:556
 msgid "Aggressive"
 msgstr "積極模式"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Saving window geometry (size and position):"
 msgstr "儲存視窗位置(大小和位置):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:556
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Let the window manager determine placement of all windows"
 msgstr "讓視窗管理員決定所有視窗的放置"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
 msgstr "記錄並使用最後的視窗位置 (儲存到使用者的偏好設定)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:564
 msgid ""
 "Save and restore window geometry for each document (saves geometry in the "
 "document)"
 msgstr "於每個文件中記錄並恢復視窗位置 (位置儲存到文件裡)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:562
+#: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "Dialog behavior (requires restart):"
 msgstr "對話窗行為 (需要重新啟動)："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "Dialogs on top:"
 msgstr "對話窗置於上層："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:576
 msgid "Dialogs are treated as regular windows"
 msgstr "對話方塊做為一般視窗"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:574
+#: ../src/ui/dialog/inkscape-preferences.cpp:578
 msgid "Dialogs stay on top of document windows"
 msgstr "對話方塊在文件視窗之上"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:576
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Same as Normal but may work better with some window managers"
 msgstr "一般相同但是某些視窗管理器下工作的更好"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:580
+#: ../src/ui/dialog/inkscape-preferences.cpp:584
 msgid "Dialog Transparency:"
 msgstr "對話窗透明度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:582
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 msgid "Opacity when focused:"
 msgstr "工作中不透明度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:584
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 msgid "Opacity when unfocused:"
 msgstr "非工作中不透明度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:586
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Time of opacity change animation:"
 msgstr "不透明度改變動畫時間："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:589
+#: ../src/ui/dialog/inkscape-preferences.cpp:593
 msgid "Miscellaneous:"
 msgstr "其他："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:592
+#: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "是否對話視窗要隱藏於視窗管理程式的工作列"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:595
+#: ../src/ui/dialog/inkscape-preferences.cpp:599
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -12942,47 +12923,47 @@ msgstr ""
 "調整文件視窗大小時縮放圖案，以保持相同區域為可見 (此為預設值，在任何使用右側"
 "捲動軸上方按鈕的視窗中都可以修改)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:597
+#: ../src/ui/dialog/inkscape-preferences.cpp:601
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "對話方塊視窗是否有關閉按鈕 (需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:598
+#: ../src/ui/dialog/inkscape-preferences.cpp:602
 msgid "Windows"
 msgstr "視窗"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:603
+#: ../src/ui/dialog/inkscape-preferences.cpp:607
 msgid "Move in parallel"
 msgstr "平行移動"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:605
+#: ../src/ui/dialog/inkscape-preferences.cpp:609
 msgid "Stay unmoved"
 msgstr "不移動"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:607
+#: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "Move according to transform"
 msgstr "根據變形來移動"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:609
+#: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid "Are unlinked"
 msgstr "已解除連結"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:611
+#: ../src/ui/dialog/inkscape-preferences.cpp:615
 msgid "Are deleted"
 msgstr "已刪除"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "原物件移動時，它的仿製物件與連結偏移："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Clones are translated by the same vector as their original."
 msgstr "仿製物件是由與它們原物件相同的向量所轉譯。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 msgid "Clones preserve their positions when their original is moved."
 msgstr "原物件移動時，仿製物件保留它們的位置。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:620
+#: ../src/ui/dialog/inkscape-preferences.cpp:624
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -12991,27 +12972,27 @@ msgstr ""
 "每個仿製物件根據它的變形來移動= 屬性。舉例來說，旋轉過的仿製物件將會以與其原"
 "物件不同的方向移動。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "When the original is deleted, its clones:"
 msgstr "原物件刪除後，它的仿製物件："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Orphaned clones are converted to regular objects."
 msgstr "被遺棄的仿製物件會被轉換為一般物件。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Orphaned clones are deleted along with their original."
 msgstr "被遺棄的仿製物件會跟著它們的原物件一起被刪除。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "When duplicating original+clones:"
 msgstr "再製 原物件+仿製物件 時："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 msgid "Relink duplicated clones"
 msgstr "重新連結再製的仿製物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -13021,213 +13002,213 @@ msgstr ""
 "製物件到再製的原物件而非之前的原物件"
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid "Clones"
 msgstr "仿製物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:639
+#: ../src/ui/dialog/inkscape-preferences.cpp:643
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr "套用時，使用最上面的已選物件作為剪裁路徑/遮罩"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:641
+#: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr "取消勾選這項將使用底層已選物件做為剪裁路徑或遮罩"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:642
+#: ../src/ui/dialog/inkscape-preferences.cpp:646
 msgid "Remove clippath/mask object after applying"
 msgstr "套用後移除剪裁路徑或遮罩"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr "套用之後，從繪圖中去除做為剪裁路徑或遮罩的物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:645
+#: ../src/ui/dialog/inkscape-preferences.cpp:649
 msgid "Clippaths and masks"
 msgstr "剪裁和遮罩"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 #: ../src/widgets/select-toolbar.cpp:544
 msgid "Scale stroke width"
 msgstr "縮放邊框寬度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:651
+#: ../src/ui/dialog/inkscape-preferences.cpp:655
 msgid "Scale rounded corners in rectangles"
 msgstr "縮放矩形中的圓角"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Transform gradients"
 msgstr "改變漸層"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "Transform patterns"
 msgstr "改變圖樣"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:654
+#: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Optimized"
 msgstr "最佳化"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Preserved"
 msgstr "保存"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:658
+#: ../src/ui/dialog/inkscape-preferences.cpp:662
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "縮放物件時，以相同比例縮放邊框寬度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:660
+#: ../src/ui/dialog/inkscape-preferences.cpp:664
 #: ../src/widgets/select-toolbar.cpp:556
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "縮放矩形時，同時縮放圓角的半徑"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:662
+#: ../src/ui/dialog/inkscape-preferences.cpp:666
 #: ../src/widgets/select-toolbar.cpp:567
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "跟著物件改變漸層 (在填充與邊框部份)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:664
+#: ../src/ui/dialog/inkscape-preferences.cpp:668
 #: ../src/widgets/select-toolbar.cpp:578
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "跟著物件轉換圖樣 (在填充或邊框部份)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:665
+#: ../src/ui/dialog/inkscape-preferences.cpp:669
 msgid "Store transformation:"
 msgstr "儲存變形:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:667
+#: ../src/ui/dialog/inkscape-preferences.cpp:671
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
 msgstr "如果可能，就套用變形到物件而不加上 transform= 屬性"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:669
+#: ../src/ui/dialog/inkscape-preferences.cpp:673
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "總是儲存變形效果做為物件的 transform= 屬性"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:671
+#: ../src/ui/dialog/inkscape-preferences.cpp:675
 msgid "Transforms"
 msgstr "變形"
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:677
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:681
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Best quality (slowest)"
 msgstr "最佳品質 (最慢)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:679
-#: ../src/ui/dialog/inkscape-preferences.cpp:703
+#: ../src/ui/dialog/inkscape-preferences.cpp:683
+#: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Better quality (slower)"
 msgstr "較佳品質 (較慢)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:681
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid "Average quality"
 msgstr "平均品質"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:707
+#: ../src/ui/dialog/inkscape-preferences.cpp:687
+#: ../src/ui/dialog/inkscape-preferences.cpp:711
 msgid "Lower quality (faster)"
 msgstr "較低品質 (較快)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 msgid "Lowest quality (fastest)"
 msgstr "最低品質 (最快)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:688
+#: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "Gaussian blur quality for display:"
 msgstr "高斯模糊顯示品質："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:690
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:694
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
 "最佳品質，但是於高倍畫面縮放時顯示也許會很慢 (點陣圖匯出時自動使用最好品質)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:692
-#: ../src/ui/dialog/inkscape-preferences.cpp:716
+#: ../src/ui/dialog/inkscape-preferences.cpp:696
+#: ../src/ui/dialog/inkscape-preferences.cpp:720
 msgid "Better quality, but slower display"
 msgstr "較佳品質，但是顯示較慢"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:694
-#: ../src/ui/dialog/inkscape-preferences.cpp:718
+#: ../src/ui/dialog/inkscape-preferences.cpp:698
+#: ../src/ui/dialog/inkscape-preferences.cpp:722
 msgid "Average quality, acceptable display speed"
 msgstr "平均品質，可接受的顯示速度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:696
-#: ../src/ui/dialog/inkscape-preferences.cpp:720
+#: ../src/ui/dialog/inkscape-preferences.cpp:700
+#: ../src/ui/dialog/inkscape-preferences.cpp:724
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "較低品質 (某些影像瑕疵)，但是顯示較快"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:698
-#: ../src/ui/dialog/inkscape-preferences.cpp:722
+#: ../src/ui/dialog/inkscape-preferences.cpp:702
+#: ../src/ui/dialog/inkscape-preferences.cpp:726
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "最低品質 (不少的影像瑕疵)，但是顯示最快"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 msgid "Filter effects quality for display:"
 msgstr "濾鏡特效顯示品質："
 
 #. show infobox
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
 msgid "Show filter primitives infobox"
 msgstr "顯示濾鏡基元屬性訊息"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid ""
 "Show icons and descriptions for the filter primitives available at the "
 "filter effects dialog."
 msgstr "於濾鏡特效的對話窗中顯示可用濾鏡基元的圖示和描述。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Select in all layers"
 msgstr "在所有圖層中選擇"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:736
+#: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Select only within current layer"
 msgstr "只在目前圖層中選擇"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:737
+#: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Select in current layer and sublayers"
 msgstr "在目前圖層和子圖層選擇"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:738
+#: ../src/ui/dialog/inkscape-preferences.cpp:742
 msgid "Ignore hidden objects and layers"
 msgstr "忽略已隱藏的物件和圖層"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:739
+#: ../src/ui/dialog/inkscape-preferences.cpp:743
 msgid "Ignore locked objects and layers"
 msgstr "忽略已鎖定的物件和圖層"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Deselect upon layer change"
 msgstr "取消即將進行的圖層變更"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:742
+#: ../src/ui/dialog/inkscape-preferences.cpp:746
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Tab, Shift+Tab："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "在所有層上使鍵盤的選擇物件命令生效"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:746
+#: ../src/ui/dialog/inkscape-preferences.cpp:750
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "只在目前圖層上使鍵盤的選擇物件命令生效"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
 msgstr "在目前圖層和它的子圖層上使鍵盤的選擇物件命令生效"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
@@ -13235,7 +13216,7 @@ msgstr ""
 "取消勾選此項，能選擇隱藏的物件 (不論是透過它們本身，或是因為位於隱藏群組或圖"
 "層之中)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
@@ -13243,77 +13224,77 @@ msgstr ""
 "取消勾選此項，能選擇鎖定的物件 (不論是透過它們本身，或是因為位於隱藏群組或圖"
 "層之中)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:755
+#: ../src/ui/dialog/inkscape-preferences.cpp:759
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr "取消勾選此項讓目前圖層變更時保持目前物件為選取狀態"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Selecting"
 msgstr "選取"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "Default export resolution:"
 msgstr "預設匯出解析度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:765
+#: ../src/ui/dialog/inkscape-preferences.cpp:769
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "匯出對話窗中的預設點陣圖解析度 (每英寸幾點)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:767
+#: ../src/ui/dialog/inkscape-preferences.cpp:771
 msgid "Open Clip Art Library Server Name:"
 msgstr "開放美工圖庫伺服器名稱："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:772
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
 msgstr ""
 "開放美工圖庫 webdav 伺服器的名稱。它會在匯入和匯出到 OCAL 的功能中被使用。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:770
+#: ../src/ui/dialog/inkscape-preferences.cpp:774
 msgid "Open Clip Art Library Username:"
 msgstr "開放美工圖庫使用者名稱："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
+#: ../src/ui/dialog/inkscape-preferences.cpp:775
 msgid "The username used to log into Open Clip Art Library."
 msgstr "登入開放美工圖庫會用到使用者名稱。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:773
+#: ../src/ui/dialog/inkscape-preferences.cpp:777
 msgid "Open Clip Art Library Password:"
 msgstr "開放美工圖庫密碼："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 msgid "The password used to log into Open Clip Art Library."
 msgstr "登入到開放美工圖庫會用到密碼。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:776
+#: ../src/ui/dialog/inkscape-preferences.cpp:780
 msgid "Import/Export"
 msgstr "匯入/匯出"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Perceptual"
 msgstr "百分比"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Relative Colorimetric"
 msgstr "相對色度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Absolute Colorimetric"
 msgstr "絕對色度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(注意：顏色管理在這次建立已被停用)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:834
+#: ../src/ui/dialog/inkscape-preferences.cpp:838
 msgid "Display adjustment"
 msgstr "顯示調整"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 #, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
@@ -13322,183 +13303,183 @@ msgstr ""
 "此 ICC 描述檔用於校正顯示輸出。\n"
 "搜尋的資料夾：%s"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:845
+#: ../src/ui/dialog/inkscape-preferences.cpp:849
 msgid "Display profile:"
 msgstr "顯示設定檔："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:854
 msgid "Retrieve profile from display"
 msgstr "從顯示檢索設定檔"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr "從放在顯示中的那些經由 XICC 檢索設定檔。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:859
 msgid "Retrieve profiles from those attached to displays."
 msgstr "從放在顯示中的那些檢索設定檔。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
 msgid "Display rendering intent:"
 msgstr "顯示演算著重於："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "The rendering intent to use to calibrate display output."
 msgstr "此演算著重在用於校準顯示輸出。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 msgid "Proofing"
 msgstr "校樣"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:869
 msgid "Simulate output on screen"
 msgstr "模擬螢幕上的輸出"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Simulates output of target device."
 msgstr "模擬目標裝置的輸出。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 msgid "Mark out of gamut colors"
 msgstr "標記超出色彩範圍"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr "超出目標裝置容許範圍的加亮顏色。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:876
+#: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Out of gamut warning color:"
 msgstr "超出色彩範圍時的警告顏色:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:877
+#: ../src/ui/dialog/inkscape-preferences.cpp:881
 msgid "Selects the color used for out of gamut warning."
 msgstr "選擇的超出色彩範圍時的警告色。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:879
+#: ../src/ui/dialog/inkscape-preferences.cpp:883
 msgid "Device profile:"
 msgstr "裝置設定檔："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "The ICC profile to use to simulate device output."
 msgstr "此 ICC 描述檔被用於模擬裝置輸出。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:883
+#: ../src/ui/dialog/inkscape-preferences.cpp:887
 msgid "Device rendering intent:"
 msgstr "裝置演算著重於："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid "Black point compensation"
 msgstr "黑色點補償"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Enables black point compensation."
 msgstr "啟用黑色點補償。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:890
+#: ../src/ui/dialog/inkscape-preferences.cpp:894
 msgid "Preserve black"
 msgstr "保留黑色色版"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(需要 LittleCMS 1.15 或更高版本)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:897
+#: ../src/ui/dialog/inkscape-preferences.cpp:901
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "在 CMYK 轉變成 CMYK 時保留 K 色版"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:910
+#: ../src/ui/dialog/inkscape-preferences.cpp:914
 msgid "<none>"
 msgstr "<無>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:955
+#: ../src/ui/dialog/inkscape-preferences.cpp:959
 msgid "Color management"
 msgstr "色彩管理"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:960
+#: ../src/ui/dialog/inkscape-preferences.cpp:964
 msgid "Major grid line emphasizing"
 msgstr "強調主要格線"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:962
+#: ../src/ui/dialog/inkscape-preferences.cpp:966
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr "格線不要隨著畫面放大而變粗"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:963
+#: ../src/ui/dialog/inkscape-preferences.cpp:967
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr "如果設定並放大畫面，參考線將會用一般顏色顯示而非主要格線的顏色。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:965
+#: ../src/ui/dialog/inkscape-preferences.cpp:969
 msgid "Default grid settings"
 msgstr "預設格線設定值"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:971
-#: ../src/ui/dialog/inkscape-preferences.cpp:992
+#: ../src/ui/dialog/inkscape-preferences.cpp:975
+#: ../src/ui/dialog/inkscape-preferences.cpp:996
 msgid "Grid units:"
 msgstr "格線單位："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
 msgid "Origin X:"
 msgstr "原點 X："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:975
-#: ../src/ui/dialog/inkscape-preferences.cpp:996
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
 msgid "Origin Y:"
 msgstr "原點 Y："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 msgid "Spacing X:"
 msgstr "間隔 X："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Spacing Y:"
 msgstr "間隔 Y："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:981
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1003
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:985
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1007
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 msgid "Grid line color:"
 msgstr "格線顏色："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 msgid "Color used for normal grid lines"
 msgstr "一般格線的顏色"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:983
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1005
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1009
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 msgid "Major grid line color:"
 msgstr "主要格線顏色："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 msgid "Color used for major (highlighted) grid lines"
 msgstr "主要格線 (高亮度顯示) 的顏色"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:986
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:990
+#: ../src/ui/dialog/inkscape-preferences.cpp:1012
 msgid "Major grid line every:"
 msgstr "主要格線間隔線條數："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:991
 msgid "Show dots instead of lines"
 msgstr "顯示點而非線"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:992
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr "如果設定，會在格點上顯示點而非線"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1015
+#: ../src/ui/dialog/inkscape-preferences.cpp:1019
 msgid "Use named colors"
 msgstr "使用命名的顏色"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1016
+#: ../src/ui/dialog/inkscape-preferences.cpp:1020
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
@@ -13506,399 +13487,399 @@ msgstr ""
 "如果設定，寫入顏色的 CSS 名稱而非數值 (當名稱有效時，例如：'red' 或 "
 "'magenta' )"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1018
+#: ../src/ui/dialog/inkscape-preferences.cpp:1022
 msgid "XML formatting"
 msgstr "XML 格式化"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1020
+#: ../src/ui/dialog/inkscape-preferences.cpp:1024
 msgid "Inline attributes"
 msgstr "內部屬性"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1021
+#: ../src/ui/dialog/inkscape-preferences.cpp:1025
 msgid "Put attributes on the same line as the element tag"
 msgstr "將屬性放置於相同直線作為元件標籤"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 msgid "Indent, spaces:"
 msgstr "縮排，間距："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
 msgstr "間隔數用於縮排嵌套的元件；設定為 0 表示不縮排"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1026
+#: ../src/ui/dialog/inkscape-preferences.cpp:1030
 msgid "Path data"
 msgstr "路徑資料"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1028
+#: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid "Allow relative coordinates"
 msgstr "使用相對坐標"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1029
+#: ../src/ui/dialog/inkscape-preferences.cpp:1033
 msgid "If set, relative coordinates may be used in path data"
 msgstr "如果設定，路徑資料中可能使用相對坐標"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1031
+#: ../src/ui/dialog/inkscape-preferences.cpp:1035
 msgid "Force repeat commands"
 msgstr "強制重複命令"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1032
+#: ../src/ui/dialog/inkscape-preferences.cpp:1036
 msgid ""
 "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead "
 "of 'L 1,2 3,4')"
 msgstr "相同路徑的強制重複命令 (舉例，「L 1,2 L 3,4」代替「L 1,2 3,4」)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1034
+#: ../src/ui/dialog/inkscape-preferences.cpp:1038
 msgid "Numbers"
 msgstr "數目"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 msgid "Numeric precision:"
 msgstr "數值精確度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 msgid "How many digits to write after the decimal dot"
 msgstr "小數點後寫入幾位數"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 msgid "Minimum exponent:"
 msgstr "最小指數："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero."
 msgstr "10 為這個指數次方寫入 SVG 的最小數字；任何更小的數字會被作為零來寫入。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1042
+#: ../src/ui/dialog/inkscape-preferences.cpp:1046
 msgid "SVG output"
 msgstr "SVG 輸出"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "System default"
 msgstr "系統預設"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Albanian (sq)"
 msgstr "阿爾巴尼亞語 (sq)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Amharic (am)"
 msgstr "阿比西尼亞語 (am)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Arabic (ar)"
 msgstr "阿拉伯語 (ar)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Armenian (hy)"
 msgstr "亞美尼亞語 (hy)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Azerbaijani (az)"
 msgstr "亞塞拜然語 (az)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Basque (eu)"
 msgstr "巴斯克語 (eu)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Belarusian (be)"
 msgstr "白俄羅斯語 (be)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bulgarian (bg)"
 msgstr "保加利亞語 (bg)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bengali (bn)"
 msgstr "孟加拉語 (bn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Breton (br)"
 msgstr "不列塔尼語 (br)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Catalan (ca)"
 msgstr "加泰隆語 (ca)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Valencian Catalan (ca@valencia)"
 msgstr "瓦倫西亞語 加泰羅尼亞語 (ca@valencia)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Chinese/China (zh_CN)"
 msgstr "中文/中國 (zh_CN)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Chinese/Taiwan (zh_TW)"
 msgstr "中文/臺灣 (zh_TW)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Croatian (hr)"
 msgstr "克羅埃西亞語 (hr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Czech (cs)"
 msgstr "捷克語 (cs)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Danish (da)"
 msgstr "丹麥語 (da)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dutch (nl)"
 msgstr "荷蘭語 (nl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dzongkha (dz)"
 msgstr "宗卡語 (dz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "German (de)"
 msgstr "德語 (de)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Greek (el)"
 msgstr "希臘語 (el)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "English (en)"
 msgstr "英語 (en)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "English/Australia (en_AU)"
 msgstr "英語/澳大利亞 (en_AU)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Canada (en_CA)"
 msgstr "英語/加拿大 (en_CA)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Great Britain (en_GB)"
 msgstr "英語/大不列顛 (en_GB)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Pig Latin (en_US@piglatin)"
 msgstr "豬拉丁語 (en_US@piglatin)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Esperanto (eo)"
 msgstr "世界語 (eo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Estonian (et)"
 msgstr "愛沙尼亞語 (et)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Finnish (fi)"
 msgstr "芬蘭語 (fi)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "French (fr)"
 msgstr "法語 (fr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Irish (ga)"
 msgstr "愛爾蘭語 (ga)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Galician (gl)"
 msgstr "加裡西亞語 (gl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hebrew (he)"
 msgstr "希伯來語 (he)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hungarian (hu)"
 msgstr "匈牙利語 (hu)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Indonesian (id)"
 msgstr "印尼語 (id)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Italian (it)"
 msgstr "義大利語 (it)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Japanese (ja)"
 msgstr "日文 (ja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Khmer (km)"
 msgstr "高棉語 (km)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Kinyarwanda (rw)"
 msgstr "金亞盧安達語 (rw)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Korean (ko)"
 msgstr "韓語 (ko)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Lithuanian (lt)"
 msgstr "立陶宛語 (lt)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Macedonian (mk)"
 msgstr "馬其頓語 (mk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Mongolian (mn)"
 msgstr "蒙古語 (mn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Nepali (ne)"
 msgstr "尼泊爾語 (ne)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Bokmål (nb)"
 msgstr "挪威 Bokmål 語 (nb)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Nynorsk (nn)"
 msgstr "挪威 Nynorsk 語 (nn)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Panjabi (pa)"
 msgstr "旁遮普語 (pa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Polish (pl)"
 msgstr "波蘭語 (pl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese (pt)"
 msgstr "葡萄牙語 (pt)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese/Brazil (pt_BR)"
 msgstr "葡萄牙語/巴西 (pt_BR)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Romanian (ro)"
 msgstr "羅馬尼亞語 (ro)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Russian (ru)"
 msgstr "俄文 (ru)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian (sr)"
 msgstr "賽爾維亞語 (sr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian in Latin script (sr@latin)"
 msgstr "塞爾維亞文 - 拉丁 (sr@latin)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovak (sk)"
 msgstr "斯洛法克語 (sk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovenian (sl)"
 msgstr "斯洛凡尼亞語 (sl)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish (es)"
 msgstr "西班牙語 (es)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish/Mexico (es_MX)"
 msgstr "西班牙語/墨西哥 (es_MX)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Swedish (sv)"
 msgstr "瑞典語 (sv)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Thai (th)"
 msgstr "泰語 (th)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Turkish (tr)"
 msgstr "土耳其語 (tr)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Ukrainian (uk)"
 msgstr "烏克蘭語 (uk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Vietnamese (vi)"
 msgstr "越南話 (vi)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
+#: ../src/ui/dialog/inkscape-preferences.cpp:1069
 msgid "Language (requires restart):"
 msgstr "語言 (需要重新啟動):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1066
+#: ../src/ui/dialog/inkscape-preferences.cpp:1070
 msgid "Set the language for menus and number formats"
 msgstr "設定選單和數字格式的語言"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Smaller"
 msgstr "較小"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1072
+#: ../src/ui/dialog/inkscape-preferences.cpp:1076
 msgid "Toolbox icon size"
 msgstr "工具箱圖示大小"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1073
+#: ../src/ui/dialog/inkscape-preferences.cpp:1077
 msgid "Set the size for the tool icons (requires restart)"
 msgstr "設定工具圖示的大小 (需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1076
+#: ../src/ui/dialog/inkscape-preferences.cpp:1080
 msgid "Control bar icon size"
 msgstr "控制列圖示大小"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1077
+#: ../src/ui/dialog/inkscape-preferences.cpp:1081
 msgid ""
 "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr "設定工具控制列圖示的大小 (需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1080
+#: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Secondary toolbar icon size"
 msgstr "次工具列的圖示大小"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1081
+#: ../src/ui/dialog/inkscape-preferences.cpp:1085
 msgid ""
 "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr "設定次工具列圖示的大小 (需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1084
+#: ../src/ui/dialog/inkscape-preferences.cpp:1088
 msgid "Work-around color sliders not drawing."
 msgstr "解決彩色滑動拉桿無法繪製問題。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1086
+#: ../src/ui/dialog/inkscape-preferences.cpp:1090
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders."
 msgstr "當啟用時，將試圖解決某些 GTK 主題繪製彩色滑動拉桿的錯誤。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1092
+#: ../src/ui/dialog/inkscape-preferences.cpp:1096
 msgid "Clear list"
 msgstr "清除清單"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1097
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Maximum documents in Open Recent:"
 msgstr "最近開啟的最大文件數："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1098
+#: ../src/ui/dialog/inkscape-preferences.cpp:1102
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
 msgstr "設定檔案選單中最近開啟文件數清單的最大長度，或者清除此清單"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
 msgid "Zoom correction factor (in %):"
 msgstr "畫面縮放校正係數 (%)："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
+#: ../src/ui/dialog/inkscape-preferences.cpp:1106
 msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
@@ -13907,44 +13888,44 @@ msgstr ""
 "調整滑動拉桿直到螢幕上尺標的長度符合實際的長度。縮放成 1:1、1:2 等等的時後會"
 "使用這個資訊來顯示物件的實際尺寸"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
+#: ../src/ui/dialog/inkscape-preferences.cpp:1108
 msgid "Interface"
 msgstr "介面"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1111
+#: ../src/ui/dialog/inkscape-preferences.cpp:1115
 msgid "Enable autosave (requires restart)"
 msgstr "啟用自動儲存 (需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1112
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
 msgstr "經過給定的時間間隔時自動儲存文件，從而將程式不正常關閉時的損失降到最低"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Interval (in minutes):"
 msgstr "時間間隔 (分鐘)："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "經過多少時間 (分鐘) 文件會自動儲存"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "filesystem|Path:"
 msgstr "路徑："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "The directory where autosaves will be written"
 msgstr "自動儲存的存放目錄"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Maximum number of autosaves:"
 msgstr "自動儲存的最大數目："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr "自動儲存檔案最大數目；用這項來限制使用的儲存空間"
@@ -13961,117 +13942,117 @@ msgstr "自動儲存檔案最大數目；用這項來限制使用的儲存空間
 #. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
 #.
 #. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1136
+#: ../src/ui/dialog/inkscape-preferences.cpp:1140
 msgid "Autosave"
 msgstr "自動儲存"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1150
 msgid "Oversample bitmaps:"
 msgstr "過度取樣點陣圖："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Automatically reload bitmaps"
 msgstr "自動重新載入點陣圖"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "檔案在磁碟上變更時自動重新載入圖像"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1169
 msgid "Bitmap editor:"
 msgstr "點陣圖編輯器："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "建立點陣圖複本的解析度："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1172
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "建立點陣圖複本使用的解析度"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 msgid "Bitmaps"
 msgstr "點陣圖"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1230
 msgid "Language:"
 msgstr "語言："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Set the main spell check language"
 msgstr "設定主要拼寫檢查語言"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1234
 msgid "Second language:"
 msgstr "第二語言："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr "設定第二拼寫檢查語言；所有被選擇的語言裡檢查只會停在未知的單字上"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1238
 msgid "Third language:"
 msgstr "第三語言："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr "設定第三拼寫檢查語言；所有被選擇的語言裡檢查只會停在未知的單字上"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1237
+#: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words with digits"
 msgstr "忽略數字"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "忽略含有數字的單字，例如 \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Ignore words in ALL CAPITALS"
 msgstr "忽略所有大寫字母的拼寫"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "忽略所有大寫字母的拼寫，例如 \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid "Spellcheck"
 msgstr "拼寫檢查"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "Add label comments to printing output"
 msgstr "為列印輸出加上標籤備註"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr "開啟時，會將一則註解加入原始列印輸入，以它的標籤來標示物件演算的輸出"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Prevent sharing of gradient definitions"
 msgstr "避免漸層定義的共用"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14080,11 +14061,11 @@ msgstr ""
 "開啟時，共用的漸層定義會自動交叉改變；取消勾選共用漸層定義會造成編輯一個物件"
 "可能會影響到另一個使用同樣漸層的物件"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Simplification threshold:"
 msgstr "簡化臨界值："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -14093,25 +14074,25 @@ msgstr ""
 "預設節點工具的「簡化」指令強度。如果你一連串地執行這個指令許多次，作用將會愈"
 "來愈強烈；短暫停一下後再執行會恢復預設的臨界值。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 msgid "Latency skew:"
 msgstr "傳輸時間延遲偏差："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 msgid "(requires restart)"
 msgstr "(需要重新啟動)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr "從實際時間中事件時鐘被扭曲的係數 (在一些系統上為 0.9766)。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1280
+#: ../src/ui/dialog/inkscape-preferences.cpp:1284
 msgid "Pre-render named icons"
 msgstr "預先演算被命名的圖示"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -14120,51 +14101,51 @@ msgstr ""
 "的錯誤"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1288
+#: ../src/ui/dialog/inkscape-preferences.cpp:1292
 msgid "User config: "
 msgstr "使用者設定："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
 msgid "User data: "
 msgstr "使用者資料："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 msgid "User cache: "
 msgstr "使用者快取："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "System config: "
 msgstr "系統設定："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1307
 msgid "System data: "
 msgstr "系統資料："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1306
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "PIXMAP: "
 msgstr "像素圖："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1314
 msgid "DATA: "
 msgstr "資料："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
 msgid "UI: "
 msgstr "使用介面："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1323
+#: ../src/ui/dialog/inkscape-preferences.cpp:1327
 msgid "Icon theme: "
 msgstr "圖示主題："
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 msgid "System info"
 msgstr "系統資訊"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 msgid "General system information"
 msgstr "一般系統資訊"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Misc"
 msgstr "其他"
 
@@ -17887,7 +17868,7 @@ msgstr "停止顏色"
 msgid "Gradient editor"
 msgstr "漸層編輯器"
 
-#: ../src/widgets/gradient-vector.cpp:1184
+#: ../src/widgets/gradient-vector.cpp:1192
 msgid "Change gradient stop color"
 msgstr "變更漸層停止點顏色"
 
@@ -20133,6 +20114,10 @@ msgstr "第二個路徑必須恰好是四個節點長。"
 #, python-format
 msgid "Could not locate file: %s"
 msgstr "無法找出檔案： %s"
+
+#: ../share/extensions/uniconv_output.py:118
+msgid "You need to install the UniConvertor software.\n"
+msgstr ""
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -22645,6 +22630,24 @@ msgstr "Windows 後設檔案輸入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid "Dip pen"
+#~ msgstr "沾水筆"
+
+#~ msgid "Marker"
+#~ msgstr "麥克筆"
+
+#~ msgid "Brush"
+#~ msgstr "筆刷"
+
+#~ msgid "Wiggly"
+#~ msgstr "波浪"
+
+#~ msgid "Splotchy"
+#~ msgstr "弄髒"
+
+#~ msgid "Tracing"
+#~ msgstr "描繪"
 
 #~ msgid "Burnt edges"
 #~ msgstr "燒焦邊緣"

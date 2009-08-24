@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-18 11:37+0200\n"
+"POT-Creation-Date: 2009-08-24 20:59+0200\n"
 "PO-Revision-Date: 2007-02-21 03:30+0100\n"
 "Last-Translator: Jurmey Rabgay <pemai_jurmey@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -371,7 +371,7 @@ msgstr ""
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
-#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2516
+#: ../src/ui/dialog/inkscape-preferences.cpp:486 ../src/verbs.cpp:2516
 msgid "Pencil"
 msgstr "ཞ་སྨྱུག"
 
@@ -2424,11 +2424,11 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>ད་ལྟོའི་བང་རིམ་དེ་ལྡེ་མིག་བརྐྱབས་བཞག་ནུག</b>. དེའི་གུར་འབྲི་བཏུབ་ནིའི་དོན་ལུ་སྡེ་མིག་མ་བརྐྱབ་པར་བཞག"
 
-#: ../src/desktop.cpp:819
+#: ../src/desktop.cpp:826
 msgid "No previous zoom."
 msgstr "ཧེ་མམ་གྱི་རྒྱས་ཟུམ་དེ་མིན་འདུག"
 
-#: ../src/desktop.cpp:844
+#: ../src/desktop.cpp:851
 msgid "No next zoom."
 msgstr "ཤུལ་མམ་གྱི་རྒྱས་ཟུམ་དེ་མིན་འདུག"
 
@@ -3269,8 +3269,8 @@ msgstr "ཌི་པའི་ཨའི། (_i)"
 msgid "_Height:"
 msgstr "མཐོ་ཚད:(_H)"
 
-#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:764
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "dpi"
 msgstr "ཌི་པི་ཨའི།"
 
@@ -3322,35 +3322,35 @@ msgstr[1] "སེལ་འཐུ་འབད་ཡོད་མི་དངོས
 msgid "Export in progress"
 msgstr "ཡར་འཕེལ་ནང་ཕྱིར་འདྲེན་འབད།"
 
-#: ../src/dialogs/export.cpp:1084
+#: ../src/dialogs/export.cpp:1101
 #, fuzzy, c-format
 msgid "Exporting %d files"
 msgstr " %s ཕྱིར་འདྲེན་འབད་དོ།(%d x %d)"
 
-#: ../src/dialogs/export.cpp:1138 ../src/dialogs/export.cpp:1212
+#: ../src/dialogs/export.cpp:1145 ../src/dialogs/export.cpp:1222
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "ཡིག་སྣོད་མིང་%sལུ་ཕྱིར་འདྲེན་འབད་མ་ཚུགས།\n"
 
-#: ../src/dialogs/export.cpp:1168
+#: ../src/dialogs/export.cpp:1175
 msgid "You have to enter a filename"
 msgstr "ཁྱོད་ཀྱིས་ཡིག་སྣོད་མིང་ཅིག་ཐོ་བཀོད་འབད་དགོཔ་ཨིན།"
 
-#: ../src/dialogs/export.cpp:1173
+#: ../src/dialogs/export.cpp:1180
 msgid "The chosen area to be exported is invalid"
 msgstr "གདམ་ཁ་བརྐྱབས་ཡོད་པའི་མངའ་ཁོངས་ཕྱིར་འདྲེན་འབད་ནི་དེ་ནུས་མེད་ཨིན་པས།"
 
-#: ../src/dialogs/export.cpp:1182
+#: ../src/dialogs/export.cpp:1195
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "སྣོད་ཐོ་ %s དེ་མེདཔ་ཨིནམ་དང་ ཡང་ན་ དེ་སྣོད་ཐོ་མེན།\n"
 
-#: ../src/dialogs/export.cpp:1197
+#: ../src/dialogs/export.cpp:1207
 #, fuzzy, c-format
 msgid "Exporting %s (%lu x %lu)"
 msgstr " %s ཕྱིར་འདྲེན་འབད་དོ།(%d x %d)"
 
-#: ../src/dialogs/export.cpp:1320 ../src/dialogs/export.cpp:1351
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
 msgid "Select a filename for exporting"
 msgstr "ཕྱིར་འདྲེན་འབད་ནིའི་དོན་ལུ་ ཡིག་སྣོད་མིང་ཅིག་སེལ་འཐུ་འབད།"
 
@@ -3877,7 +3877,7 @@ msgstr "གྲལ་ཐིག་བར་སྟོང་བཏོན་ནི།
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:375 ../src/selection-describer.cpp:69
-#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2522
+#: ../src/ui/dialog/inkscape-preferences.cpp:522 ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/text_braille.inx.h:2
@@ -3931,7 +3931,7 @@ msgid "New text node"
 msgstr "ཚིག་ཡིག་གསརཔ་གི་མཐུད་མཚམས།"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2241
+#: ../src/nodepath.cpp:2249
 msgid "Duplicate node"
 msgstr "ནོཌི་རྫུན་མ།"
 
@@ -4021,8 +4021,8 @@ msgid "_Origin X:"
 msgstr "འགོ་ཐོག་བྱུང་ས་ ཨེགསི:(_O)"
 
 #: ../src/display/canvas-axonomgrid.cpp:398 ../src/display/canvas-grid.cpp:672
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
 msgid "X coordinate of grid origin"
 msgstr "གིརིཊི་འགོ་ཐོག་འབྱུང་ས་གི་ཨེགསི་ཆ་སྙོམ།"
 
@@ -4031,8 +4031,8 @@ msgid "O_rigin Y:"
 msgstr "འགོ་ཐོག་འབྱུང་ས་ ཝའི:(_r)"
 
 #: ../src/display/canvas-axonomgrid.cpp:400 ../src/display/canvas-grid.cpp:674
-#: ../src/ui/dialog/inkscape-preferences.cpp:975
-#: ../src/ui/dialog/inkscape-preferences.cpp:996
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
 msgid "Y coordinate of grid origin"
 msgstr "གིརིཊི་འགོ་ཐོག་བྱུང་ས་གི་ ཝའི་ཆ་སྙོམ།"
 
@@ -4041,29 +4041,29 @@ msgid "Spacing _Y:"
 msgstr "བར་སྟོང་བཏོན་ནི་ ཝའི:(_Y)"
 
 #: ../src/display/canvas-axonomgrid.cpp:402
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 msgid "Base length of z-axis"
 msgstr ""
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 #: ../src/widgets/toolbox.cpp:3422
 msgid "Angle X:"
 msgstr "གྲུ་ཟུར་ ཨེགསི་:"
 
 #: ../src/display/canvas-axonomgrid.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:1001
+#: ../src/ui/dialog/inkscape-preferences.cpp:1005
 msgid "Angle of x-axis"
 msgstr ""
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 #: ../src/widgets/toolbox.cpp:3501
 msgid "Angle Z:"
 msgstr "གྲུ་ཟུར་ ཛེཌི་:"
 
 #: ../src/display/canvas-axonomgrid.cpp:406
-#: ../src/ui/dialog/inkscape-preferences.cpp:1002
+#: ../src/ui/dialog/inkscape-preferences.cpp:1006
 msgid "Angle of z-axis"
 msgstr ""
 
@@ -4151,12 +4151,12 @@ msgid "Spacing _X:"
 msgstr "བར་སྟོང་བཏོན་ནི་ ཨེགསི:(_X)"
 
 #: ../src/display/canvas-grid.cpp:676
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 msgid "Distance between vertical grid lines"
 msgstr "ཀེར་ཕྲང་གིརིཌི་གྲལ་ཐིག་བར་ནའི་རིང་ཚད་"
 
 #: ../src/display/canvas-grid.cpp:678
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
 msgid "Distance between horizontal grid lines"
 msgstr "ཐད་སྙོམས་གི་རིཌི་གྲལ་ཐིག་བར་ནའི་རིང་ཚད་"
 
@@ -5058,7 +5058,7 @@ msgid "Hue"
 msgstr "ཚོན་མདངས།"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:830
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
 #: ../src/widgets/sp-color-scales.cpp:429
@@ -5451,7 +5451,7 @@ msgstr "ཀེར་ཕྲང་པར་ལེན།"
 #: ../src/extension/internal/filter/filter.cpp:206
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
-#: ../src/ui/dialog/inkscape-preferences.cpp:729
+#: ../src/ui/dialog/inkscape-preferences.cpp:733
 msgid "Filters"
 msgstr "ཚགས་མ་ཚུ་"
 
@@ -6203,11 +6203,11 @@ msgstr "ལོག་མཚམས་བཟོ་ནི།"
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
-#: ../src/ui/dialog/inkscape-preferences.cpp:255
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
-#: ../src/ui/dialog/inkscape-preferences.cpp:550
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:422
+#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6281,7 +6281,7 @@ msgstr "ཚོས་གཞི་"
 msgid "Lightness"
 msgstr "འོད་ཡང།"
 
-#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:265 ../src/ui/dialog/inkscape-preferences.cpp:1072
 #, fuzzy
 msgid "Small"
 msgstr "ཆུང་ཀུ"
@@ -6291,7 +6291,7 @@ msgstr "ཆུང་ཀུ"
 msgid "Medium"
 msgstr "འབྲིང་མ།"
 
-#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/flood-context.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1072
 #, fuzzy
 msgid "Large"
 msgstr "ཆེ་བ།"
@@ -6597,9 +6597,9 @@ msgstr ""
 msgid "Pixel"
 msgstr "པིག་སེལ།"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:242
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 #: ../src/ui/widget/selected-style.cpp:289
 msgid "px"
 msgstr "པི་ཨེགསི།"
@@ -6617,7 +6617,7 @@ msgstr "པི་ཨེགསི།"
 msgid "Percent"
 msgstr "བརྒྱ་ཆ།"
 
-#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "%"
 msgstr "%"
 
@@ -6955,8 +6955,8 @@ msgstr "ཚད་ཤིང་"
 msgid "Dockbar style to show items on it"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:545
-#: ../src/ui/dialog/inkscape-preferences.cpp:566
+#: ../src/libgdl/gdl-dock.c:175 ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 #, fuzzy
 msgid "Floating"
 msgstr "མཐུན་འབྲེལ།"
@@ -7756,7 +7756,7 @@ msgid "Path along which intermediate steps are created."
 msgstr "འགྲུལ་ལམ་ངོ་མ་དེ་ལུ་འབྲེལ་མཐུད་འབད་ཡོད་མི་ ནུས་ཅན་པར་ལེན་དངོས་ཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#: ../src/ui/dialog/inkscape-preferences.cpp:238
+#: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Steps"
 msgstr "རིམ་པ་ཚུ།"
 
@@ -8853,20 +8853,20 @@ msgstr ""
 msgid "Stamp"
 msgstr "འགྲེམ་རྟགས་"
 
-#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689
+#: ../src/nodepath.cpp:1671 ../src/nodepath.cpp:1697
 msgid "Move nodes vertically"
 msgstr "ནོཌིསི་ཚུ་ ཀེར་ཕྲང་སྦེ་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:1665 ../src/nodepath.cpp:1691
+#: ../src/nodepath.cpp:1673 ../src/nodepath.cpp:1699
 msgid "Move nodes horizontally"
 msgstr "ནོཌིསི་ཚུ་ ཐདསྙོམས་སྦེ་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:1667 ../src/nodepath.cpp:1693 ../src/nodepath.cpp:1708
-#: ../src/nodepath.cpp:3617
+#: ../src/nodepath.cpp:1675 ../src/nodepath.cpp:1701 ../src/nodepath.cpp:1716
+#: ../src/nodepath.cpp:3625
 msgid "Move nodes"
 msgstr "ནོཌི་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:1746
+#: ../src/nodepath.cpp:1754
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -8875,55 +8875,55 @@ msgstr ""
 "དབྱིབས་བཟོ་ནིའི་དོན་ལུ་འདྲུད། རིང་ཚད་བསྡམ་བཞག་ནིའི་དོན་ལུ་ <b>གདམ་ལྡེ་</b>དང་གཅིག་ཁར། བཤེད་བཟུང་"
 "གཉིས་ཆ་རང་བསྒྱིར་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b>དང་གཅིག་ཁར།"
 
-#: ../src/nodepath.cpp:1916
+#: ../src/nodepath.cpp:1924
 msgid "Align nodes"
 msgstr "ནོཌིསི་ ཕྲང་སྒྲིག་འབད་"
 
-#: ../src/nodepath.cpp:1978
+#: ../src/nodepath.cpp:1986
 msgid "Distribute nodes"
 msgstr "ནོཌིསི་ བཀྲམ་སྤེལ་འབད་"
 
-#: ../src/nodepath.cpp:2016
+#: ../src/nodepath.cpp:2024
 msgid "Add nodes"
 msgstr "ནོཌི་ ཁ་སྐོང་རྐྱབས་"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2120
+#: ../src/nodepath.cpp:2026 ../src/nodepath.cpp:2128
 msgid "Add node"
 msgstr "ནོཌིསི་ ཁ་སྐོང་རྐྱབས་"
 
-#: ../src/nodepath.cpp:2212
+#: ../src/nodepath.cpp:2220
 msgid "Break path"
 msgstr "འགྲུལ་ལམ་ བཏོག"
 
-#: ../src/nodepath.cpp:2268
+#: ../src/nodepath.cpp:2276
 msgid "Close subpath"
 msgstr "ཡན་ལག་འགྲུལ་ལམ་ ཁ་བསྡམ་"
 
-#: ../src/nodepath.cpp:2329
+#: ../src/nodepath.cpp:2337
 msgid "Join nodes"
 msgstr "ནོཌིསི་ མཐུད་"
 
-#: ../src/nodepath.cpp:2356
+#: ../src/nodepath.cpp:2364
 msgid "Close subpath by segment"
 msgstr "ཆ་བགོས་ཐོག་ལས་ ཡན་ལག་འགྲུལ་ལམ་ཁ་སྡམས་"
 
-#: ../src/nodepath.cpp:2410
+#: ../src/nodepath.cpp:2418
 msgid "Join nodes by segment"
 msgstr "ཆ་བགོས་ཀྱིས་ ནོཌིསི་མཐུད་"
 
-#: ../src/nodepath.cpp:2423 ../src/nodepath.cpp:2438
+#: ../src/nodepath.cpp:2431 ../src/nodepath.cpp:2446
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "མཐུད་ནིའི་དོན་ལུ་ ཁྱོད་ལུ་<b>མཇུག་གི་མཐུད་མཚམས་གཉིས་</b>སེལ་འཐུ་འབད་དེ་དགོཔ་ཨིན།"
 
-#: ../src/nodepath.cpp:2595 ../src/nodepath.cpp:2631 ../src/nodepath.cpp:2635
+#: ../src/nodepath.cpp:2603 ../src/nodepath.cpp:2639 ../src/nodepath.cpp:2643
 msgid "Delete nodes"
 msgstr "ནོཌིསི་ བཏོན་གཏང་"
 
-#: ../src/nodepath.cpp:2597
+#: ../src/nodepath.cpp:2605
 msgid "Delete nodes preserving shape"
 msgstr "དབྱིབས་ཉམས་སྲུང་འབད་དེ་ ནོཌིསི་བཏོན་གཏང་་"
 
-#: ../src/nodepath.cpp:2654 ../src/nodepath.cpp:2668
+#: ../src/nodepath.cpp:2662 ../src/nodepath.cpp:2676
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -8931,35 +8931,35 @@ msgstr ""
 "<b>འགྲུལ་ལམ་གུར་ བར་ན་གི་ཆ་གོས་བཏོན་གཏང་ནིའི་དོན་ལུ་ མཇུག་གི་ས་ཚིག་གི་མཐུད་མཚམས་མེན་མི་གཉིས་</"
 "b> སེལ་འཐུ་འབད།"
 
-#: ../src/nodepath.cpp:2764
+#: ../src/nodepath.cpp:2772
 msgid "Cannot find path between nodes."
 msgstr "མཐུད་མཚམས་ཚུ་གི་བར་ན་ལུ་ འགྲུལ་ལམ་ཚའོལ་མི་འཐོབ།"
 
-#: ../src/nodepath.cpp:2796 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2804 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "ཆ་བགོས་ བཏོན་གཏང་"
 
-#: ../src/nodepath.cpp:2817
+#: ../src/nodepath.cpp:2825
 msgid "Change segment type"
 msgstr "ཆ་བགོས་དབྱེ་བ་ བསྒྱུར་བཅོས་རྐྱབས་"
 
-#: ../src/nodepath.cpp:2834 ../src/nodepath.cpp:3571
+#: ../src/nodepath.cpp:2842 ../src/nodepath.cpp:3579
 msgid "Change node type"
 msgstr "ནོཌི་དབྱེ་བ་ བསྒྱུར་བཅོས་འབད་"
 
-#: ../src/nodepath.cpp:3521 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3529 ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "ནོཌི་བཏོན་གཏང་།"
 
-#: ../src/nodepath.cpp:3863
+#: ../src/nodepath.cpp:3871
 msgid "Retract handle"
 msgstr "བཤེད་བཟུང་སླར་རྙེད་འབད་"
 
-#: ../src/nodepath.cpp:3918
+#: ../src/nodepath.cpp:3926
 msgid "Move node handle"
 msgstr "ནོཌི་བཤེད་བཟུང་ སྤོ་བཤུད་འབད་"
 
-#: ../src/nodepath.cpp:4103
+#: ../src/nodepath.cpp:4111
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8970,23 +8970,23 @@ msgstr ""
 "འཛིན་</b>དང་གཅིག་ཁར།  རིང་ཚད་བསྡམ་བཞག་ནིའི་དོན་ལུ་ <b>གདམ་ལྡེ་</b>དང་གཅིག་ཁར། བཤེད་བཟུང་"
 "གཉིས་ཆ་རང་བསྒྱིར་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་དང་གཅིག་ཁར་</b>"
 
-#: ../src/nodepath.cpp:4297
+#: ../src/nodepath.cpp:4305
 msgid "Rotate nodes"
 msgstr "ནོཌིསི་ བསྒྱིར་"
 
-#: ../src/nodepath.cpp:4412
+#: ../src/nodepath.cpp:4420
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4438
+#: ../src/nodepath.cpp:4446
 msgid "Scale nodes"
 msgstr "ནོཌིསི་ ཚད་འཇལ་"
 
-#: ../src/nodepath.cpp:4482
+#: ../src/nodepath.cpp:4490
 msgid "Flip nodes"
 msgstr "ནོཌིསི་ མྱུར་ལྷོག་འབད་"
 
-#: ../src/nodepath.cpp:4651
+#: ../src/nodepath.cpp:4659
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -8996,47 +8996,47 @@ msgstr ""
 "<b>ཚད་འཛིན་+གདམ་ལྡེ་</b>དང་གཅིག་ཁར་འདྲུད།"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4884
+#: ../src/nodepath.cpp:4892
 msgid "end node"
 msgstr "མཇུག་གི་མཐུད་མཚམས།"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4897
 msgid "cusp"
 msgstr "རྣོ་ཅན།"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4900
 msgid "smooth"
 msgstr "ཧུམ་ཁྱུག་ཁྱུ།"
 
-#: ../src/nodepath.cpp:4894
+#: ../src/nodepath.cpp:4902
 #, fuzzy
 msgid "auto"
 msgstr "སྒྲིག་བཀོད།"
 
-#: ../src/nodepath.cpp:4896
+#: ../src/nodepath.cpp:4904
 msgid "symmetric"
 msgstr "མཛེས་སྙོམས།"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4910
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "མཇུག་གི་མཐུད་མཚམས། རི་ཊེག་འབད་ཡོད་མི་ལེགས་སྐྱོང་འཐབ། (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་<b>སོར་ལྡེ་</b>དང་"
 "གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4904
+#: ../src/nodepath.cpp:4912
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "བཤེད་བཟུང་གཅིག་རི་ཊེག་འབད་ནུག  (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b> དང་གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4907
+#: ../src/nodepath.cpp:4915
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "བཤེད་བཟུང་གཉིས་ཆ་རང་རི་ཏེག་འབད་ནུག (རྒྱ་བསྐྱེད་འབད་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b>དང་གཅིག་ཁར་འདྲུད།)"
 
-#: ../src/nodepath.cpp:4919
+#: ../src/nodepath.cpp:4927
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -9046,18 +9046,18 @@ msgstr ""
 "<b>ནོཌི་ཚུ་སྤོ་བཤུད་འབད་ནིའིདོན་ལུ་ </b> ལྡེ་མིག་ཚུ་ལུ་མདའ་རྟགས་བཀལ། <b>ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་</"
 "b> &lt; &gt;<b>[ ]</b> བསྒྱིར་ནིའི་དོན་ལུ།"
 
-#: ../src/nodepath.cpp:4920
+#: ../src/nodepath.cpp:4928
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b> ནོཌི་ ཡང་ན་ དེའི་བཤེད་བཟུང་དེ་</b> འདྲུད། <b>མདའ་རྟགས</b> ནོཌི་སྤོ་བཤུད་འབད་ནིའི་དོན་ལུ་ལྡེ་"
 "མིག་ཚུ།"
 
-#: ../src/nodepath.cpp:4946 ../src/nodepath.cpp:4958
+#: ../src/nodepath.cpp:4954 ../src/nodepath.cpp:4966
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 "དངོས་པོ་རྐྱང་པའི་ ནོཌི་ ཡང་ན་ བཤེད་བཟུང་ཚུ་ཞུན་དག་འབད་ནིའི་དོན་ལུ་ དངོས་པོ་རྐྱང་པ་ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../src/nodepath.cpp:4950
+#: ../src/nodepath.cpp:4958
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -9072,18 +9072,18 @@ msgstr[1] ""
 "<b>0</b> out of <b>%i</b> ནོཌིསི་སེལ་འཐུ་འབད་དེ་ཡོདཔ། <b>ཨེད་གཏང་།</b>, <b>སོར་ལྡེ་+ཨེབ་"
 "གཏང་</b>, ཡང་ན་ <b>སེལ་འཐུ་འབད་ནིའི་དོན་ལུ་</b> ནོཌིསི་གི་མཐའ་སྐོར་སྟེ་འདྲུད།"
 
-#: ../src/nodepath.cpp:4956
+#: ../src/nodepath.cpp:4964
 msgid "Drag the handles of the object to modify it."
 msgstr "འདི་ལེགས་བཅོས་འབད་ནིའི་དོན་ལུ་ དངོས་པོ་ཚུ་གི་བཤེད་བཟུང་ཚུ་འདྲུད།"
 
-#: ../src/nodepath.cpp:4964
+#: ../src/nodepath.cpp:4972
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> of <b>%i</b> ནོཌི་ཚུ་སེལ་འཐུ་འབད་ཡོདཔ།%s. %s."
 msgstr[1] "<b>%i</b> of <b>%i</b> ནོཌི་ཚུ་སེལ་འཐུ་འབད་ཡོདཔ། %s. %s."
 
-#: ../src/nodepath.cpp:4971
+#: ../src/nodepath.cpp:4979
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -9096,7 +9096,7 @@ msgstr[1] ""
 "<b>%i</b> གི་<b>%i</b>ནོཌི་ཚུ་<b>%i</b> of <b>%i</b> ནང་ལུ་སེལ་འཐུ་འབད་དེ་ཡོདཔ།ཡན་ལག་"
 "འགྲུལ་ལམ་%s."
 
-#: ../src/nodepath.cpp:4977
+#: ../src/nodepath.cpp:4985
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -9195,7 +9195,7 @@ msgstr ""
 "འཛིན་</b>དང་གཅིག་ཁར་དང་ སྒོར་སྒོརམ་བཟོ་ནིའི་དོན་ལུ་<b>སོར་ལྡེ་</b>དང་གཅིག་ཁར་དང་ གང་བྱུང་སྦེ་བཟོ་"
 "ནི་འི་དོན་ལུ་<b>གདམ་སྡེ་</b>དང་གཅིག་ཁར་བདེ་སྒྲིག་འབད།"
 
-#: ../src/object-edit.cpp:1266
+#: ../src/object-edit.cpp:1272
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -9203,7 +9203,7 @@ msgstr ""
 "<b>ནང་ན་</b>;ལས་སྒྲིལ་ནི་དེ་ དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ "
 "གཅིག་ཏུ་འདུ་ནི/སོ་སོ་འཕྲལ་ནིའི་དོན་ལུ་ སྒྲིལ་/སྒྲིལ་ནི་ལས་བཤོལ།"
 
-#: ../src/object-edit.cpp:1269
+#: ../src/object-edit.cpp:1275
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
@@ -9211,11 +9211,11 @@ msgstr ""
 " <b>ཕྱི་ཁར་</b>;ལས་ སྒྲིལ་ནི་དེ་ དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ "
 "<b>ཕྱི་ཁར་ལུ་</b>ལུ་ཆ་ཚད་འཇལ་/བསྒྱིར་ནིའི་དོན་ལུ་་ སྒྲིལ/སྒྲིལ་ནི་ལས་བཤོལ།"
 
-#: ../src/object-edit.cpp:1313
+#: ../src/object-edit.cpp:1319
 msgid "Adjust the <b>offset distance</b>"
 msgstr "<b>དཔར་ལེན་གྱང་ཚད་</b>བདེ་སྒྲིག་འབད།"
 
-#: ../src/object-edit.cpp:1349
+#: ../src/object-edit.cpp:1355
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "<b>འབབ་རྒྱུན་འབད་ཡོད་པའི་ཚིག་ཡིག་གཞི་ཁྲམ་དེ་</b>ཚད་བསྐྱར་བཟོ་འབད་ནིའི་དོན་ལུ་འདྲུད།"
 
@@ -9333,20 +9333,20 @@ msgstr ""
 msgid "Finishing freehand sketch"
 msgstr "ཕི་རི་ཧེནཌི་མཇུག་བསྡུ་དོ།"
 
-#: ../src/pen-context.cpp:665
+#: ../src/pen-context.cpp:662
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 "འགྲུལ་ལམ་དེ་ ཁ་བསྡམ་སྟེ་མཇུག་བསྡུ་ནིའི་དོན་ལུ་ <b>ཨེབ་གཏང་འབད་</b>ཡང་ན་ <b>ཨེབ་གཏང་འབད་ཞིནམ་"
 "ལས་ དེ་ལས་འདྲུད་ </b>"
 
-#: ../src/pen-context.cpp:675
+#: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "ས་ཚིགས་འདི་ནང་ལས་འགྲུལ་ལམ་འཕྲོ་མཐུད་ནིའི་དོན་ལུ་ <b>ཨེབ་གཏང་འབད་</b>ཡང་ན་ <b>ཨེབ་གཏང་འབད་"
 "ཞིནམ་ལས་འདྲུད་</b>"
 
-#: ../src/pen-context.cpp:1271
+#: ../src/pen-context.cpp:1266
 #, fuzzy, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -9355,7 +9355,7 @@ msgstr ""
 "<b>%s</b>: དབྱེ་རིམ་ %3.2f&#176;, གྱང་ཚད་ %s; དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</"
 "b>དང་གཅིག་ཁར། འགྲུལ་ལམ་མཇུག་བསྡུ་ནིའི་དོན་ལུ་ <b>བཙུགས།</b>"
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1267
 #, fuzzy, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -9364,7 +9364,7 @@ msgstr ""
 "<b>%s</b>: དབྱེ་རིམ་ %3.2f&#176;, གྱང་ཚད་ %s; དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</"
 "b>དང་གཅིག་ཁར། འགྲུལ་ལམ་མཇུག་བསྡུ་ནིའི་དོན་ལུ་ <b>བཙུགས།</b>"
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1285
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -9373,7 +9373,7 @@ msgstr ""
 "<b>བཤེད་བཟུང་གུག་གུགཔ་</b>: དབྱེ་རིམ་%3.2f&#176; རིང་ཚད་%s; དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་"
 "<b>ཚད་འཛིན་</b>དང་གཅིག་ཁར།"
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1307
 #, fuzzy, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
@@ -9382,7 +9382,7 @@ msgstr ""
 "<b>%s</b>: དབྱེ་རིམ་ %3.2f&#176;,དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ རིང་ཚད་%s;<b>ཚད་འཛིན</"
 "b>དང་གཅིག་ཁར་དང་ བཤེད་བཟུང་དེ་སྤོ་བཤུད་འབད་ནི་རྐྱངམ་ཅིག་གིས་དོན་ལུ་<b>སོར་ལྡེ་</b>དང་གཅིག་ཁར།"
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1308
 #, fuzzy, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -9391,7 +9391,7 @@ msgstr ""
 "<b>%s</b>: དབྱེ་རིམ་ %3.2f&#176;,དབྱེ་རིམ་དཔར་བཏབ་ནིའི་དོན་ལུ་ རིང་ཚད་%s;<b>ཚད་འཛིན</"
 "b>དང་གཅིག་ཁར་དང་ བཤེད་བཟུང་དེ་སྤོ་བཤུད་འབད་ནི་རྐྱངམ་ཅིག་གིས་དོན་ལུ་<b>སོར་ལྡེ་</b>དང་གཅིག་ཁར།"
 
-#: ../src/pen-context.cpp:1360
+#: ../src/pen-context.cpp:1355
 msgid "Drawing finished"
 msgstr "པར་རིས་འབྲི་ནི་མཇུག་བསྡུ་ཡོདཔ།"
 
@@ -10160,7 +10160,7 @@ msgstr "སྒོར་ཐིག"
 
 #. ellipse
 #: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:76
-#: ../src/ui/dialog/inkscape-preferences.cpp:470 ../src/verbs.cpp:2510
+#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2510
 #: ../src/widgets/toolbox.cpp:3890
 msgid "Ellipse"
 msgstr "སྒོང་དབྱིབས།"
@@ -10187,13 +10187,13 @@ msgstr "པོ་ལ་ཡིན།"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:65
-#: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2506
+#: ../src/ui/dialog/inkscape-preferences.cpp:464 ../src/verbs.cpp:2506
 msgid "Rectangle"
 msgstr "གྲུ་བཞི་ནར་མོ།"
 
 #. 3D box
 #: ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:465 ../src/verbs.cpp:2508
+#: ../src/ui/dialog/inkscape-preferences.cpp:469 ../src/verbs.cpp:2508
 #, fuzzy
 msgid "3D Box"
 msgstr "སྒྲོམ།"
@@ -10211,13 +10211,13 @@ msgstr "པར་ལེན་འགྲུལ་ལམ།"
 
 #. spiral
 #: ../src/selection-describer.cpp:80
-#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2514
+#: ../src/ui/dialog/inkscape-preferences.cpp:482 ../src/verbs.cpp:2514
 msgid "Spiral"
 msgstr "སྒྲིལ།"
 
 #. star
 #: ../src/selection-describer.cpp:82
-#: ../src/ui/dialog/inkscape-preferences.cpp:474 ../src/verbs.cpp:2512
+#: ../src/ui/dialog/inkscape-preferences.cpp:478 ../src/verbs.cpp:2512
 #: ../src/widgets/toolbox.cpp:2733
 msgid "Star"
 msgstr "སྐར་མ།"
@@ -10435,19 +10435,19 @@ msgstr "<b>%sལུ་འབྲེལ་མཐུད་འབད་</b> "
 msgid "<b>Link</b> without URI"
 msgstr "<b>ཡུ་ཨཱར་ཨའི་</b>མེད་པར་འབྲེལ་མཐུད་འབད།"
 
-#: ../src/sp-ellipse.cpp:489 ../src/sp-ellipse.cpp:866
+#: ../src/sp-ellipse.cpp:502 ../src/sp-ellipse.cpp:879
 msgid "<b>Ellipse</b>"
 msgstr "<b>སྒོང་དབྱིབས།</b>"
 
-#: ../src/sp-ellipse.cpp:630
+#: ../src/sp-ellipse.cpp:643
 msgid "<b>Circle</b>"
 msgstr "<b>སྒོར་ཐིག</b>"
 
-#: ../src/sp-ellipse.cpp:861
+#: ../src/sp-ellipse.cpp:874
 msgid "<b>Segment</b>"
 msgstr "<b>ཆ་བགོས།</b>"
 
-#: ../src/sp-ellipse.cpp:863
+#: ../src/sp-ellipse.cpp:876
 msgid "<b>Arc</b>"
 msgstr "<b>ཞུ་དབྱིབས།</b>"
 
@@ -10757,19 +10757,19 @@ msgstr "<b>གྲུ་བཞི་ནར་མོ།</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
-#: ../src/sp-spiral.cpp:324
+#: ../src/sp-spiral.cpp:325
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "%3f ཊཱནསི་དང་གཅིག་ཁར་ <b>སྒྲིལl</b>"
 
-#: ../src/sp-star.cpp:307
+#: ../src/sp-star.cpp:309
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>སྐར་མ་</b>%d ཝར་ཊེགསི་དང་གཅིག་ཁར།"
 msgstr[1] "<b>སྐར་མ་</b>%d ཝར་ཊེགསི་ཚུ་དང་གཅིག་ཁར།"
 
-#: ../src/sp-star.cpp:311
+#: ../src/sp-star.cpp:313
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -11814,41 +11814,6 @@ msgstr "དངོས་པོ་ ཨའི་ཌི་ གཞི་སྒྲི�
 msgid "Selection"
 msgstr "སེལ་འཐུ།"
 
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:3
-#, fuzzy
-msgid "Dip pen"
-msgstr "ཡིག་ཚུགས།"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:5
-#, fuzzy
-msgid "Marker"
-msgstr "གྲིབ་ནག་ཆེ་མི་"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:7
-#, fuzzy
-msgid "Brush"
-msgstr "ཧོནམ།"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:9
-#, fuzzy
-msgid "Wiggly"
-msgstr "སྐྱ་རྫུས་མ་:"
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:11
-msgid "Splotchy"
-msgstr ""
-
-#. TRANSLATORS: calligraphic pen type
-#: ../src/ui/dialog/calligraphic-presets.h:13
-#, fuzzy
-msgid "Tracing"
-msgstr "བར་སྟོང་སྟོན་ནི:"
-
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 #, fuzzy
 msgid "Profile name:"
@@ -12017,7 +11982,7 @@ msgid "Guides"
 msgstr "ལམ་སྟོན་པ་ཚུ།(_u)"
 
 #: ../src/ui/dialog/document-properties.cpp:120
-#: ../src/ui/dialog/inkscape-preferences.cpp:1010
+#: ../src/ui/dialog/inkscape-preferences.cpp:1014
 #: ../src/widgets/toolbox.cpp:2163
 #, fuzzy
 msgid "Grids"
@@ -13321,16 +13286,27 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
+msgid "Snap the mouse pointer when dragging a constrained knot"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:235
+msgid ""
+"When dragging a knot along a constraint line, then snap the position of the "
+"mouse pointer instead of snapping the projection of the knot onto the "
+"constraint line"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:237
 #, fuzzy
 msgid "Snapping"
 msgstr "དངོས་པོའི་འགྲུལ་ལམ་ལུ་པར་བཏབ།(_p)"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:242
+#: ../src/ui/dialog/inkscape-preferences.cpp:246
 msgid "Arrow keys move by:"
 msgstr "གིས་མདའ་རྟགས་སྤོ་བཤུད་འབདཝ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:243
+#: ../src/ui/dialog/inkscape-preferences.cpp:247
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -13339,33 +13315,33 @@ msgstr ""
 "འགྱང་ཚད་འདི་གིས་སྤོ་བཤུད་འབདཝ་ཨིན། (པི་ཨེགསི་ཆ་ཕྲན་ནང་ལུ།)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:246
+#: ../src/ui/dialog/inkscape-preferences.cpp:250
 msgid "> and < scale by:"
 msgstr "> དང < གིས་ཆ་ཚད་འཇལ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:247
+#: ../src/ui/dialog/inkscape-preferences.cpp:251
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "> ཡང་ན་ < ཨེབ་མི་དེ་གིས་ ཡར་སེང་འདི་གིས་ སེལ་འཐུ་ཡར་དང་མར་ཆཆ་ཚད་འཇལཝ་ཨིན། (པི་ཨེགསི་ཆ་ཕྲན་"
 "ནང་ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:249
+#: ../src/ui/dialog/inkscape-preferences.cpp:253
 msgid "Inset/Outset by:"
 msgstr "གིས་ནང་སྒྲིག/ཕྱི་སྒྲིག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:250
+#: ../src/ui/dialog/inkscape-preferences.cpp:254
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "ནང་སྒྲིག་དང་ཕྱི་སྒྲིག་གི་བརྡ་བཀོད་ཚུ་གིས་ འགྱང་ཚད་འདི་གིས་འགྲུལ་ལམ་དེ་གནས་སྤང་འབད།(པི་ཨེགསི་ཆ་ཕྲན་ནང་"
 "ལུ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:251
+#: ../src/ui/dialog/inkscape-preferences.cpp:255
 msgid "Compass-like display of angles"
 msgstr "ཕྱོགས་འཁོར- གྲུ་ཟུར་གྱི་བཀྲམ་སྟོན་བཟུམ་སྦེ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:253
+#: ../src/ui/dialog/inkscape-preferences.cpp:257
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -13375,15 +13351,15 @@ msgstr ""
 "མི་ དེ་མེན་པ་ཅིན་ ཤར་ཁ་ཐུག་ལུ་་༠་ དང་ -༡༨༠་ལས་༡༨༠་གི་ཁྱབ་ཚད་ དང་གཡོན་སྐོར་ལུ་ཡར་སེང་དང་"
 "གཅིག་ཁར་བཀྲམ་སྟོན་འབད་ཡོདཔ། "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "Rotation snaps every:"
 msgstr "བསྒྱིར་མི་དེ་གིས་ཆ་མཉམ་པར་བཏབ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:259
+#: ../src/ui/dialog/inkscape-preferences.cpp:263
 msgid "degrees"
 msgstr "དབྱེ་རིམ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:260
+#: ../src/ui/dialog/inkscape-preferences.cpp:264
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -13391,11 +13367,11 @@ msgstr ""
 "ཚད་འཛིན་ཨེབ་སྟེ་ཡོད་མི་དེ་དང་གཅིག་ཁར་བསྒྱིར་མི་དེ་གིས་ དབྱེ་རིམ་དེ་ཅིག་པར་བཏབ་ཨིན། འདི་མ་ཚད་ དངུལ་"
 "བསྡོམས་དེ་གིས་ཨེབ་ནི་དང་ [ ཡང་ན་] བསྒྱིར་བཅུག་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:262
+#: ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "Zoom in/out by:"
 msgstr "གིས་ཕྱིར་རྒྱས/ནང་ཟུམ་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:263
+#: ../src/ui/dialog/inkscape-preferences.cpp:267
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -13403,77 +13379,77 @@ msgstr ""
 "ལག་ཆས་རྒྱས་ཟུམ་འབད་དེ་  +/- ལྡེ་མིག་ཚུ་ཨེབ་གཏང་འབད་ དེ་ལས་  སྒྱུར་བྱེད་འདི་གིས་ཕྱིར་རྒྱས་དང་ནང་ཟུམ་"
 "ལུ་བར་གྱི་ཨེབ་གཏང་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:269
+#: ../src/ui/dialog/inkscape-preferences.cpp:273
 msgid "Show selection cue"
 msgstr "སེལ་འཐུའི་ཚིག་བརྡ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "སེལ་འཐུ་འབད་ཡོད་པའི་དངོས་པོ་ཚུ་གིས་ སེལ་འཐུའི་ཚིག་བརྡ་བཀྲམ་སྟོན་འབད་འབད་དོ་ཡོདཔ་ཨིན་ན། (སེལ་འཐུ་"
 "འབད་མི་ནང་གི་ཅོག་གཅིགཔ།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:276
+#: ../src/ui/dialog/inkscape-preferences.cpp:280
 msgid "Enable gradient editing"
 msgstr "སྟེགས་རིས་ཞུན་དག་འབད་ནི་ལྕོགས་ཅན་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:277
+#: ../src/ui/dialog/inkscape-preferences.cpp:281
 msgid "Whether selected objects display gradient editing controls"
 msgstr ""
 "སེེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་ཚུ་གིས་ སྟེགས་རིས་ཞུན་དག་འབད་ནིའི་ཚད་འཛིན་བཀྲམ་སྟོན་འམད་དོ་ཡོདཔ་ཨིན་ན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:282
+#: ../src/ui/dialog/inkscape-preferences.cpp:286
 msgid "Conversion to guides uses edges instead of bounding box"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:283
+#: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 msgid "Ctrl+click dot size:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:290
+#: ../src/ui/dialog/inkscape-preferences.cpp:294
 #, fuzzy
 msgid "times current stroke width"
 msgstr "སིཊོཪོག་རྒྱ་ཚད་དེ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:291
+#: ../src/ui/dialog/inkscape-preferences.cpp:295
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:310
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>ནང་ལས་བཟོ་རྣམ་འབག་ནིའི་དོན་ལུ་</b> དངོས་པོ་སེལ་འཐུ་འབད་འབདཝ་མིན་འདུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
 msgstr ""
 "<b>དངོས་པོ་གཅིག་ལས་ལྷག་སྟེ་སེལ་འཐུ་འབད་དེ་འདུག</b> དངོས་པོ་སྣ་མང་ནང་ལས་བཟོ་རྣམ་འབད་མི་ཚུགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:348
+#: ../src/ui/dialog/inkscape-preferences.cpp:352
 msgid "Create new objects with:"
 msgstr "དངོས་པོ་གསརཔ་ཚུ་གི་རྒྱ་ཚད་གསར་བསྐྲུན་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:350
+#: ../src/ui/dialog/inkscape-preferences.cpp:354
 msgid "Last used style"
 msgstr "མཇུག་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་བཟོ་རྣམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:352
+#: ../src/ui/dialog/inkscape-preferences.cpp:356
 msgid "Apply the style you last set on an object"
 msgstr "ཁྱོད་ཀྱིས་དངོས་པོའི་གུར་མཐའ་མཇུག་ལུ་གཞི་སྒྲིག་འབད་མི་ བཟོ་རྣམ་དེ་འཇུག་སྤྱོད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:357
+#: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "This tool's own style:"
 msgstr "ལག་ཆས་འདི་གི་བཟོ་རྣམ་ངོ་མ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:361
+#: ../src/ui/dialog/inkscape-preferences.cpp:365
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -13482,185 +13458,185 @@ msgstr ""
 "རྣམ་དེ་གསོག་འཇོག་འབད་འོང་། འདི་གཞི་སྒྲིག་འབད་ནིའི་དོན་ལུ་ འོག་གི་ཨེབ་རྟ་དེ་ལག་ལེན་འཐབ།"
 
 #. style swatch
-#: ../src/ui/dialog/inkscape-preferences.cpp:365
+#: ../src/ui/dialog/inkscape-preferences.cpp:369
 msgid "Take from selection"
 msgstr "སེལ་འཐུའི་ནང་ལས་འབག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:370
+#: ../src/ui/dialog/inkscape-preferences.cpp:374
 #, fuzzy
 msgid "This tool's style of new objects"
 msgstr "ལག་ཆས་འདི་གི་བཟོ་རྣམ་ངོ་མ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:377
+#: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr ""
 "སེལ་འཐུ་(དང་པ་)འབད་ཡོད་པའི་དངོས་པོ་ཚུ་གི་བཟོ་རྣམ་དེ་ ལག་ཆས་འདི་གི་བཟོ་རྣམ་བཟུམ་སྦེ་ཨིནམ་སེམས་ཁར་"
 "བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:382
+#: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid "Tools"
 msgstr "ལག་ཆས་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:385
+#: ../src/ui/dialog/inkscape-preferences.cpp:389
 #, fuzzy
 msgid "Bounding box to use:"
 msgstr "བོན་སྒྲིང་སྒྲོམ་ཚུ་ལམ་སྟོན་པ་ལུ་པར་བཏབ།(_u)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:386
+#: ../src/ui/dialog/inkscape-preferences.cpp:390
 #, fuzzy
 msgid "Visual bounding box"
 msgstr "རྒྱབ་འགལ་བོན་སྒྲིང་སྒྲོམ་གྱི་མཐའམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:388
+#: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:389
-#, fuzzy
-msgid "Geometric bounding box"
-msgstr "རྒྱབ་འགལ་བོན་སྒྲིང་སྒྲོམ་གྱི་མཐའམ།"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:391
-msgid "This bounding box includes only the bare path"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 #, fuzzy
+msgid "Geometric bounding box"
+msgstr "རྒྱབ་འགལ་བོན་སྒྲིང་སྒྲོམ་གྱི་མཐའམ།"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
+msgid "This bounding box includes only the bare path"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:397
+#, fuzzy
 msgid "Conversion to guides:"
 msgstr "ཚིག་ཡིག་ལུ་གཞི་བསྒྱུར་འབད།(_C)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:398
 #, fuzzy
 msgid "Keep objects after conversion to guides"
 msgstr "དཔེ་གཞི་ལུ་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ <b>དངོས་པོ་(s)</b>སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:397
+#: ../src/ui/dialog/inkscape-preferences.cpp:401
 #, fuzzy
 msgid "Treat groups as a single object"
 msgstr "འགྲུལ་ལམ་གསརཔ་གསར་བསྐྲུན་འབད་དོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:399
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:401
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 #, fuzzy
 msgid "Average all sketches"
 msgstr "སྤུས་ཚད་ཆ་སྙོམས་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:402
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Width is in absolute units"
 msgstr "རྒྱ་ཚད་དེ་ཆ་ཕྲན་ཡང་དག་ནང་ལུ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 #, fuzzy
 msgid "Select new path"
 msgstr "ཤུལ་མམ་འདི་སེལ་འཐུ་འབད་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Don't attach connectors to text objects"
 msgstr "མཐུད་བྱེད་ཚུ་ ཚིག་ཡིག་དངོས་པོ་ཚུ་ལུ་ མཉམ་སྦྲགས་མའབད།"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Selector"
 msgstr "སེལ་འཐུ་འབད་མི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:410
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid "When transforming, show:"
 msgstr "བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་ སྟོན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/ui/dialog/inkscape-preferences.cpp:415
 msgid "Objects"
 msgstr "དངོས་པོ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:413
+#: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Show the actual objects when moving or transforming"
 msgstr "སྤོ་བཤུད་དང་ ཡང་ན་བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་དངོས་པོ་ངོ་མ་ཚུ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid "Box outline"
 msgstr "སྒྲོམ་མཐའ་ཐིག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "སྤོ་བཤུད་དང་ ཡང་ན་ བཟོ་བསྒྱུར་འབད་བའི་སྐབས་ལུ་ དངོས་པོ་ཚུ་གི་སྒྲོམ་གྱི་མཐའ་ཐིག་རྐྱངམ་ཅིག་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:417
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Per-object selection cue:"
 msgstr "དངོས་ཕོ་རེ་རེ་ལུ་ སེལ་འཐུའི་ཚིག་བརྡ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:420
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "No per-object selection indication"
 msgstr "དངོས་པོ་རེ་རེ་ལུ༦་སེལ་འཐུའི་བརྡ་སྟོན་ནི་མེད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Mark"
 msgstr "རྟགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr ""
 "སེལ་འཐུ་འབད་ཡོད་པའི་དངོས་པོ་རེ་རེ་ལུ་ སྤྱི་ཏོག་གི་གཡོན་གྱི་སྒྱིད་ཁུག་ནང་ལུ་ཕ་ལམ་གྱི་རྟགས་རེ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:424
+#: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Box"
 msgstr "སྒྲོམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:426
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Each selected object displays its bounding box"
 msgstr "སེལ་འཐུ་འབད་ཡོད་མི་དངོས་པོ་རེ་རེ་གིས་ ཁོང་རའི་བོན་ཌིང་སྒྲོམ་དེ་བཀྲམ་སྟོན་འབདཝ་ཨིན།"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:429
+#: ../src/ui/dialog/inkscape-preferences.cpp:433
 msgid "Node"
 msgstr "མཐུད་མཚམས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 #, fuzzy
 msgid "Path outline:"
 msgstr "སྒྲོམ་མཐའ་ཐིག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 #, fuzzy
 msgid "Path outline color"
 msgstr "ཚོས་གཞི་སྦྱར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 #, fuzzy
 msgid "Selects the color used for showing the path outline."
 msgstr "(གཙོ་དམིགས་འབད་ཡོད་མི)གིརིསཊི་གྲལ་ཐིག་སྦོམ་གྱི་ཚོས་གཞི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:435
+#: ../src/ui/dialog/inkscape-preferences.cpp:439
 msgid "Path outline flash on mouse-over"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "When hovering over a path, briefly flash its outline."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Suppress path outline flash when one path selected"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Flash time"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid ""
 "Specifies how long the path outline will be visible after a mouse-over (in "
 "milliseconds). Specify 0 to have the outline shown until mouse leaves the "
@@ -13668,49 +13644,49 @@ msgid ""
 msgstr ""
 
 #. Tweak
-#: ../src/ui/dialog/inkscape-preferences.cpp:443 ../src/verbs.cpp:2504
+#: ../src/ui/dialog/inkscape-preferences.cpp:447 ../src/verbs.cpp:2504
 msgid "Tweak"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:444
+#: ../src/ui/dialog/inkscape-preferences.cpp:448
 #, fuzzy
 msgid "Paint objects with:"
 msgstr "དངོས་པོ་གསརཔ་ཚུ་གི་རྒྱ་ཚད་གསར་བསྐྲུན་འབད།"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 #: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
 #: ../src/widgets/desktop-widget.cpp:483
 msgid "Zoom"
 msgstr "རྒྱས་ཟུམ།"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Shapes"
 msgstr "དབྱིབས་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
 #, fuzzy
 msgid "Sketch mode"
 msgstr "གཞི་སྒྲིག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch."
 msgstr ""
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:491 ../src/verbs.cpp:2518
+#: ../src/ui/dialog/inkscape-preferences.cpp:495 ../src/verbs.cpp:2518
 msgid "Pen"
 msgstr "སྨྱུག་བྲིས།"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:497 ../src/verbs.cpp:2520
+#: ../src/ui/dialog/inkscape-preferences.cpp:501 ../src/verbs.cpp:2520
 msgid "Calligraphy"
 msgstr "འབྲི་ཚུགས་ལག་རྩལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -13718,162 +13694,162 @@ msgstr ""
 "ཨཱོན་འབད་དེ་ཡོད་པ་ཅིན་ སྨྱུག་བྲིས་དེ་རྒྱས་ཟུམ་ལུ་མ་རྟེན་པར་ ཆ་ཕྲན་(པི་ཨེགསི་)ནང་ལུ་ཡོདཔ་ཨིན། དེ་མེན་པ་"
 "ཅིན་ སྨྱུག་བྲིས་དེ་གིས་རྒྱས་ཟུམ་ལུ་རྟེནམ་ཨིནམ་ལས་ རྒྱས་ཟུམ་ག་སྟེ་ལུ་འབད་རུང་ གཅིག་སྦེ་མཐོངམ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:503
+#: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid ""
 "If on, each newly created object will be selected (deselecting previous "
 "selection)"
 msgstr ""
 
 #. Paint Bucket
-#: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
+#: ../src/ui/dialog/inkscape-preferences.cpp:509 ../src/verbs.cpp:2532
 #, fuzzy
 msgid "Paint Bucket"
 msgstr "ཡིག་ཆ་དཔར་བསྐྲུན་འབད།"
 
 #. Eraser
-#: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
+#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2536
 #, fuzzy
 msgid "Eraser"
 msgstr "ཆེར་བསྐྱེད་འབད་"
 
 #. LPETool
-#: ../src/ui/dialog/inkscape-preferences.cpp:514 ../src/verbs.cpp:2538
+#: ../src/ui/dialog/inkscape-preferences.cpp:518 ../src/verbs.cpp:2538
 #, fuzzy
 msgid "LPE Tool"
 msgstr "ལག་ཆས་ཚུ།"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:524 ../src/verbs.cpp:2524
+#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2524
 msgid "Gradient"
 msgstr "སྟེགས་རིས།"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:528 ../src/verbs.cpp:2530
+#: ../src/ui/dialog/inkscape-preferences.cpp:532 ../src/verbs.cpp:2530
 msgid "Connector"
 msgstr "མཐུད་བྱེད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "ཨཱོན་འབད་བ་ཅིན་ མཐུད་བྱེད་མཉམ་སྦྲགས་ཀྱི་ས་ཚིགས་ཚུ་ ཚིག་ཡིག་དངོས་པོའི་དོན་ལུ་མི་སྟོན།"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:533 ../src/verbs.cpp:2528
+#: ../src/ui/dialog/inkscape-preferences.cpp:537 ../src/verbs.cpp:2528
 msgid "Dropper"
 msgstr "ཌོ་པར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:540
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:541
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 #, fuzzy
 msgid "Remember and use last window's geometry"
 msgstr "སྒོ་སྒྲིག་གི་ཐིག་རྩིས་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:542
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 #, fuzzy
 msgid "Don't save window geometry"
 msgstr "སྒོ་སྒྲིག་གི་ཐིག་རྩིས་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:544
-#: ../src/ui/dialog/inkscape-preferences.cpp:564
+#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:568
 #, fuzzy
 msgid "Dockable"
 msgstr "ཚད་ཤིང་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:547
+#: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Dialogs are hidden in taskbar"
 msgstr "ཌའི་ལོག་ཚུ་ལས་ཀའི་ཕྲ་རིང་ནང་སབ་བཞག་སྟེ་ཡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:548
+#: ../src/ui/dialog/inkscape-preferences.cpp:552
 msgid "Zoom when window is resized"
 msgstr "སྒོ་སྒྲིག་ཚད་བསྐྱར་བཟོ་འབད་བའི་སྐབས་ལུ་རྒྱས་ཟུམ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:549
+#: ../src/ui/dialog/inkscape-preferences.cpp:553
 msgid "Show close button on dialogs"
 msgstr "ཌའི་ལོགསི་གུར་ ཁ་བསྡམས་ནིའི་ཨེབ་རྟ་སྟོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:551
+#: ../src/ui/dialog/inkscape-preferences.cpp:555
 msgid "Normal"
 msgstr "སྤྱིར་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:552
+#: ../src/ui/dialog/inkscape-preferences.cpp:556
 msgid "Aggressive"
 msgstr "བཙན་ཤུགས་ཅན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:554
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 #, fuzzy
 msgid "Saving window geometry (size and position):"
 msgstr "སྒོ་སྒྲིག་གི་ཐིག་རྩིས་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:556
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Let the window manager determine placement of all windows"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:558
+#: ../src/ui/dialog/inkscape-preferences.cpp:562
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:560
+#: ../src/ui/dialog/inkscape-preferences.cpp:564
 msgid ""
 "Save and restore window geometry for each document (saves geometry in the "
 "document)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:562
+#: ../src/ui/dialog/inkscape-preferences.cpp:566
 #, fuzzy
 msgid "Dialog behavior (requires restart):"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "Dialogs on top:"
 msgstr "ཌའི་ལོག་ཚུ་སྤྱི་ཏོག་གུར:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:576
 msgid "Dialogs are treated as regular windows"
 msgstr "ཌའི་ལོག་ཚུ་དུས་རྒྱུན་གྱི་སྒོ་སྒྲིག་བཟུམ་སྦེ་བརྩི་འཇོག་འབདཝ་ཨིན། "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:574
+#: ../src/ui/dialog/inkscape-preferences.cpp:578
 msgid "Dialogs stay on top of document windows"
 msgstr "ཌའི་ལོག་ཚུ་གིས་ཡིག་ཆའི་སྒྲོ་སྒྲིག་གི་སྤྱི་ཏོག་གུར་སྡོདཔ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:576
+#: ../src/ui/dialog/inkscape-preferences.cpp:580
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "སྤྱིར་བཏང་དང་ཅོག་གཅིགཔ་ཡོད་ དེ་འབདཝ་ད་ སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་ཚུ་དང་གཅིག་ཁར་ལཱ་གཡོག་ལེགས་ཤོམ་འབདཝ་"
 "འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:580
+#: ../src/ui/dialog/inkscape-preferences.cpp:584
 msgid "Dialog Transparency:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:582
+#: ../src/ui/dialog/inkscape-preferences.cpp:586
 #, fuzzy
 msgid "Opacity when focused:"
 msgstr "དྭངས་སྒྲིབ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:584
+#: ../src/ui/dialog/inkscape-preferences.cpp:588
 #, fuzzy
 msgid "Opacity when unfocused:"
 msgstr "དྭངས་སྒྲིབ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:586
+#: ../src/ui/dialog/inkscape-preferences.cpp:590
 msgid "Time of opacity change animation:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:589
+#: ../src/ui/dialog/inkscape-preferences.cpp:593
 #, fuzzy
 msgid "Miscellaneous:"
 msgstr "སྣ་ཚོགས་ཕན་བསླབ་དང་ཊིགསི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:592
+#: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ སྒོ་སྒྲིག་རྒྱུན་སྐྱོང་པའི་ལས་ཀ་ཕྲ་རིང་ནང་ལུ་སྦ་བཞག་ནི་ཨིན་ན་སྨོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:595
+#: ../src/ui/dialog/inkscape-preferences.cpp:599
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -13883,48 +13859,48 @@ msgstr ""
 "འདི་ གཡས་ཀྱི་བཤུད་ཕྲའི་ལྟག་ལུ་ཡོད་མི་ཨེབ་རྟ་དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ སྒོ་སྒྲིག་ག་ཅི་ལུ་ཡང་བསྒྱུར་བཆོས་"
 "འབད་བཏུབ་པའི་སྔོན་སྒྲིག་་ཨིན། )"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:597
+#: ../src/ui/dialog/inkscape-preferences.cpp:601
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:598
+#: ../src/ui/dialog/inkscape-preferences.cpp:602
 msgid "Windows"
 msgstr "སྒོ་སྒྲིག་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:603
+#: ../src/ui/dialog/inkscape-preferences.cpp:607
 msgid "Move in parallel"
 msgstr "མཉམ་སྤྱོད་འབད་སྤོ་བཤུད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:605
+#: ../src/ui/dialog/inkscape-preferences.cpp:609
 msgid "Stay unmoved"
 msgstr "སྤོ་བཤུད་མ་འབད་བར་སྡོད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:607
+#: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "Move according to transform"
 msgstr "བཟོ་བསྒྱུར་དང་འཁྲིལ་སྟེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:609
+#: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid "Are unlinked"
 msgstr "ཚུ་འབྲེལ་མཐུད་མ་འབད་བས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:611
+#: ../src/ui/dialog/inkscape-preferences.cpp:615
 msgid "Are deleted"
 msgstr "ཚུ་བཏོན་གཏང་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:614
+#: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "ངོ་མ་དེ་སྤོ་བཤུད་འབད་བའི་སྐབས་ལུ་ དེའི་ངོ་འདྲ་དང་མཐུད་ཡོད་མི་དེ་ཚུ་པར་ལེན་འབདཝ་ཨིན:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Clones are translated by the same vector as their original."
 msgstr "ངོ་འདྲ་དེ་ཚུ་མཉམ་ཐིག་གཅིག་གིས་ཁོང་རའི་ངོ་མ་སྦེ་བཟོ་བསྒྱུར་འབད་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:618
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 msgid "Clones preserve their positions when their original is moved."
 msgstr "ངོ་འདྲ་ཚུ་གིས་ ཁོང་རའི་ངོ་མ་དེ་སྤོ་བཤུད་འབད་བའི་སྐབས་ལུ་ གནས་ས་ཚུ་ཉམས་སྲུང་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:620
+#: ../src/ui/dialog/inkscape-preferences.cpp:624
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -13933,28 +13909,28 @@ msgstr ""
 "ངོ་འདྲ་རེ་རེ་གིས་ དེའི་བཟོ་བསྒྱུར་གྱི་གནས་གོང་དང་འཁྲིལ་སྟེ་སྤོ་བཤུད་འབད་དོ་ཡོདཔ་ཨིན།= ཁྱད་ཆོས། དེ་འབད་བ་"
 "ཅིན་ ངོ་འདྲ་བསྒྱིར་ཡོད་མི་དེ་གིས་ ཁོ་རའི་ངོ་མ་ལས་ལྷག་སྟེ་ཁ་ཕྱོགས་སོ་སོ་ལུ་སྤོ་བཤུད་འབད་འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:625
 msgid "When the original is deleted, its clones:"
 msgstr "ངོ་མ་དེ་བཏོན་གཏང་པའི་སྐབས་ལུ་ དེའི་ངོ་འདྲ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:623
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Orphaned clones are converted to regular objects."
 msgstr "ངོ་འདྲ་རང་རྐྱང་ཚུ་སྤྱིར་གཏང་གི་དངོས་པོ་ལུ་གཞི་བསྒྱུར་འབད་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:625
+#: ../src/ui/dialog/inkscape-preferences.cpp:629
 msgid "Orphaned clones are deleted along with their original."
 msgstr "རང་རྐྱང་ངོ་འདྲ་ཚུ་ཁོང་རའི་ངོ་མ་དང་གཅིག་ཁར་བཏོན་གཏང་ནུག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:627
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "When duplicating original+clones:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:633
 #, fuzzy
 msgid "Relink duplicated clones"
 msgstr "ཊཡིལཌི་ངོ་འདྲ་ཚུ་ བཏོན་གཏང་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:631
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -13962,29 +13938,29 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid "Clones"
 msgstr "ངོ་འདྲ་ཚུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:639
+#: ../src/ui/dialog/inkscape-preferences.cpp:643
 #, fuzzy
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
 "སེལ་འཐུ་འབད་དེ་ཡོད་མི་སྤྱི་ཏོག་གི་དངོས་པོ་དེ་ འཛིན་མའི་འགྲུལ་ལམ་དང་ གདོང་ཁེབས་སྦེ་ལག་ལེན་འཐབ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:641
+#: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "སེལ་འཐུ་འབད་དེ་ཡོད་མི་མཇུག་གི་དངོས་པོ་དེ་ འཛིན་ནིའི་འགྲུལ་ལམ་ ཡང་ན་ གདོང་ཁེབས་སྦེ་ལག་ལེན་འཐབ་ནིའི་"
 "དོན་ལུ་ འ་ནི་འདི་ཞིབ་དཔྱད་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:642
+#: ../src/ui/dialog/inkscape-preferences.cpp:646
 #, fuzzy
 msgid "Remove clippath/mask object after applying"
 msgstr "མཇུག་སྤྱོད་འབད་འབའི་ཤུལ་ལས་ འཛིན་ནིའི་འགྲུལ་ལམ་དང ཡང་ན་ གདོང་ཁེབས་རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:644
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -13992,63 +13968,63 @@ msgstr ""
 "མཇུག་སྤྱོད་འབད་བའི་ཤུལ་ལས་ པར་རིས་ནང་ལུ་ དངོས་པོ་དེ་འཛིན་ནིའི་འགྲུལ་ལམ་དང ་ཡང་ན་ གདོང་ཁེབས་སྦེ་"
 "ལག་ལེན་འཐབ་ཡོད་མི་དེ་ རྩ་བསྐྲད་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:645
+#: ../src/ui/dialog/inkscape-preferences.cpp:649
 #, fuzzy
 msgid "Clippaths and masks"
 msgstr "བཏོག་ནི་དང་ གདོང་ཁེབས་གཏང་ནི:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 #: ../src/widgets/select-toolbar.cpp:544
 msgid "Scale stroke width"
 msgstr "སིཊོཪོག་རྒྱ་ཚད་དེ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:651
+#: ../src/ui/dialog/inkscape-preferences.cpp:655
 msgid "Scale rounded corners in rectangles"
 msgstr "སྒོར་སྒོརམ་སྦེ་ཡོད་མི་སྒྱིད་ཁུག་ཚུ་གྲུ་བཞི་ནར་མོའི་ནང་ལུ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Transform gradients"
 msgstr "སྟེགས་རིས་ཚུ་བཟོ་བསྒཡིར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/ui/dialog/inkscape-preferences.cpp:657
 msgid "Transform patterns"
 msgstr "དཔེ་གཞི་ཚུ་བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:654
+#: ../src/ui/dialog/inkscape-preferences.cpp:658
 msgid "Optimized"
 msgstr "གང་དྲག་བཟོ་ཡོདཔ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:655
+#: ../src/ui/dialog/inkscape-preferences.cpp:659
 msgid "Preserved"
 msgstr "ཉམས་སྲུང་འབད་ཡོདཔ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:658
+#: ../src/ui/dialog/inkscape-preferences.cpp:662
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "དངོས་པོ་ཚུ་ཆ་ཚད་འཇལ་བའི་སྐབས་ལུ་ སིཊོརོག་རྒྱ་ཚད་དེ་སྙོམ་ཚད་ཅོག་གཅིག་ཅིགཔ་ཡོད་མི་ཅིག་གི་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:660
+#: ../src/ui/dialog/inkscape-preferences.cpp:664
 #: ../src/widgets/select-toolbar.cpp:556
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "གྲུ་བཞི་ནར་མོ་ཚུ་ཆ་ཚད་འཇལ་བའི་སྐབས་ལུ་ སྒོར་སྒོརམ་སྦེ་ཡོད་མི་སྒཡིད་ཁུག་ཚུ་གི་ར་ཌི་དེ་ཆ་ཚད་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:662
+#: ../src/ui/dialog/inkscape-preferences.cpp:666
 #: ../src/widgets/select-toolbar.cpp:567
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "སྟེགས་རིས་ཚུ་དངོས་པོ་ཚུ་རྒྱུད་དེ་(བཀང་ནིའི་དང་ ཡང་ན སིཊོཪོག་ནང་ལུ)བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:664
+#: ../src/ui/dialog/inkscape-preferences.cpp:668
 #: ../src/widgets/select-toolbar.cpp:578
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "དཔེ་གཞི་ཚུ་ དངོས་པེ་ཚུ་རྒྱུད་དེ་(བཀང་ནི་དང་ ཡང་ན་ སིཊོཪོག་ནང་ལུ་)བཟོ་བསྒྱུར་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:665
+#: ../src/ui/dialog/inkscape-preferences.cpp:669
 msgid "Store transformation:"
 msgstr "བཟོ་བསྒྱུར་གསོག་འཇོག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:667
+#: ../src/ui/dialog/inkscape-preferences.cpp:671
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -14056,47 +14032,47 @@ msgstr ""
 "འབད་ཚུགས་པ་ཅིན་ བཟོ་བསྒྱུར་= ཁྱད་ཆོས་དེ་ཁ་སྐོང་མ་བརྐྱབ་པའི་ཐོག་ལས་ དངོས་པོ་ཚུ་ལུ་བཟོ་བསྒྱུར་འཇུག་སྤྱོད་"
 "འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:669
+#: ../src/ui/dialog/inkscape-preferences.cpp:673
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "ཨ་རྟག་རང་བཟོ་བསྒྱུར་དེ་དངོས་པོའི་གུར་་བཟོ་བསྒྱུར་=ཁྱད་ཆོས་སྦེ་སྲུང་བཞག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:671
+#: ../src/ui/dialog/inkscape-preferences.cpp:675
 msgid "Transforms"
 msgstr "བཟོ་བསྒྱུར།"
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:677
-#: ../src/ui/dialog/inkscape-preferences.cpp:701
+#: ../src/ui/dialog/inkscape-preferences.cpp:681
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 msgid "Best quality (slowest)"
 msgstr "སྤུས་ཚད་ལེགས་ཤོས་(ལྷོད་ཤོས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:679
-#: ../src/ui/dialog/inkscape-preferences.cpp:703
+#: ../src/ui/dialog/inkscape-preferences.cpp:683
+#: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Better quality (slower)"
 msgstr "སྤུས་ཚད་ལེགས་ཤོམ་(ལྷོད་པ་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:681
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:685
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid "Average quality"
 msgstr "སྤུས་ཚད་ཆ་སྙོམས་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:683
-#: ../src/ui/dialog/inkscape-preferences.cpp:707
+#: ../src/ui/dialog/inkscape-preferences.cpp:687
+#: ../src/ui/dialog/inkscape-preferences.cpp:711
 msgid "Lower quality (faster)"
 msgstr "སྤུས་ཚད་དམའ་མི་(མགྱོགས་དྲགས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 msgid "Lowest quality (fastest)"
 msgstr "སྤུས་ཚད་དམའ་ཤོས་(མགྱོགས་ཤོས་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:688
+#: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "Gaussian blur quality for display:"
 msgstr "བཀྲམ་སྟོན་འབད་ནི་ལུ་ གའུ་ཤཱན་བ་ལར་སྤུས་ཚད་:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:690
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:694
+#: ../src/ui/dialog/inkscape-preferences.cpp:718
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -14104,85 +14080,85 @@ msgstr ""
 "སྤུས་ཚད་ལེགས་ཤོམ་ཨིན་རུང་ རྒྱས་ཟུམ་མཐོ་བའི་སྐབས་ལུ་ བཀྲམ་སྟོན་འདི་གནམ་མེད་ས་མེད་ལྷོད་འོང་(བིཊི་མེཔ་ཕྱིར་"
 "འདྲེན་འདི་གིས་ ཨ་རྟག་ར་སྤུས་ཚད་ལེགས་ཤོམ་ལག་ལེན་འཐབ་ཨིན་)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:692
-#: ../src/ui/dialog/inkscape-preferences.cpp:716
+#: ../src/ui/dialog/inkscape-preferences.cpp:696
+#: ../src/ui/dialog/inkscape-preferences.cpp:720
 msgid "Better quality, but slower display"
 msgstr "སྤུས་ཚད་དྲག་རུང་ བཀྲམ་སྟོན་ལྷོད་པ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:694
-#: ../src/ui/dialog/inkscape-preferences.cpp:718
+#: ../src/ui/dialog/inkscape-preferences.cpp:698
+#: ../src/ui/dialog/inkscape-preferences.cpp:722
 msgid "Average quality, acceptable display speed"
 msgstr "སྤུས་ཚད་ཆ་སྙོམས་འབད་རུང་ བཀྲམ་སྟོན་མགྱོགས་ཚད་དང་ལེན་འབད་བཏུབ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:696
-#: ../src/ui/dialog/inkscape-preferences.cpp:720
+#: ../src/ui/dialog/inkscape-preferences.cpp:700
+#: ../src/ui/dialog/inkscape-preferences.cpp:724
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "སྤུས་ཚད་དམའ་རུང་(རྒྱལ་རབས་ཅན་གྱི་དངོས་པོ་ལ་ལོ་ཅིག་)བཀྲམ་སྟོན་འདི་མགྱོགས་དྲགས་འོངམ་ཨིན་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:698
-#: ../src/ui/dialog/inkscape-preferences.cpp:722
+#: ../src/ui/dialog/inkscape-preferences.cpp:702
+#: ../src/ui/dialog/inkscape-preferences.cpp:726
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 "སྤུས་ཚད་དམའ་ཤོས་ཨིན་རུང་(ཆ་འཇོག་འབད་བཏུབ་མི་རྒྱལ་རབས་ཅན་གྱི་དངོས་པོ་)བཀྲམ་སྟོན་འདི་ མགྱོགས་ཤོས་ཅིག་"
 "ཨིན་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:712
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
 #, fuzzy
 msgid "Filter effects quality for display:"
 msgstr "བཀྲམ་སྟོན་འབད་ནི་ལུ་ གའུ་ཤཱན་བ་ལར་སྤུས་ཚད་:"
 
 #. show infobox
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
+#: ../src/ui/dialog/inkscape-preferences.cpp:729
 #, fuzzy
 msgid "Show filter primitives infobox"
 msgstr "ཁྱད་ཆོས་བཏོན་གཏང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:727
+#: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid ""
 "Show icons and descriptions for the filter primitives available at the "
 "filter effects dialog."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 msgid "Select in all layers"
 msgstr "བང་རིམ་ཆ་མཉམ་ནང་ལུ་སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:736
+#: ../src/ui/dialog/inkscape-preferences.cpp:740
 msgid "Select only within current layer"
 msgstr "ད་ལྟོའི་བང་རིམ་གི་ནང་འཁོད་ནང་རྐྱངམ་ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:737
+#: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Select in current layer and sublayers"
 msgstr "ད་ལྟོའི་བང་རིམ་དང་ཡན་ལག་བང་རིམ་ཚུ་ནང་ལུ་ སེལ་འཐུ་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:738
+#: ../src/ui/dialog/inkscape-preferences.cpp:742
 #, fuzzy
 msgid "Ignore hidden objects and layers"
 msgstr "སྦ་བཞག་ཡོད་མི་དངོས་པོ་ཚུ་སྣང་མེད་སབེ་བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:739
+#: ../src/ui/dialog/inkscape-preferences.cpp:743
 #, fuzzy
 msgid "Ignore locked objects and layers"
 msgstr "ལྡེ་མིག་རྐྱབས་ཡོད་པའི་དངོས་པོ་ཚུ་སྣང་མེད་སྦེ་བཞག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:740
+#: ../src/ui/dialog/inkscape-preferences.cpp:744
 msgid "Deselect upon layer change"
 msgstr "བང་རིམ་བསྒྱུར་བཅོས་གུར་སེལ་འཐུ་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:742
+#: ../src/ui/dialog/inkscape-preferences.cpp:746
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "ཚད་འཛིན+/་ཨེ་ མཆོང་ལྡེ་ , སོར་ལྡེ་+ མཆོང་ལྡེ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:744
+#: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ བང་རིམ་ཆ་མཉམ་ནང་གི་དངོས་པོའི་གུར་ ལཱ་གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:746
+#: ../src/ui/dialog/inkscape-preferences.cpp:750
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ ད་ལྟོའི་བང་རིམ་ནང་གི་དངོས་པོའི་གུར་རྐྱངམ་ཅིག་ ལཱ་གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:748
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -14190,7 +14166,7 @@ msgstr ""
 "ལྡེ་སྒྲོམ་སེལ་འཐུའི་བརྡ་བཀོད་ཚུ་ ད་ལྟོའི་བང་རིམ་དང་ དེའི་ཡན་ལག་བང་རིམ་ཆ་མཉམ་ནང་གི་དངོསཔོའི་གུར་ ལཱ་"
 "གཡོག་འབད་བཏུབ་སྦེ་བཟོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:750
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
@@ -14199,7 +14175,7 @@ msgstr ""
 "སྦ་བཞག་ཡོད་མི་དངོས་པོ་ཚུ་སེལ་འཐུ་འབད་ཚུགསཔ་བཟོ་ནིའི་དོན་ལུ་ འ་ནི་འདི་ཞིབ་དཔྱད་འབད་ནི་བཤོལ།(ཁོང་ར་"
 "ཚུ་གི་དང་ ཡང་ན་ སྦ་བཞག་ཡོད་མི་སྡེ་ཚན་དང་ ཡང་ན་བང་རིམ་ནང་ལུ་སྡོད་པའི་ཐོག་ལས་འབད་དགོཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 #, fuzzy
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
@@ -14209,7 +14185,7 @@ msgstr ""
 "(ཁོང་ར་ཚུ་གིས་དང་ ཡང་ན་ ལྡེ་མིག་བརྐྱབས་ཡོད་པའི་སྡེ་ཚན་ནང་ལུ་དང་ ཡང་ན་བང་རིམ་་ནང་ལུ་སྡོད་དེ་འབད་"
 "དགོཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:755
+#: ../src/ui/dialog/inkscape-preferences.cpp:759
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -14217,753 +14193,753 @@ msgstr ""
 "ད་ལྟོའི་བང་རིམ་བསྒྱུར་བཅོས་འགྱོཝ་ད་ལུ་ ད་ལྟོའི་དངོས་པོ་ཚུ་སེལ་འཐུ་འབད་དེ་བཞག་ཚུགས་ནིའི་དོན་ལུ་ འ་ནི་འདི་"
 "ཞིབ་དཔྱད་འབད་ནི་ལས་བཤོལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:757
+#: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Selecting"
 msgstr "སེལ་འཐུ་འབད་དོ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:764
+#: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "Default export resolution:"
 msgstr "ཕྱིར་འདྲེན་ཧུམ་ཆ་སྔོན་སྒརིག་འབད:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:765
+#: ../src/ui/dialog/inkscape-preferences.cpp:769
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "བིཊི་མེཔ་ཧུམ་ཆ་དེ་(ཨིནཅི་རེ་ལུ་ཚག་རེ་ནང་)ཕྱིར་འདྲེན་ཌའི་ལོག་ནང་ལུ་སྔོན་སྒརིག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:767
+#: ../src/ui/dialog/inkscape-preferences.cpp:771
 msgid "Open Clip Art Library Server Name:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:768
+#: ../src/ui/dialog/inkscape-preferences.cpp:772
 msgid ""
 "The server name of the Open Clip Art Library webdav server. It's used by the "
 "Import and Export to OCAL function."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:770
+#: ../src/ui/dialog/inkscape-preferences.cpp:774
 msgid "Open Clip Art Library Username:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
+#: ../src/ui/dialog/inkscape-preferences.cpp:775
 msgid "The username used to log into Open Clip Art Library."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:773
+#: ../src/ui/dialog/inkscape-preferences.cpp:777
 msgid "Open Clip Art Library Password:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:774
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
 msgid "The password used to log into Open Clip Art Library."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:776
+#: ../src/ui/dialog/inkscape-preferences.cpp:780
 #, fuzzy
 msgid "Import/Export"
 msgstr "ནང་འདྲེན་"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 #, fuzzy
 msgid "Perceptual"
 msgstr "བརྒྱ་ཆ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 #, fuzzy
 msgid "Relative Colorimetric"
 msgstr "འབྲེལ་བའི་སྤོ་བཤུད།(_t)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:826
+#: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:830
+#: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "(Note: Color management has been disabled in this build)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:834
+#: ../src/ui/dialog/inkscape-preferences.cpp:838
 #, fuzzy
 msgid "Display adjustment"
 msgstr "ཐབས་ལམ་བཀྲམ་སྟོན་འབད།(_D)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:844
+#: ../src/ui/dialog/inkscape-preferences.cpp:848
 #, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:845
+#: ../src/ui/dialog/inkscape-preferences.cpp:849
 #, fuzzy
 msgid "Display profile:"
 msgstr "ཐབས་ལམ་བཀྲམ་སྟོན་འབད།(_D)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:854
 msgid "Retrieve profile from display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:853
+#: ../src/ui/dialog/inkscape-preferences.cpp:857
 msgid "Retrieve profiles from those attached to displays via XICC."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:855
+#: ../src/ui/dialog/inkscape-preferences.cpp:859
 msgid "Retrieve profiles from those attached to displays."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:864
 #, fuzzy
 msgid "Display rendering intent:"
 msgstr "ཐབས་ལམ་བཀྲམ་སྟོན་འབད།(_D)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
-#: ../src/ui/dialog/inkscape-preferences.cpp:884
+#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "The rendering intent to use to calibrate display output."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:867
 #, fuzzy
 msgid "Proofing"
 msgstr "ཡིག་ཚད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:865
+#: ../src/ui/dialog/inkscape-preferences.cpp:869
 msgid "Simulate output on screen"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Simulates output of target device."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:869
+#: ../src/ui/dialog/inkscape-preferences.cpp:873
 msgid "Mark out of gamut colors"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:871
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Highlights colors that are out of gamut for the target device."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:876
+#: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Out of gamut warning color:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:877
+#: ../src/ui/dialog/inkscape-preferences.cpp:881
 msgid "Selects the color used for out of gamut warning."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:879
+#: ../src/ui/dialog/inkscape-preferences.cpp:883
 msgid "Device profile:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "The ICC profile to use to simulate device output."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:883
+#: ../src/ui/dialog/inkscape-preferences.cpp:887
 msgid "Device rendering intent:"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
-#, fuzzy
-msgid "Black point compensation"
-msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:888
-msgid "Enables black point compensation."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:890
 #, fuzzy
+msgid "Black point compensation"
+msgstr "འགྲོ་ཡུལ་དཔར་བསྐྲུན་འབད།"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
+msgid "Enables black point compensation."
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:894
+#, fuzzy
 msgid "Preserve black"
 msgstr "ཉམས་སྲུང་འབད་ཡོདཔ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "(LittleCMS 1.15 or later required)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:897
+#: ../src/ui/dialog/inkscape-preferences.cpp:901
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:910
+#: ../src/ui/dialog/inkscape-preferences.cpp:914
 #, fuzzy
 msgid "<none>"
 msgstr "ཅི་མེད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:955
+#: ../src/ui/dialog/inkscape-preferences.cpp:959
 #, fuzzy
 msgid "Color management"
 msgstr "ཤོག་ལེབ་མཐའ་མཚམས་དེ་གི་ཚོས་གཞི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:960
+#: ../src/ui/dialog/inkscape-preferences.cpp:964
 #, fuzzy
 msgid "Major grid line emphasizing"
 msgstr "གིརིཊི་གྲལ་ཐིག་སྦོམ་རེ་རེ:(_M)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:962
+#: ../src/ui/dialog/inkscape-preferences.cpp:966
 msgid "Don't emphasize gridlines when zoomed out"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:963
+#: ../src/ui/dialog/inkscape-preferences.cpp:967
 msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:965
+#: ../src/ui/dialog/inkscape-preferences.cpp:969
 #, fuzzy
 msgid "Default grid settings"
 msgstr "ཤོག་ལེབ་ཀྱི་ཕྱོགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:971
-#: ../src/ui/dialog/inkscape-preferences.cpp:992
+#: ../src/ui/dialog/inkscape-preferences.cpp:975
+#: ../src/ui/dialog/inkscape-preferences.cpp:996
 #, fuzzy
 msgid "Grid units:"
 msgstr "ཆ་ཕྲན་ཚུ་གིརིཊི་འབད:(_u)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:974
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:999
 #, fuzzy
 msgid "Origin X:"
 msgstr "འགོ་ཐོག་བྱུང་ས་ ཨེགསི:(_O)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:975
-#: ../src/ui/dialog/inkscape-preferences.cpp:996
+#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1000
 #, fuzzy
 msgid "Origin Y:"
 msgstr "འགོ་ཐོག་འབྱུང་ས་ ཝའི:(_r)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:978
+#: ../src/ui/dialog/inkscape-preferences.cpp:982
 #, fuzzy
 msgid "Spacing X:"
 msgstr "བར་སྟོང་བཏོན་ནི་ ཨེགསི:(_X)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
-#: ../src/ui/dialog/inkscape-preferences.cpp:998
+#: ../src/ui/dialog/inkscape-preferences.cpp:983
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 #, fuzzy
 msgid "Spacing Y:"
 msgstr "བར་སྟོང་བཏོན་ནི་ ཝའི:(_Y)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:981
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1003
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:985
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1007
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 #, fuzzy
 msgid "Grid line color:"
 msgstr "གྲལ་ཐིག་གི་ཚོས་གཞི་གིརིཊི་འབད:(_c)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:982
-#: ../src/ui/dialog/inkscape-preferences.cpp:1004
+#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 #, fuzzy
 msgid "Color used for normal grid lines"
 msgstr "གིརིཊི་གྲལ་ཐིག་ཚུ་གི་ཚོས་གཞི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:983
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1005
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1009
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 #, fuzzy
 msgid "Major grid line color:"
 msgstr "གིརིཊི་གྲལ་ཐིག་གི་ཚོས་གཞི་སྦོམ:(_j)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:984
-#: ../src/ui/dialog/inkscape-preferences.cpp:1006
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:1010
 #, fuzzy
 msgid "Color used for major (highlighted) grid lines"
 msgstr "(གཙོ་དམིགས་འབད་ཡོད་མི)གིརིསཊི་གྲལ་ཐིག་སྦོམ་གྱི་ཚོས་གཞི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:986
-#: ../src/ui/dialog/inkscape-preferences.cpp:1008
+#: ../src/ui/dialog/inkscape-preferences.cpp:990
+#: ../src/ui/dialog/inkscape-preferences.cpp:1012
 #, fuzzy
 msgid "Major grid line every:"
 msgstr "གིརིཊི་གྲལ་ཐིག་སྦོམ་རེ་རེ:(_M)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:991
 msgid "Show dots instead of lines"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:988
+#: ../src/ui/dialog/inkscape-preferences.cpp:992
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1015
+#: ../src/ui/dialog/inkscape-preferences.cpp:1019
 #, fuzzy
 msgid "Use named colors"
 msgstr "འཐུ་ཡོད་པའི་ཚོས་གཞི་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1016
+#: ../src/ui/dialog/inkscape-preferences.cpp:1020
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1018
+#: ../src/ui/dialog/inkscape-preferences.cpp:1022
 #, fuzzy
 msgid "XML formatting"
 msgstr "བརྡ་དོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1020
+#: ../src/ui/dialog/inkscape-preferences.cpp:1024
 #, fuzzy
 msgid "Inline attributes"
 msgstr "ཁྱད་ཆོས་གཞི་སྒྲིག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1021
+#: ../src/ui/dialog/inkscape-preferences.cpp:1025
 msgid "Put attributes on the same line as the element tag"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 #, fuzzy
 msgid "Indent, spaces:"
 msgstr "འགོ་མཚམས་མཐུད་མཚམས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1024
+#: ../src/ui/dialog/inkscape-preferences.cpp:1028
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1026
+#: ../src/ui/dialog/inkscape-preferences.cpp:1030
 #, fuzzy
 msgid "Path data"
 msgstr "རྒྱ་ཚད་སྦྱར།(_W)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1028
+#: ../src/ui/dialog/inkscape-preferences.cpp:1032
 #, fuzzy
 msgid "Allow relative coordinates"
 msgstr "འོད་རྟགས་སྙོམ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1029
+#: ../src/ui/dialog/inkscape-preferences.cpp:1033
 msgid "If set, relative coordinates may be used in path data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1031
+#: ../src/ui/dialog/inkscape-preferences.cpp:1035
 msgid "Force repeat commands"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1032
+#: ../src/ui/dialog/inkscape-preferences.cpp:1036
 msgid ""
 "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead "
 "of 'L 1,2 3,4')"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1034
+#: ../src/ui/dialog/inkscape-preferences.cpp:1038
 #, fuzzy
 msgid "Numbers"
 msgstr "གྲལ་ཐིག་ཚུ་གི་ཨང་བཀོད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 #, fuzzy
 msgid "Numeric precision:"
 msgstr "འགྲེལ་བཤད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1037
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 msgid "How many digits to write after the decimal dot"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 #, fuzzy
 msgid "Minimum exponent:"
 msgstr "ཚད་ཉུང་མཐའ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1040
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1042
+#: ../src/ui/dialog/inkscape-preferences.cpp:1046
 #, fuzzy
 msgid "SVG output"
 msgstr "ཨེསི་ཝི་ཇི་ཨའུཊི་པུཊི།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 #, fuzzy
 msgid "System default"
 msgstr "སྔོན་སྒྲིག་སྦེ་གཞི་སྒྲིག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Albanian (sq)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Amharic (am)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Arabic (ar)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Armenian (hy)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Azerbaijani (az)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 #, fuzzy
 msgid "Basque (eu)"
 msgstr "འགྲུལ་ལམ་འཇལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1047
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Belarusian (be)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bulgarian (bg)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bengali (bn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Breton (br)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Catalan (ca)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Valencian Catalan (ca@valencia)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1048
+#: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Chinese/China (zh_CN)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Chinese/Taiwan (zh_TW)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Croatian (hr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1049
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Czech (cs)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Danish (da)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dutch (nl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dzongkha (dz)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "German (de)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Greek (el)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 #, fuzzy
 msgid "English (en)"
 msgstr "གྲུ་ཟུར།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1050
+#: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "English/Australia (en_AU)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Canada (en_CA)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Great Britain (en_GB)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1051
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Pig Latin (en_US@piglatin)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 #, fuzzy
 msgid "Esperanto (eo)"
 msgstr "གསར་བསྐྲུན་པ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Estonian (et)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1052
+#: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Finnish (fi)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "French (fr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Irish (ga)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Galician (gl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hebrew (he)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1053
+#: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hungarian (hu)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Indonesian (id)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 #, fuzzy
 msgid "Italian (it)"
 msgstr "ཨའི་ཊ་ལིཀ། "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Japanese (ja)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Khmer (km)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Kinyarwanda (rw)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Korean (ko)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Lithuanian (lt)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1054
+#: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Macedonian (mk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Mongolian (mn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 #, fuzzy
 msgid "Nepali (ne)"
 msgstr "གྲལ་ཐིག་གསརཔ་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Bokmål (nb)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Nynorsk (nn)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1055
+#: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Panjabi (pa)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Polish (pl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese (pt)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese/Brazil (pt_BR)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Romanian (ro)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1056
+#: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Russian (ru)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian (sr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian in Latin script (sr@latin)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovak (sk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovenian (sl)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish (es)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1057
+#: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish/Mexico (es_MX)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Swedish (sv)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Thai (th)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Turkish (tr)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Ukrainian (uk)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1058
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Vietnamese (vi)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
+#: ../src/ui/dialog/inkscape-preferences.cpp:1069
 #, fuzzy
 msgid "Language (requires restart):"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1066
+#: ../src/ui/dialog/inkscape-preferences.cpp:1070
 msgid "Set the language for menus and number formats"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1068
+#: ../src/ui/dialog/inkscape-preferences.cpp:1072
 #, fuzzy
 msgid "Smaller"
 msgstr "ཆུང་ཀུ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1072
+#: ../src/ui/dialog/inkscape-preferences.cpp:1076
 #, fuzzy
 msgid "Toolbox icon size"
 msgstr "ལག་ཆས་ཀྱིས་ཕྲ་རིང་ཚད་འཛིན་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1073
+#: ../src/ui/dialog/inkscape-preferences.cpp:1077
 #, fuzzy
 msgid "Set the size for the tool icons (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1076
+#: ../src/ui/dialog/inkscape-preferences.cpp:1080
 #, fuzzy
 msgid "Control bar icon size"
 msgstr "ལག་ཆས་ཀྱིས་ཕྲ་རིང་ཚད་འཛིན་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1077
+#: ../src/ui/dialog/inkscape-preferences.cpp:1081
 #, fuzzy
 msgid ""
 "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1080
+#: ../src/ui/dialog/inkscape-preferences.cpp:1084
 #, fuzzy
 msgid "Secondary toolbar icon size"
 msgstr "ལག་ཆས་ཀྱིས་ཕྲ་རིང་ཚད་འཛིན་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1081
+#: ../src/ui/dialog/inkscape-preferences.cpp:1085
 #, fuzzy
 msgid ""
 "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1084
+#: ../src/ui/dialog/inkscape-preferences.cpp:1088
 msgid "Work-around color sliders not drawing."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1086
+#: ../src/ui/dialog/inkscape-preferences.cpp:1090
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1092
+#: ../src/ui/dialog/inkscape-preferences.cpp:1096
 #, fuzzy
 msgid "Clear list"
 msgstr "གནས་གོང་ཚུ་བསལ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1097
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 #, fuzzy
 msgid "Maximum documents in Open Recent:"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་མང་མཐའ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1098
+#: ../src/ui/dialog/inkscape-preferences.cpp:1102
 #, fuzzy
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
 msgstr "ཡིག་སྣོད་དཀར་ཆག་ནང་ལུ་འཕྲལ་གྱི་ཐོ་ཡིག་་དེ་ཁ་ཕྱེ་ཟེར་མི་གི་རིང་ཚད་མང་དྲག"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
 msgid "Zoom correction factor (in %):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
+#: ../src/ui/dialog/inkscape-preferences.cpp:1106
 msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
 "display objects in their true sizes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
+#: ../src/ui/dialog/inkscape-preferences.cpp:1108
 #, fuzzy
 msgid "Interface"
 msgstr "བསྐྱར་བསྣོད།"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1111
+#: ../src/ui/dialog/inkscape-preferences.cpp:1115
 #, fuzzy
 msgid "Enable autosave (requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1112
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Interval (in minutes):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+#: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "filesystem|Path:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "The directory where autosaves will be written"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 #, fuzzy
 msgid "Maximum number of autosaves:"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་མང་མཐའ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
@@ -14980,114 +14956,114 @@ msgstr ""
 #. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
 #.
 #. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1136
+#: ../src/ui/dialog/inkscape-preferences.cpp:1140
 #, fuzzy
 msgid "Autosave"
 msgstr "རྩོམ་པ་པོ་ཚུ།(_A)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "2x2"
 msgstr "༢x༢"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "4x4"
 msgstr "༤x༤"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "8x8"
 msgstr "༨x༨"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "16x16"
 msgstr "༡༦x༡༦"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1150
 msgid "Oversample bitmaps:"
 msgstr "དཔེ་ཚད་བིཊི་མེཔསི་གི་ལྟག་ལུ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Automatically reload bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1169
 #, fuzzy
 msgid "Bitmap editor:"
 msgstr "སྟེགས་རིས་ཞུན་དག་པ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1175
 msgid "Resolution for Create Bitmap Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1172
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 #, fuzzy
 msgid "Bitmaps"
 msgstr "གདོང་ཁེབས་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1230
 #, fuzzy
 msgid "Language:"
 msgstr "ཁ་སྐད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1234
 #, fuzzy
 msgid "Second language:"
 msgstr "ཁ་སྐད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1238
 #, fuzzy
 msgid "Third language:"
 msgstr "ཁ་སྐད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1237
+#: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 #, fuzzy
 msgid "Spellcheck"
 msgstr "སེལ་འཐུ།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "Add label comments to printing output"
 msgstr "དཔར་བསྐྲུན་འབད་ནིའི་ཨའུཊི་པུཊི་ལུ་ ཁ་ཡིག་བསམ་བཀོད་ཁ་སྐོང་རྐྱབས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -15095,22 +15071,22 @@ msgstr ""
 "ཨོན་ཡོད་པའི་སྐབས་ལུ་ དངོས་པོའི་དོན་ལུ་དེའི་ཁ་ཡིག་དང་བཅས་ལྷག་སྟོན་འབད་ཡོད་པའི་ཨའུཊི་པུཊི་དེ་མིང་རྟགས་"
 "བཀལ་བའི་ཐོག་ལས་ རགས་པའི་དཔར་བསྐྲུན་ཨའུཔུཊི་ལུ་བསམ་བཀོད་དེ་ཁ་སྐོང་བརྐྱབ་འོང་།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Prevent sharing of gradient definitions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Simplification threshold:"
 msgstr "འཇམ་སམ་བཟོ་ནའི་ ཐེརེཤ་ཧཱོལ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1278
 #, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
@@ -15121,84 +15097,84 @@ msgstr ""
 "ལུ་བརྡ་བཀོད་དེ་ཚར་ལེ་ཤ་ཅིག་ལས་བཀོལ་འབད་བ་ཅིན་ འདི་གིས་ཧེང་བཀལ་དྲག་ཤུལ་ཅན་གྱི་ཐོག་ལས་བྱ་བ་འབདཝ་"
 "ཨིན། ཐེམ་ནི་གི་ཤུལ་ལས་ལོག་སྟེ་ལས་བཀོལ་འབད་མི་འདི་གིས་ སྔོན་སྒྲིག་ཐེརེཤ་ཧཱོལ་དེ་སོར་ཆུད་འབདཝ་ཨིན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 msgid "Latency skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1281
 #, fuzzy
 msgid "(requires restart)"
 msgstr ""
 "ཌའི་ལོག་སྒོ་སྒྲིག་ཚུ་ལུ་ བསྡམ་ནིའི་ཨེབ་རྟ་ཅིག་ཡོདཔ་ཨིན་ན། ( ལོག་འགོ་བཙུགས་ནི་དགོས་མཁོ་ཡོདཔ་ཨིན།)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1280
+#: ../src/ui/dialog/inkscape-preferences.cpp:1284
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1288
+#: ../src/ui/dialog/inkscape-preferences.cpp:1292
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
 #, fuzzy
 msgid "User data: "
 msgstr "ལག་ལེན་པའི་མིང་:(_U)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 #, fuzzy
 msgid "User cache: "
 msgstr "ལག་ལེན་པའི་མིང་:(_U)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "System config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1307
 #, fuzzy
 msgid "System data: "
 msgstr "སྔོན་སྒྲིག་སྦེ་གཞི་སྒྲིག་འབད།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1306
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "PIXMAP: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1314
 msgid "DATA: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
 #, fuzzy
 msgid "UI: "
 msgstr "ཨའི་ཌི:(_I)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1323
+#: ../src/ui/dialog/inkscape-preferences.cpp:1327
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 #, fuzzy
 msgid "System info"
 msgstr "རིམ་ལུགས།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 #, fuzzy
 msgid "General system information"
 msgstr "དྲན་ཚད་ལག་ལེན་གྱི་བརྡ་དོན།"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Misc"
 msgstr "མིསིཀི།"
 
@@ -19129,7 +19105,7 @@ msgstr "ཚོས་གཞི་བཀག་བཞག"
 msgid "Gradient editor"
 msgstr "སྟེགས་རིས་ཞུན་དག་པ།"
 
-#: ../src/widgets/gradient-vector.cpp:1184
+#: ../src/widgets/gradient-vector.cpp:1192
 msgid "Change gradient stop color"
 msgstr "སྟེགས་རིས་བཀག་པའི་ཚོས་གཞི་ བསྒྱུར་བཅོས་འབད་"
 
@@ -21584,6 +21560,10 @@ msgstr ""
 #, fuzzy, python-format
 msgid "Could not locate file: %s"
 msgstr "ཡིག་སྣོད་མིང་%sལུ་ཕྱིར་འདྲེན་འབད་མ་ཚུགས།\n"
+
+#: ../share/extensions/uniconv_output.py:118
+msgid "You need to install the UniConvertor software.\n"
+msgstr ""
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -24301,6 +24281,26 @@ msgstr "ཝིན་ཌོ་མེ་ཊ་ཕ་ཡིལ་ཨིནཔུཊ
 #, fuzzy
 msgid "XAML Input"
 msgstr "ཌི་ཨེགསི་ཨེཕི་ ཨིན་པུཊི།"
+
+#, fuzzy
+#~ msgid "Dip pen"
+#~ msgstr "ཡིག་ཚུགས།"
+
+#, fuzzy
+#~ msgid "Marker"
+#~ msgstr "གྲིབ་ནག་ཆེ་མི་"
+
+#, fuzzy
+#~ msgid "Brush"
+#~ msgstr "ཧོནམ།"
+
+#, fuzzy
+#~ msgid "Wiggly"
+#~ msgstr "སྐྱ་རྫུས་མ་:"
+
+#, fuzzy
+#~ msgid "Tracing"
+#~ msgstr "བར་སྟོང་སྟོན་ནི:"
 
 #, fuzzy
 #~ msgid "Burnt edges"
