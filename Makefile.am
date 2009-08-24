@@ -41,7 +41,6 @@ EXTRA_DIST = \
 	inkscape.spec		\
 	Info.plist.in	\
 	Info.plist		\
-	inkscape.nsi		\
 	buildtool.cpp build.xml	\
 	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt	\
 	HACKING.txt HACKING.de.txt HACKING.fr.txt HACKING.it.txt	\

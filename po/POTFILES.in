@@ -208,7 +208,6 @@ src/ui/clipboard.cpp
 src/ui/context-menu.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
-src/ui/dialog/calligraphic-presets.h
 src/ui/dialog/calligraphic-profile-rename.cpp
 src/ui/dialog/debug.cpp
 src/ui/dialog/document-metadata.cpp
@@ -291,6 +290,7 @@ share/extensions/perspective.py
 share/extensions/polyhedron_3d.py
 share/extensions/summersnight.py
 share/extensions/svg_and_media_zip_output.py
+share/extensions/uniconv_output.py
 share/extensions/web-set-att.py
 share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/addnodes.inx
