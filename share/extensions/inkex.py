@@ -166,6 +166,14 @@ class Effect:
             for node in self.document.xpath(path, namespaces=NSS):
                 self.selected[i] = node
 
+    def getElementById(self, id):
+        path = '//*[@id="%s"]' % id
+        el_list = self.document.xpath(path, namespaces=NSS)
+        if el_list:
+          return el_list[0]
+        else:
+          return None
+
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
         for m in docIdNodes:
