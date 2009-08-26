@@ -158,7 +158,9 @@ LPESpiro::doEffect(SPCurve * curve)
         Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
         if (path_it->closed()) {
             // if the path is closed, maybe we have to stop a bit earlier because the closing line segment has zerolength.
-            if (path_it->back_closed().isDegenerate()) {
+            const Geom::Curve &closingline = path_it->back_closed(); // the closing line segment is always of type Geom::LineSegment.
+            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
+                // closingline.isDegenerate() did not work, because it only checks for *exact* zero length, which goes wrong for relative coordinates and rounding errors...
                 // the closing line segment has zero-length. So stop before that one!
                 curve_endit = path_it->end_open();
             }
