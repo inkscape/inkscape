@@ -283,11 +283,13 @@ sp_lpe_item_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
 {
     SPLPEItem *lpeitem = (SPLPEItem *) object;
 
-    if ( sp_lpe_item_has_path_effect(lpeitem) ) {
-        std::string href = patheffectlist_write_svg(*lpeitem->path_effect_list);
-        repr->setAttribute("inkscape:path-effect", href.c_str());
-    } else {
-        repr->setAttribute("inkscape:path-effect", NULL);
+    if (flags & SP_OBJECT_WRITE_EXT) {
+        if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+            std::string href = patheffectlist_write_svg(*lpeitem->path_effect_list);
+            repr->setAttribute("inkscape:path-effect", href.c_str());
+        } else {
+            repr->setAttribute("inkscape:path-effect", NULL);
+        }
     }
 
     if (((SPObjectClass *)(parent_class))->write) {

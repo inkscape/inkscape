@@ -328,13 +328,15 @@ sp_path_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         repr->setAttribute("d", NULL);
     }
 
-    SPPath *path = (SPPath *) object;
-    if ( path->original_curve != NULL ) {
-        gchar *str = sp_svg_write_path(path->original_curve->get_pathvector());
-        repr->setAttribute("inkscape:original-d", str);
-        g_free(str);
-    } else {
-        repr->setAttribute("inkscape:original-d", NULL);
+    if (flags & SP_OBJECT_WRITE_EXT) {
+        SPPath *path = (SPPath *) object;
+        if ( path->original_curve != NULL ) {
+            gchar *str = sp_svg_write_path(path->original_curve->get_pathvector());
+            repr->setAttribute("inkscape:original-d", str);
+            g_free(str);
+        } else {
+            repr->setAttribute("inkscape:original-d", NULL);
+        }
     }
 
     SP_PATH(shape)->connEndPair.writeRepr(repr);
