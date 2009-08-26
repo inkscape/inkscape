@@ -937,11 +937,11 @@ void TextTagAttributes::addToRotate(unsigned index, double delta)
     SVGLength zero_length;
     zero_length = 0.0;
 
-    if (attributes.rotate.size() < index + 1) {
+    if (attributes.rotate.size() < index + 2) {
         if (attributes.rotate.empty())
-            attributes.rotate.resize(index + 1, zero_length);
+            attributes.rotate.resize(index + 2, zero_length);
         else
-            attributes.rotate.resize(index + 1, attributes.rotate.back());
+            attributes.rotate.resize(index + 2, attributes.rotate.back());
     }
     attributes.rotate[index] = mod360(attributes.rotate[index].computed + delta);
 }
