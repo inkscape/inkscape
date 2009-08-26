@@ -10,8 +10,8 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docbase="/home/d/ink/inkscape/share/examples"
    sodipodi:docname="markers.svg"
-   height="297mm"
-   width="210mm"
+   height="100mm"
+   width="100mm"
    inkscape:version="0.41+cvs"
    sodipodi:version="0.32"
    id="svg1">
@@ -550,6 +550,7 @@
      bordercolor="#666666"
      pagecolor="#ffffff"
      id="base" />
+  <g transform="translate(-170,-290)">
   <path
      id="path1823"
      d="M 220.71555,563.03845 C 232.55220,560.72285 244.76291,564.70736 254.47298,571.46005 C 265.04924,578.78453 273.80766,588.52881 280.95471,599.16790 C 287.33090,608.97417 291.93287,619.78003 296.47275,630.51812"
@@ -851,4 +852,5 @@
      id="path1866"
      d="M 326.69498,611.18976 L 289.42400,546.63454"
      style="fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.12500000;marker-start:url(#Arrow1S);marker-mid:none;marker-end:url(#Arrow1L);" />
+</g>
 </svg>
