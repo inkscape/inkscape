@@ -106,6 +106,7 @@ ShowUninstDetails hide
 !include Slovak.nsh
 !include Slovenian.nsh
 !include Spanish.nsh
+!include SimpChinese.nsh
 !include TradChinese.nsh
 
 ReserveFile "inkscape.nsi.uninstall"
