@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-08-24 20:59+0200\n"
-"PO-Revision-Date: 2009-08-19 06:22+0800\n"
+"PO-Revision-Date: 2009-08-28 01:35+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1874,7 +1874,7 @@ msgstr "同於畫布凹凸，但帶有透明反光"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Lightness-Contrast"
-msgstr "亮度-對比"
+msgstr "亮度和對比"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Increase or decrease lightness and contrast"
@@ -12395,14 +12395,14 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snap the mouse pointer when dragging a constrained knot"
-msgstr ""
+msgstr "拖曳限定節點時捉取滑鼠游標"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
-msgstr ""
+msgstr "當沿著限定線拖曳節點時，捉取滑鼠游標的位置而不是向限定線捉取節點"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
 msgid "Snapping"
@@ -20117,7 +20117,7 @@ msgstr "無法找出檔案： %s"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
-msgstr ""
+msgstr "必須安裝 UniConvertor 軟體。\n"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
