@@ -31,6 +31,7 @@ example_DATA = \
 	live-path-effects-pathalongpath.svg \
 	filters.svg \
 	svgfont.svg \
-	tref.svg
+	tref.svg \
+	replace-hue.svg
 
 EXTRA_DIST = $(example_DATA)
