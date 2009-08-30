@@ -142,7 +142,6 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
 static void
 sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    g_warning("child_added");
     SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
 
     if (((SPObjectClass *) feComponentTransfer_parent_class)->child_added)
