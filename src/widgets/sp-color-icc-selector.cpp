@@ -753,7 +753,7 @@ void ColorICCSelector::_updateSliders( gint ignore )
             gtk_adjustment_set_value( _fooAdj[i], val );
         }
 
-        if ( _prof->getTransfToSRGB8() ) {
+        if ( _prof && _prof->getTransfToSRGB8() ) {
             for ( guint i = 0; i < _profChannelCount; i++ ) {
                 if ( static_cast<gint>(i) != ignore ) {
                     icUInt16Number* scratch = getScratch();
