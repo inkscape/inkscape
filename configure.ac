@@ -573,35 +573,35 @@ dnl ******************************
 dnl Inkboard dependency checking
 dnl ******************************
 
-with_inkboard="no"
-with_inkboard_ssl="no"
+dnl with_inkboard="no"
+dnl with_inkboard_ssl="no"
 
-INKBOARD_CFLAGS=""
+dnl INKBOARD_CFLAGS=""
 
-AC_ARG_ENABLE(inkboard,
-		AS_HELP_STRING([--enable-inkboard], [enable Inkboard online whiteboard facility (disabled by default)]),
-       with_inkboard=$enableval,with_inkboard=no)
+dnl AC_ARG_ENABLE(inkboard,
+dnl 		AS_HELP_STRING([--enable-inkboard], [enable Inkboard online whiteboard facility (disabled by default)]),
+dnl        with_inkboard=$enableval,with_inkboard=no)
 
-if test "x$with_inkboard" = "xyes"; then
-		with_inkboard="yes"
-		AC_DEFINE(WITH_INKBOARD,1,[Build in Inkboard support])
+dnl if test "x$with_inkboard" = "xyes"; then
+dnl 		with_inkboard="yes"
+dnl 		AC_DEFINE(WITH_INKBOARD,1,[Build in Inkboard support])
 		
 		dnl Test for OpenSSL
-		PKG_CHECK_MODULES(INKBOARD, openssl, with_inkboard_ssl=yes, with_inkboard_ssl=no)
-		if test "x$with_inkboard_ssl" = "xyes"; then
+dnl 		PKG_CHECK_MODULES(INKBOARD, openssl, with_inkboard_ssl=yes, with_inkboard_ssl=no)
+dnl 		if test "x$with_inkboard_ssl" = "xyes"; then
 			dnl OpenSSL found; enable SSL support in Pedro
-			INKBOARD_CFLAGS="$INKBOARD_CFLAGS -DHAVE_SSL"
-			RELAYTOOL([ssl], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
-			RELAYTOOL([crypto], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
-			AC_DEFINE(WITH_INKBOARD_SSL,1,[Build in SSL support for Inkboard])
-		fi
-else
-	with_inkboard="no"
-fi
+dnl 			INKBOARD_CFLAGS="$INKBOARD_CFLAGS -DHAVE_SSL"
+dnl 			RELAYTOOL([ssl], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
+dnl 			RELAYTOOL([crypto], INKBOARD_LIBS, INKBOARD_CFLAGS, [inkboard_weak=yes])
+dnl 			AC_DEFINE(WITH_INKBOARD_SSL,1,[Build in SSL support for Inkboard])
+dnl 		fi
+dnl else
+dnl 	with_inkboard="no"
+dnl fi
 
-AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
-AC_SUBST(INKBOARD_LIBS)
-AC_SUBST(INKBOARD_CFLAGS)
+dnl AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
+dnl AC_SUBST(INKBOARD_LIBS)
+dnl AC_SUBST(INKBOARD_CFLAGS)
 
 dnl ******************************
 dnl Check for libwpg for extension
@@ -1008,8 +1008,6 @@ Configuration:
         Internal Python:          ${with_python}
         Internal Perl:            ${with_perl}
         Enable LittleCms:         ${enable_lcms}
-        Enable Inkboard:          ${with_inkboard}
-        Enable SSL in Inkboard:   ${with_inkboard_ssl}
         Enable Poppler-Cairo:     ${enable_poppler_cairo}
         ImageMagick Magick++:     ${magick_ok}
         Libwpg:                   ${with_libwpg}

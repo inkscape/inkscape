@@ -16,9 +16,9 @@ bin_PROGRAMS = inkscape inkview
 # Libraries which should be compiled by "make" but not installed.
 # Use this only for libraries that are really standalone, rather than for
 # source tree subdirectories.
-if WITH_INKBOARD
-libpedro = pedro/libpedro.a
-endif
+#if WITH_INKBOARD
+#libpedro = pedro/libpedro.a
+#endif
 noinst_LIBRARIES =	\
 	libinkscape.a		\
 	dom/libdom.a		\
@@ -111,8 +111,8 @@ include filters/Makefile_insert
 include helper/Makefile_insert
 include inkjar/Makefile_insert
 include io/Makefile_insert
-include pedro/Makefile_insert
-include jabber_whiteboard/Makefile_insert
+#include pedro/Makefile_insert
+#include jabber_whiteboard/Makefile_insert
 include libcroco/Makefile_insert
 include libgdl/Makefile_insert
 include libnr/Makefile_insert

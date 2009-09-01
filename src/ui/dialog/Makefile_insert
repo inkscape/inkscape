@@ -1,6 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-if WITH_INKBOARD
+##if WITH_INKBOARD
 ## inkboard_dialogs = \
 ##	ui/dialog/whiteboard-connect.cpp	\
 ##	ui/dialog/whiteboard-connect.h		\
@@ -8,7 +8,7 @@ if WITH_INKBOARD
 ##	ui/dialog/whiteboard-sharewithchat.h	\
 ##	ui/dialog/whiteboard-sharewithuser.cpp	\
 ##	ui/dialog/whiteboard-sharewithuser.h
-endif
+##endif
 
 ink_common_sources +=		\
 	ui/dialog/aboutbox.cpp			\
