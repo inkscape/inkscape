@@ -486,7 +486,6 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_pencil, _("Pencil"), iter_tools, PREFS_PAGE_TOOLS_PENCIL);
     this->AddSelcueCheckbox(_page_pencil, "/tools/freehand/pencil", true);
     this->AddNewObjectsStyle(_page_pencil, "/tools/freehand/pencil");
-    this->AddDotSizeSpinbutton(_page_pencil, "/tools/freehand/pencil", 3.0);
     _page_pencil.add_group_header( _("Sketch mode"));
     _page_pencil.add_line( true, "", _pencil_average_all_sketches, "",
                             _("If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."));
