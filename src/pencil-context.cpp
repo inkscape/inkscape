@@ -256,6 +256,14 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             	SnapManager &m = desktop->namedview->snap_manager;
 				m.setup(desktop);
 
+                if (bevent.state & GDK_CONTROL_MASK) {
+                    if (!(bevent.state & GDK_SHIFT_MASK)) {
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                	  }
+                    spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
+                    ret = true;
+                    break;
+                }
                 if (anchor) {
                     p = anchor->dp;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
@@ -415,7 +423,10 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
             case SP_PENCIL_CONTEXT_IDLE:
                 /* Releasing button in idle mode means single click */
                 /* We have already set up start point/anchor in button_press */
-                pc->state = SP_PENCIL_CONTEXT_ADDLINE;
+                if (!(revent.state & GDK_CONTROL_MASK)) {
+                    // Ctrl+click creates a single point so only set context in ADDLINE mode when Ctrl isn't pressed
+                    pc->state = SP_PENCIL_CONTEXT_ADDLINE;
+                }
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_ADDLINE:
