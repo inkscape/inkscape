@@ -146,8 +146,8 @@ Var CMDARGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 !macro delprefs
   StrCpy $0 0
-  DetailPrint "Delete personal preferences ..."
-  DetailPrint "try to find all users ..."
+  DetailPrint "Deleting personal preferences..."
+  DetailPrint "Finding all users..."
   ${Do}
  ; FIXME
   ; this will loop through all the logged users and "virtual" windows users
@@ -158,7 +158,7 @@ Var CMDARGS
     IntOp $0 $0 + 1
     ReadRegStr $2 HKU "$1\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" AppData
     ${IfThen} $2 == "" ${|} ${Continue} ${|}
-    DetailPrint "$2\Inkscape will be removed"
+    DetailPrint "Removing $2\Inkscape"
     Delete "$2\Inkscape\preferences.xml"
     Delete "$2\Inkscape\extension-errors.log"
     RMDir "$2\Inkscape"
@@ -170,21 +170,6 @@ Var CMDARGS
 ; Installer Sections
 Section -removeInkscape
 !ifndef DUMMYINSTALL
-  ; check for an old installation and clean its DLLs etc.
-  FindFirst $0 $1 $INSTDIR\*.*
-  ${Do}
-    ${IfThen} $1 == "" ${|} ${ExitDo} ${|}
-    ${If} $1 == "."
-    ${OrIf} $1 == ".."
-      FindNext $0 $1
-      ${Continue}
-    ${EndIf}
-    ${If} ${Cmd} ${|} MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "$(lng_ClearDirectoryBefore)" /SD IDCANCEL IDCANCEL ${|}
-      FindFirst $0 $1 $INSTDIR\*.*
-      ${Continue}
-    ${Else}
-    ${EndIf}
-  ${Loop}
   ;remove the old Inkscape shortcuts from the startmenu
   ;just in case they are still there
   SetShellVarContext current
@@ -203,7 +188,7 @@ SectionEnd
 Section $(lng_Core) SecCore
   SectionIn 1 2 3 RO
 !ifndef DUMMYINSTALL
-  DetailPrint "Installing Inkscape Core Files ..."
+  DetailPrint "Installing Inkscape core files..."
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   SetOverwrite on
@@ -250,7 +235,7 @@ SectionEnd
 Section $(lng_GTKFiles) SecGTK
   SectionIn 1 2 3 RO
 !ifndef DUMMYINSTALL
-  DetailPrint "Installing GTK Files ..."
+  DetailPrint "Installing GTK files..."
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   SetOverwrite on
@@ -273,7 +258,7 @@ Section $(lng_Alluser) SecAlluser
 !ifndef DUMMYINSTALL
   ; disable this option in Win95/Win98/WinME
   StrCpy $MultiUser 1
-  DetailPrint "admin mode, registry root will be HKLM"
+  DetailPrint "Installing in administrator mode (registry root will be HKLM)"
   SetShellVarContext all
 !endif
 SectionEnd
@@ -282,75 +267,57 @@ SectionGroup $(lng_Shortcuts) SecShortcuts
 
 Section $(lng_Desktop) SecDesktop
 !ifndef DUMMYINSTALL
-  ClearErrors
   CreateShortCut "$DESKTOP\Inkscape.lnk" "$INSTDIR\inkscape.exe"
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating desktop shortcuts" ${|}
 !endif
 SectionEnd
 
 Section $(lng_Quicklaunch) SecQuicklaunch
 !ifndef DUMMYINSTALL
-  ClearErrors
   ${IfThen} $QUICKLAUNCH != $TEMP ${|} CreateShortCut "$QUICKLAUNCH\Inkscape.lnk" "$INSTDIR\inkscape.exe" ${|}
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating quicklaunch shortcuts" ${|}
 !endif
 SectionEnd
 
 Section $(lng_SVGWriter) SecSVGWriter
   SectionIn 1 2 3
 !ifndef DUMMYINSTALL
-  ; create file associations, test before if needed
-  DetailPrint "creating file associations"
-  ClearErrors
+  DetailPrint "Associating SVG files with Inkscape"
   ReadRegStr $0 HKCR ".svg" ""
   ${If} $0 == ""
-    WriteRegStr HKCR ".svg" "" "svgfile"
+    StrCpy $0 svgfile
+    WriteRegStr HKCR ".svg" "" $0
     WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
   ${EndIf}
-  ReadRegStr $0 HKCR ".svgz" ""
-  ${If} $0 == ""
-    WriteRegStr HKCR ".svgz" "" "svgfile"
-    WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
-  ${EndIf}
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating file assoziations for svg writer" ${|}
+  WriteRegStr HKCR "$0\shell\edit\command" "" `"$INSTDIR\Inkscape.exe" "%1"`
 
-  DetailPrint "creating default editor"
-  ClearErrors
-  ReadRegStr $0 HKCR ".svg" ""
-  WriteRegStr HKCR "$0\shell\edit\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
   ReadRegStr $0 HKCR ".svgz" ""
-  WriteRegStr HKCR "$0\shell\edit\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating default editor" ${|}
+  ${If} $0 == ""
+    StrCpy $0 svgfile
+    WriteRegStr HKCR ".svgz" "" $0
+    WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
+  ${EndIf}
+  WriteRegStr HKCR "$0\shell\edit\command" "" `"$INSTDIR\Inkscape.exe" "%1"`
 !endif
 SectionEnd
 
 Section $(lng_ContextMenu) SecContextMenu
   SectionIn 1 2 3
 !ifndef DUMMYINSTALL
-  ; create file associations, test before if needed
-  DetailPrint "creating file associations"
-  ClearErrors
+  DetailPrint "Adding Inkscape to SVG file context menu"
   ReadRegStr $0 HKCR ".svg" ""
   ${If} $0 == ""
-    WriteRegStr HKCR ".svg" "" "svgfile"
+    StrCpy $0 svgfile
+    WriteRegStr HKCR ".svg" "" $0
     WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
   ${EndIf}
+  WriteRegStr HKCR "$0\shell\${PRODUCT_NAME}\command" "" `"$INSTDIR\Inkscape.exe" "%1"`
 
   ReadRegStr $0 HKCR ".svgz" ""
   ${If} $0 == ""
-    WriteRegStr HKCR ".svgz" "" "svgfile"
+    StrCpy $0 svgfile
+    WriteRegStr HKCR ".svgz" "" $0
     WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
   ${EndIf}
-
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating file assoziations for context menu" ${|}
-
-  DetailPrint "creating context menue"
-  ClearErrors
-  ReadRegStr $0 HKCR ".svg" ""
-  WriteRegStr HKCR "$0\shell\${PRODUCT_NAME}\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
-  ReadRegStr $0 HKCR ".svgz" ""
-  WriteRegStr HKCR "$0\shell\${PRODUCT_NAME}\command" "" '"$INSTDIR\Inkscape.exe" "%1"'
-  ${IfThen} ${Errors} ${|} DetailPrint "Uups! Problems creating context menue integration" ${|}
+  WriteRegStr HKCR "$0\shell\${PRODUCT_NAME}\command" "" `"$INSTDIR\Inkscape.exe" "%1"`
 !endif
 SectionEnd
 
@@ -499,50 +466,33 @@ SectionGroupEnd
 
 Section -FinalizeInstallation
 !ifndef DUMMYINSTALL
-  DetailPrint "finalize installation"
-  ${If} $MultiUser = 1
-    DetailPrint "admin mode, registry root will be HKLM"
-    SetShellVarContext all
-  ${Else}
-    DetailPrint "single user mode, registry root will be HKCU"
-    SetShellVarContext current
-  ${EndIf}
+  DetailPrint "Finalizing installation"
+  ${IfThen} $MultiUser  = 1 ${|} SetShellVarContext all ${|}
+  ${IfThen} $MultiUser != 1 ${|} SetShellVarContext current ${|}
 
-  ; check for writing registry
-  ClearErrors
   WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\inkscape.exe"
-  ;${If} ${Errors}
-  ;  DetailPrint "fatal: failed to write to ${PRODUCT_DIR_REGKEY}"
-  ;  DetailPrint "aborting installation"
-  ;  Abort
-  ;${EndIf}
   WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "MultiUser" $MultiUser
   WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "askMultiUser" $askMultiUser
   WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "User" $User
-  ${IfThen} ${Errors} ${|} DetailPrint "Fatal: failed to write to registry installation info" ${|}
 
   ; start menu entries
-  ClearErrors
-  CreateShortCut "$SMPROGRAMS\Inkscape.lnk" "$INSTDIR\inkscape.exe"
-  ${IfThen} ${Errors} ${|} DetailPrint "Fatal: failed to write to start menu info" ${|}
+  CreateShortcut "$SMPROGRAMS\Inkscape.lnk" "$INSTDIR\inkscape.exe"
 
   ; uninstall settings
-  ClearErrors
   ; WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" "${UNINST_EXE}"
-  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallDir" "$INSTDIR"
-  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
+  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallDir" $INSTDIR
+  WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" $INSTDIR
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME} ${PRODUCT_VERSION}"
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\Inkscape.exe,0"
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
-  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoModify" "1"
-  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoRepair" "1"
-  ${IfThen} ${Errors} ${|} DetailPrint "fatal: failed to write to registry un-installation info" ${|}
+  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoModify" 1
+  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoRepair" 1
 
   ;create/update log always within .onInstSuccess function
   !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 
-  DetailPrint "Creating MD5 checksums..."
+  DetailPrint "Creating MD5 checksums"
   ClearErrors
   FileOpen $0 $INSTDIR\Uninstall.dat r
   FileOpen $9 $INSTDIR\Uninstall.log w
@@ -650,8 +600,8 @@ Function .onInit
   ClearErrors
   UserInfo::GetName
   ${If} ${Errors}
-    # This one means you don't need to care about admin or
-    # not admin because Windows 9x doesn't either
+    ; This one means you don't need to care about admin or
+    ; not admin because Windows 9x doesn't either
     ${IfCmd} MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "$(lng_NOT_SUPPORTED)$(lng_OK_CANCEL_DESC)" /SD IDOK IDCANCEL ${||} Quit ${|}
   ${Else}
     Pop $User
@@ -683,10 +633,7 @@ Function .onInit
     ${EndIf}
     ${If} $R0 != ""
     ${AndIf} ${Cmd} ${|} MessageBox MB_YESNO|MB_ICONEXCLAMATION $(lng_WANT_UNINSTALL_BEFORE) /SD IDNO IDYES ${|}
-      ;Run the uninstaller
-      DetailPrint "Execute $R0 in $INSTDIR"
-      ClearErrors
-      ExecWait '$R0 _?=$INSTDIR' ;Do not copy the uninstaller to a temp file
+      ExecWait $R0 ;Was '$R0 _?=$INSTDIR' but we do NOT want it leaving the uninstaller behind.
     ${EndIf}
 
   ; proccess command line parameter
@@ -794,12 +741,8 @@ Function un.CustomPageUninstall
   !insertmacro MUI_HEADER_TEXT "$(lng_UInstOpt)" "$(lng_UInstOpt1)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "inkscape.nsi.uninstall" "Field 1" "Text" "$APPDATA\Inkscape\"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "inkscape.nsi.uninstall" "Field 2" "Text" "$(lng_PurgePrefs)"
-
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "inkscape.nsi.uninstall"
   !insertmacro MUI_INSTALLOPTIONS_READ $MultiUser "inkscape.nsi.uninstall" "Field 2" "State"
-  DetailPrint "keepfiles = $MultiUser"
-  ;MessageBox MB_OK "adminmode = $MultiUser MultiUserOS = $askMultiUser"
-
 FunctionEnd
 
 Function un.onInit
@@ -848,7 +791,7 @@ Section Uninstall
   ; remove personal settings
   Delete "$APPDATA\Inkscape\extension-errors.log"
   ${If} $MultiUser = 0
-    DetailPrint "purge personal settings in $APPDATA\Inkscape"
+    DetailPrint "Purging personal settings in $APPDATA\Inkscape"
     ;RMDir /r "$APPDATA\Inkscape"
     !insertmacro delprefs
   ${EndIf}
@@ -857,48 +800,33 @@ Section Uninstall
   StrCpy $3 "svg"
   ${For} $2 0 1
     ${IfThen} $2 = 1 ${|} StrCpy $3 $3z ${|}
-    DetailPrint "removing file associations for $3 editor"
+    DetailPrint "Removing file associations for $3 editor"
     ClearErrors
     ReadRegStr $0 HKCR ".$3" ""
-    DetailPrint ".$3 associated as $0"
     ${IfNot} ${Errors}
       ReadRegStr $1 HKCR "$0\shell\edit\command" ""
-      ${IfNotThen} ${Errors} ${|} DetailPrint "$3 editor is $1" ${|}
-      ${If} $1 == '"$INSTDIR\Inkscape.exe" "%1"'
-        DetailPrint "removing default .$3 editor"
+      ${If} $1 == `"$INSTDIR\Inkscape.exe" "%1"`
         DeleteRegKey HKCR "$0\shell\edit\command"
       ${EndIf}
 
       ClearErrors
       ReadRegStr $1 HKCR "$0\shell\open\command" ""
-      ${IfNotThen} ${Errors} ${|} DetailPrint "$3 viewer is $1" ${|}
-      ${If} $1 == '"$INSTDIR\Inkscape.exe" "%1"'
-        DetailPrint "removing default .$3 viewer"
+      ${If} $1 == `"$INSTDIR\Inkscape.exe" "%1"`
         DeleteRegKey HKCR "$0\shell\open\command"
       ${EndIf}
 
-      DetailPrint "removing default .$3 context menu"
       DeleteRegKey HKCR "$0\shell\${PRODUCT_NAME}"
       DeleteRegKey /ifempty HKCR "$0\shell\edit"
       DeleteRegKey /ifempty HKCR "$0\shell\open"
       DeleteRegKey /ifempty HKCR "$0\shell"
       DeleteRegKey /ifempty HKCR "$0"
-
-      ClearErrors
-      ReadRegStr $1 HKCR $0 ""
-      ${If} ${Errors} ; Formerly ${If} $1 == ""
-        DetailPrint "removing filetype .$3 $0"
-        DeleteRegKey HKCR ".$3"
-      ${EndIf}
+      DeleteRegKey /ifempty HKCR ".$3"
     ${EndIf}
   ${Next}
 
   SetShellVarContext all
-  DetailPrint "removing product regkey"
   DeleteRegKey SHCTX "${PRODUCT_DIR_REGKEY}"
-  DetailPrint "removing uninstall info"
   DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
-  DetailPrint "removing shortcuts"
   Delete "$DESKTOP\Inkscape.lnk"
   Delete "$QUICKLAUNCH\Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape.lnk"
@@ -908,11 +836,8 @@ Section Uninstall
   RMDir  "$SMPROGRAMS\Inkscape"
 
   SetShellVarContext current
-  DetailPrint "removing product regkey"
   DeleteRegKey SHCTX "${PRODUCT_DIR_REGKEY}"
-  DetailPrint "removing uninstall info"
   DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
-  DetailPrint "removing shortcuts"
   Delete "$DESKTOP\Inkscape.lnk"
   Delete "$QUICKLAUNCH\Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape.lnk"
@@ -920,8 +845,6 @@ Section Uninstall
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
-
-  DetailPrint "removing uninstall info"
 
   InitPluginsDir
   SetPluginUnload manual
@@ -939,7 +862,7 @@ Section Uninstall
       StrLen $2 $1
       ${IfThen} $2 <= 35 ${|} ${Continue} ${|}
       StrCpy $3 $1 32
-      StrCpy $filename $1 $2-36 34 #remove trailing CR/LF
+      StrCpy $filename $1 $2-36 34 ;remove trailing CR/LF
       StrCpy $filename $filename -2
       ; $3 = MD5 when installed, then deletion choice
       ; $filename = file
@@ -963,7 +886,7 @@ Section Uninstall
           ${EndIf}
         ${EndIf}
 
-        ${If} $3 = 1   ; yes
+        ${If}   $3 = 1 ; yes
         ${OrIf} $3 = 2 ; always
           ; Remove File
           ClearErrors
@@ -977,7 +900,7 @@ Section Uninstall
             ${IfThen} ${Errors} ${|} ${ExitDo} ${|}
           ${Loop}
         ${EndIf}
-      ${EndIf} ; complaining there's no opening if
+      ${EndIf}
     ${Loop}
   ${EndIf}
   FileClose $0
