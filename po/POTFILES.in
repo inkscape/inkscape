@@ -164,6 +164,7 @@ src/pencil-context.cpp
 src/pen-context.cpp
 src/persp3d.cpp
 src/preferences.cpp
+src/preferences-skeleton.h
 src/rdf.cpp
 src/rect-context.cpp
 src/select-context.cpp

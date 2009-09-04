@@ -3,6 +3,11 @@
 
 #include <inkscape-version.h>
 
+#ifdef N_
+#undef N_
+#endif
+#define N_(x) x
+
 /* The root's "version" attribute describes the preferences file format version.
  * It should only increase when a backwards-incompatible change is made, 
  * and special handling has to be added to the preferences class to update
@@ -90,12 +95,12 @@ static char const preferences_skeleton[] =
 "                       mass=\"2\" angle=\"30\" width=\"15\" thinning=\"10\" flatness=\"90\" cap_rounding=\"0.0\" usecurrent=\"1\"\n"
 "                       tracebackground=\"0\" usepressure=\"1\" usetilt=\"0\" keep_selected=\"1\">\n"
 "    <group id=\"preset\">\n"
-"    <group id=\"cp0\" name=\"Dip pen\" mass=\"2\" wiggle=\"0.0\" angle=\"30.0\" thinning=\"10\" tremor=\"0.0\" flatness=\"90\" cap_rounding=\"0.0\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
-"    <group id=\"cp1\" name=\"Marker\" mass=\"2\" wiggle=\"0.0\" angle=\"90.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0.0\" cap_rounding=\"1.0\" tracebackground=\"0\" usepressure=\"0\" usetilt=\"0\" />\n"
-"    <group id=\"cp2\" name=\"Brush\" mass=\"2\" wiggle=\"25\" angle=\"45.0\" thinning=\"-40\" tremor=\"0.0\" flatness=\"16\" cap_rounding=\".1\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
-"    <group id=\"cp3\" name=\"Wiggly\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"1\" cap_rounding=\"0.1\" flatness=\"16\" tremor=\"18\" thinning=\"-30\" angle=\"30\" wiggle=\"50\" mass=\"0\" />\n"
-"    <group id=\"cp4\" name=\"Splotchy\" width=\"100\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"0\" cap_rounding=\"1\" flatness=\"0\" tremor=\"10\" thinning=\"30\" angle=\"30\" wiggle=\"0\" mass=\"0\" />\n"
-"    <group id=\"cp5\" name=\"Tracing\" width=\"50\" mass=\"0\" wiggle=\"0.0\" angle=\"0.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0\" cap_rounding=\"0.0\" tracebackground=\"1\" usepressure=\"1\" usetilt=\"1\"/>\n"
+"    <group id=\"cp0\" name=\"" N_("Dip pen") "\" mass=\"2\" wiggle=\"0.0\" angle=\"30.0\" thinning=\"10\" tremor=\"0.0\" flatness=\"90\" cap_rounding=\"0.0\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
+"    <group id=\"cp1\" name=\"" N_("Marker") "\" mass=\"2\" wiggle=\"0.0\" angle=\"90.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0.0\" cap_rounding=\"1.0\" tracebackground=\"0\" usepressure=\"0\" usetilt=\"0\" />\n"
+"    <group id=\"cp2\" name=\"" N_("Brush") "\" mass=\"2\" wiggle=\"25\" angle=\"45.0\" thinning=\"-40\" tremor=\"0.0\" flatness=\"16\" cap_rounding=\".1\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
+"    <group id=\"cp3\" name=\"" N_("Wiggly") "\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"1\" cap_rounding=\"0.1\" flatness=\"16\" tremor=\"18\" thinning=\"-30\" angle=\"30\" wiggle=\"50\" mass=\"0\" />\n"
+"    <group id=\"cp4\" name=\"" N_("Splotchy") "\" width=\"100\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"0\" cap_rounding=\"1\" flatness=\"0\" tremor=\"10\" thinning=\"30\" angle=\"30\" wiggle=\"0\" mass=\"0\" />\n"
+"    <group id=\"cp5\" name=\"" N_("Tracing") "\" width=\"50\" mass=\"0\" wiggle=\"0.0\" angle=\"0.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0\" cap_rounding=\"0.0\" tracebackground=\"1\" usepressure=\"1\" usetilt=\"1\"/>\n"
 "    </group>\n" 
 "    </eventcontext>\n"
 "    <eventcontext id=\"eraser\" mode=\"0\" style=\"fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;\"\n"
