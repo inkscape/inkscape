@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2008-11-08 15:02+0100\n"
 "Last-Translator: Leandro Regueiro <leandro DOT regueiro AT gmail DOT com>\n"
 "Language-Team: Galician <trasno@trasno.net>\n"
@@ -36,8 +36,7 @@ msgstr "Recheo de patrón"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -396,7 +395,9 @@ msgstr "Distribuír"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -468,8 +469,8 @@ msgstr "Orixe X"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "Textos"
@@ -1614,7 +1615,7 @@ msgid "Light eraser"
 msgstr "Brillo"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -1762,13 +1763,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
-msgid "Gelatine"
-msgstr "Relación"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Substituir unha cor"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1951,19 +1952,21 @@ msgid "Something like a water noise"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "0 (transparente)"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "Baixar ó fondo"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+msgid "Change colors to a duotone palette"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
@@ -1971,14 +1974,13 @@ msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
+msgid "Like Light eraser but converts to negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "Repetir:"
+msgid "Alpha repaint"
+msgstr "Alfa (opacidade)"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1986,11 +1988,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "Modo de _visualización"
+msgid "Saturation map"
+msgstr "Saturación"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2148,6 +2152,24 @@ msgstr "Debuxo rematado"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Presencia"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Título"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -9254,47 +9276,47 @@ msgstr "Pechando o camiño."
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>Non hai camiños</b> para simplificar na selección."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Continuando o camiño seleccionado"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Creando novo camiño"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Engadindo ó camiño seleccionado"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Deixe de premer</b> aquí para pechar e finalizar o camiño."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Debuxando un camiño a man alzada"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Arrastre</b> para continuar o camiño dende este punto."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Rematando man alzada"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 #, fuzzy
 msgid "Drawing cancelled"
 msgstr "Debuxo rematado"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 #, fuzzy
 msgid "Finishing freehand sketch"
 msgstr "Rematando man alzada"
@@ -9431,6 +9453,35 @@ msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
 "%s non é un ficheiro de preferencias correcto.\n"
 "%s"
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "Script"
+
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "Escurecer"
+
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "Desenfoque"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "Título:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "Separación _X:"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10662,7 +10713,7 @@ msgstr "Simplificar"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Non hai camiños</b> para simplificar na selección."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -21390,7 +21441,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -24250,24 +24301,16 @@ msgid "XAML Input"
 msgstr "Entrada de XAML"
 
 #, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "Script"
+#~ msgid "Gelatine"
+#~ msgstr "Relación"
 
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "Escurecer"
+#~ msgid "Repaint"
+#~ msgstr "Repetir:"
 
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "Desenfoque"
-
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "Título:"
-
-#, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "Separación _X:"
+#~ msgid "Punch hole"
+#~ msgstr "Modo de _visualización"
 
 #, fuzzy
 #~ msgid "Burnt edges"

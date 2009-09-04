@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape.nou\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2008-12-08 17:47+0100\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -39,8 +39,7 @@ msgstr "Mat"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -399,7 +398,9 @@ msgstr "Desatura"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -471,8 +472,8 @@ msgstr "Origen X"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "Texts"
@@ -1619,7 +1620,7 @@ msgid "Light eraser"
 msgstr "Brillantor"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -1769,13 +1770,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
-msgid "Gelatine"
-msgstr "Relació"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Reemplaça el color..."
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1957,34 +1958,36 @@ msgid "Something like a water noise"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "0 (transparent)"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "Inf"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
-msgstr ""
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Seleccioneu colors d'una llista de mostres"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
+msgid "Like Light eraser but converts to negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "Repeteix:"
+msgid "Alpha repaint"
+msgstr "Opacitat"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1992,11 +1995,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "Mode empeny"
+msgid "Saturation map"
+msgstr "Saturació"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2153,6 +2158,24 @@ msgstr "S'ha cancel·lat el dibuix"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Presència"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Títol"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -9219,46 +9242,46 @@ msgstr "Camí a l'inrevés"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>No hi ha cap camí</b> per invertir en la selecció."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "S'està continuant el camí seleccionat"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "S'està creant un nou camí"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "S'està afegint al camí seleccionat"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Allibereu</b> aquí per tancar i acabar el camí."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Dibuixa un camí a mà alçada"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Arrossegueu</b> per continuar el camí des d'aquest punt."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Fi de la mà alçada"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "S'ha cancel·lat el dibuix"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 #, fuzzy
 msgid "Finishing freehand sketch"
 msgstr "Fi de la mà alçada"
@@ -9399,6 +9422,35 @@ msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
 "%s no és un fitxer de preferències vàlid.\n"
 "%s"
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "Seqüència"
+
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "Més fosc"
+
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "Difumina"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "Sacseja:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "Espaiat"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10626,7 +10678,7 @@ msgstr "Simplifica"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>No hi ha cap camí</b> per a simplificar a la selecció."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "S'ha produït una excepció en l'execució de l'efecte del camí."
 
@@ -21298,7 +21350,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -24098,24 +24150,16 @@ msgid "XAML Input"
 msgstr "Entrada XAML"
 
 #, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "Seqüència"
+#~ msgid "Gelatine"
+#~ msgstr "Relació"
 
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "Més fosc"
+#~ msgid "Repaint"
+#~ msgstr "Repeteix:"
 
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "Difumina"
-
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "Sacseja:"
-
-#, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "Espaiat"
+#~ msgid "Punch hole"
+#~ msgstr "Mode empeny"
 
 #, fuzzy
 #~ msgid "Burnt edges"

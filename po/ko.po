@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -26,8 +26,7 @@ msgstr "마테 젤리"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "ABCs"
 
@@ -353,7 +352,9 @@ msgstr "무채색"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -420,8 +421,8 @@ msgstr "유기 조직"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "조직"
 
@@ -1497,7 +1498,7 @@ msgid "Light eraser"
 msgstr "명도"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -1643,13 +1644,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "겔라틴"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "흐름 내부를 투명도처럼 색상화 채움"
+msgid "Replace hue by two colors"
+msgstr "색상 치환"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1840,35 +1841,36 @@ msgid "Something like a water noise"
 msgstr "비누막 같은 얇은 막"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "잡음 투명"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "단추"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
-msgstr ""
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "색상 막대 팔레트에서 색상 선택"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "객체의 가장 밝은 부분을 점진적으로 투명하게 만듦"
+msgid "Like Light eraser but converts to negative"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "반복:"
+msgid "Alpha repaint"
+msgstr "알파 새김"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1876,11 +1878,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "밀기 모드"
+msgid "Saturation map"
+msgstr "채도"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2041,6 +2045,24 @@ msgstr "발광 금속"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "있음"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "제목"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -8732,40 +8754,40 @@ msgstr "역 경로"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "선택에서 역 <b>경로 없음</b>"
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "선택 경로 계속"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "새 경로 생성"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "선택 경로 더하기"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "경로를 닫기 또는 끝내기 위하여 여기에서 <b>해제</b>"
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "자유곡선 경로 그리기"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "이 점으로부터 경로를 계속하기 위하여 <b>끌기</b>"
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "자유곡선 끝내는 중"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "그리기 취소"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -8773,7 +8795,7 @@ msgstr ""
 "<b>스케치 모드</b>: <b>Alt</b>누르면 스케시 경로 사이 삽입. <b>Alt</b> 해제"
 "시 끝내기."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "자유곡선 끝내는 중"
 
@@ -8899,6 +8921,35 @@ msgstr "기본설정 파일 %s 는 유효한 XML 문서가 아닙니다."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "%s 파일은 적합한 Inkscape 기본설정이 아님."
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "떨어짐"
+
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "어둡게"
+
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "흐림"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "흔들림:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "그림"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10072,7 +10123,7 @@ msgstr "단순화"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "선택에서 단순화시킬 <b>경로가 없음</b>"
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "경로 효과 실행하는 동안 발생하는 예외"
 
@@ -20144,7 +20195,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "수식에 일치하는 노드 없음: %s"
@@ -22758,25 +22809,25 @@ msgstr "윈도우즈 메타파일 입력"
 msgid "XAML Input"
 msgstr "XAML 입력"
 
-#, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "떨어짐"
+#~ msgid "Gelatine"
+#~ msgstr "겔라틴"
 
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "어둡게"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "흐름 내부를 투명도처럼 색상화 채움"
 
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "흐림"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "객체의 가장 밝은 부분을 점진적으로 투명하게 만듦"
 
 #, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "흔들림:"
+#~ msgid "Repaint"
+#~ msgstr "반복:"
 
 #, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "그림"
+#~ msgid "Punch hole"
+#~ msgstr "밀기 모드"
 
 #~ msgid "Burnt edges"
 #~ msgstr "탄 모서리"

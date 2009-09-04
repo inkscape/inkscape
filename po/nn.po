@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2006-11-05 18:13+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -40,8 +40,7 @@ msgstr "Mønsterfyll"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -403,7 +402,9 @@ msgstr "Deaktivert"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -474,8 +475,8 @@ msgstr "_X-origo:"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "Tekstar"
@@ -1620,7 +1621,7 @@ msgid "Light eraser"
 msgstr "Lysstyrke"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -1766,13 +1767,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
-msgid "Gelatine"
-msgstr "Relasjon"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Sist valte"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1952,19 +1953,21 @@ msgid "Something like a water noise"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "sluttnode"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "Boks"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+msgid "Change colors to a duotone palette"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
@@ -1972,14 +1975,13 @@ msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
+msgid "Like Light eraser but converts to negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "Gjenta:"
+msgid "Alpha repaint"
+msgstr "Alfa (gjennomsikt)"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1987,11 +1989,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "Heildekkjande farge"
+msgid "Saturation map"
+msgstr "Metting"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2149,6 +2153,24 @@ msgstr "Avbrote teikning."
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Nærvær"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Tittel"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -9343,46 +9365,46 @@ msgstr "Snu _retning"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Det finst <b>ingen baner</b> du kan snu retninga på i utvalet."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Held fram merkt bane"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Lagar ny bane"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Legg til merkt bane"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Slepp</b> her for å lukka og avslutta bana."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Teiknar frihandslinje."
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Dra</b> for å halda fram bana frå dette punktet."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Fullført frihandsteikning."
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Avbrote teikning."
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 #, fuzzy
 msgid "Finishing freehand sketch"
 msgstr "Fullført frihandsteikning."
@@ -9524,6 +9546,35 @@ msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
 "«%s» er ikkje ei gyldig oppsettfil.\n"
 "%s"
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "Skri_pt"
+
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "Fargeplukkar"
+
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "Blå"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "Tittel:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "Y-mellomrom:"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10799,7 +10850,7 @@ msgstr "_Forenkla"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Det finst <b>ingen baner</b> å forenkla i utvalet."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -21678,7 +21729,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -24520,24 +24571,16 @@ msgid "XAML Input"
 msgstr "SVG-fil"
 
 #, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "Skri_pt"
+#~ msgid "Gelatine"
+#~ msgstr "Relasjon"
 
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "Fargeplukkar"
+#~ msgid "Repaint"
+#~ msgstr "Gjenta:"
 
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "Blå"
-
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "Tittel:"
-
-#, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "Y-mellomrom:"
+#~ msgid "Punch hole"
+#~ msgstr "Heildekkjande farge"
 
 #, fuzzy
 #~ msgid "Burnt edges"

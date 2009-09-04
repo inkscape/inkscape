@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-07-02 00:01+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
@@ -33,8 +33,7 @@ msgstr "ג'לי מחוספס"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -380,7 +379,9 @@ msgstr "ביטול הרוויה"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -448,8 +449,8 @@ msgstr "מקור"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "מרקמים"
 
@@ -1565,7 +1566,7 @@ msgid "Light eraser"
 msgstr "בהירות"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -1710,12 +1711,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "ג'לטין"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "החלף צבע"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1901,34 +1903,36 @@ msgid "Something like a water noise"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "שקיפות הדו־שיח:"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "לחצן"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
-msgstr ""
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "בחר צבעים מלוח צבע הדגימות"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
+msgid "Like Light eraser but converts to negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "חזרה:"
+msgid "Alpha repaint"
+msgstr "שקיפות"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1936,11 +1940,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "מצב דחיפה"
+msgid "Saturation map"
+msgstr "רוויה"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2098,6 +2104,24 @@ msgstr "הציור בוטל"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "נוכחות"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "כותרת"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -8865,40 +8889,40 @@ msgstr "הפוך נתיבים"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>אין נתיבים</b> להיפוך בבחירה."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "ממשיך עם הנתיב הנבחר"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "יוצר נתיב חדש"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "מוסיף לנתיב הנבחר"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>שחרר</b> כאן כדי לסגור ולסיים את הנתיב."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "מצייר נתיב ביד חופשית"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>גרור</b> ככדי להמשיך את הנתיב מנקודה זו."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "מסיים יד חופשית"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "הציור בוטל"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -8906,7 +8930,7 @@ msgstr ""
 "<b>מצב סקיצה</b>: החזקת <b>Alt</b> מפשרת בין הנתיבים המצויירים. שחרר <b>Alt</"
 "b> לתוצאה סופית."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "מסיים סקיצה יד חופשית"
 
@@ -9032,6 +9056,35 @@ msgstr "קובץ ההעדפות %s איננו מסמך XML תקני."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "הקובץ %s אינו קובץ העדפות תקני של אינקסקייפ."
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "טפטוף"
+
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "כהה יותר"
+
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "טשטושים"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "נדנוד:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "ציור"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10214,7 +10267,7 @@ msgstr "פשט"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>אין נתיבים</b> להפשטה בבחירה."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "בוצעה חריגה בעת החלת האפקט על הנתיב."
 
@@ -20437,7 +20490,7 @@ msgstr ""
 "pypi/lxml/, או התקן אותה דרך מנהל החבילות על ידי פקודה כגון: sudo apt-get "
 "install python-lxml"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "אין מפרק התואם לביטוי: %s"
@@ -23098,25 +23151,16 @@ msgstr "קלט קובץ מטא של Windows"
 msgid "XAML Input"
 msgstr "קלט XAML"
 
-#, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "טפטוף"
+#~ msgid "Gelatine"
+#~ msgstr "ג'לטין"
 
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "כהה יותר"
+#~ msgid "Repaint"
+#~ msgstr "חזרה:"
 
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "טשטושים"
-
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "נדנוד:"
-
-#, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "ציור"
+#~ msgid "Punch hole"
+#~ msgstr "מצב דחיפה"
 
 #~ msgid "Burnt edges"
 #~ msgstr "קצוות שרופים"

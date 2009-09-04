@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-25 23:02+0900\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-25 23:02+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -42,8 +42,7 @@ msgstr "つや消しゼリー"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "ABC"
 
@@ -370,7 +369,9 @@ msgstr "彩度を除去"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -437,8 +438,8 @@ msgstr "オーガニック"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "テクスチャ"
 
@@ -1506,7 +1507,7 @@ msgid "Light eraser"
 msgstr "ライトイレイザー"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "透明化ユーティリティ"
@@ -1644,12 +1645,13 @@ msgid "Create a turbulent contour around"
 msgstr "輪郭の周囲に乱流を生成します。"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "ゼラチン"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "色変更可能でゼラチンのような乱流および透明なフィルです。"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "色の置換"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1824,45 +1826,53 @@ msgid "Something like a water noise"
 msgstr "水のノイズのように滑らかにします。"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "モノクロポジ"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "透明化ノイズ"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "色変更可能な単色の透明ポジに変換します。"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "モノクロネガ"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "色変更可能な単色の透明ネガに変換します。"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "ボタン"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "スウォッチパレットから色を選択します。"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "ライトイレイザ－, ネガ"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "オブジェクを反転し、最も明るい部分を漸進的に透明にします。"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "ライトイレイザ－, ネガ"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "塗りなおし"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "アルファ彫刻"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "全てを単色で塗りなおします。"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "パンチ穴"
+#, fuzzy
+msgid "Saturation map"
+msgstr "彩度"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "色変更可能領域以外のオブジェクトに穴をあけます。"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2011,6 +2021,24 @@ msgstr "増殖細胞"
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr "フィルのようにランダムな丸みを帯びた生きている細胞を置きます。"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "存在"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "タイトル"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8813,46 +8841,46 @@ msgstr "パスの向きを逆に"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "選択された中に、向きを逆にする<b>パスがありません</b>。"
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "選択パスを延長"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "新規パスを作成"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "選択パスに追加"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "ここで<b>マウスボタンを離す</b>と、パスを閉じて終了します。"
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "フリーハンドパスを描く"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>ドラッグ</b>でこの位置からパスを延長します。"
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "フリーハンドツールを終了"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "描画をキャンセルしました"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "フリーハンドスケッチを終了"
 
@@ -8980,6 +9008,32 @@ msgstr ""
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "ファイル %s は正常な Inkscape 設定ファイルではありません。"
+
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "スクリプト"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "マーカー"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "ブラシ"
+
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "鉛筆 (フリーハンド)"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "トレーシング"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10187,7 +10241,7 @@ msgstr "パスの簡略化"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "選択オブジェクトに簡略化する<b>パスがありません</b>。"
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -20512,7 +20566,7 @@ msgstr ""
 "ンストールするか、パッケージマネージャでインストール (Debian 系ならば apt-"
 "get install python-lxml) してください。"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "式にマッチするノードがありません: %s"
@@ -23175,22 +23229,33 @@ msgstr "Windows メタファイル入力"
 msgid "XAML Input"
 msgstr "XAML 入力"
 
-#, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "スクリプト"
+#~ msgid "Gelatine"
+#~ msgstr "ゼラチン"
 
-#~ msgid "Marker"
-#~ msgstr "マーカー"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "色変更可能でゼラチンのような乱流および透明なフィルです。"
 
-#~ msgid "Brush"
-#~ msgstr "ブラシ"
+#~ msgid "Monochrome positive"
+#~ msgstr "モノクロポジ"
 
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "鉛筆 (フリーハンド)"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "色変更可能な単色の透明ポジに変換します。"
 
-#~ msgid "Tracing"
-#~ msgstr "トレーシング"
+#~ msgid "Monochrome negative"
+#~ msgstr "モノクロネガ"
+
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "オブジェクを反転し、最も明るい部分を漸進的に透明にします。"
+
+#~ msgid "Repaint"
+#~ msgstr "塗りなおし"
+
+#~ msgid "Punch hole"
+#~ msgstr "パンチ穴"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "色変更可能領域以外のオブジェクトに穴をあけます。"
 
 #~ msgid "Burnt edges"
 #~ msgstr "エッジを焦がす"

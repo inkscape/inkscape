@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-07-28 06:56+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -41,8 +41,7 @@ msgstr "Матовое желе"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "Простые"
 
@@ -371,7 +370,9 @@ msgstr "Обесцветить"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -438,8 +439,8 @@ msgstr "Органика"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Текстуры"
 
@@ -1526,7 +1527,7 @@ msgid "Light eraser"
 msgstr "Ластик для светлых областей"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Прозрачность"
@@ -1670,13 +1671,13 @@ msgid "Create a turbulent contour around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Желе"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "Раскрашиваемая заливка с желеобразной турбулентностью и прозрачностью"
+msgid "Replace hue by two colors"
+msgstr "Замена цвета"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1857,21 +1858,24 @@ msgid "Something like a water noise"
 msgstr "Что-то вроде водного шума"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Двухцветный позитив"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Полупрозрачный шум"
 
 #: ../share/filters/filters.svg.h:195
 #, fuzzy
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Преобразовать в раскрашиваемый прозрачный позитив"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Двухцветный негатив"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Преобразовать в раскрашиваемый прозрачный негатив"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Кнопка"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Выбрать цвет из палитры образцов"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
@@ -1879,25 +1883,28 @@ msgstr "Негативный ластик для светлых областей
 
 #: ../share/filters/filters.svg.h:197
 #, fuzzy
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "Сделать самые светлые части объекта нарастающе прозрачными"
+msgid "Like Light eraser but converts to negative"
+msgstr "Негативный ластик для светлых областей"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "Перекраска"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "Альфа-гравировка №1"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Закрасить всё одним цветом"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "Пробить дыру"
+#, fuzzy
+msgid "Saturation map"
+msgstr "Насыщенность"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Выбить объект из раскрашенной непрозрачной области"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 #, fuzzy
@@ -2061,6 +2068,24 @@ msgstr "Сверкающий металл"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Наличие"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Название"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -8994,40 +9019,40 @@ msgstr "Развернуть контур"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "В выделении <b>нет контуров</b> для разворота."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Продолжение выделенного контура"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Создание нового контура"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Добавление к выделенному контуру"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Отпустите</b> здесь для закрытия и завершения контура."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Рисуется произвольный контур"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Перетащите</b> для продолжения контура из этой точки."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Завершается произвольный контур"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Отмена рисования"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -9035,7 +9060,7 @@ msgstr ""
 "<b>Эскизный режим</b>: удерживайте нажатой <b>Alt</b> для интерполяции между "
 "рисуемыми контурами, отпустите <b>Alt</b> для завершения."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Завершается эскизный контур"
 
@@ -9166,6 +9191,30 @@ msgstr "Файл параметров программы %s не являетс�
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "%s не является корректным файлом параметров Inkscape."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Чернильное перо"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Маркер"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Кисть"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Виляющее перо"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Пачкающее перо"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Трассировка"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10383,7 +10432,7 @@ msgstr "Упрощение контура"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "В выделении <b>нет контуров</b> для упрощения."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Прерывание при выполнении контурного эффекта"
 
@@ -20759,7 +20808,7 @@ msgstr ""
 "cheeseshop.python.org/pypi/lxml/, либо установите ее через пакетный менеджер "
 "командой наподобие: sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Нет узла, подходящего условиям запроса: %s"
@@ -23419,23 +23468,37 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
-#~ msgid "Dip pen"
-#~ msgstr "Чернильное перо"
+#~ msgid "Gelatine"
+#~ msgstr "Желе"
 
-#~ msgid "Marker"
-#~ msgstr "Маркер"
+#, fuzzy
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr ""
+#~ "Раскрашиваемая заливка с желеобразной турбулентностью и прозрачностью"
 
-#~ msgid "Brush"
-#~ msgstr "Кисть"
+#~ msgid "Monochrome positive"
+#~ msgstr "Двухцветный позитив"
 
-#~ msgid "Wiggly"
-#~ msgstr "Виляющее перо"
+#, fuzzy
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Преобразовать в раскрашиваемый прозрачный позитив"
 
-#~ msgid "Splotchy"
-#~ msgstr "Пачкающее перо"
+#~ msgid "Monochrome negative"
+#~ msgstr "Двухцветный негатив"
 
-#~ msgid "Tracing"
-#~ msgstr "Трассировка"
+#, fuzzy
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "Сделать самые светлые части объекта нарастающе прозрачными"
+
+#~ msgid "Repaint"
+#~ msgstr "Перекраска"
+
+#~ msgid "Punch hole"
+#~ msgstr "Пробить дыру"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Выбить объект из раскрашенной непрозрачной области"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Обгоревшие края"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -34,8 +34,7 @@ msgstr "Thạch màu, ít sáng"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "ABC"
 
@@ -371,7 +370,9 @@ msgstr "Giảm bão hoà"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -438,8 +439,8 @@ msgstr "Tế bào"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Hoa văn"
 
@@ -1554,7 +1555,7 @@ msgid "Light eraser"
 msgstr "Xóa ánh sáng"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Tiện ích sửa độ trong suốt"
@@ -1703,13 +1704,13 @@ msgid "Create a turbulent contour around"
 msgstr "Tạo thêm một đường viền mờ, bo quanh đối tượng"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Chất keo"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "Tạo bề mặt keo bằng cách thêm vào nhiều mảng hỗn độn trong suốt"
+msgid "Replace hue by two colors"
+msgstr "Đổi màu"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1887,35 +1888,38 @@ msgid "Something like a water noise"
 msgstr "Giống các gợn trên mặt nước"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Đơn sắc dương"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Nhiễu trong suốt"
 
 #: ../share/filters/filters.svg.h:195
 #, fuzzy
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Chuyển thành màu trong suốt dương"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Đơn sắc âm"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Chuyển thành màu trong suốt âm"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Nút bấm"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Chọn màu trong bảng màu mẫu"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Xóa ánh sáng, âm"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "Đảo và làm cho các phần sáng nhất của đối tượng trong suốt hơn"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "Xóa ánh sáng, âm"
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "Lặp lại:"
+msgid "Alpha repaint"
+msgstr "Trạm trổ, trong suốt"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1923,13 +1927,14 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "Chế độ đẩy"
+msgid "Saturation map"
+msgstr "Độ bão hòa"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Chuyển thành màu trong suốt âm"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 #, fuzzy
@@ -2094,6 +2099,24 @@ msgstr "Kim loại sáng bóng"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Hiện diện"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Tên"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -8919,40 +8942,40 @@ msgstr "Đảo đường nét"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Trong vùng chọn, <b>không có đối tượng</b> cần đảo ngược."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Đang tiếp tục đường nét đã chọn"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Đang tạo đường nét mới"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Đang phụ thêm vào đối tượng đã chọn"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Buông</b> ở đây để đóng và tạo xong đường nét."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Đang vẽ bằng tay một đường nét"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Kéo</b> tiếp tục đường nét từ điểm này."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Đang vẽ xong bằng tay"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Tiến trình vẽ bị thôi"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -8960,7 +8983,7 @@ msgstr ""
 "<b>Chế độ phác thảo</b>: giữ <b>Alt</b> nội suy giữa các đường nét phác "
 "thảo. Thôi giữ <b>Alt</b> để kết thúc."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Hoàn tất nét phác tự do"
 
@@ -9090,6 +9113,32 @@ msgstr "Tập tin tùy thích %s không phải là một tài liệu XML hợp l
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Tập tin %s không phải là tập tin tùy thích Inkscape."
+
+# Dip = nhúng, chấm. Dip pen = bút chấm?
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Nhúng bút"
+
+# TODO: Marker còn có thể là đánh dấu
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Dấu"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Bút vẽ"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Ngọ nguậy"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Nhiều vết"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Đồ ảnh"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10281,7 +10330,7 @@ msgstr "Đơn giản hoá"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Trong vùng chọn, <b>không có đường nét</b> cần đơn giản hoá."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Gặp ngoại lệ trong khi thực hiện Hiệu ứng Đường nét."
 
@@ -20640,7 +20689,7 @@ msgstr ""
 "hoặc cài đặt bằng trình quản lý gói (bằng lệnh như sudo apt-get install "
 "python-lxml) trước, rồi thử lại."
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Không có nút thông tin nào khớp với biểu thức: %s"
@@ -23382,25 +23431,38 @@ msgstr "Nhập Windows Metafile"
 msgid "XAML Input"
 msgstr "Nhập XAML"
 
-# Dip = nhúng, chấm. Dip pen = bút chấm?
-#~ msgid "Dip pen"
-#~ msgstr "Nhúng bút"
+#~ msgid "Gelatine"
+#~ msgstr "Chất keo"
 
-# TODO: Marker còn có thể là đánh dấu
-#~ msgid "Marker"
-#~ msgstr "Dấu"
+#, fuzzy
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "Tạo bề mặt keo bằng cách thêm vào nhiều mảng hỗn độn trong suốt"
 
-#~ msgid "Brush"
-#~ msgstr "Bút vẽ"
+#~ msgid "Monochrome positive"
+#~ msgstr "Đơn sắc dương"
 
-#~ msgid "Wiggly"
-#~ msgstr "Ngọ nguậy"
+#, fuzzy
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Chuyển thành màu trong suốt dương"
 
-#~ msgid "Splotchy"
-#~ msgstr "Nhiều vết"
+#~ msgid "Monochrome negative"
+#~ msgstr "Đơn sắc âm"
 
-#~ msgid "Tracing"
-#~ msgstr "Đồ ảnh"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "Đảo và làm cho các phần sáng nhất của đối tượng trong suốt hơn"
+
+#, fuzzy
+#~ msgid "Repaint"
+#~ msgstr "Lặp lại:"
+
+#, fuzzy
+#~ msgid "Punch hole"
+#~ msgstr "Chế độ đẩy"
+
+#, fuzzy
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Chuyển thành màu trong suốt âm"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Cháy xém cạnh"

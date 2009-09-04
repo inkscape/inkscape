@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-19 08:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -38,8 +38,7 @@ msgstr "Матове покриття"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "Основні"
 
@@ -367,7 +366,9 @@ msgstr "Знебарвлення"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -434,8 +435,8 @@ msgstr "Органіка"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Текстури"
 
@@ -1534,7 +1535,7 @@ msgid "Light eraser"
 msgstr "Світла гумка"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Інструменти прозорості"
@@ -1676,14 +1677,13 @@ msgid "Create a turbulent contour around"
 msgstr "Створює ефекти турбулентного потоку навколо контуру"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Желатин"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
-"Кольорове заливання з турбулентністю і прозорістю, подібною до речовини "
-"желатину"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Замінити колір"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1876,46 +1876,53 @@ msgid "Something like a water noise"
 msgstr "Щось схоже на брижі на воді"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Монохромний позитив"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Шумна прозорість"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Перетворити на одноколірний прозорий позитив"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Монохромний негатив"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Перетворити на одноколірний прозорий негатив"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Кнопка"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Оберіть колір з палітри зразків"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Гумка-негатив"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr ""
-"Інвертувати і зробити найсвітліші частини об’єкта поступально прозорими"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "Гумка-негатив"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "Перемалювати"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "Альфа-гравірування"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Перемалювати все монохромне"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "Пробиття отвору"
+#, fuzzy
+msgid "Saturation map"
+msgstr "Насиченість"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Витискання об’єкта у однотонну непрозору область"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2068,6 +2075,24 @@ msgstr "Зростаючі клітини"
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr "Заповнення випадковими округленими плямками, схожими на клітини"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Наявність"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Назва"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8986,40 +9011,40 @@ msgstr "Розвернути контур"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "У позначеному <b>немає контурів</b> для зміни напряму."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Продовжується позначений контур"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Створення контуру"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Додається до позначеного контуру"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Відпустіть</b> тут для закривання та завершення контуру."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Малювання довільного контуру"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Перетягніть</b> для продовження контуру з цієї точки."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Контур створено"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Малювання скасовано"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -9027,7 +9052,7 @@ msgstr ""
 "<b>Режим ескіза</b>: утримування <b>Alt</b> виконає інтерполяцію контурів "
 "ескіза. Відпустіть <b>Alt</b>, щоб завершити малювання."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Завершення довільного ескіза"
 
@@ -9155,6 +9180,30 @@ msgstr "Файл налаштувань %s не є коректним докум
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Файл %s не є коректним файлом налаштувань Inkscape."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Крапання"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Позначка"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Пензель"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Погойдування"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Плямиста"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Трасування"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10362,7 +10411,7 @@ msgstr "Спростити"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "У позначеному <b>немає контурів</b> для спрощення."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Під час виконання Ефекту контуру сталася помилка типу виключення."
 
@@ -20776,7 +20825,7 @@ msgstr ""
 "інструмента керування пакунками командою на зразок: sudo apt-get install "
 "python-lxml"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Не знайдено відповідного вузла для виразу: %s"
@@ -23467,23 +23516,36 @@ msgstr "Імпорт метафайла Windows"
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
 
-#~ msgid "Dip pen"
-#~ msgstr "Крапання"
+#~ msgid "Gelatine"
+#~ msgstr "Желатин"
 
-#~ msgid "Marker"
-#~ msgstr "Позначка"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr ""
+#~ "Кольорове заливання з турбулентністю і прозорістю, подібною до речовини "
+#~ "желатину"
 
-#~ msgid "Brush"
-#~ msgstr "Пензель"
+#~ msgid "Monochrome positive"
+#~ msgstr "Монохромний позитив"
 
-#~ msgid "Wiggly"
-#~ msgstr "Погойдування"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Перетворити на одноколірний прозорий позитив"
 
-#~ msgid "Splotchy"
-#~ msgstr "Плямиста"
+#~ msgid "Monochrome negative"
+#~ msgstr "Монохромний негатив"
 
-#~ msgid "Tracing"
-#~ msgstr "Трасування"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr ""
+#~ "Інвертувати і зробити найсвітліші частини об’єкта поступально прозорими"
+
+#~ msgid "Repaint"
+#~ msgstr "Перемалювати"
+
+#~ msgid "Punch hole"
+#~ msgstr "Пробиття отвору"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Витискання об’єкта у однотонну непрозору область"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Випалені краї"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-07-21 20:12+0800\n"
 "Last-Translator: Liu Xiaoqin <liuxqsmile@gmail.com>\n"
 "Language-Team: \n"
@@ -37,8 +37,7 @@ msgstr "不光滑果冻"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "ABCs"
 
@@ -362,7 +361,9 @@ msgstr "去除色度"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -429,8 +430,8 @@ msgstr "有机的"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "纹理"
 
@@ -1502,7 +1503,7 @@ msgid "Light eraser"
 msgstr "亮度"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "透明度系统"
@@ -1644,13 +1645,13 @@ msgid "Create a turbulent contour around"
 msgstr "周围产生紊乱的边沿"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "胶质"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
 #, fuzzy
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "彩色凝胶状填充, 湍流及透明效果"
+msgid "Replace hue by two colors"
+msgstr "替换颜色"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1826,34 +1827,35 @@ msgstr "类似水纹噪声"
 
 #: ../share/filters/filters.svg.h:195
 #, fuzzy
-msgid "Monochrome positive"
-msgstr "单色"
+msgid "Monochrome transparency"
+msgstr "噪声透明"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "按钮"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
-msgstr ""
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "从色盘中选择颜色"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "反转, 并让对象中最亮的部分渐进透明"
+msgid "Like Light eraser but converts to negative"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "重复:"
+msgid "Alpha repaint"
+msgstr "透明度(alpha)雕刻"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
@@ -1861,11 +1863,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "推压"
+msgid "Saturation map"
+msgstr "饱和度"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:200
@@ -2029,6 +2033,24 @@ msgstr "辉光金属"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "外观"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "标题"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -8717,47 +8739,47 @@ msgstr "反向路径"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "选区里<b>没有路径</b>可以反向."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "继续选择路径"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "创建新路径"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "附加到选择的路径"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "此处<b>释放</b>关闭并完成路径."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "绘制自由路径"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>拖动</b>从此点继续路径."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "完成绘制"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "绘制取消"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 "<b>草图模式</b>: 按住<b>Alt</b> 对多条路径进行平均. 释放 <b>Alt</b> 完成."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "完成手绘草图"
 
@@ -8881,6 +8903,30 @@ msgstr "配置文件%s不是有效的XML文档."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "%s 是无效的Inkscape配置文件."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "蘸水笔"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "记号笔"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "刷子"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "摇摆"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "斑点"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "描图"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10035,7 +10081,7 @@ msgstr "简化"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "选区内没有<b>路径</b>可以简化."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "执行路径效果时出错."
 
@@ -20024,7 +20070,7 @@ msgstr ""
 "python.org/pypi/lxml/ 下载并安装其最新版, 或者通过安装包管理器 (sudo apt-get "
 "install python-lxml) 来安装."
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "没有找到匹配表达式: %s 的节点"
@@ -22668,23 +22714,28 @@ msgstr "Windows 图元文件输入"
 msgid "XAML Input"
 msgstr "XAML 输入"
 
-#~ msgid "Dip pen"
-#~ msgstr "蘸水笔"
+#~ msgid "Gelatine"
+#~ msgstr "胶质"
 
-#~ msgid "Marker"
-#~ msgstr "记号笔"
+#, fuzzy
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "彩色凝胶状填充, 湍流及透明效果"
 
-#~ msgid "Brush"
-#~ msgstr "刷子"
+#, fuzzy
+#~ msgid "Monochrome positive"
+#~ msgstr "单色"
 
-#~ msgid "Wiggly"
-#~ msgstr "摇摆"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "反转, 并让对象中最亮的部分渐进透明"
 
-#~ msgid "Splotchy"
-#~ msgstr "斑点"
+#, fuzzy
+#~ msgid "Repaint"
+#~ msgstr "重复:"
 
-#~ msgid "Tracing"
-#~ msgstr "描图"
+#, fuzzy
+#~ msgid "Punch hole"
+#~ msgstr "推压"
 
 #~ msgid "Burnt edges"
 #~ msgstr "燃烧的边沿"

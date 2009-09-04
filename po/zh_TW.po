@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-28 01:35+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -36,8 +36,7 @@ msgstr "霧面果凍"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "基本"
 
@@ -360,7 +359,9 @@ msgstr "去飽和"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -427,8 +428,8 @@ msgstr "有機"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "紋理"
 
@@ -1481,7 +1482,7 @@ msgid "Light eraser"
 msgstr "亮部橡皮擦"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "透明工具"
@@ -1617,12 +1618,13 @@ msgid "Create a turbulent contour around"
 msgstr "於周圍製作紛亂的輪廓"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "凝膠"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "紊亂且透明的凝膠之可著色填塗"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "取代顏色"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1792,45 +1794,53 @@ msgid "Something like a water noise"
 msgstr "有點像水雜訊"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "單色正相"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "雜訊透明度"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "轉換為可著色的透明正相"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "單色反相"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "轉成可著色的透明負相"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "按鈕"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "從色票調色盤中選擇色彩"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "亮部橡皮擦, 反相"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "反轉並使物件最亮的部份逐次變透明"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "亮部橡皮擦, 反相"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "重塗"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "透明版畫"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "重塗任何單色"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "鑿洞"
+#, fuzzy
+msgid "Saturation map"
+msgstr "飽和度"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "把物件鑿出一個可著色的不透明區域"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -1975,6 +1985,24 @@ msgstr "成長中的細胞"
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr "隨機圓形的活細胞外觀填充"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "表現"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "標題"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8630,40 +8658,40 @@ msgstr "反向路徑"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以反轉。"
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "接續所選取的路徑"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "建立新路徑"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "附加於所選取的路徑"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "在這裡<b>釋放</b>以關閉並結束此路徑。"
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "繪製手繪路徑"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>拖曳</b>以由此點接續路徑。"
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "完成手繪"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "繪製取消"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -8671,7 +8699,7 @@ msgstr ""
 "<b>草圖模式</b>：按住 <b>Alt</b> 以插入已描繪路徑之間。放開 <b>Alt</b> 以結束"
 "定稿。"
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "完成手繪草圖"
 
@@ -8796,6 +8824,30 @@ msgstr "此偏好設定檔 %s 不是一個有效的 XML 文件。"
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "此檔案 %s 不是一個有效的 Inkscape 偏好設定檔。"
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "沾水筆"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "麥克筆"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "筆刷"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "波浪"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "弄髒"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "描繪"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -9959,7 +10011,7 @@ msgstr "簡化"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以化簡。"
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "執行路徑特效期間發生異常。"
 
@@ -19987,7 +20039,7 @@ msgstr ""
 "http://cheeseshop.python.org/pypi/lxml/ 下載並安裝最新版本，或者經由你的套件"
 "管理程式用命令 (例如：sudo apt-get install python-lxml) 來安裝它"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "沒有表示式符合的節點：%s"
@@ -22631,23 +22683,33 @@ msgstr "Windows 後設檔案輸入"
 msgid "XAML Input"
 msgstr "XAML 輸入"
 
-#~ msgid "Dip pen"
-#~ msgstr "沾水筆"
+#~ msgid "Gelatine"
+#~ msgstr "凝膠"
 
-#~ msgid "Marker"
-#~ msgstr "麥克筆"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "紊亂且透明的凝膠之可著色填塗"
 
-#~ msgid "Brush"
-#~ msgstr "筆刷"
+#~ msgid "Monochrome positive"
+#~ msgstr "單色正相"
 
-#~ msgid "Wiggly"
-#~ msgstr "波浪"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "轉換為可著色的透明正相"
 
-#~ msgid "Splotchy"
-#~ msgstr "弄髒"
+#~ msgid "Monochrome negative"
+#~ msgstr "單色反相"
 
-#~ msgid "Tracing"
-#~ msgstr "描繪"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "反轉並使物件最亮的部份逐次變透明"
+
+#~ msgid "Repaint"
+#~ msgstr "重塗"
+
+#~ msgid "Punch hole"
+#~ msgstr "鑿洞"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "把物件鑿出一個可著色的不透明區域"
 
 #~ msgid "Burnt edges"
 #~ msgstr "燒焦邊緣"

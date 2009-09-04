@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-24 22:57+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
@@ -35,8 +35,7 @@ msgstr "Matt zselé"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "Alapvető"
 
@@ -363,7 +362,9 @@ msgstr "Telítetlenné tevés"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -432,8 +433,8 @@ msgstr "Szerves"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Textúrák"
 
@@ -1523,7 +1524,7 @@ msgid "Light eraser"
 msgstr "Fényradír"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Átlátszósági funkciók"
@@ -1664,12 +1665,13 @@ msgid "Create a turbulent contour around"
 msgstr "Örvénylő kontúr létrehozása az objektum köré"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Zselatin"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "Színezhető kitöltés zselatinszerű örvényléssel és átlátszósággal"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Szín cserélése"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1851,47 +1853,53 @@ msgid "Something like a water noise"
 msgstr "Egyfajta vízszerű zaj"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Monokróm pozitív"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Átlátszóság zajosítása"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Átalakítás színezhető átlátszó pozitívvá"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Monokróm negatív"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Átalakítás színezhető átlátszó negatívvá"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Gomb"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Színválasztás egy színminta-palettáról"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Fényradír, negatív"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr ""
-"Invertálás, majd az objektum legvilágosabb részeinek progresszívan "
-"átlátszóvá tevése"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "Fényradír, negatív"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "Átfestés"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "Alfa-gravírozás"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Minden átfestése egyszínűre"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "Lyukasztás"
+#, fuzzy
+msgid "Saturation map"
+msgstr "Telítettség"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Az objektum kivágása egy színezhető átlátszatlan területből"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../share/filters/filters.svg.h:200
@@ -2045,6 +2053,25 @@ msgstr "Növekedő sejtek"
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr "Véletlenszerű lekerekített élő sejtekre emlékeztető kitöltés"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Megjelenés"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+# May contain a short, human readable description of the resource as plain, unmarked text.
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Cím"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -9036,41 +9063,41 @@ msgstr "Útvonal megfordítása"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "A kijelölésben <b>nincs megfordítható útvonal</b>."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "A kijelölt útvonal folytatása"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Új útvonal létrehozása"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Hozzáfűzés a kijelölt útvonalhoz"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 "Az útvonal lezárásához és befejezéséhez <b>engedje fel</b> a gombot itt."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Szabadkézi útvonal rajzolása"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "Az útvonal folytatása ebből a pontból: <b>húzással</b>."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Szabadkézi vonal befejezése"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Rajzolás visszavonva"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -9078,7 +9105,7 @@ msgstr ""
 "<b>Vázlatmód</b>. Interpolálás a felvázolt útvonalak közt: <b>Alt</b> nyomva "
 "tartásával. Véglegesítés: <b>Alt</b> felengedésével."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Szabadkézi vázlat befejezése"
 
@@ -9210,6 +9237,31 @@ msgstr "A(z) %s beállításfájl nem egy érvényes XML-dokumentum."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "A(z) %s fájl nem egy érvényes Inkscape-beállításfájl."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Tustoll"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Jelölőtoll"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Ecset"
+
+# May contain a short, human readable description of the resource as plain, unmarked text.
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Kígyózó"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Pacás"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Átrajzolás"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10435,7 +10487,7 @@ msgstr "Egyszerűsítés"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "A kijelölésben <b>nincs egyszerűsíthető útvonal</b>."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Kivétel (hiba) történt az útvonaleffektus végrehajtása közben."
 
@@ -21029,7 +21081,7 @@ msgstr ""
 "csomagkezelőjével (például a \"sudo apt-get install python-lxml\" vagy "
 "hasonló paranccsal)."
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Nincs illeszkedő csomópont ehhez a kifejezéshez: %s"
@@ -23737,24 +23789,35 @@ msgstr "Windows Metafile-bemenet"
 msgid "XAML Input"
 msgstr "XAML-bemenet"
 
-#~ msgid "Dip pen"
-#~ msgstr "Tustoll"
+#~ msgid "Gelatine"
+#~ msgstr "Zselatin"
 
-#~ msgid "Marker"
-#~ msgstr "Jelölőtoll"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr "Színezhető kitöltés zselatinszerű örvényléssel és átlátszósággal"
 
-#~ msgid "Brush"
-#~ msgstr "Ecset"
+#~ msgid "Monochrome positive"
+#~ msgstr "Monokróm pozitív"
 
-# May contain a short, human readable description of the resource as plain, unmarked text.
-#~ msgid "Wiggly"
-#~ msgstr "Kígyózó"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Átalakítás színezhető átlátszó pozitívvá"
 
-#~ msgid "Splotchy"
-#~ msgstr "Pacás"
+#~ msgid "Monochrome negative"
+#~ msgstr "Monokróm negatív"
 
-#~ msgid "Tracing"
-#~ msgstr "Átrajzolás"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr ""
+#~ "Invertálás, majd az objektum legvilágosabb részeinek progresszívan "
+#~ "átlátszóvá tevése"
+
+#~ msgid "Repaint"
+#~ msgstr "Átfestés"
+
+#~ msgid "Punch hole"
+#~ msgstr "Lyukasztás"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Az objektum kivágása egy színezhető átlátszatlan területből"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Égett szélek"

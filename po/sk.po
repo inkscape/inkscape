@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-18 11:43+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -36,8 +36,7 @@ msgstr "Matné želé"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "ABC"
 
@@ -364,7 +363,9 @@ msgstr "Odsýtiť"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -431,8 +432,8 @@ msgstr "Organické"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Textúry"
 
@@ -1501,7 +1502,7 @@ msgid "Light eraser"
 msgstr "Svetelná guma"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Nástroje priesvitnosti"
@@ -1641,12 +1642,13 @@ msgid "Create a turbulent contour around"
 msgstr "Vytvorí turbulentnú kontúru"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Želatína"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr "Vyfarbiteľná výplň s turbulenciou a priesvitnosťou podobnou želatíne"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Nahradiť farbu"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1823,45 +1825,53 @@ msgid "Something like a water noise"
 msgstr "Niečo ako vodný šum"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Monochromatický pozitív"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Šumová priesvitnosť"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Previesť na zafarbiteľný priesvitný pozitív"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Monochromatický negatív"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Previesť na zafarbiteľný priesvitný negatív"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Tlačidlo"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Nastaviť farby zo vzorkovníka"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Svetelná guma, negatív"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr "Invertovať a najľahšie časti objektu postupne spriehľadniť"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "Svetelná guma, negatív"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "Premaľovať"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "Alfa maľovanie"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Premaľovať čokoľvek monichromaticky"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "Vyrazená diera"
+#, fuzzy
+msgid "Saturation map"
+msgstr "Sýtosť"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Vydierovať objekt zo zafarbiteľnej nepriesvitnej oblasti"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2011,6 +2021,24 @@ msgstr "Rastúce bunky"
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr "Vyplnenie náhodnými okrúhlymi akoby živými bunkami"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Prítomnosť"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Titulok"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8883,40 +8911,40 @@ msgstr "Obrátiť smer cesty"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Výber <b>neobsahuje cesty</b>, ktorých smer možno obrátiť."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "Pokračovanie vybranej cesty"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "Tvorba novej cesty"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Pripojiť k zvolenej ceste"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Uvoľnením</b> tu zatvoríte a dokončíte cestu."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "Kreslenie cesty voľnou rukou"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>ťahaním</b> pokračujte v ceste z tohto bodu."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Dokončenie kreslenia voľnou rukou"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Kreslenie zrušené"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -8924,7 +8952,7 @@ msgstr ""
 "<b>Režim skice</b>: držaním <b>Alt</b> interpoluje medzi naskicovanými "
 "cestami. Uvoľnením <b>Alt</b> dokončíte."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Dokončenie skice voľnou rukou"
 
@@ -9055,6 +9083,30 @@ msgstr "Súbor nastavení %s nie je platný XML dokument."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Súbor %s nie je platný súbor s nastavením Inkscape."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Brko"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Značkovadlo"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Štetec"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Krútivé"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Machule"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Obrysové"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10267,7 +10319,7 @@ msgstr "Zjednodušiť"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Výber <b>neobsahuje cesty</b>, ktoré je možné zjednodušiť."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Počas vykonávania Efektu cesty sa vyskytla výnimka."
 
@@ -20618,7 +20670,7 @@ msgstr ""
 "cheeseshop.python.org/pypi/lxml/ alebo prostredníctvom vášho správcu "
 "balíčkov príkazom ako: sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Výrazu „%s“ nezodpovedá žiadny uzol"
@@ -23298,23 +23350,34 @@ msgstr "Vstup Windows Metasúbor"
 msgid "XAML Input"
 msgstr "Vstup XAML"
 
-#~ msgid "Dip pen"
-#~ msgstr "Brko"
+#~ msgid "Gelatine"
+#~ msgstr "Želatína"
 
-#~ msgid "Marker"
-#~ msgstr "Značkovadlo"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr ""
+#~ "Vyfarbiteľná výplň s turbulenciou a priesvitnosťou podobnou želatíne"
 
-#~ msgid "Brush"
-#~ msgstr "Štetec"
+#~ msgid "Monochrome positive"
+#~ msgstr "Monochromatický pozitív"
 
-#~ msgid "Wiggly"
-#~ msgstr "Krútivé"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Previesť na zafarbiteľný priesvitný pozitív"
 
-#~ msgid "Splotchy"
-#~ msgstr "Machule"
+#~ msgid "Monochrome negative"
+#~ msgstr "Monochromatický negatív"
 
-#~ msgid "Tracing"
-#~ msgstr "Obrysové"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr "Invertovať a najľahšie časti objektu postupne spriehľadniť"
+
+#~ msgid "Repaint"
+#~ msgstr "Premaľovať"
+
+#~ msgid "Punch hole"
+#~ msgstr "Vyrazená diera"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Vydierovať objekt zo zafarbiteľnej nepriesvitnej oblasti"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Ohorené okraje"
@@ -23457,9 +23520,6 @@ msgstr "Vstup XAML"
 
 #~ msgid "Adds a film grain noise to images and objects"
 #~ msgstr "Pridá obrázkom a objektom filmové zrno"
-
-#~ msgid "Alpha paint"
-#~ msgstr "Alfa maľovanie"
 
 #~ msgid "Previous Effect"
 #~ msgstr "Predchádzajúci efekt"

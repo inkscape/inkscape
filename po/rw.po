@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2006-11-05 18:09+0100\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -36,8 +36,7 @@ msgstr "Ishusho"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr ""
 
@@ -508,7 +507,9 @@ msgstr "Gukwirakwiza"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -580,8 +581,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 #, fuzzy
 msgid "Textures"
 msgstr "Umwandiko"
@@ -1868,7 +1869,7 @@ msgid "Light eraser"
 msgstr "Ubuhagarike"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr ""
@@ -2027,15 +2028,14 @@ msgstr "Umutuku:"
 msgid "Create a turbulent contour around"
 msgstr ""
 
-# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Filter.Graphic.Export.BMP.Resolution.text
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
-msgid "Gelatine"
-msgstr "Imikemurire"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Byahiswemo"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -2221,20 +2221,23 @@ msgstr "Icika ku biyobora"
 msgid "Something like a water noise"
 msgstr ""
 
+# sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr ""
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Umutuku:"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr ""
+#, fuzzy
+msgid "Duotone"
+msgstr "Ihindurangano"
 
 #: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+msgid "Change colors to a duotone palette"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
@@ -2242,28 +2245,34 @@ msgid "Light eraser, negative"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
+msgid "Like Light eraser but converts to negative"
 msgstr ""
 
-# sfx2/sdi\sfxslots.src:SID_REPEAT.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_PERCENTILE.4.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_TRIM_MEAN.4.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_WEIBULL.4.text
 #: ../share/filters/filters.svg.h:198
 #, fuzzy
-msgid "Repaint"
-msgstr "Gusubiramo"
+msgid "Alpha repaint"
+msgstr "Alufa"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr ""
 
-# sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
+# svtools/source\dialogs\colrdlg.src:DLG_COLOR.FT_SATURATION.text
 #: ../share/filters/filters.svg.h:199
 #, fuzzy
-msgid "Punch hole"
-msgstr "Ishusho"
+msgid "Saturation map"
+msgstr "Ubwuzurane"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
 msgstr ""
 
 # shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
@@ -2435,6 +2444,24 @@ msgstr "Uburyo- Shushanya"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+msgid "Fluorescence"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Umutwe:"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -10299,50 +10326,50 @@ msgstr "Ihindurakerekezo"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 #, fuzzy
 msgid "Continuing selected path"
 msgstr "Ihuza Bya Byahiswemo Inzira"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 #, fuzzy
 msgid "Appending to selected path"
 msgstr "Ihuza Bya Byahiswemo Inzira"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr ""
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr ""
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr ""
 
 # 1822
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 #, fuzzy
 msgid "Drawing cancelled"
 msgstr "Uburyo- Shushanya"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr ""
 
@@ -10460,6 +10487,58 @@ msgstr ""
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Position.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....BusinessCard.BusinessAddress.Position.text
+#: ../src/preferences-skeleton.h:98
+#, fuzzy
+msgid "Dip pen"
+msgstr "Ibirindiro"
+
+# dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_PASTE.text
+#: ../src/preferences-skeleton.h:99
+#, fuzzy
+msgid "Marker"
+msgstr "Komeka"
+
+# sw/source\ui\utlui\attrdesc.src:STR_CHANNELB.text
+#: ../src/preferences-skeleton.h:100
+#, fuzzy
+msgid "Brush"
+msgstr "Ubururu"
+
+# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
+#: ../src/preferences-skeleton.h:101
+#, fuzzy
+msgid "Wiggly"
+msgstr "Umutwe:"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr ""
+
+#: ../src/preferences-skeleton.h:103
+#, fuzzy
+msgid "Tracing"
+msgstr "itandukanya:"
 
 #: ../src/rdf.cpp:172
 #, fuzzy
@@ -11824,7 +11903,7 @@ msgstr ""
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -23675,7 +23754,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -26851,48 +26930,20 @@ msgstr ""
 msgid "XAML Input"
 msgstr "Iyinjiza"
 
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Position.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....BusinessCard.BusinessAddress.Position.text
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Filter.Graphic.Export.BMP.Resolution.text
 #, fuzzy
-#~ msgid "Dip pen"
-#~ msgstr "Ibirindiro"
+#~ msgid "Gelatine"
+#~ msgstr "Imikemurire"
 
-# dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_PASTE.text
+# sfx2/sdi\sfxslots.src:SID_REPEAT.text
 #, fuzzy
-#~ msgid "Marker"
-#~ msgstr "Komeka"
+#~ msgid "Repaint"
+#~ msgstr "Gusubiramo"
 
-# sw/source\ui\utlui\attrdesc.src:STR_CHANNELB.text
+# sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
 #, fuzzy
-#~ msgid "Brush"
-#~ msgstr "Ubururu"
-
-# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
-#, fuzzy
-#~ msgid "Wiggly"
-#~ msgstr "Umutwe:"
-
-#, fuzzy
-#~ msgid "Tracing"
-#~ msgstr "itandukanya:"
+#~ msgid "Punch hole"
+#~ msgstr "Ishusho"
 
 #, fuzzy
 #~ msgid "Burnt edges"

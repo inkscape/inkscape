@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-24 20:59+0200\n"
+"POT-Creation-Date: 2009-09-04 22:28+0200\n"
 "PO-Revision-Date: 2009-08-19 01:37+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig - www.drouizig.org <alan.monfort@free.fr>\n"
@@ -32,8 +32,7 @@ msgstr "Kaotigell dilufr"
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:198
-#: ../share/filters/filters.svg.h:206
+#: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:206
 msgid "ABCs"
 msgstr "B.A.-BA"
 
@@ -361,7 +360,9 @@ msgstr "Dibeurvec'hiañ"
 #: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:196
 #: ../share/filters/filters.svg.h:205 ../share/filters/filters.svg.h:215
+#: ../share/filters/filters.svg.h:218 ../share/filters/filters.svg.h:219
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -430,8 +431,8 @@ msgstr "Organek"
 #: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:172
-#: ../share/filters/filters.svg.h:174 ../share/filters/filters.svg.h:181
-#: ../share/filters/filters.svg.h:187 ../share/filters/filters.svg.h:200
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:187
+#: ../share/filters/filters.svg.h:200
 msgid "Textures"
 msgstr "Gwiadezhioù"
 
@@ -1520,7 +1521,7 @@ msgid "Light eraser"
 msgstr "Diverkell guñv"
 
 #: ../share/filters/filters.svg.h:158 ../share/filters/filters.svg.h:195
-#: ../share/filters/filters.svg.h:196 ../share/filters/filters.svg.h:197
+#: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
 msgstr "Goulevioù mavek a-fet treuzweluster"
@@ -1666,14 +1667,13 @@ msgid "Create a turbulent contour around"
 msgstr "Krouiñ un drolinenn fistoulik tro-dro dezhi"
 
 #: ../share/filters/filters.svg.h:174
-msgid "Gelatine"
-msgstr "Kaot-askorn"
+msgid "Quadritone fantasy"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:174
-msgid "Colorizable filling with gelatine like turbulence and transparency"
-msgstr ""
-"Leuniadur livus gant an treuzweluster hag strafuilhoù heñvel ouzh ar gaot-"
-"askorn"
+#, fuzzy
+msgid "Replace hue by two colors"
+msgstr "Amsaviñ al liv"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1862,50 +1862,54 @@ msgstr "Saflik"
 msgid "Something like a water noise"
 msgstr "Un dra bennak evel trubuilh an dour"
 
-# yonenn b. -où : positif
 #: ../share/filters/filters.svg.h:195
-msgid "Monochrome positive"
-msgstr "Yonenn unliv"
+#, fuzzy
+msgid "Monochrome transparency"
+msgstr "Treuzweluster an trouz"
 
 #: ../share/filters/filters.svg.h:195
-msgid "Convert to a Colorizable transparent positive"
-msgstr "Amdreiñ d'ur yonenn dreuzwelus ha livus"
-
-# ginenn b. -où : négatif
-#: ../share/filters/filters.svg.h:196
-msgid "Monochrome negative"
-msgstr "Ginenn unliv"
-
-#: ../share/filters/filters.svg.h:196
-msgid "Convert to a colorizable transparent negative"
+#, fuzzy
+msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Amdreiñ d'ur c'hinenn dreuzwelus livus"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Duotone"
+msgstr "Nozelenn"
+
+#: ../share/filters/filters.svg.h:196
+#, fuzzy
+msgid "Change colors to a duotone palette"
+msgstr "Diuzañ livioù diwar ul livaoueg"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Diverkell guñv, ginel"
 
 #: ../share/filters/filters.svg.h:197
-msgid ""
-"Invert and make the lightest parts of the object progressively transparent"
-msgstr ""
-"Tuginañ ha lakaat al lodoù sklaerañ eus an ergorenn da vezañ treuzwelus tamm "
-"ha tamm"
+#, fuzzy
+msgid "Like Light eraser but converts to negative"
+msgstr "Diverkell guñv, ginel"
 
 #: ../share/filters/filters.svg.h:198
-msgid "Repaint"
-msgstr "Adpentañ"
+#, fuzzy
+msgid "Alpha repaint"
+msgstr "Pent alfa"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Adpentañ pep tra unliv"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch hole"
-msgstr "Ober un toull"
+#, fuzzy
+msgid "Saturation map"
+msgstr "Peurvec'hiañ"
 
 #: ../share/filters/filters.svg.h:199
-msgid "Punch object out of a colorizable opaque area"
-msgstr "Ober un toull war ur maez demer livus"
+msgid ""
+"Creates an approximative semi-transparent and colorizable image of the "
+"saturation levels"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2061,6 +2065,24 @@ msgstr "Kelligoù o kreskiñ"
 #, fuzzy
 msgid "Random rounded living cells like fill"
 msgstr "Kelligoù bev rontaet dargouezhek da leuniadur"
+
+#: ../share/filters/filters.svg.h:218
+#, fuzzy
+msgid "Fluorescence"
+msgstr "Bezañs"
+
+#: ../share/filters/filters.svg.h:218
+msgid "Oversaturate colors which can be fluorescent in real world"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:219
+#, fuzzy
+msgid "Tritone"
+msgstr "Titl"
+
+#: ../share/filters/filters.svg.h:219
+msgid "Create a tritone palette with hue selectable by flood"
+msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -8975,40 +8997,40 @@ msgstr "Tuginañ an treug"
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>Treug ebet</b> da duginañ en diuzad."
 
-#: ../src/pencil-context.cpp:261 ../src/pen-context.cpp:493
+#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:493
 msgid "Continuing selected path"
 msgstr "O kenderc'hel an treug diuzet"
 
-#: ../src/pencil-context.cpp:269 ../src/pen-context.cpp:503
+#: ../src/pencil-context.cpp:277 ../src/pen-context.cpp:503
 msgid "Creating new path"
 msgstr "O krouiñ un treug nevez"
 
-#: ../src/pencil-context.cpp:272 ../src/pen-context.cpp:505
+#: ../src/pencil-context.cpp:280 ../src/pen-context.cpp:505
 msgid "Appending to selected path"
 msgstr "Ouzhpennañ d'an treug diuzet"
 
-#: ../src/pencil-context.cpp:373
+#: ../src/pencil-context.cpp:381
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Leuskel</b> amañ evit serriñ hag echuiñ an treug."
 
-#: ../src/pencil-context.cpp:379
+#: ../src/pencil-context.cpp:387
 msgid "Drawing a freehand path"
 msgstr "O tresañ un tres dre zorn"
 
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:392
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Riklañ</b> evit kenderc'hel an treug diouzh ar poent-mañ."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:455
+#: ../src/pencil-context.cpp:466
 msgid "Finishing freehand"
 msgstr "Oc'h echuiñ an tresañ dre zorn"
 
-#: ../src/pencil-context.cpp:511 ../src/pen-context.cpp:253
+#: ../src/pencil-context.cpp:522 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr "Tresañ dilezet"
 
-#: ../src/pencil-context.cpp:561
+#: ../src/pencil-context.cpp:572
 msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
@@ -9016,7 +9038,7 @@ msgstr ""
 "<b>Mod brastres</b>: chom o poezañ war <b>Alt</b> a etrelotod etre an "
 "treugoù brastreset. Leuskel <b>Alt</b> a-benn echuiñ."
 
-#: ../src/pencil-context.cpp:589
+#: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
 msgstr "Oc'h echuiñ an tresañ dre zorn"
 
@@ -9149,6 +9171,30 @@ msgstr "Restr ar gwellvezioù %s n'eo ket ur restr reoliek."
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Ar restr %s n'eo ket ur restr gwellvezioù talvoudek."
+
+#: ../src/preferences-skeleton.h:98
+msgid "Dip pen"
+msgstr "Stouiñ ar c'hreion"
+
+#: ../src/preferences-skeleton.h:99
+msgid "Marker"
+msgstr "Merker"
+
+#: ../src/preferences-skeleton.h:100
+msgid "Brush"
+msgstr "Broust"
+
+#: ../src/preferences-skeleton.h:101
+msgid "Wiggly"
+msgstr "Kildroennek"
+
+#: ../src/preferences-skeleton.h:102
+msgid "Splotchy"
+msgstr "Strimpet"
+
+#: ../src/preferences-skeleton.h:103
+msgid "Tracing"
+msgstr "Tresadur"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -10357,7 +10403,7 @@ msgstr "Eeunaat"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Treug ebet</b> da eeunaat en diuzad."
 
-#: ../src/sp-lpe-item.cpp:346
+#: ../src/sp-lpe-item.cpp:348
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Degouezhet ez eus bet un nemedenn e-pad erounit an Efed Treug."
 
@@ -20776,7 +20822,7 @@ msgstr ""
 "http://cheeseshop.python.org/pypi/lxml/, pe staliit eñ dre hoc'h ardoer "
 "pakadoù dre un arc'had evel : sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:213
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "N'eus klom ebet o klotañ gant ar riñvenn : %s"
@@ -23460,23 +23506,39 @@ msgstr "Enankad Windows Metafile"
 msgid "XAML Input"
 msgstr "Enankad mod XAML"
 
-#~ msgid "Dip pen"
-#~ msgstr "Stouiñ ar c'hreion"
+#~ msgid "Gelatine"
+#~ msgstr "Kaot-askorn"
 
-#~ msgid "Marker"
-#~ msgstr "Merker"
+#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
+#~ msgstr ""
+#~ "Leuniadur livus gant an treuzweluster hag strafuilhoù heñvel ouzh ar gaot-"
+#~ "askorn"
 
-#~ msgid "Brush"
-#~ msgstr "Broust"
+# yonenn b. -où : positif
+#~ msgid "Monochrome positive"
+#~ msgstr "Yonenn unliv"
 
-#~ msgid "Wiggly"
-#~ msgstr "Kildroennek"
+#~ msgid "Convert to a Colorizable transparent positive"
+#~ msgstr "Amdreiñ d'ur yonenn dreuzwelus ha livus"
 
-#~ msgid "Splotchy"
-#~ msgstr "Strimpet"
+# ginenn b. -où : négatif
+#~ msgid "Monochrome negative"
+#~ msgstr "Ginenn unliv"
 
-#~ msgid "Tracing"
-#~ msgstr "Tresadur"
+#~ msgid ""
+#~ "Invert and make the lightest parts of the object progressively transparent"
+#~ msgstr ""
+#~ "Tuginañ ha lakaat al lodoù sklaerañ eus an ergorenn da vezañ treuzwelus "
+#~ "tamm ha tamm"
+
+#~ msgid "Repaint"
+#~ msgstr "Adpentañ"
+
+#~ msgid "Punch hole"
+#~ msgstr "Ober un toull"
+
+#~ msgid "Punch object out of a colorizable opaque area"
+#~ msgstr "Ober un toull war ur maez demer livus"
 
 #~ msgid "Burnt edges"
 #~ msgstr "Riblennoù devet"
@@ -23623,9 +23685,6 @@ msgstr "Enankad mod XAML"
 
 #~ msgid "Adds a film grain noise to images and objects"
 #~ msgstr "Ouzhpennañ arwe ur film d'ar skeudennoù pe d'an ergorennoù"
-
-#~ msgid "Alpha paint"
-#~ msgstr "Pent alfa"
 
 #~ msgid "Previous Effect"
 #~ msgstr "Efed kent"
