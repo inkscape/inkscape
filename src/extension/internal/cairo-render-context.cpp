@@ -192,6 +192,8 @@ CairoRenderContext::cloneMe(double width, double height) const
                                                             (int)ceil(width), (int)ceil(height));
     new_context->_cr = cairo_create(surface);
     new_context->_surface = surface;
+    new_context->_width = width;
+    new_context->_height = height;
     new_context->_is_valid = TRUE;
 
     return new_context;
@@ -749,6 +751,9 @@ CairoRenderContext::setupSurface(double width, double height)
     if (_vector_based_target && _stream == NULL)
         return false;
 
+    _width = width;
+    _height = height;
+
     cairo_surface_t *surface = NULL;
     switch (_target) {
         case CAIRO_SURFACE_TYPE_IMAGE:
@@ -796,13 +801,16 @@ bool
 CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm)
 {
     if(surface == NULL) {
-        return FALSE;
+        return false;
     }
     if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
-        return FALSE;
+        return false;
     }
 
     _cr = cairo_create(surface);
+    if(CAIRO_STATUS_SUCCESS != cairo_status(_cr)) {
+        return false;
+    }
     if (ctm)
         cairo_set_matrix(_cr, ctm);
     _surface = surface;
