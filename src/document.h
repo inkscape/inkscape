@@ -185,14 +185,12 @@ SPDocument *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, 
 
 gdouble sp_document_width(SPDocument *document);
 gdouble sp_document_height(SPDocument *document);
-gboolean sp_document_landscape(SPDocument *document);
 Geom::Point sp_document_dimensions(SPDocument *document);
 
 struct SPUnit;
 
 void sp_document_set_width(SPDocument *document, gdouble width, const SPUnit *unit);
 void sp_document_set_height(SPDocument *document, gdouble height, const SPUnit *unit);
-void sp_document_set_landscape(SPDocument *document, gboolean landscape);
 
 #define SP_DOCUMENT_URI(d)  (d->uri)
 #define SP_DOCUMENT_NAME(d) (d->name)

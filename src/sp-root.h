@@ -36,7 +36,6 @@ struct SPRoot : public SPGroup {
     SVGLength y;
     SVGLength width;
     SVGLength height;
-    gboolean landscape;
 
     /* viewBox; */
     unsigned int viewBox_set : 1;

@@ -189,7 +189,7 @@ Print::Print(SPDocument *doc, SPItem *base) :
     gdouble doc_width = sp_document_width(_doc) * PT_PER_PX;
     gdouble doc_height = sp_document_height(_doc) * PT_PER_PX;
     GtkPaperSize *paper_size;
-    if (sp_document_landscape(_doc)) {
+    if (doc_width > doc_height) {
         gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
         paper_size = gtk_paper_size_new_custom("custom", "custom",
                                                doc_height, doc_width, GTK_UNIT_POINTS);

@@ -345,6 +345,18 @@ PageSizer::setDim (double w, double h, bool changeList)
     _changedw_connection.block();
     _changedh_connection.block();
 
+    if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
+        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+        double const old_height = sp_document_height(doc);
+        sp_document_set_width (doc, w, &_px_unit);
+        sp_document_set_height (doc, h, &_px_unit);
+        // The origin for the user is in the lower left corner; this point should remain stationary when
+        // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
+        Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
+		SP_GROUP(SP_ROOT(doc->root))->translateChildItems(vert_offset);
+        sp_document_done (doc, SP_VERB_NONE, _("Set page size"));
+    }
+
     if ( w != h ) {
         _landscapeButton.set_sensitive(true);
         _portraitButton.set_sensitive (true);
@@ -354,19 +366,6 @@ PageSizer::setDim (double w, double h, bool changeList)
     } else {
         _landscapeButton.set_sensitive(false);
         _portraitButton.set_sensitive (false);
-    }
-
-    if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
-        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
-        double const old_height = sp_document_height(doc);
-        sp_document_set_width (doc, w, &_px_unit);
-        sp_document_set_height (doc, h, &_px_unit);
-        sp_document_set_landscape (doc, _landscape);
-        // The origin for the user is in the lower left corner; this point should remain stationary when
-        // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
-        Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
-		SP_GROUP(SP_ROOT(doc->root))->translateChildItems(vert_offset);
-        sp_document_done (doc, SP_VERB_NONE, _("Set page size"));
     }
 
     if (changeList)
