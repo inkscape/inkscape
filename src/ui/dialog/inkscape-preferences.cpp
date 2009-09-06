@@ -220,11 +220,11 @@ void InkscapePreferences::initPageSnapping()
 
     _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
     _page_snapping.add_line( false, _("Delay (in ms):"), _snap_delay, "",
-                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
+                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
 
     _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
     _page_snapping.add_line( false, "", _snap_closest_only, "",
-                             _("Only try to snap the node that is initialy closest to the mouse pointer"));
+                             _("Only try to snap the node that is initially closest to the mouse pointer"));
 
     _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
     _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",

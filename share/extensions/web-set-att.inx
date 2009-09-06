@@ -8,9 +8,9 @@
   <_param name="sep1" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
   <_param name="help" type="description">This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element.</_param>
   <_param name="sep2" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
-  <_param name="help" type="description">If you want to set more then one attribute, you must separate this with a space, and only with a space.</_param>
+  <_param name="help" type="description">If you want to set more than one attribute, you must separate this with a space, and only with a space.</_param>
   <param name="att" type="string" _gui-text="Attribute to set">fill stroke stroke-width</param>
-  <param name="when" type="enum" _gui-text="When the set must be done?">
+  <param name="when" type="enum" _gui-text="When should the set be done?">
     <_item value="onclick">on click</_item>
     <_item value="onfocusin">on focus</_item>
     <_item value="onfocusout">on blur</_item>
@@ -22,7 +22,7 @@
     <_item value="onmouseout">on mouse out</_item>
     <_item value="onload">on element loaded</_item>
   </param>
-  <_param name="help" type="description">The list of values must have the same size of the attributes list.</_param>
+  <_param name="help" type="description">The list of values must have the same size as the attributes list.</_param>
   <param name="val" type="string" _gui-text="Value to set">red black 5px</param>
   <param name="compatibility" type="enum" _gui-text="Compatibility with previews code to this event">
     <_item value="append">Run it after</_item>
@@ -32,7 +32,7 @@
   <_param name="help" type="description">The next parameter is useful when you select more than two elements</_param>
   <param name="from-and-to" type="enum" _gui-text="Source and destination of setting">
     <_item value="g-to-one">All selected ones set an attribute in the last one</_item>
-    <_item value="one-to-g">The first selected set an attribute in all others</_item>
+    <_item value="one-to-g">The first selected sets an attribute in all others</_item>
   </param>
   <effect>
     <object-type>all</object-type>

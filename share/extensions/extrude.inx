@@ -5,8 +5,8 @@
 	<dependency type="executable" location="extensions">extrude.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
   <param name="mode" type="optiongroup" _gui-text="Mode:">
-     <option>Lines</option>
-     <option>Polygons</option>
+     <_option>Lines</_option>
+     <_option>Polygons</_option>
   </param>
     <effect>
 		<object-type>path</object-type>

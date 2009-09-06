@@ -175,7 +175,7 @@ def report_properties( params ):#report to the Inkscape console using errormsg
     inkex.errormsg(_("Side Length 'a'/px: " + str( params[0][0] ) ))
     inkex.errormsg(_("Side Length 'b'/px: " + str( params[0][1] ) ))
     inkex.errormsg(_("Side Length 'c'/px: " + str( params[0][2] ) ))
-    inkex.errormsg(_("Angle 'A'/radians:" + str( params[1][0] ) ))
+    inkex.errormsg(_("Angle 'A'/radians: " + str( params[1][0] ) ))
     inkex.errormsg(_("Angle 'B'/radians: " + str( params[1][1] ) ))
     inkex.errormsg(_("Angle 'C'/radians: " + str( params[1][2] ) ))
     inkex.errormsg(_("Semiperimeter/px: " + str( params[4][1] ) ))

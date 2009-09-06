@@ -38,8 +38,8 @@
     </page>
     <page name="tab" _gui-text="Localization">
       <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
-      <_param name="month-names"  type="string" _gui-text="Month names">January February March April May June July August September October November December</_param>
-      <_param name="day-names"  type="string" _gui-text="Day names">Sun Mon Tue Wed Thu Fri Sat</_param>
+      <_param name="month-names"  type="string" _gui-text="Month names" xml:space="preserve">January February March April May June July August September October November December</_param>
+      <_param name="day-names"  type="string" _gui-text="Day names" xml:space="preserve">Sun Mon Tue Wed Thu Fri Sat</_param>
       <_param name="day-names-help" type="description">(The day names list must start from Sunday)</_param>
       <param name="encoding" _gui-text="Char Encoding" type="optiongroup" appearance="minimal">
 	  	<option value="arabic">arabic</option>

@@ -5,7 +5,7 @@
   <dependency type="executable" location="extensions">pathmodifier.py</dependency>
   <dependency type="executable" location="extensions">pathalongpath.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
-  <_param name="title" type="description">This effect bends a pattern object along arbitrary "skeleton" paths. The pattern is the top most object in the selection. (groups of paths/shapes/clones... allowed)</_param>
+  <_param name="title" type="description">This effect bends a pattern object along arbitrary "skeleton" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)</_param>
   <param name="copymode" type="enum" _gui-text="Copies of the pattern:">
     <_item value="Single">Single</_item>
     <_item value="Single, stretched">Single, stretched</_item>

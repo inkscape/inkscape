@@ -33,9 +33,7 @@ class Project(inkex.Effect):
             inkex.Effect.__init__(self)
     def effect(self):
         if len(self.options.ids) < 2:
-            inkex.errormsg(_("This extension requires two selected paths.")
-                           + "  "
-                           + _("The second path must be exactly four nodes long."))
+            inkex.errormsg(_("This extension requires two selected paths. \nThe second path must be exactly four nodes long."))
             exit()
 
         #obj is selected second

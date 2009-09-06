@@ -930,7 +930,7 @@ ArcKnotHolder::ArcKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRelea
                       _("Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"),
                       SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
     entity_start->create(desktop, item, this,
-                         _("Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>"
+                         _("Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> "
                            "to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"),
                          SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
     entity_end->create(desktop, item, this,

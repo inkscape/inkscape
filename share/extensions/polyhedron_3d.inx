@@ -10,7 +10,7 @@
                 <_option value="cube">Cube</_option>
                 <_option value="trunc_cube">Truncated Cube</_option>
                 <_option value="snub_cube">Snub Cube</_option>
-                <_option value="cuboct">Cuboctohedron</_option>
+                <_option value="cuboct">Cuboctahedron</_option>
                 <_option value="tet">Tetrahedron</_option>
                 <_option value="trunc_tet">Truncated Tetrahedron</_option>
                 <_option value="oct">Octahedron</_option>
@@ -65,9 +65,9 @@
         </page>
         <page name="style" _gui-text="Style">
             <param name="scl"    type="float"   min="0"    max="10000" _gui-text="Scaling Factor">100</param>
-            <param name="f_r"  type="int"   min="0" max="255" _gui-text="Fill Colour (Red)">255</param>
-            <param name="f_g"  type="int"   min="0" max="255" _gui-text="Fill Colour (Green)">0</param>
-            <param name="f_b"  type="int"   min="0" max="255" _gui-text="Fill Colour (Blue)">0</param>
+            <param name="f_r"  type="int"   min="0" max="255" _gui-text="Fill Color (Red)">255</param>
+            <param name="f_g"  type="int"   min="0" max="255" _gui-text="Fill Color (Green)">0</param>
+            <param name="f_b"  type="int"   min="0" max="255" _gui-text="Fill Color (Blue)">0</param>
             <param name="f_opac" type="int" min="0" max="100" _gui-text="Fill Opacity/ %">100</param>
             <param name="s_opac" type="int" min="0" max="100" _gui-text="Stroke Opacity/ %">100</param>
             <param name="th"   type="float" min="0" max="100" _gui-text="Line Thickness / px">2</param>
@@ -75,7 +75,9 @@
             <param name="lv_x" type="float" min="-100" max="100" _gui-text="Light x-Position">1</param>
             <param name="lv_y" type="float" min="-100" max="100" _gui-text="Light y-Position">1</param>
             <param name="lv_z" type="float" min="-100" max="100" _gui-text="Light z-Position">-2</param>
-            <param name="show" type="optiongroup" appearance="minimal" _gui-text="Show:">
+<!-- TRANSLATORS: only translate "string" in "context|string".
+For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS -->
+            <param name="show" type="optiongroup" appearance="minimal" _gui-text="polyhedron|Show:">
                 <_option value="vtx">Vertices</_option>
                 <_option value="edg">Edges</_option>
                 <_option value="fce">Faces</_option></param>

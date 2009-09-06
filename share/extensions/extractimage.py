@@ -63,7 +63,7 @@ class MyEffect(inkex.Effect):
                                 open(path,'wb').write(data)
                                 node.set(inkex.addNS('href','xlink'),os.path.realpath(path)) #absolute for making in-mem cycles work
                             else:
-                                inkex.errormsg(_('Difficulty finding the image data.'))
+                                inkex.errormsg(_('Unable to find image data.'))
                             break
 
 if __name__ == '__main__':

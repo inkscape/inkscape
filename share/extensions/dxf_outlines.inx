@@ -10,12 +10,11 @@
 			<param name="ROBO" type="boolean" _gui-text="enable ROBO-Master output">false</param>
 		</page>
 		<page name="help" _gui-text="Help">
-			<_param name="inputhelp" type="description">- AutoCAD Release 13 format.
+			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 13 format.
 - assume svg drawing is in pixels, at 90 dpi.
 - assume dxf drawing is in mm.
 - only LWPOLYLINE and SPLINE elements are supported.
-- ROBO-Master option is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape.
-		</_param>
+- ROBO-Master option is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape.</_param>
 		</page>
 	</param>
 	<output>

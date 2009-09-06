@@ -1062,7 +1062,7 @@ sp_item_description(SPItem *item)
             const gchar *label = SP_OBJECT_STYLE(item)->filter.href->getObject()->label();
             gchar *snew;
             if (label) {
-                snew = g_strdup_printf (_("%s; <i>filtered (%s)</i>"), s, label);
+                snew = g_strdup_printf (_("%s; <i>filtered (%s)</i>"), s, _(label));
             } else {
                 snew = g_strdup_printf (_("%s; <i>filtered</i>"), s);
             }

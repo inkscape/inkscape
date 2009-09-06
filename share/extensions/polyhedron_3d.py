@@ -57,7 +57,7 @@ _ = gettext.gettext
 try:
     from numpy import *
 except:
-    inkex.errormsg(_("Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
+    inkex.errormsg(_("Failed to import the numpy module. This module is required by this extension. Please install it and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
     sys.exit()
 
 #FILE IO ROUTINES

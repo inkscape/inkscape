@@ -303,7 +303,7 @@ void ColorICCSelector::init()
 
 
     _profileSel = gtk_combo_box_new_text();
-    gtk_combo_box_append_text( GTK_COMBO_BOX(_profileSel), "<none>" );
+    gtk_combo_box_append_text( GTK_COMBO_BOX(_profileSel), _("<none>") );
     gtk_widget_show( _profileSel );
     gtk_combo_box_set_active( GTK_COMBO_BOX(_profileSel), 0 );
     gtk_table_attach( GTK_TABLE(t), _profileSel, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
@@ -576,7 +576,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
         gtk_combo_box_remove_text( combo, 0 );
     }
 
-    gtk_combo_box_append_text( combo, "<none>");
+    gtk_combo_box_append_text( combo, _("<none>"));
 
     gtk_combo_box_set_active( combo, 0 );
 

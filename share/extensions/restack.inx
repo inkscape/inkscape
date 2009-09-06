@@ -15,14 +15,16 @@
     </param>
 	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle">0.00</param>
     <param name="xanchor" type="optiongroup"  appearance="minimal" _gui-text="Horizontal Point:">
-        <_option value="l">Left</_option>
-        <_option value="m">Middle</_option>
-        <_option value="r">Right</_option>
+<!-- TRANSLATORS: only translate "string" in "context|string".
+For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS -->
+        <_option value="l">restack|Left</_option>
+        <_option value="m">restack|Middle</_option>
+        <_option value="r">restack|Right</_option>
     </param>
     <param name="yanchor" type="optiongroup"  appearance="minimal" _gui-text="Vertical Point:">
-        <_option value="t">Top</_option>
-        <_option value="m">Middle</_option>
-        <_option value="b">Bottom</_option>
+        <_option value="t">restack|Top</_option>
+        <_option value="m">restack|Middle</_option>
+        <_option value="b">restack|Bottom</_option>
     </param>
     <effect>
 	<object-type>path</object-type>

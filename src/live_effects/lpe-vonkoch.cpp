@@ -49,7 +49,7 @@ LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     similar_only(_("Use uniform transforms only"), _("2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."), "similar_only", &wr, this, false),
     drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
     //,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
-    ref_path(_("Reference segment"), _("The reference segment. Defaults to bbox diameter."), "ref_path", &wr, this, "M0,0 L10,0"),
+    ref_path(_("Reference segment"), _("The reference segment. Defaults to the horizontal midline of the bbox."), "ref_path", &wr, this, "M0,0 L10,0"),
     //refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
     //refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
     //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.

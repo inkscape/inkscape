@@ -35,14 +35,14 @@
             </param>
             <param name="cust_str"      type="string"  _gui-text="Point At">cos(a_a):cos(a_b):cos(a_c)</param>
             <param name="cust_pt"       type="boolean" _gui-text="Draw Marker At This Point"></param>
-            <param name="cust_radius"   type="boolean" _gui-text="Draw Circle About This Point"></param>
+            <param name="cust_radius"   type="boolean" _gui-text="Draw Circle Around This Point"></param>
             <param name="radius"        type="string"  _gui-text="Radius / px">s_a*s_b*s_c/(4*area)</param>
             <param name="isogonal_conj" type="boolean" _gui-text="Draw Isogonal Conjugate"></param>
             <param name="isotomic_conj" type="boolean" _gui-text="Draw Isotomic Conjugate"></param>
             <param name="report" type="boolean" _gui-text="Report this triangle's properties"></param>
         </page>
         <page name="Help" _gui-text="Help">
-            <param name="instructions"   type="description">This extension draws constructions about a triangle defined by the first 3 nodes of a selected path. You may select one of preset objects or create your own ones.
+            <_param name="instructions" type="description" xml:space="preserve">This extension draws constructions about a triangle defined by the first 3 nodes of a selected path. You may select one of preset objects or create your own ones.
             
 All units are the Inkscape's pixel unit. Angles are all in radians.
 You can specify a point by trilinear coordinates or by a triangle centre function.
@@ -63,7 +63,7 @@ Also available are the inverse trigonometric functions:
 sec(x); csc(x); cot(x)
 
 You can specify the radius of a circle about a custom point using an formula, which may also contain the side lengths, angles, etc. You can also plot the isogonal and isotomic conjugate of the point. Be aware that this may cause a divide-by-zero error for certain points.
-            </param>
+            </_param>
         </page>
     </param>
     <effect>
