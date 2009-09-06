@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-19 01:37+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig - www.drouizig.org <alan.monfort@free.fr>\n"
@@ -3640,7 +3640,6 @@ msgid "Title:"
 msgstr "Titl :"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Diskouez :"
 
@@ -4281,7 +4280,7 @@ msgstr "Teul nevez %d"
 msgid "Memory document %d"
 msgstr "Teul kounañ %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Teul dianv %d"
@@ -6327,7 +6326,7 @@ msgstr "Dilemel maez(ioù) an ilrezenn"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "unanenn"
 
@@ -7690,13 +7689,15 @@ msgstr "Kresk ar pellder etre al linennaouegoù."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "Lenkrder an hanter-droioù : tu kentañ, diabarzh"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 "Arventennañ lenkrder/lemmder an treug pa dizh un hanter-dro 'en traoñ'. "
 "0=lemm, 1=dre ziouer"
@@ -7706,8 +7707,9 @@ msgid "1st side, out"
 msgstr "Tu kentañ, diavaez"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Arventennañ lenkrder/lemmder an treug pa guita un hanter-dro 'en traoñ'. "
@@ -7718,8 +7720,9 @@ msgid "2nd side, in"
 msgstr "Eil tu, diabarzh"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Arventennañ lenkrder/lemmder an treug pa dizh un hanter-dro 'e krec'h'. "
@@ -7730,8 +7733,9 @@ msgid "2nd side, out"
 msgstr "Eil tu, diavaez"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Arventennañ lenkrder/lemmder an treug pa guita un hanter-dro 'e krec'h'. "
@@ -7742,7 +7746,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Distabilder ar brasder : tu kentañ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
 "Dilec'hiañ a ra gant un doare dargouezhek hantre-droioù 'en traoñ' a-benn "
 "krouiñ argemmadoù brasder."
@@ -7754,7 +7759,8 @@ msgid "2nd side"
 msgstr "Eil tu"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 "Dilec'hiañ a ra gant un doare dargouezhek hanter-droioù 'e krec'h' a-benn "
 "krouiñ argemmadoù brasder."
@@ -7764,16 +7770,18 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Distabilder ar gensturelezh : tu kentañ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "Ouzhpennañ dargouezhelezh ar roud dre zilec'hiañ an hanter-droioù en 'traoñ' "
 "gant un doare a-spin davit ar vevenn."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 "Ouzhpennañ dargouezhelezh ar roud dre zilec'hiañ an hanter-droioù e 'krec'h' "
@@ -7784,11 +7792,13 @@ msgid "Variance: 1st side"
 msgstr "Vebiant : tu kentañ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Dargouezhelezh lenkrder un hanter-dro 'en traoñ'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Dargouezhelezh lenkrder un hanter-dro 'e krec'h'"
 
 #.
@@ -7797,7 +7807,8 @@ msgid "Generate thick/thin path"
 msgstr "Krouiñ un treug tev/moan"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "Darvannañ un tres gant un tevder argemmus"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7813,7 +7824,8 @@ msgid "Thickness: at 1st side"
 msgstr "Tevder : war an tu kentañ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "Led war hanter-droioù 'en traoñ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7821,7 +7833,8 @@ msgid "at 2nd side"
 msgstr "war an eil tu"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "Led war hanter-droioù 'e krec'h"
 
 #.
@@ -7830,13 +7843,18 @@ msgid "from 2nd to 1st side"
 msgstr "eus an eil tu betek an hini kentañ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "Led an treugoù eus hanter-droioù e krec'h an traoñ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "eus an tu kentañ betek an eil"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "Led war hanter-droioù 'en traoñ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7860,11 +7878,11 @@ msgstr ""
 "Al lec'hiadur daveel ouzh ar poent dave a zespiz roud ha kementad ar "
 "c'hrommadur hollek"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "Kleiz"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "Dehou"
 
@@ -8127,7 +8145,8 @@ msgid "Reference segment"
 msgstr "Regenn daveiñ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr ""
 "Ar regenn daveiñ. Arventennoù dre ziouer e boestad vevenniñ an treuzkiz."
 
@@ -8872,8 +8891,9 @@ msgstr ""
 "Kengeidañ <b>sav</b> un elipsenn, gant <b>Ctrl</b>evit tresañ ur c'helc'h"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11489,7 +11509,6 @@ msgstr "Ergorenn vihanañ"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Diuzad"
 
@@ -11867,8 +11886,8 @@ msgstr "Stlennoù"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12220,7 +12239,7 @@ msgstr "Sav maez ar sil efedoù"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "Mod :"
 
@@ -12927,10 +12946,11 @@ msgid "Delay (in ms):"
 msgstr "Dale (e milieil.) :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "Gortoz a-raok desteudañ keit ha m'emañ al logodenn o tilec'hiañ ha neuze, "
 "gortoz un tamm c'hoazh. Erspizet eo an dale ouzhpenn-mañ amañ. Mar "
@@ -12941,7 +12961,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Desteudañ ar c'hlom tostañ ouzh ar reti hepken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Klask desteudañ ar c'hlom tostañ ouzh reti al logodenn hepken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -14031,6 +14053,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Mirout ar sanell D gant SMMD -> treuzfurmañ a ra SMMD"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<tra ebet>"
 
@@ -14900,7 +14924,7 @@ msgstr "Dibrennañ an dreuzfollenn"
 msgid "New"
 msgstr "Nevez"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Krec'h"
 
@@ -15607,8 +15631,8 @@ msgstr "Aotrevarz :"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Dibarzhioù"
 
@@ -15977,7 +16001,7 @@ msgstr ""
 "Admentañ ar bajennad d'he lakaat da genglotañ gant an diuzad bremanel, pe an "
 "dresadenn a-bezh ma n'eus ket un diuzad"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Arventenniñ ment ar bajenn"
 
@@ -20749,7 +20773,8 @@ msgid "Side Length 'c'/px: "
 msgstr "Hirder an tu 'c'/px :"
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "Korn 'A'/radianoù :"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20807,7 +20832,8 @@ msgstr ""
 "diwezhañ diouzh http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "Diaes eo kavet roadennoù ar skeudenn."
 
 #: ../share/extensions/inkex.py:66
@@ -20840,7 +20866,6 @@ msgstr "n'eo ket gouest da spislec'hiañ ar merker : %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Daou dreug diuzet zo azgoulennet gant an askouezh-mañ."
 
@@ -20862,7 +20887,7 @@ msgstr ""
 "get install python-numpy."
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20872,7 +20897,7 @@ msgstr ""
 "Klaskit ober gant an argerzhadur Treug->Ergorenn da dreug."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
@@ -20880,7 +20905,7 @@ msgstr ""
 "c'hlom."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -20889,7 +20914,7 @@ msgstr ""
 "Klaskit ober gant an argerzhadur Ergorenn->Digenstrollañ."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20898,7 +20923,7 @@ msgstr ""
 "Klaskit ober gant an argerzhadur Treug->Ergorenn da dreug."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20907,9 +20932,10 @@ msgstr ""
 "Klaskit ober gant an argerzhadur Treug->Ergorenn da dreug."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "C'hwitadenn war enporzhiañ ar molladoù numpy. Azgoulennet eo ar mollad-mañ "
@@ -20947,9 +20973,14 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "Fazi diabarzh.  N'eus ket bet diuzet ur rizh alberz\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "Ret eo d'an eil treug bezañ pevar c'hlom e hirder."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr ""
+"An askouezh-mañ a c'houlenn ma vefe an eil treug bet diuzet hir gant pevar "
+"c'hlom."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21271,7 +21302,8 @@ msgid "Custom Points and Options"
 msgstr "Poentoù personelaet ha dibarzhioù"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "Tresañ ur c'hlec'h tro-dro d'ar poent-mañ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21363,19 +21395,54 @@ msgid "Symmedians"
 msgstr "Kemgreiztuennoù"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Arc'hwel an tric'horn"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "Daveoù trilinennek"
 
 #: ../share/extensions/dxf_input.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- Laoskadur AutoCAD 13 ha nevesañ, - lakaat ez eo an tresañ mod dxf e mm. - "
 "lakaat ez eo an tresañ mod svg e pikselioù, e 90 dpm. - miret eo an "
@@ -21383,51 +21450,54 @@ msgstr ""
 "BLOC'HADOÙ, arverañ Tarzhañ ar bloc'hadoù gant AutoCAD kentoc'h, mar bez "
 "ezhomm."
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "Bonegadur an arouezennoù"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "Enankad DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Enporzhiañ un teul e ventrezh eskemm AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "Pe, arverañ ar periad skeulaat dre zorn"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "Arverañ ar skeulaat emgefreek betek ar vent A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- Laoskadur AutoCAD 13. - lakaat ez eo an tresañ mod dxf e mm. - lakaat ez "
 "eo an tresañ mod svg e pikselioù, e 90 dpm. -  elfennoù LWPOLYLINE ha SPLINE "
 "zo skoret hepken. - An dibarzh ROBO-Master eo un danailh arbennikaet helenn "
 "gant ROBO-Master ha gwelerezed AutoDesk hepken, ket gant Inkscape."
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Desktop Cutting Plotter (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "Gweredekaat ec'hankad ROBO-Master"
 
@@ -21523,6 +21593,16 @@ msgstr "Treug evit enrollañ ur skeudenn"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Eztourzhañ"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Linenn"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Liestueg"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -22063,7 +22143,7 @@ msgid "Start Value"
 msgstr "Gwerzh an derou"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Stil"
 
@@ -22402,9 +22482,10 @@ msgid "Space between copies:"
 msgstr "Esaou etre an eiladoù :"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Krommet e vo un ergorenn c'houstur gant an efed-mañ a-hed treugoù un \"atel"
@@ -22436,9 +22517,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Astenn an esaouioù a-benn ma kenglotint gant hirder an atel"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Krommet e vo un ergorenn c'houstur gant an efed-mañ a-hed treugoù un \"atel"
@@ -22547,7 +22629,8 @@ msgid "Cube"
 msgstr "Diñs"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Pevarzektaleg"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22579,15 +22662,18 @@ msgid "Filename:"
 msgstr "Anv restr :"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "Liv leuniañ (Glas)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "Liv leuniañ (Gwer)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "Liv leuniañ (Ruz)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22671,74 +22757,83 @@ msgstr "Periad skeulaat"
 msgid "Shading"
 msgstr "Disheoladur"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Ugenttaleg triambek bihan"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Diñs kuñvet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Daouzektaleg kuñvet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Demerez an tres/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "Pevarzaleg"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Neuze c'helañ tro dro da :"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "Diñs krennet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "Daouzektaleg krennet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Ugenttaleg krennet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "Eizhtaleg krennet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "Pevarzaleg krennet"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Begoù"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Skrammañ"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "Ahel-X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Ahel-Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Ahel-Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Rummañ war Z an tuioù dre :"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "Liestueg 3M"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22757,7 +22852,8 @@ msgid "Canvas"
 msgstr "Steuenn "
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "Barrennoù al livioù"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22792,15 +22888,15 @@ msgstr "Merkoù desteudañ"
 msgid "Right:"
 msgstr "Dehou :"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "Arventennañ ar merkoù didroc'hañ e"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Steredenn arvoned"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Krec'h :"
 
@@ -22873,52 +22969,71 @@ msgid "Arrange"
 msgstr "Kempenn"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "Traoñ"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Eus an traoñ betek krec'h (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "Poent a-zremm :"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "Eus an tu kleiz d'an tu dehou (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "Kreiz"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "D'an diabarzh skinek"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "D'an diavaez skinek"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Adberniañ"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Roudadur an adberniañ :"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "Eus an tu dehou d'an tu kleiz (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "Eus krec'h betek an traoñ (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "Poent a-serzh :"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Traoñ"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "Adberniañ"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Kreiz"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "Adberniañ"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "Adberniañ"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23315,8 +23430,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "Keverlec'hded gant boneg an alberzioù en degouezh-mañ"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "Mar fell deoc'h arventennañ muioc'h eget un doareenn e rankit disrannañ an "
@@ -23341,11 +23457,13 @@ msgid "Source and destination of setting"
 msgstr "Tarzh hag arvoned an arventennoù"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "Lakaet eo un doareenn d'an hol re all gant an hini gentañ bet diuzet"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "Roll ar gwerzhioù a rank bezañ ken hir ha roll an doareennoù."
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -23382,7 +23500,8 @@ msgid "Web"
 msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "Pegoulez e ranker arventennañ ?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23436,7 +23555,8 @@ msgid "on mouse up"
 msgstr "gant al logodenn o sevel"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "An holl re bet diuzet a dreuzkas davit an hini diwezhañ"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23460,9 +23580,10 @@ msgid "The first selected transmits to all others"
 msgstr "An hini gentañ a dreuzkas d'an holl"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "An efed-mañ a dreuzkas unan pe veur a zoareenn diouzh an elfenn gentañ "
 "diuzet betek an eil elfenn pa zegouezh un dargouezh."
@@ -23505,6 +23626,9 @@ msgstr "Enankad Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Enankad mod XAML"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "Ret eo d'an eil treug bezañ pevar c'hlom e hirder."
 
 #~ msgid "Gelatine"
 #~ msgstr "Kaot-askorn"

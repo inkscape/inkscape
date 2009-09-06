@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-28 19:44+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -3606,7 +3606,6 @@ msgid "Title:"
 msgstr "Naziv:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Pokaži:"
 
@@ -4247,7 +4246,7 @@ msgstr "Nov dokument %d"
 msgid "Memory document %d"
 msgstr "Pomnilniški dokument %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Neimenovan dokument %d"
@@ -6311,7 +6310,7 @@ msgstr "Izbriši konce preliva"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "Enota"
 
@@ -7664,13 +7663,15 @@ msgstr "Naraščanje razdalje med šrafiranim."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "Gladkost polobratov: prva stran, navznoter"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 "Določite gladkost/ostrino poti, ko doseže 'spodnji' polobrat. 0=ostro, "
 "1=privzeto"
@@ -7680,8 +7681,9 @@ msgid "1st side, out"
 msgstr "Prva stran, navzven"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Določite gladkost/ostrino poti, ko zapusti 'spodnji' polobrat. 0=ostro, "
@@ -7692,8 +7694,9 @@ msgid "2nd side, in"
 msgstr "Druga stran, navznoter"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Določite gladkost/ostrino poti, ko doseže 'zgornji' polobrat. 0=ostro, "
@@ -7704,8 +7707,9 @@ msgid "2nd side, out"
 msgstr "Druga stran, navzven"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Določite gladkost/ostrino poti, ko zapusti 'zgornji' polobrat. 0=ostro, "
@@ -7716,7 +7720,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Variacija velikosti: prva stran"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
 "Naključno premakne 'spodnje' polobrate, s čimer povzroči variacije velikosti."
 
@@ -7727,7 +7732,8 @@ msgid "2nd side"
 msgstr "Druga stran"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 "Naključno premakne 'zgornje' polobrate, s čimer povzroči variacije velikosti."
 
@@ -7736,16 +7742,18 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Variacija vzporednosti: prva stran"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "Dodaj naključnost smeri s premikanjem 'spodnjih' polobratov tangencialno na "
 "mejo."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 "Dodaj naključnost smeri z naključnim premikanjem 'zgornjih' polobratov "
@@ -7756,11 +7764,13 @@ msgid "Variance: 1st side"
 msgstr "Varianca: na prvi strani"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Naključnost gladkosti 'spodnjih' polobratov"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Naključnost gladkosti 'vrhnjih' polobratov"
 
 #.
@@ -7769,7 +7779,8 @@ msgid "Generate thick/thin path"
 msgstr "Ustvari debelo/tanko pot"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "Simuliraj potezo s spreminjajočo debelino"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7785,7 +7796,8 @@ msgid "Thickness: at 1st side"
 msgstr "Debelina: na prvi strani"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "Širina pri 'spodnjih' polobratih"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7793,7 +7805,8 @@ msgid "at 2nd side"
 msgstr "na drugi strani"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "Širina pri 'vrhnjih' polobratih"
 
 #.
@@ -7802,13 +7815,18 @@ msgid "from 2nd to 1st side"
 msgstr "od druge do prve strani"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "Širina poti od 'zgornjega' do 'spodnjega' polobrata"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "od prve do druge strani"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "Širina pri 'spodnjih' polobratih"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7832,11 +7850,11 @@ msgstr ""
 "Relativen položaj glede na referenčno točko določa splošno smer in količino "
 "ukrivljanja"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "levo"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "desno"
 
@@ -8099,7 +8117,8 @@ msgid "Reference segment"
 msgstr "Referenčni odsek"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "Referenčni odsek. Privzet je premer okvira."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8844,8 +8863,9 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Prilagodite <b>višino</b> elipse; s <b>Ctrl</b> narišete krog"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11474,7 +11494,6 @@ msgstr "Najmanjši predmet"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Izbor"
 
@@ -11846,8 +11865,8 @@ msgstr "Podatki"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12199,7 +12218,7 @@ msgstr "Višina območja učinkovanja filtra"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "Način:"
 
@@ -12905,10 +12924,11 @@ msgid "Delay (in ms):"
 msgstr "Zamuda (v ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "Preloži pripenjanje, dokler se miška premika, nato počakaj še delček "
 "sekunde. To dodatno zamudo določite tukaj. Če je nastavljena na nič ali pa "
@@ -12919,7 +12939,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Pripni le vozlišče, ki je najbližje kazalcu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 "Poskusi pripeti le vozlišče, ki je na začetku najbližje miškinemu kazalcu"
 
@@ -13982,6 +14004,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Ohrani kanal K pri transformacijah CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<brez>"
 
@@ -14848,7 +14872,7 @@ msgstr "Odkleni plast"
 msgid "New"
 msgstr "Nov"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Vrh"
 
@@ -15548,8 +15572,8 @@ msgstr "Strpnost:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Možnosti"
 
@@ -15920,7 +15944,7 @@ msgstr ""
 "Spremeni velikost strani, da bo prilagojena velikosti trenutne izbire ali "
 "celi risbi, če ni nič izbrano"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Nastavi velikost strani"
 
@@ -20679,7 +20703,8 @@ msgid "Side Length 'c'/px: "
 msgstr "Dolžina stranice 'c'/slik. točke: "
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "Kot 'A'/radiani:"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20737,7 +20762,8 @@ msgstr ""
 "naslova http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "Težave z iskanjem slikovnih podatkov."
 
 #: ../share/extensions/inkex.py:66
@@ -20770,7 +20796,6 @@ msgstr "Označevalnika ni mogoče najti: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Razširitev potrebuje dve izbrani poti."
 
@@ -20791,7 +20816,7 @@ msgstr ""
 "lahko to storite z naslednjim ukazom: sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20801,13 +20826,13 @@ msgstr ""
 "Poskusite uporabiti proceduro Pot->Predmet v pot."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr "Ta razširitev zahteva, da je druga izbrana pot dolga štiri vozlišča."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -20816,7 +20841,7 @@ msgstr ""
 "Poskusite uporabiti proceduro Predmet->Razdruži."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20825,7 +20850,7 @@ msgstr ""
 "Poskusite uporabiti proceduro Pot->Predmet v pot."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20834,9 +20859,10 @@ msgstr ""
 "Poskusite uporabiti proceduro Pot->Predmet v pot."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "Modula numpy ni mogoče uvoziti. Ta modul je obvezen za to razširitev. "
@@ -20874,9 +20900,12 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "Notranja napaka. Izbrana ni nobena vrsta prikaza\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "Druga pot mora biti dolga natanko štiri vozlišča."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr "Ta razširitev zahteva, da je druga izbrana pot dolga štiri vozlišča."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21198,7 +21227,8 @@ msgid "Custom Points and Options"
 msgstr "Točke po meri in možnosti"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "Nariši krog okoli te točke"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21290,19 +21320,54 @@ msgid "Symmedians"
 msgstr "Simediane"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Trikotna funkcija"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "Trilinearne koordinate"
 
 #: ../share/extensions/dxf_input.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD, 13. izdaja in novejši; - predvideva, da je risba dxf v mm; - "
 "predpostavlja, da je risba svg v slikovnih točkah, pri 90 pik na palec; - "
@@ -21310,36 +21375,39 @@ msgstr ""
 "Uvozi (Import); - omejena podpora za BLOCKS; če jih potrebujete, raje "
 "uporabite AutoCAD Explode Blocks."
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "Kodna tabela znakov"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "Uvoz DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Uvozi zapis AutoCAD Document Exchange"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "Ali uporabi ročni faktor spreminjanja velikosti"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "Uporabi samodejno prilagajanje velikosti A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- AutoCAD, zapis 13. izdaje; - predpostavlja, da je risba svg v slikovnih "
 "točkah, pri 90 pik na palec; - predvideva, da je risba dxf v mm; - podprti "
@@ -21347,15 +21415,15 @@ msgstr ""
 "zlepek, berljiv le z ogledovalniki ROBO-Master in AutoDesk, ne pa tudi s "
 "programom Inkscape."
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Namizni rezalnik-risalnik"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Namizni rezalnik-risalnik (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "Omogoči izvoz ROBO-Master"
 
@@ -21451,6 +21519,16 @@ msgstr "Pot za shranjevanje slike"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Izrini"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Črta"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Poligon"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21992,7 +22070,7 @@ msgid "Start Value"
 msgstr "Začetna vrednost"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Slog"
 
@@ -22332,9 +22410,10 @@ msgid "Space between copies:"
 msgstr "Razmik med kopijami:"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Ta učinek ukrivi predmet vzorca vzdolž poljubne poti \"okostja\". Vzorec je "
@@ -22365,9 +22444,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Raztegni praznine, da ustrezajo dolžini okostja"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Ta učinek razprši vzorec vzdolž poljubne poti \"okostja\". Vzorec je vrhnji "
@@ -22475,7 +22555,8 @@ msgid "Cube"
 msgstr "Kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Kuboktaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22507,15 +22588,18 @@ msgid "Filename:"
 msgstr "Ime datoteke:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "Barva polnila (modra)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "Barva polnila (zelena)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "Barva polnila (rdeča)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22599,74 +22683,83 @@ msgstr "Faktor sprem. merila"
 msgid "Shading"
 msgstr "Senčenje"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Mali triambski dvajseterec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Prisekana kocka"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Prisekan dvanajsterec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Prekrivnost poteze / %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "Četverec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Nato zasukaj okoli:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "Prirezana kocka"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "Prirezan dvanajsterec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Prirezan dvajseterec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "Prirezan osmerec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "Prirezan četverec"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Vrhovi"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Pogled"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "Os X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Os Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Os Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Z-razvrsti ploskve po:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "3D-polieder"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22685,7 +22778,8 @@ msgid "Canvas"
 msgstr "Platno"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "Barvni stolpci"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22720,15 +22814,15 @@ msgstr "Registrske oznake"
 msgid "Right:"
 msgstr "Desno:"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "Nastavi oznake za porezave na"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Cilj zvezde"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Vrh:"
 
@@ -22801,52 +22895,71 @@ msgid "Arrange"
 msgstr "Razporedi"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "Dno"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Z dna na vrh (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "Vodoravna točka:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "Z leve na desno (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "Sredinsko"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "Krožno navznoter"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "Krožno navzven"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Ponovno naloži na sklad"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Smer ponovnega skladanja:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "Z desne na levo (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "Z vrha na dno (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "Navpična točka:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Dno"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "Ponovno naloži na sklad"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Sredinsko"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "Ponovno naloži na sklad"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "Ponovno naloži na sklad"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23241,8 +23354,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "Združljivost s predogledno kodo tega dogodka"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "Če želite nastaviti več kot eno lastnost, jih morate med seboj ločiti "
@@ -23267,11 +23381,13 @@ msgid "Source and destination of setting"
 msgstr "Vir in cilj nastavitve"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "Prvi izbrani določa lastnost vseh drugih"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "Seznam vrednosti mora biti enako velik kot seznam lastnosti."
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -23306,7 +23422,8 @@ msgid "Web"
 msgstr "Splet"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "Kdaj mora biti opravljeno nastavljanje?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23360,7 +23477,8 @@ msgid "on mouse up"
 msgstr "ob pomiku miške navzdol"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "Vsi izbrani oddajajo zadnjemu"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23384,9 +23502,10 @@ msgid "The first selected transmits to all others"
 msgstr "Prvi izbrani oddaja vsem drugim"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "Ta učinek preda eno ali več lastnosti s prvo izbranega elementa na drugega, "
 "ko se pripeti dogodek."
@@ -23429,6 +23548,9 @@ msgstr "Uvoz Metadatoteke Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Uvoz XAML"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "Druga pot mora biti dolga natanko štiri vozlišča."
 
 #~ msgid "Gelatine"
 #~ msgstr "Želatina"

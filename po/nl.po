@@ -43,7 +43,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-29 18:20+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -3675,7 +3675,6 @@ msgid "Title:"
 msgstr "title:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Toon:"
 
@@ -4317,7 +4316,7 @@ msgstr "Nieuw document %d"
 msgid "Memory document %d"
 msgstr "Omvang van document in het geheugen %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Naamloos document %d"
@@ -6375,7 +6374,7 @@ msgstr "Kleurverloopovergang(en) verwijderen"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "Eenheid"
 
@@ -7747,13 +7746,15 @@ msgstr "Stijging afstand tussen krabbels."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "Gladheid bochten: 1ste zijde, in"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 "Gladheid/scherpte van het pad instellen bij naderen van een bocht aan de "
 "onderzijde. 0=scherp, 1=standaard"
@@ -7763,8 +7764,9 @@ msgid "1st side, out"
 msgstr "1ste zijde, uit"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Gladheid/scherpte van het pad instellen bij verlaten van een bocht aan de "
@@ -7775,8 +7777,9 @@ msgid "2nd side, in"
 msgstr "2de zijde, in"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Gladheid/scherpte van het pad instellen bij naderen van een bocht aan de "
@@ -7787,8 +7790,9 @@ msgid "2nd side, out"
 msgstr "2de zijde, uit"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Gladheid/scherpte van het pad instellen bij verlaten van een bocht aan de "
@@ -7799,7 +7803,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Nervositeit grootte: 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
 "Bocht 'onderzijde' willekeurig verplaatsen om variaties in grootte te maken."
 
@@ -7810,7 +7815,8 @@ msgid "2nd side"
 msgstr "2de zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 "Bocht 'bovenzijde' willekeurig verplaatsen om variaties in grootte te maken."
 
@@ -7819,16 +7825,18 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Nervolisiteit parallellisme: 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "Richtingswillekeurigheid toevoegen door het tangentieel verplaatsen van de "
 "bochten langs de 'onderzijde' naar de randen."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 "Richtingswillekeurigheid toevoegen door het tangentieel verplaatsen van de "
@@ -7839,11 +7847,13 @@ msgid "Variance: 1st side"
 msgstr "Willekeurigheid: 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Willekeurigheid van gladheid bochten 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Willekeurigheid van gladheid bochten 'bovenzijde'"
 
 #.
@@ -7852,7 +7862,8 @@ msgid "Generate thick/thin path"
 msgstr "Dik/dun pad genereren"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "Een lijn met variërende dikte simuleren"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7868,7 +7879,8 @@ msgid "Thickness: at 1st side"
 msgstr "Dikte: bij 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "Breedte bij bochten aan 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7876,7 +7888,8 @@ msgid "at 2nd side"
 msgstr "bij 2de zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "Breedte bij bochten aan 'bovenzijde'"
 
 #.
@@ -7885,13 +7898,18 @@ msgid "from 2nd to 1st side"
 msgstr "van 2de naar 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "Breedte paden van bochten van 'bovenzijde' naar 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "van 1ste naar 2de zijde"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "Breedte bij bochten aan 'onderzijde'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7915,11 +7933,11 @@ msgstr ""
 "Relatieve positie ten opzichte van referentiepunt bepaalt globale richting "
 "en grootte van de buiging"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "Links"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "Rechts"
 
@@ -8185,7 +8203,8 @@ msgid "Reference segment"
 msgstr "Referentiesegment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "Het referentiesegment. Standaard is dit de diameter van de omhullende."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8939,8 +8958,9 @@ msgstr ""
 "te maken"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11583,7 +11603,6 @@ msgstr "Kleinste object"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Selectie"
 
@@ -11957,8 +11976,8 @@ msgstr "Informatie"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12310,7 +12329,7 @@ msgstr "Hoogte van filtereffectgebied"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -13022,10 +13041,11 @@ msgid "Delay (in ms):"
 msgstr "Vertraging (in ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "Het kleven uitstellen zolang de muis beweegt en wacht een bepaalde fractie "
 "van een seconde. Deze extra vertraging wordt hier opgegeven. Indien "
@@ -13037,7 +13057,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Enkel het knooppunt dichtst bij de cursor kleeft"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 "Enkel het knooppunt dat initieel het dichtst bij de muiscursor is, proberen "
 "kleven"
@@ -14126,6 +14148,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "K-kanaal behouden in CMYK->CMYK-transformaties"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<geen>"
 
@@ -14995,7 +15019,7 @@ msgstr "Laag ontgrendelen"
 msgid "New"
 msgstr "Nieuw"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Bov"
 
@@ -15704,8 +15728,8 @@ msgstr "Tolerantie:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Opties"
 
@@ -16078,7 +16102,7 @@ msgstr ""
 "precies op past, of de volledige tekening als er niets geselecteerd is"
 
 # XXX Waar wordt dit gebruikt?
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Paginagrootte instellen"
 
@@ -20864,7 +20888,8 @@ msgid "Side Length 'c'/px: "
 msgstr "Lengte zijde 'c'/px: "
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "Hoek 'A'/radialen:"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20922,7 +20947,8 @@ msgstr ""
 "van http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "Probleem bij het vinden van de afbeeldingsdata."
 
 #: ../share/extensions/inkex.py:66
@@ -20955,7 +20981,6 @@ msgstr "onmogelijk om plaats markering te bepalen: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Deze extensie vereist twee geselecteerde paden."
 
@@ -20977,7 +21002,7 @@ msgstr ""
 "get install python-numpy."
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20987,7 +21012,7 @@ msgstr ""
 "Probeer de procedure Paden->Object naar Pad."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
@@ -20995,7 +21020,7 @@ msgstr ""
 "is."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -21004,7 +21029,7 @@ msgstr ""
 "Probeer de procedure Object->Groep opheffen."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -21013,7 +21038,7 @@ msgstr ""
 "Probeer de procedure Paden->Object naar Pad."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -21022,9 +21047,10 @@ msgstr ""
 "Probeer de procedure Paden->Object naar Pad."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "Laden van de numpy module mislukt. Deze module is nodig voor deze extensie. "
@@ -21066,9 +21092,14 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "Interne fout. Geen beeldtype geselecteerd\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "Het tweede pad moet exact vier knooppunten lang zijn."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr ""
+"Deze extensie vereist dat het tweede geselecteerde pad vier knooppunten lang "
+"is."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21390,7 +21421,8 @@ msgid "Custom Points and Options"
 msgstr "Aangepaste punten en opties"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "Cirkel tekenen rond dit punt"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21483,55 +21515,93 @@ msgid "Symmedians"
 msgstr "Symmedianen"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Triangulaire functie"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "Trilineaire coördinaten"
 
 #: ../share/extensions/dxf_input.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD versie 13 en nieuwer. - neem aan dat dxf tekening in mm is. - neem "
 "aan dat svg tekening in punten is, op 90 ppi. - lagen enkel behouden bij "
 "Bestand-&gt;Openen, niet Importeren. - beperkte ondersteuning voor BLOCKS, "
 "gebruik AutoCAD Explode Blocks indien nodig."
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "Karakterencodering"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "DXF-invoer"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "AutoCAD's Document Exchange Format importeren"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "Of manuele schalingsfactor gebruiken"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "Automatisch schalen tot A4-grootte toepassen"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- AutoCAD versie 13 formaat. - neem aan dat de svg tekening in pixels is bij "
 "90 ppi. - neem aan dat dxf tekening in mm is. - alleen LWPOLYLINE en SPLINE "
@@ -21539,15 +21609,15 @@ msgstr ""
 "spline die alleen leesbaar is door ROBO-Master en Autodesk viewers, niet "
 "door Inkscape."
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Desktop Cutting Plotter (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "ROBO-Master-uitvoer inschakelen"
 
@@ -21644,6 +21714,16 @@ msgstr "Pad om afbeelding naar op te slaan"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Uitrekken"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Lijn"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Veelhoek"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -22187,7 +22267,7 @@ msgid "Start Value"
 msgstr "Beginwaarde"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Stijl"
 
@@ -22529,9 +22609,10 @@ msgid "Space between copies:"
 msgstr "Ruimte tussen kopieën"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Dit effect buigt een patroon langs een willekeurig \"skeletpad\".  Het "
@@ -22563,9 +22644,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Vrij ruimte uitrekken en aanpassen aan het skeletpad"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Dit effect verspreidt een patroon langs een willekeurig \"skeletpad\". Het "
@@ -22674,7 +22756,8 @@ msgid "Cube"
 msgstr "Kubus"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Kuboöctaëder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22706,15 +22789,18 @@ msgid "Filename:"
 msgstr "Bestandsnaam:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "Vulkleur (blauw)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "Vulkleur (groen)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "Vulkleur (rood)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22798,74 +22884,83 @@ msgstr "Schalingsgraad"
 msgid "Shading"
 msgstr "Schaduw"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Kleine triambische icosaëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Stompe kubus"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Stompe dodecaëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Ondoorzichtigheid lijn / %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "Tetraëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Roteer vervolgens rond:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "Afgeknotte kubus"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "Afgeknotte dodecaëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Afgeknotte icosaëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "Afgeknotte octaëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "Afgeknotte tetraëder"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Knooppunten"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Beeld"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "X-as"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Y-as"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Z-as"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Sorteer zijden volgens Z-as via:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "3D veelhoek"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22884,7 +22979,8 @@ msgid "Canvas"
 msgstr "Canvas"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "Kleurbalken"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22919,15 +23015,15 @@ msgstr "Registratiemarkeringen"
 msgid "Right:"
 msgstr "Rechts:"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "Afsnijmarkeringen instellen op"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Roos"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Bovenzijde:"
 
@@ -23000,52 +23096,71 @@ msgid "Arrange"
 msgstr "Ordenen"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "Onder"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Onder naar boven (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "Horizontaal punt:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "Links naar rechts (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "Midden"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "Radiaal naar binnen"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "Radiaal naar buiten"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Herstapelen"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Richting herstapelen"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "Rechts naar links (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "Boven naar onder (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "Verticaal punt:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Onder"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "Herstapelen"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Midden"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "Herstapelen"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "Herstapelen"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23442,8 +23557,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "Compatibiliteit die code toont voorafgaand aan deze gebeurtenis"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "Indien je meer dan één attribuut wilt veranderen, moeten deze gescheiden "
@@ -23468,11 +23584,13 @@ msgid "Source and destination of setting"
 msgstr "Bron en bestemming van instelling"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "Het eerste geselecteerde stelt een attribuut in bij alle andere"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr ""
 "De lijst met waarden moet dezelfde grootte hebben als de attributenlijst."
 
@@ -23511,7 +23629,8 @@ msgid "Web"
 msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "Wanneer moet de verandering doorgevoerd worden?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23565,7 +23684,8 @@ msgid "on mouse up"
 msgstr "bij muisknop loslaten"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "Alle geselecteerde kopiëren naar de laatste"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23589,9 +23709,10 @@ msgid "The first selected transmits to all others"
 msgstr "Het eerste geselecteerd naar alle andere kopiëren"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "Dit effect kopieert één of meer attributen van het eerste naar het tweede "
 "geselecteerde element, wanneer een bepaalde gebeurtenis voorvalt."
@@ -23634,6 +23755,9 @@ msgstr "Windows Metafile-invoer"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML-invoer"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "Het tweede pad moet exact vier knooppunten lang zijn."
 
 #~ msgid "Gelatine"
 #~ msgstr "Gelatine"

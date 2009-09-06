@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -3650,7 +3650,6 @@ msgid "Title:"
 msgstr "Title:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Show:"
 
@@ -4291,7 +4290,7 @@ msgstr "Tài liệu mới %d"
 msgid "Memory document %d"
 msgstr "Tài liệu bộ nhớ %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Tài liệu không tên %d"
@@ -6309,7 +6308,7 @@ msgstr "Xoá pha của chuyển sắc"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "Đơn vị"
 
@@ -7661,13 +7660,15 @@ msgstr "Độ tăng khoảng cách giữa hai bước sóng"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "Độ mượt của nửa dưới: mặt thứ nhất, đi tới"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 "Đặt độ mượt/độ sắc của đường nét khi đi tới nửa 'dưới' của bước sóng. 0=sắc, "
 "1=mặc định"
@@ -7677,8 +7678,9 @@ msgid "1st side, out"
 msgstr "mặt thứ nhất, đi xa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Đặt độ mượt/độ sắc của đường nét khi đi xa khỏi nửa 'dưới' của bước sóng. "
@@ -7689,8 +7691,9 @@ msgid "2nd side, in"
 msgstr "mặt thứ hai, đi tới"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Đặt độ mượt/độ sắc của đường nét khi tới nửa 'trên' của bước sóng. 0=sắc, "
@@ -7701,8 +7704,9 @@ msgid "2nd side, out"
 msgstr "mặt thứ hai, đi xa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Đặt độ mượt/độ sắc của đường nét đi xa khỏi nửa 'trên' của bước sóng. 0=sắc, "
@@ -7713,7 +7717,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Bù biên độ: mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr "Di chuyển ngãu nhiên nửa 'dưới' để tạo ra thay đổi biên độ ngẫu nhiên."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7723,7 +7728,8 @@ msgid "2nd side"
 msgstr "mặt thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr "Di chuyển ngãu nhiên nửa 'trên' để tạo ra thay đổi biên độ ngẫu nhiên."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7731,16 +7737,18 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Bù song song : mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "Tạo hướng ngẫu nhiên bằng cách di chuyển nửa 'dưới' theo phương tiếp tuyến "
 "với đường bao."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 "Tạo hướng ngẫu nhiên bằng cách di chuyển nửa 'trên' theo phương tiếp tuyến "
@@ -7751,12 +7759,14 @@ msgid "Variance: 1st side"
 msgstr "Dạng khác : mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Mức ngẫu nhiên của độ mịn nửa 'dưới'"
 
 # halfturn là gì?
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Mức ngẫu nhiên của độ mịn nửa 'trên'"
 
 #.
@@ -7765,7 +7775,8 @@ msgid "Generate thick/thin path"
 msgstr "Tạo đường nét dày/mỏng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "Mô phỏng nét vẽ có độ rộng thay đổi"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7781,7 +7792,8 @@ msgid "Thickness: at 1st side"
 msgstr "Độ dày: ở mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "Chiều rộng ở nửa 'dưới' bước sóng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7789,7 +7801,8 @@ msgid "at 2nd side"
 msgstr "ở mặt thứ hai"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "Chiều rộng ở nửa 'trên' bước sóng"
 
 #.
@@ -7798,13 +7811,18 @@ msgid "from 2nd to 1st side"
 msgstr "từ mặt thứ hai sang mặt thứ nhất"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "Chiều rộng của đường nét từ nửa 'trên' xuống nửa 'dưới'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "từ mặt thứ nhất đến thứ hai"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "Chiều rộng ở nửa 'dưới' bước sóng"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7828,11 +7846,11 @@ msgstr ""
 "Vị trí tương đối tới một điểm tham chiếu, định nghĩa mức độ và hướng uốn "
 "cong toàn bộ sóng"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "Trái"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "Phải"
 
@@ -8097,7 +8115,8 @@ msgid "Reference segment"
 msgstr "Đoạn tham chiếu"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "Đoạn tham chiếu. Mặc định là bán kính hộp"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8819,8 +8838,9 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Thay đổi <b>chiều cao</b> của elip. Giữ <b>Ctrl</b> tạo hình tròn."
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11390,7 +11410,6 @@ msgstr "Đối tượng nhỏ nhất"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Vùng chọn"
 
@@ -11764,8 +11783,8 @@ msgstr "Thông tin"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12115,7 +12134,7 @@ msgstr "Chiều cao của vùng bộ lọc hiệu ứng"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "Chế độ :"
 
@@ -12820,10 +12839,11 @@ msgid "Delay (in ms):"
 msgstr "Thời gian chờ (ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "Chờ một khoảng thời gian trước khi bám dính, kể từ khi chuột ngừng di "
 "chuyển. Thời gian chờ được thiết lập ở đây. Nếu đặt là không hoặc một giá "
@@ -12834,7 +12854,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Chỉ bám dính vào nút gần con trỏ nhất"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Chỉ thử bám dính vào đối tượng gần con trỏ chuột nhất ngay lúc đó"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13909,6 +13931,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Bảo tồn kênh K khi chuyển dạng CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<không có>"
 
@@ -14772,7 +14796,7 @@ msgstr "Gỡ khoá lớp"
 msgid "New"
 msgstr "Mới"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Đỉnh"
 
@@ -15474,8 +15498,8 @@ msgstr "Chịu đựng:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Tùy chọn"
 
@@ -15844,7 +15868,7 @@ msgstr ""
 "Thay đổi kích cỡ của trang để vừa khít vùng chọn hiện thời, hay khít toàn "
 "bản vẽ nếu không có vùng chọn riêng."
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Đặt kích cỡ trang"
 
@@ -20615,7 +20639,8 @@ msgid "Side Length 'c'/px: "
 msgstr "Chiều dài 'c' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "Góc 'A' (radian):"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20674,7 +20699,8 @@ msgstr ""
 "từ trang http://pyxml.sourceforge.net/, cài đặt vào máy và thử lại."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "Không tìm được dữ liệu ảnh."
 
 #: ../share/extensions/inkex.py:66
@@ -20707,7 +20733,6 @@ msgstr "Không thể định vị hình nút: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Hãy chọn hai đường nét trước khi sử dụng phần mở rộng này."
 
@@ -20728,7 +20753,7 @@ msgstr ""
 "sudo apt-get install python-numpy để cài đặt thư viện này."
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20738,14 +20763,14 @@ msgstr ""
 "Hãy thử dùng lệnh Đường nét | Đối tượng sang Đường nét."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Phần mở rộng này yêu cầu đường nét thứ hai mà bạn chọn phải có ít nhất 4 nút."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 #, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
@@ -20755,7 +20780,7 @@ msgstr ""
 "Hãy chạy lệnh Đối tượng | Rã nhóm rồi thử lại."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 #, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
@@ -20765,7 +20790,7 @@ msgstr ""
 "Hãy chạy lệnh Đường nét | Đối tượng sang đường nét, rồi thử lại."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 #, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
@@ -20775,9 +20800,10 @@ msgstr ""
 "Hãy chạy lệnh Đường nét | Đối tượng sang đường nét, rồi thử lại."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "Phần mở rộng này cần sử dụng mô-đun numpy. Hãy cài đặt mô-đun còn thiếu "
@@ -20814,9 +20840,13 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "Gặp lỗi nội tại. Chưa chọn kiểu xem\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr ""
+"Phần mở rộng này yêu cầu đường nét thứ hai mà bạn chọn phải có ít nhất 4 nút."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21139,7 +21169,8 @@ msgid "Custom Points and Options"
 msgstr "Điểm tự chọn và Tùy chọn"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "Vẽ đường tròn quanh điểm này"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21241,65 +21272,101 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Hàm Tam giác"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "Tọa độ tam giác"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 
 # Name: don't translate / Tên: đừng dịch
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 #, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "Bảng mã Ký tự"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "Nhập DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Nhập khẩu định dạng trao đổi tài liệu của AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "Hoặc tự đặt hệ số co giãn"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "Tự động co giãn về cỡ A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Bộ vẽ đồ thị cắt màn hình nền"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 #, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Bộ vẽ đồ thị cắt màn hình nền (*.DXF)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 #, fuzzy
 msgid "enable ROBO-Master output"
 msgstr "Xuất ROBO-Master"
@@ -21399,6 +21466,16 @@ msgstr "Đường nét theo đó cần lưu ảnh"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Trạm trổ"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Đường"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Đa giác"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21971,7 +22048,7 @@ msgid "Start Value"
 msgstr "Giá trị đầu"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Kiểu dáng"
 
@@ -22311,9 +22388,10 @@ msgid "Space between copies:"
 msgstr "Khoảng cách giữa hai bản sao :"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Hiệu ứng này uốn cong một mẫu đối tượng dọc theo một đường nét \"khung\" bất "
@@ -22345,9 +22423,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Kéo dãn khoảng cách cho vừa chiều dài khung"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Hiệu ứng này xếp một mẫu rải rác theo một đường nét \"khung\" bất kỳ. Mẫu "
@@ -22460,7 +22539,8 @@ msgstr "Lập phương"
 
 # khối 8 mặt tam giác, 6 mặt vuông
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Cuboctohedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22492,15 +22572,18 @@ msgid "Filename:"
 msgstr "Tên tập tin:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "Màu Tô (Lam)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "Màu Tô (Lục)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "Màu Tô (Đỏ)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22592,81 +22675,90 @@ msgstr "Hệ số thu phóng"
 msgid "Shading"
 msgstr "Tạo Bóng"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 #, fuzzy
 msgid "Small Triambic Icosahedron"
 msgstr "<small>Loại trừ đá lát:</small>"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Khối lập phương lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Khối mười hai mặt lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Độ đục nét/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 #, fuzzy
 msgid "Tetrahedron"
 msgstr "Khối tứ diện"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Sau đó xoay quanh:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Truncated Cube"
 msgstr "căn bậc ba"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 #, fuzzy
 msgid "Truncated Dodecahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 #, fuzzy
 msgid "Truncated Icosahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 #, fuzzy
 msgid "Truncated Octahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 #, fuzzy
 msgid "Truncated Tetrahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Đỉnh"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Xem"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "Trục X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Trục Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Trục Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Sắp xếp các mặt theo trục Z bởi:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "Khối đa diện 3D"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22685,7 +22777,8 @@ msgid "Canvas"
 msgstr "Vùng vẽ"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "Thanh màu"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22720,15 +22813,15 @@ msgstr "Dấu đăng ký"
 msgid "Right:"
 msgstr "Phải:"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "Đặt dấu xén vào"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Đánh dấu sao cho đích"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Trên:"
 
@@ -22801,52 +22894,71 @@ msgid "Arrange"
 msgstr "Sắp xếp"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "Đáy"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Dưới - trên (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "So sánh ngang"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "Trái - phải (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "Giữa"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "Xoay tròn, sâu vào trong"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "Xoay tròn, lồi ra ngoài"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Sắp xếp lại độ cao"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Hướng sắp xếp:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "Phải - trái (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "Trên - Dưới (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "So sánh dọc:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Đáy"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "Sắp xếp lại độ cao"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Giữa"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "Sắp xếp lại độ cao"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "Sắp xếp lại độ cao"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23244,8 +23356,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "Tính tương thích với các mã xem trước của sự kiện này"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr "Nếu cần gán nhiều thuộc tính, hãy dùng dấu cách để phân biệt chúng."
 
@@ -23268,12 +23381,14 @@ msgid "Source and destination of setting"
 msgstr "Nguồn và đích"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr ""
 "Đối tượng được chọn đầu tiên sẽ đặt một thuộc tính cho các đối tượng khác"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "Số giá trị nhập vào phải bằng số thuộc tính."
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -23307,7 +23422,8 @@ msgid "Web"
 msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "Khi nào sẽ thực hiện việc gán thuộc tính?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23361,7 +23477,8 @@ msgid "on mouse up"
 msgstr "on mouse up"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "Tất cả đối tượng đã chọn gửi cho đối tượng cuối cùng"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23385,9 +23502,10 @@ msgid "The first selected transmits to all others"
 msgstr "Mục đầu tiên được chọn sẽ gửi cho tất cả các mục khác"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "Hiệu ứng này truyền một hoặc nhiều thuộc tính từ đối tượng thứ nhất sang đối "
 "tượng thứ hai được chọn khi xảy ra một sự kiện."
@@ -23430,6 +23548,9 @@ msgstr "Nhập Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Nhập XAML"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút."
 
 #~ msgid "Gelatine"
 #~ msgstr "Chất keo"

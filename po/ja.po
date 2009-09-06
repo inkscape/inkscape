@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-25 23:02+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -3578,7 +3578,6 @@ msgid "Title:"
 msgstr "タイトル:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "表示:"
 
@@ -4223,7 +4222,7 @@ msgstr "新規ドキュメント %d"
 msgid "Memory document %d"
 msgstr "メモリドキュメント %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "無題ドキュメント %d"
@@ -6236,7 +6235,7 @@ msgstr "グラデーションの色フェーズを削除"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "単位"
 
@@ -7576,13 +7575,13 @@ msgstr ""
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+msgid "Half-turns smoothness: 1st side, in"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
@@ -7591,7 +7590,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -7602,7 +7601,7 @@ msgstr "端点ノード"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -7612,7 +7611,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -7621,7 +7620,7 @@ msgid "Magnitude jitter: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7632,7 +7631,7 @@ msgid "2nd side"
 msgstr "端点ノード"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7641,13 +7640,13 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 
@@ -7656,11 +7655,11 @@ msgid "Variance: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr ""
 
 #.
@@ -7671,7 +7670,7 @@ msgstr "新規パスを作成"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
-msgid "Simulate a stroke of varrying width"
+msgid "Simulate a stroke of varying width"
 msgstr "ストローク幅を拡大縮小"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7688,7 +7687,7 @@ msgid "Thickness: at 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+msgid "Width at 'bottom' half-turns"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7696,7 +7695,7 @@ msgid "at 2nd side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+msgid "Width at 'top' half-turns"
 msgstr ""
 
 #.
@@ -7705,12 +7704,15 @@ msgid "from 2nd to 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+msgid "Width from 'top' to 'bottom'"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+msgid "Width from 'bottom' to 'top'"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
@@ -7734,11 +7736,11 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "左"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "右"
 
@@ -7997,7 +7999,8 @@ msgid "Reference segment"
 msgstr "基準セグメント"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "基準となるセグメントです。デフォルトは境界枠の直径になります。"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8718,7 +8721,7 @@ msgstr "円/弧の<b>高さ</b>を調節、<b>Ctrl</b>で真円にする"
 #: ../src/object-edit.cpp:933
 #, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11339,7 +11342,6 @@ msgstr "最小オブジェクト"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "選択範囲"
 
@@ -11712,8 +11714,8 @@ msgstr "情報"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12062,7 +12064,7 @@ msgstr "フィルタエフェクト領域の高さ"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "モード:"
 
@@ -12700,10 +12702,11 @@ msgid "Delay (in ms):"
 msgstr "遅延 (ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "マウスが動いている限りスナップは行われず、その後さらにほんの一瞬待ちます。こ"
 "こでそのほんの一瞬の待ち時間を指定します。0 あるいは非常に小さい値が設定され"
@@ -12714,7 +12717,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "ポインタにもっとも近いノードのみスナップする"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "最初マウスポインタにもっとも近いノードのみスナップしようとします"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13783,6 +13788,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "CMYK -> CMYK 変換において K チャンネルを維持します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<なし>"
 
@@ -14646,7 +14653,7 @@ msgstr "レイヤーをアンロック"
 msgid "New"
 msgstr "新規"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "最前面"
 
@@ -15346,8 +15353,8 @@ msgstr "許容値:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "オプション"
 
@@ -15714,7 +15721,7 @@ msgstr ""
 "現在の選択オブジェクトか、選択オブジェクトがない場合は描画全体にフィットする"
 "ようにページサイズを変更"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "ページサイズの設定"
 
@@ -20492,7 +20499,7 @@ msgid "Side Length 'c'/px: "
 msgstr "ステップの長さ (ピクセル)"
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+msgid "Angle 'A'/radians: "
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20551,8 +20558,9 @@ msgstr ""
 "から最新のバージョンをダウンロードしてください。"
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
-msgstr ""
+#, fuzzy
+msgid "Unable to find image data."
+msgstr "ノード ID '%s' が見つかりません。\n"
 
 #: ../share/extensions/inkex.py:66
 msgid ""
@@ -20584,7 +20592,6 @@ msgstr "マーカーを置けません: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "このエクステンションは 2 つのパスを選択する必要があります。"
 
@@ -20605,7 +20612,7 @@ msgstr ""
 "システムならば apt-get install python-numpy)。<"
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20615,7 +20622,7 @@ msgstr ""
 "「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
@@ -20623,7 +20630,7 @@ msgstr ""
 "ん。"
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -20632,7 +20639,7 @@ msgstr ""
 "「オブジェクト」メニューの「グループ解除」を試してみてください。"
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20641,7 +20648,7 @@ msgstr ""
 "「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20650,9 +20657,10 @@ msgstr ""
 "「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "numpy モジュールのインポートに失敗しました。numpy モジュールはこのエクステン"
@@ -20686,9 +20694,14 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "内部エラーです。表示タイプが選択されていません\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "2 番目のパスは4ノードの長さがなければなりません。"
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr ""
+"このエクステンションは2番目に選択したパスは4ノードの長さでなければなりませ"
+"ん。"
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21010,7 +21023,8 @@ msgid "Custom Points and Options"
 msgstr "カスタムポイントとオプション"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "このポイントで円を描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21102,66 +21116,103 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "三角関数による"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "三線座標による"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "文字エンコーディング"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "DXF 入力"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "AutoCAD の文書交換形式をインポート"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- AutoCAD Release 13 形式。 - SVG 描画を 90 dpi のピクセルとみなす。 - DXF 描"
 "画の単位を mm とみなす。 - LWPOLYLINE および SPLINE 要素のみサポート。 - "
 "ROBO-Master オプションは ROBO-Master および AutoDesk ビューアでのみ読み込み可"
 "能なスプラインに特化、Inkscape では読み込み不可。"
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "デスクトップ カッティングプロッタ"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "デスクトップ カッティングプロッタ (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "ROBO-Master 出力を有効にする"
 
@@ -21258,6 +21309,16 @@ msgstr "画像を保存するパス"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "押し出し"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "直線"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "ポリゴン"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21795,7 +21856,7 @@ msgid "Start Value"
 msgstr "開始値"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "スタイル"
 
@@ -22132,9 +22193,10 @@ msgid "Space between copies:"
 msgstr "コピー間の間隔"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "このエフェクトは任意の \"スケルトン\" パスに沿ってパターンオブジェクトを曲げ"
@@ -22166,9 +22228,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "スケルトンパスの長さにあわせて間隔を広げる"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "このエフェクトは任意の \"スケルトン\" パスに沿ってパターンを散乱させます。パ"
@@ -22277,7 +22340,8 @@ msgid "Cube"
 msgstr "立方体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "立法8面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22309,15 +22373,18 @@ msgid "Filename:"
 msgstr "ファイル名:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "フィルの色 (青)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "フィルの色 (緑)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "フィルの色 (赤)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22401,74 +22468,83 @@ msgstr "拡縮係数"
 msgid "Shading"
 msgstr "シェーディング"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "小2重3角20・12面体の双対"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "ねじれ立方体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "ねじれ12面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "ストロークの透明度/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "4面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "その後の回転軸"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "切頂立方体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "切頂12面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "切頂20面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "切頂8面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "切頂4面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "頂点"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "表示"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "X 軸"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Y 軸"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Z 軸"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "フェイスの Z ソート:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "3D 多面体"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22487,7 +22563,8 @@ msgid "Canvas"
 msgstr "キャンバス"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "カラーバー"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22522,15 +22599,15 @@ msgstr "レジストレーションマーク"
 msgid "Right:"
 msgstr "右:"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "トンボの設定対象"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "スターターゲット"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "上:"
 
@@ -22603,52 +22680,71 @@ msgid "Arrange"
 msgstr "配置"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "下"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "下→上 (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "水平ポイント:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "左→右 (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "中央"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "内側へ放射状"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "外側へ放射状"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr " 再スタック"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "再スタック方向:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "右→左 (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "上→下 (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "垂直ポイント:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "下"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr " 再スタック"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "中央"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr " 再スタック"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr " 再スタック"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23042,8 +23138,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "このイベントのプレビューコードとの互換性"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "2つ以上の属性を設定する場合は、それぞれを 1個だけのスペースで分けてください。"
@@ -23067,11 +23164,13 @@ msgid "Source and destination of setting"
 msgstr "設定元と設定先"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "最初の選択がその他全てを設定"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "値のリストは属性リストと同じサイズでなければなりません。"
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -23106,7 +23205,8 @@ msgid "Web"
 msgstr "ウェブ"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "設定を行う時"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23160,7 +23260,8 @@ msgid "on mouse up"
 msgstr "マウスボタンを離した時"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "選択した全てが最後の一つへ伝送"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23183,9 +23284,10 @@ msgid "The first selected transmits to all others"
 msgstr "最初の選択からその他全てへ伝送"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "このエフェクトはイベント発生時に一つ以上の属性を最初に選択された要素から2番目"
 "に選択された要素へ伝送します。"
@@ -23228,6 +23330,9 @@ msgstr "Windows メタファイル入力"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 入力"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "2 番目のパスは4ノードの長さがなければなりません。"
 
 #~ msgid "Gelatine"
 #~ msgstr "ゼラチン"

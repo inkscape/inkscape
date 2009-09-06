@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.46+devel\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-19 17:14+0200\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -3625,7 +3625,6 @@ msgid "Title:"
 msgstr "Назва:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Паказваць:"
 
@@ -4264,7 +4263,7 @@ msgstr "Новы дакумэнт %d"
 msgid "Memory document %d"
 msgstr "Запомніць дакумэнт %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Дакумэнт бяз назвы %d"
@@ -6308,7 +6307,7 @@ msgstr "Выдаліць спыны ґрадыента"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "Адзінка"
 
@@ -7653,13 +7652,15 @@ msgstr "Павелічэньне адлегласьці між штрыхамі.
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "Гладкасьць паўаваротаў: 1-ы бок, унутар"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 "Задае гладкасьць/вострасьць шляха калі дасягае «ніжняга» паўаварота. 0=рэзкі, "
 "1=прадвызначаны"
@@ -7669,8 +7670,9 @@ msgid "1st side, out"
 msgstr "1-ы бок, вонкі"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Задае гладкасьць/вострасьць шляха калі выходзіць з «ніжняга» паўаварота. "
@@ -7681,8 +7683,9 @@ msgid "2nd side, in"
 msgstr "2-гі бок, унутар"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Задае гладкасьць/вострасьць шляха калі дасягае «верхняга» паўаварота. "
@@ -7693,8 +7696,9 @@ msgid "2nd side, out"
 msgstr "2-гі бок, вонкі"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "Задае гладкасьць/вострасьць шляха калі выходзіць зь «верхняга» паўаварота. "
@@ -7705,7 +7709,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Дрыжэньне велічыні: 1-ы бок"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr "Адвольна перасоўвае «ніжнія» паўавароты, каб зьмянялася велічыня."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7715,7 +7720,8 @@ msgid "2nd side"
 msgstr "2-гі бок"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr "Адвольна перасоўвае «верхнія» паўавароты, каб зьмянялася велічыня."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7723,15 +7729,17 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Дрыжэньне паралельнасьці: 1-ы бок"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "Дадаць адвольнасьць напрамку, перасоўваючы «ніжнія» паўавароты датычна мяжы."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 "Дадаць адвольнасьць напрамку, адвольна перасоўваючы «верхнія» паўавароты "
@@ -7742,11 +7750,13 @@ msgid "Variance: 1st side"
 msgstr "Варыяцыя: 1-ы бок"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Адвольнасьць гладкасьці «ніжніх» паўаваротаў"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Адвольнасьць гладкасьці «верхніх» паўаваротаў"
 
 #.
@@ -7755,7 +7765,8 @@ msgid "Generate thick/thin path"
 msgstr "Стварыць тонкі/тоўсты шлях"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "Удаць мазок пераменнай шырыні"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7771,7 +7782,8 @@ msgid "Thickness: at 1st side"
 msgstr "Таўшчыня: ля 1-га боку"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "Шырыня ля «ніжніх» паўаваротаў"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7779,7 +7791,8 @@ msgid "at 2nd side"
 msgstr "ля 2-га боку"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "Шырыня ля «верхніх» паўаваротаў"
 
 #.
@@ -7788,13 +7801,18 @@ msgid "from 2nd to 1st side"
 msgstr "з 2-га да 1-га боку"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "Шырыня шляхоў ля «верхніх» і «ніжніх» паўаваротаў"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "з 1-га ў 2-гі бок"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "Шырыня ля «ніжніх» паўаваротаў"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7818,11 +7836,11 @@ msgstr ""
 "Становішча адносна эталённага пункту вызначае напрамак і велічыню агульнага "
 "згінаньня"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "Левы"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "Правы"
 
@@ -8088,7 +8106,8 @@ msgid "Reference segment"
 msgstr "Эталённы адрэзак"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "Эталённы адрэзак. Прадвызначана — дыямэтар абмежавальнай рамкі."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8826,8 +8845,9 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Зьмяніць <b>вышыню</b> эліпса, з <b>Ctrl</b> зрабіць акружынай"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11432,7 +11452,6 @@ msgstr "Найменшы абʼект"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Вылучэньне"
 
@@ -11805,8 +11824,8 @@ msgstr "Інфармацыя"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12158,7 +12177,7 @@ msgstr "Вышыня вобласьці фільтра эфэктаў"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "Рэжым:"
 
@@ -12862,10 +12881,11 @@ msgid "Delay (in ms):"
 msgstr "Затрымка (у мс):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "Адкласьці прыцягваньне пакуль мыш рухаецца, пасьля пачакаць дадатковую долю "
 "сэкунды. Гэтая дадатковая затрымка задаецца тут. Калі зададзены 0 ці вельмі "
@@ -12876,7 +12896,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прыцягваць толькі найбліжэйшы да курсора вузел"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 "Спрабаваць прыцягнуць толькі вузел, які з самага пачатку найбліжэйшы да "
 "курсора мышы"
@@ -13952,6 +13974,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "Захоўваць канал K пры ператварэньнях CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<няма>"
 
@@ -14819,7 +14843,7 @@ msgstr "Адамкнуць пласт"
 msgid "New"
 msgstr "Стварыць"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Верх"
 
@@ -15521,8 +15545,8 @@ msgstr "Допуск:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Выборы"
 
@@ -15891,7 +15915,7 @@ msgstr ""
 "Зьмяніць памер старонкі да памеру бягучага вылучэньня, ці ўсяго рысунка, "
 "калі няма вылучэньня"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Вызначэньне памеру старонкі"
 
@@ -20646,7 +20670,8 @@ msgid "Side Length 'c'/px: "
 msgstr "Даўжыня боку c/пкс:"
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "Вугал A/радыяны:"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20704,7 +20729,8 @@ msgstr ""
 "з http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "Цяжкасьці з пошукам даньняў відарыса."
 
 #: ../share/extensions/inkex.py:66
@@ -20737,7 +20763,6 @@ msgstr "Немагчыма адшукаць метку: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "Гэты пашыральнік патрабуе два вылучаныя шляхі."
 
@@ -20759,7 +20784,7 @@ msgstr ""
 "numpy."
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20769,7 +20794,7 @@ msgstr ""
 "Паспрабуй выкарыстаць працэдуру Шлях->Абʼект у шлях."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
@@ -20777,7 +20802,7 @@ msgstr ""
 "ўдоўжкі."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -20786,7 +20811,7 @@ msgstr ""
 "Паспрабуй выкарыстаць працэдуру Абʼект->Разґрупаваць."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20795,7 +20820,7 @@ msgstr ""
 "Паспрабуй выкарыстаць працэдуру Шлях->Абʼект у шлях."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20804,9 +20829,10 @@ msgstr ""
 "Паспрабуй выкарыстаць працэдуру Шлях->Абʼект у шлях."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "Не ўдалося імпартаваць модуль numpy. Гэты модуль патрэбны для гэтага "
@@ -20843,9 +20869,14 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "Нутраная памылка. Ня выбраны тып віду\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "Другі шлях мусіць быць дакладна чатыры вузлы ўдожкі."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr ""
+"Гэтаму пашыральніку патрабуецца, каб другі вылучаны шлях быў чатыры вузлы "
+"ўдоўжкі."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21167,7 +21198,8 @@ msgid "Custom Points and Options"
 msgstr "Свае пункты й выборы"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "Рысаваць акружыну вакол гэтага пункта"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -21259,70 +21291,108 @@ msgid "Symmedians"
 msgstr "Сымэдыяны"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Трохкутнай функцыяй"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "Трылінейнымі каардынатамі"
 
 #: ../share/extensions/dxf_input.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD выпуску 13 і навейшы. - лічыцца, што рысунак dxf у мм. - лічыцца, "
 "што рысунак svg у піксэлях, пры 90 п/ц. - пласты захоўваюцца толькі пры Файл-"
 "&gt;Адкрыць, не Імпартаваць. - абмежаваная падтрымка блёкаў (BLOCKS), пры "
 "патрэбе выкарыстоўвай Explode Blocks AutoCADʼа."
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "Знаказбор"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "Чытаньне DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Імпарт абменнага фармату дакумэнтаў AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "Або ўвядзі ўручную множнік зьмяненьня памеру"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "Аўтаматычна падганяць памер пад А4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- Фармат AutoCAD выпуску 13. - лічым, што рысунак svg у піксэлях, пры 90 п/"
 "ц. - лічым, што рысунак dxf у мм. - падтрымліваюцца толькі элемэнты "
 "LWPOLYLINE і SPLINE. - выбор ROBO-Master — гэта адмысловы сплайн, які "
 "ўспрымаецца толькі праглядальнікамі ROBO-Master і AutoDesk, але не Inkscape."
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Настольны рэжучы плотэр"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Настольны рэжучы плотэр (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "задзейнічаць выводжаньне ROBO-Master"
 
@@ -21419,6 +21489,16 @@ msgstr "Шлях, па якім запісаць відарыс"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Выціснуць"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Лінія"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Шматкутнік"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21960,7 +22040,7 @@ msgid "Start Value"
 msgstr "Пачатковае значэньне"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Стыль"
 
@@ -22298,9 +22378,10 @@ msgid "Space between copies:"
 msgstr "Прагал між копіямі:"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Гэты эфэкт згінае абʼект-узор уздоўж «шкілетных» шляхоў. У якасьці ўзора "
@@ -22332,9 +22413,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Расьцягнуць прагалы, каб яны адпавядалі даўжыні шкілета"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Гэты эфэкт раскідвае ўзор уздоўж «шкілетных» шляхоў. У якасьці ўзора "
@@ -22443,7 +22525,8 @@ msgid "Cube"
 msgstr "Куб"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Кубаактаэдар"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -22475,15 +22558,18 @@ msgid "Filename:"
 msgstr "Назва файла:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "Колер запаўненьня (сіні)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "Колер запаўненьня (зялёны)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "Колер запаўненьня (чырвоны)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -22567,74 +22653,83 @@ msgstr "Каэфіцыент памеру"
 msgid "Shading"
 msgstr "Зацяненьне"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Малы трыямбічны дваццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Адсечаны куб"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Адсечаны дванаццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Непразрыстасьць штрыхоў / %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "Чатырохграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Потым павернуць вакол"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "Абрэзаны куб"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "Абрэзаны дванаццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Абрэзаны дваццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "Абрэзаны васьміграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "Абрэзаны чатырохграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Вяршыні"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Від"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "Восі X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Восі Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Восі Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Сартаваць грані ўздоўж восі Z паводле:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "Абʼёмны шматграньнік"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22653,7 +22748,8 @@ msgid "Canvas"
 msgstr "Палатно"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "Каляровыя палосы"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22689,15 +22785,15 @@ msgstr "Пазнакі сумяшчэньня"
 msgid "Right:"
 msgstr "Справа:"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "Уставіць пазнакі абразаньня ў"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Зорка"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Зьверху:"
 
@@ -22770,52 +22866,71 @@ msgid "Arrange"
 msgstr "Упарадкаваць"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "Спод"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Зьнізу ўверх (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "Гарызантальны пункт:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "Зьлева направа (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "Сярэдні"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "Кругавы ваўнутар"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "Кругавы вонкі"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Перапарадкаваць"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Напрамак перапарадкаваньня:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "Справа налева (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "Зьверху ўніз (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "Вэртыкальны пункт:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Спод"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "Перапарадкаваць"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Сярэдні"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "Перапарадкаваць"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "Перапарадкаваць"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23212,8 +23327,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "Сумяшчальнасьць з кодам агляду для гэтай падзеі"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "Калі жадаеш задаць больш за адзін атрыбут, мусіш аддзяляць іх прабеламі, і "
@@ -23238,11 +23354,13 @@ msgid "Source and destination of setting"
 msgstr "Крыніца й прызначэньне заданьня"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "Першы вылучаны задае атрыбут ва ўсіх астатніх"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "Сьпіс значэньняў мусіць мець такі ж памер, як сьпіс атрыбутаў."
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -23277,7 +23395,8 @@ msgid "Web"
 msgstr "Сеціва"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "Калі мусіць быць зроблена?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -23331,7 +23450,8 @@ msgid "on mouse up"
 msgstr "калі адпушчаная кнопка мышы"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "Усё вылучанае перадаецца апошняму"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -23355,9 +23475,10 @@ msgid "The first selected transmits to all others"
 msgstr "Першы вылучаны перадае ўсім астатнім"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "Гэты эфэкт перадае адзін ці болей атрыбутаў ад першага вылучанага элемэнта "
 "другому, калі здараецца падзея."
@@ -23400,6 +23521,9 @@ msgstr "Чытаньне Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Чытаньне XAML"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "Другі шлях мусіць быць дакладна чатыры вузлы ўдожкі."
 
 #~ msgid "Gelatine"
 #~ msgstr "Жэлятын"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2007-03-28 18:36+0100\n"
 "Last-Translator: Robert Millan <rmh@aybabtu.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -3764,7 +3764,6 @@ msgid "Title:"
 msgstr "Títol:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Mostra:"
 
@@ -4448,7 +4447,7 @@ msgstr "Nou document %d"
 msgid "Memory document %d"
 msgstr "Document de memòria %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sense nom %d"
@@ -6593,7 +6592,7 @@ msgstr "Suprimix una fase del degradat"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "Unitat"
 
@@ -8001,13 +8000,13 @@ msgstr ""
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+msgid "Half-turns smoothness: 1st side, in"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
@@ -8016,7 +8015,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -8027,7 +8026,7 @@ msgstr "node final"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -8037,7 +8036,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 
@@ -8046,7 +8045,7 @@ msgid "Magnitude jitter: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -8057,7 +8056,7 @@ msgid "2nd side"
 msgstr "node final"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -8066,13 +8065,13 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
 
@@ -8081,11 +8080,11 @@ msgid "Variance: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr ""
 
 #.
@@ -8096,7 +8095,7 @@ msgstr "S'està creant un nou camí"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
-msgid "Simulate a stroke of varrying width"
+msgid "Simulate a stroke of varying width"
 msgstr "Escala l'amplada del contorn"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -8113,7 +8112,7 @@ msgid "Thickness: at 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+msgid "Width at 'bottom' half-turns"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -8121,7 +8120,7 @@ msgid "at 2nd side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+msgid "Width at 'top' half-turns"
 msgstr ""
 
 #.
@@ -8130,12 +8129,15 @@ msgid "from 2nd to 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+msgid "Width from 'top' to 'bottom'"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+msgid "Width from 'bottom' to 'top'"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
@@ -8159,11 +8161,11 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 #, fuzzy
 msgid "Right"
 msgstr "Drets"
@@ -8440,7 +8442,7 @@ msgid "Reference segment"
 msgstr "Suprimix el segment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr ""
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -9196,7 +9198,7 @@ msgstr "Ajusteu <b>l'alçada</b> de l'el·lipsi, amb <b>Ctrl</b> es fa un cercle
 #: ../src/object-edit.cpp:933
 #, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11879,7 +11881,6 @@ msgstr "Establix l'ID de l'objecte"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Selecció"
 
@@ -12282,8 +12283,8 @@ msgstr "Informació"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -12680,7 +12681,7 @@ msgstr "Alçada de la selecció"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 #, fuzzy
 msgid "Mode:"
 msgstr "Mode"
@@ -13337,7 +13338,7 @@ msgstr "Nom de la capa:"
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:225
@@ -13345,7 +13346,8 @@ msgid "Only snap the node closest to the pointer"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -14440,6 +14442,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 #, fuzzy
 msgid "<none>"
 msgstr "cap"
@@ -15335,7 +15339,7 @@ msgstr "Desbloca la capa"
 msgid "New"
 msgstr "Nou"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "Sup"
 
@@ -16091,8 +16095,8 @@ msgstr "Tolerància:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "Opcions"
 
@@ -16463,7 +16467,7 @@ msgstr ""
 "Canvia la grandària de la pàgina per ajustar la selecció actual, o el dibuix "
 "sencer si no hi ha res seleccionat"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Establix la grandària de la pàgina"
 
@@ -21471,7 +21475,7 @@ msgid "Side Length 'c'/px: "
 msgstr "Longitud de pas (px)"
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+msgid "Angle 'A'/radians: "
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -21521,7 +21525,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+msgid "Unable to find image data."
 msgstr ""
 
 #: ../share/extensions/inkex.py:66
@@ -21550,7 +21554,6 @@ msgstr ""
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 #, fuzzy
 msgid "This extension requires two selected paths."
 msgstr "Crea una unió de camins seleccionats"
@@ -21569,7 +21572,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -21577,27 +21580,27 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -21606,7 +21609,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.py:60
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 
@@ -21637,9 +21640,12 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr ""
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr ""
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr "Crea una unió de camins seleccionats"
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, fuzzy, python-format
@@ -21985,7 +21991,7 @@ msgid "Custom Points and Options"
 msgstr "Opcions de la línia d'ordres"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+msgid "Draw Circle Around This Point"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -22093,67 +22099,103 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 #, fuzzy
 msgid "Triangle Function"
 msgstr "Funció del blau"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 #, fuzzy
 msgid "Trilinear Coordinates"
 msgstr "Coordenades del cursor"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 #, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 #, fuzzy
 msgid "Character Encoding"
 msgstr "Estel: canvia l'arrodoniment"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "Entrada DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Importa el format de document d'intercanvi d'AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 #, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "Desktop Cutting Plotter (*.DXF)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr ""
 
@@ -22259,6 +22301,16 @@ msgstr "Camí on alçar la imatge"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Fes relleu"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "Línia"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "Polígon"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -22836,7 +22888,7 @@ msgid "Start Value"
 msgstr "Valor d'x inicial"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Estil"
 
@@ -23161,7 +23213,7 @@ msgstr "Espai entre còpies:"
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 
@@ -23197,7 +23249,7 @@ msgstr ""
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 
@@ -23315,8 +23367,9 @@ msgid "Cube"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
-msgstr ""
+#, fuzzy
+msgid "Cuboctahedron"
+msgstr "Altre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
@@ -23350,15 +23403,15 @@ msgid "Filename:"
 msgstr "Establix el nom de fitxer"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+msgid "Fill Color (Blue)"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+msgid "Fill Color (Green)"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+msgid "Fill Color (Red)"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -23455,77 +23508,86 @@ msgstr "Color"
 msgid "Shading"
 msgstr "Espaiat:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, fuzzy, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "_Pinta el contorn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "Sense arrodonir"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "Vertices"
 msgstr "_Vertical"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 #, fuzzy
 msgid "View"
 msgstr "_Visualitza"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr ""
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "Polígon"
 
 #: ../share/extensions/printing-marks.inx.h:1
 #, fuzzy
@@ -23549,7 +23611,7 @@ msgstr "Cian"
 
 #: ../share/extensions/printing-marks.inx.h:5
 #, fuzzy
-msgid "Colour Bars"
+msgid "Color Bars"
 msgstr "Colors"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -23590,17 +23652,17 @@ msgstr ""
 msgid "Right:"
 msgstr "Drets"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 #, fuzzy
 msgid "Set crop marks to"
 msgstr "Marcadors"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 #, fuzzy
 msgid "Star Target"
 msgstr "Destí:"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 #, fuzzy
 msgid "Top:"
 msgstr "Sup"
@@ -23682,61 +23744,78 @@ msgid "Arrange"
 msgstr "Angle"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
-msgid "Bottom"
-msgstr "Inf"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "Text horitzontal"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:9
-#, fuzzy
-msgid "Middle"
-msgstr "Títol"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 #, fuzzy
 msgid "Radial Inward"
 msgstr "Degradat radial"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 #, fuzzy
 msgid "Radial Outward"
 msgstr "Degradat radial"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 #, fuzzy
 msgid "Restack"
 msgstr " R_einicia "
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Restack Direction:"
 msgstr "Descripció"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Top to Bottom (270)"
 msgstr "_Baixa a baix de tot"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "Text vertical"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "Inf"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr " R_einicia "
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "Títol"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr " R_einicia "
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr " R_einicia "
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -24172,7 +24251,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 
@@ -24196,11 +24275,14 @@ msgid "Source and destination of setting"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr ""
+"Cada objecte seleccionat té una marca de diamant en la cantonada superior "
+"esquerra"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+msgid "The list of values must have the same size as the attributes list."
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -24232,7 +24314,7 @@ msgid "Web"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+msgid "When should the set be done?"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -24291,7 +24373,7 @@ msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 #, fuzzy
-msgid "All selected ones transmits to the last one"
+msgid "All selected ones transmit to the last one"
 msgstr "Múltiples objectes seleccionats tenen el matix contorn"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -24316,7 +24398,7 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:12
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:13

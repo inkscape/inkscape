@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -3590,7 +3590,6 @@ msgid "Title:"
 msgstr "제목:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "보이기:"
 
@@ -4223,7 +4222,7 @@ msgstr "새 문서 %d"
 msgid "Memory document %d"
 msgstr "메모리 문서 %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "이름이 없는 문서 %d"
@@ -6202,7 +6201,7 @@ msgstr "그라디언트 조절점 삭제"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "단위"
 
@@ -7511,13 +7510,15 @@ msgstr "해치 사이 거리 증가"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "180도 회전 부드러움: 1번쨰 면,"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr "최하단 180도 회전시 경로의 부드러움/날카로움 설정. 0=날카로움, 1=기본"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
@@ -7525,8 +7526,9 @@ msgid "1st side, out"
 msgstr "첫번째 면, 밖"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "최하단 180도 회전을 떠날 때 경로의 부드러움/날카로움 설정. 0=날카롭게, 1=기본"
@@ -7536,8 +7538,9 @@ msgid "2nd side, in"
 msgstr "2번째 면, 안"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "상단 180도 회전에 도달시 경로의 부드러움/날카로움 설정. 0=날카로움, 1=기본"
@@ -7547,8 +7550,9 @@ msgid "2nd side, out"
 msgstr "2번째 면, 밖"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "상단 180도 회전을 떠날 때 경로의 부드러움/날카로움 설정. 0=날카로움, 1=기본"
@@ -7558,7 +7562,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "지터 크기: 1번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr "크기 변동을 만들기 위하여 하단을 무작위로 180도 회전 이동."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7568,7 +7573,8 @@ msgid "2nd side"
 msgstr "2번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr "크기 변동을 만들기 이하여 상단 무작위로 180도 회전 이동시킴"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7576,28 +7582,33 @@ msgid "Parallelism jitter: 1st side"
 msgstr "병행 파형난조: 1번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
 "하단 180도 회전 방향을 경계와 접선방향 이동에 의하여 방향을 무작위로 더함."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
+"하단 180도 회전 방향을 경계와 접선방향 이동에 의하여 방향을 무작위로 더함."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
 msgstr "변화: 1번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "하단 180도 회전 부드러움 무작위"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "상단 180도 회전 부드러움 무작위"
 
 #.
@@ -7606,7 +7617,8 @@ msgid "Generate thick/thin path"
 msgstr "두껍고/얇은 경로 생성"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "다양한 너비를 점검"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7622,7 +7634,8 @@ msgid "Thickness: at 1st side"
 msgstr "두께: 1번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "하단 180도 회전 너비"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7630,7 +7643,8 @@ msgid "at 2nd side"
 msgstr "2번째 면"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "상단 180도 회전 너비"
 
 #.
@@ -7639,13 +7653,18 @@ msgid "from 2nd to 1st side"
 msgstr "2번쨰에서 1번째 면까지"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "상단에서 하단 180도 회전 경로 너비"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "1번째에서 2번째면까지"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "하단 180도 회전 너비"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7667,11 +7686,11 @@ msgid ""
 "amount"
 msgstr "참조점의 상대적 위치는 전역 굽음 방향과 크기를 정의함"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "왼쪽"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "오른쪽"
 
@@ -7926,7 +7945,8 @@ msgid "Reference segment"
 msgstr "참조 세그먼트"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "참조 세그먼트. 기본은 bbox 직경임."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8630,8 +8650,9 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "타원 <b>높이</b> 조정, <b>Ctrl</b>: 원 생성"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11184,7 +11205,6 @@ msgstr "가장 작은 객체"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "선택"
 
@@ -11548,8 +11568,8 @@ msgstr "정보"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11895,7 +11915,7 @@ msgstr "필터 효과 구간의 높이"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "모드:"
 
@@ -12568,10 +12588,11 @@ msgid "Delay (in ms):"
 msgstr "지연 (밀리초):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "마우스가 이동 중 붙이기 지연, 부수적인 지연은 이곳에서 특별하며 0이거나 작은 "
 "숫자는 붙이기가 즉각적으로 일어남"
@@ -12581,7 +12602,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "포인터에 가장 근접한 노드 붙이기만"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "초기에 마우스 포인터에 가장 가까운 노드에 붙이기 시도만"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13585,6 +13608,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "CMYK -> CMYK 변환에서 K 채널 유지"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<없음>"
 
@@ -14414,7 +14439,7 @@ msgstr "레이어 잠금 해제"
 msgid "New"
 msgstr "새로"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "최상단"
 
@@ -15108,8 +15133,8 @@ msgstr "허용치:"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "설정"
 
@@ -15465,7 +15490,7 @@ msgid ""
 "is no selection"
 msgstr "페이지를 현재 선택 또는 선택이 없을 때 전체 그림에 맞게 크기 재조정"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "페이지 크기 설정"
 
@@ -20132,7 +20157,8 @@ msgid "Side Length 'c'/px: "
 msgstr "면 길이 c / 화소"
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "각도 'A'/라디안:"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20184,7 +20210,8 @@ msgstr ""
 "최신 버전을 다운받으시오."
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "이미지 자료를 찾기 어려움."
 
 #: ../share/extensions/inkex.py:66
@@ -20213,7 +20240,6 @@ msgstr "표시를 위치시킬 수 없음: %s"
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "이 확장자는 2개의 선택 경로를 필요로 함."
 
@@ -20231,7 +20257,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, fuzzy, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20241,13 +20267,13 @@ msgstr ""
 "진행 경로 | 객체를 객체로 사용하시오."
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr "이 확장은 두번째 선택된 노드가 4개의 노드보다 길어야 합니다."
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 #, fuzzy
 msgid ""
 "The second selected object is a group, not a path.\n"
@@ -20257,7 +20283,7 @@ msgstr ""
 "T진행 객체 | 구릅해제를 사용하세요."
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 #, fuzzy
 msgid ""
 "The second selected object is not a path.\n"
@@ -20267,7 +20293,7 @@ msgstr ""
 "진행 경로/ 객체를 경로로 사용하세요."
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 #, fuzzy
 msgid ""
 "The first selected object is not a path.\n"
@@ -20277,9 +20303,10 @@ msgstr ""
 "진행 경로 | 객체를 객체로 사용하시오."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "넘피 모듈을 읽어오는 데 실패. 이 모듈을 이 확장자에서 필요로 합니다. 다시 설"
@@ -20315,9 +20342,12 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "내부 오류. 선택된 보기 형태 없음\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "두번째 경로는 정확히 4 노드 길이이어야 합니다."
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr "이 확장은 두번째 선택된 노드가 4개의 노드보다 길어야 합니다."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -20636,7 +20666,8 @@ msgid "Custom Points and Options"
 msgstr "사용자 점과 설정"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "이 점에 대하여 원 그리기"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -20728,64 +20759,100 @@ msgid "Symmedians"
 msgstr "대칭 중간값"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "삼각 함수"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "3축 좌표"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 #, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "오토캐드 DXF (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "문자 엔코딩"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "DXF 입력"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "DXF 불러오기"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "또는 수동 배율 요소를 사용"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "자동 크기를 A4로 사용"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "데스크톱 커팅 플로터"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 #, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "데스크톱 커팅 플로터 (*.DXF)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 #, fuzzy
 msgid "enable ROBO-Master output"
 msgstr "ROBO-Master 출력"
@@ -20882,6 +20949,16 @@ msgstr "이미지 저장 경로"
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "밀어내기"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "선"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "다각형"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21409,7 +21486,7 @@ msgid "Start Value"
 msgstr "시작 값"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "스타일"
 
@@ -21717,7 +21794,7 @@ msgstr "복사본 사이 공백:"
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 
@@ -21748,7 +21825,7 @@ msgstr "골격 길이에 적합하도록 공백 확장"
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 
@@ -21857,7 +21934,8 @@ msgid "Cube"
 msgstr "사면체"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "8면체"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -21889,15 +21967,18 @@ msgid "Filename:"
 msgstr "파일 이름:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "채움 색상(청)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "채움 색상(녹)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "채움 색상(적)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -21981,74 +22062,83 @@ msgstr "비율 요소"
 msgid "Shading"
 msgstr "음영"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "작은 Triambic 20면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "팽팽한 6면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "팽팽한 12면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "윤곽선 불투명도/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "사면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "그 때 회전:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "잘린 6면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "잘린 12면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "잘린 20면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "잘린 8면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "잘린 사면체"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "꼭지점"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "보기"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "X-축"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Y-축"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Z-축"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Z-정렬 면:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "3D 다면체"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22067,7 +22157,8 @@ msgid "Canvas"
 msgstr "캔버스"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "색상 막대"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22102,15 +22193,15 @@ msgstr "등록 마크"
 msgid "Right:"
 msgstr "오른쪽"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "자름 표시 설정"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "시작 목표"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "최상단:"
 
@@ -22181,52 +22272,71 @@ msgid "Arrange"
 msgstr "배열"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "최하단"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "최하단에서 최상단 (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "수평 점:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "왼쪽에서 오른쪽으로 (0)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "중간"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "방사 안쪽"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "방사 바깥쪽"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "다시쌓기"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "다시쌓기 방향:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "오른쪽에서 왼쪽 (180)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "최상단에서 최하단으로 (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "수직 점:"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "최하단"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "다시쌓기"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "중간"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "다시쌓기"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "다시쌓기"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -22622,8 +22732,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "이 이벤트에 미리보기 코드로 호환"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 "하나 이상의 속성을 설정시, Space를 가진 공백으로 이것을 분리하여야 합니다."
@@ -22647,11 +22758,13 @@ msgid "Source and destination of setting"
 msgstr "소스와 설정 지점"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "전체 다른 것에서 선택된 첫번째를 속성으로 설정"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "값 목록은 속성 목록의 동일 크기를 가져야 합니다."
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -22686,7 +22799,8 @@ msgid "Web"
 msgstr "웹"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "언제 설정을 완료해야 합니까?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -22740,7 +22854,8 @@ msgid "on mouse up"
 msgstr "마우스가 위에 있을 때"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "하나를 선택한 전체가 다른 마지막 하나로 전달"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -22763,9 +22878,10 @@ msgid "The first selected transmits to all others"
 msgstr "선택된 첫째를 전체 다른 것에 전달"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "이 효과는 이벤트가 발생시 하나 또는 그 이상의 속성을 선택된 첫번째에서 두번째"
 "까지 보냅니다."
@@ -22808,6 +22924,9 @@ msgstr "윈도우즈 메타파일 입력"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 입력"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "두번째 경로는 정확히 4 노드 길이이어야 합니다."
 
 #~ msgid "Gelatine"
 #~ msgstr "겔라틴"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-04 22:28+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
 "PO-Revision-Date: 2009-08-26 08:52+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
@@ -3511,7 +3511,6 @@ msgid "Title:"
 msgstr "ចំណងជើង ៖"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "បង្ហាញ ៖"
 
@@ -4148,7 +4147,7 @@ msgstr "ឯកសារ​ថ្មី​ %d"
 msgid "Memory document %d"
 msgstr "ឯកសារ​សតិ​ %d"
 
-#: ../src/document.cpp:647
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "ឯកសារ %d មិន​មាន​​ឈ្មោះ​"
@@ -6130,7 +6129,7 @@ msgstr "លុប​កា​របញ្ឈប់​ជម្រាល"
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Unit"
 msgstr "ឯកតា"
 
@@ -7440,13 +7439,15 @@ msgstr "ការ​កើន​ចម្ងាយ​រវាង​ឆ្នូ
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Half turns smoothness: 1st side, in"
+#, fuzzy
+msgid "Half-turns smoothness: 1st side, in"
 msgstr "រលោង​ពាក់​កណ្ដាល​ត្រឡប់ ៖ ផ្នែក​ទី ១ ខាង​ក្នុង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
-"1=default"
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
 msgstr "កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ដល់​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ 0= ច្បាស់ 1= លំនាំដើម"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
@@ -7454,8 +7455,9 @@ msgid "1st side, out"
 msgstr "ផ្នែក​ទី ១ ខាងក្រៅ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
 "កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ។ 0= ច្បាស់ 1= លំនាំដើម"
@@ -7465,8 +7467,9 @@ msgid "2nd side, in"
 msgstr "ផ្នែក​ទី ២ ខាង​ក្នុង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr "កំណត់​ភាព​រលោង​/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ដែល​ដល់​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ។ 0= ច្បាស់ 1= លំនាំដើម"
 
@@ -7475,8 +7478,9 @@ msgid "2nd side, out"
 msgstr "ផ្នែក​ទី ២ ខាងក្រៅ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
+#, fuzzy
 msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr "កំណត់​ភាព​រលោង/​ច្បាស់​របស់​ផ្លូវ នៅពេល​ចេញ​ពី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ។ 0= ច្បាស់1= លំនាំដើម"
 
@@ -7485,7 +7489,8 @@ msgid "Magnitude jitter: 1st side"
 msgstr "បម្លាស់​ប្ដូរ​ទំហំ ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr "ផ្លាស់ទី​​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ដោយ​ចៃដន្យ ដើម្បី​ធ្វើ​ឲ្យ​មាន​បម្លាស់​ប្ដូរ​ទំហំ ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7495,7 +7500,8 @@ msgid "2nd side"
 msgstr "ផ្នែក​ទី ២"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+#, fuzzy
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr "ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ដើម្បី​ធ្វើ​ឲ្យ​មាន​បម្លាស់​ប្ដូរ​ទំហំ ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7503,14 +7509,16 @@ msgid "Parallelism jitter: 1st side"
 msgstr "បម្លាស់​ប្ដូរ​បន្ទាត់​ស្រប​គ្នា ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
+#, fuzzy
 msgid ""
-"Add direction randomness by moving 'bottom' halfsturns tangentially to the "
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr "បន្ថែម​ទិស​ដោយចៃដន្យ ដោយ​ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត' ​បន្តិចបន្តួច​ទៅកាន់​ព្រំដែន ។"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
+#, fuzzy
 msgid ""
-"Add direction randomness by randomly moving 'top' halfsturns tangentially to "
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr "បន្ថែម​ទិស​ដោយចៃដន្យ ដោយ​ផ្លាស់ទី​ពាក់​កណ្ដាល​ត្រឡប់ 'កំពូល' ​បន្តិចបន្តួច​ទៅកាន់​ព្រំដែន ។"
 
@@ -7519,11 +7527,13 @@ msgid "Variance: 1st side"
 msgstr "វ៉ារ្យ៉ង់ ៖ ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomness of 'bottom' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "ភាព​ចៃដន្យ​នៃ​ពាក់​កណ្ដាល​ត្រឡប់​រលោង 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Randomness of 'top' halfturns smoothness"
+#, fuzzy
+msgid "Randomness of 'top' half-turns smoothness"
 msgstr "ភាព​ចៃដន្យ​នៃ​ពាក់​កណ្ដាល​ត្រឡប់​រលោង 'កំពូល'"
 
 #.
@@ -7532,7 +7542,8 @@ msgid "Generate thick/thin path"
 msgstr "បង្កើត​ផ្លូវ​ក្រាស់/​ស្ដើង"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-msgid "Simulate a stroke of varrying width"
+#, fuzzy
+msgid "Simulate a stroke of varying width"
 msgstr "គូស​វាស​ដូចៗ​គ្នា ដោយ​ប្រើ​ទំហំ​ផ្សេងគ្នា"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7548,7 +7559,8 @@ msgid "Thickness: at 1st side"
 msgstr "កម្រាស់ ៖ នៅ​ផ្នែក​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Width at 'bottom' half turns"
+#, fuzzy
+msgid "Width at 'bottom' half-turns"
 msgstr "ទទឹង​នៅ​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
@@ -7556,7 +7568,8 @@ msgid "at 2nd side"
 msgstr "​ចំហៀង​ទី ២"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Width at 'top' halfturns"
+#, fuzzy
+msgid "Width at 'top' half-turns"
 msgstr "ទទឹង​នៅ​ការ​ត្រឡប់​ពាក់កណ្ដាល 'កំពូល'"
 
 #.
@@ -7565,13 +7578,18 @@ msgid "from 2nd to 1st side"
 msgstr "ពី​ចំហៀង​ទី ២ ទៅ​ចំហៀង​ទី ១"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
-msgid "Width of paths from 'top' to 'bottom' halfturns"
+#, fuzzy
+msgid "Width from 'top' to 'bottom'"
 msgstr "ទទឹង​ផ្លូវ​ពី​ការ​ត្រឡប់​ពាក់កណ្ដាល​ពី 'កំពូល' ទៅ 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "ពី​ចំហៀង​ទី ១ ទៅ​ជំហាន​ទី ២"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#, fuzzy
+msgid "Width from 'bottom' to 'top'"
+msgstr "ទទឹង​នៅ​ពាក់​កណ្ដាល​ត្រឡប់ 'បាត'"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7593,11 +7611,11 @@ msgid ""
 "amount"
 msgstr "ទីតាំង​ដែល​ទាក់​ទង​ទៅនឹង​ចំណុច​យោង កំណត់​ទិស និង​ចំនួន​សរុប​​នៃ​ភាព​កោង​សកល"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "ឆ្វេង"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "ស្ដាំ"
 
@@ -7852,7 +7870,8 @@ msgid "Reference segment"
 msgstr "ចម្រៀក​សេចក្ដី​យោង​"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "The reference segment. Defaults to bbox diameter."
+#, fuzzy
+msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr "ចម្រៀក​សេចក្ដី​យោង ។ កំណត់​លំនាំដើម​ទៅ​បន្ទាត់​ផ្ចិត ។"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
@@ -8547,8 +8566,9 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "លៃ​តម្រូវ​រាង​ពងក្រពើ <b>កម្ពស់</b> ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​បង្កើត​រង្វង់"
 
 #: ../src/object-edit.cpp:933
+#, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
@@ -11068,7 +11088,6 @@ msgstr "វត្ថុ​ដែល​តូច​បំផុត"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
 #: ../src/widgets/desktop-widget.cpp:1573
-#: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "ជម្រើស"
 
@@ -11434,8 +11453,8 @@ msgstr "ព័ត៌មាន"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 #: ../share/extensions/draw_from_triangle.inx.h:20
-#: ../share/extensions/dxf_input.inx.h:5
-#: ../share/extensions/dxf_outlines.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
 #: ../share/extensions/measure.inx.h:2
 msgid "Help"
@@ -11784,7 +11803,7 @@ msgstr "កម្ពស់​របស់​​តំបន់​បែបផែ
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2165
 #: ../src/widgets/toolbox.cpp:3859 ../src/widgets/toolbox.cpp:4250
-#: ../share/extensions/extrude.inx.h:3
+#: ../share/extensions/extrude.inx.h:4
 msgid "Mode:"
 msgstr "របៀប ៖"
 
@@ -12448,10 +12467,11 @@ msgid "Delay (in ms):"
 msgstr "ពន្យារ (មិល្លីវិនាទី) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
+#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate"
+"When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 "ផ្អាក​ការ​ចាប់យក នៅពេល​ដែល​កណ្ដរ​ផ្លាស់ទី ហើយ​បន្ទាប់​មក​ត្រូវ​រងចាំ​បន្តិច ។ ការ​ពន្យាពេល​រង់ចាំ គឺ​អាច​កំណត់​"
 "បាន​នៅ​ទីនេះ ។ នៅពេល​ដែល​បាន​កំណត់​ទៅ​សូន្យ ឬ​ទៅតម្លៃ​ដែល​ទាប​ណាមួយ នោះ​ការ​ចាប់យក​នឹង​ធ្វើ​បន្ត​ភ្លាមៗ​ដោយ​"
@@ -12462,7 +12482,9 @@ msgid "Only snap the node closest to the pointer"
 msgstr "ចាប់យក​តែ​ថ្នាំង​ដែល​នៅ​ជិត​នឹង​ទ្រនិច​បំផុត"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initialy closest to the mouse pointer"
+#, fuzzy
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "ព្យាយាមចាប់យក​តែ​ថ្នាំង​ដែល​នៅ​ជិត​នឹង​ទ្រនិច​កណ្ដុរ​​ជាង​គេ​បំផុត​ប៉ុណ្ណោះ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13477,6 +13499,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "ការពារ​ឆានែល K នៅក្នុង​​ការ​ប្លែង CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/widgets/sp-color-icc-selector.cpp:306
+#: ../src/widgets/sp-color-icc-selector.cpp:579
 msgid "<none>"
 msgstr "<គ្មាន>"
 
@@ -14327,7 +14351,7 @@ msgstr "មិន​ចាក់សោ​ស្រទាប់"
 msgid "New"
 msgstr "ថ្មី"
 
-#: ../src/ui/dialog/layers.cpp:657 ../share/extensions/restack.inx.h:16
+#: ../src/ui/dialog/layers.cpp:657
 msgid "Top"
 msgstr "កំពូល"
 
@@ -15022,8 +15046,8 @@ msgstr "ភាព​ស្រដៀង​ពណ៌ ៖"
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
-#: ../share/extensions/dxf_input.inx.h:7
-#: ../share/extensions/dxf_outlines.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:11
+#: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Options"
 msgstr "ជម្រើស"
 
@@ -15381,7 +15405,7 @@ msgid ""
 "is no selection"
 msgstr "ផ្លាស់ប្ដូរ​ទំព័រ​ឲ្យ​សម​នឹង​ជម្រើស​បច្ចុប្បន្ន ឬ​គំនូរ​ទាំង​មូល ប្រសិន​បើ​គ្មាន​ជម្រើស"
 
-#: ../src/ui/widget/page-sizer.cpp:369
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "កំណត់​ទំហំ​ទំព័រ"
 
@@ -20051,7 +20075,8 @@ msgid "Side Length 'c'/px: "
 msgstr "ប្រវែង​ចំហៀង 'c' / ភីកសែល ៖ "
 
 #: ../share/extensions/draw_from_triangle.py:178
-msgid "Angle 'A'/radians:"
+#, fuzzy
+msgid "Angle 'A'/radians: "
 msgstr "មុំ 'A'/រ៉ាដ្យង់ ៖"
 
 #: ../share/extensions/draw_from_triangle.py:179
@@ -20109,7 +20134,8 @@ msgstr ""
 "sourceforge.net/ ។"
 
 #: ../share/extensions/extractimage.py:66
-msgid "Difficulty finding the image data."
+#, fuzzy
+msgid "Unable to find image data."
 msgstr "ការ​លំបាក​ក្នុង​ការ​រក​ទិន្នន័យ​រូបភាព ។"
 
 #: ../share/extensions/inkex.py:66
@@ -20142,7 +20168,6 @@ msgstr "មិន​អាច​ដាក់​សញ្ញា​សម្គា
 #: ../share/extensions/pathalongpath.py:197
 #: ../share/extensions/pathscatter.py:208
 #: ../share/extensions/perspective.py:61
-#: ../share/extensions/summersnight.py:36
 msgid "This extension requires two selected paths."
 msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារ​ផ្លូវ​ដែល​ជ្រើស​ពីរ ។"
 
@@ -20163,7 +20188,7 @@ msgstr ""
 "ពាក្យ​បញ្ជា sudo apt-get install python-numpy ។"
 
 #: ../share/extensions/perspective.py:68
-#: ../share/extensions/summersnight.py:45
+#: ../share/extensions/summersnight.py:43
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -20173,13 +20198,13 @@ msgstr ""
 "ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ->វត្ថុ ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/perspective.py:74
-#: ../share/extensions/summersnight.py:52
+#: ../share/extensions/summersnight.py:50
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារផ្លូវ​ដែល​ជ្រើស​ទីពីរ​ឲ្យ​មាន​ប្រវែង​បួន​ថ្នាំង ។"
 
 #: ../share/extensions/perspective.py:99
-#: ../share/extensions/summersnight.py:84
+#: ../share/extensions/summersnight.py:82
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -20188,7 +20213,7 @@ msgstr ""
 "ព្យាយាម​ប្រើ​និតិវិធី វត្ថុ->បំបែក​ក្រុម ។"
 
 #: ../share/extensions/perspective.py:101
-#: ../share/extensions/summersnight.py:86
+#: ../share/extensions/summersnight.py:84
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20197,7 +20222,7 @@ msgstr ""
 "ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ->វត្ថុ​ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/perspective.py:104
-#: ../share/extensions/summersnight.py:89
+#: ../share/extensions/summersnight.py:87
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -20206,9 +20231,10 @@ msgstr ""
 "ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ -> វត្ថុ ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
-"extension. Please install them and try again.  On a Debian-like system this "
+"extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ។ ម៉ូឌុល​នេះ​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា នឹង​ព្យាយាម​"
@@ -20244,9 +20270,12 @@ msgstr ""
 msgid "Internal Error. No view type selected\n"
 msgstr "កំហុស​ខាង​ក្នុង ។ គ្មាន​ប្រភេទ​ទិដ្ឋភាព​ដែល​បាន​ជ្រើស​ទេ\n"
 
-#: ../share/extensions/summersnight.py:38
-msgid "The second path must be exactly four nodes long."
-msgstr "ផ្លូវ​ទី​ពីរ​ត្រូវ​តែ​មាន​ប្រវែង​៤​ថ្នាំង ។"
+#: ../share/extensions/summersnight.py:36
+#, fuzzy
+msgid ""
+"This extension requires two selected paths. \n"
+"The second path must be exactly four nodes long."
+msgstr "ផ្នែក​បន្ថែម​នេះ​ទាមទារផ្លូវ​ដែល​ជ្រើស​ទីពីរ​ឲ្យ​មាន​ប្រវែង​បួន​ថ្នាំង ។"
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -20567,7 +20596,8 @@ msgid "Custom Points and Options"
 msgstr "ចំណុច​ផ្ទាល់ខ្លួន និង​ជម្រើស"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-msgid "Draw Circle About This Point"
+#, fuzzy
+msgid "Draw Circle Around This Point"
 msgstr "គូរ​រង្វង់​អំពី​ចំណុច​នេះ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
@@ -20659,68 +20689,106 @@ msgid "Symmedians"
 msgstr "បន្ទាត់​ភ្ជាប់ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+msgid ""
+"This extension draws constructions about a triangle defined by the first 3 "
+"nodes of a selected path. You may select one of preset objects or create "
+"your own ones.\n"
+"            \n"
+"All units are the Inkscape's pixel unit. Angles are all in radians.\n"
+"You can specify a point by trilinear coordinates or by a triangle centre "
+"function.\n"
+"Enter as functions of the side length or angles.\n"
+"Trilinear elements should be separated by a colon: ':'.\n"
+"Side lengths are represented as 's_a', 's_b' and 's_c'.\n"
+"Angles corresponding to these are 'a_a', 'a_b', and 'a_c'.\n"
+"You can also use the semi-perimeter and area of the triangle as constants. "
+"Write 'area' or 'semiperim' for these.\n"
+"\n"
+"You can use any standard Python math function:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Also available are the inverse trigonometric functions:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"You can specify the radius of a circle about a custom point using an "
+"formula, which may also contain the side lengths, angles, etc. You can also "
+"plot the isogonal and isotomic conjugate of the point. Be aware that this "
+"may cause a divide-by-zero error for certain points.\n"
+"            "
+msgstr ""
+
+#: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "មុខងារ​ត្រីកោណ"
 
-#: ../share/extensions/draw_from_triangle.inx.h:36
+#: ../share/extensions/draw_from_triangle.inx.h:58
 msgid "Trilinear Coordinates"
 msgstr "កោអរដោនេ​​លីនេអ៊ែរ​គោលបី"
 
 #: ../share/extensions/dxf_input.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 and newer. - assume dxf drawing is in mm. - assume svg "
-"drawing is in pixels, at 90 dpi. - layers are preserved only on File-&gt;"
-"Open, not Import. - limited support for BLOCKS, use AutoCAD Explode Blocks "
-"instead, if needed."
+"- AutoCAD Release 13 and newer.\n"
+"- assume dxf drawing is in mm.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- layers are preserved only on File->Open, not Import.\n"
+"- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- ការ​ចេញ​ផ្សាយ AutoCAD កំណែ 13 និង​ក្រោយ ។ - ការ​គូរ dxf គឺ​គិត​ជា​មិល្លីមែត្រ ។ - ការ​គូរ svg ​"
 "គិត​ជា​ភីកសែល នៅ​ជម្រៅ 90 dpi ។ - ស្រទាប់​គឺ​ត្រូវបាន​បម្រុង​ទុក​នៅលើ​ ឯកសារ-&gt;បើក មិនមែន​នាំចូល​"
 "ទេ ។ - ការ​កំណត់ទ្រ​កំណត់​សម្រាប់ BLOCKS ដែល​ប្រើ AutoCAD Explode Blocks ជំនួស ។"
 
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
 msgstr "AutoCAD DXF R13 (*.dxf)"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
 msgstr "ការ​អ៊ិនកូដ​តួអក្សរ"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:8
 msgid "DXF Input"
 msgstr "ការ​បញ្ចូល DXF"
 
-#: ../share/extensions/dxf_input.inx.h:6
+#: ../share/extensions/dxf_input.inx.h:10
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "នាំចូល​ទ្រង់ទ្រាយ​ផ្លាស់ប្ដូរ​ឯកសារ AutoCAD's"
 
-#: ../share/extensions/dxf_input.inx.h:8
+#: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
 msgstr "ឬ​ប្រើ​កត្តា​ធ្វើ​មាត្រដ្ឋាន​ដោយដៃ"
 
-#: ../share/extensions/dxf_input.inx.h:9
+#: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
 msgstr "ប្រើ​ការ​ធ្វើ​មាត្រដ្ឋាន​ដោយស្វ័យប្រវត្តិ​ទៅ​ទំហំ A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
+#, fuzzy
 msgid ""
-"- AutoCAD Release 13 format. - assume svg drawing is in pixels, at 90 dpi. - "
-"assume dxf drawing is in mm. - only LWPOLYLINE and SPLINE elements are "
-"supported. - ROBO-Master option is a specialized spline readable only by "
-"ROBO-Master and AutoDesk viewers, not Inkscape."
+"- AutoCAD Release 13 format.\n"
+"- assume svg drawing is in pixels, at 90 dpi.\n"
+"- assume dxf drawing is in mm.\n"
+"- only LWPOLYLINE and SPLINE elements are supported.\n"
+"- ROBO-Master option is a specialized spline readable only by ROBO-Master "
+"and AutoDesk viewers, not Inkscape."
 msgstr ""
 "- AutoCAD ចេញ​ផ្សាយ​ទ្រង់ទ្រាយ ១៣ ។ - សន្មត​គំនូរ svg គឺ​ជា​ភីកសែល​នៅ​កម្រិត 90 dpi. - សន្មត​គំនូរ "
 "dxf គឺ​ជា​ម.ម. - មានតែ​ធាតុ LWPOLYLINE និង SPLINE ត្រូវ​បាន​គាំទ្រ ។ - ជម្រើស​ROBO-Master គឺ​"
 "ជា​ចំណុច​ពិសេស​ដែលអាច​អាន​បាន​ដោយ​​កម្មវិធីមើលROBO-Master និង AutoDesk មិនមែនជា Inkscape ទេ ។"
 
-#: ../share/extensions/dxf_outlines.inx.h:2
+#: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "គ្រោងកាត់​ផ្ទៃតុ"
 
-#: ../share/extensions/dxf_outlines.inx.h:3
+#: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
 msgstr "គ្រោងកាត់​ផ្ទៃតុ (R13) (*.dxf)"
 
-#: ../share/extensions/dxf_outlines.inx.h:6
+#: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
 msgstr "បើក​លទ្ធផល ROBO-Master"
 
@@ -20816,6 +20884,16 @@ msgstr "ផ្លូវ​ត្រូវ​​រក្សាទុករូប
 #: ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "ហូត​"
+
+#: ../share/extensions/extrude.inx.h:3
+#, fuzzy
+msgid "Lines"
+msgstr "បន្ទាត់"
+
+#: ../share/extensions/extrude.inx.h:5
+#, fuzzy
+msgid "Polygons"
+msgstr "ពហុកោណ"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21353,7 +21431,7 @@ msgid "Start Value"
 msgstr "តម្លៃ​ចាប់ផ្ដើម"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "រចនាប័ទ្ម"
 
@@ -21688,9 +21766,10 @@ msgid "Space between copies:"
 msgstr "ចន្លោះ​រវាង​ច្បាប់​ចម្លង ៖"
 
 #: ../share/extensions/pathalongpath.inx.h:16
+#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "បែបផែន​នេះ​ធ្វើ​ឲ្យ​វត្ថុ​លំនាំ​កោង​តាម​ផ្លូវ \"គ្រោង​\" ដោយ​បង្ខំ ។ លំនាំ​គឺ​នៅ​វត្ថុ​កំពូល​បំផុត​ក្នុង​ជម្រើស ។ "
@@ -21721,9 +21800,10 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "ទាញ​ទំហំ​ឲ្យ​សម​និង​ប្រវែង​គ្រោង​ឆ្អឹង"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the top most object in the selection. (groups of paths/shapes/"
+"pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "បែបផែន​នេះ​ធ្វើ​ឲ្យ​វត្ថុ​លំនាំ​កោង​តាម​ផ្លូវ \"គ្រោង​\" ដោយ​បង្ខំ ។ លំនាំ​គឺ​នៅ​វត្ថុ​កំពូល​បំផុត​ក្នុង​ជម្រើស ។ "
@@ -21831,7 +21911,8 @@ msgid "Cube"
 msgstr "គូប"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-msgid "Cuboctohedron"
+#, fuzzy
+msgid "Cuboctahedron"
 msgstr "Cuboctohedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
@@ -21863,15 +21944,18 @@ msgid "Filename:"
 msgstr "ឈ្មោះ​ឯកសារ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Colour (Blue)"
+#, fuzzy
+msgid "Fill Color (Blue)"
 msgstr "បំពេញ​ពណ៌ (ខៀវ)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Colour (Green)"
+#, fuzzy
+msgid "Fill Color (Green)"
 msgstr "បំពេញ​ពណ៌ (បៃតង)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Colour (Red)"
+#, fuzzy
+msgid "Fill Color (Red)"
 msgstr "បំពេញ​ពណ៌ (ក្រហម)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
@@ -21955,74 +22039,83 @@ msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 msgid "Shading"
 msgstr "ស្រមោល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Triambic Icosahedron តូច"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "គូប​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "ទ្វា​ទសត័ល​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "ភាព​ស្រអាប់​ស្នាម​គូស/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "ចតុត័ល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "ដូច្នេះ​បង្វិល​ជុំវិញ ៖"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "កាត់​គូប​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "កាត់​ទ្វាទសត័ល​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Icosahedron បានកាត់​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "កាត់​អដ្ឋត័ល​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "កាត់​ចតុត័ល​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "កំពូល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "មើល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "អ័ក្ស X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "អ័ក្ស Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "អ័ក្ស Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "មុខ​តម្រៀប Z តាម ៖"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+#, fuzzy
+msgid "polyhedron|Show:"
+msgstr "ពហុកោណ​ត្រីមាត្រ"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22041,7 +22134,8 @@ msgid "Canvas"
 msgstr "ផ្ទាំង​កំណាត់"
 
 #: ../share/extensions/printing-marks.inx.h:5
-msgid "Colour Bars"
+#, fuzzy
+msgid "Color Bars"
 msgstr "របារ​ពណ៌"
 
 #: ../share/extensions/printing-marks.inx.h:6
@@ -22076,15 +22170,15 @@ msgstr "សញ្ញា​សម្គាល់​ការ​ចុះ​ឈ្
 msgid "Right:"
 msgstr "ស្ដាំ ៖"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:16
 msgid "Set crop marks to"
 msgstr "កំណត់​សញ្ញា​សម្គាល់​ការ​ច្រឹប​ទៅ"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "ទិស​តារា"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "កំពូល ៖"
 
@@ -22155,52 +22249,71 @@ msgid "Arrange"
 msgstr "រៀបចំ"
 
 #: ../share/extensions/restack.inx.h:4
-msgid "Bottom"
-msgstr "បាត"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "បាត​ទៅ​កំពូល (៩០)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "ចំណុច​ផ្ដេក ៖"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "ឆ្វេង​ទៅ​ស្ដាំ (០)"
 
-#: ../share/extensions/restack.inx.h:9
-msgid "Middle"
-msgstr "កណ្ដាល"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "កាំ​ខាង​ក្នុង"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "កាំ​ខាង​ក្រៅ"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "ដាក់​ជង់​ឡើង​វិញ"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "ទិស​ដាក់​ជង់​ឡើង​វិញ ៖"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "ពី​ស្ដាំ​ទៅ​ឆ្វេង (១៨០)"
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "ពី​កំពូល​ទៅ​បាត (២៧០)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "ចំណុច​​បញ្ឈរ​ ៖"
+
+#: ../share/extensions/restack.inx.h:14
+#, fuzzy
+msgid "restack|Bottom"
+msgstr "បាត"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+#, fuzzy
+msgid "restack|Left"
+msgstr "ដាក់​ជង់​ឡើង​វិញ"
+
+#: ../share/extensions/restack.inx.h:18
+#, fuzzy
+msgid "restack|Middle"
+msgstr "កណ្ដាល"
+
+#: ../share/extensions/restack.inx.h:19
+#, fuzzy
+msgid "restack|Right"
+msgstr "ដាក់​ជង់​ឡើង​វិញ"
+
+#: ../share/extensions/restack.inx.h:20
+#, fuzzy
+msgid "restack|Top"
+msgstr "ដាក់​ជង់​ឡើង​វិញ"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -22591,8 +22704,9 @@ msgid "Compatibility with previews code to this event"
 msgstr "ភាព​ឆបគ្នា​ជាមួយ​នឹង​កូដ​ការ​មើល​ជាមុន​ចំពោះ​ព្រឹត្តិការណ៍​នេះ"
 
 #: ../share/extensions/web-set-att.inx.h:4
+#, fuzzy
 msgid ""
-"If you want to set more then one attribute, you must separate this with a "
+"If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr "ប្រសិន​បើ​អ្នក​ចង់​កំណត់​គុណលក្ខណៈ​ច្រើន អ្នក​ត្រូវតែ​ចែក​វា​ឲ្យ​ដាច់​ពី​គ្នា​ដោយប្រើ​ដកឃ្លា ។"
 
@@ -22615,11 +22729,13 @@ msgid "Source and destination of setting"
 msgstr "ប្រភព និង​ទិសដៅ​នៃ​ការ​កំណត់"
 
 #: ../share/extensions/web-set-att.inx.h:10
-msgid "The first selected set an attribute in all others"
+#, fuzzy
+msgid "The first selected sets an attribute in all others"
 msgstr "ធាតុ​ដែល​បាន​ជ្រើស​ដំបូង​គេ កំណត់​គុណលក្ខណៈ​នៅ​ក្នុង​ធាតុ​ដែល​បាន​ជ្រើស​ផ្សេងទៀត​ទាំងអស់"
 
 #: ../share/extensions/web-set-att.inx.h:11
-msgid "The list of values must have the same size of the attributes list."
+#, fuzzy
+msgid "The list of values must have the same size as the attributes list."
 msgstr "បញ្ជី​តម្លៃ​ត្រូវតែ​មាន​ទំហំ​ដូច​គ្នង​នឹង​បញ្ជី​គុណលក្ខណៈ ។"
 
 #: ../share/extensions/web-set-att.inx.h:12
@@ -22654,7 +22770,8 @@ msgid "Web"
 msgstr "បណ្ដាញ"
 
 #: ../share/extensions/web-set-att.inx.h:17
-msgid "When the set must be done?"
+#, fuzzy
+msgid "When should the set be done?"
 msgstr "តើ​ត្រូវ​ធ្វើ​ការ​កំណត់​ឲ្យ​រួចរាល់​នៅ​ពេល​ណា ?"
 
 #: ../share/extensions/web-set-att.inx.h:18
@@ -22708,7 +22825,8 @@ msgid "on mouse up"
 msgstr "នៅពេល​ផ្លាស់ទី​កណ្ដុរ​ឡើង​លើ"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All selected ones transmits to the last one"
+#, fuzzy
+msgid "All selected ones transmit to the last one"
 msgstr "ធាតុ​ដែល​បាន​ជ្រើស​ទាំងអស់​បញ្ជូន​ទៅកាន់​ធាតុ​ដែល​បាន​ជ្រើស​ចុងក្រោយ"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -22731,9 +22849,10 @@ msgid "The first selected transmits to all others"
 msgstr "ធាតុ​ដែល​បាន​ជ្រើស​ដំបូង​គេ​បញ្ជូន​ទៅកាន់​ធាតុ​ផ្សេងទៀត"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
-"to the second when a event occurs."
+"to the second when an event occurs."
 msgstr ""
 "បែបផែន​នេះ បញ្ជូន​គុណលក្ខណៈ​មួយ​ឬ​ច្រើន​ពី​ធាតុ​ដែល​បាន​ជ្រើស​ដំបូង​ទៅកាន់​ធាតុ​បន្ទាប់ នៅពេល​ដែល​មាន​"
 "ព្រឹត្តិការណ៍​មួយ​កើតឡើង ។"
@@ -22776,6 +22895,9 @@ msgstr "ការ​បញ្ចូល​ឯកសារ​មេតា​រប
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "ការ​បញ្ចូល DXF"
+
+#~ msgid "The second path must be exactly four nodes long."
+#~ msgstr "ផ្លូវ​ទី​ពីរ​ត្រូវ​តែ​មាន​ប្រវែង​៤​ថ្នាំង ។"
 
 #~ msgid "Gelatine"
 #~ msgstr "ចាហួយ"
