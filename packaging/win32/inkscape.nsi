@@ -19,7 +19,7 @@
 ; MUI 1.67 compatible ------
 SetCompressor /SOLID lzma
 SetCompressorDictSize 32
-RequestExecutionLevel highest
+RequestExecutionLevel admin
 !include "MUI.nsh"
 !include "LogicLib.nsh"
 !include "sections.nsh"
