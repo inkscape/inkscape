@@ -163,6 +163,11 @@ if [ ! -e "$LIBPREFIX/lib/gnome-vfs-2.0" ]; then
 	exit 1
 fi
 
+if ! pkg-config --modversion ImageMagick >/dev/null 2>&1; then
+	echo "Missing ImageMagick -- please install ImageMagick and try again." >&2
+	exit 1
+fi
+
 if [ ! -e "$LIBPREFIX/lib/aspell-0.60/en.dat" ]; then
 	echo "Missing aspell en dictionary -- please install at least 'aspell-dict-en', but" >&2
 	echo "preferably all dictionaries ('aspell-dict-*') and try again." >&2
@@ -311,6 +316,10 @@ cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
 
+imagemagick_version=`pkg-config --modversion ImageMagick`
+cp -r "$LIBPREFIX/lib/ImageMagick-$imagemagick_version" "$pkglib/"
+cp -r "$LIBPREFIX/share/ImageMagick-$imagemagick_version" "$pkgresources/share/"
+
 # Copy aspell dictionary files:
 cp -r "$LIBPREFIX/lib/aspell-0.60" "$pkglib/"
 cp -r "$LIBPREFIX/share/aspell" "$pkgresources/share/"
@@ -322,7 +331,7 @@ nfiles=0
 endl=true
 while $endl; do
 	echo -e "\033[1mLooking for dependencies.\033[0m Round" $a
-	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
+	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $pkglib/ImageMagick/modules-Q16/{filters,coders}/*.so $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
 	cp -f $libs $package/Contents/Resources/lib
 	let "a+=1"	
 	nnfiles=`ls $package/Contents/Resources/lib | wc -l`
@@ -383,42 +392,85 @@ fixlib () {
 		done
 	fi
 }
-# 
-# Fix package deps
-# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/loaders"
-# for file in *.so; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# )
-# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/engines"
-# for file in *.so; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# )
-# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/immodules"
-# for file in *.so; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# )
-# (cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/printbackends"
-# for file in *.so; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# )
-# (cd "$package/Contents/Resources/bin"
-# for file in *; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# cd ../lib
-# for file in *.dylib; do
-# 	echo "Rewriting dylib paths for $file..."
-# 	fixlib "$file" "`pwd`"
-# done
-# )
+
+rewritelibpaths () {
+	# 
+	# Fix package deps
+	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/loaders"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/engines"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/immodules"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/gtk-2.0/2.10.0/printbackends"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/gnome-vfs-2.0/modules"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/pango/1.6.0/modules"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/ImageMagick/modules-Q16/filters"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/lib/ImageMagick/modules-Q16/coders"
+	for file in *.so; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+	(cd "$package/Contents/Resources/bin"
+	for file in *; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	cd ../lib
+	for file in *.dylib; do
+		echo "Rewriting dylib paths for $file..."
+		fixlib "$file" "`pwd`"
+	done
+	)
+}
+
+PATHLENGTH=`echo $LIBPREFIX | wc -c`
+if [ "$PATHLENGTH" -ge "50" ]; then
+	# If the LIBPREFIX path is long enough to allow 
+	# path rewriting, then do this.
+	rewritelibpaths
+else
+	echo "Could not rewrite dylb paths for bundled libraries.  This requires" >&2
+	echo "Macports to be installed in a PREFIX of at least 50 characters in length." >&2
+	echo "" >&2
+	echo "The package will still work if the following line is uncommented in" >&2
+	echo "Inkscape.app/Contents/Resources/bin/inkscape:" >&2
+	echo '        export DYLD_LIBRARY_PATH="$TOP/lib"' >&2
+	exit 1
+
+fi
 
 exit 0

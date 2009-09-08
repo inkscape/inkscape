@@ -29,7 +29,8 @@ PYTHON_VERS=`python -V 2>&1 | cut -c 8-10`
 export PYTHONPATH="$TOP/python/site-packages/$ARCH/$PYTHON_VERS"
 # NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
 
-export DYLD_LIBRARY_PATH="$TOP/lib"
+# No longer required if path rewriting has been conducted.
+# export DYLD_LIBRARY_PATH="$TOP/lib"
 
 
 export FONTCONFIG_PATH="$TOP/etc/fonts"
@@ -42,6 +43,16 @@ export GNOME_VFS_MODULE_CONFIG_PATH="$TOP/etc/gnome-vfs-2.0/modules"
 export GNOME_VFS_MODULE_PATH="$TOP/lib/gnome-vfs-2.0/modules"
 export XDG_DATA_DIRS="$TOP/share"
 export ASPELL_CONF="prefix $TOP;"
+
+# Note: This requires the path with the exact ImageMagic version number.
+# FIXME: Make the osx-app.sh script write the version into this file when 
+#        building the package.  Note, that ImageMagick will only work if 
+#        it does not find a version installed into the same PREFIX as it
+#        was originally installed.  Luckily, this is very unlikely given
+#        the extra long and strangely named install prefix we use.
+export MAGICK_CONFIGURE_PATH="$TOP/lib/ImageMagick-6.5.5/config:$TOP/share/ImageMagick-6.5.5/config"
+export MAGICK_CODER_FILTER_PATH="$TOP/lib/ImageMagick-6.5.5/modules-Q16/filters"
+export MAGICK_CODER_MODULE_PATH="$TOP/lib/ImageMagick-6.5.5/modules-Q16/coders"
 
 export INKSCAPE_SHAREDIR="$TOP"
 # TODO: move the share directory to a its own folder to make things a bit cleaner in the app bundle
