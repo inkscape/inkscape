@@ -4,6 +4,7 @@
     <id>org.inkscape.output.scour</id>
     <dependency type="executable" location="extensions">scour.py</dependency>
     <dependency type="executable" location="extensions">svg_regex.py</dependency>
+    <dependency type="executable" location="extensions">yocto_css.py</dependency>
     <output>
         <extension>.svg</extension>
         <mimetype>image/svg+xml</mimetype>

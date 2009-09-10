@@ -32,26 +32,16 @@
 # Even more ideas here: http://esw.w3.org/topic/SvgTidy
 #  * analysis of path elements to see if rect can be used instead? (must also need to look
 #    at rounded corners)
-#  * removal of unused attributes in groups:
-#    <g fill="blue" ...>
-#      <rect fill="red" ... />
-#      <rect fill="red" ... />
-#      <rect fill="red" ... />
-#    </g>
-#    in this case, fill="blue" should be removed
 
 # Next Up:
-# + analyze all children of a group, if they have common inheritable attributes, then move them to the group
-# + scour lengths for *opacity, svg:x,y,width,height, stroke-miterlimit, stroke-width
-# - analyze a group and its children, if a group's attribute is not being used by any children 
-#   (or descendants?) then remove it
+# + remove unused attributes in parent elements
+# + prevent elements from being stripped if they are referenced in a <style> element
+#   (for instance, filter, marker, pattern) - need a crude CSS parser
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
 # - parse transform attribute
 # - if a <g> has only one element in it, collapse the <g> (ensure transform, etc are carried down)
 # - option to remove metadata
-# - prevent elements from being stripped if they are referenced in a <style> element
-#   (for instance, filter, marker, pattern) - need a crude CSS parser
 
 # necessary to get true division
 from __future__ import division
@@ -66,6 +56,7 @@ import urllib
 from svg_regex import svg_parser
 import gzip
 import optparse
+from yocto_css import parseCssString
 
 # Python 2.3- did not have Decimal
 try:
@@ -75,7 +66,7 @@ except ImportError:
 	Decimal = FixedPoint	
 
 APP = 'scour'
-VER = '0.19'
+VER = '0.20'
 COPYRIGHT = 'Copyright Jeff Schiller, 2009'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -411,6 +402,9 @@ def findElementsWithId(node, elems=None):
 				findElementsWithId(child, elems)
 	return elems
 
+referencingProps = ['fill', 'stroke', 'filter', 'clip-path', 'mask',  'marker-start', 
+					'marker-end', 'marker-mid']
+
 def findReferencedElements(node, ids=None):
 	"""
 	Returns the number of times an ID is referenced as well as all elements
@@ -419,13 +413,25 @@ def findReferencedElements(node, ids=None):
 	Currently looks at fill, stroke, clip-path, mask, marker, and
 	xlink:href attributes.
 	"""
+	global referencingProps
 	if ids is None:
 		ids = {}
 	# TODO: input argument ids is clunky here (see below how it is called)
 	# GZ: alternative to passing dict, use **kwargs
-	href = node.getAttributeNS(NS['XLINK'],'href')
+
+	# if this node is a style element, parse its text into CSS
+	if node.nodeName == 'style' and node.namespaceURI == NS['SVG']:
+		# node.firstChild will be either a CDATA or a Text node
+		cssRules = parseCssString(node.firstChild.nodeValue)
+		for rule in cssRules:
+			for propname in rule['properties']:
+				propval = rule['properties'][propname]
+				findReferencingProperty(node, propname, propval, ids)
+		
+		return ids
 	
-	# if xlink:href is set, then grab the id
+	# else if xlink:href is set, then grab the id
+	href = node.getAttributeNS(NS['XLINK'],'href')	
 	if href != '' and len(href) > 1 and href[0] == '#':
 		# we remove the hash mark from the beginning of the id
 		id = href[1:]
@@ -437,8 +443,6 @@ def findReferencedElements(node, ids=None):
 
 	# now get all style properties and the fill, stroke, filter attributes
 	styles = node.getAttribute('style').split(';')
-	referencingProps = ['fill', 'stroke', 'filter', 'clip-path', 'mask',  'marker-start', 
-						'marker-end', 'marker-mid']
 	for attr in referencingProps:
 		styles.append(':'.join([attr, node.getAttribute(attr)]))
 			
@@ -447,35 +451,39 @@ def findReferencedElements(node, ids=None):
 		if len(propval) == 2 :
 			prop = propval[0].strip()
 			val = propval[1].strip()
-			if prop in referencingProps and val != '' :
-				if len(val) >= 7 and val[0:5] == 'url(#' :
-					id = val[5:val.find(')')]
-					if ids.has_key(id) :
-						ids[id][0] += 1
-						ids[id][1].append(node)
-					else:
-						ids[id] = [1,[node]]
-				# if the url has a quote in it, we need to compensate
-				elif len(val) >= 8 :
-					id = None
-					# double-quote
-					if val[0:6] == 'url("#' :
-						id = val[6:val.find('")')]
-					# single-quote
-					elif val[0:6] == "url('#" :
-						id = val[6:val.find("')")]
-					if id != None:
-						if ids.has_key(id) :
-							ids[id][0] += 1
-							ids[id][1].append(node)
-						else:
-							ids[id] = [1,[node]]
+			findReferencingProperty(node, prop, val, ids)
 
 	if node.hasChildNodes() :
 		for child in node.childNodes:
 			if child.nodeType == 1 :
 				findReferencedElements(child, ids)
 	return ids
+
+def findReferencingProperty(node, prop, val, ids):
+	global referencingProps
+	if prop in referencingProps and val != '' :
+		if len(val) >= 7 and val[0:5] == 'url(#' :
+			id = val[5:val.find(')')]
+			if ids.has_key(id) :
+				ids[id][0] += 1
+				ids[id][1].append(node)
+			else:
+				ids[id] = [1,[node]]
+		# if the url has a quote in it, we need to compensate
+		elif len(val) >= 8 :
+			id = None
+			# double-quote
+			if val[0:6] == 'url("#' :
+				id = val[6:val.find('")')]
+			# single-quote
+			elif val[0:6] == "url('#" :
+				id = val[6:val.find("')")]
+			if id != None:
+				if ids.has_key(id) :
+					ids[id][0] += 1
+					ids[id][1].append(node)
+				else:
+					ids[id] = [1,[node]]
 
 numIDsRemoved = 0
 numElemsRemoved = 0
@@ -700,6 +708,59 @@ def moveCommonAttributesToParentGroup(elem):
 
 	# update our statistic (we remove N*M attributes and add back in M attributes)
 	num += (len(childElements)-1) * len(commonAttrs)
+	return num
+
+def removeUnusedAttributesOnParent(elem):
+	"""
+	This recursively calls this function on all children of the element passed in,
+	then removes any unused attributes on this elem if none of the children inherit it
+	"""
+	num = 0
+
+	childElements = []
+	# recurse first into the children (depth-first)
+	for child in elem.childNodes:
+		if child.nodeType == 1: 
+			childElements.append(child)
+			num += removeUnusedAttributesOnParent(child)
+	
+	# only process the children if there are more than one element
+	if len(childElements) <= 1: return num
+
+	# get all attribute values on this parent
+	attrList = elem.attributes
+	unusedAttrs = {}
+	for num in range(attrList.length):
+		attr = attrList.item(num)
+		if attr.nodeName in ['clip-rule',
+					'display-align', 
+					'fill', 'fill-opacity', 'fill-rule', 
+					'font', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch',
+					'font-style', 'font-variant', 'font-weight',
+					'letter-spacing',
+					'pointer-events', 'shape-rendering',
+					'stroke', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
+					'stroke-miterlimit', 'stroke-opacity', 'stroke-width',
+					'text-anchor', 'text-decoration', 'text-rendering', 'visibility', 
+					'word-spacing', 'writing-mode']:
+			unusedAttrs[attr.nodeName] = attr.nodeValue
+	
+	# for each child, if at least one child inherits the parent's attribute, then remove
+	for childNum in range(len(childElements)):
+		child = childElements[childNum]
+		inheritedAttrs = []
+		for name in unusedAttrs.keys():
+			val = child.getAttribute(name)
+			if val == '' or val == None or val == 'inherit':
+				inheritedAttrs.append(name)
+		for a in inheritedAttrs:
+			del unusedAttrs[a]
+	
+	# unusedAttrs now has all the parent attributes that are unused
+	for name in unusedAttrs.keys():
+		elem.removeAttribute(name)
+		num += 1
+	
 	return num
 	
 def removeDuplicateGradientStops(doc):
@@ -1707,11 +1768,10 @@ def parseListOfPoints(s):
 	
 		Returns a list of containing an even number of coordinate strings
 	"""
-	
 	# (wsp)? comma-or-wsp-separated coordinate pairs (wsp)?
 	# coordinate-pair = coordinate comma-or-wsp coordinate
 	# coordinate = sign? integer
-	nums = re.split("\\s*\\,?\\s*", s)
+	nums = re.split("\\s*\\,?\\s*", s.strip())
 	i = 0
 	points = []
 	while i < len(nums):
@@ -2137,8 +2197,10 @@ def scourString(in_string, options=None):
 			pass
 
 	# move common attributes to parent group
-	# TODO: should make sure this is called with most-nested groups first
 	numAttrsRemoved += moveCommonAttributesToParentGroup(doc.documentElement)
+	
+	# remove unused attributes from parent
+	numAttrsRemoved += removeUnusedAttributesOnParent(doc.documentElement)
 
 	while removeDuplicateGradientStops(doc) > 0:
 		pass
