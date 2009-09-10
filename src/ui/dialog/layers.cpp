@@ -73,12 +73,12 @@ public:
     SPObject* _target;
 };
 
-static gboolean layers_panel_activated( GtkObject */*object*/, GdkEvent * /*event*/, gpointer data )
+static gboolean layers_panel_activated(Inkscape::Application * /*inkscape*/, SPDesktop *desktop, gpointer data )
 {
     if ( data )
     {
         LayersPanel* panel = reinterpret_cast<LayersPanel*>(data);
-        panel->setDesktop(panel->getDesktop());
+        panel->setDesktop(desktop);
     }
 
     return FALSE;
@@ -94,7 +94,6 @@ static gboolean layers_panel_deactivated( GtkObject */*object*/, GdkEvent * /*ev
 
     return FALSE;
 }
-
 
 void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback )
 {
@@ -349,20 +348,22 @@ bool LayersPanel::_checkForSelected(const Gtk::TreePath &path, const Gtk::TreeIt
 void LayersPanel::_layersChanged()
 {
 //    g_message("_layersChanged()");
-    SPDocument* document = _desktop->doc();
-    SPObject* root = document->root;
-    if ( root ) {
-        _selectedConnection.block();
-        if ( _mgr && _mgr->includes( root ) ) {
-            SPObject* target = _desktop->currentLayer();
-            _store->clear();
+    if(_desktop) {
+        SPDocument* document = _desktop->doc();
+        SPObject* root = document->root;
+        if ( root ) {
+            _selectedConnection.block();
+            if ( _mgr && _mgr->includes( root ) ) {
+                SPObject* target = _desktop->currentLayer();
+                _store->clear();
 
-#if DUMP_LAYERS
-            g_message("root:%p  {%s}   [%s]", root, root->id, root->label() );
-#endif // DUMP_LAYERS
-            _addLayer( document, root, 0, target, 0 );
+    #if DUMP_LAYERS
+                g_message("root:%p  {%s}   [%s]", root, root->id, root->label() );
+    #endif // DUMP_LAYERS
+                _addLayer( document, root, 0, target, 0 );
+            }
+            _selectedConnection.unblock();
         }
-        _selectedConnection.unblock();
     }
 }
 
@@ -414,9 +415,9 @@ SPObject* LayersPanel::_selectedLayer()
 
 void LayersPanel::_pushTreeSelectionToCurrent()
 {
-    SPObject* inTree = _selectedLayer();
     // TODO hunt down the possible API abuse in getting NULL
-    if ( _desktop->currentRoot() ) {
+    if ( _desktop && _desktop->currentRoot() ) {
+        SPObject* inTree = _selectedLayer();
         if ( inTree ) {
             SPObject* curr = _desktop->currentLayer();
             if ( curr != inTree ) {
@@ -459,6 +460,7 @@ void LayersPanel::_checkTreeSelection()
 
 void LayersPanel::_preToggle( GdkEvent const *event )
 {
+
     if ( _toggleEvent ) {
         gdk_event_free(_toggleEvent);
         _toggleEvent = 0;
@@ -472,6 +474,8 @@ void LayersPanel::_preToggle( GdkEvent const *event )
 
 void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
 {
+    g_return_if_fail(_desktop != NULL);
+
     Gtk::TreeModel::Children::iterator iter = _tree.get_model()->get_iter(str);
     Gtk::TreeModel::Row row = *iter;
 
@@ -720,6 +724,7 @@ LayersPanel::LayersPanel() :
 
     g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK( layers_panel_activated ), this );
     g_signal_connect( G_OBJECT(INKSCAPE), "deactivate_desktop", G_CALLBACK( layers_panel_deactivated ), this );
+
     setDesktop( targetDesktop );
 
     show_all_children();
@@ -761,7 +766,7 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
             _desktop = 0;
         }
 
-        _desktop = getDesktop();
+        _desktop = Panel::getDesktop();
         if ( _desktop ) {
             //setLabel( _desktop->doc()->name );
 
