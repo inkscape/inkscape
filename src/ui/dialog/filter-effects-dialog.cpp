@@ -462,7 +462,7 @@ public:
     ColorMatrixValues()
         : AttrWidget(SP_ATTR_VALUES),
           // TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
-          _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on colour space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
+          _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
           _label(_("None"), Gtk::ALIGN_LEFT),
@@ -2279,7 +2279,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR_FILTER_COLORMATRIX):
             _infobox_icon.set_from_icon_name("feColorMatrix-icon", Gtk::ICON_SIZE_DIALOG);
-            _infobox_desc.set_markup(_("The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."));
+            _infobox_desc.set_markup(_("The <b>feColorMatrix</b> filter primitive applies a matrix transformation to color of each rendered pixel. This allows for effects like turning object to grayscale, modifying color saturation and changing color hue."));
             break;
         case(NR_FILTER_COMPONENTTRANSFER):
             _infobox_icon.set_from_icon_name("feComponentTransfer-icon", Gtk::ICON_SIZE_DIALOG);
@@ -2319,7 +2319,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR_FILTER_MORPHOLOGY):
             _infobox_icon.set_from_icon_name("feMorphology-icon", Gtk::ICON_SIZE_DIALOG);
-            _infobox_desc.set_markup(_("The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."));
+            _infobox_desc.set_markup(_("The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-color objects erode makes the object thinner and dilate makes it thicker."));
             break;
         case(NR_FILTER_OFFSET):
             _infobox_icon.set_from_icon_name("feOffset-icon", Gtk::ICON_SIZE_DIALOG);
