@@ -11,10 +11,9 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-06 10:44+0200\n"
-"PO-Revision-Date: 2009-08-25 23:06+0200\n"
+"PO-Revision-Date: 2009-09-09 20:27+0200\n"
 "Last-Translator: Lucas Vieites Fariña <lucas@codexion.com>\n"
-"Language-Team:  inkscape-translator@lists.sourceforge.net <inkscape-"
-"translator@lists.sourceforge.net>\n"
+"Language-Team:  inkscape-translator@lists.sourceforge.net <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1666,12 +1665,11 @@ msgstr "Crea un contorno turbulento"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Quadritone fantasy"
-msgstr ""
+msgstr "Fantasía cuatritono"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Replace hue by two colors"
-msgstr "Reemplazar color"
+msgstr "Reemplazar tono por dos colores"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1855,53 +1853,47 @@ msgid "Something like a water noise"
 msgstr "Algo parecido al sonido del agua"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Monochrome transparency"
-msgstr "Transparencia de ruido"
+msgstr "Transparencia monocromática"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "Convertir a un negativo colorizable transparente"
+msgstr "Convertir a un positivo o negativo colorizable transparente"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Duotone"
-msgstr "Botón"
+msgstr "Duotono"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Change colors to a duotone palette"
-msgstr "Elija los colores de una paleta de muestras"
+msgstr "Cambiar los colores a una paleta duotono"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
 msgstr "Borrador de luz, negativo"
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
 msgid "Like Light eraser but converts to negative"
-msgstr "Borrador de luz, negativo"
+msgstr "Borrador claro pero convierte a negativo"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Alpha repaint"
-msgstr "Grabado alfa"
+msgstr "Repintado alfa"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Repintar cualquier cosa en monocromo"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Saturation map"
-msgstr "Saturación"
+msgstr "Mapa de saturación"
 
 #: ../share/filters/filters.svg.h:199
 msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
 msgstr ""
+"Crea una imagen semitransparente y aproximada de los niveles de saturación"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2055,22 +2047,20 @@ msgid "Random rounded living cells like fill"
 msgstr "Relleno similar a células vivientes redondas"
 
 #: ../share/filters/filters.svg.h:218
-#, fuzzy
 msgid "Fluorescence"
-msgstr "Presencia"
+msgstr "Fluorescencia"
 
 #: ../share/filters/filters.svg.h:218
 msgid "Oversaturate colors which can be fluorescent in real world"
-msgstr ""
+msgstr "Sobresaturar colores que pueden ser fluorescentes en el mundo real"
 
 #: ../share/filters/filters.svg.h:219
-#, fuzzy
 msgid "Tritone"
-msgstr "Título"
+msgstr "Tritono"
 
 #: ../share/filters/filters.svg.h:219
 msgid "Create a tritone palette with hue selectable by flood"
-msgstr ""
+msgstr "Crear una paleta tritono con tono seleccionable por relleno"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -7725,12 +7715,10 @@ msgstr "Crecimiento de distancia entre tramados."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-#, fuzzy
 msgid "Half-turns smoothness: 1st side, in"
 msgstr "Suavidad de vueltas: 1er lado, dentro"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
 "0=sharp, 1=default"
@@ -7743,7 +7731,6 @@ msgid "1st side, out"
 msgstr "1er lado, fuera"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
@@ -7756,7 +7743,6 @@ msgid "2nd side, in"
 msgstr "2º lado, dentro "
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
@@ -7769,7 +7755,6 @@ msgid "2nd side, out"
 msgstr "2º lado, fuera"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
@@ -7782,9 +7767,9 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Variación de magnitud: 1er lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-#, fuzzy
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr "Mueve las vueltas «inferiores» "
+msgstr ""
+"Mueve las vueltas «inferiores» al azar para producir variaciones de magnitud."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7793,18 +7778,15 @@ msgid "2nd side"
 msgstr "2º lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-#, fuzzy
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
-"Mueve las vueltas «superiores» aleatoriamente para producir variaciones de "
-"magnitud."
+"Mueve las vueltas «superiores» al azar para producir variaciones de magnitud."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
 msgstr "Variación de paralelismo: 1er lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
-#, fuzzy
 msgid ""
 "Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
@@ -7813,7 +7795,6 @@ msgstr ""
 "tangencialmente hacia el límite."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
-#, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
@@ -7826,14 +7807,12 @@ msgid "Variance: 1st side"
 msgstr "Variación: 1er lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Aleatoriedad de las suavidad de las vueltas «inferiores»"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-#, fuzzy
 msgid "Randomness of 'top' half-turns smoothness"
-msgstr "Aleatoriedad de las suavidad de las vueltas «superiores»"
+msgstr "Aleatoriedad de la suavidad de las vueltas «superiores»"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
@@ -7841,7 +7820,6 @@ msgid "Generate thick/thin path"
 msgstr "Generar un trayecto grueso/fino"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Simulate a stroke of varying width"
 msgstr "Simular un trazo de anchura variable"
 
@@ -7858,7 +7836,6 @@ msgid "Thickness: at 1st side"
 msgstr "Grosor: en el primer lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "Width at 'bottom' half-turns"
 msgstr "Grosor en las vueltas «inferiores»"
 
@@ -7867,7 +7844,6 @@ msgid "at 2nd side"
 msgstr "en el 2º lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-#, fuzzy
 msgid "Width at 'top' half-turns"
 msgstr "Grosor en vueltas «superiores»"
 
@@ -7877,18 +7853,16 @@ msgid "from 2nd to 1st side"
 msgstr "del 2º al primer lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#, fuzzy
 msgid "Width from 'top' to 'bottom'"
-msgstr "Grosor de trayectos de las vueltas «superiores» a las «inferiores»"
+msgstr "Anchura de «arriba» a «abajo»"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "del primer al 2º lado"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
-#, fuzzy
 msgid "Width from 'bottom' to 'top'"
-msgstr "Grosor en las vueltas «inferiores»"
+msgstr "Anchura de «abajo» a «arriba»"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -8179,11 +8153,10 @@ msgid "Reference segment"
 msgstr "Segmento de referencia"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr ""
-"El segmento de referencia. Por defecto es el diámetro de la caja contenedora "
-"(bbox)."
+"El segmento de referencia. Por defecto es la mediana horizontal de la caja "
+"contenedora (bbox)."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -8933,7 +8906,6 @@ msgstr ""
 "bloquear la proporción"
 
 #: ../src/object-edit.cpp:933
-#, fuzzy
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
@@ -8941,7 +8913,7 @@ msgid ""
 msgstr ""
 "Sitúe el <b>punto de inicio</b> del arco o segmento; con <b>Ctrl</b> para "
 "fijar el ángulo; arrastre <b>por dentro</b> para obtener la elipse del arco, "
-"<b>por fuera</b> para el segmento"
+"<b>por fuera</b> para obtener el segmento"
 
 #: ../src/object-edit.cpp:937
 msgid ""
@@ -11364,7 +11336,7 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
-"Lucas Vieites Fariña, 2003-2007\n"
+"Lucas Vieites Fariña, 2003-2009\n"
 "Francisco Javier F. Serrador, 2003\n"
 "José Antonio Salgueiro Aquino, 2003"
 
@@ -13041,13 +13013,12 @@ msgid "Delay (in ms):"
 msgstr "Retardo (en ms):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
-#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
 "When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
-"Posponer el ajusta mientras se mueve el ratón, y luego esperar una fracción "
+"Posponer el ajuste mientras se mueve el ratón, y luego esperar una fracción "
 "de segundo adicional. Este retardo adicional se indica aquí. Si es cero o un "
 "número muy bajo, el ajuste será inmediato."
 
@@ -13056,7 +13027,6 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Solo ajustar el nodo más próximo al puntero."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-#, fuzzy
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
@@ -13079,7 +13049,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snap the mouse pointer when dragging a constrained knot"
-msgstr ""
+msgstr "Ajustar el puntero del ratón al arrastrar un nudo restringido"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid ""
@@ -13087,6 +13057,9 @@ msgid ""
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
 msgstr ""
+"Al arrastrar un nudo a lo largo de una línea de restricción, ajustar la "
+"posición del ratón en vez de ajustar la proyección del nudo sobre la línea "
+"de restricción"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
 msgid "Snapping"
@@ -20891,7 +20864,6 @@ msgid "Side Length 'c'/px: "
 msgstr "Longitud del lado «c»/px"
 
 #: ../share/extensions/draw_from_triangle.py:178
-#, fuzzy
 msgid "Angle 'A'/radians: "
 msgstr "Ángulo «A»/radianes:"
 
@@ -20950,9 +20922,8 @@ msgstr ""
 "http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-#, fuzzy
 msgid "Unable to find image data."
-msgstr "Hay problemas para encontrar los datos de la imagen."
+msgstr "No se han podido encontrar los datos de la imagen."
 
 #: ../share/extensions/inkex.py:66
 msgid ""
@@ -21050,14 +21021,13 @@ msgstr ""
 "Intente utilizar la opción «Trayecto -> Objeto a trayecto»"
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "No se ha podido importar el módulo numpy. Esta extensión necesita este "
-"módulo. Vuelva a intentarlo después de instalarlos. En un sistema de tipo "
+"módulo. Vuelva a intentarlo después de instalarlo. En un sistema de tipo "
 "Debian puede hacerlo con el comando «sudo apt-get install python-numpy»."
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -21095,13 +21065,12 @@ msgid "Internal Error. No view type selected\n"
 msgstr "Error interno. No se ha seleccionado un tipo de vista\n"
 
 #: ../share/extensions/summersnight.py:36
-#, fuzzy
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
 msgstr ""
-"Esta extensión necesita que el segundo trayecto seleccionado sea de cuatro "
-"nodos."
+"Esta extensión necesita dos trayectos seleccionados.\n"
+"El segundo trayecto debe ser exactamente de de cuatro nodos."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21110,7 +21079,7 @@ msgstr "No se ha podido encontrar el archivo: %s"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
-msgstr ""
+msgstr "Necesita instalar el software UniConvertor.\n"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -21426,7 +21395,6 @@ msgid "Custom Points and Options"
 msgstr "Puntos personalizados y opciones"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-#, fuzzy
 msgid "Draw Circle Around This Point"
 msgstr "Trazar círculo alrededor de este punto"
 
@@ -21558,6 +21526,37 @@ msgid ""
 "may cause a divide-by-zero error for certain points.\n"
 "            "
 msgstr ""
+"Esta extensión dibuja construcciones sobre un triángulo definido por los "
+"tres primeros nodos de un trayecto seleccionado. Puede seleccionar uno de "
+"los objetos predefinidos o crear los suyos propios.\n"
+"\n"
+"Todas las unidades son la unidad de píxel de Inkscape. Los ángulos son todos "
+"en radianes.\n"
+"Puede especificar un punto por coordenadas trilineales o por una función de "
+"centro triangular.\n"
+"Introduzca como funciones la longitud de los lados o ángulos.\n"
+"Los elementos trilineales se deben separar por dos puntos: «:».\n"
+"La longitud de los lados se representan como «s_a», «s_b» y «s_c».\n"
+"Los ángulos correspondientes a éstos son: «a_a», «a_b» y «a_c».\n"
+"También puede utilizar el semiperímetro y el área del triángulo como "
+"constantes. Para esto escriba «area» o «semiperim».\n"
+"\n"
+"Puede utilizar las funciones matemáticas estándar de python:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"También están disponibles las funciones trigonométricas inversas:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"Puede indicar el radio de un círculo alrededor de un punto usando una "
+"fórmula, que también puede contener las longitudes de los lados, ángulos, "
+"etc. Así mismo puede trazar las conjugadas isogonal e isotómica del punto. "
+"Tenga en cuenta que esto puede causar un error de «división entre cero» para "
+"ciertos puntos.\n"
+"            "
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
@@ -21568,7 +21567,6 @@ msgid "Trilinear Coordinates"
 msgstr "Coordenadas trilineales"
 
 #: ../share/extensions/dxf_input.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 and newer.\n"
 "- assume dxf drawing is in mm.\n"
@@ -21576,11 +21574,12 @@ msgid ""
 "- layers are preserved only on File->Open, not Import.\n"
 "- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
-"- AutoCAD Versión 13 y posteriores. - asume que el dibujo dxf está en mm. - "
-"asume que el dibujo svg está en píxeles, a 90 ppp. - las capas solamente se "
-"conservan con «Archivo-&gt;Abrir», no «Importar». - soporte limitado para "
-"BLOQUES, us\n"
-"tilice la opción de AutoCAD «Explotar bloques» si es necesario."
+"- AutoCAD Versión 13 y posteriores.\n"
+"- asume que el dibujo dxf está en mm.\n"
+"- asume que el dibujo svg está en píxeles, a 90 ppp.\n"
+"- las capas solamente se conservan con «Archivo-&gt;Abrir», no «Importar»\n"
+" - soporte limitado para BLOQUES, utilice la opción de AutoCAD «Explotar "
+"bloques» si es necesario."
 
 #: ../share/extensions/dxf_input.inx.h:6
 msgid "AutoCAD DXF R13 (*.dxf)"
@@ -21607,7 +21606,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Utilizar escalado automático a tamaño A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 format.\n"
 "- assume svg drawing is in pixels, at 90 dpi.\n"
@@ -21616,11 +21614,12 @@ msgid ""
 "- ROBO-Master option is a specialized spline readable only by ROBO-Master "
 "and AutoDesk viewers, not Inkscape."
 msgstr ""
-"- Formato AutoCAD Versión 13. - asume que el dibujo svg está en píxeles, a "
-"90 ppp. - asume que el dibujo dxf está en mm. - solamente se admiten "
-"elementos LWPOLYLINE y SPLINE. - la opción ROBO-Master es un spline "
-"especializado legible solamente por ROBO-Master y visores AutoDesk, ni "
-"Inkscape."
+"- Formato AutoCAD Versión 13.\n"
+"- asume que el dibujo svg está en píxeles, a 90 ppp.\n"
+"- asume que el dibujo dxf está en mm.\n"
+"- solamente se admiten elementos LWPOLYLINE y SPLINE.\n"
+"- la opción ROBO-Master es un spline especializado legible solamente por "
+"ROBO-Master y visores AutoDesk, ni Inkscape."
 
 #: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
@@ -21728,14 +21727,12 @@ msgid "Extrude"
 msgstr "Extrusionar"
 
 #: ../share/extensions/extrude.inx.h:3
-#, fuzzy
 msgid "Lines"
-msgstr "Línea"
+msgstr "Líneas"
 
 #: ../share/extensions/extrude.inx.h:5
-#, fuzzy
 msgid "Polygons"
-msgstr "Polígono"
+msgstr "Polígonos"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -22615,14 +22612,13 @@ msgid "Space between copies:"
 msgstr "Espacio entre copias:"
 
 #: ../share/extensions/pathalongpath.inx.h:16
-#, fuzzy
 msgid ""
 "This effect bends a pattern object along arbitrary \"skeleton\" paths. The "
 "pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Este efecto flexiona un objeto de patrón a lo largo de trayectos «esqueleto» "
-"arbitrarios. El patrón es el objeto superior de la selección. Se permiten "
+"arbitrarios. El patrón es el objeto superior de la selección. (se permiten "
 "grupos de trayectos, formas, clones, ...)"
 
 #: ../share/extensions/pathscatter.inx.h:1
@@ -22650,14 +22646,13 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Estirar espacios para ajustarse a la longitud del esqueleto"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
 "Este efecto esparce un objeto de patrón a lo largo de trayectos «esqueleto» "
-"arbitrarios. El patrón es el objeto superior de la selección. Se permiten "
+"arbitrarios. El patrón es el objeto superior de la selección. (se permiten "
 "grupos de trayectos, formas, clones, ...)"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
@@ -22762,7 +22757,6 @@ msgid "Cube"
 msgstr "Cubo"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-#, fuzzy
 msgid "Cuboctahedron"
 msgstr "Cuboctaedro"
 
@@ -22795,17 +22789,14 @@ msgid "Filename:"
 msgstr "Nombre de archivo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill Color (Blue)"
 msgstr "Color de relleno (azul)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill Color (Green)"
 msgstr "Color de relleno (verde)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill Color (Red)"
 msgstr "Color de relleno (rojo)"
 
@@ -22964,9 +22955,8 @@ msgstr "Z-ordenar caras por:"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
 msgid "polyhedron|Show:"
-msgstr "Políedro 3D"
+msgstr "Mostrar:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22985,7 +22975,6 @@ msgid "Canvas"
 msgstr "Lienzo"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Color Bars"
 msgstr "Barras de colores"
 
@@ -23142,31 +23131,26 @@ msgid "Vertical Point:"
 msgstr "Punto vertical:"
 
 #: ../share/extensions/restack.inx.h:14
-#, fuzzy
 msgid "restack|Bottom"
-msgstr "Inferior"
+msgstr "Fondo"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../share/extensions/restack.inx.h:17
-#, fuzzy
 msgid "restack|Left"
-msgstr "Apilar"
+msgstr "Izquierda"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "restack|Middle"
 msgstr "Centro"
 
 #: ../share/extensions/restack.inx.h:19
-#, fuzzy
 msgid "restack|Right"
-msgstr "Apilar"
+msgstr "Derecho"
 
 #: ../share/extensions/restack.inx.h:20
-#, fuzzy
 msgid "restack|Top"
-msgstr "Apilar"
+msgstr "Arriba"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23563,7 +23547,6 @@ msgid "Compatibility with previews code to this event"
 msgstr "Compatibilidad de este evento con el código de vistas previas"
 
 #: ../share/extensions/web-set-att.inx.h:4
-#, fuzzy
 msgid ""
 "If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
@@ -23590,12 +23573,10 @@ msgid "Source and destination of setting"
 msgstr "Origen y destino del ajuste"
 
 #: ../share/extensions/web-set-att.inx.h:10
-#, fuzzy
 msgid "The first selected sets an attribute in all others"
 msgstr "El primer seleccionado fija un atributo en todos los demás"
 
 #: ../share/extensions/web-set-att.inx.h:11
-#, fuzzy
 msgid "The list of values must have the same size as the attributes list."
 msgstr ""
 "La lista de valores debe tener el mismo tamaño que la lista de atributos."
@@ -23633,7 +23614,6 @@ msgid "Web"
 msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:17
-#, fuzzy
 msgid "When should the set be done?"
 msgstr "¿Cuándo se debe fijar?"
 
@@ -23688,7 +23668,6 @@ msgid "on mouse up"
 msgstr "al soltar (on mouse up)"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmit to the last one"
 msgstr "Todos los seleccionados transmiten al último"
 
@@ -23713,7 +23692,6 @@ msgid "The first selected transmits to all others"
 msgstr "El primer seleccionado transmite a todos los demás"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when an event occurs."
