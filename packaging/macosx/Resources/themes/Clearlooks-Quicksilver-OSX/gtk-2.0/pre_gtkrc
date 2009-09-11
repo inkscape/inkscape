@@ -8,6 +8,8 @@
 # GNU General Public License http://www.gnu.org/copyleft/gpl.html
 #
 
+pixmap_path "${THEMEDIR}"
+
 style "clearlooks-default"
 {
 	GtkButton		::default_border	 = { 0, 0, 0, 0 }

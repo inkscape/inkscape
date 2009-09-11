@@ -163,6 +163,11 @@ if [ ! -e "$LIBPREFIX/lib/gnome-vfs-2.0" ]; then
 	exit 1
 fi
 
+if ! pkg-config --exists poppler; then
+	echo "Missing poppler -- please install poppler and try again." >&2
+	exit 1
+fi
+
 if ! pkg-config --modversion ImageMagick >/dev/null 2>&1; then
 	echo "Missing ImageMagick -- please install ImageMagick and try again." >&2
 	exit 1
@@ -267,6 +272,10 @@ cp -rp "$LIBPREFIX/share/mime" "$pkgresources/share/"
 
 # Icons and the rest of the script framework
 rsync -av --exclude ".svn" "$resdir"/Resources/* "$pkgresources/"
+
+# Update the ImageMagick path in startup script.
+IMAGEMAGICKVER=`pkg-config --modversion ImageMagick`
+sed -e "s,IMAGEMAGICKVER,$IMAGEMAGICKVER,g" -i "" $pkgbin/inkscape
 
 # Add python modules if requested
 if [ ${add_python} = "true" ]; then
