@@ -1037,7 +1037,7 @@ void InkscapePreferences::initPageSVGOutput()
 
     _page_svgoutput.add_group_header( _("Numbers"));
 
-    _svgoutput_numericprecision.init("/options/svgoutput/numericprecision", 1.0, 16.0, 1.0, 2.0, 8.0, true, false);
+    _svgoutput_numericprecision.init("/options/svgoutput/numericprecision", 3.0, 16.0, 1.0, 2.0, 8.0, true, false);
     _page_svgoutput.add_line( false, _("Numeric precision:"), _svgoutput_numericprecision, "", _("How many digits to write after the decimal dot"), false);
 
     _svgoutput_minimumexponent.init("/options/svgoutput/minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
