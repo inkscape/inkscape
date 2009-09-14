@@ -335,7 +335,8 @@ box3d_set_transform(SPItem *item, Geom::Matrix const &xform)
     Persp3D *persp = box3d_get_perspective(box);
     Persp3D *transf_persp;
 
-    if (!persp3d_has_all_boxes_in_selection (persp)) {
+    if (sp_desktop_document(inkscape_active_desktop()) == SP_OBJECT_DOCUMENT(item) && 
+        !persp3d_has_all_boxes_in_selection (persp)) {
         std::list<SPBox3D *> selboxes = sp_desktop_selection(inkscape_active_desktop())->box3DList();
 
         /* create a new perspective as a copy of the current one and link the selected boxes to it */
