@@ -148,6 +148,8 @@ private:
     void _setClipboardColor(guint32);
     void _userWarn(SPDesktop *, char const *);
 
+    void _inkscape_wait_for_targets(std::list<Glib::ustring> &);
+
     // private properites
     SPDocument *_clipboardSPDoc; ///< Document that stores the clipboard until someone requests it
     Inkscape::XML::Node *_defs; ///< Reference to the clipboard document's defs node
@@ -1226,7 +1228,9 @@ Geom::Scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point 
  */
 Glib::ustring ClipboardManagerImpl::_getBestTarget()
 {
-    std::list<Glib::ustring> targets = _clipboard->wait_for_targets();
+    // GTKmm's wait_for_targets() is broken, see the comment in _inkscape_wait_for_targets()
+    std::list<Glib::ustring> targets; // = _clipboard->wait_for_targets();
+    _inkscape_wait_for_targets(targets);
 
     // clipboard target debugging snippet
     /*
@@ -1365,6 +1369,35 @@ void ClipboardManagerImpl::_userWarn(SPDesktop *desktop, char const *msg)
 }
 
 
+// GTKMM's clipboard::wait_for_targets is buggy and might return bogus, see
+//
+// https://bugs.launchpad.net/inkscape/+bug/296778
+// http://mail.gnome.org/archives/gtk-devel-list/2009-June/msg00062.html
+//
+// for details. Until this has been fixed upstream we will use our own implementation
+// of this method, as copied from /gtkmm-2.16.0/gtk/gtkmm/clipboard.cc.
+void ClipboardManagerImpl::_inkscape_wait_for_targets(std::list<Glib::ustring> &listTargets)
+{
+    //Get a newly-allocated array of atoms:
+    GdkAtom* targets = 0;
+    gint n_targets = 0;
+    gboolean test = gtk_clipboard_wait_for_targets( gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), &targets, &n_targets );
+    if(!test)
+        n_targets = 0; //otherwise it will be -1.
+
+    //Add the targets to the C++ container:
+    for(int i = 0; i < n_targets; i++)
+    {
+        //Convert the atom to a string:
+        gchar* const atom_name = gdk_atom_name(targets[i]);
+
+        Glib::ustring target;
+        if(atom_name)
+            target = Glib::ScopedPtr<char>(atom_name).get(); //This frees the gchar*.
+
+        listTargets.push_back(target);
+    }
+}
 
 /* #######################################
           ClipboardManager class
