@@ -625,10 +625,14 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
 static void sp_box3d_finish(Box3DContext *bc)
 {
     bc->_message_context->clear();
-    g_assert (SP_ACTIVE_DOCUMENT->current_persp3d);
+    bc->ctrl_dragged = false;
+    bc->extruded = false;
 
     if ( bc->item != NULL ) {
         SPDesktop * desktop = SP_EVENT_CONTEXT_DESKTOP(bc);
+        SPDocument *doc = sp_desktop_document(desktop);
+        if (!doc || !doc->current_persp3d)
+            return;
 
         SPBox3D *box = SP_BOX3D(bc->item);
 
@@ -647,9 +651,6 @@ static void sp_box3d_finish(Box3DContext *bc)
 
         bc->item = NULL;
     }
-
-    bc->ctrl_dragged = false;
-    bc->extruded = false;
 }
 
 void sp_box3d_context_update_lines(SPEventContext *ec) {
