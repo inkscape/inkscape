@@ -432,6 +432,7 @@ pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern *pattern)
 {
 	if (SP_IS_OBJECT (pattern))
 		SP_OBJECT (pattern)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        /* Conditional to avoid causing infinite loop if there's a cycle in the href chain. */
 }
 
 guint
