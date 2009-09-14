@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2008-08-04 17:53+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team:  <it@li.org>\n"
@@ -2399,7 +2399,7 @@ msgstr "Ŝanĝu perspektivon (angulo de senfina akso)"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D-fako</b>; kun <b>Ŝvkl</b> por ekstrudi laŭ Z-akso"
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "Kreu 3D-fakon"
 
@@ -11291,41 +11291,41 @@ msgid "Blur tweak"
 msgstr "Korekto per puŝo"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Nenio estis kopiita."
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "Nenio en la poŝo."
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Elektu <b>objekto(j)n</b> al kiu(j) oni aplikas stilon."
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "Nenio stilo en la poŝo."
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Elektu <b>objekto(j)n</b> al kiu(j) oni aplikas grandon."
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "Nenio grandeco en la poŝo."
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Elektu <b>objekto(j)n</b> por enmeti artifikojn de viv-streko en ili."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "Nenio efiko en la poŝo."
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "La poŝo ne entenas iun strekon."
 
@@ -12231,8 +12231,9 @@ msgstr "St_ilo de streko"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
+#, fuzzy
 msgid ""
-"This matrix determines a linear transform on colour space. Each line affects "
+"This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12773,10 +12774,11 @@ msgstr ""
 "bildon: ekrane, multiplika, pli malhela kaj pli hela."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
+#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"colour of each rendered pixel. This allows for effects like turning object "
-"to grayscale, modifying colour saturation and changing colour hue."
+"color of each rendered pixel. This allows for effects like turning object to "
+"grayscale, modifying color saturation and changing color hue."
 msgstr ""
 "La prafunkcio de filtrilo <b>feMatrico-de-Koloro</b> aplikas matrican "
 "transformadon al koloro de ĉiu bildigita bildero. Tio taŭgas por artifikoj "
@@ -12885,9 +12887,10 @@ msgstr ""
 "'normala' moduso aŭ multajn prafunkciojn feMiksita en 'over' moduso."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
+#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-colour objects erode makes the object thinner and dilate makes it "
+"For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "La prafunkcio de filtrilo <b>feMorfologio</b> erodas kaj dilatas la "
@@ -15139,43 +15142,43 @@ msgstr "_Aldonu"
 msgid "New layer created."
 msgstr "Nova kreita tavolo."
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Malkaŝu tavolon"
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Kaŝu tavolon"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Bloku tavolon"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Malbloku tavolon"
 
-#: ../src/ui/dialog/layers.cpp:652
+#: ../src/ui/dialog/layers.cpp:656
 msgid "New"
 msgstr "Nova"
 
-#: ../src/ui/dialog/layers.cpp:657
+#: ../src/ui/dialog/layers.cpp:661
 msgid "Top"
 msgstr "Pinto"
 
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:667
 msgid "Up"
 msgstr "Sup"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:673
 msgid "Dn"
 msgstr "Sub"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:679
 msgid "Bot"
 msgstr "Ambaŭ"
 
-#: ../src/ui/dialog/layers.cpp:685
+#: ../src/ui/dialog/layers.cpp:689
 msgid "X"
 msgstr "X"
 
@@ -21170,7 +21173,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:221
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Neniu kongruanta nodo por  la esprimo: %s"

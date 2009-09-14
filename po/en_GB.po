@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2009-06-12 22:15-0000\n"
 "Last-Translator: Tim Sheridan <tim.sheridan@gmail.com>\n"
 "Language-Team: en_GB <en_gb@li.org>\n"
@@ -2319,7 +2319,7 @@ msgstr "Change perspective (angle of PLs)"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "Create 3D box"
 
@@ -11026,41 +11026,41 @@ msgid "Blur tweak"
 msgstr "Blur tweak"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Nothing was copied."
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "Nothing on the clipboard."
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Select <b>object(s)</b> to paste style to."
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "No style on the clipboard."
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Select <b>object(s)</b> to paste size to."
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "No size on the clipboard."
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Select <b>object(s)</b> to paste live path effect to."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "No effect on the clipboard."
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "Clipboard does not contain a path."
 
@@ -11924,8 +11924,9 @@ msgstr "Stroke st_yle"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
+#, fuzzy
 msgid ""
-"This matrix determines a linear transform on colour space. Each line affects "
+"This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12474,10 +12475,11 @@ msgstr ""
 "multiply, darken and lighten."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
+#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"colour of each rendered pixel. This allows for effects like turning object "
-"to grayscale, modifying colour saturation and changing colour hue."
+"color of each rendered pixel. This allows for effects like turning object to "
+"grayscale, modifying color saturation and changing color hue."
 msgstr ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "colour of each rendered pixel. This allows for effects like turning object "
@@ -12584,9 +12586,10 @@ msgstr ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
+#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-colour objects erode makes the object thinner and dilate makes it "
+"For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
@@ -14771,43 +14774,43 @@ msgstr "_Add"
 msgid "New layer created."
 msgstr "New layer created."
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Unhide layer"
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Hide layer"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Lock layer"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Unlock layer"
 
-#: ../src/ui/dialog/layers.cpp:652
+#: ../src/ui/dialog/layers.cpp:656
 msgid "New"
 msgstr "New"
 
-#: ../src/ui/dialog/layers.cpp:657
+#: ../src/ui/dialog/layers.cpp:661
 msgid "Top"
 msgstr "Top"
 
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:667
 msgid "Up"
 msgstr "Up"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:673
 msgid "Dn"
 msgstr "Dn"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:679
 msgid "Bot"
 msgstr "Bot"
 
-#: ../src/ui/dialog/layers.cpp:685
+#: ../src/ui/dialog/layers.cpp:689
 msgid "X"
 msgstr "X"
 
@@ -20660,7 +20663,7 @@ msgstr ""
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:221
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "No matching node for expression: %s"

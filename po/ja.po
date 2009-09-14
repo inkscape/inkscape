@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-13 18:22+0900\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2009-09-13 18:22+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -2240,7 +2240,7 @@ msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
 "<b>3D ボックス</b>; <b>Shift</b> を押しながらで Z 軸に沿って押し出します。"
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "3D ボックスを作成..."
 
@@ -10958,42 +10958,42 @@ msgid "Blur tweak"
 msgstr "微調整 ぼかし"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "何もコピーされていません。"
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "クリップボードが空です。"
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "スタイルを貼り付ける対象の<b>オブジェクト</b>を選択してください。"
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "クリップボードにスタイルはありません。"
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "サイズをペーストする対象の<b>オブジェクト</b>を選択して下さい。"
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "クリップボードにサイズはありません。"
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 "ライブパスエフェクトへ貼り付ける<b>オブジェクト</b>を選択してください。"
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "クリップボードにエフェクトはありません。"
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "クリップボードにパスは含まれていません。"
 

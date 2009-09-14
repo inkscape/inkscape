@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -2327,7 +2327,7 @@ msgstr "Đổi hình phối (góc của các đường chiếu phối cảnh)"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>Lập phương</b>; giữ <b>Shift</b> để thu phóng theo trục Z"
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "Tạo khối lập phương"
 
@@ -11035,41 +11035,41 @@ msgid "Blur tweak"
 msgstr "Chỉnh độ nhòe"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Chưa sao chép gì."
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "Không có gì trên bảng nháp."
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kiểu dáng."
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "Không có kiểu dáng nào lưu trong bảng nháp."
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kích cỡ."
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "Không có kích thước nào lưu trong bảng nháp"
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán hiệu ứng đường nét động."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "Không có hiệu ứng nào lưu trong bảng nháp"
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "Bảng nháp không chứa đường nét."
 
@@ -11936,8 +11936,9 @@ msgstr "_Kiểu nét viền"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
+#, fuzzy
 msgid ""
-"This matrix determines a linear transform on colour space. Each line affects "
+"This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12452,10 +12453,11 @@ msgstr ""
 "tối, sáng hơn và tối hơn."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
+#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"colour of each rendered pixel. This allows for effects like turning object "
-"to grayscale, modifying colour saturation and changing colour hue."
+"color of each rendered pixel. This allows for effects like turning object to "
+"grayscale, modifying color saturation and changing color hue."
 msgstr ""
 "Bộ lọc thô <b>feColorMatrix</b> chuyển đổi màu sắc của tất cả các điểm ảnh "
 "trên đối tượng được chọn dựa trên một bảng giá trị, định nghĩa phép biến đổi "
@@ -12562,9 +12564,10 @@ msgstr ""
 "độ 'over'."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
+#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-colour objects erode makes the object thinner and dilate makes it "
+"For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "Bộ lọc nguồn <b>feMorphology</b> tạo hiệu ứng thu nhỏ và mở rộng. Đối với "
@@ -14776,43 +14779,43 @@ msgstr "Thê_m"
 msgid "New layer created."
 msgstr "Lớp mới đã được tạo."
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Hiện lớp"
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Ẩn lớp"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Khoá lớp"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Gỡ khoá lớp"
 
-#: ../src/ui/dialog/layers.cpp:652
+#: ../src/ui/dialog/layers.cpp:656
 msgid "New"
 msgstr "Mới"
 
-#: ../src/ui/dialog/layers.cpp:657
+#: ../src/ui/dialog/layers.cpp:661
 msgid "Top"
 msgstr "Đỉnh"
 
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:667
 msgid "Up"
 msgstr "Lên"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:673
 msgid "Dn"
 msgstr "Xuống"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:679
 msgid "Bot"
 msgstr "Đáy"
 
-#: ../src/ui/dialog/layers.cpp:685
+#: ../src/ui/dialog/layers.cpp:689
 msgid "X"
 msgstr "X"
 
@@ -20715,7 +20718,7 @@ msgstr ""
 "hoặc cài đặt bằng trình quản lý gói (bằng lệnh như sudo apt-get install "
 "python-lxml) trước, rồi thử lại."
 
-#: ../share/extensions/inkex.py:221
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Không có nút thông tin nào khớp với biểu thức: %s"

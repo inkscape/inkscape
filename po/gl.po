@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2008-11-08 15:02+0100\n"
 "Last-Translator: Leandro Regueiro <leandro DOT regueiro AT gmail DOT com>\n"
 "Language-Team: Galician <trasno@trasno.net>\n"
@@ -2388,7 +2388,7 @@ msgstr "Crear rectángulo"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "Crear caixa 3D"
 
@@ -11415,42 +11415,42 @@ msgid "Blur tweak"
 msgstr "Sen trazo"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Non se copiou nada."
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "Non hai nada no portarretallos."
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Seleccione algún <b>obxecto</b> ó que pegarlle o estilo."
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "Non hai ningún estilo no portarretallos."
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Seleccione algún <b>obxecto</b> ó que pegarlle o tamaño."
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "Non hai ningún tamaño no portarretallos."
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Seleccione algún <b>obxecto</b> ó que pegarlle o tamaño."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "Non hai ningún efecto no portarretallos."
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "O portarretallos non contén ningún camiño."
 
@@ -12382,7 +12382,7 @@ msgstr "E_stilo do trazo"
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
 msgid ""
-"This matrix determines a linear transform on colour space. Each line affects "
+"This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12900,8 +12900,8 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"colour of each rendered pixel. This allows for effects like turning object "
-"to grayscale, modifying colour saturation and changing colour hue."
+"color of each rendered pixel. This allows for effects like turning object to "
+"grayscale, modifying color saturation and changing color hue."
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2286
@@ -12975,7 +12975,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-colour objects erode makes the object thinner and dilate makes it "
+"For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
@@ -15201,45 +15201,45 @@ msgstr "_Engadir"
 msgid "New layer created."
 msgstr "Creouse unha nova capa."
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Mostrar unha capa"
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Agochar unha capa"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Bloquear unha capa"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Desbloquear unha capa"
 
-#: ../src/ui/dialog/layers.cpp:652
+#: ../src/ui/dialog/layers.cpp:656
 msgid "New"
 msgstr "Novo"
 
-#: ../src/ui/dialog/layers.cpp:657
+#: ../src/ui/dialog/layers.cpp:661
 #, fuzzy
 msgid "Top"
 msgstr "Elevar á cima"
 
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:667
 msgid "Up"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:673
 msgid "Dn"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:679
 #, fuzzy
 msgid "Bot"
 msgstr "suavizado"
 
-#: ../src/ui/dialog/layers.cpp:685
+#: ../src/ui/dialog/layers.cpp:689
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -21445,7 +21445,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:221
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""

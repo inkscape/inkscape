@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"POT-Creation-Date: 2009-09-14 22:40+0200\n"
 "PO-Revision-Date: 2009-08-28 19:44+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -2268,7 +2268,7 @@ msgstr "Spremeni perspektivo (kot perspektivnih črt)"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D-okvir</b>; s tipko <b>Shift</b> izrivate vzdolž osi Z"
 
-#: ../src/box3d-context.cpp:646
+#: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
 msgstr "Ustvari 3D-okvir"
 
@@ -11119,41 +11119,41 @@ msgid "Blur tweak"
 msgstr "Prilagoditev z zabisanjem"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:255
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Nič ni bilo kopirano."
 
-#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
-#: ../src/ui/clipboard.cpp:542
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
+#: ../src/ui/clipboard.cpp:544
 msgid "Nothing on the clipboard."
 msgstr "Ničesar ni na odložišču."
 
-#: ../src/ui/clipboard.cpp:372
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Izberite <b>predmet</b> za prenos sloga."
 
-#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "Na odložišču ni nobenega sloga."
 
-#: ../src/ui/clipboard.cpp:423
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Izberite <b>predmet</b> za prenos velikosti."
 
-#: ../src/ui/clipboard.cpp:430
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "Na odložišču ni nobene velikosti."
 
-#: ../src/ui/clipboard.cpp:481
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Izberite <b>predmete</b> za lepljenje učinka žive poti."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:505
+#: ../src/ui/clipboard.cpp:507
 msgid "No effect on the clipboard."
 msgstr "Na odložišču ni nobenega učinka."
 
-#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
+#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
 msgid "Clipboard does not contain a path."
 msgstr "Odložišče ne vsebuje poti."
 
@@ -12018,8 +12018,9 @@ msgstr "_Slog poteze"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
+#, fuzzy
 msgid ""
-"This matrix determines a linear transform on colour space. Each line affects "
+"This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12536,10 +12537,11 @@ msgstr ""
 "zaslon, pomnoži, potemni in posvetli."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
+#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"colour of each rendered pixel. This allows for effects like turning object "
-"to grayscale, modifying colour saturation and changing colour hue."
+"color of each rendered pixel. This allows for effects like turning object to "
+"grayscale, modifying color saturation and changing color hue."
 msgstr ""
 "Bazični filter <b>feColorMatrix</b> (feBarvnaMatrika) uveljavi matrično "
 "transformacijo na barvi vsake upodobljene slikovne točke. To omogoča učinke, "
@@ -12651,9 +12653,10 @@ msgstr ""
 "'over' (preko)."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
+#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-colour objects erode makes the object thinner and dilate makes it "
+"For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "Bazični filter <b>feMorphology</b> (feMorfologija) ponuja učinka razjedanja "
@@ -14852,43 +14855,43 @@ msgstr "_Dodaj"
 msgid "New layer created."
 msgstr "Ustvarjena nova plast."
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Razkrij plast"
 
-#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Skrij plast"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Zakleni plast"
 
-#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Odkleni plast"
 
-#: ../src/ui/dialog/layers.cpp:652
+#: ../src/ui/dialog/layers.cpp:656
 msgid "New"
 msgstr "Nov"
 
-#: ../src/ui/dialog/layers.cpp:657
+#: ../src/ui/dialog/layers.cpp:661
 msgid "Top"
 msgstr "Vrh"
 
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:667
 msgid "Up"
 msgstr "Gor"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:673
 msgid "Dn"
 msgstr "Dol"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:679
 msgid "Bot"
 msgstr "Dno"
 
-#: ../src/ui/dialog/layers.cpp:685
+#: ../src/ui/dialog/layers.cpp:689
 msgid "X"
 msgstr "X"
 
@@ -20778,7 +20781,7 @@ msgstr ""
 "python.org/pypi/lxml/ ali pa jo namestite prek svojega upravitelja paketov z "
 "ukazom, kot je: sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:221
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "Ni ujemajočega vozlišča za izraz: %s"
