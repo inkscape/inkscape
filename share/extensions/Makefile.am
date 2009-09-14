@@ -131,7 +131,8 @@ extensions = \
 	web-set-att.py \
 	web-transmit-att.py \
 	whirl.py \
-	wmf_output.py
+	wmf_output.py \
+	yocto_css.py
 
 otherstuff = \
 	aisvg.xslt \
