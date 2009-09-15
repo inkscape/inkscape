@@ -184,11 +184,12 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
                     g_warning("SVG element URI was not found in the document while loading feImage");
                 }
             }
-            catch(const Inkscape::UnsupportedURIException & e)
+            // catches either MalformedURIException or UnsupportedURIException
+            catch(const Inkscape::BadURIException & e)
             {
                 feImage->from_element = false;
                 /* This occurs when using external image as the source */
-                //g_warning("caught Inkscape::UnsupportedURIException in sp_feImage_set");
+                //g_warning("caught Inkscape::BadURIException in sp_feImage_set");
                 break;
             }
             break;
