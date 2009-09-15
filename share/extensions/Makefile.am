@@ -236,8 +236,6 @@ modules = \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \
-	svgz_input.inx \
-	svgz_output.inx \
 	text_uppercase.inx\
 	text_lowercase.inx \
 	text_sentencecase.inx \
