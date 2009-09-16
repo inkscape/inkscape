@@ -38,6 +38,8 @@ int file_open_tmp( std::string& name_used, const std::string& prefix );
 
 bool file_test( char const *utf8name, GFileTest test );
 
+bool file_is_writable( char const *utf8name);
+
 GDir *dir_open(gchar const *utf8name, guint flags, GError **error);
 
 gchar *dir_read_utf8name(GDir *dir);

@@ -31,6 +31,7 @@ public:
     class save_failed {};        /**< Generic failure for an undescribed reason */
     class save_cancelled {};     /**< Saving was cancelled */
     class no_extension_found {}; /**< Failed because we couldn't find an extension to match the filename */
+    class file_read_only {};     /**< The existing file can not be opened for writing */
 
                  Output (Inkscape::XML::Node * in_repr,
                          Implementation::Implementation * in_imp);

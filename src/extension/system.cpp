@@ -32,6 +32,7 @@
 #include "implementation/script.h"
 #include "implementation/xslt.h"
 #include "xml/rebase-hrefs.h"
+#include "io/sys.h"
 /* #include "implementation/plugin.h" */
 
 namespace Inkscape {
@@ -246,6 +247,13 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if (check_overwrite && !sp_ui_overwrite_file(fileName)) {
         g_free(fileName);
         throw Output::no_overwrite();
+    }
+
+    // test if the file exists and is writable
+    // the test only checks the file attributes and might pass where ACL does not allow to write
+    if (Inkscape::IO::file_test(filename, G_FILE_TEST_EXISTS) && !Inkscape::IO::file_is_writable(filename)) {
+        g_free(fileName);
+        throw Output::file_read_only();
     }
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);

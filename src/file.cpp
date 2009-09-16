@@ -591,6 +591,14 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         g_free(text);
         g_free(safeUri);
         return FALSE;
+    } catch (Inkscape::Extension::Output::file_read_only &e) {
+        gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
+        gchar *text = g_strdup_printf(_("File %s is write protected. Please remove write protection and try again."), safeUri);
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
+        sp_ui_error_dialog(text);
+        g_free(text);
+        g_free(safeUri);
+        return FALSE;
     } catch (Inkscape::Extension::Output::save_failed &e) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("File %s could not be saved."), safeUri);
@@ -604,6 +612,9 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         return FALSE;
     } catch (Inkscape::Extension::Output::no_overwrite &e) {
         return sp_file_save_dialog(parentWindow, doc, Inkscape::Extension::FILE_SAVE_METHOD_SAVE_AS);
+    } catch (...) {
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
+        return FALSE;
     }
 
     SP_ACTIVE_DESKTOP->event_log->rememberFileSave();
@@ -837,8 +848,8 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
     if (doc->isModifiedSinceSave()) {
         if ( doc->uri == NULL )
         {
-            // Hier sollte in Argument mitgegeben werden, das anzeigt, daß das Dokument das erste
-            // Mal gespeichert wird, so daß als default .svg ausgewählt wird und nicht die zuletzt
+            // Hier sollte in Argument mitgegeben werden, das anzeigt, daï¿½ das Dokument das erste
+            // Mal gespeichert wird, so daï¿½ als default .svg ausgewï¿½hlt wird und nicht die zuletzt
             // benutzte "Save as ..."-Endung
             return sp_file_save_dialog(parentWindow, doc, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG);
         } else {

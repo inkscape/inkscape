@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <glib/gutils.h>
 #include <glibmm/fileutils.h>
 #if GLIB_CHECK_VERSION(2,6,0)
@@ -267,6 +269,38 @@ bool Inkscape::IO::file_test( char const *utf8name, GFileTest test )
     }
 
     return exists;
+}
+
+bool Inkscape::IO::file_is_writable( char const *utf8name)
+{
+    bool success = true;
+
+    if ( utf8name) {
+        gchar *filename = NULL;
+        if (utf8name && !g_utf8_validate(utf8name, -1, NULL)) {
+            /* FIXME: Trying to guess whether or not a filename is already in utf8 is unreliable.
+               If any callers pass non-utf8 data (e.g. using g_get_home_dir), then change caller to
+               use simple g_file_test.  Then add g_return_val_if_fail(g_utf_validate(...), false)
+               to beginning of this function. */
+            filename = g_strdup(utf8name);
+            // Looks like g_get_home_dir isn't safe.
+            //g_warning("invalid UTF-8 detected internally. HUNT IT DOWN AND KILL IT!!!");
+        } else {
+            filename = g_filename_from_utf8 ( utf8name, -1, NULL, NULL, NULL );
+        }
+        if ( filename ) {
+            struct stat st;
+            if(g_lstat (filename, &st) == 0) {
+                success = ((st.st_mode & S_IWRITE) != 0);
+            }
+            g_free(filename);
+            filename = NULL;
+        } else {
+            g_warning( "Unable to convert filename in IO:file_test" );
+        }
+    }
+
+    return success;
 }
 
 /** Wrapper around g_dir_open, but taking a utf8name as first argument. */
