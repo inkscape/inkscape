@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-14 22:40+0200\n"
-"PO-Revision-Date: 2009-09-06 13:11+0300\n"
+"PO-Revision-Date: 2009-09-16 22:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
@@ -12022,7 +12022,6 @@ msgstr "С_тиль штриха"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -12546,7 +12545,6 @@ msgstr ""
 "змішування: просвічування, множення, темнішання та світлішання."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
@@ -12660,7 +12658,6 @@ msgstr ""
 "застосування примітивів feComposite у 'над'-режимі."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
