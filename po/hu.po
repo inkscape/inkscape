@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-17 21:14+0200\n"
-"PO-Revision-Date: 2009-09-14 23:04+0200\n"
+"PO-Revision-Date: 2009-09-17 23:24+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -5736,6 +5736,8 @@ msgstr "A dokumentum nem lett elmentve."
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
+"A(z) \"%s\" fájl írásvédett. Távolítsa el az írásvédelmet, majd próbálkozzon "
+"újra."
 
 #: ../src/file.cpp:604
 #, c-format
