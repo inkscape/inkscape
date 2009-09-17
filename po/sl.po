@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: 2009-08-28 19:44+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -5560,13 +5560,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Zapis SVG (Scalable Vector Graphics), kot ga določa W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "Uvoz SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "Stisnjeni Inkscape SVG (*.svgz)"
 
@@ -5575,13 +5572,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "Zapis SVG, stisnjen z GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "Izvoz SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Lasten datotečni zapis Inkscape, stisnjen z GZip"
 
@@ -5621,7 +5615,7 @@ msgstr "Naj bo učinek upodobljen na platnu v živo?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Vrste datoteke ni mogoče zaznati. Datoteka bo odprta kot SVG."
 
@@ -5633,7 +5627,7 @@ msgstr "Vrste datoteke ni mogoče zaznati. Datoteka bo odprta kot SVG."
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Želene datoteke %s ni mogoče naložiti"
@@ -5686,73 +5680,80 @@ msgstr ""
 "Razširitve Inkscape za shranjevanje dokumenta (%s) ni mogoče najti. To se "
 "lahko zgodi zaradi neznane končnice datoteke."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "Dokument ni shranjen."
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "Datoteke %s ni mogoče shraniti."
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "Dokument shranjen."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "risba%s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "risba-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "Izberite datoteko za shranjevanje kopije"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "Izberi datoteko za shranjevanje"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "Ni sprememb za shranjevanje."
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "Shranjevanje dokumenta ..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "Uvozi"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "Izberi datoteko za uvoz"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Napaka pri shranjevanju začasne kopije"
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "Prijava v Open Clip Art"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5763,11 +5764,11 @@ msgstr ""
 "in geslo pravilni, če ima strežnik podporo za webdav, preverite pa tudi, če "
 "niste pozabili izbrati licence."
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "Dokument izvožen ..."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Uvozi iz odprte knjižnice izrezkov (Open Clip Art Library)"
 
@@ -6622,47 +6623,47 @@ msgstr ""
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "Branje iz otroške cevi ni uspelo (%s)"
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "Mape '%s' ni mogoče spremeniti (%s)"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Otroškega procesa (%s) ni mogoče izvršiti"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "Neveljavno ime programa: %s"
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "Neveljaven niz v vektorju argumenta pri %d: %s"
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "Neveljaven niz v okolju: %s"
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Cevi za komuniciranje z otroškim procesom (%s) ni mogoče ustvariti"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "Neveljavna delovna mapa: %s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Programa za pomoč ni mogoče izvesti (%s)"

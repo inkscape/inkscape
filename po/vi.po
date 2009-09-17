@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -5608,13 +5608,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Định dạng ảnh véc-tơ có khả năng co giãn như được W3C xác định."
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "Nhập SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "SVG Inkscape đã nén (*.svgz)"
 
@@ -5623,13 +5620,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "Định dạng tập tin SVG được nén bằng GZip."
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "Xuất SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Định dạng tập tin sở hữu của Inkscape, được nén bằng GZip."
 
@@ -5669,7 +5663,7 @@ msgstr "Cập nhật lại kết quả trên vùng vẽ mỗi khi thay đổi th
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Không nhận dạng được định dạng của tập tin. Đang mở dưới dạng SVG."
 
@@ -5681,7 +5675,7 @@ msgstr "Không nhận dạng được định dạng của tập tin. Đang mở
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Lỗi nạp tập tin đã yêu cầu %s"
@@ -5730,73 +5724,80 @@ msgstr ""
 "Không tìm thấy phần mở rộng Inkscape để lưu tài liệu (%s). Có thể vì một "
 "phần mở rộng tên tập tin không rõ."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "Chưa lưu tài liệu."
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "Không thể lưu tập tin %s."
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "Tài liệu đã được lưu."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "hình%s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "hình-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "Chọn tập tin vào đó cần lưu bản sao"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "Chọn tập tin vào đó cần lưu"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "Không có thay đổi cần lưu."
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "Đang lưu tài liệu..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "Nhập"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "Chọn tập tin cần nhập khẩu"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "Chọn tập tin vào đó cần xuất"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Gặp lỗi khi lưu một bản sao tạm thời"
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "Thông tin đăng nhập vào trang Open Clip Art"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5807,11 +5808,11 @@ msgstr ""
 "và mật khẩu đều là đúng. Nếu máy chủ hỗ trợ WebDAV, cũng kiểm tra bạn đã "
 "chọn giấy phép."
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "Tài liệu đã được xuất..."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Nhập từ Open Clip Art Library"
 
@@ -6619,47 +6620,47 @@ msgstr ""
 msgid "Replace"
 msgstr "Thay thế"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "Không đọc được từ pipe con (%s)"
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "Không di chuyển được sang thư mục '%s' (%s)"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Không thực thi được tiến trình con (%s)"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "Tên chương trình không hợp lệ: %s"
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "Gặp chuỗi không hợp lệ trong véc-tơ đối số tại %d: %s"
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "Gặp chuỗi không hợp lệ trong môi trường: %s"
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Không tạo được pipe để liên lạc với tiến trình con (%s)"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "Thư mục làm việc không hợp lệ: %s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Lỗi thực thi chương trình bổ trợ (%s)"

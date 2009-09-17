@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: 2009-09-12 10:38+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -5526,13 +5526,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Formát Scalable Vector Graphics ako ho definovalo W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "Vstup SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "Komprimované SVG Inkscape (*.svgz)"
 
@@ -5541,13 +5538,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "SVG formát komprimovaný pomocou GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "Výstup SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Natívny formát Inkscape komprimovaný pomocou GZip"
 
@@ -5587,7 +5581,7 @@ msgstr "Prejavia sa nastavenia efektov na živom plátne?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Autodetekcia formátu zlyhala. Súbor bude otvorený ako SVG."
 
@@ -5599,7 +5593,7 @@ msgstr "Autodetekcia formátu zlyhala. Súbor bude otvorený ako SVG."
 msgid "default.svg"
 msgstr "default.sk.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Nepodarilo sa načítať požadovaný súbor %s"
@@ -5652,73 +5646,80 @@ msgstr ""
 "Nenašlo sa rozšírenie Inkscape pre uloženie dokumentu  (%s). Mohla to "
 "spôsobiť neznáma prípona súboru."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "Dokument nebol uložený."
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "Súbor %s nie je uložený."
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "Dokument bol uložený."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "kresba%s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "kresba-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "Voľba súboru na uloženie kópie"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "Voľba súboru na uloženie"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "Nie je potrebné uložiť žiadne zmeny."
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "Ukladá sa dokument..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "Importovať"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "Voľba súboru na importovanie"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "Voľba súboru na exportovanie"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Chyba pri ukladaní dočasnej kópie."
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "Prihlásenie sa do Open Clip Art"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5729,11 +5730,11 @@ msgstr ""
 "mena a hesla. Ak má server podporu WebDAV a overte, či ste nezabudli zvoliť "
 "aj licenciu."
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "Dokument bol exportovaný."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importovať z knižnice Open Clip Art"
 
@@ -6575,47 +6576,47 @@ msgstr ""
 msgid "Replace"
 msgstr "Nahradiť"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "Nepodarilo sa čítanie z rúry detského procesu (%s)"
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "Nie je možné zmeniť aktuálny adresár na „%s“ (%s)"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Nepodarilo sa spustiť detský proces (%s)"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "Neplatný názov programu: %s"
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "Neplatný reťazec vo vektore argumentov na pozícii %d: %s"
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "Neplatný reťazec v prostredí: %s"
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Nepodarilo sa vytvoriť rúru na komunikáciu s detským procesom: %s"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "Neplatný pracovný adresár: %s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Nepodarilo sa spustiť pomocný program: %s"

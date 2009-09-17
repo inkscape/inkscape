@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: 2009-09-14 17:45+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -5417,13 +5417,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "由 W3C 定義之可縮放向量圖形格式"
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "SVGZ 輸入"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "壓縮的 Inkscape SVG (*.svgz)"
 
@@ -5432,13 +5429,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "SVG 檔案格式使用 GZip 壓縮"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "SVGZ 輸出"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Inkscape 本地檔案格式使用 GZip 壓縮"
 
@@ -5478,7 +5472,7 @@ msgstr "是否在畫布上即時預覽此特效？"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "格式自動偵測失敗。此檔案將視為 SVG 來開啟。"
 
@@ -5490,7 +5484,7 @@ msgstr "格式自動偵測失敗。此檔案將視為 SVG 來開啟。"
 msgid "default.svg"
 msgstr "default.zh_TW.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "無法載入所要求的檔案 %s"
@@ -5539,73 +5533,80 @@ msgid ""
 msgstr ""
 "沒有找到 Inkscape 擴充功能以儲存文件 (%s)。這可能是某個未知的副檔名所導致。"
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "文件尚未儲存。"
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "無法儲存檔案 %s。"
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "文件已儲存"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "繪圖%s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "繪圖-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "選取檔案以儲存複本到"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "選擇檔案以儲存到"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "沒有任何改變需要儲存"
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "儲存文件中..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "匯入"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "選擇欲匯入之檔案"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "選取要匯出的檔案"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "儲存暫存複本時錯誤"
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "登入開放美工圖庫"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5615,11 +5616,11 @@ msgstr ""
 "匯出文件錯誤。確認伺服器名稱、使用者名稱和密碼是否正確的。這個伺服器是否支援 "
 "webdav 也確認你沒忘記選擇授權。"
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "匯出文件中..."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "從開放美工圖庫匯入"
 
@@ -6422,47 +6423,47 @@ msgstr ""
 msgid "Replace"
 msgstr "取代"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "無法從管道讀取 (%s)"
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "無法改變到目錄「%s」(%s)"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "無法執行子處理程序 (%s)"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "無效的程式名稱：%s"
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "引數向量中無效的字串於 %d: %s"
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "環境中無效的字串： %s"
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "無法建立管道來和子處理程序溝通 (%s)"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "無效的目錄：%s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "無法執行輔助程式 (%s)"

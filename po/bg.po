@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: 2007-11-13 12:30+0200\n"
 "Last-Translator: GIMP <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -5791,13 +5791,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Scalable Vector Graphics формат, както е дефиниран от W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "SVGZ вход"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "Компресиран Inkscape SVG (*.svgz)"
 
@@ -5806,13 +5803,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "SVG файлов формат, компресиран с GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "SVGZ изход"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Форматът по подразбиране на Inkscape, компресиран с GZip"
 
@@ -5854,7 +5848,7 @@ msgstr "Контролира дали настройките на ефекта �
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 "Грешка при автоматично разпознаване на формата. Файлът е отворен като SVG."
@@ -5867,7 +5861,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Грешка при зареждане на желания файл %s"
@@ -5920,73 +5914,80 @@ msgstr ""
 "Не е намерено Inkscapeразширение за запазване на документа (%s).  Товаможе "
 "да е причинено от непознато файлово разширение."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "Документа е запазен."
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "Файлът %s не може да бъде запазен."
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "Документа е запазен."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "рисунка%s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "рисунка-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "Избор на файл, в който да се запази копие"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "Избор на файл, в който да се запази"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "Няма промени, които да бъдат запазени."
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "Запазване на документ..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "Внасяне"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "Избор на файл за внасяне"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "Избор на файл, в който да се изнесе"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Грешка при запис на временно копие"
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "Вход за Open Clip Art"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, fuzzy, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5997,11 +5998,11 @@ msgstr ""
 "потребителското име паролата са правилни. Дали сървърът поддържа webdav, и "
 "не сте забравили са изберете лиценз."
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "Документ изнесен..."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Внасяне от Open Clip Art Library"
 
@@ -6828,51 +6829,51 @@ msgstr ""
 msgid "Replace"
 msgstr "Замяна"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr ""
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, fuzzy, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr ""
 "Не може да създаде папка %s.\n"
 "%s"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, fuzzy, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Грешка при зареждане на желания файл %s"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr ""
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr ""
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr ""
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, fuzzy, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Грешка при създаване на временен файл за отпечатване: %s"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, fuzzy, c-format
 msgid "Invalid working directory: %s"
 msgstr ""
 "%s не е валидна папка.\n"
 "%s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, fuzzy, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Грешка при създаване на временен файл за отпечатване: %s"

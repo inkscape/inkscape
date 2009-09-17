@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-14 22:40+0200\n"
+"POT-Creation-Date: 2009-09-17 21:14+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -5506,13 +5506,10 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "W3C에 의해 정의된 SVG 형식"
 
 #: ../src/extension/internal/svgz.cpp:47
-#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "SVGZ 입력"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
-#: ../share/extensions/svgz_input.inx.h:1
-#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "압축된 Inkscape SVG·(*.svgz)"
 
@@ -5521,13 +5518,10 @@ msgid "SVG file format compressed with GZip"
 msgstr "Gzip으로 압축된 SVG 파일 형식"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
-#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "SVGZ 출력"
 
 #: ../src/extension/internal/svgz.cpp:68
-#: ../share/extensions/svgz_input.inx.h:2
-#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "Gzip으로 압축된 Inkscape 파일 형식"
 
@@ -5567,7 +5561,7 @@ msgstr "캠버스상에서 효과를 미리보기를 할까요?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:106
+#: ../src/extension/system.cpp:107
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "파일 형식 자동인식 실패, SVG형식으로 파일을 읽습니다."
 
@@ -5579,7 +5573,7 @@ msgstr "파일 형식 자동인식 실패, SVG형식으로 파일을 읽습니�
 msgid "default.svg"
 msgstr "기본.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1039
+#: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "요청한파일  %s를 읽어오는데 실패"
@@ -5627,73 +5621,80 @@ msgid ""
 "caused by an unknown filename extension."
 msgstr "문서 (%s)를 저장하기 위한 Inkscape 확장자가 없음."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
+#: ../src/file.cpp:611 ../src/file.cpp:616
 msgid "Document not saved."
 msgstr "문서가 저장되지 않음."
 
 #: ../src/file.cpp:596
 #, c-format
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
+msgstr ""
+
+#: ../src/file.cpp:604
+#, c-format
 msgid "File %s could not be saved."
 msgstr "파일 %s가 저장되지 않을 수 있습니다."
 
-#: ../src/file.cpp:610
+#: ../src/file.cpp:621
 msgid "Document saved."
 msgstr "문서 저장됨."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
+#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
 #, c-format
 msgid "drawing%s"
 msgstr "그림 %s"
 
-#: ../src/file.cpp:748
+#: ../src/file.cpp:759
 #, c-format
 msgid "drawing-%d%s"
 msgstr "그림-%d%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:763
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:767
+#: ../src/file.cpp:778
 msgid "Select file to save a copy to"
 msgstr "복사본을 저장하기 위하여 파일 선택"
 
-#: ../src/file.cpp:769
+#: ../src/file.cpp:780
 msgid "Select file to save to"
 msgstr "저장 파일 선택"
 
-#: ../src/file.cpp:860
+#: ../src/file.cpp:871
 msgid "No changes need to be saved."
 msgstr "저장된 변화가 없음."
 
-#: ../src/file.cpp:877
+#: ../src/file.cpp:888
 msgid "Saving document..."
 msgstr "문서 저장..."
 
-#: ../src/file.cpp:1036
+#: ../src/file.cpp:1047
 msgid "Import"
 msgstr "불러오기"
 
-#: ../src/file.cpp:1086
+#: ../src/file.cpp:1097
 msgid "Select file to import"
 msgstr "읽어올 파일 선택"
 
-#: ../src/file.cpp:1198 ../src/file.cpp:1312
+#: ../src/file.cpp:1209 ../src/file.cpp:1323
 msgid "Select file to export to"
 msgstr "내보내기 위한 파일 선택"
 
-#: ../src/file.cpp:1344
+#: ../src/file.cpp:1355
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "임시파일 저장 중 오류"
 
-#: ../src/file.cpp:1364
+#: ../src/file.cpp:1375
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art 로그인"
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1401
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5701,11 +5702,11 @@ msgid ""
 "didn't forget to choose a license."
 msgstr "문서 내보내기 오류."
 
-#: ../src/file.cpp:1411
+#: ../src/file.cpp:1422
 msgid "Document exported..."
 msgstr "문서 내보내기..."
 
-#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Open Clip Art에서 읽어오기"
 
@@ -6508,47 +6509,47 @@ msgstr ""
 msgid "Replace"
 msgstr "치환"
 
-#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
+#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "자식 파이프 (%s) 로 부터 읽는데 실패"
 
-#: ../src/io/sys.cpp:444
+#: ../src/io/sys.cpp:478
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "'%s' (%s) 폴더 변경 실패!"
 
-#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
+#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "자식 프로세스 (%s) 실행 실패!"
 
-#: ../src/io/sys.cpp:623
+#: ../src/io/sys.cpp:657
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "부적합한 프로그램 이름: %s"
 
-#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
+#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "%d의 인수 벡터에서 부적합한 문자열 : %s"
 
-#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
+#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "환경에서 부적합한 문자열: %s"
 
-#: ../src/io/sys.cpp:705
+#: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "자식 프로세스 (%s)와 통신하기 위한 파이프 생성 실패"
 
-#: ../src/io/sys.cpp:918
+#: ../src/io/sys.cpp:952
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "부적합한 작업 폴더 : %s"
 
-#: ../src/io/sys.cpp:986
+#: ../src/io/sys.cpp:1020
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "도움말 프로그램 (%s) 실행 오류!"
