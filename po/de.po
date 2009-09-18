@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-17 21:14+0200\n"
-"PO-Revision-Date: 2009-09-11 15:18+0100\n"
+"PO-Revision-Date: 2009-09-18 01:25+0100\n"
 "Last-Translator: Alexander Senger <neutronenspalter@freenet.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1667,12 +1667,11 @@ msgstr "Erstelle verwirbelte Kontur außen herum"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Quadritone fantasy"
-msgstr ""
+msgstr "Vierfarben-Fantasie"
 
 #: ../share/filters/filters.svg.h:174
-#, fuzzy
 msgid "Replace hue by two colors"
-msgstr "Farbe ersetzen"
+msgstr "Farbwert durch zwei Farben ersetzen"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
@@ -1853,14 +1852,12 @@ msgid "Something like a water noise"
 msgstr "Dünn, wie eine Seifenblase"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Monochrome transparency"
-msgstr "Transparenzrauschen"
+msgstr "Monochrome Transparenz"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "In einfärbbares transparentes Negativ umwandeln"
+msgstr "In einfärbbares transparentes Positiv oder Negativ umwandeln"
 
 #: ../share/filters/filters.svg.h:196
 #, fuzzy
@@ -1992,9 +1989,8 @@ msgid "Melted jelly"
 msgstr "Geschmolzenes Gelee"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "Striche enden mit einem runden Ende"
+msgstr "Glänzende Wölbung mit verschwommenen Kanten"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Combined lighting"
@@ -2057,13 +2053,12 @@ msgid "Random rounded living cells like fill"
 msgstr "Füllung mit zufälliger Zellstruktur"
 
 #: ../share/filters/filters.svg.h:218
-#, fuzzy
 msgid "Fluorescence"
-msgstr "Anwesenheit"
+msgstr "Fluoreszenz"
 
 #: ../share/filters/filters.svg.h:218
 msgid "Oversaturate colors which can be fluorescent in real world"
-msgstr ""
+msgstr "Farben übersättigen (erinnert an fluoreszente Farben)"
 
 #: ../share/filters/filters.svg.h:219
 #, fuzzy
@@ -5738,6 +5733,8 @@ msgstr "Dokument wurde nicht gespeichert."
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
+"Datei %s ist schreibgeschützt! Bitte entfernen Sie den Schreibschutz und "
+"versuchen es dann erneut."
 
 #: ../src/file.cpp:604
 #, c-format
@@ -5845,9 +5842,8 @@ msgid "Diffuse Lighting"
 msgstr "Diffuse Beleuchtung"
 
 #: ../src/filter-enums.cpp:26
-#, fuzzy
 msgid "Displacement Map"
-msgstr "Maximale Verschiebung, px"
+msgstr "Versatzkarte"
 
 #: ../src/filter-enums.cpp:27
 msgid "Flood"
@@ -7754,7 +7750,6 @@ msgid "Half-turns smoothness: 1st side, in"
 msgstr "Weichheit der Rundungen: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
 "0=sharp, 1=default"
@@ -7767,7 +7762,6 @@ msgid "1st side, out"
 msgstr "1. Seite, außen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
@@ -7780,7 +7774,6 @@ msgid "2nd side, in"
 msgstr "2. Seite, innen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
@@ -7793,7 +7786,6 @@ msgid "2nd side, out"
 msgstr "2. Seite, außen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
-#, fuzzy
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
@@ -7806,10 +7798,9 @@ msgid "Magnitude jitter: 1st side"
 msgstr "Ausmaß Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-#, fuzzy
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
-"Verschiebt zufällig \"untere\" Wendepunkte, um Änderung der Größenordnung zu "
+"Verschiebt zufällig \"untere\" Wendepunkte, um Änderung der Amplitude zu "
 "erreichen."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
@@ -7819,10 +7810,9 @@ msgid "2nd side"
 msgstr "2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-#, fuzzy
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
-"Verschiebt zufällig \"obere\" Wendepunkte, um Änderung der Größenordnung zu "
+"Verschiebt zufällig \"obere\" Wendepunkte, um Änderung der Amplitude zu "
 "erreichen."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
@@ -7852,12 +7842,10 @@ msgid "Variance: 1st side"
 msgstr "Varianz: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Randomness of 'bottom' half-turns smoothness"
 msgstr "Zufall in der Glattheit \"unterer\" Wendepunkte"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-#, fuzzy
 msgid "Randomness of 'top' half-turns smoothness"
 msgstr "Zufall in der Glattheit \"oberer\" Wendepunkte"
 
@@ -7867,7 +7855,6 @@ msgid "Generate thick/thin path"
 msgstr "Erzeuge dicken/dünnen Pfad"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Simulate a stroke of varying width"
 msgstr "Simulieren eines Striches mit variabler Breite"
 
@@ -7884,7 +7871,6 @@ msgid "Thickness: at 1st side"
 msgstr "Dicke: auf der 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "Width at 'bottom' half-turns"
 msgstr "Breite an den \"unteren\" Wendepunkten"
 
@@ -7893,7 +7879,6 @@ msgid "at 2nd side"
 msgstr "auf der 2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
-#, fuzzy
 msgid "Width at 'top' half-turns"
 msgstr "Breite an den \"oberen\" Wendepunkten"
 
@@ -7903,7 +7888,6 @@ msgid "from 2nd to 1st side"
 msgstr "von der 2. zur 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
-#, fuzzy
 msgid "Width from 'top' to 'bottom'"
 msgstr "Breite der Striche von \"oben\" nach \"unten\""
 
@@ -7912,7 +7896,6 @@ msgid "from 1st to 2nd side"
 msgstr "von der 1. zur 2. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
-#, fuzzy
 msgid "Width from 'bottom' to 'top'"
 msgstr "Breite an den \"unteren\" Wendepunkten"
 
@@ -8443,9 +8426,8 @@ msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Das Dokument in eine EMF-Datei exportieren"
 
 #: ../src/main.cpp:384
-#, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
-msgstr "Textelemente beim EPS-Export in Pfade umwandeln "
+msgstr "Textelemente beim PS-/EPS-/PDF-Export in Pfade umwandeln "
 
 #: ../src/main.cpp:389
 msgid ""
@@ -8926,7 +8908,6 @@ msgstr ""
 "und horizontale Rundung gleich"
 
 #: ../src/object-edit.cpp:447 ../src/object-edit.cpp:451
-#, fuzzy
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
@@ -8966,7 +8947,6 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "<b>Höhe</b> der Ellipse anpassen; <b>Strg</b> erzeugt einen Kreis"
 
 #: ../src/object-edit.cpp:933
-#, fuzzy
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
@@ -9212,7 +9192,6 @@ msgid "Toggle multiple vanishing points"
 msgstr "Multiple Fluchtpunkte umschalten"
 
 #: ../src/preferences.cpp:101
-#, fuzzy
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
@@ -11976,11 +11955,10 @@ msgstr "<b>Einrasten an Führungslinien</b>"
 msgid "(invalid UTF-8 string)"
 msgstr "(ungültiger UTF-8 string)"
 
-# !!! palettes, not swatches?
 #: ../src/ui/dialog/document-properties.cpp:349
-#, fuzzy, c-format
+#, c-format
 msgid "Color profiles directory (%s) is unavailable."
-msgstr "Palettenverzeichnis (%s) nicht auffindbar."
+msgstr "Verzeichnis der Farbprofile (%s) nicht auffindbar."
 
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
@@ -12204,7 +12182,6 @@ msgstr "_Muster der Kontur"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -12212,9 +12189,9 @@ msgid ""
 "depend on input colors, so can be used to adjust a constant component value."
 msgstr ""
 "Diese Matrix definiert eine lineare Transformation im Farbraum. Jede Zeile "
-"wirkt auf eine der Farbkomponenten. Jede Spalte bestimmt den Einfluß der "
-"jeweiligen Eingangskomponente. Die letzte Spalte gibt einen konstanten "
-"Grundwert der Ausgangskomponenten vor. "
+"wirkt auf eine der Farbkomponenten des Ausgangs, jede Spalte bestimmt den "
+"Einfluß der jeweiligen Eingangskomponente. Die letzte Spalte gibt einen "
+"konstanten Grundwert der Ausgangskomponenten vor. "
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
@@ -12424,12 +12401,10 @@ msgstr ""
 msgid "Value(s):"
 msgstr "Wert(e):"
 
-# !!! Urheber?
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2223
-#, fuzzy
 msgid "Operator:"
-msgstr "Operator"
+msgstr "Operator:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K1:"
@@ -12439,15 +12414,14 @@ msgstr "K1"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2187
-#, fuzzy
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
 "values of the first and second inputs respectively."
 msgstr ""
-"Bei gewählter Arithmetischer  Verknüpfung wird jeder Zielbildpunkt durch die "
-"Formel k1*i1*i2 + k2*i1 + k3*i2 + k4 berechnet.  Wobei i1 und i2 die Werte "
-"der Eingangsbildpunkte ist."
+"Bei gewählter Arithmetischer Verknüpfung wird jeder Zielbildpunkt durch die "
+"Formel k1*i1*i2 + k2*i1 + k3*i2 + k4 berechnet, wobei i1 und i2 die Werte "
+"der Eingangsbildpunkte sind."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 msgid "K2:"
@@ -12733,15 +12707,14 @@ msgstr ""
 "Multiplizieren, Verdunkeln und Erhellen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
 "grayscale, modifying color saturation and changing color hue."
 msgstr ""
-"Der <b>Farb-Matrix</b> Filter bewirkt eine Matrix-Transformation der Farben "
-"jedes gerenderten Pixels. Das erlaubt Effekte wie Umwandeln in Graustufen, "
-"Modifizieren der Sättigung und Änderung der Helligkeit."
+"Der Filterbaustein <b>feFarbmatrix</b> wendet eine Matrix-Transformation auf "
+"die Farben der gerenderten Pixel an. Dies erlaubt Effekte wie Umwandeln in "
+"Graustufen, Modifizieren der Sättigung und Änderung des Farbwerts."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid ""
@@ -12750,6 +12723,10 @@ msgid ""
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
 msgstr ""
+"Der Filterbaustein <b>feKomponententransfer</b> beeinflusst die "
+"Farbkomponenten des Eingangs (rot, grün, blau und alpha) gemäß "
+"festzulegender Transferfunktionen. Dies erlaubt Operationen wie Helligkeits- "
+"und Kontrasteinstellung, Farbbalance und Schwellenwerte."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2290
 msgid ""
@@ -12785,6 +12762,10 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"Die Filterbausteine <b>feDiffuseBeleuchtung</b> und fePunktlichtbeleuchtung "
+"erzeugen \"Relief-Schattierungen\". Der Alphakanal des Eingangs wird "
+"verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden "
+"angehoben, weniger opake abgesenkt."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2302
 msgid ""
@@ -12793,6 +12774,10 @@ msgid ""
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
 msgstr ""
+"Der Filterbaustein <b>feVersatzKarte</b> verschiebt die Pixel des ersten "
+"Eingangs unter Verwendung des zweiten Eingangs als Versatzkarte. Letztere "
+"definiert, woher die Pixel kommen sollen. Klassische Beispiele sind Wirbel- "
+"und Quetscheffekte."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2306
 msgid ""
@@ -12800,6 +12785,9 @@ msgid ""
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
+"Der Filterbaustein <b>feFüllung</b> füllt einen Bereich mit vorgegebener "
+"Farbe und Opazität. Normalerweise wird dies als Eingang für andere Filter "
+"verwendet, um so Farben ins Spiel zu bringen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2310
 msgid ""
@@ -12815,6 +12803,8 @@ msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
+"Der Filterbaustein <b>feBild</b> füllt eine Region mit einem externen Bild "
+"oder einem anderen Teil des Dokuments."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2318
 msgid ""
@@ -12823,6 +12813,10 @@ msgid ""
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
+"Der Filterbaustein <b>feVerschmelzen</b> führt mehrere einzelne Bilder zu "
+"einem einzigen zusammen unter Verwendung des Alphakanals. Dies ist "
+"äquivalent zu den Bausteinen feÜberblenden im Normalmodus oder feVerbund im "
+"\"Überlagern\"-Modus."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid ""
@@ -12830,6 +12824,9 @@ msgid ""
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
+"Der Filterbaustein <b>feMorphologie</b> stellt die Effekte \"Erodieren\" und "
+"\"Weiten\" zur Verfügung. Für einfarbige Objekte wirkt \"Erodieren\" "
+"ausdünnend und \"Weiten\" verdickend."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid ""
@@ -12837,6 +12834,10 @@ msgid ""
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
+"Der Filterbaustein <b>feVersatz</b> verschiebt das Bild um einen "
+"benutzerdefinierten Betrag. Dies ist z. B. für abgesetzte Schatten nützlich, "
+"die sich an einer leicht anderen Position als das eigentliche Objekt "
+"befinden."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 msgid ""
@@ -12845,11 +12846,17 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
+"Die Filterbausteine feDiffuseBeleuchtung und <b>fePunktlichtbeleuchtung</b> "
+"erzeugen \"geprägte\" Schattierungen. Der Alphakanal des Eingangs wird "
+"verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden "
+"angehoben, weniger opake abgesenkt."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
+"Der Filterbaustein <b>feKacheln</b> belegt einen Bereich mit Kopien einer "
+"Graphik."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2338
 msgid ""
@@ -12857,6 +12864,10 @@ msgid ""
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
+"Der Filterbaustein <b>feTurbulenz</b> zeichnet Perlin-Rauschen. Diese Art "
+"von Rauschen kann verwendet werden, um natürliche Phänomene wie Wolken, "
+"Feuer oder Rauch, sowie komplexe Texturen wie Marmor oder Granit "
+"nachzubilden."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
@@ -13087,7 +13098,6 @@ msgid "Delay (in ms):"
 msgstr "Verzögerung (in msec):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
-#, fuzzy
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
@@ -13102,12 +13112,11 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Nur an dem Knoten einrasten, der dem Zeiger am nähesten ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-#, fuzzy
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
-"Nur versuchen an dem Knoten einzurasten, der initial dem Mauszeiger am "
-"nähesten ist."
+"Nur versuchen an dem Knoten einzurasten, der dem Mauszeiger zu Beginn am "
+"nächsten ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
 msgid "Weight factor:"
@@ -13260,10 +13269,9 @@ msgid "times current stroke width"
 msgstr "(Faktor zur Kontur)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:295
-#, fuzzy
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
-"Größe der Punkte die durch Strg+Klick erzeugt werden (Relative zu aktuellen "
+"Größe der Punkte, die durch Strg+Klick erzeugt werden (Relativ zur aktuellen "
 "Strichdicke)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:310
@@ -13951,12 +13959,10 @@ msgstr "Niedrigste Qualität (beträchtliche Artefakte), aber schnellste Anzeige
 msgid "Filter effects quality for display:"
 msgstr "Effekt-Qualität für Anzeige:"
 
-# !!! Filterprimitiv
 #. show infobox
 #: ../src/ui/dialog/inkscape-preferences.cpp:729
-#, fuzzy
 msgid "Show filter primitives infobox"
-msgstr "Attribut für Filterprimitiv setzen"
+msgstr "Zeigt Informationen zu den Filterbausteinen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:731
 msgid ""
@@ -14102,11 +14108,13 @@ msgid "Display adjustment"
 msgstr "Anzeige Anpassungen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:848
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
 "Searched directories:%s"
-msgstr "ICC-Profil das zum kalibrieren der Anzeige genutzt werden soll."
+msgstr ""
+"ICC-Profil, das zum Kalibrieren der Anzeige genutzt werden soll.\n"
+"Durchsuchte Verzeichnisse:%s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:849
 msgid "Display profile:"
@@ -14185,9 +14193,8 @@ msgid "Enables black point compensation."
 msgstr "Ermöglicht Schwarzpunktkompensation"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:894
-#, fuzzy
 msgid "Preserve black"
-msgstr "Beibehalten"
+msgstr "Schwarzwert beibehalten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:899
 msgid "(LittleCMS 1.15 or later required)"
@@ -14225,9 +14232,8 @@ msgstr ""
 "gezeichnet, wenn die Ansicht herausgezoomt ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:969
-#, fuzzy
 msgid "Default grid settings"
-msgstr "Ausrichtung der Zeichenfläche:"
+msgstr "Vorgabe Gittereinstellungen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
 #: ../src/ui/dialog/inkscape-preferences.cpp:996
@@ -14657,12 +14663,10 @@ msgid "Set the size for the tool icons (requires restart)"
 msgstr "Größe der Werkzeugsymbole verändern (erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
-#, fuzzy
 msgid "Control bar icon size"
-msgstr "Werkzeugeinstellungsleiste"
+msgstr "Symbolgröße in Werkzeugleiste"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-#, fuzzy
 msgid ""
 "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr ""
@@ -14671,16 +14675,14 @@ msgstr ""
 
 # !!! called "Commands Bar" in other places
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
-#, fuzzy
 msgid "Secondary toolbar icon size"
-msgstr "Befehlsleiste kleiner machen"
+msgstr "Symbolgröße in zweiter Werkzeugleiste"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1085
-#, fuzzy
 msgid ""
 "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr ""
-"Befehlsleiste in der Größe einer sekundären Werkzeugleiste darstellen "
+"Bestimmt die Größe der Piktogramme in untergeordneten Werkzeugleisten "
 "(erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1088
@@ -14704,12 +14706,11 @@ msgid "Maximum documents in Open Recent:"
 msgstr "Länge der \"letzte Dokumente\"-Liste:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
-#, fuzzy
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
 msgstr ""
-"Die maximale Länge der Liste zuletzt geöffneter Dokumente im Menü »Datei«."
+"Die maximale Länge der Liste zuletzt geöffneter Dokumente im Menü »Datei«"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1105
 msgid "Zoom correction factor (in %):"
@@ -15298,14 +15299,12 @@ msgid "Set SVG Font attribute"
 msgstr "SVG-Schrift-Attribut setzen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
-#, fuzzy
 msgid "Adjust kerning value"
-msgstr "Sättigung anpassen"
+msgstr "Unterschneidung anpassen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
-#, fuzzy
 msgid "Family Name:"
-msgstr "Dateiname setzen"
+msgstr "Font-Familienname:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:374
 msgid "Set width:"
@@ -15322,17 +15321,13 @@ msgstr "Glyphe hinzufügen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:481
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:525
-#, fuzzy
 msgid "Select a <b>path</b> to define the curves of a glyph"
-msgstr "<b>Pfad</b> zum Schrumpfen/Erweitern auswählen."
+msgstr "Wählen Sie einen <b>Pfad</b> aus, der die Form der Glyphe bestimmt."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:489
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:533
-#, fuzzy
 msgid "The selected object does not have a <b>path</b> description."
-msgstr ""
-"Ausgewähltes Objekt ist <b>kein Pfad</b> - kann es nicht schrumpfen/"
-"erweitern."
+msgstr "Ausgewähltes Objekt ist <b>kein Pfad</b>!"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:504
 msgid "No glyph selected in the SVGFonts dialog."
@@ -15360,14 +15355,12 @@ msgid "Remove font"
 msgstr "Schrift entfernen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:623
-#, fuzzy
 msgid "Remove glyph"
-msgstr "Füllung entfernen"
+msgstr "Glyphe entfernen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Rechteck entfernen"
+msgstr "Unterschneidungspaar entfernen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
@@ -15387,9 +15380,8 @@ msgid "Glyph name"
 msgstr "Name der Glyphe"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
-#, fuzzy
 msgid "Matching string"
-msgstr "  Zeichenkette: "
+msgstr "Passende Zeichenkette "
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
@@ -15405,9 +15397,8 @@ msgstr "Unterschneidungspaar hinzufügen"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:734
-#, fuzzy
 msgid "Kerning Setup:"
-msgstr "Unterschneidung nach oben"
+msgstr "Unterschneidungseinstellung:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
@@ -15418,9 +15409,8 @@ msgid "2nd Glyph:"
 msgstr "2. Glyphe:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:741
-#, fuzzy
 msgid "Add pair"
-msgstr "Ebene hinzufügen"
+msgstr "Paarung hinzufügen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 #, fuzzy
@@ -15806,14 +15796,18 @@ msgstr "Optionen"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:627
-#, fuzzy
 msgid ""
 "Inkscape bitmap tracing\n"
 "is based on Potrace,\n"
 "created by Peter Selinger\n"
 "\n"
 "http://potrace.sourceforge.net"
-msgstr "Dank an Peter Selinger, http://potrace.sourceforge.net"
+msgstr ""
+"Inkscapes Vektorrasterisierung\n"
+"basiert auf Potrace,\n"
+"entwickelt von Peter Selinger\n"
+"\n"
+"http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:630
 msgid "Credits"
@@ -18611,7 +18605,7 @@ msgstr "Farbprofil entfernen"
 
 #: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
-msgstr ""
+msgstr "Entfernt ein verknüpftes ICC-Farbprofil."
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -19336,6 +19330,8 @@ msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
+"Mittenmarkierungen werden auf jedem Knoten entlang eines Pfades - außer dem "
+"ersten und letzten - gezeichnet."
 
 #: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers:"
@@ -19344,6 +19340,8 @@ msgstr "Endmarkierungen:"
 #: ../src/widgets/stroke-style.cpp:1256
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
+"Endmarkierungen werden auf dem ersten und letzten Knoten eines Pfades oder "
+"einer Form gezeichnet."
 
 #: ../src/widgets/stroke-style.cpp:1605 ../src/widgets/stroke-style.cpp:1701
 msgid "Set stroke style"
@@ -19351,7 +19349,7 @@ msgstr "Stil der Kontur setzen"
 
 #: ../src/widgets/toolbox.cpp:183
 msgid "Color/opacity used for color tweaking"
-msgstr ""
+msgstr "Farbe / Opazität zur Farbjustage"
 
 #: ../src/widgets/toolbox.cpp:187
 msgid "Style of new stars"
@@ -19572,7 +19570,7 @@ msgstr "An Ecken der Umrandung einrasten"
 
 #: ../src/widgets/toolbox.cpp:2064
 msgid "BBox Edge Midpoints"
-msgstr ""
+msgstr "Mittenpunkte der Umrandungskanten"
 
 #: ../src/widgets/toolbox.cpp:2064
 msgid "Snap from and to midpoints of bounding box edges"
@@ -19722,7 +19720,7 @@ msgstr "Zahl der Ecken eines Polygons oder Sterns"
 
 #: ../src/widgets/toolbox.cpp:2771
 msgid "thin-ray star"
-msgstr ""
+msgstr "Dünnstrahliger Stern"
 
 #: ../src/widgets/toolbox.cpp:2771
 msgid "pentagram"
@@ -20038,7 +20036,7 @@ msgstr "startet vom Mittelpunkt"
 
 #: ../src/widgets/toolbox.cpp:3752
 msgid "starts mid-way"
-msgstr ""
+msgstr "beginnt mittig"
 
 #: ../src/widgets/toolbox.cpp:3752
 msgid "starts near edge"
@@ -20090,7 +20088,7 @@ msgstr "Erstelle eine Folge von Achsenparallelen Liniensegmenten"
 
 #: ../src/widgets/toolbox.cpp:3859
 msgid "Mode of new lines drawn by this tool"
-msgstr ""
+msgstr "Modus für neue, mit diesem Werkzeug zu zeichnende Linien"
 
 #: ../src/widgets/toolbox.cpp:3888
 msgid "Triangle in"
@@ -20151,7 +20149,7 @@ msgstr ""
 #. Width
 #: ../src/widgets/toolbox.cpp:4121
 msgid "(pinch tweak)"
-msgstr ""
+msgstr "(Zupfjustage)"
 
 #: ../src/widgets/toolbox.cpp:4121
 msgid "(broad tweak)"
@@ -20746,7 +20744,7 @@ msgstr "Zeige Begrenzungsrahmen"
 
 #: ../src/widgets/toolbox.cpp:5609
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
+msgstr "Zeigt Umrandung (wird benutzt, um unendliche Linien zu schneiden)"
 
 #: ../src/widgets/toolbox.cpp:5620
 msgid "Get limiting bounding box from selection"
@@ -20778,7 +20776,7 @@ msgstr "LPE Dialog öffnen"
 
 #: ../src/widgets/toolbox.cpp:5671
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
+msgstr "Öffnet den LPE-Dialog (erlaubt Anpassung der Parameterwerte)"
 
 #: ../src/widgets/toolbox.cpp:5735
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -20786,7 +20784,7 @@ msgstr "Die Größe des Radiers (relativ zum sichtbaren Dokumentausschnitt)"
 
 #: ../src/widgets/toolbox.cpp:5753
 msgid "Delete objects touched by the eraser"
-msgstr ""
+msgstr "Lösche Objekte, die vom Radierer berührt werden."
 
 #: ../src/widgets/toolbox.cpp:5759
 msgid "Cut"
@@ -20954,6 +20952,8 @@ msgstr ""
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr ""
+"Fehler beim Bearbeiten dieses Objekts. Versuchen Sie, es in einen Pfad "
+"umzuwandeln."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
@@ -20970,19 +20970,19 @@ msgstr "Seitenlänge 'c'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians: "
-msgstr ""
+msgstr "Winkel A in Radiant:"
 
 #: ../share/extensions/draw_from_triangle.py:179
 msgid "Angle 'B'/radians: "
-msgstr ""
+msgstr "Winkel B in Radiant:"
 
 #: ../share/extensions/draw_from_triangle.py:180
 msgid "Angle 'C'/radians: "
-msgstr ""
+msgstr "Winkel C in Radiant:"
 
 #: ../share/extensions/draw_from_triangle.py:181
 msgid "Semiperimeter/px: "
-msgstr ""
+msgstr "Halbdurchmesser in px:"
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Area /px^2: "
@@ -21002,6 +21002,8 @@ msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
 msgstr ""
+"Keine Attribute xlink:href oder sodipodi:absref gefunden, bzw. zeigen diese "
+"nicht auf eine existierende Datei! Fehler beim Einbetten der Grafik."
 
 #: ../share/extensions/embedimage.py:76
 #, python-format
@@ -21026,7 +21028,6 @@ msgstr ""
 "von http://pyxml.sourceforge.net/ herunter."
 
 #: ../share/extensions/extractimage.py:66
-#, fuzzy
 msgid "Unable to find image data."
 msgstr "Problem beim Auffinden der Bilderdaten"
 
@@ -21125,16 +21126,14 @@ msgstr ""
 " Versuchen sie den Befehl Pfad | Objekt in Pfad umwandeln."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
-"Der Import der numpy -Module ist fehlgeschlagen. Diese Module werden von der "
-"Erweiterung benötigt. Bitte installieren Sie diese und versuchen es erneut. "
-"Auf einem Debian-Betriebssystem können Sie dafür folgenden Befehl nutzen: "
-"sudo apt-get install python-numpy"
+"Der Import der benötigten numpy -Module ist fehlgeschlagen. Bitte "
+"installieren Sie diese und versuchen es erneut. Auf einem Debian-System "
+"können Sie dafür folgenden Befehl nutzen: sudo apt-get install python-numpy"
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
@@ -21142,15 +21141,16 @@ msgstr "Keine Flächendaten im ausgewählter Datei gefunden"
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Versuchen Sie es mit \"kantendefiniert\" im Modeldatei-Reiter.\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
 msgstr ""
+"In der spezifizierten Datei wurden keine Kantenbeschreibungen gefunden."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Versuchen Sie es mit \"flächendefiniert\" im Modeldatei-Reiter.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
@@ -21158,19 +21158,21 @@ msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
+"Keine Flächenbeschreibungen gefunden! Stellen Sie sicher, dass die Datei "
+"Flächendaten enthält und als \"flächendefiniert\" im Reiter \"Modeldatei\" "
+"importiert wird.\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
 msgstr "Interner Fehler. Kein Ansichtstyp gewählt\n"
 
 #: ../share/extensions/summersnight.py:36
-#, fuzzy
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
 msgstr ""
-"Diese Erweiterung erwartet, dass der als zweites gewählte Pfad vier Knoten "
-"lang ist."
+"Diese Erweiterung erwartet zwei gewählte Pfade,\n"
+"mit genau vier Knoten im zweiten Pfad."
 
 #: ../share/extensions/svg_and_media_zip_output.py:125
 #, python-format
@@ -21179,7 +21181,7 @@ msgstr "Konnte Datei nicht finden: %s"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
-msgstr ""
+msgstr "Sie müssen die Software \"UniConvertor\" installieren!\n"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -21487,16 +21489,15 @@ msgstr "Gergonne-Dreieck"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
-msgstr ""
+msgstr "Benutzerspezifischer Punkt definiert durch:"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
 msgid "Custom Points and Options"
 msgstr "Optionen und benutzerdefinierte Punkte"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-#, fuzzy
 msgid "Draw Circle Around This Point"
-msgstr "Zeichne kreis rund um diesen Punkt"
+msgstr "Zeichnet Kreis um diesen Punkt"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
 msgid "Draw From Triangle"
@@ -21504,15 +21505,15 @@ msgstr "Dreiecksgeometrie"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
-msgstr ""
+msgstr "Zeichne isogonal Konjugierte"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
-msgstr ""
+msgstr "Zeichen isotomisch Konjugierte"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
-msgstr ""
+msgstr "Zeichnet Markierung an diesem Punkt."
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 msgid "Excentral Triangle"
@@ -21546,13 +21547,15 @@ msgstr "Innenkreis"
 msgid "Nagel Point"
 msgstr "Nagel-Punkt"
 
+# Für diesen Begriff gibt es noch keine deutsche Entsprechung.
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Nine-Point Centre"
-msgstr ""
+msgstr "Nine-Point-Zentrum"
 
+# Für diesen Begriff gibt es noch keine deutsche Entsprechung.
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Nine-Point Circle"
-msgstr ""
+msgstr "Nine-Point-Kreis"
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
 msgid "Orthic Triangle"
@@ -21576,20 +21579,19 @@ msgid "Report this triangle's properties"
 msgstr "Eigenschaften der Führungslinien setzen"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
-#, fuzzy
 msgid "Symmedial Triangle"
-msgstr "Einzeln"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
-#, fuzzy
 msgid "Symmedian Point"
-msgstr "Vertikaler Punkt:"
+msgstr "Lemoinepunkt"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
-msgstr ""
+msgstr "Symmediane"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21621,15 +21623,44 @@ msgid ""
 "may cause a divide-by-zero error for certain points.\n"
 "            "
 msgstr ""
+"Diese Erweiterung zeichnet Geometrien bezüglich eines Dreiecks definiert "
+"durch die ersten drei Punkte eines Pfades. Sie können vorgegebene Objekte "
+"wählen oder eigene erstellen.\n"
+"             \n"
+"Alle Längeneinheiten sind Inkscape-Pixel, Winkel werden in Radiant "
+"angegeben.\n"
+"Ein Punkt kann in trilinearen Koordinaten angegeben oder durch eine "
+"Dreieckszentrumsfunktion definiert sein.\n"
+"Funktionsparameter sind Seitenlängen und Winkel.nTrilineare Koordinaten "
+"werden durch Doppelpunkt \":\" getrennt.\n"
+"Seitenlängen werden durch \"s_a\", \"s_b\" und \"s_c\" repräsentiert.\n"
+"Die korrespondierenden Winkel sind \"a_a\", \"a_b\" und \"a_c\".\n"
+"Mögliche Konstanten sind auch halber Umfang \"semiperim\" und Fläche \"area"
+"\" des Dreiecks.\n"
+"\n"
+"Erlaubt sind alle mathematischen Standardfunktionen in Python:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Möglich sind auch die Inversen der trigonometrischen Funktionen:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"Der Radius eines Kreises um einen gegebenen Punkt kann durch eine Fomel mit "
+"den Parametern Seitenlänge, Winkel, etc. gegeben sein. Es ist ebenfalls "
+"möglich, die isogonal und isotomisch Konjugierten dieses Punktes zu "
+"zeichnen. Beachten Sie, dass es bei bestimmten Punkten zu einem Division-"
+"durch-Null-Fehler kommen kann.\n"
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
 msgstr "Dreieck Funktion"
 
 #: ../share/extensions/draw_from_triangle.inx.h:58
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "Zeigerkoordinaten"
+msgstr "Trilineare Koordinaten"
 
 #: ../share/extensions/dxf_input.inx.h:1
 msgid ""
@@ -21639,11 +21670,17 @@ msgid ""
 "- layers are preserved only on File->Open, not Import.\n"
 "- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
+"- AutoCAD R13 und neuer.\n"
+"- Längeneinheiten der Zeichnung sind mm.\n"
+"- SVG-Längeneinheiten sind Pixel bei 90 dpi.\n"
+"- Ebenen werden nur erhalten bei \"Datei &gt Öffnen\", nicht bei "
+"\"Importieren\".\n"
+"- BLOCKS werden nicht voll unterstützt. Verwenden Sie AutoCAD Explode "
+"Blocks, falls nötig."
 
 #: ../share/extensions/dxf_input.inx.h:6
-#, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
@@ -21659,7 +21696,7 @@ msgstr "AutoCADs »Document Exchange Format« importieren"
 
 #: ../share/extensions/dxf_input.inx.h:12
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Alternativ wird manueller Skalierungsfaktor verwendet."
 
 #: ../share/extensions/dxf_input.inx.h:13
 msgid "Use automatic scaling to size A4"
@@ -21674,19 +21711,24 @@ msgid ""
 "- ROBO-Master option is a specialized spline readable only by ROBO-Master "
 "and AutoDesk viewers, not Inkscape."
 msgstr ""
+"- AutoCAD R13-Format.\n"
+"- Längeneinheiten der dxf-Zeichnung sind mm.\n"
+"- SVG-Längeneinheiten sind Pixel bei 90 dpi.\n"
+"- Es werden nur LWPOLYLINE- und SPLINE-Elemente unterstützt.\n"
+"- Die Option ROBO-Master bezieht sich auf spezielle Splines, die nur in ROBO-"
+"Master und AutoDesk, nicht aber in Inkscape, zur Verfügung stehen."
 
 #: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
 msgstr "Desktop Cutting Plotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
-#, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
-msgstr "Desktop Cutting Plotter (*.DXF)"
+msgstr "Desktop Cutting Plotter (R13) (*.DXF)"
 
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "enable ROBO-Master output"
-msgstr ""
+msgstr "ermöglicht ROBO-Master-Ausgabe"
 
 #: ../share/extensions/dxf_output.inx.h:1
 msgid "AutoCAD DXF R12 (*.dxf)"
@@ -21771,9 +21813,8 @@ msgid "Extract Image"
 msgstr "Ein Bild extrahieren"
 
 #: ../share/extensions/extractimage.inx.h:3
-#, fuzzy
 msgid "Note: The file extension is appended automatically."
-msgstr "Dateinamenserweiterung automatisch anhängen"
+msgstr "Dateierweiterung wird automatisch angehängt"
 
 #: ../share/extensions/extractimage.inx.h:4
 msgid "Path to save image"
@@ -21784,14 +21825,12 @@ msgid "Extrude"
 msgstr "Extrudieren"
 
 #: ../share/extensions/extrude.inx.h:3
-#, fuzzy
 msgid "Lines"
-msgstr "Linie"
+msgstr "Linien"
 
 #: ../share/extensions/extrude.inx.h:5
-#, fuzzy
 msgid "Polygons"
-msgstr "Polygon"
+msgstr "Polygone"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21911,6 +21950,14 @@ msgid ""
 "   Isotropic scaling is disabled.\n"
 "   First derivative is always determined numerically."
 msgstr ""
+"Wählen Sie ein Dreieck vor Aufruf der Erweiterung.\n"
+"Aus diesem bestimmen sich X- und Y-Skala.\n"
+"\n"
+"In Polarkoordinaten:\n"
+"  Start- und Endwert in X bestimmen den Winkelbereich in Radiant.n  Die X-"
+"Skala wird so gesetzt, dass rechte und linke Rechteckkante bei +/-1 liegen.\n"
+"  Isotropische Skalierung ist ausgeschaltet.\n"
+"  Erste Ableitungen werden nummerisch bestimmt."
 
 #: ../share/extensions/funcplot.inx.h:22
 #: ../share/extensions/param_curves.inx.h:15
@@ -22283,19 +22330,20 @@ msgid "End Value"
 msgstr "Endwert"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "<b>Effektparameter</b>"
+msgstr "Fließkommazahl"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid ""
 "If you select \"Other\", you must know the SVG attributes to identify here "
 "this \"other\":"
 msgstr ""
+"Falls Sie \"Andere\" wählen, so müssen Sie diese Anderen durch deren SVG-"
+"Attribute spezifizieren:"
 
 #: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
-msgstr ""
+msgstr "Ganzzahl"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
@@ -22351,7 +22399,7 @@ msgstr "Übersetzer Y"
 
 #: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
-msgstr ""
+msgstr "Wo anzuwenden?"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
@@ -22554,9 +22602,8 @@ msgid "Multiply t-range by 2*pi"
 msgstr "T-Bereich mit 2*pi multiplizieren"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "Parameter"
+msgstr "Parametrische Kurve"
 
 #: ../share/extensions/param_curves.inx.h:7
 msgid "Range and Sampling"
@@ -22573,6 +22620,10 @@ msgid ""
 "\n"
 "First derivatives are always determined numerically."
 msgstr ""
+"Wählen Sie ein Rechteck vor Aufruf der Erweiterung.\n"
+"Aus diesem bestimmen sich X- und Y-Skala.\n"
+"\n"
+"Erste Ableitungen werden nummerisch bestimmt."
 
 #: ../share/extensions/param_curves.inx.h:24
 msgid "Start t-value"
@@ -22638,6 +22689,9 @@ msgid ""
 "pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
+"Dieser Effekt biegt ein Muster entlang eines beliebigen \"Gerüst-\"Pfades. "
+"Das Muster ist das oberste Objekt in einer Auswahl (Gruppierungen von Pfaden/"
+"Formen/Klonen... sind erlaubt)."
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -22669,6 +22723,9 @@ msgid ""
 "pattern is the topmost object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
+"Dieser Effekt verstreut ein Muster entlang eines beliebigen \"Gerüst-"
+"\"Pfades. Das Muster ist das oberste Objekt in einer Auswahl (Gruppierungen "
+"von Pfaden/Formen/Klonen... sind erlaubt)."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22789,7 +22846,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
-msgstr ""
+msgstr "Kantenspezifiziert"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 msgid "Edges"
@@ -22797,7 +22854,7 @@ msgstr "Kanten"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "Flächenspezifiziert"
 
 # !!!
 #: ../share/extensions/polyhedron_3d.inx.h:10
@@ -22809,19 +22866,16 @@ msgid "Filename:"
 msgstr "Dateiname:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill Color (Blue)"
-msgstr "Füllfarbe (Blau)"
+msgstr "Füllfarbe (Blauwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill Color (Green)"
-msgstr "Füllfarbe (Grün)"
+msgstr "Füllfarbe (Grünwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill Color (Red)"
-msgstr "Füllfarbe (Rot)"
+msgstr "Füllfarbe (Rotwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
 #, no-c-format
@@ -23578,13 +23632,12 @@ msgid "Compatibility with previews code to this event"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:4
-#, fuzzy
 msgid ""
 "If you want to set more than one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
-"Wenn Sie mehr als nur ein Attribut übertragen wollen, sollten Sie diese mit "
-"einem Leerzeichen - und nur mit einem Leerzeichen -  vereinzeln. "
+"Wenn Sie mehr als ein Attribut setzen wollen, müssen Sie diese mit einzelnen "
+"Leerzeichen trennen. "
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6

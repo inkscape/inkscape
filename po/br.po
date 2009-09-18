@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-17 21:14+0200\n"
-"PO-Revision-Date: 2009-09-07 18:08+0100\n"
+"PO-Revision-Date: 2009-09-15 11:40+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig - www.drouizig.org <alan.monfort@free.fr>\n"
 "MIME-Version: 1.0\n"
@@ -6021,7 +6021,7 @@ msgstr "Strishaat"
 
 #: ../src/filter-enums.cpp:112
 msgid "Dilate"
-msgstr "Ledanaat"
+msgstr "Arlediñ"
 
 #: ../src/filter-enums.cpp:118
 msgid "Fractal Noise"
@@ -12014,7 +12014,6 @@ msgstr "S_til an tres"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -12538,7 +12537,6 @@ msgstr ""
 "liesaat, teñvalaat ha sklaeraat."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
@@ -12649,13 +12647,14 @@ msgstr ""
 "'skoueriek'  pe meur a sil kentidik feLiesparzh e mod 'war\"."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
-"Ar sil kentidik <b>feNeuziadur</b> a bourchas un efed strishaat pe ledanaat."
+"Ar sil kentidik <b>feNeuziadur</b> a bourchas un efed strishaat pe ledanaat. "
+"Evit an ergorennoù o liv eeun e laka 'strishaat' an ergorennoù da vezañ "
+"moanoc'h hag 'arlediñ' a laka an ergorennoù da vezañ tevoc'h."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid ""
