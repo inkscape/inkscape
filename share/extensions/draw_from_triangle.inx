@@ -62,7 +62,7 @@ cosh(x); sinh(x); tanh(x)
 Also available are the inverse trigonometric functions:
 sec(x); csc(x); cot(x)
 
-You can specify the radius of a circle about a custom point using an formula, which may also contain the side lengths, angles, etc. You can also plot the isogonal and isotomic conjugate of the point. Be aware that this may cause a divide-by-zero error for certain points.
+You can specify the radius of a circle around a custom point using a formula, which may also contain the side lengths, angles, etc. You can also plot the isogonal and isotomic conjugate of the point. Be aware that this may cause a divide-by-zero error for certain points.
             </_param>
         </page>
     </param>

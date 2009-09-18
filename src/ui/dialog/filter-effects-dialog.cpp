@@ -1315,7 +1315,7 @@ void FilterEffectsDialog::FilterModifier::add_filter()
 
     const int count = _model->children().size();
     std::ostringstream os;
-    os << "filter" << count;
+    os << _("filter") << count;
     filter->setLabel(os.str().c_str());
 
     update_filters();

@@ -75,9 +75,7 @@
             <param name="lv_x" type="float" min="-100" max="100" _gui-text="Light x-Position">1</param>
             <param name="lv_y" type="float" min="-100" max="100" _gui-text="Light y-Position">1</param>
             <param name="lv_z" type="float" min="-100" max="100" _gui-text="Light z-Position">-2</param>
-<!-- TRANSLATORS: only translate "string" in "context|string".
-For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS -->
-            <param name="show" type="optiongroup" appearance="minimal" _gui-text="polyhedron|Show:">
+            <param name="show" type="optiongroup" appearance="minimal" _gui-text="Show:">
                 <_option value="vtx">Vertices</_option>
                 <_option value="edg">Edges</_option>
                 <_option value="fce">Faces</_option></param>
