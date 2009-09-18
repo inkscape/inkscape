@@ -101,7 +101,7 @@ fi
 LANGSTR=`defaults read .GlobalPreferences AppleCollationOrder 2>/dev/null`
 if [ "x$LANGSTR" == "x" ]
 then
-    echo "Warning: AppleCollationOrder setting not found, using AppleLocale."
+    echo "Warning: AppleCollationOrder setting not found, using AppleLocale." 1>&2
     LANGSTR=`defaults read .GlobalPreferences AppleLocale 2>/dev/null | \
             sed 's/_.*//'`
 fi
@@ -110,7 +110,7 @@ fi
 #       to crash on startup in locale_from_utf8().
 export LANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
 	tail -n1 | sed 's/\./ /' | awk '{print $2}'`.UTF-8"
-echo "Setting Language: $LANG"
+echo "Setting Language: $LANG" 1>&2
 
 # Handle the case where the directory storing Inkscape has a '#' in the name.
 # This '#' needs to be escaped in pango.modules for Pango to work properly.
