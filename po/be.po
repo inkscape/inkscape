@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.46+devel\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2009-09-08 21:25+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -3618,6 +3618,7 @@ msgid "Title:"
 msgstr "Назва:"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Паказваць:"
 
@@ -7814,11 +7815,11 @@ msgstr ""
 "Становішча адносна эталённага пункту вызначае напрамак і велічыню агульнага "
 "згінаньня"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr "Левы"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
 msgstr "Правы"
 
@@ -12078,6 +12079,11 @@ msgstr "Перайменаваць фільтар"
 msgid "Apply filter"
 msgstr "Ужыць фільтар"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Фільтры"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Дадаць фільтар"
@@ -14824,23 +14830,26 @@ msgstr "Адамкнуць пласт"
 msgid "New"
 msgstr "Стварыць"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Верх"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Пласты"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Уверх"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Ніз"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Спод"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -20808,10 +20817,11 @@ msgstr ""
 "Паспрабуй выкарыстаць працэдуру Шлях->Абʼект у шлях."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "Не ўдалося імпартаваць модуль numpy. Гэты модуль патрэбны для гэтага "
 "пашыральніка. Калі ласка, усталюй яго й паспрабуй зноў. На сыстэмах кшталту "
@@ -21267,6 +21277,7 @@ msgid "Symmedians"
 msgstr "Сымэдыяны"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21292,7 +21303,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22045,7 +22056,7 @@ msgid "Start Value"
 msgstr "Пачатковае значэньне"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Стыль"
 
@@ -22652,82 +22663,74 @@ msgstr "Каэфіцыент памеру"
 msgid "Shading"
 msgstr "Зацяненьне"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr "Малы трыямбічны дваццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr "Адсечаны куб"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr "Адсечаны дванаццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Непразрыстасьць штрыхоў / %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Чатырохграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
 msgstr "Потым павернуць вакол"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr "Абрэзаны куб"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr "Абрэзаны дванаццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr "Абрэзаны дваццаціграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr "Абрэзаны васьміграньнік"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr "Абрэзаны чатырохграньнік"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Вяршыні"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
 msgstr "Від"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr "Восі X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr "Восі Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr "Восі Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr "Сартаваць грані ўздоўж восі Z паводле:"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-msgid "polyhedron|Show:"
-msgstr "Паказваць:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22863,66 +22866,58 @@ msgid "Arrange"
 msgstr "Упарадкаваць"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Зьнізу:"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Зьнізу ўверх (90)"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
 msgstr "Гарызантальны пункт:"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Зьлева направа (0)"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Зрашэціць"
+
+#: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
 msgstr "Кругавы ваўнутар"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
 msgstr "Кругавы вонкі"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr "Перапарадкаваць"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Напрамак перапарадкаваньня:"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "Справа налева (180)"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Верх"
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "Зьверху ўніз (270)"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
 msgstr "Вэртыкальны пункт:"
-
-#: ../share/extensions/restack.inx.h:14
-msgid "restack|Bottom"
-msgstr "Уверсе"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-msgid "restack|Left"
-msgstr "Зьлева"
-
-#: ../share/extensions/restack.inx.h:18
-msgid "restack|Middle"
-msgstr "Усярэдзіне"
-
-#: ../share/extensions/restack.inx.h:19
-msgid "restack|Right"
-msgstr "Справа"
-
-#: ../share/extensions/restack.inx.h:20
-msgid "restack|Top"
-msgstr "Зьверху"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23508,6 +23503,24 @@ msgstr "Чытаньне Windows Metafile"
 msgid "XAML Input"
 msgstr "Чытаньне XAML"
 
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Паказваць:"
+
+#~ msgid "restack|Bottom"
+#~ msgstr "Уверсе"
+
+#~ msgid "restack|Left"
+#~ msgstr "Зьлева"
+
+#~ msgid "restack|Middle"
+#~ msgstr "Усярэдзіне"
+
+#~ msgid "restack|Right"
+#~ msgstr "Справа"
+
+#~ msgid "restack|Top"
+#~ msgstr "Зьверху"
+
 #~ msgid "Gelatine"
 #~ msgstr "Жэлятын"
 
@@ -23605,9 +23618,6 @@ msgstr "Чытаньне XAML"
 
 #~ msgid "Gives the flood color to the dark parts of the image"
 #~ msgstr "Фарбуе цёмныя часткі відарыса колерам заліваньня"
-
-#~ msgid "Layers"
-#~ msgstr "Пласты"
 
 #~ msgid "AutoCAD Plot drawing files (*.plt)"
 #~ msgstr "Файлы рысункаў AutoCAD Plot (*.plt)"

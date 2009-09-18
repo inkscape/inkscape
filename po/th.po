@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2006-10-20 17:56+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n.opentle.org>\n"
@@ -3702,6 +3702,7 @@ msgid "Title:"
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr ""
 
@@ -8027,11 +8028,11 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 #, fuzzy
 msgid "Right"
 msgstr "ความสูง:"
@@ -12265,6 +12266,11 @@ msgstr "ลบสีพื้นออก"
 msgid "Apply filter"
 msgstr "เพิ่มชั้นภาพ"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "แ_ฟ้ม"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 #, fuzzy
 msgid "Add filter"
@@ -14895,23 +14901,26 @@ msgstr ""
 msgid "New"
 msgstr "สร้างใหม่"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "บน"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "_ชั้นภาพ"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "ขึ้น"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "ลง"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "ล่าง"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -21033,7 +21042,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -21546,7 +21555,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22293,7 +22302,7 @@ msgid "Start Value"
 msgstr "ล้างค่า"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr ""
 
@@ -22920,86 +22929,77 @@ msgstr "ตัวเลือก"
 msgid "Shading"
 msgstr "ระ_ยะห่างแกน X:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, fuzzy, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "สีเ_ส้น"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "ไม่มน"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 #, fuzzy
 msgid "Vertices"
 msgstr "แนว_ตั้ง"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
 msgstr "มุ_มมอง"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr ""
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
-msgid "polyhedron|Show:"
-msgstr "รูปหลายเหลี่ยม"
 
 #: ../share/extensions/printing-marks.inx.h:1
 #, fuzzy
@@ -23153,78 +23153,65 @@ msgid "Arrange"
 msgstr "มุม"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "ล่าง"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "ข้อความแนวนอน"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "ชื่อ"
+
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Radial Inward"
 msgstr "การไล่ระดับสีแบบรัศมี"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 #, fuzzy
 msgid "Radial Outward"
 msgstr "การไล่ระดับสีแบบรัศมี"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Restack"
 msgstr "_ตั้งค่าใหม่"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 #, fuzzy
 msgid "Restack Direction:"
 msgstr "คำอธิบาย"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "บน"
+
+#: ../share/extensions/restack.inx.h:17
 #, fuzzy
 msgid "Top to Bottom (270)"
 msgstr "ลดลงไปห_ลังสุด"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "ข้อความแนวตั้ง"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "ล่าง"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr "_ตั้งค่าใหม่"
-
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "ชื่อ"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr "_ตั้งค่าใหม่"
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr "_ตั้งค่าใหม่"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23840,6 +23827,30 @@ msgid "XAML Input"
 msgstr "ข้อมูลเข้าแบบ XFIG"
 
 #, fuzzy
+#~ msgid "polyhedron|Show:"
+#~ msgstr "รูปหลายเหลี่ยม"
+
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "ล่าง"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr "_ตั้งค่าใหม่"
+
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "ชื่อ"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr "_ตั้งค่าใหม่"
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr "_ตั้งค่าใหม่"
+
+#, fuzzy
 #~ msgid "Gelatine"
 #~ msgstr "สีเส้นนำตำแหน่ง"
 
@@ -23874,10 +23885,6 @@ msgstr "ข้อมูลเข้าแบบ XFIG"
 #, fuzzy
 #~ msgid "Export canvas"
 #~ msgstr "ส่งออก"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "_ชั้นภาพ"
 
 #, fuzzy
 #~ msgid "Open files saved for plotters"
@@ -24334,10 +24341,6 @@ msgstr "ข้อมูลเข้าแบบ XFIG"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "แบบอักษร"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "แ_ฟ้ม"
 
 #, fuzzy
 #~ msgid "I hate text"

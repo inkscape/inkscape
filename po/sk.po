@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2009-09-12 10:38+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -3579,6 +3579,7 @@ msgid "Title:"
 msgstr "Titulok:"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Zobraziť:"
 
@@ -7780,11 +7781,11 @@ msgstr ""
 "Relatívna poloha k referenčnému bodu definuje smer a množstvo globálneho "
 "ohnutia"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr "Ľavá"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
 msgstr "Pravá"
 
@@ -12046,6 +12047,11 @@ msgstr "Premenovať filter"
 msgid "Apply filter"
 msgstr "Použiť filter"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Filter"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Pridať filter"
@@ -14783,23 +14789,26 @@ msgstr "Odomknúť vrstvu"
 msgid "New"
 msgstr "Nový"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Vrch"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Vrstvy"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Hore"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Dolu"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Naspodok"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -20753,10 +20762,11 @@ msgstr ""
 "Skúste použiť postup Cesta -> Objekt na cestu."
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "Nepodarilo sa importovať modul numpy. Toto rozšírenie vyžaduje tento modul. "
 "Prosím, nainštalujte ho a skúste to znova. Na systéme Debian sa to robí "
@@ -21216,6 +21226,7 @@ msgid "Symmedians"
 msgstr "Lemoinove body"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21241,7 +21252,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -21993,7 +22004,7 @@ msgid "Start Value"
 msgstr "Počiatočná hodnota"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Štýl"
 
@@ -22600,82 +22611,74 @@ msgstr "Koeficient zväčšenia"
 msgid "Shading"
 msgstr "Tieňovanie"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Krytie ťahu/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetrahedrón"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
 msgstr "Potom otáčať okolo:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr "Zrezaná kocka"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr "Zrezaný dodekahedrón"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr "Zrezaný ikosahedrón"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr "Zrezaný oktahedrón"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr "Zrezaný ihlan"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Vrcholy"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
 msgstr "Zobraziť"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr "os X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr "os Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr "os Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr "Zoradiť na osi z podľa:"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-msgid "polyhedron|Show:"
-msgstr "polyhedron|Zobraziť:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22810,66 +22813,58 @@ msgid "Arrange"
 msgstr "Rozmiestniť"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Dolu:"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Odspodu navrch (90)"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
 msgstr "Vodorovný bod:"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Zľava doprava (0)"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Prederavený"
+
+#: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
 msgstr "Radiálne smerom dnu"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
 msgstr "Radiálne smerom von"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr "Znova naskladať"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Smer naskladania:"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "Sprava doľava (180)"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Vrch"
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "Zvrchu dolu (270)"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
 msgstr "Zvislý bod:"
-
-#: ../share/extensions/restack.inx.h:14
-msgid "restack|Bottom"
-msgstr "restack|Spodok"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-msgid "restack|Left"
-msgstr "restack|Vľavo"
-
-#: ../share/extensions/restack.inx.h:18
-msgid "restack|Middle"
-msgstr "restack|Stred"
-
-#: ../share/extensions/restack.inx.h:19
-msgid "restack|Right"
-msgstr "restack|Vpravo"
-
-#: ../share/extensions/restack.inx.h:20
-msgid "restack|Top"
-msgstr "restack|Vrch"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23453,6 +23448,24 @@ msgstr "Vstup Windows Metasúbor"
 msgid "XAML Input"
 msgstr "Vstup XAML"
 
+#~ msgid "polyhedron|Show:"
+#~ msgstr "polyhedron|Zobraziť:"
+
+#~ msgid "restack|Bottom"
+#~ msgstr "restack|Spodok"
+
+#~ msgid "restack|Left"
+#~ msgstr "restack|Vľavo"
+
+#~ msgid "restack|Middle"
+#~ msgstr "restack|Stred"
+
+#~ msgid "restack|Right"
+#~ msgstr "restack|Vpravo"
+
+#~ msgid "restack|Top"
+#~ msgstr "restack|Vrch"
+
 #~ msgid "The second path must be exactly four nodes long."
 #~ msgstr "Druhá cesta musí mať dĺžku presne štyri uzly."
 
@@ -23593,9 +23606,6 @@ msgstr "Vstup XAML"
 
 #~ msgid "Export canvas"
 #~ msgstr "Exportovať plátno"
-
-#~ msgid "Layers"
-#~ msgstr "Vrstvy"
 
 #~ msgid "AutoCAD Plot drawing files (*.plt)"
 #~ msgstr "Súbory výkresov AutoCAD Plot (*.plt)"
@@ -24381,9 +24391,6 @@ msgstr "Vstup XAML"
 
 #~ msgid "Amount of Blur"
 #~ msgstr "Množstvo rozostrenia"
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
 
 #~ msgid "I hate text"
 #~ msgstr "Nenávidím text"

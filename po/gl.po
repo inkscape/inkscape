@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2008-11-08 15:02+0100\n"
 "Last-Translator: Leandro Regueiro <leandro DOT regueiro AT gmail DOT com>\n"
 "Language-Team: Galician <trasno@trasno.net>\n"
@@ -3803,6 +3803,7 @@ msgstr "Título:"
 
 # Rosetta
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 #, fuzzy
 msgid "Show:"
 msgstr "Amosar/Agochar"
@@ -8162,12 +8163,12 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 #, fuzzy
 msgid "Left"
 msgstr "Aliñar á esqueda"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 #, fuzzy
 msgid "Right"
 msgstr "Aliñar á dereita"
@@ -12499,6 +12500,11 @@ msgstr "Renomear o filtro"
 msgid "Apply filter"
 msgstr "Engadir o filtro"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Filtro"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Engadir o filtro"
@@ -15222,25 +15228,27 @@ msgstr "Desbloquear unha capa"
 msgid "New"
 msgstr "Novo"
 
-#: ../src/ui/dialog/layers.cpp:661
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
 #, fuzzy
-msgid "Top"
-msgstr "Elevar á cima"
+msgid "layers|Top"
+msgstr "Capa"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 #, fuzzy
 msgid "Bot"
 msgstr "suavizado"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -21519,7 +21527,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -22031,7 +22039,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22802,7 +22810,7 @@ msgid "Start Value"
 msgstr "Valor X inicial"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr " Estilo "
 
@@ -23438,90 +23446,81 @@ msgstr "Mover, escalar, rotar"
 msgid "Shading"
 msgstr "Separación _X:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 #, fuzzy
 msgid "Small Triambic Icosahedron"
 msgstr "<small>Non hai nada seleccionado.</small>"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Opacidade do trazo/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraedro"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "Rotar 9_0º en sentido antihorario"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Vértices"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
 msgstr "_Ver"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 #, fuzzy
 msgid "X-Axis"
 msgstr "Ángulo do eixe x"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 #, fuzzy
 msgid "Y-Axis"
 msgstr "Ángulo do eixe x"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 #, fuzzy
 msgid "Z-Axis"
 msgstr "Ángulo do eixe x"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 #, fuzzy
 msgid "Z-Sort Faces By:"
 msgstr "> e < escalan:"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
-msgid "polyhedron|Show:"
-msgstr "Polígono"
 
 # leo
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23681,79 +23680,67 @@ msgstr "Ordenar"
 
 #: ../share/extensions/restack.inx.h:4
 #, fuzzy
+msgid "Bottom"
+msgstr "Baixar ó fondo"
+
+#: ../share/extensions/restack.inx.h:5
+#, fuzzy
 msgid "Bottom to Top (90)"
 msgstr "Eleva-la selección á cima"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "Texto horizontal"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 #, fuzzy
 msgid "Left to Right (0)"
 msgstr "Aliñar as liñas á dereita"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Título"
+
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Radial Inward"
 msgstr "Degradado radial"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 #, fuzzy
 msgid "Radial Outward"
 msgstr "Degradado radial"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Restack"
 msgstr " R_establecer"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 #, fuzzy
 msgid "Restack Direction:"
 msgstr "Descrición"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+#, fuzzy
+msgid "Top"
+msgstr "Elevar á cima"
+
+#: ../share/extensions/restack.inx.h:17
 #, fuzzy
 msgid "Top to Bottom (270)"
 msgstr "Baixa-la selección ó fondo"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "Texto vertical"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "Baixar ó fondo"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr " R_establecer"
-
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "Título"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr " R_establecer"
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr " R_establecer"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -24384,6 +24371,30 @@ msgid "XAML Input"
 msgstr "Entrada de XAML"
 
 #, fuzzy
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Polígono"
+
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "Baixar ó fondo"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr " R_establecer"
+
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "Título"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr " R_establecer"
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr " R_establecer"
+
+#, fuzzy
 #~ msgid "Gelatine"
 #~ msgstr "Relación"
 
@@ -24436,10 +24447,6 @@ msgstr "Entrada de XAML"
 
 #~ msgid "Export canvas"
 #~ msgstr "Exportar o lenzo"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Capa"
 
 #, fuzzy
 #~ msgid "Open files saved for plotters"
@@ -25018,9 +25025,6 @@ msgstr "Entrada de XAML"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "Fonte"
-
-#~ msgid "Filter"
-#~ msgstr "Filtro"
 
 #~ msgid "I hate text"
 #~ msgstr "Odio o texto"

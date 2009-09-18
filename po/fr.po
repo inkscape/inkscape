@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
-"PO-Revision-Date: 2009-09-16 17:52+0100\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"PO-Revision-Date: 2009-09-18 08:29+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3691,6 +3691,7 @@ msgid "Title:"
 msgstr "Titre :"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Afficher :"
 
@@ -7946,11 +7947,11 @@ msgstr ""
 "La position relative à un point de référence définit globalement la "
 "direction de la flexion et sa quantité"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr "Gauche"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
 msgstr "Droite"
 
@@ -12297,6 +12298,10 @@ msgstr "Renommer le filtre"
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+msgid "filter"
+msgstr "filtre"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Ajouter un filtre"
@@ -15104,23 +15109,25 @@ msgstr "Déverrouiller le calque"
 msgid "New"
 msgstr "Nouveau"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Devant"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+msgid "layers|Top"
+msgstr "Haut"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Haut"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Bas"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Fond"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -21170,7 +21177,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "Échec lors de l'import du module numpy. Ce module est nécessaire à cette "
 "extension. Veuillez l'installer et réessayer. Sur un système de type Debian, "
@@ -21656,7 +21663,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22418,7 +22425,7 @@ msgid "Start Value"
 msgstr "Valeur initiale"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Style"
 
@@ -23021,82 +23028,74 @@ msgstr "Facteur d'échelle"
 msgid "Shading"
 msgstr "Ombrage"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr "Petit icosaèdre triambique"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr "Cube adouci"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr "Dodécaèdre adouci"
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Opacité du contour (%)"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tétraèdre"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
 msgstr "Puis tourner autour de :"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr "Cube tronqué"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr "Dodécaèdre tronqué"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr "Icosaèdre tronqué"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr "Octaèdre tronqué"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr "Tétraèdre tronqué"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Sommets"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
 msgstr "Vue"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr "Axe X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr "Axe Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr "Axe Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr "Ordonner les côtés sur l'axe Z par :"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-msgid "polyhedron|Show:"
-msgstr "Montrer :"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -23231,66 +23230,56 @@ msgid "Arrange"
 msgstr "Organiser"
 
 #: ../share/extensions/restack.inx.h:4
+msgid "Bottom"
+msgstr "Bas"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "De bas en haut (90)"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
 msgstr "Point horizontal :"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "De gauche à droite (0)"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+msgid "Middle"
+msgstr "Milieu"
+
+#: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
 msgstr "Vers l'intérieur"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
 msgstr "Vers l'extérieur"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr "Renumérotation"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Sens de la renumérotation :"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "De droite à gauche (180)"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Devant"
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "De haut en bas (270)"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
 msgstr "Point vertical :"
-
-#: ../share/extensions/restack.inx.h:14
-msgid "restack|Bottom"
-msgstr "Bas"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-msgid "restack|Left"
-msgstr "Gauche"
-
-#: ../share/extensions/restack.inx.h:18
-msgid "restack|Middle"
-msgstr "Milieu"
-
-#: ../share/extensions/restack.inx.h:19
-msgid "restack|Right"
-msgstr "Droite"
-
-#: ../share/extensions/restack.inx.h:20
-msgid "restack|Top"
-msgstr "Haut"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23878,17 +23867,23 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
-#~ msgid "filter"
-#~ msgstr "filtre"
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Montrer :"
 
-#~ msgid "layers|Top"
-#~ msgstr "Haut"
-
-#~ msgid "Bottom"
+#~ msgid "restack|Bottom"
 #~ msgstr "Bas"
 
-#~ msgid "Middle"
+#~ msgid "restack|Left"
+#~ msgstr "Gauche"
+
+#~ msgid "restack|Middle"
 #~ msgstr "Milieu"
+
+#~ msgid "restack|Right"
+#~ msgstr "Droite"
+
+#~ msgid "restack|Top"
+#~ msgstr "Haut"
 
 #, fuzzy
 #~ msgid "objectAttributes|Show:"

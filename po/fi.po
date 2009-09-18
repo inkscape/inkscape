@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2008-02-04 00:18+0200\n"
 "Last-Translator: Riku Leino <riku@scribus.info>\n"
 "Language-Team: Finnish\n"
@@ -3736,6 +3736,7 @@ msgid "Title:"
 msgstr "Nimi:"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Näytä:"
 
@@ -8045,12 +8046,12 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 #, fuzzy
 msgid "Left"
 msgstr "ft"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 #, fuzzy
 msgid "Right"
 msgstr "Oikeudet"
@@ -12418,6 +12419,11 @@ msgstr "Nimeä suodin uudelleen"
 msgid "Apply filter"
 msgstr "Käytä suodinta"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "_Suodata"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Lisää suodin"
@@ -15123,23 +15129,26 @@ msgstr "Vapauta taso"
 msgid "New"
 msgstr "Uusi"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Ylin"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Taso"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Ylös"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Alas"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Alin"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -21238,7 +21247,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -21748,7 +21757,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22492,7 +22501,7 @@ msgid "Start Value"
 msgstr "Alun x-arvo"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Tyyli"
 
@@ -23108,86 +23117,77 @@ msgstr "Tasainen väri"
 msgid "Shading"
 msgstr "Välistys"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, fuzzy, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "_Viivan väritys"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "pyöristämätön"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 #, fuzzy
 msgid "Vertices"
 msgstr "_Pystysuora"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
 msgstr "_Näytä"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr ""
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
-msgid "polyhedron|Show:"
-msgstr "Monikulmio"
 
 #: ../share/extensions/printing-marks.inx.h:1
 #, fuzzy
@@ -23341,77 +23341,64 @@ msgid "Arrange"
 msgstr "Järjestä"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Alin"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "Vaakasuora teksti"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Laatta"
+
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Radial Inward"
 msgstr "Säteittäinen väriliuku"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 #, fuzzy
 msgid "Radial Outward"
 msgstr "Säteittäinen väriliuku"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Restack"
 msgstr " _Palauta "
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Ylin"
+
+#: ../share/extensions/restack.inx.h:17
 #, fuzzy
 msgid "Top to Bottom (270)"
 msgstr "_Vie alimmaiseksi"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "Pystysuora teksti"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "Alin"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr " _Palauta "
-
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "Laatta"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr " _Palauta "
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr " _Palauta "
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -24030,6 +24017,30 @@ msgid "XAML Input"
 msgstr "XAML-tuonti"
 
 #, fuzzy
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Monikulmio"
+
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "Alin"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr " _Palauta "
+
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "Laatta"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr " _Palauta "
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr " _Palauta "
+
+#, fuzzy
 #~ msgid "Gelatine"
 #~ msgstr "Suhde"
 
@@ -24082,10 +24093,6 @@ msgstr "XAML-tuonti"
 #, fuzzy
 #~ msgid "Export canvas"
 #~ msgstr "Muokkaa piirtoalustalla"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Taso"
 
 #, fuzzy
 #~ msgid "Open files saved for plotters"
@@ -24670,10 +24677,6 @@ msgstr "XAML-tuonti"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "Pyörityksen määrä"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "_Suodata"
 
 #, fuzzy
 #~ msgid "I hate text"

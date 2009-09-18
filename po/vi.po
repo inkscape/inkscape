@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -3650,6 +3650,7 @@ msgid "Title:"
 msgstr "Title:"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Show:"
 
@@ -7847,11 +7848,11 @@ msgstr ""
 "Vị trí tương đối tới một điểm tham chiếu, định nghĩa mức độ và hướng uốn "
 "cong toàn bộ sóng"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr "Trái"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
 msgstr "Phải"
 
@@ -12058,6 +12059,11 @@ msgstr "Thay tên bộ lọc"
 msgid "Apply filter"
 msgstr "Áp dụng bộ lọc"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Lọc"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "Thêm bộ lọc"
@@ -14800,23 +14806,26 @@ msgstr "Gỡ khoá lớp"
 msgid "New"
 msgstr "Mới"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Đỉnh"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Lớp"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Lên"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Xuống"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Đáy"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -20808,7 +20817,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "Phần mở rộng này cần sử dụng mô-đun numpy. Hãy cài đặt mô-đun còn thiếu "
 "trước rồi thử lại. Trên Debian Linux, bạn có thể dùng lệnh sudo apt-get "
@@ -21301,7 +21310,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22052,7 +22061,7 @@ msgid "Start Value"
 msgstr "Giá trị đầu"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Kiểu dáng"
 
@@ -22679,90 +22688,81 @@ msgstr "Hệ số thu phóng"
 msgid "Shading"
 msgstr "Tạo Bóng"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 #, fuzzy
 msgid "Small Triambic Icosahedron"
 msgstr "<small>Loại trừ đá lát:</small>"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr "Khối lập phương lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr "Khối mười hai mặt lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Độ đục nét/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 #, fuzzy
 msgid "Tetrahedron"
 msgstr "Khối tứ diện"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
 msgstr "Sau đó xoay quanh:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 #, fuzzy
 msgid "Truncated Cube"
 msgstr "căn bậc ba"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 #, fuzzy
 msgid "Truncated Dodecahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 #, fuzzy
 msgid "Truncated Icosahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 #, fuzzy
 msgid "Truncated Octahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 #, fuzzy
 msgid "Truncated Tetrahedron"
 msgstr "%s: tập tin đã bị cắt ngắn"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "Đỉnh"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
 msgstr "Xem"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr "Trục X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr "Trục Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr "Trục Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr "Sắp xếp các mặt theo trục Z bởi:"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
-msgid "polyhedron|Show:"
-msgstr "Khối đa diện 3D"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22898,71 +22898,58 @@ msgid "Arrange"
 msgstr "Sắp xếp"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Dưới:"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "Dưới - trên (90)"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
 msgstr "So sánh ngang"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Trái - phải (0)"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Giữa"
+
+#: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
 msgstr "Xoay tròn, sâu vào trong"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
 msgstr "Xoay tròn, lồi ra ngoài"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr "Sắp xếp lại độ cao"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Hướng sắp xếp:"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "Phải - trái (180)"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Đỉnh"
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "Trên - Dưới (270)"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
 msgstr "So sánh dọc:"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "Đáy"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr "Sắp xếp lại độ cao"
-
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "Giữa"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr "Sắp xếp lại độ cao"
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr "Sắp xếp lại độ cao"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23553,6 +23540,30 @@ msgstr "Nhập Windows Metafile"
 msgid "XAML Input"
 msgstr "Nhập XAML"
 
+#, fuzzy
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Khối đa diện 3D"
+
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "Đáy"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr "Sắp xếp lại độ cao"
+
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "Giữa"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr "Sắp xếp lại độ cao"
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr "Sắp xếp lại độ cao"
+
 #~ msgid "The second path must be exactly four nodes long."
 #~ msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút."
 
@@ -23702,9 +23713,6 @@ msgstr "Nhập XAML"
 
 #~ msgid "Export canvas"
 #~ msgstr "Xuất vùng vẽ"
-
-#~ msgid "Layers"
-#~ msgstr "Lớp"
 
 #~ msgid "AutoCAD Plot drawing files (*.plt)"
 #~ msgstr "Bản vẽ AutoCAD Plot (*.plt)"
@@ -24467,9 +24475,6 @@ msgstr "Nhập XAML"
 
 #~ msgid "Amount of Blur"
 #~ msgstr "Làm mờ"
-
-#~ msgid "Filter"
-#~ msgstr "Lọc"
 
 #, fuzzy
 #~ msgid "I hate text"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2009-09-15 08:08+0700\n"
 "Last-Translator: \n"
 "Language-Team: Khmer <en@li.org>\n"
@@ -3501,6 +3501,7 @@ msgid "Title:"
 msgstr "ចំណងជើង ៖"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "បង្ហាញ ៖"
 
@@ -7586,11 +7587,11 @@ msgid ""
 "amount"
 msgstr "ទីតាំង​ដែល​ទាក់​ទង​ទៅនឹង​ចំណុច​យោង កំណត់​ទិស និង​ចំនួន​សរុប​​នៃ​ភាព​កោង​សកល"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr "ឆ្វេង"
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 msgid "Right"
 msgstr "ស្ដាំ"
 
@@ -11693,6 +11694,11 @@ msgstr "ប្ដូរ​ឈ្មោះ​តម្រង​"
 msgid "Apply filter"
 msgstr "អនុវត្ត​តម្រង"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "តម្រង​"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
 msgstr "បន្ថែម​តម្រង"
@@ -14317,23 +14323,26 @@ msgstr "មិន​ចាក់សោ​ស្រទាប់"
 msgid "New"
 msgstr "ថ្មី"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "កំពូល"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "ស្រទាប់​ទៅ​កំពូល"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "លើ"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "ក្រោម"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "បាត"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -20195,10 +20204,11 @@ msgstr ""
 "ព្យាយាម​ប្រើ​និតិវិធី ផ្លូវ -> វត្ថុ ទៅកាន់​ផ្លូវ ។"
 
 #: ../share/extensions/polyhedron_3d.py:60
+#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "បរាជ័យ​ក្នុង​ការ​នាំចូល​ម៉ូឌុល numpy ។ ម៉ូឌុល​នេះ​ទាមទារ​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ដំឡើង​ពួក​វា នឹង​ព្យាយាម​"
 "ម្ដង​ទៀត ។ នៅ​លើ​ប្រព័ន្ធ​ដូច Debian នេះ​អាច​ត្រូវ​បាន​ធ្វើ​ដោយ​ប្រើ​ពាក្យ​បញ្ជា sudo apt-get "
@@ -20652,6 +20662,7 @@ msgid "Symmedians"
 msgstr "បន្ទាត់​ភ្ជាប់ត្រីកោណ"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
+#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -20677,7 +20688,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -21420,7 +21431,7 @@ msgid "Start Value"
 msgstr "តម្លៃ​ចាប់ផ្ដើម"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "រចនាប័ទ្ម"
 
@@ -22022,82 +22033,74 @@ msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 msgid "Shading"
 msgstr "ស្រមោល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr "Triambic Icosahedron តូច"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr "គូប​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr "ទ្វា​ទសត័ល​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "ភាព​ស្រអាប់​ស្នាម​គូស/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "ចតុត័ល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
 msgstr "ដូច្នេះ​បង្វិល​ជុំវិញ ៖"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr "កាត់​គូប​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr "កាត់​ទ្វាទសត័ល​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr "Icosahedron បានកាត់​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr "កាត់​អដ្ឋត័ល​ឲ្យ​ខ្លី"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr "កាត់​ចតុត័ល​ឲ្យ​ខ្លី"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
 msgstr "កំពូល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "View"
 msgstr "មើល"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr "អ័ក្ស X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr "អ័ក្ស Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr "អ័ក្ស Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr "មុខ​តម្រៀប Z តាម ៖"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-msgid "polyhedron|Show:"
-msgstr "ពហុត័ល|បង្ហាញ ៖"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22230,66 +22233,58 @@ msgid "Arrange"
 msgstr "រៀបចំ"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "បាត ៖"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "បាត​ទៅ​កំពូល (៩០)"
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 msgid "Horizontal Point:"
 msgstr "ចំណុច​ផ្ដេក ៖"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "ឆ្វេង​ទៅ​ស្ដាំ (០)"
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "ដាក់​គ្រប់កន្លែង"
+
+#: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
 msgstr "កាំ​ខាង​ក្នុង"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
 msgstr "កាំ​ខាង​ក្រៅ"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 msgid "Restack"
 msgstr "ដាក់​ជង់​ឡើង​វិញ"
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "ទិស​ដាក់​ជង់​ឡើង​វិញ ៖"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr "ពី​ស្ដាំ​ទៅ​ឆ្វេង (១៨០)"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "កំពូល"
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "ពី​កំពូល​ទៅ​បាត (២៧០)"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 msgid "Vertical Point:"
 msgstr "ចំណុច​​បញ្ឈរ​ ៖"
-
-#: ../share/extensions/restack.inx.h:14
-msgid "restack|Bottom"
-msgstr "ដាក់​ជង់​ឡើងវិញ|​បាត"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-msgid "restack|Left"
-msgstr "ដាក់​ជង់​ឡើងវិញ|​ឆ្វេង"
-
-#: ../share/extensions/restack.inx.h:18
-msgid "restack|Middle"
-msgstr "ដាក់​ជង់​ឡើងវិញ|​កណ្ដាល"
-
-#: ../share/extensions/restack.inx.h:19
-msgid "restack|Right"
-msgstr "ដាក់​ជង់​ឡើងវិញ|​ស្ដាំ"
-
-#: ../share/extensions/restack.inx.h:20
-msgid "restack|Top"
-msgstr "ដាក់​ជង់​ឡើងវិញ|​កំពូល"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -22865,3 +22860,21 @@ msgstr "ការ​បញ្ចូល​ឯកសារ​មេតា​រប
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "ការ​បញ្ចូល DXF"
+
+#~ msgid "polyhedron|Show:"
+#~ msgstr "ពហុត័ល|បង្ហាញ ៖"
+
+#~ msgid "restack|Bottom"
+#~ msgstr "ដាក់​ជង់​ឡើងវិញ|​បាត"
+
+#~ msgid "restack|Left"
+#~ msgstr "ដាក់​ជង់​ឡើងវិញ|​ឆ្វេង"
+
+#~ msgid "restack|Middle"
+#~ msgstr "ដាក់​ជង់​ឡើងវិញ|​កណ្ដាល"
+
+#~ msgid "restack|Right"
+#~ msgstr "ដាក់​ជង់​ឡើងវិញ|​ស្ដាំ"
+
+#~ msgid "restack|Top"
+#~ msgstr "ដាក់​ជង់​ឡើងវិញ|​កំពូល"

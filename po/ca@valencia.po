@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2007-03-28 18:36+0100\n"
 "Last-Translator: Robert Millan <rmh@aybabtu.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -3764,6 +3764,7 @@ msgid "Title:"
 msgstr "Títol:"
 
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Mostra:"
 
@@ -8162,11 +8163,11 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 #, fuzzy
 msgid "Right"
 msgstr "Drets"
@@ -12590,6 +12591,11 @@ msgstr "Suprimix l'emplenat"
 msgid "Apply filter"
 msgstr "Afegix capa"
 
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Filtres"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 #, fuzzy
 msgid "Add filter"
@@ -15340,23 +15346,26 @@ msgstr "Desbloca la capa"
 msgid "New"
 msgstr "Nou"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr "Sup"
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Ca_pa"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr "Dalt"
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr "Baix"
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
 msgstr "Inf"
 
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 msgid "X"
 msgstr "X"
 
@@ -21611,7 +21620,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -22125,7 +22134,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -22889,7 +22898,7 @@ msgid "Start Value"
 msgstr "Valor d'x inicial"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Estil"
 
@@ -23509,86 +23518,77 @@ msgstr "Color"
 msgid "Shading"
 msgstr "Espaiat:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, fuzzy, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "_Pinta el contorn"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "Sense arrodonir"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 #, fuzzy
 msgid "Vertices"
 msgstr "_Vertical"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
 msgstr "_Visualitza"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
 msgstr ""
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-#, fuzzy
-msgid "polyhedron|Show:"
-msgstr "Polígon"
 
 #: ../share/extensions/printing-marks.inx.h:1
 #, fuzzy
@@ -23745,78 +23745,65 @@ msgid "Arrange"
 msgstr "Angle"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Inf"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "Text horitzontal"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:7
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Títol"
+
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Radial Inward"
 msgstr "Degradat radial"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 #, fuzzy
 msgid "Radial Outward"
 msgstr "Degradat radial"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Restack"
 msgstr " R_einicia "
 
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 #, fuzzy
 msgid "Restack Direction:"
 msgstr "Descripció"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Sup"
+
+#: ../share/extensions/restack.inx.h:17
 #, fuzzy
 msgid "Top to Bottom (270)"
 msgstr "_Baixa a baix de tot"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "Text vertical"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "Inf"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr " R_einicia "
-
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "Títol"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr " R_einicia "
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr " R_einicia "
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -24445,6 +24432,30 @@ msgid "XAML Input"
 msgstr "Entrada EMF"
 
 #, fuzzy
+#~ msgid "polyhedron|Show:"
+#~ msgstr "Polígon"
+
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "Inf"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr " R_einicia "
+
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "Títol"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr " R_einicia "
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr " R_einicia "
+
+#, fuzzy
 #~ msgid "Gelatine"
 #~ msgstr "Relació"
 
@@ -24497,10 +24508,6 @@ msgstr "Entrada EMF"
 #, fuzzy
 #~ msgid "Export canvas"
 #~ msgstr "Exporta"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Ca_pa"
 
 #, fuzzy
 #~ msgid "Open files saved for plotters"
@@ -25071,10 +25078,6 @@ msgstr "Entrada EMF"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "Quantitat de torsió"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "Filtres"
 
 #, fuzzy
 #~ msgid "I hate text"

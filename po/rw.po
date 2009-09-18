@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-17 21:14+0200\n"
+"POT-Creation-Date: 2009-09-18 08:45+0200\n"
 "PO-Revision-Date: 2006-11-05 18:09+0100\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -4184,6 +4184,7 @@ msgstr "Umutwe:"
 # #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
 # sc/source\ui\src\menue.src:SCCFG_MENUBAR.SUBMENU_EDIT.SUBMENU_CHANGES.FID_CHG_SHOW.text
 #: ../src/dialogs/object-attributes.cpp:43
+#: ../share/extensions/polyhedron_3d.inx.h:37
 #, fuzzy
 msgid "Show:"
 msgstr "Kwerekana..."
@@ -9157,11 +9158,11 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
 #, fuzzy
 msgid "Right"
 msgstr "Ubuhagarike"
@@ -13886,6 +13887,12 @@ msgstr "Ihuza"
 msgid "Apply filter"
 msgstr "Nka Akugara"
 
+# vcl/source\src\helptext.src:SV_HELPTEXT_SPLITFLOATING.text
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
+#, fuzzy
+msgid "filter"
+msgstr "Bihindagurika"
+
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 #, fuzzy
 msgid "Add filter"
@@ -16787,25 +16794,34 @@ msgstr "Ntoya"
 msgid "New"
 msgstr "Gishya"
 
-#: ../src/ui/dialog/layers.cpp:661
-msgid "Top"
-msgstr ""
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../src/ui/dialog/layers.cpp:663
+#, fuzzy
+msgid "layers|Top"
+msgstr "Ntoya"
 
-#: ../src/ui/dialog/layers.cpp:667
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:673
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Dn"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:679
+#: ../src/ui/dialog/layers.cpp:681
 #, fuzzy
 msgid "Bot"
 msgstr "Ihindurangano"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Font.Strikeout..6.text
-#: ../src/ui/dialog/layers.cpp:689
+#: ../src/ui/dialog/layers.cpp:691
 #, fuzzy
 msgid "X"
 msgstr "X"
@@ -23833,7 +23849,7 @@ msgstr ""
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command, sudo apt-get install python-numpy."
+"can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:331
@@ -24400,7 +24416,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle about a custom point using an "
+"You can specify the radius of a circle around a custom point using a "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -25219,7 +25235,7 @@ msgstr "Agaciro"
 
 # sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS2.SC_OPCODE_STYLE.2.text
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Umususire"
 
@@ -26016,56 +26032,54 @@ msgstr "Gutangira Ibara"
 msgid "Shading"
 msgstr "itandukanya:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:41
+#: ../share/extensions/polyhedron_3d.inx.h:42
 #, fuzzy, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Amagenamiterere"
 
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr ""
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
 msgid "Then Rotate Around:"
 msgstr "Umutuku:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
 msgstr ""
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:51
 #, fuzzy
 msgid "Vertices"
 msgstr "Imirongo Ihagaze"
@@ -26082,31 +26096,25 @@ msgstr "Imirongo Ihagaze"
 # offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SD_EDITOPTIONS.3.text
 # #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
 # offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SD_GRAPHIC_OPTIONS.3.text
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "View"
 msgstr "Igaragaza"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "X-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "Y-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Z-Axis"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:57
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/polyhedron_3d.inx.h:60
-msgid "polyhedron|Show:"
 msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -26299,29 +26307,40 @@ msgid "Arrange"
 msgstr "Imfuruka"
 
 #: ../share/extensions/restack.inx.h:4
+#, fuzzy
+msgid "Bottom"
+msgstr "Ihindurangano"
+
+#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:5
+#: ../share/extensions/restack.inx.h:6
 #, fuzzy
 msgid "Horizontal Point:"
 msgstr "Imirongo Itambitse"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:7
+# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
+#: ../share/extensions/restack.inx.h:9
+#, fuzzy
+msgid "Middle"
+msgstr "Umutwe:"
+
+#: ../share/extensions/restack.inx.h:10
 #, fuzzy
 msgid "Radial Inward"
 msgstr "Ikizamuko"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:11
 #, fuzzy
 msgid "Radial Outward"
 msgstr "Ikizamuko"
 
-#: ../share/extensions/restack.inx.h:9
+#: ../share/extensions/restack.inx.h:12
 #, fuzzy
 msgid "Restack"
 msgstr "Umwandiko"
@@ -26346,51 +26365,27 @@ msgstr "Umwandiko"
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Position.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....BusinessCard.BusinessAddress.Position.text
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:13
 #, fuzzy
 msgid "Restack Direction:"
 msgstr "Ibirindiro"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:18
 #, fuzzy
 msgid "Vertical Point:"
 msgstr "Imirongo Ihagaze"
-
-#: ../share/extensions/restack.inx.h:14
-#, fuzzy
-msgid "restack|Bottom"
-msgstr "Ihindurangano"
-
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../share/extensions/restack.inx.h:17
-#, fuzzy
-msgid "restack|Left"
-msgstr "Umwandiko"
-
-# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
-#: ../share/extensions/restack.inx.h:18
-#, fuzzy
-msgid "restack|Middle"
-msgstr "Umutwe:"
-
-#: ../share/extensions/restack.inx.h:19
-#, fuzzy
-msgid "restack|Right"
-msgstr "Umwandiko"
-
-#: ../share/extensions/restack.inx.h:20
-#, fuzzy
-msgid "restack|Top"
-msgstr "Umwandiko"
 
 #: ../share/extensions/rtree.inx.h:1
 #, fuzzy
@@ -27046,6 +27041,27 @@ msgstr ""
 msgid "XAML Input"
 msgstr "Iyinjiza"
 
+#, fuzzy
+#~ msgid "restack|Bottom"
+#~ msgstr "Ihindurangano"
+
+#, fuzzy
+#~ msgid "restack|Left"
+#~ msgstr "Umwandiko"
+
+# shell/source\win32\shlxthandler\shlxthdl.lng:%TITLE_COLON%.text
+#, fuzzy
+#~ msgid "restack|Middle"
+#~ msgstr "Umutwe:"
+
+#, fuzzy
+#~ msgid "restack|Right"
+#~ msgstr "Umwandiko"
+
+#, fuzzy
+#~ msgid "restack|Top"
+#~ msgstr "Umwandiko"
+
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Filter.Graphic.Export.BMP.Resolution.text
 #, fuzzy
 #~ msgid "Gelatine"
@@ -27084,16 +27100,6 @@ msgstr "Iyinjiza"
 #, fuzzy
 #~ msgid "Export canvas"
 #~ msgstr "Kohereza"
-
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Ntoya"
 
 #, fuzzy
 #~ msgid "Open files saved for plotters"
@@ -27715,11 +27721,6 @@ msgstr "Iyinjiza"
 #, fuzzy
 #~ msgid "Amount of Blur"
 #~ msgstr "Akadomo"
-
-# vcl/source\src\helptext.src:SV_HELPTEXT_SPLITFLOATING.text
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "Bihindagurika"
 
 #, fuzzy
 #~ msgid "I hate text"
