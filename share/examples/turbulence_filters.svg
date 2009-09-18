@@ -51,20 +51,22 @@
        inkscape:persp3d-origin="300 : 400 : 1" />
     <filter
        id="filter2387"
+       color-interpolation-filters="sRGB"
        inkscape:label="smudge">
       <feTurbulence
          id="feTurbulence2389"
          type="fractalNoise"
-         baseFrequency="0.10000000000000001"
+         baseFrequency="0.1"
          numOctaves="1"
          seed="363"
-         in="SourceAlpha" />
+	 result="resultTurbulence" />
       <feDisplacementMap
          id="feDisplacementMap2391"
          yChannelSelector="G"
          xChannelSelector="R"
          scale="52.334152334152343"
-         in="SourceGraphic" />
+         in="SourceGraphic"
+	 in2="resultTurbulence" />
     </filter>
     <linearGradient
        inkscape:collect="always"
@@ -86,12 +88,12 @@
        y2="470.36218" />
     <filter
        id="filter2407"
+       color-interpolation-filters="sRGB"
        inkscape:label="camo_holes">
       <feTurbulence
          id="feTurbulence2409"
-         in="SourceAlpha"
          type="fractalNoise"
-         baseFrequency="0.10000000000000001"
+         baseFrequency="0.1"
          numOctaves="1"
          seed="338" />
       <feColorMatrix
@@ -116,14 +118,14 @@
        y2="470.36218" />
     <filter
        id="filter2423"
+       color-interpolation-filters="sRGB"
        inkscape:label="add_noise">
       <feTurbulence
          id="feTurbulence2425"
          type="fractalNoise"
-         baseFrequency="0.10000000000000001"
+         baseFrequency="0.1"
          numOctaves="2"
-         seed="363"
-         in="SourceAlpha" />
+         seed="363" />
       <feComposite
          id="feComposite2429"
          in2="SourceGraphic"
@@ -140,12 +142,12 @@
        y2="470.36218" />
     <filter
        inkscape:label="cloudy"
+       color-interpolation-filters="sRGB"
        id="filter2435">
       <feTurbulence
-         in="SourceAlpha"
          seed="363"
          numOctaves="5"
-         baseFrequency="0.029999999999999999"
+         baseFrequency="0.03"
          type="fractalNoise"
          id="feTurbulence2437" />
       <feColorMatrix
@@ -181,12 +183,12 @@
        y2="470.36218" />
     <filter
        inkscape:label="black_white_speckles"
+       color-interpolation-filters="sRGB"
        id="filter2457">
       <feTurbulence
-         in="SourceAlpha"
          seed="363"
          numOctaves="2"
-         baseFrequency="0.20000000000000004"
+         baseFrequency="0.2"
          type="turbulence"
          id="feTurbulence2459" />
       <feColorMatrix
@@ -199,12 +201,13 @@
     </filter>
     <filter
        id="filter2465"
+       color-interpolation-filters="sRGB"
        inkscape:label="crumbled_tin_foil">
       <feTurbulence
          id="feTurbulence2467"
          type="fractalNoise"
          numOctaves="5"
-         baseFrequency="0.050000000000000003"
+         baseFrequency="0.05"
          seed="364"
          result="result0" />
       <feDiffuseLighting
