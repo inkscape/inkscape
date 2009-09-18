@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-17 23:24+0200\n"
+"PO-Revision-Date: 2009-09-18 21:44+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -12250,9 +12250,8 @@ msgid "Apply filter"
 msgstr "Szűrő alkalmazása"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
-msgstr "Szűrők"
+msgstr "szűrő"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
@@ -15082,9 +15081,8 @@ msgstr "Új"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "Rétegek"
+msgstr "Felülre"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -21176,7 +21174,6 @@ msgstr ""
 "Próbálkozzon az \"Útvonal->Objektum átalakítása útvonallá\" funkcióval."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -21642,7 +21639,6 @@ msgid "Symmedians"
 msgstr "Szimmediánok"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -23245,9 +23241,8 @@ msgid "Arrange"
 msgstr "Elrendezés"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Alsó:"
+msgstr "Alsó"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -23263,9 +23258,8 @@ msgstr "Balról jobbra (0)"
 
 # May contain a short, human readable description of the resource as plain, unmarked text.
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Lyuggatott"
+msgstr "Közép"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
