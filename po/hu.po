@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-18 21:44+0200\n"
+"PO-Revision-Date: 2009-09-18 21:52+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -23283,7 +23283,7 @@ msgstr "Jobbról balra (180)"
 
 #: ../share/extensions/restack.inx.h:16
 msgid "Top"
-msgstr "Felülre"
+msgstr "Felső"
 
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
