@@ -16743,7 +16743,7 @@ msgstr "tutorial-shapes.it.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1920
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.svg"
+msgstr "tutorial-advanced.it.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1924
@@ -16763,7 +16763,7 @@ msgstr "tutorial-elements.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1936
 msgid "tutorial-tips.svg"
-msgstr "tutorial-tips.svg"
+msgstr "tutorial-tips.it.svg"
 
 #: ../src/verbs.cpp:2212 ../src/verbs.cpp:2731
 msgid "Unlock all objects in the current layer"

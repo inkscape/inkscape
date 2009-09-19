@@ -17045,7 +17045,7 @@ msgstr "Dikey"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:1912
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg"
+msgstr "tutorial-basic.tr.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1916
