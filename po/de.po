@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-18 01:25+0100\n"
+"PO-Revision-Date: 2009-09-19 09:36+0100\n"
 "Last-Translator: Alexander Senger <neutronenspalter@freenet.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1860,14 +1860,12 @@ msgid "Convert to a colorizable transparent positive or negative"
 msgstr "In einfärbbares transparentes Positiv oder Negativ umwandeln"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Duotone"
-msgstr "Schaltfläche"
+msgstr "Zweifarbigkeit"
 
 #: ../share/filters/filters.svg.h:196
-#, fuzzy
 msgid "Change colors to a duotone palette"
-msgstr "Farben aus einer Farbfelder-Palette auswählen"
+msgstr "Farbpalette auf zwei Farben reduzieren"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
@@ -1897,6 +1895,7 @@ msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
 msgstr ""
+"Erzeugt ein ungefähr halbtransparentes einfärbbares Bild der Sättigungspegel"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2068,6 +2067,7 @@ msgstr "Titel"
 #: ../share/filters/filters.svg.h:219
 msgid "Create a tritone palette with hue selectable by flood"
 msgstr ""
+"Erzeugt eine Drei-Farben-Palette mit durch Füllfarbe definierten Farbton"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -4189,7 +4189,7 @@ msgstr "Seiten-Ecke"
 
 #: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
-msgstr ""
+msgstr "konvexe Hülllinienecke"
 
 #: ../src/display/snap-indicator.cpp:132
 msgid "quadrant point"
@@ -4257,7 +4257,7 @@ msgstr "Führungslinienursprung"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
-msgstr ""
+msgstr "Konvexe Hülllinienecke"
 
 #: ../src/display/snap-indicator.cpp:193
 msgid "Quadrant point"
@@ -5102,7 +5102,7 @@ msgstr "Wellenlänge"
 
 #: ../src/extension/internal/bitmap/wave.cpp:46
 msgid "Alter selected bitmap(s) along sine wave."
-msgstr ""
+msgstr "Ausgewählte Bitmap(s) entlang Sinuskurve verformen"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
@@ -7593,7 +7593,6 @@ msgid "Stroke width"
 msgstr "Breite der Kontur"
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "Add the stroke width to the interruption size"
 msgstr "Addiere Strichdicke zur Unterbrechungslänge."
 
@@ -7617,11 +7616,11 @@ msgstr "Größe des Orientierungszeigers/-schalters"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
-msgstr ""
+msgstr "Kreuzungsmarkierung"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
-msgstr ""
+msgstr "Kreuzungsmarkierungen"
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
@@ -7821,22 +7820,20 @@ msgid "Parallelism jitter: 1st side"
 msgstr "Parallelität Schwankung: 1. Seite"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
-#, fuzzy
 msgid ""
 "Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
-"Fügt Zufall in der Richtung hinzu, in dem \"untere\" Wendepunkte tangential "
-"zur Begrenzung bewegt werden."
+"Ändert Richtung zufällig, in dem \"untere\" Wendepunkte tangential zur "
+"Begrenzung bewegt werden."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
-#, fuzzy
 msgid ""
 "Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
-"Fügt Zufall in der Richtung hinzu, in dem \"obere\" Wendepunkte tangential "
-"zur Begrenzung bewegt werden."
+"Ändert Richtung zufällig, in dem \"obere\" Wendepunkte tangential zur "
+"Begrenzung bewegt werden."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
@@ -7901,9 +7898,8 @@ msgid "Width from 'bottom' to 'top'"
 msgstr "Breite an den \"unteren\" Wendepunkten"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
-#, fuzzy
 msgid "Hatches width and dir"
-msgstr "Breite, Höhe: "
+msgstr "Strichbreite und -richtung "
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Defines hatches frequency and direction"
@@ -8191,9 +8187,8 @@ msgid "Reference segment"
 msgstr "Referenz-Segment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
-msgstr "Referenzsegment (Vorgabe ist Diagonale der Umrandung)"
+msgstr "Referenzsegment (Vorgabe ist horizontale Mittellinie der Umrandung)"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -10329,7 +10324,7 @@ msgstr "Horizontale Führungslinie bei %s"
 #: ../src/sp-guide.cpp:434
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
-msgstr ""
+msgstr "bei %d Grad, durch (%s, %s)"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
@@ -10901,17 +10896,19 @@ msgid "Paste text"
 msgstr "Text einfügen"
 
 #: ../src/text-context.cpp:1602
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"Fließtext schreiben; <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
+"Fließtext schreiben (%d Zeichen); <b>Eingabe</b>, um einen neuen Absatz zu "
+"beginnen."
 
 #: ../src/text-context.cpp:1604
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Text schreiben; <b>Eingabe</b>, um eine neue Zeile zu beginnen."
+msgstr ""
+"Text schreiben (%d Zeichen); <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -16030,7 +16027,7 @@ msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
 msgid "Zoom drawing if window size changes"
-msgstr "Zeichnungsgröße ändern, sobald die Fenstergröße verändert wird"
+msgstr "Zeichnungsgröße mit Fenstergröße verändern"
 
 #: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:503
 msgid "Cursor coordinates"
@@ -16814,7 +16811,6 @@ msgid "Deleted layer."
 msgstr "Ebene wurde gelöscht."
 
 #: ../src/verbs.cpp:1309
-#, fuzzy
 msgid "Toggle layer solo"
 msgstr "Sichbarkeit der aktuellen Ebene umschalten"
 
@@ -17818,7 +17814,7 @@ msgstr "Bearbeiten der Knoten oder der Anfasser eines Pfades"
 
 #: ../src/verbs.cpp:2505
 msgid "Tweak objects by sculpting or painting"
-msgstr "Objekte verbesserun druch Verformen oder Malen (Shift+F2)"
+msgstr "Objekte verbessern durch Verformen oder Malen (Umschalt+F2)"
 
 #: ../src/verbs.cpp:2507
 msgid "Create rectangles and squares"
@@ -18606,7 +18602,7 @@ msgstr "Alles in allen Ebenen einblenden"
 
 #: ../src/verbs.cpp:2740
 msgid "Link an ICC color profile"
-msgstr ""
+msgstr "Verknüpfung mit ICC-Farbprofil"
 
 #: ../src/verbs.cpp:2741
 msgid "Remove Color Profile"
@@ -19129,7 +19125,7 @@ msgstr "_K"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:235
 msgid "Gray"
-msgstr "Graustufen"
+msgstr "Grau"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:238
 #: ../src/widgets/sp-color-icc-selector.cpp:239
@@ -19152,13 +19148,15 @@ msgstr "Magenta"
 msgid "Yellow"
 msgstr "Gelb"
 
+# ??? Check!
 #: ../src/widgets/sp-color-icc-selector.cpp:296
 msgid "Fix"
-msgstr ""
+msgstr "Festlegen"
 
+# ??? Check!
 #: ../src/widgets/sp-color-icc-selector.cpp:299
 msgid "Fix RGB fallback to match icc-color() value."
-msgstr ""
+msgstr "Legt RGB-Ausweichwert für Entsprechung des icc-color()-Parameters fest"
 
 #. Label
 #: ../src/widgets/sp-color-icc-selector.cpp:380
@@ -19394,7 +19392,7 @@ msgstr "Stil von neuen kalligrafischen Strichen"
 
 #: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
 msgid "TBD"
-msgstr ""
+msgstr "\"Beschreibung fehlt noch!\""
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -19599,7 +19597,7 @@ msgstr "Knoten oder Anfasser einrasten"
 
 #: ../src/widgets/toolbox.cpp:2091
 msgid "Snap to paths"
-msgstr "An Objektpfaden einra_sten"
+msgstr "An Objektpfaden einrasten"
 
 #: ../src/widgets/toolbox.cpp:2100
 msgid "Path intersections"
@@ -19631,7 +19629,7 @@ msgstr "Linien-Mittelpunkte"
 
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Snap from and to midpoints of line segments"
-msgstr "Einrasten von und an Mittelpunkten von Liniensegmenten"
+msgstr "Einrasten an Mittelpunkten von Liniensegmenten"
 
 #: ../src/widgets/toolbox.cpp:2136
 msgid "Object Centers"
@@ -19647,7 +19645,7 @@ msgstr "Rotationszentren"
 
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Snap from and to an item's rotation center"
-msgstr "Einrasten von und an rotationszentren von Objekten"
+msgstr "Ein-/Ausrasten an Rotationszentren von Objekten"
 
 #: ../src/widgets/toolbox.cpp:2154
 msgid "Page border"
@@ -19657,15 +19655,13 @@ msgstr "Seitenrand"
 msgid "Snap to the page border"
 msgstr "Am Seitenrand einrasten"
 
-# !!!
 #: ../src/widgets/toolbox.cpp:2163
 msgid "Snap to grids"
-msgstr "<b>Einrasten am Gitter</b>"
+msgstr "Am Gitter einrasten"
 
-# !!! points?
 #: ../src/widgets/toolbox.cpp:2172
 msgid "Snap to guides"
-msgstr "_Knoten (Punkte) an Führungslinien einrasten"
+msgstr "An Führungslinien einrasten"
 
 #: ../src/widgets/toolbox.cpp:2377
 msgid "Star: Change number of corners"
@@ -19799,7 +19795,7 @@ msgstr "reichlich abgerundet"
 
 #: ../src/widgets/toolbox.cpp:2795 ../src/widgets/toolbox.cpp:2810
 msgid "blown up"
-msgstr ""
+msgstr "aufgebläht"
 
 #: ../src/widgets/toolbox.cpp:2798
 msgid "Rounded"
@@ -20097,7 +20093,7 @@ msgstr "Erstelle eine Folge von Achsenparallelen Liniensegmenten"
 
 #: ../src/widgets/toolbox.cpp:3859
 msgid "Mode of new lines drawn by this tool"
-msgstr "Modus für neue, mit diesem Werkzeug zu zeichnende Linien"
+msgstr "Modus für neue Linie mit diesem Werkzeug"
 
 #: ../src/widgets/toolbox.cpp:3888
 msgid "Triangle in"
@@ -20116,9 +20112,8 @@ msgid "Shape:"
 msgstr "Form:"
 
 #: ../src/widgets/toolbox.cpp:3916
-#, fuzzy
 msgid "Shape of new paths drawn by this tool"
-msgstr "Stil von neuen Pfaden (Malwerkzeug)"
+msgstr "Stil von neuen Pfaden mit diesem Werkzeug"
 
 #: ../src/widgets/toolbox.cpp:4001
 msgid "(many nodes, rough)"
@@ -21135,7 +21130,6 @@ msgstr ""
 " Versuchen sie den Befehl Pfad | Objekt in Pfad umwandeln."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -21640,9 +21634,9 @@ msgstr ""
 "Alle Längeneinheiten sind Inkscape-Pixel, Winkel werden in Radiant "
 "angegeben.\n"
 "Ein Punkt kann in trilinearen Koordinaten angegeben oder durch eine "
-"Dreieckszentrumsfunktion definiert sein.\n"
-"Funktionsparameter sind Seitenlängen und Winkel.nTrilineare Koordinaten "
-"werden durch Doppelpunkt \":\" getrennt.\n"
+"Dreieckszentrumfunktion definiert sein.\n"
+"Funktionsparameter sind Seitenlängen und Winkel.\n"
+"Trilineare Koordinaten werden durch Doppelpunkt \":\" getrennt.\n"
 "Seitenlängen werden durch \"s_a\", \"s_b\" und \"s_c\" repräsentiert.\n"
 "Die korrespondierenden Winkel sind \"a_a\", \"a_b\" und \"a_c\".\n"
 "Mögliche Konstanten sind auch halber Umfang \"semiperim\" und Fläche \"area"
@@ -22053,18 +22047,22 @@ msgstr "Kartesisches Gitter"
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
 msgstr ""
+"Halbiert X-Unter-Unterteilungsfrequenz nach n Unterteilungen. (nur "
+"Logarithmus) "
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
 msgstr ""
+"Halbiert Y-Unter-Unterteilungsfrequenz nach n Unterteilungen. (nur "
+"Logarithmus) "
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Logarithmische X-Unterteilung (Basis wie oben gegeben)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Logarithmische Y-Unterteilung (Basis wie oben gegeben)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Spacing [px]"
@@ -22100,27 +22098,27 @@ msgstr "Nebenteilung Y Dicke [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
-msgstr ""
+msgstr "Unterteilungen pro X-Hauptteilung"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 msgid "Subdivisions per Major Y Division"
-msgstr ""
+msgstr "Unterteilungen pro Y-Hauptteilung"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
 msgid "Subminor X Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke untergeordnete X-Teilung [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
 msgid "Subminor Y Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke untergeordnete Y-Teilung [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
-msgstr ""
+msgstr "Unter-Unterteilungen pro X-Unterteilung"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "Unter-Unterteilungen pro Y-Unterteilung"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions"
@@ -22132,27 +22130,27 @@ msgstr "Winkelteilung im Zentrum"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
-msgstr ""
+msgstr "Durchmesser Mittelpunkt [px]"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
-msgstr ""
+msgstr "Beginn des umlaufenden Bezeichners [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr ""
+msgstr "Größe des umlaufenden Bezeichners [px]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "Umlaufende Bezeichner"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Logarithmische Unterteilung (Basis wie oben gegeben)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke Winkelteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:10
 msgid "Major Circular Division Spacing [px]"
@@ -22160,23 +22158,23 @@ msgstr "Haupt-Kreis-Teilung Abstand [px]"
 
 #: ../share/extensions/grid_polar.inx.h:11
 msgid "Major Circular Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke Kreisteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
-msgstr ""
+msgstr "Hauptkreisteilung"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "Winkel-Nebenteilung endet n Teilstriche vor dem Zentrum"
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke Winkelnebenteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Circular Division Thickness [px]"
-msgstr ""
+msgstr "Strichstärke Kreisnebenteilung [px]"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -22184,11 +22182,11 @@ msgstr "Polargitter"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "Nebenteilungen pro Winkelhauptteilung"
 
 #: ../share/extensions/grid_polar.inx.h:20
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "Nebenteilungen pro Kreishauptteilung"
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
@@ -22252,7 +22250,7 @@ msgstr "Voreinstellung"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "Drittel-Regel"
 
 #: ../share/extensions/guides_creator.inx.h:19
 msgid "Start from edges"
@@ -22280,7 +22278,7 @@ msgstr "HPGL-Ausgabe"
 
 #: ../share/extensions/hpgl_output.inx.h:4
 msgid "Mirror Y-axis"
-msgstr ""
+msgstr "Y-Spiegelachse"
 
 #: ../share/extensions/hpgl_output.inx.h:5
 msgid "Plot invisible layers"
@@ -22288,11 +22286,11 @@ msgstr "Plotte unsichtbare Ebenen"
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "X-origin (px)"
-msgstr ""
+msgstr "X-Ursprung [px]"
 
 #: ../share/extensions/hpgl_output.inx.h:7
 msgid "Y-origin (px)"
-msgstr ""
+msgstr "Y-Ursprung [px]"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
@@ -22357,7 +22355,7 @@ msgstr "Ganzzahl"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
-msgstr ""
+msgstr "Attribut innerhalb einer Gruppe interpolieren"
 
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
@@ -22394,6 +22392,8 @@ msgid ""
 "elements inside the selected group or for all elements in a multiple "
 "selection"
 msgstr ""
+"Dieser Effekt setzt ein beliebiges interpolierbares Attribut für jedes "
+"Element innerhalb einer Gruppe oder einer mehrteiligen Auswahl"
 
 #: ../share/extensions/interp_att_g.inx.h:21
 msgid "Transformation"
@@ -22463,6 +22463,25 @@ msgid ""
 "\n"
 "]: return to remembered point\n"
 msgstr ""
+"\n"
+"Der Pfad ergibt sich aus wiederholten\n"
+"Anwendungen der Regeln auf das Axiom.\n"
+"Die folgenden Kommandos werden dabei\n"
+"in Axiom und Regeln erkannt:\n"
+"\n"
+"Beliebige aus {A, B, C, D, E, F}: vorwärts zeichnen\n"
+"\n"
+"Beliebige aus {G, H, I, J, K, L}: vorwärts gehen\n"
+"\n"
+"+: nach links wenden\n"
+"\n"
+"-: nach rechts wenden\n"
+"\n"
+"|: umkehren\n"
+"\n"
+"[: Punkt merken\n"
+"\n"
+"]: zu gemerktem Punkt zurückkehren\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
@@ -22572,6 +22591,11 @@ msgid ""
 "in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
 "real world, Scale must be set to 250."
 msgstr ""
+"Dieser Effekt misst die Länge eines Pfades in den gewählten Einheiten und "
+"fügt diese als Text-auf-Pfad-Objekt an. Die Anzahl der signifikanten Stellen "
+"wird durch \"Präzision\" gewählt. Das Feld \"Versatz\" kontrolliert die "
+"Entfernung Text-Pfad. Der \"Maßstab\" kann zur Messung skalierter Pfade "
+"verwendet werden (M = 250 -> 1cm entspricht 2,5m)."
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
 msgid "Angle"
@@ -22725,7 +22749,7 @@ msgstr "Originalmuster ist:"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "Leerzeichen strecken, um an Gerüstlänge zu passen"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
@@ -22760,7 +22784,7 @@ msgstr "Breite des Buches (in Zoll)"
 
 #: ../share/extensions/perfectboundcover.inx.h:6
 msgid "Caliper (inches)"
-msgstr ""
+msgstr "Messschieber (Zoll)"
 
 # !!! not the best translation
 #: ../share/extensions/perfectboundcover.inx.h:7
@@ -22769,7 +22793,7 @@ msgstr "Abdeckung"
 
 #: ../share/extensions/perfectboundcover.inx.h:8
 msgid "Cover Thickness Measurement"
-msgstr ""
+msgstr "Dickenmessung Überdeckung"
 
 #: ../share/extensions/perfectboundcover.inx.h:9
 msgid "Interior Pages"
@@ -22852,7 +22876,7 @@ msgstr "Dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
-msgstr ""
+msgstr "Zeichnet rückseitige Polygone"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -22898,7 +22922,7 @@ msgstr "Großes Dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:18
 msgid "Great Stellated Dodecahedron"
-msgstr ""
+msgstr "Großes überschlagenes Dodekaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
@@ -22968,17 +22992,18 @@ msgstr "Skalierungsfaktor"
 msgid "Shading"
 msgstr "Schattierung"
 
+# Für "Triambic" gibt es eigentlich keine deutsche Entsprechung...
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "Kleines Triambisches Ikosaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Cube"
-msgstr ""
+msgstr "Abgeschrägtes Hexaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "Abgeschrägtes Dodekaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
@@ -22995,23 +23020,23 @@ msgstr "Dann rotiere um:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
-msgstr ""
+msgstr "Hexaederstumpf"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "Dodekaederstumpf"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "Ikosaederstumpf"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Octahedron"
-msgstr ""
+msgstr "Oktaederstumpf"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "Tetraederstumpf"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
@@ -23035,7 +23060,7 @@ msgstr "Z-Achse"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "Z-Sortierung der Flächen gemäß:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -23302,11 +23327,11 @@ msgstr "Platzierung der Zähne"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr ""
+msgstr "Innerhalb (Hypotrochoide)"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr ""
+msgstr "Außerhalb (Epitrochoide)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
@@ -23378,6 +23403,8 @@ msgid ""
 "(Select your system encoding. More information at http://docs.python.org/"
 "library/codecs.html#standard-encodings)"
 msgstr ""
+"(Wählen Sie die Systemkodierung. Mehr Informationen dazu unter http://docs."
+"python.org/library/codecs.html#standard-encodings)"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
@@ -23476,6 +23503,7 @@ msgstr "Sonntag"
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options below have no influence when the above is checked."
 msgstr ""
+"Ist das obere Häckchen gesetzt, sind die unteren Optionen bedeutungslos."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -23617,7 +23645,7 @@ msgstr "Attributname"
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
-msgstr ""
+msgstr "Kompatibilität des Vorschaufunktion mit diesem Ereignis"
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid ""
@@ -23652,12 +23680,13 @@ msgstr "Das zuerst ausgewählte setzt ein Attribut in alle anderen"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size as the attributes list."
-msgstr ""
+msgstr "Die Werteliste muss die gleiche Länge wie die Attributenliste haben!"
 
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
 msgstr ""
+"Der nächste Parameter ist nützlich, wenn Sie mehr als zwei Elemente wählen."
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
@@ -23665,13 +23694,15 @@ msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
 msgstr ""
+"Dieser Effekt fügt ein Merkmal hinzu, dass nur in SVG-fähigen Browsern (etwa "
+"Firefox) sicht- oder nutzbar ist."
 
 #: ../share/extensions/web-set-att.inx.h:14
 msgid ""
 "This effect sets one or more attributes in the second selected element, when "
 "a defined event occurs on the first selected element."
 msgstr ""
-"Dieser Effekt setzt ein oder mehrere Attribute im zweiten ausgewählten "
+"Dieser Effekt setzt ein oder mehrere Attribute im zweiten markierten "
 "Element, wenn ein bestimmtes Event bei dem zuerst ausgewählten eintritt."
 
 #: ../share/extensions/web-set-att.inx.h:15
@@ -23683,6 +23714,7 @@ msgstr "Wert(e) festlegen"
 msgid "Web"
 msgstr "Internet"
 
+# Was ist "set" in diesem Zusammenhang?
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When should the set be done?"
 msgstr ""
@@ -23690,7 +23722,7 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
 msgid "on activate"
-msgstr "beim aktivieren"
+msgstr "beim Aktivieren"
 
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
@@ -23715,27 +23747,27 @@ msgstr "bei Fokuserhalt"
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse down"
-msgstr "beim Mausdrücken"
+msgstr "wenn Zeiger sich nach unten bewegt"
 
 #: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "on mouse move"
-msgstr "beim Maus bewegen"
+msgstr "bei Bewegen des Zeigers"
 
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
 msgid "on mouse out"
-msgstr "beim Verlasen der Maus"
+msgstr "wenn Zeiger Objekt verlässt"
 
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
-msgstr "beim Überfahren mit der Maus"
+msgstr "bei Überfahren mit Zeiger"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "on mouse up"
-msgstr "wenn Maus verschwindet"
+msgstr "wenn Zeiger sich nach oben bewegt"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 #, fuzzy
@@ -23751,8 +23783,8 @@ msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
 msgstr ""
-"Wenn Sie mehr als nur ein Attribut übertragen wollen, sollten Sie diese mit "
-"einem Leerzeichen - und nur mit einem Leerzeichen -  vereinzeln. "
+"Wenn Sie mehr als nur ein Attribut übertragen wollen, müssen Sie diese mit "
+"einzelnen Leerzeichen trennen. "
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
@@ -23760,7 +23792,7 @@ msgstr "Quelle und Ziel für die Übertragung"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
 msgid "The first selected transmits to all others"
-msgstr "Das zuerst gewählte überträgt zu allen anderen"
+msgstr "Das zuerst Gewählte überträgt zu allen anderen"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
 #, fuzzy
