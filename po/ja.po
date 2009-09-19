@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-13 18:22+0900\n"
+"POT-Creation-Date: 2009-09-19 23:21+0900\n"
+"PO-Revision-Date: 2009-09-19 23:19+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "滑らかななドロップ状のベベルをメタリック仕上げで
 
 #: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
-msgstr "モーションぼかし, 水平"
+msgstr "モーションぼかし・水平"
 
 #: ../share/filters/filters.svg.h:5 ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7 ../share/filters/filters.svg.h:57
@@ -101,7 +101,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
-msgstr "モーションぼかし, 垂直"
+msgstr "モーションぼかし・垂直"
 
 #: ../share/filters/filters.svg.h:6
 msgid ""
@@ -950,7 +950,7 @@ msgstr "輪郭の周りを描画します。"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Outline, double"
-msgstr "外郭線, 二重"
+msgstr "外郭線・二重"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -1046,7 +1046,7 @@ msgstr "HSL バンプ・アルファ"
 #: ../share/filters/filters.svg.h:191 ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:204
 msgid "Image effects, transparent"
-msgstr "イメージエフェクト, 透過"
+msgstr "イメージエフェクト・透過"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
@@ -1190,7 +1190,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
-msgstr "HSL バンプ, つや消し"
+msgstr "HSL バンプ・つや消し"
 
 #: ../share/filters/filters.svg.h:120
 msgid ""
@@ -1217,7 +1217,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
-msgstr "泡状バンプ, つや消し"
+msgstr "泡状バンプ・つや消し"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
@@ -1262,7 +1262,7 @@ msgstr "ティッシュまたはラフペーパー上のインクの染みです
 
 #: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
-msgstr "色付きの外郭線, 内側"
+msgstr "色付きの外郭線・内側"
 
 #: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
@@ -1389,7 +1389,7 @@ msgstr "サテン"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
-msgstr "真珠貝シェーディングのシルク生地です。"
+msgstr "シルク生地の真珠貝シェーディングです。"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Frosted glass"
@@ -1461,7 +1461,7 @@ msgstr "3D ウッド"
 
 #: ../share/filters/filters.svg.h:152
 msgid "3D warped, fibered wood texture"
-msgstr "3D で歪んだ繊維質の木目調テクスチャです。"
+msgstr "3D の歪んだ繊維質の木目調テクスチャです。"
 
 #: ../share/filters/filters.svg.h:153
 msgid "3D mother of pearl"
@@ -1469,7 +1469,7 @@ msgstr "3D 真珠貝"
 
 #: ../share/filters/filters.svg.h:153
 msgid "3D warped, iridescent pearly shell texture"
-msgstr "3D で歪んだ虹色の真珠貝テクスチャです。"
+msgstr "3D の歪んだ虹色の真珠貝テクスチャです。"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Tiger fur"
@@ -1535,7 +1535,7 @@ msgstr "小規模の粒子状効果を加えます。"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr "HSL バンプ, 透明"
+msgstr "HSL バンプ・透明"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
@@ -1573,7 +1573,7 @@ msgstr "ビットマップやマテリアルに透明な描画エフェクトを
 
 #: ../share/filters/filters.svg.h:165
 msgid "Alpha draw, color"
-msgstr "アルファ描画, 色"
+msgstr "アルファ描画・色"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
@@ -1777,7 +1777,7 @@ msgstr "線とフィルをラフにし透明な彫り込みを行うエフェク
 
 #: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
-msgstr "アルファ描画, 液体"
+msgstr "アルファ描画・液体"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
@@ -1843,7 +1843,7 @@ msgstr "色をデュオトーンパレットへ変更します。"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
-msgstr "ライトイレイザ－, ネガ"
+msgstr "ライトイレイザ－・ネガ"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Like Light eraser but converts to negative"
@@ -1893,7 +1893,7 @@ msgstr "高さのマップが HSL 感度のキャンバステクスチャです�
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
-msgstr "キャンバスバンプ, つや消し"
+msgstr "キャンバスバンプ・つや消し"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
@@ -1945,7 +1945,7 @@ msgstr "濃い色の透明プラスティックです。"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Melted jelly, matte"
-msgstr "溶けたゼリー, つや消し"
+msgstr "溶けたゼリー・つや消し"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
@@ -2465,11 +2465,11 @@ msgstr "<b>P3</b>: 120&#176; 回転"
 
 #: ../src/dialogs/clonetiler.cpp:1922
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
-msgstr "<b>P31M</b>: 反転 + 120&#176; 回転, 濃く"
+msgstr "<b>P31M</b>: 反転 + 120&#176; 回転、濃く"
 
 #: ../src/dialogs/clonetiler.cpp:1923
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
-msgstr "<b>P31M1</b>: 反転 + 120&#176; 回転, 薄く"
+msgstr "<b>P31M1</b>: 反転 + 120&#176; 回転、薄く"
 
 #: ../src/dialogs/clonetiler.cpp:1924
 msgid "<b>P6</b>: 60&#176; rotation"
@@ -5650,6 +5650,7 @@ msgstr "ドキュメントは保存されません。"
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
+"ファイル %s は書き込み禁止になっています。書き込み禁止を解除してください。"
 
 #: ../src/file.cpp:604
 #, c-format
@@ -5766,7 +5767,7 @@ msgstr "フルード"
 
 #: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:55
 msgid "Image"
-msgstr "画像"
+msgstr "イメージ"
 
 #: ../src/filter-enums.cpp:30
 msgid "Merge"
@@ -6151,7 +6152,7 @@ msgstr "デフォルトグラデーションの作成"
 
 #: ../src/gradient-context.cpp:588
 msgid "<b>Draw around</b> handles to select them"
-msgstr ""
+msgstr "ハンドルの<b>周囲に線を引く</b>とそれらを選択します。"
 
 #: ../src/gradient-context.cpp:686
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -6507,7 +6508,7 @@ msgstr "ステータスバー (ウインドウの下端部) の表示/非表示�
 #: ../src/interface.cpp:956
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr ""
+msgstr "未知の VERB \"%s\""
 
 #: ../src/interface.cpp:995
 msgid "Open _Recent"
@@ -6833,11 +6834,11 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:706
 msgid "Switcher Style"
-msgstr "スイッチャースタイル"
+msgstr "スイッチャスタイル"
 
 #: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:707
 msgid "Switcher buttons style"
-msgstr "スイッチャーボタンのスタイルです。"
+msgstr "スイッチャボタンのスタイルです。"
 
 #: ../src/libgdl/gdl-dock-master.c:168
 msgid "Expand direction"
@@ -7059,11 +7060,11 @@ msgstr "ブール演算"
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
-msgstr ""
+msgstr "円 (中心と半径)"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "3 点による円"
 
 #: ../src/live_effects/effect.cpp:92
 msgid "Dynamic stroke"
@@ -7075,7 +7076,7 @@ msgstr "格子変形"
 
 #: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
-msgstr "線のセグメント"
+msgstr "線分"
 
 #: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
@@ -7083,7 +7084,7 @@ msgstr "鏡面対象"
 
 #: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
-msgstr ""
+msgstr "平行線"
 
 #: ../src/live_effects/effect.cpp:98
 msgid "Path length"
@@ -7107,7 +7108,7 @@ msgstr "再帰スケルトン"
 
 #: ../src/live_effects/effect.cpp:103
 msgid "Tangent to curve"
-msgstr ""
+msgstr "曲線の接線"
 
 #: ../src/live_effects/effect.cpp:104
 msgid "Text label"
@@ -7138,7 +7139,7 @@ msgstr "コッホ曲線"
 
 #: ../src/live_effects/effect.cpp:113
 msgid "Knot"
-msgstr ""
+msgstr "ノット"
 
 #: ../src/live_effects/effect.cpp:114
 msgid "Construct grid"
@@ -7146,7 +7147,7 @@ msgstr "グリッドの構築"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Spiro spline"
-msgstr ""
+msgstr "スピロスプライン"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Envelope Deformation"
@@ -7158,7 +7159,7 @@ msgstr "サブパスの補間"
 
 #: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "ハッチ (ラフ)"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Sketch"
@@ -7267,7 +7268,7 @@ msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
-"ステッチの内側およびガイドパスの外側へ始点を移動するゆれのランダムな量です。"
+"ステッチの内側およびガイドパスの外側へ始点を移動する揺れのランダムな量です。"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
@@ -7422,15 +7423,15 @@ msgstr "固定幅"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
-msgstr ""
+msgstr "後ろ側のひもを隠す領域の大きさです"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "In units of stroke width"
-msgstr ""
+msgstr "ストローク幅を単位とする"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width"
-msgstr ""
+msgstr "'遮蔽する幅' をストローク幅の比率とみなします"
 
 #: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
@@ -7439,23 +7440,23 @@ msgstr "ストローク幅"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size"
-msgstr ""
+msgstr "ストローク幅を遮蔽サイズに加えます"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Crossing path stroke width"
-msgstr ""
+msgstr "交差ストローク幅"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size"
-msgstr ""
+msgstr "交差したストローク幅を遮蔽サイズに加えます"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
-msgstr "スイッチャーサイズ"
+msgstr "スイッチャサイズ"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "方向インジケータ/スイッチャのサイズです"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
@@ -7467,7 +7468,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "ドラッグで交点を選択、クリックで切り替えます。"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7503,7 +7504,7 @@ msgstr "パターンのコピー"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
 msgid "How many pattern copies to place along the skeleton path"
-msgstr "スケルトンパスに沿ってパターンコピーをどれくらい置くか"
+msgstr "スケルトンパスに沿ってパターンコピーをどれくらい置くかを指定します"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "Width of the pattern"
@@ -7540,7 +7541,7 @@ msgstr "接線オフセット"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
 msgid "Offsets in unit of pattern size"
-msgstr "パターンサイズを単位にオフセットする"
+msgstr "パターンサイズを単位としてオフセットする"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid ""
@@ -7568,11 +7569,11 @@ msgstr "この数値より近い終点を結合します。0 にすると結合�
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
-msgstr ""
+msgstr "振動のランダム性"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
-msgstr ""
+msgstr "ハッチ間の距離の変動量 (%) です。"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth"
@@ -7580,164 +7581,174 @@ msgstr "増加"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
-msgstr ""
+msgstr "ハッチ間の距離の増加量です。"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half-turns smoothness: 1st side, in"
-msgstr ""
+msgstr "旋回点の滑らかさ: 1 次側・入"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
 "0=sharp, 1=default"
 msgstr ""
+"パスが '下側' で旋回点に達する時の滑らかさ/鋭さを設定します。0=尖らせる、1=デ"
+"フォルト"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr ""
+msgstr "1 次側・出"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
+"パスが '下側' で旋回点から抜ける時の滑らかさ/鋭さを設定します。0=尖らせる、1="
+"デフォルト"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in"
-msgstr ""
+msgstr "2 次側・入"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
+"パスが '上側' で旋回点に達する時の滑らかさ/鋭さを設定します。0=尖らせる、1=デ"
+"フォルト"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr ""
+msgstr "2 次側・出"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
 "1=default"
 msgstr ""
+"パスが '上側' で旋回点から抜ける時の滑らかさ/鋭さを設定します。0=尖らせる、1="
+"デフォルト"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "揺れの規模: 1 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr ""
+msgstr "'下側' の旋回点をランダムに動かす大きさの変動値"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "2nd side"
-msgstr ""
+msgstr "2 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
-msgstr ""
+msgstr "'上側' の旋回点をランダムに動かす大きさの変動値"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "揺れの平行度: 1 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid ""
 "Add direction randomness by moving 'bottom' half-turns tangentially to the "
 "boundary."
 msgstr ""
+"'下側' 旋回点を境界に対して接線方向に移動するランダムな方向を加えます。"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid ""
 "Add direction randomness by randomly moving 'top' half-turns tangentially to "
 "the boundary."
 msgstr ""
+"'上側' 旋回点を境界に対して接線方向に移動するランダムな方向を加えます。"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
-msgstr ""
+msgstr "変化: 1 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' half-turns smoothness"
-msgstr ""
+msgstr "'下側' 旋回点の滑らかさのランダム性"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' half-turns smoothness"
-msgstr ""
+msgstr "'上側' 旋回点の滑らかさのランダム性"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 msgid "Generate thick/thin path"
-msgstr ""
+msgstr "パスを太く/細くする"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 msgid "Simulate a stroke of varying width"
-msgstr ""
+msgstr "ストロークの様々な幅をシミュレートします"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Bend hatches"
-msgstr ""
+msgstr "ハッチを曲げる"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "ハッチ全体に曲げを加えます (低速)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
-msgstr ""
+msgstr "太さ: 1 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half-turns"
-msgstr ""
+msgstr "'下側' 旋回点の幅"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
-msgstr ""
+msgstr "2 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' half-turns"
-msgstr ""
+msgstr "'上側' 旋回点の幅"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "from 2nd to 1st side"
-msgstr ""
+msgstr "2 次側 → 1 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "Width from 'top' to 'bottom'"
-msgstr ""
+msgstr "'上側' から '下側' への幅"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
-msgstr ""
+msgstr "1 次側 → 2 次側"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width from 'bottom' to 'top'"
-msgstr ""
+msgstr "'下側' から '上側' への幅"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
-msgstr ""
+msgstr "幅と方向のハッチ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "ハッチの振動と方向を定義します。"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
-msgstr ""
+msgstr "全体的に曲げる"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
-msgstr ""
+msgstr "基準点への相対位置が全体的に曲げる量と方向を定義します。"
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
@@ -7881,19 +7892,19 @@ msgstr "各ストロークがオリジナルパスと離れる距離の平均"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr "最大ゆれ幅"
+msgstr "最大揺れ幅"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr "ゆれの最大規模"
+msgstr "揺れの最大規模"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
-msgstr "ゆれの頻度"
+msgstr "揺れの頻度"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Average number of tremble periods in a stroke"
-msgstr "ストローク内のゆれ周期の平均数"
+msgstr "ストローク内の揺れ周期の平均数"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -7950,7 +7961,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
-msgstr ""
+msgstr "最小曲率"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
@@ -7958,7 +7969,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
-msgstr ""
+msgstr "最大曲率"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Nb of generations"
@@ -8282,7 +8293,7 @@ msgstr "エクステンションのディレクトリを出力して終了"
 
 #: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
-msgstr "未使用の定義をドキュメントの&lt;defs&gt;セクションから削除する"
+msgstr "未使用の定義をドキュメントの defs セクションから削除する"
 
 #: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
@@ -9468,7 +9479,7 @@ msgstr "前面レイヤーに移動する<b>オブジェクト</b>を選択し�
 
 #: ../src/selection-chemistry.cpp:1076
 msgid "Raise to next layer"
-msgstr ""
+msgstr "前面のレイヤーに移動"
 
 #: ../src/selection-chemistry.cpp:1083
 msgid "No more layers above."
@@ -9480,7 +9491,7 @@ msgstr "背面レイヤーに移動する<b>オブジェクト</b>を選択し�
 
 #: ../src/selection-chemistry.cpp:1121
 msgid "Lower to previous layer"
-msgstr ""
+msgstr "背面のレイヤーに移動"
 
 #: ../src/selection-chemistry.cpp:1128
 msgid "No more layers below."
@@ -9505,7 +9516,7 @@ msgstr "回転"
 
 #: ../src/selection-chemistry.cpp:1486
 msgid "Rotate by pixels"
-msgstr ""
+msgstr "ピクセル数で回転"
 
 #: ../src/selection-chemistry.cpp:1541
 msgid "Scale by whole factor"
@@ -11733,7 +11744,7 @@ msgstr "プレビューなし"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:489
 msgid "too large for preview"
-msgstr ""
+msgstr "プレビューするには大きすぎます"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:577
 msgid "Enable preview"
@@ -11755,19 +11766,19 @@ msgstr "全てのファイル"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:723
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:198
 msgid "All Images"
-msgstr "全ての画像"
+msgstr "全てのイメージ"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:199
 msgid "All Vectors"
-msgstr "全てのベクター画像"
+msgstr "全てのベクターイメージ"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:200
 msgid "All Bitmaps"
-msgstr "全てのビットマップ画像"
+msgstr "全てのビットマップイメージ"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
@@ -11881,7 +11892,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
-msgstr "画像ファイル"
+msgstr "イメージファイル"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:578
 msgid "Selected SVG Element"
@@ -11890,7 +11901,7 @@ msgstr "選択された SVG 要素"
 #. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
-msgstr ""
+msgstr "feImage 入力に使用するイメージの選択"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
@@ -11906,11 +11917,11 @@ msgstr "光源:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the XY plane, in degrees"
-msgstr ""
+msgstr "光源の XY 軸面の角度"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:956
 msgid "Direction angle for the light source on the YZ plane, in degrees"
-msgstr ""
+msgstr "光源の YZ 軸面の角度"
 
 #. default x:
 #. default y:
@@ -11918,7 +11929,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 msgid "Location"
-msgstr "場所"
+msgstr "位置"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
@@ -11940,20 +11951,20 @@ msgstr "Z 座標"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
-msgstr ""
+msgstr "照射点"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Specular Exponent"
-msgstr ""
+msgstr "反射指数"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
-msgstr ""
+msgstr "光源の焦点を制御する指数値です。"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
-msgstr ""
+msgstr "コーン角度"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid ""
@@ -11961,6 +11972,8 @@ msgid ""
 "light source and the point to which it is pointing at) and the spot light "
 "cone. No light is projected outside this cone."
 msgstr ""
+"スポットライトの光軸 (光源から照射点までの光の軸線) とコーン (円錐状の光線) "
+"との角度です。コーンの外側には照射されません。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
@@ -11987,7 +12000,6 @@ msgid "Apply filter"
 msgstr "フィルタの適用"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
 msgstr "フィルタ"
 
@@ -12009,15 +12021,15 @@ msgstr "コネクション"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
-msgstr ""
+msgstr "フィルタプリミティヴの削除"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
-msgstr ""
+msgstr "マージノードの除去"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
-msgstr ""
+msgstr "フィルタプリミティヴの順序変更"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
@@ -12410,7 +12422,7 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
-"<b>feComposite</b> フィルタプリミティブは、Porter-Duff ブレンドモードや SVG "
+"<b>feComposite</b> フィルタプリミティヴは、Porter-Duff ブレンドモードや SVG "
 "標準で述べられている算術モードの一つを使って 2 つのイメージを合成します。"
 "Porter-Duff モードは基本的にイメージの対応するピクセル値間で論理演算を行いま"
 "す。"
@@ -12475,7 +12487,7 @@ msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
-"<b>feImage</b> フィルタプリミティブは、外部イメージまたはドキュメントの他の部"
+"<b>feImage</b> フィルタプリミティヴは、外部イメージまたはドキュメントの他の部"
 "分で領域を塗りつぶします。"
 
 # FIXME: Change 「Over」モード to translated mode name when 'Over' is translated.
@@ -13304,7 +13316,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "Dialog behavior (requires restart):"
-msgstr "ダイアログの振る舞い (再起動が必要)"
+msgstr "ダイアログの振る舞い (再起動が必要):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:573
 msgid "Dialogs on top:"
@@ -13342,7 +13354,7 @@ msgstr "アニメーションで不透明度を変化させる時間:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:593
 msgid "Miscellaneous:"
-msgstr "その他"
+msgstr "その他:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
@@ -13571,7 +13583,7 @@ msgstr "最低品質 (最も高速)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:692
 msgid "Gaussian blur quality for display:"
-msgstr "ガウスぼかしの表示品質"
+msgstr "ガウスぼかしの表示品質:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:694
 #: ../src/ui/dialog/inkscape-preferences.cpp:718
@@ -14718,9 +14730,8 @@ msgstr "新規"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "レイヤー"
+msgstr "上"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -14773,7 +14784,7 @@ msgstr "選択されていません"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
-msgstr "パッチエフェクトの作成と適用"
+msgstr "パスエフェクトの作成と適用"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:391
 msgid "Remove path effect"
@@ -14835,6 +14846,8 @@ msgid ""
 "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in "
 "preferences.xml"
 msgstr ""
+"preferences.xml の dialogs.debug 'redirect' に 1 が設定されているため、ログ表"
+"示を有効にします"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:78
 msgid "File"
@@ -15859,7 +15872,7 @@ msgstr "とても広い"
 #. "Wrap" indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:215
 msgid "swatches|Wrap"
-msgstr ""
+msgstr "折り返し"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -15887,7 +15900,7 @@ msgstr "ビットマップオプション"
 
 #: ../src/ui/widget/rendering-options.cpp:44
 msgid "Preferred resolution of rendering, in dots per inch."
-msgstr ""
+msgstr "既定のレンダリング解像度を 1 インチ当たりのドット数で指定します。"
 
 #: ../src/ui/widget/rendering-options.cpp:52
 msgid ""
@@ -15895,6 +15908,9 @@ msgid ""
 "smaller in file size and can be arbitrarily scaled, but some filter effects "
 "will not be correctly rendered."
 msgstr ""
+"Cairo ベクター操作を使用してレンダリングします。生成されるイメージは通常ファ"
+"イルサイズは小さくなり、任意のサイズに変更できますが、一部のエフェクトは正し"
+"くレンダリングされません。"
 
 #: ../src/ui/widget/rendering-options.cpp:57
 msgid ""
@@ -15902,6 +15918,9 @@ msgid ""
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
 msgstr ""
+"全てをビットマップにレンダリングします。生成された画像は通常ファイルサイズが"
+"大きくなり、任意のサイズ変更を行った際に品質の低下を伴うようになりますが、全"
+"てのオブジェクトは表示されたものに忠実にレンダリングされます。"
 
 #: ../src/ui/widget/selected-style.cpp:112
 #: ../src/ui/widget/style-swatch.cpp:117
@@ -16416,7 +16435,7 @@ msgstr "レイヤーを削除しました。"
 
 #: ../src/verbs.cpp:1309
 msgid "Toggle layer solo"
-msgstr ""
+msgstr "他のレイヤーの表示/非表示"
 
 #: ../src/verbs.cpp:1389
 msgid "Flip horizontally"
@@ -17456,7 +17475,7 @@ msgstr "ズームイン/アウト"
 
 #: ../src/verbs.cpp:2529
 msgid "Pick colors from image"
-msgstr "画像から色を採取"
+msgstr "イメージから色を採取"
 
 #: ../src/verbs.cpp:2531
 msgid "Create diagram connectors"
@@ -18794,7 +18813,7 @@ msgstr "値"
 
 #: ../src/widgets/sp-xmlview-content.cpp:169
 msgid "Type text in a text node"
-msgstr ""
+msgstr "テキストノードでのテキスト入力"
 
 #: ../src/widgets/stroke-style.cpp:286 ../src/widgets/stroke-style.cpp:345
 msgid "Set stroke color"
@@ -18926,7 +18945,7 @@ msgstr "ストロークのスタイルの設定"
 
 #: ../src/widgets/toolbox.cpp:183
 msgid "Color/opacity used for color tweaking"
-msgstr ""
+msgstr "色の微調整で使用する色/不透明度"
 
 #: ../src/widgets/toolbox.cpp:187
 msgid "Style of new stars"
@@ -20264,19 +20283,19 @@ msgstr "割り当て"
 
 #: ../src/widgets/toolbox.cpp:5509
 msgid "Closed"
-msgstr ""
+msgstr "完結"
 
 #: ../src/widgets/toolbox.cpp:5511
 msgid "Open start"
-msgstr ""
+msgstr "始点を開放"
 
 #: ../src/widgets/toolbox.cpp:5513
 msgid "Open end"
-msgstr ""
+msgstr "終点を開放"
 
 #: ../src/widgets/toolbox.cpp:5515
 msgid "Open both"
-msgstr ""
+msgstr "両端を開放"
 
 #: ../src/widgets/toolbox.cpp:5574
 msgid "All inactive"
@@ -20310,19 +20329,19 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5649
 msgid "Display measuring info"
-msgstr ""
+msgstr "計測情報を表示"
 
 #: ../src/widgets/toolbox.cpp:5650
 msgid "Display measuring info for selected items"
-msgstr ""
+msgstr "選択アイテムの計測情報を表示します"
 
 #: ../src/widgets/toolbox.cpp:5670
 msgid "Open LPE dialog"
-msgstr ""
+msgstr "LPE ダイアログを開く"
 
 #: ../src/widgets/toolbox.cpp:5671
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
+msgstr "LPE ダイアログを開きます (パラメータを数値であわせます)"
 
 #: ../src/widgets/toolbox.cpp:5735
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -20362,7 +20381,7 @@ msgstr "テキスト: フォントサイズの変更"
 
 #: ../src/widgets/toolbox.cpp:6625
 msgid "Select font family (Alt+X to access)"
-msgstr ""
+msgstr "フォントファミリの選択 (Alt+X でアクセスできます)"
 
 #: ../src/widgets/toolbox.cpp:6662
 msgid ""
@@ -20511,23 +20530,23 @@ msgstr "辺長 'c'/px: "
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians: "
-msgstr ""
+msgstr "角度 'A'/ラジアン: "
 
 #: ../share/extensions/draw_from_triangle.py:179
 msgid "Angle 'B'/radians: "
-msgstr ""
+msgstr "角度 'B'/ラジアン: "
 
 #: ../share/extensions/draw_from_triangle.py:180
 msgid "Angle 'C'/radians: "
-msgstr ""
+msgstr "角度 'C'/ラジアン: "
 
 #: ../share/extensions/draw_from_triangle.py:181
 msgid "Semiperimeter/px: "
-msgstr ""
+msgstr "周長の半分/px: "
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Area /px^2: "
-msgstr ""
+msgstr "面積 /px^2: "
 
 #: ../share/extensions/dxf_outlines.py:33
 msgid ""
@@ -20667,7 +20686,6 @@ msgstr ""
 "「パス」メニューの「オブジェクトをパスへ」を使ってみてください。"
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -20683,7 +20701,7 @@ msgstr "指定されたファイルにフェイスデータがありませんで
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "モデルフェイルタブで、\"エッジ指定\" を選択してみてください。\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
@@ -20691,7 +20709,7 @@ msgstr "指定されたファイルにエッジデータが見つかりません
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "モデルファイルタブで \"フェイス指定\" を選択してみてください。\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
@@ -20699,6 +20717,9 @@ msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
+"フェイスデータが見つかりません。ファイルにフェイスデータが含まれていること、"
+"およびそのファイルが \"モデルファイル\" タブで \"フェイス指定\" でインポート"
+"されていることを確認してください。\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
@@ -20774,7 +20795,7 @@ msgstr "Adobe Illustrator 8.0 以下 (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
-msgstr "Adobe Illustrator 8.0以前で保存されたファイルを開く"
+msgstr "Adobe Illustrator 8.0以前で保存されたファイルを開きます"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
@@ -20798,7 +20819,7 @@ msgstr "Corel DRAW Compressed Exchange ファイル入力"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr "Corel DRAW で保存された Compressed Exchange ファイルを開く"
+msgstr "Corel DRAW で保存された Compressed Exchange ファイルを開きます"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
@@ -20846,7 +20867,7 @@ msgstr "Corel DRAW Presentation Exchange ファイル入力"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr "Corel DRAW で保存された Presentation Exchange ファイルを開く"
+msgstr "Corel DRAW で保存された Presentation Exchange ファイルを開きます"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -20953,8 +20974,8 @@ msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
 msgstr ""
-"Dia ファイルをインポートするには、Dia 自身をインストールしなければなりませ"
-"ん。Dia は http://live.gnome.org/Dia/ から入手できます。"
+"Dia ファイルをインポートするには、Dia 自身がインストールされていなければなり"
+"ません。Dia は http://live.gnome.org/Dia/ から入手できます。"
 
 #: ../share/extensions/dia.inx.h:5
 msgid ""
@@ -21021,7 +21042,7 @@ msgstr "共通オブジェクト"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
 msgid "Contact Triangle"
-msgstr "三角形と接触"
+msgstr "ジェルゴンヌ三角形"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -21053,7 +21074,7 @@ msgstr "このポイントでマーカーを描く"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 msgid "Excentral Triangle"
-msgstr ""
+msgstr "傍心三角形"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
 msgid "Excentres"
@@ -21124,7 +21145,6 @@ msgid "Symmedians"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21157,16 +21177,16 @@ msgid ""
 "            "
 msgstr ""
 "このエクステンションは選択パスの最初の 3 ノードで定義された三角形に関する構造"
-"をを描画します。今あるオブジェクトの一つか、新たに作成したものを選択すること"
-"ができます。\n"
+"を描画します。今あるオブジェクトの一つか、新たに作成したものを選択することが"
+"できます。\n"
 "            \n"
 "全ての単位は Inkscape のピクセル単位に、角度は全てラジアンになります。\n"
-"三線座標または三角関数から指定することができます。\n"
+"三線座標または三角関数からポイントを指定することができます。\n"
 "辺長または角度の関数として入力してください。\n"
 "三線要素はコロン「:」で分けられていなければなりません。\n"
 "辺長は 's_a'、's_b'、および 's_c' と表されます。\n"
 "角度は 'a_a'、'a_b'、および 'a_c' と表されます。\n"
-"周長の半分や三角形の領域を定数として使用することもできます。それぞれ "
+"周長の半分や三角形の面積を定数として使用することもできます。それぞれ "
 "'semiperim'、'area' と記述します。\n"
 "\n"
 "標準 Python 数学関数も使用できます:\n"
@@ -21179,9 +21199,9 @@ msgstr ""
 "また逆三角関数も使用可能です:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"式で使用するカスタムポイントに辺長や角度などを含む円の半径を指定できます。等"
-"角およびアイソトミック共役も描画できますが、これはいくつかのポイントでゼロ除"
-"算エラーを引き起こすかもしれないことに注意してください。\n"
+"辺長や角度などを含む式で使用するカスタムポイント周囲の円の半径を指定できま"
+"す。等角およびアイソトミック共役も描画できますが、これはいくつかのポイントで"
+"ゼロ除算エラーを引き起こすかもしれないことに注意してください。\n"
 "            "
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
@@ -22473,7 +22493,7 @@ msgstr "最小"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Model File"
-msgstr "モデルタイプ"
+msgstr "モデルファイル"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object Type"
@@ -22705,9 +22725,8 @@ msgid "Arrange"
 msgstr "配置"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "下:"
+msgstr "最背面"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -22722,9 +22741,8 @@ msgid "Left to Right (0)"
 msgstr "左→右 (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "なぞなぞ"
+msgstr "中央"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
