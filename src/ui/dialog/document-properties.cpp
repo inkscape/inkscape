@@ -381,8 +381,40 @@ DocumentProperties::populate_available_profiles(){
     _menu.show_all();
 }
 
-void
-DocumentProperties::linkSelectedProfile()
+/**
+ * Cleans up name to remove disallowed characters.
+ * Some discussion at http://markmail.org/message/bhfvdfptt25kgtmj
+ * Allowed ASCII first characters:  ':', 'A'-'Z', '_', 'a'-'z'
+ * Allowed ASCII remaining chars add: '-', '.', '0'-'9', 
+ *
+ * @param str the string to clean up.
+ */
+static void sanitizeName( Glib::ustring& str )
+{
+    if (str.size() > 1) {
+        char val = str.at(0);
+        if (((val < 'A') || (val > 'Z'))
+            && ((val < 'a') || (val > 'z'))
+            && (val != '_')
+            && (val != ':')) {
+            str.replace(0, 1, "_");
+        }
+        for (Glib::ustring::size_type i = 1; i < str.size(); i++) {
+            char val = str.at(i);
+            if (((val < 'A') || (val > 'Z'))
+                && ((val < 'a') || (val > 'z'))
+                && ((val < '0') || (val > '9'))
+                && (val != '_')
+                && (val != ':')
+                && (val != '-')
+                && (val != '.')) {
+                str.replace(i, 1, "_");
+            }
+        }
+    }
+}
+
+void DocumentProperties::linkSelectedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
     // TODO remove use of 'active' desktop
@@ -396,7 +428,10 @@ DocumentProperties::linkSelectedProfile()
         }
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
-        cprofRepr->setAttribute("name", (gchar*) _menu.get_active()->get_data("name"));
+        gchar* tmp = static_cast<gchar*>(_menu.get_active()->get_data("name"));
+        Glib::ustring nameStr = tmp ? tmp : "profile"; // TODO add some auto-numbering to avoid collisions
+        sanitizeName(nameStr);
+        cprofRepr->setAttribute("name", nameStr.c_str());
         cprofRepr->setAttribute("xlink:href", (gchar*) _menu.get_active()->get_data("filepath"));
 
         // Checks whether there is a defs element. Creates it when needed
