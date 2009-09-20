@@ -47,6 +47,8 @@
 #include "display/nr-plain-stuff.h"
 #include "sp-gradient-reference.h"
 
+//#define USE_DOCUMENT_PALETTE 1
+
 namespace Inkscape {
 namespace UI {
 namespace Dialogs {
@@ -364,6 +366,7 @@ static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
     }
 }
 
+#if USE_DOCUMENT_PALETTE
 static void editGradientImpl( SPGradient* gr )
 {
     if ( gr ) {
@@ -424,6 +427,7 @@ static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
         }
     }
 }
+#endif // USE_DOCUMENT_PALETTE
 
 static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event, gpointer user_data)
 {
@@ -451,6 +455,7 @@ static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event,
                               user_data);
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
 
+#if USE_DOCUMENT_PALETTE
             child = gtk_separator_menu_item_new();
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             popupExtras.push_back(child);
@@ -484,6 +489,7 @@ static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event,
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             //popupExtras.push_back(child);
             gtk_widget_set_sensitive( child, FALSE );
+#endif // USE_DOCUMENT_PALETTE
 
             gtk_widget_show_all(popupMenu);
         }
@@ -1248,6 +1254,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     _clear->ptr = this;
     _remove = new ColorItem( ege::PaintDef::NONE );
     _remove->ptr = this;
+#if USE_DOCUMENT_PALETTE
     {
         JustForNow *docPalette = new JustForNow();
 
@@ -1256,6 +1263,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
         _ptr = docPalette;
     }
+#endif // USE_DOCUMENT_PALETTE
     loadEmUp();
     if ( !possible.empty() ) {
         JustForNow* first = 0;
@@ -1403,6 +1411,7 @@ void SwatchesPanel::handleGradientsChange()
         }
     }
 
+#if USE_DOCUMENT_PALETTE
     if ( _ptr ) {
         JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
         // TODO delete pointed to objects
@@ -1462,10 +1471,12 @@ void SwatchesPanel::handleGradientsChange()
             _rebuild();
         }
     }
+#endif // USE_DOCUMENT_PALETTE
 }
 
 void SwatchesPanel::_updateFromSelection()
 {
+#if USE_DOCUMENT_PALETTE
     if ( _ptr ) {
         JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
 
@@ -1543,6 +1554,7 @@ void SwatchesPanel::_updateFromSelection()
             item->setState( isFill, isStroke );
         }
     }
+#endif // USE_DOCUMENT_PALETTE
 }
 
 void SwatchesPanel::_handleAction( int setId, int itemId )
