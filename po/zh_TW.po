@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-14 17:45+0800\n"
+"POT-Creation-Date: 2009-09-18 08:19+0200\n"
+"PO-Revision-Date: 2009-09-18 19:41+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -5543,7 +5543,7 @@ msgstr "文件尚未儲存。"
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
-msgstr ""
+msgstr "檔案 %s 具有寫入保護。請移除寫入保護後再試一次。"
 
 #: ../src/file.cpp:604
 #, c-format
@@ -11560,16 +11560,15 @@ msgstr "邊框樣式 (_Y)"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
 msgstr ""
-"這個矩陣在色彩空間上決定一個線性變換。每一條線影響一個顏色組成。每一列決定顏"
-"色組成裡多少從輸入被併入到輸出。最後一列不取決於輸入的顏色，所以可以被使用於"
-"調整一個常數組件值。"
+"這個矩陣於色彩空間上計算線性變換。每一行影響一個顏色組成。每一列決定顏色組成"
+"裡多少從輸入被併入到輸出。最後一列不取決於輸入的顏色，所以可以被使用於調整一"
+"個常數組件值。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
@@ -11681,7 +11680,6 @@ msgid "Apply filter"
 msgstr "套用濾鏡"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
 msgstr "濾鏡"
 
@@ -12066,14 +12064,13 @@ msgstr ""
 "此<b>混合</b>濾鏡基元提供 4 種圖像混合模式：濾色、色彩增值、變暗和變亮。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
 "grayscale, modifying color saturation and changing color hue."
 msgstr ""
-"此<b>顏色矩陣</b>濾鏡基元應用一個矩陣變換來計算每個被演算的像素顏色。這個允許"
-"的特效有物件轉成灰階、修改顏色飽和度和改變顏色色相。"
+"此<b>顏色矩陣</b>濾鏡基元應用矩陣變換來計算每個被演算的像素顏色。這個特效可以"
+"使物件轉成灰階、修改顏色飽和度和改變顏色色相。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2286
 msgid ""
@@ -12164,14 +12161,13 @@ msgstr ""
 "蓋」模式的合成基元。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
-"此<b>形態</b>濾鏡基元提供腐蝕和膨脹效果。對單色物件來說腐蝕使物件更薄而膨脹使"
-"物件更厚。"
+"此<b>形態</b>濾鏡基元提供腐蝕和膨脹效果。對單色物件來說，腐蝕會讓物件更薄而膨"
+"脹會更厚。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2326
 msgid ""
@@ -14281,9 +14277,8 @@ msgstr "新增"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "圖層"
+msgstr "頂部"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -20127,14 +20122,14 @@ msgstr ""
 "試著執行「路徑->物件轉成路徑」的步驟。"
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 "無法匯入 numpy 模組。這個擴充功能需要這個模組。請安裝模組後再試一次。於 "
-"Debian-like 系統上可以執行 sudo apt-get install python-numpy 指令來安裝模組。"
+"Debian-like 系統上可以執行 'sudo apt-get install python-numpy' 指令來安裝模"
+"組。"
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
@@ -20583,7 +20578,6 @@ msgid "Symmedians"
 msgstr "類似中線"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -20615,8 +20609,8 @@ msgid ""
 "may cause a divide-by-zero error for certain points.\n"
 "            "
 msgstr ""
-"這個擴充功能可繪製結構由所選路徑前 3 個節點定義的三角形。你可以選擇預設物件的"
-"其中之一或者自己建立。\n"
+"這個擴充功能可繪製由所選路徑前 3 個節點定義的三角形結構。你可以選擇預設物件其"
+"中之一或者自己建立。\n"
 "            \n"
 "所有單位為 Inkscape 的像素單位。 角度的單位全部為弧度。\n"
 "你可以用三重線性座標或三角中心函數指定一個點。\n"
@@ -22149,9 +22143,8 @@ msgid "Arrange"
 msgstr "排列"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "底部："
+msgstr "底部"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -22166,9 +22159,8 @@ msgid "Left to Right (0)"
 msgstr "左側到右側 (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "佈滿"
+msgstr "中間"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
