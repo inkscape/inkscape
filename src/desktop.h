@@ -203,7 +203,6 @@ struct SPDesktop : public Inkscape::UI::View::View
     }
     void displayModeToggle();
     Inkscape::RenderMode _display_mode;
-    Inkscape::RenderMode _saved_display_mode;
     Inkscape::RenderMode getMode() const { return _display_mode; }
 
     Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }

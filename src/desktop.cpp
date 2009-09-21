@@ -148,7 +148,6 @@ SPDesktop::SPDesktop() :
     _layer_hierarchy( 0 ),
     _reconstruction_old_layer_id( 0 ),
     _display_mode(Inkscape::RENDERMODE_NORMAL),
-    _saved_display_mode(Inkscape::RENDERMODE_NORMAL),
     _widget( 0 ),
     _inkscape( 0 ),
     _guides_message_context( 0 ),
@@ -444,18 +443,21 @@ void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     SP_CANVAS_ARENA (drawing)->arena->rendermode = mode;
     canvas->rendermode = mode;
     _display_mode = mode;
-    if (mode != Inkscape::RENDERMODE_OUTLINE) {
-        _saved_display_mode = _display_mode;
-    }
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
     _widget->setTitle(SP_DOCUMENT_NAME(sp_desktop_document(this)));
 }
 
 void SPDesktop::displayModeToggle() {
-    if (_display_mode == Inkscape::RENDERMODE_OUTLINE) {
-        _setDisplayMode(_saved_display_mode);
-    } else {
+    switch (_display_mode) {
+    case Inkscape::RENDERMODE_NORMAL:
+        _setDisplayMode(Inkscape::RENDERMODE_NO_FILTERS);
+        break;
+    case Inkscape::RENDERMODE_NO_FILTERS:
         _setDisplayMode(Inkscape::RENDERMODE_OUTLINE);
+        break;
+    case Inkscape::RENDERMODE_OUTLINE:
+    default:
+        _setDisplayMode(Inkscape::RENDERMODE_NORMAL);
     }
 }
 
