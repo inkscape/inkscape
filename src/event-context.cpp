@@ -1181,8 +1181,12 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item,
     bool const c1 = event->state & GDK_BUTTON2_MASK; // We shouldn't hold back any events when other mouse buttons have been
     bool const c2 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
 												     // Inkscape will get stuck in an unresponsive state
-
-    if (c1 || c2) {
+    bool const c3 = tools_isactive(ec->desktop, TOOLS_CALLIGRAPHIC);
+                                                     // The snap delay will repeat the last motion event, which will lead to
+                                                     // erroneous points in the calligraphy context. And because we don't snap
+                                                     // in this context, we might just as well disable the snap delay all together
+ 
+    if (c1 || c2 || c3) {
     	// Make sure that we don't send any pending snap events to a context if we know in advance
     	// that we're not going to snap any way (e.g. while scrolling with middle mouse button)
     	// Any motion event might affect the state of the context, leading to unexpected behavior
