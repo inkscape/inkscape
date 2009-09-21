@@ -86,6 +86,7 @@ tutorial_DATA = \
     tutorial-elements.pl.svg \
     tutorial-elements.pt_BR.svg \
     tutorial-elements.ru.svg \
+    tutorial-elements.sk.svg \
     tutorial-elements.sl.svg \
     tutorial-elements.zh_TW.svg \
     tutorial-interpolate.svg \
@@ -137,6 +138,7 @@ tutorial_DATA = \
     tutorial-tracing.pl.svg \
     tutorial-tracing.pt_BR.svg \
     tutorial-tracing.ru.svg \
+    tutorial-tracing.sk.svg \
     tutorial-tracing.sl.svg \
     tutorial-tracing.vi.svg \
     tutorial-tracing.zh_TW.svg \
