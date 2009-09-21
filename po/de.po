@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-19 09:36+0100\n"
+"PO-Revision-Date: 2009-09-21 10:07+0100\n"
 "Last-Translator: Alexander Senger <neutronenspalter@freenet.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -520,7 +520,7 @@ msgstr "Van Gogh Gemälde-Effekt für Bilder"
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
-msgstr "HSL Beulen"
+msgstr "HSL Rauhigkeit"
 
 #: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
@@ -533,7 +533,7 @@ msgstr "HSL Beulen"
 #: ../share/filters/filters.svg.h:203 ../share/filters/filters.svg.h:212
 #: ../share/filters/filters.svg.h:213 ../share/filters/filters.svg.h:216
 msgid "Bumps"
-msgstr "Prägung"
+msgstr "Raue Texturen"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
@@ -1052,7 +1052,7 @@ msgstr "Bleiglasfester-Effekt mit Beleuchtung von unten"
 
 #: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
-msgstr "HSL Beulen, Alpha"
+msgstr "HSL Rauigkeit, Alpha"
 
 #: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:165
@@ -1066,11 +1066,11 @@ msgstr "Bild-Effekte, transparenz"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr "Wie flexible Oberflächenstruktur aber mit transparenten Glanzlichtern"
+msgstr "Wie flexible HSL Rauigkeit aber mit transparenten Glanzlichtern"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
-msgstr "lebendige Beulen, Alpha"
+msgstr "Bläschenstruktur, Alpha"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same as Bubbly Bumps but with transparent highlights"
@@ -1205,12 +1205,12 @@ msgstr "Lichthof innen und außen mit wählbarem Versatz und Füllfarbe"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
-msgstr "HSL Beulen, matt"
+msgstr "HSL Rauigkeit, matt"
 
 #: ../share/filters/filters.svg.h:120
 msgid ""
 "Same as HSL bumps but with a diffuse reflection instead of a specular one"
-msgstr "Wie HSL Beulen mit diffuser Reflexion (statt glänzender)"
+msgstr "Wie HSL Rauigkeit mit diffuser Reflexion (statt glänzender)"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Dark Emboss"
@@ -1235,7 +1235,7 @@ msgstr "Bläschenstruktur, matt"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Wie HSL Blasen mit diffuser Reflexion (statt glänzender)"
+msgstr "Wie Bläschenstruktur mit diffuser Reflexion (statt glänzender)"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1551,11 +1551,11 @@ msgstr "Fügt kleinteilige Körnung hinzu"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr "HSL Beulen, Transparent"
+msgstr "HSL Rauigkeit, Transparent"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
-msgstr "Gut einstellbare glänzende Erhebung mit Transparenz"
+msgstr "Gut einstellbare glänzende Oberflächenstruktur mit Transparenz"
 
 # not sure here -cm-
 #: ../share/filters/filters.svg.h:162
@@ -1574,11 +1574,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet Bumps"
-msgstr "Samtene Erhebung"
+msgstr "Samtene Oberflächenstruktur"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Gives Smooth Bumps velvet like"
-msgstr "Erhebung mit samtartiger Erscheinung"
+msgstr "Oberflächenstrukturen mit samtartiger Erscheinung"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
@@ -1794,27 +1794,28 @@ msgid "Alpha engraving"
 msgstr "Alpha Gravur"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr "Versieht Bitmaps und Materialien mit einem transparenten Gemäldeeffekt"
+msgstr "Erzeugt einen transparenten Gravureffekt mit rohen Linien und Füllung."
 
 #: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
 msgstr "Alpha Zeichnung, flüssig"
 
+# Meint "fluid drawing" tatsächlich etwas wie Wasserfarbenmalerei?
 #: ../share/filters/filters.svg.h:189
-#, fuzzy
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr "Versieht Bitmaps und Materialien mit einem transparenten Gemäldeeffekt"
+msgstr ""
+"Erzeugt einen transparenten Wasserfarbeneffekt mit rohen Linien und Füllung"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Liquid drawing"
 msgstr "Flüssige Zeichnung"
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr "Versieht Bitmaps und Materialien mit einem transparenten Gemäldeeffekt"
+msgstr ""
+"Versieht Bilder mit einem expressionistischem Ausdruck (fließende, wellige "
+"Formen)"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
@@ -1837,10 +1838,9 @@ msgid "Alpha engraving B"
 msgstr "Alphagravur B"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid ""
 "Gives a controllable roughness engraving effect to bitmaps and materials"
-msgstr "Versieht Bitmaps und Materialien mit einem transparenten Gemäldeeffekt"
+msgstr "Erzeugt eine einstellbare raue Oberfläche auf Materialien und Bildern "
 
 #: ../share/filters/filters.svg.h:194
 msgid "Lapping"
@@ -1872,23 +1872,20 @@ msgid "Light eraser, negative"
 msgstr "Lichtradierer, negativ"
 
 #: ../share/filters/filters.svg.h:197
-#, fuzzy
 msgid "Like Light eraser but converts to negative"
-msgstr "Lichtradierer, negativ"
+msgstr "Wie Lichtradierer, wandelt aber in Negativ um"
 
 #: ../share/filters/filters.svg.h:198
-#, fuzzy
 msgid "Alpha repaint"
-msgstr "Alpha Gravur"
+msgstr "Monochromisieren"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
 msgstr "Alles schwarzweiss nachmalen"
 
 #: ../share/filters/filters.svg.h:199
-#, fuzzy
 msgid "Saturation map"
-msgstr "Sättigung"
+msgstr "Sättigungskarte"
 
 #: ../share/filters/filters.svg.h:199
 msgid ""
@@ -1914,9 +1911,8 @@ msgid "Thick glossy and translucent paint texture with high depth"
 msgstr "Dicke, glänzende Farbe, durchscheinend mit unebener Oberfläche"
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Canvas Bumps"
-msgstr "Leinwand"
+msgstr "Leinwandtextur"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
@@ -1927,14 +1923,12 @@ msgid "Canvas Bumps, matte"
 msgstr "Leinwandstruktur , matt"
 
 #: ../share/filters/filters.svg.h:203
-#, fuzzy
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr "Wie HSL Blasen mit diffuser Reflexion (statt glänzender)"
+msgstr "Wie Leinwandtextur mit diffuser Reflexion (statt glänzender)"
 
 #: ../share/filters/filters.svg.h:204
-#, fuzzy
 msgid "Canvas Bumps alpha"
-msgstr "HSL Beulen, Alpha"
+msgstr "Leinwandtextur, Alpha"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
@@ -1945,9 +1939,8 @@ msgid "Lightness-Contrast"
 msgstr "Helligkeit - Kontrast"
 
 #: ../share/filters/filters.svg.h:205
-#, fuzzy
 msgid "Increase or decrease lightness and contrast"
-msgstr "Erhöhe oder erniedrige Kontrast in Bitmap(s)"
+msgstr "Helligkeit und Kontrast anpassen"
 
 #: ../share/filters/filters.svg.h:206
 msgid "Clean edges"
@@ -2034,9 +2027,8 @@ msgid "Adds a colorizable edges glow inside objects and pictures"
 msgstr "Fügt einfärbbaren Lichthof um Kanten in Objekten und Bilder hinzu"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Relief print"
-msgstr "Blaupause"
+msgstr "Holzschnitt"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps effect with a bevel, color flood and complex lighting"
@@ -2060,9 +2052,8 @@ msgid "Oversaturate colors which can be fluorescent in real world"
 msgstr "Farben übersättigen (erinnert an fluoreszente Farben)"
 
 #: ../share/filters/filters.svg.h:219
-#, fuzzy
 msgid "Tritone"
-msgstr "Titel"
+msgstr "Drei-Farben-Palette"
 
 #: ../share/filters/filters.svg.h:219
 msgid "Create a tritone palette with hue selectable by flood"
@@ -2227,11 +2218,11 @@ msgstr "Sand (Bitmap)"
 
 #: ../share/patterns/patterns.svg.h:41
 msgid "Cloth (bitmap)"
-msgstr "Wäsche (Bitmap"
+msgstr "Stoff (Bitmap"
 
 #: ../share/patterns/patterns.svg.h:42
 msgid "Old paint (bitmap)"
-msgstr "Altes Bild (Bitmap)"
+msgstr "Alte Farbe (Bitmap)"
 
 #: ../src/arc-context.cpp:319
 msgid ""
@@ -2242,7 +2233,7 @@ msgstr ""
 
 #: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
-msgstr "<b>Umschalt</b>: Ausgehend vom Mittelpunkt zeichnen"
+msgstr "<b>Umschalt</b>: Um Mittelpunkt zeichnen"
 
 #: ../src/arc-context.cpp:471
 #, c-format
@@ -2250,8 +2241,8 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
-"<b>Ellipse</b>: %s × %s; (festes Achsenverhältnis %d:%d); <b>Umschalt</b> "
-"zeichnet um Startpunkt"
+"<b>Ellipse</b>: %s &#215; %s (festes Achsenverhältnis %d:%d); <b>Umschalt</"
+"b> zeichnet um Startpunkt"
 
 #: ../src/arc-context.cpp:473
 #, c-format
@@ -2259,8 +2250,8 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Ellipse</b>: %s × %s; <b>Strg</b> drücken für ganzzahlige Verhältnisse "
-"der Radien; <b>Umschalt</b> zeichnet um Startpunkt"
+"<b>Ellipse</b>: %s &#215; %s; <b>Strg</b> drücken für ganzzahliges "
+"Verhältnis der Radien; <b>Umschalt</b> zeichnet um Startpunkt"
 
 #: ../src/arc-context.cpp:499
 msgid "Create ellipse"
@@ -2564,7 +2555,6 @@ msgstr "Vertikale Verschiebung pro Spalte (in % der Kachelhöhe)"
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Zufällige vertikale Verschiebung um diesen Prozentsatz"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2027 ../src/dialogs/clonetiler.cpp:2175
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
@@ -2572,14 +2562,13 @@ msgstr "<b>Exponent:</b>"
 #: ../src/dialogs/clonetiler.cpp:2034
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
-"Reihenabstände bleiben gleich (1), laufen zusammen (<1) oder vergrößern sich "
-"(>1)"
+"Reihenabstände bleiben gleich (1), laufen zusammen (<1) oder auseinander (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:2041
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
-"Spaltenabstände bleiben gleich (1), laufen zusammen (<1) oder vergrößern "
-"sich (>1)"
+"Spaltenabstände bleiben gleich (1), laufen zusammen (<1) oder auseinander "
+"(>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2049 ../src/dialogs/clonetiler.cpp:2219
@@ -2594,7 +2583,7 @@ msgstr "Vorzeichenumkehrung der Verschiebungen für jede Reihe"
 
 #: ../src/dialogs/clonetiler.cpp:2060
 msgid "Alternate the sign of shifts for each column"
-msgstr "Vorzeichenumkehrung bei der Verschiebungen für jede Spalte"
+msgstr "Vorzeichenumkehrung der Verschiebungen für jede Spalte"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2067 ../src/dialogs/clonetiler.cpp:2237
@@ -2627,7 +2616,6 @@ msgstr "Kachelbreite in Verschiebung nicht einberechnen"
 msgid "Sc_ale"
 msgstr "_Maßstab"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2113
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-Skalierung:</b>"
@@ -2646,7 +2634,6 @@ msgstr "Horizontale Skalierung pro Spalte (in % der Kachelbreite)"
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Horizontale Skalierung um diesen Prozentsatz zufällig verändern"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-Skalierung:</b>"
@@ -2677,10 +2664,9 @@ msgstr ""
 "Spaltenabstände bleiben gleich (1), laufen zusammen (<1) oder vergrößern "
 "sich (>1)"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2197
 msgid "<b>Base:</b>"
-msgstr "<b>Basis</b>"
+msgstr "<b>Basis:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2204 ../src/dialogs/clonetiler.cpp:2211
 msgid ""
@@ -2709,7 +2695,6 @@ msgstr "Skalierung für sukzessive Spalten aufaddieren"
 msgid "_Rotation"
 msgstr "_Rotation"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2265
 msgid "<b>Angle:</b>"
 msgstr "<b>Winkel:</b>"
@@ -2748,7 +2733,6 @@ msgstr "Rotation für sukzessive Spalten aufaddieren"
 msgid "_Blur & opacity"
 msgstr "_Weichzeichner und Deckkraft"
 
-# !!!
 #: ../src/dialogs/clonetiler.cpp:2343
 msgid "<b>Blur:</b>"
 msgstr "<b>Weichzeichner:</b>"
@@ -2894,7 +2878,7 @@ msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
 msgstr ""
-"Für jeden Klon den entsprechenden Wert an dieser Stelle aus der Zeichnung "
+"Für jeden Klon den entsprechenden Wert an dessen Stelle aus der Zeichnung "
 "anwenden"
 
 #: ../src/dialogs/clonetiler.cpp:2596
@@ -3013,8 +2997,8 @@ msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
 msgstr ""
-"Jeder Klon wird mit der Wahrscheinlichkeit erzeugt, welche sich aus dem "
-"übernommenen Wert an dieser Stelle ergibt"
+"Jeder Klon wird mit der Wahrscheinlichkeit erzeugt, welche sich aus dem Wert "
+"an dieser Stelle ergibt"
 
 #: ../src/dialogs/clonetiler.cpp:2744
 msgid "Size"
@@ -3022,8 +3006,7 @@ msgstr "Größe"
 
 #: ../src/dialogs/clonetiler.cpp:2747
 msgid "Each clone's size is determined by the picked value in that point"
-msgstr ""
-"Die jeweiligen Größen der Klone hängen ab vom übernommenen Wert an dem Punkt"
+msgstr "Die jeweilige Größe der Klone hängt vom Wert an diesem Punkt ab"
 
 #: ../src/dialogs/clonetiler.cpp:2757
 msgid ""
@@ -3036,8 +3019,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr ""
-"Die Deckkraft jedes Klons wird durch den übernommenen Wert an dieser Stelle "
-"bestimmt"
+"Die Deckkraft jedes Klons wird durch den Wert an dieser Stelle bestimmt"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3114,7 +3096,7 @@ msgstr " _Entfernen "
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
 "Vorhandene gekachelte Klone des ausgewählten Objektes entfernen (nur "
-"Verwandte)"
+"Geschwister)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
@@ -3147,7 +3129,7 @@ msgstr "_Benutzerdefiniert"
 
 #: ../src/dialogs/export.cpp:271
 msgid "<big><b>Export area</b></big>"
-msgstr "<big><b>Exportierbereich</b></big>"
+msgstr "<big><b>Exportbereich</b></big>"
 
 #: ../src/dialogs/export.cpp:285
 msgid "Units:"
@@ -3227,7 +3209,7 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:631
 msgid "Hide all except selected"
-msgstr "Alle ausser ausgewählte verstecken"
+msgstr "Alle außer Ausgewählte verstecken"
 
 #: ../src/dialogs/export.cpp:635
 msgid "In the exported image, hide all objects except those that are selected"
@@ -3448,8 +3430,7 @@ msgstr "_Attribut: "
 #: ../src/dialogs/find.cpp:690 ../src/ui/dialog/find.cpp:63
 msgid "Find objects by the name of an attribute (exact or partial match)"
 msgstr ""
-"Objekte nach einem Attributnamen finden (exakte oder partielle "
-"Übereinstimmung)"
+"Objekte nach Attributnamen finden (exakte oder partielle Übereinstimmung)"
 
 #: ../src/dialogs/find.cpp:704 ../src/ui/dialog/find.cpp:64
 msgid "Search in s_election"
@@ -3514,8 +3495,8 @@ msgstr "_ID-Kennung"
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr ""
-"Das Kennungsattribut »id=« (nur Buchstaben, Ziffern und die Zeichen ».-_:« "
-"zulässig)"
+"Das Kennungsattribut \"id=\" (nur Buchstaben, Ziffern und die Zeichen \".-_:"
+"\" zulässig)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -3685,7 +3666,6 @@ msgstr "Breite:"
 msgid "Height:"
 msgstr "Höhe:"
 
-# !!!
 #: ../src/dialogs/object-attributes.cpp:106
 #, c-format
 msgid "%s Properties"
@@ -3831,7 +3811,7 @@ msgstr "Textstil setzen"
 
 #: ../src/dialogs/xml-tree.cpp:152
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
-msgstr "<b>Klick</b> wählt Knoten aus, <b>Ziehen</b> zur neuen Anordnung."
+msgstr "<b>Klick</b> wählt Knoten aus, <b>Ziehen</b> ordnet neu an."
 
 #: ../src/dialogs/xml-tree.cpp:163
 msgid "<b>Click</b> attribute to edit."
@@ -4048,8 +4028,8 @@ msgid ""
 "Determines whether to snap to this grid or not. Can be 'on' for invisible "
 "grids."
 msgstr ""
-"Legt fest, ob an diesem Raster ausgerichtet werden soll. Kann auch für "
-"unsichtbare Gitter an sein."
+"Legt fest, ob an diesem Raster eingerastet werden soll. Kann auch für "
+"unsichtbare Gitter gesetzt sein."
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
@@ -4060,8 +4040,8 @@ msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
-"Bei entferntem Zoom werden nicht alle Gitterlinien dargestellt. Nur auf "
-"Sichtbare wird eingerastet."
+"Nicht alle Gitterlinien werden dargestellt, wenn stark heraus gezoomt wird. "
+"Nur auf Sichtbare wird eingerastet."
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -4072,8 +4052,8 @@ msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
 msgstr ""
-"Legt fest, ob das Raster angezeigt werden soll. Objekte richten sich auch an "
-"unsichtbaren Gittern aus."
+"Legt fest, ob das Raster angezeigt werden soll. Objekte rasten auch an "
+"unsichtbaren Gittern ein."
 
 #: ../src/display/canvas-grid.cpp:676
 msgid "Spacing _X:"
@@ -4145,11 +4125,11 @@ msgstr "Pfadüberschneidung"
 
 #: ../src/display/snap-indicator.cpp:96
 msgid "bounding box corner"
-msgstr "Ecken der Umrandungs_box"
+msgstr "Ecken der Umrandungsbox"
 
 #: ../src/display/snap-indicator.cpp:99
 msgid "bounding box side"
-msgstr "Seite der Umrandungsboxx"
+msgstr "Seite der Umrandungsbox"
 
 #: ../src/display/snap-indicator.cpp:102
 msgid "bounding box"
@@ -4169,7 +4149,7 @@ msgstr "Objektmittelpunkt"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "object rotation center"
-msgstr "Obkejt-Rotationszentrum"
+msgstr "Objekt-Rotationszentrum"
 
 #: ../src/display/snap-indicator.cpp:117
 msgid "handle"
@@ -4185,7 +4165,7 @@ msgstr "Mittelpunkt der Umrandung"
 
 #: ../src/display/snap-indicator.cpp:126
 msgid "page corner"
-msgstr "Seiten-Ecke"
+msgstr "Seitenecke"
 
 #: ../src/display/snap-indicator.cpp:129
 msgid "convex hull corner"
@@ -4209,7 +4189,7 @@ msgstr "Text-Grundlinie"
 
 #: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box corner"
-msgstr "Ecken der Umrandungs_box"
+msgstr "Ecken der Umrandungsbox"
 
 #: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box midpoint"
@@ -4221,7 +4201,7 @@ msgstr "Mitte der Umrandungslinie"
 
 #: ../src/display/snap-indicator.cpp:163
 msgid "Smooth node"
-msgstr "weicher Knoten"
+msgstr "glatter Knoten"
 
 #: ../src/display/snap-indicator.cpp:166
 msgid "Cusp node"
@@ -4237,7 +4217,7 @@ msgstr "Objektmittelpunkt"
 
 #: ../src/display/snap-indicator.cpp:175
 msgid "Object rotation center"
-msgstr "Obkejt-Rotationszentrum"
+msgstr "Objekt-Rotationszentrum"
 
 #: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
@@ -4287,7 +4267,7 @@ msgstr "Neues Dokument %d"
 #: ../src/document.cpp:473
 #, c-format
 msgid "Memory document %d"
-msgstr "Speicherdokument %d"
+msgstr "Dokument im Speicher %d"
 
 #: ../src/document.cpp:628
 #, c-format
@@ -4302,7 +4282,7 @@ msgstr "Pfad ist geschlossen."
 #. We hit bot start and end of single curve, closing paths
 #: ../src/draw-context.cpp:596
 msgid "Closing path."
-msgstr "Geschlossener Pfad."
+msgstr "Pfad schließen"
 
 #: ../src/draw-context.cpp:706
 msgid "Draw path"
@@ -5280,7 +5260,6 @@ msgstr "Horizontaler Versatz"
 msgid "Vertical offset, px"
 msgstr "Vertikaler Versatz"
 
-# !!!
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
 #: ../src/extension/internal/filter/filter.cpp:206
@@ -5963,9 +5942,8 @@ msgid "Arithmetic"
 msgstr "Arithmetisch"
 
 #: ../src/filter-enums.cpp:84
-#, fuzzy
 msgid "Identity"
-msgstr "Identifikator"
+msgstr "Identität"
 
 #: ../src/filter-enums.cpp:85
 msgid "Table"
@@ -6172,11 +6150,11 @@ msgstr "%s ausgewählt"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
 #: ../src/gradient-context.cpp:167 ../src/gradient-context.cpp:176
-#, fuzzy, c-format
+#, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
-msgstr[0] "Farbverlaufs-Anfasser verschieben"
-msgstr[1] "Farbverlaufs-Anfasser verschieben"
+msgstr[0] " von %d Farbverlaufs-Anfasser gewählt"
+msgstr[1] " von %d Farbverlaufs-Anfassern gewählt"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
 #: ../src/gradient-context.cpp:168 ../src/gradient-context.cpp:177
@@ -6189,17 +6167,15 @@ msgstr[1] "auf %d gewählte Objekte"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
-msgstr[0] ""
-"Ein Anfasser des Endknotens ist eingezogen (<b>Ziehen+Umschalt</b> zieht ihn "
-"heraus)"
+msgstr[0] "Ein Anfasser für %d Endknoten"
 msgstr[1] ""
-"Ein Anfasser des Endknotens ist eingezogen (<b>Ziehen+Umschalt</b> zieht ihn "
-"heraus)"
+"Ein Anfasser für %d zusammenliegende Endknoten (<b>Umschalt + Ziehen</b> "
+"trennt)"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
 #: ../src/gradient-context.cpp:182
@@ -6736,9 +6712,8 @@ msgid "GdlDockMaster object which the dockbar widget is attached to"
 msgstr "GdlDockMaster-Objekt, dem das Objekt zugeordnet ist"
 
 #: ../src/libgdl/gdl-dock-bar.c:116
-#, fuzzy
 msgid "Dockbar style"
-msgstr "Skalieren"
+msgstr "Stil de Dockleiste"
 
 #: ../src/libgdl/gdl-dock-bar.c:117
 msgid "Dockbar style to show items on it"
@@ -6758,9 +6733,8 @@ msgid "Default title"
 msgstr "Vorgegebener Titel"
 
 #: ../src/libgdl/gdl-dock.c:184
-#, fuzzy
 msgid "Default title for the newly created floating docks"
-msgstr "Vorgegebener Titel für neu erstellte schwebende Leisten"
+msgstr "Vorgegebener Titel für neu erstellte schwebende Docks"
 
 #: ../src/libgdl/gdl-dock.c:191
 msgid "Width for the dock when it's of floating type"
@@ -6771,24 +6745,20 @@ msgid "Height for the dock when it's of floating type"
 msgstr "Höhe des Docks im schwebenden Zustand"
 
 #: ../src/libgdl/gdl-dock.c:206
-#, fuzzy
 msgid "Float X"
-msgstr "Beziehung"
+msgstr "X-Koordinate"
 
 #: ../src/libgdl/gdl-dock.c:207
-#, fuzzy
 msgid "X coordinate for a floating dock"
-msgstr "X-Koordinate des Gitterursprungs"
+msgstr "X-Koordinate eines schwebenden Docks"
 
 #: ../src/libgdl/gdl-dock.c:214
-#, fuzzy
 msgid "Float Y"
-msgstr "Beziehung"
+msgstr "Y-Koordinate"
 
 #: ../src/libgdl/gdl-dock.c:215
-#, fuzzy
 msgid "Y coordinate for a floating dock"
-msgstr "Y-Koordinate des Gitterursprungs"
+msgstr "Y-Koordinate eines schwebenden Docks"
 
 #: ../src/libgdl/gdl-dock.c:499
 #, c-format
@@ -6935,19 +6905,16 @@ msgstr ""
 "sind alle ungebunden; -1 weist auf Inkonsistenzen zwischen den Objekten hin"
 
 #: ../src/libgdl/gdl-dock-master.c:160 ../src/libgdl/gdl-switcher.c:706
-#, fuzzy
 msgid "Switcher Style"
-msgstr "Kacheln zusammenfügen"
+msgstr "Stil des Umschalters"
 
 #: ../src/libgdl/gdl-dock-master.c:161 ../src/libgdl/gdl-switcher.c:707
-#, fuzzy
 msgid "Switcher buttons style"
-msgstr "Zur nächsten Ebene gewächselt."
+msgstr "Stil des Umschalters"
 
 #: ../src/libgdl/gdl-dock-master.c:168
-#, fuzzy
 msgid "Expand direction"
-msgstr "Zeilenabstand vergrößern"
+msgstr "Richtung der Expansion"
 
 #: ../src/libgdl/gdl-dock-master.c:169
 msgid ""
@@ -7000,9 +6967,8 @@ msgid "Long name"
 msgstr "Langer Name"
 
 #: ../src/libgdl/gdl-dock-object.c:129
-#, fuzzy
 msgid "Human readable name for the dock object"
-msgstr "Freiform-Bezeichner des Objektes"
+msgstr "Verständlicher Name für das Dock-Objekt"
 
 #: ../src/libgdl/gdl-dock-object.c:135
 #, fuzzy
@@ -7022,9 +6988,8 @@ msgid "Pixbuf icon for the dock object"
 msgstr "Pixbuf Symbol für das Leisten-Objekt"
 
 #: ../src/libgdl/gdl-dock-object.c:148
-#, fuzzy
 msgid "Dock master"
-msgstr "Ebene sperren"
+msgstr "Hauptdock"
 
 #: ../src/libgdl/gdl-dock-object.c:149
 msgid "Dock master this dock object is bound to"
@@ -7091,11 +7056,9 @@ msgstr "Betreiber"
 msgid "The dock object this placeholder is attached to"
 msgstr "Das Dock-Objekt, zu dem dieser Platzhalter gehört"
 
-# !!!
 #: ../src/libgdl/gdl-dock-placeholder.c:159
-#, fuzzy
 msgid "Next placement"
-msgstr "Platzierung der Zähne"
+msgstr "Nächste Platzierung"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:160
 msgid ""
@@ -7127,18 +7090,16 @@ msgid "X-Coordinate"
 msgstr "X-Koordinate"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:192
-#, fuzzy
 msgid "X coordinate for dock when floating"
-msgstr "X-Koordinate des Gitterursprungs"
+msgstr "X-Koordinate des Docks im schwebenden Zustand"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:198
 msgid "Y-Coordinate"
 msgstr "Y-Koordinate"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:199
-#, fuzzy
 msgid "Y coordinate for dock when floating"
-msgstr "Y-Koordinate des Gitterursprungs"
+msgstr "Y-Koordinate des Docks im schwebenden Zustand"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
@@ -7460,44 +7421,32 @@ msgid "Top bend path"
 msgstr "Oberen Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top path along which to bend the original path"
-msgstr ""
-"Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
-"bleibt bestehen."
+msgstr "Oberer Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right bend path"
 msgstr "Rechten Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right path along which to bend the original path"
-msgstr ""
-"Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
-"bleibt bestehen."
+msgstr "Rechter Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom bend path"
 msgstr "Unteren Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom path along which to bend the original path"
-msgstr ""
-"Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
-"bleibt bestehen."
+msgstr "Unterer Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left bend path"
 msgstr "Linken Pfad verbiegen"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left path along which to bend the original path"
-msgstr ""
-"Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
-"bleibt bestehen."
+msgstr "Linker Pfad, entlang welchem der Originalpfad gebogen wird"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
@@ -7538,11 +7487,8 @@ msgid "Trajectory"
 msgstr "Kurve"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr ""
-"Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad "
-"bleibt bestehen."
+msgstr "Pfad, entlang dem die Zwischenschritte entstehen"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -7550,14 +7496,12 @@ msgid "Steps"
 msgstr "Schritte"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
-#, fuzzy
 msgid "Determines the number of steps from start to end path."
-msgstr "Bestimmt die Anzahl der Schritte vom Start bis zum Endpfad."
+msgstr "Bestimmt die Anzahl der Schritte vom Start- bis zum Endpfad."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "Zeilenabstand vergrößern"
+msgstr "Gleiche Abstände"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid ""
@@ -7571,9 +7515,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Fixed width"
-msgstr "Stiftbreite"
+msgstr "Feste Breite"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
@@ -7597,14 +7540,12 @@ msgid "Add the stroke width to the interruption size"
 msgstr "Addiere Strichdicke zur Unterbrechungslänge."
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Crossing path stroke width"
-msgstr "Breite der Kontur ändern"
+msgstr "Breite gekreuzter Striche"
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Add crossed stroke width to the interruption size"
-msgstr "Addiere Strichdicke zur Unterbrechungslänge."
+msgstr "Addiere Dicke gekreuzter Striche zur Unterbrechungslänge."
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
@@ -7667,9 +7608,8 @@ msgid "Width of the pattern"
 msgstr "Breite des Musters"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
-#, fuzzy
 msgid "Scale the width of the pattern in units of its length"
-msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
+msgstr "Breite des Musters in Vielfachen seiner Länge"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
 msgid "Spacing"
@@ -7745,9 +7685,8 @@ msgstr "Zunahme des Abstands zwischen den Strichen"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
-#, fuzzy
 msgid "Half-turns smoothness: 1st side, in"
-msgstr "Weichheit der Rundungen: 1. Seite"
+msgstr "Weichheit der Umkehrpunkte: 1. Seite, einlaufend"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
@@ -8590,11 +8529,11 @@ msgstr "_Text"
 # !!!
 #: ../src/menus-skeleton.h:244
 msgid "Filter_s"
-msgstr "Filter"
+msgstr "_Filter"
 
 #: ../src/menus-skeleton.h:250
 msgid "Exte_nsions"
-msgstr "Erweiterungen"
+msgstr "E_rweiterungen"
 
 #: ../src/menus-skeleton.h:257
 msgid "Whiteboa_rd"
@@ -9130,22 +9069,22 @@ msgstr ""
 "fortzusetzen."
 
 #: ../src/pen-context.cpp:1266
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
-"<b>%s</b>: Winkel %3.2f&#176;, Abstand %s; <b>Strg</b> rastet den Winkel "
-"ein; <b>Eingabe</b> schließt den Pfad ab"
+"<b>Kurvensegment</b>: Winkel %3.2f&#176;, Abstand %s; <b>Strg</b> rastet den "
+"Winkel ein; <b>Eingabe</b> schließt den Pfad ab"
 
 #: ../src/pen-context.cpp:1267
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
-"<b>%s</b>: Winkel %3.2f&#176;, Abstand %s; <b>Strg</b> rastet den Winkel "
-"ein; <b>Eingabe</b> schließt den Pfad ab"
+"<b>Liniensegment</b>: Winkel %3.2f&#176;, Abstand %s; <b>Strg</b> rastet den "
+"Winkel ein; <b>Eingabe</b> schließt den Pfad ab"
 
 #: ../src/pen-context.cpp:1285
 #, c-format
@@ -9157,22 +9096,22 @@ msgstr ""
 "einrasten"
 
 #: ../src/pen-context.cpp:1307
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
-"<b>%s</b>: Winkel %3.2f&#176;, Länge %s; <b>Strg</b> rastet den Winkel ein; "
-"<b>Umschalt</b> bewegt nur diesen Anfasser"
+"<b>Symmetrischer Kurvenanfasser</b>: Winkel %3.2f&#176;, Länge %s; <b>Strg</"
+"b> rastet den Winkel ein; <b>Umschalt</b> bewegt nur diesen Anfasser"
 
 #: ../src/pen-context.cpp:1308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
-"<b>%s</b>: Winkel %3.2f&#176;, Länge %s; <b>Strg</b> rastet den Winkel ein; "
-"<b>Umschalt</b> bewegt nur diesen Anfasser"
+"<b>Kurvenanfasser</b>: Winkel %3.2f&#176;, Länge %s; <b>Strg</b> rastet den "
+"Winkel ein; <b>Umschalt</b> bewegt nur diesen Anfasser"
 
 # not sure here -cm-
 #: ../src/pen-context.cpp:1355
@@ -9265,12 +9204,11 @@ msgstr "Wackelig"
 
 #: ../src/preferences-skeleton.h:102
 msgid "Splotchy"
-msgstr ""
+msgstr "Klecksig"
 
 #: ../src/preferences-skeleton.h:103
-#, fuzzy
 msgid "Tracing"
-msgstr "Abstand"
+msgstr "Nachzeichnen"
 
 #: ../src/rdf.cpp:172
 msgid "CC Attribution"
@@ -9802,9 +9740,8 @@ msgid "Select <b>clones</b> to relink."
 msgstr "<b>Klon</b> auswählen, um wieder zu verknüpfen"
 
 #: ../src/selection-chemistry.cpp:1942
-#, fuzzy
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
-msgstr "Zu klonendes <b>Objekt</b> auswählen."
+msgstr "Kopiert ein <b>Objekt</b> in die Ablage als Elter für Klone."
 
 #: ../src/selection-chemistry.cpp:1966
 msgid "<b>No clones to relink</b> in the selection."
@@ -10303,13 +10240,12 @@ msgid "Guides Around Page"
 msgstr "Führungslinien an Seitenrändern"
 
 #: ../src/sp-guide.cpp:421
-#, fuzzy
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
-"<b>Ziehen</b> erstellt eine Ellipse. <b>Anfasser ziehen</b> erzeugt Bogen "
-"oder Kreissegment. <b>Klick</b> wählt aus."
+"<b>Umschalt+Ziehen</b> rotiert, <b>Strg+Ziehen</b> bewegt Ursprung, <b>Entf</"
+"b> löscht."
 
 #: ../src/sp-guide.cpp:426
 #, c-format
@@ -10936,11 +10872,10 @@ msgstr ""
 "b> oder <b>Ziehen</b> um Knoten auszuwählen, dann Knoten oder Anfasser "
 "<b>ziehen</b>. Ganzes Objekt durch <b>Klick</b> auswählen."
 
-# nicht ganz korrekt..aber besser als nix
 #: ../src/tools-switch.cpp:136
 msgid "To tweak a path by pushing, select it and drag over it."
 msgstr ""
-"Um einen Pfad zu verformen, selektieren Sie diesen und verschieben Sie ihn."
+"Um eine Pfadform zu justieren, selektieren Sie diesen und ziehen über ihn."
 
 #: ../src/tools-switch.cpp:142
 msgid ""
@@ -10984,14 +10919,12 @@ msgstr ""
 "Form. <b>Klick</b> wählt aus."
 
 #: ../src/tools-switch.cpp:172
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected "
 "path, <b>Alt</b> activates sketch mode."
 msgstr ""
-"<b>Ziehen</b> erzeugt eine Freihandlinie. <b>Umschalt</b>, um den "
-"ausgewählten Pfad weiterzuzeichnen. <b>Strg+Klicken</b> um einzelne Punkte "
-"zu erzeugen."
+"<b>Ziehen</b> erzeugt eine Freihandlinie. <b>Umschalt</b> erweitert "
+"ausgewählten Pfad. <b>Alt</b> wechselt in Skizzenmodus."
 
 #: ../src/tools-switch.cpp:178
 msgid ""
@@ -11188,11 +11121,11 @@ msgstr ""
 
 #: ../src/tweak-context.cpp:1223
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr "<b>Nichts ausgewählt!</b> Wähle Objekte zum Modellieren aus."
+msgstr "<b>Nichts ausgewählt!</b> Wähle Objekte zum Justieren aus."
 
 #: ../src/tweak-context.cpp:1259
 msgid "Move tweak"
-msgstr "Verschiebungs-Justage"
+msgstr "Verschieben-Justage"
 
 # Was bewegt sich?
 #: ../src/tweak-context.cpp:1263
@@ -11205,15 +11138,15 @@ msgstr "Bewegungsversatz-Justage"
 
 #: ../src/tweak-context.cpp:1271
 msgid "Scale tweak"
-msgstr "Skalierungs-Justage"
+msgstr "Skalieren-Justage"
 
 #: ../src/tweak-context.cpp:1275
 msgid "Rotate tweak"
-msgstr "Rotations-Justage"
+msgstr "Rotieren-Justage"
 
 #: ../src/tweak-context.cpp:1279
 msgid "Duplicate/delete tweak"
-msgstr "Dulizierungs-/Löschungs-Justage"
+msgstr "Dulizieren-/Löschen-Justage"
 
 #: ../src/tweak-context.cpp:1283
 msgid "Push path tweak"
@@ -11379,6 +11312,7 @@ msgstr "Ü_bersetzer"
 msgid "_License"
 msgstr "_Lizenz"
 
+# Hier muss die deutsche Grafik, die bei der Inkscape-Info angezeigt werden soll, benannt werden!
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
 #. the filename of its translated version, e.g. about.zh.svg for Chinese.
@@ -11400,6 +11334,7 @@ msgstr "about.svg"
 msgid "translator-credits"
 msgstr ""
 "Adib Taraben (theadib@yahoo.com)\n"
+"Alexander Senger (neutronenspalter@freenet.de)\n"
 "Benedikt Roth (Benedikt.Roth@gmx.net)\n"
 "Christian Meyer (chrisime@gnome.org)\n"
 "Christian Neumair (chris@gnome-de.org)\n"
@@ -11416,11 +11351,10 @@ msgstr ""
 msgid "Align"
 msgstr "Ausrichten"
 
-# CHECK
 #: ../src/ui/dialog/align-and-distribute.cpp:397
 #: ../src/ui/dialog/align-and-distribute.cpp:788
 msgid "Distribute"
-msgstr "Abstände ausgleichen"
+msgstr "Verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:466
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
@@ -11464,10 +11398,9 @@ msgstr "Entklumpen"
 msgid "Randomize positions"
 msgstr "Positionen zufällig machen"
 
-# CHECK
 #: ../src/ui/dialog/align-and-distribute.cpp:739
 msgid "Distribute text baselines"
-msgstr "Grundlinien von Text ausgleichen"
+msgstr "Textgrundlinien verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:759
 msgid "Align text baselines"
@@ -11487,17 +11420,16 @@ msgid "Relative to: "
 msgstr "Relativ zu: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:798
-#, fuzzy
 msgid "Treat selection as group: "
-msgstr "Auf die Selektion ist kein Pfad-Effekt angewandt."
+msgstr "Auswahl als Gruppe behandeln:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "Rechte Seite der Objekte an linker Seite der Verankerung ausrichten"
+msgstr "Rechte Objektkanten an linker Seite der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:807
 msgid "Align left edges"
-msgstr "Linksbündig ausrichten"
+msgstr "Linke Kanten ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:810
 msgid "Center objects horizontally"
@@ -11505,32 +11437,31 @@ msgstr "Objekte horizontal zentrieren"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
 msgid "Align right sides"
-msgstr "Rechtsbündig ausrichten"
+msgstr "Rechte Kanten ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr ""
-"Linke Kanten der Objekte an der rechten Seite der Verankerung ausrichten"
+msgstr "Linke Objektkanten an rechter Seite der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr "Unterseiten der Objekte an Oberseite der Verankerung ausrichten"
+msgstr "Objektunterkanten an Oberkante der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:822
 msgid "Align top edges"
-msgstr "An Oberkanten ausrichten"
+msgstr "Oberkanten ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:825
 msgid "Center on horizontal axis"
-msgstr "Horizontal zentrieren"
+msgstr "Zentren horizontal ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:828
 msgid "Align bottom edges"
-msgstr "An Unterkante ausrichten"
+msgstr "Unterkanten ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr "Oberseiten der Objekte an Unterseite der Verankerung ausrichten"
+msgstr "Objektoberkanten an Unterkante der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:836
 msgid "Align baseline anchors of texts horizontally"
@@ -11546,15 +11477,15 @@ msgstr "Horizontale Abstände zwischen Objekten ausgleichen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:848
 msgid "Distribute left edges equidistantly"
-msgstr "Abstände zwischen linken Seiten der Objekte ausgleichen"
+msgstr "Linke Objektkanten gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Distribute centers equidistantly horizontally"
-msgstr "Horizontale Abstände zwischen Objektmittelpunkten ausgleichen"
+msgstr "Objektmittelpunkten horizontal gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:854
 msgid "Distribute right edges equidistantly"
-msgstr "Abstände zwischen rechten Seiten der Objekte ausgleichen"
+msgstr "Rechte Objektkanten gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:858
 msgid "Make vertical gaps between objects equal"
@@ -11566,19 +11497,19 @@ msgstr "Oberkanten der Objekte gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:865
 msgid "Distribute centers equidistantly vertically"
-msgstr "Vertikale Abstände zwischen Objektmittelpunkten ausgleichen"
+msgstr "Objektmittelpunkten vertikal gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Distribute bottom edges equidistantly"
-msgstr "Abstände zwischen Unterkanten ausgleichen"
+msgstr "Unterkanten gleichmäßig anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:873
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "Grundlinien von Textelementen horizontal gleichmäßig anordnen"
+msgstr "Grundlinien von Textelementen horizontal verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:876
 msgid "Distribute baselines of texts vertically"
-msgstr "Grundlinien von Textelementen vertikal gleichmäßig anordnen"
+msgstr "Grundlinien von Textelementen vertikal verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 msgid "Randomize centers in both dimensions"
@@ -11611,11 +11542,11 @@ msgstr "Ausgewählte Knoten vertikal ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Distribute selected nodes horizontally"
-msgstr "Ausgewählte Knoten horizontal gleichmäßig anordnen"
+msgstr "Ausgewählte Knoten horizontal verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:910
 msgid "Distribute selected nodes vertically"
-msgstr "Ausgewählte Knoten vertikal gleichmäßig anordnen"
+msgstr "Ausgewählte Knoten vertikal verteilen"
 
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:915
@@ -11655,11 +11586,11 @@ msgstr "Meldungen"
 
 #: ../src/ui/dialog/debug.cpp:77 ../src/ui/dialog/messages.cpp:55
 msgid "Capture log messages"
-msgstr "Nachrichten zur Fehlersuche protokollieren"
+msgstr "Fehlerprotokoll mitschreiben"
 
 #: ../src/ui/dialog/debug.cpp:79 ../src/ui/dialog/messages.cpp:57
 msgid "Release log messages"
-msgstr "Nachrichten zur Fehlersuche nicht protokollieren"
+msgstr "Fehlerprotokoll verwerfen"
 
 #: ../src/ui/dialog/document-metadata.cpp:73
 msgid "Metadata"
@@ -11674,7 +11605,6 @@ msgstr "Nutzungsbedingungen - Lizenz"
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>Dublin-Core-Entities</b>"
 
-# !!!
 #: ../src/ui/dialog/document-metadata.cpp:176
 msgid "<b>License</b>"
 msgstr "<b>Lizenz</b>"
@@ -11760,7 +11690,7 @@ msgstr ""
 "Während des Ziehens einer Führungslinie rastet diese an Objekt-Knoten oder "
 "Ecken von Umrandungskästen ein (\"An Knoten einrasten\" oder \"An "
 "Umrandungsecken einrasten\" muss aktiviert sein; nur ein kleiner Teil um den "
-"Pfeil wird einrasten)"
+"Mauszeiger wird einrasten)"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -11772,7 +11702,7 @@ msgstr "Farbe der Führungslinien"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Color of guidelines"
-msgstr "Farbe der Führunglinien"
+msgstr "Farbe der Führungslinien"
 
 #: ../src/ui/dialog/document-properties.cpp:103
 msgid "_Highlight color:"
@@ -11784,7 +11714,7 @@ msgstr "Farbe der hervorgehobenen Führungslinien"
 
 #: ../src/ui/dialog/document-properties.cpp:103
 msgid "Color of a guideline when it is under mouse"
-msgstr "Farbe der Führungslinie unter dem Mauszeiger"
+msgstr "Farbe der Führungslinie falls unter dem Mauszeiger"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -11823,11 +11753,11 @@ msgstr "Einrasten"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 msgid "Color Management"
-msgstr "Farb-Managemebt"
+msgstr "Farb-Management"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "Scripting"
-msgstr "Skript"
+msgstr "Skripte"
 
 # !!!
 #: ../src/ui/dialog/document-properties.cpp:221
@@ -11851,7 +11781,7 @@ msgstr "<b>Führungslinien</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:272
 msgid "Snap _distance"
-msgstr "Einrastabstand:"
+msgstr "Einrastabstand"
 
 #: ../src/ui/dialog/document-properties.cpp:272
 msgid "Snap only when _closer than:"
@@ -11911,7 +11841,7 @@ msgstr ""
 #. Options for snapping to guides
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap dist_ance"
-msgstr "Einrastabstand:"
+msgstr "Einrastabstand"
 
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap only when close_r than:"
@@ -11924,8 +11854,8 @@ msgstr "Einrastabstand in Bildschirmpixeln, um an Führungslinien einzurasten"
 #: ../src/ui/dialog/document-properties.cpp:285
 msgid "Always snap to guides, regardless of the distance"
 msgstr ""
-"Wenn gesetzt, dann rasten Objekte an der nahesten Führungslinie ein, "
-"unabhängig von der Entfernung"
+"Objekte rasten immer an der nächsten Führungslinie ein, unabhängig von der "
+"Entfernung"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid ""
@@ -11939,15 +11869,13 @@ msgstr ""
 msgid "<b>Snap to objects</b>"
 msgstr "<b>An Objekten einrasten</b>"
 
-# !!!
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "<b>Snap to grids</b>"
-msgstr "<b>Einrasten am Gitter</b>"
+msgstr "<b>Am Gitter einrasten</b>"
 
-# !!! points?
 #: ../src/ui/dialog/document-properties.cpp:294
 msgid "<b>Snap to guides</b>"
-msgstr "<b>Einrasten an Führungslinien</b>"
+msgstr "<b>An Führungslinien einrasten</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:323
 msgid "(invalid UTF-8 string)"
@@ -11986,7 +11914,6 @@ msgstr "Profil verknüpfen"
 msgid "Profile Name"
 msgstr "Profil-Name"
 
-# !!! points?
 #: ../src/ui/dialog/document-properties.cpp:569
 msgid "<b>External script files:</b>"
 msgstr "<b>Externe Script-Dateien:</b>"
@@ -12072,7 +11999,7 @@ msgstr "Alle Bilder"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:199
 msgid "All Vectors"
-msgstr "Alle Vektoren"
+msgstr "Alle Vektorgrafiken"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
@@ -12151,7 +12078,7 @@ msgstr "Kantenglättung"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1464
 msgid "Background"
-msgstr "Hintergrund:"
+msgstr "Hintergrund"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1487
 msgid "Destination"
@@ -12193,7 +12120,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
-msgstr "Bild"
+msgstr "Bild-Datei"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:578
 msgid "Selected SVG Element"
@@ -12201,9 +12128,8 @@ msgstr "Gewähltes SVG Element"
 
 #. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
-#, fuzzy
 msgid "Select an image to be used as feImage input"
-msgstr "Wählen Sie ein Bild und eine oder mehrere Formen über diesem"
+msgstr "Wählt ein Bild als Eingabe für feBild"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
@@ -12237,7 +12163,7 @@ msgstr "Position"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "X coordinate"
-msgstr "X-Koordinate:"
+msgstr "X-Koordinate"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:959
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
@@ -12249,16 +12175,15 @@ msgstr "Y-Koordinate"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:962
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Z coordinate"
-msgstr "X-Koordinate:"
+msgstr "X-Koordinate"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Points At"
 msgstr "Zeigt auf"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:966
-#, fuzzy
 msgid "Specular Exponent"
-msgstr "Exponent"
+msgstr "Glanzpunkt-Exponent"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:966
 msgid "Exponent value controlling the focus for the light source"
@@ -12267,7 +12192,7 @@ msgstr "Exponent bestimmt den Fokus der Lichtquelle"
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid "Cone Angle"
-msgstr "Kegel Winkel"
+msgstr "Konuswinkel"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:968
 msgid ""
@@ -12275,7 +12200,7 @@ msgid ""
 "light source and the point to which it is pointing at) and the spot light "
 "cone. No light is projected outside this cone."
 msgstr ""
-"Öffnungswinkel des Lichtkonus. Ausserhalb des Konus gibt es kein Licht. "
+"Öffnungswinkel des Lichtkonus. Außerhalb des Konus gibt es kein Licht. "
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1029
 msgid "New light source"
@@ -12302,9 +12227,8 @@ msgid "Apply filter"
 msgstr "Filter anwenden"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
-msgstr "_Filter"
+msgstr "Filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
@@ -12324,7 +12248,7 @@ msgstr "Verbindungen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1542
 msgid "Remove filter primitive"
-msgstr "Filterprimitiv entfernen"
+msgstr "Filterbaustein entfernen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1914
 msgid "Remove merge node"
@@ -12332,7 +12256,7 @@ msgstr "Zusammengefassten Knoten löschen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2030
 msgid "Reorder filter primitive"
-msgstr "Filterprimitive umordnen"
+msgstr "Filterbausteine umordnen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "Add Effect:"
@@ -12366,7 +12290,7 @@ msgstr "X-Koordinate der linken Ecke des Ausschnitts, auf den Filter wirkt"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Y coordinate of the upper corners of filter effects region"
-msgstr "Y-Koordinate der obere Ecke des Filtereffektbereichs"
+msgstr "Y-Koordinate der obere Ecke des Ausschnitts, auf den Filter wirkt"
 
 #. default width:
 #. default height:
@@ -12411,7 +12335,7 @@ msgstr "Operator:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K1:"
-msgstr "K1"
+msgstr "K1:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
@@ -12428,15 +12352,15 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 msgid "K2:"
-msgstr "K2"
+msgstr "K2:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid "K3:"
-msgstr "K3"
+msgstr "K3:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2187
 msgid "K4:"
-msgstr "K4"
+msgstr "K4:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 #: ../src/ui/dialog/tracedialog.cpp:581
@@ -12444,14 +12368,12 @@ msgid "Size:"
 msgstr "Größe:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-#, fuzzy
 msgid "width of the convolve matrix"
-msgstr "Breite des Papiers"
+msgstr "Breite der Faltungsmatrix"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
-#, fuzzy
 msgid "height of the convolve matrix"
-msgstr "Höhe des zu füllenden Rechtecks"
+msgstr "Höhe der Faltungsmatrix"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2191
 msgid ""
@@ -12471,9 +12393,8 @@ msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
-#, fuzzy
 msgid "Kernel:"
-msgstr "Unterschneidung nach oben"
+msgstr "Faltungsmatrix:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid ""
@@ -12502,14 +12423,14 @@ msgid ""
 "divisor that is the sum of all the matrix values tends to have an evening "
 "effect on the overall color intensity of the result."
 msgstr ""
-"Durch diesen Wert wird auf das Ergebnis der kernelMatrix angewendet auf das "
+"Durch diesen Wert wird das Ergebnis der Faltung angewendet auf das "
 "Eingangsbild geteilt, um den endgültigen Farbwert des Ausgangspixels zu "
 "erhalten. Ist der Divisor die Summe der Matrixeinträge, so wird das Ergebnis "
 "eine gemittelte Farbintensität aufweisen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Bias:"
-msgstr "Verzerrung"
+msgstr "Grundwert:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid ""
@@ -12521,7 +12442,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Edge Mode:"
-msgstr "Kanten-Modus"
+msgstr "Kanten-Modus:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid ""
@@ -12545,9 +12466,8 @@ msgstr ""
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#, fuzzy
 msgid "Diffuse Color:"
-msgstr "Sichtbare Farben"
+msgstr "Diffusreflektierende Farbe:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -12557,7 +12477,7 @@ msgstr "Definiert die Farbe der Lichtquelle"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "Surface Scale:"
-msgstr "Flächenskalierung:"
+msgstr "Oberflächenskalierung:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -12565,8 +12485,8 @@ msgid ""
 "This value amplifies the heights of the bump map defined by the input alpha "
 "channel"
 msgstr ""
-"Dieser Wert multipliziert die Höhenkarte, die aus dem Alphakanal der Eingabe "
-"gewonnen wird."
+"Dieser Wert multipliziert die Oberflächenstruktur, die aus dem Alphakanal "
+"der Eingabe gewonnen wird."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
@@ -12593,7 +12513,7 @@ msgstr "Dies bestimmt die Stärke des Versatzeffekts."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "X displacement:"
-msgstr "X Verschiebung"
+msgstr "X-Verschiebung:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
@@ -12601,7 +12521,7 @@ msgstr "Farbkomponente, die den Versatz in X-Richtung bestimmt"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Y displacement:"
-msgstr "Y Verschiebung"
+msgstr "Y-Verschiebung:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
@@ -12663,9 +12583,8 @@ msgstr "Um diesen Betrag wird das Eingangsbild nach unten verschoben."
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-#, fuzzy
 msgid "Specular Color:"
-msgstr "Zwischenfarbe"
+msgstr "Glanzpunktfarbe:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent:"
@@ -12679,11 +12598,11 @@ msgstr "Exponent bestimmt Glanzlicht, größer ist \"glänzender\""
 msgid ""
 "Indicates whether the filter primitive should perform a noise or turbulence "
 "function."
-msgstr "Zeigt an, ob der Filterbaustein eine Rauschen oder Turbulenz erzeugt."
+msgstr "Zeigt an, ob der Filterbaustein Rauschen oder Turbulenz erzeugt."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid "Base Frequency:"
-msgstr "Basisfrequenz"
+msgstr "Basisfrequenz:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 msgid "Octaves:"
@@ -12691,7 +12610,7 @@ msgstr "Oktaven:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "Seed:"
-msgstr "Samen"
+msgstr "Startwert:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
@@ -12699,15 +12618,15 @@ msgstr "Startwert des Pseudozufallsgenerators"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2261
 msgid "Add filter primitive"
-msgstr "Filterprimitiv hinzufügen"
+msgstr "Filterbaustein hinzufügen"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2278
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
-"Der <b>Mischen</b> Filter sieht 4 Bild-Misch-Modi vor: Screen, "
-"Multiplizieren, Verdunkeln und Erhellen."
+"Der <b>Mischen</b> Filterbaustein sieht 4 Bild-Misch-Modi vor: Screen, "
+"Multiplizieren, Verdunkeln und Aufhellen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
 msgid ""
@@ -12715,7 +12634,7 @@ msgid ""
 "color of each rendered pixel. This allows for effects like turning object to "
 "grayscale, modifying color saturation and changing color hue."
 msgstr ""
-"Der Filterbaustein <b>feFarbmatrix</b> wendet eine Matrix-Transformation auf "
+"Der Filterbaustein <b>Farbmatrix</b> wendet eine Matrix-Transformation auf "
 "die Farben der gerenderten Pixel an. Dies erlaubt Effekte wie Umwandeln in "
 "Graustufen, Modifizieren der Sättigung und Änderung des Farbwerts."
 
@@ -12726,7 +12645,7 @@ msgid ""
 "transfer functions, allowing operations like brightness and contrast "
 "adjustment, color balance, and thresholding."
 msgstr ""
-"Der Filterbaustein <b>feKomponententransfer</b> beeinflusst die "
+"Der Filterbaustein <b>Komponententransfer</b> beeinflusst die "
 "Farbkomponenten des Eingangs (rot, grün, blau und alpha) gemäß "
 "festzulegender Transferfunktionen. Dies erlaubt Operationen wie Helligkeits- "
 "und Kontrasteinstellung, Farbbalance und Schwellenwerte."
@@ -12738,10 +12657,11 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
-"Der <b>Kombinieren</b> Filter kombiniert zwei Bilder mittels eines Porter-"
-"Duff-Misch-Modus oder dem arithmetischen Modus, der im SVG-Standard "
-"beschrieben ist. Der Porter-Duff-Misch-Modus beinhaltet logische Operationen "
-"zwischen den korrespondierenden Pixel-Werten der Bilder."
+"Der Filterbaustein <b>Kombinieren</b> kombiniert zwei Bilder mittels einer "
+"der Porter-Duff-Misch-Modi oder dem arithmetischen Modus, wie sie im SVG-"
+"Standard beschrieben sind. Die Porter-Duff-Misch-Modi bestehen im "
+"Wesentlichen aus logischen Operationen zwischen den korrespondierenden Pixel-"
+"Werten der Bilder."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2294
 msgid ""
@@ -12751,11 +12671,11 @@ msgid ""
 "be created using this filter primitive, the special gaussian blur primitive "
 "is faster and resolution-independent."
 msgstr ""
-"Bei dem <b>Faltungsmatrix</b> Filter können Sie eine Biegung spezifizieren, "
-"die auf das Bild angewendet wird. Gewöhnliche Effekte dafür sind "
-"Weichzeichnen, Scharfzeichnen, Prägen und Kantenerkennung. Achtung: Zwar "
-"kann mit diesem Filter der Gaussche Weichzeichner angewendet werden, "
-"allerdings ist ist der eigentliche Effekt schneller und von der Auflösung "
+"Bei dem Filterbaustein <b>Faltungsmatrix</b> können Sie eine Faltung "
+"spezifizieren, die auf das Bild angewendet wird. Mögliche Ergebnisse sind "
+"Weichzeichnen, Schärfen, Prägen und Kantenerkennung. Achtung: Zwar kann der "
+"gleiche Effekt wie mit dem Gaußschen Weichzeichner erreicht werden, "
+"allerdings ist der spezialisierte Effekt schneller und von der Auflösung "
 "unabhängig. "
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2298
@@ -12765,7 +12685,7 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
-"Die Filterbausteine <b>feDiffuseBeleuchtung</b> und fePunktlichtbeleuchtung "
+"Die Filterbausteine <b>DiffuseBeleuchtung</b> und Punktlichtbeleuchtung "
 "erzeugen \"Relief-Schattierungen\". Der Alphakanal des Eingangs wird "
 "verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden "
 "angehoben, weniger opake abgesenkt."
@@ -12777,7 +12697,7 @@ msgid ""
 "how far the pixel should come from. Classical examples are whirl and pinch "
 "effects."
 msgstr ""
-"Der Filterbaustein <b>feVersatzKarte</b> verschiebt die Pixel des ersten "
+"Der Filterbaustein <b>VersatzKarte</b> verschiebt die Pixel des ersten "
 "Eingangs unter Verwendung des zweiten Eingangs als Versatzkarte. Letztere "
 "definiert, woher die Pixel kommen sollen. Klassische Beispiele sind Wirbel- "
 "und Quetscheffekte."
@@ -12788,8 +12708,8 @@ msgid ""
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
-"Der Filterbaustein <b>feFüllung</b> füllt einen Bereich mit vorgegebener "
-"Farbe und Opazität. Normalerweise wird dies als Eingang für andere Filter "
+"Der Filterbaustein <b>Füllung</b> füllt einen Bereich mit vorgegebener Farbe "
+"und Opazität. Normalerweise wird dies als Eingang für andere Filter "
 "verwendet, um so Farben ins Spiel zu bringen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2310
@@ -12797,16 +12717,16 @@ msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
-"Der <b>Gaußsche Weichzeichner</b> Filter zeichnet die Quelle weich. Er wird "
-"normalerweise zusammen mit dem Filter Versatz benutzt, um Schlagschatten-"
-"Effekte zu erzeugen."
+"Der Filterbaustein <b>Gaußscher Weichzeichner</b> zeichnet die Quelle weich. "
+"Er wird normalerweise zusammen mit dem Filterbaustein Versatz benutzt, um "
+"abgesetzte Schatten zu erzeugen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2314
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
-"Der Filterbaustein <b>feBild</b> füllt eine Region mit einem externen Bild "
+"Der Filterbaustein <b>Bild</b> füllt eine Region mit einem externen Bild "
 "oder einem anderen Teil des Dokuments."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2318
@@ -12816,10 +12736,10 @@ msgid ""
 "compositing for this. This is equivalent to using several feBlend primitives "
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
-"Der Filterbaustein <b>feVerschmelzen</b> führt mehrere einzelne Bilder zu "
-"einem einzigen zusammen unter Verwendung des Alphakanals. Dies ist "
-"äquivalent zu den Bausteinen feÜberblenden im Normalmodus oder feVerbund im "
-"\"Überlagern\"-Modus."
+"Der Filterbaustein <b>Verschmelzen</b> führt mehrere einzelne Bilder unter "
+"Verwendung des Alphakanals zu einem einzigen zusammen. Dies ist äquivalent "
+"zu den Bausteinen Überblenden im Normalmodus oder Verbund im \"Überlagern\"-"
+"Modus."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
 msgid ""
@@ -12827,7 +12747,7 @@ msgid ""
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
-"Der Filterbaustein <b>feMorphologie</b> stellt die Effekte \"Erodieren\" und "
+"Der Filterbaustein <b>Morphologie</b> stellt die Effekte \"Erodieren\" und "
 "\"Weiten\" zur Verfügung. Für einfarbige Objekte wirkt \"Erodieren\" "
 "ausdünnend und \"Weiten\" verdickend."
 
@@ -12837,7 +12757,7 @@ msgid ""
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
-"Der Filterbaustein <b>feVersatz</b> verschiebt das Bild um einen "
+"Der Filterbaustein <b>Versatz</b> verschiebt das Bild um einen "
 "benutzerdefinierten Betrag. Dies ist z. B. für abgesetzte Schatten nützlich, "
 "die sich an einer leicht anderen Position als das eigentliche Objekt "
 "befinden."
@@ -12849,7 +12769,7 @@ msgid ""
 "information: higher opacity areas are raised toward the viewer and lower "
 "opacity areas recede away from the viewer."
 msgstr ""
-"Die Filterbausteine feDiffuseBeleuchtung und <b>fePunktlichtbeleuchtung</b> "
+"Die Filterbausteine DiffuseBeleuchtung und <b>Punktlichtbeleuchtung</b> "
 "erzeugen \"geprägte\" Schattierungen. Der Alphakanal des Eingangs wird "
 "verwendet, um Höheninformationen zu erhalten: opakere Gebiete werden "
 "angehoben, weniger opake abgesenkt."
@@ -12858,7 +12778,7 @@ msgstr ""
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
-"Der Filterbaustein <b>feKacheln</b> belegt einen Bereich mit Kopien einer "
+"Der Filterbaustein <b>Kacheln</b> belegt einen Bereich mit Kopien einer "
 "Graphik."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2338
@@ -12867,19 +12787,17 @@ msgid ""
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
-"Der Filterbaustein <b>feTurbulenz</b> zeichnet Perlin-Rauschen. Diese Art "
-"von Rauschen kann verwendet werden, um natürliche Phänomene wie Wolken, "
-"Feuer oder Rauch, sowie komplexe Texturen wie Marmor oder Granit "
-"nachzubilden."
+"Der Filterbaustein <b>Turbulenz</b> zeichnet Perlin-Rauschen. Diese Art von "
+"Rauschen kann verwendet werden, um natürliche Phänomene wie Wolken, Feuer "
+"oder Rauch, sowie komplexe Texturen wie Marmor oder Granit nachzubilden."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2357
 msgid "Duplicate filter primitive"
-msgstr "Filterprimitiv duplizieren"
+msgstr "Filterbaustein duplizieren"
 
-# !!! Filterprimitiv
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2410
 msgid "Set filter primitive attribute"
-msgstr "Attribut für Filterprimitiv setzen"
+msgstr "Attribut für Filterbaustein setzen"
 
 #: ../src/ui/dialog/guides.cpp:42
 msgid "Unit:"
@@ -12887,16 +12805,15 @@ msgstr "Einheit:"
 
 #: ../src/ui/dialog/guides.cpp:45
 msgid "Angle (degrees):"
-msgstr "Grad:"
+msgstr "Winkel (°):"
 
 #: ../src/ui/dialog/guides.cpp:46
 msgid "Rela_tive change"
 msgstr "_Relative Bewegung"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "Move and/or rotate the guide relative to current settings"
-msgstr "Führungslinie relativ zur aktuellen Position verschieben"
+msgstr "Führungslinie relativ zur aktuellen Position verschieben/rotieren"
 
 #: ../src/ui/dialog/guides.cpp:112
 msgid "Set guide properties"
@@ -14136,9 +14053,8 @@ msgid "Retrieve profiles from those attached to displays."
 msgstr "Ermittle Profil von angeschlossenen Anzeigegeräten."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:864
-#, fuzzy
 msgid "Display rendering intent:"
-msgstr "_Anzeigemodus"
+msgstr "Anzeigenversatz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:865
 #: ../src/ui/dialog/inkscape-preferences.cpp:888
@@ -14187,9 +14103,8 @@ msgid "Device rendering intent:"
 msgstr "Gerätewiedergabe-Bedeutung"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:890
-#, fuzzy
 msgid "Black point compensation"
-msgstr "Druck-Konfiguration"
+msgstr "Schwarzpunktanpassung"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Enables black point compensation."
@@ -14920,15 +14835,14 @@ msgid "Simplification threshold:"
 msgstr "Schwellwert für Vereinfachungen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
-#, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
 "aggressively; invoking it again after a pause restores the default threshold."
 msgstr ""
-"Vorgabestärke der Vereinfachung. Wird diese Operation mehrmals schnell "
-"hintereinander ausgeführt, erhöht sich die Stärke; kurze Pause dazwischen "
-"setzt die Stärke wieder zurück."
+"Vorgabeschwelle der Vereinfachung im Knotenwerkzeug. Wird diese Operation "
+"mehrmals schnell hintereinander ausgeführt, erhöht sich die Stärke; kurze "
+"Pause dazwischen setzt den Schwellwert zurück."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1281
 msgid "Latency skew:"
@@ -15253,9 +15167,8 @@ msgid "Could not open temporary PNG for bitmap printing"
 msgstr "Konnte temporäres PNG für Rasterdruck nicht öffnen"
 
 #: ../src/ui/dialog/print.cpp:136
-#, fuzzy
 msgid "Could not set up Document"
-msgstr "Konnte Quelle zum Drucken nicht setzen: %s"
+msgstr "Dokument konnte nicht eingerichtet werden"
 
 # CairoRenderContext ist Eigenname?
 #: ../src/ui/dialog/print.cpp:140
@@ -15419,9 +15332,8 @@ msgid "Add pair"
 msgstr "Paarung hinzufügen"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:753
-#, fuzzy
 msgid "First Unicode range"
-msgstr "Unicode-Zeichen einfügen"
+msgstr "Erster Unicodebereich"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
@@ -16699,7 +16611,7 @@ msgid_plural ""
 msgstr[0] "<b>Endlicher</b> Fluchtpunkt benutzt von <b>%d</b> Box."
 msgstr[1] ""
 "<b>Endlicher</b> Fluchtpunkt benutzt von <b>%d</b> Boxen; Ziehen mit "
-"<b>Umschalttaste</b> zum Separieren der markierten Box(en)"
+"<b>Umschalttaste</b> zum Separieren der markierten Boxen"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -16712,21 +16624,18 @@ msgid_plural ""
 msgstr[0] "<b>Unendlicher</b> Fluchtpunkt benutzt von <b>%d</b> Box"
 msgstr[1] ""
 "<b>Unendlicher</b> Fluchtpunkt benutzt von <b>%d</b> Boxen; Ziehen mit "
-"<b>Umschalttaste</b> zum Separieren der markierten Box(en)"
+"<b>Umschalttaste</b> zum Separieren der markierten Boxen"
 
 #: ../src/vanishing-point.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
-msgstr[0] ""
-"Farbverlaufspunkt ist <b>%d</b> weiteren Farbverlauf zugewiesen. Ziehen mit "
-"<b>Umschalt</b> trennt die Zuweisung"
+msgstr[0] "<b>%d</b> Quader zugewiesen. "
 msgstr[1] ""
-"Farbverlaufspunkt ist <b>%d</b> weiteren Farbverläufen zugewiesen. Ziehen "
-"mit <b>Umschalt</b> trennt die Zuweisung"
+"<b>%d</b> Quadern zugewiesen. <b>Umschalt+Ziehen</b> trennt die Quader."
 
 #: ../src/verbs.cpp:1140
 msgid "Switch to next layer"
@@ -17200,9 +17109,8 @@ msgid "Objects to _Marker"
 msgstr "Objekte in Markierungen umwandeln"
 
 #: ../src/verbs.cpp:2321
-#, fuzzy
 msgid "Convert selection to a line marker"
-msgstr "Die gewählten Objekte in die Zwischenablage verschieben"
+msgstr "Auswahl in Linienmarkierung umwandeln"
 
 #: ../src/verbs.cpp:2322
 msgid "Objects to Gu_ides"
@@ -18038,9 +17946,8 @@ msgid "LPE Tool Preferences"
 msgstr "Pfad-Effekt-Einstellungen"
 
 #: ../src/verbs.cpp:2578
-#, fuzzy
 msgid "Open Preferences for the LPETool tool"
-msgstr "Eigenschaften für das Zoomwerkzeug öffnen"
+msgstr "Eigenschaften für LPE-Werkzeug öffnen"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2581
@@ -18896,14 +18803,14 @@ msgid "Paint is undefined"
 msgstr "Farbe ist undefiniert"
 
 #: ../src/widgets/paint-selector.cpp:984
-#, fuzzy
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
-"Benutze <b>Objekt » Füllmuster » Objekte in Füllmuster umwandeln</b>, um ein "
-"neues Füllmuster vom ausgewählten Objekt zu erzeugen."
+"Benutzen Sie das <b>Knotenwerkzeug</b> um Position Winkel und Größe des "
+"Musters anzupassen. Mit <b>Objekt » Füllmuster » Objekte in Füllmuster "
+"umwandeln</b> lassen sich neue Füllmuster von ausgewählten Objekten erzeugen."
 
 #: ../src/widgets/select-toolbar.cpp:247
 msgid "Transform by toolbar"
@@ -20193,18 +20100,16 @@ msgid "Move objects in any direction"
 msgstr "Verschiebe Objekte in irgendeine Richtung"
 
 #: ../src/widgets/toolbox.cpp:4166
-#, fuzzy
 msgid "Move in/out mode"
-msgstr "Knoten verschieben"
+msgstr "Her-/Wegbewegen"
 
 #: ../src/widgets/toolbox.cpp:4167
 msgid "Move objects towards cursor; with Shift from cursor"
 msgstr "Verschiebt Objekte zum Cursor; mit Shift vom Cursor weg"
 
 #: ../src/widgets/toolbox.cpp:4173
-#, fuzzy
 msgid "Move jitter mode"
-msgstr "Knoten zittrig verteilen"
+msgstr "Zittern hinzufügen"
 
 #: ../src/widgets/toolbox.cpp:4174
 msgid "Move objects in random directions"
@@ -21578,9 +21483,8 @@ msgid "Radius / px"
 msgstr "Radius / px"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
-#, fuzzy
 msgid "Report this triangle's properties"
-msgstr "Eigenschaften der Führungslinien setzen"
+msgstr "Eigenschaften dieses Dreiecks anzeigen"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 msgid "Symmedial Triangle"
@@ -21595,7 +21499,6 @@ msgid "Symmedians"
 msgstr "Symmediane"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21625,7 +21528,6 @@ msgid ""
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
-"            "
 msgstr ""
 "Diese Erweiterung zeichnet Geometrien bezüglich eines Dreiecks definiert "
 "durch die ersten drei Punkte eines Pfades. Sie können vorgegebene Objekte "
@@ -22866,9 +22768,8 @@ msgid "Cube"
 msgstr "Würfel"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-#, fuzzy
 msgid "Cuboctahedron"
-msgstr "Cuboctohedron"
+msgstr "Kuboktaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
@@ -23079,9 +22980,8 @@ msgid "Canvas"
 msgstr "Leinwand"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Color Bars"
-msgstr "Farbleiste"
+msgstr "Farbleisten"
 
 #: ../share/extensions/printing-marks.inx.h:6
 msgid "Crop Marks"
@@ -23196,9 +23096,8 @@ msgid "Arrange"
 msgstr "Anordnen"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Unten:"
+msgstr "Unterste"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -23213,9 +23112,8 @@ msgid "Left to Right (0)"
 msgstr "Links nach Rechts (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Durchsetzt"
+msgstr "Mitte"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
@@ -23674,9 +23572,8 @@ msgid "Source and destination of setting"
 msgstr "Quelle und Ziel setzen"
 
 #: ../share/extensions/web-set-att.inx.h:10
-#, fuzzy
 msgid "The first selected sets an attribute in all others"
-msgstr "Das zuerst ausgewählte setzt ein Attribut in alle anderen"
+msgstr "Das zuerst Gewählte setzt ein Attribut in alle anderen"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size as the attributes list."
@@ -23770,9 +23667,8 @@ msgid "on mouse up"
 msgstr "wenn Zeiger sich nach oben bewegt"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmit to the last one"
-msgstr "Alle ausgewählten übertragen zum Letzten"
+msgstr "Alle Gewählten übertragen zum Letzten"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
@@ -23795,13 +23691,12 @@ msgid "The first selected transmits to all others"
 msgstr "Das zuerst Gewählte überträgt zu allen anderen"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when an event occurs."
 msgstr ""
-"Dieser Effekt setzt ein oder mehrere Attribute im zweiten ausgewählten "
-"Element, wenn ein bestimmtes Event bei dem zuerst ausgewählten eintritt."
+"Dieser Effekt setzt Attribute im zweiten ausgewählten Element, wenn ein "
+"Ereignis bei dem ersten Element eintritt."
 
 #: ../share/extensions/web-transmit-att.inx.h:13
 msgid "Transmit Attributes"
