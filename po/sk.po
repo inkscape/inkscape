@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-12 10:38+0100\n"
+"PO-Revision-Date: 2009-09-21 12:20+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -5657,6 +5657,8 @@ msgstr "Dokument nebol uložený."
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
+"Súbor %s je chránený proti zápisu. Prosím, odstráňte ochranu proti zápisu a "
+"skúste to znova."
 
 #: ../src/file.cpp:604
 #, c-format
@@ -11925,7 +11927,6 @@ msgstr "Štýl ť_ahu"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -12048,9 +12049,8 @@ msgid "Apply filter"
 msgstr "Použiť filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
-msgstr "Filter"
+msgstr "filter"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
@@ -12449,7 +12449,6 @@ msgstr ""
 "tienenie, násobenie, stmavenie a zosvetlenie."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
@@ -12560,7 +12559,6 @@ msgstr ""
 "niekoľkých primitív feComposite v režime „cez“."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
@@ -14792,9 +14790,8 @@ msgstr "Nový"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "Vrstvy"
+msgstr "layers|Vrch"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -20762,7 +20759,6 @@ msgstr ""
 "Skúste použiť postup Cesta -> Objekt na cestu."
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -20770,7 +20766,7 @@ msgid ""
 msgstr ""
 "Nepodarilo sa importovať modul numpy. Toto rozšírenie vyžaduje tento modul. "
 "Prosím, nainštalujte ho a skúste to znova. Na systéme Debian sa to robí "
-"príkazom sudo apt-get install python-numpy."
+"príkazom „sudo apt-get install python-numpy“."
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
@@ -21226,7 +21222,6 @@ msgid "Symmedians"
 msgstr "Lemoinove body"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -22806,16 +22801,15 @@ msgstr "Typ čiarového kódu:"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle:"
-msgstr "ľubovoľný uhol:"
+msgstr "Ľubovoľný uhol:"
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Arrange"
 msgstr "Rozmiestniť"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Dolu:"
+msgstr "Spodok"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -22830,9 +22824,8 @@ msgid "Left to Right (0)"
 msgstr "Zľava doprava (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Prederavený"
+msgstr "Stred"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
