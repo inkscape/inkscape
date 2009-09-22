@@ -70,7 +70,7 @@ Filter::get_filter (Inkscape::Extension::Extension * ext) {
 	return sp_repr_read_mem(filter, strlen(filter), NULL);
 }
 
-void 
+void
 Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc, gchar * srcGraphic, gchar * srcGraphicAlpha)
 {
 	if (from == NULL) return;
@@ -99,7 +99,7 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 	          from_child != NULL ; from_child = from_child->next()) {
 		Glib::ustring name = "svg:";
 		name += from_child->name();
-		
+
 		Inkscape::XML::Node * to_child = doc->createElement(name.c_str());
 		to->appendChild(to_child);
 		merge_filters(to_child, from_child, doc, srcGraphic, srcGraphicAlpha);
@@ -149,7 +149,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 			Glib::ustring url = "url(#"; url += newfilterroot->attribute("id"); url += ")";
 
 			merge_filters(newfilterroot, filterdoc->root(), xmldoc);
-  
+
       Inkscape::GC::release(newfilterroot);
 
 			sp_repr_css_set_property(css, "filter", url.c_str());
@@ -170,21 +170,29 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 			}
 			g_free(lfilter);
 
+			// no filter
 			if (filternode == NULL) {
+				g_warning("no assoziating filter found!");
 				continue;
 			}
 
-			filternode->lastChild()->setAttribute("result", FILTER_SRC_GRAPHIC);
+			if (filternode->lastChild() == NULL) {
+                // empty filter, we insert
+                merge_filters(filternode, filterdoc->root(), xmldoc);
+			} else {
+                // existing filter, we merge
+                filternode->lastChild()->setAttribute("result", FILTER_SRC_GRAPHIC);
+                Inkscape::XML::Node * alpha = xmldoc->createElement("svg:feColorMatrix");
+                alpha->setAttribute("result", FILTER_SRC_GRAPHIC_ALPHA);
+                alpha->setAttribute("in", FILTER_SRC_GRAPHIC); // not required, but we're being explicit
+                alpha->setAttribute("values", "0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0");
 
-			Inkscape::XML::Node * alpha = xmldoc->createElement("svg:feColorMatrix");
-			alpha->setAttribute("result", FILTER_SRC_GRAPHIC_ALPHA);
-			alpha->setAttribute("in", FILTER_SRC_GRAPHIC); // not required, but we're being explicit
-			alpha->setAttribute("values", "0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0");
-			filternode->appendChild(alpha);
+                filternode->appendChild(alpha);
 
-			merge_filters(filternode, filterdoc->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
+                merge_filters(filternode, filterdoc->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
 
-      Inkscape::GC::release(alpha);
+                Inkscape::GC::release(alpha);
+			}
 		}
     }
 

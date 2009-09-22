@@ -52,7 +52,7 @@
 #if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"
 using Inkscape::round;
-#endif 
+#endif
 
 namespace Inkscape {
 namespace Filters {
@@ -92,9 +92,9 @@ Filter::Filter()
 Filter::Filter(int n)
 {
     _primitive_count = 0;
-    _primitive_table_size = n;
-    _primitive = new FilterPrimitive*[n];
-    for ( int i = 0 ; i < n ; i++ ) {
+    _primitive_table_size = (n > 0) ? n : 1;    // we guarantee there is at least 1(one) filter slot
+    _primitive = new FilterPrimitive*[_primitive_table_size];
+    for ( int i = 0 ; i < _primitive_table_size ; i++ ) {
         _primitive[i] = NULL;
     }
     _common_init();
@@ -159,7 +159,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         // It's no use to try and filter an empty object.
         return 1;
     }
-        
+
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
     units.set_item_bbox(item_bbox);
@@ -370,7 +370,11 @@ void Filter::_enlarge_primitive_table() {
     for (int i = _primitive_count ; i < _primitive_table_size ; i++) {
         new_tbl[i] = NULL;
     }
-    delete[] _primitive;
+    if(_primitive != NULL) {
+        delete[] _primitive;
+    } else {
+        g_warning("oh oh");
+    }
     _primitive = new_tbl;
 }
 
@@ -434,7 +438,7 @@ void Filter::clear_primitives()
 }
 
 void Filter::set_x(SVGLength const &length)
-{ 
+{
   if (length._set)
       _region_x = length;
 }
@@ -449,7 +453,7 @@ void Filter::set_width(SVGLength const &length)
       _region_width = length;
 }
 void Filter::set_height(SVGLength const &length)
-{ 
+{
   if (length._set)
       _region_height = length;
 }
