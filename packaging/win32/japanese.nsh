@@ -4,6 +4,7 @@
 ; windows code page: 932
 ; Authors:
 ; Kenji Inoue kenz@oct.zaq.ne.jp
+; Masato Hashimoto cabezon.hashimoto@gmail.com, 2009. 
 ;
 ; february 15 2007 new language bn, en_AU, eo, id, ro
 ; april 11 2007 new language he
@@ -20,22 +21,22 @@ LangString lng_Caption   ${LANG_JAPANESE} "${PRODUCT_NAME} -- Open Source Scalab
 LangString lng_LICENSE_BUTTON   ${LANG_JAPANESE} "Ÿ‚Ö >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_JAPANESE} "$(^Name) ‚Í GNU General Public License (GPL) ‚Ì‰º‚ÅƒŠƒŠ[ƒX‚³‚ê‚Ü‚·B‚ ‚­‚Ü‚ÅQl‚Ì‚½‚ß‚Éƒ‰ƒCƒZƒ“ƒX‚ğ‚±‚±‚É’ñ¦‚µ‚Ü‚·B$_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_JAPANESE} "$(^Name) ‚Í GNU General Public License (GPL) ‚Ì‰º‚ÅƒŠƒŠ[ƒX‚³‚ê‚Ü‚·BQl‚É“–ŠYƒ‰ƒCƒZƒ“ƒX‚ğ‚±‚±‚É•\¦‚µ‚Ü‚·B$_CLICK"
 
 ;has been installed by different user
 LangString lng_DIFFERENT_USER ${LANG_JAPANESE} "Inkscape ‚Íƒ†[ƒU $0 ‚É‚æ‚Á‚ÄƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B$\r$\n‚±‚Ì‚Ü‚Ü‘±‚¯‚é‚Æ³í‚ÉŠ®—¹‚µ‚È‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñB$\r$\n$0 ‚ÅƒƒOƒCƒ“‚µ‚Ä‚©‚çÄ“x‚İ‚Ä‚­‚¾‚³‚¢B"
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_JAPANESE} "$R1 ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B$\n$(^Name) ‚ğƒCƒ“ƒXƒg[ƒ‹‚·‚é‘O‚ÉˆÈ‘O‚Ìƒo[ƒWƒ‡ƒ“‚ğíœ‚µ‚Ü‚·‚©H"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_JAPANESE} "$R1 ‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B$\n$(^Name) ‚ğƒCƒ“ƒXƒg[ƒ‹‚·‚é‘O‚ÉˆÈ‘O‚Ìƒo[ƒWƒ‡ƒ“‚ğíœ‚µ‚Ü‚·‚©?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_JAPANESE} "$\n$\nOK‚ğ‰Ÿ‚µ‚ÄŒp‘±‚·‚é‚©CANCEL‚ğ‰Ÿ‚µ‚Ä’†~‚µ‚Ä‚­‚¾‚³‚¢B"
+LangString lng_OK_CANCEL_DESC ${LANG_JAPANESE} "$\n$\nOK ‚ğ‰Ÿ‚µ‚ÄŒp‘±‚·‚é‚© CANCEL ‚ğ‰Ÿ‚µ‚Ä’†~‚µ‚Ä‚­‚¾‚³‚¢B"
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_JAPANESE} "ŠÇ—ÒŒ ŒÀ‚ª‚ ‚è‚Ü‚¹‚ñB$\r$\n‚·‚×‚Ä‚Ìƒ†[ƒU‚É‘Î‚·‚é Inkscape ‚ÌƒCƒ“ƒXƒg[ƒ‹‚Í³í‚ÉŠ®—¹‚µ‚È‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñB$\r$\n'‚·‚×‚Ä‚Ìƒ†[ƒU' ƒIƒvƒVƒ‡ƒ“‚Ìƒ`ƒFƒbƒN‚ğŠO‚µ‚Ä‚­‚¾‚³‚¢B"
+LangString lng_NO_ADMIN ${LANG_JAPANESE} "ŠÇ—ÒŒ ŒÀ‚ª‚ ‚è‚Ü‚¹‚ñB$\r$\n‚·‚×‚Ä‚Ìƒ†[ƒU‚É‘Î‚·‚é Inkscape ‚ÌƒCƒ“ƒXƒg[ƒ‹‚Í³í‚ÉŠ®—¹‚µ‚È‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñB$\r$\n'‚·‚×‚Ä‚Ìƒ†[ƒU' ƒIƒvƒVƒ‡ƒ“‚Ìƒ`ƒFƒbƒNƒ}[ƒN‚ğŠO‚µ‚Ä‚­‚¾‚³‚¢B"
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_JAPANESE} "Inkscape ‚Í Windows 95/98/ME ã‚Å‚Í“®ì‚µ‚Ü‚¹‚ñI$\r$\nÚ‚µ‚­‚ÍƒIƒtƒBƒVƒƒƒ‹ Web ƒTƒCƒg‚ğ‚²——‚­‚¾‚³‚¢B"
+LangString lng_NOT_SUPPORTED ${LANG_JAPANESE} "Inkscape ‚Í Windows 95/98/ME ã‚Å‚Í“®ì‚µ‚Ü‚¹‚ñ!$\r$\nÚ‚µ‚­‚ÍƒIƒtƒBƒVƒƒƒ‹ƒEƒFƒuƒTƒCƒg‚ğ‚²——‚­‚¾‚³‚¢B"
 
 ; Full install type
 LangString lng_Full $(LANG_JAPANESE) "Š®‘S"
@@ -53,10 +54,10 @@ LangString lng_Core $(LANG_JAPANESE) "${PRODUCT_NAME} SVG Editor (•K{)"
 LangString lng_CoreDesc $(LANG_JAPANESE) "${PRODUCT_NAME} ‚ÌƒRƒAƒtƒ@ƒCƒ‹‚ÆDLL"
 
 ; GTK+ install section
-LangString lng_GTKFiles $(LANG_JAPANESE) "GTK+ ƒ‰ƒ“ƒ^ƒCƒ€ŠÂ‹«i•K{j"
+LangString lng_GTKFiles $(LANG_JAPANESE) "GTK+ ƒ‰ƒ“ƒ^ƒCƒ€ŠÂ‹« (•K{)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_JAPANESE) "ƒ}ƒ‹ƒ`ƒvƒ‰ƒbƒgƒtƒH[ƒ€‘Î‰ GUI ƒc[ƒ‹ƒLƒbƒgi${PRODUCT_NAME} ‚ªg—pj"
+LangString lng_GTKFilesDesc $(LANG_JAPANESE) "ƒ}ƒ‹ƒ`ƒvƒ‰ƒbƒgƒtƒH[ƒ€‘Î‰ GUI ƒc[ƒ‹ƒLƒbƒg (${PRODUCT_NAME} ‚ªg—p)"
 
 ; shortcuts install section
 LangString lng_Shortcuts $(LANG_JAPANESE) "ƒVƒ‡[ƒgƒJƒbƒg"
@@ -68,7 +69,7 @@ LangString lng_ShortcutsDesc $(LANG_JAPANESE) "${PRODUCT_NAME} ‚ğŠJn‚·‚é‚½‚ß‚Ìƒ
 LangString lng_Alluser $(LANG_JAPANESE) "‚·‚×‚Ä‚Ìƒ†[ƒU"
 
 ; All user install section description
-LangString lng_AlluserDesc $(LANG_JAPANESE) "‚±‚ÌƒRƒ“ƒsƒ…[ƒ^‚ğg‚¤‚·‚×‚Ä‚Ìl‚É‚±‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğƒCƒ“ƒXƒg[ƒ‹i‚·‚×‚Ä‚Ìƒ†[ƒUj"
+LangString lng_AlluserDesc $(LANG_JAPANESE) "‚±‚ÌƒRƒ“ƒsƒ…[ƒ^‚ğg‚¤‚·‚×‚Ä‚Ìl‚É‚±‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğƒCƒ“ƒXƒg[ƒ‹ (‚·‚×‚Ä‚Ìƒ†[ƒU)"
 
 ; Desktop section
 LangString lng_Desktop $(LANG_JAPANESE) "ƒfƒXƒNƒgƒbƒv"
@@ -127,43 +128,43 @@ LangString lng_TutorialsDesc $(LANG_JAPANESE) "${PRODUCT_NAME} ‚Ìƒ`ƒ…[ƒgƒŠƒAƒ‹"
 
 
 ; Languages section
-LangString lng_Languages $(LANG_JAPANESE) "–|–ó"
+LangString lng_Languages $(LANG_JAPANESE) "‘Û‰»"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_JAPANESE) "${PRODUCT_NAME} ‚Ì‚³‚Ü‚´‚Ü‚Ì–|–óƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒXƒg[ƒ‹"
+LangString lng_LanguagesDesc $(LANG_JAPANESE) "${PRODUCT_NAME} ‚Ì‚³‚Ü‚´‚Ü‚ÈŒ¾Œê‚Ìƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒXƒg[ƒ‹"
 
 LangString lng_am $(LANG_JAPANESE) "am  ƒAƒ€ƒnƒ‰Œê"
-LangString lng_ar $(LANG_JAPANESE) "ar  Arabic"
+LangString lng_ar $(LANG_JAPANESE) "ar  ƒAƒ‰ƒrƒAŒê"
 LangString lng_az $(LANG_JAPANESE) "az  ƒAƒ[ƒ‹ƒoƒCƒWƒƒƒ“Œê"
 LangString lng_be $(LANG_JAPANESE) "be  ƒxƒ‰ƒ‹[ƒVŒê"
 LangString lng_bg $(LANG_JAPANESE) "bg  ƒuƒ‹ƒKƒŠƒAŒê"
-LangString lng_bn $(LANG_JAPANESE) "bn  Bengali"
-LangString lng_br $(LANG_JAPANESE) "br  Breton"
+LangString lng_bn $(LANG_JAPANESE) "bn  ƒxƒ“ƒKƒ‹Œê"
+LangString lng_br $(LANG_JAPANESE) "br  ƒuƒ‹ƒgƒ“Œê"
 LangString lng_ca $(LANG_JAPANESE) "ca  ƒJƒ^ƒƒjƒAŒê"
-LangString lng_ca@valencia $(LANG_JAPANESE) "ca@valencia  Valencian Catalan"
+LangString lng_ca@valencia $(LANG_JAPANESE) "ca@valencia  ƒoƒŒƒ“ƒVƒAŒê"
 LangString lng_cs $(LANG_JAPANESE) "cs  ƒ`ƒFƒRŒê"
 LangString lng_da $(LANG_JAPANESE) "da  ƒfƒ“ƒ}[ƒNŒê"
 LangString lng_de $(LANG_JAPANESE) "de  ƒhƒCƒcŒê"
 LangString lng_dz $(LANG_JAPANESE) "dz  ƒ]ƒ“ƒJŒê"
 LangString lng_el $(LANG_JAPANESE) "el  ƒMƒŠƒVƒƒŒê"
 LangString lng_en $(LANG_JAPANESE) "en  ‰pŒê"
-LangString lng_en_AU $(LANG_JAPANESE) "en_AU Australian English"
-LangString lng_en_CA $(LANG_JAPANESE) "en_CA ‰pŒêiƒJƒiƒ_j"
-LangString lng_en_GB $(LANG_JAPANESE) "en_GB ‰pŒêi‰p‘j"
-LangString lng_en_US@piglatin $(LANG_JAPANESE) "‰pŒêiƒsƒbƒOƒ‰ƒeƒ“A•Ä‘j"
-LangString lng_eo $(LANG_JAPANESE) "eo  Esperanto"
+LangString lng_en_AU $(LANG_JAPANESE) "en_AU ‰pŒê (ƒI[ƒXƒgƒ‰ƒŠƒA)"
+LangString lng_en_CA $(LANG_JAPANESE) "en_CA ‰pŒê (ƒJƒiƒ_)"
+LangString lng_en_GB $(LANG_JAPANESE) "en_GB ‰pŒê (‰p‘)"
+LangString lng_en_US@piglatin $(LANG_JAPANESE) "en_US@piglatin ƒsƒbƒOEƒ‰ƒeƒ“Œê"
+LangString lng_eo $(LANG_JAPANESE) "eo  ƒGƒXƒyƒ‰ƒ“ƒgŒê"
 LangString lng_es $(LANG_JAPANESE) "es  ƒXƒyƒCƒ“Œê"
-LangString lng_es_MX $(LANG_JAPANESE) "es_MX  ƒXƒyƒCƒ“ŒêiƒƒLƒVƒRj"
+LangString lng_es_MX $(LANG_JAPANESE) "es_MX  ƒXƒyƒCƒ“Œê (ƒƒLƒVƒR)"
 LangString lng_et $(LANG_JAPANESE) "et  ƒGƒXƒgƒjƒAŒê"
 LangString lng_eu $(LANG_JAPANESE) "eu  ƒoƒXƒNŒê"
 LangString lng_fi $(LANG_JAPANESE) "fi  ƒtƒBƒ“ƒ‰ƒ“ƒhŒê"
 LangString lng_fr $(LANG_JAPANESE) "fr  ƒtƒ‰ƒ“ƒXŒê"
 LangString lng_ga $(LANG_JAPANESE) "ga  ƒAƒCƒ‹ƒ‰ƒ“ƒhŒê"
 LangString lng_gl $(LANG_JAPANESE) "gl  ƒKƒŠƒVƒAŒê"
-LangString lng_he $(LANG_JAPANESE) "he  Hebrew"
+LangString lng_he $(LANG_JAPANESE) "he  ƒwƒuƒ‰ƒCŒê"
 LangString lng_hr $(LANG_JAPANESE) "hr  ƒNƒƒAƒ`ƒAŒê"
 LangString lng_hu $(LANG_JAPANESE) "hu  ƒnƒ“ƒKƒŠ[Œê"
-LangString lng_id $(LANG_JAPANESE) "id  Indonesian"
+LangString lng_id $(LANG_JAPANESE) "id  ƒCƒ“ƒhƒlƒVƒAŒê"
 LangString lng_it $(LANG_JAPANESE) "it  ƒCƒ^ƒŠƒAŒê"
 LangString lng_ja $(LANG_JAPANESE) "ja  “ú–{Œê"
 LangString lng_km $(LANG_JAPANESE) "km  ƒNƒ[ƒ‹Œê"
@@ -172,28 +173,28 @@ LangString lng_lt $(LANG_JAPANESE) "lt  ƒŠƒgƒAƒjƒAŒê"
 LangString lng_mk $(LANG_JAPANESE) "mk  ƒ}ƒPƒhƒjƒAŒê"
 LangString lng_mn $(LANG_JAPANESE) "mn  ƒ‚ƒ“ƒSƒ‹Œê"
 LangString lng_ne $(LANG_JAPANESE) "ne  ƒlƒp[ƒ‹Œê"
-LangString lng_nb $(LANG_JAPANESE) "nb  ƒmƒ‹ƒEƒF[Œêiƒu[ƒNƒ‚[ƒ‹j"
+LangString lng_nb $(LANG_JAPANESE) "nb  ƒmƒ‹ƒEƒF[Œêƒu[ƒNƒ‚[ƒ‹"
 LangString lng_nl $(LANG_JAPANESE) "nl  ƒIƒ‰ƒ“ƒ_Œê"
-LangString lng_nn $(LANG_JAPANESE) "nn  ƒmƒ‹ƒEƒF[Œêiƒj[ƒmƒVƒNj"
+LangString lng_nn $(LANG_JAPANESE) "nn  ƒmƒ‹ƒEƒF[Œêƒj[ƒmƒVƒ…ƒN"
 LangString lng_pa $(LANG_JAPANESE) "pa  ƒpƒ“ƒWƒƒƒuŒê"
 LangString lng_pl $(LANG_JAPANESE) "po  ƒ|[ƒ‰ƒ“ƒhŒê"
 LangString lng_pt $(LANG_JAPANESE) "pt  ƒ|ƒ‹ƒgƒKƒ‹Œê"
-LangString lng_pt_BR $(LANG_JAPANESE) "pt_BR ƒ|ƒ‹ƒgƒKƒ‹Œêiƒuƒ‰ƒWƒ‹j"
-LangString lng_ro $(LANG_JAPANESE) "ro  Romanian"
+LangString lng_pt_BR $(LANG_JAPANESE) "pt_BR ƒ|ƒ‹ƒgƒKƒ‹Œê (ƒuƒ‰ƒWƒ‹)"
+LangString lng_ro $(LANG_JAPANESE) "ro  ƒ‹[ƒ}ƒjƒAŒê"
 LangString lng_ru $(LANG_JAPANESE) "ru  ƒƒVƒAŒê"
-LangString lng_rw $(LANG_JAPANESE) "rw  ƒLƒ“ƒ„ƒ‹ƒƒ“ƒ_Œê"
+LangString lng_rw $(LANG_JAPANESE) "rw  ƒLƒjƒ„ƒ‹ƒƒ“ƒ_Œê"
 LangString lng_sk $(LANG_JAPANESE) "sk  ƒXƒƒoƒLƒAŒê"
 LangString lng_sl $(LANG_JAPANESE) "sl  ƒXƒƒxƒjƒAŒê"
 LangString lng_sq $(LANG_JAPANESE) "sq  ƒAƒ‹ƒoƒjƒAŒê"
 LangString lng_sr $(LANG_JAPANESE) "sr  ƒZƒ‹ƒrƒAŒê"
-LangString lng_sr@latin $(LANG_JAPANESE) "sr@latin  ƒZƒ‹ƒrƒAŒêiƒ‰ƒeƒ“j"
+LangString lng_sr@latin $(LANG_JAPANESE) "sr@latin  ƒZƒ‹ƒrƒAŒêƒ‰ƒeƒ“•¶š"
 LangString lng_sv $(LANG_JAPANESE) "sv  ƒXƒEƒF[ƒfƒ“Œê"
 LangString lng_th $(LANG_JAPANESE) "th  ƒ^ƒCŒê"
 LangString lng_tr $(LANG_JAPANESE) "tr  ƒgƒ‹ƒRŒê"
 LangString lng_uk $(LANG_JAPANESE) "uk  ƒEƒNƒ‰ƒCƒiŒê"
 LangString lng_vi $(LANG_JAPANESE) "vi  ƒxƒgƒiƒ€Œê"
-LangString lng_zh_CN $(LANG_JAPANESE) "zh_CH  ’†‘ŒêiŠÈ‘Ìšj"
-LangString lng_zh_TW $(LANG_JAPANESE) "zh_TW  ’†‘Œêi”É‘Ìšj"
+LangString lng_zh_CN $(LANG_JAPANESE) "zh_CH  ’†‘Œê (ŠÈ‘Ìš)"
+LangString lng_zh_TW $(LANG_JAPANESE) "zh_TW  ’†‘Œê (”É‘Ìš)"
 
 
 
@@ -207,18 +208,18 @@ LangString lng_UInstOpt1  ${LANG_JAPANESE} "•K—v‚Å‚ ‚ê‚ÎˆÈ‰º‚ÌƒIƒvƒVƒ‡ƒ“‚ğ‘I‘ğ‚µ
 ; Ask to purge the personal preferences
 LangString lng_PurgePrefs ${LANG_JAPANESE} "ŒÂlİ’è‚ğc‚·"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_JAPANESE} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_JAPANESE} "$\n$\nRETRY ‚ğ‰Ÿ‚·‚Æ‘±sACANCEL ‚ğ‰Ÿ‚·‚Æ’†~‚µ‚Ü‚·B"
 
-LangString lng_ClearDirectoryBefore ${LANG_JAPANESE} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_JAPANESE} "${PRODUCT_NAME} ‚Í‹ó‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÉƒCƒ“ƒXƒg[ƒ‹‚·‚é•K—v‚ª‚ ‚è‚Ü‚·‚ªA$INSTDIR ‚Í‹ó‚Å‚Í‚ ‚è‚Ü‚¹‚ñB‚Ü‚¸‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğ‚«‚ê‚¢‚É‚µ‚Ä‚­‚¾‚³‚¢!$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_JAPANESE} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_JAPANESE} "$INSTDIR\uninstall.log ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ!$\r$\nƒfƒBƒŒƒNƒgƒŠ $INSTDIR ‚ğè“®‚Åíœ‚µ‚ÄƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢!"
 
-LangString lng_FileChanged ${LANG_JAPANESE} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_JAPANESE} "ƒtƒ@ƒCƒ‹ $filename ‚ÍƒCƒ“ƒXƒg[ƒ‹Œã‚É•ÏX‚³‚ê‚Ä‚¢‚Ü‚·B$\r$\n‚±‚Ìƒtƒ@ƒCƒ‹‚ğíœ‚µ‚Ü‚·‚©?"
 
-LangString lng_Yes ${LANG_JAPANESE} "Yes"
+LangString lng_Yes ${LANG_JAPANESE} "‚Í‚¢"
 
-LangString lng_AlwaysYes ${LANG_JAPANESE} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_JAPANESE} "‘S‚Ä‚Í‚¢"
 
-LangString lng_No ${LANG_JAPANESE} "No"
+LangString lng_No ${LANG_JAPANESE} "‚¢‚¢‚¦"
 
-LangString lng_AlwaysNo ${LANG_JAPANESE} "always answer No"
+LangString lng_AlwaysNo ${LANG_JAPANESE} "‘S‚Ä‚¢‚¢‚¦"

@@ -25,6 +25,7 @@ templates_DATA = \
 	default.fr.svg \
 	default.hu.svg \
 	default.it.svg \
+	default.ja.svg \
 	default.lt.svg \
 	default.nl.svg \
         default.pl.svg \

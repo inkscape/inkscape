@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-19 23:21+0900\n"
-"PO-Revision-Date: 2009-09-19 23:19+0900\n"
+"POT-Creation-Date: 2009-09-22 23:43+0900\n"
+"PO-Revision-Date: 2009-09-22 23:27+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -2300,11 +2300,11 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>現在のレイヤーはロックされています</b>。ロックを解除すれば編集できます。"
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "前のズームはありません。"
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "次のズームはありません。"
 
@@ -5201,7 +5201,7 @@ msgstr "垂直オフセット, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5588,7 +5588,7 @@ msgstr ""
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:156
 msgid "default.svg"
-msgstr "default.svg"
+msgstr "default.ja.svg"
 
 #: ../src/file.cpp:248 ../src/file.cpp:1050
 #, c-format
@@ -5852,21 +5852,25 @@ msgstr "アルファの輝度"
 msgid "Default"
 msgstr "デフォルト"
 
+# FIXME: Operator of feComposite filter
 #: ../src/filter-enums.cpp:73
 msgid "Over"
-msgstr ""
+msgstr "Over"
 
+# FIXME: Operator of feComposite filter
 #: ../src/filter-enums.cpp:74
 msgid "In"
-msgstr ""
+msgstr "In"
 
+# FIXME: Operator of feComposite filter
 #: ../src/filter-enums.cpp:75
 msgid "Out"
-msgstr ""
+msgstr "Out"
 
+# FIXME: Operator of feComposite filter
 #: ../src/filter-enums.cpp:76
 msgid "Atop"
-msgstr ""
+msgstr "Atop"
 
 #: ../src/filter-enums.cpp:77
 msgid "XOR"
@@ -6813,11 +6817,11 @@ msgstr "このドックを閉じる"
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
 msgid "Controlling dock item"
-msgstr "制御するドックアイテム"
+msgstr "制御ドックアイテム"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:707
 msgid "Dockitem which 'owns' this grip"
-msgstr ""
+msgstr "このグリップを '所有' するドックアイテム"
 
 #: ../src/libgdl/gdl-dock-master.c:145
 msgid "Default title for newly created floating docks"
@@ -6959,7 +6963,7 @@ msgstr "位置"
 
 #: ../src/libgdl/gdl-dock-paned.c:133
 msgid "Position of the divider in pixels"
-msgstr ""
+msgstr "仕切りの位置 (ピクセル)"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:143
 msgid "Sticky"
@@ -6970,6 +6974,8 @@ msgid ""
 "Whether the placeholder will stick to its host or move up the hierarchy when "
 "the host is redocked"
 msgstr ""
+"ホストが再びドックされた時にプレースホルダがをホストに追随させるか階層をあげ"
+"るかを指定します。"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:151
 msgid "Host"
@@ -6987,7 +6993,7 @@ msgstr "次の配置"
 msgid ""
 "The position an item will be docked to our host if a request is made to dock "
 "to us"
-msgstr ""
+msgstr "アイテムがドックされるよう要求された時のホストにドックする位置です。"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:170
 msgid "Width for the widget when it's attached to the placeholder"
@@ -7004,6 +7010,8 @@ msgstr "フローティングトップレベル"
 #: ../src/libgdl/gdl-dock-placeholder.c:185
 msgid "Whether the placeholder is standing in for a floating toplevel dock"
 msgstr ""
+"トップレベルドックをフロートする時にプレースホルダを表示させるかどうか指定し"
+"ます。"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
@@ -7024,22 +7032,24 @@ msgstr "ドックがフローティングした時の Y 座標"
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
 msgstr ""
+"バインドされていないプレースホルダにドックオブジェクトのドックを試みます。"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:618
 #, c-format
 msgid "Got a detach signal from an object (%p) who is not our host %p"
 msgstr ""
+"ホストが %p ではないオブジェクト (%p) から取り外しシグナルを受け取りました。"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:643
 #, c-format
 msgid ""
 "Something weird happened while getting the child placement for %p from "
 "parent %p"
-msgstr ""
+msgstr "%p 配置を親 %p から取得している時に何か変なことが起こりました。"
 
 #: ../src/libgdl/gdl-dock-tablabel.c:129
 msgid "Dockitem which 'owns' this tablabel"
-msgstr ""
+msgstr "このタブラベルを '所有' するドックアイテム"
 
 #: ../src/libnrtype/FontFactory.cpp:780
 msgid "Ignoring font without family that will crash Pango"
@@ -9352,7 +9362,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "何も削除されませんでした。"
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "削除"
@@ -9520,7 +9530,7 @@ msgstr "ピクセル数で回転"
 
 #: ../src/selection-chemistry.cpp:1541
 msgid "Scale by whole factor"
-msgstr ""
+msgstr "全ての係数での拡大縮小"
 
 #: ../src/selection-chemistry.cpp:1556
 msgid "Move vertically"
@@ -9922,7 +9932,7 @@ msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
-"選択オブジェクトを<b>縮め/伸ばし</b>ます。<b>Ctrl</b> で縦横比を維持して拡大"
+"選択オブジェクトを<b>圧縮/伸張</b>します。<b>Ctrl</b> で縦横比を維持して拡大"
 "縮小、<b>Shift</b> で回転中心で拡大縮小します。"
 
 #: ../src/seltrans.cpp:673
@@ -10073,7 +10083,7 @@ msgstr "角度 %d°、座標 (%s,%s)"
 
 #: ../src/sp-image.cpp:1128
 msgid "embedded"
-msgstr ""
+msgstr "埋め込み"
 
 #: ../src/sp-image.cpp:1136
 #, c-format
@@ -10111,22 +10121,22 @@ msgstr "オブジェクト"
 #: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr ""
+msgstr "%s; <i>被クリップ</i>"
 
 #: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
-msgstr ""
+msgstr "%s; <i>被マスク</i>"
 
 #: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
-msgstr ""
+msgstr "%s; <i>被フィルタ (%s)</i>"
 
 #: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
-msgstr ""
+msgstr "%s; <i>被フィルタ</i>"
 
 #: ../src/sp-item-group.cpp:760
 #, c-format
@@ -10375,7 +10385,7 @@ msgstr "<b>孤立したクローン文字データ</b>"
 
 #: ../src/sp-tspan.cpp:284
 msgid "<b>Text span</b>"
-msgstr ""
+msgstr "<b>属性付きテキスト</b>"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -10390,7 +10400,7 @@ msgstr "<b>クローン</b> 対象: %s"
 
 #: ../src/sp-use.cpp:339
 msgid "<b>Orphaned clone</b>"
-msgstr "<b>オリジナルなしのクローン</b>"
+msgstr "<b>孤立したクローン</b>"
 
 #: ../src/star-context.cpp:333
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
@@ -11663,61 +11673,61 @@ msgstr "カラープロファイルディレクトリ (%s) は利用できませ
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "リンクカラープロファイル"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "リンクカラープロファイルの削除"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>リンクされたカラープロファイル</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>利用可能なカラープロファイル:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "プロファイルをリンク"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "プロファイル名"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>外部スクリプトファイル:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "追加"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "ファイル名"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "外部スクリプトの追加..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr "外部スクリプトの削除"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr " <b>作成</b> "
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>定義されたグリッド</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "グリッドの削除"
 
@@ -13359,8 +13369,8 @@ msgstr "その他:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr ""
-"ダイアログウインドウをウインドウマネージャのタスクバーに隠されるかどうか指定"
-"します"
+"ダイアログウインドウをウインドウマネージャのタスクバーに隠すかどうか指定しま"
+"す"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:599
 msgid ""
@@ -15112,7 +15122,7 @@ msgstr "サンプルテキスト"
 msgid "Preview Text:"
 msgstr "プレビューテキスト:"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
@@ -15121,53 +15131,53 @@ msgstr ""
 "ロークをセットします。"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 msgid "Set fill"
 msgstr "フィルのセット"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 msgid "Set stroke"
 msgstr "ストロークのセット"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "編集"
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 msgid "Convert"
 msgstr "変換"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "色定義の変更"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove stroke color"
 msgstr "ストローク色を削除"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove fill color"
 msgstr "フィル色を削除"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set stroke color to none"
 msgstr "ストロークの色を塗りなしへ"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set fill color to none"
 msgstr "フィルの色を塗りなしへ"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "スウォッチからストローク色を設定"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "スウォッチからフィル色を設定"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "パレットディレクトリ (%s) は利用できません。"
@@ -21086,7 +21096,7 @@ msgstr "傍接円"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 msgid "Extouch Triangle"
-msgstr ""
+msgstr "傍接円との接点を結んだ三角形"
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 msgid "Gergonne Point"
@@ -21134,7 +21144,7 @@ msgstr "この三角のプロパティを報告する"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 msgid "Symmedial Triangle"
-msgstr ""
+msgstr "[*1] と対辺との交点を結んだ三角形"
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
 msgid "Symmedian Point"
@@ -21142,7 +21152,7 @@ msgstr "ルモアーヌ点"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
-msgstr ""
+msgstr "頂点からルモアーヌ点を通過して対辺に至る直線 [*1]"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
 msgid ""
