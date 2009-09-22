@@ -1358,7 +1358,7 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
 #ifdef WIN32
 	// code in this section is borrowed from ui/dialogs/filedialogimpl-win32.cpp
 	OPENFILENAMEW opf;
-	WCHAR* filter_string = (WCHAR*)g_utf8_to_utf16("PNG\0*.png\0\0", 12, NULL, NULL, NULL);
+	WCHAR* filter_string = (WCHAR*)g_utf8_to_utf16("PNG\0*.png\0", 10, NULL, NULL, NULL);
 	WCHAR* title_string = (WCHAR*)g_utf8_to_utf16(_("Select a filename for exporting"), -1, NULL, NULL, NULL);
 	WCHAR* extension_string = (WCHAR*)g_utf8_to_utf16("*.png", -1, NULL, NULL, NULL);
 	// Copy the selected file name, converting from UTF-8 to UTF-16
