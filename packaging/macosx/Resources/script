@@ -40,7 +40,7 @@ if [[ $VERSION -le 4 ]]; then
 fi
 	
 # Warn the user about time-consuming generation of fontconfig caches.
-test -f "${HOME}/.config/Inkscape/.fccache-new" || exit 12
+test -f "${HOME}/.inkscape-etc/.fccache-new" || exit 12
 
 
 

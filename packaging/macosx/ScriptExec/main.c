@@ -243,8 +243,8 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
     ShowFirstStartWarningDialog();
 
     // Note that we've seen the warning.
-    system("test -d \"$HOME/.config/Inkscape\" || mkdir -p \"$HOME/.config/Inkscape\"; "
-           "touch \"$HOME/.config/Inkscape/.fccache-new\"");
+    system("test -d \"$HOME/.inkscape-etc\" || mkdir -p \"$HOME/.inkscape-etc\"; "
+           "touch \"$HOME/.inkscape-etc/.fccache-new\"");
     // Rerun now.
     OSErr err = ExecuteScript(scriptPath, &pid);
     ExitToShell();
