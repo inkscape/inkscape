@@ -6,7 +6,7 @@
 #	Jean-Olivier Irisson <jo.irisson@gmail.com>
 #
 
-CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
+CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo \"$PWD\")`"
 # e.g. /Applications/Inkscape.app/Contents/Resources/bin
 TOP="`dirname \"$CWD\"`"
 # e.g. /Applications/Inkscape.app/Contents/Resources
@@ -60,6 +60,11 @@ export INKSCAPE_SHAREDIR="$TOP"
 export INKSCAPE_PLUGINDIR="$TOP/lib/inkscape"
 export INKSCAPE_LOCALEDIR="$TOP/locale"
 
+# Handle the case where the directory storing Inkscape has special characters
+# ('#', '&', '|') in the name.  These need to be escaped to work properly for 
+# various configuration files.
+ESCAPEDTOP=`echo "$TOP" | sed 's/#/\\\\\\\\#/' | sed 's/&/\\\\\\&/g' | sed 's/|/\\\\\\|/g'`
+
 # Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
 if [[ ! -e "$HOME/.gtkrc-2.0" ]]; then
 	# Appearance setting
@@ -91,7 +96,7 @@ if [[ ! -e "$HOME/.gtkrc-2.0" ]]; then
 	# Modify the gtkrc
 	#	- with the correct colors
 	#	- to point to the correct scrollbars folder
-	sed 's/OSX_HILI_COLOR_PLACEHOLDER/'$hiliColorFormated'/g' "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/pre_gtkrc" | sed 's/OSX_MENU_COLOR_PLACEHOLDER/\"'$menuColor'\"/g' | sed 's/AQUASTYLE_PLACEHOLDER/'$aquaStyle'/g' | sed 's|${THEMEDIR}|'"$TOP/themes/Clearlooks-Quicksilver-OSX/gtk-2.0|g" > "${HOME}/.inkscape-etc/gtkrc"
+	sed 's/OSX_HILI_COLOR_PLACEHOLDER/'$hiliColorFormated'/g' "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/pre_gtkrc" | sed 's/OSX_MENU_COLOR_PLACEHOLDER/\"'$menuColor'\"/g' | sed 's/AQUASTYLE_PLACEHOLDER/'$aquaStyle'/g' | sed 's|${THEMEDIR}|'"$ESCAPEDTOP/themes/Clearlooks-Quicksilver-OSX/gtk-2.0|g" > "${HOME}/.inkscape-etc/gtkrc"
 
 	export GTK2_RC_FILES="$HOME/.inkscape-etc/gtkrc"
 fi
@@ -112,17 +117,13 @@ export LANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
 	tail -n1 | sed 's/\./ /' | awk '{print $2}'`.UTF-8"
 echo "Setting Language: $LANG" 1>&2
 
-# Handle the case where the directory storing Inkscape has a '#' in the name.
-# This '#' needs to be escaped in pango.modules for Pango to work properly.
-ESCAPEDTOP=`echo $TOP | sed 's/#/\\\\\\\\#/'`
-
 sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > "${HOME}/.inkscape-etc/pangorc"
 sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/pango/pango.modules" \
     > "${HOME}/.inkscape-etc/pango.modules"
 cp -f "$TOP/etc/pango/pangox.aliases" "${HOME}/.inkscape-etc/"
-sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gtk.immodules" \
+sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/gtk-2.0/gtk.immodules" \
     > "${HOME}/.inkscape-etc/gtk.immodules"
-sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gdk-pixbuf.loaders" \
+sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/gtk-2.0/gdk-pixbuf.loaders" \
     > "${HOME}/.inkscape-etc/gdk-pixbuf.loaders"
 
 exec "$CWD/inkscape-bin" "$@"
