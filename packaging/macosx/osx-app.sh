@@ -325,9 +325,8 @@ cp -r $LIBPREFIX/lib/gtk-2.0/$gtk_version/* $pkglib/gtk-2.0/$gtk_version/
 mkdir -p $pkglib/gnome-vfs-2.0/modules
 cp $LIBPREFIX/lib/gnome-vfs-2.0/modules/*.so $pkglib/gnome-vfs-2.0/modules/
 
-imagemagick_version=`pkg-config --modversion ImageMagick`
-cp -r "$LIBPREFIX/lib/ImageMagick-$imagemagick_version" "$pkglib/"
-cp -r "$LIBPREFIX/share/ImageMagick-$imagemagick_version" "$pkgresources/share/"
+cp -r "$LIBPREFIX/lib/ImageMagick-$IMAGEMAGICKVER" "$pkglib/"
+cp -r "$LIBPREFIX/share/ImageMagick-$IMAGEMAGICKVER" "$pkgresources/share/"
 
 # Copy aspell dictionary files:
 cp -r "$LIBPREFIX/lib/aspell-0.60" "$pkglib/"
@@ -340,7 +339,7 @@ nfiles=0
 endl=true
 while $endl; do
 	echo -e "\033[1mLooking for dependencies.\033[0m Round" $a
-	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $pkglib/ImageMagick/modules-Q16/{filters,coders}/*.so $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
+	libs="`otool -L $pkglib/gtk-2.0/$gtk_version/{engines,immodules,loaders,printbackends}/*.{dylib,so} $pkglib/pango/$pango_version/modules/* $pkglib/gnome-vfs-2.0/modules/* $package/Contents/Resources/lib/* $pkglib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/{filters,coders}/*.so $binary 2>/dev/null | fgrep compatibility | cut -d\( -f1 | grep $LIBPREFIX | sort | uniq`"
 	cp -f $libs $package/Contents/Resources/lib
 	let "a+=1"	
 	nnfiles=`ls $package/Contents/Resources/lib | wc -l`
@@ -441,13 +440,13 @@ rewritelibpaths () {
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/ImageMagick/modules-Q16/filters"
+	(cd "$package/Contents/Resources/lib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/filters"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
 	done
 	)
-	(cd "$package/Contents/Resources/lib/ImageMagick/modules-Q16/coders"
+	(cd "$package/Contents/Resources/lib/ImageMagick-$IMAGEMAGICKVER/modules-Q16/coders"
 	for file in *.so; do
 		echo "Rewriting dylib paths for $file..."
 		fixlib "$file" "`pwd`"
