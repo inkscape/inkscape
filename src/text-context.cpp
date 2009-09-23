@@ -881,10 +881,10 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                 if (MOD__CTRL_ONLY && tc->text) {
                                     SPStyle const *style = sp_te_style_at_position(tc->text, std::min(tc->text_sel_start, tc->text_sel_end));
                                     SPCSSAttr *css = sp_repr_css_attr_new();
-                                    if (style->font_style.computed == SP_CSS_FONT_STYLE_NORMAL)
-                                        sp_repr_css_set_property(css, "font-style", "italic");
-                                    else
+                                    if (style->font_style.computed != SP_CSS_FONT_STYLE_NORMAL)
                                         sp_repr_css_set_property(css, "font-style", "normal");
+                                    else
+                                        sp_repr_css_set_property(css, "font-style", "italic");
                                     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
                                     sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,

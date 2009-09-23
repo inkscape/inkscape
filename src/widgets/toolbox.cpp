@@ -5941,7 +5941,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
             GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-bold"));
 
             gboolean active = gtk_toggle_button_get_active (button);
-            gboolean check  = (query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700);
+            gboolean check  = ((query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700) && (query->font_weight.computed != SP_CSS_FONT_WEIGHT_NORMAL) && (query->font_weight.computed != SP_CSS_FONT_WEIGHT_LIGHTER));
 
             if (active != check)
             {
@@ -6208,17 +6208,31 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
         fontFromStyle->Unref();
     }
 
+    bool nochange = true;
     switch (prop)
     {
         case 0:
         {
             if (!fontSpec.empty()) {
                 newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
+                if (!newFontSpec.empty()) {
+                    // Don't even set the bold if the font didn't exist on the system
+                    sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
+                    nochange = false;
+                }
             }
-            if (fontSpec != newFontSpec) {
-                // Don't even set the bold if the font didn't exist on the system
-                sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
+            // set or reset the button according
+            if(nochange) {
+                gboolean check = gtk_toggle_button_get_active (button);
+
+                if (active != check)
+                {
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+                }
             }
+
             break;
         }
 
@@ -6226,10 +6240,21 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
         {
             if (!fontSpec.empty()) {
                 newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
+                if (!newFontSpec.empty()) {
+                    // Don't even set the italic if the font didn't exist on the system
+                    sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
+                    nochange = false;
+                }
             }
-            if (fontSpec != newFontSpec) {
-                // Don't even set the italic if the font didn't exist on the system
-                sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
+            if(nochange) {
+                gboolean check = gtk_toggle_button_get_active (button);
+
+                if (active != check)
+                {
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+                }
             }
             break;
         }
