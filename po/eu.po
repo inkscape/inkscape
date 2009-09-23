@@ -16750,7 +16750,7 @@ msgstr "tutorial-advanced.eu.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1924
 msgid "tutorial-tracing.svg"
-msgstr "tutorial-tracing.svg"
+msgstr "tutorial-tracing.eu.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1928
