@@ -16553,7 +16553,7 @@ msgstr "tutorial-calligraphy.vi.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1932
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.vi.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1936
