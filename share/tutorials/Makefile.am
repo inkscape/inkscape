@@ -18,6 +18,7 @@ tutorial_DATA = \
     potrace-pl.png \
     potrace-pt_BR.png \
     potrace-ru.png \
+    potrace-sk.png \
     potrace-sl.png \
     potrace-vi.png \
     potrace-zh_CN.png \
