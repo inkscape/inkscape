@@ -697,7 +697,7 @@ void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
 void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
                                         Geom::Point const &p,
                                         Geom::Point const &guide_normal,
-                                        ConstraintLine const &c) const
+                                        ConstraintLine const &/*c*/) const
 {
     /* Get a list of all the SPItems that we will try to snap to */
     std::vector<SPItem*> cand;
