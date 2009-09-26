@@ -499,6 +499,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
+           -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
   </target>
@@ -553,6 +554,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2
+           -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
   </target>
@@ -604,6 +606,7 @@
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 
+           -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
   </target>

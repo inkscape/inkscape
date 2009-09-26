@@ -1,4 +1,6 @@
-
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 //#define DEBUG_LCMS
 
@@ -12,10 +14,17 @@
 
 #include <cstring>
 #include <string>
-// #ifdef WIN32
-// #include <windows.h>
-// #include <Icm.h>
-// #endif
+
+#ifdef WIN32
+#ifndef _WIN32_WINDOWS         // Allow use of features specific to Windows 98 or later.
+#define _WIN32_WINDOWS 0x0410
+#endif
+#if ENABLE_LCMS
+#else
+#include <windows.h>
+#endif // ENABLE_LCMS
+#endif
+
 #include "xml/repr.h"
 #include "color-profile.h"
 #include "color-profile-fns.h"
@@ -27,6 +36,9 @@
 #include "dom/uri.h"
 #include "dom/util/digest.h"
 
+#ifdef WIN32
+#include <Icm.h>
+#endif // WIN32
 
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
@@ -604,21 +616,21 @@ std::list<Glib::ustring> ColorProfile::getProfileDirs() {
     }
 
 
-// #ifdef WIN32
-//     wchar_t pathBuf[MAX_PATH + 1];
-//     pathBuf[0] = 0;
-//     DWORD pathSize = sizeof(pathBuf);
-//     g_assert(sizeof(wchar_t) == sizeof(gunichar2));
-//     if ( GetColorDirectoryW( NULL, &pathBuf, &pathSize ) ) {
-//         gchar * utf8Path = g_utf16_to_utf8( (gunichar2*)(&pathBuf[0]), -1, NULL, NULL, NULL );
-//         if ( !g_utf8_validate(utf8Path, -1, NULL) ) {
-//             g_warning( "GetColorDirectoryW() resulted in invalid UTF-8" );
-//         } else {
-//             sources.pushback(utf8Path);
-//         }
-//         g_free( utf8Path );
-//     }
-// #endif // WIN32
+#ifdef WIN32
+    wchar_t pathBuf[MAX_PATH + 1];
+    pathBuf[0] = 0;
+    DWORD pathSize = sizeof(pathBuf);
+    g_assert(sizeof(wchar_t) == sizeof(gunichar2));
+    if ( GetColorDirectoryW( NULL, pathBuf, &pathSize ) ) {
+        gchar * utf8Path = g_utf16_to_utf8( (gunichar2*)(&pathBuf[0]), -1, NULL, NULL, NULL );
+        if ( !g_utf8_validate(utf8Path, -1, NULL) ) {
+            g_warning( "GetColorDirectoryW() resulted in invalid UTF-8" );
+        } else {
+            sources.push_back(utf8Path);
+        }
+        g_free( utf8Path );
+    }
+#endif // WIN32
 
     return sources;
 }
