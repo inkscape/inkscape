@@ -35,7 +35,7 @@ B is a map t --> B(t) = ( a(t), b(t) ).
 The first step is to re-parametrize B by its arc length: this is the parametrization in which a point p on B is located by its distance s from start. One obtains a new map s --> U(s) = (a'(s),b'(s)), that still describes the same path B, but where the distance along B from start to
 U(s) is s itself.
 
-We also need a unit normal to the path. This can be obtained by computing a unit tangent vector, and rotate it by 90°. Call this normal vector N(s).
+We also need a unit normal to the path. This can be obtained by computing a unit tangent vector, and rotate it by 90ï¿½. Call this normal vector N(s).
 
 The basic deformation associated to B is then given by:
 
@@ -100,11 +100,14 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
 
-//We use the group bounding box size or the path bbox size to translate well x and y
-    x-= vertical_pattern.get_value() ? boundingbox_Y.min() : boundingbox_X.min();
-    y-= vertical_pattern.get_value() ? boundingbox_X.middle() : boundingbox_Y.middle();
+    Interval bboxHorizontal = vertical_pattern.get_value() ? boundingbox_Y : boundingbox_X;
+    Interval bboxVertical = vertical_pattern.get_value() ? boundingbox_X : boundingbox_Y;
 
-  double scaling = uskeleton.cuts.back()/boundingbox_X.extent();
+    //We use the group bounding box size or the path bbox size to translate well x and y
+    x-= bboxHorizontal.min();
+    y-= bboxVertical.middle();
+
+  double scaling = uskeleton.cuts.back()/bboxHorizontal.extent();
 
   if (scaling != 1.0) {
         x*=scaling;
