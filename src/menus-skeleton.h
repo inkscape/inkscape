@@ -29,7 +29,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"FileExport\" />\n"
 #ifdef WITH_GNOME_VFS
 "       <verb verb-id=\"FileImportFromOCAL\" />\n"
-"       <verb verb-id=\"FileExportToOCAL\" />\n"
+//"       <verb verb-id=\"FileExportToOCAL\" />\n"
 #endif
 "       <separator/>\n"
 "       <verb verb-id=\"FilePrint\" />\n"

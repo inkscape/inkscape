@@ -105,75 +105,86 @@ protected:
 /**
  * Our implementation of the FileExportToOCALDialog interface.
  */
+/*
 class FileExportToOCALDialog : public FileDialogOCALBase
 {
 
 public:
+*/
     /**
      * Constructor
      * @param fileTypes one of FileDialogTypes
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
+/*
     FileExportToOCALDialog(Gtk::Window& parentWindow, 
                              FileDialogType fileTypes,
-			     const Glib::ustring &title);
-    
+                 const Glib::ustring &title);
+*/
     /**
      * Destructor.
      * Perform any necessary cleanups.
      */
+/*
     ~FileExportToOCALDialog();
-
+*/
     /**
      * Show an SaveAs file selector.
      * @return the selected path if user selected one, else NULL
      */
+/*
     bool show();
 
     Glib::ustring getFilename();
 
     Glib::ustring myFilename;
-
+*/
     /**
      * Change the window title.
      */
+/*
     void change_title(const Glib::ustring& title);
     
 private:
-
+*/
     /**
      * Fix to allow the user to type the file name
      */
+/*
     Gtk::Entry *fileNameEntry;
-    
+*/
     /**
      *  Data mirror of the combo box
      */
+/*
     std::vector<FileType> fileTypes;
 
     // Child widgets
     Gtk::HBox childBox;
     Gtk::VBox checksBox;
     Gtk::HBox fileBox;
-
+*/
     /**
      * The extension to use to write this file
      */
+/*
     Inkscape::Extension::Extension *extension;
-
+*/
     /**
      * Callback for user input into fileNameEntry
      */
+/*
     void fileNameEntryChangedCallback();
-
+*/
     /**
      * List of known file extensions.
      */
+/*
     std::set<Glib::ustring> knownExtensions;
 
 }; //FileExportToOCAL
-
+*/
 
 //########################################################################
 //# F I L E    E X P O R T   T O   O C A L   P A S S W O R D
@@ -183,45 +194,52 @@ private:
 /**
  * Our implementation of the FileExportToOCALPasswordDialog interface.
  */
+/*
 class FileExportToOCALPasswordDialog : public FileDialogOCALBase
 {
 
 public:
+*/
     /**
      * Constructor
      * @param title the title of the dialog
      */
+/*
     FileExportToOCALPasswordDialog(Gtk::Window& parentWindow, 
                                 const Glib::ustring &title);
-    
+*/
     /**
      * Destructor.
      * Perform any necessary cleanups.
      */
+/*
     ~FileExportToOCALPasswordDialog();
-
+*/
 
     /**
      * Show 2 entry to input username and password.
      */
+/*
     bool show();
 
     Glib::ustring getUsername();
     Glib::ustring getPassword();
-
+*/
     /**
      * Change the window title.
      */
+/*
     void change_title(const Glib::ustring& title);
 
     Glib::ustring myUsername;
     Glib::ustring myPassword;
 
 private:
-
+*/
     /**
      * Fix to allow the user to type the file name
      */
+/*
     Gtk::Entry *usernameEntry;
     Gtk::Entry *passwordEntry;
     
@@ -231,7 +249,7 @@ private:
     Gtk::HBox passBox;
     
 }; //FileExportToOCALPassword
-
+*/
 
 
 //#########################################################################

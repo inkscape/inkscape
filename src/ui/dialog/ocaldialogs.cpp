@@ -41,6 +41,7 @@ namespace Dialog
 /**
  * Callback for fileNameEntry widget
  */
+/*
 void FileExportToOCALDialog::fileNameEntryChangedCallback()
 {
     if (!fileNameEntry)
@@ -53,25 +54,32 @@ void FileExportToOCALDialog::fileNameEntryChangedCallback()
     myFilename = fileName;
     response(Gtk::RESPONSE_OK);
 }
-
+*/
 /**
  * Constructor
  */
+/*
 FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
             FileDialogType fileTypes,
             const Glib::ustring &title) :
     FileDialogOCALBase(title, parentWindow)
 {
-    /*
+*/
+     /*
      * Start Taking the vertical Box and putting a Label
      * and a Entry to take the filename
      * Later put the extension selection and checkbox (?)
      */
     /* Initalize to Autodetect */
+/*
     extension = NULL;
+*/
     /* No filename to start out with */
+/*
     myFilename = "";
+*/
     /* Set our dialog type (save, export, etc...)*/
+/*
     dialogType = fileTypes;
     Gtk::VBox *vbox = get_vbox();
 
@@ -102,17 +110,19 @@ FileExportToOCALDialog::FileExportToOCALDialog(Gtk::Window &parentWindow,
 
     show_all_children();
 }
-
+*/
 /**
  * Destructor
  */
+/*
 FileExportToOCALDialog::~FileExportToOCALDialog()
 {
 }
-
+*/
 /**
  * Show this dialog modally.  Return true if user hits [OK]
  */
+/*
 bool
 FileExportToOCALDialog::show()
 {
@@ -130,10 +140,11 @@ FileExportToOCALDialog::show()
         return FALSE;
         }
 }
-
+*/
 /**
  * Get the file name chosen by the user.   Valid after an [OK]
  */
+/*
 Glib::ustring
 FileExportToOCALDialog::getFilename()
 {
@@ -150,7 +161,7 @@ FileExportToOCALDialog::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
 }
-
+*/
 
 //########################################################################
 //# F I L E    E X P O R T   T O   O C A L   P A S S W O R D
@@ -160,14 +171,17 @@ FileExportToOCALDialog::change_title(const Glib::ustring& title)
 /**
  * Constructor
  */
+/*
 FileExportToOCALPasswordDialog::FileExportToOCALPasswordDialog(Gtk::Window &parentWindow,
                              const Glib::ustring &title) : FileDialogOCALBase(title, parentWindow)
 {
+*/
     /*
      * Start Taking the vertical Box and putting 2 Labels
      * and 2 Entries to take the username and password
      */
     /* No username and password to start out with */
+/*
     myUsername = "";
     myPassword = "";
 
@@ -200,18 +214,20 @@ FileExportToOCALPasswordDialog::FileExportToOCALPasswordDialog(Gtk::Window &pare
 
     show_all_children();
 }
-
+*/
 
 /**
  * Destructor
  */
+/*
 FileExportToOCALPasswordDialog::~FileExportToOCALPasswordDialog()
 {
 }
-
+*/
 /**
  * Show this dialog modally.  Return true if user hits [OK]
  */
+/*
 bool
 FileExportToOCALPasswordDialog::show()
 {
@@ -229,20 +245,22 @@ FileExportToOCALPasswordDialog::show()
         return FALSE;
     }
 }
-
+*/
 /**
  * Get the username.   Valid after an [OK]
  */
+/*
 Glib::ustring
 FileExportToOCALPasswordDialog::getUsername()
 {
     myUsername = usernameEntry->get_text();
     return myUsername;
 }
-
+*/
 /**
  * Get the password.   Valid after an [OK]
  */
+/*
 Glib::ustring
 FileExportToOCALPasswordDialog::getPassword()
 {
@@ -255,7 +273,7 @@ FileExportToOCALPasswordDialog::change_title(const Glib::ustring& title)
 {
     this->set_title(title);
 }
-
+*/
 
 //#########################################################################
 //### F I L E   I M P O R T   F R O M   O C A L

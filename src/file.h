@@ -151,13 +151,13 @@ bool sp_file_export_dialog (Gtk::Window &parentWindow);
 /**
  * Export the current document to OCAL
  */
-void sp_file_export_to_ocal (Gtk::Window &parentWindow );
+//void sp_file_export_to_ocal (Gtk::Window &parentWindow );
 
 
 /**
  * Export the current document to OCAL
  */
-bool sp_file_export_to_ocal_dialog (void *widget);
+//bool sp_file_export_to_ocal_dialog (void *widget);
 
 
 /*######################

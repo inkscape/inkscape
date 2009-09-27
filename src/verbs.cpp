@@ -81,9 +81,9 @@
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
 
-#ifdef WITH_INKBOARD
-#include "jabber_whiteboard/session-manager.h"
-#endif
+//#ifdef WITH_INKBOARD
+//#include "jabber_whiteboard/session-manager.h"
+//#endif
 
 /**
  * \brief Return the name without underscores and ellipsis, for use in dialog
@@ -804,9 +804,9 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_FILE_IMPORT_FROM_OCAL:
             sp_file_import_from_ocal(*parent);
             break;
-        case SP_VERB_FILE_EXPORT_TO_OCAL:
-            sp_file_export_to_ocal(*parent);
-            break;
+//        case SP_VERB_FILE_EXPORT_TO_OCAL:
+//            sp_file_export_to_ocal(*parent);
+//            break;
         case SP_VERB_FILE_NEXT_DESKTOP:
             inkscape_switch_desktops_next();
             break;
@@ -1833,13 +1833,13 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_DIALOG_ITEM:
             sp_item_dialog();
             break;
-#ifdef WITH_INKBOARD
+/*#ifdef WITH_INKBOARD
         case SP_VERB_XMPP_CLIENT:
         {
             Inkscape::Whiteboard::SessionManager::showClient();
             break;
         }
-#endif
+#endif*/
         case SP_VERB_DIALOG_INPUT:
             sp_input_dialog();
             break;
@@ -2263,7 +2263,7 @@ Verb *Verb::_base_verbs[] = {
     new FileVerb(SP_VERB_FILE_EXPORT, "FileExport", N_("_Export Bitmap..."),
                  N_("Export this document or a selection as a bitmap image"), INKSCAPE_ICON_DOCUMENT_EXPORT),
     new FileVerb(SP_VERB_FILE_IMPORT_FROM_OCAL, "FileImportFromOCAL", N_("Import From Open Clip Art Library"), N_("Import a document from Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_IMPORT_OCAL),
-    new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
+//    new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
     new FileVerb(SP_VERB_FILE_NEXT_DESKTOP, "NextWindow", N_("N_ext Window"),
                  N_("Switch to the next document window"), INKSCAPE_ICON_WINDOW_NEXT),
     new FileVerb(SP_VERB_FILE_PREV_DESKTOP, "PrevWindow", N_("P_revious Window"),

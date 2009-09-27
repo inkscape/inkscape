@@ -68,9 +68,9 @@
 # include <libgnomevfs/gnome-vfs.h>
 #endif
 
-#ifdef WITH_INKBOARD
-#include "jabber_whiteboard/session-manager.h"
-#endif
+//#ifdef WITH_INKBOARD
+//#include "jabber_whiteboard/session-manager.h"
+//#endif
 
 #ifdef WIN32
 #include <windows.h>
@@ -1270,6 +1270,7 @@ sp_file_export_dialog(Gtk::Window &/*parentWindow*/)
 /**
  *  Display an Export dialog, export as the selected type if OK pressed
  */
+/*
 bool
 sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 {
@@ -1406,10 +1407,11 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 
     return success;
 }
-
+*/
 /**
  * Export the current document to OCAL
  */
+/*
 void
 sp_file_export_to_ocal(Gtk::Window &parentWindow)
 {
@@ -1421,7 +1423,7 @@ sp_file_export_to_ocal(Gtk::Window &parentWindow)
     if (success)
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Document exported..."));
 }
-
+*/
 
 /*######################
 ## I M P O R T  F R O M  O C A L
