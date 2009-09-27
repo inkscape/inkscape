@@ -160,8 +160,8 @@
         #define WITH_PYTHON                   1
 
         /* shared whiteboard */
-        #undef WITH_INKBOARD                 1
-        #undef HAVE_SSL                      1
+        #undef WITH_INKBOARD
+        #undef HAVE_SSL
         
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
