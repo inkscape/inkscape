@@ -40,7 +40,6 @@ void nr_mmx_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int
 
 /* Fixed point precision */
 #define FBITS 12
-#define FBITS_HP 18 // In some places we need a higher precision
 
 void nr_R8G8B8A8_N_EMPTY_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, int rs,
 					       const unsigned char *spx, int sw, int sh, int srs,
@@ -169,10 +168,10 @@ void nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P_TRANSFORM (unsigned char *px, int w, in
 static void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (unsigned char *px, int w, int h, int rs,
 						 const unsigned char *spx, int sw, int sh, int srs,
-						 const long long *FFd2s, unsigned int alpha)
+						 const long *FFd2s, unsigned int alpha)
 {
-    unsigned char *d0;
-	long long FFsx0, FFsy0;
+	unsigned char *d0;
+	int FFsx0, FFsy0;
 	int x, y;
 
 	d0 = px;
@@ -181,15 +180,15 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (unsigned char *px, int w, int h
 
 	for (y = 0; y < h; y++) {
 		unsigned char *d;
-		long long FFsx, FFsy;
+		long FFsx, FFsy;
 		d = d0;
 		FFsx = FFsx0;
 		FFsy = FFsy0;
 		for (x = 0; x < w; x++) {
 			long sx, sy;
-			sx = long(FFsx >> FBITS_HP);
+			sx = FFsx >> FBITS;
 			if ((sx >= 0) && (sx < sw)) {
-				sy = long(FFsy >> FBITS_HP);
+				sy = FFsy >> FBITS;
 				if ((sy >= 0) && (sy < sh)) {
 					const unsigned char *s;
 					unsigned int a;
@@ -225,11 +224,11 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (unsigned char *px, int w, int h
 static void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h, int rs,
 						 const unsigned char *spx, int sw, int sh, int srs,
-						 const long long *FFd2s, const long *FF_S, unsigned int alpha, int dbits)
+						 const long *FFd2s, const long *FF_S, unsigned int alpha, int dbits)
 {
 	int size;
 	unsigned char *d0;
-	long long FFsx0, FFsy0;
+	int FFsx0, FFsy0;
 	int x, y;
 
 	size = (1 << dbits);
@@ -243,7 +242,7 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 
 	for (y = 0; y < h; y++) {
 		unsigned char *d;
-		long long FFsx, FFsy;
+		long FFsx, FFsy;
 		d = d0;
 		FFsx = FFsx0;
 		FFsy = FFsy0;
@@ -253,9 +252,9 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 			r = g = b = a = 0;
 			for (i = 0; i < size; i++) {
 				long sx, sy;
-				sx = (FFsx >> FBITS_HP) + (FF_S[2 * i] >> FBITS);
+				sx = (FFsx + FF_S[2 * i]) >> FBITS;
 				if ((sx >= 0) && (sx < sw)) {
-					sy = (FFsy >> FBITS_HP) + (FF_S[2 * i + 1] >> FBITS);
+					sy = (FFsy + FF_S[2 * i + 1]) >> FBITS;
 					if ((sy >= 0) && (sy < sh)) {
 						const unsigned char *s;
 						unsigned int ca;
@@ -303,7 +302,6 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 {
 	int dbits;
 	long FFd2s[6];
-	long long FFd2s_HP[6]; // with higher precision
 	int i;
 
 	if (alpha == 0) return;
@@ -312,7 +310,6 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 
 	for (i = 0; i < 6; i++) {
 		FFd2s[i] = (long) (d2s[i] * (1 << FBITS) + 0.5);
-		FFd2s_HP[i] = (long long) (d2s[i] * (1 << FBITS_HP) + 0.5);;
 	}
 
 	if (dbits == 0) {
@@ -323,7 +320,7 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 			return;
 		}
 #endif
-		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (px, w, h, rs, spx, sw, sh, srs, FFd2s_HP, alpha);
+		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (px, w, h, rs, spx, sw, sh, srs, FFd2s, alpha);
 	} else {
 		int xsize, ysize;
 		long FFs_x_x_S, FFs_x_y_S, FFs_y_x_S, FFs_y_y_S;
@@ -354,7 +351,7 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 			return;
 		}
 #endif
-		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (px, w, h, rs, spx, sw, sh, srs, FFd2s_HP, FF_S, alpha, dbits);
+		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (px, w, h, rs, spx, sw, sh, srs, FFd2s, FF_S, alpha, dbits);
 	}
 }
 
