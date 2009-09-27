@@ -14,6 +14,7 @@ tutorial_DATA = \
     potrace-eu.png \
     potrace-fr.png \
     potrace-hu.png \
+    potrace-ja.png \
     potrace.png \
     potrace-pl.png \
     potrace-pt_BR.png \
@@ -72,6 +73,7 @@ tutorial_DATA = \
     tutorial-calligraphy.eu.svg \
     tutorial-calligraphy.fr.svg \
     tutorial-calligraphy.hu.svg \
+    tutorial-calligraphy.ja.svg \
     tutorial-calligraphy.pl.svg \
     tutorial-calligraphy.pt_BR.svg \
     tutorial-calligraphy.ru.svg \
@@ -86,6 +88,7 @@ tutorial_DATA = \
     tutorial-elements.eu.svg \
     tutorial-elements.fr.svg \
     tutorial-elements.hu.svg \
+    tutorial-elements.ja.svg \
     tutorial-elements.pl.svg \
     tutorial-elements.pt_BR.svg \
     tutorial-elements.ru.svg \
@@ -123,6 +126,7 @@ tutorial_DATA = \
     tutorial-tips.eu.svg \
     tutorial-tips.fr.svg \
     tutorial-tips.hu.svg \
+    tutorial-tips.ja.svg \
     tutorial-tips.it.svg \
     tutorial-tips.pl.svg \
     tutorial-tips.pt_BR.svg \
@@ -138,6 +142,7 @@ tutorial_DATA = \
     tutorial-tracing.eu.svg \
     tutorial-tracing.fr.svg \
     tutorial-tracing.hu.svg \
+    tutorial-tracing.ja.svg \
     tutorial-tracing.pl.svg \
     tutorial-tracing.pt_BR.svg \
     tutorial-tracing.ru.svg \

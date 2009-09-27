@@ -131,7 +131,7 @@ LangString lng_TutorialsDesc $(LANG_JAPANESE) "${PRODUCT_NAME} のチュートリアル"
 LangString lng_Languages $(LANG_JAPANESE) "国際化"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_JAPANESE) "${PRODUCT_NAME} のさまざまな言語のファイルをインストール"
+LangString lng_LanguagesDesc $(LANG_JAPANESE) "${PRODUCT_NAME} のさまざまな言語のローカライズファイルをインストール"
 
 LangString lng_am $(LANG_JAPANESE) "am  アムハラ語"
 LangString lng_ar $(LANG_JAPANESE) "ar  アラビア語"
