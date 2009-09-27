@@ -755,6 +755,8 @@ CairoRenderContext::setupSurface(double width, double height)
     _height = height;
 
     cairo_surface_t *surface = NULL;
+    cairo_matrix_t ctm;
+    cairo_matrix_init_identity (&ctm);
     switch (_target) {
         case CAIRO_SURFACE_TYPE_IMAGE:
             surface = cairo_image_surface_create(_target_format, (int)ceil(width), (int)ceil(height));
@@ -766,11 +768,19 @@ CairoRenderContext::setupSurface(double width, double height)
 #endif
 #ifdef CAIRO_HAS_PS_SURFACE
         case CAIRO_SURFACE_TYPE_PS:
-            surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
+            if (!_eps && width > height) {
+                surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, height, width);
+                cairo_matrix_init (&ctm, 0, -1, 1,  0, 0, 0);
+                cairo_matrix_translate (&ctm, -width, 0);
+                cairo_ps_surface_dsc_begin_page_setup (surface);
+                cairo_ps_surface_dsc_comment (surface, "%%PageOrientation: Landscape");
+            } else {
+                surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
+            }
             if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
                 return FALSE;
             }
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
             cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
             cairo_ps_surface_set_eps (surface, (cairo_bool_t) _eps);
 #endif
@@ -781,7 +791,7 @@ CairoRenderContext::setupSurface(double width, double height)
             break;
     }
 
-    return _finishSurfaceSetup (surface);
+    return _finishSurfaceSetup (surface, &ctm);
 }
 
 bool
