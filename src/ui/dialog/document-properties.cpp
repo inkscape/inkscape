@@ -397,7 +397,7 @@ static void sanitizeName( Glib::ustring& str )
             && ((val < 'a') || (val > 'z'))
             && (val != '_')
             && (val != ':')) {
-            str.replace(0, 1, "_");
+            str.replace(0, 1, "-");
         }
         for (Glib::ustring::size_type i = 1; i < str.size(); i++) {
             char val = str.at(i);
@@ -408,7 +408,7 @@ static void sanitizeName( Glib::ustring& str )
                 && (val != ':')
                 && (val != '-')
                 && (val != '.')) {
-                str.replace(i, 1, "_");
+                str.replace(i, 1, "-");
             }
         }
     }

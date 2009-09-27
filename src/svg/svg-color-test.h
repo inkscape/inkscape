@@ -87,6 +87,8 @@ public:
             {1, true, "positive", "icc-color(positive, +0.1)"},
             {1, true, "negative", "icc-color(negative, -0.1)"},
             {0, false, "", "icc-color(named, value)"},
+            {1, true, "hyphen-name", "icc-color(hyphen-name, 1)"},
+            {1, true, "under_name", "icc-color(under_name, 1)"},
         };
 
         for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ ) {
