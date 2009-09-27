@@ -179,7 +179,8 @@ Matrix Matrix::inverse() const {
     Matrix d;
 
     Geom::Coord const determ = det();
-    if (!are_near(determ, 0.0)) {
+    // the numerical precision of the determinant must be significant
+    if (fabs(determ) > 1e-18) {
         Geom::Coord const ideterm = 1.0 / determ;
 
         d._c[0] =  _c[3] * ideterm;
