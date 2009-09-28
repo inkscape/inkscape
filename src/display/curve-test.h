@@ -90,7 +90,7 @@ public:
             pv[0] = path1;
             TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 3u);
             pv[0] = path2;
-            TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 3u);
+            TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 2u); // zero length closing segments do not increase the nodecount.
             pv[0] = path3;
             TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 5u);
             pv[0] = path4;
