@@ -123,7 +123,6 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/bin/inkscape	\
 	packaging/macosx/Resources/etc/fonts/fonts.conf	\
 	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/pre_gtkrc \
-	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/sync_osx_look.sh \
 	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-down.png \
 	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-left.png \
 	packaging/macosx/Resources/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/Scrollbars/stepper-right.png \
