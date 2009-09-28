@@ -11,9 +11,7 @@ if (@ARGV < 1) {
 
 my $rel = shift @ARGV;
 
-$rel =~ s/\.//;
-
-my @page = `lynx -dump $wiki/ReleaseNotes$rel`;
+my @page = `w3m -dump $wiki/Release_notes/$rel`;
 
 print "$#page lines\n";
 
@@ -22,9 +20,9 @@ foreach my $line (@page) {
 
     $line =~ s/\[\[\d+\]edit\]//g;
 
-    last if $line =~ /^ Previous releases/;
+    last if $line =~ /^\s*Previous releases/;
 
-    if ($line =~ /^\s+Inkscape 0\.46/) {
+    if ($line =~ /^\s*Inkscape $rel/) {
         $seen_overview = 1;
     }
     next unless $seen_overview;
