@@ -629,10 +629,14 @@ SPCurve::nodes_in_path() const
 
         nr++; // count last node (this works also for closed paths because although they don't have a 'last node', they do have an extra segment
 
-        if (it->closed()) {
+        // do not count closing knot double for zero-length closing line segments
+        // however, if the path is only a moveto, and is closed, do not subtract 1 (otherwise the result will be zero nodes)
+        if ( it->closed()
+             && ((*it).size() != 0) )
+        {
             Geom::Curve const &c = it->back_closed();
             if (are_near(c.initialPoint(), c.finalPoint())) {
-                nr--;   // do not count closing knot double for zero-length closing line segments
+                nr--;   
             }
         }
     }
