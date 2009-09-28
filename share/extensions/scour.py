@@ -36,6 +36,10 @@
 # Next Up:
 # + remove unused attributes in parent elements
 # + prevent elements from being stripped if they are referenced in a <style> element
+# + only move common attributes and remove unused attributes after removing duplicate gradients
+# + only move common attributes to parent if the parent contains non-whitespace text nodes
+# + do not pretty-print elements if whitespace is important (xml:space="preserve")
+# - TODO: fix the removal of comment elements (between <?xml?> and <svg>)
 #   (for instance, filter, marker, pattern) - need a crude CSS parser
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
@@ -66,7 +70,7 @@ except ImportError:
 	Decimal = FixedPoint	
 
 APP = 'scour'
-VER = '0.20'
+VER = '0.21'
 COPYRIGHT = 'Copyright Jeff Schiller, 2009'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -431,7 +435,7 @@ def findReferencedElements(node, ids=None):
 		return ids
 	
 	# else if xlink:href is set, then grab the id
-	href = node.getAttributeNS(NS['XLINK'],'href')	
+	href = node.getAttributeNS(NS['XLINK'],'href')
 	if href != '' and len(href) > 1 and href[0] == '#':
 		# we remove the hash mark from the beginning of the id
 		id = href[1:]
@@ -641,7 +645,8 @@ def moveCommonAttributesToParentGroup(elem):
 	""" 
 	This recursively calls this function on all children of the passed in element
 	and then iterates over all child elements and removes common inheritable attributes 
-	from the children and places them in the parent group.
+	from the children and places them in the parent group.  But only if the parent contains
+	nothing but element children and whitespace.
 	"""
 	num = 0
 	
@@ -651,6 +656,10 @@ def moveCommonAttributesToParentGroup(elem):
 		if child.nodeType == 1: 
 			childElements.append(child)
 			num += moveCommonAttributesToParentGroup(child)
+		# else if the parent has non-whitespace text children, do not
+		# try to move common attributes
+		elif child.nodeType == 3 and child.nodeValue.strip():
+			return num
 
 	# only process the children if there are more than one element
 	if len(childElements) <= 1: return num
@@ -913,11 +922,14 @@ def removeDuplicateGradients(doc):
 	referencedIDs = findReferencedElements(doc.documentElement)
 	for masterGrad in gradientsToRemove.keys():
 		master_id = masterGrad.getAttribute('id')
+#		print 'master='+master_id
 		for dupGrad in gradientsToRemove[masterGrad]:
 			# if the duplicate gradient no longer has a parent that means it was
 			# already re-mapped to another master gradient
 			if not dupGrad.parentNode: continue
 			dup_id = dupGrad.getAttribute('id')
+#			print 'dup='+dup_id
+#			print referencedIDs[dup_id]
 			# for each element that referenced the gradient we are going to remove
 			for elem in referencedIDs[dup_id][1]:
 				# find out which attribute referenced the duplicate gradient
@@ -2023,7 +2035,7 @@ def makeWellFormed(str):
 # - pretty printing
 # - somewhat judicious use of whitespace
 # - ensure id attributes are first
-def serializeXML(element, options, ind = 0):
+def serializeXML(element, options, ind = 0, preserveWhitespace = False):
 	indent = ind
 	I=''
 	if options.indent_type == 'tab': I='\t'
@@ -2059,9 +2071,20 @@ def serializeXML(element, options, ind = 0):
 		
 		outString += ' '
 		# preserve xmlns: if it is a namespace prefix declaration
-		if attr.namespaceURI == 'http://www.w3.org/2000/xmlns/' and attr.nodeName.find('xmlns') == -1:
-			outString += 'xmlns:'
-		outString += attr.nodeName + '=' + quot + attrValue + quot
+		if attr.prefix != None:
+			outString += attr.prefix + ':'
+		elif attr.namespaceURI != None:
+			if attr.namespaceURI == 'http://www.w3.org/2000/xmlns/' and attr.nodeName.find('xmlns') == -1:
+				outString += 'xmlns:'
+			elif attr.namespaceURI == 'http://www.w3.org/1999/xlink':
+				outString += 'xlink:'
+		outString += attr.localName + '=' + quot + attrValue + quot
+
+		if attr.nodeName == 'xml:space':
+			if attrValue == 'preserve':
+				preserveWhitespace = True
+			elif attrValue == 'default':
+				preserveWhitespace = False
 	
 	# if no children, self-close
 	children = element.childNodes
@@ -2072,13 +2095,17 @@ def serializeXML(element, options, ind = 0):
 		for child in element.childNodes:
 			# element node
 			if child.nodeType == 1:
-				outString += '\n' + serializeXML(child, options, indent + 1)
-				onNewLine = True
+				if preserveWhitespace:
+					outString += serializeXML(child, options, 0, preserveWhitespace)
+				else:
+					outString += '\n' + serializeXML(child, options, indent + 1, preserveWhitespace)
+					onNewLine = True
 			# text node
 			elif child.nodeType == 3:
 				# trim it only in the case of not being a child of an element
 				# where whitespace might be important
-				if element.nodeName in ["text", "tspan", "textPath", "tref", "title", "desc", "textArea"]:
+				if element.nodeName in ["text", "tspan", "textPath", "tref", "title", "desc", "textArea", 
+										"flowRoot", "flowDiv", "flowSpan", "flowPara", "flowRegion"]:
 					outString += makeWellFormed(child.nodeValue)
 				else:
 					outString += makeWellFormed(child.nodeValue.strip())
@@ -2196,12 +2223,6 @@ def scourString(in_string, options=None):
 		while removeNestedGroups(doc.documentElement) > 0:
 			pass
 
-	# move common attributes to parent group
-	numAttrsRemoved += moveCommonAttributesToParentGroup(doc.documentElement)
-	
-	# remove unused attributes from parent
-	numAttrsRemoved += removeUnusedAttributesOnParent(doc.documentElement)
-
 	while removeDuplicateGradientStops(doc) > 0:
 		pass
 	
@@ -2213,6 +2234,12 @@ def scourString(in_string, options=None):
 	while removeDuplicateGradients(doc) > 0:
 		pass
 	
+	# move common attributes to parent group
+	numAttrsRemoved += moveCommonAttributesToParentGroup(doc.documentElement)
+	
+	# remove unused attributes from parent
+	numAttrsRemoved += removeUnusedAttributesOnParent(doc.documentElement)
+
 	# clean path data
 	for elem in doc.documentElement.getElementsByTagName('path') :
 		if elem.getAttribute('d') == '':
