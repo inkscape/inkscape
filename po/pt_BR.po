@@ -13845,7 +13845,7 @@ msgstr ""
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:537 ../src/verbs.cpp:2528
 msgid "Dropper"
-msgstr "Borracha"
+msgstr "Conta-gotas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
@@ -19087,7 +19087,7 @@ msgstr "Gradiente radial"
 
 #: ../src/widgets/paint-selector.cpp:191
 msgid "Unset paint (make it undefined so it can be inherited)"
-msgstr "Indefinido (marque esta opção e ela poderá ser herdada)"
+msgstr "Indefinido (marque esta opção e a propriedade poderá ser herdada)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:203
@@ -19095,16 +19095,15 @@ msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
 msgstr ""
-"Régra de preenchimento <b>evenodd</b>: Não preenche áreas de interseção de "
-"um mesmo caminho"
+"Não preenche áreas de auto-interseção de "
+"um caminho"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:214
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
-"Régra de preenchimento <b>nonzero</b>: Preenche áreas de interseção de um "
-"mesmo caminho"
+"Preenchimento depende das orientações (sentido horário/anti-horário) dos caminhos."
 
 #: ../src/widgets/paint-selector.cpp:531
 msgid "No objects"
