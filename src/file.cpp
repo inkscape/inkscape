@@ -138,31 +138,48 @@ sp_file_new(const Glib::ustring &templ)
     return dt;
 }
 
-SPDesktop*
-sp_file_new_default()
+SPDesktop* sp_file_new_default()
 {
     std::list<gchar *> sources;
     sources.push_back( profile_path("templates") ); // first try user's local dir
     sources.push_back( g_strdup(INKSCAPE_TEMPLATESDIR) ); // then the system templates dir
+    std::list<gchar const*> baseNames;
+    gchar const* localized = _("default.svg");
+    if (strcmp("default.svg", localized) != 0) {
+        baseNames.push_back(localized);
+    }
+    baseNames.push_back("default.svg");
+    gchar *foundTemplate = 0;
 
-    while (!sources.empty()) {
-        gchar *dirname = sources.front();
-        if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
+    for (std::list<gchar const*>::iterator nameIt = baseNames.begin(); (nameIt != baseNames.end()) && !foundTemplate; ++nameIt) {
+        for (std::list<gchar *>::iterator it = sources.begin(); (it != sources.end()) && !foundTemplate; ++it) {
+            gchar *dirname = *it;
+            if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
 
-            // TRANSLATORS: default.svg is localizable - this is the name of the default document
-            //  template. This way you can localize the default pagesize, translate the name of
-            //  the default layer, etc. If you wish to localize this file, please create a
-            //  localized share/templates/default.xx.svg file, where xx is your language code.
-            char *default_template = g_build_filename(dirname, _("default.svg"), NULL);
-            if (Inkscape::IO::file_test(default_template, G_FILE_TEST_IS_REGULAR)) {
-                return sp_file_new(default_template);
+                // TRANSLATORS: default.svg is localizable - this is the name of the default document
+                //  template. This way you can localize the default pagesize, translate the name of
+                //  the default layer, etc. If you wish to localize this file, please create a
+                //  localized share/templates/default.xx.svg file, where xx is your language code.
+                char *tmp = g_build_filename(dirname, *nameIt, NULL);
+                if (Inkscape::IO::file_test(tmp, G_FILE_TEST_IS_REGULAR)) {
+                    foundTemplate = tmp;
+                } else {
+                    g_free(tmp);
+                }
             }
         }
-        g_free(dirname);
-        sources.pop_front();
     }
 
-    return sp_file_new("");
+    for (std::list<gchar *>::iterator it = sources.begin(); it != sources.end(); ++it) {
+        g_free(*it);
+    }
+
+    SPDesktop* desk = sp_file_new(foundTemplate ? foundTemplate : "");
+    if (foundTemplate) {
+        g_free(foundTemplate);
+        foundTemplate = 0;
+    }
+    return desk;
 }
 
 
