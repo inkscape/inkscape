@@ -637,14 +637,17 @@ void ColorICCSelector::_colorChanged()
             tmp[i] = val * 0x0ffff;
         }
         guchar post[4] = {0,0,0,0};
-        cmsDoTransform( _prof->getTransfToSRGB8(), tmp, post, 1 );
-        guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
-        if ( other != _color.toRGBA32(255) ) {
-            _fixupNeeded = other;
-            gtk_widget_set_sensitive( _fixupBtn, TRUE );
+        cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
+        if ( trans ) {
+            cmsDoTransform( trans, tmp, post, 1 );
+            guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
+            if ( other != _color.toRGBA32(255) ) {
+                _fixupNeeded = other;
+                gtk_widget_set_sensitive( _fixupBtn, TRUE );
 #ifdef DEBUG_LCMS
-            g_message("Color needs to change 0x%06x to 0x%06x", _color.toRGBA32(255) >> 8, other >> 8 );
+                g_message("Color needs to change 0x%06x to 0x%06x", _color.toRGBA32(255) >> 8, other >> 8 );
 #endif // DEBUG_LCMS
+            }
         }
     }
 #else
@@ -773,8 +776,11 @@ void ColorICCSelector::_updateSliders( gint ignore )
                         }
                     }
 
-                    cmsDoTransform( _prof->getTransfToSRGB8(), scratch, _fooMap[i], 1024 );
-                    sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                    cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
+                    if ( trans ) {
+                        cmsDoTransform( trans, scratch, _fooMap[i], 1024 );
+                        sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                    }
                 }
             }
         }
@@ -840,7 +846,10 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
          }
          guchar post[4] = {0,0,0,0};
 
-         cmsDoTransform( iccSelector->_prof->getTransfToSRGB8(), tmp, post, 1 );
+         cmsHTRANSFORM trans = iccSelector->_prof->getTransfToSRGB8();
+         if ( trans ) {
+             cmsDoTransform( trans, tmp, post, 1 );
+         }
 
          SPColor other( SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255) );
          other.icc = new SVGICCColor();

@@ -487,7 +487,7 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
 
 cmsHTRANSFORM ColorProfile::getTransfToSRGB8()
 {
-    if ( !_transf ) {
+    if ( !_transf && profHandle ) {
         int intent = getLcmsIntent(rendering_intent);
         _transf = cmsCreateTransform( profHandle, _getInputFormat(_profileSpace), getSRGBProfile(), TYPE_RGBA_8, intent, 0 );
     }
@@ -496,7 +496,7 @@ cmsHTRANSFORM ColorProfile::getTransfToSRGB8()
 
 cmsHTRANSFORM ColorProfile::getTransfFromSRGB8()
 {
-    if ( !_revTransf ) {
+    if ( !_revTransf && profHandle ) {
         int intent = getLcmsIntent(rendering_intent);
         _revTransf = cmsCreateTransform( getSRGBProfile(), TYPE_RGBA_8, profHandle, _getInputFormat(_profileSpace), intent, 0 );
     }
