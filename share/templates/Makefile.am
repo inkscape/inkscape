@@ -15,6 +15,7 @@ templates_DATA = \
 	DVD_cover_superslim_300dpi.svg \
 	DVD_cover_ultraslim_300dpi.svg \
 	default.svg \
+	default.be.svg \
 	default.ca.svg \
 	default.cs.svg \
 	default.de.svg \
