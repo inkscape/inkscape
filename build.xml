@@ -553,7 +553,7 @@
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
-           -lgomp -lpthreadGC2
+           -lgomp -lpthreadGC2 -laspell
            -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
@@ -605,7 +605,7 @@
            -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
-           -lgomp -lpthreadGC2 
+           -lgomp -lpthreadGC2 -laspell
            -lmscms  <!-- required for color profiles -->
        </libs>
     </link>
