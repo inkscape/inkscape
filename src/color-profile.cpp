@@ -272,14 +272,17 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                         // Normal for files that have not yet been saved.
                         docbase = "";
                     }
+
+                    gchar* escaped = g_uri_escape_string(cprof->href, "!*'();:@=+$,/?#[]", TRUE);
+
                     //g_message("docbase:%s\n", docbase);
                     org::w3c::dom::URI docUri(docbase);
                     //# 2. Get href of icc file.  we don't care if it's rel or abs
-                    org::w3c::dom::URI hrefUri(cprof->href);
+                    org::w3c::dom::URI hrefUri(escaped);
                     //# 3.  Resolve the href according the docBase.  This follows
                     //      the w3c specs.  All absolute and relative issues are considered
                     org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
-                    gchar* fullname = g_strdup((gchar *)cprofUri.getNativePath().c_str());
+                    gchar* fullname = g_uri_unescape_string(cprofUri.getNativePath().c_str(), "");
                     cprof->_clearProfile();
                     cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
                     if ( cprof->profHandle ) {
@@ -289,6 +292,8 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
 #ifdef DEBUG_LCMS
                     DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
 #endif // DEBUG_LCMS
+                    g_free(escaped);
+                    escaped = 0;
                     g_free(fullname);
 #endif // ENABLE_LCMS
                 }
