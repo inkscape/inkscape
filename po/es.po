@@ -5,13 +5,13 @@
 # Agradecimientos: zert, softcatala, 2002-2003.
 # Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
-# Lucas Vieites Fariña <lucas@codexion.com>, 2003-2009.
+# Lucas Vieites Fariña <lucas@codexion.com>, 2003-200, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-09 20:27+0200\n"
+"POT-Creation-Date: 2009-09-06 10:44+0200\n"
+"PO-Revision-Date: 2009-09-26 12:34+0200\n"
 "Last-Translator: Lucas Vieites Fariña <lucas@codexion.com>\n"
 "Language-Team:  inkscape-translator@lists.sourceforge.net <inkscape-"
 "translator@lists.sourceforge.net>\n"
@@ -1875,7 +1875,7 @@ msgstr "Borrador de luz, negativo"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Like Light eraser but converts to negative"
-msgstr "Borrador claro pero convierte a negativo"
+msgstr "Como Borrador claro pero convierte a negativo"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Alpha repaint"
@@ -1894,7 +1894,8 @@ msgid ""
 "Creates an approximative semi-transparent and colorizable image of the "
 "saturation levels"
 msgstr ""
-"Crea una imagen semitransparente y aproximada de los niveles de saturación"
+"Crea una imagen aproximada semitransparente y colorizable de los niveles de "
+"saturación"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2275,7 +2276,7 @@ msgstr "Cambiar perspectiva (ángulo de las LP)"
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>Caja 3D</b>; use <b>Mayús</b> para extruir a lo largo del eje Z"
 
-#: ../src/box3d-context.cpp:650
+#: ../src/box3d-context.cpp:646
 msgid "Create 3D box"
 msgstr "Crear caja 3D"
 
@@ -3656,7 +3657,6 @@ msgid "Title:"
 msgstr "Título:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
 msgstr "Mostrar:"
 
@@ -5629,10 +5629,13 @@ msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Formato de gráficos vectoriales escalables (SVG) definido por W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
+#: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
 msgstr "Entrada SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
+#: ../share/extensions/svgz_input.inx.h:1
+#: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "SVG de Inkscape comprimido (*.svgz)"
 
@@ -5641,10 +5644,13 @@ msgid "SVG file format compressed with GZip"
 msgstr "Formato SVG comprimido con Gzip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
+#: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
 msgstr "Salida SVGZ"
 
 #: ../src/extension/internal/svgz.cpp:68
+#: ../share/extensions/svgz_input.inx.h:2
+#: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
 msgstr "El formato nativo de Inkscape comprimido con Gzip"
 
@@ -5684,7 +5690,7 @@ msgstr "¿Se previsualiza el el efecto en el lienzo?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:107
+#: ../src/extension/system.cpp:106
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 "Ha fallado la detección automática de formato. Se abrirá el archivo como SVG."
@@ -5697,7 +5703,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.es.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:248 ../src/file.cpp:1039
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Error al cargar el archivo pedido %s"
@@ -5748,80 +5754,73 @@ msgstr ""
 "No se ha encontrado una extensión de inkscape para guardar el documento (%"
 "s). Esto pudo ser causado por una extensión de archivo desconocida."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:603
 msgid "Document not saved."
 msgstr "No se ha guardado el documento."
 
 #: ../src/file.cpp:596
 #, c-format
-msgid ""
-"File %s is write protected. Please remove write protection and try again."
-msgstr ""
-
-#: ../src/file.cpp:604
-#, c-format
 msgid "File %s could not be saved."
 msgstr "No se ha podido guardar el archivo %s."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:610
 msgid "Document saved."
 msgstr "Documento guardado."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:742 ../src/file.cpp:1176 ../src/file.cpp:1297
 #, c-format
 msgid "drawing%s"
 msgstr "dibujo%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:748
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dibujo-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:752
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:767
 msgid "Select file to save a copy to"
 msgstr "Seleccione el archivo en el que se guardará una copia"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:769
 msgid "Select file to save to"
 msgstr "Seleccione el archivo en el que se guardará"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:860
 msgid "No changes need to be saved."
 msgstr "No hay cambios que necesiten ser guardados."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:877
 msgid "Saving document..."
 msgstr "Guardando documento..."
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1036
 msgid "Import"
 msgstr "Importar"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1086
 msgid "Select file to import"
 msgstr "Seleccionar el archivo a importar"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1198 ../src/file.cpp:1312
 msgid "Select file to export to"
 msgstr "Seleccionar el archivo de exportación"
 
-#: ../src/file.cpp:1355
+#: ../src/file.cpp:1344
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Error al guardar una copia temporal"
 
-#: ../src/file.cpp:1375
+#: ../src/file.cpp:1364
 msgid "Open Clip Art Login"
 msgstr "Acceso a Open Clip Art"
 
-#: ../src/file.cpp:1401
+#: ../src/file.cpp:1390
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5832,11 +5831,11 @@ msgstr ""
 "usuario y contraseña sean correctos, que el servidor acepte webdav y "
 "compruebe que haya elegido una licencia."
 
-#: ../src/file.cpp:1422
+#: ../src/file.cpp:1411
 msgid "Document exported..."
 msgstr "Documento exportado..."
 
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1439 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importar desde Open Clip Art Library"
 
@@ -6668,48 +6667,48 @@ msgstr ""
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: ../src/io/sys.cpp:446 ../src/io/sys.cpp:454
+#: ../src/io/sys.cpp:412 ../src/io/sys.cpp:420
 #, c-format
 msgid "Failed to read from child pipe (%s)"
 msgstr "Ha fallado la lectura del pipe hijo (%s)"
 
-#: ../src/io/sys.cpp:478
+#: ../src/io/sys.cpp:444
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
 msgstr "No se ha podido cambiar al directorio «%s» (%s)"
 
-#: ../src/io/sys.cpp:484 ../src/io/sys.cpp:710
+#: ../src/io/sys.cpp:450 ../src/io/sys.cpp:676
 #, c-format
 msgid "Failed to execute child process (%s)"
 msgstr "Error al ejecutar el proceso hijo (%s)"
 
-#: ../src/io/sys.cpp:657
+#: ../src/io/sys.cpp:623
 #, c-format
 msgid "Invalid program name: %s"
 msgstr "Nombre de programa inválido: %s"
 
-#: ../src/io/sys.cpp:667 ../src/io/sys.cpp:956
+#: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
 msgstr "Cadena inválida en el vector argumento en %d: %s"
 
-#: ../src/io/sys.cpp:678 ../src/io/sys.cpp:971
+#: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
 #, c-format
 msgid "Invalid string in environment: %s"
 msgstr "Cadena inválida en el entorno: %s"
 
-#: ../src/io/sys.cpp:739
+#: ../src/io/sys.cpp:705
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
 msgstr "Error al crear un pipe para la comunicación con el proceso hijo (%s)"
 
 # dld: src/inkscape.cpp:1201
-#: ../src/io/sys.cpp:952
+#: ../src/io/sys.cpp:918
 #, c-format
 msgid "Invalid working directory: %s"
 msgstr "Directorio de trabajo inválido: %s"
 
-#: ../src/io/sys.cpp:1020
+#: ../src/io/sys.cpp:986
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Error al ejecutar el programa auxiliar (%s)"
@@ -7772,7 +7771,8 @@ msgstr "Variación de magnitud: 1er lado"
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
 msgstr ""
-"Mueve las vueltas «inferiores» al azar para producir variaciones de magnitud."
+"Mueve las vueltas «inferiores» de forma aleatoria para producir variaciones "
+"de magnitud"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7783,7 +7783,8 @@ msgstr "2º lado"
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
 msgstr ""
-"Mueve las vueltas «superiores» al azar para producir variaciones de magnitud."
+"Mueve las vueltas «superiores» aleatoriamente para producir variaciones de "
+"magnitud."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
@@ -7815,7 +7816,7 @@ msgstr "Aleatoriedad de las suavidad de las vueltas «inferiores»"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' half-turns smoothness"
-msgstr "Aleatoriedad de la suavidad de las vueltas «superiores»"
+msgstr "Aleatoriedad de las suavidad de las vueltas «superiores»"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
@@ -7889,11 +7890,11 @@ msgstr ""
 "La posición relativa al punto de referencia define la dirección y cantidad "
 "de torsión global"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:27
 msgid "Left"
 msgstr "Izquierda"
 
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:28
 msgid "Right"
 msgstr "Derecha"
 
@@ -11184,42 +11185,42 @@ msgid "Blur tweak"
 msgstr "Retoque de desenfoque"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:257
+#: ../src/ui/clipboard.cpp:255
 msgid "Nothing was copied."
 msgstr "No se ha copiado nada."
 
-#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
-#: ../src/ui/clipboard.cpp:544
+#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
+#: ../src/ui/clipboard.cpp:542
 msgid "Nothing on the clipboard."
 msgstr "No hay nada en el portapapeles."
 
-#: ../src/ui/clipboard.cpp:374
+#: ../src/ui/clipboard.cpp:372
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Seleccione los <b>objetos</b> a los que pegar el estilo."
 
-#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
+#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
 msgid "No style on the clipboard."
 msgstr "No hay estilo en el portapapeles."
 
-#: ../src/ui/clipboard.cpp:425
+#: ../src/ui/clipboard.cpp:423
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Seleccione los <b>objetos</b> a los que pegar el tamaño."
 
-#: ../src/ui/clipboard.cpp:432
+#: ../src/ui/clipboard.cpp:430
 msgid "No size on the clipboard."
 msgstr "No hay tamaño en el portapapeles."
 
-#: ../src/ui/clipboard.cpp:483
+#: ../src/ui/clipboard.cpp:481
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 "Seleccione los <b>objetos</b> a los que pegar el el efecto de trayecto vivo."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:507
+#: ../src/ui/clipboard.cpp:505
 msgid "No effect on the clipboard."
 msgstr "No hay efecto en el portapapeles."
 
-#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
+#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
 msgid "Clipboard does not contain a path."
 msgstr "El portapapeles no contiene un trayecto"
 
@@ -11339,7 +11340,7 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
-"Lucas Vieites Fariña, 2003-2009\n"
+"Lucas Vieites Fariña, 2003-2007\n"
 "Francisco Javier F. Serrador, 2003\n"
 "José Antonio Salgueiro Aquino, 2003"
 
@@ -12093,9 +12094,8 @@ msgstr "Est_ilo de trazo"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
-"This matrix determines a linear transform on color space. Each line affects "
+"This matrix determines a linear transform on colour space. Each line affects "
 "one of the color components. Each column determines how much of each color "
 "component from the input is passed to the output. The last column does not "
 "depend on input colors, so can be used to adjust a constant component value."
@@ -12215,11 +12215,6 @@ msgstr "Renombrar filtro"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1249
 msgid "Apply filter"
 msgstr "Aplicar filtro"
-
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
-msgid "filter"
-msgstr "Filtros"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
@@ -12628,11 +12623,10 @@ msgstr ""
 "pantalla, multiplicar, oscurecer y aclarar."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
-"color of each rendered pixel. This allows for effects like turning object to "
-"grayscale, modifying color saturation and changing color hue."
+"colour of each rendered pixel. This allows for effects like turning object "
+"to grayscale, modifying colour saturation and changing colour hue."
 msgstr ""
 "La primitiva de filtro <b>feColorMatrix</b> aplica una matriz de "
 "transformación al color de cada pixel renderizado. Esto permite crear "
@@ -12743,10 +12737,9 @@ msgstr ""
 "«normal» o varias primitivas feCompositve en modo «over»."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
-"For single-color objects erode makes the object thinner and dilate makes it "
+"For single-colour objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "La primitiva de filtro <b>feMorphology</b> proporciona efectos de erosión y "
@@ -14991,46 +14984,43 @@ msgstr "_Añadir"
 msgid "New layer created."
 msgstr "Se ha creado una capa nueva."
 
-#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Mostrar capa"
 
-#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Ocultar capa"
 
-#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Bloquear capa"
 
-#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Desbloquear capa"
 
-#: ../src/ui/dialog/layers.cpp:656
+#: ../src/ui/dialog/layers.cpp:652
 msgid "New"
 msgstr "Nuevo"
 
-#. TRANSLATORS: only translate "string" in "context|string".
-#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
-msgid "layers|Top"
-msgstr "Capas"
+#: ../src/ui/dialog/layers.cpp:657
+msgid "Top"
+msgstr "Superior"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:663
 msgid "Up"
 msgstr "Arriba"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:669
 msgid "Dn"
 msgstr "Abajo"
 
-#: ../src/ui/dialog/layers.cpp:681
+#: ../src/ui/dialog/layers.cpp:675
 msgid "Bot"
 msgstr "Inferior"
 
-#: ../src/ui/dialog/layers.cpp:691
+#: ../src/ui/dialog/layers.cpp:685
 msgid "X"
 msgstr "X"
 
@@ -20951,7 +20941,7 @@ msgstr ""
 "http://cheeseshop.python.org/pypi/lxml/ o mediante su gestor de paquetes con "
 "un comando similar a este: sudo apt-get install python-lxml"
 
-#: ../share/extensions/inkex.py:222
+#: ../share/extensions/inkex.py:221
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr "No hay nodo coincidente para la expresión %s"
@@ -21035,11 +21025,10 @@ msgstr ""
 "Intente utilizar la opción «Trayecto -> Objeto a trayecto»"
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
-"can be done with the command 'sudo apt-get install python-numpy'."
+"can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "No se ha podido importar el módulo numpy. Esta extensión necesita este "
 "módulo. Vuelva a intentarlo después de instalarlo. En un sistema de tipo "
@@ -21510,7 +21499,6 @@ msgid "Symmedians"
 msgstr "Simedianos"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21536,7 +21524,7 @@ msgid ""
 "Also available are the inverse trigonometric functions:\n"
 "sec(x); csc(x); cot(x)\n"
 "\n"
-"You can specify the radius of a circle around a custom point using a "
+"You can specify the radius of a circle about a custom point using an "
 "formula, which may also contain the side lengths, angles, etc. You can also "
 "plot the isogonal and isotomic conjugate of the point. Be aware that this "
 "may cause a divide-by-zero error for certain points.\n"
@@ -21571,8 +21559,7 @@ msgstr ""
 "fórmula, que también puede contener las longitudes de los lados, ángulos, "
 "etc. Así mismo puede trazar las conjugadas isogonal e isotómica del punto. "
 "Tenga en cuenta que esto puede causar un error de «división entre cero» para "
-"ciertos puntos.\n"
-"            "
+"ciertos puntos."
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
@@ -21593,7 +21580,7 @@ msgstr ""
 "- AutoCAD Versión 13 y posteriores.\n"
 "- asume que el dibujo dxf está en mm.\n"
 "- asume que el dibujo svg está en píxeles, a 90 ppp.\n"
-"- las capas solamente se conservan con «Archivo-&gt;Abrir», no «Importar»\n"
+"- las capas solamente se conservan con «Archivo->Abrir», no «Importar»\n"
 " - soporte limitado para BLOQUES, utilice la opción de AutoCAD «Explotar "
 "bloques» si es necesario."
 
@@ -22292,7 +22279,7 @@ msgid "Start Value"
 msgstr "Valor inicial"
 
 #: ../share/extensions/interp_att_g.inx.h:18
-#: ../share/extensions/polyhedron_3d.inx.h:43
+#: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Style"
 msgstr "Estilo"
 
@@ -22897,74 +22884,82 @@ msgstr "Factor de escala"
 msgid "Shading"
 msgstr "Sombreado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Icosaedro triámbico pequeño"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Cubo romo"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Dodecaedro romo"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke Opacity/ %"
 msgstr "Opacidad de trazo/ %"
 
-#: ../share/extensions/polyhedron_3d.inx.h:44
+#: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Tetrahedron"
 msgstr "Tetraedro"
 
-#: ../share/extensions/polyhedron_3d.inx.h:45
+#: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Then Rotate Around:"
 msgstr "Luego rotar sobre:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:46
+#: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Truncated Cube"
 msgstr "Cubo truncado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:47
+#: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Dodecahedron"
 msgstr "Dodecaedro truncado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:48
+#: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Icosahedron"
 msgstr "Icosaedro truncado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:49
+#: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Octahedron"
 msgstr "Octaedro truncado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:50
+#: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Tetrahedron"
 msgstr "Tetraedro truncado"
 
-#: ../share/extensions/polyhedron_3d.inx.h:51
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
 msgstr "Vértices"
 
-#: ../share/extensions/polyhedron_3d.inx.h:52
+#: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
 msgstr "Vista"
 
-#: ../share/extensions/polyhedron_3d.inx.h:53
+#: ../share/extensions/polyhedron_3d.inx.h:54
 msgid "X-Axis"
 msgstr "Eje X"
 
-#: ../share/extensions/polyhedron_3d.inx.h:54
+#: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Y-Axis"
 msgstr "Eje Y"
 
-#: ../share/extensions/polyhedron_3d.inx.h:55
+#: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Axis"
 msgstr "Eje Z"
 
-#: ../share/extensions/polyhedron_3d.inx.h:56
+#: ../share/extensions/polyhedron_3d.inx.h:57
 msgid "Z-Sort Faces By:"
 msgstr "Z-ordenar caras por:"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/polyhedron_3d.inx.h:60
+msgid "polyhedron|Show:"
+msgstr "Mostrar:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -23099,58 +23094,66 @@ msgid "Arrange"
 msgstr "Ordenar"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
-msgid "Bottom"
-msgstr "Inferior:"
-
-#: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
 msgstr "De abajo arriba (90)"
 
-#: ../share/extensions/restack.inx.h:6
+#: ../share/extensions/restack.inx.h:5
 msgid "Horizontal Point:"
 msgstr "Punto horizontal:"
 
-#: ../share/extensions/restack.inx.h:8
+#: ../share/extensions/restack.inx.h:6
 msgid "Left to Right (0)"
 msgstr "De izquierda a derecha (0)"
 
-#: ../share/extensions/restack.inx.h:9
-#, fuzzy
-msgid "Middle"
-msgstr "Acribillar"
-
-#: ../share/extensions/restack.inx.h:10
+#: ../share/extensions/restack.inx.h:7
 msgid "Radial Inward"
 msgstr "Radial hacia adentro"
 
-#: ../share/extensions/restack.inx.h:11
+#: ../share/extensions/restack.inx.h:8
 msgid "Radial Outward"
 msgstr "Radial hacia afuera"
 
-#: ../share/extensions/restack.inx.h:12
+#: ../share/extensions/restack.inx.h:9
 msgid "Restack"
 msgstr "Apilar"
 
-#: ../share/extensions/restack.inx.h:13
+#: ../share/extensions/restack.inx.h:10
 msgid "Restack Direction:"
 msgstr "Dirección de apilado:"
 
-#: ../share/extensions/restack.inx.h:15
+#: ../share/extensions/restack.inx.h:11
 msgid "Right to Left (180)"
 msgstr "De derecha a izquierda (180)"
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr "Superior"
-
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:12
 msgid "Top to Bottom (270)"
 msgstr "De arriba abajo (270)"
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:13
 msgid "Vertical Point:"
 msgstr "Punto vertical:"
+
+#: ../share/extensions/restack.inx.h:14
+msgid "restack|Bottom"
+msgstr "Fondo"
+
+#. TRANSLATORS: only translate "string" in "context|string".
+#. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+#: ../share/extensions/restack.inx.h:17
+msgid "restack|Left"
+msgstr "Izquierda"
+
+#: ../share/extensions/restack.inx.h:18
+msgid "restack|Middle"
+msgstr "Centro"
+
+#: ../share/extensions/restack.inx.h:19
+msgid "restack|Right"
+msgstr "Derecha"
+
+#: ../share/extensions/restack.inx.h:20
+msgid "restack|Top"
+msgstr "Arriba"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -23738,24 +23741,6 @@ msgstr "Entrada de metaarchivo de windows"
 msgid "XAML Input"
 msgstr "Entrada XAML"
 
-#~ msgid "polyhedron|Show:"
-#~ msgstr "Mostrar:"
-
-#~ msgid "restack|Bottom"
-#~ msgstr "Fondo"
-
-#~ msgid "restack|Left"
-#~ msgstr "Izquierda"
-
-#~ msgid "restack|Middle"
-#~ msgstr "Centro"
-
-#~ msgid "restack|Right"
-#~ msgstr "Derecho"
-
-#~ msgid "restack|Top"
-#~ msgstr "Arriba"
-
 #~ msgid "The second path must be exactly four nodes long."
 #~ msgstr "El segundo trayecto debe medir exáctamente cuatro nodos."
 
@@ -23893,6 +23878,9 @@ msgstr "Entrada XAML"
 
 #~ msgid "Export canvas"
 #~ msgstr "Exportar el lienzo"
+
+#~ msgid "Layers"
+#~ msgstr "Capas"
 
 #~ msgid "AutoCAD Plot drawing files (*.plt)"
 #~ msgstr "Archivos de AutoCAD Plot (*.plt)"
