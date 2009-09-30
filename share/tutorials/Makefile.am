@@ -55,6 +55,7 @@ tutorial_DATA = \
     tutorial-basic.hu.svg \
     tutorial-basic.it.svg \
     tutorial-basic.ja.svg \
+    tutorial-basic.nl.svg \
     tutorial-basic.nn.svg \
     tutorial-basic.pl.svg \
     tutorial-basic.pt_BR.svg \
