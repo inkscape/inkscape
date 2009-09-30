@@ -132,7 +132,7 @@ for ch in root.getchildren():
 
                 text = etree.Element(e_text, nsmap=NSS)
                 text.attrib['x']=str( q['x'] + q['width'] * (menu_shifts[menu] + 0.5) )
-                text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.8) )
+                text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.86) )
                 text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.08)
                 text.text = fi.attrib[a_label]
                 newroot.append(text)
@@ -143,7 +143,7 @@ for ch in root.getchildren():
 
                 text = etree.Element(e_text, nsmap=NSS)
                 text.attrib['x']=str( q['x'] + q['width'] * (menu_shifts[menu] + 0.5) )
-                text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.9) )
+                text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.92) )
                 text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.04)
                 text.text = fi.attrib[a_tooltip]
                 newroot.append(text)
