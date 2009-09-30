@@ -1482,6 +1482,13 @@ profile_path(const char *filename)
             if ( g_mkdir_with_parents(prefdir, mode) == -1 ) {
                 int problem = errno;
                 g_warning("Unable to create profile directory (%s) (%d)", g_strerror(problem), problem);
+            } else {
+                gchar const *userDirs[] = {"keys", "templates", "icons", "extensions", "palettes", NULL};
+                for (gchar const** name = userDirs; *name; ++name) {
+                    gchar *dir = g_build_filename(prefdir, *name, NULL);
+                    g_mkdir_with_parents(dir, mode);
+                    g_free(dir);
+                }
             }
         }
     }
