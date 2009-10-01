@@ -376,13 +376,14 @@ normal mode. In Unicode mode, each group of 4 hexadecimal digits you type become
 single Unicode character, thus allowing you to enter arbitrary symbols (as long as you
 know their Unicode codepoints and the font supports them). To finish the Unicode input, 
 press <flowSpan style="font-weight:bold">Enter</flowSpan>. For example, <flowSpan style="font-weight:bold">Ctrl+U 2 0 1 4 Enter</flowSpan> inserts
-an em-dash (—).
+an em-dash (—). To quit the Unicode mode without inserting anything press
+<flowSpan style="font-weight:bold">Esc</flowSpan>.
 </flowDiv></flowRoot>
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2615.6252089999994"><tspan x="10" y="2615.6252089999994">Using the grid for drawing icons</tspan></text>
-<rect id="d0e347" width="288" height="1000px" x="10" y="2620.5252089999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e347" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Suppose you want to create a 24x24 pixel icon. Create a 24x24 px canvas (use the
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2627.256768999999"><tspan x="10" y="2627.256768999999">Using the grid for drawing icons</tspan></text>
+<rect id="d0e350" width="288" height="1000px" x="10" y="2632.1567689999993" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e350" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Suppose you want to create a 24x24 pixel icon. Create a 24x24 px canvas (use the
 <flowSpan style="font-family:sans serif">Document Preferences</flowSpan>) and set the grid to 0.5 px (48x48 gridlines).
 Now, if you align filled objects to <flowSpan style="font-style:italic">even</flowSpan> gridlines, and stroked
 objects to <flowSpan style="font-style:italic">odd</flowSpan> gridlines with the stroke width in px being an even
@@ -392,8 +393,8 @@ get a crisp bitmap image without unneeded antialiasing.
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2719.4054479999995"><tspan x="10" y="2719.4054479999995">Object rotation</tspan></text>
-<rect id="d0e365" width="288" height="1000px" x="10" y="2724.3054479999996" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e365" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When in the Select tool, <flowSpan style="font-weight:bold">click</flowSpan> on an object to see the scaling arrows,
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2731.0370079999993"><tspan x="10" y="2731.0370079999993">Object rotation</tspan></text>
+<rect id="d0e368" width="288" height="1000px" x="10" y="2735.9370079999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e368" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When in the Select tool, <flowSpan style="font-weight:bold">click</flowSpan> on an object to see the scaling arrows,
 then <flowSpan style="font-weight:bold">click again</flowSpan> on the object to see the rotation and shift arrows. If
 the arrows at the corners are clicked and dragged, the object will rotate around the
 center (shown as a cross mark). If you hold down the <flowSpan style="font-weight:bold">Shift</flowSpan> key while
@@ -401,7 +402,7 @@ doing this, the rotation will occur around the opposite corner. You can also dra
 rotation center to any place.
 </flowDiv></flowRoot>
 
-<rect id="d0e377" width="288" height="1000px" x="10" y="2809.6270789999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e377" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Or, you can rotate from keyboard by pressing <flowSpan style="font-weight:bold">[</flowSpan> and <flowSpan style="font-weight:bold">]</flowSpan>
+<rect id="d0e380" width="288" height="1000px" x="10" y="2821.258638999999" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e380" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Or, you can rotate from keyboard by pressing <flowSpan style="font-weight:bold">[</flowSpan> and <flowSpan style="font-weight:bold">]</flowSpan>
 (by 15 degrees) or <flowSpan style="font-weight:bold">Ctrl+[</flowSpan> and <flowSpan style="font-weight:bold">Ctrl+]</flowSpan> (by 90
 degrees). The same <flowSpan style="font-weight:bold">[]</flowSpan> keys with <flowSpan style="font-weight:bold">Alt</flowSpan> perform slow
 pixel-size rotation.
@@ -409,8 +410,8 @@ pixel-size rotation.
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2863.7417689999993"><tspan x="10" y="2863.7417689999993">Open dialog as an object palette</tspan></text>
-<rect id="d0e404" width="288" height="1000px" x="10" y="2868.6417689999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e404" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">If you have a number of small SVG files whose contents you often reuse in other
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2875.373328999999"><tspan x="10" y="2875.373328999999">Open dialog as an object palette</tspan></text>
+<rect id="d0e407" width="288" height="1000px" x="10" y="2880.273328999999" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e407" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">If you have a number of small SVG files whose contents you often reuse in other
 documents, you can conveniently use the Open dialog as a palette. Add the directory with
 your SVG sources into the bookmarks list so you can open it quickly. Then browse that
 directory looking at the previews. Once you found the file you need, simply drag it to
@@ -419,8 +420,8 @@ the canvas and it will be imported into your current document.
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2965.7747429999995"><tspan x="10" y="2965.7747429999995">Drop shadows</tspan></text>
-<rect id="d0e413" width="288" height="1000px" x="10" y="2970.6747429999996" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e413" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Inkscape supports the Gaussian blur SVG filter, so you can easily create blurred drop 
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="2977.4063029999993"><tspan x="10" y="2977.4063029999993">Drop shadows</tspan></text>
+<rect id="d0e416" width="288" height="1000px" x="10" y="2982.3063029999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e416" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Inkscape supports the Gaussian blur SVG filter, so you can easily create blurred drop 
 shadows for objects. Select an object, duplicate it by <flowSpan style="font-weight:bold">Ctrl+D</flowSpan>, press 
 <flowSpan style="font-weight:bold">PgDown</flowSpan> to put it beneath original object, place it a little to the right 
 and lower than original object. Now open Fill And Stroke dialog and change Blur value to, 
@@ -429,8 +430,8 @@ say, 5.0. That's it!
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3056.6564179999996"><tspan x="10" y="3056.6564179999996">Placing text on a path</tspan></text>
-<rect id="d0e428" width="288" height="1000px" x="10" y="3061.5564179999997" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e428" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">To place text along a curve, select the text and the curve together and choose
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3068.2879779999994"><tspan x="10" y="3068.2879779999994">Placing text on a path</tspan></text>
+<rect id="d0e431" width="288" height="1000px" x="10" y="3073.1879779999995" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e431" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">To place text along a curve, select the text and the curve together and choose
 <flowSpan style="font-family:sans serif">Put on Path</flowSpan> from the Text menu. The text will start at the beginning
 of the path. In general it is best to create an explicit path that you want the text to
 be fitted to, rather than fitting it to some other drawing element — this will give you
@@ -439,8 +440,8 @@ more control without screwing over your drawing.
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3149.2646599999994"><tspan x="10" y="3149.2646599999994">Selecting the original</tspan></text>
-<rect id="d0e440" width="288" height="1000px" x="10" y="3154.1646599999995" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e440" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When you have a text on path, a linked offset, or a clone, their source object/path may
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3160.896219999999"><tspan x="10" y="3160.896219999999">Selecting the original</tspan></text>
+<rect id="d0e443" width="288" height="1000px" x="10" y="3165.7962199999993" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e443" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When you have a text on path, a linked offset, or a clone, their source object/path may
 be difficult to select because it may be directly underneath, or made invisible and/or
 locked. The magic key <flowSpan style="font-weight:bold">Shift+D</flowSpan> will help you; select the text, linked
 offset, or clone, and press <flowSpan style="font-weight:bold">Shift+D</flowSpan> to move selection to the
@@ -449,8 +450,8 @@ corresponding path, offset source, or clone original.
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3241.9142919999995"><tspan x="10" y="3241.9142919999995">Window off-screen recovery</tspan></text>
-<rect id="d0e455" width="288" height="1000px" x="10" y="3246.8142919999996" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e455" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When moving documents between systems with different resolutions or number of displays,
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3253.5458519999993"><tspan x="10" y="3253.5458519999993">Window off-screen recovery</tspan></text>
+<rect id="d0e458" width="288" height="1000px" x="10" y="3258.4458519999994" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e458" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">When moving documents between systems with different resolutions or number of displays,
 you may find Inkscape has saved a window position that places the window out of reach on
 your screen. Simply maximise the window (which will bring it back into view, use the
 task bar), save and reload. You can avoid this altogether by unchecking the global
@@ -460,8 +461,8 @@ option to save window geometry (<flowSpan style="font-family:sans serif">Inkscap
 
 
 
-<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3345.6945309999996"><tspan x="10" y="3345.6945309999996">Transparency, gradients, and PostScript export</tspan></text>
-<rect id="d0e470" width="288" height="1000px" x="10" y="3350.5945309999997" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e470" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">PostScript or EPS formats do not support <flowSpan style="font-style:italic">transparency</flowSpan>, so you
+<text style="font-size:8.5;font-style:normal;font-weight:bold;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Sans;text-anchor:start;writing-mode:lr" x="10" y="3357.3260909999995"><tspan x="10" y="3357.3260909999995">Transparency, gradients, and PostScript export</tspan></text>
+<rect id="d0e473" width="288" height="1000px" x="10" y="3362.2260909999995" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e473" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">PostScript or EPS formats do not support <flowSpan style="font-style:italic">transparency</flowSpan>, so you
 should never use it if you are going to export to PS/EPS. In the case of flat
 transparency which overlays flat color, it's easy to fix it: Select one of the
 transparent objects; switch to the Dropper tool (<flowSpan style="font-weight:bold">F7</flowSpan>); make sure it's in
@@ -472,7 +473,7 @@ several flat color areas, you will need to break it correspondingly into pieces 
 apply this procedure to each piece.
 </flowDiv></flowRoot>
 
-<rect id="d0e479" width="288" height="1000px" x="10" y="3480.4852009999995" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e479" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Exporting <flowSpan style="font-style:italic">gradients</flowSpan> to PS or EPS does not work for text
+<rect id="d0e482" width="288" height="1000px" x="10" y="3492.1167609999993" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e482" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Exporting <flowSpan style="font-style:italic">gradients</flowSpan> to PS or EPS does not work for text
 (unless text is converted to path) or for stroke paint. Also, since transparency is lost
 on PS or EPS export, you can't use e.g. a gradient from an <flowSpan style="font-style:italic">opaque</flowSpan>
 blue to <flowSpan style="font-style:italic">transparent</flowSpan> blue; as a workaround, replace it by a gradient
@@ -481,7 +482,7 @@ color.</flowDiv></flowRoot>
 
 
 
-<g transform="translate(0, 3554.5934429999993)"><defs xmlns:svg="http://www.w3.org/2000/svg" id="defs3">
+<g transform="translate(0, 3566.225002999999)"><defs xmlns:svg="http://www.w3.org/2000/svg" id="defs3">
     <linearGradient id="linearGradient841">
       <stop style="stop-color:#0082ab;stop-opacity:1;" offset="0.00000000" id="stop842"/>
       <stop style="stop-color:white;stop-opacity:0;" offset="1" id="stop843"/>
