@@ -173,10 +173,13 @@ svgcolors={
 
 def parseStyle(s):
     """Create a dictionary from the value of an inline style attribute"""
-    return dict([i.split(":") for i in s.split(";") if len(i)])
+    if s is None:
+      return {}
+    else:
+      return dict([i.split(":") for i in s.split(";") if len(i)])
 def formatStyle(a):
     """Format an inline style attribute from a dictionary"""
-    return ";".join([":".join(i) for i in a.iteritems()])
+    return ";".join([att+":"+str(val) for att,val in a.iteritems()])
 def isColor(c):
     """Determine if its a color we can use. If not, leave it unchanged."""
     if c.startswith('#') and (len(c)==4 or len(c)==7):
