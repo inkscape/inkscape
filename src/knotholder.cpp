@@ -234,7 +234,7 @@ KnotHolder::add_pattern_knotholder()
                           _("<b>Move</b> the pattern fill inside the object"),
                           SP_KNOT_SHAPE_CROSS);
         entity_scale->create(desktop, item, this,
-                             _("<b>Scale</b> the pattern fill uniformly"),
+                             _("<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"),
                              SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
         entity_angle->create(desktop, item, this,
                              _("<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"),
