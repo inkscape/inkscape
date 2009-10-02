@@ -94,7 +94,7 @@ class Restack(inkex.Effect):
             midx = (minx + maxx) / 2
             midy = (miny + maxy) / 2
 
-            #calculate distances fro each selected object
+            #calculate distances for each selected object
             for id, node in self.selected.iteritems():
                 # get the bounding box
                 x,y,w,h = dimen[id]

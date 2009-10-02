@@ -5,7 +5,7 @@
   <dependency type="executable" location="extensions">pathmodifier.py</dependency>
   <dependency type="executable" location="extensions">pathscatter.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
-  <_param name="title" type="description">This effect scatters a pattern along arbitrary "skeleton" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)</_param>
+  <_param name="title" type="description">This effect scatters a pattern along arbitrary "skeleton" paths. The pattern must be the topmost object in the selection. Groups of paths, shapes, clones are allowed.</_param>
   <param name="follow" type="boolean" _gui-text="Follow path orientation">false</param>
   <param name="stretch" type="boolean" _gui-text="Stretch spaces to fit skeleton length">false</param>
   <param name="space" type="float" _gui-text="Space between copies:" min="-10000.0" max="10000.0">0.0</param>
