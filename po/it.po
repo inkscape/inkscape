@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-09-18 08:45+0200\n"
-"PO-Revision-Date: 2009-09-29 22:07+0100\n"
+"PO-Revision-Date: 2009-10-02 23:19+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -2048,7 +2048,7 @@ msgstr "Metallo lucido"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metallic effect for any color"
-msgstr ""
+msgstr "Effetto metallico brillante per qualsiasi colore"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
@@ -2082,15 +2082,15 @@ msgstr "Combinato"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
-msgstr ""
+msgstr "Stagnola"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Metallic foil effect combining two lighting types and variable crumple"
-msgstr ""
+msgstr "Effetto carta stagnola con due tipi d'illuminazione e pieghe variabili"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Copper and chocolate"
-msgstr ""
+msgstr "Rame e cioccolato"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Specular bump which can be easily converted from metallic to molded plastic effects"
@@ -2150,7 +2150,7 @@ msgstr "Titolo"
 
 #: ../share/filters/filters.svg.h:219
 msgid "Create a tritone palette with hue selectable by flood"
-msgstr ""
+msgstr "Crea un effetto in tre toni, col colore regolabile tramite il riempimento"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -5763,7 +5763,7 @@ msgstr "Documento non salvato."
 #: ../src/file.cpp:596
 #, c-format
 msgid "File %s is write protected. Please remove write protection and try again."
-msgstr ""
+msgstr "Il file %s è protetto dalla scrittura. Rimuovere la protezione e riprovare."
 
 #: ../src/file.cpp:604
 #, c-format
@@ -12589,7 +12589,7 @@ msgstr "Al passaggio del mouse sul tracciato, ne evidenzia brevemente lo schelet
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Suppress path outline flash when one path selected"
-msgstr "Disattiva evidenziaazione scheletro tracciato quando un tracciato è già selezionato"
+msgstr "Disattiva evidenziazione scheletro tracciato quando un tracciato è già selezionato"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
@@ -19815,7 +19815,7 @@ msgstr "Impossibile trovare il file: %s"
 
 #: ../share/extensions/uniconv_output.py:118
 msgid "You need to install the UniConvertor software.\n"
-msgstr ""
+msgstr "È necessario installare il programma UniConvertor.\n"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
@@ -20292,6 +20292,11 @@ msgid ""
 "- only LWPOLYLINE and SPLINE elements are supported.\n"
 "- ROBO-Master option is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape."
 msgstr ""
+"- Formato AutoCAD Release 13.\n"
+"- si assume che le unità svg siano in pixel, a 90 dpi.\n"
+"- si assume che le unità dxf siano in mm.\n"
+"- sono supportati solo elementi LWPOLYLINE e SPLINE.\n"
+"- l'opzione ROBO-Master genere una spline interpretabile solo da ROBO-Master e lettori AutoDesk, non da Inkscape."
 
 #: ../share/extensions/dxf_outlines.inx.h:6
 msgid "Desktop Cutting Plotter"
@@ -22170,7 +22175,7 @@ msgstr "Il parametro successivo è utile se si selezionano più di due elementi"
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
 msgid "This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox)."
-msgstr "Questo effetto aggiunge una caratteristica visibile (o usabile) so su browser web che supportino SVG (come Firefox)"
+msgstr "Questo effetto aggiunge una caratteristica visibile (o usabile) solo su browser web che supportino SVG (come Firefox)"
 
 #: ../share/extensions/web-set-att.inx.h:14
 msgid "This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element."
