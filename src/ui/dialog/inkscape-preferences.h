@@ -69,7 +69,7 @@ enum {
     PREFS_PAGE_CMS,
     PREFS_PAGE_GRIDS,
     PREFS_PAGE_SVGOUTPUT,
-    PREFS_PAGE_AUTOSAVE,
+    PREFS_PAGE_SAVE,
     PREFS_PAGE_IMPORTEXPORT,
     PREFS_PAGE_MOUSE,
     PREFS_PAGE_SCROLLING,
@@ -117,7 +117,7 @@ protected:
     DialogPage _page_mouse, _page_scrolling, _page_snapping, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
-        _page_ui, _page_autosave, _page_bitmaps, _page_spellcheck;
+        _page_ui, _page_save, _page_bitmaps, _page_spellcheck;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
@@ -209,10 +209,11 @@ protected:
     PrefCheckButton _misc_bitmap_autoreload;
     PrefSpinButton  _bitmap_copy_res;
 
-    PrefCheckButton _autosave_autosave_enable;
-    PrefSpinButton  _autosave_autosave_interval;
-    PrefEntry       _autosave_autosave_path;
-    PrefSpinButton  _autosave_autosave_max;
+    PrefCheckButton _save_use_current_dir;
+    PrefCheckButton _save_autosave_enable;
+    PrefSpinButton  _save_autosave_interval;
+    PrefEntry       _save_autosave_path;
+    PrefSpinButton  _save_autosave_max;
 
     Gtk::ComboBoxText   _cms_display_profile;
     PrefCheckButton     _cms_from_display;
@@ -298,7 +299,7 @@ protected:
     void initPageSVGOutput();
     void initPageUI();
     void initPageSpellcheck();
-    void initPageAutosave();
+    void initPageSave();
     void initPageBitmaps();
     void initPageMisc();
     void initPageI18n();

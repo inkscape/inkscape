@@ -120,7 +120,7 @@ InkscapePreferences::InkscapePreferences()
     initPageCMS();
     initPageGrids();
     initPageSVGOutput();
-    initPageAutosave();
+    initPageSave();
     initPageImportExport();
     initPageMouse();
     initPageScrolling();
@@ -1109,19 +1109,24 @@ void InkscapePreferences::initPageUI()
 }
 
 
-void InkscapePreferences::initPageAutosave()
+void InkscapePreferences::initPageSave()
 {
+    _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
+    _page_save.add_line( false, "", _save_use_current_dir, "",
+                         _("The \"Save As ...\" dialog uses the current working directory for saving (if the file was previously saved). If not previously saved, the most recent \"Save As ...\" directory is used."), true);
+
+
     // Autosave options
-    _autosave_autosave_enable.init( _("Enable autosave (requires restart)"), "/options/autosave/enable", false);
-    _page_autosave.add_line(false, "", _autosave_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
-    _autosave_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(true, _("Interval (in minutes):"), _autosave_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
-    _autosave_autosave_path.init("/options/autosave/path", true);
+    _save_autosave_enable.init( _("Enable autosave (requires restart)"), "/options/autosave/enable", false);
+    _page_save.add_line(false, "", _save_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
+    _save_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
+    _page_save.add_line(true, _("Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
+    _save_autosave_path.init("/options/autosave/path", true);
     //TRANSLATORS: only translate "string" in "context|string".
     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    _page_autosave.add_line(true, Q_("filesystem|Path:"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
-    _autosave_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(true, _("Maximum number of autosaves:"), _autosave_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
+    _page_save.add_line(true, Q_("filesystem|Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _save_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
+    _page_save.add_line(true, _("Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 
     /* When changing the interval or enabling/disabling the autosave function,
      * update our running configuration
@@ -1137,7 +1142,7 @@ void InkscapePreferences::initPageAutosave()
 
     // -----------
 
-    this->AddPage(_page_autosave, _("Autosave"), PREFS_PAGE_AUTOSAVE);
+    this->AddPage(_page_save, _("Save"), PREFS_PAGE_SAVE);
 }
 
 void InkscapePreferences::initPageBitmaps()
