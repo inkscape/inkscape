@@ -1283,11 +1283,19 @@ SPDesktopWidget::setToolboxFocusTo (const gchar* label)
 void
 SPDesktopWidget::setToolboxAdjustmentValue (gchar const *id, double value)
 {
+    GtkAdjustment *a = NULL;
     gpointer hb = sp_search_by_data_recursive (aux_toolbox, (gpointer) id);
-    if (hb && GTK_IS_WIDGET(hb) && GTK_IS_SPIN_BUTTON(hb)) {
-        GtkAdjustment *a = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(hb));
-        gtk_adjustment_set_value (a, value);
+    if (hb && GTK_IS_WIDGET(hb)) {
+        if (GTK_IS_SPIN_BUTTON(hb))
+            a = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON(hb));
+        else if (GTK_IS_RANGE(hb))
+            a = gtk_range_get_adjustment (GTK_RANGE(hb));
     }
+
+    if (a)
+        gtk_adjustment_set_value (a, value);
+    else
+        g_warning ("Could not find GtkAdjustment for %s\n", id);
 }
 
 void
