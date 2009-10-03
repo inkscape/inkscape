@@ -159,7 +159,7 @@ public:
     }
 
     void testReadImplicitMoveto() {
-        TS_WARN("Currently lib2geom (/libnr) has no way of specifying the difference between '... z M 0,0 L 1,0' and '... z L 1,0', the SVG specification does state that these should be handled differently with respect to markers however, see the description of the 'orient' attribute of the 'marker' element.");
+        TS_WARN("Currently lib2geom (/libnr) has no way of specifying the difference between 'M 0,0 ... z M 0,0 L 1,0' and 'M 0,0 ... z L 1,0', the SVG specification does state that these should be handled differently with respect to markers however, see the description of the 'orient' attribute of the 'marker' element.");
         Geom::PathVector pv_good;
         pv_good.push_back(Geom::Path(Geom::Point(1,1)));
         pv_good.back().append(Geom::LineSegment(Geom::Point(1,1),Geom::Point(2,2)));
@@ -173,7 +173,7 @@ public:
             TSM_ASSERT(path_str, bpathEqual(pv,pv_good));
         }
         {   // Test relative version
-            char const * path_str = "M 1,1 L 2,2 z L 3,3 z";
+            char const * path_str = "M 1,1 l 1,1 z l 2,2 z";
             Geom::PathVector pv = sp_svg_read_pathv(path_str);
             TSM_ASSERT(path_str, bpathEqual(pv,pv_good));
         }
