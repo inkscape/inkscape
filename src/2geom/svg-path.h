@@ -64,33 +64,58 @@ public:
     void moveTo(Point p) {
         finish();
         _path.start(p);
+        _start_p = p;
         _in_path = true;
     }
 //TODO: what if _in_path = false?
 
     void hlineTo(Coord v) {
-    	_path.template appendNew<HLineSegment>(Point(v, _path.finalPoint()[Y]));
+    // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
+        _path.template appendNew<HLineSegment>(Point(v, _path.finalPoint()[Y]));
     }
 
     void vlineTo(Coord v) {
-    	_path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
+    // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
+        _path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
     }
 
     void lineTo(Point p) {
+        // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
         _path.template appendNew<LineSegment>(p);
     }
 
     void quadTo(Point c, Point p) {
+        // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
         _path.template appendNew<QuadraticBezier>(c, p);
     }
 
     void curveTo(Point c0, Point c1, Point p) {
+        // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
         _path.template appendNew<CubicBezier>(c0, c1, p);
     }
 
     void arcTo(double rx, double ry, double angle,
                bool large_arc, bool sweep, Point p)
     {
+        // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
+        if (!_in_path) {
+            moveTo(_start_p);
+        }
         _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
                                                  large_arc, sweep, p);
     }
@@ -113,6 +138,7 @@ protected:
     bool _in_path;
     OutputIterator _out;
     Path _path;
+    Point _start_p;
 };
 
 typedef std::back_insert_iterator<std::vector<Path> > iter;
