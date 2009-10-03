@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-03 07:08+0200\n"
-"PO-Revision-Date: 2009-09-18 21:52+0200\n"
+"PO-Revision-Date: 2009-10-03 13:06+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -6699,9 +6699,9 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "Az objektumon belüli kitöltőminta <b>áthelyezése</b>"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "A kitöltőminta egyenletes <b>átméretezése</b>"
+msgstr ""
+"A kitöltőminta <b>átméretezése</b>. Egyenletes átméretezés: <b>Ctrl</b>."
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -14714,7 +14714,7 @@ msgstr "Felület"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "Az aktuális könyvtár használata a \"Mentés másként...\" művelethez"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14722,6 +14722,9 @@ msgid ""
 "the file was previously saved). If not previously saved, the most recent "
 "\"Save As ...\" directory is used."
 msgstr ""
+"A \"Mentés másként...\" párbeszédablak az aktuális munkakönyvtárt használja "
+"mentéshez (ha a fájl már volt mentve korábban). Ha a fájl még nem volt "
+"mentve, akkor a legutóbbi \"Mentés másként...\"-könyvtár lesz használva."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -22762,15 +22765,14 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Üres helyek nyújtása, hogy illeszkedjen a váz hosszához"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
 "shapes, clones are allowed."
 msgstr ""
 "Ez az effektus szétszór egy mintát tetszőleges, vázként használt útvonalak "
-"mentén. A minta a kijelölés legfelső objektuma. Útvonalak, alakzatok, klónok "
-"stb. csoportjai is használhatók."
+"mentén. A mintának a kijelölés legfelső objektumának kell lennie. Útvonalak, "
+"alakzatok és klónok csoportjai is használhatók."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22867,7 +22869,6 @@ msgid "3D Polyhedron"
 msgstr "3D poliéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "Az objektum körüljárási iránya az óramutató járásának iránya"
 
@@ -22884,7 +22885,6 @@ msgid "Dodecahedron"
 msgstr "Dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
 msgstr "Hátrafelé néző sokszögek rajzolása"
 
@@ -22909,24 +22909,21 @@ msgid "Filename:"
 msgstr "Fájlnév:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
-msgstr "Kitöltési szín (kék)"
+msgstr "Kitöltési szín, kék"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
-msgstr "Kitöltési szín (zöld)"
+msgstr "Kitöltési szín, zöld"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
-msgstr "Kitöltési szín (vörös)"
+msgstr "Kitöltési szín, vörös"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "Kitöltés átlátszatlansága (%)"
+msgstr "Kitöltés átlátszatlansága, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22941,22 +22938,18 @@ msgid "Icosahedron"
 msgstr "Ikozaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "Világosítás"
+msgstr "Fény-X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "Világosítás"
+msgstr "Fény-Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "Világosítás"
+msgstr "Fény-Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "Betöltés fájlból"
 
@@ -22973,7 +22966,6 @@ msgid "Minimum"
 msgstr "Minimum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "Modellfájl"
 
@@ -22990,17 +22982,14 @@ msgid "Octahedron"
 msgstr "Oktaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
 msgstr "Elforgatás ezen tengely körül:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
-msgstr "Elforgatás (fok)"
+msgstr "Elforgatás, fok"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Scaling factor"
 msgstr "Méretezési tényező"
 
@@ -23021,21 +23010,19 @@ msgid "Snub Dodecahedron"
 msgstr "Pisze dodekaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Körvonal átlátszatlansága (%)"
+msgstr "Körvonal átlátszatlansága, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "Körvonalszélesség"
+msgstr "Körvonalszélesség, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Majd elforgatás ezen tengely körül:"
 
@@ -23080,7 +23067,6 @@ msgid "Z-Axis"
 msgstr "Z tengely"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
 msgstr "Oldalak z-rendezése ez alapján:"
 
