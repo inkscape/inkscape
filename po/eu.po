@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-09-29 16:17+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -722,8 +722,10 @@ msgid "Metallized paint"
 msgstr "Margo metalizatua"
 
 #: ../share/filters/filters.svg.h:67
-msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "Metalizatu efektua argiztapen bigunarekin, zeharrargitsu piskatekin ertzetan"
+msgid ""
+"Metallized effect with a soft lighting, slightly translucent at the edges"
+msgstr ""
+"Metalizatu efektua argiztapen bigunarekin, zeharrargitsu piskatekin ertzetan"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -873,7 +875,8 @@ msgid "Rough and glossy"
 msgstr "Latza eta distiratsua"
 
 #: ../share/filters/filters.svg.h:84
-msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
+msgid ""
+"Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 "Zimurtutako paper distiratsuaren efektua, bai irudi bai objektuentzako "
 "erabil daitekeena"
@@ -915,7 +918,8 @@ msgid "Electronic microscopy"
 msgstr "Mikroskopio elektronikoa"
 
 #: ../share/filters/filters.svg.h:89
-msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Mikroskopio elektronikoan bezalako alaka, argi gordina, deskolorazioa eta "
 "distira"
@@ -950,7 +954,8 @@ msgstr "Eskema, bikoitza"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr "Marraztu marra leuna barnean gainjarritzen dituen koloreekin margoztuta"
+msgstr ""
+"Marraztu marra leuna barnean gainjarritzen dituen koloreekin margoztuta"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Fancy blur"
@@ -958,7 +963,8 @@ msgstr "Lauso dotorea"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr "Ingerada koloreztatua leundu desaturazioa eta ñabardura biratzea baimentzeko"
+msgstr ""
+"Ingerada koloreztatua leundu desaturazioa eta ñabardura biratzea baimentzeko"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Glow"
@@ -1062,7 +1068,8 @@ msgid "Smooth edges"
 msgstr "Ertz leunak"
 
 #: ../share/filters/filters.svg.h:105
-msgid "Smooth the outside of shapes and pictures without altering their contents"
+msgid ""
+"Smooth the outside of shapes and pictures without altering their contents"
 msgstr "Leundu forma eta irudien kanpokoa beraien edukia eraldatu gabe"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
@@ -1070,7 +1077,8 @@ msgid "Torn edges"
 msgstr "Ertzen urradura"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:128
-msgid "Displace the outside of shapes and pictures without altering their content"
+msgid ""
+"Displace the outside of shapes and pictures without altering their content"
 msgstr "Joanarazi forma eta irudien kanpokoa beraien edukia eraldatu gabe"
 
 #: ../share/filters/filters.svg.h:107
@@ -1155,14 +1163,16 @@ msgstr "Betegarri zaratatsua"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr "Oinarrizko betegarri zaratatsuaren testura. Doitu kolorea 'Betegarria'n"
+msgstr ""
+"Oinarrizko betegarri zaratatsuaren testura. Doitu kolorea 'Betegarria'n"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
 msgstr "Gozotasunaren lorategia"
 
 #: ../share/filters/filters.svg.h:117
-msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
+msgid ""
+"Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 "Turbulentzia fantasmagorikodun xortak, Hieronymus Bosch-en 'Gozotasunaren "
 "lorategia' bezalakoa"
@@ -1190,7 +1200,8 @@ msgid "HSL Bumps, matte"
 msgstr "ÑSL erliebea, distiragabea"
 
 #: ../share/filters/filters.svg.h:120
-msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one"
+msgid ""
+"Same as HSL bumps but with a diffuse reflection instead of a specular one"
 msgstr "ÑSL erliebea bezalakoa baina islapen lausoarekin ispilatua izan ordez"
 
 #: ../share/filters/filters.svg.h:121
@@ -1217,7 +1228,8 @@ msgstr "Erliebe burbuilak, distiragabea"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Erliebe burbuilak bezalakoa baina argi lausoarekin ispilatua izan ordez"
+msgstr ""
+"Erliebe burbuilak bezalakoa baina argi lausoarekin ispilatua izan ordez"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1262,7 +1274,8 @@ msgstr "Margotu eskema, barnekoa"
 
 #: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
-msgstr "Margotu daitekeen barneko eskema zabalera eta lausoa doitu daitezkeenak"
+msgstr ""
+"Margotu daitekeen barneko eskema zabalera eta lausoa doitu daitezkeenak"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Liquid"
@@ -1285,8 +1298,10 @@ msgid "Felt"
 msgstr "Feltroa"
 
 #: ../share/filters/filters.svg.h:132
-msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr "Feltroa bezalako testura kolorearen turbulentzia eta piskat ilunagoa ertzetan"
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
+msgstr ""
+"Feltroa bezalako testura kolorearen turbulentzia eta piskat ilunagoa ertzetan"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
@@ -1294,7 +1309,8 @@ msgstr "Tinta margoa"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr "Tintaren margoa paperean turbulentziadun kolorea piskat desplazatuta duela"
+msgstr ""
+"Tintaren margoa paperean turbulentziadun kolorea piskat desplazatuta duela"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
@@ -1302,7 +1318,8 @@ msgstr "Ostadar tindatua"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr "Ostadarraren kolore leunak ertzetan zehar urtuta eta kolorezta daitekeena"
+msgstr ""
+"Ostadarraren kolore leunak ertzetan zehar urtuta eta kolorezta daitekeena"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
@@ -1440,7 +1457,8 @@ msgstr "Tartan izurtua"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr "Tartan eredua izurduraren desplazamenduarekin eta ertzen inguruan alakarekin"
+msgstr ""
+"Tartan eredua izurduraren desplazamenduarekin eta ertzen inguruan alakarekin"
 
 #: ../share/filters/filters.svg.h:151
 msgid "3D marble"
@@ -1632,7 +1650,8 @@ msgstr "Ostadar okertua"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Smooth rainbow colors warped along the edges and colorizable"
-msgstr "Ostadarraren kolore leunak ertzetan zehar urtuta eta kolorezta daitekeena"
+msgstr ""
+"Ostadarraren kolore leunak ertzetan zehar urtuta eta kolorezta daitekeena"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Rough and dilate"
@@ -1656,7 +1675,8 @@ msgstr "Postal zaharra"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr "Piska bat posterizatu eta marraztu ertzak postal zaharretako margoen antzera"
+msgstr ""
+"Piska bat posterizatu eta marraztu ertzak postal zaharretako margoen antzera"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Fuzzy Glow"
@@ -1664,7 +1684,8 @@ msgstr "Dirdira lausoa"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
-msgstr "Desplazatutako erdi gardentasunaren kopia gainjartzen dio lausotutakoari"
+msgstr ""
+"Desplazatutako erdi gardentasunaren kopia gainjartzen dio lausotutakoari"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Dots transparency"
@@ -1687,8 +1708,10 @@ msgid "Smear transparency"
 msgstr "Gardentasun lohitua"
 
 #: ../share/filters/filters.svg.h:179
-msgid "Paint objects with a transparent turbulence which turns around color edges"
-msgstr "Margotu objektuak turbulentzia garden batekin, koloreen ertzak inguratuz"
+msgid ""
+"Paint objects with a transparent turbulence which turns around color edges"
+msgstr ""
+"Margotu objektuak turbulentzia garden batekin, koloreen ertzak inguratuz"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
@@ -1743,7 +1766,8 @@ msgid "Plaster"
 msgstr "Igeltsua"
 
 #: ../share/filters/filters.svg.h:185
-msgid "Combine a HSL edges detection bump with a matte and crumpled surface effect"
+msgid ""
+"Combine a HSL edges detection bump with a matte and crumpled surface effect"
 msgstr ""
 "Konbinatu ÑSA ertz detekzioaren erliebea gainazal distiragabe eta "
 "zimurtuaren efektu batekin"
@@ -1778,7 +1802,8 @@ msgstr "Alfa marrazkia, likidoa"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr "Marrazki likido gardenaren efektua ematen du marra eta betegarri latzarekin"
+msgstr ""
+"Marrazki likido gardenaren efektua ematen du marra eta betegarri latzarekin"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Liquid drawing"
@@ -1794,7 +1819,8 @@ msgstr "Marmoldun tinta"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr "Marmolaren gardentasun efektua irudiaren ertzak detektatzeko osatutakoa"
+msgstr ""
+"Marmolaren gardentasun efektua irudiaren ertzak detektatzeko osatutakoa"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic"
@@ -1809,7 +1835,8 @@ msgid "Alpha engraving B"
 msgstr "B grabaketa alfa"
 
 #: ../share/filters/filters.svg.h:193
-msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "grabatu baten gogortasunezko efektu kontrolagarri bat eskaintzen du bit-mapa "
 "eta materialei"
@@ -1878,7 +1905,8 @@ msgstr "Berniz zimurtua"
 
 #: ../share/filters/filters.svg.h:201
 msgid "Thick glossy and translucent paint texture with high depth"
-msgstr "Satinatu lodia eta pinturaren testura zeharrargitsua sakonera altuarekin"
+msgstr ""
+"Satinatu lodia eta pinturaren testura zeharrargitsua sakonera altuarekin"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas Bumps"
@@ -1894,7 +1922,8 @@ msgstr "Oihalaren erliebea, distiragabea"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr "Oihalaren erliebe batzuen bezala, baina argi lausoarekin ispilatua izan ordez"
+msgstr ""
+"Oihalaren erliebe batzuen bezala, baina argi lausoarekin ispilatua izan ordez"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
@@ -1996,7 +2025,8 @@ msgstr "Kolore bigunak"
 
 #: ../share/filters/filters.svg.h:215
 msgid "Adds a colorizable edges glow inside objects and pictures"
-msgstr "Objektu eta irudien barruan ertz koloreztagarrien dirdirak gehitzen ditu"
+msgstr ""
+"Objektu eta irudien barruan ertz koloreztagarrien dirdirak gehitzen ditu"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Relief print"
@@ -2020,7 +2050,8 @@ msgstr "Fluoreszentea"
 
 #: ../share/filters/filters.svg.h:218
 msgid "Oversaturate colors which can be fluorescent in real world"
-msgstr "Gainsaturatu koloreak benetako munduan fluoreszenteak izan daitezkeenak"
+msgstr ""
+"Gainsaturatu koloreak benetako munduan fluoreszenteak izan daitezkeenak"
 
 #: ../share/filters/filters.svg.h:219
 msgid "Tritone"
@@ -2028,7 +2059,8 @@ msgstr "Hiru tonu"
 
 #: ../share/filters/filters.svg.h:219
 msgid "Create a tritone palette with hue selectable by flood"
-msgstr "Sortu hiru tonuko paleta betegarriaren araberako ñabardura hautagarriarekin"
+msgstr ""
+"Sortu hiru tonuko paleta betegarriaren araberako ñabardura hautagarriarekin"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -2195,7 +2227,8 @@ msgid "Old paint (bitmap)"
 msgstr "Pintura zaharra (bit-mapa)"
 
 #: ../src/arc-context.cpp:319
-msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
+msgid ""
+"<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ktrl</b>: sortu zirkulua edo osoko erlaziodun elipsea, atxikitu arkuaren/"
 "segmentuaren angelua"
@@ -2271,7 +2304,8 @@ msgstr "Lotura-marraren amaiera"
 
 #: ../src/connector-context.cpp:1154
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr "<b>Konexio-puntua</b>: egin klik edo arrastatu lotura-marra berria sortzeko"
+msgstr ""
+"<b>Konexio-puntua</b>: egin klik edo arrastatu lotura-marra berria sortzeko"
 
 #: ../src/connector-context.cpp:1227
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
@@ -2283,27 +2317,28 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Hautatu <b>gutxienez lotura-marra ez den objektu bat</b>."
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Egin lotura-marrek hautatutako objektuak saihestea"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Egin kotura-marrek ezikusi egitea hautatutako objektuei"
 
 #: ../src/context-fns.cpp:36 ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr "<b>Uneko geruza ezkutatuta dago</b>. Bihurtu ikusgai bertan marrazteko."
+msgstr ""
+"<b>Uneko geruza ezkutatuta dago</b>. Bihurtu ikusgai bertan marrazteko."
 
 #: ../src/context-fns.cpp:42 ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>Uneko geruza blokeatuta dago</b>. Desblokeatu bertan marrazteko."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Ez dago aurreko zoomik."
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Ez dago hurrengo zoomik."
 
@@ -2631,7 +2666,8 @@ msgid "<b>Base:</b>"
 msgstr "<b>Oinarria:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2204 ../src/dialogs/clonetiler.cpp:2211
-msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
+msgid ""
+"Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr ""
 "Espiral logaritmikoaren oinarria: erabili gabe (1), bateratuta (<1) edo "
 "aldenduta (>1)"
@@ -2959,7 +2995,8 @@ msgstr "Tamaina"
 
 #: ../src/dialogs/clonetiler.cpp:2747
 msgid "Each clone's size is determined by the picked value in that point"
-msgstr "Klon bakoitzaren tamaina puntu horretan hautatutako balioak zehazten du"
+msgstr ""
+"Klon bakoitzaren tamaina puntu horretan hautatutako balioak zehazten du"
 
 #: ../src/dialogs/clonetiler.cpp:2757
 msgid ""
@@ -2971,7 +3008,8 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "Klon bakoitzaren opakotasuna puntu horretan hautatutako balioak zehazten du"
+msgstr ""
+"Klon bakoitzaren opakotasuna puntu horretan hautatutako balioak zehazten du"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3130,7 +3168,7 @@ msgid "_Height:"
 msgstr "_Altuera:"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "dpi"
 
@@ -3211,7 +3249,7 @@ msgstr "%s direktorioa ez da existitzen edo ez da direktorio bat.\n"
 msgid "Exporting %s (%lu x %lu)"
 msgstr "%s esportatzen (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Hautatu fitxategi-izen bat esportatzeko"
 
@@ -3368,7 +3406,8 @@ msgid "_Style: "
 msgstr "_Estiloa: "
 
 #: ../src/dialogs/find.cpp:689 ../src/ui/dialog/find.cpp:62
-msgid "Find objects by the value of the style attribute (exact or partial match)"
+msgid ""
+"Find objects by the value of the style attribute (exact or partial match)"
 msgstr ""
 "Aurkitu objektuak estiloa atributuaren balioaren arabera (osotasunean edo "
 "zati batean bat datozenak)"
@@ -3443,8 +3482,10 @@ msgid "_Id"
 msgstr "_Id"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr "id=atributua (hizkiak, digitoak eta .-_: karaktereak bakarrik onartzen dira)"
+msgid ""
+"The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgstr ""
+"id=atributua (hizkiak, digitoak eta .-_: karaktereak bakarrik onartzen dira)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -3576,7 +3617,7 @@ msgid "Title:"
 msgstr "Titulua:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Erakutsi:"
 
@@ -3719,11 +3760,11 @@ msgstr "Lerrokatu marrak eskuinean"
 msgid "Justify lines"
 msgstr "Justifikatu marrak"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Testu horizontala"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Testu bertikala"
 
@@ -4189,7 +4230,7 @@ msgstr "Lekaren izkin-konkorra"
 msgid "Quadrant point"
 msgstr "Koadrante-puntua"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Zentratu"
 
@@ -4281,14 +4322,16 @@ msgid "Set picked color"
 msgstr "Ezarri aukeratutako kolorea"
 
 #: ../src/dyna-draw-context.cpp:615
-msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
+msgid ""
+"<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr ""
 "<b>Gidaren bidea hautatuta</b>; hasi gidan zehar marrazten <b>Ktrl</b> "
 "teklarekin"
 
 #: ../src/dyna-draw-context.cpp:617
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
-msgstr "<b>Hautatu gidaren bidea</b>ren jarraipena <b>Ktrl</b> teklarekin lantzeko"
+msgstr ""
+"<b>Hautatu gidaren bidea</b>ren jarraipena <b>Ktrl</b> teklarekin lantzeko"
 
 #: ../src/dyna-draw-context.cpp:752
 msgid "Tracking: <b>connection to guide path lost!</b>"
@@ -4470,7 +4513,8 @@ msgstr ""
 
 #: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr "Kanpoko moduloen direktorio-izena hutsik dago. Moduluak ez dira kargatuko."
+msgstr ""
+"Kanpoko moduloen direktorio-izena hutsik dago. Moduluak ez dira kargatuko."
 
 #: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
@@ -4858,7 +4902,8 @@ msgid "Brightness"
 msgstr "Distira"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
+msgid ""
+"Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr "Doitu hautatutako bit-mapen ñabardura, saturazioa eta distira kopurua"
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
@@ -4905,7 +4950,8 @@ msgstr "Goratuta"
 msgid ""
 "Alter lightness the edges of selected bitmap(s) to create a raised "
 "appearance."
-msgstr "Aldatu hautatutako bit-mapen ertzen argitasuna goratutako itxura sortzeko."
+msgstr ""
+"Aldatu hautatutako bit-mapen ertzen argitasuna goratutako itxura sortzeko."
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
@@ -4917,7 +4963,8 @@ msgid "Order"
 msgstr "Ordena"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
-msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
+msgid ""
+"Reduce noise in selected bitmap(s) using a noise peak elimination filter."
 msgstr ""
 "Murriztu zarata hautatutako bit-mapetan zarataren gainak ezabatzeko "
 "iragazkia erabiliz."
@@ -4927,8 +4974,10 @@ msgid "Resample"
 msgstr "Lagindu berriro"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "Aldatu hautatutako irudiaren bereizmena emandako pixel-tamainara aldatuz."
+msgid ""
+"Alter the resolution of selected image by resizing it to the given pixel size"
+msgstr ""
+"Aldatu hautatutako irudiaren bereizmena emandako pixel-tamainara aldatuz."
 
 #: ../src/extension/internal/bitmap/shade.cpp:39
 msgid "Shade"
@@ -5004,7 +5053,8 @@ msgstr "Desenfokatze-maskara"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
-msgstr "Enfokatu hautatutako bit-mapak desenfokatze-maskararen algoritmoa erabiliz."
+msgstr ""
+"Enfokatu hautatutako bit-mapak desenfokatze-maskararen algoritmoa erabiliz."
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
 msgid "Wave"
@@ -5199,7 +5249,7 @@ msgstr "Desplazamendu bertikala (px)"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5228,7 +5278,8 @@ msgstr "Pertsonala"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr "Kanpoko moduloen direktorio-izena hutsik dago. Iragazkiak ez dira kargatuko."
+msgstr ""
+"Kanpoko moduloen direktorio-izena hutsik dago. Iragazkiak ez dira kargatuko."
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow crest"
@@ -5294,7 +5345,7 @@ msgstr "Desplazamendu bertikala"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5418,7 +5469,8 @@ msgstr "Inportatu testua testu gisa"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr "Ordeztu PDfko letra-tipoak instalatutako antzeko izena duten letra-tipoekin"
+msgstr ""
+"Ordeztu PDfko letra-tipoak instalatutako antzeko izena duten letra-tipoekin"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -5580,56 +5632,55 @@ msgstr ""
 "Huts egin du formatua automatikoki detektatzean. Fitxategia SVG gisa ireki "
 "da."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "default.eu.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Ezin izan da eskatutako %s fitxategia kargatu"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokumentua ez da gorde oraindik. Ezin da leheneratu"
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
-msgstr "Aldaketak galduko dira! Ziur zaude %s dokumentua birkargatzea nahi duzula?"
+msgstr ""
+"Aldaketak galduko dira! Ziur zaude %s dokumentua birkargatzea nahi duzula?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "Dokumentua leheneratua."
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "Dokumentua ez da leheneratu."
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Hautatu ireki beharreko fitxategia"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Garbitu &lt;definizioak&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
-msgstr[0] "Erabili gabeko definizio <b>%i</b> ezabatuta, &lt;definizioak&gt;en."
-msgstr[1] "Erabili gabeko <b>%i</b> definizio ezabatuta, &lt;definizioak&gt;en."
+msgstr[0] ""
+"Erabili gabeko definizio <b>%i</b> ezabatuta, &lt;definizioak&gt;en."
+msgstr[1] ""
+"Erabili gabeko <b>%i</b> definizio ezabatuta, &lt;definizioak&gt;en."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Erabili gabeko definizioak &lt;definizioak&gt;en."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5638,96 +5689,73 @@ msgstr ""
 "Ez da Inkscape-ren luzapenik aurkitu dokumentua gordetzeko (%s).  Beharbada "
 "fitxategi-izenaren luzapen ezezagun batek eragingo zuen hau."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "Dokumentua ez da gorde."
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
-msgid "File %s is write protected. Please remove write protection and try again."
+msgid ""
+"File %s is write protected. Please remove write protection and try again."
 msgstr ""
 "%s fitxategia idaztetik babestuta dago. Idaztearen aurkako babesa kendu eta "
 "saiatu berriro."
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "%s fitxategia ezin izan da gorde."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "Dokumentua gorde da."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "marrazkia%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "marrazkia-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Hautatu fitxategia kopia gordetzeko"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Hautatu fitxategia gordetzeko"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "Ez dago gordetzeko aldaketarik."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 msgid "Saving document..."
 msgstr "Dokumentua gordetzea..."
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Inportatu"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Hautatu inportatu beharreko fitxategia"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 msgid "Select file to export to"
 msgstr "Hautatu fitxategia esportatzeko"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr "Errorea aldi baterako kopia gordetzean"
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr "'Open Clip Art'-era sarbidea"
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-"Errorea dokumentua esportatzean. Ziurtatu zerbitzariaren izena, erabiltzaile-"
-"izena eta pasahitza zuzenak direla, zerbitzariak WebDav onartzen duela eta "
-"lizentzia bat aukeratzea ez duzula ahaztu."
-
-#: ../src/file.cpp:1422
-msgid "Document exported..."
-msgstr "Dokumentua esportatuta..."
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Inportatu 'Open Clip Art' liburutegitik"
 
@@ -5910,8 +5938,8 @@ msgstr "Doitu"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -5996,10 +6024,14 @@ msgstr "<b>Laburketa gehiegi</b>, emaitza hutsa da."
 
 #: ../src/flood-context.cpp:509
 #, c-format
-msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
-msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
-msgstr[0] "Area beteta, bidea nodo <b>%d</b>-ekin sortuta eta hautapenarekin bilduta."
-msgstr[1] "Area beteta, bidea <b>%d</b> nodoekin sortuta eta hautapenarekin bilduta."
+msgid ""
+"Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural ""
+"Area filled, path with <b>%d</b> nodes created and unioned with selection."
+msgstr[0] ""
+"Area beteta, bidea nodo <b>%d</b>-ekin sortuta eta hautapenarekin bilduta."
+msgstr[1] ""
+"Area beteta, bidea <b>%d</b> nodoekin sortuta eta hautapenarekin bilduta."
 
 #: ../src/flood-context.cpp:513
 #, c-format
@@ -6092,8 +6124,10 @@ msgstr[1] " hautatutako %d objektutan"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
-msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgid ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural ""
+"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
 "Helduleku bat eten %d batzeko (arrastatu <b>Maius</b> teklarekin bereizteko) "
 "hautatuta"
@@ -6113,7 +6147,8 @@ msgstr[1] "gradientearen <b>%d</b> helduleku hautatutako %d objektuetatik"
 #: ../src/gradient-context.cpp:189
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
-msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgid_plural ""
+"<b>No</b> gradient handles selected out of %d on %d selected objects"
 msgstr[0] ""
 "Gradientearen %d heldulekutatik <b>ez da ezer</b> hautatu hautatutako "
 "objektu %d-etik"
@@ -6242,7 +6277,7 @@ msgstr "Unitatea"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Unitateak"
 
@@ -6411,7 +6446,8 @@ msgstr ""
 #: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
-msgstr "Huts egin du automatikoki gordetzean. %s fitxategia ezin izan da gorde."
+msgstr ""
+"Huts egin du automatikoki gordetzean. %s fitxategia ezin izan da gorde."
 
 #: ../src/inkscape.cpp:424
 msgid "Autosave complete."
@@ -6580,7 +6616,8 @@ msgstr "Kate baliogabea ingurunean: %s"
 #: ../src/io/sys.cpp:739
 #, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr "Huts egin du kanalizazioa sortzean (%s) ume-prozesuarekin komunikatzeko"
+msgstr ""
+"Huts egin du kanalizazioa sortzean (%s) ume-prozesuarekin komunikatzeko"
 
 #: ../src/io/sys.cpp:952
 #, c-format
@@ -6610,7 +6647,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Lekuz aldatu</b> betetze-eredua objektu barruan"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "<b>Eskalatu</b> betetze-eredua uniformeki"
 
 #: ../src/knotholder.cpp:240
@@ -6714,7 +6752,8 @@ msgid "Locked"
 msgstr "Blokeatuta"
 
 #: ../src/libgdl/gdl-dock-item.c:321
-msgid "If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgid ""
+"If set, the dock item cannot be dragged around and it doesn't show a grip"
 msgstr ""
 "Ezartzen bada, elementu atrakagarria ezingo da arrastatu inguruan eta ezingo "
 "du helduleku bat erakutsi"
@@ -6756,7 +6795,8 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-item.c:1345 ../src/libgdl/gdl-dock-item.c:1390
 #, c-format
 msgid "Unsupported docking strategy %s in dock object of type %s"
-msgstr "Onartu gabeko atrakatzeko %s estrategia %s motako objektu atrakagarrian"
+msgstr ""
+"Onartu gabeko atrakatzeko %s estrategia %s motako objektu atrakagarrian"
 
 #. UnLock menuitem
 #: ../src/libgdl/gdl-dock-item.c:1479
@@ -6931,7 +6971,8 @@ msgstr "Ezin da %p %p(e)n atrakatu, maisu desberdinenak direlako"
 
 #: ../src/libgdl/gdl-dock-object.c:612
 #, c-format
-msgid "Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgid ""
+"Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 "Jadanik lotuta dagoen %2$p objektu atrakagarri bati %1$p lotzea saiatu da "
 "(uneko maisua: %3$p)"
@@ -7010,7 +7051,8 @@ msgstr "Atrakagarri mugikorraren Y koordenatua"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
-msgstr "Objektu atrakagarri bat lotu ezin daitekeen leku-markari lotzea saiatu da"
+msgstr ""
+"Objektu atrakagarri bat lotu ezin daitekeen leku-markari lotzea saiatu da"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:618
 #, c-format
@@ -7030,7 +7072,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "Elementu atrakagarria (fitxa-etiketaren 'jabe' dena)"
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 "Familiarik gabeko letra-tipoari ezikusi egiten, Pango kraskatu erazi "
@@ -7188,7 +7230,8 @@ msgstr "<b>%s</b> parametroa editatzen."
 
 #: ../src/live_effects/effect.cpp:644
 msgid "None of the applied path effect's parameters can be edited on-canvas."
-msgstr "Aplikatutako bideen efektuen parametro bat ere ezin da oihalean editatu."
+msgstr ""
+"Aplikatutako bideen efektuen parametro bat ere ezin da oihalean editatu."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
@@ -7640,7 +7683,8 @@ msgstr "Magnitudearen aldakuntza: 1. alboa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr "Mugitu ausaz 'beheko' biraketa erdiak magnitudearen aldakuntza sortzeko."
+msgstr ""
+"Mugitu ausaz 'beheko' biraketa erdiak magnitudearen aldakuntza sortzeko."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7650,7 +7694,8 @@ msgstr "2. alboa"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
-msgstr "Mugitu ausaz 'goiko' biraketa erdiak magnitudearen aldakuntza sortzeko."
+msgstr ""
+"Mugitu ausaz 'goiko' biraketa erdiak magnitudearen aldakuntza sortzeko."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
@@ -7860,7 +7905,8 @@ msgstr "Trazuaren luzeraren aldakuntza"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Trazuaren luzeraren ausazko aldaera (gehienezko luzerarekiko erlatiboa)"
+msgstr ""
+"Trazuaren luzeraren ausazko aldaera (gehienezko luzerarekiko erlatiboa)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7961,7 +8007,8 @@ msgstr "Ausazko kokalekua"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr "0: uniformeki banatutako eraikitze-marrak ; 1: erabat ausazko kokalekua"
+msgstr ""
+"0: uniformeki banatutako eraikitze-marrak ; 1: erabat ausazko kokalekua"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -8198,7 +8245,8 @@ msgstr "IDa"
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
 #: ../src/main.cpp:337
-msgid "Export just the object with export-id, hide all others (only with export-id)"
+msgid ""
+"Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Esportatu export-id duen objektua bakarrik, ezkutatu beste guztiak ('export-"
 "id'-rekin soilik)"
@@ -8314,7 +8362,8 @@ msgstr "Bistaratu luzapenaren direktorioa eta irten"
 
 #: ../src/main.cpp:434
 msgid "Remove unused definitions from the defs section(s) of the document"
-msgstr "Dokumentuko 'definizioak' atalean erabiltzen ez diren definizioak ezabatu"
+msgstr ""
+"Dokumentuko 'definizioak' atalean erabiltzen ez diren definizioak ezabatu"
 
 #: ../src/main.cpp:439
 msgid "List the IDs of all the verbs in Inkscape"
@@ -8449,7 +8498,8 @@ msgstr ""
 "horizontalean/bertikalean; <b>Ktrl+Alt</b>: mugitu heldulekuetan zehar"
 
 #: ../src/node-context.cpp:229
-msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
+msgid ""
+"<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Maius</b>: txandakatu nodo hautaketa, desgaitu atxikitzea, biratu "
 "helduleku biak"
@@ -8631,7 +8681,8 @@ msgstr "simetrikoa"
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4910
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-msgstr "amaierako nodoa, heldulekua uzkurtuta (arrastatu <b>Maius</b> zabaltzeko)"
+msgstr ""
+"amaierako nodoa, heldulekua uzkurtuta (arrastatu <b>Maius</b> zabaltzeko)"
 
 #: ../src/nodepath.cpp:4912
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
@@ -8689,10 +8740,14 @@ msgstr[1] "<b>%i</b>/<b>%i</b> nodo hautatu dira; %s. %s."
 
 #: ../src/nodepath.cpp:4979
 #, c-format
-msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b>/<b>%i</b> nodo hautatu da <b>%i</b> / <b>%i</b> azpibideetan. %s."
-msgstr[1] "<b>%i</b>/<b>%i</b> nodo hautatu dira <b>%i</b> / <b>%i</b> azpibideetan. %s."
+msgid ""
+"<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural ""
+"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgstr[0] ""
+"<b>%i</b>/<b>%i</b> nodo hautatu da <b>%i</b> / <b>%i</b> azpibideetan. %s."
+msgstr[1] ""
+"<b>%i</b>/<b>%i</b> nodo hautatu dira <b>%i</b> / <b>%i</b> azpibideetan. %s."
 
 #: ../src/nodepath.cpp:4985
 #, c-format
@@ -8935,7 +8990,8 @@ msgstr ""
 "amaitzeko."
 
 #: ../src/pen-context.cpp:672
-msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
+msgid ""
+"<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "<b>Egin klik</b> edo <b>egin klik eta arrastatu</b> puntu honetatik bidea "
 "jarraitzeko."
@@ -8999,7 +9055,8 @@ msgid "Toggle multiple vanishing points"
 msgstr "Txandakatu hainbat ihespuntu"
 
 #: ../src/preferences.cpp:101
-msgid "Inkscape will run with default settings, and new settings will not be saved. "
+msgid ""
+"Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
 "Inkscape ezarpen lehenetsiekin exekutatuko da, eta ezarpen berriak ez dira "
 "gordeko."
@@ -9149,7 +9206,8 @@ msgid "Creator"
 msgstr "Sortzailea"
 
 #: ../src/rdf.cpp:243
-msgid "Name of entity primarily responsible for making the content of this document."
+msgid ""
+"Name of entity primarily responsible for making the content of this document."
 msgstr "Dokumentuko edukia sortu duen arduradun nagusiaren izena."
 
 #: ../src/rdf.cpp:245
@@ -9157,7 +9215,8 @@ msgid "Rights"
 msgstr "Eskubideak"
 
 #: ../src/rdf.cpp:246
-msgid "Name of entity with rights to the Intellectual Property of this document."
+msgid ""
+"Name of entity with rights to the Intellectual Property of this document."
 msgstr "Dokumentu honen jabetza intelektualaren eskubideak dituenaren izena."
 
 #: ../src/rdf.cpp:248
@@ -9349,7 +9408,8 @@ msgstr ""
 "hautatzeko"
 
 #: ../src/select-context.cpp:723
-msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
+msgid ""
+"<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 "<b>Alt</b>: egin klik azpia hautatzeko; arrastatu hautatutakoa lekuz "
 "aldatzeko edo ukimenez hautatzeko"
@@ -9367,7 +9427,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Ezer ez</b> da ezabatu."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Ezabatu"
@@ -9406,7 +9466,8 @@ msgstr "Hautatu <b>objektua(k)</b> goratzeko."
 
 #: ../src/selection-chemistry.cpp:694 ../src/selection-chemistry.cpp:756
 #: ../src/selection-chemistry.cpp:790 ../src/selection-chemistry.cpp:854
-msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
+msgid ""
+"You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "Ezin dira <b>talde</b> edo <b>geruza desberdinetako</b> objektuak goratu/"
 "beheratu."
@@ -9653,7 +9714,8 @@ msgstr "Objektuak eredu"
 
 #: ../src/selection-chemistry.cpp:2352
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
-msgstr "Hautatu <b>objektua betetze-ereduarekin</b> bertatik objektuak ateratzeko."
+msgstr ""
+"Hautatu <b>objektua betetze-ereduarekin</b> bertatik objektuak ateratzeko."
 
 #: ../src/selection-chemistry.cpp:2405
 msgid "<b>No pattern fills</b> in the selection."
@@ -9802,7 +9864,8 @@ msgstr "Egin klik hautapenean eskalatzeko/biratzeko heldulekuak txandakatzeko"
 
 #. no items
 #: ../src/selection-describer.cpp:130
-msgid "No objects selected. Click, Shift+click, or drag around objects to select."
+msgid ""
+"No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr ""
 "Ez da objekturik hautatu. Egin klik, Maius+klik edo arrastatu objektuen "
 "inguruan hautatzeko."
@@ -10101,7 +10164,8 @@ msgstr "<b>Alt</b>: blokeatu espiralaren erradioa"
 
 #: ../src/spiral-context.cpp:453
 #, c-format
-msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid ""
+"<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Espirala</b>: erradioa %s, angelua %5g&#176;; <b>Ktrl</b> angelua "
 "atxikitzeko"
@@ -10178,7 +10242,8 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "Hautatu <b>gutxienez bide bat</b> bilketa boolearra egiteko."
 
 #: ../src/splivarot.cpp:131
-msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
+msgid ""
+"Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr ""
 "Hautatu <b>zehazki bi bide</b> diferentzia edo zatiketa lantzeko edo bidea "
 "mozteko."
@@ -10192,7 +10257,8 @@ msgstr ""
 "hautatutako objektuen <b>z ordena</b> zehaztu."
 
 #: ../src/splivarot.cpp:192
-msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
+msgid ""
+"One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Objektuetako bat <b>ez da bidea</b>, ezin da eragiketa boolearra egin."
 
 #: ../src/splivarot.cpp:633
@@ -10397,7 +10463,8 @@ msgstr "<b>Ktrl</b>: atxikitu angelua; mantendu izpiak erradial gisa"
 
 #: ../src/star-context.cpp:464
 #, c-format
-msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid ""
+"<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Poligonoa</b>: erradioa %s, angelua %5g&#176;; <b>Ktrl</b> angelua "
 "atxikitzeko"
@@ -10505,7 +10572,8 @@ msgstr ""
 "hautatzeko."
 
 #: ../src/text-context.cpp:443
-msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
+msgid ""
+"<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 "<b>Egin klik</b> testu mugikorra editatzeko, <b>arrastatu</b> testuaren zati "
 "bat hautatzeko."
@@ -10636,7 +10704,8 @@ msgstr ""
 #: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Idatzi edo editatu testua (%d karaktere); <b>Sartu</b> lerro berria hasteko."
+msgstr ""
+"Idatzi edo editatu testua (%d karaktere); <b>Sartu</b> lerro berria hasteko."
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -10898,7 +10967,8 @@ msgstr "%s. Arrastatu edo klik egin <b>bideak lazteko</b>."
 #: ../src/tweak-context.cpp:258
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
-msgstr "%s. Arrastatu edo klik egin <b>objektuak</b> kolorearekin <b>margotzeko</b>."
+msgstr ""
+"%s. Arrastatu edo klik egin <b>objektuak</b> kolorearekin <b>margotzeko</b>."
 
 #: ../src/tweak-context.cpp:262
 #, c-format
@@ -10907,7 +10977,8 @@ msgstr "%s. Arrastatu edo klik egin <b>koloreak ausaz nahasteko</b>."
 
 #: ../src/tweak-context.cpp:266
 #, c-format
-msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
+msgid ""
+"%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 "%s. Arrastatu edo klik egin <b>lauzoa handiagotzeko</b>; Maius teklarekin "
 "<b>gutxiagotzeko</b>."
@@ -11158,12 +11229,12 @@ msgstr "B:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Kendu teilakatuak"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Antolatu lotura-marra"
 
@@ -11202,7 +11273,8 @@ msgstr "Erabili hautapena talde gisa: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "Lerrokatutako objektuen eskuineko ertzak ainguraren ezkerreko ertzarekin"
+msgstr ""
+"Lerrokatutako objektuen eskuineko ertzak ainguraren ezkerreko ertzarekin"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:807
 msgid "Align left edges"
@@ -11218,7 +11290,8 @@ msgstr "Lerrokatu eskuinaldeak"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr "Lerrokatutako objektuen ezkerreko ertzak ainguraren eskuineko ertzarekin"
+msgstr ""
+"Lerrokatutako objektuen ezkerreko ertzak ainguraren eskuineko ertzarekin"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align bottom edges of objects to the top edge of the anchor"
@@ -11300,10 +11373,11 @@ msgstr "Sakabanatu objektuak: saiatu ertzetik ertzerako distantziak berdintzen"
 msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
-msgstr "Mugitu objektuak ahal den gutxien beraien muga-koadroak ez teilakatzeko"
+msgstr ""
+"Mugitu objektuak ahal den gutxien beraien muga-koadroak ez teilakatzeko"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Antolatu hautatutako lotura-marrak"
 
@@ -11351,7 +11425,20 @@ msgstr "Hautapena"
 msgid "Profile name:"
 msgstr "Profilaren izena:"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Save"
 msgstr "Gorde"
 
@@ -11419,7 +11506,8 @@ msgid "Background color"
 msgstr "Atzeko planoaren kolorea"
 
 #: ../src/ui/dialog/document-properties.cpp:93
-msgid "Color and transparency of the page background (also used for bitmap export)"
+msgid ""
+"Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Orriaren atzeko planoaren kolorea eta gardentasuna (bit-mapa esportatzeko "
 "ere erabilia)"
@@ -11653,61 +11741,61 @@ msgstr "Kolore-profilen direktorioa (%s) ez dago erabilgarri."
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "Estekatu kolore-profila"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "Kendu estekatutako kolore-profila"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Estekatutako kolore-profilak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Kolore-profil erabilgarriak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "Estekatu profila"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "Profilaren izena"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>Kanpoko script fitxategiak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "Gehitu"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "Gehitu kanpoko script-a..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr "Kendu kanpoko script-a"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr "<b>Sortzea</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>Definitutako saretak</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "Kendu sareta"
 
@@ -12544,7 +12632,8 @@ msgstr ""
 "dira."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid ""
+"The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Iragazkiaren <b>feTile</b> primitibak eskualde bat mosaikoan jartzen du bere "
 "sarrera grafikoarekin."
@@ -12635,14 +12724,16 @@ msgstr "pixelak"
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
-msgstr "Objektu batetik egon behar duzun distantzia saguarekin heltzeko (pixeletan)"
+msgstr ""
+"Objektu batetik egon behar duzun distantzia saguarekin heltzeko (pixeletan)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:174
 msgid "Click/drag threshold:"
 msgstr "Klik egitearen/arrastatzearen atalasea:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:175
-msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
+msgid ""
+"Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Saguaren arrastatze gehiengoarekin (pantailako pixeletan) klik egitea bezala "
 "aintzakotzat hartzea, eta ez arrastatzea."
@@ -12670,7 +12761,8 @@ msgstr ""
 "behar da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
-msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
+msgid ""
+"Change tool as different devices are used on the tablet (pen, eraser, mouse)"
 msgstr ""
 "Aldatu tresna tableta grafikoan gailu desberdinak erabiltzen diren arabera "
 "(luma, borragoma, sagua)"
@@ -12733,7 +12825,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Atalasea:"
 
@@ -12802,8 +12894,10 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Puntutik gertuen dagoen nodoa atxikitu soilik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initially closest to the mouse pointer"
-msgstr "Hasieran saguaren puntutik gertuen dagoen nodoa atxikitzen saiatu soilik"
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
+msgstr ""
+"Hasieran saguaren puntutik gertuen dagoen nodoa atxikitzen saiatu soilik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
 msgid "Weight factor:"
@@ -12856,7 +12950,8 @@ msgid "> and < scale by:"
 msgstr "'>' eta '<' eskalatzeko:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:251
-msgid "Pressing > or < scales selection up or down by this increment (in px units)"
+msgid ""
+"Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr "> edo < teklak sakatzeak hautapena eskalatzen du (pixeletan)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:253
@@ -12864,7 +12959,8 @@ msgid "Inset/Outset by:"
 msgstr "laburtu/luzatu:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:254
-msgid "Inset and Outset commands displace the path by this distance (in px units)"
+msgid ""
+"Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "Laburtzeko eta luzatzeko komandoek bidea distantzia honekin desplazatzen "
 "dute (pixeletan)"
@@ -12916,7 +13012,8 @@ msgid "Show selection cue"
 msgstr "Erakutsi hautapen-heldulekua"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:274
-msgid "Whether selected objects display a selection cue (the same as in selector)"
+msgid ""
+"Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "Hautatutako objektuek hautapen-heldulekua erakutsiko duten edo ez "
 "(hautatzailean bezala)"
@@ -13002,7 +13099,8 @@ msgstr "Objektu berrien tresna-estiloa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid "Remember the style of the (first) selected object as this tool's style"
-msgstr "Gogoratu (lehen) hautatutako objektuaren estiloa tresna honen estilo gisa"
+msgstr ""
+"Gogoratu (lehen) hautatutako objektuaren estiloa tresna honen estilo gisa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid "Tools"
@@ -13018,7 +13116,8 @@ msgstr "Muga-koadro bisuala"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr "Muga-koadro honek trazu-zabalera, markatzaileak, iragazki-marjinak e.a ditu."
+msgstr ""
+"Muga-koadro honek trazu-zabalera, markatzaileak, iragazki-marjinak e.a ditu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "Geometric bounding box"
@@ -13040,7 +13139,8 @@ msgstr "Mantendu objketuak gidetara bihurtu ostean"
 msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion."
-msgstr "Objektu bat gidetara bihurtzean, ez ezabatu objektua bihurketaren ondoren."
+msgstr ""
+"Objektu bat gidetara bihurtzean, ez ezabatu objektua bihurketaren ondoren."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Treat groups as a single object"
@@ -13093,7 +13193,8 @@ msgstr "Muga-koadroa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Show only a box outline of the objects when moving or transforming"
-msgstr "Erakutsi objektuen muga-koadroak soilik lekuz aldatzean edo eraldatzean"
+msgstr ""
+"Erakutsi objektuen muga-koadroak soilik lekuz aldatzean edo eraldatzean"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Per-object selection cue:"
@@ -13109,7 +13210,8 @@ msgstr "Marka"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Each selected object has a diamond mark in the top left corner"
-msgstr "Hautatutako objektu bakoitzak erronbo formako marka du goi-ezkerreko ertzean"
+msgstr ""
+"Hautatutako objektu bakoitzak erronbo formako marka du goi-ezkerreko ertzean"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Box"
@@ -13151,7 +13253,8 @@ msgstr "Kendu keinua bidearen eskematik bide bat hautatzean"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr "Bide bat hautatzen bada, bertan behera utzi bidearen eskemak keinua edukitzea"
+msgstr ""
+"Bide bat hautatzen bada, bertan behera utzi bidearen eskemak keinua edukitzea"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Flash time"
@@ -13476,7 +13579,8 @@ msgstr ""
 "maskara gisa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
-msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
+msgid ""
+"Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Desgaitu hau hautatutako azpiko objektua mozketaren bide edo maskara gisa "
 "erabiltzeko"
@@ -13525,7 +13629,8 @@ msgstr "Mantenduta"
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr "Objektuak eskalatzean, eskalatu trazuaren zabalera proportzio berdinean"
+msgstr ""
+"Objektuak eskalatzean, eskalatu trazuaren zabalera proportzio berdinean"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
 #: ../src/widgets/select-toolbar.cpp:556
@@ -13535,7 +13640,8 @@ msgstr "Laukizuzenak eskalatzean, eskalatu izkina biribilduen erradioa"
 #: ../src/ui/dialog/inkscape-preferences.cpp:666
 #: ../src/widgets/select-toolbar.cpp:567
 msgid "Move gradients (in fill or stroke) along with the objects"
-msgstr "Gradienteak ('bete' edo 'trazua' eremuan) objektuarekin batera eraldatzea"
+msgstr ""
+"Gradienteak ('bete' edo 'trazua' eremuan) objektuarekin batera eraldatzea"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:668
 #: ../src/widgets/select-toolbar.cpp:578
@@ -13550,7 +13656,8 @@ msgstr "Gorde eraldaketa:"
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
-msgstr "Posible bada, aplikatu eraldaketa objektuan 'eraldatu' atributua gehitu gabe."
+msgstr ""
+"Posible bada, aplikatu eraldaketa objektuan 'eraldatu' atributua gehitu gabe."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:673
 msgid "Always store transformation as a transform= attribute on objects"
@@ -13667,7 +13774,8 @@ msgstr "Ktrl+A, Tab, Maius+Tab:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:748
 msgid "Make keyboard selection commands work on objects in all layers"
-msgstr "Teklatuko hautapen-komandoak geruza guztietan funtzionatzea eragiten du"
+msgstr ""
+"Teklatuko hautapen-komandoak geruza guztietan funtzionatzea eragiten du"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:750
 msgid "Make keyboard selection commands work on objects in current layer only"
@@ -13824,7 +13932,8 @@ msgstr "Markatu kolore-gamatik kanpoko koloreak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:875
 msgid "Highlights colors that are out of gamut for the target device."
-msgstr "Helburuko gailuaren kolore-gamatik kanpo dauden koloreak nabarmentzen ditu."
+msgstr ""
+"Helburuko gailuaren kolore-gamatik kanpo dauden koloreak nabarmentzen ditu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Out of gamut warning color:"
@@ -14326,15 +14435,18 @@ msgid "Control bar icon size"
 msgstr "Kontrol-barrako ikonoen tamaina"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-msgid "Set the size for the icons in tools' control bars to use (requires restart)"
-msgstr "Tresnen kontrol-barrako ikonoen tamaina ezartzen du (berrabiarazi behar da)"
+msgid ""
+"Set the size for the icons in tools' control bars to use (requires restart)"
+msgstr ""
+"Tresnen kontrol-barrako ikonoen tamaina ezartzen du (berrabiarazi behar da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Secondary toolbar icon size"
 msgstr "Bigarren mailako tresna-barrako ikonoen tamaina"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1085
-msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
+msgid ""
+"Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr ""
 "Ezarri 'bigarren mailako' tresna-barrako ikonoen tamaina (berrabiarazi behar "
 "da)"
@@ -14385,12 +14497,23 @@ msgstr ""
 msgid "Interface"
 msgstr "Interfazea"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Enable autosave (requires restart)"
 msgstr "Gaitu automatikoki gordetzea (berrabiarazi behar da)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -14398,107 +14521,93 @@ msgstr ""
 "Gorde automatikoki uneko dokumentuak emandako bitartean, honela kraskadura "
 "baten aurrean galera gutxiagotzeko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr "Bitartea (min):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "Bitartea (minututan) dokumentua automatikoki gordetzeko"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr "Bide-izena:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr "Zein direktorioan gordeko diren automatikoki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Maximum number of autosaves:"
 msgstr "Automatikoki gordetzearen gehienezko kopurua:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
-msgid "Maximum number of autosaved files; use this to limit the storage space used"
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+msgid ""
+"Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Automatikoki gordetako fitxategien gehienezko kopurua. Erabili hau "
 "erabilitako biltegiaren lekua mugatzeko"
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-msgid "Autosave"
-msgstr "Gorde automatikoki"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "Gainlaginketaren bit-mapak:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr "Birkargatu automatikoki bit-mapak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
-msgstr "Birkargatu automatikoki estekatutako irudiak fitxategia diskoan aldatzean"
+msgstr ""
+"Birkargatu automatikoki estekatutako irudiak fitxategia diskoan aldatzean"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "Bit-mapen editorea:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "Bereizmena bit-maparen kopia sortzeko:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Bereizmena 'Sortu bit-maparen kopia' komandoan erabiltzeko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr "Bit-mapak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "Hizkuntza:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr "Ezarri zuzentzaile ortografikoaren hizkuntza nagusia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "Bigarren hizkuntza:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -14506,11 +14615,11 @@ msgstr ""
 "Ezarri zuzentzaile ortografikoaren bigarren hizkuntza. Egiaztaketa gelditu "
 "egingo da aukeratutako hizkuntza GUZTIETAN ezezaguna denean soilik"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "Hirugarren hizkuntza:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -14518,31 +14627,31 @@ msgstr ""
 "Ezarri zuzentzaile ortografikoaren hirugarren hizkuntza. Egiaztaketa gelditu "
 "egingo da aukeratutako hizkuntza GUZTIETAN ezezaguna denean soilik"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr "Ezikusi egin digitudun hitzei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ezikusi egin digituak dituzten hitzei, \"R2D2\" bezalakoei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ezikusi egin hitzei MAIUSKULA GUZTIETAN"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ezikusi egin maiuskulaz idatzitako hitzei, \"IUPAC\" bezalakoei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "Zuzentzailea"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Gehitu etiketen iruzkina inprimatzeko"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14550,11 +14659,11 @@ msgstr ""
 "Aktibatuta dagoenean iruzkin bat gehituko zaio inprimakiaren irteeran, "
 "irteeran marraztutako objektua etiketa honekin markatuz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr "Saihestu gradienteen definizioak partekatzea"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14565,11 +14674,11 @@ msgstr ""
 "horrela objektu batek gradiente berdina darabilten beste objektuei eragingo "
 "die."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Soiltze-muga:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -14579,15 +14688,15 @@ msgstr ""
 "jarraitasunez erabiltzen baduzu gero eta oldartsuago eragingo du; geldiune "
 "baten ondoren berriro erabiltzen bada, lehenespeneko mugarekin ezarriko du."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr "Okerduraren latentzia:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(berrabiarazi behar da)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
@@ -14595,11 +14704,11 @@ msgstr ""
 "erlojuaren gertaera uneko ordutik okertzen deneko faktorea (0,9766 sistema "
 "batzuetan)."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr "Aurre-errendatu izendatutako ikonoak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -14609,51 +14718,51 @@ msgstr ""
 "egiteko da hau."
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr "Erabiltzailearen konfig.: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "User data: "
 msgstr "Erabiltzailearen datuak: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid "User cache: "
 msgstr "Erabiltzailearen cachea: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr "Sistemako konfig.: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid "System data: "
 msgstr "Sistemaren datuak: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr "PIXMAPA: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr "DATUAK: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "UI: "
 msgstr "UIa: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr "Ikonoen gaia: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "System info"
 msgstr "Sistemako informazioa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "General system information"
 msgstr "Sistemako informazio orokorra"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Hainbat"
 
@@ -14852,23 +14961,11 @@ msgstr ""
 "Gaitu egunkariak bistaratzea preferences.xml fitxategiko dialogs.debug "
 "'redirect' atributua 1 balioarekin ezartzean"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-msgid "File"
-msgstr "Fitxategia"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-msgid "Username:"
-msgstr "Erabiltzaile-izena:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-msgid "Password:"
-msgstr "Pasahitza:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr "Errorea Open Clip Art-eko RSS iturria irakurtzean"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
@@ -14877,23 +14974,23 @@ msgstr ""
 "zerbitzariaren izena zuzena dela 'Konfigurazioa -> Inportatu/Esportatu' "
 "menuan (adib: openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr "Zerbitzariak Clip Art iturriaren gaizki osatutako formatua eman du"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 msgid "Search for:"
 msgstr "Bilatu:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr "Ez dago bilaketarekin bat datorren fitxategirik"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 msgid "Search"
 msgstr "Bilatu"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr "Aurkitutako fitxategiak"
 
@@ -15115,61 +15212,62 @@ msgstr "Lagin-testua"
 msgid "Preview Text:"
 msgstr "Testuaren aurrebista:"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
-msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
+msgid ""
+"Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 "Kolorea: <b>%s</b>; <b>klik egin</b> betegarria ezartzeko, <b>Maius + klik "
 "egin</b> trazua ezartzeko"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 msgid "Set fill"
 msgstr "Ezarri betegarria"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 msgid "Set stroke"
 msgstr "Ezarri trazua"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Editatu..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 msgid "Convert"
 msgstr "Bihurtu"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "Aldatu kolorearen definizioa"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove stroke color"
 msgstr "Kendu trazuaren kolorea"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove fill color"
 msgstr "Kendu betegarriaren kolorea"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set stroke color to none"
 msgstr "Ezarri trazuaren kolorea hutsarekin"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set fill color to none"
 msgstr "Ezarri betegarriaren kolorea hutsarekin"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Ezarri trazu-kolorea paleta batetik"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Ezarri betegarriaren kolorea paletatik"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Paleten direktorioa (%s) ez dago erabilgarri."
@@ -15192,7 +15290,8 @@ msgstr "Berdindu altuera"
 
 #: ../src/ui/dialog/tile.cpp:674
 msgid "If not set, each row has the height of the tallest object in it"
-msgstr "Ez bada ezartzen, errenkada bakoitzak objektu altuenaren altuera izango du"
+msgstr ""
+"Ez bada ezartzen, errenkada bakoitzak objektu altuenaren altuera izango du"
 
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
@@ -15215,7 +15314,8 @@ msgstr "Berdindu zabalera"
 
 #: ../src/ui/dialog/tile.cpp:743
 msgid "If not set, each column has the width of the widest object in it"
-msgstr "Ez bada ezartzen, zutabe bakoitzak objektu zabalenaren zabalera izango du"
+msgstr ""
+"Ez bada ezartzen, zutabe bakoitzak objektu zabalenaren zabalera izango du"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/tile.cpp:789
@@ -15474,7 +15574,8 @@ msgstr "Eguneratu"
 msgid ""
 "Preview the intermediate bitmap with the current settings, without actual "
 "tracing"
-msgstr "Aurrikusi tarteko bit-mapa uneko ezarpenekin, erabateko bektorizaziorik gabe"
+msgstr ""
+"Aurrikusi tarteko bit-mapa uneko ezarpenekin, erabateko bektorizaziorik gabe"
 
 #: ../src/ui/dialog/tracedialog.cpp:662
 msgid "Preview"
@@ -16256,7 +16357,8 @@ msgstr "Doitu trazu-zabalera"
 #: ../src/ui/widget/selected-style.cpp:1402
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr "<b>Trazu-zabalera</b> doitzen: %.3g zen, orain <b>%.3g</b> (diferentzia %.3g)"
+msgstr ""
+"<b>Trazu-zabalera</b> doitzen: %.3g zen, orain <b>%.3g</b> (diferentzia %.3g)"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -16341,7 +16443,8 @@ msgstr[1] ""
 
 #: ../src/vanishing-point.cpp:320
 #, c-format
-msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
+msgid ""
+"shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
@@ -16521,7 +16624,8 @@ msgstr "_Leheneratu"
 
 #: ../src/verbs.cpp:2247
 msgid "Revert to the last saved version of document (changes will be lost)"
-msgstr "Leheneratu dokumentuaren azken gordetako bertsioa (aldaketak galduko dira)"
+msgstr ""
+"Leheneratu dokumentuaren azken gordetako bertsioa (aldaketak galduko dira)"
 
 #: ../src/verbs.cpp:2248
 msgid "_Save"
@@ -16596,14 +16700,7 @@ msgstr "Esportatu dokumentua edo hautapena bit-mapa irudi gisa"
 msgid "Import a document from Open Clip Art Library"
 msgstr "Inportatu dokumentu bat Open Clip Art liburutegitik"
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr "Esportatu Open Clip Art liburutegira"
-
-#: ../src/verbs.cpp:2266
-msgid "Export this document to Open Clip Art Library"
-msgstr "Esportatu dokumentu hau Open Clip Art liburutegira"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "_Hurrengo leihoa"
@@ -16702,7 +16799,8 @@ msgstr "Itsatsi tamaina bereiztuta"
 
 #: ../src/verbs.cpp:2295
 msgid "Scale each selected object to match the size of the copied object"
-msgstr "Eskalatu hautatutako objektu bakoitza kopiatutako objektuaren tamainara"
+msgstr ""
+"Eskalatu hautatutako objektu bakoitza kopiatutako objektuaren tamainara"
 
 #: ../src/verbs.cpp:2296
 msgid "Paste Width Separately"
@@ -16782,7 +16880,8 @@ msgstr "Sortu _klona"
 
 #: ../src/verbs.cpp:2313
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr "Sortu klon bat hautatutako objektutik (jatorrizkora estekatutako kopia bat)"
+msgstr ""
+"Sortu klon bat hautatutako objektutik (jatorrizkora estekatutako kopia bat)"
 
 #: ../src/verbs.cpp:2314
 msgid "Unlin_k Clone"
@@ -16792,7 +16891,8 @@ msgstr "As_katu klona"
 msgid ""
 "Cut the selected clones' links to the originals, turning them into "
 "standalone objects"
-msgstr "Moztu hautatutako klonen jatorrizkoarekiko esteka, objektu bakarti bihurtuz"
+msgstr ""
+"Moztu hautatutako klonen jatorrizkoarekiko esteka, objektu bakarti bihurtuz"
 
 #: ../src/verbs.cpp:2316
 msgid "Relink to Copied"
@@ -16878,7 +16978,8 @@ msgstr "Al_derantzikatu hautapena"
 
 #: ../src/verbs.cpp:2335
 msgid "Invert selection (unselect what is selected and select everything else)"
-msgstr "Alderantzikatu hautapena (desautatu hautatutakoa, eta hautatu beste guztia)"
+msgstr ""
+"Alderantzikatu hautapena (desautatu hautatutakoa, eta hautatu beste guztia)"
 
 #: ../src/verbs.cpp:2336
 msgid "Invert in All Layers"
@@ -16991,7 +17092,8 @@ msgstr "Kendu eskuzko karaktere-tarteak"
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Kendu testu-objektu bateko eskuzko karaktere-tarte eta glifo-biraketa guztiak"
+msgstr ""
+"Kendu testu-objektu bateko eskuzko karaktere-tarte eta glifo-biraketa guztiak"
 
 #: ../src/verbs.cpp:2372
 msgid "_Union"
@@ -17025,7 +17127,8 @@ msgstr "E_sklusioa"
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
-msgstr "Sortu hautatutako bideen OR esklusiboa (bide bakarrari dagozkion zati horiek)"
+msgstr ""
+"Sortu hautatutako bideen OR esklusiboa (bide bakarrari dagozkion zati horiek)"
 
 #: ../src/verbs.cpp:2380
 msgid "Di_vision"
@@ -17113,7 +17216,8 @@ msgstr "De_splazamendu estekatua"
 
 #: ../src/verbs.cpp:2412
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "Sortu jatorrizko bideari estekatutako desplazamendu dinamikoko objektu bat"
+msgstr ""
+"Sortu jatorrizko bideari estekatutako desplazamendu dinamikoko objektu bat"
 
 #: ../src/verbs.cpp:2414
 msgid "_Stroke to Path"
@@ -17387,7 +17491,8 @@ msgid "Remove mask from selection"
 msgstr "Kendu maskara hautapenetik"
 
 #: ../src/verbs.cpp:2493
-msgid "Apply clipping path to selection (using the topmost object as clipping path)"
+msgid ""
+"Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 "Aplikatu mozketa bidea hautapenari (goiko objektua mozketako bide gisa "
 "erabiliz)"
@@ -17870,7 +17975,8 @@ msgid "_Fill and Stroke..."
 msgstr "_Bete eta trazatu..."
 
 #: ../src/verbs.cpp:2640
-msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
+msgid ""
+"Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr ""
 "Editatu objektuen koloreak, gradienteak, trazu-zabalera, gezi-buruak, marra "
 "ereduak..."
@@ -18172,7 +18278,8 @@ msgid "Fit the page to the drawing"
 msgstr "Doitu orria marrazkira"
 
 #: ../src/verbs.cpp:2728
-msgid "Fit the page to the current selection or the drawing if there is no selection"
+msgid ""
+"Fit the page to the current selection or the drawing if there is no selection"
 msgstr "Doitu orria uneko hautapenera edo marrazkira hautapenik ez badago"
 
 #. LockAndHide
@@ -18287,7 +18394,7 @@ msgstr "Letra-tamaina:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqÑñ12369$€¢?.;/()"
 
@@ -18466,7 +18573,8 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:214
-msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
+msgid ""
+"Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Betegarria lisoa da azpibide bat aurkako norantzakoa ez bada (betetze-araua: "
 "zero ez denean)"
@@ -18602,7 +18710,8 @@ msgstr "Blokeatu zabalera eta altuera"
 
 #: ../src/widgets/select-toolbar.cpp:486
 msgid "When locked, change both width and height by the same proportion"
-msgstr "Blokeatzen bada, zabalera eta altuera proportzio berdinean aldatuko dira"
+msgstr ""
+"Blokeatzen bada, zabalera eta altuera proportzio berdinean aldatuko dira"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -18906,7 +19015,8 @@ msgstr "Hasierako markatzaileak:"
 
 #: ../src/widgets/stroke-style.cpp:1234
 msgid "Start Markers are drawn on the first node of a path or shape"
-msgstr "Hasierako markatzaileak bide edo forma bateko aurreneko nodoan marrazten dira"
+msgstr ""
+"Hasierako markatzaileak bide edo forma bateko aurreneko nodoan marrazten dira"
 
 #: ../src/widgets/stroke-style.cpp:1243
 msgid "Mid Markers:"
@@ -18926,7 +19036,8 @@ msgstr "Amaierako markatzaileak:"
 
 #: ../src/widgets/stroke-style.cpp:1256
 msgid "End Markers are drawn on the last node of a path or shape"
-msgstr "Hasierako markatzaileak bide edo forma bateko azkenengo nodoan marrazten dira"
+msgstr ""
+"Hasierako markatzaileak bide edo forma bateko azkenengo nodoan marrazten dira"
 
 #: ../src/widgets/stroke-style.cpp:1605 ../src/widgets/stroke-style.cpp:1701
 msgid "Set stroke style"
@@ -19415,7 +19526,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Izkinak eta angeluak ausaz sakabanatu"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Lehenetsiak"
 
@@ -19937,7 +20048,8 @@ msgstr "Presioa"
 
 #: ../src/widgets/toolbox.cpp:4363
 msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr "Erabili sarrerako gailuaren presioa berrukitze-ekintzaren indarra aldatzeko"
+msgstr ""
+"Erabili sarrerako gailuaren presioa berrukitze-ekintzaren indarra aldatzeko"
 
 #: ../src/widgets/toolbox.cpp:4543
 msgid "No preset"
@@ -20174,7 +20286,8 @@ msgstr "Masa:"
 
 #: ../src/widgets/toolbox.cpp:4835
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr "Handitu parametro hau luma arrastatzeko, inertziaz arrastatuko balitz bezala"
+msgstr ""
+"Handitu parametro hau luma arrastatzeko, inertziaz arrastatuko balitz bezala"
 
 #: ../src/widgets/toolbox.cpp:4850
 msgid "Trace Background"
@@ -20273,7 +20386,8 @@ msgid "Assign opacity"
 msgstr "Esleitu opakotasuna"
 
 #: ../src/widgets/toolbox.cpp:5320
-msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
+msgid ""
+"If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
 "Alfa hautatzen bada, esleitu hautapenera trazu edo betegarriaren gardentasun "
 "gisa"
@@ -20370,23 +20484,23 @@ msgstr "Testua: aldatu letra-tipoaren familia"
 msgid "Text: Change alignment"
 msgstr "Testua: aldatu lerrokadura"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Testua: letra-tipoaren estiloa"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Testua: aldatu orientazioa"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Testua: aldatu letra-tamaina"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr "Hautatu letra-familia (Alt+X atzitzeko)"
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -20394,91 +20508,93 @@ msgstr ""
 "Letra-tipo hau ez dago sisteman instalatuta. Inkscape-k letra-tipo "
 "lehenetsia erabiliko du."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Lerrokatu ezkerrean"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Lerrokatu eskuinean"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Justifikatu"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Lodia"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Etzana"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Aldatu lotura-marren tartea"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr "Saihestu"
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Ignore"
 msgstr "Ezikusi egin"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Connector Spacing"
 msgstr "Lotura-marren tartea"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Tartea:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
-msgstr "Lotura-marren trazu automatikoak sortzen duten tartea objektuen inguruan"
+msgstr ""
+"Lotura-marren trazu automatikoak sortzen duten tartea objektuen inguruan"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 msgid "Graph"
 msgstr "Grafikoa"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Connector Length"
 msgstr "Lotura-marren luzera"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Luzera:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Lotura-marren luzera egokia bideraketa aplikatzean"
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr "Beherantz"
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Sortu lotura-marrak amaierako-markatzaileekin (geziak) beherantz zuzenduz"
+msgstr ""
+"Sortu lotura-marrak amaierako-markatzaileekin (geziak) beherantz zuzenduz"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr "Ez utzi formak gainjartzea"
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 msgid "Fill by"
 msgstr "Bete"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Fill by:"
 msgstr "Bete:"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 msgid "Fill Threshold"
 msgstr "Betegarriaren atalasea"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -20486,29 +20602,30 @@ msgstr ""
 "Klik egindako pixelaren eta inguruko pixelen  arteko gehienezko "
 "desberdintasuna betegarrian kontatzeko"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr "Handitu/uzkurtu honekin"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr "Handitu/uzkurtu:"
 
-#: ../src/widgets/toolbox.cpp:7187
-msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+#: ../src/widgets/toolbox.cpp:7212
+msgid ""
+"The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Sortutako betegarriaren bidea handitzeko (positiboa) edo uzkurtzeko"
 "(negatiboa) kopurua"
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 msgid "Close gaps"
 msgstr "Itxi tarteak"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 msgid "Close gaps:"
 msgstr "Itxi tarteak:"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -20518,7 +20635,8 @@ msgstr ""
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
-msgstr "Ezin da objektu hau prozesatu. Saiatu aurrenik hura bide batera aldatzen."
+msgstr ""
+"Ezin da objektu hau prozesatu. Saiatu aurrenik hura bide batera aldatzen."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
@@ -20658,7 +20776,8 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:74
 #: ../share/extensions/summersnight.py:50
-msgid "This extension requires that the second selected path be four nodes long."
+msgid ""
+"This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Hedapen honek hautatutako bigarren bideak lau nodoko luzera izatea eskatzen "
 "du."
@@ -20706,7 +20825,8 @@ msgstr "Ez da aurpegien daturik aurkitu emandako fitxategian."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr "Saiatu \"Ertz zehaztua\" hautatzea \"Modeloaren fitxategia\" fitxapean.\n"
+msgstr ""
+"Saiatu \"Ertz zehaztua\" hautatzea \"Modeloaren fitxategia\" fitxapean.\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
@@ -20714,7 +20834,8 @@ msgstr "Ez da ertzen daturik aurkitu emandako fitxategian."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr "Saiatu \"Aurpegi zehaztua\" hautatzea \"Modeloaren fitxategia\" fitxapean.\n"
+msgstr ""
+"Saiatu \"Aurpegi zehaztua\" hautatzea \"Modeloaren fitxategia\" fitxapean.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
@@ -22309,10 +22430,11 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Tiratu tarteak eskeletoaren luzera doitzeko"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 "Efektu honek eredu bat sakabanatzen du \"eskeletoaren\" bide arbitrarioan "
 "zehar. Eredua hautapeneko objekturik gorenekoa da. (bideen/formen/klonen "
@@ -22412,7 +22534,8 @@ msgid "3D Polyhedron"
 msgstr "3D poliedroa"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-msgid "Clockwise Wound Object"
+#, fuzzy
+msgid "Clockwise wound object"
 msgstr "Harilkatutako objektua erlojuaren noranzkoan"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -22428,7 +22551,8 @@ msgid "Dodecahedron"
 msgstr "Dodekaedroa"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "Marraztu atzeko aurpegien poligonoak"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -22452,20 +22576,23 @@ msgid "Filename:"
 msgstr "Fitxategi-izena"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
+#, fuzzy
+msgid "Fill color, Blue"
 msgstr "Betegarriaren kolorea (urdina)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
+#, fuzzy
+msgid "Fill color, Green"
 msgstr "Betegarriaren kolorea (berdea)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
+#, fuzzy
+msgid "Fill color, Red"
 msgstr "Betegarriaren kolorea (gorria)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, no-c-format
-msgid "Fill Opacity/ %"
+#, fuzzy, no-c-format
+msgid "Fill opacity, %"
 msgstr "Betegarriaren opakutasuna (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -22481,92 +22608,102 @@ msgid "Icosahedron"
 msgstr "Ikosaedro"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-msgid "Light x-Position"
-msgstr "Argiaren x posizioa"
+#, fuzzy
+msgid "Light X"
+msgstr "Argitu"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-msgid "Light y-Position"
-msgstr "Argiaren y posizioa"
+#, fuzzy
+msgid "Light Y"
+msgstr "Argitu"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-msgid "Light z-Position"
-msgstr "Argiaren z posizioa"
+#, fuzzy
+msgid "Light Z"
+msgstr "Argitu"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr "Marraren lodiera (px)"
-
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
+#, fuzzy
+msgid "Load from file"
 msgstr "Kargatu fitxategitik"
 
-#: ../share/extensions/polyhedron_3d.inx.h:25
+#: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
 msgstr "Gehienezkoa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr "Meridianoa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Minimum"
 msgstr "Gutxienekoa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
-msgid "Model File"
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Model file"
 msgstr "Modeloaren fitxategia"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Object Type"
 msgstr "Objektu mota"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object:"
 msgstr "Objektua:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "Octahedron"
 msgstr "Oktaedroa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:33
-msgid "Rotate Around:"
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
 msgstr "Biratu:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:34
-msgid "Rotation / Degrees"
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Rotation, degrees"
 msgstr "Biraketa (graduak)"
 
-#: ../share/extensions/polyhedron_3d.inx.h:35
-msgid "Scaling Factor"
+#: ../share/extensions/polyhedron_3d.inx.h:34
+#, fuzzy
+msgid "Scaling factor"
 msgstr "Eskalatze-faktorea"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
 msgstr "Itzaldura"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Ikosaedro txikia trianbikoa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Kubo zapala"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Dodekaedro zapala"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
-#, no-c-format
-msgid "Stroke Opacity/ %"
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, fuzzy, no-c-format
+msgid "Stroke opacity, %"
 msgstr "Trazuaren opakotasuna / %"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Trazu-zabalera"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraedroa"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-msgid "Then Rotate Around:"
+#, fuzzy
+msgid "Then rotate around:"
 msgstr "Ondoren biratu:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -22610,7 +22747,8 @@ msgid "Z-Axis"
 msgstr "Z ardatza"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+#, fuzzy
+msgid "Z-sort faces by:"
 msgstr "Z-ordenatu aurpegiak honen arabera:"
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23221,12 +23359,14 @@ msgstr "Hautatutako aurrenekoak atributu bat ezartzen du beste guztietan"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size as the attributes list."
-msgstr "Balioen zerrendak atributuen zerrendaren tamaina berdina izan behar du."
+msgstr ""
+"Balioen zerrendak atributuen zerrendaren tamaina berdina izan behar du."
 
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr "Hurrengo parametroa erabilgarria da elementu bi baino gehiago hautatzean"
+msgstr ""
+"Hurrengo parametroa erabilgarria da elementu bi baino gehiago hautatzean"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
@@ -23380,272 +23520,328 @@ msgstr "Windows metafitxategi sarrera"
 msgid "XAML Input"
 msgstr "XAML sarrera"
 
-msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-msgstr "Gorde Adobe Illustrator 8.0 (Postscript-en oinarritua)"
+#~ msgid "Error saving a temporary copy"
+#~ msgstr "Errorea aldi baterako kopia gordetzean"
 
-msgid "Glossy jelly"
-msgstr "Jelatina satinatua"
+#~ msgid "Open Clip Art Login"
+#~ msgstr "'Open Clip Art'-era sarbidea"
 
-msgid "Glossy jelly, backlit"
-msgstr "Jelatina satinatua, atze-argiztapena"
+#~ msgid ""
+#~ "Error exporting the document. Verify if the server name, username and "
+#~ "password are correct, if the server has support for webdav and verify if "
+#~ "you didn't forget to choose a license."
+#~ msgstr ""
+#~ "Errorea dokumentua esportatzean. Ziurtatu zerbitzariaren izena, "
+#~ "erabiltzaile-izena eta pasahitza zuzenak direla, zerbitzariak WebDav "
+#~ "onartzen duela eta lizentzia bat aukeratzea ez duzula ahaztu."
 
-msgid ""
-"Highly flexible bubbles effect depending on color hue saturation and "
-"luminance"
-msgstr ""
-"Ñabardura, saturazio eta luminantzia koloreen araberako burbuila malguen "
-"efektu altua"
+#~ msgid "Document exported..."
+#~ msgstr "Dokumentua esportatuta..."
 
-msgid "Gives the flood color to the dark parts of the image"
-msgstr "Kolore betegarria ematen dio irudiaren zati ilunei"
+#~ msgid "Autosave"
+#~ msgstr "Gorde automatikoki"
 
-msgid "Air Spray; adjust the Displacement Map amount"
-msgstr "Airezko ihinztadura. Desplazamendu-mapa doitu"
+#~ msgid "File"
+#~ msgstr "Fitxategia"
 
-msgid ""
-"Same than HSL bumps but with an alpha added for combination with "
-"transparency depending filters"
-msgstr ""
-"ÑSL erliebea bezalakoa, baina alfa gehituta iragazkien mendeko "
-"gardentasunarekin konbinatzeko"
+#~ msgid "Username:"
+#~ msgstr "Erabiltzaile-izena:"
 
-msgid "HSL bubbles, diffuse"
-msgstr "ÑSL burbuilak, lausoak"
+#~ msgid "Password:"
+#~ msgstr "Pasahitza:"
 
-msgid "Metal or plastic badge bevel"
-msgstr "Metalezko edo plastikozko plaka alakatua"
+#~ msgid "Export To Open Clip Art Library"
+#~ msgstr "Esportatu Open Clip Art liburutegira"
 
-msgid "Soft bump"
-msgstr "Erliebe biguna"
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr "Esportatu dokumentu hau Open Clip Art liburutegira"
 
-msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr "Konboluzio-erliebea. Lausoarekin erliebearen efektu polita eman dezake"
+#~ msgid "Light x-Position"
+#~ msgstr "Argiaren x posizioa"
 
-msgid "Masking tools"
-msgstr "Maskaratzeko tresnak"
+#~ msgid "Light y-Position"
+#~ msgstr "Argiaren y posizioa"
 
-msgid "Burnt paper edges texture"
-msgstr "Erretako paperaren ertzak testura"
+#~ msgid "Light z-Position"
+#~ msgstr "Argiaren z posizioa"
 
-msgid "Adds a film grain noise to images and objects"
-msgstr "Pelikula-pikor zarata gehitzen die irudi eta objektuei"
+#~ msgid "Line Thickness / px"
+#~ msgstr "Marraren lodiera (px)"
 
-msgid "Lead pencil"
-msgstr "Berunezko arkatza"
+#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
+#~ msgstr "Gorde Adobe Illustrator 8.0 (Postscript-en oinarritua)"
 
-msgid "_Write session file:"
-msgstr "_Erregistratu saioko fitxategia:"
+#~ msgid "Glossy jelly"
+#~ msgstr "Jelatina satinatua"
 
-msgid "Shared SVG whiteboard tool."
-msgstr "Partekatutako SVGren arbelzuria tresna."
+#~ msgid "Glossy jelly, backlit"
+#~ msgstr "Jelatina satinatua, atze-argiztapena"
 
-msgid "Based on the Pedro XMPP client"
-msgstr "Pedro XMPP bezeroan oinarrituta"
+#~ msgid ""
+#~ "Highly flexible bubbles effect depending on color hue saturation and "
+#~ "luminance"
+#~ msgstr ""
+#~ "Ñabardura, saturazio eta luminantzia koloreen araberako burbuila malguen "
+#~ "efektu altua"
 
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b>(e)k gonbidatu egin zaitu arbel zuriko saiora."
+#~ msgid "Gives the flood color to the dark parts of the image"
+#~ msgstr "Kolore betegarria ematen dio irudiaren zati ilunei"
 
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "<b>%1</b>(e)n arbel zurirako gonbitea onartu nahi duzu?"
+#~ msgid "Air Spray; adjust the Displacement Map amount"
+#~ msgstr "Airezko ihinztadura. Desplazamendu-mapa doitu"
 
-msgid "Inkboard session (%1 to %2)"
-msgstr "Inkboard saioa (%1 - %2)"
+#~ msgid ""
+#~ "Same than HSL bumps but with an alpha added for combination with "
+#~ "transparency depending filters"
+#~ msgstr ""
+#~ "ÑSL erliebea bezalakoa, baina alfa gehituta iragazkien mendeko "
+#~ "gardentasunarekin konbinatzeko"
 
-msgid "Adjust the \"left\" end of the bisector"
-msgstr "Doitu erdikariaren \"ezkerreko\" amaiera"
+#~ msgid "HSL bubbles, diffuse"
+#~ msgstr "ÑSL burbuilak, lausoak"
 
-msgid "Null"
-msgstr "Hutsa"
+#~ msgid "Metal or plastic badge bevel"
+#~ msgstr "Metalezko edo plastikozko plaka alakatua"
 
-msgid "Subtract A-B"
-msgstr "A-B kenketa"
+#~ msgid "Soft bump"
+#~ msgstr "Erliebe biguna"
 
-msgid "Subtract B-A"
-msgstr "B-A kenketa"
+#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
+#~ msgstr ""
+#~ "Konboluzio-erliebea. Lausoarekin erliebearen efektu polita eman dezake"
 
-msgid "Determines which kind of boolop will be performed."
-msgstr "Eragiketa "
+#~ msgid "Masking tools"
+#~ msgstr "Maskaratzeko tresnak"
 
-msgid "Angle of the first copy"
-msgstr "Aurreneko kopiaren angelua"
+#~ msgid "Burnt paper edges texture"
+#~ msgstr "Erretako paperaren ertzak testura"
 
-msgid "Thick-Thin strokes (fast)"
-msgstr "Trazu lodi-meheak (azkarra)"
+#~ msgid "Adds a film grain noise to images and objects"
+#~ msgstr "Pelikula-pikor zarata gehitzen die irudi eta objektuei"
 
-msgid "Thick-Thin strokes (slow)"
-msgstr "Trazu lodi-meheak (motela)"
+#~ msgid "Lead pencil"
+#~ msgstr "Berunezko arkatza"
 
-msgid "Min/Max width ratio"
-msgstr "Gutx./Gehien. zabalera-tasa"
+#~ msgid "_Write session file:"
+#~ msgstr "_Erregistratu saioko fitxategia:"
 
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr "trazu lodienen norabidea (aurkakoa = meheena)"
+#~ msgid "Shared SVG whiteboard tool."
+#~ msgstr "Partekatutako SVGren arbelzuria tresna."
 
-msgid "Grow for"
-msgstr "Haztea"
+#~ msgid "Based on the Pedro XMPP client"
+#~ msgstr "Pedro XMPP bezeroan oinarrituta"
 
-msgid "Make the stroke thiner near it's start"
-msgstr "Egin trazua meheagoa bere hasieratik gertu"
+#~ msgid "<b>%1</b> has invited you to a whiteboard session."
+#~ msgstr "<b>%1</b>(e)k gonbidatu egin zaitu arbel zuriko saiora."
 
-msgid "Fade for"
-msgstr "Iraungitu"
+#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
+#~ msgstr "<b>%1</b>(e)n arbel zurirako gonbitea onartu nahi duzu?"
 
-msgid "Make the stroke thiner near it's end"
-msgstr "Egin trazua meheagoa bere amaieratik gertu"
+#~ msgid "Inkboard session (%1 to %2)"
+#~ msgstr "Inkboard saioa (%1 - %2)"
 
-msgid "Determines on which side the line or line segment is infinite."
-msgstr "Marra edo marraren segmentua zen albotan infinitua den zehazten du."
+#~ msgid "Adjust the \"left\" end of the bisector"
+#~ msgstr "Doitu erdikariaren \"ezkerreko\" amaiera"
 
-msgid "Discard original path?"
-msgstr "Baztertu jatorriko bidea?"
+#~ msgid "Null"
+#~ msgstr "Hutsa"
 
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "Aktibatu hau bidearen zati ispilatua mantentzeko soilik"
+#~ msgid "Subtract A-B"
+#~ msgstr "A-B kenketa"
 
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr "Ispilua bezala funtzionatzen duen marra isladapenerako"
+#~ msgid "Subtract B-A"
+#~ msgstr "B-A kenketa"
 
-msgid "Handle to control the distance of the offset from the curve"
-msgstr "Heldulekua (desplazamenduaren distantzia kurbatik kontrolatzeko)"
+#~ msgid "Determines which kind of boolop will be performed."
+#~ msgstr "Eragiketa "
 
-msgid "Specifies the left end of the parallel"
-msgstr "Paraleloaren ezkerreko amaiera zehazten du"
+#~ msgid "Angle of the first copy"
+#~ msgstr "Aurreneko kopiaren angelua"
 
-msgid "Specifies the right end of the parallel"
-msgstr "Paraleloaren eskuineko amaiera zehazten du"
+#~ msgid "Thick-Thin strokes (fast)"
+#~ msgstr "Trazu lodi-meheak (azkarra)"
 
-msgid "Adjust the \"left\" end of the parallel"
-msgstr "Doitu paraleloaren \"ezkerreko\" amaiera"
+#~ msgid "Thick-Thin strokes (slow)"
+#~ msgstr "Trazu lodi-meheak (motela)"
 
-msgid "Adjust the \"right\" end of the parallel"
-msgstr "Doitu paraleloaren \"eskuineko\" amaiera"
+#~ msgid "Min/Max width ratio"
+#~ msgstr "Gutx./Gehien. zabalera-tasa"
 
-msgid "Adjust the bisector's \"left\" end"
-msgstr "Doitu erdikariaren \"ezkerreko\" amaiera"
+#~ msgid "direction of thickest strokes (opposite = thinest)"
+#~ msgstr "trazu lodienen norabidea (aurkakoa = meheena)"
 
-msgid "Adjust the bisector's \"right\" end"
-msgstr "Doitu erdikariaren \"eskuineko\" amaiera"
+#~ msgid "Grow for"
+#~ msgstr "Haztea"
 
-msgid "Uses XY plane?"
-msgstr "Erabili XY planoa?"
+#~ msgid "Make the stroke thiner near it's start"
+#~ msgstr "Egin trazua meheagoa bere hasieratik gertu"
 
-msgid ""
-"If true, put the path on the left side of an imaginary box, otherwise on the "
-"right side"
-msgstr ""
-"Egia bada, jarri bidea irudikatutako koadroaren ezkerreko alboan. Bestela, "
-"eskuineko alboan"
+#~ msgid "Fade for"
+#~ msgstr "Iraungitu"
 
-msgid "just a real number like 1.4!"
-msgstr "zenbaki erreal bat, 1,4 bezalakoa."
+#~ msgid "Make the stroke thiner near it's end"
+#~ msgstr "Egin trazua meheagoa bere amaieratik gertu"
 
-msgid "Additional angle between tangent and curve"
-msgstr "Tangentea eta kurbaren arteko angelu gehigarria"
+#~ msgid "Determines on which side the line or line segment is infinite."
+#~ msgstr "Marra edo marraren segmentua zen albotan infinitua den zehazten du."
 
-msgid "Location along curve"
-msgstr "Kokalekua kurban zehar"
+#~ msgid "Discard original path?"
+#~ msgstr "Baztertu jatorriko bidea?"
 
-msgid ""
-"Location of the point of attachment along the curve (between 0.0 and number-"
-"of-segments)"
-msgstr ""
-"Eranskinaren puntuaren kokalekua kurban zehar (0,0 eta segmentu kopuruaren "
-"artekoa)"
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "Aktibatu hau bidearen zati ispilatua mantentzeko soilik"
 
-msgid "Specifies the left end of the tangent"
-msgstr "Tangentearen ezkerreko amaiera zehazten du"
+#~ msgid "Line which serves as 'mirror' for the reflection"
+#~ msgstr "Ispilua bezala funtzionatzen duen marra isladapenerako"
 
-msgid "Specifies the right end of the tangent"
-msgstr "Tangentearen eskuineko amaiera zehazten du"
+#~ msgid "Handle to control the distance of the offset from the curve"
+#~ msgstr "Heldulekua (desplazamenduaren distantzia kurbatik kontrolatzeko)"
 
-msgid "Adjust the point of attachment of the tangent"
-msgstr "Doitu tangentearen eranskinaren puntua"
+#~ msgid "Specifies the left end of the parallel"
+#~ msgstr "Paraleloaren ezkerreko amaiera zehazten du"
 
-msgid "Adjust the \"right\" end of the tangent"
-msgstr "Doitu tangentearen \"eskuineko\" amaiera"
+#~ msgid "Specifies the right end of the parallel"
+#~ msgstr "Paraleloaren eskuineko amaiera zehazten du"
 
-msgid "Text label attached to the path"
-msgstr "Testuaren etiketa bideari erantsitakoa"
+#~ msgid "Adjust the \"left\" end of the parallel"
+#~ msgstr "Doitu paraleloaren \"ezkerreko\" amaiera"
 
-msgid "Playback controls"
-msgstr "Erreprodukzio-kontrolak"
+#~ msgid "Adjust the \"right\" end of the parallel"
+#~ msgstr "Doitu paraleloaren \"eskuineko\" amaiera"
 
-msgid "Active session file:"
-msgstr "Aktibatu saioko fitxategia:"
+#~ msgid "Adjust the bisector's \"left\" end"
+#~ msgstr "Doitu erdikariaren \"ezkerreko\" amaiera"
 
-msgid "Go back one change"
-msgstr "Joan aldaketa bat atzera"
+#~ msgid "Adjust the bisector's \"right\" end"
+#~ msgstr "Doitu erdikariaren \"eskuineko\" amaiera"
 
-msgid "Go forward one change"
-msgstr "Joan aldaketa bat aurrera"
+#~ msgid "Uses XY plane?"
+#~ msgstr "Erabili XY planoa?"
 
-msgid "Open session file"
-msgstr "Ireki saioko fitxategia"
+#~ msgid ""
+#~ "If true, put the path on the left side of an imaginary box, otherwise on "
+#~ "the right side"
+#~ msgstr ""
+#~ "Egia bada, jarri bidea irudikatutako koadroaren ezkerreko alboan. "
+#~ "Bestela, eskuineko alboan"
 
-msgid "_Use SSL"
-msgstr "_Erabili SSL"
+#~ msgid "just a real number like 1.4!"
+#~ msgstr "zenbaki erreal bat, 1,4 bezalakoa."
 
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "<b>%1</b> Jabber zerbitzariarekin konektatzen"
+#~ msgid "Additional angle between tangent and curve"
+#~ msgstr "Tangentea eta kurbaren arteko angelu gehigarria"
 
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr "Huts egin du <b>%1</b> Jabber zerbitzariarekin konektatzean"
+#~ msgid "Location along curve"
+#~ msgstr "Kokalekua kurban zehar"
 
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr "<b>%1</b> Jabber zerbitzariko <b>%2</b> erabiltzaile gisa konexioa ezartzen"
+#~ msgid ""
+#~ "Location of the point of attachment along the curve (between 0.0 and "
+#~ "number-of-segments)"
+#~ msgstr ""
+#~ "Eranskinaren puntuaren kokalekua kurban zehar (0,0 eta segmentu "
+#~ "kopuruaren artekoa)"
 
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Huts egin du <b>%1</b> Jabber zerbitzarian <b>%2</b> gisa autentifikatzean"
+#~ msgid "Specifies the left end of the tangent"
+#~ msgstr "Tangentearen ezkerreko amaiera zehazten du"
 
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr "Huts egin du SSL hasieratzean <b>%1</b> Jabber zerbitzariarekin konektatzean"
+#~ msgid "Specifies the right end of the tangent"
+#~ msgstr "Tangentearen eskuineko amaiera zehazten du"
 
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "<b>%1</b> Jabber zerbitzariarekin konektatuta <b>%2</b> gisa"
+#~ msgid "Adjust the point of attachment of the tangent"
+#~ msgstr "Doitu tangentearen eranskinaren puntua"
 
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Huts egin du <b>%1</b> Jabber zerbitzarian <b>%2</b> gisa harpidetzean"
+#~ msgid "Adjust the \"right\" end of the tangent"
+#~ msgstr "Doitu tangentearen \"eskuineko\" amaiera"
 
-msgid "Chatroom _server:"
-msgstr "Berriketa-gelaren _zerbitzaria:"
+#~ msgid "Text label attached to the path"
+#~ msgstr "Testuaren etiketa bideari erantsitakoa"
 
-msgid "Chatroom _password:"
-msgstr "Berriketa-gelaren _pasahitza:"
+#~ msgid "Playback controls"
+#~ msgstr "Erreprodukzio-kontrolak"
 
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr "<b>%1@%2</b> berriketa-gelarekin sinkronizatzen <b>%3</b> heldulekua erabiliz"
+#~ msgid "Active session file:"
+#~ msgstr "Aktibatu saioko fitxategia:"
 
-msgid "_User's Jabber ID:"
-msgstr "_Erabiltzailearen Jabber IDa:"
+#~ msgid "Go back one change"
+#~ msgstr "Joan aldaketa bat atzera"
 
-msgid "Buddy List"
-msgstr "Lagunen zerrenda"
+#~ msgid "Go forward one change"
+#~ msgstr "Joan aldaketa bat aurrera"
 
-msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr "Arbel zuriko gonbitea <b>%1</b>(r)i bidaltzen"
+#~ msgid "Open session file"
+#~ msgstr "Ireki saioko fitxategia"
 
-msgid "draw-geometry-inactive"
-msgstr "marrazketa-geometriko-inaktiboa"
+#~ msgid "_Use SSL"
+#~ msgstr "_Erabili SSL"
 
-msgid "Rainbow melt"
-msgstr "Ostadar urtua"
+#~ msgid "Establishing connection to Jabber server <b>%1</b>"
+#~ msgstr "<b>%1</b> Jabber zerbitzariarekin konektatzen"
 
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr "Ostadar banda bertikalak, 3D erliebedun orbaneko ertzekin"
+#~ msgid "Failed to establish connection to Jabber server <b>%1</b>"
+#~ msgstr "Huts egin du <b>%1</b> Jabber zerbitzariarekin konektatzean"
 
-msgid "Pewter NR"
-msgstr "Eztainuzko NR"
+#~ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
+#~ msgstr ""
+#~ "<b>%1</b> Jabber zerbitzariko <b>%2</b> erabiltzaile gisa konexioa "
+#~ "ezartzen"
 
-msgid "Mid grey satin like shader close to pewter"
-msgstr "Eztainutik gertu dagoen itzaldura bezalako satin grisaren erdian"
+#~ msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr ""
+#~ "Huts egin du <b>%1</b> Jabber zerbitzarian <b>%2</b> gisa autentifikatzean"
 
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-"Aktibatu hau korapiloen heldulekuak desaktibatzeko (erabilgarria da edizioan "
-"nodoen heldulekuekin arazoak sortzen badituzte)"
+#~ msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
+#~ msgstr ""
+#~ "Huts egin du SSL hasieratzean <b>%1</b> Jabber zerbitzariarekin "
+#~ "konektatzean"
 
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "SVG bit-mapara esportatzeko bereizmena (lehenetsia: 90)"
+#~ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr "<b>%1</b> Jabber zerbitzariarekin konektatuta <b>%2</b> gisa"
 
+#~ msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr ""
+#~ "Huts egin du <b>%1</b> Jabber zerbitzarian <b>%2</b> gisa harpidetzean"
+
+#~ msgid "Chatroom _server:"
+#~ msgstr "Berriketa-gelaren _zerbitzaria:"
+
+#~ msgid "Chatroom _password:"
+#~ msgstr "Berriketa-gelaren _pasahitza:"
+
+#~ msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
+#~ msgstr ""
+#~ "<b>%1@%2</b> berriketa-gelarekin sinkronizatzen <b>%3</b> heldulekua "
+#~ "erabiliz"
+
+#~ msgid "_User's Jabber ID:"
+#~ msgstr "_Erabiltzailearen Jabber IDa:"
+
+#~ msgid "Buddy List"
+#~ msgstr "Lagunen zerrenda"
+
+#~ msgid "Sending whiteboard invitation to <b>%1</b>"
+#~ msgstr "Arbel zuriko gonbitea <b>%1</b>(r)i bidaltzen"
+
+#~ msgid "draw-geometry-inactive"
+#~ msgstr "marrazketa-geometriko-inaktiboa"
+
+#~ msgid "Rainbow melt"
+#~ msgstr "Ostadar urtua"
+
+#~ msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
+#~ msgstr "Ostadar banda bertikalak, 3D erliebedun orbaneko ertzekin"
+
+#~ msgid "Pewter NR"
+#~ msgstr "Eztainuzko NR"
+
+#~ msgid "Mid grey satin like shader close to pewter"
+#~ msgstr "Eztainutik gertu dagoen itzaldura bezalako satin grisaren erdian"
+
+#~ msgid ""
+#~ "Check this to deactivate knotholder handles (useful if they interfere "
+#~ "with node handles during editing)"
+#~ msgstr ""
+#~ "Aktibatu hau korapiloen heldulekuak desaktibatzeko (erabilgarria da "
+#~ "edizioan nodoen heldulekuekin arazoak sortzen badituzte)"
+
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr "SVG bit-mapara esportatzeko bereizmena (lehenetsia: 90)"

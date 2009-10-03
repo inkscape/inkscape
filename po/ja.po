@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-02 01:54+0900\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-10-01 16:22+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
@@ -3129,7 +3129,7 @@ msgid "_Height:"
 msgstr "高さ(_H):"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "dpi"
 
@@ -3572,7 +3572,7 @@ msgid "Title:"
 msgstr "タイトル:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "表示:"
 
@@ -5297,7 +5297,7 @@ msgstr "垂直オフセット"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5888,8 +5888,8 @@ msgstr "折り返し"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6602,7 +6602,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "オブジェクト内のパターンフィルを<b>移動</b>"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "パターンフィルを一律に<b>拡大縮小</b>"
 
 #: ../src/knotholder.cpp:240
@@ -11344,7 +11345,20 @@ msgstr "選択範囲"
 msgid "Profile name:"
 msgstr "プロファイル名:"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Save"
 msgstr "保存"
 
@@ -14364,12 +14378,23 @@ msgstr ""
 msgid "Interface"
 msgstr "インターフェイス"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Enable autosave (requires restart)"
 msgstr "自動保存を有効にする (Inkscape の再起動が必要)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -14377,107 +14402,91 @@ msgstr ""
 "設定された間隔で現在のドキュメントを自動保存し、クラッシュ時の損失を最小限に"
 "抑えます。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr "間隔 (分):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "ドキュメントを自動保存する間隔 (分) です"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr "パス:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr "自動保存先ディレクトリです"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Maximum number of autosaves:"
 msgstr "自動保存の最大数:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "自動保存ファイルの最大数です。ストレージのスペース利用の上限に使用されます。"
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-msgid "Autosave"
-msgstr "自動保存"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "オーバーサンプルビットマップ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr "ビットマップを自動的に読み込む"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "リンクされた画像ファイルが変更された時に自動的に読み込みます"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "ビットマップエディタ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "作成するビットマップコピーの解像度:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "ビットマップコピーの作成コマンドで使用される解像度です"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr "ビットマップ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "言語:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr "メインのスペルチェック言語を指定してください"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "第 2 言語:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -14485,11 +14494,11 @@ msgstr ""
 "第2のスペルチェック言語を指定してください。チェックは選択された全ての言語で不"
 "明な単語のみ停止します。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "第 3 言語:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -14497,31 +14506,31 @@ msgstr ""
 "第3のスペルチェック言語を指定してください。チェックは選択された全ての言語で不"
 "明な単語のみ停止します。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr "数値を含む単語を無視する"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "数値を含む単語を無視します。たとえば \"R2D2\" みたいな。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr "全て大文字の単語を無視する"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "全て大文字の単語を無視します。たとえば \"IUPAC\" みたいな。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "スペルチェック"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "プリント出力にラベルコメントを追加する"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14529,11 +14538,11 @@ msgstr ""
 "オンにすると、ラベル付きオブジェクトのレンダ出力がマークされた RAW プリント出"
 "力にコメントが追加されます"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr "グラデーション定義を共用しない"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14544,11 +14553,11 @@ msgstr ""
 "るためにグラデーション定義の共有を許可する時はチェックマークを外してくださ"
 "い。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "パスの簡略化のしきい値:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -14558,26 +14567,26 @@ msgstr ""
 "早く複数回実行されると徐々に強く働きます。一呼吸おくとデフォルトのしきい値が"
 "復活します。"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr "レイテンシ スキュー:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(Inkscape の再起動が必要)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
 "イベントクロックが実際の時刻からずれる係数です (一部のシステムは 0.9766)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr "名前付きアイコンのプレレンダ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -14586,51 +14595,51 @@ msgstr ""
 "は GTK+ 名前付きアイコン通知のバグに対処するためのものです。"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr "ユーザ設定: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "User data: "
 msgstr "ユーザデータ: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid "User cache: "
 msgstr "ユーザキャッシュ: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr "システム設定: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid "System data: "
 msgstr "システムデータ: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr "PIXMAP: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr "DATA: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "UI: "
 msgstr "UI: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr "アイコンテーマ: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "System info"
 msgstr "システム情報"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "General system information"
 msgstr "一般システム情報"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "その他"
 
@@ -22249,10 +22258,11 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "スケルトンパスの長さにあわせて間隔を広げる"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 "このエフェクトは任意の \"スケルトン\" パスに沿ってパターンを散乱させます。パ"
 "ターンは選択された中の最前面のオブジェクトになります (パス/シェイプ/クローン"
@@ -22352,7 +22362,8 @@ msgid "3D Polyhedron"
 msgstr "3D 多面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-msgid "Clockwise Wound Object"
+#, fuzzy
+msgid "Clockwise wound object"
 msgstr "時計回りのワウンドオブジェクト"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -22368,7 +22379,8 @@ msgid "Dodecahedron"
 msgstr "12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "背面の多角形も描画する"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -22392,20 +22404,23 @@ msgid "Filename:"
 msgstr "ファイル名:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
+#, fuzzy
+msgid "Fill color, Blue"
 msgstr "フィルの色 (青)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
+#, fuzzy
+msgid "Fill color, Green"
 msgstr "フィルの色 (緑)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
+#, fuzzy
+msgid "Fill color, Red"
 msgstr "フィルの色 (赤)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, no-c-format
-msgid "Fill Opacity/ %"
+#, fuzzy, no-c-format
+msgid "Fill opacity, %"
 msgstr "フィルの不透明度/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -22421,92 +22436,102 @@ msgid "Icosahedron"
 msgstr "20面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-msgid "Light x-Position"
-msgstr "照明の X 位置"
+#, fuzzy
+msgid "Light X"
+msgstr "比較 (明)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-msgid "Light y-Position"
-msgstr "照明の Y 位置"
+#, fuzzy
+msgid "Light Y"
+msgstr "比較 (明)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-msgid "Light z-Position"
-msgstr "照明の Y 位置"
+#, fuzzy
+msgid "Light Z"
+msgstr "比較 (明)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr "線の厚み / px"
-
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
+#, fuzzy
+msgid "Load from file"
 msgstr "ファイルから読み込む"
 
-#: ../share/extensions/polyhedron_3d.inx.h:25
+#: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
 msgstr "最大"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr "中間"
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Minimum"
 msgstr "最小"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
-msgid "Model File"
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Model file"
 msgstr "モデルファイル"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Object Type"
 msgstr "オブジェクトタイプ"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object:"
 msgstr "オブジェクト:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "Octahedron"
 msgstr "8面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:33
-msgid "Rotate Around:"
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
 msgstr "回転軸"
 
-#: ../share/extensions/polyhedron_3d.inx.h:34
-msgid "Rotation / Degrees"
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Rotation, degrees"
 msgstr "回転 / 角度"
 
-#: ../share/extensions/polyhedron_3d.inx.h:35
-msgid "Scaling Factor"
-msgstr "拡縮係数"
+#: ../share/extensions/polyhedron_3d.inx.h:34
+#, fuzzy
+msgid "Scaling factor"
+msgstr "単一色"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
 msgstr "シェーディング"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "小2重3角20・12面体の双対"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "ねじれ立方体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "ねじれ12面体"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
-#, no-c-format
-msgid "Stroke Opacity/ %"
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, fuzzy, no-c-format
+msgid "Stroke opacity, %"
 msgstr "ストロークの透明度/ %"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "ストローク幅"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "4面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-msgid "Then Rotate Around:"
+#, fuzzy
+msgid "Then rotate around:"
 msgstr "その後の回転軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -22550,7 +22575,8 @@ msgid "Z-Axis"
 msgstr "Z 軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+#, fuzzy
+msgid "Z-sort faces by:"
 msgstr "フェイスの Z ソート:"
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23317,6 +23343,24 @@ msgstr "Windows メタファイル入力"
 msgid "XAML Input"
 msgstr "XAML 入力"
 
+#~ msgid "Autosave"
+#~ msgstr "自動保存"
+
+#~ msgid "Light x-Position"
+#~ msgstr "照明の X 位置"
+
+#~ msgid "Light y-Position"
+#~ msgstr "照明の Y 位置"
+
+#~ msgid "Light z-Position"
+#~ msgstr "照明の Y 位置"
+
+#~ msgid "Line Thickness / px"
+#~ msgstr "線の厚み / px"
+
+#~ msgid "Scaling Factor"
+#~ msgstr "拡縮係数"
+
 #~ msgid "Error saving a temporary copy"
 #~ msgstr "作業コピーの保存でエラーです"
 
@@ -23720,10 +23764,6 @@ msgstr "XAML 入力"
 #, fuzzy
 #~ msgid "Adjust the \"right\" end of the parallel"
 #~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Scaling factor"
-#~ msgstr "単一色"
 
 #, fuzzy
 #~ msgid "Display unit"

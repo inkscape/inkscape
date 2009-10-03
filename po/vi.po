@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-07-21 04:35+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -2368,11 +2368,11 @@ msgstr "<b>Điểm cuối đường nối</b>: kéo để cập nhật hoặc k�
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Chọn <b>ít nhất một đối tượng khác đường nối</b>"
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Làm cho đường nối tránh các đối tượng đã chọn"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Làm cho đường nối bỏ qua các đối tượng đã chọn"
 
@@ -2384,11 +2384,11 @@ msgstr "<b>Lớp hiện thời bị ẩn</b>. Hãy bỏ chế độ ẩn trướ
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>Lớp hiện thời bị khoá</b>. Hãy gỡ khoá trước khi vẽ trên nó."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Không có hệ số thu phóng trước."
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Không có hệ số thu phóng kế tiếp."
 
@@ -3210,7 +3210,7 @@ msgid "_Height:"
 msgstr "_Cao :"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "dpi"
 
@@ -3289,7 +3289,7 @@ msgstr "Thư mục %s không tồn tại hay không phải là một thư mục.
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Đang xuất %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Chọn tên tập tin cần xuất"
 
@@ -3650,7 +3650,7 @@ msgid "Title:"
 msgstr "Title:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Show:"
 
@@ -3794,11 +3794,11 @@ msgstr "Căn lề phải"
 msgid "Justify lines"
 msgstr "Căn lề 2 bên"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Chữ ngang"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Chữ dọc"
 
@@ -4265,7 +4265,7 @@ msgstr "Góc đường bao lồi"
 msgid "Quadrant point"
 msgstr "Điểm một phần tư"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Tâm điểm"
 
@@ -5285,7 +5285,7 @@ msgstr "Độ dịch dọc, px"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5382,7 +5382,7 @@ msgstr "Độ dịch dọc"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5668,55 +5668,51 @@ msgstr "Cập nhật lại kết quả trên vùng vẽ mỗi khi thay đổi th
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Không nhận dạng được định dạng của tập tin. Đang mở dưới dạng SVG."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Lỗi nạp tập tin đã yêu cầu %s"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Chưa lưu tài liệu nên không thể hoàn nguyên."
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Các thay đổi sẽ bị mất ! Bạn có chắc muốn nạp lại tài liệu %s không?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "Tài liệu đã được hoàn nguyên."
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "Chưa hoàn nguyên tài liệu."
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Chọn tập tin cần mở"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Làm sạch &lt;defs&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Mới gỡ bỏ <b>%i</b> lời xác định không dùng khỏi &lt;defs&gt;."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Không có lời xác định không dùng trong &lt;defs&gt;."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5725,95 +5721,71 @@ msgstr ""
 "Không tìm thấy phần mở rộng Inkscape để lưu tài liệu (%s). Có thể vì một "
 "phần mở rộng tên tập tin không rõ."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "Chưa lưu tài liệu."
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Không thể lưu tập tin %s."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "Tài liệu đã được lưu."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "hình%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "hình-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Chọn tập tin vào đó cần lưu bản sao"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Chọn tập tin vào đó cần lưu"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "Không có thay đổi cần lưu."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 msgid "Saving document..."
 msgstr "Đang lưu tài liệu..."
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Nhập"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Chọn tập tin cần nhập khẩu"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 msgid "Select file to export to"
 msgstr "Chọn tập tin vào đó cần xuất"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr "Gặp lỗi khi lưu một bản sao tạm thời"
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr "Thông tin đăng nhập vào trang Open Clip Art"
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-"Gặp lỗi khi xuất tài liệu. Hãy kiểm tra xem cả tên máy chủ, tên người dùng "
-"và mật khẩu đều là đúng. Nếu máy chủ hỗ trợ WebDAV, cũng kiểm tra bạn đã "
-"chọn giấy phép."
-
-#: ../src/file.cpp:1422
-msgid "Document exported..."
-msgstr "Tài liệu đã được xuất..."
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Nhập từ Open Clip Art Library"
 
@@ -5996,8 +5968,8 @@ msgstr "Cuộn"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6317,7 +6289,7 @@ msgstr "Đơn vị"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Đơn vị"
 
@@ -6684,7 +6656,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Di chuyển</b> mẫu tô bên trong đối tượng"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "<b>Co giãn</b> đều mẫu tô"
 
 #: ../src/knotholder.cpp:240
@@ -7099,7 +7072,7 @@ msgstr "Một ss cái khó hiểu xẩy ra khi nhận sự định vị con cho 
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "Mục-cư-trú có 'riêng' nhãn tab này"
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Đang bỏ qua phông không có nhóm mà sẽ làm cho Pango sụp đổ."
 
@@ -9457,7 +9430,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Chưa</b> xoá gì."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Xóa"
@@ -11224,12 +11197,12 @@ msgstr "D:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Gỡ bỏ chỗ chồng chéo"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Sắp đặt mạng đường nối"
 
@@ -11371,7 +11344,7 @@ msgstr ""
 "nhau"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Sắp đặt hợp lý mạng đường nối đã chọn"
 
@@ -11419,7 +11392,20 @@ msgstr "Vùng chọn"
 msgid "Profile name:"
 msgstr "Tên Hồ Sơ :"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Save"
 msgstr "Lưu"
 
@@ -11721,61 +11707,61 @@ msgstr "Không sử dụng được Thư mục hồ sơ màu (%s)."
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "Hồ sơ màu liên kết"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "Xóa các Hồ sơ màu liên kết"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Hồ sơ màu liên kết</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Các hồ sơ màu sử dụng được:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "Hồ sơ màu liên kết"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "Tên hồ sơ"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>Văn lệnh ngoài chương trình:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "Thêm"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "Tên tập tin"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "Chạy một văn lệnh ngoài chương trình..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr "Xóa văn lệnh ngoài chương trình"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr "<b>Tạo</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>Lưới đã xác định</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "Xóa bỏ lưới"
 
@@ -12798,7 +12784,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Ngưỡng:"
 
@@ -14455,12 +14441,23 @@ msgstr ""
 msgid "Interface"
 msgstr "Giao diện"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Enable autosave (requires restart)"
 msgstr "Bật chế độ sao lưu tự động (cần khởi chạy lại):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -14468,112 +14465,96 @@ msgstr ""
 "Tự động lưu (các) tài liệu đang mở sau một chu kỳ để tránh mất dữ liệu trong "
 "trường hợp Inkscape bị treo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr "Chu kỳ tự động lưu (phút)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "Chu kỳ (tính bằng phút) thực hiện việc tự động lưu tài liệu"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr "Đường dẫn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr "Thư mục sẽ chứa tập tin tự động sao lưu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Maximum number of autosaves:"
 msgstr "Số tập tin sao lưu lớn nhất:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Số tập tin tối đa sẽ được tự động lưu; dùng thiết lập này để giới hạn không "
 "gian lưu trữ sẽ sử dụng"
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-msgid "Autosave"
-msgstr "Tự động sao lưu"
-
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2×2"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4×4"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8×8"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "Quá lấy mẫu ảnh bitmap:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr "Tự động nạp lại các ảnh bitmap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "Tự động nạp lại các ảnh được liên kết mỗi khi chúng thay đổi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "Trình xử lý ảnh bitmap:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "Độ phân giải khi Tạo bản sao dạng ảnh:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Độ phân giải được lệnh Tạo bản sao dạng ảnh sử dụng"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr "Ảnh bitmap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "Ngôn ngữ:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr "Đặt ngôn ngữ chính sẽ kiểm tra chính tả"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "Ngôn ngữ thứ hai:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -14581,11 +14562,11 @@ msgstr ""
 "Đặt ngôn ngữ thứ hai sẽ kiểm tra chính tả; quá trình kiểm tra sẽ tìm ra một "
 "từ KHÔNG CÓ trong TẤT CẢ các ngôn ngữ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "Ngôn ngữ thứ ba:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -14593,31 +14574,31 @@ msgstr ""
 "Đặt ngôn ngữ thứ ba sẽ kiểm tra chính tả; quá trình kiểm tra sẽ tìm ra một "
 "từ KHÔNG CÓ trong TẤT CẢ các ngôn ngữ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr "Bỏ qua các từ chứa số"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Bỏ qua các từ có chứa chữ số, ví dụ như \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Bỏ qua các từ VIẾT HOA"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Bỏ qua các từ viết hoa toàn bộ, ví dụ như \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "Kiểm tra chính tả"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Thêm vào Xuất in ấn các chú thích nhãn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14625,11 +14606,11 @@ msgstr ""
 "Bật tùy chọn này thì một chú thích sẽ được thêm vào Xuất in thô, đánh dấu "
 "Xuất đã vẽ của đối tượng đó bằng nhãn riêng của nó."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr "Không chia sẻ các chuyển sắc đã thiết lập"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14640,11 +14621,11 @@ msgstr ""
 "cho phép chia sẻ thiết lập chuyển sắc giữa nhiều đối tượng, sửa chuyển sắc "
 "sẽ tác động lên tất cả các đối tượng chuyển sắc đó."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Ngưỡng đơn giản hoá:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 #, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
@@ -14655,15 +14636,15 @@ msgstr ""
 "lần một cách liên tiếp nhanh, nó sẽ hoạt động mỗi lần một năng nổ thêm; còn "
 "việc gọi lại sau khi tạm dừng sẽ phục hồi ngưỡng mặc định."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr "Độ xô nghiêng:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(cần khởi chạy lại)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
@@ -14671,11 +14652,11 @@ msgstr ""
 "Hệ số theo đó đồng hồ sự kiện được xô lệch đi so với thời gian thực (0.9766 "
 "trên một số hệ thống)."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr "Chuẩn bị trước các biểu tượng có tên."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -14685,51 +14666,51 @@ msgstr ""
 "viện GTK+."
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr "Cấu hình người dùng:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "User data: "
 msgstr "Dữ liệu người dùng:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid "User cache: "
 msgstr "Bộ đệm người dùng:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr "Cấu hình hệ thống:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid "System data: "
 msgstr "Dữ liệu hệ thống:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr "PIXMAP: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr "DATA: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "UI: "
 msgstr "UI: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr "Sắc thái Biểu tượng:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "System info"
 msgstr "Thông Tin Hệ Thống"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "General system information"
 msgstr "Thông tin tổng quát về hệ thống"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Linh tinh"
 
@@ -14930,23 +14911,11 @@ msgstr ""
 "» (chuyển hướng) của « dialogs.debug » thành 1 trong tập tin tùy thích « "
 "preferences.xml »"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-msgid "File"
-msgstr "Tập tin"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-msgid "Username:"
-msgstr "Tên người dùng:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-msgid "Password:"
-msgstr "Mật khẩu:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr "Lỗi khi đọc nguồn tin RSS từ thư viện Open Clip Art"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
@@ -14955,23 +14924,23 @@ msgstr ""
 "bạn đã nhập đúng tên máy chủ trong Cấu hình -> Nhập/Xuất chưa (v.d: "
 "openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr "Máy chủ trả về nguồn thông Clip Art bị lỗi"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 msgid "Search for:"
 msgstr "Tìm:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr "Không tìm thấy tập tin nào"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr "Các tập tin tìm thấy"
 
@@ -15193,7 +15162,7 @@ msgstr "Văn bản mẫu"
 msgid "Preview Text:"
 msgstr "Văn bản xem thử:"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
@@ -15202,53 +15171,53 @@ msgstr ""
 "để đặt làm màu nét"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 msgid "Set fill"
 msgstr "Đặt màu tô"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 msgid "Set stroke"
 msgstr "Đặt màu nét"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Sửa..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 msgid "Convert"
 msgstr "Chuyển đổi"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "Thay đổi định nghĩa màu"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove stroke color"
 msgstr "Xóa màu nét"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove fill color"
 msgstr "Xóa màu tô"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set stroke color to none"
 msgstr "Đặt màu nét thành trong suốt"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set fill color to none"
 msgstr "Đặt màu tô thành trong suốt"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Đặt màu nét từ bảng chọn màu"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Đặt màu tô từ bảng chọn màu"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Thư mục bảng màu (%s) không sẵn sàng."
@@ -16677,14 +16646,7 @@ msgstr "Xuất khẩu tài liệu này hay vùng chọn của nó dạng ảnh b
 msgid "Import a document from Open Clip Art Library"
 msgstr "Nhập tài liệu từ Open Clip Art Library"
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr "Xuất lên Open Clip Art Library"
-
-#: ../src/verbs.cpp:2266
-msgid "Export this document to Open Clip Art Library"
-msgstr "Xuất tài liệu này lên Open Clip Art Library"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "Cửa sổ _kế"
@@ -18390,7 +18352,7 @@ msgstr "Kích cỡ phông:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "ĂăÂâÊêÔôƯưƠơĐđ₫«»ằẩễốựỡẳữẵỵẴỔỬỴỜ"
 
@@ -19527,7 +19489,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Rải ngẫu nhiên các góc"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Mặc định"
 
@@ -20486,23 +20448,23 @@ msgstr "Văn bản: đổi nhóm phông"
 msgid "Text: Change alignment"
 msgstr "Văn bản: đổi căn chỉnh"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Văn bản: đổi kiểu phông"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Văn bản: đổi hướng"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Văn bản: đổi kích cỡ phông"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr "Chọn họ phông chữ (Alt+X để truy cập)"
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -20510,92 +20472,92 @@ msgstr ""
 "Phông này chưa được cài đặt vào hệ thống của bạn nên trình Inkscape sẽ dùng "
 "phông mặc định thay vào đó."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Sắp hàng bên trái"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Sắp hàng bên phải"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Sắp thẳng"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Đậm"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Nghiêng"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Đổi khoảng cách đường nối"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr "Tránh"
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Ignore"
 msgstr "Bỏ qua"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Connector Spacing"
 msgstr "Khoảng cách đường nối"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Khoảng cách:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Khoảng cách còn lại chung quanh đối tượng do đường nối tự động cập nhật"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 msgid "Graph"
 msgstr "Đồ thị"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Connector Length"
 msgstr "Chiều dài đường nối"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Dài:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Chiều dài lý tưởng cho đường nối khi bố trí được áp dụng"
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr "Xuống"
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Làm cho đường nối có hình nút cuối (mũi tên) chỉ xuống"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr "Không đặt các hình chồng chéo lên nhau"
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 msgid "Fill by"
 msgstr "Tô theo"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Fill by:"
 msgstr "Tô theo :"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 msgid "Fill Threshold"
 msgstr "Ngưỡng tô"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -20603,29 +20565,29 @@ msgstr ""
 "Hiệu số tối đa được phép giữa điểm ảnh đã nhấn vào và các điểm ảnh chung "
 "quanh cần tính khi tô"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr "Phóng to/thu nhỏ theo"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr "Phóng to/thu nhỏ theo :"
 
-#: ../src/widgets/toolbox.cpp:7187
+#: ../src/widgets/toolbox.cpp:7212
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Số lượng cần phóng to (số dương) hay thu nhỏ (số âm) đường nét tô đã tạo"
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 msgid "Close gaps"
 msgstr "Đóng khe"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 msgid "Close gaps:"
 msgstr "Đóng khe:"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -22439,8 +22401,8 @@ msgstr "Kéo dãn khoảng cách cho vừa chiều dài khung"
 #, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 "Hiệu ứng này xếp một mẫu rải rác theo một đường nét \"khung\" bất kỳ. Mẫu "
 "được chọn là đối tượng nằm trên cùng của các đối tượng đang chọn (có thể là "
@@ -22543,7 +22505,8 @@ msgid "3D Polyhedron"
 msgstr "Khối đa diện 3D"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-msgid "Clockwise Wound Object"
+#, fuzzy
+msgid "Clockwise wound object"
 msgstr "Xoay phải đối tượng"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -22561,7 +22524,8 @@ msgid "Dodecahedron"
 msgstr "Khối dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "Vẽ đa giác mặt sau"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -22586,22 +22550,22 @@ msgstr "Tên tập tin:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
 #, fuzzy
-msgid "Fill Color (Blue)"
+msgid "Fill color, Blue"
 msgstr "Màu Tô (Lam)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
 #, fuzzy
-msgid "Fill Color (Green)"
+msgid "Fill color, Green"
 msgstr "Màu Tô (Lục)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
 #, fuzzy
-msgid "Fill Color (Red)"
+msgid "Fill color, Red"
 msgstr "Màu Tô (Đỏ)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, no-c-format
-msgid "Fill Opacity/ %"
+#, fuzzy, no-c-format
+msgid "Fill opacity, %"
 msgstr "Độ đục màu tô/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -22621,90 +22585,95 @@ msgstr "Khối 20 mặt"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 #, fuzzy
-msgid "Light x-Position"
-msgstr "Vị trí cửa sổ: X %d, Y %d"
+msgid "Light X"
+msgstr "Sáng hơn"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 #, fuzzy
-msgid "Light y-Position"
-msgstr "Vị trí cửa sổ: X %d, Y %d"
+msgid "Light Y"
+msgstr "Sáng hơn"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
 #, fuzzy
-msgid "Light z-Position"
-msgstr "Vị trí cửa sổ: X %d, Y %d"
+msgid "Light Z"
+msgstr "Sáng hơn"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 #, fuzzy
-msgid "Line Thickness / px"
-msgstr "Độ dày đường viền [px]"
-
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
+msgid "Load from file"
 msgstr "Mở Từ Tập Tin"
 
-#: ../share/extensions/polyhedron_3d.inx.h:25
+#: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
 msgstr "Tối Đa"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr "Trung Bình"
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Minimum"
 msgstr "Tối Thiểu"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
-msgid "Model File"
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Model file"
 msgstr "Tập Tin Mô Hình"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Object Type"
 msgstr "Kiểu Đối Tượng"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object:"
 msgstr "Đối Tượng:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 #, fuzzy
 msgid "Octahedron"
 msgstr "Khối 8 mặt"
 
-#: ../share/extensions/polyhedron_3d.inx.h:33
-msgid "Rotate Around:"
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
 msgstr "Xoay Quanh:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:34
-msgid "Rotation / Degrees"
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Rotation, degrees"
 msgstr "Xoay / độ"
 
-#: ../share/extensions/polyhedron_3d.inx.h:35
-msgid "Scaling Factor"
-msgstr "Hệ số thu phóng"
+#: ../share/extensions/polyhedron_3d.inx.h:34
+#, fuzzy
+msgid "Scaling factor"
+msgstr "Hệ số tỷ lệ của phông chữ."
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
 msgstr "Tạo Bóng"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 #, fuzzy
 msgid "Small Triambic Icosahedron"
 msgstr "<small>Loại trừ đá lát:</small>"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Khối lập phương lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Khối mười hai mặt lệch"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
-#, no-c-format
-msgid "Stroke Opacity/ %"
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, fuzzy, no-c-format
+msgid "Stroke opacity, %"
 msgstr "Độ đục nét/ %"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Chiều rộng nét"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 #, fuzzy
@@ -22712,7 +22681,8 @@ msgid "Tetrahedron"
 msgstr "Khối tứ diện"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-msgid "Then Rotate Around:"
+#, fuzzy
+msgid "Then rotate around:"
 msgstr "Sau đó xoay quanh:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -22761,7 +22731,8 @@ msgid "Z-Axis"
 msgstr "Trục Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+#, fuzzy
+msgid "Z-sort faces by:"
 msgstr "Sắp xếp các mặt theo trục Z bởi:"
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23540,6 +23511,61 @@ msgstr "Nhập Windows Metafile"
 msgid "XAML Input"
 msgstr "Nhập XAML"
 
+#~ msgid "Error saving a temporary copy"
+#~ msgstr "Gặp lỗi khi lưu một bản sao tạm thời"
+
+#~ msgid "Open Clip Art Login"
+#~ msgstr "Thông tin đăng nhập vào trang Open Clip Art"
+
+#~ msgid ""
+#~ "Error exporting the document. Verify if the server name, username and "
+#~ "password are correct, if the server has support for webdav and verify if "
+#~ "you didn't forget to choose a license."
+#~ msgstr ""
+#~ "Gặp lỗi khi xuất tài liệu. Hãy kiểm tra xem cả tên máy chủ, tên người "
+#~ "dùng và mật khẩu đều là đúng. Nếu máy chủ hỗ trợ WebDAV, cũng kiểm tra "
+#~ "bạn đã chọn giấy phép."
+
+#~ msgid "Document exported..."
+#~ msgstr "Tài liệu đã được xuất..."
+
+#~ msgid "Autosave"
+#~ msgstr "Tự động sao lưu"
+
+#~ msgid "File"
+#~ msgstr "Tập tin"
+
+#~ msgid "Username:"
+#~ msgstr "Tên người dùng:"
+
+#~ msgid "Password:"
+#~ msgstr "Mật khẩu:"
+
+#~ msgid "Export To Open Clip Art Library"
+#~ msgstr "Xuất lên Open Clip Art Library"
+
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr "Xuất tài liệu này lên Open Clip Art Library"
+
+#, fuzzy
+#~ msgid "Light x-Position"
+#~ msgstr "Vị trí cửa sổ: X %d, Y %d"
+
+#, fuzzy
+#~ msgid "Light y-Position"
+#~ msgstr "Vị trí cửa sổ: X %d, Y %d"
+
+#, fuzzy
+#~ msgid "Light z-Position"
+#~ msgstr "Vị trí cửa sổ: X %d, Y %d"
+
+#, fuzzy
+#~ msgid "Line Thickness / px"
+#~ msgstr "Độ dày đường viền [px]"
+
+#~ msgid "Scaling Factor"
+#~ msgstr "Hệ số thu phóng"
+
 #, fuzzy
 #~ msgid "polyhedron|Show:"
 #~ msgstr "Khối đa diện 3D"
@@ -24082,10 +24108,6 @@ msgstr "Nhập XAML"
 #, fuzzy
 #~ msgid "Adjust the \"right\" end of the parallel"
 #~ msgstr "Điều chỉnh vùng chọn phải đến offset trước"
-
-#, fuzzy
-#~ msgid "Scaling factor"
-#~ msgstr "Hệ số tỷ lệ của phông chữ."
 
 #, fuzzy
 #~ msgid "Display unit"

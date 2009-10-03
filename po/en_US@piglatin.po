@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2007-01-05 13:35-0600\n"
 "Last-Translator: Jon South <striker@lunar-linux.org>\n"
 "Language-Team: \n"
@@ -2446,11 +2446,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Electsay <b>atway eastlay oneway onnay-onnectorcay objectway</b>."
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Akemay onnectorscay avoidway electedsay objectsway"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Akemay onnectorscay ignoreway electedsay objectsway"
 
@@ -2466,11 +2466,11 @@ msgstr ""
 "<b>Urrentcay ayerlay isway ockedlay</b>. Unlockway itway otay ebay ableway "
 "otay awdray onway itway."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Onay eviouspray oomzay."
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Onay extnay oomzay."
 
@@ -3340,7 +3340,7 @@ msgid "_Height:"
 msgstr "_Eighthay:"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "idpay"
 
@@ -3421,7 +3421,7 @@ msgstr ""
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Exportingway %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Electsay a ilenamefay orfay exportingway"
 
@@ -3797,7 +3797,7 @@ msgid "Title:"
 msgstr "Itletay:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Owshay:"
 
@@ -3946,11 +3946,11 @@ msgstr "Alignway ineslay ightray"
 msgid "Justify lines"
 msgstr "Ustifyjay"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Orizontalhay exttay"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Erticalvay exttay"
 
@@ -4452,7 +4452,7 @@ msgstr ""
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Entercay"
 
@@ -5535,7 +5535,7 @@ msgstr "Erticalvay Offsetway"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5638,7 +5638,7 @@ msgstr "Erticalvay Offsetway"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5940,58 +5940,54 @@ msgstr ""
 "Ormatfay autodetectway ailedfay. Ethay ilefay isway eingbay openedway asway "
 "SVG."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Ailedfay otay oadlay ethay equestedray ilefay %s"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Ocumentday otnay avedsay etyay.  Annotcay evertray."
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Angeschay illway ebay ostlay!  Areway you uresay you antway otay eloadray "
 "ocumentday %s?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "Ocumentday evertedray."
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "Ocumentday otnay evertedray."
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Electsay ilefay otay openway"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Acuumvay &lt;defs&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Emovedray <b>%i</b> unusedway efinitionday inway &lt;efsday&gt;."
 msgstr[1] "Emovedray <b>%i</b> unusedway efinitionsday inway &lt;efsday&gt;."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Onay unusedway efinitionsday inway &lt;efsday&gt;."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -6000,94 +5996,72 @@ msgstr ""
 "Onay Inkscape extensionway oundfay otay avesay ocumentday (%s).  Isthay "
 "aymay avehay eenbay ausedcay ybay anway unknownway ilenamefay extensionway."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "Ocumentday otnay avedsay."
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Ilefay %s ouldcay otnay ebay avedsay."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "Ocumentday avedsay."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "awingdray%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "awingdray-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Electsay ilefay otay avesay away opycay otay"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Electsay ilefay otay avesay otay"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "Onay angeschay eednay otay ebay avedsay."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 #, fuzzy
 msgid "Saving document..."
 msgstr "Avesay ocumentday"
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Importway"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Electsay ilefay otay importway"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 msgid "Select file to export to"
 msgstr "Electsay ilefay otay exportway otay"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr ""
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr ""
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-
-#: ../src/file.cpp:1422
-#, fuzzy
-msgid "Document exported..."
-msgstr "Ocumentday evertedray."
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -6297,8 +6271,8 @@ msgstr "Apwray"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6648,7 +6622,7 @@ msgstr "Unitway"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Unitsway"
 
@@ -7025,7 +6999,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Ovemay</b> ethay atternpay illfay insideway ethay objectway"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "<b>Alescay</b> ethay atternpay illfay uniformlyway"
 
 #: ../src/knotholder.cpp:240
@@ -7452,7 +7427,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this tablabel"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignoringway ontfay ithoutway amilyfay atthay illway ashcray Angopay"
 
@@ -9938,7 +9913,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Othingnay</b> asway eletedday."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Eleteday"
@@ -11793,12 +11768,12 @@ msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Emoveray overlapsway"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Arrangeway onnectorcay etworknay"
 
@@ -11959,7 +11934,7 @@ msgstr ""
 "oundingbay oxesbay oday otnay overlapway"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Icelynay arrangeway electedsay onnectorcay etworknay"
 
@@ -12012,7 +11987,20 @@ msgstr "Electionsay"
 msgid "Profile name:"
 msgstr "Etsay ilenamefay"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 #, fuzzy
 msgid "Save"
 msgstr "Ave_say"
@@ -12331,72 +12319,72 @@ msgstr "Alettespay irectoryday (%s) isway unavailableway."
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 #, fuzzy
 msgid "Link Color Profile"
 msgstr "Ickpay averagedway olorscay omfray imageway"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 #, fuzzy
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Eneralgay</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 #, fuzzy
 msgid "Link Profile"
 msgstr "Inklay Operties_pray"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 #, fuzzy
 msgid "Profile Name"
 msgstr "Etsay ilenamefay"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 #, fuzzy
 msgid "<b>External script files:</b>"
 msgstr "Apsnay _ointspay otay uidesgay"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 #, fuzzy
 msgid "Add"
 msgstr "_Addway"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 #, fuzzy
 msgid "Filename"
 msgstr "Etsay ilenamefay"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 #, fuzzy
 msgid "Add external script..."
 msgstr "Editway illfay..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 #, fuzzy
 msgid "Remove external script"
 msgstr "Emoveray exttay omfray athpay"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 #, fuzzy
 msgid "<b>Creation</b>"
 msgstr " <b>Eate_cray</b> "
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 #, fuzzy
 msgid "<b>Defined grids</b>"
 msgstr "<b>Eneralgay</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 #, fuzzy
 msgid "Remove grid"
 msgstr "Emoveray Edray"
@@ -13416,7 +13404,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Esholdthray:"
 
@@ -15147,167 +15135,161 @@ msgstr ""
 msgid "Interface"
 msgstr "Interpolateway"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 #, fuzzy
 msgid "Enable autosave (requires restart)"
 msgstr ""
 "Etherwhay ialogday indowsway avehay a oseclay uttonbay (equiresray estartray)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 #, fuzzy
 msgid "Maximum number of autosaves:"
 msgstr "Axmay ecentray ocumentsday:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-#, fuzzy
-msgid "Autosave"
-msgstr "_Authorsway"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "Oversampleway itmapsbay:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 #, fuzzy
 msgid "Bitmap editor:"
 msgstr "Adientgray editorway"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 #, fuzzy
 msgid "Bitmaps"
 msgstr "Etsay askmay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 #, fuzzy
 msgid "Language:"
 msgstr "Anguagelay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 #, fuzzy
 msgid "Second language:"
 msgstr "Anguagelay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 #, fuzzy
 msgid "Third language:"
 msgstr "Anguagelay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 #, fuzzy
 msgid "Spellcheck"
 msgstr "Electsay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Addway abellay ommentscay otay intingpray outputway"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -15316,22 +15298,22 @@ msgstr ""
 "outputway, arkingmay ethay enderedray outputway orfay anway objectway ithway "
 "itsway abellay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Implificationsay esholdthray:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 #, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
@@ -15343,84 +15325,84 @@ msgstr ""
 "itway illway actway oremay andway oremay aggressivelyway; invokingway itway "
 "againway afterway a ausepay estoresray ethay efaultday esholdthray."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 #, fuzzy
 msgid "(requires restart)"
 msgstr ""
 "Etherwhay ialogday indowsway avehay a oseclay uttonbay (equiresray estartray)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 #, fuzzy
 msgid "User data: "
 msgstr "_Usernameway:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 #, fuzzy
 msgid "User cache: "
 msgstr "_Usernameway:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 #, fuzzy
 msgid "System data: "
 msgstr "Etsay asway efaultday"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 #, fuzzy
 msgid "UI: "
 msgstr "_IDWAY: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 #, fuzzy
 msgid "System info"
 msgstr "Ystemsay"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 #, fuzzy
 msgid "General system information"
 msgstr "Emorymay usageway informationway"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Iscmay"
 
@@ -15629,50 +15611,35 @@ msgstr ""
 "Enableway oglay isplayday ybay ettingsay ialogsday.ebugday 'edirectray' "
 "attributeway otay 1 inway eferencespray.xml"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-#, fuzzy
-msgid "File"
-msgstr "Ile_fay"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-#, fuzzy
-msgid "Username:"
-msgstr "_Usernameway:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-#, fuzzy
-msgid "Password:"
-msgstr "_Asswordpay:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 #, fuzzy
 msgid "Search for:"
 msgstr "Earchsay oupsgray"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 #, fuzzy
 msgid "Search"
 msgstr "Earchsay oupsgray"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr ""
 
@@ -15930,67 +15897,67 @@ msgstr "Alescay"
 msgid "Preview Text:"
 msgstr "Eviewpray"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 #, fuzzy
 msgid "Set fill"
 msgstr "Unsetway illfay"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 #, fuzzy
 msgid "Set stroke"
 msgstr "Unsetway okestray"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Editway..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 #, fuzzy
 msgid "Convert"
 msgstr "Overagecay"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "Angechay olorcay efinitionday"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 #, fuzzy
 msgid "Remove stroke color"
 msgstr "Emoveray okestray"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 #, fuzzy
 msgid "Remove fill color"
 msgstr "Emoveray illfay"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 #, fuzzy
 msgid "Set stroke color to none"
 msgstr "Etsay okestray olorcay"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 #, fuzzy
 msgid "Set fill color to none"
 msgstr "Etsay illfay olorcay"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Etsay okestray olorcay omfray atchsway"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Etsay illfay olorcay omfray atchsway"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Alettespay irectoryday (%s) isway unavailableway."
@@ -17461,16 +17428,7 @@ msgstr ""
 msgid "Import a document from Open Clip Art Library"
 msgstr ""
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr ""
-
-#: ../src/verbs.cpp:2266
-#, fuzzy
-msgid "Export this document to Open Clip Art Library"
-msgstr ""
-"Exportway isthay ocumentday orway a electionsay asway a itmapbay imageway"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "_Extnay Indowway"
@@ -19256,7 +19214,7 @@ msgstr "Ontfay izesay:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -20475,7 +20433,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Atterscay andomlyray ethay ornerscay andway anglesway"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Efaultsday"
 
@@ -21538,23 +21496,23 @@ msgstr "Exttay: Angechay ontfay amilyfay"
 msgid "Text: Change alignment"
 msgstr "Exttay: Angechay alignmentway"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Exttay: Angechay ontfay ylestay"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Exttay: Agepay orientationway"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Exttay: Angechay ontfay izesay"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -21562,130 +21520,130 @@ msgstr ""
 "Isthay ontfay isway urrentlycay otnay installedway onway ouryay ystemsay. "
 "Inkscape illway useway ethay efaultday ontfay insteadway."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Alignway eftlay"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Alignway ightray"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Ustifyjay"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Oldbay"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Italicway"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Angechay onnectorcay acingspay"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 #, fuzzy
 msgid "Ignore"
 msgstr "onenay"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 #, fuzzy
 msgid "Connector Spacing"
 msgstr "Angechay onnectorcay acingspay"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Acingspay:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Ethay amountway ofway acespay eftlay aroundway objectsway ybay autoway-"
 "outingray onnectorscay"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 #, fuzzy
 msgid "Graph"
 msgstr "Apwray"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 #, fuzzy
 msgid "Connector Length"
 msgstr "Onnectorcay"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Engthlay:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Idealway engthlay orfay onnectorscay enwhay ayoutlay isway appliedway"
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr ""
 "Akemay onnectorscay ithway endway-arkersmay (arrowsway) ointpay ownwardsday"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr "Oday otnay allowway overlappingway apesshay"
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 #, fuzzy
 msgid "Fill by"
 msgstr "Illfay"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 #, fuzzy
 msgid "Fill by:"
 msgstr "Illfay"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 #, fuzzy
 msgid "Fill Threshold"
 msgstr "Esholdthray:"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7187
+#: ../src/widgets/toolbox.cpp:7212
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 #, fuzzy
 msgid "Close gaps"
 msgstr "Ear_clay"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 #, fuzzy
 msgid "Close gaps:"
 msgstr "Ear_clay"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 #, fuzzy
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
@@ -23501,8 +23459,8 @@ msgstr ""
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:1
@@ -23612,7 +23570,7 @@ msgstr "Olygonpay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 #, fuzzy
-msgid "Clockwise Wound Object"
+msgid "Clockwise wound object"
 msgstr "Unlockway objectway"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -23629,8 +23587,9 @@ msgid "Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
-msgstr ""
+#, fuzzy
+msgid "Draw back-facing polygons"
+msgstr "Eatecray arsstay andway olygonspay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -23656,20 +23615,23 @@ msgid "Filename:"
 msgstr "Etsay ilenamefay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Blue"
+msgstr "Atflay olorcay illfay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Green"
+msgstr "Atflay olorcay okestray"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Red"
+msgstr "Atflay olorcay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
 #, fuzzy, no-c-format
-msgid "Fill Opacity/ %"
+msgid "Fill opacity, %"
 msgstr "Opacityway, %:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -23686,97 +23648,99 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 #, fuzzy
-msgid "Light x-Position"
-msgstr "Ositionpay:"
+msgid "Light X"
+msgstr "Ightnesslay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 #, fuzzy
-msgid "Light y-Position"
-msgstr "Ositionpay:"
+msgid "Light Y"
+msgstr "Ightnesslay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
 #, fuzzy
-msgid "Light z-Position"
-msgstr "Ositionpay:"
+msgid "Light Z"
+msgstr "Ightnesslay"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr ""
+#, fuzzy
+msgid "Load from file"
+msgstr "Inklay Operties_pray"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
-msgstr ""
-
-#: ../share/extensions/polyhedron_3d.inx.h:25
 #, fuzzy
 msgid "Maximum"
 msgstr "ediummay"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 #, fuzzy
 msgid "Minimum"
 msgstr "Inimummay izesay"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
+#: ../share/extensions/polyhedron_3d.inx.h:27
 #, fuzzy
-msgid "Model File"
+msgid "Model file"
 msgstr "Allway ypestay"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 #, fuzzy
 msgid "Object Type"
 msgstr "Objectway"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 #, fuzzy
 msgid "Object:"
 msgstr "Objectway"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 #, fuzzy
 msgid "Octahedron"
 msgstr "Otherway"
 
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
+msgstr "Otateray odesnay"
+
 #: ../share/extensions/polyhedron_3d.inx.h:33
 #, fuzzy
-msgid "Rotate Around:"
-msgstr "Otateray odesnay"
+msgid "Rotation, degrees"
+msgstr "Otation_ray"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 #, fuzzy
-msgid "Rotation / Degrees"
-msgstr "Otation_ray"
-
-#: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
-msgid "Scaling Factor"
+msgid "Scaling factor"
 msgstr "Atflay olorcay"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 #, fuzzy
 msgid "Shading"
 msgstr "Acingspay:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, fuzzy, no-c-format
-msgid "Stroke Opacity/ %"
+msgid "Stroke opacity, %"
 msgstr "Okestray aint_pay"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Okestray idthway"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
@@ -23784,7 +23748,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
-msgid "Then Rotate Around:"
+msgid "Then rotate around:"
 msgstr "Otnay oundedray"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -23830,7 +23794,7 @@ msgid "Z-Axis"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+msgid "Z-sort faces by:"
 msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -24675,6 +24639,47 @@ msgid "XAML Input"
 msgstr "DXF Inputway"
 
 #, fuzzy
+#~ msgid "Document exported..."
+#~ msgstr "Ocumentday evertedray."
+
+#, fuzzy
+#~ msgid "Autosave"
+#~ msgstr "_Authorsway"
+
+#, fuzzy
+#~ msgid "File"
+#~ msgstr "Ile_fay"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "_Usernameway:"
+
+#, fuzzy
+#~ msgid "Password:"
+#~ msgstr "_Asswordpay:"
+
+#, fuzzy
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr ""
+#~ "Exportway isthay ocumentday orway a electionsay asway a itmapbay imageway"
+
+#, fuzzy
+#~ msgid "Light x-Position"
+#~ msgstr "Ositionpay:"
+
+#, fuzzy
+#~ msgid "Light y-Position"
+#~ msgstr "Ositionpay:"
+
+#, fuzzy
+#~ msgid "Light z-Position"
+#~ msgstr "Ositionpay:"
+
+#, fuzzy
+#~ msgid "Scaling Factor"
+#~ msgstr "Atflay olorcay"
+
+#, fuzzy
 #~ msgid "polyhedron|Show:"
 #~ msgstr "Olygonpay"
 
@@ -25018,10 +25023,6 @@ msgstr "DXF Inputway"
 #, fuzzy
 #~ msgid "Adjust the \"right\" end of the parallel"
 #~ msgstr "Editway ethay opsstay ofway ethay adientgray"
-
-#, fuzzy
-#~ msgid "Scaling factor"
-#~ msgstr "Atflay olorcay"
 
 #, fuzzy
 #~ msgid "Display unit"

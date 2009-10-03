@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-08-12 15:54+0300\n"
 "Last-Translator: Domas Jokubauskis <domasj@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -2412,11 +2412,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Pažymėkite <b>bent vieną objektą, kuris nėra jungtis</b>."
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Jungti objektus vengiant kitų objektų kirtimo"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Jungti objektus nepaisant kertamų objektų"
 
@@ -2429,11 +2429,11 @@ msgstr ""
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>Sluoksnis užrakintas</b>. Sluoksnyje galite piešti tik jį atrakinę."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Nėra buvusio mastelio"
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Nėra kito mastelio"
 
@@ -3273,7 +3273,7 @@ msgid "_Height:"
 msgstr "_Aukštis:"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "dp_i"
 
@@ -3354,7 +3354,7 @@ msgstr "Katalogas %s neegzistuoja arba yra ne katalogas.\n"
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Eksportuojama %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Parinkite eksporto failą"
 
@@ -3719,7 +3719,7 @@ msgid "Title:"
 msgstr "Pavadinimas:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Rodyti:"
 
@@ -3868,11 +3868,11 @@ msgstr "Lygiuota pagal dešinę"
 msgid "Justify lines"
 msgstr "Lygiuota abipus"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Horizontalus dėstymas"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Vertikalus dėstymas"
 
@@ -4374,7 +4374,7 @@ msgstr ""
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Centras"
 
@@ -5430,7 +5430,7 @@ msgstr "Vertikalus poslinkis"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5530,7 +5530,7 @@ msgstr "Vertikalus poslinkis"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5826,47 +5826,43 @@ msgstr ""
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Formato atpažinimas nepavyko. Failas atveriamas kaip SVG."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "default.lt.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Nepavyko įkelti parinkto failo %s"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokumentas dar neišsaugotas. Nėra ką atstatyti."
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Bet kokie daryti keitimai dings! Ar jūs tikrai norite atstatyti seną "
 "dokumento %s versiją?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "Atstatyta sena dokumento versija"
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "Dokumento sena versija neatstatyta"
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Pasirinkite failą"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Valyti &lt;aprašus&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -5874,11 +5870,11 @@ msgstr[0] "Pašalintas <b>%i</b> nenaudotas aprašymas &lt;defs&gt; sekcijoje."
 msgstr[1] "Pašalinti <b>%i</b> nenaudoti aprašymai &lt;defs&gt; sekcijoje."
 msgstr[2] "Pašalinta <b>%i</b> nenaudotų aprašymų &lt;defs&gt; sekcijoje."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Nerasta nenaudojamų elementų &lt;defs&gt; sekcijoje."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5887,95 +5883,73 @@ msgstr ""
 "Nerastas Inkscape įskiepis dokumento (%s) saugojimui.  Taip galėjo nutikti "
 "dėl neatpažinto failo plėtinio."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "Dokumentas neišsaugotas"
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Nepavyko išsaugoti failo %s."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "Dokumentas išsaugotas"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "piešinys%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "piešinys-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, fuzzy, c-format
 msgid "%s"
 msgstr "%"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Pasirinkite failą, į kurį įrašyti kopiją"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Pasirinkite failą išsaugojimui"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "Nėra pakeitimų"
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 #, fuzzy
 msgid "Saving document..."
 msgstr "Išsaugoti dokumentą"
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Importavimas"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Pasirinkite failą importavimui"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Importuoti failą"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr ""
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr ""
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-
-#: ../src/file.cpp:1422
-#, fuzzy
-msgid "Document exported..."
-msgstr "Atstatyta sena dokumento versija"
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importuoti iš Open Clip Art Library"
 
@@ -6185,8 +6159,8 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6548,7 +6522,7 @@ msgstr "Vienetas"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Vienetai"
 
@@ -6924,7 +6898,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Stumdyti</b> užpildo raštą"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "<b>Keisti</b> užpildo rašto mastelį"
 
 #: ../src/knotholder.cpp:240
@@ -7340,7 +7315,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this tablabel"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignoruojamas šriftas, kuris gali kelti problemų Pango bibliotekai"
 
@@ -9757,7 +9732,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Niekas</b> nepašalinta."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Šalinimas"
@@ -11641,12 +11616,12 @@ msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Naikinti persidengimus"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Išdėstyti jungčių tinklą"
 
@@ -11807,7 +11782,7 @@ msgstr ""
 "nepersidengtų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Tvarkingai išdėstyti pažymėtų jungčių tinklą"
 
@@ -11860,7 +11835,20 @@ msgstr "Pažymėjimas"
 msgid "Profile name:"
 msgstr "Pasirinkite failo vardą"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 #, fuzzy
 msgid "Save"
 msgstr "Iš_saugoti"
@@ -12159,62 +12147,62 @@ msgstr "Spalvų profilių aplankas (%s) nepasiekiamas."
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "Link Color Profile"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "Pašalinti susietą spalvų profilį"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Susieti spalvų profiliai:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Prieinami spalvų profiliai:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "Susieti profilį"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "Profilio pavadinimas"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>Išoriniai scenarijų failai:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "Pridėti"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "Failo vardas"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "Pridėti išorinį scenarijų..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 #, fuzzy
 msgid "Remove external script"
 msgstr "Atrišti tekstą nuo kreivės"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr " <b>Kūrimas</b> "
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>Nustatyti tinkleliai</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "Šalinti tinklelį"
 
@@ -13203,7 +13191,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Riba:"
 
@@ -14879,181 +14867,175 @@ msgstr ""
 msgid "Interface"
 msgstr "Sąsaja"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 #, fuzzy
 msgid "Enable autosave (requires restart)"
 msgstr "Ar dialogų langai turės uždarymo ikoną (reikalauja perleidimo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 #, fuzzy
 msgid "Maximum number of autosaves:"
 msgstr "Anksčiau naudotų dokumentų kiekis:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-#, fuzzy
-msgid "Autosave"
-msgstr "_Autoriai"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "Taškinės grafikos rengyklė:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "Kalba:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "Antroji kalba:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "Trečioji kalba:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "Rašybos tikrinimas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Pridėti komentarą spausdinant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr "Jei įjungta, spausdinant bus pridedamas komentaras"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Supaprastinimo koeficientas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 #, fuzzy
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
@@ -15064,82 +15046,82 @@ msgstr ""
 "komandą kelis kart iš eilės, paprastinama vis agresyviai, o po pauzės "
 "atsistato nustatytas koeficientas."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(reikia perleidimo)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 #, fuzzy
 msgid "User data: "
 msgstr "Naudotojo vardas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 #, fuzzy
 msgid "User cache: "
 msgstr "Naudotojo vardas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 #, fuzzy
 msgid "System data: "
 msgstr "Sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 #, fuzzy
 msgid "UI: "
 msgstr "I_D: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 #, fuzzy
 msgid "System info"
 msgstr "Sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 #, fuzzy
 msgid "General system information"
 msgstr "Atminties naudojimo techninė informacija"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Įvairūs"
 
@@ -15346,45 +15328,33 @@ msgid ""
 "preferences.xml"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-msgid "File"
-msgstr "Failas"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-msgid "Username:"
-msgstr "Naudotojo vardas:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-msgid "Password:"
-msgstr "Slaptažodis:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 msgid "Search for:"
 msgstr "Paieškos frazė:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr "Nėra failų, atitinkančių jūsų paiešką"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 msgid "Search"
 msgstr "Ieškoti"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr "Rasti failai"
 
@@ -15636,68 +15606,68 @@ msgstr "Imčių skaičius"
 msgid "Preview Text:"
 msgstr "Peržiūra"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 #, fuzzy
 msgid "Set fill"
 msgstr "Nenurodytas užpildas"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 #, fuzzy
 msgid "Set stroke"
 msgstr "Nenurodyta linijos išvaizda ar spalva"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Redaguoti..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 #, fuzzy
 msgid "Convert"
 msgstr "Viršelis"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 #, fuzzy
 msgid "Change color definition"
 msgstr "Puslapi_o kryptis:"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 #, fuzzy
 msgid "Remove stroke color"
 msgstr "Be linijos"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 #, fuzzy
 msgid "Remove fill color"
 msgstr "Be užpildo"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 #, fuzzy
 msgid "Set stroke color to none"
 msgstr "Linijos spalvos nustatymas"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 #, fuzzy
 msgid "Set fill color to none"
 msgstr "Užpildo spalvos nustatymas"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Linijos spalvos parinkimas iš paletės"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Užpildo spalvos parinkimas iš paletės"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Palečių katalogas (%s) nepasiekiamas."
@@ -17156,15 +17126,7 @@ msgstr "Eksportuoti dokumentą ar pažymėjimą kaip taškinį vaizdą"
 msgid "Import a document from Open Clip Art Library"
 msgstr ""
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr "Eksportuoti į Open Clip Art Library"
-
-#: ../src/verbs.cpp:2266
-#, fuzzy
-msgid "Export this document to Open Clip Art Library"
-msgstr "Eksportuoti dokumentą ar pažymėjimą kaip taškinį vaizdą"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "_Kitas langas"
@@ -18899,7 +18861,7 @@ msgstr "Šrifto dydis:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpĄąĖėŽž12369$€?.;/()"
 
@@ -20097,7 +20059,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Išmėtyti kampus atsitiktinai"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Atstatyti"
 
@@ -21114,23 +21076,23 @@ msgstr "Tekstas: šrifto šeimos pakeitimas"
 msgid "Text: Change alignment"
 msgstr "Tekstas: lygiavimo pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Tekstas: šrifto stiliaus pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Tekstas: orientacijos pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Tekstas: šrifto dydžio pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -21138,128 +21100,128 @@ msgstr ""
 "Šis šriftas nėra instaliuotas Jūsų sistemoje. Vietoje jo Inkscape naudos "
 "numatytąjį šriftą."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Kairinė lygiuotė"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Dešininė lygiuotė"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Lygiuota abipus"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Paryškinta"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Kursyvas"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Atstumo iki objekto pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 #, fuzzy
 msgid "Ignore"
 msgstr "nėra"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 #, fuzzy
 msgid "Connector Spacing"
 msgstr "Atstumo iki objekto pakeitimas"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Tarpai:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Iki apeinamų objektų paliekamas tarpų dydis"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 #, fuzzy
 msgid "Graph"
 msgstr "Grupė"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 #, fuzzy
 msgid "Connector Length"
 msgstr "Jungtis"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Ilgis:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 #, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Kurti jungtis su galų žymėmis (rodyklėmis), kurios nukreiptos atgal"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 #, fuzzy
 msgid "Fill by"
 msgstr "Užpildas"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 #, fuzzy
 msgid "Fill by:"
 msgstr "Užpildas"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 #, fuzzy
 msgid "Fill Threshold"
 msgstr "Riba:"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7187
+#: ../src/widgets/toolbox.cpp:7212
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 #, fuzzy
 msgid "Close gaps"
 msgstr "_Valyti"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 #, fuzzy
 msgid "Close gaps:"
 msgstr "_Valyti"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 #, fuzzy
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
@@ -23049,8 +23011,8 @@ msgstr ""
 #: ../share/extensions/pathscatter.inx.h:14
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:1
@@ -23157,7 +23119,7 @@ msgstr "Daugiakampis"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
 #, fuzzy
-msgid "Clockwise Wound Object"
+msgid "Clockwise wound object"
 msgstr "Atrakinti objektą"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -23174,8 +23136,9 @@ msgid "Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
-msgstr ""
+#, fuzzy
+msgid "Draw back-facing polygons"
+msgstr "Žvaigždžių ir daugiakampių kūrimo režimas"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -23201,20 +23164,23 @@ msgid "Filename:"
 msgstr "Pasirinkite failo vardą"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Blue"
+msgstr "Užpildas vientisa spalva"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Green"
+msgstr "Linija vientisa spalva"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
-msgstr ""
+#, fuzzy
+msgid "Fill color, Red"
+msgstr "Vientisa spalva"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
 #, fuzzy, no-c-format
-msgid "Fill Opacity/ %"
+msgid "Fill opacity, %"
 msgstr "Nepermatomumas, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -23231,97 +23197,99 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 #, fuzzy
-msgid "Light x-Position"
-msgstr "Kur sukurti:"
+msgid "Light X"
+msgstr "Šviesumas"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 #, fuzzy
-msgid "Light y-Position"
-msgstr "Kur sukurti:"
+msgid "Light Y"
+msgstr "Šviesumas"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
 #, fuzzy
-msgid "Light z-Position"
-msgstr "Kur sukurti:"
+msgid "Light Z"
+msgstr "Šviesumas"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr ""
+#, fuzzy
+msgid "Load from file"
+msgstr "Susieti profilį"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
-msgstr ""
-
-#: ../share/extensions/polyhedron_3d.inx.h:25
 #, fuzzy
 msgid "Maximum"
 msgstr "vidutiniai"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 #, fuzzy
 msgid "Minimum"
 msgstr "Mažiausias dydis"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
+#: ../share/extensions/polyhedron_3d.inx.h:27
 #, fuzzy
-msgid "Model File"
+msgid "Model file"
 msgstr "Visi failai"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 #, fuzzy
 msgid "Object Type"
 msgstr "Objektas"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 #, fuzzy
 msgid "Object:"
 msgstr "Objektas"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 #, fuzzy
 msgid "Octahedron"
 msgstr "Kita"
 
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
+msgstr "Mazgų sukimas"
+
 #: ../share/extensions/polyhedron_3d.inx.h:33
 #, fuzzy
-msgid "Rotate Around:"
-msgstr "Mazgų sukimas"
+msgid "Rotation, degrees"
+msgstr "Pasu_kimas"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 #, fuzzy
-msgid "Rotation / Degrees"
-msgstr "Pasu_kimas"
-
-#: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
-msgid "Scaling Factor"
+msgid "Scaling factor"
 msgstr "Vientisa spalva"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 #, fuzzy
 msgid "Shading"
 msgstr "Tarpai:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
+#: ../share/extensions/polyhedron_3d.inx.h:41
 #, fuzzy, no-c-format
-msgid "Stroke Opacity/ %"
+msgid "Stroke opacity, %"
 msgstr "_Linijos spalva"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Linijos storis"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
@@ -23329,7 +23297,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 #, fuzzy
-msgid "Then Rotate Around:"
+msgid "Then rotate around:"
 msgstr "Neapvalinama"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -23375,7 +23343,7 @@ msgid "Z-Axis"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+msgid "Z-sort faces by:"
 msgstr ""
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -24204,6 +24172,42 @@ msgstr "Windows Metafile įvestis"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML įvestis"
+
+#, fuzzy
+#~ msgid "Document exported..."
+#~ msgstr "Atstatyta sena dokumento versija"
+
+#, fuzzy
+#~ msgid "Autosave"
+#~ msgstr "_Autoriai"
+
+#~ msgid "File"
+#~ msgstr "Failas"
+
+#~ msgid "Username:"
+#~ msgstr "Naudotojo vardas:"
+
+#~ msgid "Password:"
+#~ msgstr "Slaptažodis:"
+
+#~ msgid "Export To Open Clip Art Library"
+#~ msgstr "Eksportuoti į Open Clip Art Library"
+
+#, fuzzy
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr "Eksportuoti dokumentą ar pažymėjimą kaip taškinį vaizdą"
+
+#, fuzzy
+#~ msgid "Light x-Position"
+#~ msgstr "Kur sukurti:"
+
+#, fuzzy
+#~ msgid "Light y-Position"
+#~ msgstr "Kur sukurti:"
+
+#, fuzzy
+#~ msgid "Light z-Position"
+#~ msgstr "Kur sukurti:"
 
 #, fuzzy
 #~ msgid "polyhedron|Show:"

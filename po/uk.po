@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:45+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-09-20 16:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 0.3\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -66,7 +66,8 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr ""
+"Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -726,7 +727,8 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr ""
+"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -922,7 +924,8 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -1200,7 +1203,8 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr ""
+"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -1308,7 +1312,8 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid "Felt like texture with color turbulence and slightly darker at the edges"
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -1341,7 +1346,8 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr ""
+"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -1609,7 +1615,8 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr ""
+"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -1853,7 +1860,8 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -2337,11 +2345,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Позначте <b>принаймні два об'єкти</b> для з'єднання."
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Змусити лінії огинати обрані об'єкти"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Змусити лінії ігнорувати обрані об'єкти"
 
@@ -2357,11 +2365,11 @@ msgstr ""
 "<b>Поточний рівень - зафіксований</b>. Розблокуйте його, щоб мати можливість "
 "креслити у ньому."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Немає попереднього масштабу."
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Немає наступного масштабу."
 
@@ -3029,7 +3037,8 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr ""
+"Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3189,7 +3198,7 @@ msgid "_Height:"
 msgstr "_Висота:"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "dpi"
 
@@ -3272,7 +3281,7 @@ msgstr "Каталог %s не існує, або ж це не каталог.\n
 msgid "Exporting %s (%lu x %lu)"
 msgstr "Експорт %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Виберіть ім'я файлу для експорту"
 
@@ -3503,7 +3512,8 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr ""
+"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -3635,7 +3645,7 @@ msgid "Title:"
 msgstr "Заголовок:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Показ:"
 
@@ -3778,11 +3788,11 @@ msgstr "Вирівняти рядки за правою межею"
 msgid "Justify lines"
 msgstr "Вирівнювання рядків"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Горизонтальний текст"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Вертикальний текст"
 
@@ -4250,7 +4260,7 @@ msgstr "Кут опуклої оболонки"
 msgid "Quadrant point"
 msgstr "Точка чверті"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Центрувати"
 
@@ -5282,7 +5292,7 @@ msgstr "Вертикальний зсув, у пк"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5379,7 +5389,7 @@ msgstr "Вертикальний зсув"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5663,47 +5673,43 @@ msgstr "Контролює, чи буде показано параметри е
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Не вдається визначити формат файлу. Файл відкривається як SVG."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "типовий.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Не вдається завантажити потрібний файл %s"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr ""
 "Документ ще не був збережений. Неможливо повернутись до попереднього стану."
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Зміни будуть втрачені! Ви впевнені, що бажаєте завантажити документ %s знову?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "Документ повернутий до попереднього стану."
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "Документ не повернутий до попереднього стану."
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Виберіть файл"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Очистити &lt;defs&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -5711,11 +5717,11 @@ msgstr[0] "Вилучено <b>%i</b> непотрібний елемент у &
 msgstr[1] "Вилучено <b>%i</b> непотрібні елементи у &lt;defs&gt;."
 msgstr[2] "Вилучено <b>%i</b> непотрібних елементів у &lt;defs&gt;."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Немає непотрібних елементів у &lt;defs&gt;."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5724,12 +5730,12 @@ msgstr ""
 "Не знайдено модуль збереження документа (%s). Можливо, невідоме розширення "
 "файлу."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "Документ не збережено."
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
@@ -5737,84 +5743,60 @@ msgstr ""
 "Файл %s захищено від запису. Будь ласка, зніміть захист від запису і "
 "повторіть спробу."
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Файл %s неможливо зберегти."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "Документ збережено."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "рисунок%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "рисунок-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Оберіть файл для збереження копії"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Виберіть файл для збереження"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "Файл не було змінено. Збереження непотрібне."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 msgid "Saving document..."
 msgstr "Збереження документа..."
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Імпорт"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Виберіть файл для імпорту"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 msgid "Select file to export to"
 msgstr "Оберіть файл для експорту"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr "Помилка під час збереження тимчасової копії"
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr "Вхід до Open Clip Art"
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-"Під час експорту документа сталася помилка. Перевірте чи вірно обрано ім’я "
-"сервера, ім’я користувача та пароль, чи є у сервера підтримка webdav, і чи "
-"не забули ви вказати також і ліцензію."
-
-#: ../src/file.cpp:1422
-msgid "Document exported..."
-msgstr "Документ експортовано..."
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Імпортувати з Open Clip Art Library"
 
@@ -5997,8 +5979,8 @@ msgstr "Обгортка"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6192,7 +6174,8 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -6348,7 +6331,7 @@ msgstr "Одиниця"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Одиниці"
 
@@ -6715,7 +6698,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Переміщувати</b> заповнення візерунком всередині об'єкту"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "Пропорційно <b>масштабувати</b> заповнення візерунком"
 
 #: ../src/knotholder.cpp:240
@@ -7138,7 +7122,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "Елемент панелі, що \"володіє\" цією міткою вкладки"
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Шрифт без сімейства, який може привести до збою Pango, ігнорується"
 
@@ -8073,7 +8057,8 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr ""
+"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -9053,7 +9038,8 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr ""
+"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1266
 #, c-format
@@ -9481,7 +9467,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Нічого</b> не було вилучено."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Вилучити"
@@ -10896,7 +10882,8 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:214
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr ""
+"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:220
 msgid ""
@@ -11299,12 +11286,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Вилучити перекриття"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Впорядкувати сітку з'єднувальних ліній"
 
@@ -11445,7 +11432,7 @@ msgid ""
 msgstr "Переміщувати об'єкти якомога менше, так щоб їх рамки не перекривалися"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонійно розташувати обране з'єднання об'єктів"
 
@@ -11493,7 +11480,20 @@ msgstr "позначене"
 msgid "Profile name:"
 msgstr "Назва профілю:"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Save"
 msgstr "Зберегти"
 
@@ -11795,61 +11795,61 @@ msgstr "Каталог профілів кольорів (%s) недоступн
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "Пов’язати профіль кольорів"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "Вилучити пов’язаний профіль кольорів"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Пов’язані профілі кольорів:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Доступні профілі кольорів:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "Пов’язати з профілем"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "Назва профілю"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>Файли зовнішніх скриптів:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "Додати"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "Назва файла"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "Додати зовнішній скрипт..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr "Вилучити зовнішній скрипт"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr "<b>Створення</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>Визначені сітки</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "Вилучити сітку"
 
@@ -12684,7 +12684,8 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid ""
+"The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у вигляді вхідного "
 "графічного зображення"
@@ -12874,7 +12875,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Поріг:"
 
@@ -12941,7 +12942,8 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initially closest to the mouse pointer"
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13409,7 +13411,8 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
-msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr ""
+"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Remember and use last window's geometry"
@@ -14532,12 +14535,23 @@ msgstr ""
 msgid "Interface"
 msgstr "Інтерфейс"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Enable autosave (requires restart)"
 msgstr "Увімкнути автозбереження (потребує перезапуску)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -14545,110 +14559,94 @@ msgstr ""
 "Автоматично зберігати поточні документи через вказані проміжки часу, таким "
 "чином зменшуючи втрати у випадку аварійного завершення програми"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr "Інтервал (у хвилинах):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "Інтервал (у хвилинах) між автоматичними зберіганнями копій"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr "Шлях:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr "Каталог, куди буде записано автоматичні копії"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Maximum number of autosaves:"
 msgstr "Максимальна кількість копій автозбереження:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Максимальна кількість файлів автоматичного збереження, скористайтеся, щоб "
 "зекономити простір на диску"
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-msgid "Autosave"
-msgstr "Автозбереження"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "Усереднювати растр по точках:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr "Автоматично перезавантажувати растр"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 "Автоматично перезавантажувати пов’язані зображення після зміни файла на диску"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "Растровий редактор:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "Роздільна здатність для створення растрової копії:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 "Роздільна здатність, яку буде використано у команді створення растрової копії"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr "Растрові зображення"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "Мова:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr "Встановити основну мову перевірки правопису"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "Друга мова:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -14656,11 +14654,11 @@ msgstr ""
 "Встановіть другу мову для перевірки правопису: перевірка зупинятиметься лише "
 "на словах, яких немає у ВСІХ вказаних мовах"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "Третя мова:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -14668,31 +14666,31 @@ msgstr ""
 "Встановіть третю мову для перевірки правопису: перевірка зупинятиметься лише "
 "на словах, яких немає у ВСІХ вказаних мовах"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr "Ігнорувати слова з цифрами"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ігнорувати слова, що містять цифри, наприклад, «R2D2»"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ігнорувати слова ПРОПИСНИМИ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ігнорувати слова, написані прописними літерами, наприклад, «IUPAC»"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "Перевірка правопису"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Додати коментар до виводу друку"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14700,11 +14698,11 @@ msgstr ""
 "Якщо увімкнено, до необробленого виводу друку буде додано коментар, що "
 "позначає вивід об'єкта з його позначкою"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr "Не поділяти визначення градієнтів між об’єктами"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14715,11 +14713,11 @@ msgstr ""
 "об’єктами так, що зміна градієнта для одного об’єкта може вплинути на інші "
 "об’єкти, що використовують той самий градієнт"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Поріг спрощення:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -14730,15 +14728,15 @@ msgstr ""
 "агресивно; щоб повернутися до типового значення, зробіть паузу перед "
 "черговим викликом команди."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr "Відхилення латентності:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(потребує перезапуску)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
@@ -14746,11 +14744,11 @@ msgstr ""
 "Коефіцієнт, на який годинник подій відхилятиметься від справжнього часу "
 "(0,9766 на деяких системах)."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr "Іменовані піктограми, що залежать від показу"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -14760,51 +14758,51 @@ msgstr ""
 "у GTK+"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr "Налаштування користувача: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "User data: "
 msgstr "Дані користувача: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid "User cache: "
 msgstr "Кеш користувача: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr "Системні налаштування: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid "System data: "
 msgstr "Системна дата: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr "PIXMAP: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr "DATA: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "UI: "
 msgstr "UI: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr "Тема піктограм: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "System info"
 msgstr "Відомості щодо системи"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "General system information"
 msgstr "Загальні відомості щодо системи"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Інше"
 
@@ -15004,23 +15002,11 @@ msgstr ""
 "значення 1 атрибуту dialogs.debug 'redirect' у\n"
 "файлі preferences.xml"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-msgid "File"
-msgstr "Файл"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-msgid "Username:"
-msgstr "Ім’я користувача:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-msgid "Password:"
-msgstr "Пароль:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr "Помилка під час читання RSS-потоку Open Clip Art"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
@@ -15029,23 +15015,23 @@ msgstr ""
 "чи правильно обрано назву сервера у меню \"Параметри->Імпорт/Експорт"
 "\" (наприклад: openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr "Сервер передав зіпсований потік Clip Art"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 msgid "Search for:"
 msgstr "Шукати:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr "Не знайдено файлів, що відповідають критеріям Вашого пошуку"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 msgid "Search"
 msgstr "Пошук"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr "Файлів знайдено"
 
@@ -15267,7 +15253,7 @@ msgstr "Текст зразка"
 msgid "Preview Text:"
 msgstr "Перегляд тексту:"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
@@ -15276,53 +15262,53 @@ msgstr ""
 "+Клацання</b> встановить колір штриха"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 msgid "Set fill"
 msgstr "Встановлення заливання"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 msgid "Set stroke"
 msgstr "Встановлення штриха"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Редагування..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 msgid "Convert"
 msgstr "Перетворити"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "Зміна визначення кольору"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove stroke color"
 msgstr "Вилучити колір штриха"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove fill color"
 msgstr "Вилучити колір заповнення"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set stroke color to none"
 msgstr "Зняти колір з штриха"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set fill color to none"
 msgstr "Зняти колір заповнення"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Встановити колір штриха зі зразків"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Встановити колір заповнення зі зразків"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Каталог з палітрами (%s) недоступний."
@@ -15429,7 +15415,8 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr ""
+"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -16761,14 +16748,7 @@ msgstr "Експортувати документ чи позначену час
 msgid "Import a document from Open Clip Art Library"
 msgstr "Імпортувати документ з Open Clip Art Library"
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr "Експортувати до Open Clip Art Library"
-
-#: ../src/verbs.cpp:2266
-msgid "Export this document to Open Clip Art Library"
-msgstr "Експортувати документ до Open Clip Art Library"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "_Наступне вікно"
@@ -18481,7 +18461,7 @@ msgstr "Розмір шрифту:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаБбВвЇїЄєҐґIiPpQq12369$€¢?.;/()"
 
@@ -19618,7 +19598,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Випадковим чином перемістити кути та повернути радіуси"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Типово"
 
@@ -20578,23 +20558,23 @@ msgstr "Текст: Зміна сімейства шрифту"
 msgid "Text: Change alignment"
 msgstr "Текст: Зміна вирівнювання"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Текст: Зміна нарису шрифту"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Текст: Зміна орієнтації"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Текст: Зміна розміру шрифту"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr "Оберіть гарнітуру шрифту (Alt+X для доступу)"
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -20602,91 +20582,92 @@ msgstr ""
 "Цей шрифт у системі не встановлено. Замість нього Inkscape використовуватиме "
 "типовий."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Вирівнювання ліворуч"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Вирівнювання праворуч"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Вирівняти з заповненням"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Жирним"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Курсивом"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Зміна відстаней для лінії з'єднання"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr "Уникати"
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Connector Spacing"
 msgstr "Відстань для з'єднання"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Інтервал:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Простір, що залишається навколо об'єктів під час автоз'єднання"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 msgid "Graph"
 msgstr "Графік"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Connector Length"
 msgstr "Довжина з'єднання"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Довжина:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
-msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr ""
+"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr "Вниз"
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Змусити кінцеві стрілки ліній з'єднання вказувати вниз"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr "Не дозволяти перекриття форм"
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 msgid "Fill by"
 msgstr "Залити"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Fill by:"
 msgstr "Чим залити:"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 msgid "Fill Threshold"
 msgstr "Поріг залиття"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -20694,29 +20675,30 @@ msgstr ""
 "Максимальна допустима різниця між точкою, на якій клацнули та сусідніми "
 "точками які обчислені у заповненні"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr "Збільшити/зменшити на"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
-#: ../src/widgets/toolbox.cpp:7187
-msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+#: ../src/widgets/toolbox.cpp:7212
+msgid ""
+"The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 msgid "Close gaps"
 msgstr "Закрити проміжки"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 msgid "Close gaps:"
 msgstr "Закриті проміжки:"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -21814,11 +21796,13 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -22515,10 +22499,11 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Витягнути інтервали для відповідності каркасу"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 "Цей ефект вигинає об’єкт візерунка вздовж довільного скелетного контуру. "
 "Візерунок є верхнім об’єктом у позначеному (можна використовувати групи "
@@ -22618,7 +22603,8 @@ msgid "3D Polyhedron"
 msgstr "Просторовий багатогранник"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-msgid "Clockwise Wound Object"
+#, fuzzy
+msgid "Clockwise wound object"
 msgstr "Об’єкт порізаний за годинниковою стрілкою"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -22634,7 +22620,8 @@ msgid "Dodecahedron"
 msgstr "Додекаедр"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "Малювати зворотні грані полігонів"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -22658,20 +22645,23 @@ msgid "Filename:"
 msgstr "Назва файла:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
+#, fuzzy
+msgid "Fill color, Blue"
 msgstr "Заповнити контур (Синім)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
+#, fuzzy
+msgid "Fill color, Green"
 msgstr "Заповнити контур (Зеленим)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
+#, fuzzy
+msgid "Fill color, Red"
 msgstr "Заповнити контур (Червоним)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, no-c-format
-msgid "Fill Opacity/ %"
+#, fuzzy, no-c-format
+msgid "Fill opacity, %"
 msgstr "Непрозорість заповнення, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -22687,92 +22677,101 @@ msgid "Icosahedron"
 msgstr "Ікосаедр"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-msgid "Light x-Position"
-msgstr "Розташування світла за X"
+#, fuzzy
+msgid "Light X"
+msgstr "Світліше"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-msgid "Light y-Position"
-msgstr "Розташування світла за Y"
+#, fuzzy
+msgid "Light Y"
+msgstr "Світліше"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-msgid "Light z-Position"
-msgstr "Розташування світла за Z"
+#, fuzzy
+msgid "Light Z"
+msgstr "Світліше"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr "Товщина лінії [у пк]"
-
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
+#, fuzzy
+msgid "Load from file"
 msgstr "Завантажити з файла"
 
-#: ../share/extensions/polyhedron_3d.inx.h:25
+#: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
 msgstr "Максимальний"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr "Середній"
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Minimum"
 msgstr "Мінімальний"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
-msgid "Model File"
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Model file"
 msgstr "Файл моделі"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Object Type"
 msgstr "Тип об'єкта"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object:"
 msgstr "Об'єкт:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "Octahedron"
 msgstr "Октаедр"
 
-#: ../share/extensions/polyhedron_3d.inx.h:33
-msgid "Rotate Around:"
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
 msgstr "Обертати навколо:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:34
-msgid "Rotation / Degrees"
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Rotation, degrees"
 msgstr "Обертання (у градусах)"
 
-#: ../share/extensions/polyhedron_3d.inx.h:35
-msgid "Scaling Factor"
-msgstr "Коефіцієнт масштабу"
+#: ../share/extensions/polyhedron_3d.inx.h:34
+msgid "Scaling factor"
+msgstr "Коефіцієнт масштабування"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
 msgstr "Затінювання"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Малий тріамбічний ікосаедр"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Підрізати куб"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Підрізати додекаедр"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
-#, no-c-format
-msgid "Stroke Opacity/ %"
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, fuzzy, no-c-format
+msgid "Stroke opacity, %"
 msgstr "Непрозорість штриха (у %)"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Товщина штриха"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Тетраедр"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-msgid "Then Rotate Around:"
+#, fuzzy
+msgid "Then rotate around:"
 msgstr "Потім обертати навколо:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -22816,7 +22815,8 @@ msgid "Z-Axis"
 msgstr "Вісь Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+#, fuzzy
+msgid "Z-sort faces by:"
 msgstr "Грані за Z через:"
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23591,6 +23591,57 @@ msgstr "Імпорт метафайла Windows"
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
 
+#~ msgid "Error saving a temporary copy"
+#~ msgstr "Помилка під час збереження тимчасової копії"
+
+#~ msgid "Open Clip Art Login"
+#~ msgstr "Вхід до Open Clip Art"
+
+#~ msgid ""
+#~ "Error exporting the document. Verify if the server name, username and "
+#~ "password are correct, if the server has support for webdav and verify if "
+#~ "you didn't forget to choose a license."
+#~ msgstr ""
+#~ "Під час експорту документа сталася помилка. Перевірте чи вірно обрано "
+#~ "ім’я сервера, ім’я користувача та пароль, чи є у сервера підтримка "
+#~ "webdav, і чи не забули ви вказати також і ліцензію."
+
+#~ msgid "Document exported..."
+#~ msgstr "Документ експортовано..."
+
+#~ msgid "Autosave"
+#~ msgstr "Автозбереження"
+
+#~ msgid "File"
+#~ msgstr "Файл"
+
+#~ msgid "Username:"
+#~ msgstr "Ім’я користувача:"
+
+#~ msgid "Password:"
+#~ msgstr "Пароль:"
+
+#~ msgid "Export To Open Clip Art Library"
+#~ msgstr "Експортувати до Open Clip Art Library"
+
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr "Експортувати документ до Open Clip Art Library"
+
+#~ msgid "Light x-Position"
+#~ msgstr "Розташування світла за X"
+
+#~ msgid "Light y-Position"
+#~ msgstr "Розташування світла за Y"
+
+#~ msgid "Light z-Position"
+#~ msgstr "Розташування світла за Z"
+
+#~ msgid "Line Thickness / px"
+#~ msgstr "Товщина лінії [у пк]"
+
+#~ msgid "Scaling Factor"
+#~ msgstr "Коефіцієнт масштабу"
+
 #~ msgid "polyhedron|Show:"
 #~ msgstr "Показ:"
 
@@ -24068,9 +24119,6 @@ msgstr "Імпорт з XAML"
 
 #~ msgid "Adjust the \"right\" end of the parallel"
 #~ msgstr "Скоригувати «правий» кінець паралельної"
-
-#~ msgid "Scaling factor"
-#~ msgstr "Коефіцієнт масштабування"
 
 #~ msgid "Display unit"
 #~ msgstr "Одиниця показу"

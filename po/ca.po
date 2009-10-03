@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape.nou\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-09-18 08:19+0200\n"
+"POT-Creation-Date: 2009-10-03 07:08+0200\n"
 "PO-Revision-Date: 2009-10-01 13:42+0200\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -920,7 +920,8 @@ msgstr "Microscopi electrònic"
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
-"Crea un efecte de llum descolorida i fluorescent com en un microscopi electrònic"
+"Crea un efecte de llum descolorida i fluorescent com en un microscopi "
+"electrònic"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Tartan"
@@ -1643,7 +1644,8 @@ msgstr "Fosc i fluorescent"
 #: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
-"Enfosqueix la vora difuminant l'interior i afegint una brillantor fluorescent flexible"
+"Enfosqueix la vora difuminant l'interior i afegint una brillantor "
+"fluorescent flexible"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Darken edges"
@@ -2312,18 +2314,18 @@ msgstr ""
 #: ../src/connector-context.cpp:1227
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
-"<b>Punt final de connexió</b>: arrossegueu per a tornar a encaminar o connectar a "
-"noves formes"
+"<b>Punt final de connexió</b>: arrossegueu per a tornar a encaminar o "
+"connectar a noves formes"
 
 #: ../src/connector-context.cpp:1339
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Seleccioneu <b>almenys un objecte que no sigui un connector</b>."
 
-#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6972
+#: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
 msgstr "Els connectors tenen en compte els objectes seleccionats"
 
-#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:6982
+#: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
 msgstr "Els connectors ignoren els objectes seleccionats"
 
@@ -2335,11 +2337,11 @@ msgstr "<b>La capa actual està amagada</b>. Mostreu-la per a dibuixar-hi."
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>La capa actual està blocada</b>. Desbloqueu-la per a dibuixar-hi."
 
-#: ../src/desktop.cpp:826
+#: ../src/desktop.cpp:828
 msgid "No previous zoom."
 msgstr "Cap ampliació anterior."
 
-#: ../src/desktop.cpp:851
+#: ../src/desktop.cpp:853
 msgid "No next zoom."
 msgstr "Cap ampliació següent."
 
@@ -3172,7 +3174,7 @@ msgid "_Height:"
 msgstr "A_lçada:"
 
 #: ../src/dialogs/export.cpp:509 ../src/ui/dialog/inkscape-preferences.cpp:768
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "dpi"
 msgstr "ppp"
 
@@ -3255,7 +3257,7 @@ msgstr "El directori %s no existeix o no és un directori.\n"
 msgid "Exporting %s (%lu x %lu)"
 msgstr "S'està exportant %s (%lu x %lu)"
 
-#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1362
+#: ../src/dialogs/export.cpp:1331 ../src/dialogs/export.cpp:1366
 msgid "Select a filename for exporting"
 msgstr "Seleccioneu el nom de fitxer per exportar"
 
@@ -3621,7 +3623,7 @@ msgid "Title:"
 msgstr "Títol:"
 
 #: ../src/dialogs/object-attributes.cpp:43
-#: ../share/extensions/polyhedron_3d.inx.h:37
+#: ../share/extensions/polyhedron_3d.inx.h:36
 msgid "Show:"
 msgstr "Mostra:"
 
@@ -3764,11 +3766,11 @@ msgstr "Alinea les línies a la dreta"
 msgid "Justify lines"
 msgstr "Justifica les línies"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6779
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6804
 msgid "Horizontal text"
 msgstr "Text horitzontal"
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6791
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6816
 msgid "Vertical text"
 msgstr "Text vertical"
 
@@ -4235,7 +4237,7 @@ msgstr "Cantonada convexa"
 msgid "Quadrant point"
 msgstr "Punt del quadrant"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6709
+#: ../src/display/snap-indicator.cpp:196 ../src/widgets/toolbox.cpp:6734
 msgid "Center"
 msgstr "Centra"
 
@@ -5266,7 +5268,7 @@ msgstr "Desplaçament vertical"
 
 #: ../src/extension/internal/filter/drop-shadow.h:44
 #: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter.cpp:214
 #: ../src/extension/internal/filter/filter-file.cpp:148
 #: ../src/extension/internal/filter/snow.h:38
 #: ../src/ui/dialog/inkscape-preferences.cpp:733
@@ -5362,7 +5364,7 @@ msgstr "Desplaçament vertical"
 #: ../share/extensions/lindenmayer.inx.h:31
 #: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
-#: ../share/extensions/polyhedron_3d.inx.h:32
+#: ../share/extensions/polyhedron_3d.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:14
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
@@ -5647,47 +5649,43 @@ msgstr "Els efectes es previsualitzen al moment al llenç?"
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Ha fallat l'autodetecció de format. El fitxer s'obrirà com a SVG."
 
-#. TRANSLATORS: default.svg is localizable - this is the name of the default document
-#. template. This way you can localize the default pagesize, translate the name of
-#. the default layer, etc. If you wish to localize this file, please create a
-#. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:156
+#: ../src/file.cpp:147
 msgid "default.svg"
 msgstr "default.ca.svg"
 
-#: ../src/file.cpp:248 ../src/file.cpp:1050
+#: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "No s'ha pogut carregar el fitxer demanat %s"
 
-#: ../src/file.cpp:273
+#: ../src/file.cpp:290
 msgid "Document not saved yet.  Cannot revert."
 msgstr "No s'ha desat el document. No es pot recuperar l'estat anterior."
 
-#: ../src/file.cpp:279
+#: ../src/file.cpp:296
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Es perdran els canvis. Esteu segur que voleu tornar a carregar el document %"
 "s?"
 
-#: ../src/file.cpp:308
+#: ../src/file.cpp:325
 msgid "Document reverted."
 msgstr "S'ha recuperat el document anterior."
 
-#: ../src/file.cpp:310
+#: ../src/file.cpp:327
 msgid "Document not reverted."
 msgstr "No s'ha recuperat el document anterior."
 
-#: ../src/file.cpp:460
+#: ../src/file.cpp:477
 msgid "Select file to open"
 msgstr "Seleccioneu el fitxer per obrir"
 
-#: ../src/file.cpp:547
+#: ../src/file.cpp:564
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Neteja &lt;defs&gt;"
 
-#: ../src/file.cpp:552
+#: ../src/file.cpp:569
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -5695,11 +5693,11 @@ msgstr[0] "S'ha esborrat <b>%i</b>definició sense fer servir a &lt;defs&gt;."
 msgstr[1] ""
 "S'han esborrat <b>%i</b>definicions sense fer servir a &lt;defs&gt;."
 
-#: ../src/file.cpp:557
+#: ../src/file.cpp:574
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "No hi ha definicions sense fer servir a &lt;defs&gt;."
 
-#: ../src/file.cpp:588
+#: ../src/file.cpp:605
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5708,12 +5706,12 @@ msgstr ""
 "No s'ha trobat cap extensió de l'Inkscape per desar el document (%s). És "
 "possible que es desconegui l'extensió del fitxer."
 
-#: ../src/file.cpp:589 ../src/file.cpp:597 ../src/file.cpp:605
-#: ../src/file.cpp:611 ../src/file.cpp:616
+#: ../src/file.cpp:606 ../src/file.cpp:614 ../src/file.cpp:622
+#: ../src/file.cpp:628 ../src/file.cpp:633
 msgid "Document not saved."
 msgstr "No s'ha desat el document."
 
-#: ../src/file.cpp:596
+#: ../src/file.cpp:613
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
@@ -5721,84 +5719,60 @@ msgstr ""
 "El fitxer %s està protegit contra escriptura. Toqueu la protecció i torneu-"
 "ho a provar."
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:621
 #, c-format
 msgid "File %s could not be saved."
 msgstr "No s'ha pogut desar el document %s."
 
-#: ../src/file.cpp:621
+#: ../src/file.cpp:638
 msgid "Document saved."
 msgstr "S'ha desat el document."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:753 ../src/file.cpp:1187 ../src/file.cpp:1308
+#: ../src/file.cpp:770 ../src/file.cpp:1204
 #, c-format
 msgid "drawing%s"
 msgstr "dibuix%s"
 
-#: ../src/file.cpp:759
+#: ../src/file.cpp:776
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dibuix-%d%s"
 
-#: ../src/file.cpp:763
+#: ../src/file.cpp:780
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/file.cpp:778
+#: ../src/file.cpp:795
 msgid "Select file to save a copy to"
 msgstr "Seleccioneu el fitxer per a desar-ne una còpia"
 
-#: ../src/file.cpp:780
+#: ../src/file.cpp:797
 msgid "Select file to save to"
 msgstr "Seleccioneu el fitxer on desar"
 
-#: ../src/file.cpp:871
+#: ../src/file.cpp:888
 msgid "No changes need to be saved."
 msgstr "No hi ha cap canvi per desar."
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:905
 msgid "Saving document..."
 msgstr "S'està desant el document..."
 
-#: ../src/file.cpp:1047
+#: ../src/file.cpp:1064
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/file.cpp:1097
+#: ../src/file.cpp:1114
 msgid "Select file to import"
 msgstr "Seleccioneu el fitxer per a importar"
 
-#: ../src/file.cpp:1209 ../src/file.cpp:1323
+#: ../src/file.cpp:1226
 msgid "Select file to export to"
 msgstr "Seleccioneu el fitxer per a exportar"
 
-#: ../src/file.cpp:1355
-#, c-format
-msgid "Error saving a temporary copy"
-msgstr "S'ha produït un error en desar una còpia temporal"
-
-#: ../src/file.cpp:1375
-msgid "Open Clip Art Login"
-msgstr "Entrada de l'Open Clip Art"
-
-#: ../src/file.cpp:1401
-#, c-format
-msgid ""
-"Error exporting the document. Verify if the server name, username and "
-"password are correct, if the server has support for webdav and verify if you "
-"didn't forget to choose a license."
-msgstr ""
-"S'ha produït un error en exportar el document. Verifiqueu que el nom del "
-"servidor, el nom d'usuari i la contrasenya siguin correctes, que el servidor "
-"permeti emprar webdav i que heu escollit una llicència."
-
-#: ../src/file.cpp:1422
-msgid "Document exported..."
-msgstr "S'ha exportat el document..."
-
-#: ../src/file.cpp:1450 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importa de la biblioteca Open Clip Art"
 
@@ -5981,8 +5955,8 @@ msgstr "Estén"
 #: ../src/ui/dialog/inkscape-preferences.cpp:259
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211 ../src/verbs.cpp:2239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -6324,7 +6298,7 @@ msgstr "Unitat"
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:5660 ../src/widgets/toolbox.cpp:7203
 msgid "Units"
 msgstr "Unitats"
 
@@ -6692,7 +6666,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Moveu</b> el patró d'emplenat de l'interior de l'objecte"
 
 #: ../src/knotholder.cpp:237
-msgid "<b>Scale</b> the pattern fill uniformly"
+#, fuzzy
+msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr "<b>Escaleu</b> el patró d'emplenat uniformement"
 
 #: ../src/knotholder.cpp:240
@@ -7116,7 +7091,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "Element que conté aquest tablabel"
 
-#: ../src/libnrtype/FontFactory.cpp:780
+#: ../src/libnrtype/FontFactory.cpp:806
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 "S'ha ignorat un tipus de lletra sense família que causaria un error en el "
@@ -7359,8 +7334,8 @@ msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
-"La quantitat d'aleatorietat amb què es començarà a espaiar els punts inicials "
-"del camí cap endavant i cap enrere"
+"La quantitat d'aleatorietat amb què es començarà a espaiar els punts "
+"inicials del camí cap endavant i cap enrere"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
@@ -9069,8 +9044,8 @@ msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
-"<b>Nansa de corba</b>: %3.2f&#176;, longitud %s; amb <b>Ctrl</b> per "
-"ajustar l'angle"
+"<b>Nansa de corba</b>: %3.2f&#176;, longitud %s; amb <b>Ctrl</b> per ajustar "
+"l'angle"
 
 #: ../src/pen-context.cpp:1307
 #, c-format
@@ -9482,7 +9457,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "No s'ha suprimit <b>res</b>."
 
 #: ../src/selection-chemistry.cpp:221 ../src/text-context.cpp:995
-#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/toolbox.cpp:1304
 #: ../src/widgets/toolbox.cpp:5752
 msgid "Delete"
 msgstr "Suprimeix"
@@ -10044,8 +10019,8 @@ msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
-"<b>Centre</b> de rotació i torsió; arrossegueu per a moure; escalar "
-"amb Maj també usa aquest centre"
+"<b>Centre</b> de rotació i torsió; arrossegueu per a moure; escalar amb Maj "
+"també usa aquest centre"
 
 #: ../src/seltrans.cpp:672
 msgid ""
@@ -11298,12 +11273,12 @@ msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7043
+#: ../src/widgets/toolbox.cpp:7068
 msgid "Remove overlaps"
 msgstr "Suprimeix les superposicions"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6906
+#: ../src/widgets/toolbox.cpp:6931
 msgid "Arrange connector network"
 msgstr "Ordena la xarxa de connectors"
 
@@ -11446,7 +11421,7 @@ msgstr ""
 "no se sobreposin"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7031
 msgid "Nicely arrange selected connector network"
 msgstr "Ordena la xarxa de connectors seleccionada"
 
@@ -11494,7 +11469,20 @@ msgstr "Selecció"
 msgid "Profile name:"
 msgstr "Nom del perfil:"
 
+#. When changing the interval or enabling/disabling the autosave function,
+#. * update our running configuration
+#. *
+#. * FIXME!
+#. * the inkscape_autosave_init should be called AFTER the values have been changed
+#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
+#.
+#.
+#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
+#.
+#. -----------
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Save"
 msgstr "Desa"
 
@@ -11800,61 +11788,61 @@ msgstr "El directori de les perfils de color (%s) no es troba disponible."
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:416 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr "Associa el perfil de color"
 
-#: ../src/ui/dialog/document-properties.cpp:489
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr "Suprimeix el perfil de color associat"
 
-#: ../src/ui/dialog/document-properties.cpp:503
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Perfils de color associats:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:505
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Perfils de color disponibles:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:507
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr "Associa el perfil"
 
-#: ../src/ui/dialog/document-properties.cpp:538
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr "Nom del perfil"
 
-#: ../src/ui/dialog/document-properties.cpp:569
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr "<b>Fitxers d'script externs:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:571
-#: ../src/ui/dialog/swatches.cpp:458
+#: ../src/ui/dialog/document-properties.cpp:606
+#: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr "Afegeix"
 
-#: ../src/ui/dialog/document-properties.cpp:594
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr "Nom de fitxer"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:634
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr "Afegeix un script extern..."
 
-#: ../src/ui/dialog/document-properties.cpp:658
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr "Suprimeix l'script extern"
 
-#: ../src/ui/dialog/document-properties.cpp:739
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr "<b>Creació</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:740
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr "<b>Graelles definides</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:950
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr "Suprimeix la graella"
 
@@ -12882,7 +12870,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7160
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7185
 msgid "Threshold:"
 msgstr "Llindar:"
 
@@ -14573,12 +14561,23 @@ msgstr ""
 msgid "Interface"
 msgstr "Interfície"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:1114
+msgid "Use current directory for \"Save As ...\""
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+msgid ""
+"The \"Save As ...\" dialog uses the current working directory for saving (if "
+"the file was previously saved). If not previously saved, the most recent "
+"\"Save As ...\" directory is used."
+msgstr ""
+
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1115
+#: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Enable autosave (requires restart)"
 msgstr "Desa automàticament (cal reiniciar):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -14586,111 +14585,95 @@ msgstr ""
 "Desa automàticament els documents actuals amb la periodicitat indicada, "
 "d'aquesta manera es minimitzen les pèrdues en cas de que es pengi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes):"
 msgstr "Interval (en minuts):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 "Interval (en minuts) amb el qual es desarà automàticament els documents"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "filesystem|Path:"
 msgstr "Ubicació:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "The directory where autosaves will be written"
 msgstr "El directori on es desaran els fitxers desats automàticament"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Maximum number of autosaves:"
 msgstr "Nombre màxim de fitxers desats automàticament:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Nombre màxim de fitxers desats automàticament; utilitzeu-ho per a limitar la "
 "utilització de l'espai de disc"
 
-#. When changing the interval or enabling/disabling the autosave function,
-#. * update our running configuration
-#. *
-#. * FIXME!
-#. * the inkscape_autosave_init should be called AFTER the values have been changed
-#. * (which cannot be guaranteed from here) - use a PrefObserver somewhere
-#.
-#.
-#. _autosave_autosave_enable.signal_toggled().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
-#.
-#. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
-msgid "Autosave"
-msgstr "Desa automàticament"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1155
 msgid "Oversample bitmaps:"
 msgstr "Sobre-mostreja els mapes de bits:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Automatically reload bitmaps"
 msgstr "Carrega de nou els mapes de bits automàticament"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 "Carrega de nou automàticament les imatges quan es detecti que el fitxer del "
 "disc hagi canviat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Bitmap editor:"
 msgstr "Editor de mapa de bits:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1180
 msgid "Resolution for Create Bitmap Copy:"
 msgstr "Resolució per a «Crea una còpia del mapa de bits»:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Resolució utilitzada per a l'ordre  «Crea una còpia del mapa de bits»"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Bitmaps"
 msgstr "Mapa de bits"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Language:"
 msgstr "Idioma:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1236
 msgid "Set the main spell check language"
 msgstr "Defineix l'idioma principal del corrector ortogràfic"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Second language:"
 msgstr "Idioma secundari:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -14698,11 +14681,11 @@ msgstr ""
 "Defineix l'idioma secundari del corrector ortogràfic; el corrector només "
 "s'aturarà si la paraula no coincideixen en cap dels idiomes indicats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
 msgstr "Idioma terciari:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1239
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -14710,31 +14693,31 @@ msgstr ""
 "Defineix l'idioma terciari del corrector ortogràfic; el corrector només "
 "s'aturarà si la paraula no coincideixen en cap dels idiomes indicats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
 msgstr "Ignora les paraules amb números"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ignora les paraules amb números, com per exemple \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1250
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ignora les paraules en MAJÚSCULES"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ignora les paraules en majúscules, com per exemple \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1254
 msgid "Spellcheck"
 msgstr "Corrector ortogràfic"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Add label comments to printing output"
 msgstr "Afegeix comentaris d'etiqueta a la sortida d'impressió"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -14742,11 +14725,11 @@ msgstr ""
 "Si està habilitat, s'afegirà un comentari a la sortida d'impressió, que "
 "marqui la sortida generada per a un objecte amb la seva etiqueta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Prevent sharing of gradient definitions"
 msgstr "No comparteixis les definicions de degradats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1279
 msgid ""
 "When on, shared gradient definitions are automatically forked on change; "
 "uncheck to allow sharing of gradient definitions so that editing one object "
@@ -14757,11 +14740,11 @@ msgstr ""
 "definicions dels degradats, de manera que en editar-se'n el d'un objecte es "
 "modificarà els altres objectes que el facin servir"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1277
+#: ../src/ui/dialog/inkscape-preferences.cpp:1282
 msgid "Simplification threshold:"
 msgstr "Llindar de simplificació:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -14772,15 +14755,15 @@ msgstr ""
 "agressivament. En invocar-la després d'una pausa es retorna al valor "
 "predeterminat del llindar."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Latency skew:"
 msgstr "Imprecisió de la latència:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "(requires restart)"
 msgstr "(cal reiniciar)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)."
@@ -14788,65 +14771,65 @@ msgstr ""
 "Factor amb el qual es modifica l'hora actual del sistema (0,9766 en alguns "
 "sistemes)."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Pre-render named icons"
 msgstr "Renderitza prèviament els icones amb nom"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
-"Quan es marqui l'opció, les icones amb nom es renderitzaran prèviament "
-"abans de mostrar la interfície d'usuari. Això és una solució temporal a "
-"alguns problemes del GTK+ amb la notificació dels icones amb nom"
+"Quan es marqui l'opció, les icones amb nom es renderitzaran prèviament abans "
+"de mostrar la interfície d'usuari. Això és una solució temporal a alguns "
+"problemes del GTK+ amb la notificació dels icones amb nom"
 
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "User config: "
 msgstr "Configuració de l'usuari: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "User data: "
 msgstr "Dades de l'usuari: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid "User cache: "
 msgstr "Memòria cau de l'usuari: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "System config: "
 msgstr "Configuració del sistema: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid "System data: "
 msgstr "Dades del sistema: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "PIXMAP: "
 msgstr "Mapa de píxels: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1314
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid "DATA: "
 msgstr "Dades: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1323
 msgid "UI: "
 msgstr "Interfície: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1332
 msgid "Icon theme: "
 msgstr "Tema de la icona:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "System info"
 msgstr "Informació del sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1342
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 msgid "General system information"
 msgstr "Informació general del sistema"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1344
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Misc"
 msgstr "Miscel·lània"
 
@@ -15045,23 +15028,11 @@ msgstr ""
 "Habilita la visualització del registre establint l'atribut 'redirect' a 1 a "
 "preferences.xml"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:78
-msgid "File"
-msgstr "Fitxer"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:176
-msgid "Username:"
-msgstr "Nom d'usuari:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:177
-msgid "Password:"
-msgstr "Contrasenya:"
-
-#: ../src/ui/dialog/ocaldialogs.cpp:404
+#: ../src/ui/dialog/ocaldialogs.cpp:422
 msgid "Error while reading the Open Clip Art RSS feed"
 msgstr "S'ha produït un error mentre es llegia el canal RSS de l'Open Clip Art"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:443
+#: ../src/ui/dialog/ocaldialogs.cpp:461
 msgid ""
 "Failed to receive the Open Clip Art Library RSS feed. Verify if the server "
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
@@ -15070,23 +15041,23 @@ msgstr ""
 "Verifiqueu que el nom del servidor a Configuració->Importa/exporta (p. e.: "
 "openclipart.org)"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:457
+#: ../src/ui/dialog/ocaldialogs.cpp:475
 msgid "Server supplied malformed Clip Art feed"
 msgstr "El servidor ha retornat un canal de Clip Art incorrecte"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:548
+#: ../src/ui/dialog/ocaldialogs.cpp:566
 msgid "Search for:"
 msgstr "Cerca:"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:549
+#: ../src/ui/dialog/ocaldialogs.cpp:567
 msgid "No files matched your search"
 msgstr "La vostra cerca no ha retornat cap fitxer"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:560
+#: ../src/ui/dialog/ocaldialogs.cpp:578
 msgid "Search"
 msgstr "Cerca"
 
-#: ../src/ui/dialog/ocaldialogs.cpp:577
+#: ../src/ui/dialog/ocaldialogs.cpp:595
 msgid "Files found"
 msgstr "Fitxers trobats"
 
@@ -15310,7 +15281,7 @@ msgstr "Text d'exemple"
 msgid "Preview Text:"
 msgstr "Previsualitza el text:"
 
-#: ../src/ui/dialog/swatches.cpp:329
+#: ../src/ui/dialog/swatches.cpp:331
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
@@ -15319,53 +15290,53 @@ msgstr ""
 "a definir el traç"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:438
+#: ../src/ui/dialog/swatches.cpp:442
 msgid "Set fill"
 msgstr "Defineix l'emplenat"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:446
+#: ../src/ui/dialog/swatches.cpp:450
 msgid "Set stroke"
 msgstr "Defineix el contorn"
 
-#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:476 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
 msgid "Edit..."
 msgstr "Edita..."
 
-#: ../src/ui/dialog/swatches.cpp:483
+#: ../src/ui/dialog/swatches.cpp:488
 msgid "Convert"
 msgstr "Converteix"
 
-#: ../src/ui/dialog/swatches.cpp:645
+#: ../src/ui/dialog/swatches.cpp:651
 msgid "Change color definition"
 msgstr "Canvia la definició del color"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove stroke color"
 msgstr "Suprimeix el color del traç"
 
-#: ../src/ui/dialog/swatches.cpp:846
+#: ../src/ui/dialog/swatches.cpp:852
 msgid "Remove fill color"
 msgstr "Suprimeix el color d'emplenat"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set stroke color to none"
 msgstr "Deixa indefinit el color del traç"
 
-#: ../src/ui/dialog/swatches.cpp:851
+#: ../src/ui/dialog/swatches.cpp:857
 msgid "Set fill color to none"
 msgstr "Deixa indefinit el color d'emplenat"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set stroke color from swatch"
 msgstr "Estableix el color d'una llista de mostres"
 
-#: ../src/ui/dialog/swatches.cpp:868
+#: ../src/ui/dialog/swatches.cpp:874
 msgid "Set fill color from swatch"
 msgstr "Estableix el color d'emplenat d'una llista de mostres"
 
-#: ../src/ui/dialog/swatches.cpp:1192
+#: ../src/ui/dialog/swatches.cpp:1198
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "El directori de les paletes (%s) no es troba disponible."
@@ -16798,14 +16769,7 @@ msgstr "Exporta el document o la selecció com a mapa de bits"
 msgid "Import a document from Open Clip Art Library"
 msgstr "Importa un document de la biblioteca Open Clip Art"
 
-#: ../src/verbs.cpp:2266
-msgid "Export To Open Clip Art Library"
-msgstr "Exporta a la biblioteca Open Clip Art"
-
-#: ../src/verbs.cpp:2266
-msgid "Export this document to Open Clip Art Library"
-msgstr "Exporta el document a la biblioteca Open Clip Art"
-
+#. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "Finestra s_egüent"
@@ -18507,7 +18471,7 @@ msgstr "Mida de la lletra:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6497
+#: ../src/widgets/font-selector.cpp:641 ../src/widgets/toolbox.cpp:6522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqcÇ12369$€¢?.;/()"
 
@@ -19640,7 +19604,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr "Distribueix a l'atzar les cantonades i els angles"
 
 #: ../src/widgets/toolbox.cpp:2828 ../src/widgets/toolbox.cpp:3767
-#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7224
+#: ../src/widgets/toolbox.cpp:4027 ../src/widgets/toolbox.cpp:7249
 msgid "Defaults"
 msgstr "Per defecte"
 
@@ -20612,23 +20576,23 @@ msgstr "Text: canvia el tipus de lletra"
 msgid "Text: Change alignment"
 msgstr "Text: canvia l'alineació"
 
-#: ../src/widgets/toolbox.cpp:6253
+#: ../src/widgets/toolbox.cpp:6278
 msgid "Text: Change font style"
 msgstr "Text: canvia l'estil del tipus de lletra"
 
-#: ../src/widgets/toolbox.cpp:6300
+#: ../src/widgets/toolbox.cpp:6325
 msgid "Text: Change orientation"
 msgstr "Text: canvia l'orientació"
 
-#: ../src/widgets/toolbox.cpp:6414
+#: ../src/widgets/toolbox.cpp:6439
 msgid "Text: Change font size"
 msgstr "Text: canvia la mida de la lletra"
 
-#: ../src/widgets/toolbox.cpp:6625
+#: ../src/widgets/toolbox.cpp:6650
 msgid "Select font family (Alt+X to access)"
 msgstr "Selecciona un tipus de lletra (Alt+X per accedir-hi)"
 
-#: ../src/widgets/toolbox.cpp:6662
+#: ../src/widgets/toolbox.cpp:6687
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -20636,93 +20600,93 @@ msgstr ""
 "Aquest tipus de lletra no es troba instal·lat en el vostre sistema. "
 "L'Inkscape farà servir el tipus de lletra predeterminat."
 
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6723
 msgid "Align left"
 msgstr "Alinea a l'esquerra"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6745
 msgid "Align right"
 msgstr "Alinea a la dreta"
 
-#: ../src/widgets/toolbox.cpp:6731
+#: ../src/widgets/toolbox.cpp:6756
 msgid "Justify"
 msgstr "Justifica"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6771
 msgid "Bold"
 msgstr "Negreta"
 
-#: ../src/widgets/toolbox.cpp:6757
+#: ../src/widgets/toolbox.cpp:6782
 msgid "Italic"
 msgstr "Cursiva"
 
-#: ../src/widgets/toolbox.cpp:6888
+#: ../src/widgets/toolbox.cpp:6913
 msgid "Change connector spacing"
 msgstr "Canvia l'espaiat del connector"
 
-#: ../src/widgets/toolbox.cpp:6971
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Avoid"
 msgstr "Evita"
 
-#: ../src/widgets/toolbox.cpp:6981
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Ignore"
 msgstr "Ignora"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Connector Spacing"
 msgstr "Espaiat del connector"
 
-#: ../src/widgets/toolbox.cpp:6993
+#: ../src/widgets/toolbox.cpp:7018
 msgid "Spacing:"
 msgstr "Espaiat:"
 
-#: ../src/widgets/toolbox.cpp:6994
+#: ../src/widgets/toolbox.cpp:7019
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "La quantitat d'espai que queda al voltant dels objectes en girar "
 "automàticament els connectors"
 
-#: ../src/widgets/toolbox.cpp:7005
+#: ../src/widgets/toolbox.cpp:7030
 msgid "Graph"
 msgstr "Graf"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Connector Length"
 msgstr "Longitud del connector"
 
-#: ../src/widgets/toolbox.cpp:7015
+#: ../src/widgets/toolbox.cpp:7040
 msgid "Length:"
 msgstr "Longitud:"
 
-#: ../src/widgets/toolbox.cpp:7016
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Longitud ideal per als connectors quan s'aplica la disposició"
 
-#: ../src/widgets/toolbox.cpp:7028
+#: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
 msgstr "Cap a sota"
 
-#: ../src/widgets/toolbox.cpp:7029
+#: ../src/widgets/toolbox.cpp:7054
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Fes que els connectors amb marcadors finals (fletxes) apuntin abaix"
 
-#: ../src/widgets/toolbox.cpp:7044
+#: ../src/widgets/toolbox.cpp:7069
 msgid "Do not allow overlapping shapes"
 msgstr "No permetis que se superposin les formes"
 
-#: ../src/widgets/toolbox.cpp:7147
+#: ../src/widgets/toolbox.cpp:7172
 msgid "Fill by"
 msgstr "Omple segons"
 
-#: ../src/widgets/toolbox.cpp:7148
+#: ../src/widgets/toolbox.cpp:7173
 msgid "Fill by:"
 msgstr "Omple segons:"
 
-#: ../src/widgets/toolbox.cpp:7160
+#: ../src/widgets/toolbox.cpp:7185
 msgid "Fill Threshold"
 msgstr "Llindar d'emplenat"
 
-#: ../src/widgets/toolbox.cpp:7161
+#: ../src/widgets/toolbox.cpp:7186
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -20730,30 +20694,30 @@ msgstr ""
 "La màxima diferència permesa entre el píxel clicat i els píxels dels "
 "voltants que es contaran en l'emplenat"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by"
 msgstr "Augmenta/encongeix"
 
-#: ../src/widgets/toolbox.cpp:7186
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Grow/shrink by:"
 msgstr "Augmenta/encongeix:"
 
-#: ../src/widgets/toolbox.cpp:7187
+#: ../src/widgets/toolbox.cpp:7212
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "La quantitat a augmentar (positiu) o encongir (negatiu) el camí d'emplenat "
 "creat"
 
-#: ../src/widgets/toolbox.cpp:7212
+#: ../src/widgets/toolbox.cpp:7237
 msgid "Close gaps"
 msgstr "Tapa els forats"
 
-#: ../src/widgets/toolbox.cpp:7213
+#: ../src/widgets/toolbox.cpp:7238
 msgid "Close gaps:"
 msgstr "Tapa els forats:"
 
-#: ../src/widgets/toolbox.cpp:7225
+#: ../src/widgets/toolbox.cpp:7250
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -22548,10 +22512,11 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Estira els espais per a ajustar la longitud de l'esquelet"
 
 #: ../share/extensions/pathscatter.inx.h:14
+#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
-"pattern is the topmost object in the selection. (groups of paths/shapes/"
-"clones... allowed)"
+"pattern must be the topmost object in the selection. Groups of paths, "
+"shapes, clones are allowed."
 msgstr ""
 "Aquest efecte dispersa un patró seguint uns camins arbitraris (esquelets). "
 "El patró és l'objecte superior de la selecció (es permet agrupar camins, "
@@ -22651,7 +22616,8 @@ msgid "3D Polyhedron"
 msgstr "Políedre 3D"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-msgid "Clockwise Wound Object"
+#, fuzzy
+msgid "Clockwise wound object"
 msgstr "Objecte enredat cap a la dreta"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
@@ -22667,7 +22633,8 @@ msgid "Dodecahedron"
 msgstr "Dodecaedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-msgid "Draw Back-Facing Polygons"
+#, fuzzy
+msgid "Draw back-facing polygons"
 msgstr "Dibuixa les cares ocultes dels polígons"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
@@ -22691,20 +22658,23 @@ msgid "Filename:"
 msgstr "Nom del fitxer:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-msgid "Fill Color (Blue)"
+#, fuzzy
+msgid "Fill color, Blue"
 msgstr "Color d'emplenament (blau)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-msgid "Fill Color (Green)"
+#, fuzzy
+msgid "Fill color, Green"
 msgstr "Color d'emplenament (verd)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-msgid "Fill Color (Red)"
+#, fuzzy
+msgid "Fill color, Red"
 msgstr "Color d'emplenament (vermell)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, no-c-format
-msgid "Fill Opacity/ %"
+#, fuzzy, no-c-format
+msgid "Fill opacity, %"
 msgstr "Opacitat d'emplenament %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
@@ -22720,92 +22690,102 @@ msgid "Icosahedron"
 msgstr "Icosaedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-msgid "Light x-Position"
-msgstr "Posició X de la llum"
+#, fuzzy
+msgid "Light X"
+msgstr "Il·lumina"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-msgid "Light y-Position"
-msgstr "Posició Y de la llum"
+#, fuzzy
+msgid "Light Y"
+msgstr "Il·lumina"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-msgid "Light z-Position"
-msgstr "Posició Z de la llum"
+#, fuzzy
+msgid "Light Z"
+msgstr "Il·lumina"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-msgid "Line Thickness / px"
-msgstr "Guix de la línia / px"
-
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Load From File"
+#, fuzzy
+msgid "Load from file"
 msgstr "Carrega d'un fitxer"
 
-#: ../share/extensions/polyhedron_3d.inx.h:25
+#: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
 msgstr "Màxim"
 
-#: ../share/extensions/polyhedron_3d.inx.h:26
+#: ../share/extensions/polyhedron_3d.inx.h:25
 msgid "Mean"
 msgstr "Mitjana"
 
-#: ../share/extensions/polyhedron_3d.inx.h:27
+#: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "Minimum"
 msgstr "Mínim"
 
-#: ../share/extensions/polyhedron_3d.inx.h:28
-msgid "Model File"
+#: ../share/extensions/polyhedron_3d.inx.h:27
+#, fuzzy
+msgid "Model file"
 msgstr "Fitxer model"
 
-#: ../share/extensions/polyhedron_3d.inx.h:29
+#: ../share/extensions/polyhedron_3d.inx.h:28
 msgid "Object Type"
 msgstr "Tipus d'objecte"
 
-#: ../share/extensions/polyhedron_3d.inx.h:30
+#: ../share/extensions/polyhedron_3d.inx.h:29
 msgid "Object:"
 msgstr "Objecte:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:31
+#: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "Octahedron"
 msgstr "Octaedre"
 
-#: ../share/extensions/polyhedron_3d.inx.h:33
-msgid "Rotate Around:"
+#: ../share/extensions/polyhedron_3d.inx.h:32
+#, fuzzy
+msgid "Rotate around:"
 msgstr "Gira al voltant:"
 
-#: ../share/extensions/polyhedron_3d.inx.h:34
-msgid "Rotation / Degrees"
+#: ../share/extensions/polyhedron_3d.inx.h:33
+#, fuzzy
+msgid "Rotation, degrees"
 msgstr "Rotació / graus"
 
-#: ../share/extensions/polyhedron_3d.inx.h:35
-msgid "Scaling Factor"
+#: ../share/extensions/polyhedron_3d.inx.h:34
+#, fuzzy
+msgid "Scaling factor"
 msgstr "Factor d'escala"
 
-#: ../share/extensions/polyhedron_3d.inx.h:36
+#: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
 msgstr "Ombres"
 
-#: ../share/extensions/polyhedron_3d.inx.h:38
+#: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
 msgstr "Icosaedre triàmbric petit"
 
-#: ../share/extensions/polyhedron_3d.inx.h:39
+#: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
 msgstr "Cub rom"
 
-#: ../share/extensions/polyhedron_3d.inx.h:40
+#: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
 msgstr "Dodecaedre rom"
 
-#: ../share/extensions/polyhedron_3d.inx.h:42
-#, no-c-format
-msgid "Stroke Opacity/ %"
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, fuzzy, no-c-format
+msgid "Stroke opacity, %"
 msgstr "Opacitat del contorn %"
+
+#: ../share/extensions/polyhedron_3d.inx.h:42
+#, fuzzy
+msgid "Stroke width, px"
+msgstr "Amplada del contorn"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-msgid "Then Rotate Around:"
+#, fuzzy
+msgid "Then rotate around:"
 msgstr "Després gira:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
@@ -22849,7 +22829,8 @@ msgid "Z-Axis"
 msgstr "Eix Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-msgid "Z-Sort Faces By:"
+#, fuzzy
+msgid "Z-sort faces by:"
 msgstr "Ordena les cares per Z:"
 
 #: ../share/extensions/printing-marks.inx.h:1
@@ -23619,6 +23600,54 @@ msgstr "Entrada de Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrada XAML"
+
+#~ msgid "Error saving a temporary copy"
+#~ msgstr "S'ha produït un error en desar una còpia temporal"
+
+#~ msgid "Open Clip Art Login"
+#~ msgstr "Entrada de l'Open Clip Art"
+
+#~ msgid ""
+#~ "Error exporting the document. Verify if the server name, username and "
+#~ "password are correct, if the server has support for webdav and verify if "
+#~ "you didn't forget to choose a license."
+#~ msgstr ""
+#~ "S'ha produït un error en exportar el document. Verifiqueu que el nom del "
+#~ "servidor, el nom d'usuari i la contrasenya siguin correctes, que el "
+#~ "servidor permeti emprar webdav i que heu escollit una llicència."
+
+#~ msgid "Document exported..."
+#~ msgstr "S'ha exportat el document..."
+
+#~ msgid "Autosave"
+#~ msgstr "Desa automàticament"
+
+#~ msgid "File"
+#~ msgstr "Fitxer"
+
+#~ msgid "Username:"
+#~ msgstr "Nom d'usuari:"
+
+#~ msgid "Password:"
+#~ msgstr "Contrasenya:"
+
+#~ msgid "Export To Open Clip Art Library"
+#~ msgstr "Exporta a la biblioteca Open Clip Art"
+
+#~ msgid "Export this document to Open Clip Art Library"
+#~ msgstr "Exporta el document a la biblioteca Open Clip Art"
+
+#~ msgid "Light x-Position"
+#~ msgstr "Posició X de la llum"
+
+#~ msgid "Light y-Position"
+#~ msgstr "Posició Y de la llum"
+
+#~ msgid "Light z-Position"
+#~ msgstr "Posició Z de la llum"
+
+#~ msgid "Line Thickness / px"
+#~ msgstr "Guix de la línia / px"
 
 #~ msgid "Gelatine"
 #~ msgstr "Gelatina"
