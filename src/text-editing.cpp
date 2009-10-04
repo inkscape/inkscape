@@ -1547,8 +1547,9 @@ static bool redundant_double_nesting_processor(SPObject **item, SPObject *child,
     if (!objects_have_equal_style(SP_OBJECT_PARENT(*item), child)) return false;
 
     Inkscape::XML::Node *insert_after_repr;
-    if (prepend) insert_after_repr = SP_OBJECT_REPR(SP_OBJECT_PREV(*item));
-    else insert_after_repr = SP_OBJECT_REPR(*item);
+    if (!prepend) insert_after_repr = SP_OBJECT_REPR(*item);
+    else if (SP_OBJECT_PREV(*item)) insert_after_repr = SP_OBJECT_REPR(SP_OBJECT_PREV(*item));
+    else insert_after_repr = NULL;
     while (SP_OBJECT_REPR(child)->childCount()) {
         Inkscape::XML::Node *move_repr = SP_OBJECT_REPR(child)->firstChild();
         Inkscape::GC::anchor(move_repr);
