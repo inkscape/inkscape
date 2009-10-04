@@ -224,6 +224,14 @@ void SPDocument::remove_persp3d (Persp3D * const /*persp*/)
     g_print ("Please implement deletion of perspectives here.\n");
 }
 
+void SPDocument::initialize_current_persp3d()
+{
+    this->current_persp3d = persp3d_document_first_persp(this);
+    if (!this->current_persp3d) {
+        this->current_persp3d = persp3d_create_xml_element(this);
+    }
+}
+
 unsigned long SPDocument::serial() const {
     return priv->serial;
 }
@@ -373,11 +381,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     // Remark: Here, we used to create a "currentpersp3d" element in the document defs.
     // But this is probably a bad idea since we need to adapt it for every change of selection, which will
     // completely clutter the undo history. Maybe rather save it to prefs on exit and re-read it on startup?
-
-    document->current_persp3d = persp3d_document_first_persp(document);
-    if (!document->current_persp3d) {
-        document->current_persp3d = persp3d_create_xml_element (document);
-    }
+    document->initialize_current_persp3d();
 
     sp_document_set_undo_sensitive(document, true);
 
@@ -730,6 +734,10 @@ SPDocument::emitReconstructionFinish(void)
 {
     // printf("Finishing Reconstruction\n");
     priv->_reconstruction_finish_signal.emit();
+    
+    // Reference to the old persp3d object is invalid after reconstruction.
+    initialize_current_persp3d();
+    
     return;
 }
 

@@ -114,6 +114,7 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
     void add_persp3d(Persp3D * const persp);
     void remove_persp3d(Persp3D * const persp);
+    void initialize_current_persp3d();
 
     sigc::connection connectModified(ModifiedSignal::slot_type slot);
     sigc::connection connectURISet(URISetSignal::slot_type slot);
