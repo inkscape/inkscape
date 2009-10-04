@@ -1492,7 +1492,7 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
 
     int retval = FALSE;
 
-    /* dispatch normally regardless of the event's window if an item has
+    /* dispatch normally regardless of the event's window if an item
        has a pointer grab in effect */
     if (!canvas->grabbed_item &&
         event->window != SP_CANVAS_WINDOW (canvas))
