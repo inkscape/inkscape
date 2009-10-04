@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
-"PO-Revision-Date: 2009-10-01 16:22+0900\n"
+"POT-Creation-Date: 2009-10-03 19:00+0900\n"
+"PO-Revision-Date: 2009-10-03 18:59+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1855,7 +1855,7 @@ msgstr "アルファ再ペイント"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Repaint anything monochrome"
-msgstr "全てを単色で塗りなおします。"
+msgstr "すべてを単色で塗りなおします。"
 
 #: ../share/filters/filters.svg.h:199
 msgid "Saturation map"
@@ -3058,7 +3058,8 @@ msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
-"ダイアログの全てのシフト、拡大縮小、回転、不透明度、色の変化をゼロに戻します"
+"ダイアログのすべてのシフト、拡大縮小、回転、不透明度、色の変化をゼロに戻しま"
+"す。"
 
 #: ../src/dialogs/export.cpp:146 ../src/verbs.cpp:2623
 msgid "_Page"
@@ -3425,7 +3426,7 @@ msgstr "検索(_F)"
 
 #: ../src/dialogs/find.cpp:747 ../src/ui/dialog/find.cpp:87
 msgid "Select objects matching all of the fields you filled in"
-msgstr "入力したすべての項目に一致したオブジェクトを選択します"
+msgstr "入力した全ての項目に一致したオブジェクトを選択します"
 
 #. Create the label for the object id
 #: ../src/dialogs/item-properties.cpp:120
@@ -3987,8 +3988,8 @@ msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
-"ズームアウト時、グリッドラインの全ては表示されません。見えているラインにのみ"
-"スナップします。"
+"ズームアウト時、グリッドラインのすべては表示されません。見えているラインにの"
+"みスナップします。"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -6003,9 +6004,9 @@ msgid ""
 "<b>Only the visible part of the bounded area was filled.</b> If you want to "
 "fill all of the area, undo, zoom out, and fill again."
 msgstr ""
-"<b>境界内のうち、表示されている部分のみ塗りつぶしました。</b>境界内全てを塗り"
-"つぶしたい場合は、いったんアンドゥし、ズームアウトした後再度塗りつぶしてくだ"
-"さい。"
+"<b>境界内のうち、表示されている部分のみ塗りつぶしました。</b>境界内すべてを塗"
+"りつぶしたい場合は、いったんアンドゥし、ズームアウトした後再度塗りつぶしてく"
+"ださい。"
 
 #: ../src/flood-context.cpp:1122 ../src/flood-context.cpp:1282
 msgid "Fill bounded area"
@@ -6599,16 +6600,15 @@ msgstr "ハンドルの移動"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:234
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "オブジェクト内のパターンフィルを<b>移動</b>"
+msgstr "オブジェクト内のパターンフィルを<b>移動</b>します。"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "パターンフィルを一律に<b>拡大縮小</b>"
+msgstr "パターンフィルを<b>拡大縮小</b>します。<b>Ctrl</b> で均一になります。"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "パターンフィルを<b>回転</b>。<b>Ctrl</b>で角度をスナップ"
+msgstr "パターンフィルを<b>回転</b>します。<b>Ctrl</b>で角度をスナップします。"
 
 #: ../src/libgdl/gdl-dock-bar.c:108
 msgid "Master"
@@ -6805,7 +6805,7 @@ msgid ""
 "If is set to 1, all the dock items bound to the master are locked; if it's "
 "0, all are unlocked; -1 indicates inconsistency among the items"
 msgstr ""
-"1 を設定すると、全てのマスターにバインドされたドックアイテムはロックされま"
+"1 を設定すると、すべてのマスターにバインドされたドックアイテムはロックされま"
 "す。0 を設定すると、全てはロックされません。-1 ではアイテム間で統一されませ"
 "ん。"
 
@@ -8549,7 +8549,7 @@ msgstr "ノードを回転"
 
 #: ../src/nodepath.cpp:4420
 msgid "Cannot scale nodes when all are at the same location."
-msgstr "全てが同じ場所にある時ノードの拡大縮小はできません。"
+msgstr "すべてが同じ場所にある時ノードの拡大縮小はできません。"
 
 #: ../src/nodepath.cpp:4446
 msgid "Scale nodes"
@@ -8808,19 +8808,19 @@ msgstr "選択した中に<b>連結するパスがありません</b>。"
 
 #: ../src/path-chemistry.cpp:180
 msgid "Select <b>path(s)</b> to break apart."
-msgstr "分割する<b>パス</b>を選択して下さい。"
+msgstr "分解する<b>パス</b>を選択して下さい。"
 
 #: ../src/path-chemistry.cpp:184
 msgid "Breaking apart paths..."
-msgstr "パスを分割しています..."
+msgstr "パスを分解しています..."
 
 #: ../src/path-chemistry.cpp:271
 msgid "Break apart"
-msgstr "分割"
+msgstr "分解"
 
 #: ../src/path-chemistry.cpp:273
 msgid "<b>No path(s)</b> to break apart in the selection."
-msgstr "分割する<b>パスが選択されていません</b>。"
+msgstr "分解する<b>パスが選択されていません</b>。"
 
 #: ../src/path-chemistry.cpp:285
 msgid "Select <b>object(s)</b> to convert to path."
@@ -10141,7 +10141,7 @@ msgstr "排他"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
-msgstr "分離"
+msgstr "分割"
 
 #: ../src/splivarot.cpp:106
 msgid "Cut path"
@@ -10161,7 +10161,7 @@ msgstr ""
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr ""
-"差分、排他、分離、またはパスのカット操作を行うための <b>2 個だけのパス</b>を"
+"差分、排他、分割、またはパスのカット操作を行うための <b>2 個だけのパス</b>を"
 "選択して下さい。"
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
@@ -10169,7 +10169,7 @@ msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
 msgstr ""
-"差分、排他、分離、またはパスのカットのための選択オブジェクトの<b>重なり順</b>"
+"差分、排他、分割、またはパスのカットのための選択オブジェクトの<b>重なり順</b>"
 "を決定できませんでした。"
 
 #: ../src/splivarot.cpp:192
@@ -10544,11 +10544,11 @@ msgstr ""
 
 #: ../src/text-context.cpp:834
 msgid "No-break space"
-msgstr "非分割スペース"
+msgstr "ノーブレークスペース"
 
 #: ../src/text-context.cpp:836
 msgid "Insert no-break space"
-msgstr "非分割スペースの挿入"
+msgstr "ノーブレークスペースの挿入"
 
 #: ../src/text-context.cpp:873
 msgid "Make bold"
@@ -14380,7 +14380,7 @@ msgstr "インターフェイス"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "\"名前をつけて保存...\" でカレントディレクトリを使用する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14388,6 +14388,9 @@ msgid ""
 "the file was previously saved). If not previously saved, the most recent "
 "\"Save As ...\" directory is used."
 msgstr ""
+"ファイルが以前に保存されている場合に \"名前をつけて保存...\" ダイアログで保存"
+"先にカレントディレクトリを使用します。保存されたことがない場合は、最後に \"名"
+"前をつけて保存...\" で使用されたディレクトリが使用されます。"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -14491,8 +14494,8 @@ msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
-"第2のスペルチェック言語を指定してください。チェックは選択された全ての言語で不"
-"明な単語のみ停止します。"
+"第2のスペルチェック言語を指定してください。チェックは選択されたすべての言語で"
+"不明な単語のみ停止します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Third language:"
@@ -14503,8 +14506,8 @@ msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
-"第3のスペルチェック言語を指定してください。チェックは選択された全ての言語で不"
-"明な単語のみ停止します。"
+"第3のスペルチェック言語を指定してください。チェックは選択されたすべての言語で"
+"不明な単語のみ停止します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Ignore words with digits"
@@ -16721,7 +16724,8 @@ msgstr "パスエフェクトを貼り付け(_E)"
 
 #: ../src/verbs.cpp:2303
 msgid "Apply the path effect of the copied object to selection"
-msgstr "コピーされたオブジェクトのパスエフェクトを選択オブジェクトに適用"
+msgstr ""
+"コピーされたオブジェクトのパスエフェクトを選択オブジェクトに適用します。"
 
 #: ../src/verbs.cpp:2304
 msgid "Remove Path _Effect"
@@ -16729,7 +16733,7 @@ msgstr "パスエフェクトを除去(_E)"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
-msgstr "選択オブジェクトからあらゆるパスエフェクトを削除"
+msgstr "選択オブジェクトからあらゆるパスエフェクトを除去します。"
 
 #: ../src/verbs.cpp:2306
 msgid "Remove Filters"
@@ -16737,7 +16741,7 @@ msgstr "フィルタを除去"
 
 #: ../src/verbs.cpp:2307
 msgid "Remove any filters from selected objects"
-msgstr "選択オブジェクトからあらゆるフィルタを削除"
+msgstr "選択オブジェクトからあらゆるフィルタを除去します。"
 
 #: ../src/verbs.cpp:2308
 msgid "_Delete"
@@ -16966,7 +16970,8 @@ msgstr "手動カーニングを削除(_K)"
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "テキストオブジェクトから、手動カーニング、文字の回転を全て削除"
+msgstr ""
+"テキストオブジェクトから、手動カーニング、文字の回転をすべて削除します。"
 
 #: ../src/verbs.cpp:2372
 msgid "_Union"
@@ -16974,7 +16979,7 @@ msgstr "統合(_U)"
 
 #: ../src/verbs.cpp:2373
 msgid "Create union of selected paths"
-msgstr "選択パスを統合したパスを作成"
+msgstr "選択パスを統合したパスを作成します。"
 
 #: ../src/verbs.cpp:2374
 msgid "_Intersection"
@@ -16982,7 +16987,7 @@ msgstr "交差(_I)"
 
 #: ../src/verbs.cpp:2375
 msgid "Create intersection of selected paths"
-msgstr "選択パスの交差部分を作成"
+msgstr "選択パスの交差部分を作成します。"
 
 #: ../src/verbs.cpp:2376
 msgid "_Difference"
@@ -16990,7 +16995,7 @@ msgstr "差分(_D)"
 
 #: ../src/verbs.cpp:2377
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr "選択パスの差分を作成 (背面側マイナス前面側)"
+msgstr "選択パスの差分 (背面側マイナス前面側) を作成します。"
 
 #: ../src/verbs.cpp:2378
 msgid "E_xclusion"
@@ -17000,15 +17005,15 @@ msgstr "排他(_X)"
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
-msgstr "選択パスの排他ORを作成 (複数の部分が単一のパスに属します)"
+msgstr "選択パスの排他的ORを作成します (複数の部分が単一のパスに属します)。"
 
 #: ../src/verbs.cpp:2380
 msgid "Di_vision"
-msgstr "分離(_V)"
+msgstr "分割(_V)"
 
 #: ../src/verbs.cpp:2381
 msgid "Cut the bottom path into pieces"
-msgstr "背面側のパスを部分に切断する"
+msgstr "背面側のパスを複数パスに切断します。"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -17018,7 +17023,7 @@ msgstr "パスをカット(_P)"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "背面側のパスのストロークを部分に切断し、フィルは削除する"
+msgstr "背面側のパスのストロークを部分に切断し、フィルは削除します。"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -17029,23 +17034,23 @@ msgstr "アウトセット(_E)"
 
 #: ../src/verbs.cpp:2390
 msgid "Outset selected paths"
-msgstr "選択パスをアウトセット (外側へオフセット)"
+msgstr "選択パスをアウトセット (外側へオフセット) します。"
 
 #: ../src/verbs.cpp:2392
 msgid "O_utset Path by 1 px"
-msgstr "パスをアウトセット、1ピクセル(_U)"
+msgstr "パスをアウトセット、1 ピクセル(_U)"
 
 #: ../src/verbs.cpp:2393
 msgid "Outset selected paths by 1 px"
-msgstr "選択パスを1ピクセル分アウトセット"
+msgstr "選択パスを 1 ピクセル分アウトセットします。"
 
 #: ../src/verbs.cpp:2395
 msgid "O_utset Path by 10 px"
-msgstr "パスをアウトセット、10ピクセル(_U)"
+msgstr "パスをアウトセット、10 ピクセル(_U)"
 
 #: ../src/verbs.cpp:2396
 msgid "Outset selected paths by 10 px"
-msgstr "選択パスを10ピクセル分アウトセット"
+msgstr "選択パスを 10 ピクセル分アウトセットします。"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -17056,7 +17061,7 @@ msgstr "インセット(_N)"
 
 #: ../src/verbs.cpp:2401
 msgid "Inset selected paths"
-msgstr "選択パスをインセット (内側へオフセット)"
+msgstr "選択パスをインセット (内側へオフセット) します。"
 
 #: ../src/verbs.cpp:2403
 msgid "I_nset Path by 1 px"
@@ -17064,15 +17069,15 @@ msgstr "パスをインセット、1ピクセル(_N)"
 
 #: ../src/verbs.cpp:2404
 msgid "Inset selected paths by 1 px"
-msgstr "選択パスを1ピクセル分インセット"
+msgstr "選択パスを 1 ピクセル分インセットします。"
 
 #: ../src/verbs.cpp:2406
 msgid "I_nset Path by 10 px"
-msgstr "パスをインセット、10ピクセル(_N)"
+msgstr "パスをインセット、10 ピクセル(_N)"
 
 #: ../src/verbs.cpp:2407
 msgid "Inset selected paths by 10 px"
-msgstr "選択パスを10ピクセル分インセット"
+msgstr "選択パスを 10 ピクセル分インセットします。"
 
 #: ../src/verbs.cpp:2409
 msgid "D_ynamic Offset"
@@ -17080,7 +17085,7 @@ msgstr "ダイナミックオフセット(_Y)"
 
 #: ../src/verbs.cpp:2409
 msgid "Create a dynamic offset object"
-msgstr "ダイナミックオフセットオブジェクトを作成"
+msgstr "ダイナミックオフセットオブジェクトを作成します。"
 
 #: ../src/verbs.cpp:2411
 msgid "_Linked Offset"
@@ -17088,7 +17093,8 @@ msgstr "リンクオフセット(_L)"
 
 #: ../src/verbs.cpp:2412
 msgid "Create a dynamic offset object linked to the original path"
-msgstr "オリジナルのパスにリンクするダイナミックオフセットオブジェクトを作成"
+msgstr ""
+"オリジナルのパスにリンクするダイナミックオフセットオブジェクトを作成します。"
 
 #: ../src/verbs.cpp:2414
 msgid "_Stroke to Path"
@@ -17104,7 +17110,7 @@ msgstr "パスの簡略化(_M)"
 
 #: ../src/verbs.cpp:2417
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr "選択パスを簡略化 (余分なノードを削除)"
+msgstr "選択パスを簡略化 (余分なノードを削除) します。"
 
 #: ../src/verbs.cpp:2418
 msgid "_Reverse"
@@ -17144,11 +17150,11 @@ msgstr "複数のパスを1つに結合します。"
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2429
 msgid "Break _Apart"
-msgstr "分割(_A)"
+msgstr "分解(_A)"
 
 #: ../src/verbs.cpp:2430
 msgid "Break selected paths into subpaths"
-msgstr "選択したパスをサブパスに分割します。"
+msgstr "選択したパスをサブパスに分解します。"
 
 #: ../src/verbs.cpp:2431
 msgid "Rows and Columns..."
@@ -21150,7 +21156,7 @@ msgstr ""
 "を描画します。今あるオブジェクトの一つか、新たに作成したものを選択することが"
 "できます。\n"
 "            \n"
-"全ての単位は Inkscape のピクセル単位に、角度は全てラジアンになります。\n"
+"すべての単位は Inkscape のピクセル単位に、角度は全てラジアンになります。\n"
 "三線座標または三角関数からポイントを指定することができます。\n"
 "辺長または角度の関数として入力してください。\n"
 "三線要素はコロン「:」で分けられていなければなりません。\n"
@@ -22258,7 +22264,6 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "スケルトンパスの長さにあわせて間隔を広げる"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
@@ -22266,7 +22271,7 @@ msgid ""
 msgstr ""
 "このエフェクトは任意の \"スケルトン\" パスに沿ってパターンを散乱させます。パ"
 "ターンは選択された中の最前面のオブジェクトになります (パス/シェイプ/クローン"
-"などのグループが指定できます)。"
+"のグループが指定できます)。"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22362,7 +22367,6 @@ msgid "3D Polyhedron"
 msgstr "3D 多面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "時計回りのワウンドオブジェクト"
 
@@ -22379,7 +22383,6 @@ msgid "Dodecahedron"
 msgstr "12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
 msgstr "背面の多角形も描画する"
 
@@ -22404,24 +22407,21 @@ msgid "Filename:"
 msgstr "ファイル名:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
 msgstr "フィルの色 (青)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
 msgstr "フィルの色 (緑)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
 msgstr "フィルの色 (赤)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "フィルの不透明度/ %"
+msgstr "フィルの不透明度, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22436,22 +22436,18 @@ msgid "Icosahedron"
 msgstr "20面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "比較 (明)"
+msgstr "照明の X 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "比較 (明)"
+msgstr "照明の Y 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "比較 (明)"
+msgstr "照明の Z 位置"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "ファイルから読み込む"
 
@@ -22468,7 +22464,6 @@ msgid "Minimum"
 msgstr "最小"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "モデルファイル"
 
@@ -22485,19 +22480,16 @@ msgid "Octahedron"
 msgstr "8面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
-msgstr "回転軸"
+msgstr "回転軸:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
 msgstr "回転 / 角度"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Scaling factor"
-msgstr "単一色"
+msgstr "拡縮係数"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
 msgid "Shading"
@@ -22516,23 +22508,21 @@ msgid "Snub Dodecahedron"
 msgstr "ねじれ12面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "ストロークの透明度/ %"
+msgstr "ストロークの透明度, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "ストローク幅"
+msgstr "ストローク幅, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "4面体"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
-msgstr "その後の回転軸"
+msgstr "その後の回転軸:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
@@ -22575,9 +22565,8 @@ msgid "Z-Axis"
 msgstr "Z 軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
-msgstr "フェイスの Z ソート:"
+msgstr "Z 軸ソートフェイス:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -23357,1316 +23346,3 @@ msgstr "XAML 入力"
 
 #~ msgid "Line Thickness / px"
 #~ msgstr "線の厚み / px"
-
-#~ msgid "Scaling Factor"
-#~ msgstr "拡縮係数"
-
-#~ msgid "Error saving a temporary copy"
-#~ msgstr "作業コピーの保存でエラーです"
-
-#~ msgid "Open Clip Art Login"
-#~ msgstr "Open Clip Art ログイン"
-
-#~ msgid ""
-#~ "Error exporting the document. Verify if the server name, username and "
-#~ "password are correct, if the server has support for webdav and verify if "
-#~ "you didn't forget to choose a license."
-#~ msgstr ""
-#~ "ドキュメントのエクスポートでエラーです。サーバ名、ユーザ名、およびパスワー"
-#~ "ドが正しいことを確認してください。サーバが WebDAV をサポートしている場合、"
-#~ "ライセンスの選択を忘れていないかどうか確認してください。"
-
-#~ msgid "Document exported..."
-#~ msgstr "ドキュメントをエクスポートしました..."
-
-#~ msgid "File"
-#~ msgstr "ファイル"
-
-#~ msgid "Username:"
-#~ msgstr "ユーザ名:"
-
-#~ msgid "Password:"
-#~ msgstr "パスワード:"
-
-#~ msgid "Export To Open Clip Art Library"
-#~ msgstr "Open Clip Art Library へエクスポート"
-
-#~ msgid "Export this document to Open Clip Art Library"
-#~ msgstr "このドキュメントを Open Clip Art library へエクスポート"
-
-#~ msgid "polyhedron|Show:"
-#~ msgstr "表示:"
-
-#~ msgid "restack|Bottom"
-#~ msgstr "下"
-
-#~ msgid "restack|Left"
-#~ msgstr "左"
-
-#~ msgid "restack|Middle"
-#~ msgstr "中央"
-
-#~ msgid "restack|Right"
-#~ msgstr "右"
-
-#~ msgid "restack|Top"
-#~ msgstr "上"
-
-#~ msgid "Gelatine"
-#~ msgstr "ゼラチン"
-
-#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
-#~ msgstr "色変更可能でゼラチンのような乱流および透明なフィルです。"
-
-#~ msgid "Monochrome positive"
-#~ msgstr "モノクロポジ"
-
-#~ msgid "Convert to a Colorizable transparent positive"
-#~ msgstr "色変更可能な単色の透明ポジに変換します。"
-
-#~ msgid "Monochrome negative"
-#~ msgstr "モノクロネガ"
-
-#~ msgid ""
-#~ "Invert and make the lightest parts of the object progressively transparent"
-#~ msgstr "オブジェクを反転し、最も明るい部分を漸進的に透明にします。"
-
-#~ msgid "Repaint"
-#~ msgstr "塗りなおし"
-
-#~ msgid "Punch hole"
-#~ msgstr "パンチ穴"
-
-#~ msgid "Punch object out of a colorizable opaque area"
-#~ msgstr "色変更可能領域以外のオブジェクトに穴をあけます。"
-
-#~ msgid "The second path must be exactly four nodes long."
-#~ msgstr "2 番目のパスは4ノードの長さがなければなりません。"
-
-#~ msgid "Burnt edges"
-#~ msgstr "エッジを焦がす"
-
-#~ msgid "Torn edges with a dark inner blur"
-#~ msgstr "エッジを破き、内側に黒いぼかしをいれます。"
-
-#, fuzzy
-#~ msgid "Highly flexible specular bump"
-#~ msgstr "透明で非常に軟らかい鏡面反射のバンプをつけます。"
-
-#, fuzzy
-#~ msgid "Interruption width"
-#~ msgstr "補間の方法"
-
-#~ msgid "AI 8.0 Output"
-#~ msgstr "AI 8.0 出力"
-
-#~ msgid "Adobe Illustrator 8.0 (*.ai)"
-#~ msgstr "Adobe Illustrator 8.0 (*.ai)"
-
-#, fuzzy
-#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-#~ msgstr "Adobe Illustratorファイルを書き込み"
-
-#~ msgid "EPSI Output"
-#~ msgstr "EPSI 出力"
-
-#~ msgid "Encapsulated Postscript Interchange (*.epsi)"
-#~ msgstr "カプセル化 Postscript インターチェンジ (*.epsi)"
-
-#~ msgid "Encapsulated Postscript with a thumbnail"
-#~ msgstr "サムネイル付きのカプセル化 Postscript"
-
-#~ msgid "Glossy jelly"
-#~ msgstr "グロスゼリー"
-
-#~ msgid "Bulging, glossy jelly covering"
-#~ msgstr "つやありゼリー状被膜のふくらみをつけます"
-
-#~ msgid "Glossy jelly, backlit"
-#~ msgstr "グロスゼリー、逆光"
-
-#~ msgid "Bulging, glossy jelly covering; two light sources"
-#~ msgstr "二つの光源でつやありゼリー状被膜のふくらみをつけます"
-
-#, fuzzy
-#~ msgid "Export area is whole canvas"
-#~ msgstr "エクスポート領域はキャンバス全体"
-
-#, fuzzy
-#~ msgid "Export drawing, not page"
-#~ msgstr "エクスポートの進捗"
-
-#, fuzzy
-#~ msgid "Export canvas"
-#~ msgstr "エクスポート"
-
-#, fuzzy
-#~ msgid "Open files saved for plotters"
-#~ msgstr "XFIGで保存されたファイルを開く"
-
-#, fuzzy
-#~ msgid "HSL bubbles, transparent"
-#~ msgstr "0 (透明)"
-
-#, fuzzy
-#~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "テキストをパスに変換"
-
-#, fuzzy
-#~ msgid "Melt and glow"
-#~ msgstr "左角度"
-
-#, fuzzy
-#~ msgid "Badge"
-#~ msgstr "エッジをぼかす"
-
-#, fuzzy
-#~ msgid "Ghost outline"
-#~ msgstr "外枠のみを表示"
-
-#, fuzzy
-#~ msgid "Flow inside"
-#~ msgstr "端点ノード"
-
-#~ msgid "_Write session file:"
-#~ msgstr "セッションファイルに書込み(_W):"
-
-#~ msgid "Select a location and filename"
-#~ msgstr "場所とファイル名を選択"
-
-#~ msgid "Set filename"
-#~ msgstr "ファイル名を設定"
-
-#~ msgid "<b>%1</b> has invited you to a whiteboard session."
-#~ msgstr "<b>%1</b>があなたをホワイトボードセッションに招待しました。"
-
-#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-#~ msgstr "<b>%1</b>のホワイトボードセッションへの招待を受け入れますか?"
-
-#~ msgid "Accept invitation"
-#~ msgstr "招待に応じる"
-
-#~ msgid "Decline invitation"
-#~ msgstr "招待を辞退する"
-
-#~ msgid "Inkboard session (%1 to %2)"
-#~ msgstr "Inkboardセッション (%1 から %2 へ)"
-
-#, fuzzy
-#~ msgid "Length left"
-#~ msgstr "長さ:"
-
-#, fuzzy
-#~ msgid "Length right"
-#~ msgstr "長さの単位:"
-
-#, fuzzy
-#~ msgid "Specifies the right end of the bisector"
-#~ msgstr "色の明度を抽出"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the bisector"
-#~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Adjust the \"right\" of the bisector"
-#~ msgstr "色の明度を抽出"
-
-#, fuzzy
-#~ msgid "Intersect"
-#~ msgstr "交差"
-
-#, fuzzy
-#~ msgid "Identity A"
-#~ msgstr "識別子"
-
-#, fuzzy
-#~ msgid "Identity B"
-#~ msgstr "識別子"
-
-#, fuzzy
-#~ msgid "2nd path"
-#~ msgstr "パスを切断"
-
-#, fuzzy
-#~ msgid "Path to which the original path will be boolop'ed."
-#~ msgstr ""
-#~ "オリジナルのパスにリンクするダイナミックオフセットオブジェクトを作成"
-
-#, fuzzy
-#~ msgid "Boolop type"
-#~ msgstr "全てのタイプ"
-
-#, fuzzy
-#~ msgid "Starting"
-#~ msgstr "始点:"
-
-#, fuzzy
-#~ msgid "Rotation angle"
-#~ msgstr "回転(_R)"
-
-#, fuzzy
-#~ msgid "Number of copies"
-#~ msgstr "行の数"
-
-#, fuzzy
-#~ msgid "Number of copies of the original path"
-#~ msgstr "ポリゴンまたは星形の角の数"
-
-#, fuzzy
-#~ msgid "Origin"
-#~ msgstr "開始位置X(_O):"
-
-#, fuzzy
-#~ msgid "Origin of the rotation"
-#~ msgstr "ページの向き:"
-
-#, fuzzy
-#~ msgid "Adjust the starting angle"
-#~ msgstr "彩度を小さく"
-
-#, fuzzy
-#~ msgid "Adjust the rotation angle"
-#~ msgstr "彩度を小さく"
-
-#, fuzzy
-#~ msgid "Elliptic Pen"
-#~ msgstr "円/弧"
-
-#, fuzzy
-#~ msgid "Sharp"
-#~ msgstr "シェイプ"
-
-#, fuzzy
-#~ msgid "Round"
-#~ msgstr "丸め:"
-
-#, fuzzy
-#~ msgid "Method"
-#~ msgstr "メートル"
-
-#, fuzzy
-#~ msgid "Choose pen type"
-#~ msgstr "セグメントの種類を変更"
-
-#, fuzzy
-#~ msgid "Maximal stroke width"
-#~ msgstr "ストローク幅を拡大縮小"
-
-#, fuzzy
-#~ msgid "Pen roundness"
-#~ msgstr "丸めなし"
-
-#, fuzzy
-#~ msgid "angle"
-#~ msgstr "角度"
-
-#, fuzzy
-#~ msgid "Grow for"
-#~ msgstr "ノードを下げる"
-
-#, fuzzy
-#~ msgid "Round ends"
-#~ msgstr "丸め:"
-
-#, fuzzy
-#~ msgid "left capping"
-#~ msgstr "左角度"
-
-#, fuzzy
-#~ msgid "Control handle 0"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 1"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 2"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 3"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 4"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 5"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 6"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 7"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 8"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 9"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 10"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 11"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 12"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 13"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 14"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "Control handle 15"
-#~ msgstr "ノードハンドルを移動"
-
-#, fuzzy
-#~ msgid "End type"
-#~ msgstr "  タイプ: "
-
-#, fuzzy
-#~ msgid "Reflection line"
-#~ msgstr "選択"
-
-#, fuzzy
-#~ msgid "Adjust the offset"
-#~ msgstr "<b>オフセット距離</b>を調整"
-
-#, fuzzy
-#~ msgid "Specifies the left end of the parallel"
-#~ msgstr "色の明度を抽出"
-
-#, fuzzy
-#~ msgid "Specifies the right end of the parallel"
-#~ msgstr "色の明度を抽出"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the parallel"
-#~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Adjust the \"right\" end of the parallel"
-#~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Display unit"
-#~ msgstr "表示モード(_D)"
-
-#, fuzzy
-#~ msgid "Print unit after path length"
-#~ msgstr "後光の幅 (ピクセル)"
-
-#, fuzzy
-#~ msgid "Adjust the bisector's \"left\" end"
-#~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Scale x"
-#~ msgstr "拡大縮小"
-
-#, fuzzy
-#~ msgid "Scale y"
-#~ msgstr "拡大縮小"
-
-#, fuzzy
-#~ msgid "Offset x"
-#~ msgstr "オフセット"
-
-#, fuzzy
-#~ msgid "Offset y"
-#~ msgstr "オフセット"
-
-#, fuzzy
-#~ msgid "Adjust the origin"
-#~ msgstr "曲線をドラッグ"
-
-#, fuzzy
-#~ msgid "Iterations"
-#~ msgstr "交差"
-
-#, fuzzy
-#~ msgid "Float parameter"
-#~ msgstr "<b>矩形</b>"
-
-#, fuzzy
-#~ msgid "Adjust the \"left\" end of the tangent"
-#~ msgstr "グラデーションの色フェーズを編集"
-
-#, fuzzy
-#~ msgid "Stack step"
-#~ msgstr "スキャンを積み重ねる"
-
-#, fuzzy
-#~ msgid "point param"
-#~ msgstr "螺旋を作成"
-
-#, fuzzy
-#~ msgid "path param"
-#~ msgstr "螺旋を作成"
-
-#, fuzzy
-#~ msgid "Label"
-#~ msgstr "ラベル(_L)"
-
-#, fuzzy
-#~ msgid "All Image Files"
-#~ msgstr "全ての画像を埋め込む"
-
-#, fuzzy
-#~ msgid "Target"
-#~ msgstr "ターゲット:"
-
-#, fuzzy
-#~ msgid "Seed"
-#~ msgstr "スピード"
-
-#, fuzzy
-#~ msgid "Path:"
-#~ msgstr "パス"
-
-#, fuzzy
-#~ msgid "Session file"
-#~ msgstr "セッションファイルに書込み(_W):"
-
-#, fuzzy
-#~ msgid "Message information"
-#~ msgstr "メモリ使用状況の情報"
-
-#, fuzzy
-#~ msgid "Active session file:"
-#~ msgstr "セッションファイルに書込み(_W):"
-
-#, fuzzy
-#~ msgid "Close file"
-#~ msgstr "閉じる(_C)"
-
-#, fuzzy
-#~ msgid "Set delay"
-#~ msgstr "アルファを設定"
-
-#, fuzzy
-#~ msgid "Rewind"
-#~ msgstr "レンダリング"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "貼り付け"
-
-#, fuzzy
-#~ msgid "Open session file"
-#~ msgstr "セッションファイルに書込み(_W):"
-
-#, fuzzy
-#~ msgid "_Register"
-#~ msgstr "前面へ"
-
-#, fuzzy
-#~ msgid "_Server:"
-#~ msgstr "向きを逆に(_R)"
-
-#, fuzzy
-#~ msgid "_Username:"
-#~ msgstr "ユーザ名(_U):"
-
-#, fuzzy
-#~ msgid "_Password:"
-#~ msgstr "パスワード(_P):"
-
-#, fuzzy
-#~ msgid "P_ort:"
-#~ msgstr "エクスポート(_E)"
-
-#, fuzzy
-#~ msgid "Connect"
-#~ msgstr "コネクタ"
-
-#, fuzzy
-#~ msgid "Chatroom _name:"
-#~ msgstr "レイヤー名:"
-
-#, fuzzy
-#~ msgid "Chatroom _handle:"
-#~ msgstr "ノードの種類を変更"
-
-#, fuzzy
-#~ msgid "Connect to chatroom"
-#~ msgstr "コネクタ"
-
-#, fuzzy
-#~ msgid "_Cancel"
-#~ msgstr "キャンセル"
-
-#~ msgid "Previous Effect"
-#~ msgstr "前回のエフェクト"
-
-#, fuzzy
-#~ msgid "Organization"
-#~ msgstr "ページの向き:"
-
-#, fuzzy
-#~ msgid "Comics rounded"
-#~ msgstr "丸めなし"
-
-#, fuzzy
-#~ msgid "Preferred resolution (DPI) of bitmaps"
-#~ msgstr "ビットマップ解像度 (インチあたりのドット数)"
-
-#, fuzzy
-#~ msgid "Deactivate knotholder?"
-#~ msgstr "非アクティベート"
-
-#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
-#~ msgstr "SVGをビットマップへエクスポートするときの解像度 (デフォルト 90)"
-
-#, fuzzy
-#~ msgid "Unicode"
-#~ msgstr "未ロード"
-
-#, fuzzy
-#~ msgid "gradient level"
-#~ msgstr "グラデーションが選択されていません"
-
-#, fuzzy
-#~ msgid "Render object in black and white"
-#~ msgstr "黒と白の領域を反転します"
-
-#, fuzzy
-#~ msgid "Specular bump"
-#~ msgstr "指数"
-
-#, fuzzy
-#~ msgid "Under glass effect for bitmaps"
-#~ msgstr "テキストをパスに変換"
-
-#, fuzzy
-#~ msgid "HSL-sensitive Bubbles effect for bitmaps"
-#~ msgstr "テキストをパスに変換"
-
-#, fuzzy
-#~ msgid "Kilt"
-#~ msgstr "日付"
-
-#, fuzzy
-#~ msgid "Bump for bitmaps"
-#~ msgstr "マスクを設定"
-
-#, fuzzy
-#~ msgid "Path Effects"
-#~ msgstr "エフェクト(_C)"
-
-#~ msgid "Biggest item"
-#~ msgstr "最大オブジェクト"
-
-#~ msgid "Smallest item"
-#~ msgstr "最小オブジェクト"
-
-#, fuzzy
-#~ msgid "Median Filter"
-#~ msgstr "レイヤーを追加"
-
-#~ msgid "Effe_cts"
-#~ msgstr "エフェクト(_C)"
-
-#~ msgid "Center on vertical axis"
-#~ msgstr "中心を垂直軸に合わせる"
-
-#, fuzzy
-#~ msgid "el Greek"
-#~ msgstr "緑"
-
-#, fuzzy
-#~ msgid "Commands bar icon size"
-#~ msgstr "コマンドバー"
-
-#, fuzzy
-#~ msgid "Snap nodes"
-#~ msgstr "オブジェクトのノードにスナップ(_N)"
-
-#, fuzzy
-#~ msgid "Snap to intersections of a grid with a guide"
-#~ msgstr "ノードをオブジェクトにスナップ(_T)"
-
-#~ msgid "Embed All Images"
-#~ msgstr "全ての画像を埋め込む"
-
-#, fuzzy
-#~ msgid "Major Y Division Spacing"
-#~ msgstr "水平間隔"
-
-#, fuzzy
-#~ msgid "Convolve"
-#~ msgstr "クローン"
-
-#, fuzzy
-#~ msgid "Modulate"
-#~ msgstr "モード"
-
-#, fuzzy
-#~ msgid "Cairo PDF Output"
-#~ msgstr "DXF出力"
-
-#, fuzzy
-#~ msgid "PDF via Cairo (*.pdf)"
-#~ msgstr "Diaダイアグラム (*.dia)"
-
-#, fuzzy
-#~ msgid "PDF File"
-#~ msgstr "ファイル(_F)"
-
-#, fuzzy
-#~ msgid "Cairo PS Output"
-#~ msgstr "DXF出力"
-
-#, fuzzy
-#~ msgid "PostScript via Cairo (*.ps)"
-#~ msgstr "Postscript (*.ps)"
-
-#~ msgid "Encapsulated Postscript Output"
-#~ msgstr "カプセル化Postscript出力"
-
-#~ msgid "Make bounding box around full page"
-#~ msgstr "境界枠をページ全体にする"
-
-#~ msgid "Embed fonts (Type 1 only)"
-#~ msgstr "フォントを埋め込む (タイプ1のみ)"
-
-#, fuzzy
-#~ msgid "Yes, more descriptions"
-#~ msgstr "  記述: "
-
-#, fuzzy
-#~ msgid "Crystal"
-#~ msgstr "グレースケール"
-
-#, fuzzy
-#~ msgid "Artist text"
-#~ msgstr "縦書"
-
-#, fuzzy
-#~ msgid "Amount of Blur"
-#~ msgstr "渦の量"
-
-#, fuzzy
-#~ msgid "I hate text"
-#~ msgstr "テキストを作成"
-
-#, fuzzy
-#~ msgid "Metal"
-#~ msgstr "マゼンタ"
-
-#, fuzzy
-#~ msgid "Iron Man vector objects"
-#~ msgstr "選択オブジェクトを整列"
-
-#, fuzzy
-#~ msgid "PatternedGlass"
-#~ msgstr "パターン"
-
-#, fuzzy
-#~ msgid "Snow"
-#~ msgstr "表示:"
-
-#~ msgid "Print Destination"
-#~ msgstr "印刷先"
-
-#~ msgid "Print properties"
-#~ msgstr "印刷のプロパティ"
-
-#~ msgid ""
-#~ "Use PDF vector operators. The resulting image is usually smaller in file "
-#~ "size and can be arbitrarily scaled, but patterns will be lost."
-#~ msgstr ""
-#~ "PDFベクターオペレータを使います。出力画像のデータ量は通常小さくなり、品質"
-#~ "を落とさずに表示スケールを変更できますが、パターンは失われます。"
-
-#~ msgid ""
-#~ "Print everything as bitmap. The resulting image is usually larger in file "
-#~ "size and cannot be arbitrarily scaled without quality loss, but all "
-#~ "objects will be rendered exactly as displayed."
-#~ msgstr ""
-#~ "すべてをビットマップとして印刷します。出力画像のデータ量は通常大きくなり品"
-#~ "質を落とさずに表示スケールを変更できませんが、全てのオブジェクトは画面表示"
-#~ "と同様に描画されます。"
-
-#~ msgid "Preferred resolution (dots per inch) of bitmap"
-#~ msgstr "ビットマップ解像度 (インチあたりのドット数)"
-
-#~ msgid "Print destination"
-#~ msgstr "印刷先"
-
-#~ msgid ""
-#~ "Printer name (as given by lpstat -p);\n"
-#~ "leave empty to use the system default printer.\n"
-#~ "Use '> filename' to print to file.\n"
-#~ "Use '| prog arg...' to pipe to a program."
-#~ msgstr ""
-#~ "プリンタ名 (lpstat -p で与えられる名前) :\n"
-#~ "デフォルトプリンタを使う場合は空白のままにしてください。\n"
-#~ "'> ファイル名' でファイルに出力します。\n"
-#~ "'| プログラム 引数...' で他のプログラムに出力を渡します。"
-
-#~ msgid "PDF Print"
-#~ msgstr "PDF印刷"
-
-#~ msgid "Print using PostScript operators"
-#~ msgstr "PostScript 操作を使って印刷"
-
-#~ msgid ""
-#~ "Use PostScript vector operators. The resulting image is usually smaller "
-#~ "in file size and can be arbitrarily scaled, but alpha transparency and "
-#~ "patterns will be lost."
-#~ msgstr ""
-#~ "PostScriptベクターオペレータを使います。出力画像のデータ量は通常小さくな"
-#~ "り、品質を落とさずに表示スケールを変更できますが、アルファ透明度とパターン"
-#~ "は失われます。"
-
-#~ msgid "Postscript Print"
-#~ msgstr "Postscript印刷"
-
-#~ msgid "Postscript Output"
-#~ msgstr "Postscript出力"
-
-#~ msgid ""
-#~ "Cannot create file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "ファイル %s を作成できません。\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Cannot write file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "ファイル %s に書き込むことができません。\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Although Inkscape will run, it will use default settings,\n"
-#~ "and any changes made in preferences will not be saved."
-#~ msgstr ""
-#~ "Inkscapeは実行されますが、デフォルト設定が使用され、\n"
-#~ "設定の変更は保存されません。"
-
-#~ msgid ""
-#~ "%s not a valid XML file, or\n"
-#~ "you don't have read permissions on it.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s は正規のXMLファイルでないか、または\n"
-#~ "そのファイルの読み込み権限がありません。\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "%s is not a valid menus file.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s は正規のメニューファイルではありません。\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Inkscape will run with default menus.\n"
-#~ "New menus will not be saved."
-#~ msgstr ""
-#~ "Inkscapeはデフォルトメニューで実行されます。\n"
-#~ "新しいメニューは保存されません。"
-
-#, fuzzy
-#~ msgid "Mirror reflection"
-#~ msgstr "<b>PM</b>: 反射"
-
-#, fuzzy
-#~ msgid "Gap width"
-#~ msgstr "幅を統一"
-
-#, fuzzy
-#~ msgid "Lala"
-#~ msgstr "ラベル(_L)"
-
-#, fuzzy
-#~ msgid "Lolo"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Last gen. segment"
-#~ msgstr "セグメントを削除"
-
-#, fuzzy
-#~ msgid "Reference"
-#~ msgstr "差分"
-
-#, fuzzy
-#~ msgid "Change LPE point parameter"
-#~ msgstr "螺旋を作成"
-
-#~ msgid "Embed fonts on export (Type 1 only) (EPS)"
-#~ msgstr "エクスポート時にフォントを埋め込む (タイプ1のみ) (EPS)"
-
-#~ msgid "Export files with the bounding box set to the page size (EPS)"
-#~ msgstr "境界枠をページサイズに設定してエクスポート(EPS)"
-
-#~ msgid "Select <b>at least two objects</b> to combine."
-#~ msgstr "連結する<b>2個以上のオブジェクト</b>を選択して下さい。"
-
-#~ msgid "Fit page to selection"
-#~ msgstr "ページを選択オブジェクトにフィット"
-
-#, fuzzy
-#~ msgid "<b>Pushing %d</b> selected object"
-#~ msgid_plural "<b>Pushing %d</b> selected objects"
-#~ msgstr[0] "選択したオブジェクトを統合"
-
-#, fuzzy
-#~ msgid "<b>Shrinking %d</b> selected object"
-#~ msgid_plural "<b>Shrinking %d</b> selected objects"
-#~ msgstr[0] "選択したオブジェクトを統合"
-
-#, fuzzy
-#~ msgid "<b>Growing %d</b> selected object"
-#~ msgid_plural "<b>Growing %d</b> selected objects"
-#~ msgstr[0] "選択オブジェクトをグループ化"
-
-#, fuzzy
-#~ msgid "<b>Attracting %d</b> selected object"
-#~ msgid_plural "<b>Attracting %d</b> selected objects"
-#~ msgstr[0] "選択オブジェクトを整列"
-
-#, fuzzy
-#~ msgid "<b>Repelling %d</b> selected object"
-#~ msgid_plural "<b>Repelling %d</b> selected objects"
-#~ msgstr[0] "選択したオブジェクトを統合"
-
-#, fuzzy
-#~ msgid "<b>Roughening %d</b> selected object"
-#~ msgid_plural "<b>Roughening %d</b> selected objects"
-#~ msgstr[0] "選択したオブジェクトを統合"
-
-#, fuzzy
-#~ msgid "<b>Painting %d</b> selected object"
-#~ msgid_plural "<b>Painting %d</b> selected objects"
-#~ msgstr[0] "選択したオブジェクトを統合"
-
-#, fuzzy
-#~ msgid "<b>Jittering colors in %d</b> selected object"
-#~ msgid_plural "<b>Jittering colors in %d</b> selected objects"
-#~ msgstr[0] "選択オブジェクトをコネクタが迂回するようにする"
-
-#, fuzzy
-#~ msgid "_Nodes"
-#~ msgstr "ノード"
-
-#, fuzzy
-#~ msgid "Snap nodes to object paths"
-#~ msgstr "ノードをオブジェクトにスナップ(_T)"
-
-#, fuzzy
-#~ msgid "Snap bounding box corners and nodes to the page border"
-#~ msgstr "境界枠をオブジェクトにスナップ(_S)"
-
-#, fuzzy
-#~ msgid "_Grid with guides"
-#~ msgstr "グリッド/ガイド"
-
-#, fuzzy
-#~ msgid "<b>Snapping</b>"
-#~ msgstr "<b>グリッドのスナップ</b>"
-
-#, fuzzy
-#~ msgid "<b>What snaps</b>"
-#~ msgstr "<b>矩形</b>"
-
-#, fuzzy
-#~ msgid "<b>Special points to consider</b>"
-#~ msgstr "点をガイドにスナップ(_O)"
-
-#~ msgid "Export"
-#~ msgstr "エクスポート"
-
-#~ msgid ""
-#~ "This value affects the amount of smoothing applied to freehand lines; "
-#~ "lower values produce more uneven paths with more nodes"
-#~ msgstr ""
-#~ "この値は、フリーハンド線に適用されるスムージング量に影響します。小さい値を"
-#~ "指定すると、より多くのノードを有し、不規則度の高い線が作られます"
-
-#, fuzzy
-#~ msgid "Grid units"
-#~ msgstr "グリッドの単位(_U):"
-
-#, fuzzy
-#~ msgid "Origin Y"
-#~ msgstr "開始位置Y(_R):"
-
-#, fuzzy
-#~ msgid "Spacing X"
-#~ msgstr "X方向の間隔(_X):"
-
-#, fuzzy
-#~ msgid "Spacing Y"
-#~ msgstr "Y方向の間隔(_Y):"
-
-#, fuzzy
-#~ msgid "Selects the color used for major (highlighted) grid lines."
-#~ msgstr "メジャー (強調表示) グリッドラインの色"
-
-#, fuzzy
-#~ msgid "Major grid line every"
-#~ msgstr "メジャーグリッドラインの頻度(_M):"
-
-#, fuzzy
-#~ msgid "Angle X"
-#~ msgstr "角度:"
-
-#, fuzzy
-#~ msgid "Angle Z"
-#~ msgstr "角度:"
-
-#, fuzzy
-#~ msgid "Inline the XML attributes"
-#~ msgstr "属性を削除"
-
-#, fuzzy
-#~ msgid "Enable auto-save of document"
-#~ msgstr "トレース: アクティブなドキュメントがありません"
-
-#, fuzzy
-#~ msgid "<b>Mode:</b>"
-#~ msgstr "<b>境界線</b>"
-
-#, fuzzy
-#~ msgid "Spiro splines mode"
-#~ msgstr "ノードをずらす"
-
-#, fuzzy
-#~ msgid "Repel mode"
-#~ msgstr "削除"
-
-#, fuzzy
-#~ msgid "Change calligraphic profile"
-#~ msgstr "カリグラフィ線を描く"
-
-#, fuzzy
-#~ msgid "Save current settings as new profile"
-#~ msgstr "ドキュメントを新しい名前で保存"
-
-#, fuzzy
-#~ msgid "Generate Template"
-#~ msgstr "パスから生成"
-
-#, fuzzy
-#~ msgid "Report Normal Vector Information"
-#~ msgstr "メモリ使用状況の情報"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#~ msgid "Postscript (*.ps)"
-#~ msgstr "Postscript (*.ps)"
-
-#~ msgid ""
-#~ "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
-#~ msgstr ""
-#~ "<b>%s</b>をセットできませんでした。<b>%s</b>の値を持つ他の要素が既に存在し"
-#~ "ます!"
-
-#, fuzzy
-#~ msgid "Bend Path"
-#~ msgstr "パスを切断"
-
-#, fuzzy
-#~ msgid "Space between copies of the pattern"
-#~ msgstr "コピー間の空き:"
-
-#~ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-#~ msgstr ""
-#~ "オブジェクトの中の少なくとも1個が<b>パスでなく</b>、連結できません。"
-
-#~ msgid ""
-#~ "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-#~ msgstr ""
-#~ "<b>異なるグループ</b>または<b>レイヤー</b>のオブジェクトは連結できません。"
-
-#, fuzzy
-#~ msgid "Nothing in the clipboard."
-#~ msgstr "クリップボードが空です。"
-
-#, fuzzy
-#~ msgid "Nothing on the style clipboard."
-#~ msgstr "クリップボードが空です。"
-
-#, fuzzy
-#~ msgid "<b>Snapping to special nodes</b>"
-#~ msgstr "ノードをオブジェクトにスナップ(_T)"
-
-#~ msgid "Dialogs stay on top (experimental!)"
-#~ msgstr "ダイアログを最前面に表示 (実験段階です!)"
-
-#~ msgid ""
-#~ "Whether dialogs should stay on top of document windows. Read the "
-#~ "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
-#~ "'Restore' to bring back a minimized document window)"
-#~ msgstr ""
-#~ "ドキュメントウインドウの最前面にダイアログを表示するかどうかを指定します。"
-#~ "この問題に関してリリースノートを読んでください! (タスクバーのボタンを右ク"
-#~ "リックして「元のサイズに戻す」を押すと最小化されたドキュメントウインドウを"
-#~ "戻すことができます)"
-
-#, fuzzy
-#~ msgid "Apply chosen effect to selection"
-#~ msgstr "変形を選択オブジェクトに適用"
-
-#, fuzzy
-#~ msgid "Tall"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Square"
-#~ msgstr "四角"
-
-#, fuzzy
-#~ msgid "Wide"
-#~ msgstr "隠す(_H)"
-
-#, fuzzy
-#~ msgid "Delete Segment"
-#~ msgstr "セグメントを削除"
-
-#, fuzzy
-#~ msgid "Reset all parameters to defaults"
-#~ msgstr "現在のタブの値をデフォルトにリセット"
-
-#~ msgid "Interpolate style (experimental)"
-#~ msgstr "スタイルを補間 (試験的)"
-
-#~ msgid "Developer Examples"
-#~ msgstr "開発者用サンプル"
-
-#~ msgid "RadioButton example"
-#~ msgstr "ラジオボタンの例"
-
-#~ msgid "Select option: "
-#~ msgstr "オプションを選択:"
-
-#~ msgid "Select second option: "
-#~ msgstr "2番目のオプションを選択:"
-
-#~ msgid "medium"
-#~ msgstr "中"
-
-#, fuzzy
-#~ msgid "X Channel"
-#~ msgstr "キャンセル"
-
-#, fuzzy
-#~ msgid "Y Channel"
-#~ msgstr "キャンセル"
-
-#, fuzzy
-#~ msgid "Preferred resolution (dpi) of bitmaps"
-#~ msgstr "ビットマップ解像度 (インチあたりのドット数)"
-
-#, fuzzy
-#~ msgid "Search Tag"
-#~ msgstr "画像を検索"
-
-#, fuzzy
-#~ msgid "Measure unit:"
-#~ msgstr "パスを計測"
-
-#, fuzzy
-#~ msgid "Degrees:"
-#~ msgstr "度"
-
-#~ msgid "Gri_d Arrange..."
-#~ msgstr "格子配置(_D)..."
-
-#, fuzzy
-#~ msgid "Start point jitter"
-#~ msgstr "彩度"
-
-#, fuzzy
-#~ msgid "Slope"
-#~ msgstr "エンベロープ"
-
-#, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "合わせる距離:"
-
-#, fuzzy
-#~ msgid "Snap di_stance"
-#~ msgstr "合わせる距離:"
-
-#, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "合わせる距離:"
-
-#, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "合わせる距離:"
-
-#, fuzzy
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "雑多なヒントと裏技"
-
-#, fuzzy
-#~ msgid "Date:"
-#~ msgstr "日付"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "フォーマット"
-
-#, fuzzy
-#~ msgid "Creator:"
-#~ msgstr "作成者"
-
-#, fuzzy
-#~ msgid "Publisher:"
-#~ msgstr "発行者"
-
-#, fuzzy
-#~ msgid "Identifier:"
-#~ msgstr "識別子"
-
-#, fuzzy
-#~ msgid "Source:"
-#~ msgstr "ソース"
-
-#, fuzzy
-#~ msgid "Relation:"
-#~ msgstr "関連"
-
-#, fuzzy
-#~ msgid "Subject:"
-#~ msgstr "オブジェクト"
-
-#, fuzzy
-#~ msgid "Coverage:"
-#~ msgstr "範囲"
-
-#, fuzzy
-#~ msgid "Contributor:"
-#~ msgstr "貢献者"
-
-#, fuzzy
-#~ msgid "Default Metadata"
-#~ msgstr "メタデータ"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "CC 帰属"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "CC 帰属 - 同一条件許諾"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "CC 帰属 - 派生禁止"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "CC 帰属 - 非営利"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr "CC 帰属 - 非営利 - 同一条件許諾"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr "CC 帰属 - 非営利 - 派生禁止"
-
-#, fuzzy
-#~ msgid "Free Art License"
-#~ msgstr "新しいファイルを開く"
-
-#, fuzzy
-#~ msgid "Default License"
-#~ msgstr "デフォルト"
-
-#, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "角度:"
-
-#, fuzzy
-#~ msgid "%s at %s"
-#~ msgstr "%s at %s"
-
-#, fuzzy
-#~ msgid "Move by:"
-#~ msgstr "%sを移動"
-
-#, fuzzy
-#~ msgid "Moving %s %s"
-#~ msgstr "%sを移動"
-
-#~ msgid "Change layer opacity"
-#~ msgstr "レイヤーの不透明度を変更"
-
-#~ msgid "Opacity, %:"
-#~ msgstr "不透明度, %:"
-
-#, fuzzy
-#~ msgid "Pattern along path"
-#~ msgstr "パターンをパスに沿わせる"
-
-#, fuzzy
-#~ msgid "unknown error"
-#~ msgstr "不明"
-
-#, fuzzy
-#~ msgid "Print Preview not available"
-#~ msgstr "印刷プレビュー(_W)"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "オブジェクトのパスにスナップ(_P)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "チェックすると、オブジェクトは動かされた際に最も近いグリッドラインに距離に"
-#~ "関係なく位置合わせされます"
-
-#, fuzzy
-#~ msgid "Gridtype"
-#~ msgstr "グリッドの種類:"
-
-#~ msgid "Print _Direct"
-#~ msgstr "直接印刷(_D)"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr "プロンプトなしでファイルまたはパイプに直接印刷"
-
-#, fuzzy
-#~ msgid "Gradients"
-#~ msgstr "グラデーション"
-
-#~ msgid "Spacing between letters"
-#~ msgstr "文字の間隔"
-
-#~ msgid "Spacing between lines"
-#~ msgstr "行の間隔"
-
-#~ msgid "Horizontal kerning"
-#~ msgstr "水平カーニング"
-
-#~ msgid "Vertical kerning"
-#~ msgstr "垂直カーニング"
