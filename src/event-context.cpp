@@ -384,7 +384,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     }
                     break;
                 case 2:
-                    if (event->button.state == GDK_SHIFT_MASK) {
+                    if (event->button.state & GDK_SHIFT_MASK) {
                         zoom_rb = 2;
                     } else {
                     	// When starting panning, make sure there are no snap events pending because these might disable the panning again
