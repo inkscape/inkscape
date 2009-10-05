@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-03 07:08+0200\n"
-"PO-Revision-Date: 2009-07-02 00:01+0200\n"
+"PO-Revision-Date: 2009-10-05 11:08+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,6 @@ msgid "Small-scale roughening to edges and content"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Rubber stamp"
 msgstr "חותמת־גומי"
 
@@ -161,9 +160,8 @@ msgstr "חותמת־גומי"
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:150
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:183
 #: ../share/filters/filters.svg.h:217
-#, fuzzy
 msgid "Overlays"
-msgstr "מעבר"
+msgstr "שכבות"
 
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
@@ -217,9 +215,8 @@ msgstr "גלי"
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:110
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:194
-#, fuzzy
 msgid "Distort"
-msgstr "מחלק"
+msgstr "עיוות"
 
 #: ../share/filters/filters.svg.h:16
 #, fuzzy
@@ -235,7 +232,6 @@ msgid "Fill object with sparse translucent specks"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:18
-#, fuzzy
 msgid "Oil slick"
 msgstr "החלקת־שמן"
 
@@ -252,7 +248,6 @@ msgid "Flake-like white splotches"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:20
-#, fuzzy
 msgid "Leopard fur"
 msgstr "פרוות נמר"
 
@@ -284,7 +279,7 @@ msgstr "עננים"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Airy, fluffy, sparse white clouds"
-msgstr ""
+msgstr "עננים לבנים אווריריים, קלילים, דלילים"
 
 #: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
@@ -298,18 +293,16 @@ msgstr "שפר חדות"
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:160 ../share/filters/filters.svg.h:162
 #: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Image effects"
-msgstr "נהל אפקטי נתיב"
+msgstr "אפקטי תמונה"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr ""
+msgstr "חידוד קצוות וגבולות בתוך הפריט, עוצמה=0.15"
 
 #: ../share/filters/filters.svg.h:24
-#, fuzzy
 msgid "Sharpen more"
-msgstr "שפר חדות"
+msgstr "שיפור החדות"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
@@ -320,9 +313,8 @@ msgid "Oil painting"
 msgstr "ציור שמן"
 
 #: ../share/filters/filters.svg.h:25
-#, fuzzy
 msgid "Simulate oil painting style"
-msgstr "הדמה את הפלט על המסך"
+msgstr "הדמיית סגנון ציור שמן"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Edge detect"
@@ -330,26 +322,23 @@ msgstr "זיהוי קצוות"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "זיהוי קצוות הצבעים בפריט"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Horizontal edge detect"
-msgstr "טקסט אופקי"
+msgstr "זיהוי קצוות אופקי"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "נקודת הציון האופקית של הבחירה"
+msgstr "זיהוי הקצוות האופקיים של הצבעים בפריט"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Vertical edge detect"
-msgstr "טקסט אנכי"
+msgstr "זיהוי קצוות אנכי"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "זיהוי קצוות אנכיים של הצבעים בפריט"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
@@ -359,16 +348,15 @@ msgstr "עיפרון"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "זיהוי קצוות הצבעים ועקיבה חוזרת אחריהם בגווני אפור"
 
 #: ../share/filters/filters.svg.h:30
-#, fuzzy
 msgid "Blueprint"
-msgstr "רוחב הטישטוש"
+msgstr "נייר תכנון"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "זיהוי קצוות הצבעים ועקיבה חוזרת אחריהם בכחול"
 
 #: ../share/filters/filters.svg.h:31
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -432,12 +420,11 @@ msgstr "גיל"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
-msgstr ""
+msgstr "חיקוי של תמונה מיושנת"
 
 #: ../share/filters/filters.svg.h:35
-#, fuzzy
 msgid "Organic"
-msgstr "מקור"
+msgstr "אורגני"
 
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:42
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:61
@@ -491,9 +478,8 @@ msgid "Soft bevel, slightly depressed middle"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:40
-#, fuzzy
 msgid "Inset"
-msgstr "_צמצם"
+msgstr "צמצום"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Shadowy outer bevel"
@@ -520,13 +506,12 @@ msgid "Pixel smear"
 msgstr "מריחת פיקסלים"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
-msgstr "המר אפקטי מסננים למפות סיביות"
+msgstr "אפקט ציורי ואן גוך עבור מפות סיביות"
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
-msgstr ""
+msgstr "מהמורות HSL"
 
 #: ../share/filters/filters.svg.h:44 ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:120
@@ -555,36 +540,34 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "מהמורות בועתיות"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "אפקט של בועות גמישות עם כמה שינויי מיקומים"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
-msgstr ""
+msgstr "בועה זורחת"
 
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:52
 #: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:65
 #: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Ridges"
-msgstr "קצוות"
+msgstr "חריצים"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "אפקט בועות עם שבירת קרניים וזריחה"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Neon"
 msgstr "נאון"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
 msgid "Neon light effect"
-msgstr "אפקט הנמסות"
+msgstr "אפקט נורות נאון"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Molten metal"
@@ -595,14 +578,12 @@ msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Pressed steel"
-msgstr "ערכה"
+msgstr "פלדה מעוצבת"
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Pressed metal with a rolled edge"
-msgstr "קווי המתאר מסתיימים בקצה עגול"
+msgstr "ברזל מעוצב עם קצה מעוגל"
 
 #: ../share/filters/filters.svg.h:51
 #, fuzzy
@@ -633,7 +614,7 @@ msgstr "הגדר את גודל העמוד"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Glowing metal"
-msgstr ""
+msgstr "ברזל זורח"
 
 #: ../share/filters/filters.svg.h:54
 #, fuzzy
@@ -651,7 +632,7 @@ msgstr "פיזור"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr ""
+msgstr "עלים על הרצפה בשלכת, או עלוה חיה"
 
 #: ../share/filters/filters.svg.h:56
 #, fuzzy
@@ -690,20 +671,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:60
 msgid "Cracked Lava"
-msgstr ""
+msgstr "לבה סדוקה"
 
 #: ../share/filters/filters.svg.h:60
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "תבנית וולקנית, מעט מזכיר עור"
 
 #: ../share/filters/filters.svg.h:61
-#, fuzzy
 msgid "Bark"
-msgstr "סימון"
+msgstr "גזע־עץ"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
-msgstr ""
+msgstr "תבנית גזע־עץ, אנכית; להשתמש עם צבעים עמוקים"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
@@ -737,7 +717,7 @@ msgstr "שינוי י_חסי"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Gel effect with light refraction"
-msgstr ""
+msgstr "אפקט של ג'ל עם שבירת אור קלה"
 
 #: ../share/filters/filters.svg.h:66
 #, fuzzy
@@ -746,7 +726,7 @@ msgstr "שינוי י_חסי"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Gel effect with strong refraction"
-msgstr ""
+msgstr "אפקט של ג'ל עם שבירת אור מהותית"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Metallized paint"
@@ -767,9 +747,8 @@ msgid "Gel Ridge with a pearlescent look"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Raised border"
-msgstr "הגבה מפרק"
+msgstr "מסגרת מוגבהת"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Strongly raised border around a flat surface"
@@ -784,9 +763,8 @@ msgid "Gel Ridge metallized at its top"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Fat oil"
-msgstr "צבע אחיד"
+msgstr "שמן סמיך"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Fat oil with some adjustable turbulence"
@@ -837,9 +815,8 @@ msgid "Creates a black light inside and outside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:76
-#, fuzzy
 msgid "Smooth outline"
-msgstr "מתאר הנתיב:"
+msgstr "קו מתאר רך"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
@@ -927,18 +904,16 @@ msgid "Convert to small scattered particles with some thickness"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:87
-#, fuzzy
 msgid "Warm inside"
-msgstr "בצד השני"
+msgstr "חמים בפנים"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Blurred colorized contour, filled inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:88
-#, fuzzy
 msgid "Cool outside"
-msgstr "קווי חוץ התיבה"
+msgstr "קריר מבחוץ"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
@@ -954,36 +929,32 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:90
-#, fuzzy
 msgid "Tartan"
-msgstr "יעד"
+msgstr "בד סקוטי"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Checkered tartan pattern"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:91
-#, fuzzy
 msgid "Invert hue"
-msgstr "הפוך"
+msgstr "היפוך הגוון"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Invert hue, or rotate it"
 msgstr "הפיכת הגוון או הטייתו"
 
 #: ../share/filters/filters.svg.h:92
-#, fuzzy
 msgid "Inner outline"
-msgstr "קווי חוץ התיבה"
+msgstr "קו חיצוני מבפנים"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Draws an outline around"
 msgstr "ציור קו מתאר מסביב"
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Outline, double"
-msgstr "ק_ו חיצוני"
+msgstr "קו חיצוני, כפול"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -998,9 +969,8 @@ msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:95
-#, fuzzy
 msgid "Glow"
-msgstr "הטל זריחה"
+msgstr "זריחה"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Glow of object's own color at the edges"
@@ -1033,9 +1003,8 @@ msgid "Classical photographic solarization effect"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:99
-#, fuzzy
 msgid "Moonarize"
-msgstr "הוספת צבע"
+msgstr "אפקט ירח"
 
 #: ../share/filters/filters.svg.h:99
 msgid ""
@@ -1056,9 +1025,8 @@ msgid "Stained glass"
 msgstr "זכוכית מוכתמת"
 
 #: ../share/filters/filters.svg.h:101
-#, fuzzy
 msgid "Illuminated stained glass effect"
-msgstr "זווית תאורה"
+msgstr "אפקט זכוכית מוכתמת מוארת"
 
 #: ../share/filters/filters.svg.h:102
 msgid "Dark glass"
@@ -1143,9 +1111,8 @@ msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Roughen inside"
-msgstr "מצב חיספוס"
+msgstr "חיספוס פנימי"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
@@ -1153,7 +1120,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
-msgstr ""
+msgstr "בר חלוף"
 
 #: ../share/filters/filters.svg.h:111
 msgid ""
@@ -1186,18 +1153,16 @@ msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:115
-#, fuzzy
 msgid "Noise transparency"
-msgstr "שקיפות הדו־שיח:"
+msgstr "שקיפות הרעש"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "Noise fill"
-msgstr "ללא מילוי"
+msgstr "מילוי ברעש"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
@@ -1205,7 +1170,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
-msgstr ""
+msgstr "גן של פינוקים"
 
 #: ../share/filters/filters.svg.h:117
 msgid ""
@@ -1291,11 +1256,11 @@ msgstr "הדפסת LaTeX"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Wax print on tissue texture"
-msgstr ""
+msgstr "הדפסת שעווה על תבנית מרקמית"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
-msgstr ""
+msgstr "כתם דיו"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
@@ -1338,9 +1303,8 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:133
-#, fuzzy
 msgid "Ink paint"
-msgstr "ללא צבע"
+msgstr "צביעה בדיו"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
@@ -1348,19 +1312,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
-msgstr ""
+msgstr "קשת אטומה"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr ""
+msgstr "צבעי קשת רכים הנמסים בקצוות ומשפיעים על הצבע"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
-msgstr ""
+msgstr "קשת נמסה"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "צבעי קשת רכים הנמסים בעדינות לאורך הקצוות"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
@@ -1372,7 +1336,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
-msgstr ""
+msgstr "טיוטת קומיקס"
 
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
@@ -1424,9 +1388,8 @@ msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:142
-#, fuzzy
 msgid "Comics"
-msgstr "שלב"
+msgstr "קומיקס"
 
 #: ../share/filters/filters.svg.h:142
 #, fuzzy
@@ -1434,18 +1397,16 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "הפוך את האזורים הלבנים והשחורים"
 
 #: ../share/filters/filters.svg.h:143
-#, fuzzy
 msgid "Satin"
-msgstr "מתחיל ב־"
+msgstr "סטן"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Frosted glass"
-msgstr "זכוכית סדוקה"
+msgstr "זכוכית קפואה"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
@@ -1461,9 +1422,8 @@ msgid "Contouring version of smooth shader"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Aluminium"
-msgstr "מזערי"
+msgstr "אלומיניום"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
@@ -1479,18 +1439,16 @@ msgid "Fluid brushed cartoon drawing"
 msgstr "התאם את העמוד לציור"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Chrome"
-msgstr "שלב"
+msgstr "כרום"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Chrome dark"
-msgstr "סימני חיתוך"
+msgstr "כרום כהה"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1538,7 +1496,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:155
 msgid "Shaken liquid"
-msgstr ""
+msgstr "נוזל מנוער"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Colorizable filling with flow inside like transparency"
@@ -1569,7 +1527,7 @@ msgstr "בהירות"
 #: ../share/filters/filters.svg.h:197 ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
-msgstr ""
+msgstr "כלי שקיפות"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
@@ -1615,7 +1573,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet Bumps"
-msgstr ""
+msgstr "מהמורות סגולות"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Gives Smooth Bumps velvet like"
@@ -1640,7 +1598,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:166
 msgid "Chewing gum"
-msgstr ""
+msgstr "מסטיק"
 
 #: ../share/filters/filters.svg.h:166
 msgid ""
@@ -1649,35 +1607,30 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-#, fuzzy
 msgid "Black outline"
-msgstr "נקודה שחורה"
+msgstr "קו חיצוני שחור"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Color outline"
-msgstr "צבעי הקווים המנחים"
+msgstr "קו חיצוני בצבע"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Draws a colored outline around"
-msgstr "ציור קו מתאר מסביב"
+msgstr "ציור קו חיצוני צבוע"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Inner Shadow"
-msgstr "רדיוס פנימי"
+msgstr "הצללה פנימית"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Adds a colorizable drop shadow inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Dark and Glow"
 msgstr "כהה וזורח"
 
@@ -1737,27 +1690,24 @@ msgid "Overlays a semi-transparent shifted copy to a blurred one"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:177
-#, fuzzy
 msgid "Dots transparency"
-msgstr "שקיפות הדו־שיח:"
+msgstr "שקיפות הנקודות"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Canvas transparency"
-msgstr "שקיפות הדו־שיח:"
+msgstr "שקיפות לוח הציור"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr ""
 
 #: ../share/filters/filters.svg.h:179
-#, fuzzy
 msgid "Smear transparency"
-msgstr "שקיפות הדו־שיח:"
+msgstr "שקיפות המריחה"
 
 #: ../share/filters/filters.svg.h:179
 msgid ""
@@ -1773,18 +1723,16 @@ msgid "Thick painting effect with turbulence"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:181
-#, fuzzy
 msgid "Burst"
-msgstr "טשטוש"
+msgstr "בקיעה"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:182
-#, fuzzy
 msgid "Embossed leather"
-msgstr "אפקט תבליט"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:182
 msgid ""
@@ -1801,9 +1749,8 @@ msgid "White splotches evocating carnaval masks"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:184
-#, fuzzy
 msgid "Plastify"
-msgstr "פיזור אחיד"
+msgstr "התכה"
 
 #: ../share/filters/filters.svg.h:184
 msgid ""
@@ -1812,9 +1759,8 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:185
-#, fuzzy
 msgid "Plaster"
-msgstr "הדבק"
+msgstr "פלסטר"
 
 #: ../share/filters/filters.svg.h:185
 msgid ""
@@ -1822,18 +1768,16 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:186
-#, fuzzy
 msgid "Rough transparency"
-msgstr "שקיפות הדו־שיח:"
+msgstr "שקיפות גסה"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:187
-#, fuzzy
 msgid "Gouache"
-msgstr "מקור"
+msgstr "גואש"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Partly opaque water color effect with bleed"
@@ -1858,9 +1802,8 @@ msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:190
-#, fuzzy
 msgid "Liquid drawing"
-msgstr "ציור%s"
+msgstr "ציור בצבעי מים"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
@@ -2022,11 +1965,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
-msgstr ""
+msgstr "פלסטיק בצבעים עמוקים"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Transparent plastic with deep colors"
-msgstr ""
+msgstr "פלסטיק שקוף עם צבעים עמוקים"
 
 #: ../share/filters/filters.svg.h:209
 #, fuzzy
@@ -2038,9 +1981,8 @@ msgid "Matte bevel with blurred edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Melted jelly"
-msgstr "ג'לי מחוספס"
+msgstr "ג'לי נמס"
 
 #: ../share/filters/filters.svg.h:210
 #, fuzzy
@@ -2048,9 +1990,8 @@ msgid "Glossy bevel with blurred edges"
 msgstr "קווי המתאר מסתיימים בקצה עגול"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Combined lighting"
-msgstr "משולב"
+msgstr "תאורה משולבת"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
@@ -2080,9 +2021,8 @@ msgid "Adds a colorizable glow inside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Soft colors"
-msgstr "צבע החודש"
+msgstr "צבעים רכים"
 
 #: ../share/filters/filters.svg.h:215
 msgid "Adds a colorizable edges glow inside objects and pictures"
@@ -2098,18 +2038,16 @@ msgid "Bumps effect with a bevel, color flood and complex lighting"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:217
-#, fuzzy
 msgid "Growing cells"
-msgstr "הציור בוטל"
+msgstr "תאים גדלים"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Random rounded living cells like fill"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:218
-#, fuzzy
 msgid "Fluorescence"
-msgstr "נוכחות"
+msgstr "אור פלורוסנטי"
 
 #: ../share/filters/filters.svg.h:218
 msgid "Oversaturate colors which can be fluorescent in real world"
@@ -2225,9 +2163,8 @@ msgid "Stripes 4:1 white"
 msgstr "פסים 4:1 לבן"
 
 #: ../share/patterns/patterns.svg.h:27
-#, fuzzy
 msgid "Checkerboard"
-msgstr "לוח _שיתופי"
+msgstr "לוח דמקה"
 
 #: ../share/patterns/patterns.svg.h:28
 msgid "Checkerboard white"
@@ -2275,9 +2212,8 @@ msgid "Camouflage"
 msgstr "הסוואה"
 
 #: ../share/patterns/patterns.svg.h:39
-#, fuzzy
 msgid "Ermine"
-msgstr "שלב"
+msgstr "פרוות סמור"
 
 #: ../share/patterns/patterns.svg.h:40
 msgid "Sand (bitmap)"
@@ -2294,11 +2230,11 @@ msgstr "ציור ישן (מפת סיביות)"
 #: ../src/arc-context.cpp:319
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr "<b>Ctrl</b>: צור מעגל או אליפסה קבועת־פסיעה, הצמד זווית קשת/קטע"
+msgstr "<b>Ctrl</b>: יצירת מעגל או אליפסה קבועי־פסיעה, הצמדת זווית קשת/קטע"
 
 #: ../src/arc-context.cpp:320 ../src/rect-context.cpp:362
 msgid "<b>Shift</b>: draw around the starting point"
-msgstr "<b>Shift</b>: צייר מסביב לנקודת ההתחלה"
+msgstr "<b>Shift</b>: ציור מסביב לנקודת ההתחלה"
 
 #: ../src/arc-context.cpp:471
 #, c-format
@@ -2306,8 +2242,8 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
 "to draw around the starting point"
 msgstr ""
-"<b>אליפסה</b>: %s &#215; %s (מוגבלת ליחס %d:%d); לחצו <b>Shift</b> על מנת "
-"לצייר מסביב לנקודת ההתחלה"
+"<b>אליפסה</b>: %s &#215; %s (מוגבלת ליחס %d:%d); ניתן ללחוץ על <b>Shift</b> "
+"על מנת לצייר מסביב לנקודת ההתחלה"
 
 #: ../src/arc-context.cpp:473
 #, c-format
@@ -2315,18 +2251,19 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>אליפסה</b>: %s &#215; %s; לחצו על  <b>Ctrl</b> ריבוע או מעגל בעל רדיוס "
-"אחיד; לחצו על <b>Shift</b> על מנת לצייר מסביב לנקודת ההתחלה"
+"<b>אליפסה</b>: %s &#215; %s; ניתן ללחוץ על  <b>Ctrl</b> כדי ליצור ריבוע או "
+"מעגל בעל רדיוס אחיד; ניתן ללחוץ על <b>Shift</b> על מנת לצייר מסביב לנקודת "
+"ההתחלה"
 
 #: ../src/arc-context.cpp:499
 msgid "Create ellipse"
-msgstr "צור אליפסה"
+msgstr "יצירת אליפסה"
 
 #: ../src/box3d-context.cpp:429 ../src/box3d-context.cpp:436
 #: ../src/box3d-context.cpp:443 ../src/box3d-context.cpp:450
 #: ../src/box3d-context.cpp:457 ../src/box3d-context.cpp:464
 msgid "Change perspective (angle of PLs)"
-msgstr "שנה פרספקטיבה (זווית קווי הפרספקטיבה)"
+msgstr "שינוי פרספקטיבה (זווית קווי הפרספקטיבה)"
 
 #. status text
 #: ../src/box3d-context.cpp:622
@@ -2335,7 +2272,7 @@ msgstr "<b>תיבה תלת מימדית</b>; לחיצה על <b>Shift</b> כדי
 
 #: ../src/box3d-context.cpp:650
 msgid "Create 3D box"
-msgstr "צור תיבה תלת מימדית"
+msgstr "יצירת תיבה תלת מימדית"
 
 #: ../src/box3d.cpp:315
 msgid "<b>3D Box</b>"
@@ -2343,7 +2280,7 @@ msgstr "<b>תיבה תלת־מימדית</b>"
 
 #: ../src/connector-context.cpp:526
 msgid "Creating new connector"
-msgstr "צור מחבר חדש"
+msgstr "יצירת מחבר חדש"
 
 #: ../src/connector-context.cpp:775
 msgid "Connector endpoint drag cancelled."
@@ -2351,44 +2288,44 @@ msgstr "בוטלה גרירת נקודת הקצה של המחבר."
 
 #: ../src/connector-context.cpp:824
 msgid "Reroute connector"
-msgstr "נתב את המחבר מחדש"
+msgstr "ניתוב המחבר מחדש"
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:988
 msgid "Create connector"
-msgstr "צור מחבר"
+msgstr "יצירת מחבר"
 
 #: ../src/connector-context.cpp:1012
 msgid "Finishing connector"
-msgstr "סיום מחבר"
+msgstr "מחבר מסיים"
 
 #: ../src/connector-context.cpp:1154
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr "<b>נקודת חיבור</b>: הקלק או גרור לשם יצירת מחבר חדש"
+msgstr "<b>נקודת חיבור</b>: יש להקליל או לגרור לשם יצירת מחבר חדש"
 
 #: ../src/connector-context.cpp:1227
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
-msgstr "<b>מחבר הסיום</b>: גרור לניתוב מחדש או חבר לצורות חדשות"
+msgstr "<b>מחבר הסיום</b>: ניתן לגרור לניתוב מחדש או לחבר לצורות חדשות"
 
 #: ../src/connector-context.cpp:1339
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "בחר <b>לפחות פריט אחד שאינו מחבר</b>."
+msgstr "יש לבחור <b>לפחות בפריט אחד שאינו מחבר</b>."
 
 #: ../src/connector-context.cpp:1344 ../src/widgets/toolbox.cpp:6997
 msgid "Make connectors avoid selected objects"
-msgstr "גרום למחברים להמנע מהפריטים הנבחרים"
+msgstr "אילוץ המחברים להמנע מהפריטים הנבחרים"
 
 #: ../src/connector-context.cpp:1345 ../src/widgets/toolbox.cpp:7007
 msgid "Make connectors ignore selected objects"
-msgstr "גרום למחברים להתעלם מהפריטים הנבחרים"
+msgstr "אילוץ המחברים להתעלם מהפריטים הנבחרים"
 
 #: ../src/context-fns.cpp:36 ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr "<b> השכבה הנוכחית חבויה </b> בצע פעולת גילוי על מנת לצייר עליה"
+msgstr "<b>השכבה הנוכחית מוסתרת</b>. יש לבטל את הסתרתה כדי לצייר עליה."
 
 #: ../src/context-fns.cpp:42 ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
-msgstr "<b> השכבה הנוכחית נעולה </b> פתח את הנעילה על מנת לצייר עליה"
+msgstr "<b>השכבה הנוכחית נעולה</b>. יש לשחרר את הנעילה כדי לצייר עליה."
 
 #: ../src/desktop.cpp:828
 msgid "No previous zoom."
@@ -2400,16 +2337,16 @@ msgstr "אין רמת התקרבות נוספת."
 
 #: ../src/desktop-events.cpp:187
 msgid "Create guide"
-msgstr "צור קו מנחה"
+msgstr "יצירת קו מנחה"
 
 #: ../src/desktop-events.cpp:391
 msgid "Move guide"
-msgstr "הזז קו מנחה"
+msgstr "הזזת קו מנחה"
 
 #: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:445
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
-msgstr "מחק קו מנחה"
+msgstr "מחיקת קו מנחה"
 
 #: ../src/desktop-events.cpp:425
 #, c-format
@@ -2435,19 +2372,19 @@ msgstr "<small>לפריט זה אין כפילים פרושים.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:976
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "בחר <b>פריט אחד</b> שיש לנתק ממנו את כפיליו הפרוסים."
+msgstr "נא לבחור <b>בפריט אחד</b> שיש לנתק ממנו את כפיליו הפרוסים."
 
 #: ../src/dialogs/clonetiler.cpp:998
 msgid "Unclump tiled clones"
-msgstr "נתק כפילים פרוסים"
+msgstr "ניתוק כפילים פרוסים"
 
 #: ../src/dialogs/clonetiler.cpp:1028
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "בחר <b>פריט אחד</b> שברצונך להסיר את כפיליו הפרוסים."
+msgstr "יש לבחור <b>בפריט אחד</b> שברצונך להסיר את כפיליו הפרוסים."
 
 #: ../src/dialogs/clonetiler.cpp:1051
 msgid "Delete tiled clones"
-msgstr "מחק כפילים פרוסים"
+msgstr "מחיקת כפילים פרוסים"
 
 #: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:1883
 msgid "Select an <b>object</b> to clone."
@@ -2638,36 +2575,36 @@ msgstr "החלף את סימן התזוזות עבור כל עמודה"
 #: ../src/dialogs/clonetiler.cpp:2067 ../src/dialogs/clonetiler.cpp:2237
 #: ../src/dialogs/clonetiler.cpp:2314
 msgid "<small>Cumulate:</small>"
-msgstr "<small>צבור:</small>"
+msgstr "<small>צבירה:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2073
 msgid "Cumulate the shifts for each row"
-msgstr "צבור את התזוזות עבור כל שורה"
+msgstr "צבירת התזוזות עבור כל שורה"
 
 #: ../src/dialogs/clonetiler.cpp:2078
 msgid "Cumulate the shifts for each column"
-msgstr "צבור את המרווחים עבור כל עמודה"
+msgstr "צבירת המרווחים עבור כל עמודה"
 
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:2085
 msgid "<small>Exclude tile:</small>"
-msgstr "<small>אל תכלול אריח:</small>"
+msgstr "<small>ללא הכללת האריח:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:2091
 msgid "Exclude tile height in shift"
-msgstr "אל תכלול את גובה האריח בהזזה"
+msgstr "אין תכלול את גובה האריח בהזזה"
 
 #: ../src/dialogs/clonetiler.cpp:2096
 msgid "Exclude tile width in shift"
-msgstr "אל תכלול את רוחב האריח בהזזה"
+msgstr "אין תכלול את רוחב האריח בהזזה"
 
 #: ../src/dialogs/clonetiler.cpp:2105
 msgid "Sc_ale"
-msgstr "שנה _גודל"
+msgstr "שינוי _גודל"
 
 #: ../src/dialogs/clonetiler.cpp:2113
 msgid "<b>Scale X:</b>"
-msgstr "<b>תזוזה בציר ה־X:</b>"
+msgstr "<b>שינוי גודל בציר ה־X:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2121
 #, no-c-format
@@ -2681,11 +2618,11 @@ msgstr "שינוי גודל אופקי עבור כל עמודה (באחוזים 
 
 #: ../src/dialogs/clonetiler.cpp:2136
 msgid "Randomize the horizontal scale by this percentage"
-msgstr "שנה את הגודל האופקי באופן אקראי לפי אחוזים אלו"
+msgstr "שינוי הגודל האופקי באופן אקראי לפי אחוזים אלו"
 
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "<b>Scale Y:</b>"
-msgstr "<b>שנה גודל בציר ה־Y:</b>"
+msgstr "<b>שינוי גודל בציר ה־Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2152
 #, no-c-format
@@ -2699,7 +2636,7 @@ msgstr "שינוי גודל אנכי עבור כל עמודה (באחוזים מ
 
 #: ../src/dialogs/clonetiler.cpp:2167
 msgid "Randomize the vertical scale by this percentage"
-msgstr "שנה את הגודל האנכי באופן אקראי לפי אחוזים אלו"
+msgstr "שינוי הגודל האנכי באופן אקראי לפי אחוזים אלו"
 
 #: ../src/dialogs/clonetiler.cpp:2182
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
@@ -2720,19 +2657,19 @@ msgstr "בסיס עבור ספירלה לוגריתמית: לא בשימוש (0)
 
 #: ../src/dialogs/clonetiler.cpp:2225
 msgid "Alternate the sign of scales for each row"
-msgstr "החלף את סמל שינוי הגודל עבור כל שורה"
+msgstr "החלפת סימן שינוי הגודל עבור כל שורה"
 
 #: ../src/dialogs/clonetiler.cpp:2230
 msgid "Alternate the sign of scales for each column"
-msgstr "החלף את סמל שינוי הגודל עבור כל עמודה"
+msgstr "החלפת סימן שינוי הגודל עבור כל עמודה"
 
 #: ../src/dialogs/clonetiler.cpp:2243
 msgid "Cumulate the scales for each row"
-msgstr "צבור את שינוי הגודל עבור כל שורה"
+msgstr "צבירת שינוי הגודל עבור כל שורה"
 
 #: ../src/dialogs/clonetiler.cpp:2248
 msgid "Cumulate the scales for each column"
-msgstr "צבור את שינוי הגודל עבור כל עמודה"
+msgstr "צבירת את שינוי הגודל עבור כל עמודה"
 
 #: ../src/dialogs/clonetiler.cpp:2257
 msgid "_Rotation"
@@ -3719,18 +3656,16 @@ msgid "Accept the chosen suggestion"
 msgstr "קבלת ההצעה הנבחרת"
 
 #: ../src/dialogs/spellcheck.cpp:969
-#, fuzzy
 msgid "_Ignore once"
-msgstr "התעלם"
+msgstr "ה_תעלמות רק הפעם"
 
 #: ../src/dialogs/spellcheck.cpp:969
 msgid "Ignore this word only once"
 msgstr "התעלמות ממילה זו רק הפעם"
 
 #: ../src/dialogs/spellcheck.cpp:971
-#, fuzzy
 msgid "_Ignore"
-msgstr "התעלם"
+msgstr "ה_תעלמות"
 
 #: ../src/dialogs/spellcheck.cpp:971
 msgid "Ignore this word in this session"
@@ -3745,18 +3680,16 @@ msgid "Add this word to the chosen dictionary"
 msgstr "הוספת מילה זו למילון הנבחר"
 
 #: ../src/dialogs/spellcheck.cpp:1002
-#, fuzzy
 msgid "_Stop"
-msgstr "ה_גדר"
+msgstr "_עצירה"
 
 #: ../src/dialogs/spellcheck.cpp:1002
 msgid "Stop the check"
 msgstr "עצירת הבדיקה"
 
 #: ../src/dialogs/spellcheck.cpp:1004
-#, fuzzy
 msgid "_Start"
-msgstr "התחלה"
+msgstr "ה_תחלה"
 
 #: ../src/dialogs/spellcheck.cpp:1004
 msgid "Start the check"
@@ -4093,43 +4026,36 @@ msgid "UNDEFINED"
 msgstr "לא מוגדר"
 
 #: ../src/display/snap-indicator.cpp:66
-#, fuzzy
 msgid "grid line"
-msgstr "קו־מנחה"
+msgstr "קו ברשת"
 
 #: ../src/display/snap-indicator.cpp:69
-#, fuzzy
 msgid "grid intersection"
-msgstr "הצמד אל הצטלבויות רשת וקו מנחה"
+msgstr "מפגש קווי רשת"
 
 #: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr "קו־מנחה"
 
 #: ../src/display/snap-indicator.cpp:75
-#, fuzzy
 msgid "guide intersection"
-msgstr "הצמד אל הצטלבויות רשת וקו מנחה"
+msgstr "מפגש קווים מנחים"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "guide origin"
-msgstr "קו־מנחה"
+msgstr "מקור הקו־המנחה"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "grid-guide intersection"
-msgstr "הצמד אל הצטלבויות רשת וקו מנחה"
+msgstr "מפגש קו רשת וקו־מנחה"
 
 #: ../src/display/snap-indicator.cpp:84
-#, fuzzy
 msgid "cusp node"
-msgstr "הצמד למפרקים חדים"
+msgstr "מפרק חד"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "smooth node"
-msgstr "מפרקים מוחלקים"
+msgstr "מפרק חלק"
 
 #: ../src/display/snap-indicator.cpp:90
 msgid "path"
@@ -4140,17 +4066,14 @@ msgid "path intersection"
 msgstr "הצטלבות נתיבים"
 
 #: ../src/display/snap-indicator.cpp:96
-#, fuzzy
 msgid "bounding box corner"
-msgstr "פינות התיבה התוחמת"
+msgstr "פינת התיבה התוחמת"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box side"
-msgstr "פינות התיבה התוחמת"
+msgstr "צלע התיבה התוחמת"
 
 #: ../src/display/snap-indicator.cpp:102
-#, fuzzy
 msgid "bounding box"
 msgstr "תיבה תוחמת"
 
@@ -4229,24 +4152,20 @@ msgid "Smooth node"
 msgstr "מפרק חלק"
 
 #: ../src/display/snap-indicator.cpp:166
-#, fuzzy
 msgid "Cusp node"
-msgstr "מצב דחיפה"
+msgstr "מפרק חד"
 
 #: ../src/display/snap-indicator.cpp:169
-#, fuzzy
 msgid "Line midpoint"
-msgstr "נקודות אמצע הקו"
+msgstr "נקודת אמצע הקו"
 
 #: ../src/display/snap-indicator.cpp:172
-#, fuzzy
 msgid "Object midpoint"
 msgstr "נקודות מרכז הפריט"
 
 #: ../src/display/snap-indicator.cpp:175
-#, fuzzy
 msgid "Object rotation center"
-msgstr "מרכז ה_סיבוב"
+msgstr "מרכז ה_סיבוב של הפריט"
 
 #: ../src/display/snap-indicator.cpp:178
 msgid "Handle"
@@ -4261,9 +4180,8 @@ msgid "Guide"
 msgstr "קו־מנחה"
 
 #: ../src/display/snap-indicator.cpp:187
-#, fuzzy
 msgid "Guide origin"
-msgstr "קו־מנחה"
+msgstr "מקור הקו־המנחה"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Convex hull corner"
@@ -5171,16 +5089,14 @@ msgstr "הרזולוציה ליצירת עותק מפת סיביות:"
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
-#, fuzzy
 msgid "Export area is drawing"
 msgstr "השטח המיוצא הינו הציור"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
-#, fuzzy
 msgid "Export area is page"
-msgstr "השטח המיוצא הינו הציור"
+msgstr "השטח המיוצא הינו העמוד"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -5749,9 +5665,9 @@ msgid "drawing-%d%s"
 msgstr "ציור־%d%s"
 
 #: ../src/file.cpp:780
-#, fuzzy, c-format
+#, c-format
 msgid "%s"
-msgstr "%"
+msgstr "%s"
 
 #: ../src/file.cpp:795
 msgid "Select file to save a copy to"
@@ -6495,7 +6411,6 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "הצגה או הסתרה של סרגל הפקודות (מתחת לתפריט)"
 
 #: ../src/interface.cpp:870
-#, fuzzy
 msgid "Snap Controls Bar"
 msgstr "הצמדת סרגל הפקדים"
 
@@ -7122,9 +7037,8 @@ msgid "Rotate copies"
 msgstr "סובב עותקים"
 
 #: ../src/live_effects/effect.cpp:102
-#, fuzzy
 msgid "Recursive skeleton"
-msgstr "איחזור קימורים מהבחירה..."
+msgstr "שלד נסוג"
 
 #: ../src/live_effects/effect.cpp:103
 msgid "Tangent to curve"
@@ -7436,9 +7350,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
-#, fuzzy
 msgid "Fixed width"
-msgstr "עובי העט"
+msgstr "עובי קבוע"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
@@ -7628,7 +7541,6 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
 msgstr "צד שני, פנימה"
 
@@ -7901,9 +7813,8 @@ msgid ""
 msgstr "המרחק המרבי בין סופי הנתיבים הרגיל והמשוערך (ביחס לאורך המרבי)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
-msgstr "קיזוז מקבילי"
+msgstr "קיזוז ממוצע"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 #, fuzzy
@@ -7974,9 +7885,8 @@ msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min"
-msgstr "_שלב"
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
@@ -7984,7 +7894,7 @@ msgstr "עקמומיות מזערית"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
-msgstr ""
+msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
@@ -9044,14 +8954,12 @@ msgid "Dip pen"
 msgstr "טפטוף"
 
 #: ../src/preferences-skeleton.h:99
-#, fuzzy
 msgid "Marker"
-msgstr "כהה יותר"
+msgstr "טוש סימון"
 
 #: ../src/preferences-skeleton.h:100
-#, fuzzy
 msgid "Brush"
-msgstr "טשטושים"
+msgstr "מברשת"
 
 #: ../src/preferences-skeleton.h:101
 #, fuzzy
@@ -9060,7 +8968,7 @@ msgstr "נדנוד:"
 
 #: ../src/preferences-skeleton.h:102
 msgid "Splotchy"
-msgstr ""
+msgstr "מוכתם"
 
 #: ../src/preferences-skeleton.h:103
 #, fuzzy
@@ -11972,7 +11880,6 @@ msgid "Apply filter"
 msgstr "החל מסנן"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
 msgstr "מסנן"
 
@@ -12027,9 +11934,8 @@ msgstr "הגדרות כלליות למסנן"
 #. default x:
 #. default y:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
-#, fuzzy
 msgid "Coordinates:"
-msgstr "נקודות הציון"
+msgstr "נקודות הציון:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "X coordinate of the left corners of filter effects region"
@@ -12042,9 +11948,8 @@ msgstr "נקודת הציון ב־Y של הפינות השמאליות של אי
 #. default width:
 #. default height:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2162
-#, fuzzy
 msgid "Dimensions:"
-msgstr "מימדים"
+msgstr "מימדים:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2162
 msgid "Width of filter effects region"
@@ -12072,20 +11977,17 @@ msgstr ""
 "פעולות צבע נפוצות מבלי לציין מטריצה שלמה."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2169
-#, fuzzy
 msgid "Value(s):"
-msgstr "ערך/ים"
+msgstr "ערך/ים:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2223
-#, fuzzy
 msgid "Operator:"
-msgstr "מפעיל"
+msgstr "מפעיל:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
-#, fuzzy
 msgid "K1:"
-msgstr "K1"
+msgstr "K1:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
@@ -12100,19 +12002,16 @@ msgstr ""
 "k2*i1 + k3*i2 + k4 בעוד i1 ו־i2 הינם ערכי הפיקסלים של הפלט הראשון והשני"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
-#, fuzzy
 msgid "K2:"
-msgstr "K2"
+msgstr "K2:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2186
-#, fuzzy
 msgid "K3:"
-msgstr "K3"
+msgstr "K3:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2187
-#, fuzzy
 msgid "K4:"
-msgstr "K4"
+msgstr "K4:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 #: ../src/ui/dialog/tracedialog.cpp:581
@@ -12145,9 +12044,8 @@ msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
-#, fuzzy
 msgid "Kernel:"
-msgstr "גרעין"
+msgstr "גרעין:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid ""
@@ -12164,9 +12062,8 @@ msgstr ""
 "האלכסונית) בעוד שמטריצה המלאה במספרים קבועים שאינם 0 תוביל לאפקט טשטוש נפוץ."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
-#, fuzzy
 msgid "Divisor:"
-msgstr "מחלק"
+msgstr "מחלק:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid ""
@@ -12180,9 +12077,8 @@ msgstr ""
 "בעל אפקט השוואה על עוצמת הצבע הכללית של התוצאה."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
-#, fuzzy
 msgid "Bias:"
-msgstr "להטות"
+msgstr "הטייה:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid ""
@@ -12193,9 +12089,8 @@ msgstr ""
 "המסנן."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
-#, fuzzy
 msgid "Edge Mode:"
-msgstr "מצב קצוות"
+msgstr "מצב הקצוות:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid ""
@@ -12216,9 +12111,8 @@ msgstr "במידה והוגדר, ערוץ השקיפות לא ישתנה על י
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#, fuzzy
 msgid "Diffuse Color:"
-msgstr "הפץ את הצבע"
+msgstr "הפצת הצבע:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2201
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -12227,9 +12121,8 @@ msgstr "מגדיר את צבע מקור האור"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
-#, fuzzy
 msgid "Surface Scale:"
-msgstr "שינוי גודל פני השטח"
+msgstr "שינוי גודל פני השטח:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -12240,9 +12133,8 @@ msgstr "ערך זה מדגיש את גבהי מפת התבליט המוגדרת 
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
-#, fuzzy
 msgid "Constant:"
-msgstr "קבוע"
+msgstr "קבוע:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2236
@@ -12251,32 +12143,28 @@ msgstr "קבוע זה משפיע על מודל התאורה של פונג."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2204
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2238
-#, fuzzy
 msgid "Kernel Unit Length:"
-msgstr "אורך יחידות הליבה"
+msgstr "אורך יחידות הליבה:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
-#, fuzzy
 msgid "Scale:"
-msgstr "התאם מידות"
+msgstr "התאמת מידות:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "This defines the intensity of the displacement effect."
 msgstr "פעולה זו מגדירה את עוצמת אפקט שינוי המיקום."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
-#, fuzzy
 msgid "X displacement:"
-msgstr "שינוי מקום ב־X"
+msgstr "שינוי מקום ב־X:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2209
 msgid "Color component that controls the displacement in the X direction"
 msgstr "מרכיב הצבע השולט על שינוי המיקום בכיוון ה־X"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
-#, fuzzy
 msgid "Y displacement:"
-msgstr "שינוי מיקום ב־Y"
+msgstr "שינוי מיקום ב־Y:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2210
 msgid "Color component that controls the displacement in the Y direction"
@@ -12284,9 +12172,8 @@ msgstr "מרכיב הצבע השולט על שינוי המיקום בכיוון
 
 #. default: black
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
-#, fuzzy
 msgid "Flood Color:"
-msgstr "הצפה בצבע"
+msgstr "הצפה בצבע:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
 msgid "The whole filter region will be filled with this color."
@@ -12298,9 +12185,8 @@ msgid "Opacity:"
 msgstr "אטימות:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
-#, fuzzy
 msgid "Standard Deviation:"
-msgstr "סטיית תקן"
+msgstr "סטיית תקן:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2217
 msgid "The standard deviation for the blur operation."
@@ -12315,28 +12201,24 @@ msgstr ""
 "הרחבה: מבצע \"השמנה\" של תמונת הפלט."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2224
-#, fuzzy
 msgid "Radius:"
-msgstr "רדיוס"
+msgstr "רדיוס:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2227
-#, fuzzy
 msgid "Source of Image:"
-msgstr "מקור התמונה"
+msgstr "מקור התמונה:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2230
-#, fuzzy
 msgid "Delta X:"
-msgstr "שינוי ב־X"
+msgstr "שינוי ב־X:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2230
 msgid "This is how far the input image gets shifted to the right"
 msgstr "זהו המרחק המרבי אליו תוזז התמונה לימין"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2231
-#, fuzzy
 msgid "Delta Y:"
-msgstr "שינוי ב־Y"
+msgstr "שינוי ב־Y:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "This is how far the input image gets shifted downwards"
@@ -12344,14 +12226,12 @@ msgstr "זהו המרחק המרבי אליו תוזז התמונה כלפי מ�
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
-#, fuzzy
 msgid "Specular Color:"
-msgstr "צבע ההשתקפות"
+msgstr "צבע ההשתקפות:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
-#, fuzzy
 msgid "Exponent:"
-msgstr "מעריך"
+msgstr "מעריך:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
@@ -12364,9 +12244,8 @@ msgid ""
 msgstr "מציין האם המסנן הקדמוני אמור לבמע רעש או פונקציית עירבול."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2247
-#, fuzzy
 msgid "Base Frequency:"
-msgstr "תדירות בסיס"
+msgstr "תדירות בסיסית:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 #, fuzzy
@@ -12374,9 +12253,8 @@ msgid "Octaves:"
 msgstr "מתומנים"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
-#, fuzzy
 msgid "Seed:"
-msgstr "מהירות:"
+msgstr "זריעה:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
@@ -12395,14 +12273,13 @@ msgstr ""
 "והארה."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
 "grayscale, modifying color saturation and changing color hue."
 msgstr ""
-"המסנן הקדמוני <b>feColorMatrix</b> מחיל מטריצת שינוי לצבע מכל פיקסל מעובד. "
-"דבר זה מאפשר אפקטים כמו הפיכת צבעי התמונה לגווני אפור, שינוי רוויית הצבע "
+"המסנן הקדמוני <b>feColorMatrix</b> מחיל מטריצת שינוי לצבע של כל פיקסל מעובד. "
+"דבר זה מאפשר אפקטים כמו הפיכת צבעי הפריט לגווני אפור, שינוי רוויית הצבע "
 "ושינוי גוון הצבע."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2286
@@ -13118,7 +12995,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "אם נבחר נתיב, אין להמשיך ולהבהיר את קווי המתאר של הנתיב."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Flash time"
@@ -14328,7 +14205,7 @@ msgstr "מנשק"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "שימוש בתיקייה המיועד ל\"שמירה בשם ...\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14666,9 +14543,8 @@ msgstr "חדש"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "שכבות"
+msgstr "עליונה"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -15586,7 +15462,7 @@ msgstr "מיקום הסמן"
 
 #: ../src/ui/view/edit-widget.cpp:1082 ../src/widgets/desktop-widget.cpp:518
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: ../src/ui/view/edit-widget.cpp:1089
 msgid ""
@@ -15661,7 +15537,7 @@ msgstr "קנייני"
 
 #: ../src/ui/widget/licensor.cpp:38
 msgid "MetadataLicence|Other"
-msgstr ""
+msgstr "אחר"
 
 #: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
@@ -16234,8 +16110,10 @@ msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</"
 "b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "נקודת ההעלמות <b>סופית</b> משותפת לתיבה <b>אחת</b>"
 msgstr[1] ""
+"נקודת ההעלמות <b>סופית</b> משותפת ל־<b>%d</b> תיבות; ניתן לגרור עם <b>Shift</"
+"b> כדי להפריד את התיבות הנבחרות"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -16245,24 +16123,23 @@ msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with "
 "<b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
+msgstr[0] "נקודת העלמות <b>אינסופית</b> משותפת לתיבה <b>אחת</b>"
 msgstr[1] ""
+"נקודת העלמות <b>אין סופית</b> משותפת ל־<b>%d</b> תיבות; ניתן לגרור עם "
+"<b>Shift</b> כדי להפריד את התיבות הנבחרות)"
 
 #: ../src/vanishing-point.cpp:320
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
 msgstr[0] ""
-"משותף בין תיבה <b>%d</b>; גרור עם <b>Shift</b>כדי להפריד את התיבה/ות הנבחרת/"
-"ותמשותף בין <b>%d</b> תיבות; גרור עם <b>Shift</b> כדי להפריד את התיבה/ות "
-"הנברחת/ות"
+"משותף לתיבה<b>אחת</b>; ניתן לגרור עם <b>Shift</b>כדי להפריד את התיבה הנבחרת"
 msgstr[1] ""
-"משותף בין תיבה <b>%d</b>; גרור עם <b>Shift</b>כדי להפריד את התיבה/ות הנבחרת/"
-"ותמשותף בין <b>%d</b> תיבות; גרור עם <b>Shift</b> כדי להפריד את התיבה/ות "
-"הנברחת/ות"
+"משותף ל־<b>%d</b> תיבות; ניתן לגרור עם <b>Shift</b> כדי להפריד את התיבות "
+"הנבחרות"
 
 #: ../src/verbs.cpp:1140
 msgid "Switch to next layer"
@@ -17374,9 +17251,8 @@ msgid "LPE Edit"
 msgstr "ערוך LPE"
 
 #: ../src/verbs.cpp:2535
-#, fuzzy
 msgid "Edit Path Effect parameters"
-msgstr "ערוך את הפרמטרים של האפקט החי"
+msgstr "עריכת הפרמטרים של אפקטי הנתיבים"
 
 #: ../src/verbs.cpp:2537
 msgid "Erase existing paths"
@@ -17920,14 +17796,12 @@ msgid "View Layers"
 msgstr "הצג שכבות"
 
 #: ../src/verbs.cpp:2682
-#, fuzzy
 msgid "Path Effect Editor..."
-msgstr "אפקטי נתיב..."
+msgstr "עורך אפקטי הנתיבים..."
 
 #: ../src/verbs.cpp:2683
-#, fuzzy
 msgid "Manage, edit, and apply path effects"
-msgstr "צור והחל אפקט נתיב"
+msgstr "ניהול, עריכה והחלה של אפקטי נתיב"
 
 #: ../src/verbs.cpp:2684
 msgid "Filter Editor..."
@@ -18037,9 +17911,8 @@ msgstr "טיפים ועצות שונים ומשונים"
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2717
-#, fuzzy
 msgid "Previous Extension"
-msgstr "אודות ה_רחבות"
+msgstr "הרחבה קודמת"
 
 #: ../src/verbs.cpp:2718
 #, fuzzy
@@ -19042,9 +18915,8 @@ msgid "Snap from and to midpoints of bounding box edges"
 msgstr "הצמד מנקודות האמצע של התיבה התוחמת ואליהן"
 
 #: ../src/widgets/toolbox.cpp:2074
-#, fuzzy
 msgid "BBox Centers"
-msgstr "מרכז"
+msgstr "מרכזי התיבות התוחמות"
 
 #: ../src/widgets/toolbox.cpp:2074
 #, fuzzy
@@ -19093,19 +18965,16 @@ msgid "Snap from and to midpoints of line segments"
 msgstr "הצמד אל ומנקודות האמצע של מקטעי הקווים"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Object Centers"
-msgstr "מאפייני ה_פריט"
+msgstr "מרכזי הפריטים"
 
 #: ../src/widgets/toolbox.cpp:2136
-#, fuzzy
 msgid "Snap from and to centers of objects"
-msgstr "הצמד אל ומנקודות האמצע של הפריטים"
+msgstr "הצמדה אל ומנקודות האמצע של הפריטים"
 
 #: ../src/widgets/toolbox.cpp:2145
-#, fuzzy
 msgid "Rotation Centers"
-msgstr "מרכז ה_סיבוב"
+msgstr "מרכזי הסיבוב"
 
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Snap from and to an item's rotation center"
@@ -19672,9 +19541,8 @@ msgid "Scale mode"
 msgstr "מצב שינוי גודל"
 
 #: ../src/widgets/toolbox.cpp:4181
-#, fuzzy
 msgid "Shrink objects, with Shift enlarge"
-msgstr "שיכפול פריטים, עם Shift מחיקה"
+msgstr "כיווץ פריטים, עם Shift לההגדלה"
 
 #: ../src/widgets/toolbox.cpp:4187
 msgid "Rotate mode"
@@ -20402,7 +20270,6 @@ msgid "Side Length 'c'/px: "
 msgstr "אורך הצד 'ג'/פיקסלים:"
 
 #: ../share/extensions/draw_from_triangle.py:178
-#, fuzzy
 msgid "Angle 'A'/radians: "
 msgstr "זוית 'א'/רדיאנים:"
 
@@ -20461,9 +20328,8 @@ msgstr ""
 "http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:66
-#, fuzzy
 msgid "Unable to find image data."
-msgstr "קושי במציאת נתוני התמונה."
+msgstr "לא ניתן למצוא את נתוני התמונה."
 
 #: ../share/extensions/inkex.py:66
 msgid ""
@@ -20572,18 +20438,16 @@ msgstr ""
 "install python-numpy."
 
 #: ../share/extensions/polyhedron_3d.py:331
-#, fuzzy
 msgid "No face data found in specified file."
-msgstr "לא נמצאו נתוני פנים בקובץ שצויין\n"
+msgstr "לא נמצאו נתוני פנים בקובץ שצויין."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:338
-#, fuzzy
 msgid "No edge data found in specified file."
-msgstr "לא נמצאו נתוני קצה בקובץ המצויין\n"
+msgstr "לא נמצאו נתוני קצה בקובץ המצויין."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
@@ -20929,9 +20793,8 @@ msgid "Custom Points and Options"
 msgstr "נקודות מותאמות ואפשרויות"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-#, fuzzy
 msgid "Draw Circle Around This Point"
-msgstr "צייר עיגול על נקודה זו"
+msgstr "ציור עיגול סביב נקודה זו"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
 msgid "Draw From Triangle"
@@ -21072,9 +20935,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:6
-#, fuzzy
 msgid "AutoCAD DXF R13 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R13 (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:7
 msgid "Character Encoding"
@@ -21111,19 +20973,16 @@ msgid "Desktop Cutting Plotter"
 msgstr "תוויין חותך שולני"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
-#, fuzzy
 msgid "Desktop Cutting Plotter (R13) (*.dxf)"
-msgstr "תוויין חותך שולחני (*.DXF)"
+msgstr "תוויין חיתוך שולחני (R13)‏ (*.DXF)"
 
 #: ../share/extensions/dxf_outlines.inx.h:10
-#, fuzzy
 msgid "enable ROBO-Master output"
-msgstr "פלט ROBO-Master"
+msgstr "הפעלת פלט ROBO-Master"
 
 #: ../share/extensions/dxf_output.inx.h:1
-#, fuzzy
 msgid "AutoCAD DXF R12 (*.dxf)"
-msgstr "AutoCAD DXF (*.dxf)"
+msgstr "AutoCAD DXF R12 (*.dxf)"
 
 #: ../share/extensions/dxf_output.inx.h:2
 msgid "DXF Output"
@@ -21215,14 +21074,12 @@ msgid "Extrude"
 msgstr "הוצאה"
 
 #: ../share/extensions/extrude.inx.h:3
-#, fuzzy
 msgid "Lines"
-msgstr "קו"
+msgstr "קווים"
 
 #: ../share/extensions/extrude.inx.h:5
-#, fuzzy
 msgid "Polygons"
-msgstr "מצולע"
+msgstr "מצולעים"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -21407,9 +21264,8 @@ msgid "GIMP XCF"
 msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
-#, fuzzy
 msgid "GIMP XCF maintaining layers (*.xcf)"
-msgstr "GIMP XCF ששמר על שכבותיו (*.XCF)"
+msgstr "GIMP XCF תוך שימור השכבות (*.XCF)"
 
 #: ../share/extensions/gimp_xcf.inx.h:3
 msgid "Save Grid:"
@@ -21709,18 +21565,16 @@ msgid "SVG 1.1 Specification"
 msgstr "איפיון התקן SVG 1.1"
 
 #: ../share/extensions/interp_att_g.inx.h:1
-#, fuzzy
 msgid "Attribute to Interpolate"
-msgstr "שם המאפיין"
+msgstr "מאפיין לעירבול"
 
 #: ../share/extensions/interp_att_g.inx.h:3
 msgid "End Value"
 msgstr "ערך הסיום"
 
 #: ../share/extensions/interp_att_g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "פרמטר ציפה"
+msgstr "מספר ממשי"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 msgid ""
@@ -21729,9 +21583,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:8
-#, fuzzy
 msgid "Integer Number"
-msgstr "ה_זמן משתמש"
+msgstr "מספר שלם"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
@@ -21774,9 +21627,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:21
-#, fuzzy
 msgid "Transformation"
-msgstr "מידע"
+msgstr "המרת צורה"
 
 #: ../share/extensions/interp_att_g.inx.h:22
 #, fuzzy
@@ -21823,7 +21675,6 @@ msgid "Interpolation steps"
 msgstr "צעדי הריגול"
 
 #: ../share/extensions/lindenmayer.inx.h:1
-#, fuzzy
 msgid ""
 "\n"
 "The path is generated by applying the \n"
@@ -21845,10 +21696,24 @@ msgid ""
 "\n"
 "]: return to remembered point\n"
 msgstr ""
-"הנתיב נוצר על ידי החלת החלפת החוקים לזמני אקסיומה, מיון. הפקודות הבאות "
-"מזוהות באקסיומה ובחוקים: כל אחת מ־A,B,C,D,E,F: צייר קדימה כל אחת מ־G,H,I,J,K,"
-"L: עבור קדימה +: פנה שמאלה -: פנה ימינה | פנה ב־180 מעלות [: זכור את "
-"הנקודה ]: חזור לנקודה שנשמרה"
+"\n"
+"הנתיב נוצר על ידי החלת החלפת החוקים\n"
+"לזמני אקסיומה, מיון. הפקודות\n"
+"הבאות מזוהות באקסיומה ובחוקים:\n"
+"\n"
+"כל אחת מ־A,B,C,D,E,F: ציור קדימה\n"
+"\n"
+"כל אחת מ־G,H,I,J,K,L: מעבר קדימה\n"
+"\n"
+"+: פנייה שמאלה\n"
+"\n"
+"-: פנייה ימינה\n"
+"\n"
+"| פנייה ב־180 מעלות\n"
+"\n"
+"[: שמירת הנקודה\n"
+"\n"
+"]: חזרה לנקודה שנשמרה\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
@@ -21987,9 +21852,8 @@ msgid "Text Outline Input"
 msgstr "קלט קוי מתאר של טקסט"
 
 #: ../share/extensions/param_curves.inx.h:2
-#, fuzzy
 msgid "End t-value"
-msgstr "ערך ה־X לסיום"
+msgstr "ערך ה־t לסיום"
 
 #: ../share/extensions/param_curves.inx.h:4
 #, fuzzy
@@ -21998,9 +21862,8 @@ msgstr ""
 "שינוי גודל איזוטרופי (משתמש בקטן ביותר מבין רוחב/טווח־x או גובה/טווח־y)"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "הכפל את טווח ה־X ב־pi*2"
+msgstr "הכפלת טווח ה־t ב־pi*2"
 
 #: ../share/extensions/param_curves.inx.h:6
 #, fuzzy
@@ -22025,9 +21888,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/param_curves.inx.h:24
-#, fuzzy
 msgid "Start t-value"
-msgstr "ערך ה־X ההתחלתי"
+msgstr "ערך ה־t ההתחלתי"
 
 #: ../share/extensions/param_curves.inx.h:26
 #, fuzzy
@@ -22463,7 +22325,6 @@ msgid "Canvas"
 msgstr "משטח ציור"
 
 #: ../share/extensions/printing-marks.inx.h:5
-#, fuzzy
 msgid "Color Bars"
 msgstr "עמודות צבע"
 
@@ -22580,9 +22441,8 @@ msgid "Arrange"
 msgstr "סדר"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "תחתון:"
+msgstr "תחתון"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -22597,7 +22457,6 @@ msgid "Left to Right (0)"
 msgstr "שמאל־לימין (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
 msgstr "אמצעי"
 
@@ -22660,14 +22519,12 @@ msgid "Strength (%):"
 msgstr "כוח (%):"
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Optimized SVG (*.svg)"
-msgstr "SVG של אינקסקייפ (*.svg)"
+msgstr "SVG משופר (*.svg)"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Optimized SVG Output"
-msgstr "פלט SVG"
+msgstr "פלט SVG משופר"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
@@ -22693,9 +22550,8 @@ msgid "File format for use in sK1 vector graphics editor"
 msgstr "פתח קבצים שנשמרו בעורך הגרפיקה sK1"
 
 #: ../share/extensions/sk1_output.inx.h:3
-#, fuzzy
 msgid "sK1 vector graphics files output"
-msgstr "קלט קבצי גרפיקה וקטורית sK1"
+msgstr "פלט קובצי sK1 לגרפיקה וקטורית"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -22796,9 +22652,8 @@ msgid "(The day names list must start from Sunday)"
 msgstr "(שמות הימים בשבוע חייבים להתחיל מיום ראשון)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
-#, fuzzy
 msgid "Automatically set size and position"
-msgstr "טען את מפות הסיביות מחדש אוטומטית"
+msgstr "הגדרת המיקום והגודל אוטומטית"
 
 #: ../share/extensions/svgcalendar.inx.h:4
 msgid "Calendar"
@@ -23090,7 +22945,6 @@ msgid "Web"
 msgstr "אינטרנט"
 
 #: ../share/extensions/web-set-att.inx.h:17
-#, fuzzy
 msgid "When should the set be done?"
 msgstr "מתי יש להשלים את הערכה?"
 
@@ -23150,9 +23004,8 @@ msgid "All selected ones transmit to the last one"
 msgstr "למספר הפריטים שנבחרו ישנו קו מתאר זהה"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
-#, fuzzy
 msgid "Attribute to transmit"
-msgstr "שם המאפיין"
+msgstr "מאפיין להעברה"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
 msgid ""
@@ -23175,14 +23028,12 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "Transmit Attributes"
-msgstr "מאפיינים בשורה"
+msgstr "מאפייני העברה"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
-#, fuzzy
 msgid "When to transmit"
-msgstr "הסט את הריווח לימין"
+msgstr "מתי להעביר"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
