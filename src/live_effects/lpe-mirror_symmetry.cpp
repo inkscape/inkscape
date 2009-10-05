@@ -60,6 +60,11 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
 std::vector<Geom::Path>
 LPEMirrorSymmetry::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
+    // Don't allow empty path parameter:
+    if ( reflection_line.get_pathvector().empty() ) {
+        return path_in;
+    }
+
     std::vector<Geom::Path> path_out;
     if (!discard_orig_path) {
         path_out = path_in;

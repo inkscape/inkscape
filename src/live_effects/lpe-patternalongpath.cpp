@@ -33,7 +33,7 @@ B is a map t --> B(t) = ( a(t), b(t) ).
 The first step is to re-parametrize B by its arc length: this is the parametrization in which a point p on B is located by its distance s from start. One obtains a new map s --> U(s) = (a'(s),b'(s)), that still describes the same path B, but where the distance along B from start to
 U(s) is s itself.
 
-We also need a unit normal to the path. This can be obtained by computing a unit tangent vector, and rotate it by 90°. Call this normal vector N(s).
+We also need a unit normal to the path. This can be obtained by computing a unit tangent vector, and rotate it by 90ï¿½. Call this normal vector N(s).
 
 The basic deformation associated to B is then given by:
 
@@ -103,6 +103,11 @@ Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
     using namespace Geom;
+
+    // Don't allow empty path parameter:
+    if ( pattern.get_pathvector().empty() ) {
+        return pwd2_in;
+    }
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
     Piecewise<D2<SBasis> > output;

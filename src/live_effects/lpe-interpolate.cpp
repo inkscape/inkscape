@@ -52,8 +52,13 @@ LPEInterpolate::~LPEInterpolate()
 Geom::PathVector
 LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
 {
-    if ( (path_in.size() < 2) || (number_of_steps < 2))
+    if ( (path_in.size() < 2) || (number_of_steps < 2)) {
         return path_in;
+    }
+    // Don't allow empty path parameter:
+    if ( trajectory_path.get_pathvector().empty() ) {
+        return path_in;
+    }
 
     std::vector<Geom::Path> path_out;
 

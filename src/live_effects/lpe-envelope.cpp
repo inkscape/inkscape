@@ -69,6 +69,15 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 
     using namespace Geom;
 
+    // Don't allow empty path parameters:
+    if ( bend_path1.get_pathvector().empty()
+         || bend_path2.get_pathvector().empty()
+         || bend_path3.get_pathvector().empty()
+         || bend_path4.get_pathvector().empty() )
+    {
+        return pwd2_in;
+    }
+
     /*
     The code below is inspired from the Bend Path code developed by jfb and mgsloan
     Please, read it before tring to understand this one
