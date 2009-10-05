@@ -543,7 +543,11 @@ void sp_lpe_item_remove_current_path_effect(SPLPEItem *lpeitem, bool keep_paths)
     new_list.remove(lperef); //current lpe ref is always our 'own' pointer from the path_effect_list
     std::string r = patheffectlist_write_svg(new_list);
 
-    SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
+    if (!r.empty()) {
+        SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", r.c_str());
+    } else {
+        SP_OBJECT_REPR(lpeitem)->setAttribute("inkscape:path-effect", NULL);
+    }
 
     if (!keep_paths) {
         sp_lpe_item_cleanup_original_path_recursive(lpeitem);
