@@ -1113,7 +1113,7 @@ void InkscapePreferences::initPageSave()
 {
     _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
     _page_save.add_line( false, "", _save_use_current_dir, "",
-                         _("The \"Save As ...\" dialog uses the current working directory for saving (if the file was previously saved). If not previously saved, the most recent \"Save As ...\" directory is used."), true);
+                         _("When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is. When it's off, it will open in the directory where you last saved a file using that dialog."), true);
 
 
     // Autosave options
