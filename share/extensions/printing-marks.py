@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
 import inkex, simplestyle, math
-from subprocess import Popen, PIPE, STDOUT
 
 class Printing_Marks (inkex.Effect):
 
@@ -147,7 +146,7 @@ class Printing_Marks (inkex.Effect):
 
     def draw_star_target(self, cx, cy, name, parent):
         r = (self.mark_size/2)
-        style = {'fill':'#000 device-cmyk(1,1,1,1)', 'fill-opacity':'1', 'stroke':'none'}
+        style = {'fill':'#000', 'fill-opacity':'1', 'stroke':'none'}
         d = ' M 0,0'
         i = 0
         while i < ( 2 * math.pi ):
@@ -167,7 +166,7 @@ class Printing_Marks (inkex.Effect):
                 'id':name,
                 'transform':'translate('+str(cx)+','+str(cy)+\
                             ') rotate('+str(rotate)+')' })
-        l = min( self.mark_size / 3, max(self.area_w,self.area_h) / 45 )
+        l = min( self.mark_size / 3, max(self.width,self.height) / 45 )
         for bar in [{'c':'*', 'stroke':'#000', 'x':0,        'y':-(l+1)},
                     {'c':'r', 'stroke':'#0FF', 'x':0,        'y':0},
                     {'c':'g', 'stroke':'#F0F', 'x':(l*11)+1, 'y':-(l+1)},
@@ -189,58 +188,12 @@ class Printing_Marks (inkex.Effect):
                 r = inkex.etree.SubElement(g, 'rect', r_att)
                 i += 0.1
 
-    def get_selection_area(self):
-        sel_area = {}
-        min_x, min_y, max_x, max_y = False, False, False, False
-        for id in self.options.ids:
-            sel_area[id] = {}
-            for att in [ "x", "y", "width", "height" ]:
-                args = [ "inkscape", "-I", id, "--query-"+att, self.svg_file ]
-                sel_area[id][att] = \
-                    Popen(args, stdout=PIPE, stderr=PIPE).communicate()[0]
-            current_min_x = float( sel_area[id]["x"] )
-            current_min_y = float( sel_area[id]["y"] )
-            current_max_x = float( sel_area[id]["x"] ) + \
-                            float( sel_area[id]["width"] )
-            current_max_y = float( sel_area[id]["y"] ) + \
-                            float( sel_area[id]["height"] )
-            if not min_x: min_x = current_min_x
-            if not min_y: min_y = current_min_y
-            if not max_x: max_x = current_max_x
-            if not max_y: max_y = current_max_y
-            if current_min_x < min_x: min_x = current_min_x
-            if current_min_y < min_y: min_y = current_min_y
-            if current_max_x > max_x: max_x = current_max_x
-            if current_max_y > max_y: max_y = current_max_y
-            #inkex.errormsg( '>> '+ id +
-            #                ' min_x:'+ str(min_x) +
-            #                ' min_y:'+ str(min_y) +
-            #                ' max_x:'+ str(max_x) +
-            #                ' max_y:'+ str(max_y) )
-        self.area_x1 = min_x
-        self.area_y1 = min_y
-        self.area_x2 = max_x
-        self.area_xy = max_y
-        self.area_w = max_x - min_x
-        self.area_h = max_y - min_y
-
     def effect(self):
 
         if self.options.where_to_crop == 'selection' :
-            self.get_selection_area()
             inkex.errormsg('Sory, the crop to selection is a TODO feature')
-            exit(1)
-        else :
-            svg = self.document.getroot()
-            self.area_w  = inkex.unittouu(svg.get('width'))
-            self.area_h  = inkex.unittouu(svg.attrib['height'])
-            self.area_x1 = 0
-            self.area_y1 = 0
-            self.area_x2 = self.area_w
-            self.area_xy = self.area_h
 
         # Get SVG document dimensions
-        # self.width must be replaced by self.area_x2. same to others.
         svg = self.document.getroot()
         self.width  = width  = inkex.unittouu(svg.get('width'))
         self.height = height = inkex.unittouu(svg.attrib['height'])
@@ -431,25 +384,25 @@ class Printing_Marks (inkex.Effect):
                 # Left Bars
                 cx = max( bml + offset, self.min_mark_margin )
                 self.draw_coluor_bars(-cx - (self.mark_size/2),
-                                      height/2 + self.mark_size,
+                                      height/2,
                                       90,
                                       'PrintingColourBarsL', g_center)
                 # Right Bars
                 cx = max( bmr + offset, self.min_mark_margin )
                 self.draw_coluor_bars(width + cx + (self.mark_size/2),
-                                      height/2 + self.mark_size,
+                                      height/2,
                                       90,
                                       'PrintingColourBarsR', g_center)
             else :
                 # Top Bars
                 cy = max( bmt + offset, self.min_mark_margin )
-                self.draw_coluor_bars(width/2 + self.mark_size,
+                self.draw_coluor_bars(width/2,
                                       -cy - (self.mark_size/2),
                                       0,
                                       'PrintingColourBarsT', g_center)
                 # Bottom Bars
                 cy = max( bmb + offset, self.min_mark_margin )
-                self.draw_coluor_bars(width/2 + self.mark_size,
+                self.draw_coluor_bars(width/2,
                                       height + cy + (self.mark_size/2),
                                       0,
                                       'PrintingColourBarsB', g_center)
