@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
+"POT-Creation-Date: 2009-10-05 22:03+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -1510,7 +1510,7 @@ msgstr "투명한 매우 유연한 특수 융기"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "그림"
 
@@ -4141,17 +4141,17 @@ msgstr "텍스트 기준선"
 msgid " to "
 msgstr " 에서 "
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "새 문서 %d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "메모리 문서 %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "이름이 없는 문서 %d"
@@ -6709,7 +6709,7 @@ msgstr "새 도크 제어자 %p가 자동임."
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "페이지"
 
@@ -7749,7 +7749,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "얼마나 많은 작도 선을 그릴 것인가"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8255,7 +8255,7 @@ msgstr "<b>Shift</b>: 노드 선택 토글, 붙이기 불가능, 양 핸들 회�
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: 핸들 길이 잠금; <b>Ctrl+Alt</b>: 핸들 따라 이동"
 
-#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:624
 msgid "Stamp"
 msgstr "도장"
 
@@ -9295,7 +9295,7 @@ msgstr "90도 반시계방향 회전"
 msgid "Rotate 90&#176; CW"
 msgstr "90도 시계방향 회전"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "회전"
@@ -9317,7 +9317,7 @@ msgid "Move horizontally"
 msgstr "수평 이동"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "이동"
 
@@ -9673,15 +9673,15 @@ msgstr[1] "<b>%i</b> 객체( <b>%s</b> 유형)"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:537 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "찌그러짐"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 msgid "Set center"
 msgstr "중앙 설정"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -9689,7 +9689,7 @@ msgstr ""
 "회전 및 기울이기의 <b>중심점</b>: 재 위치 시키기 위하여 끌기; Shift: 중앙에"
 "서 사용 가능"
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -9697,7 +9697,7 @@ msgstr ""
 "선택을 <b>축소 또는 확장</b>; <b>Ctrl</b>: 일정하게 비율 조정; <b>Shift</b>: "
 "회전 중심 주위로 비율 조정"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -9705,7 +9705,7 @@ msgstr ""
 "선택 <b>비율 조정</b>: <b>Ctrl</b>: 균일하게 비율 조정; <b>Shift</b>: 회전 중"
 "심 주변 비율 조정"
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -9713,7 +9713,7 @@ msgstr ""
 "선택 <b>기울이기</b>: <b>Ctrl</b>: 각도 붙이기 점 조정; <b>Shift</b>: 반대면 "
 "주변 기울이기"
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -9721,35 +9721,35 @@ msgstr ""
 "선택 <b>회전</b>; <b>Ctrl</b>: 각도 붙이기 점 조정; <b>Shift</b>: 반대 모서"
 "리 주변 회전"
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 msgid "Reset center"
 msgstr "중앙 초기화"
 
-#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058 ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>비율</b>: %0.2f%% x %0.2f%%; <b>Ctrl</b>: 비율 잠금"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>기울이기</b>: %0.2f&#176;; <b>Ctrl</b>: 각도 붙이기 점 조정"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>회전</b>: %0.2f&#176;; <b>Ctrl</b>: 각도 붙이기 점 조정"
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>중앙</b> %s, %s 로 이동"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11091,7 +11091,7 @@ msgstr "가장 작은 객체"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "선택"
 
@@ -13993,9 +13993,9 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
-"The \"Save As ...\" dialog uses the current working directory for saving (if "
-"the file was previously saved). If not previously saved, the most recent "
-"\"Save As ...\" directory is used."
+"When this option is on, the \"Save as...\" dialog will always open in the "
+"directory where the currently open document is. When it's off, it will open "
+"in the directory where you last saved a file using that dialog."
 msgstr ""
 
 #. Autosave options

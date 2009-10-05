@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 08:40+0300\n"
+"POT-Creation-Date: 2009-10-05 22:03+0200\n"
 "PO-Revision-Date: 2009-10-03 08:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 0.3\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -66,7 +66,8 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr ""
+"Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -726,7 +727,8 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr ""
+"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -922,7 +924,8 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -1200,7 +1203,8 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr ""
+"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -1308,7 +1312,8 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid "Felt like texture with color turbulence and slightly darker at the edges"
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -1341,7 +1346,8 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr ""
+"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -1564,7 +1570,7 @@ msgstr "Дуже гнучкі дзеркальні горби з прозорі�
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "Малюнок"
 
@@ -1609,7 +1615,8 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr ""
+"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -1853,7 +1860,8 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid ""
+"Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -3029,7 +3037,8 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr ""
+"Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3503,7 +3512,8 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr ""
+"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -4266,17 +4276,17 @@ msgstr "Базова лінія тексту"
 msgid " to "
 msgstr " у "
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "Новий документ %d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "Документ у пам'яті %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Документ без назви %d"
@@ -6164,7 +6174,8 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid ""
+"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -6689,8 +6700,8 @@ msgstr "<b>Переміщувати</b> заповнення візерунко�
 #: ../src/knotholder.cpp:237
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr ""
-"<b>Масштабувати</b> заповнення візерунком; рівномірно, якщо натиснуто <b>"
-"Ctrl</b>"
+"<b>Масштабувати</b> заповнення візерунком; рівномірно, якщо натиснуто "
+"<b>Ctrl</b>"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -6936,7 +6947,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "Сторінка"
 
@@ -8011,7 +8022,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr "Кількість ліній побудови (дотичних) для малювання"
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8047,7 +8058,8 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr ""
+"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -8540,7 +8552,7 @@ msgstr ""
 "<b>Alt</b>: зафіксувати довжину вуса; <b>Ctrl+Alt</b>: переміщувати вздовж "
 "вусів"
 
-#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:624
 msgid "Stamp"
 msgstr "Штамп"
 
@@ -9027,7 +9039,8 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr ""
+"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1266
 #, c-format
@@ -9611,7 +9624,7 @@ msgstr "Обернути на 90&#176; проти годинникової ст�
 msgid "Rotate 90&#176; CW"
 msgstr "Обернути на 90&#176; за годинниковою стрілкою"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Обертати"
@@ -9633,7 +9646,7 @@ msgid "Move horizontally"
 msgstr "Перемістити горизонтально"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Перемістити"
 
@@ -10008,15 +10021,15 @@ msgstr[2] "<b>%i</b> об'єктів, що належать до типів <b>%
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:537 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Нахил"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 msgid "Set center"
 msgstr "Встановлення центру"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10024,7 +10037,7 @@ msgstr ""
 "<b>Центр</b> обертання та нахилу: його можна перетягнути; зміна розміру з "
 "Shift також відбувається навколо нього"
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10032,7 +10045,7 @@ msgstr ""
 "<b>Стиснути чи розтягнути</b> позначені об'єкти; з <b>Ctrl</b> - зберігати "
 "пропорцію; з <b>Shift</b> - навколо центру обертання"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10040,7 +10053,7 @@ msgstr ""
 "<b>Змінювати розмір</b> позначених об'єктів; з <b>Ctrl</b> - зберігати "
 "пропорцію; з <b>Shift</b> - навколо центру обертання"
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10048,7 +10061,7 @@ msgstr ""
 "<b>Нахилити</b> позначені об'єкти; з <b>Ctrl</b> - обмежувати кут; з "
 "<b>Shift</b> - навколо протилежного кута"
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10056,11 +10069,11 @@ msgstr ""
 "<b>Обертати</b> позначені об'єкти; з <b>Ctrl</b> - обмежувати кут; з "
 "<b>Shift</b> - навколо протилежного кута"
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 msgid "Reset center"
 msgstr "Повернення до початкового центру"
 
-#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058 ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -10068,24 +10081,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Нахил</b>: %0.2f&#176;; з <b>Ctrl</b> - обмежити кут"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Обертання</b>: %0.2f&#176;; з <b>Ctrl</b> - обмежити кут"
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Перемістити <b>центр</b> до %s, %s"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -10870,7 +10883,8 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:214
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr ""
+"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:220
 msgid ""
@@ -11459,7 +11473,7 @@ msgstr "Найменший об’єкт"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "позначене"
 
@@ -12671,7 +12685,8 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid ""
+"The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у вигляді вхідного "
 "графічного зображення"
@@ -12928,7 +12943,8 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid "Only try to snap the node that is initially closest to the mouse pointer"
+msgid ""
+"Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13396,7 +13412,8 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
-msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr ""
+"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Remember and use last window's geometry"
@@ -14525,14 +14542,10 @@ msgstr "Використовувати для «Зберегти як...» по�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
-"The \"Save As ...\" dialog uses the current working directory for saving (if "
-"the file was previously saved). If not previously saved, the most recent "
-"\"Save As ...\" directory is used."
+"When this option is on, the \"Save as...\" dialog will always open in the "
+"directory where the currently open document is. When it's off, it will open "
+"in the directory where you last saved a file using that dialog."
 msgstr ""
-"У діалоговому вікні «Зберегти як...» для збереження файлів буде використано "
-"поточний робочий каталог (якщо раніше ви зберігали файл). Якщо файл ще не "
-"було збережено, буде використано попередній каталог збереження інструменту "
-"«Зберегти як...»."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -15403,7 +15416,8 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr ""
+"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -20627,7 +20641,8 @@ msgstr "Довжина:"
 
 #: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
-msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr ""
+"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
 #: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
@@ -20670,7 +20685,8 @@ msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
 #: ../src/widgets/toolbox.cpp:7212
-msgid "The amount to grow (positive) or shrink (negative) the created fill path"
+msgid ""
+"The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
@@ -21781,11 +21797,13 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr ""
+"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -22636,7 +22654,8 @@ msgstr "Заповнити контур (зеленим)"
 msgid "Fill color, Red"
 msgstr "Заповнити контур (червоним)"
 
-#: ../share/extensions/polyhedron_3d.inx.h:16, no-c-format
+#: ../share/extensions/polyhedron_3d.inx.h:16
+#, no-c-format
 msgid "Fill opacity, %"
 msgstr "Непрозорість заповнення, %"
 
@@ -22724,7 +22743,8 @@ msgstr "Підрізати куб"
 msgid "Snub Dodecahedron"
 msgstr "Підрізати додекаедр"
 
-#: ../share/extensions/polyhedron_3d.inx.h:41, no-c-format
+#: ../share/extensions/polyhedron_3d.inx.h:41
+#, no-c-format
 msgid "Stroke opacity, %"
 msgstr "Непрозорість штриха (у %)"
 
@@ -23555,6 +23575,16 @@ msgstr "Імпорт метафайла Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
+
+#~ msgid ""
+#~ "The \"Save As ...\" dialog uses the current working directory for saving "
+#~ "(if the file was previously saved). If not previously saved, the most "
+#~ "recent \"Save As ...\" directory is used."
+#~ msgstr ""
+#~ "У діалоговому вікні «Зберегти як...» для збереження файлів буде "
+#~ "використано поточний робочий каталог (якщо раніше ви зберігали файл). "
+#~ "Якщо файл ще не було збережено, буде використано попередній каталог "
+#~ "збереження інструменту «Зберегти як...»."
 
 #~ msgid "Error saving a temporary copy"
 #~ msgstr "Помилка під час збереження тимчасової копії"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
+"POT-Creation-Date: 2009-10-05 22:03+0200\n"
 "PO-Revision-Date: 2007-02-21 03:30+0100\n"
 "Last-Translator: Jurmey Rabgay <pemai_jurmey@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -1646,7 +1646,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "པར་རིས།"
 
@@ -4412,17 +4412,17 @@ msgstr "ཚིག་ཡིག་གཞི་ཐིག་ ཕྲང་སྒྲ�
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "ཡིག་ཆ་གསརཔ་%d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "དྲན་འཛིན་ཡིག་ཆ་%d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "མིང་མ་བཏགས་པར་ཡོད་མི་ཡིག་ཆ་%d"
@@ -7179,7 +7179,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "ཤོག་ལེབ།"
 
@@ -8298,7 +8298,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
@@ -8851,7 +8851,7 @@ msgstr ""
 "<b>གདམ་ལྡེ་</b>: བཤེད་བཟུང་གི་རིང་ཚད་བསྡམ་བཞག <b>ཚད་འཛིན་+གདམ་ལྡེ་</b>: བཤེད་བཟུང་ཚུ་བརྒྱུད་"
 "དེ་སྤོ་བཤུད་འབད།"
 
-#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:624
 msgid "Stamp"
 msgstr "འགྲེམ་རྟགས་"
 
@@ -9955,7 +9955,7 @@ msgstr "༩༠ ལུ་བསྒྱིར་&#176;༡༧༦་ སི་སི�
 msgid "Rotate 90&#176; CW"
 msgstr "༩༠ ལུ་བསྒྱིར་&#176;༡༧༦་ སི་ཌབ་ལུ་"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "བསྒྱིར་བ་"
@@ -9977,7 +9977,7 @@ msgid "Move horizontally"
 msgstr "ཐད་སྙོམས་སྦེ་ སྤོ་བཤུད་འབད་"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "སྤོ་བཤུད་"
 
@@ -10365,15 +10365,15 @@ msgstr[1] "<b>%i</b>དངོས་པོ་<b>%i</b>གི་དབྱེ་བ
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:537 ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "གསེག་ལོག་"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 msgid "Set center"
 msgstr "དབུས་ གཞི་སྒྲིག་འབད་"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10381,7 +10381,7 @@ msgstr ""
 "བསྒྱིར་ནི་དང་གསེག་ལོག་འབད་ནི་གི་<b>དབུས།</b> ཡང་བསྐྱར་ས་གནས་བཟོ་ནིའི་དོན་ལུ་འདྲུད། སོར་ལྡེ་དང་གཅིག་"
 "ཁར་ཆ་ཚད་འཇལ་མི་དེ་གིས་ཡང་དབུས་འདི་ལག་ལེན་འཐབ་དོ་ཡོདཔ་ཨིན།"
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10389,7 +10389,7 @@ msgstr ""
 "སེལ་འཐུ་དེ་ གཅིག་མཚུགས་སྦེ་ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ བསྒྱིར་ནིའི་དབུས་"
 "ཀྱི་མཐའ་སྐོར་ཏེ་ ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་ <b>བཙིར་བཏོན་ ཡང་ན་ བསྣར།</b>"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10397,7 +10397,7 @@ msgstr ""
 "སེལ་འཐུ་དེ་ གཅིག་མཚུངས་སྦེ་ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ བསྒྱིར་ནིའི་དབུས་"
 "ཀྱི་མཐའ་སྐོར་ཏེ་ཆ་ཚད་འཇལ་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b>དང་གཅིག་ཁར་<b>ཆ་ཚད་འཇལ།</b>"
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10405,7 +10405,7 @@ msgstr ""
 "སེལ་འཐུ་དེ་ གྲུ་ཟུར་དཔར་བཏབ་ནིའི་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ རྒྱབ་འགལ་སྦེ་ཡོད་མིའི་"
 "མཐའ་སྐོར་ཏེ་གསེག་ལོག་འབད་ནིའི་དོན་ལུ་ <b>སོརལྡེ་</b><b>དང་གཅིག་ཁར་ གསེག་་ལོག་འབད།</b>"
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10413,11 +10413,11 @@ msgstr ""
 "སེལ་འཐུ་དེ་ གྲུ་ཟུར་དཔར་བཏབ་ནིའི་་དོན་ལུ་ <b>ཚད་འཛིན་</b>དང་གཅིག་ཁར་དང་ རྒྱབ་འགལ་ཡོད་མི་སྒྱིད་"
 "ཁུག་གི་མཐའ་སྐོར་ཏེ་བསྒྱིར་ནིའི་དོན་ལུ་ <b>སོར་ལྡེ་</b> དང་གཅིག་ཁར་<b>བསྒྱིར།</b>"
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 msgid "Reset center"
 msgstr "དབུས་ སླར་གཞི་སྒྲིག་འབད་"
 
-#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058 ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -10426,7 +10426,7 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
@@ -10434,17 +10434,17 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "གྲུ་ཟུར་དཔར་བཏབ་ནིའི་དོན་ལུ་%0.2f&#176;; <b>ཚད་འཛིན་</b> དང་གཅིག་ཁར་<b>བསྒྱིར།</b>"
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Move <b>center</b> to %s, %s"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11840,7 +11840,7 @@ msgstr "དངོས་པོ་ ཨའི་ཌི་ གཞི་སྒྲི�
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "སེལ་འཐུ།"
 
@@ -14960,9 +14960,9 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
-"The \"Save As ...\" dialog uses the current working directory for saving (if "
-"the file was previously saved). If not previously saved, the most recent "
-"\"Save As ...\" directory is used."
+"When this option is on, the \"Save as...\" dialog will always open in the "
+"directory where the currently open document is. When it's off, it will open "
+"in the directory where you last saved a file using that dialog."
 msgstr ""
 
 #. Autosave options

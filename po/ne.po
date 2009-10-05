@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
+"POT-Creation-Date: 2009-10-05 22:03+0200\n"
 "PO-Revision-Date: 2006-11-05 17:47+0100\n"
 "Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "रेखाचित्र"
 
@@ -4438,17 +4438,17 @@ msgstr "बायाँतिर पंक्तिबद्ध गर्नु�
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "नयाँ कागजात %d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "स्मृति कागजात %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "नामकरण नगरिएको कागजात %d"
@@ -7219,7 +7219,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "पृष्ठ"
 
@@ -8341,7 +8341,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #, fuzzy
@@ -8884,7 +8884,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: ह्यान्डल लम्बाई ताल्चा लगाउनुहोस्; <b>Ctrl+Alt</b>: ह्यान्डलहरू संग सार्नुहोस्"
 
-#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:624
 #, fuzzy
 msgid "Stamp"
 msgstr "सटाउनुहोस्"
@@ -10003,7 +10003,7 @@ msgstr "9_0&#176; CCW घुमाउनुहोस्"
 msgid "Rotate 90&#176; CW"
 msgstr "90&#176; CW घुमाउनुहोस्"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 #, fuzzy
 msgid "Rotate"
@@ -10027,7 +10027,7 @@ msgid "Move horizontally"
 msgstr "तेर्सो"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 #, fuzzy
 msgid "Move"
 msgstr "सार्नुहोस्"
@@ -10415,17 +10415,17 @@ msgstr[1] "<b>%i</b> प्रकारको <b>%i</b> वस्तुहरू
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:537 ../src/ui/dialog/transformation.cpp:819
 #, fuzzy
 msgid "Skew"
 msgstr "स्क्यु"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 #, fuzzy
 msgid "Set center"
 msgstr "मुद्रक चयन गर्नुहोस्"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10433,7 +10433,7 @@ msgstr ""
 "स्क्युनिङ् र परिक्रमणको <b>केन्द्र</b>: पुन: स्थान तोक्न तान्नुहोस्; सिफ्ट संग स्केलिङले पनि यो "
 "केन्द्र प्रयोग गर्दछ"
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10441,7 +10441,7 @@ msgstr ""
 "चयन <b>फैलाउनुहोस् वा घटाउनुहोस्</b>; समान रुपमा मापन गर्न <b>Ctrl</b> संग; परिक्रमण "
 "केन्द्र वरिपरि मापन गर्न <b>Shift</b> संग"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10449,7 +10449,7 @@ msgstr ""
 "चयन <b>मापन गर्नुहोस्</b>; समान रुपमा मापन गर्न <b>Ctrl</b> संग; परिक्रमण केन्द्र "
 "वरिपरि मापन गर्न <b>Shift</b> संग"
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10457,7 +10457,7 @@ msgstr ""
 "चयन <b>स्क्यु</b>; कोण सटाउन <b>Ctrl</b> संग; विपरित किनारा वरिपिर स्क्यु गर्न "
 "<b>Shift</b> संग"
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10465,36 +10465,36 @@ msgstr ""
 "चयन <b>घुमाउनुहोस्</b>; कोण सटाउन <b>Ctrl</b> संग; विपरित कुना वरिपरि घुमाउन "
 "<b>Shift</b> संग"
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 #, fuzzy
 msgid "Reset center"
 msgstr "हालको तह बढाउनुहोस्"
 
-#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058 ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>स्केल</b>: %0.2f%% x %0.2f%%; अनुपात ताल्चा लगाउन <b>Ctrl</b> संग"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>स्क्यु</b>: %0.2f&#176;; कोण सटाउन <b>Ctrl</b> संग"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>घुमाउनुहोस्</b>: %0.2f&#176;; कोण सटाउन <b>Ctrl</b> संग"
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>केन्द</b> %s मा सार्नुहोस्, %s"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11915,7 +11915,7 @@ msgstr "पाठ वस्तुहरू खोजी गर्नुहोस
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "चयन"
 
@@ -14971,9 +14971,9 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
-"The \"Save As ...\" dialog uses the current working directory for saving (if "
-"the file was previously saved). If not previously saved, the most recent "
-"\"Save As ...\" directory is used."
+"When this option is on, the \"Save as...\" dialog will always open in the "
+"directory where the currently open document is. When it's off, it will open "
+"in the directory where you last saved a file using that dialog."
 msgstr ""
 
 #. Autosave options

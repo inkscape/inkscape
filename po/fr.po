@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
-"PO-Revision-Date: 2009-10-03 07:26+0100\n"
+"POT-Creation-Date: 2009-10-05 22:02+0200\n"
+"PO-Revision-Date: 2009-10-05 22:05+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1621,7 +1621,7 @@ msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "Dessin"
 
@@ -4292,17 +4292,17 @@ msgstr "Ligne de base de texte"
 msgid " to "
 msgstr " à "
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "Nouveau document %d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "Document d'information %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sans nom %d"
@@ -6852,7 +6852,7 @@ msgstr "Le nouveau contrôleur d'attache %p est automatique. Seuls les ojbets d'
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "Page"
 
@@ -7829,7 +7829,7 @@ msgstr "Nombre de lignes de construction (tangentes) à dessiner"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530
+#: ../src/seltrans.cpp:531
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
@@ -8317,7 +8317,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b> : bloquer la longueur des poignées; <b>Ctrl+Alt</b> : déplacer le long des poignées"
 
 #: ../src/nodepath.cpp:755
-#: ../src/seltrans.cpp:623
+#: ../src/seltrans.cpp:624
 msgid "Stamp"
 msgstr "Tamponner"
 
@@ -9249,7 +9249,7 @@ msgid "Rotate 90&#176; CW"
 msgstr "Tourner de 90&#176; dans le sens horaire"
 
 #: ../src/selection-chemistry.cpp:1439
-#: ../src/seltrans.cpp:533
+#: ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Tourner"
@@ -9272,7 +9272,7 @@ msgstr "Déplacer horizontalement"
 
 #: ../src/selection-chemistry.cpp:1562
 #: ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527
+#: ../src/seltrans.cpp:528
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Déplacer"
@@ -9628,65 +9628,65 @@ msgstr[1] "<b>%i</b> objets de <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536
+#: ../src/seltrans.cpp:537
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Incliner"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 msgid "Set center"
 msgstr "Définir le centre"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "<b>Centre</b> de rotation/inclinaison : cliquer-déplacer pour le déplacer; redimensionner avec <b>Maj</b> utilise aussi ce centre"
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Agrandir ou rétrécir</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément; <b>Maj</b> pour redimensionner autour du centre de rotation"
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "<b>Incliner</b> la sélection; <b>Ctrl</b> pour incliner par incréments; <b>Maj</b> pour incliner autour du coin opposé"
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour tourner autour du coin opposé"
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:1057
-#: ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058
+#: ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%%; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinaison</b> : %0.2f&#176;; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -10947,7 +10947,7 @@ msgstr "Objet le plus petit"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "Sélection"
 
@@ -13581,8 +13581,8 @@ msgid "Use current directory for \"Save As ...\""
 msgstr "« Enregistrer sous... » utilise le dossier courant "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
-msgid "The \"Save As ...\" dialog uses the current working directory for saving (if the file was previously saved). If not previously saved, the most recent \"Save As ...\" directory is used."
-msgstr "La boîte de dialogue « Enregistrer sous... » utilise le dossier en cours d'utilisation pour effectuer l'enregistrement si le fichier a été précédemment enregistré. Dans le cas inverse, le dossier le plus récemment utilisé pour cette commande est utilisé."
+msgid "When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is. When it's off, it will open in the directory where you last saved a file using that dialog."
+msgstr "Lorsque cette option est active, la boîte de dialogue « Enregistrer sous... » s'ouvre toujours dans le dossier contenant le document actuellement ouvert. Si l'option est désactivée, elle ouvre alors le dernier dossier dans lequel un fichier a été enregistré avec cette boîte de dialogue."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -22174,6 +22174,15 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid ""
+#~ "The \"Save As ...\" dialog uses the current working directory for saving "
+#~ "(if the file was previously saved). If not previously saved, the most "
+#~ "recent \"Save As ...\" directory is used."
+#~ msgstr ""
+#~ "La boîte de dialogue « Enregistrer sous... » utilise le dossier en cours "
+#~ "d'utilisation pour effectuer l'enregistrement si le fichier a été "
+#~ "précédemment enregistré. Dans le cas inverse, le dossier le plus "
+#~ "récemment utilisé pour cette commande est utilisé."
 #~ msgid "Autosave"
 #~ msgstr "Enregistrement automatique"
 #~ msgid "Error saving a temporary copy"

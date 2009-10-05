@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-03 07:08+0200\n"
+"POT-Creation-Date: 2009-10-05 22:03+0200\n"
 "PO-Revision-Date: 2006-11-05 18:13+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1577
 msgid "Drawing"
 msgstr "Teikning"
 
@@ -4450,17 +4450,17 @@ msgstr "Juster venstresider."
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:441
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "Nytt dokument %d"
 
-#: ../src/document.cpp:473
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "Dokument i minne %d"
 
-#: ../src/document.cpp:628
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Namnlaust dokument %d"
@@ -7226,7 +7226,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1573
 msgid "Page"
 msgstr "Side"
 
@@ -8347,7 +8347,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1516
-#: ../src/seltrans.cpp:530 ../src/ui/dialog/transformation.cpp:738
+#: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #, fuzzy
@@ -8891,7 +8891,7 @@ msgstr ""
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: Lås styrke. <b>Ctrl + Alt</b>: Flytt mellom kontrollpunkt."
 
-#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:623
+#: ../src/nodepath.cpp:755 ../src/seltrans.cpp:624
 #, fuzzy
 msgid "Stamp"
 msgstr "Steg"
@@ -10022,7 +10022,7 @@ msgstr "Roter 9_0° mot venstre"
 msgid "Rotate 90&#176; CW"
 msgstr "Roter _90° mot høgre"
 
-#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:533
+#: ../src/selection-chemistry.cpp:1439 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 #, fuzzy
 msgid "Rotate"
@@ -10047,7 +10047,7 @@ msgid "Move horizontally"
 msgstr "Vassrett tekst"
 
 #: ../src/selection-chemistry.cpp:1562 ../src/selection-chemistry.cpp:1588
-#: ../src/seltrans.cpp:527 ../src/ui/dialog/transformation.cpp:681
+#: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 #, fuzzy
 msgid "Move"
 msgstr "Flytt"
@@ -10438,17 +10438,17 @@ msgstr[1] "<b>%i</b> objekt med <b>%i</b> typar"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:536 ../src/ui/dialog/transformation.cpp:819
+#: ../src/seltrans.cpp:537 ../src/ui/dialog/transformation.cpp:819
 #, fuzzy
 msgid "Skew"
 msgstr "Vri"
 
-#: ../src/seltrans.cpp:548
+#: ../src/seltrans.cpp:549
 #, fuzzy
 msgid "Set center"
 msgstr "Vel skrivar"
 
-#: ../src/seltrans.cpp:645
+#: ../src/seltrans.cpp:646
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -10456,7 +10456,7 @@ msgstr ""
 "<b>Midtpunkt</b> for rotering og forskyving. Dra for å flytta. Skalering med "
 "<b>Shift</b> brukar òg dette punktet."
 
-#: ../src/seltrans.cpp:672
+#: ../src/seltrans.cpp:673
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -10464,7 +10464,7 @@ msgstr ""
 "<b>Trykk saman eller utvid</b> utvalet. Bruk <b>Ctrl</b> for å halda på høgd/"
 "breidd-forholdet og <b>Shift</b> for å skalera rundt roteringsmidtpunktet."
 
-#: ../src/seltrans.cpp:673
+#: ../src/seltrans.cpp:674
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -10472,7 +10472,7 @@ msgstr ""
 "<b>Skaler</b> utvalet. Bruk <b>Ctrl</b> for å halda på høgd/breidd-forholdet "
 "og <b>Shift</b> for å skalera rundt roteringsmidtpunktet."
 
-#: ../src/seltrans.cpp:677
+#: ../src/seltrans.cpp:678
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -10480,7 +10480,7 @@ msgstr ""
 "<b>Vri</b> utvalet. Bruk <b>Ctrl</b> for stegrotering og <b>Shift</b> for å "
 "vri rundt motståande hjørne."
 
-#: ../src/seltrans.cpp:678
+#: ../src/seltrans.cpp:679
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -10488,12 +10488,12 @@ msgstr ""
 "<b>Roter</b> utvalet. Bruk <b>Ctrl</b> for stegrotering og <b>Shift</b> for "
 "å rotera rundt motståande hjørne."
 
-#: ../src/seltrans.cpp:812
+#: ../src/seltrans.cpp:813
 #, fuzzy
 msgid "Reset center"
 msgstr "Hev dette laget."
 
-#: ../src/seltrans.cpp:1057 ../src/seltrans.cpp:1156
+#: ../src/seltrans.cpp:1058 ../src/seltrans.cpp:1157
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -10502,24 +10502,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1268
+#: ../src/seltrans.cpp:1269
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Vri</b>: %0.2f&#176;. Bruk <b>Ctrl</b> for stegvriing."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1328
+#: ../src/seltrans.cpp:1329
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Roter</b>: %0.2f&#176;. Bruk <b>Ctrl</b> for stegrotering."
 
-#: ../src/seltrans.cpp:1370
+#: ../src/seltrans.cpp:1371
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Flytt <b>midten</b> til %s, %s"
 
-#: ../src/seltrans.cpp:1540
+#: ../src/seltrans.cpp:1541
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11957,7 +11957,7 @@ msgstr "Søk etter tekstobjekt"
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1581
 msgid "Selection"
 msgstr "Utval"
 
@@ -15041,9 +15041,9 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
-"The \"Save As ...\" dialog uses the current working directory for saving (if "
-"the file was previously saved). If not previously saved, the most recent "
-"\"Save As ...\" directory is used."
+"When this option is on, the \"Save as...\" dialog will always open in the "
+"directory where the currently open document is. When it's off, it will open "
+"in the directory where you last saved a file using that dialog."
 msgstr ""
 
 #. Autosave options
