@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-05 10:27+0100\n"
+"PO-Revision-Date: 2009-10-06 13:56+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6666,9 +6666,9 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Bewegen des Füllmusters</b> innerhalb des Objektes"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "Einheitliches <b>Skalieren</b> des Füllmusters"
+msgstr ""
+"Einheitliches <b>Skalieren</b> des Füllmusters; gleichmäßig durch <b>STRG</b>"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -14632,7 +14632,7 @@ msgstr "Benutzeroberfläche"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "Verwende aktuelles Verzeichnis für \"Speichern unter...\""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14640,6 +14640,10 @@ msgid ""
 "directory where the currently open document is. When it's off, it will open "
 "in the directory where you last saved a file using that dialog."
 msgstr ""
+"Wenn diese Option aktiviert ist, wird der \"Speichern unter\"-Dialog immer "
+"das Verzeichnis öffnen, in dem das aktuell offene Dokument liegt. Ist sie "
+"deaktiviert, wird das Verzeichnis der letzten Speicherung über diesen Dialog "
+"geöffnet."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -21456,7 +21460,6 @@ msgid "Symmedians"
 msgstr "Symmediane"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -21497,11 +21500,11 @@ msgstr ""
 "Ein Punkt kann in trilinearen Koordinaten angegeben oder durch eine "
 "Dreieckszentrumfunktion definiert sein.\n"
 "Funktionsparameter sind Seitenlängen und Winkel.\n"
-"Trilineare Koordinaten werden durch Doppelpunkt \":\" getrennt.\n"
-"Seitenlängen werden durch \"s_a\", \"s_b\" und \"s_c\" repräsentiert.\n"
-"Die korrespondierenden Winkel sind \"a_a\", \"a_b\" und \"a_c\".\n"
-"Mögliche Konstanten sind auch halber Umfang \"semiperim\" und Fläche \"area"
-"\" des Dreiecks.\n"
+"Trilineare Koordinaten werden durch Doppelpunkt ':' getrennt.\n"
+"Seitenlängen werden durch 's_a', 's_b' und 's_c' repräsentiert.\n"
+"Die korrespondierenden Winkel sind 'a_a', 'a_b' und 'a_c'.\n"
+"Mögliche Konstanten sind auch halber Umfang 'semiperim' und Fläche 'area' "
+"des Dreiecks.\n"
 "\n"
 "Erlaubt sind alle mathematischen Standardfunktionen in Python:\n"
 "ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
@@ -21518,6 +21521,7 @@ msgstr ""
 "möglich, die isogonal und isotomisch Konjugierten dieses Punktes zu "
 "zeichnen. Beachten Sie, dass es bei bestimmten Punkten zu einem Division-"
 "durch-Null-Fehler kommen kann.\n"
+"            "
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
@@ -22612,7 +22616,6 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Leerzeichen strecken, um an Gerüstlänge zu passen"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
@@ -22719,7 +22722,6 @@ msgid "3D Polyhedron"
 msgstr "3D Polyhedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "Objekt im Uhrzeigersinn gewunden"
 
@@ -22736,7 +22738,6 @@ msgid "Dodecahedron"
 msgstr "Dodecahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
 msgstr "Zeichnet rückseitige Polygone"
 
@@ -22762,24 +22763,21 @@ msgid "Filename:"
 msgstr "Dateiname:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
 msgstr "Füllfarbe (Blauwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
 msgstr "Füllfarbe (Grünwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
 msgstr "Füllfarbe (Rotwert)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "Deckkraft, %:"
+msgstr "Deckkraft, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22794,22 +22792,18 @@ msgid "Icosahedron"
 msgstr "Ikosaeder (Zwanzigfläcnher)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "Erhellen"
+msgstr "Erhellen X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "Erhellen"
+msgstr "Erhellen Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "Erhellen"
+msgstr "Erhellen Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "Lade von datei"
 
@@ -22826,7 +22820,6 @@ msgid "Minimum"
 msgstr "Minimun"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "Modell-Datei"
 
@@ -22843,12 +22836,10 @@ msgid "Octahedron"
 msgstr "Oktaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
 msgstr "Rotieren um:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
 msgstr "Rotation (Grad)"
 
@@ -22874,21 +22865,19 @@ msgid "Snub Dodecahedron"
 msgstr "Abgeschrägtes Dodekaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Strich-Deckkraft/ %"
+msgstr "Strich-Deckkraft, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "Breite der Kontur"
+msgstr "Breite der Kontur, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Dann rotiere um:"
 
@@ -22933,7 +22922,6 @@ msgid "Z-Axis"
 msgstr "Z-Achse"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
 msgstr "Z-Sortierung der Flächen gemäß:"
 
