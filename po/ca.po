@@ -1,4 +1,4 @@
-# translation of inkscape.nou.po to Catalan
+# translation of inkscape.pot to Catalan
 # Inkscape translation to Catalan.
 # This file is distributed under the same license as the Inkscape package.
 # Copyright © 2000-2007, 2008 Free Software Foundation, Inc.
@@ -6,21 +6,20 @@
 # Quico Llach <quico@softcatala.org>, 2000. Traducció sodipodi.
 # Francesc Dorca <f.dorca@filnet.es>, 2003. Traducció sodipodi.
 # Xavier Conde Rueda <xavi.conde@gmail.com>, 2004-2008.
-# Quim Perez i Noguer <noguer@gmail.com>, 2008-2009.
-# Joaquim Perez Noguer <noguer@gmail.com>, 2009.
+# Joaquim Perez i Noguer <noguer@gmail.com>, 2008-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape.nou\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-01 13:42+0200\n"
+"PO-Revision-Date: 2009-10-06 00:12+0200\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
-"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language-Team: Catalan <gnome@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 0.3\n"
+"X-Generator: Gtranslator\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -6663,16 +6662,15 @@ msgstr "Mou el punt de control"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:234
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b>Moveu</b> el patró d'emplenat de l'interior de l'objecte"
+msgstr "<b>Mou</b> el patró d'emplenat dins l'objecte"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "<b>Escaleu</b> el patró d'emplenat uniformement"
+msgstr "<b>Escala</b> el patró d'emplenat; amb <b>Ctrl</b> ho fa uniformement"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Gireu</b> el patró d'emplenat; amb <b>Ctrl</b> per ajustar l'angle"
+msgstr "<b>Gira</b> el patró d'emplenat; amb <b>Ctrl</b> ajusta l'angle"
 
 #: ../src/libgdl/gdl-dock-bar.c:108
 msgid "Master"
@@ -14563,7 +14561,7 @@ msgstr "Interfície"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "Utilitza el directori actual per a «Anomena i desa ...»"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14571,6 +14569,10 @@ msgid ""
 "directory where the currently open document is. When it's off, it will open "
 "in the directory where you last saved a file using that dialog."
 msgstr ""
+"Quan aquesta opció està activada el diàleg «Anomena i desa...» sempre obrirà "
+"el directori on el document actual sigui. Quan aquesta opció està "
+"desactivada, obrirà l'últim directori on vau desar algun document amb aquest "
+"diàleg."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -22512,15 +22514,14 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Estira els espais per a ajustar la longitud de l'esquelet"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
 "shapes, clones are allowed."
 msgstr ""
 "Aquest efecte dispersa un patró seguint uns camins arbitraris (esquelets). "
-"El patró és l'objecte superior de la selecció (es permet agrupar camins, "
-"formes, clons, ...)"
+"El patró ha de ser l'objecte superior de la selecció. Es permet agrupar "
+"camins, formes i clons."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22616,7 +22617,6 @@ msgid "3D Polyhedron"
 msgstr "Políedre 3D"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "Objecte enredat cap a la dreta"
 
@@ -22633,7 +22633,6 @@ msgid "Dodecahedron"
 msgstr "Dodecaedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
 msgstr "Dibuixa les cares ocultes dels polígons"
 
@@ -22658,24 +22657,21 @@ msgid "Filename:"
 msgstr "Nom del fitxer:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
-msgstr "Color d'emplenament (blau)"
+msgstr "Color d'emplenament, blau"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
-msgstr "Color d'emplenament (verd)"
+msgstr "Color d'emplenament, verd"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
-msgstr "Color d'emplenament (vermell)"
+msgstr "Color d'emplenament, vermell"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "Opacitat d'emplenament %"
+msgstr "Opacitat d'emplenament, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22690,22 +22686,18 @@ msgid "Icosahedron"
 msgstr "Icosaedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "Il·lumina"
+msgstr "Llum X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "Il·lumina"
+msgstr "Llum Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "Il·lumina"
+msgstr "Llum Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "Carrega d'un fitxer"
 
@@ -22722,7 +22714,6 @@ msgid "Minimum"
 msgstr "Mínim"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "Fitxer model"
 
@@ -22739,17 +22730,14 @@ msgid "Octahedron"
 msgstr "Octaedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
 msgstr "Gira al voltant:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
-msgstr "Rotació / graus"
+msgstr "Gira, graus"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Scaling factor"
 msgstr "Factor d'escala"
 
@@ -22770,21 +22758,19 @@ msgid "Snub Dodecahedron"
 msgstr "Dodecaedre rom"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Opacitat del contorn %"
+msgstr "Opacitat del contorn, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "Amplada del contorn"
+msgstr "Amplada del contorn, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraedre"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Després gira:"
 
@@ -22829,7 +22815,6 @@ msgid "Z-Axis"
 msgstr "Eix Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
 msgstr "Ordena les cares per Z:"
 
