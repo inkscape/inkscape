@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-09-26 12:34+0200\n"
+"PO-Revision-Date: 2009-10-06 22:29+0200\n"
 "Last-Translator: Lucas Vieites Fariña <lucas@codexion.com>\n"
 "Language-Team:  inkscape-translator@lists.sourceforge.net <inkscape-"
 "translator@lists.sourceforge.net>\n"
@@ -5755,6 +5755,8 @@ msgstr "No se ha guardado el documento."
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
+"El archivo %s está protegido contra escritura. Retire la protección contra "
+"escritura e inténtelo de nuevo."
 
 #: ../src/file.cpp:621
 #, c-format
@@ -6705,9 +6707,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Mover</b> el relleno de mosaico dentro del objeto"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "<b>Escalar</b> el relleno de mosaico uniformemente"
+msgstr "<b>Escalar</b> el relleno de mosaico; uniformemente con <b>Ctrl</b>"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -12082,7 +12083,6 @@ msgstr "Est_ilo de trazo"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid ""
 "This matrix determines a linear transform on color space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -12206,9 +12206,8 @@ msgid "Apply filter"
 msgstr "Aplicar filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1318
-#, fuzzy
 msgid "filter"
-msgstr "Filtros"
+msgstr "filtro"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1325
 msgid "Add filter"
@@ -12617,7 +12616,6 @@ msgstr ""
 "pantalla, multiplicar, oscurecer y aclarar."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2282
-#, fuzzy
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
@@ -12732,14 +12730,13 @@ msgstr ""
 "«normal» o varias primitivas feCompositve en modo «over»."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2322
-#, fuzzy
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 "La primitiva de filtro <b>feMorphology</b> proporciona efectos de erosión y "
-"dilatación. La erosión «adelgaza» el objeto si es de un solo color y la "
+"dilatación. En objetos de un solo color la erosión «adelgaza» el objeto y la "
 "dilatación lo «engorda»."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2326
@@ -14654,7 +14651,7 @@ msgstr "Interfaz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "Usar la carpeta actual para «Guardar como...»"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14662,6 +14659,10 @@ msgid ""
 "directory where the currently open document is. When it's off, it will open "
 "in the directory where you last saved a file using that dialog."
 msgstr ""
+"Cuando esta opción está activa, el diálog «Guardar como...» siempre se abrirá "
+"en el directorio en el que está el documento abierto. Si está desactivado, "
+"se abrirá en el directorio en el que ha guardado un archivo la última vez "
+"con ese diálogo."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -14998,9 +14999,8 @@ msgstr "Nuevo"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/ui/dialog/layers.cpp:663
-#, fuzzy
 msgid "layers|Top"
-msgstr "Capas"
+msgstr "Superior"
 
 #: ../src/ui/dialog/layers.cpp:669
 msgid "Up"
@@ -21000,7 +21000,6 @@ msgstr ""
 "Intente utilizar la opción «Trayecto -> Objeto a trayecto»"
 
 #: ../share/extensions/polyhedron_3d.py:60
-#, fuzzy
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -21475,7 +21474,6 @@ msgid "Symmedians"
 msgstr "Simedianos"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
-#, fuzzy
 msgid ""
 "This extension draws constructions about a triangle defined by the first 3 "
 "nodes of a selected path. You may select one of preset objects or create "
@@ -22626,15 +22624,14 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Estirar espacios para ajustarse a la longitud del esqueleto"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
 "shapes, clones are allowed."
 msgstr ""
 "Este efecto esparce un objeto de patrón a lo largo de trayectos «esqueleto» "
-"arbitrarios. El patrón es el objeto superior de la selección. (se permiten "
-"grupos de trayectos, formas, clones, ...)"
+"arbitrarios. El patrón debe ser el objeto superior de la selección. Se "
+"permiten grupos de trayectos, formas o clones."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22730,7 +22727,6 @@ msgid "3D Polyhedron"
 msgstr "Políedro 3D"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "Objeto enredado hacia la derecha"
 
@@ -22747,7 +22743,6 @@ msgid "Dodecahedron"
 msgstr "Dodecaedro"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
 msgstr "Dibujar polígonos que están de espaldas"
 
@@ -22772,24 +22767,21 @@ msgid "Filename:"
 msgstr "Nombre de archivo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
-msgstr "Color de relleno (azul)"
+msgstr "Color de relleno, Azul"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
-msgstr "Color de relleno (verde)"
+msgstr "Color de relleno, Verde"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
-msgstr "Color de relleno (rojo)"
+msgstr "Color de relleno, Rojo"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "Opacidad de relleno/ %"
+msgstr "Opacidad de relleno, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22804,22 +22796,18 @@ msgid "Icosahedron"
 msgstr "Icosaedro"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "Aclarar"
+msgstr "Luz X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "Aclarar"
+msgstr "Luz Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "Aclarar"
+msgstr "Luz Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "Cargar desde archivo"
 
@@ -22836,7 +22824,6 @@ msgid "Minimum"
 msgstr "Mínimo"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "Archivo de modelo"
 
@@ -22853,17 +22840,14 @@ msgid "Octahedron"
 msgstr "Octaedro"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
 msgstr "Rotar sobre:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
-msgstr "Rotación / grados"
+msgstr "Rotación, grados"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#, fuzzy
 msgid "Scaling factor"
 msgstr "Factor de escala"
 
@@ -22884,21 +22868,19 @@ msgid "Snub Dodecahedron"
 msgstr "Dodecaedro romo"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Opacidad de trazo/ %"
+msgstr "Opacidad de trazo, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "Ancho de trazo"
+msgstr "Ancho de trazo, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetraedro"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Luego rotar sobre:"
 
@@ -22943,7 +22925,6 @@ msgid "Z-Axis"
 msgstr "Eje Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
 msgstr "Z-ordenar caras por:"
 
@@ -23080,9 +23061,8 @@ msgid "Arrange"
 msgstr "Ordenar"
 
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Bottom"
-msgstr "Inferior:"
+msgstr "Abajo"
 
 #: ../share/extensions/restack.inx.h:5
 msgid "Bottom to Top (90)"
@@ -23097,9 +23077,8 @@ msgid "Left to Right (0)"
 msgstr "De izquierda a derecha (0)"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Acribillar"
+msgstr "Medio"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
