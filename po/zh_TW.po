@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-09-18 19:41+0800\n"
+"PO-Revision-Date: 2009-10-06 20:49+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -5016,16 +5016,16 @@ msgstr "Postscript 檔案"
 #: ../src/extension/internal/cairo-ps-out.cpp:311
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated PostScript"
-msgstr "壓縮 Postscript"
+msgstr "封裝的 Postscript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated PostScript (*.eps)"
-msgstr "壓縮 Postscript (*.eps)"
+msgstr "封裝的 Postscript (*.eps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 msgid "Encapsulated PostScript File"
-msgstr "壓縮 PostScript 檔案"
+msgstr "封裝的 PostScript 檔案"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
@@ -6460,9 +6460,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>移動</b>物件內部的圖樣填充"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "單一型式地<b>縮放</b>填充圖樣"
+msgstr "<b>縮放</b>填充圖樣；如果按 <b>Ctrl</b> 可一致地縮放"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -10799,7 +10798,8 @@ msgstr "about.svg"
 msgid "translator-credits"
 msgstr ""
 "趙惟倫 (william.chao@ossii.com.tw)\n"
-"吳東俊 (ziyawu@gmail.com)"
+"吳東俊 (ziyawu@gmail.com)\n"
+"蘇秀慧"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:787
@@ -13933,7 +13933,7 @@ msgstr "介面"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "「另存新檔 ...」使用目前的目錄"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -13941,6 +13941,8 @@ msgid ""
 "directory where the currently open document is. When it's off, it will open "
 "in the directory where you last saved a file using that dialog."
 msgstr ""
+"若啟用這個選項，「另存新檔 ...」對話窗每次都會用目前文件所在的目錄開啟。若停"
+"用這選項，會用此對話窗最近儲存檔案的目錄開啟。"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -21672,14 +21674,13 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "伸展間距來符合骨幹長度"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
 "shapes, clones are allowed."
 msgstr ""
-"這個特效可沿著任意「骨幹」路徑散佈圖案。圖案必須在選取區的最上層。(可以是路"
-"徑/形狀/仿製物件的群組...)"
+"這個特效可沿著任意「骨幹」路徑散佈圖案。圖案必須在選取區的最上層。可以是路"
+"徑、形狀、仿製物件的群組。"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -21775,7 +21776,6 @@ msgid "3D Polyhedron"
 msgstr "3D 多面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "順時針方向纏繞物件"
 
@@ -21792,9 +21792,8 @@ msgid "Dodecahedron"
 msgstr "十二面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
-msgstr "繪製背對視角的多邊形"
+msgstr "繪製背面視角的多邊形"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -21817,24 +21816,21 @@ msgid "Filename:"
 msgstr "檔名："
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
-msgstr "填入顏色 (藍)"
+msgstr "填入顏色, 藍"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
-msgstr "填入顏色 (綠)"
+msgstr "填入顏色, 綠"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
-msgstr "填入顏色 (紅)"
+msgstr "填入顏色, 紅"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "填入不透明度/ %"
+msgstr "填入不透明度, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -21849,22 +21845,18 @@ msgid "Icosahedron"
 msgstr "二十面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "變亮"
+msgstr "燈光 X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "變亮"
+msgstr "燈光 Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "變亮"
+msgstr "燈光 Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "從檔案載入"
 
@@ -21881,7 +21873,6 @@ msgid "Minimum"
 msgstr "最小"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "模型檔"
 
@@ -21898,14 +21889,12 @@ msgid "Octahedron"
 msgstr "八面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
-msgstr "旋轉："
+msgstr "繞著旋轉："
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
-msgstr "旋轉/度"
+msgstr "旋轉, 度"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Scaling factor"
@@ -21928,23 +21917,21 @@ msgid "Snub Dodecahedron"
 msgstr "扭稜十二面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "邊框不透明度/ %"
+msgstr "邊框不透明度, %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "邊框寬度"
+msgstr "邊框寬度, px"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "四面體"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
-msgstr "接著旋轉："
+msgstr "接著圍繞旋轉："
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
@@ -21987,9 +21974,8 @@ msgid "Z-Axis"
 msgstr "Z-軸"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
-msgstr "Z-排序外觀："
+msgstr "面之排序方式："
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -22744,6 +22730,14 @@ msgstr "Windows 後設檔案輸入"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid ""
+#~ "The \"Save As ...\" dialog uses the current working directory for saving "
+#~ "(if the file was previously saved). If not previously saved, the most "
+#~ "recent \"Save As ...\" directory is used."
+#~ msgstr ""
+#~ "「另存新檔 ...」對話窗於儲存時會使用目前正在作業的目錄 (如果檔案已經事先儲"
+#~ "存)。如果沒有事先儲存，會使用最近儲存的「另存新檔 ...」目錄。"
 
 #~ msgid "Error saving a temporary copy"
 #~ msgstr "儲存暫存複本時錯誤"
