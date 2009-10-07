@@ -1630,10 +1630,17 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool const transform_stroke = prefs->getBool("/options/transform/stroke", true);
-    Geom::Rect visual_bbox = get_visual_bbox(_geometric_bbox, _absolute_affine, _strokewidth, transform_stroke);
+    if (_geometric_bbox) {
+        Geom::Rect visual_bbox = get_visual_bbox(_geometric_bbox, _absolute_affine, _strokewidth, transform_stroke);
+        // return the new handle position
+        return visual_bbox.min() + visual_bbox.dimensions() * Geom::Scale(_handle_x, _handle_y);
+    }
 
-    // return the new handle position
-    return visual_bbox.min() + visual_bbox.dimensions() * Geom::Scale(_handle_x, _handle_y);
+    // Fall back scenario, in case we don't have a geometric bounding box at hand;
+    // (Due to some bugs related to bounding boxes having at least one zero dimension; For more details
+    // see https://bugs.launchpad.net/inkscape/+bug/318726)
+    g_warning("No geometric bounding box has been calculated; this is a bug that needs fixing!");
+    return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
 }
 
 void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference)
