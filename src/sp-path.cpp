@@ -379,7 +379,7 @@ sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
 
     // Transform the original-d path if this is a valid LPE item, other else the (ordinary) path
     if (path->original_curve && SP_IS_LPE_ITEM(item) && 
-                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
+                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
         path->original_curve->transform(xform);
     } else {
         shape->curve->transform(xform);
@@ -427,7 +427,7 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
             } else {
                 repr->setAttribute("d", NULL);
             }
-        } else {
+        } else if (!success) {
             // LPE was unsuccesfull. Read the old 'd'-attribute.
             if (gchar const * value = repr->attribute("d")) {
                 Geom::PathVector pv = sp_svg_read_pathv(value);
@@ -489,7 +489,7 @@ SPCurve*
 sp_path_get_curve_for_edit (SPPath *path)
 {
     if (path->original_curve && SP_IS_LPE_ITEM(path) && 
-                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(path))) {
+                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
         return sp_path_get_original_curve(path);
     } else {
         return sp_shape_get_curve( (SPShape *) path );
@@ -504,7 +504,7 @@ const SPCurve*
 sp_path_get_curve_reference (SPPath *path)
 {
     if (path->original_curve && SP_IS_LPE_ITEM(path) && 
-                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(path))) {
+                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
         return path->original_curve;
     } else {
         return path->curve;

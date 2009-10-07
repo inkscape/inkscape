@@ -72,7 +72,7 @@ static void sp_group_hide (SPItem * item, unsigned int key);
 static void sp_group_snappoints (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
-static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup);
+static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
 
 static SPLPEItemClass * parent_class;
 
@@ -856,30 +856,36 @@ sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
             }
         }
 
-        sp_group_perform_patheffect(SP_GROUP(lpeitem), SP_GROUP(lpeitem));
+        sp_group_perform_patheffect(SP_GROUP(lpeitem), SP_GROUP(lpeitem), write);
     }
 }
 
 static void
-sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup)
+sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
 {
     GSList const *item_list = sp_item_group_item_list(SP_GROUP(group));
     for ( GSList const *iter = item_list; iter; iter = iter->next ) {
         SPObject *subitem = static_cast<SPObject *>(iter->data);
         if (SP_IS_GROUP(subitem)) {
-            sp_group_perform_patheffect(SP_GROUP(subitem), topgroup);
+            sp_group_perform_patheffect(SP_GROUP(subitem), topgroup, write);
         } else if (SP_IS_SHAPE(subitem)) {
-            SPCurve * c = sp_shape_get_curve(SP_SHAPE(subitem));
+            SPCurve * c = NULL;
+            if (SP_IS_PATH(subitem)) {
+                c = sp_path_get_curve_for_edit(SP_PATH(subitem));
+            } else {
+                c = sp_shape_get_curve(SP_SHAPE(subitem));
+            }
             // only run LPEs when the shape has a curve defined
             if (c) {
                 sp_lpe_item_perform_path_effect(SP_LPE_ITEM(topgroup), c);
                 sp_shape_set_curve(SP_SHAPE(subitem), c, TRUE);
 
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
-
-                gchar *str = sp_svg_write_path(c->get_pathvector());
-                repr->setAttribute("d", str);
-                g_free(str);
+                if (write) {
+                    Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
+                    gchar *str = sp_svg_write_path(c->get_pathvector());
+                    repr->setAttribute("d", str);
+                    g_free(str);
+                }
 
                 c->unref();
             }
