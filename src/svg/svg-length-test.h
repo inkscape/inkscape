@@ -134,6 +134,36 @@ public:
         TSM_ASSERT_EQUALS(validStrings, validStrings.size(), 0u);
     }
 
+
+
+    void testFourPlaces()
+    {
+        double val = 761.92918978947023;
+        int precision = 4;
+        int minexp = -8;
+        char buf[256] = {0};
+
+        memset(buf, 0xCC, sizeof(buf)); // Make it easy to detect an overrun.
+        unsigned int retval = sp_svg_number_write_de( buf, sizeof(buf), val, precision, minexp );
+        TSM_ASSERT_EQUALS("Number of chars written", retval, 5u);
+        TSM_ASSERT_EQUALS("Numeric string written", std::string(buf), std::string("761.9"));
+        TSM_ASSERT_EQUALS(std::string("Buffer overrun ") + buf, '\xCC', buf[retval + 1]);
+    }
+
+    void testTwoPlaces()
+    {
+        double val = 761.92918978947023;
+        int precision = 2;
+        int minexp = -8;
+        char buf[256] = {0};
+
+        memset(buf, 0xCC, sizeof(buf)); // Make it easy to detect an overrun.
+        unsigned int retval = sp_svg_number_write_de( buf, sizeof(buf), val, precision, minexp );
+        TSM_ASSERT_EQUALS("Number of chars written", retval, 3u);
+        TSM_ASSERT_EQUALS("Numeric string written", std::string(buf), std::string("760"));
+        TSM_ASSERT_EQUALS(std::string("Buffer overrun ") + buf, '\xCC', buf[retval + 1]);
+    }
+
     // TODO: More tests
 };
 
