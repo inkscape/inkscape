@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-07 15:29+0900\n"
-"PO-Revision-Date: 2009-10-07 16:31+0900\n"
+"POT-Creation-Date: 2009-10-09 01:52+0900\n"
+"PO-Revision-Date: 2009-10-09 01:51+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -22885,7 +22885,7 @@ msgstr "XAML 出力"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr "メディア付きの Inkscape SVG (*.zip)"
+msgstr "Inkscape SVG メディア付き圧縮 (*.zip)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
 msgid ""
