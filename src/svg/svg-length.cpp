@@ -43,7 +43,7 @@ unsigned int sp_svg_number_read_f(gchar const *str, float *val)
     if ((gchar const *) e == str) {
         return 0;
     }
-    
+
     *val = v;
     return 1;
 }
@@ -59,7 +59,7 @@ unsigned int sp_svg_number_read_d(gchar const *str, double *val)
     if ((gchar const *) e == str) {
         return 0;
     }
-    
+
     *val = v;
     return 1;
 }
@@ -72,14 +72,14 @@ static unsigned int sp_svg_number_write_ui(gchar *buf, unsigned int val)
         c[16u - (++i)] = '0' + (val % 10u);
         val /= 10u;
     } while (val > 0u);
-    
+
     memcpy(buf, &c[16u - i], i);
     buf[i] = 0;
-    
+
     return i;
 }
 
-static unsigned int sp_svg_number_write_i(gchar *buf, int val)
+static unsigned int sp_svg_number_write_i(gchar *buf, int bufLen, int val)
 {
     int p = 0;
     unsigned int uval;
@@ -91,11 +91,11 @@ static unsigned int sp_svg_number_write_i(gchar *buf, int val)
     }
 
     p += sp_svg_number_write_ui(buf+p, uval);
-    
+
     return p;
 }
 
-static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec, unsigned int fprec)
+static unsigned sp_svg_number_write_d(gchar *buf, int bufLen, double val, unsigned int tprec, unsigned int fprec)
 {
     /* Process sign */
     int i = 0;
@@ -103,15 +103,15 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
         buf[i++] = '-';
         val = fabs(val);
     }
-    
+
     /* Determine number of integral digits */
     int idigits = 0;
     if (val >= 1.0) {
         idigits = (int) floor(log10(val)) + 1;
     }
-    
+
     /* Determine the actual number of fractional digits */
-    fprec = MAX(fprec, tprec - idigits);
+    fprec = MAX(static_cast<int>(fprec), static_cast<int>(tprec) - idigits);
     /* Round value */
     val += 0.5 / pow(10.0, fprec);
     /* Extract integral and fractional parts */
@@ -146,7 +146,7 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
     return end_i;
 }
 
-unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, int min_exp)
+unsigned int sp_svg_number_write_de(gchar *buf, int bufLen, double val, unsigned int tprec, int min_exp)
 {
     int eval = (int)floor(log10(fabs(val)));
     if (val == 0.0 || eval < min_exp) {
@@ -158,12 +158,12 @@ unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, 
         (unsigned int)eval+1;
     unsigned int maxnumdigitsWithExp = tprec + ( eval<0 ? 4 : 3 ); // It's not necessary to take larger exponents into account, because then maxnumdigitsWithoutExp is DEFINITELY larger
     if (maxnumdigitsWithoutExp <= maxnumdigitsWithExp) {
-        return sp_svg_number_write_d(buf, val, tprec, 0);
+        return sp_svg_number_write_d(buf, bufLen, val, tprec, 0);
     } else {
         val = eval < 0 ? val * pow(10.0, -eval) : val / pow(10.0, eval);
-        int p = sp_svg_number_write_d(buf, val, tprec, 0);
+        int p = sp_svg_number_write_d(buf, bufLen, val, tprec, 0);
         buf[p++] = 'e';
-        p += sp_svg_number_write_i(buf + p, eval);
+        p += sp_svg_number_write_i(buf + p, bufLen - p, eval);
         return p;
     }
 }
@@ -255,7 +255,7 @@ std::vector<SVGLength> sp_svg_length_list_read(gchar const *str)
     float computed;
     char *next = (char *) str;
     std::vector<SVGLength> list;
-    
+
     while (sp_svg_length_read_lff(next, &unit, &value, &computed, &next)) {
 
         SVGLength length;
@@ -266,9 +266,9 @@ std::vector<SVGLength> sp_svg_length_list_read(gchar const *str)
                (*next == ',' || *next == ' ' || *next == '\n' || *next == '\r' || *next == '\t')) {
             // the list can be comma- or space-separated, but we will be generous and accept
             // a mix, including newlines and tabs
-            next++; 
+            next++;
         }
-        
+
         if (!next || !*next) {
             break;
         }
@@ -291,7 +291,7 @@ static unsigned sp_svg_length_read_lff(gchar const *str, SVGLength::Unit *unit, 
     if (e == str) {
         return 0;
     }
-    
+
     if (!e[0]) {
         /* Unitless */
         if (unit) {

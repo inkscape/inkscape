@@ -129,7 +129,7 @@ void Inkscape::SVG::PathString::State::appendNumber(double v, int precision, int
     size_t const oldsize = str.size();
     str.append(reserve, (char)0);
     char* begin_of_num = const_cast<char*>(str.data()+oldsize); // Slightly evil, I know (but std::string should be storing its data in one big block of memory, so...)
-    size_t added = sp_svg_number_write_de(begin_of_num, v, precision, minexp);
+    size_t added = sp_svg_number_write_de(begin_of_num, reserve, v, precision, minexp);
     str.resize(oldsize+added); // remove any trailing characters
 }
 

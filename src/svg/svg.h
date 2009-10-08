@@ -1,5 +1,5 @@
-#ifndef __SP_SVG_H__
-#define __SP_SVG_H__
+#ifndef SEEN_SP_SVG_H
+#define SEEN_SP_SVG_H
 
 /*
  * SVG data parser
@@ -28,14 +28,14 @@
  * - no valid end character checking
  * Return FALSE and let val untouched on error
  */
- 
-unsigned int sp_svg_number_read_f (const gchar *str, float *val);
-unsigned int sp_svg_number_read_d (const gchar *str, double *val);
+
+unsigned int sp_svg_number_read_f( const gchar *str, float *val );
+unsigned int sp_svg_number_read_d( const gchar *str, double *val );
 
 /*
  * No buffer overflow checking is done, so better wrap them if needed
  */
-unsigned int sp_svg_number_write_de (gchar *buf, double val, unsigned int tprec, int min_exp);
+unsigned int sp_svg_number_write_de( gchar *buf, int bufLen, double val, unsigned int tprec, int min_exp );
 
 /* Length */
 
@@ -48,9 +48,9 @@ unsigned int sp_svg_number_write_de (gchar *buf, double val, unsigned int tprec,
  * Any return value pointer can be NULL
  */
 
-unsigned int sp_svg_length_read_computed_absolute (const gchar *str, float *length);
-std::vector<SVGLength> sp_svg_length_list_read (const gchar *str);
-unsigned int sp_svg_length_read_ldd (const gchar *str, SVGLength::Unit *unit, double *value, double *computed);
+unsigned int sp_svg_length_read_computed_absolute( const gchar *str, float *length );
+std::vector<SVGLength> sp_svg_length_list_read( const gchar *str );
+unsigned int sp_svg_length_read_ldd( const gchar *str, SVGLength::Unit *unit, double *value, double *computed );
 
 std::string sp_svg_length_write_with_units(SVGLength const &length);
 
@@ -59,15 +59,15 @@ bool sp_svg_transform_read(gchar const *str, Geom::Matrix *transform);
 gchar *sp_svg_transform_write(Geom::Matrix const &transform);
 gchar *sp_svg_transform_write(Geom::Matrix const *transform);
 
-double sp_svg_read_percentage (const char * str, double def);
+double sp_svg_read_percentage( const char * str, double def );
 
 /* NB! As paths can be long, we use here dynamic string */
 
-Geom::PathVector sp_svg_read_pathv (char const * str);
-gchar * sp_svg_write_path (Geom::PathVector const &p);
-gchar * sp_svg_write_path (Geom::Path const &p);
+Geom::PathVector sp_svg_read_pathv( char const * str );
+gchar * sp_svg_write_path( Geom::PathVector const &p );
+gchar * sp_svg_write_path( Geom::Path const &p );
 
-#endif
+#endif // SEEN_SP_SVG_H
 
 /*
   Local Variables:
