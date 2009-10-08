@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-07 21:34+0100\n"
+"PO-Revision-Date: 2009-10-08 19:09+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -164,9 +164,8 @@ msgid "Small-scale roughening to edges and content"
 msgstr "Piccole increspature sui bordi e all'interno"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Rubber stamp"
-msgstr "Deformazione elastica"
+msgstr "Timbro di gomma"
 
 #: ../share/filters/filters.svg.h:11
 #: ../share/filters/filters.svg.h:17
@@ -189,14 +188,12 @@ msgid "Overlays"
 msgstr "Sovrapposizione"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "Posizione casuale"
+msgstr "Bianchettature interne casuali"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Ink bleed"
-msgstr "Miscela"
+msgstr "Macchie d'inchiostro"
 
 #: ../share/filters/filters.svg.h:12
 #: ../share/filters/filters.svg.h:13
@@ -249,9 +246,8 @@ msgid "Distort"
 msgstr "Distorto"
 
 #: ../share/filters/filters.svg.h:16
-#, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "Raggio orizzontale di un angolo arrotondato"
+msgstr "Ondulazione orizzontale dei bordi"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Speckle"
@@ -551,9 +547,8 @@ msgid "Shadowy outer bevel"
 msgstr "Smussatura esterna ombreggiata"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Dripping"
-msgstr "Script"
+msgstr "Colate"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Random paint streaks downwards"
@@ -568,9 +563,8 @@ msgid "Glossy clumpy jam spread"
 msgstr "Marmellata con grumi e riflessi"
 
 #: ../share/filters/filters.svg.h:43
-#, fuzzy
 msgid "Pixel smear"
-msgstr "Pixel"
+msgstr "Sbaffi di pixel"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Van Gogh painting effect for bitmaps"
@@ -1001,7 +995,7 @@ msgstr "Microscopio elettronico"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr ""
+msgstr "Luce fredda, opaca, scolorata e smussature come in un microscopio elettronico"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Tartan"
@@ -1033,7 +1027,7 @@ msgstr "Contorno doppio"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "Disegna una linea dolce dall'interno colorabile con il colore a cui viene sovrapposta"
 
 #: ../share/filters/filters.svg.h:94
 #, fuzzy
@@ -1042,7 +1036,7 @@ msgstr "Modifica sfocatura"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "Un contorno liscio colorato che permette de-saturazione e rotazione del colore"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Glow"
@@ -1151,9 +1145,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
-#, fuzzy
 msgid "Torn edges"
-msgstr "Muovi nodi"
+msgstr "Contorni frastagliati"
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
@@ -1463,9 +1456,8 @@ msgid "Comics"
 msgstr "Fumetti"
 
 #: ../share/filters/filters.svg.h:142
-#, fuzzy
 msgid "Imitation of black and white cartoon shading"
-msgstr "Inverte le regioni di bianco e nero"
+msgstr "Imitazione dell'ombreggiatura bianca e nera dei fumetti"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Satin"
@@ -1473,7 +1465,7 @@ msgstr "Satinato"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "Ombreggiatura opalescente simile a madreperla"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Frosted glass"
@@ -1481,7 +1473,7 @@ msgstr "Vetro smerigliato"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Non realistic frosted glass imitation"
-msgstr ""
+msgstr "Imitazione non realistica di vetro smerigliato"
 
 #: ../share/filters/filters.svg.h:145
 #, fuzzy
@@ -1727,9 +1719,8 @@ msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Arcobaleno colorato deformato lungo i bordi e colorabile"
 
 #: ../share/filters/filters.svg.h:173
-#, fuzzy
 msgid "Rough and dilate"
-msgstr "Modalità increspatura"
+msgstr "Espansione con increspature"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Create a turbulent contour around"
@@ -1911,14 +1902,12 @@ msgid "Something like a water noise"
 msgstr "Simile ai disturbi dovuti all'acqua"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Monochrome transparency"
-msgstr "Trasparenza rumorosa"
+msgstr "Trasparenza monocromatica"
 
 #: ../share/filters/filters.svg.h:195
-#, fuzzy
 msgid "Convert to a colorizable transparent positive or negative"
-msgstr "Converte in un negativo trasparente colorabile"
+msgstr "Converte in un negativo o positivo trasparente colorabile"
 
 #: ../share/filters/filters.svg.h:196
 msgid "Duotone"
@@ -1950,7 +1939,7 @@ msgstr "Mappa di saturazione"
 
 #: ../share/filters/filters.svg.h:199
 msgid "Creates an approximative semi-transparent and colorizable image of the saturation levels"
-msgstr ""
+msgstr "Crea un'immagine approssimativa semi-trasparente e colorabile dei livelli di saturazione"
 
 #: ../share/filters/filters.svg.h:200
 msgid "Riddled"
@@ -2018,11 +2007,11 @@ msgstr "Effetto metallico brillante per qualsiasi colore"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Deep colors plastic"
-msgstr ""
+msgstr "Plastica a colori scuri"
 
 #: ../share/filters/filters.svg.h:208
 msgid "Transparent plastic with deep colors"
-msgstr ""
+msgstr "Plastica trasparente con colori scuri"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Melted jelly, matte"
@@ -2030,7 +2019,7 @@ msgstr "Gelatina sciolta, opaca"
 
 #: ../share/filters/filters.svg.h:209
 msgid "Matte bevel with blurred edges"
-msgstr ""
+msgstr "Smussatura opaca con contorni sfumati"
 
 #: ../share/filters/filters.svg.h:210
 msgid "Melted jelly"
@@ -2042,9 +2031,8 @@ msgid "Glossy bevel with blurred edges"
 msgstr "I tratti hanno terminazioni arrotondate"
 
 #: ../share/filters/filters.svg.h:211
-#, fuzzy
 msgid "Combined lighting"
-msgstr "Combinato"
+msgstr "Illuminazione combinata"
 
 #: ../share/filters/filters.svg.h:212
 msgid "Tinfoil"
@@ -2063,9 +2051,8 @@ msgid "Specular bump which can be easily converted from metallic to molded plast
 msgstr ""
 
 #: ../share/filters/filters.svg.h:214
-#, fuzzy
 msgid "Inner Glow"
-msgstr "Ombra interno"
+msgstr "Alone interno"
 
 #: ../share/filters/filters.svg.h:214
 msgid "Adds a colorizable glow inside"
@@ -2076,9 +2063,8 @@ msgid "Soft colors"
 msgstr "Colori tenui"
 
 #: ../share/filters/filters.svg.h:215
-#, fuzzy
 msgid "Adds a colorizable edges glow inside objects and pictures"
-msgstr "Proietta un'ombra interna colorabile"
+msgstr "Proietta un alone colorabile dei bordi all'interno di oggetti e immagini"
 
 #: ../share/filters/filters.svg.h:216
 #, fuzzy
@@ -2087,7 +2073,7 @@ msgstr "Cianotipo"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr ""
+msgstr "Effetto rugoso con smussatura, riempimento colorato e illuminazione avanzata"
 
 #: ../share/filters/filters.svg.h:217
 msgid "Growing cells"
@@ -7356,9 +7342,8 @@ msgid "Enable the left and right deformation paths"
 msgstr "Attiva i tracciati di deformazione destro e sinistro"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable top & bottom paths"
-msgstr "Aggancia ai _tracciati"
+msgstr "Abilita tracciati in cima e in fondo"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 #, fuzzy
@@ -7516,7 +7501,7 @@ msgstr "Spaziatura"
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #, no-c-format
 msgid "Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."
-msgstr ""
+msgstr "Spaziatura tra le copie del motivo. Sono permessi valori negativi, ma limitati al -90% della larghezza del motivo."
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:72
 #: ../share/extensions/pathalongpath.inx.h:5
@@ -7657,9 +7642,8 @@ msgid "Generate thick/thin path"
 msgstr "Genera tracciato sottile/spesso"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
-#, fuzzy
 msgid "Simulate a stroke of varying width"
-msgstr "Ridimensiona la larghezza del contorno"
+msgstr "Simula un contorno a larghezza variabile"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
@@ -7794,9 +7778,8 @@ msgid "Shift marks by this many steps"
 msgstr "Imposta delimitatori"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
-#, fuzzy
 msgid "Mark direction"
-msgstr "Espandi direzione"
+msgstr "Segna direzione"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Direction of marks (when viewing along the path from start to end)"
@@ -7838,9 +7821,8 @@ msgid "Stroke length variation"
 msgstr "Variazione lunghezza tratto"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
-#, fuzzy
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Ridimensiona la larghezza del tracciato di contorno relativamente alla sua lunghezza"
+msgstr "Variazione casuale della lunghezza del contorno (relativa alla lunghezza massima)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7975,7 +7957,7 @@ msgstr "Usa solo trasformazioni uniformi"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."
-msgstr ""
+msgstr "2 segmenti consecutivi sono usati per invertire/preservare solo l'orientamento (altrimenti definiscono una trasformazione generica)."
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Draw all generations"
@@ -7991,9 +7973,8 @@ msgid "Reference segment"
 msgstr "Segmento di riferimento"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
-msgstr "Il segmento di riferimento. Il diametro del riquadro è usato come predefinito."
+msgstr "Il segmento di riferimento. La mediana orizzontale del riquadro è usato come predefinito."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -8105,7 +8086,7 @@ msgstr "Esporta il documento come file PNG"
 
 #: ../src/main.cpp:295
 msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
-msgstr ""
+msgstr "Risoluzione per esportare in bitmap e per la resa dei filtri in PS/EPS/PDF (predefinito 90)"
 
 #: ../src/main.cpp:296
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -9456,9 +9437,8 @@ msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Selezionare l'<b>oggetto</b> di cui fare una copia bitmap."
 
 #: ../src/selection-chemistry.cpp:2497
-#, fuzzy
 msgid "Rendering bitmap..."
-msgstr "Inversione tracciati"
+msgstr "Creazione bitmap..."
 
 #: ../src/selection-chemistry.cpp:2676
 msgid "Create bitmap"
@@ -9830,9 +9810,8 @@ msgid "Guides Around Page"
 msgstr "Guide attorno alla pagina"
 
 #: ../src/sp-guide.cpp:421
-#, fuzzy
 msgid "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"
-msgstr "<b>Trascinare</b> per creare un ellisse. <b>Trascinare i controlli</b> per farne un arco un segmento. <b>Fare clic</b> per selezionare."
+msgstr "<b>Maiusc+trascinare</b> per ruotare, <b>Ctrl+trascinare</b> per spostare l'origine, <b>Canc</b> per cancellare"
 
 #: ../src/sp-guide.cpp:426
 #, c-format
@@ -13652,7 +13631,7 @@ msgstr "Usa la cartella attuale per «Salva come...»"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid "When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is. When it's off, it will open in the directory where you last saved a file using that dialog."
-msgstr ""
+msgstr "Quando questa opzione è attiva, la finestra «Salva come...» verrà aperta alla cartella in cui risiede il documento aperto. Se disattivata, verrà all'ultima cartella in cui è stato salvato in questa maniera un file."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -18753,9 +18732,8 @@ msgid "Shape:"
 msgstr "Forma:"
 
 #: ../src/widgets/toolbox.cpp:3916
-#, fuzzy
 msgid "Shape of new paths drawn by this tool"
-msgstr "Stile dei nuovi tracciati creati con il «Pastello»"
+msgstr "Forma dei nuovi tracciati disegnati con questo strumento"
 
 #: ../src/widgets/toolbox.cpp:4001
 msgid "(many nodes, rough)"
@@ -19355,9 +19333,8 @@ msgid "Get limiting bounding box from selection"
 msgstr "Preleva riquadro limite dalla selezione"
 
 #: ../src/widgets/toolbox.cpp:5621
-#, fuzzy
 msgid "Set limiting bounding box (used to cut infinite lines) to the bounding box of current selection"
-msgstr "Aggancia gli angoli dei riquadri agli angoli di altri riquadri"
+msgstr "Imposta il riquadro limitante (usato per tagliare linee infinite) al riquadro della selezione attuale"
 
 #: ../src/widgets/toolbox.cpp:5633
 msgid "Choose a line segment type"
@@ -20775,7 +20752,7 @@ msgstr "Origine Y (px)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 msgid "hpgl output flatness"
-msgstr ""
+msgstr "appiattimento output hpgl"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -20864,7 +20841,7 @@ msgstr "Etichetta"
 
 #: ../share/extensions/interp_att_g.inx.h:20
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection"
-msgstr ""
+msgstr "Questo effetto applica un valore per ogni attributo interpolabile a tutti gli elementi del gruppo o degli oggetti multipli selezionati"
 
 #: ../share/extensions/interp_att_g.inx.h:21
 msgid "Transformation"
@@ -21176,7 +21153,7 @@ msgstr "La trama originale sarà:"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "Stira gli spazi per adattarsi alla lunghezza dello scheletro"
 
 #: ../share/extensions/pathscatter.inx.h:14
 msgid "This effect scatters a pattern along arbitrary \"skeleton\" paths. The pattern must be the topmost object in the selection. Groups of paths, shapes, clones are allowed."
