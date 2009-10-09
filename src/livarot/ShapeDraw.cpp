@@ -24,7 +24,6 @@ Shape::Plot (double ix, double iy, double ir, double mx, double my, bool doPoint
   fprintf(outFile,"\"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n");
   fprintf(outFile,"<svg:svg\n");
   fprintf(outFile,"   id=\"svg1\"\n");
-  fprintf(outFile,"   sodipodi:version=\"0.32\"\n");
   fprintf(outFile,"   inkscape:version=\"0.38cvs\"\n");
   fprintf(outFile,"   xmlns:svg=\"http://www.w3.org/2000/svg\"\n");
   fprintf(outFile,"   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n");
