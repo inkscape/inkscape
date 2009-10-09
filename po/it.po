@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-08 19:09+0100\n"
+"PO-Revision-Date: 2009-10-09 23:20+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -689,7 +689,7 @@ msgstr "Metallo lucidato"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Glowing metal texture"
-msgstr "Texture metallica con alonce"
+msgstr "Texture metallica con alone"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Leaves"
@@ -729,7 +729,7 @@ msgstr "Cera d'api iridescente"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Waxy texture which keeps its iridescence through color fill change"
-msgstr "Texture "
+msgstr "Texture ondulata che mantiene l'iridescenza con cambiamenti del colore di riempimento"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Eroded metal"
@@ -981,9 +981,8 @@ msgid "Blurred colorized contour, filled inside"
 msgstr "Contorno sfumato colorabile, riempimento interno"
 
 #: ../share/filters/filters.svg.h:88
-#, fuzzy
 msgid "Cool outside"
-msgstr "Riquadro"
+msgstr "Esterno freddo"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Blurred colorized contour, empty inside"
@@ -1141,7 +1140,7 @@ msgstr "Bordi smussati"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr ""
+msgstr "Liscia l'esterno di forme e immagine senza alterare il contenuto"
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
@@ -1151,7 +1150,7 @@ msgstr "Contorni frastagliati"
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "Scosta l'esterno di forme e immagine senza alterare il contenuto"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Feather"
@@ -1159,7 +1158,7 @@ msgstr "Cuoio"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "Applica una maschera di sfocatura al bordo senza alterare il contenuto"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Blur content"
@@ -1176,7 +1175,7 @@ msgstr "Illuminazione speculare"
 #: ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:211
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "Smussatura base speculare per costruire altre texture"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Roughen inside"
@@ -1248,7 +1247,7 @@ msgstr "Illuminazione diffusa"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "Smussatura base diffusa per costruire altre texture"
 
 #: ../share/filters/filters.svg.h:119
 #, fuzzy
@@ -1257,7 +1256,7 @@ msgstr "estrusione"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
+msgstr "Alone interno e esterno con riempimento colorabile ed eventuale spiazzamento"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -1268,9 +1267,8 @@ msgid "Same as HSL bumps but with a diffuse reflection instead of a specular one
 msgstr "Come Rughe HSL, ma con un'illuminazione diffusa anzichè speculare"
 
 #: ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "Dark Emboss"
-msgstr "Rilievo"
+msgstr "Rilievo scuro"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Emboss effect : 3D relief where white is replaced by black"
@@ -1289,9 +1287,8 @@ msgid "Bubbly Bumps, matte"
 msgstr "Rughe a bolle, opache"
 
 #: ../share/filters/filters.svg.h:123
-#, fuzzy
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Come bolle HSL ma con un'illuminazione diffusa anzichè speculare"
+msgstr "Come rughe a bolle ma con un'illuminazione diffusa anziché speculare"
 
 #: ../share/filters/filters.svg.h:124
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1327,9 +1324,8 @@ msgid "Inkblot on tissue or rough paper"
 msgstr "Macchie di inchiostro su tessuto o carta grezza"
 
 #: ../share/filters/filters.svg.h:129
-#, fuzzy
 msgid "Color outline, in"
-msgstr "Colore delle linee guida"
+msgstr "Contorno colorato, interno"
 
 #: ../share/filters/filters.svg.h:129
 msgid "A colorizable inner outline with adjustable width and blur"
@@ -1357,7 +1353,7 @@ msgstr "Feltro"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "Texture simile a feltro con turbolenza colorata e leggermente più scura ai bordi"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
@@ -1365,7 +1361,7 @@ msgstr "Disegno a china"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "Inchiostro su carta con variazioni di colore turbolente"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
@@ -1414,42 +1410,39 @@ msgstr "Shader 3D non realistici"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "Ombreggiatura a fumetto grezza con un aspetto vitreo"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Comics fading"
-msgstr ""
+msgstr "Fumetto scolorito"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "Tinta in stile fumetto con bordi scoloriti"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Smooth shader"
-msgstr "Smussatura"
+msgstr "Shader liscio"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "Ombreggiatura dolce con una mina in grafite"
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Emboss shader"
-msgstr "Shader rilievo NR"
+msgstr "Shader rilievo"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "Combinazione di ombreggiatura dolce e rilievo"
 
 #: ../share/filters/filters.svg.h:141
-#, fuzzy
 msgid "Smooth shader dark"
-msgstr "Smussatura"
+msgstr "Shader liscio scuro"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "Versione scura di una ombreggiature dolce non realistica"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics"
@@ -1476,13 +1469,12 @@ msgid "Non realistic frosted glass imitation"
 msgstr "Imitazione non realistica di vetro smerigliato"
 
 #: ../share/filters/filters.svg.h:145
-#, fuzzy
 msgid "Smooth shader contour"
-msgstr "Smussatura"
+msgstr "Shader liscio contornato"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "Versione contornata dello shader liscio"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Aluminium"
@@ -1490,33 +1482,31 @@ msgstr "Alluminio"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "Shader alluminio smerigliato"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Comics fluid"
-msgstr ""
+msgstr "Fumetto fluido"
 
 #: ../share/filters/filters.svg.h:147
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "Adatta la pagina al disegno"
+msgstr "Disegno di fumetto abbozzato"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Chrome"
-msgstr "Combina"
+msgstr "Cromatura"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "Shader cromato non realistica con forte illuminazione speculare"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Chrome dark"
-msgstr ""
+msgstr "Cromatura scura"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "Versione scura dell'ombreggiatura cromata con un simulazione di riflesso in basso"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Wavy tartan"
@@ -1524,7 +1514,7 @@ msgstr "Tartan increspato"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
+msgstr "Motivo a tartan con spostamento a onde e smussatura ai bordi"
 
 #: ../share/filters/filters.svg.h:151
 msgid "3D marble"
@@ -1556,23 +1546,23 @@ msgstr "Pelo di tigre"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "Motivo tigrati con pieghe e smussature lungo i bordi"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Shaken liquid"
-msgstr ""
+msgstr "Liquido agitato"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Colorizable filling with flow inside like transparency"
-msgstr ""
+msgstr "Riempimento colorabile con flussi interni in trasparenza"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Comics cream"
-msgstr ""
+msgstr "Fumetto crema"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "Shader a fumetto con onde cremose in trasparenza"
 
 #: ../share/filters/filters.svg.h:157
 msgid "Black Light"
@@ -1583,9 +1573,8 @@ msgid "Light areas turn to black"
 msgstr "Le aree chiare diventano nere"
 
 #: ../share/filters/filters.svg.h:158
-#, fuzzy
 msgid "Light eraser"
-msgstr "Luminosità"
+msgstr "Sovraesposto"
 
 #: ../share/filters/filters.svg.h:158
 #: ../share/filters/filters.svg.h:195
@@ -1597,16 +1586,15 @@ msgstr "Strumenti trasparenze"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "Rende le parti più chiare dell'oggetto progressivamente trasparenti"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Noisy blur"
 msgstr "Sfocatura rumorosa"
 
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Ridimensiona angoli arrotondati"
+msgstr "Sfocatura e raschiatura su piccola scala a bordi e contenuto"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Film grain"
@@ -1632,7 +1620,7 @@ msgstr "Disegno"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
-msgstr ""
+msgstr "Aggiunge un effetto incisione o matita a piombo o cromolitografia o simile a immagini o materiali usati come riempimento"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet Bumps"
@@ -1685,22 +1673,20 @@ msgid "Draws a colored outline around"
 msgstr "Disegna un contorno esterno colorato"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
 msgid "Inner Shadow"
-msgstr "Ombra interno"
+msgstr "Ombra interna"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Adds a colorizable drop shadow inside"
 msgstr "Proietta un'ombra interna colorabile"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Dark and Glow"
-msgstr "Ombre e aloni"
+msgstr "Scuro e con alone"
 
 #: ../share/filters/filters.svg.h:170
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
-msgstr ""
+msgstr "Scurisce il bordo con una sfocatura interna e aggiunge un alone controllabile"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Darken edges"
@@ -1708,7 +1694,7 @@ msgstr "Bordi scuri"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Darken the edges with an inner blur"
-msgstr ""
+msgstr "Scurisce i bordi con un interno sfuocato"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Warped rainbow"
@@ -1740,11 +1726,11 @@ msgstr "Cartolina antica"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "Posterizza leggermente e disegna i bordi come nelle vecchie cartoline stampate"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Fuzzy Glow"
-msgstr ""
+msgstr "Alone incoerente"
 
 #: ../share/filters/filters.svg.h:176
 msgid "Overlays a semi-transparent shifted copy to a blurred one"
@@ -1849,7 +1835,7 @@ msgstr "Alpha (opacità)"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr ""
+msgstr "Aggiunge un effetto di incisione in trasparenza con linee e riempimenti grezzi"
 
 #: ../share/filters/filters.svg.h:189
 #, fuzzy
@@ -1858,7 +1844,7 @@ msgstr "Alfa"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr ""
+msgstr "Aggiunge un effetto fluido e trasparente alle immagini con linee e riempimenti grezzi"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Liquid drawing"
@@ -1866,7 +1852,7 @@ msgstr "Pittura ad acqua"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr ""
+msgstr "Aggiunge un effetto espressionista fluido e ondulato alle immagini"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
@@ -1891,7 +1877,7 @@ msgstr "Alpha (opacità)"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "Aggiunge un effetto incisione grezza regolabile a immagine e materiali"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Lapping"
@@ -1919,11 +1905,11 @@ msgstr "Cambia i colori in una tavolozza a due toni"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Light eraser, negative"
-msgstr ""
+msgstr "Sovraesposto, negativo"
 
 #: ../share/filters/filters.svg.h:197
 msgid "Like Light eraser but converts to negative"
-msgstr ""
+msgstr "Come «Sovraesposto», ma converte in negativo"
 
 #: ../share/filters/filters.svg.h:198
 msgid "Alpha repaint"
@@ -1963,7 +1949,7 @@ msgstr "Tela rugosa"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "Texture simile a tela con HSL dipendenti dalla mappa del rilievo"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
@@ -2026,9 +2012,8 @@ msgid "Melted jelly"
 msgstr "Gelatina sciolta"
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Glossy bevel with blurred edges"
-msgstr "I tratti hanno terminazioni arrotondate"
+msgstr "Smussatura vitrea con bordi sfumati"
 
 #: ../share/filters/filters.svg.h:211
 msgid "Combined lighting"
@@ -2048,7 +2033,7 @@ msgstr "Rame e cioccolato"
 
 #: ../share/filters/filters.svg.h:213
 msgid "Specular bump which can be easily converted from metallic to molded plastic effects"
-msgstr ""
+msgstr "Ruga speculari che può essere facilmente convertita da un effetto metallo a plastica fusa"
 
 #: ../share/filters/filters.svg.h:214
 msgid "Inner Glow"
@@ -2067,9 +2052,8 @@ msgid "Adds a colorizable edges glow inside objects and pictures"
 msgstr "Proietta un alone colorabile dei bordi all'interno di oggetti e immagini"
 
 #: ../share/filters/filters.svg.h:216
-#, fuzzy
 msgid "Relief print"
-msgstr "Cianotipo"
+msgstr "Stampa in rilievo"
 
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps effect with a bevel, color flood and complex lighting"
@@ -2208,9 +2192,8 @@ msgid "Checkerboard white"
 msgstr "Scacchiera bianca"
 
 #: ../share/patterns/patterns.svg.h:29
-#, fuzzy
 msgid "Packed circles"
-msgstr "cerchio"
+msgstr "Cerchi impacchettati"
 
 #: ../share/patterns/patterns.svg.h:30
 msgid "Polka dots, small"
@@ -2257,9 +2240,8 @@ msgid "Sand (bitmap)"
 msgstr "Sabbia (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:41
-#, fuzzy
 msgid "Cloth (bitmap)"
-msgstr "Crea bitmap"
+msgstr "Tessuto (bitmap)"
 
 #: ../share/patterns/patterns.svg.h:42
 msgid "Old paint (bitmap)"
@@ -5287,9 +5269,8 @@ msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "Nome per la cartella dei moduli esterni non valido. I moduli non verranno caricati."
 
 #: ../src/extension/internal/filter/snow.h:32
-#, fuzzy
 msgid "Snow crest"
-msgstr "Nessuna anteprima"
+msgstr "Cresta innevata"
 
 #: ../src/extension/internal/filter/snow.h:34
 #, fuzzy
@@ -5413,23 +5394,23 @@ msgstr "File di disegno OpenDocument"
 #. more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:56
 msgid "media box"
-msgstr ""
+msgstr "riquadro contenuto"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:57
 msgid "crop box"
-msgstr ""
+msgstr "riquadro adattato"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:58
 msgid "trim box"
-msgstr ""
+msgstr "riquadro ritaglio"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:59
 msgid "bleed box"
-msgstr ""
+msgstr "riquadro rifilo"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:60
 msgid "art box"
-msgstr ""
+msgstr "riquadro immagine"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:72
 msgid "Select page:"
@@ -7050,9 +7031,8 @@ msgid "Dynamic stroke"
 msgstr "Contorno dinamico"
 
 #: ../src/live_effects/effect.cpp:93
-#, fuzzy
 msgid "Lattice Deformation"
-msgstr "Rotazione del carattere"
+msgstr "Deformazione reticolare"
 
 #: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
@@ -7071,9 +7051,8 @@ msgid "Path length"
 msgstr "Lunghezza tracciato"
 
 #: ../src/live_effects/effect.cpp:99
-#, fuzzy
 msgid "Perpendicular bisector"
-msgstr "(perpendicolare alla direzione, \"pennello\")"
+msgstr "Bisettrice perpendicolare"
 
 #: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
@@ -7136,9 +7115,8 @@ msgid "Envelope Deformation"
 msgstr "Deformazione a busta"
 
 #: ../src/live_effects/effect.cpp:117
-#, fuzzy
 msgid "Interpolate Sub-Paths"
-msgstr "Interpola"
+msgstr "Interpola sotto-tracciati"
 
 #: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
@@ -7146,7 +7124,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Sketch"
-msgstr ""
+msgstr "Bozzetto"
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Ruler"
@@ -7284,9 +7262,8 @@ msgid "Scale the width of the stitch path"
 msgstr "Ridimensionamento della larghezza del tracciato di contorno"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale width relative to length"
-msgstr "Ridimensiona larghezza relativamente"
+msgstr "Ridimensiona larghezza relativamente alla lunghezza"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 #, fuzzy
@@ -7402,9 +7379,8 @@ msgid "Size of hidden region of lower string"
 msgstr "Dimensione della regione nascosta della stringa inferiore"
 
 #: ../src/live_effects/lpe-knot.cpp:324
-#, fuzzy
 msgid "In units of stroke width"
-msgstr "Larghezza contorno"
+msgstr "In unità della larghezza contorno"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width"
@@ -7421,9 +7397,8 @@ msgid "Add the stroke width to the interruption size"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:326
-#, fuzzy
 msgid "Crossing path stroke width"
-msgstr "Modifica larghezza contorno"
+msgstr "Larghezza contorno tracciato intersecante"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size"
@@ -7516,13 +7491,12 @@ msgid "Tangential offset"
 msgstr "Proiezione tangenziale"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:74
-#, fuzzy
 msgid "Offsets in unit of pattern size"
-msgstr "Da oggetto a motivo"
+msgstr "Spostamento in unita di dimensione del motivo"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
-msgstr ""
+msgstr "Spaziatura e spostamento tangenziale e normale sono espressi come rapporto larghezza/altezza"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -7732,28 +7706,24 @@ msgid "End"
 msgstr "Fine"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
-#, fuzzy
 msgid "Mark distance"
-msgstr "Distanza di aggancio"
+msgstr "Distanza segni"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
-#, fuzzy
 msgid "Distance between successive ruler marks"
-msgstr "Distanza tra  linee guida verticali"
+msgstr "Distanza tra segni successivi del righello"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
-#, fuzzy
 msgid "Major length"
-msgstr "Lunghezza d'onda"
+msgstr "Lunghezza principali"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Length of major ruler marks"
 msgstr "Lunghezza dei segni principali del righello"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
-#, fuzzy
 msgid "Minor length"
-msgstr "Lunghezza d'onda"
+msgstr "Lunghezza secondari"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Length of minor ruler marks"
@@ -7768,14 +7738,12 @@ msgid "Draw a major mark every ... steps"
 msgstr "Traccia un segno ogni tot passi"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-#, fuzzy
 msgid "Shift marks by"
-msgstr "Imposta delimitatori"
+msgstr "Sposta segni di"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
-#, fuzzy
 msgid "Shift marks by this many steps"
-msgstr "Imposta delimitatori"
+msgstr "Sposta segni di questi passi"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Mark direction"
@@ -7812,9 +7780,8 @@ msgid "Max stroke length"
 msgstr "Lunghezza massima del contorno"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
-#, fuzzy
 msgid "Maximum length of approximating strokes"
-msgstr "Lunghezza massima dello spigolo (in unità della larghezza del contorno)"
+msgstr "Lunghezza massima del tratto approssimante"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
@@ -7829,9 +7796,8 @@ msgid "Max. overlap"
 msgstr "Massima sovrapposizione"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
-#, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Ridimensiona la larghezza del tracciato di contorno relativamente alla sua lunghezza"
+msgstr "Quanti tratti successivi devono sovrapporsi (relativamente alla massima lunghezza)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
@@ -7859,11 +7825,11 @@ msgstr "Distanza media"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr ""
+msgstr "Tremore massimo"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr ""
+msgstr "Grandezza massima del tremore"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 #, fuzzy
@@ -8190,7 +8156,7 @@ msgstr "Converte i testi in tracciati durante l'esportazione (PS, EPS, PDF)"
 
 #: ../src/main.cpp:389
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
-msgstr ""
+msgstr "Elimina filtri nella resa di oggetti con filtri, invece di farne una versione raster (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:395
@@ -8765,7 +8731,7 @@ msgstr "Disegno cancellato"
 
 #: ../src/pencil-context.cpp:572
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
-msgstr ""
+msgstr "<b>Modalità bozzetto</b>: tenere premuto <b>Alt</b> per interpolare i tracciati abbozzati. Rilasciare <b>Alt</b> per completare."
 
 #: ../src/pencil-context.cpp:600
 msgid "Finishing freehand sketch"
@@ -11517,9 +11483,8 @@ msgstr "St_ile contorno"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
-#, fuzzy
 msgid "This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value."
-msgstr "Questa matrice determina una trasformazione lineare dello spazio cromatico. Ogni riga agisce su una componente del colore. Ogni colonna determina in che quantità il colore in input verrà passato all'output. L'ultima colonna non dipende dal colore in input, per cui può essere usata per impostare una componente costante."
+msgstr "Questa matrice determina una trasformazione lineare dello spazio cromatico. Ogni riga agisce su una componente del colore. Ogni colonna determina in che quantità il colore in input verrà passato all'output. L'ultima colonna non dipende dai colori in input, per cui può essere usata per impostare una componente costante."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
@@ -11784,7 +11749,7 @@ msgstr "Divisore:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
-msgstr ""
+msgstr "Dopo aver applicato la kernelMatrix all'immagine in input per ottenere un numero, esso viene diviso per il divisore per ottenere il valore del colore finale. Un divisore che è la somma di tutti i valori della matrice tende ad avere un effetto scurente sull'intensità complessiva del colore risultante."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Bias:"
@@ -11800,7 +11765,7 @@ msgstr "Modalità spigolo:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2197
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
-msgstr ""
+msgstr "Determina come estendere del necessario l'immagine in input con i valori di colore affinché la matrice di operazione possa essere applicata quando il kernel è posizionata in corrispondenza o vicino al bordo dell'immagine."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2198
 msgid "Preserve Alpha"
@@ -11896,6 +11861,8 @@ msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
 msgstr ""
+"Erodi: rende l'immagine più piccola.\n"
+"Dilata: rende l'immagine più grossa."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2224
 msgid "Radius:"
@@ -11932,7 +11899,7 @@ msgstr "Esponente:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
 msgid "Exponent for specular term, larger is more \"shiny\"."
-msgstr ""
+msgstr "Esponente per il termini speculare, valori maggiori rendono più \"brillante\"."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
@@ -11947,9 +11914,8 @@ msgid "Octaves:"
 msgstr "Ottave:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
-#, fuzzy
 msgid "Seed:"
-msgstr "Velocità:"
+msgstr "Seme:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2249
 msgid "The starting number for the pseudo random number generator."
@@ -12518,7 +12484,7 @@ msgstr "Tempo di evidenziazione"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."
-msgstr ""
+msgstr "Specifica per quanto la traccia del tracciato resta visibile dopo il passaggio del mouse (in millisecondi). Specificando 0 la traccia resterà visibile finché il mouse è sopra il tracciato."
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:447
@@ -12549,7 +12515,7 @@ msgstr "Modalità bozzetto"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."
-msgstr ""
+msgstr "Se attivo, il bozzetto finale sarà la media di tutti i bozzetti disegnati, invece di fare la media tra il vecchio risultato e l'ultimo disegnato."
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:495
@@ -17675,7 +17641,7 @@ msgstr "Proprietà:"
 
 #: ../src/widgets/select-toolbar.cpp:536
 msgid "Control whether or not to scale stroke widths, scale rectangle corners, transform gradient fills, and transform pattern fills with the object"
-msgstr ""
+msgstr "Controlla se ridimensionare la larghezza del contorno, gli angoli dei rettangoli, trasformare i gradienti e i motivi di riempimento insieme all'oggetto"
 
 #: ../src/widgets/select-toolbar.cpp:555
 msgid "Scale rounded corners"
@@ -20002,9 +19968,8 @@ msgid "Custom Point Specified By:"
 msgstr "Punto particolare specificato da:"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
-#, fuzzy
 msgid "Custom Points and Options"
-msgstr "Opzioni da linea di comando"
+msgstr "Opzioni e punti personalizzati"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle Around This Point"
@@ -20016,11 +19981,11 @@ msgstr "Disegna dal triangolo"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
-msgstr ""
+msgstr "Disegna il coniugato isogonale"
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
 msgid "Draw Isotomic Conjugate"
-msgstr ""
+msgstr "Disegna il coniugato isotomico"
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
 msgid "Draw Marker At This Point"
@@ -20507,11 +20472,11 @@ msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Suddivisione logaritmica X (base specificata nella voce precedente)."
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Suddivisione logaritmica Y (base specificata nella voce precedente)."
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 #, fuzzy
@@ -20603,7 +20568,7 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Suddivisione logaritmica (base specificata nella voce precedente)."
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
@@ -21253,9 +21218,8 @@ msgid "3D Polyhedron"
 msgstr "Poliedro 3D"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
-msgstr "Sblocca oggetto"
+msgstr "Ruota oggetto in senso orario"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
 msgid "Cube"
@@ -21456,14 +21420,12 @@ msgid "Z-sort faces by:"
 msgstr "Ordina profondità facce per:"
 
 #: ../share/extensions/printing-marks.inx.h:1
-#, fuzzy
 msgid "Bleed Margin"
-msgstr "Margine (in)"
+msgstr "Margini di rifilo"
 
 #: ../share/extensions/printing-marks.inx.h:2
-#, fuzzy
 msgid "Bleed Marks"
-msgstr "Delimitatore metà:"
+msgstr "Indicatori di taglio"
 
 #: ../share/extensions/printing-marks.inx.h:3
 msgid "Bottom:"
@@ -21514,9 +21476,8 @@ msgid "Set crop marks to"
 msgstr "Imposta delimitatori a"
 
 #: ../share/extensions/printing-marks.inx.h:17
-#, fuzzy
 msgid "Star Target"
-msgstr "Obiettivo"
+msgstr "Indicatore a stella"
 
 #: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
