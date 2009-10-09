@@ -13,9 +13,13 @@ private:
     struct test_t {
         char const* str; SVGLength::Unit unit; float value; float computed;
     };
+    struct testd_t {
+        char const* str; double val; int prec; int minexp;
+    };
     static test_t const absolute_tests[12];
     static test_t const relative_tests[3];
     static char const * fail_tests[8];
+
 public:
     SvgLengthTest() {
     }
@@ -134,34 +138,21 @@ public:
         TSM_ASSERT_EQUALS(validStrings, validStrings.size(), 0u);
     }
 
-
-
-    void testFourPlaces()
+    void testPlaces()
     {
-        double val = 761.92918978947023;
-        int precision = 4;
-        int minexp = -8;
-        char buf[256] = {0};
+        testd_t const precTests[] = {
+            {"760", 761.92918978947023, 2, -8},
+            {"761.9", 761.92918978947023, 4, -8},
+        };
 
-        memset(buf, 0xCC, sizeof(buf)); // Make it easy to detect an overrun.
-        unsigned int retval = sp_svg_number_write_de( buf, sizeof(buf), val, precision, minexp );
-        TSM_ASSERT_EQUALS("Number of chars written", retval, 5u);
-        TSM_ASSERT_EQUALS("Numeric string written", std::string(buf), std::string("761.9"));
-        TSM_ASSERT_EQUALS(std::string("Buffer overrun ") + buf, '\xCC', buf[retval + 1]);
-    }
-
-    void testTwoPlaces()
-    {
-        double val = 761.92918978947023;
-        int precision = 2;
-        int minexp = -8;
-        char buf[256] = {0};
-
-        memset(buf, 0xCC, sizeof(buf)); // Make it easy to detect an overrun.
-        unsigned int retval = sp_svg_number_write_de( buf, sizeof(buf), val, precision, minexp );
-        TSM_ASSERT_EQUALS("Number of chars written", retval, 3u);
-        TSM_ASSERT_EQUALS("Numeric string written", std::string(buf), std::string("760"));
-        TSM_ASSERT_EQUALS(std::string("Buffer overrun ") + buf, '\xCC', buf[retval + 1]);
+        for ( size_t i = 0; i < G_N_ELEMENTS(precTests); i++ ) {
+            char buf[256] = {0};
+            memset(buf, 0xCC, sizeof(buf)); // Make it easy to detect an overrun.
+            unsigned int retval = sp_svg_number_write_de( buf, sizeof(buf), precTests[i].val, precTests[i].prec, precTests[i].minexp );
+            TSM_ASSERT_EQUALS("Number of chars written", retval, strlen(precTests[i].str));
+            TSM_ASSERT_EQUALS("Numeric string written", std::string(buf), std::string(precTests[i].str));
+            TSM_ASSERT_EQUALS(std::string("Buffer overrun ") + precTests[i].str, '\xCC', buf[retval + 1]);
+        }
     }
 
     // TODO: More tests
