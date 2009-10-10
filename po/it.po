@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-09 23:20+0100\n"
+"PO-Revision-Date: 2009-10-10 13:08+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1654,7 +1654,7 @@ msgstr "Chewing gum"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Creates colorizable blotches which smoothly flow over the edges of the lines at their crossings"
-msgstr ""
+msgstr "Crea macchie colorabili che fluiscono dolcemente lungo i bordi delle linee dai punti di intersezione"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -1772,13 +1772,12 @@ msgid "Thick painting effect with turbulence"
 msgstr "Effetto pittura spessa con turbolenza"
 
 #: ../share/filters/filters.svg.h:181
-#, fuzzy
 msgid "Burst"
-msgstr "Sfocature"
+msgstr "Palloncino scoppiato"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "Texture a palloncino scoppiato con pieghe e buchi"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Embossed leather"
@@ -4795,9 +4794,8 @@ msgid "Highlight edges of selected bitmap(s)."
 msgstr "Evidenzia i bordi delle bitmap selezionate."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
-msgstr "Mette in rilievo la bitmap selezionata - esalta gli spigoli con un effetto 3D."
+msgstr "Mette in rilievo le bitmap selezionate - esalta gli spigoli con un effetto 3D."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -5273,9 +5271,8 @@ msgid "Snow crest"
 msgstr "Cresta innevata"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size"
-msgstr "Dimensione punti"
+msgstr "Dimensione cumuli"
 
 #: ../src/extension/internal/filter/snow.h:42
 msgid "Snow has fallen on object"
@@ -7076,9 +7073,8 @@ msgstr "Etichetta testuale"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:107
-#, fuzzy
 msgid "Bend"
-msgstr "Miscela"
+msgstr "Piegatura"
 
 #: ../src/live_effects/effect.cpp:108
 msgid "Gears"
@@ -7091,7 +7087,7 @@ msgstr "Motivo lungo tracciato"
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:110
 msgid "Stitch Sub-Paths"
-msgstr ""
+msgstr "Cucitura sotto-tracciati"
 
 #. 0.47
 #: ../src/live_effects/effect.cpp:112
@@ -7120,7 +7116,7 @@ msgstr "Interpola sotto-tracciati"
 
 #: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "Scarabocchi (grezzo)"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Sketch"
@@ -7157,14 +7153,12 @@ msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Nessuno dei parametri dell'effetto su tracciato applicato può essere modificato direttamente sulla tela."
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Bend path"
-msgstr "Distorci tracciato"
+msgstr "Tracciato di piega"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
-#, fuzzy
 msgid "Path along which to bend the original path"
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato secondo il quale piegare il tracciato originale"
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
@@ -7185,7 +7179,7 @@ msgstr "Tracciato verticale"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
-msgstr ""
+msgstr "Ruota l'originale di 90 gradi, prima di piegarlo lungo il tracciato di piegatura"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
@@ -7204,13 +7198,12 @@ msgid "The size of the grid in Y direction."
 msgstr "Dimensione della griglia sulla direzione Y."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path"
-msgstr "Tracciato contorno"
+msgstr "Tracciato di cucitura"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
-msgstr ""
+msgstr "Il tracciato che sarà usato come cucitura."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths"
@@ -7226,15 +7219,15 @@ msgstr "Varianza margine iniziale"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The amount of random jitter to move the start points of the stitches inside & outside the guide path"
-msgstr ""
+msgstr "La quantità casuale di cui muovere il punto iniziale dei fili verso l'interno o l'esterno del tracciato guida"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
-msgstr ""
+msgstr "Varianza spaziatura iniziale"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
-msgstr ""
+msgstr "La quantità casuale di cui muovere il punto iniziale dei fili avanti e indietro lungo il tracciato guida"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
@@ -7242,33 +7235,31 @@ msgstr "Varianza margine finale"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of randomness that moves the end points of the stitches inside & outside the guide path"
-msgstr ""
+msgstr "La quantità casuale di cui muovere il punto finale dei fili verso l'interno o l'esterno del tracciato guida"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End spacing variance"
-msgstr ""
+msgstr "Varianza spaziatura iniziale"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
-msgstr ""
+msgstr "La quantità casuale di cui muovere il punto iniziale dei fili avanti e indietro lungo il tracciato guida"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale width"
 msgstr "Ridimensiona larghezza"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
-#, fuzzy
 msgid "Scale the width of the stitch path"
-msgstr "Ridimensionamento della larghezza del tracciato di contorno"
+msgstr "Ridimensiona la larghezza del tracciato di cucitura"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale width relative to length"
 msgstr "Ridimensiona larghezza relativamente alla lunghezza"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
-#, fuzzy
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Ridimensiona la larghezza del tracciato di contorno relativamente alla sua lunghezza"
+msgstr "Ridimensiona la larghezza del tracciato di cucitura relativamente alla sua lunghezza"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 #, fuzzy
@@ -7522,93 +7513,90 @@ msgstr "Casualità frequenza"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
-msgstr ""
+msgstr "Variazione di distanza tra i tratti, in %."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
-#, fuzzy
 msgid "Growth"
-msgstr "Ritocco accrescimento"
+msgstr "Accrescimento"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
-msgstr ""
+msgstr "Crescita della distanza tra i tratti."
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half-turns smoothness: 1st side, in"
-msgstr ""
+msgstr "Curvatura inversioni: lato inferiore, prima"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Imposta curvatura dolce/spigolosa del tracciato in arrivo alle inversioni in \"fondo\". 0=spigoloso, 1=predefinito"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr ""
+msgstr "lato inferiore, dopo"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Imposta curvatura dolce/spigolosa del tracciato in uscita dalle inversioni in \"fondo\". 0=spigoloso, 1=predefinito"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
-msgstr "nodo finale"
+msgstr "lato superiore, prima"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Imposta curvatura dolce/spigolosa del tracciato in arrivo alle inversioni in \"cima\". 0=spigoloso, 1=predefinito"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr ""
+msgstr "lato superiore, dopo"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Imposta curvatura dolce/spigolosa del tracciato in uscita dalle inversioni in \"cima\". 0=spigoloso, 1=predefinito"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "Casualità dimensione: lato inferiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr ""
+msgstr "Sposta casualmente le inversioni in \"fondo\" per produrre variazioni di dimensione."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
-#, fuzzy
 msgid "2nd side"
-msgstr "nodo finale"
+msgstr "lato superiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' half-turns to produce magnitude variations."
-msgstr ""
+msgstr "Sposta casualmente le inversioni in \"cima\" per produrre variazioni di dimensione."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "Casualità parallelismo: lato inferiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Add direction randomness by moving 'bottom' half-turns tangentially to the boundary."
-msgstr ""
+msgstr "Aggiunge casualità alla direzione spostando le inversioni in \"fondo\" tangenzialmente al contorno."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Add direction randomness by randomly moving 'top' half-turns tangentially to the boundary."
-msgstr ""
+msgstr "Aggiunge casualità alla direzione spostando le inversioni in \"cima\" tangenzialmente al contorno."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
-msgstr ""
+msgstr "Variazione: lato inferiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' half-turns smoothness"
-msgstr ""
+msgstr "Casualità nella curvatura delle inversioni in \"fondo\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' half-turns smoothness"
-msgstr ""
+msgstr "Casualità nella curvatura delle inversioni in \"cima\""
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
@@ -7620,65 +7608,63 @@ msgid "Simulate a stroke of varying width"
 msgstr "Simula un contorno a larghezza variabile"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
-#, fuzzy
 msgid "Bend hatches"
-msgstr "Distorci tracciato"
+msgstr "Piega scarabocchio"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "Aggiunge una piega globale agli scarabocchi (lento)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
-msgstr ""
+msgstr "Spessore: al lato inferiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half-turns"
-msgstr ""
+msgstr "Larghezza alle inversioni in \"fondo\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
-msgstr ""
+msgstr "al lato superiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' half-turns"
-msgstr ""
+msgstr "Larghezza alle inversioni in \"cima\""
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "from 2nd to 1st side"
-msgstr ""
+msgstr "dal lato superiore a quello inferiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "Width from 'top' to 'bottom'"
-msgstr ""
+msgstr "Larghezza dalla \"cima\" al \"fondo\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
-msgstr ""
+msgstr "dal lato inferiore a quello superiore"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width from 'bottom' to 'top'"
-msgstr ""
+msgstr "Larghezza dal \"fondo\" alla \"fondo\""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
-#, fuzzy
 msgid "Hatches width and dir"
-msgstr "Blocca larghezza e altezza: "
+msgstr "Larghezza e direzione scarabocchio"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Defines hatches frequency and direction"
-msgstr ""
+msgstr "Definisce la direzione e la frequenza degli scarabocchi"
 
 #.
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
-msgstr ""
+msgstr "Piegatura globale"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Relative position to a reference point defines global bending direction and amount"
-msgstr ""
+msgstr "La posizione relativa a un punto di riferimento definisce la quantità e la direzione della piegatura globale"
 
 #: ../src/live_effects/lpe-ruler.cpp:27
 #: ../share/extensions/restack.inx.h:7
@@ -7832,13 +7818,12 @@ msgid "Maximum tremble magnitude"
 msgstr "Grandezza massima del tremore"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "Frequenza base"
+msgstr "Frequenza tremore"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Average number of tremble periods in a stroke"
-msgstr ""
+msgstr "Numero medio di periodi tremolanti in un bozzetto"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -12194,11 +12179,11 @@ msgstr "Quando sono disponibili più possibilità per l'aggancio, Inkscape può 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:233
 msgid "Snap the mouse pointer when dragging a constrained knot"
-msgstr ""
+msgstr "Aggancia il puntatore del mouse durante il trascinamento di un punto annodato"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:235
 msgid "When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"
-msgstr ""
+msgstr "Durante il trascinamento di un nodo lungo un tracciato annodato, aggancia la posizione del puntatore del mouse invece delle proiezione del nodo lungo il tracciato"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:237
 msgid "Snapping"
@@ -19484,19 +19469,16 @@ msgstr "Impossibile elaborare questo oggetto. Convertirlo prima in tracciato."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
-#, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato 'a'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:176
-#, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato 'b'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:177
-#, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato 'c'/px:"
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians: "
@@ -19626,7 +19608,7 @@ msgstr "Errore nell'importare il modulo numpy. Tale modulo è necessario a quest
 
 #: ../share/extensions/polyhedron_3d.py:331
 msgid "No face data found in specified file."
-msgstr ""
+msgstr "Nessuna informazione per le facce trovata nel file specificato."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
@@ -19634,7 +19616,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
-msgstr ""
+msgstr "Nessuna informazione per gli spigoli trovata nel file specificato."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
@@ -20479,68 +20461,60 @@ msgid "Logarithmic Y Subdiv. (Base given by entry above)"
 msgstr "Suddivisione logaritmica Y (base specificata nella voce precedente)."
 
 #: ../share/extensions/grid_cartesian.inx.h:7
-#, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr "Spaziatura orizzontale"
+msgstr "Spaziatura divisioni X primarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
-#, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "Divisione"
+msgstr "Spessore divisioni X primarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
-#, fuzzy
 msgid "Major X Divisions"
-msgstr "Divisione"
+msgstr "Divisioni X principali"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
-#, fuzzy
 msgid "Major Y Division Spacing [px]"
-msgstr "Spaziatura orizzontale"
+msgstr "Spaziatura divisioni Y primarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "Divisione"
+msgstr "Spessore divisioni Y primarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
-#, fuzzy
 msgid "Major Y Divisions"
-msgstr "Divisione"
+msgstr "Divisioni Y principali"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "Divisione"
+msgstr "Spessore divisioni X secondarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "Divisione"
+msgstr "Spessore divisioni Y secondarie [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
-msgstr ""
+msgstr "Sottodivisioni per divisione principale X"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 msgid "Subdivisions per Major Y Division"
-msgstr ""
+msgstr "Sottodivisioni per divisione principale X"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
 msgid "Subminor X Division Thickness [px]"
-msgstr ""
+msgstr "Spessore sottodivisioni minori Y [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
 msgid "Subminor Y Division Thickness [px]"
-msgstr ""
+msgstr "Spessore sottodivisioni minori Y [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
-msgstr ""
+msgstr "Sottodivisioni minori per ogni sottodivisione su X"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "Sottodivisioni minori per ogni sottodivisione su X"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions"
@@ -20556,15 +20530,15 @@ msgstr "Diametro punto centrale [px]"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
-msgstr ""
+msgstr "Spostamento etichetta circonferenza [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr ""
+msgstr "Dimensione etichetta circonferenza [px]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "Etichetta circonferenza"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
@@ -20572,32 +20546,31 @@ msgstr "Suddivisione logaritmica (base specificata nella voce precedente)."
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
-msgstr ""
+msgstr "Spessore divisioni angolari principali [px]"
 
 #: ../share/extensions/grid_polar.inx.h:10
-#, fuzzy
 msgid "Major Circular Division Spacing [px]"
-msgstr "Spaziatura orizzontale"
+msgstr "Spaziatura divisioni circolari primarie [px]"
 
 #: ../share/extensions/grid_polar.inx.h:11
 msgid "Major Circular Division Thickness [px]"
-msgstr ""
+msgstr "Spessore divisioni circolari principali [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divisions"
-msgstr ""
+msgstr "Divisioni circolari principali"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "Le divisioni secondarie d'angolo terminano \"n\" divisioni prima del centro"
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
-msgstr ""
+msgstr "Spessore divisioni angolari secondarie [px]"
 
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Circular Division Thickness [px]"
-msgstr ""
+msgstr "Spessore divisioni circolari secondarie [px]"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -20605,11 +20578,11 @@ msgstr "Griglia polare"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "Sottodivisioni per divisioni angolari principali"
 
 #: ../share/extensions/grid_polar.inx.h:20
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "Sottodivisioni per divisioni circolari principali"
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
@@ -21094,7 +21067,7 @@ msgstr "Spaziatura tra le copie:"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)"
-msgstr ""
+msgstr "questo effetto ricrea un motivo lungo dei tracciati \"scheletro\" arbitrari. Il motivo è l'oggetto superiore della selezione (sono permessi gruppi di tracciati/forme/cloni)."
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -21941,19 +21914,16 @@ msgid "From Three Sides"
 msgstr "Da tre lati"
 
 #: ../share/extensions/triangle.inx.h:11
-#, fuzzy
 msgid "Side Length a / px"
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato a / px"
 
 #: ../share/extensions/triangle.inx.h:12
-#, fuzzy
 msgid "Side Length b / px"
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato b / px"
 
 #: ../share/extensions/triangle.inx.h:13
-#, fuzzy
 msgid "Side Length c / px"
-msgstr "Lunghezza passi (px)"
+msgstr "Lunghezza lato c / px"
 
 #: ../share/extensions/triangle.inx.h:14
 msgid "Triangle"
