@@ -15991,37 +15991,37 @@ msgstr "수직방향 거꾸로"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:1912
 msgid "tutorial-basic.svg"
-msgstr "지침서-기본.svg"
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1916
 msgid "tutorial-shapes.svg"
-msgstr "지침서-모양.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1920
 msgid "tutorial-advanced.svg"
-msgstr "지침서-고급.svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1924
 msgid "tutorial-tracing.svg"
-msgstr "지침서-따오기(복사).svg"
+msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1928
 msgid "tutorial-calligraphy.svg"
-msgstr "지침서-붓 윤곽선.svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1932
 msgid "tutorial-elements.svg"
-msgstr "지침서-요소.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1936
 msgid "tutorial-tips.svg"
-msgstr "지침서-도구설명.svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2212 ../src/verbs.cpp:2731
 msgid "Unlock all objects in the current layer"
