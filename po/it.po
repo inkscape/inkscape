@@ -1,5 +1,5 @@
 # Italian translation of inkscape.
-# Copyright (C) 2000-2007 Free Software Foundation, Inc.
+# Copyright (C) 2000-2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the inkscape package.
 # Brisa Francesco <fbrisa@yahoo.it>, 2000.
 # Alessio Frusciante <algol@firenze.linux.it>, 2002, 2003.
@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape\n"
+"Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-10-10 13:08+0100\n"
+"PO-Revision-Date: 2009-10-11 17:07+0100\n"
 "Last-Translator: Luca Bruno <lucab@debian.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Crea e modifica immagini Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape - Grafica Vettoriale SVG"
+msgstr "Inkscape - Grafica vettoriale SVG"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -189,7 +189,7 @@ msgstr "Sovrapposizione"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
-msgstr "Bianchettature interne casuali"
+msgstr "Tratti interne casuali di bianchetto"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Ink bleed"
@@ -255,7 +255,7 @@ msgstr "Macchia"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Fill object with sparse translucent specks"
-msgstr "Disegna l'oggetto con granelli traslucenti sparsi"
+msgstr "Disegna l'oggetto con granelli traslucidi sparsi"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Oil slick"
@@ -708,16 +708,15 @@ msgstr "Foglie cadute in autunno, o foglie vive"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Translucent"
-msgstr "Traslucente"
+msgstr "Traslucido"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Illuminated translucent plastic or glass effect"
 msgstr "Vetro o plastica lucidi e illuminati"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "curvo"
+msgstr "Intersezioni dolci"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Blur inner borders and intersections"
@@ -1029,9 +1028,8 @@ msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "Disegna una linea dolce dall'interno colorabile con il colore a cui viene sovrapposta"
 
 #: ../share/filters/filters.svg.h:94
-#, fuzzy
 msgid "Fancy blur"
-msgstr "Modifica sfocatura"
+msgstr "Sfocatura avanzata"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
@@ -1250,9 +1248,8 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Smussatura base diffusa per costruire altre texture"
 
 #: ../share/filters/filters.svg.h:119
-#, fuzzy
 msgid "Cutout Glow"
-msgstr "estrusione"
+msgstr "Alone netto"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1631,18 +1628,16 @@ msgid "Gives Smooth Bumps velvet like"
 msgstr "Crea rughe soffici ad effetto velluto"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Alpha draw"
-msgstr "Alfa"
+msgstr "Disegno in trasparenza"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Conferisce un effetto disegno con trasparenza a bitmap e materiali"
 
 #: ../share/filters/filters.svg.h:165
-#, fuzzy
 msgid "Alpha draw, color"
-msgstr "Alfa"
+msgstr "Disegno colorato in trasparenza"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
@@ -1737,31 +1732,28 @@ msgid "Overlays a semi-transparent shifted copy to a blurred one"
 msgstr "Sovrappone una copia sfalsata semitrasparente a una sfuocata"
 
 #: ../share/filters/filters.svg.h:177
-#, fuzzy
 msgid "Dots transparency"
-msgstr "Trasparenza rumorosa"
+msgstr "Puntinatura in trasparenza"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "Produce una trasparenza con HSL regolabili in stile puntinista"
 
 #: ../share/filters/filters.svg.h:178
-#, fuzzy
 msgid "Canvas transparency"
-msgstr "Trasparenza rumorosa"
+msgstr "Tela in trasparenza"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
 msgstr "Produce una trasparenza con HSL regolabili simile alla tela"
 
 #: ../share/filters/filters.svg.h:179
-#, fuzzy
 msgid "Smear transparency"
-msgstr "Trasparenza rumorosa"
+msgstr "Sbavatura in trasparenza"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Paint objects with a transparent turbulence which turns around color edges"
-msgstr "Dipinge l'oggetto con una turbolenza trasparenza che gira attorno ai bordi di colore"
+msgstr "Dipinge l'oggetto con una turbolenza trasparente che gira attorno ai bordi di colore"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
@@ -1828,18 +1820,16 @@ msgid "Partly opaque water color effect with bleed"
 msgstr "Effetto acqua colorata parzialmente opaca e con macchie"
 
 #: ../share/filters/filters.svg.h:188
-#, fuzzy
 msgid "Alpha engraving"
-msgstr "Alpha (opacità)"
+msgstr "Incisione in trasparenza"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "Aggiunge un effetto di incisione in trasparenza con linee e riempimenti grezzi"
 
 #: ../share/filters/filters.svg.h:189
-#, fuzzy
 msgid "Alpha draw, liquid"
-msgstr "Alfa"
+msgstr "Disegno liquido in trasparenza"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
@@ -1870,9 +1860,8 @@ msgid "Thick acrylic paint texture with high texture depth"
 msgstr "Texture acrilico denso con forte profondità"
 
 #: ../share/filters/filters.svg.h:193
-#, fuzzy
 msgid "Alpha engraving B"
-msgstr "Alpha (opacità)"
+msgstr "Incisione B in trasparenza"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
@@ -3065,7 +3054,7 @@ msgstr " Ri_muovi "
 
 #: ../src/dialogs/clonetiler.cpp:2963
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr "Rimuovi i cloni in serie dell'oggetto selezionati (solo imparentati)"
+msgstr "Rimuove i cloni in serie dell'oggetto selezionati (solo imparentati)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
@@ -3583,7 +3572,7 @@ msgstr "Id non valido! "
 
 #: ../src/dialogs/item-properties.cpp:447
 msgid "Id exists! "
-msgstr "Id esistente!"
+msgstr "Id già esistente!"
 
 #: ../src/dialogs/item-properties.cpp:454
 msgid "Set object ID"
@@ -4384,9 +4373,8 @@ msgid "<b>Drawing</b> an eraser stroke"
 msgstr "<b>Disegno</b> di un tratto di cancellazione"
 
 #: ../src/eraser-context.cpp:830
-#, fuzzy
 msgid "Draw eraser stroke"
-msgstr "Crea linee calligrafiche"
+msgstr "Disegna tratto di cancellazione"
 
 #: ../src/event-context.cpp:618
 msgid "<b>Space+mouse drag</b> to pan canvas"
@@ -7262,48 +7250,40 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "Ridimensiona la larghezza del tracciato di cucitura relativamente alla sua lunghezza"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top bend path"
-msgstr "Distorci tracciato"
+msgstr "Tracciato lato superiore"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
-#, fuzzy
 msgid "Top path along which to bend the original path"
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato del lato superiore usato per deformare il tracciato originale"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right bend path"
-msgstr "Distorci tracciato"
+msgstr "Tracciato lato destro"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
-#, fuzzy
 msgid "Right path along which to bend the original path"
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato del lato destro usato per deformare il tracciato originale"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom bend path"
-msgstr "Distorci tracciato"
+msgstr "Tracciato lato inferiore"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "Bottom path along which to bend the original path"
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato del lato inferiore usato per deformare il tracciato originale"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left bend path"
-msgstr "Distorci tracciato"
+msgstr "Tracciato lato sinistro"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
-#, fuzzy
 msgid "Left path along which to bend the original path"
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato del lato sinistro usato per deformare il tracciato originale"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
-msgstr "Attiva tracciati destro e sinistro"
+msgstr "Abilita tracciati destro e sinistro"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
@@ -7314,9 +7294,8 @@ msgid "Enable top & bottom paths"
 msgstr "Abilita tracciati in cima e in fondo"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
-#, fuzzy
 msgid "Enable the top and bottom deformation paths"
-msgstr "Duplica il motivo prima della deformazione"
+msgstr "Attiva i tracciati di deformazione inferiore e superiore"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -7339,9 +7318,8 @@ msgid "Trajectory"
 msgstr "Traiettoria"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "Crea una proiezione dinamica del tracciato originale"
+msgstr "Tracciato lungo il quale creare i passaggi intermedi."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
@@ -7358,7 +7336,7 @@ msgstr "Spaziatura equidistante"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
-msgstr ""
+msgstr "Se attivo, la spaziatura tra i passaggi intermedi sarà costante per la lunghezza del tracciato. Altrimenti, la distanza sarà determinata dalla posizione dei nodi del tracciato di sostegno."
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:323
@@ -7375,7 +7353,7 @@ msgstr "In unità della larghezza contorno"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width"
-msgstr ""
+msgstr "Considera «Dimensione interruzione\" in rapporto alla dimensione del tratto"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 #: ../src/widgets/stroke-style.cpp:1093
@@ -7385,20 +7363,19 @@ msgstr "Larghezza contorno"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size"
-msgstr ""
+msgstr "Aggiunge la larghezza del tratto alla dimensione dell'interruzione"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Crossing path stroke width"
-msgstr "Larghezza contorno tracciato intersecante"
+msgstr "Larghezza contorno tracciato intersecato"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size"
-msgstr ""
+msgstr "Aggiunge la larghezza del tracciato intersecato alla dimensione dell'interruzione"
 
 #: ../src/live_effects/lpe-knot.cpp:327
-#, fuzzy
 msgid "Switcher size"
-msgstr "Incolla _stile"
+msgstr "Dimensione indicatore"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
@@ -7844,7 +7821,7 @@ msgstr "Ridimensiona"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr ""
+msgstr "Ridimensiona il fattore di relazione tra curvatura e lunghezza linee di costruzione (provare 5*proiezione)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
@@ -7900,7 +7877,7 @@ msgstr "Tracciato generatore"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Path whose segments define the iterated transforms"
-msgstr ""
+msgstr "Tracciato i cui segmenti verranno usati per definire la trasformazione iterativa"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Use uniform transforms only"
@@ -8824,9 +8801,8 @@ msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Il file %s non è un file di impostazioni Inkscape valido."
 
 #: ../src/preferences-skeleton.h:98
-#, fuzzy
 msgid "Dip pen"
-msgstr "Script"
+msgstr "Calamaio"
 
 #: ../src/preferences-skeleton.h:99
 msgid "Marker"
@@ -8837,9 +8813,8 @@ msgid "Brush"
 msgstr "Pennello"
 
 #: ../src/preferences-skeleton.h:101
-#, fuzzy
 msgid "Wiggly"
-msgstr "Ondulazione:"
+msgstr "Strisciante"
 
 #: ../src/preferences-skeleton.h:102
 msgid "Splotchy"
@@ -10669,7 +10644,7 @@ msgstr "Segui Collegamento"
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:357
 msgid "_Remove Link"
-msgstr "Rimuovi Collegamento"
+msgstr "_Rimuovi collegamento"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:405
@@ -13893,7 +13868,7 @@ msgstr "Basso"
 
 #: ../src/ui/dialog/layers.cpp:681
 msgid "Bot"
-msgstr "Bot"
+msgstr "Fondo"
 
 #: ../src/ui/dialog/layers.cpp:691
 msgid "X"
@@ -13930,7 +13905,7 @@ msgstr "Può essere selezionato un solo elemento"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:284
 msgid "Empty selection"
-msgstr "Selezione nulla"
+msgstr "Nessuna selezione"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
@@ -14080,9 +14055,8 @@ msgid "Set SVG Font attribute"
 msgstr "Imposta attributo font SVG"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:174
-#, fuzzy
 msgid "Adjust kerning value"
-msgstr "Modifica colore"
+msgstr "Modifica valore crenatura"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:364
 msgid "Family Name:"
@@ -14141,9 +14115,8 @@ msgid "Remove glyph"
 msgstr "Rimuovi glifo"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:638
-#, fuzzy
 msgid "Remove kerning pair"
-msgstr "Rimuovi guide esistenti"
+msgstr "Rimuovi crenatura a coppia"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
@@ -14176,13 +14149,12 @@ msgstr "Prendi forma dalla selezione..."
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
-msgstr ""
+msgstr "Aggiungi crenatura a coppia"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:734
-#, fuzzy
 msgid "Kerning Setup:"
-msgstr "Kern in alto"
+msgstr "Impostazione crenatura:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
@@ -14205,9 +14177,8 @@ msgid "Second Unicode range"
 msgstr "Secondo intervallo Unicode"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:761
-#, fuzzy
 msgid "Kerning value:"
-msgstr "Pulisci"
+msgstr "Valore crenatura:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
@@ -14235,9 +14206,8 @@ msgid "_Glyphs"
 msgstr "_Glifi"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "_Kerning"
-msgstr "_Disegno"
+msgstr "_Crenatura"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:879
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:880
@@ -15811,7 +15781,7 @@ msgstr "Rimuovi _effetti su tracciato"
 
 #: ../src/verbs.cpp:2305
 msgid "Remove any path effects from selected objects"
-msgstr "Rimuovi tutti gli effetti su tracciato dalla selezione"
+msgstr "Rimuove tutti gli effetti su tracciato dalla selezione"
 
 #: ../src/verbs.cpp:2306
 msgid "Remove Filters"
@@ -18210,7 +18180,7 @@ msgstr "Centro oggetti"
 
 #: ../src/widgets/toolbox.cpp:2136
 msgid "Snap from and to centers of objects"
-msgstr "Aggancia a e i centri degli oggetti"
+msgstr "Aggancia a e con i centri degli oggetti"
 
 #: ../src/widgets/toolbox.cpp:2145
 msgid "Rotation Centers"
@@ -18664,14 +18634,12 @@ msgid "Mode of new lines drawn by this tool"
 msgstr "Modalità delle nuove linee disegnate da questo strumento"
 
 #: ../src/widgets/toolbox.cpp:3888
-#, fuzzy
 msgid "Triangle in"
-msgstr "Singolo"
+msgstr "Triangolo crescente"
 
 #: ../src/widgets/toolbox.cpp:3889
-#, fuzzy
 msgid "Triangle out"
-msgstr "Singolo"
+msgstr "Triangolo decrescente"
 
 #: ../src/widgets/toolbox.cpp:3891
 msgid "From clipboard"
@@ -19157,7 +19125,7 @@ msgstr "Vettorizza sfondo"
 
 #: ../src/widgets/toolbox.cpp:4851
 msgid "Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"
-msgstr ""
+msgstr "Imitare la luminosità dello sfondo con lo spessore del tratto a penna (bianco - larghezza minima, nero - larghezza massima)"
 
 #: ../src/widgets/toolbox.cpp:4864
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -19612,7 +19580,7 @@ msgstr "Nessuna informazione per le facce trovata nel file specificato."
 
 #: ../share/extensions/polyhedron_3d.py:332
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Selezionare \"Specificato allo spigolo\" nella scheda «File modello».\n"
 
 #: ../share/extensions/polyhedron_3d.py:338
 msgid "No edge data found in specified file."
@@ -19620,12 +19588,12 @@ msgstr "Nessuna informazione per gli spigoli trovata nel file specificato."
 
 #: ../share/extensions/polyhedron_3d.py:339
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Selezionare \"Specificato alla faccia\" nella scheda «File modello».\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:514
 msgid "Face Data Not Found. Ensure file contains face data, and check the file is imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "Informazioni sulle facce non trovate. Verificare che il file contenga informazioni per le facce e che il file sia importato come \"Specificato alla faccia\" nella scheda «File modello».\n"
 
 #: ../share/extensions/polyhedron_3d.py:516
 msgid "Internal Error. No view type selected\n"
@@ -19941,9 +19909,8 @@ msgid "Common Objects"
 msgstr "Oggetti comuni"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "Singolo"
+msgstr "Triangolo inscritto"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -19986,9 +19953,8 @@ msgid "Excircles"
 msgstr "Cerchio exinscritto"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
-#, fuzzy
 msgid "Extouch Triangle"
-msgstr "Singolo"
+msgstr "Triangolo di Nagel"
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
 msgid "Gergonne Point"
@@ -20071,6 +20037,28 @@ msgid ""
 "You can specify the radius of a circle around a custom point using a formula, which may also contain the side lengths, angles, etc. You can also plot the isogonal and isotomic conjugate of the point. Be aware that this may cause a divide-by-zero error for certain points.\n"
 "            "
 msgstr ""
+"Questa estensione disegna costruzioni geometriche partendo da un triangolo definito dai primi 3 nodi del tracciato selezionato. Si può usare un oggetto esistente o crearne un nuovo.\n"
+"            \n"
+"Tutte le dimensioni sono in unità pixel di Inkscape. Gli angoli sono in radianti.\n"
+"Un punto può essere specificato tramite coordinate trilineari o una funzione di centro triangolo.\n"
+"Inserire una formula in funzione della lunghezza dei lati o degli angoli.\n"
+"I riferimenti trilineari devono essere separati da due punti: \":\".\n"
+"La lunghezza dei lati è rappresentata da \"s_a\", \"s_b\" e \"s_c\".\n"
+"Gli angolo corrispondenti sono \"a_a\", \"a_b\", e \"a_c\".\n"
+"Si può usare anche il semi-perimetro o l'area come costanti per il triangolo, inserendo usando \"area\" o \"semiperim\".\n"
+"\n"
+"Si possono usare le funzioni matematiche standard di Python:\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x)\n"
+"\n"
+"Sono disponibili inoltre le funzioni trigonometriche inverse:\n"
+"sec(x); csc(x); cot(x)\n"
+"\n"
+"Si può specificare il raggio di un cerchio attorno a un punto specifico usando un formula, che può contenere la lunghezza dei lati, angoli, etc. Si può anche disegnare il coniugato isogonale e isotomico del punto. Attenzione che per alcuni punti questo potrebbe causare un errore dovuto a divisione per zero.\n"
+"            "
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
@@ -20446,11 +20434,11 @@ msgstr "Griglia cartesiana"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Metà sottodivisione secondaria X. Frequenza dopo \"n\" suddivisioni (solo log)."
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Metà sottodivisione secondaria Y. Frequenza dopo \"n\" suddivisioni (solo log)."
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -20626,7 +20614,7 @@ msgstr "Personalizzata..."
 
 #: ../share/extensions/guides_creator.inx.h:11
 msgid "Delete existing guides"
-msgstr "Rimuovi guide esistenti"
+msgstr "Cancella guide esistenti"
 
 #: ../share/extensions/guides_creator.inx.h:12
 msgid "Golden ratio"
@@ -20849,6 +20837,25 @@ msgid ""
 "\n"
 "]: return to remembered point\n"
 msgstr ""
+"\n"
+"Il tracciato verrà generato applicando le \n"
+"sostituzioni definite Regole all'Assioma, in \n"
+"numero pari a Ordine. Sono riconosciuti i \n"
+"seguenti comandi in Regole e Assioma:\n"
+"\n"
+"Uno tra A,B,C,D,E,F: disegna dritto \n"
+"\n"
+"Uno tra G,H,I,J,K,L: muovi dritto \n"
+"\n"
+"+: gira a sinistra\n"
+"\n"
+"-: gira a destra\n"
+"\n"
+"|: ruota di 180 gradi\n"
+"\n"
+"[: memorizza punto \n"
+"\n"
+"]: ritorna al punto memorizzato\n"
 
 #: ../share/extensions/lindenmayer.inx.h:21
 msgid "Axiom"
@@ -21067,7 +21074,7 @@ msgstr "Spaziatura tra le copie:"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)"
-msgstr "questo effetto ricrea un motivo lungo dei tracciati \"scheletro\" arbitrari. Il motivo è l'oggetto superiore della selezione (sono permessi gruppi di tracciati/forme/cloni)."
+msgstr "Questo effetto ricrea un motivo lungo dei tracciati \"scheletro\" arbitrari. Il motivo è l'oggetto superiore della selezione (sono permessi gruppi di tracciati/forme/cloni)."
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -21155,7 +21162,7 @@ msgstr "Copertina"
 
 #: ../share/extensions/perfectboundcover.inx.h:16
 msgid "Remove existing guides"
-msgstr "Rimuovi guide esistenti"
+msgstr "Cancella guide esistenti"
 
 #: ../share/extensions/perfectboundcover.inx.h:18
 msgid "Specify Width"
@@ -22054,7 +22061,7 @@ msgstr "all'allontanamento del mouse"
 #: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
-msgstr "al sorvolo del mouse"
+msgstr "al passaggio del mouse"
 
 #: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
