@@ -19,37 +19,37 @@
 !insertmacro MUI_LANGUAGE "Finnish"
 
 ; Product name
-LangString lng_Caption   ${LANG_FINNISH} "${PRODUCT_NAME} -- Avoimen l√§hdekoodin SVG-muokkain"
+LangString lng_Caption   ${LANG_FINNISH} "${PRODUCT_NAME} -- Avoimen l‰hdekoodin SVG-muokkain"
 
 ; Button text "Next >" for the license page
 LangString lng_LICENSE_BUTTON   ${LANG_FINNISH} "Seuraava >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FINNISH} "$(^Name) on julkaistu GNU General Public License (GPL) -lisenssill√§. $_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FINNISH} "$(^Name) on julkaistu GNU General Public License (GPL) -lisenssill‰. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_FINNISH} "K√§ytt√§j√§ $0.$\r$\n on asentanut Inkscapen\nJos jatkat, asennus saattaa ep√§onnistua.!$\r$\nKirjaudu sis√§√§n k√§ytt√§j√§n√§ $0 ja yrit√§ uudestaan."
+LangString lng_DIFFERENT_USER ${LANG_FINNISH} "K‰ytt‰j‰ $0.$\r$\n on asentanut Inkscapen\nJos jatkat, asennus saattaa ep‰onnistua.!$\r$\nKirjaudu sis‰‰n k‰ytt‰j‰n‰ $0 ja yrit‰ uudestaan."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FINNISH} "$R1 has already been installed. $\nDo you want to remove the previous version before installing $(^Name) ?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_FINNISH} "$R1 on jo asennettu. $\nHaluatko poistaa edellisen version ennen asennusta $(^Name) ?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_FINNISH} "$\n$\nPress OK to continue or press CANCEL to abort."
+LangString lng_OK_CANCEL_DESC ${LANG_FINNISH} "$\n$\nPaina OK jatkaaksi tai Peruuta keskeytt‰‰ksesi."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_FINNISH} "Sinulla ei ole p√§√§k√§ytt√§j√§n oikeuksia.$\r$\nInkscapen asennus kaikille k√§ytt√§jille saattaa ep√§onnistua.$\r$\n√Ñl√§ k√§yt√§ kaikille k√§ytt√§jille -ominaisuutta."
+LangString lng_NO_ADMIN ${LANG_FINNISH} "Sinulla ei ole p‰‰k‰ytt‰j‰n oikeuksia.$\r$\nInkscapen asennus kaikille k‰ytt‰jille saattaa ep‰onnistua.$\r$\nƒl‰ k‰yt‰ kaikille k‰ytt‰jille -ominaisuutta."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_FINNISH} "Inkscape ei toimi k√§ytt√∂j√§rjestelmiss√§ Windows 95/98/ME!$\r$\nLis√§tietoja saat ohjelman kotisivulta."
+LangString lng_NOT_SUPPORTED ${LANG_FINNISH} "Inkscape ei toimi k‰yttˆj‰rjestelmiss‰ Windows 95/98/ME!$\r$\nLis‰tietoja saat ohjelman kotisivulta."
 
 ; Full install type
-LangString lng_Full $(LANG_FINNISH) "T√§ysi"
+LangString lng_Full $(LANG_FINNISH) "T‰ysi"
 
 ; Optimal install type
 LangString lng_Optimal $(LANG_FINNISH) "Oletus"
 
 ; Minimal install type
-LangString lng_Minimal $(LANG_FINNISH) "V√§h√§isin"
+LangString lng_Minimal $(LANG_FINNISH) "V‰h‰isin"
 
 ; Core install section
 LangString lng_Core $(LANG_FINNISH) "${PRODUCT_NAME} SVG-muokkain (pakollinen)"
@@ -58,40 +58,40 @@ LangString lng_Core $(LANG_FINNISH) "${PRODUCT_NAME} SVG-muokkain (pakollinen)"
 LangString lng_CoreDesc $(LANG_FINNISH) "${PRODUCT_NAME} tiedostot ja dll-kirjastot"
 
 ; GTK+ install section
-LangString lng_GTKFiles $(LANG_FINNISH) "GTK+-ajoymp√§rist√∂ (pakollinen)"
+LangString lng_GTKFiles $(LANG_FINNISH) "GTK+-ajoymp‰ristˆ (pakollinen)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_FINNISH) "Usealla alustalla toimiva k√§ytt√∂liittym√§kehys, jota ${PRODUCT_NAME} k√§ytt√§√§"
+LangString lng_GTKFilesDesc $(LANG_FINNISH) "Usealla alustalla toimiva k‰yttˆliittym‰kehys, jota ${PRODUCT_NAME} k‰ytt‰‰"
 
 ; shortcuts install section
 LangString lng_Shortcuts $(LANG_FINNISH) "Pikakuvakkeet"
 
 ; shortcuts install section description
-LangString lng_ShortcutsDesc $(LANG_FINNISH) "Pikakuvakkeet Inkscapen k√§ynnist√§miseksi"
+LangString lng_ShortcutsDesc $(LANG_FINNISH) "Pikakuvakkeet Inkscapen k‰ynnist‰miseksi"
 
 ; All user install section
-LangString lng_Alluser $(LANG_FINNISH) "kaikille k√§ytt√§jille"
+LangString lng_Alluser $(LANG_FINNISH) "kaikille k‰ytt‰jille"
 
 ; All user install section description
-LangString lng_AlluserDesc $(LANG_FINNISH) "Asenna Inkscape kaikille t√§m√§n tietokoneen k√§ytt√§jille"
+LangString lng_AlluserDesc $(LANG_FINNISH) "Asenna Inkscape kaikille t‰m‰n tietokoneen k‰ytt‰jille"
 
 ; Desktop section
-LangString lng_Desktop $(LANG_FINNISH) "Ty√∂p√∂yt√§"
+LangString lng_Desktop $(LANG_FINNISH) "Tyˆpˆyt‰"
 
 ; Desktop section description
-LangString lng_DesktopDesc $(LANG_FINNISH) "Luo ${PRODUCT_NAME}-pikakuvake ty√∂p√∂yd√§lle"
+LangString lng_DesktopDesc $(LANG_FINNISH) "Luo ${PRODUCT_NAME}-pikakuvake tyˆpˆyd‰lle"
 
 ; Start Menu  section
-LangString lng_Startmenu $(LANG_FINNISH) "K√§ynnist√§-valikko"
+LangString lng_Startmenu $(LANG_FINNISH) "K‰ynnist‰-valikko"
 
 ; Start Menu section description
-LangString lng_StartmenuDesc $(LANG_FINNISH) "Lis√§√§ ${PRODUCT_NAME} K√§ynnist√§-valikkoon"
+LangString lng_StartmenuDesc $(LANG_FINNISH) "Lis‰‰ ${PRODUCT_NAME} K‰ynnist‰-valikkoon"
 
 ; Quick launch section
-LangString lng_Quicklaunch $(LANG_FINNISH) "Pikak√§ynnistys"
+LangString lng_Quicklaunch $(LANG_FINNISH) "Pikak‰ynnistys"
 
 ; Quick launch section description
-LangString lng_QuicklaunchDesc $(LANG_FINNISH) "Lis√§√§ ${PRODUCT_NAME} pikak√§ynnistysriville"
+LangString lng_QuicklaunchDesc $(LANG_FINNISH) "Lis‰‰ ${PRODUCT_NAME} pikak‰ynnistysriville"
 
 ; File type association for editing
 LangString lng_SVGWriter ${LANG_FINNISH} "Avaa SVG-tiedostot Inkscapella"
@@ -100,16 +100,16 @@ LangString lng_SVGWriter ${LANG_FINNISH} "Avaa SVG-tiedostot Inkscapella"
 LangString lng_SVGWriterDesc ${LANG_FINNISH} "Tee Inkscapesta oletusmuokkain SVG-tiedostoille"
 
 ; Context Menu
-LangString lng_ContextMenu ${LANG_FINNISH} "Context Menu"
+LangString lng_ContextMenu ${LANG_FINNISH} "Kontekstivalikko"
 
 ; Context Menu description
-LangString lng_ContextMenuDesc ${LANG_FINNISH} "Lis√§√§ ${PRODUCT_NAME} SVG-tiedostojen pikavalikkoon"
+LangString lng_ContextMenuDesc ${LANG_FINNISH} "Lis‰‰ ${PRODUCT_NAME} SVG-tiedostojen pikavalikkoon"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_FINNISH} "Delete personal preferences"
+LangString lng_DeletePrefs ${LANG_FINNISH} "Poista asetukset"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_FINNISH} "Delete personal preferences leftover from previous installations"
+LangString lng_DeletePrefsDesc ${LANG_FINNISH} "Poista edelliseen versioon tehdyt asetukset"
 
 
 ; Additional files section
@@ -128,25 +128,25 @@ LangString lng_ExamplesDesc $(LANG_FINNISH) "Inkscapen avulla tehdyt esimerkit"
 LangString lng_Tutorials $(LANG_FINNISH) "Ohjeet"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_FINNISH) "Inkscapen k√§ytt√∂√§ opettavat ohjeet (englanniksi)"
+LangString lng_TutorialsDesc $(LANG_FINNISH) "Inkscapen k‰yttˆ‰ opettavat ohjeet (englanniksi)"
 
 
 ; Languages section
-LangString lng_Languages $(LANG_FINNISH) "K√§√§nn√∂kset"
+LangString lng_Languages $(LANG_FINNISH) "K‰‰nnˆkset"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_FINNISH) "Asenna Inkscapen k√§√§nn√∂kset"
+LangString lng_LanguagesDesc $(LANG_FINNISH) "Asenna Inkscapen k‰‰nnˆkset"
 
 LangString lng_am $(LANG_FINNISH) "am  amhari"
 LangString lng_ar $(LANG_FINNISH) "ar  Arabic"
-LangString lng_az $(LANG_FINNISH) "az  azerbaid≈æani"
-LangString lng_be $(LANG_FINNISH) "be  valkoven√§j√§"
+LangString lng_az $(LANG_FINNISH) "az  azerbaid?ani"
+LangString lng_be $(LANG_FINNISH) "be  valkoven‰j‰"
 LangString lng_bg $(LANG_FINNISH) "bg  bulgaria"
 LangString lng_bn $(LANG_FINNISH) "bn  Bengali"
 LangString lng_br $(LANG_FINNISH) "br  Breton"
 LangString lng_ca $(LANG_FINNISH) "ca  katalaani"
 LangString lng_ca@valencia $(LANG_FINNISH) "ca@valencia  Valencian Catalan"
-LangString lng_cs $(LANG_FINNISH) "cs  t≈°ekki"
+LangString lng_cs $(LANG_FINNISH) "cs  t?ekki"
 LangString lng_da $(LANG_FINNISH) "da  tanska"
 LangString lng_de $(LANG_FINNISH) "de  saksa"
 LangString lng_dz $(LANG_FINNISH) "dz  dzongkha"
@@ -177,7 +177,7 @@ LangString lng_lt $(LANG_FINNISH) "lt  liettua"
 LangString lng_mk $(LANG_FINNISH) "mk  makedonia"
 LangString lng_mn $(LANG_FINNISH) "mn  mongolia"
 LangString lng_ne $(LANG_FINNISH) "ne  nepali"
-LangString lng_nb $(LANG_FINNISH) "nb  kirjanorjaÔøΩ"
+LangString lng_nb $(LANG_FINNISH) "nb  kirjanorja"
 LangString lng_nl $(LANG_FINNISH) "nl  hollanti"
 LangString lng_nn $(LANG_FINNISH) "nn  nykynorja"
 LangString lng_pa $(LANG_FINNISH) "pa  punjabi"
@@ -185,7 +185,7 @@ LangString lng_pl $(LANG_FINNISH) "po  puola"
 LangString lng_pt $(LANG_FINNISH) "pt  portugali"
 LangString lng_pt_BR $(LANG_FINNISH) "pt_BR Brasilian portugali"
 LangString lng_ro $(LANG_FINNISH) "ro  Romanian"
-LangString lng_ru $(LANG_FINNISH) "ru  ven√§j√§"
+LangString lng_ru $(LANG_FINNISH) "ru  ven‰j‰"
 LangString lng_rw $(LANG_FINNISH) "rw  ruanda"
 LangString lng_sk $(LANG_FINNISH) "sk  slovakki"
 LangString lng_sl $(LANG_FINNISH) "sl  sloveeni"
@@ -210,20 +210,20 @@ LangString lng_UInstOpt   ${LANG_FINNISH} "Ohjelman poiston asetukset"
 LangString lng_UInstOpt1  ${LANG_FINNISH} "Valitse haluamasi asetukset ohjelman poistamiseksi"
 
 ; Ask to purge the personal preferences
-LangString lng_PurgePrefs ${LANG_FINNISH} "S√§ilyt√§ omat asetukset"
+LangString lng_PurgePrefs ${LANG_FINNISH} "S‰ilyt‰ omat asetukset"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_FINNISH} "$\n$\nPress RETRY to continue or press CANCEL to abort."
+LangString lng_RETRY_CANCEL_DESC ${LANG_FINNISH} "$\n$\nPaina Yrit‰ uudelleen jatkaaksei tai Peruuta lopettaaksesi."
 
-LangString lng_ClearDirectoryBefore ${LANG_FINNISH} "${PRODUCT_NAME} must be installed in an empty directory. $INSTDIR is not empty. Please clear this directory first!$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_FINNISH} "${PRODUCT_NAME} t‰ytyy asentaa tyhj‰‰n kansioon. $INSTDIR ei ole tyhj‰. Tyhjenn‰ kansio ensin!$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_FINNISH} "$INSTDIR\uninstall.log not found!$\r$\nPlease uninstall by clearing directory $INSTDIR yourself!"
+LangString lng_UninstallLogNotFound ${LANG_FINNISH} "$INSTDIR\uninstall.log ei lˆytynyt!$\r$\nPoista tyhjent‰m‰ll‰ asennuskansio $INSTDIR!"
 
-LangString lng_FileChanged ${LANG_FINNISH} "The file $filename has been changed after installation.$\r$\nDo you still want to delete that file?"
+LangString lng_FileChanged ${LANG_FINNISH} "Tiedosto $filename on muuttunut asennuksen j‰lkeen.$\r$\nPoistetaanko se siit‰ huolimatta?"
 
-LangString lng_Yes ${LANG_FINNISH} "Yes"
+LangString lng_Yes ${LANG_FINNISH} "Kyll‰"
 
-LangString lng_AlwaysYes ${LANG_FINNISH} "always answer Yes"
+LangString lng_AlwaysYes ${LANG_FINNISH} "Kyll‰ kaikkiin"
 
-LangString lng_No ${LANG_FINNISH} "No"
+LangString lng_No ${LANG_FINNISH} "Ei"
 
-LangString lng_AlwaysNo ${LANG_FINNISH} "always answer No"
+LangString lng_AlwaysNo ${LANG_FINNISH} "Ei kaikkiin"
