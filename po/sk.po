@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:03+0200\n"
-"PO-Revision-Date: 2009-09-21 12:20+0100\n"
+"PO-Revision-Date: 2009-10-12 16:56+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -6614,9 +6614,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Presunúť</b> vzorku výplne dovnútra objektu"
 
 #: ../src/knotholder.cpp:237
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
-msgstr "<b>Mierka</b> vzorky vyplní rovnomerne"
+msgstr "Zmeniť <b>mierku</b> vzorky výplne; rovnomerne s <b>Ctrl</b>"
 
 #: ../src/knotholder.cpp:240
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -14425,7 +14424,7 @@ msgstr "Rozhranie"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Use current directory for \"Save As ...\""
-msgstr ""
+msgstr "Použiť aktuálny adresár pre „Uložiť ako...“"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid ""
@@ -14433,6 +14432,9 @@ msgid ""
 "directory where the currently open document is. When it's off, it will open "
 "in the directory where you last saved a file using that dialog."
 msgstr ""
+"Keď je táto voľba zapnutá, v dialógu „Uložiť ako...“ sa vždy otvorí adresár, "
+"kde sa nachádza aktuálny dokument. Keď je vypnutá, otvorí sa adresár, kde sa "
+"nachádza posledný súbor, ktorý ste týmto dialógom uložili."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
@@ -22333,15 +22335,14 @@ msgid "Stretch spaces to fit skeleton length"
 msgstr "Roztiahnuť medzery, aby zodpovedali dĺžke kostry"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern must be the topmost object in the selection. Groups of paths, "
 "shapes, clones are allowed."
 msgstr ""
 "Tento efekt roztrúsi vzorový objekt pozdĺž ľubovoľnej „kostry“, ktorou je "
-"cesta. Vzorka je najvrchnejší objekt výberu. (skupiny ciest/tvarov/klonov sú "
-"povolené)"
+"cesta. Vzorka je najvrchnejší objekt výberu. Skupiny ciest/tvarov/klonov sú "
+"povolené."
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in)"
@@ -22437,7 +22438,6 @@ msgid "3D Polyhedron"
 msgstr "3D polyhedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:2
-#, fuzzy
 msgid "Clockwise wound object"
 msgstr "Objekt omotaný v smere hodinových ručičiek"
 
@@ -22454,9 +22454,8 @@ msgid "Dodecahedron"
 msgstr "Dodekahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
-#, fuzzy
 msgid "Draw back-facing polygons"
-msgstr "Nakresliť mnohouholníky otočené chrbtom"
+msgstr "Vykresliť mnohouholníky otočené chrbtom"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -22479,24 +22478,21 @@ msgid "Filename:"
 msgstr "Názov súboru:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:12
-#, fuzzy
 msgid "Fill color, Blue"
 msgstr "Farba výplne (modrá)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:13
-#, fuzzy
 msgid "Fill color, Green"
 msgstr "Farba výplne (zelená)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:14
-#, fuzzy
 msgid "Fill color, Red"
 msgstr "Farba výplne (červená)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:16
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity, %"
-msgstr "Krytie výplne/ %"
+msgstr "Krytie výplne (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22511,22 +22507,18 @@ msgid "Icosahedron"
 msgstr "Ikosahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
-#, fuzzy
 msgid "Light X"
-msgstr "Zosvetliť"
+msgstr "Svetlo X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
-#, fuzzy
 msgid "Light Y"
-msgstr "Zosvetliť"
+msgstr "Svetlo Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
-#, fuzzy
 msgid "Light Z"
-msgstr "Zosvetliť"
+msgstr "Svetlo Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
-#, fuzzy
 msgid "Load from file"
 msgstr "Načítať zo súboru"
 
@@ -22543,7 +22535,6 @@ msgid "Minimum"
 msgstr "Minimum"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Model file"
 msgstr "Súbor modelu"
 
@@ -22560,14 +22551,12 @@ msgid "Octahedron"
 msgstr "Oktahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
-#, fuzzy
 msgid "Rotate around:"
 msgstr "Otáčať okolo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
-#, fuzzy
 msgid "Rotation, degrees"
-msgstr "Rotácia / stupne"
+msgstr "Rotácia (stupne)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Scaling factor"
@@ -22590,21 +22579,19 @@ msgid "Snub Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Krytie ťahu/ %"
+msgstr "Krytie ťahu (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
-#, fuzzy
 msgid "Stroke width, px"
-msgstr "Šírka ťahu"
+msgstr "Šírka ťahu (px)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tetrahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Potom otáčať okolo:"
 
@@ -22649,9 +22636,8 @@ msgid "Z-Axis"
 msgstr "os Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
-#, fuzzy
 msgid "Z-sort faces by:"
-msgstr "Zoradiť na osi z podľa:"
+msgstr "Zoradiť strany na osi Z podľa:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
