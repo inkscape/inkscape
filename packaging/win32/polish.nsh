@@ -2,10 +2,10 @@
 ; polish.nsh
 ; polish language strings for inkscape installer
 ; windows code page: 1250
-; translator:
+; Authors:
 ; Przemys³aw Loesch p_loesch@poczta.onet.pl
-; Marcin Floryan marcin.floryan@gmail.com
-; Leszek(teo)¯yczkowski leszekz@gmail.com
+; Marcin Floryan marcin.floryan@gmail.com - 2008
+; Leszek(teo)¯yczkowski leszekz@gmail.com - 2009
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
@@ -16,11 +16,12 @@
 ; april 11 2007 new language he
 ; october 2007 new language ca@valencian
 ; January 2008 new uninstaller messages
+; February 2008 new languages ar, br
 
 !insertmacro MUI_LANGUAGE "Polish"
 
 ; Product name
-LangString lng_Caption   ${LANG_POLISH} "${PRODUCT_NAME} -- Edytor grafiki wektorowej na licencji Open Source"
+LangString lng_Caption   ${LANG_POLISH} "${PRODUCT_NAME} — otwarte oprogramowanie do grafiki wektorowej SVG"
 
 ; Button text "Next >" for the license page
 LangString lng_LICENSE_BUTTON   ${LANG_POLISH} "Dalej »"
@@ -29,16 +30,16 @@ LangString lng_LICENSE_BUTTON   ${LANG_POLISH} "Dalej »"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_POLISH} "$(^Name) jest udostêpniony na licencji GNU General Public License (GPL). Tekst licencji jest do³¹czony jedynie w celach informacyjnych. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_POLISH} "Program Inkscape zosta³ zainstalowany przez u¿ytkownika $0.$\r$\nJeœli instalacja bêdzie kontynuowana mo¿e zakoñczyæ siê niepowodzeniem!$\r$\nProszê zalogowaæ siê proszê jako $0 i spróbowaæ ponownie."
+LangString lng_DIFFERENT_USER ${LANG_POLISH} "Program Inkscape zosta³ zainstalowany przez u¿ytkownika $0.$\r$\nJeœli instalacja bêdzie kontynuowana, mo¿e zakoñczyæ siê niepowodzeniem!$\r$\nProszê zalogowaæ siê jako $0 i spróbowaæ ponownie."
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_POLISH} "$R1 jest ju¿ zainstalowany. $\nCzy chcesz przed zainstalowaniem $(^Name) usun¹æ poprzedni¹ wersjê?"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_POLISH} "$R1 jest ju¿ zainstalowany. $\nCzy chcesz przed zainstalowaniem programu $(^Name) usun¹æ jego poprzedni¹ wersjê?"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_POLISH} "$\n$\nAby kontynuowaæ instalacjê naciœnij przycisk OK, aby przerwaæ - Anuluj."
+LangString lng_OK_CANCEL_DESC ${LANG_POLISH} "$\n$\nAby kontynuowaæ instalacjê, naciœnij przycisk OK, aby przerwaæ – Anuluj."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_POLISH} "Nie masz uprawnieñ administratora.$\r$\nInstalacja programu Inkscape dla wszystkich u¿ytkowników mo¿e zakoñczoñczyæ siê niepowodzeniem.$\r$\nProszê wy³¹czyæ opcjê ''Dla wszystkich u¿ytkowników''."
+LangString lng_NO_ADMIN ${LANG_POLISH} "Nie masz uprawnieñ administratora.$\r$\nInstalacja programu Inkscape dla wszystkich u¿ytkowników mo¿e zakoñczyæ siê niepowodzeniem.$\r$\nProszê wy³¹czyæ opcjê „Dla wszystkich u¿ytkowników”."
 
 ;win9x is not supported
 LangString lng_NOT_SUPPORTED ${LANG_POLISH} "Program Inkscape nie dzia³a w systemach Windows 95/98/ME!$\r$\nProszê zapoznaæ siê z informacjami na ten temat na oficjalnej stronie internetowej programu."
@@ -56,7 +57,7 @@ LangString lng_Minimal $(LANG_POLISH) "Minimalna"
 LangString lng_Core $(LANG_POLISH) "${PRODUCT_NAME} Edytor SVG (wymagane)"
 
 ; Core install section description
-LangString lng_CoreDesc $(LANG_POLISH) "Podstawowe pliki i biblioteki dll dla ${PRODUCT_NAME}"
+LangString lng_CoreDesc $(LANG_POLISH) "Podstawowe pliki i biblioteki dll dla programu ${PRODUCT_NAME}"
 
 ; GTK+ install section
 LangString lng_GTKFiles $(LANG_POLISH) "Œrodowisko pracy GTK+ (wymagane)"
@@ -68,82 +69,83 @@ LangString lng_GTKFilesDesc $(LANG_POLISH) "Wieloplatformowe œrodowisko graficzn
 LangString lng_Shortcuts $(LANG_POLISH) "Skróty"
 
 ; shortcuts install section description
-LangString lng_ShortcutsDesc $(LANG_POLISH) "Skróty do uruchamiania ${PRODUCT_NAME}"
+LangString lng_ShortcutsDesc $(LANG_POLISH) "Skróty do uruchamiania programu ${PRODUCT_NAME}"
 
 ; All user install section
-LangString lng_Alluser $(LANG_POLISH) "Dla wszystkich u¿ytkowników"
+LangString lng_Alluser $(LANG_POLISH) "dla wszystkich u¿ytkowników"
 
 ; All user install section description
 LangString lng_AlluserDesc $(LANG_POLISH) "Program Inkscape zostanie zainstalowany dla wszystkich u¿ytkowników tego komputera"
 
 ; Desktop section
-LangString lng_Desktop $(LANG_POLISH) "Skrót na pulpicie"
+LangString lng_Desktop $(LANG_POLISH) "Pulpit"
 
 ; Desktop section description
-LangString lng_DesktopDesc $(LANG_POLISH) "Utwórz na pulpicie skrót do uruchamiania ${PRODUCT_NAME}"
+LangString lng_DesktopDesc $(LANG_POLISH) "Na pulpicie zostanie utworzony skrót do uruchamiania programu ${PRODUCT_NAME}"
 
 ; Start Menu  section
 LangString lng_Startmenu $(LANG_POLISH) "Menu Start"
 
 ; Start Menu section description
-LangString lng_StartmenuDesc $(LANG_POLISH) "Utwórz w menu Start skrót do uruchamiania ${PRODUCT_NAME}"
+LangString lng_StartmenuDesc $(LANG_POLISH) "W menu Start zostanie utworzony skrót do uruchamiania programu ${PRODUCT_NAME}"
 
 ; Quick launch section
-LangString lng_Quicklaunch $(LANG_POLISH) "Skrót na pasku szybkiego uruchamiania"
+LangString lng_Quicklaunch $(LANG_POLISH) "Pasek szybkiego uruchamiania"
 
 ; Quick launch section description
-LangString lng_QuicklaunchDesc $(LANG_POLISH) "Utwórz na pasku szybkiego uruchamiania skrót do uruchamiania ${PRODUCT_NAME}"
+LangString lng_QuicklaunchDesc $(LANG_POLISH) "Na pasku szybkiego uruchamiania zostanie utworzony skrót do uruchamiania programu ${PRODUCT_NAME}"
 
 ; File type association for editing
-LangString lng_SVGWriter ${LANG_POLISH} "${PRODUCT_NAME} domyœlnym edytorem plików SVG"
+LangString lng_SVGWriter ${LANG_POLISH} "Otwieraj pliki SVG za pomoc¹ programu ${PRODUCT_NAME}"
 
 ; File type association for editing description
-LangString lng_SVGWriterDesc ${LANG_POLISH} "${PRODUCT_NAME} bêdzie domyœlnym edytor otwieranych plików SVG"
+LangString lng_SVGWriterDesc ${LANG_POLISH} "Program ${PRODUCT_NAME} bêdzie domyœlnym edytorem plików SVG"
 
 ; Context Menu
 LangString lng_ContextMenu ${LANG_POLISH} "Menu kontekstowe"
 
 ; Context Menu description
-LangString lng_ContextMenuDesc ${LANG_POLISH} "Dodaje element ${PRODUCT_NAME} do systemowego menu kontekstowego"
+LangString lng_ContextMenuDesc ${LANG_POLISH} "Do systemowego menu kontekstowego zostanie dodany program ${PRODUCT_NAME}"
 
 ; remove personal preferences
 LangString lng_DeletePrefs ${LANG_POLISH} "Usuñ ustawienia u¿ytkownika"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_POLISH} "Usua ustawienia u¿ytkownika pozostawione przez poprzednie instalacje"
+LangString lng_DeletePrefsDesc ${LANG_POLISH} "Zostan¹ usuniête ustawienia u¿ytkownika pozostawione przez poprzednie instalacje"
 
 
 ; Additional files section
 LangString lng_Addfiles $(LANG_POLISH) "Pliki dodatkowe"
 
 ; Additional files section description
-LangString lng_AddfilesDesc $(LANG_POLISH) "Pliki dodatkowe"
+LangString lng_AddfilesDesc $(LANG_POLISH) "Zostan¹ dodane wybrane poni¿ej dodatkowe pliki"
 
 ; Examples section
 LangString lng_Examples $(LANG_POLISH) "Przyk³ady"
 
 ; Examples section description
-LangString lng_ExamplesDesc $(LANG_POLISH) "Przyk³ady u¿ycia ${PRODUCT_NAME}"
+LangString lng_ExamplesDesc $(LANG_POLISH) "Przyk³ady u¿ycia programu ${PRODUCT_NAME}"
 
 ; Tutorials section
 LangString lng_Tutorials $(LANG_POLISH) "Poradniki"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_POLISH) "Poradniki jak korzystaæ z ${PRODUCT_NAME}"
+LangString lng_TutorialsDesc $(LANG_POLISH) "Poradniki jak korzystaæ z programu ${PRODUCT_NAME}"
 
 
 ; Languages section
 LangString lng_Languages $(LANG_POLISH) "Jêzyki interfejsu"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_POLISH) "Dostêpne jêzyki interfejsu dla ${PRODUCT_NAME}"
+LangString lng_LanguagesDesc $(LANG_POLISH) "Dostêpne jêzyki interfejsu dla programu ${PRODUCT_NAME}"
 
-LangString lng_am $(LANG_POLISH) "am  Amharic"
-LangString lng_ar $(LANG_POLISH) "ar  Arabski"
-LangString lng_az $(LANG_POLISH) "az  Azerskii"
+LangString lng_am $(LANG_POLISH) "am  Amharski"
+LangString lng_ar $(LANG_ENGLISH) "ar  Arabski"
+LangString lng_az $(LANG_POLISH) "az  Azerski"
 LangString lng_be $(LANG_POLISH) "be  Bia³oruski"
 LangString lng_bg $(LANG_POLISH) "bg  Bu³garski"
 LangString lng_bn $(LANG_POLISH) "bn  Bengalski"
+LangString lng_br $(LANG_ENGLISH) "br  Bretoñski"
 LangString lng_ca $(LANG_POLISH) "ca  Kataloñski"
 LangString lng_ca@valencia $(LANG_POLISH) "ca@valencia  Walencki-Kataloñski"
 LangString lng_cs $(LANG_POLISH) "cs  Czeski"
@@ -191,7 +193,7 @@ LangString lng_sk $(LANG_POLISH) "sk  S³owacki"
 LangString lng_sl $(LANG_POLISH) "sl  S³oweñski"
 LangString lng_sq $(LANG_POLISH) "sq  Albañski"
 LangString lng_sr $(LANG_POLISH) "sr  Serbski"
-LangString lng_sr@Latn $(LANG_POLISH) "sr@Latn  Serbski skrypt ³aiñski"
+LangString lng_sr@Latn $(LANG_POLISH) "sr@Latn  Serbski skrypt ³aciñski"
 LangString lng_sv $(LANG_POLISH) "sv  Szwedzki"
 LangString lng_th $(LANG_POLISH) "th  Tajski"
 LangString lng_tr $(LANG_POLISH) "tr  Turecki"
@@ -200,9 +202,6 @@ LangString lng_vi $(LANG_POLISH) "vi  Wietnamski"
 LangString lng_zh_CN $(LANG_POLISH) "zh_CH  Chiñski uproszczony"
 LangString lng_zh_TW $(LANG_POLISH) "zh_TW  Chiñski tradycyjny"
 
-
-
-
 ; uninstallation options
 LangString lng_UInstOpt   ${LANG_POLISH} "Opcje dezinstalacji"
 
@@ -210,11 +209,11 @@ LangString lng_UInstOpt   ${LANG_POLISH} "Opcje dezinstalacji"
 LangString lng_UInstOpt1  ${LANG_POLISH} "Dokonaj wyboru spoœród dodatkowych opcji"
 
 ; Ask to purge the personal preferences
-LangString lng_PurgePrefs ${LANG_POLISH} "Zachowaj w systemie ustawienia u¿ytkownika "
+LangString lng_PurgePrefs ${LANG_POLISH} "Zachowaj ustawienia u¿ytkownika"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_POLISH} "$\n$\nAby kontynuowaæ naciœnij przycisk Ponów próbê, aby anulowaæ - Anuluj."
+LangString lng_RETRY_CANCEL_DESC ${LANG_POLISH} "$\n$\nAby kontynuowaæ, naciœnij przycisk Ponów próbê, aby przerwaæ - Anuluj."
 
-LangString lng_ClearDirectoryBefore ${LANG_POLISH} "${PRODUCT_NAME} musi byæ zainstalowany w pustym katalogu. Katalog $INSTDIR nie jest pusty. Proszê najpierw opró¿niæ katalog $(lng_RETRY_CANCEL_DESC)!"
+LangString lng_ClearDirectoryBefore ${LANG_POLISH} "${PRODUCT_NAME} musi byæ instalowany w pustym katalogu. Katalog $INSTDIR nie jest pusty. Proszê najpierw opró¿niæ ten katalog! $(lng_RETRY_CANCEL_DESC)"
 
 LangString lng_UninstallLogNotFound ${LANG_POLISH} "Nie znaleziono $INSTDIR\uninstall.log!$\r$\nProszê wykonaæ dezinstalacjê rêcznie poprzez usuniêcie katalogu $INSTDIR!"
 
