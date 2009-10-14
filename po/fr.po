@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-05 22:02+0200\n"
-"PO-Revision-Date: 2009-10-05 22:05+0100\n"
+"PO-Revision-Date: 2009-10-14 22:54+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11354,13 +11354,13 @@ msgstr "Tous les fichiers"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:723
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:198
 msgid "All Images"
-msgstr "Incorporer toutes les images"
+msgstr "Toutes les images"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:199
 msgid "All Vectors"
-msgstr "Tous les vecteurs"
+msgstr "Tous les formats vectoriels"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
