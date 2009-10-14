@@ -97,10 +97,10 @@ class D2{
     }
     std::vector<Point > valueAndDerivatives(double t, unsigned n) const {
         std::vector<Coord> x = f[X].valueAndDerivatives(t, n),
-                           y = f[Y].valueAndDerivatives(t, n);
-        std::vector<Point> res;
-        for(unsigned i = 0; i <= n; i++) {
-            res.push_back(Point(x[i], y[i]));
+                           y = f[Y].valueAndDerivatives(t, n); // always returns a vector of size n+1
+        std::vector<Point> res(n+1);
+        for (unsigned i = 0; i <= n; i++) {
+            res[i] = Point(x[i], y[i]);
         }
         return res;
     }
