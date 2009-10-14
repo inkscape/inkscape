@@ -306,10 +306,12 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
     int segmentCount = 0;
     for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it)
-	    {
+        {
         segmentCount += (*it).size();
-        if (it->closed())
-            segmentCount += 1;
+
+        // If segment not closed, add space for a closing segment.
+        if (!it->closed()) segmentCount += 1;
+
         }
 
     out("/*###################################################\n");
@@ -340,10 +342,14 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
         cminmax.expandTo(pit->initialPoint());
 
         /**
-         * For all segments in the subpath
+         * For all segments in the subpath, including extra closing segment defined by 2geom
          */		         
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
-		    {
+            {
+
+            // If path is closed, we don't need extra closing segment.
+            if( pit->closed() && cit == pit->end() )
+                continue;
 
             if( is_straight_curve(*cit) )
                 {
@@ -374,6 +380,11 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
                 out(",\n");
             else
                 out("\n");
+            if (segmentNr > segmentCount)
+                {
+                err("Too many segments");
+                return false;
+                }
 
             cminmax.expandTo(cit->finalPoint());
 
