@@ -353,6 +353,9 @@ bool ShapeEditor::is_over_stroke (Geom::Point event_p, bool remember) {
 
     const SPItem *item = get_item(SH_NODEPATH);
 
+    if (!item || !SP_IS_ITEM(item))
+        return false;
+
     //Translate click point into proper coord system
     this->curvepoint_doc = desktop->w2d(event_p);
     this->curvepoint_doc *= sp_item_dt2i_affine(item);
