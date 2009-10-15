@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2008-11-08 15:02+0100\n"
 "Last-Translator: Leandro Regueiro <leandro DOT regueiro AT gmail DOT com>\n"
 "Language-Team: Galician <trasno@trasno.net>\n"
@@ -24,7 +24,17 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Cree e edite imaxes Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:2
+#, fuzzy
+msgid "Inkscape"
+msgstr "Saír de Inkscape"
+
+#: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
+msgstr "Editor de imaxes vectoriais Inkscape"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "Editor de imaxes vectoriais Inkscape"
 
 #: ../share/filters/filters.svg.h:2
@@ -5829,15 +5839,15 @@ msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 "Abrir ficheiros gardados con Adobe Illustrator 9.0 e versións máis novas"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "Saída de PovRay"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr ""
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 #, fuzzy
 msgid "PovRay Raytracer File"
 msgstr "Ficheiro de Encapsulated Postscript"
@@ -7796,62 +7806,68 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 #, fuzzy
 msgid "Fixed width"
 msgstr "Ancho, alto:"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 #, fuzzy
 msgid "In units of stroke width"
 msgstr "Axustar o ancho do trazo"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "Ancho do trazo"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Crossing path stroke width"
 msgstr "Cambiar o ancho do trazo"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 #, fuzzy
 msgid "Switcher size"
 msgstr "Pegar estilo"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "Creando novo conectador"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10401,7 +10417,7 @@ msgid ""
 "with <b>Shift</b> to disable snapping"
 msgstr ""
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 #, fuzzy
 msgid "Drag curve"
 msgstr "Limiar de clic/arrastre:"

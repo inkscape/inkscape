@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2009-10-06 00:12+0200\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gnome@llistes.softcatala.org>\n"
@@ -26,7 +26,17 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Creeu i editeu imatges de gràfics de vectors escalables"
 
 #: ../inkscape.desktop.in.h:2
+#, fuzzy
+msgid "Inkscape"
+msgstr "Surt de l'Inkscape"
+
+#: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
+msgstr "Editor de gràfics vectorials Inkscape"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "Editor de gràfics vectorials Inkscape"
 
 #: ../share/filters/filters.svg.h:2
@@ -5540,15 +5550,15 @@ msgstr "Adobe Illustrator 9.0 i superior (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Obre fitxers desats amb l'Adobe Illustrator 9.0 i superiors"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "Sortida PovRay"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (només camins i figures)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "Fitxer de traçador de rajos PovRay"
 
@@ -7475,58 +7485,64 @@ msgstr ""
 "la ubicació dels nodes del camí."
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Fixed width"
 msgstr "Amplada fixa"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr "Mida de la regió oculta de la cadena inferior"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "In units of stroke width"
 msgstr "En unitats d'amplada de traç"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "Considera «l'Amplada de salt» en proporció amb l'amplada del traç"
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "Amplada del contorn"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr "Afegeix l'amplada de traç a l'amplada del salt"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Crossing path stroke width"
 msgstr "Amplada del traç del camí creuat"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr "Afegeix l'amplada del traç creuat a l'amplada del salt"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Switcher size"
 msgstr "Mida de l'intercanviador"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr "Indicador de l'orientació / mida de l'intercanviador"
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr "Senyals del creuament"
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr "Senyals dels creuaments"
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr "Arrossegueu per a seleccionar el creuament, cliqueu per a invertir-lo"
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "Canvia l'espaiat del connector"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10090,7 +10106,7 @@ msgstr ""
 "<b>Moveu</b> a %s, %s; amb <b>Ctrl</b> per restringir a horitzontal/"
 "vertical; amb <b>majúscules</b> inhabilita l'ajustament"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "Arrossega la corba"
 

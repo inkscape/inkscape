@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Rune Rønde Laursen <runerl@skjoldhoej.dk>\n"
 "Language-Team: Dansk <dansk@klid.dk>\n"
@@ -25,7 +25,17 @@ msgstr "Opret og redigér SVG-billeder"
 
 #: ../inkscape.desktop.in.h:2
 #, fuzzy
+msgid "Inkscape"
+msgstr "Afslut Inkscape"
+
+#: ../inkscape.desktop.in.h:3
+#, fuzzy
 msgid "Inkscape Vector Graphics Editor"
+msgstr "Inkscape SVG Vector Illustrator"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "Inkscape SVG Vector Illustrator"
 
 #: ../share/filters/filters.svg.h:2
@@ -5813,16 +5823,16 @@ msgstr "Adobe Illustrator (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Åbn filer gemt med Adobe Illustrator"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "PovRay-uddata"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 #, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (eksportér kurver)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "PovRay Raytracer fil"
 
@@ -7840,62 +7850,68 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 #, fuzzy
 msgid "Fixed width"
 msgstr "Side_bredde"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 #, fuzzy
 msgid "In units of stroke width"
 msgstr "Bredde på streg"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "Bredde på streg"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Crossing path stroke width"
 msgstr "Skalér stregbredde"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 #, fuzzy
 msgid "Switcher size"
 msgstr "Indsætnings_stil"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "Ændr afstand på forbindelsesmellemrum"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10508,7 +10524,7 @@ msgstr ""
 "<b>Flyt</b> %s, %s; med <b>Ctrl</b> for at begrænse til vandret/lodret; med "
 "<b>Shift</b> for at slå trinvis justering fra"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "Træk kurve"
 

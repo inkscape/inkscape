@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2006-11-05 17:47+0100\n"
 "Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -25,7 +25,17 @@ msgstr "स्केलेबुल भेक्टर ग्राफिक्�
 
 #: ../inkscape.desktop.in.h:2
 #, fuzzy
+msgid "Inkscape"
+msgstr "Inkspace अन्त्य गर्नुहोस्"
+
+#: ../inkscape.desktop.in.h:3
+#, fuzzy
 msgid "Inkscape Vector Graphics Editor"
+msgstr "इन्क्सकेप SVG भेक्टर दृष्टान्तकर्ता"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "इन्क्सकेप SVG भेक्टर दृष्टान्तकर्ता"
 
 #: ../share/filters/filters.svg.h:2
@@ -5794,16 +5804,16 @@ msgstr "एडब वर्णनकर्ता (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "एडब वर्णनकर्ता संग बचत गरिएको फाइलहरू खोल्नुहोस्"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "PovRay निर्गत"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 #, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (export splines)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "PovRay रेट्रयाकर फाइल"
 
@@ -7816,62 +7826,68 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 #, fuzzy
 msgid "Fixed width"
 msgstr "पृष्ठ चौडाई"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 #, fuzzy
 msgid "In units of stroke width"
 msgstr "स्ट्रोक चौडाइ"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "स्ट्रोक चौडाइ"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Crossing path stroke width"
 msgstr "स्ट्रोक चौडाई मापन गर्नुहोस्"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 #, fuzzy
 msgid "Switcher size"
 msgstr "शैली टाँस्नुहोस्"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "योजकहरू सिर्जना गर्नुहोस्"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10503,7 +10519,7 @@ msgstr ""
 "%s द्धारा <b>सार्नुहोस्</b>, %s; तेर्सो/ठाडो निषेध गर्न <b>Ctrl</b> संग; स्न्यापिङ् अक्षम "
 "पार्न <b>Shift</b> संग"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr ""
 

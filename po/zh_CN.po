@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2009-09-07 14:09+0800\n"
 "Last-Translator: Liu Xiaoqin <liuxqsmile@gmail.com>\n"
 "Language-Team: \n"
@@ -26,7 +26,17 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "创建并编辑可缩放矢量图形图像"
 
 #: ../inkscape.desktop.in.h:2
+#, fuzzy
+msgid "Inkscape"
+msgstr "退出 Inkscape"
+
+#: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
+msgstr "Inkscape矢量绘图软件"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "Inkscape矢量绘图软件"
 
 #: ../share/filters/filters.svg.h:2
@@ -5420,15 +5430,15 @@ msgstr "Adobe Illustrator 9.0及以上版本(*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "打开使用Adobe Illustrator 9.0(或更新的版本)保存的文件"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "PovRay 输出"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (仅路径和形状)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "PovRay Raytracer 文件"
 
@@ -7275,58 +7285,64 @@ msgstr ""
 "置."
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Fixed width"
 msgstr "固定宽度"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr "下方绳子的隐藏长度"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "In units of stroke width"
 msgstr "以笔廓宽度为单位"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "将'间断宽度'设置为笔廓宽度的比例"
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "笔廓宽度"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr "将笔廓宽度添加到间断长度中"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Crossing path stroke width"
 msgstr "交叉路径笔廓宽度"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr "将交叉线的笔廓宽度添加到间断长度中"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Switcher size"
 msgstr "开关大小"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr "方向指示/开关的大小"
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "改变连接器间距"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -9753,7 +9769,7 @@ msgstr ""
 "以%s, %s <b>移动</b>; 使用<b>Ctrl</b>限制水平/垂直移动; 按住 <b>Shift</b> 禁"
 "用捕捉"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "拖动曲线"
 

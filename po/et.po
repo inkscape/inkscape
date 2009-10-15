@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2009-09-28 20:50+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -24,7 +24,17 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "SVG-vektorgraafikas piltide joonistamine ja muutmine"
 
 #: ../inkscape.desktop.in.h:2
+#, fuzzy
+msgid "Inkscape"
+msgstr "Inkscape töö lõpetamine"
+
+#: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
+msgstr "Inkscape, vektorgraafika redaktor"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "Inkscape, vektorgraafika redaktor"
 
 #: ../share/filters/filters.svg.h:2
@@ -5654,15 +5664,15 @@ msgstr "Adobe Illustrator 9.0 ja uuemad (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Avab faile mis on salvestatud Adobe Illustratoriga 9 või uuemaga"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "PovRay väljund"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (ainult jooned ja kujundid)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "PovRay Raytracer fail"
 
@@ -7566,64 +7576,70 @@ msgstr ""
 #  Stroke width
 #  Width
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 #, fuzzy
 msgid "Fixed width"
 msgstr "Pliiatsi laius"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 #, fuzzy
 msgid "In units of stroke width"
 msgstr "Muuda joonelaiust"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "Joone laius"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 #, fuzzy
 msgid "Add the stroke width to the interruption size"
 msgstr "Joone laius"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Crossing path stroke width"
 msgstr "Muuda joonelaiust"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Add crossed stroke width to the interruption size"
 msgstr "Joone laius"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 #, fuzzy
 msgid "Switcher size"
 msgstr "Vahetaja stiil"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "Ühendaja vahekauguste muutmine"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10096,7 +10112,7 @@ msgid ""
 "with <b>Shift</b> to disable snapping"
 msgstr ""
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "Lohista kurv"
 

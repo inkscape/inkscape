@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-05 22:03+0200\n"
+"POT-Creation-Date: 2009-10-15 12:45+0200\n"
 "PO-Revision-Date: 2007-02-21 03:30+0100\n"
 "Last-Translator: Jurmey Rabgay <pemai_jurmey@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -26,7 +26,17 @@ msgstr "ཆ་ཚད་འཇལ་བཏུབ་པའི་མཉམ་ཐི
 
 #: ../inkscape.desktop.in.h:2
 #, fuzzy
+msgid "Inkscape"
+msgstr "ཨིངཀིསི་ཀེབ་སྤང་།"
+
+#: ../inkscape.desktop.in.h:3
+#, fuzzy
 msgid "Inkscape Vector Graphics Editor"
+msgstr "ཨིཀིསིཀེཔི་ སི་ཝི་ཇི་ མཉམ་ཐིག་གི་པར་རིས་མཁན།"
+
+#: ../inkscape.desktop.in.h:4
+#, fuzzy
+msgid "Vector Graphics Editor"
 msgstr "ཨིཀིསིཀེཔི་ སི་ཝི་ཇི་ མཉམ་ཐིག་གི་པར་རིས་མཁན།"
 
 #: ../share/filters/filters.svg.h:2
@@ -5762,16 +5772,16 @@ msgstr "རི་མོ་མཁན་ ཨེ་ཌོབ་འབད།(*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "ཨེ་ཌོབ་རི་མོ་མཁན་དང་གཅིག་ཁར་སྲུང་བཞག་འབད་དེ་ཡོད་མི་ཡིག་སྣོད་ཚུ་སྲུང་བཞག་འབད།"
 
-#: ../src/extension/internal/pov-out.cpp:677
+#: ../src/extension/internal/pov-out.cpp:688
 msgid "PovRay Output"
 msgstr "PovRay ཨའུཊི་པུཊི།"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:693
 #, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "པོཝ་རེ།(*.pov)(ཨིསི་པི་ལ་ཡིན་ཕྱིར་འདྲེན་འབད།)"
 
-#: ../src/extension/internal/pov-out.cpp:683
+#: ../src/extension/internal/pov-out.cpp:694
 msgid "PovRay Raytracer File"
 msgstr "པོཝ་རེ་ འོད་ བཤུལ་འཚོལ་འབད་མི་ཡིག་སྣོད།"
 
@@ -7776,62 +7786,68 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 #, fuzzy
 msgid "Fixed width"
 msgstr "ཤོག་ལེབ་ཀྱི་རྒྱ་ཚད།(_W)"
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 #, fuzzy
 msgid "In units of stroke width"
 msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr "རྒྱ་ཚད་སིཊོརོག་འབད།"
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 #, fuzzy
 msgid "Crossing path stroke width"
 msgstr "སིཊོཀ་རྒྱ་ཚད་སོར་"
 
-#: ../src/live_effects/lpe-knot.cpp:326
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 #, fuzzy
 msgid "Switcher size"
 msgstr "བཟོ་རྣམ་སྦྱར།(_S)"
 
-#: ../src/live_effects/lpe-knot.cpp:327
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:339
+#: ../src/live_effects/lpe-knot.cpp:344
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
+
+#. / @todo Is this the right verb?
+#: ../src/live_effects/lpe-knot.cpp:637
+#, fuzzy
+msgid "Change knot crossing"
+msgstr "མཐུད་བྱེད་ཀྱི་བར་སྟོང་བཞག་ཐངས་ བསྒྱུར་བཅོས་འབད་"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -10453,7 +10469,7 @@ msgstr ""
 "%s, %s;གིས་ ཐད་སྙོམས/ཀེར་ཕྲང་སྦེ་བཀག་ཆ་འབད་ནིའི་དོན་ལུ་ <b>Ctrl</b>དང་གཅིག་ཁར་དང་ དཔར་"
 "བཏབ་ནི་དེ་ལྕོགས་མིན་བཟོ་ནིའི་དོན་ལུ་<b>སོར་ལྡེ་</b> <b>སྤེ་བཤུད་འབད།</b>"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "གུག་གུགཔ་ འདྲུད་"
 
