@@ -14,7 +14,7 @@ INSTRUCTIONS
 An automated version is planned for later, but currently you'll just have to follow these instructions.  Oh, and it won't do the last half dozen steps automatically.
 
 (0. Compile Inkscape)
-1.  Copy everything from the "inkscape" build directory, EXCEPT for inkscape.dbg, into ./App/Inkscape
+1.  Copy everything from the "inkscape" build directory, EXCEPT for inkscape.dbg and gdb.exe, into ./App/Inkscape
 2.  Update the version number in the "Version" section of ./App/AppInfo/appinfo.ini
 3.  Compile ./Other/Source/InkscapePortable.nsi with NSIS
 4.  Run the PortableApps.com AppCompactor on ./App/Inkscape

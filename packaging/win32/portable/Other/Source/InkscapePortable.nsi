@@ -20,22 +20,23 @@
 ;along with this program; if not, write to the Free Software
 ;Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+!define PORTABLEAPPNAME "Inkscape Portable"
 !define NAME InkscapePortable
 !define VER "1.6.6.0"
 !define LAUNCHERLANGUAGE English
 
 ;=== Program Details
-Name "Inkscape Portable"
+Name "${PORTABLEAPPNAME}"
 OutFile "..\..\${NAME}.exe"
 VIProductVersion "${VER}"
-VIAddVersionKey ProductName "Inkscape Portable"
+VIAddVersionKey ProductName "${PORTABLEAPPNAME}"
 VIAddVersionKey Comments "Allows Inkscape to be run from a removable drive.  For additional details, visit Inkscape.org"
 VIAddVersionKey CompanyName "PortableApps.com"
 VIAddVersionKey LegalCopyright "PortableApps.com & Inkscape.org"
-VIAddVersionKey FileDescription "Inkscape Portable"
+VIAddVersionKey FileDescription "${PORTABLEAPPNAME}"
 VIAddVersionKey FileVersion "${VER}"
 VIAddVersionKey ProductVersion "${VER}"
-VIAddVersionKey InternalName "Inkscape Portable"
+VIAddVersionKey InternalName "${PORTABLEAPPNAME}"
 VIAddVersionKey LegalTrademarks "PortableApps.com is a Trademark of Rare Ideas, LLC."
 VIAddVersionKey OriginalFilename "${NAME}.exe"
 ;VIAddVersionKey PrivateBuild ""
@@ -76,7 +77,6 @@ Icon "..\..\App\AppInfo\appicon.ico"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\${LAUNCHERLANGUAGE}.nlf"
 !include PortableApps.comLauncherLANG_${LAUNCHERLANGUAGE}.nsh
 
-Var EXECSTRING
 Var MISSINGFILEORPATH
 
 Section Main
