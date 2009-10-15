@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-05 23:21+0200\n"
+"PO-Revision-Date: 2009-10-15 12:58+0200\n"
 "Last-Translator: Arpad Biro <biro.arpad gmail>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -24,18 +24,16 @@ msgstr ""
 "és szerkesztése"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Kilépés az Inkscape-ből"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape - vektorgrafikai szerkesztő"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape - vektorgrafikai szerkesztő"
+msgstr "Vektorgrafikai szerkesztő"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -7594,9 +7592,8 @@ msgstr "Kereszteződés kijelölése: húzással. Megfordítás: kattintással."
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "Kapcsok helykihagyásának módosítása"
+msgstr "Csomókereszteződés módosítása"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
