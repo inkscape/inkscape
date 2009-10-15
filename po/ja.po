@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-09 01:51+0900\n"
+"POT-Creation-Date: 2009-10-15 17:54+0900\n"
+"PO-Revision-Date: 2009-10-15 17:53+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -28,21 +28,19 @@ msgstr ""
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "スケーラブル ベクター グラフィックス イメージの作成と編集を行います"
+msgstr "Scalable Vector Graphics (SVG) イメージの作成と編集を行います"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Inkscape を終了"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape ベクターグラフィックエディタ"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape ベクターグラフィックエディタ"
+msgstr "ベクターグラフィックエディタ"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -7465,9 +7463,8 @@ msgstr "ドラッグで交点を選択、クリックで切り替えます。"
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "コネクタ間隔の変更"
+msgstr "ノット交点の変更"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -9986,7 +9983,7 @@ msgstr ""
 "<b>移動</b> %s, %s。<b>Ctrl</b> で水平/垂直方向に制限、<b>Shift</b> でスナッ"
 "プを無効化します。"
 
-#: ../src/shape-editor.cpp:471
+#: ../src/shape-editor.cpp:468
 msgid "Drag curve"
 msgstr "曲線をドラッグ"
 
