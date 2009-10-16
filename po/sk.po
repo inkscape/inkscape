@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-12 16:56+0100\n"
+"PO-Revision-Date: 2009-10-16 10:18+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -25,18 +25,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Tvorba a úprava obrázkov Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Ukončí Inkscape"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape - editor vektorovej grafiky"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape - editor vektorovej grafiky"
+msgstr "editor vektorovej grafiky"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -7481,9 +7479,8 @@ msgstr "Ťahaním vyberte pretnutie, kliknutím ho obrátite"
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "Zmeniť rozostup konektorov"
+msgstr "Zmeniť pretínanie uzlov"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11

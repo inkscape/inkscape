@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2007-10-17 19:30+0100\n"
-"Last-Translator: Josef Vybíral <josef.vybiral@gmail.com>\n"
+"PO-Revision-Date: 2009-10-16 10:18+0100\n"
+"Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team:  <none>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,19 +22,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Vytvářejte a upravujte vektorovou grafiku (SVG)"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Ukončit Inkscape"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
-#, fuzzy
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape SVG Vektorový Ilustrátor"
+msgstr "Inkscape - editor vektorové grafiky"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape SVG Vektorový Ilustrátor"
+msgstr "editor vektorové grafiky"
 
 #: ../share/filters/filters.svg.h:2
 #, fuzzy
@@ -14599,23 +14596,23 @@ msgstr "Nastavit jako výchozí"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Albanian (sq)"
-msgstr ""
+msgstr "albánština (sq)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Amharic (am)"
-msgstr ""
+msgstr "amharština (am)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Arabic (ar)"
-msgstr ""
+msgstr "arabština (ar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Armenian (hy)"
-msgstr ""
+msgstr "arménština (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Azerbaijani (az)"
-msgstr ""
+msgstr "azerbajdžánština (az)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 #, fuzzy
@@ -14624,63 +14621,63 @@ msgstr "Měřítko"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Belarusian (be)"
-msgstr ""
+msgstr "běloruština (be)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bulgarian (bg)"
-msgstr ""
+msgstr "bulharština (bg)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Bengali (bn)"
-msgstr ""
+msgstr "bengálština (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Breton (br)"
-msgstr ""
+msgstr "bretonština (br)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Catalan (ca)"
-msgstr ""
+msgstr "katalánština (ca)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Valencian Catalan (ca@valencia)"
-msgstr ""
+msgstr "valencijská katalánština (ca@valencia)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Chinese/China (zh_CN)"
-msgstr ""
+msgstr "čínština (Čína) (zh_CN)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Chinese/Taiwan (zh_TW)"
-msgstr ""
+msgstr "čínština (Taiwan) (zh_TW)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Croatian (hr)"
-msgstr ""
+msgstr "chorvatština (hr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Czech (cs)"
-msgstr ""
+msgstr "čeština (cs)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Danish (da)"
-msgstr ""
+msgstr "dánština (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dutch (nl)"
-msgstr ""
+msgstr "nizozemština (nl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Dzongkha (dz)"
-msgstr ""
+msgstr "Dzongkä (dz)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "German (de)"
-msgstr ""
+msgstr "němčina (de)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Greek (el)"
-msgstr ""
+msgstr "řečtina (el)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 #, fuzzy
@@ -14689,19 +14686,19 @@ msgstr "Úhel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "English/Australia (en_AU)"
-msgstr ""
+msgstr "angličtina (Austrálie) (en_AU)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Canada (en_CA)"
-msgstr ""
+msgstr "angličtina (Kanada) (en_CA)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "English/Great Britain (en_GB)"
-msgstr ""
+msgstr "angličtina (Spojené království) (en_GB)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Pig Latin (en_US@piglatin)"
-msgstr ""
+msgstr "Pig Latin (en_US@piglatin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 #, fuzzy
@@ -14710,35 +14707,35 @@ msgstr "Tvůrce"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Estonian (et)"
-msgstr ""
+msgstr "estonština (et)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Finnish (fi)"
-msgstr ""
+msgstr "finština (fi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "French (fr)"
-msgstr ""
+msgstr "francouzština (fr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Irish (ga)"
-msgstr ""
+msgstr "irština (ga)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Galician (gl)"
-msgstr ""
+msgstr "galicijština (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hebrew (he)"
-msgstr ""
+msgstr "hebrejština (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Hungarian (hu)"
-msgstr ""
+msgstr "maďarština (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Indonesian (id)"
-msgstr ""
+msgstr "indonéština (id)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 #, fuzzy
@@ -14747,31 +14744,31 @@ msgstr "Kurzíva"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Japanese (ja)"
-msgstr ""
+msgstr "japonština (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Khmer (km)"
-msgstr ""
+msgstr "khmerština (km)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Kinyarwanda (rw)"
-msgstr ""
+msgstr "rwandština (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Korean (ko)"
-msgstr ""
+msgstr "korejština (ko)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Lithuanian (lt)"
-msgstr ""
+msgstr "litevština (lt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Macedonian (mk)"
-msgstr ""
+msgstr "makedonština (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Mongolian (mn)"
-msgstr ""
+msgstr "mongolština (mn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 #, fuzzy
@@ -14780,79 +14777,79 @@ msgstr "Nový řádek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Bokmål (nb)"
-msgstr ""
+msgstr "norský bokmål (nb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Norwegian Nynorsk (nn)"
-msgstr ""
+msgstr "norský nynorsk (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Panjabi (pa)"
-msgstr ""
+msgstr "paňdžábština (pa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Polish (pl)"
-msgstr ""
+msgstr "polština (pl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese (pt)"
-msgstr ""
+msgstr "portugalština (pt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Portuguese/Brazil (pt_BR)"
-msgstr ""
+msgstr "portugalština (Brazílie) (pt_BR)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Romanian (ro)"
-msgstr ""
+msgstr "rumunština (ro)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1060
 msgid "Russian (ru)"
-msgstr ""
+msgstr "ruština (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian (sr)"
-msgstr ""
+msgstr "srbština (sr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Serbian in Latin script (sr@latin)"
-msgstr ""
+msgstr "srbština (latinka) (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovak (sk)"
-msgstr ""
+msgstr "slovenština (sk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Slovenian (sl)"
-msgstr ""
+msgstr "slovinština (sl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish (es)"
-msgstr ""
+msgstr "španělština (es)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1061
 msgid "Spanish/Mexico (es_MX)"
-msgstr ""
+msgstr "španělština (Mexiko) (es_MX)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Swedish (sv)"
-msgstr ""
+msgstr "švédština (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Thai (th)"
-msgstr ""
+msgstr "thajština (th)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Turkish (tr)"
-msgstr ""
+msgstr "turečtina (tr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Ukrainian (uk)"
-msgstr ""
+msgstr "ukrajinština (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "Vietnamese (vi)"
-msgstr ""
+msgstr "vietnamština (vi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1069
 #, fuzzy
