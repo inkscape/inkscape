@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-06 07:32+0300\n"
+"PO-Revision-Date: 2009-10-15 14:03+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 0.3\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -27,18 +27,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Створення та редагування зображень у форматі SVG"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Вийти з Inkscape"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Редактор векторної графіки Inkscape"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Редактор векторної графіки Inkscape"
+msgstr "Редактор векторної графіки"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -76,8 +74,7 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
-"Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -737,8 +734,7 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
-"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -934,8 +930,7 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid ""
-"Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -1213,8 +1208,7 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
-"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -1322,8 +1316,7 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid ""
-"Felt like texture with color turbulence and slightly darker at the edges"
+msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -1356,8 +1349,7 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
-"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -1625,8 +1617,7 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr ""
-"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -1870,8 +1861,7 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid ""
-"Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -3047,8 +3037,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr ""
-"Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -3522,8 +3511,7 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
-"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -6184,8 +6172,7 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid ""
-"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -7577,9 +7564,8 @@ msgstr "Перетягніть, щоб обрати перехрестя, кла
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "Зміна відстаней для лінії з'єднання"
+msgstr "Змінити перехрестя у вузлі"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7599,7 +7585,7 @@ msgstr "Повторюються"
 #: ../src/live_effects/lpe-patternalongpath.cpp:55
 #: ../share/extensions/pathalongpath.inx.h:9
 msgid "Repeated, stretched"
-msgstr "Повторюються і розтягаються"
+msgstr "Повторюються і розтягуються"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
@@ -8074,8 +8060,7 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
-"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -9055,8 +9040,7 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:672
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
-"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1266
 #, c-format
@@ -10899,8 +10883,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:214
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
-"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:220
 msgid ""
@@ -12701,8 +12684,7 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid ""
-"The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у вигляді вхідного "
 "графічного зображення"
@@ -12959,8 +12941,7 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid ""
-"Only try to snap the node that is initially closest to the mouse pointer"
+msgid "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -13428,8 +13409,7 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Save and restore window geometry for each document"
-msgstr ""
-"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Remember and use last window's geometry"
@@ -15437,8 +15417,7 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr ""
-"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -20662,8 +20641,7 @@ msgstr "Довжина:"
 
 #: ../src/widgets/toolbox.cpp:7041
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
-"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
 #: ../src/widgets/toolbox.cpp:7053
 msgid "Downwards"
@@ -20706,8 +20684,7 @@ msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
 #: ../src/widgets/toolbox.cpp:7212
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
+msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
@@ -21818,13 +21795,11 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
