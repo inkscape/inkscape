@@ -24,18 +24,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Crea e modifica immagini Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Chiude Inkscape"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Inkscape - Grafica vettoriale SVG"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape - Grafica vettoriale SVG"
+msgstr "Grafica vettoriale SVG"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -7563,9 +7561,8 @@ msgstr "Trascinare per selezionare un intersezione, cliccare per girarla"
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "Cambia spaziatura connettori"
+msgstr "Cambia intersezione nodo"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
