@@ -206,7 +206,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         }
         /* If autodetect fails, save as Inkscape SVG */
         if (omod == NULL) {
-            omod = dynamic_cast<Output *>(db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE));
+            // omod = dynamic_cast<Output *>(db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)); use exception and let user choose
         }
     } else {
         omod = dynamic_cast<Output *>(key);

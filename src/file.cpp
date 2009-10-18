@@ -883,6 +883,10 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
                 ext = fn.substr( pos );
             }
             success = file_save(parentWindow, doc, fn, Inkscape::Extension::db.get(ext.c_str()), FALSE, TRUE, Inkscape::Extension::FILE_SAVE_METHOD_SAVE_AS);
+            if (success == false) {
+                // give the user the chance to change filename or extension
+                return sp_file_save_dialog(parentWindow, doc, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG);
+            }
         }
     } else {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No changes need to be saved."));
