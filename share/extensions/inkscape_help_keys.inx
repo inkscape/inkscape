@@ -3,7 +3,7 @@
     <_name>Keys and Mouse Reference</_name>
     <id>org.inkscape.help.keys</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-	<param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/keys046.html</param>
+	<param name="url" gui-hidden="true" type="string">http://inkscape.org/doc/keys047.html</param>
     <effect needs-document="false">
 		<object-type>all</object-type>
 		<effects-menu hidden="true"/>
