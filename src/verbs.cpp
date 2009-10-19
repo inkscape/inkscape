@@ -2667,10 +2667,10 @@ Verb *Verb::_base_verbs[] = {
                    N_("Create multiple clones of selected object, arranging them into a pattern or scattering"), INKSCAPE_ICON_DIALOG_TILE_CLONES),
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),
                    N_("Edit the ID, locked and visible status, and other object properties"), INKSCAPE_ICON_DIALOG_OBJECT_PROPERTIES),
-#ifdef WITH_INKBOARD
+/*#ifdef WITH_INKBOARD
     new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
                    N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
-#endif
+#endif*/
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
                    N_("Configure extended input devices, such as a graphics tablet"), INKSCAPE_ICON_DIALOG_INPUT_DEVICES),
     new DialogVerb(SP_VERB_DIALOG_INPUT2, "DialogInput2", N_("_Input Devices (new)..."),
