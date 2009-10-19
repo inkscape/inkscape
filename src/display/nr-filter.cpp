@@ -168,6 +168,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     // TODO: with filterRes of 0x0 should return an empty image
     std::pair<double,double> resolution
         = _filter_resolution(filter_area, trans, filterquality);
+    if(!(resolution.first > 0 && resolution.second > 0))
+	return 1;
     units.set_resolution(resolution.first, resolution.second);
     if (_x_pixels > 0) {
         units.set_automatic_resolution(false);
