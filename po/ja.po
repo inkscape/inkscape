@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-15 17:54+0900\n"
-"PO-Revision-Date: 2009-10-15 17:53+0900\n"
+"POT-Creation-Date: 2009-10-20 16:26+0900\n"
+"PO-Revision-Date: 2009-10-20 16:24+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -5482,15 +5482,15 @@ msgstr "Adobe Illustrator 9.0 以降 (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Adobe Illustrator 9.0 以降で保存されたファイルを開きます"
 
-#: ../src/extension/internal/pov-out.cpp:688
+#: ../src/extension/internal/pov-out.cpp:700
 msgid "PovRay Output"
 msgstr "PovRay 出力"
 
-#: ../src/extension/internal/pov-out.cpp:693
+#: ../src/extension/internal/pov-out.cpp:705
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (パスとシェイプのみ)"
 
-#: ../src/extension/internal/pov-out.cpp:694
+#: ../src/extension/internal/pov-out.cpp:706
 msgid "PovRay Raytracer File"
 msgstr "PovRay レイトレーサファイル"
 
@@ -5595,7 +5595,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.ja.svg"
 
-#: ../src/file.cpp:265 ../src/file.cpp:1067
+#: ../src/file.cpp:265 ../src/file.cpp:1071
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "要求されたファイル %s を開くことに失敗しました"
@@ -5667,7 +5667,7 @@ msgid "Document saved."
 msgstr "ドキュメントを保存しました。"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:770 ../src/file.cpp:1204
+#: ../src/file.cpp:770 ../src/file.cpp:1208
 #, c-format
 msgid "drawing%s"
 msgstr "描画%s"
@@ -5690,27 +5690,27 @@ msgstr "コピーを保存するファイルを選択"
 msgid "Select file to save to"
 msgstr "保存するファイルを選択"
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:892
 msgid "No changes need to be saved."
 msgstr "保存が必要な変更がされていません。"
 
-#: ../src/file.cpp:905
+#: ../src/file.cpp:909
 msgid "Saving document..."
 msgstr "ドキュメントを保存しています..."
 
-#: ../src/file.cpp:1064
+#: ../src/file.cpp:1068
 msgid "Import"
 msgstr "インポート"
 
-#: ../src/file.cpp:1114
+#: ../src/file.cpp:1118
 msgid "Select file to import"
 msgstr "インポートするファイルを選択"
 
-#: ../src/file.cpp:1226
+#: ../src/file.cpp:1230
 msgid "Select file to export to"
 msgstr "エクスポート先のファイルを選択"
 
-#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1473 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Open Clip Art Library からインポート"
 
@@ -9983,7 +9983,7 @@ msgstr ""
 "<b>移動</b> %s, %s。<b>Ctrl</b> で水平/垂直方向に制限、<b>Shift</b> でスナッ"
 "プを無効化します。"
 
-#: ../src/shape-editor.cpp:468
+#: ../src/shape-editor.cpp:471
 msgid "Drag curve"
 msgstr "曲線をドラッグ"
 
@@ -17993,14 +17993,10 @@ msgstr "オブジェクトのプロパティ(_O)..."
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr "ID、ロックと表示の状態、その他のオブジェクトのプロパティを編集します。"
 
-#: ../src/verbs.cpp:2672
-msgid "_Instant Messaging..."
-msgstr "インスタントメッセージング(_I)..."
-
-#: ../src/verbs.cpp:2672
-msgid "Jabber Instant Messaging Client"
-msgstr "Jabber インスタントメッセージングクライアントを起動します。"
-
+#. #ifdef WITH_INKBOARD
+#. new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
+#. N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
+#. #endif
 #: ../src/verbs.cpp:2674
 msgid "_Input Devices..."
 msgstr "入力デバイス(_I)..."
@@ -22077,7 +22073,7 @@ msgstr ""
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr "カラーマーカーをマッチストロークへ"
+msgstr "マーカーの色をストロークに合わせる"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
@@ -23344,3 +23340,9 @@ msgstr "Windows メタファイル入力"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "XAML 入力"
+
+#~ msgid "_Instant Messaging..."
+#~ msgstr "インスタントメッセージング(_I)..."
+
+#~ msgid "Jabber Instant Messaging Client"
+#~ msgstr "Jabber インスタントメッセージングクライアントを起動します。"
