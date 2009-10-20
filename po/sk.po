@@ -2342,7 +2342,7 @@ msgstr "<small>Nič nebolo vybrané.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:161
 msgid "<small>More than one object selected.</small>"
-msgstr "<small>Vybraný viac ako jeden object.</small>"
+msgstr "<small>Vybraný viac ako jeden objekt.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:168
 #, c-format
@@ -11884,7 +11884,7 @@ msgstr "Dokument"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../share/extensions/color_custom.inx.h:3
 msgid "Custom"
-msgstr "Vlastné"
+msgstr "Vlastná"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1458
 msgid "Cairo"
@@ -20921,7 +20921,7 @@ msgstr "Open presentation exchange súbory uložené v Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
-msgstr "Svetlejšie"
+msgstr "Svetlejšia"
 
 #: ../share/extensions/color_custom.inx.h:1
 msgid "Blue Function"
@@ -20937,7 +20937,7 @@ msgstr "Funkcia červenej"
 
 #: ../share/extensions/color_darker.inx.h:2
 msgid "Darker"
-msgstr "Tmavšie"
+msgstr "Tmavšia"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
@@ -20973,7 +20973,7 @@ msgstr "Negatív"
 
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Randomize"
-msgstr "Náhodne"
+msgstr "Náhodná"
 
 #: ../share/extensions/color_removeblue.inx.h:2
 msgid "Remove Blue"
