@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-15 22:16+0100\n"
+"PO-Revision-Date: 2009-10-21 07:43+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4313,7 +4313,7 @@ msgstr "Text-Grundlinie"
 
 #: ../src/display/snap-indicator.cpp:241
 msgid " to "
-msgstr " von "
+msgstr " an "
 
 #: ../src/document.cpp:445
 #, c-format
