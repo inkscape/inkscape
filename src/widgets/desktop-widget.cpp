@@ -1339,8 +1339,7 @@ sp_desktop_widget_new (SPNamedView *namedview)
 
     dtw->desktop = new SPDesktop();
     dtw->stub = new SPDesktopWidget::WidgetStub (dtw);
-    dtw->desktop->registerEditWidget (dtw->stub);
-    dtw->desktop->init (namedview, dtw->canvas);
+    dtw->desktop->init (namedview, dtw->canvas, dtw->stub);
     inkscape_add_desktop (dtw->desktop);
 
     // Add the shape geometry to libavoid for autorouting connectors.

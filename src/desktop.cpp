@@ -164,8 +164,10 @@ SPDesktop::SPDesktop() :
 }
 
 void
-SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
+SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWidgetInterface *widget)
 {
+    _widget = widget;
+
     // Temporary workaround for link order issues:
     Inkscape::DeviceManager::getManager().getDevices();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

@@ -180,7 +180,7 @@ struct SPDesktop : public Inkscape::UI::View::View
 #endif
 
     SPDesktop();
-    void init (SPNamedView* nv, SPCanvas* canvas);
+    void init (SPNamedView* nv, SPCanvas* canvas, Inkscape::UI::View::EditWidgetInterface *widget);
     virtual ~SPDesktop();
     void destroy();
 
@@ -302,9 +302,6 @@ struct SPDesktop : public Inkscape::UI::View::View
     void maximize();
     void fullscreen();
     void focusMode(bool mode = true);
-
-    void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)
-    { _widget = widget; }
 
     Geom::Matrix w2d() const; //transformation from window to desktop coordinates (used for zooming)
     Geom::Point w2d(Geom::Point const &p) const;
