@@ -8,8 +8,9 @@ screens_DATA = \
 	about.br.svg\
 	about.ca.svg\
 	about.cs.svg\
-    about.de.svg\
+    	about.de.svg\
 	about.es.svg\
+	about.eu.svg\
 	about.fi.svg\
 	about.fr.svg\
 	about.gl.svg\
@@ -21,8 +22,8 @@ screens_DATA = \
 	about.ru.svg\
 	about.sk.svg\
 	about.sl.svg\
-    about.sr.svg\
-    about.sr@latin.svg\
+    	about.sr.svg\
+    	about.sr@latin.svg\
 	about.uk.svg
 
 EXTRA_DIST = $(screens_DATA)
