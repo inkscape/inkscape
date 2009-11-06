@@ -5,13 +5,13 @@
 # Agradecimientos: zert, softcatala, 2002-2003.
 # Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
-# Lucas Vieites Fariña <lucas@codexion.com>, 2003-2009.
+# Lucas Vieites Fariña <lucas@codexion.com>, 2003-200, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-15 13:58+0100\n"
+"PO-Revision-Date: 2009-11-06 19:21+0100\n"
 "Last-Translator: Lucas Vieites Fariña <lucas@codexion.com>\n"
 "Language-Team:  inkscape-translator@lists.sourceforge.net <inkscape-"
 "translator@lists.sourceforge.net>\n"
@@ -6555,7 +6555,7 @@ msgstr "Mostrar u ocultar la barra de comandos (bajo el menú)"
 
 #: ../src/interface.cpp:870
 msgid "Snap Controls Bar"
-msgstr "Ajustar barra de controles"
+msgstr "Barra de controles de ajuste"
 
 #: ../src/interface.cpp:870
 msgid "Show or hide the snapping controls"
