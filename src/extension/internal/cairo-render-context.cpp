@@ -768,15 +768,7 @@ CairoRenderContext::setupSurface(double width, double height)
 #endif
 #ifdef CAIRO_HAS_PS_SURFACE
         case CAIRO_SURFACE_TYPE_PS:
-            if (!_eps && width > height) {
-                surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, height, width);
-                cairo_matrix_init (&ctm, 0, -1, 1,  0, 0, 0);
-                cairo_matrix_translate (&ctm, -width, 0);
-                cairo_ps_surface_dsc_begin_page_setup (surface);
-                cairo_ps_surface_dsc_comment (surface, "%%PageOrientation: Landscape");
-            } else {
-                surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
-            }
+            surface = cairo_ps_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, width, height);
             if(CAIRO_STATUS_SUCCESS != cairo_surface_status(surface)) {
                 return FALSE;
             }
