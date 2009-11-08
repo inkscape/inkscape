@@ -856,19 +856,32 @@ sp_selected_path_outline(SPDesktop *desktop)
                 SPShape *shape = SP_SHAPE(item);
 
                 Geom::PathVector const & pathv = curve->get_pathvector();
-                for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-                    for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-                        if ( SPObject *marker_obj = shape->marker[i] ) {
+
+                // START marker
+                for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
+                    if ( SPObject *marker_obj = shape->marker[i] ) {
+                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
+                        sp_selected_path_outline_add_marker( marker_obj, m,
+                                                             Geom::Scale(i_style->stroke_width.computed), transform,
+                                                             g_repr, xml_doc, doc );
+                    }
+                }
+                // MID marker
+                for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
+                    SPObject *midmarker_obj = shape->marker[i];
+                    if (!midmarker_obj) continue;
+                    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                        // START position
+                        if ( path_it != pathv.begin() 
+                             && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
+                        {
                             Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
-                            sp_selected_path_outline_add_marker( marker_obj, m,
+                            sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
                                                                  g_repr, xml_doc, doc );
                         }
-                    }
-
-                    for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                        SPObject *midmarker_obj = shape->marker[i];
-                        if ( midmarker_obj && (path_it->size_default() > 1) ) {
+                        // MID position
+                       if (path_it->size_default() > 1) {
                             Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
                             Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
                             while (curve_it2 != path_it->end_default())
@@ -886,23 +899,32 @@ sp_selected_path_outline(SPDesktop *desktop)
                                 ++curve_it2;
                             }
                         }
-                    }
-
-                    for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-                        if ( SPObject *marker_obj = shape->marker[i] ) {
-                            /* Get reference to last curve in the path.
-                             * For moveto-only path, this returns the "closing line segment". */
-                            unsigned int index = path_it->size_default();
-                            if (index > 0) {
-                                index--;
-                            }
-                            Geom::Curve const &lastcurve = (*path_it)[index];
-
+                        // END position
+                        if ( path_it != (pathv.end()-1) && !path_it->empty()) {
+                            Geom::Curve const &lastcurve = path_it->back_default();
                             Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
-                            sp_selected_path_outline_add_marker( marker_obj, m,
+                            sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
                                                                  g_repr, xml_doc, doc );
                         }
+                    }
+                }
+                // END marker
+                for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
+                    if ( SPObject *marker_obj = shape->marker[i] ) {
+                        /* Get reference to last curve in the path.
+                         * For moveto-only path, this returns the "closing line segment". */
+                        Geom::Path const &path_last = pathv.back();
+                        unsigned int index = path_last.size_default();
+                        if (index > 0) {
+                            index--;
+                        }
+                        Geom::Curve const &lastcurve = path_last[index];
+
+                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                        sp_selected_path_outline_add_marker( marker_obj, m,
+                                                             Geom::Scale(i_style->stroke_width.computed), transform,
+                                                             g_repr, xml_doc, doc );
                     }
                 }
 

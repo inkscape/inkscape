@@ -192,11 +192,28 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     ctx->renderPathVector(pathv, style, &pbox);
 
-    for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-      // START position
-        for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-            if ( shape->marker[i] ) {
-                SPMarker* marker = SP_MARKER (shape->marker[i]);
+    // START marker
+    for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
+        if ( shape->marker[i] ) {
+            SPMarker* marker = SP_MARKER (shape->marker[i]);
+            Geom::Matrix tr;
+            if (marker->orient_auto) {
+                tr = sp_shape_marker_get_transform_at_start(pathv.begin()->front());
+            } else {
+                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(pathv.begin()->front().pointAt(0));
+            }
+            sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
+        }
+    }
+    // MID marker
+    for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
+        if ( !shape->marker[i] ) continue;
+        SPMarker* marker = SP_MARKER (shape->marker[i]);
+        for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+            // START position
+            if ( path_it != pathv.begin() 
+                 && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
+            {
                 Geom::Matrix tr;
                 if (marker->orient_auto) {
                     tr = sp_shape_marker_get_transform_at_start(path_it->front());
@@ -205,11 +222,8 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 }
                 sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
-        }
-
-      // MID position
-        for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-            if ( shape->marker[i] && (path_it->size_default() > 1) ) {
+            // MID position
+            if (path_it->size_default() > 1) {
                 Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
                 Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
                 while (curve_it2 != path_it->end_default())
@@ -217,9 +231,6 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                     /* Put marker between curve_it1 and curve_it2.
                      * Loop to end_default (so including closing segment), because when a path is closed,
                      * there should be a midpoint marker between last segment and closing straight line segment */
-
-                    SPMarker* marker = SP_MARKER (shape->marker[i]);
-
                     Geom::Matrix tr;
                     if (marker->orient_auto) {
                         tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
@@ -233,30 +244,41 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                     ++curve_it2;
                 }
             }
-        }
-
-      // END position
-        for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-            if ( shape->marker[i] ) {
-                SPMarker* marker = SP_MARKER (shape->marker[i]);
-
-                /* Get reference to last curve in the path.
-                 * For moveto-only path, this returns the "closing line segment". */
-                unsigned int index = path_it->size_default();
-                if (index > 0) {
-                    index--;
-                }
-                Geom::Curve const &lastcurve = (*path_it)[index];
-
+            // END position
+            if ( path_it != (pathv.end()-1) && !path_it->empty()) {
+                Geom::Curve const &lastcurve = path_it->back_default();
                 Geom::Matrix tr;
                 if (marker->orient_auto) {
                     tr = sp_shape_marker_get_transform_at_end(lastcurve);
                 } else {
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
                 }
-
                 sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
+        }
+    }
+    // END marker
+    for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
+        if ( shape->marker[i] ) {
+            SPMarker* marker = SP_MARKER (shape->marker[i]);
+
+            /* Get reference to last curve in the path.
+             * For moveto-only path, this returns the "closing line segment". */
+            Geom::Path const &path_last = pathv.back();
+            unsigned int index = path_last.size_default();
+            if (index > 0) {
+                index--;
+            }
+            Geom::Curve const &lastcurve = path_last[index];
+
+            Geom::Matrix tr;
+            if (marker->orient_auto) {
+                tr = sp_shape_marker_get_transform_at_end(lastcurve);
+            } else {
+                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
+            }
+
+            sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
         }
     }
 }
