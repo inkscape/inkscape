@@ -893,10 +893,11 @@ sp_arc_position_set(SPArc *arc, gdouble x, gdouble y, gdouble rx, gdouble ry)
     ge->rx.computed = rx;
     ge->ry.computed = ry;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    // those pref values are in degrees, while we want radians
     if (prefs->getDouble("/tools/shapes/arc/start", 0.0) != 0)
-        ge->start = prefs->getDouble("/tools/shapes/arc/start", 0.0);
+        ge->start = prefs->getDouble("/tools/shapes/arc/start", 0.0) * M_PI / 180;
     if (prefs->getDouble("/tools/shapes/arc/end", 0.0) != 0)
-        ge->end = prefs->getDouble("/tools/shapes/arc/end", 0.0);
+        ge->end = prefs->getDouble("/tools/shapes/arc/end", 0.0) * M_PI / 180;
     if (!prefs->getBool("/tools/shapes/arc/open"))
         ge->closed = 1;
     else

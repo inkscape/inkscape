@@ -4929,7 +4929,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble(Glib::ustring("/tools/shapes/arc") + value_name, (adj->value * M_PI)/ 180);
+        prefs->setDouble(Glib::ustring("/tools/shapes/arc/") + value_name, adj->value);
     }
 
     // quit if run by the attr_changed listener
