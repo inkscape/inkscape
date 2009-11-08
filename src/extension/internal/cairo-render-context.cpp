@@ -1450,7 +1450,7 @@ CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsi
 #define GLYPH_ARRAY_SIZE 64
 
 unsigned int
-CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke)
+CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool path)
 {
     cairo_glyph_t glyph_array[GLYPH_ARRAY_SIZE];
     cairo_glyph_t *glyphs = glyph_array;
@@ -1474,15 +1474,10 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
         i++;
     }
 
-    if (is_stroke) {
+    if (path) {
         cairo_glyph_path(cr, glyphs, num_glyphs - num_invalid_glyphs);
     } else {
-        if (_is_texttopath) {
-            cairo_glyph_path(cr, glyphs, num_glyphs - num_invalid_glyphs);
-            cairo_fill_preserve(cr);
-        } else {
-            cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);
-        }
+        cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);
     }
 
     if (num_glyphs > GLYPH_ARRAY_SIZE)
@@ -1544,20 +1539,30 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
             _showGlyphs(_cr, font, glyphtext, TRUE);
         }
     } else {
-
+        bool fill = false, stroke = false, have_path = false;
         if (style->fill.isColor() || style->fill.isPaintserver()) {
             // set fill style
             _setFillStyle(style, NULL);
-
-            _showGlyphs(_cr, font, glyphtext, FALSE);
+            fill = true;
         }
 
         if (style->stroke.isColor() || style->stroke.isPaintserver()) {
             // set stroke style
             _setStrokeStyle(style, NULL);
-
-            // paint stroke
-            _showGlyphs(_cr, font, glyphtext, TRUE);
+            stroke = true;
+        }
+        if (fill) {
+            if (_is_texttopath) {
+                _showGlyphs(_cr, font, glyphtext, true);
+                have_path = true;
+                if (stroke) cairo_fill_preserve(_cr);
+                else cairo_fill(_cr);
+            } else {
+                _showGlyphs(_cr, font, glyphtext, false);
+            }
+        }
+        if (stroke) {
+            if (!have_path) _showGlyphs(_cr, font, glyphtext, true);
             cairo_stroke(_cr);
         }
     }
