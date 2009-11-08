@@ -225,6 +225,16 @@ box3d_side_set_shape (SPShape *shape)
     box3d_side_compute_corner_ids(side, corners);
 
     SPCurve *c = new SPCurve();
+
+    if (!box3d_get_corner_screen(box, corners[0]).isFinite() ||
+        !box3d_get_corner_screen(box, corners[1]).isFinite() ||
+        !box3d_get_corner_screen(box, corners[2]).isFinite() ||
+        !box3d_get_corner_screen(box, corners[3]).isFinite() )
+    {
+        g_warning ("Trying to draw a 3D box side with invalid coordinates.\n");
+        return;
+    }
+
     c->moveto(box3d_get_corner_screen(box, corners[0]));
     c->lineto(box3d_get_corner_screen(box, corners[1]));
     c->lineto(box3d_get_corner_screen(box, corners[2]));
