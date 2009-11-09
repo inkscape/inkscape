@@ -125,13 +125,26 @@ CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _renderer(parent),
     _render_mode(RENDER_MODE_NORMAL),
     _clip_mode(CLIP_MODE_MASK)
-{}
+{
+    font_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, font_data_free);
+}
 
 CairoRenderContext::~CairoRenderContext(void)
 {
+    if(font_table != NULL) {
+        g_hash_table_remove_all(font_table);
+    }
+
     if (_cr) cairo_destroy(_cr);
     if (_surface) cairo_surface_destroy(_surface);
     if (_layout) g_object_unref(_layout);
+}
+void CairoRenderContext::font_data_free(gpointer data)
+{
+    cairo_font_face_t *font_face = (cairo_font_face_t *)data;
+    if (font_face) {
+        cairo_font_face_destroy(font_face);
+    }
 }
 
 CairoRenderer*
@@ -612,7 +625,7 @@ CairoRenderContext::popLayer(void)
 
                 // copy over the correct CTM
                 // It must be stored in item_transform of current state after pushState.
-                Geom::Matrix item_transform; 
+                Geom::Matrix item_transform;
                 if (_state->parent_has_userspace)
                     item_transform = getParentState()->transform * _state->item_transform;
                 else
@@ -1015,7 +1028,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     }
 
-    // Calculate the size of the surface which has to be created 
+    // Calculate the size of the surface which has to be created
 #define SUBPIX_SCALE 100
     // Cairo requires an integer pattern surface width/height.
     // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
@@ -1323,7 +1336,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
     }
 
     bool no_fill = style->fill.isNone() || style->fill_opacity.value == 0;
-    bool no_stroke = style->stroke.isNone() || style->stroke_width.computed < 1e-9 || 
+    bool no_stroke = style->stroke.isNone() || style->stroke_width.computed < 1e-9 ||
                     style->stroke_opacity.value == 0;
 
     if (no_fill && no_stroke)
@@ -1492,10 +1505,11 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
 {
     // create a cairo_font_face from PangoFont
     double size = style->font_size.computed;
-    cairo_font_face_t *font_face = NULL;
+    gpointer fonthash = (gpointer)font;
+    cairo_font_face_t *font_face = (cairo_font_face_t *)g_hash_table_lookup(font_table, fonthash);
 
     FcPattern *fc_pattern = NULL;
-    
+
 #ifdef USE_PANGO_WIN32
 # ifdef CAIRO_HAS_WIN32_FONT
     LOGFONTA *lfa = pango_win32_font_logfont(font);
@@ -1504,17 +1518,23 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
     ZeroMemory(&lfw, sizeof(LOGFONTW));
     memcpy(&lfw, lfa, sizeof(LOGFONTA));
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, lfa->lfFaceName, LF_FACESIZE, lfw.lfFaceName, LF_FACESIZE);
-    
-    font_face = cairo_win32_font_face_create_for_logfontw(&lfw);
+
+    if(font_face == NULL) {
+        font_face = cairo_win32_font_face_create_for_logfontw(&lfw);
+        g_hash_table_insert(font_table, fonthash, font_face);
+    }
 # endif
 #else
 # ifdef CAIRO_HAS_FT_FONT
     PangoFcFont *fc_font = PANGO_FC_FONT(font);
     fc_pattern = fc_font->font_pattern;
-    font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
+    if(font_face == NULL) {
+        font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
+        g_hash_table_insert(font_table, fonthash, font_face);
+    }
 # endif
 #endif
-    
+
     cairo_save(_cr);
     cairo_set_font_face(_cr, font_face);
 
@@ -1567,8 +1587,8 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
 
     cairo_restore(_cr);
 
-    if (font_face)
-        cairo_font_face_destroy(font_face);
+//    if (font_face)
+//        cairo_font_face_destroy(font_face);
 
     return true;
 }

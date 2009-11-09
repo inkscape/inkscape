@@ -195,6 +195,9 @@ protected:
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
     void _concatTransform(cairo_t *cr, Geom::Matrix const *transform);
 
+    GHashTable *font_table;
+    static void font_data_free(gpointer data);
+
     CairoRenderState *_createState(void);
 };
 
