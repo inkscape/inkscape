@@ -1541,17 +1541,14 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
     } else {
         bool fill = false, stroke = false, have_path = false;
         if (style->fill.isColor() || style->fill.isPaintserver()) {
-            // set fill style
-            _setFillStyle(style, NULL);
             fill = true;
         }
 
         if (style->stroke.isColor() || style->stroke.isPaintserver()) {
-            // set stroke style
-            _setStrokeStyle(style, NULL);
             stroke = true;
         }
         if (fill) {
+            _setFillStyle(style, NULL);
             if (_is_texttopath) {
                 _showGlyphs(_cr, font, glyphtext, true);
                 have_path = true;
@@ -1562,6 +1559,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
             }
         }
         if (stroke) {
+            _setStrokeStyle(style, NULL);
             if (!have_path) _showGlyphs(_cr, font, glyphtext, true);
             cairo_stroke(_cr);
         }
