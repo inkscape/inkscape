@@ -15,6 +15,7 @@
 #include <glibmm/i18n.h>
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <gtk/gtk.h>
 #include "preferences.h"
 #include "preferences-skeleton.h"
 #include "inkscape.h"
@@ -25,6 +26,34 @@
 #define PREFERENCES_FILE_NAME "preferences.xml"
 
 namespace Inkscape {
+
+static Inkscape::XML::Document *loadImpl( std::string const& prefsFilename, Glib::ustring & errMsg );
+static void migrateDetails( Inkscape::XML::Document *from, Inkscape::XML::Document *to );
+
+static Inkscape::XML::Document *migrateFromDoc = 0;
+
+// TODO clean up. Function copied from file.cpp:
+// what gets passed here is not actually an URI... it is an UTF-8 encoded filename (!)
+static void file_add_recent(gchar const *uri)
+{
+    if (!uri) {
+        g_warning("file_add_recent: uri == NULL");
+    } else {
+        GtkRecentManager *recent = gtk_recent_manager_get_default();
+        gchar *fn = g_filename_from_utf8(uri, -1, NULL, NULL, NULL);
+        if (fn) {
+            if (g_file_test(fn, G_FILE_TEST_EXISTS)) {
+                gchar *uriToAdd = g_filename_to_uri(fn, NULL, NULL);
+                if (uriToAdd) {
+                    gtk_recent_manager_add_item(recent, uriToAdd);
+                    g_free(uriToAdd);
+                }
+            }
+            g_free(fn);
+        }
+    }
+}
+
 
 // private inner class definition
 
@@ -46,7 +75,6 @@ private:
     Observer &_observer;
     Glib::ustring const _filter;
 };
-
 
 Preferences::Preferences() :
     _prefs_basename(PREFERENCES_FILE_NAME),
@@ -156,58 +184,72 @@ void Preferences::_load()
     }
 
     // Yes, the pref file exists.
+    Glib::ustring errMsg;
+    Inkscape::XML::Document *prefs_read = loadImpl( _prefs_filename, errMsg );
+
+    if ( prefs_read ) {
+        if ( migrateFromDoc ) {
+            migrateDetails( migrateFromDoc, _prefs_doc );
+        }
+        // Merge the loaded prefs with defaults.
+        _prefs_doc->root()->mergeFrom(prefs_read->root(), "id");
+        Inkscape::GC::release(prefs_read);
+        _writable = true;
+    } else {
+        _reportError(errMsg, not_saved);
+    }
+}
+
+//_reportError(msg, not_saved);
+static Inkscape::XML::Document *loadImpl( std::string const& prefsFilename, Glib::ustring & errMsg )
+{
     // 2. Is it a regular file?
-    if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_IS_REGULAR)) {
-        //_reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
-        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+    if (!g_file_test(prefsFilename.data(), G_FILE_TEST_IS_REGULAR)) {
         gchar *msg = g_strdup_printf(_("The preferences file %s is not a regular file."),
-            Glib::filename_to_utf8(_prefs_filename).data());
-        _reportError(msg, not_saved);
+            Glib::filename_to_utf8(prefsFilename).data());
+        errMsg = msg;
         g_free(msg);
-        return;
+        return 0;
     }
 
     // 3. Is the file readable?
     gchar *prefs_xml = NULL; gsize len = 0;
-    if (!g_file_get_contents(_prefs_filename.data(), &prefs_xml, &len, NULL)) {
-        //_reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
-        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+    if (!g_file_get_contents(prefsFilename.data(), &prefs_xml, &len, NULL)) {
         gchar *msg = g_strdup_printf(_("The preferences file %s could not be read."),
-            Glib::filename_to_utf8(_prefs_filename).data());
-        _reportError(msg, not_saved);
+            Glib::filename_to_utf8(prefsFilename).data());
+        errMsg = msg;
         g_free(msg);
-        return;
+        return 0;
     }
 
     // 4. Is it valid XML?
     Inkscape::XML::Document *prefs_read = sp_repr_read_mem(prefs_xml, len, NULL);
     g_free(prefs_xml);
     if (!prefs_read) {
-        //_reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
-        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
         gchar *msg = g_strdup_printf(_("The preferences file %s is not a valid XML document."),
-            Glib::filename_to_utf8(_prefs_filename).data());
-        _reportError(msg, not_saved);
+            Glib::filename_to_utf8(prefsFilename).data());
+        errMsg = msg;
         g_free(msg);
-        return;
+        return 0;
     }
 
     // 5. Basic sanity check: does the root element have a correct name?
     if (strcmp(prefs_read->root()->name(), "inkscape")) {
-        //_reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
-        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
         gchar *msg = g_strdup_printf(_("The file %s is not a valid Inkscape preferences file."),
-            Glib::filename_to_utf8(_prefs_filename).data());
-        _reportError(msg, not_saved);
+            Glib::filename_to_utf8(prefsFilename).data());
+        errMsg = msg;
         g_free(msg);
         Inkscape::GC::release(prefs_read);
-        return;
+        return 0;
     }
 
-    // Merge the loaded prefs with defaults.
-    _prefs_doc->root()->mergeFrom(prefs_read->root(), "id");
-    Inkscape::GC::release(prefs_read);
-    _writable = true;
+    return prefs_read;
+}
+
+static void migrateDetails( Inkscape::XML::Document *from, Inkscape::XML::Document *to )
+{
+    // TODO pull in additional prefs with more granularity
+    to->root()->mergeFrom(from->root(), "id");
 }
 
 /**
@@ -250,6 +292,61 @@ bool Preferences::getLastError( Glib::ustring& primary, Glib::ustring& secondary
         secondary.clear();
     }
     return result;
+}
+
+void Preferences::migrate( std::string const& legacyDir, std::string const& prefdir )
+{
+    int mode = S_IRWXU;
+#ifdef S_IRGRP
+    mode |= S_IRGRP;
+#endif
+#ifdef S_IXGRP
+    mode |= S_IXGRP;
+#endif
+#ifdef S_IXOTH
+    mode |= S_IXOTH;
+#endif
+    if ( g_mkdir_with_parents(prefdir.data(), mode) == -1 ) {
+    } else {
+    }
+
+    gchar * oldPrefFile = g_build_filename(legacyDir.data(), PREFERENCES_FILE_NAME, NULL);
+    if (oldPrefFile) {
+        if (g_file_test(oldPrefFile, G_FILE_TEST_EXISTS)) {
+            Glib::ustring errMsg;
+            Inkscape::XML::Document *oldPrefs = loadImpl( oldPrefFile, errMsg );
+            if (oldPrefs) {
+                Glib::ustring docId("documents");
+                Glib::ustring recentId("recent");
+                Inkscape::XML::Node *node = oldPrefs->root();
+                Inkscape::XML::Node *child = NULL;
+                for (child = node->firstChild(); child; child = child->next()) {
+                    if (docId == child->attribute("id")) {
+                        for (child = child->firstChild(); child; child = child->next()) {
+                            if (recentId == child->attribute("id")) {
+                                for (child = child->firstChild(); child; child = child->next()) {
+                                    gchar const* uri = child->attribute("uri");
+                                    if (uri) {
+                                        file_add_recent(uri);
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                migrateFromDoc = oldPrefs;
+                //Inkscape::GC::release(oldPrefs);
+                oldPrefs = 0;
+            } else {
+                g_warning( "%s", errMsg.c_str() );
+            }
+        }
+        g_free(oldPrefFile);
+        oldPrefFile = 0;
+    }
 }
 
 // Now for the meat.

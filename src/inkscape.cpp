@@ -1457,6 +1457,7 @@ profile_path(const char *filename)
             if (needsMigration) {
                 // TODO here is a point to hook in preference migration
                 g_warning("Preferences need to be migrated from 0.46 or older %s to %s", legacyDir, prefdir);
+                Inkscape::Preferences::migrate( legacyDir, prefdir );
             }
 
             bool needsRenameWarning = ( !Inkscape::IO::file_test( prefdir, G_FILE_TEST_EXISTS ) && Inkscape::IO::file_test( dev47Dir, G_FILE_TEST_EXISTS ) );

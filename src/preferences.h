@@ -420,6 +420,12 @@ public:
      * @{
      */
 
+
+    /**
+     * Copies values from old location to new.
+     */
+    static void migrate( std::string const& legacyDir, std::string const& prefdir );
+
     /**
      * @brief Access the singleton Preferences object.
      */
