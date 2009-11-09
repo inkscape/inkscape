@@ -10,10 +10,10 @@
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape\n"
+"Project-Id-Version: inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-16 05:31+0300\n"
+"PO-Revision-Date: 2009-11-09 22:53+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Вздутый слой матового желе"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Smart jelly"
-msgstr "Хитровыдуманное желе"
+msgstr "Замысловатое желе"
 
 #: ../share/filters/filters.svg.h:3
 #: ../share/filters/filters.svg.h:4
@@ -173,7 +173,7 @@ msgstr "Огрубление"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Small-scale roughening to edges and content"
-msgstr "Небольшое зашершавливание краев и содержимого"
+msgstr "Небольшое загрубление краёв и содержимого"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Rubber stamp"
@@ -259,7 +259,7 @@ msgstr "Искажения"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Horizontal rippling of edges"
-msgstr "Horizontal rippling of edges"
+msgstr "Горизонтальная рябь краёв"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Speckle"
@@ -1459,7 +1459,7 @@ msgstr "Комикс"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Imitation of black and white cartoon shading"
-msgstr "Имитация Поменять местами чёрные и белые области"
+msgstr "Имитация чёрно-белых мультипликационных шейдеров"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Satin"
@@ -1467,7 +1467,7 @@ msgstr "Сатин"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Silky close to mother of pearl shading"
-msgstr "Шелковый шейдер наподобие перламутра"
+msgstr "Шёлковый шейдер наподобие перламутра"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Frosted glass"
@@ -1535,19 +1535,19 @@ msgstr "Объемная текстура мрамора"
 
 #: ../share/filters/filters.svg.h:152
 msgid "3D wood"
-msgstr "Трехмерная древесина"
+msgstr "Трёхмерная древесина"
 
 #: ../share/filters/filters.svg.h:152
 msgid "3D warped, fibered wood texture"
-msgstr "Объемная текстура древесины"
+msgstr "Объёмная текстура древесины"
 
 #: ../share/filters/filters.svg.h:153
 msgid "3D mother of pearl"
-msgstr "Объемный перламутр"
+msgstr "Объёмный перламутр"
 
 #: ../share/filters/filters.svg.h:153
 msgid "3D warped, iridescent pearly shell texture"
-msgstr "Объемная текстура перламутровой раковины"
+msgstr "Объёмная текстура перламутровой раковины"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Tiger fur"
@@ -1749,7 +1749,7 @@ msgstr "Прозрачные точки"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Создать пуантилистическую прозрачность, чувствительную к HSL"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Canvas transparency"
@@ -1757,7 +1757,7 @@ msgstr "Прозрачный холст"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "Создать похожую на холст прозрачность, чувствительную к HSL"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Smear transparency"
@@ -1801,7 +1801,7 @@ msgstr "Белые неровные пятна, напоминающие кар�
 
 #: ../share/filters/filters.svg.h:184
 msgid "Plastify"
-msgstr ""
+msgstr "Пластификация"
 
 #: ../share/filters/filters.svg.h:184
 msgid "HSL edges detection bump with a wavy reflective surface effect and variable crumple"
@@ -6624,7 +6624,7 @@ msgstr "Заменить"
 #: ../src/io/sys.cpp:454
 #, c-format
 msgid "Failed to read from child pipe (%s)"
-msgstr ""
+msgstr "Не удалось прочитать из канала-потомка (%s)"
 
 #: ../src/io/sys.cpp:478
 #, c-format
@@ -6646,7 +6646,7 @@ msgstr "Некорректное название программы: %s"
 #: ../src/io/sys.cpp:956
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
-msgstr ""
+msgstr "Invalid string in argument vector at %d: %s"
 
 #: ../src/io/sys.cpp:678
 #: ../src/io/sys.cpp:971
@@ -6655,9 +6655,9 @@ msgid "Invalid string in environment: %s"
 msgstr "Некорректная строка в окружении: %s"
 
 #: ../src/io/sys.cpp:739
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr "Не удалось создать временный файл для печати: %s"
+msgstr "Не удалось создать канал для взаимодействия с потомственным процессом (%s)"
 
 #: ../src/io/sys.cpp:952
 #, c-format
@@ -7202,7 +7202,7 @@ msgstr "Без эффекта"
 #: ../src/live_effects/effect.cpp:341
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "Укажите параметрический контур для LPE '%s' %d щелчками мышью"
 
 #: ../src/live_effects/effect.cpp:639
 #, c-format
@@ -7560,7 +7560,7 @@ msgstr "Сливаться у концов"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "Сращивать концы, находящиеся ближе этого расстояния. Ноль означает не сращивать."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -8019,7 +8019,7 @@ msgstr "Вставить контур"
 
 #: ../src/live_effects/parameter/path.cpp:188
 msgid "Link to path"
-msgstr ""
+msgstr "Связать с контуром"
 
 #: ../src/live_effects/parameter/path.cpp:409
 msgid "Paste path parameter"
@@ -8027,7 +8027,7 @@ msgstr "Вставить параметр контура"
 
 #: ../src/live_effects/parameter/path.cpp:441
 msgid "Link path parameter to path"
-msgstr ""
+msgstr "Связать параметр контура с контуром"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
@@ -20569,19 +20569,19 @@ msgstr "Картезианская сетка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Половинное подразделение по X, Частота после 'n' подразделений (только логарфим.)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "Половинное подразделение по Y, Частота после 'n' подразделений (только логарфим.)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Логарифмическое подразделение по X (основа задаётся выше)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Логарифмическое подразделение по Y (основа задаётся выше)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Spacing [px]"
@@ -20665,7 +20665,7 @@ msgstr "Периферические метки"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Логарифмическое подразделение (основа задаётся выше)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness [px]"
@@ -20685,7 +20685,7 @@ msgstr "Основных круговых делений"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "Деление малого угла заканчивается за это число делений до центра"
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness [px]"
@@ -21465,15 +21465,15 @@ msgstr "Затенение"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "Малый звёздчатый икосаэдр"
 
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Snub Cube"
-msgstr ""
+msgstr "Усечённый куб"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Snub Dodecahedron"
-msgstr ""
+msgstr "Плосконосый додекаэдр"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
@@ -22096,7 +22096,7 @@ msgstr "Устанавливаемые атрибуты"
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
-msgstr ""
+msgstr "Совместимость с кодом просмотра события:"
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid "If you want to set more than one attribute, you must separate this with a space, and only with a space."
@@ -22267,543 +22267,4 @@ msgstr "Импорт файлов Windows Metafile"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Импорт XAML"
-
-#~ msgid "Autosave"
-#~ msgstr "Автосохранение"
-#~ msgid "Light x-Position"
-#~ msgstr "Точка источника света на оси X:"
-#~ msgid "Light y-Position"
-#~ msgstr "Точка источника света на оси Y:"
-#~ msgid "Light z-Position"
-#~ msgstr "Точка источника света на оси Z:"
-#~ msgid "Line Thickness / px"
-#~ msgstr "Толщина линии (px)"
-#~ msgid "Scaling Factor"
-#~ msgstr "Коэффициент масштаба:"
-#~ msgid "Error saving a temporary copy"
-#~ msgstr "Ошибка сохранения временной копии"
-#~ msgid "Open Clip Art Login"
-#~ msgstr "Вход в Open Clip Art"
-#~ msgid ""
-#~ "Error exporting the document. Verify if the server name, username and "
-#~ "password are correct, if the server has support for webdav and verify if "
-#~ "you didn't forget to choose a license."
-#~ msgstr ""
-#~ "Произошла ошибка при экспорте документа. Проверьте, корректно ли введены "
-#~ "имя сервера, имя пользователя и пароль, есть ли у сервера поддержка "
-#~ "webdav, не забыли ли вы указать лицензию."
-#~ msgid "Document exported..."
-#~ msgstr "Документ экспортирован..."
-#~ msgid "File"
-#~ msgstr "Файл"
-#~ msgid "Username:"
-#~ msgstr "Имя пользователя:"
-#~ msgid "Password:"
-#~ msgstr "Пароль:"
-#~ msgid "Export To Open Clip Art Library"
-#~ msgstr "Экспортировать в Open Clip Art Library"
-#~ msgid "Export this document to Open Clip Art Library"
-#~ msgstr "Экспортировать документ или выделенное в Open Clip Art Library"
-
-#, fuzzy
-#~ msgid "polyhedron|Show:"
-#~ msgstr "Трехмерный многогранник"
-
-#, fuzzy
-#~ msgid "restack|Bottom"
-#~ msgstr "Внизу"
-
-#, fuzzy
-#~ msgid "restack|Left"
-#~ msgstr "Поменять вертикальный порядок"
-
-#, fuzzy
-#~ msgid "restack|Middle"
-#~ msgstr "Посередине"
-
-#, fuzzy
-#~ msgid "restack|Right"
-#~ msgstr "Поменять вертикальный порядок"
-
-#, fuzzy
-#~ msgid "restack|Top"
-#~ msgstr "Поменять вертикальный порядок"
-#~ msgid "The second path must be exactly four nodes long."
-#~ msgstr "Второй контур должен состоят ровно из четырех узлов."
-#~ msgid "Gelatine"
-#~ msgstr "Желе"
-
-#, fuzzy
-#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
-#~ msgstr ""
-#~ "Раскрашиваемая заливка с желеобразной турбулентностью и прозрачностью"
-#~ msgid "Monochrome positive"
-#~ msgstr "Двухцветный позитив"
-
-#, fuzzy
-#~ msgid "Convert to a Colorizable transparent positive"
-#~ msgstr "Преобразовать в раскрашиваемый прозрачный позитив"
-#~ msgid "Monochrome negative"
-#~ msgstr "Двухцветный негатив"
-
-#, fuzzy
-#~ msgid ""
-#~ "Invert and make the lightest parts of the object progressively transparent"
-#~ msgstr "Сделать самые светлые части объекта нарастающе прозрачными"
-#~ msgid "Repaint"
-#~ msgstr "Перекраска"
-#~ msgid "Punch hole"
-#~ msgstr "Пробить дыру"
-#~ msgid "Punch object out of a colorizable opaque area"
-#~ msgstr "Выбить объект из раскрашенной непрозрачной области"
-#~ msgid "Burnt edges"
-#~ msgstr "Обгоревшие края"
-#~ msgid "Torn edges with a dark inner blur"
-#~ msgstr "Рваные края с темным внутренним размыванием"
-#~ msgid "Interruption width"
-#~ msgstr "Толщина прерывания"
-#~ msgid "add stroke width to interruption size"
-#~ msgstr "Добавить толщину обводки к толщине прерывания"
-#~ msgid "AI 8.0 Output"
-#~ msgstr "Экспорт в AI 8.0"
-#~ msgid "Adobe Illustrator 8.0 (*.ai)"
-#~ msgstr "Файлы Adobe Illustrator 8.0 (*.ai)"
-#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-#~ msgstr "Записать файл формата Adobe Illustrator 8.0 (на основе PostScript)"
-#~ msgid "EPSI Output"
-#~ msgstr "Экспорт в EPSI"
-#~ msgid "Encapsulated Postscript Interchange (*.epsi)"
-#~ msgstr "Файлы Encapsulated Postscript Interchange (*.epsi)"
-#~ msgid "Encapsulated Postscript with a thumbnail"
-#~ msgstr "Encapsulated Postscript с эскизом"
-#~ msgid "Highly flexible specular bump"
-#~ msgstr "Очень гибкая отражающая выпуклость"
-#~ msgid "Glossy jelly"
-#~ msgstr "Блестящее желе"
-#~ msgid "Bulging, glossy jelly covering"
-#~ msgstr "Вздутый слой блестящего желе"
-#~ msgid "Glossy jelly, backlit"
-#~ msgstr "Блестящее желе в контровом свете"
-#~ msgid "Bulging, glossy jelly covering; two light sources"
-#~ msgstr "Вздутый слой блестящего желе; два источника света"
-#~ msgid "Air Spray; adjust the Displacement Map amount"
-#~ msgstr "Аэрограф, управляемый значением карты смещения"
-#~ msgid "Export area is whole canvas"
-#~ msgstr "Экспортируемая область включает в себя весь холст"
-#~ msgid "Export drawing, not page"
-#~ msgstr "Экспортировать только рисунок"
-#~ msgid "Export canvas"
-#~ msgstr "Экспортировать холст"
-#~ msgid "HSL bubbles"
-#~ msgstr "Пузыри"
-#~ msgid "Bright and glowing metal texture"
-#~ msgstr "Яркая и сверкающая металлическая текстура"
-#~ msgid "Gives the flood color to the dark parts of the image"
-#~ msgstr "Раскрасить темные части изображения примитивом Заливка"
-#~ msgid "HSL bubbles, alpha"
-#~ msgstr "Пузыри с альфа-каналом"
-#~ msgid "HSL Bumps, diffuse"
-#~ msgstr "Рассеянные выпуклости"
-#~ msgid "HSL bubbles, diffuse"
-#~ msgstr "Рассеянные пузыри"
-#~ msgid "HSL bubbles, transparent"
-#~ msgstr "Прозрачные пузыри"
-#~ msgid "Thick paint, glossy"
-#~ msgstr "Густая краска, с блеском"
-#~ msgid "Thick painting effect with turbulence and a glossy varnish"
-#~ msgstr ""
-#~ "Эффект густой краски с турбулентностью и блестящим лаковым покрытием"
-#~ msgid "Burst, glossy"
-#~ msgstr "Лопнувший шарик, блестящий"
-#~ msgid "Burst balloon texture crumpled with holes and glossy"
-#~ msgstr "Текстура разорвавшегося воздушного шарика, блестящая"
-#~ msgid "AutoCAD Plot drawing files (*.plt)"
-#~ msgstr "Файлы AutoCAD Plot (*.plt)"
-#~ msgid "Open files saved for plotters"
-#~ msgstr "Открыть файлы, сохранённые для плоттеров"
-#~ msgid "Marbled transparency effect"
-#~ msgstr "Эффект прозрачного мрамора"
-#~ msgid "Mask and transparency effects"
-#~ msgstr "Маски и полупрозрачность"
-#~ msgid "draw-geometry-inactive"
-#~ msgstr "draw-geometry-inactive"
-#~ msgid "Target"
-#~ msgstr "Цель"
-#~ msgid "Seed"
-#~ msgstr "Случайное значение"
-#~ msgid "Pixel smear, glossy"
-#~ msgstr "Пиксельные мазки, глянцевые"
-#~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "Глянцевый эффект раскрашивания для растра"
-#~ msgid "Adds a film grain noise to images and objects"
-#~ msgstr "Добавить эффект шума растровым и векторным изображениям"
-#~ msgid "Previous Effect"
-#~ msgstr "Повторить последний"
-#~ msgid "All Image Files"
-#~ msgstr "Все файлы изображений"
-#~ msgid "Organization"
-#~ msgstr "Организация"
-
-#, fuzzy
-#~ msgid "Float parameter"
-#~ msgstr "Параметры эффекта"
-#~ msgid "just a real number like 1.4!"
-#~ msgstr "Просто реальное число вроде 1,4!"
-#~ msgid "Session file"
-#~ msgstr "Файл сеанса"
-#~ msgid "Playback controls"
-#~ msgstr "Управление воспроизведением"
-#~ msgid "Message information"
-#~ msgstr "Информация о сеансе"
-#~ msgid "Active session file:"
-#~ msgstr "Файл активного сеанса:"
-#~ msgid "Delay (milliseconds):"
-#~ msgstr "Задержка (мс):"
-#~ msgid "Close file"
-#~ msgstr "Закрыть файл"
-#~ msgid "Set delay"
-#~ msgstr "Установить задержку"
-#~ msgid "Rewind"
-#~ msgstr "Перемотать назад"
-#~ msgid "Go back one change"
-#~ msgstr "На изменение вперед"
-#~ msgid "Pause"
-#~ msgstr "Пауза"
-#~ msgid "Go forward one change"
-#~ msgstr "На изменение назад"
-#~ msgid "Play"
-#~ msgstr "Воспроизвести"
-#~ msgid "Open session file"
-#~ msgstr "Открыть файл сеанса"
-#~ msgid "Melt and glow"
-#~ msgstr "Расплавлен и сияет"
-#~ msgid "Badge"
-#~ msgstr "Значок"
-#~ msgid "Metal or plastic badge bevel"
-#~ msgstr "Фаска металлического или пластикового значка"
-#~ msgid "Ghost outline"
-#~ msgstr "Призрачный контур"
-#~ msgid "Masking tools"
-#~ msgstr "Маскирование"
-
-#, fuzzy
-#~ msgid "Color inline"
-#~ msgstr "Прохладный контур"
-
-#, fuzzy
-#~ msgid "Flow inside"
-#~ msgstr "Огрубление изнутри"
-#~ msgid "Lead pencil"
-#~ msgstr "Свинцовый карандаш"
-#~ msgid "Cross blotches"
-#~ msgstr "Перекрестные пятна"
-
-#, fuzzy
-#~ msgid "Rough contour"
-#~ msgstr "Объекты пересоединены"
-#~ msgid "Path:"
-#~ msgstr "Путь:"
-#~ msgid "_Write session file:"
-#~ msgstr "_Записать файл сеанса:"
-#~ msgid "Shared SVG whiteboard tool."
-#~ msgstr "Инструмент совместного рисования SVG. "
-#~ msgid "Based on the Pedro XMPP client"
-#~ msgstr "Основан на XMPP-клиенте Pedro."
-#~ msgid "Select a location and filename"
-#~ msgstr "Укажите местоположение и имя файла"
-#~ msgid "Set filename"
-#~ msgstr "Укажите имя файла"
-#~ msgid "<b>%1</b> has invited you to a whiteboard session."
-#~ msgstr "<b>%1</b> пригласил вас на сеанс совместного рисования."
-#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-#~ msgstr ""
-#~ "Вы хотите принять приглашение <b>%1</b> на сеанс совместного рисования?"
-#~ msgid "Accept invitation"
-#~ msgstr "Принять приглашение"
-#~ msgid "Decline invitation"
-#~ msgstr "Отклонить приглашение"
-#~ msgid "Inkboard session (%1 to %2)"
-#~ msgstr "Сеанс Inkboard (%1 до %2)"
-#~ msgid "_Use SSL"
-#~ msgstr "Ис_пользовать SSL"
-#~ msgid "_Register"
-#~ msgstr "За_регистрироваться"
-#~ msgid "_Server:"
-#~ msgstr "_Сервер:"
-#~ msgid "_Username:"
-#~ msgstr "_Имя пользователя:"
-#~ msgid "_Password:"
-#~ msgstr "_Пароль:"
-#~ msgid "P_ort:"
-#~ msgstr "П_орт:"
-#~ msgid "Connect"
-#~ msgstr "Соединиться"
-#~ msgid "Establishing connection to Jabber server <b>%1</b>"
-#~ msgstr "Устанавливается соединение с Jabber-сервером <b>%1</b>"
-#~ msgid "Failed to establish connection to Jabber server <b>%1</b>"
-#~ msgstr "Не удалось установить соединение с сервером Jabber <b>%1</b>"
-#~ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-#~ msgstr ""
-#~ "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
-
-#, fuzzy
-#~ msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr ""
-#~ "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
-
-#, fuzzy
-#~ msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-#~ msgstr "Устанавливается соединение с Jabber-сервером <b>%1</b>"
-
-#, fuzzy
-#~ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr ""
-#~ "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
-
-#, fuzzy
-#~ msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr ""
-#~ "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
-#~ msgid "Chatroom _name:"
-#~ msgstr "_Название комнаты:"
-#~ msgid "Chatroom _server:"
-#~ msgstr "_Сервер комнаты:"
-#~ msgid "Chatroom _password:"
-#~ msgstr "_Пароль комнаты:"
-#~ msgid "Chatroom _handle:"
-#~ msgstr "_Прозвище комнаты:"
-#~ msgid "Connect to chatroom"
-#~ msgstr "Соединиться с комнатой"
-#~ msgid "_User's Jabber ID:"
-#~ msgstr "Jabber ID по_льзователя:"
-#~ msgid "_Invite user"
-#~ msgstr "_Пригласить пользователя"
-#~ msgid "_Cancel"
-#~ msgstr "О_тменить"
-#~ msgid "Buddy List"
-#~ msgstr "Список собеседников"
-#~ msgid "Burnt paper edges texture"
-#~ msgstr "Текстура бумаги с обгоревшими краями"
-
-#, fuzzy
-#~ msgid "Enhance outline and glows inside and outside"
-#~ msgstr "Создать черный свет изнутри и снаружи"
-#~ msgid "Length left"
-#~ msgstr "Длина слева:"
-#~ msgid "Specifies the left end of the bisector"
-#~ msgstr "Определяет левый конец биссектрисы"
-#~ msgid "Length right"
-#~ msgstr "Длина справа:"
-#~ msgid "Specifies the right end of the bisector"
-#~ msgstr "Определяет правый конец биссектрисы"
-#~ msgid "Adjust the \"left\" end of the bisector"
-#~ msgstr "Переместить левый конец биссектрисы"
-#~ msgid "Adjust the \"right\" of the bisector"
-#~ msgstr "Переместить правый конец биссектрисы"
-#~ msgid "Intersect"
-#~ msgstr "Пересечение"
-#~ msgid "Subtract A-B"
-#~ msgstr "Разность А-B"
-#~ msgid "Identity A"
-#~ msgstr "Объект А"
-#~ msgid "Subtract B-A"
-#~ msgstr "Разность B-A"
-#~ msgid "Identity B"
-#~ msgstr "Объект B"
-#~ msgid "2nd path"
-#~ msgstr "Второй контур"
-#~ msgid "Path to which the original path will be boolop'ed."
-#~ msgstr "Контур B, с которым взаимодействует исходный контур A"
-#~ msgid "Boolop type"
-#~ msgstr "Тип операции"
-#~ msgid "Determines which kind of boolop will be performed."
-#~ msgstr "Какой тип логической операции будет использован"
-#~ msgid "Starting"
-#~ msgstr "Начало:"
-#~ msgid "Angle of the first copy"
-#~ msgstr "Угол первой копии"
-#~ msgid "Rotation angle"
-#~ msgstr "Угол вращения:"
-#~ msgid "Angle between two successive copies"
-#~ msgstr "Угол между двумя соседними копиями"
-#~ msgid "Number of copies"
-#~ msgstr "Количество копий"
-#~ msgid "Number of copies of the original path"
-#~ msgstr "Количество копий исходного контура"
-#~ msgid "Origin"
-#~ msgstr "Точка отсчета"
-#~ msgid "Origin of the rotation"
-#~ msgstr "Точка отсчета для вращения"
-#~ msgid "Adjust the starting angle"
-#~ msgstr "Изменить начальный угол"
-#~ msgid "Adjust the rotation angle"
-#~ msgstr "Изменить угол вращения"
-
-#, fuzzy
-#~ msgid "Elliptic Pen"
-#~ msgstr "Эллиптическое перо"
-#~ msgid "Sharp"
-#~ msgstr "Острые"
-#~ msgid "Round"
-#~ msgstr "Округлые"
-
-#, fuzzy
-#~ msgid "Method"
-#~ msgstr "Режим"
-#~ msgid "Choose pen type"
-#~ msgstr "Выберите тип пера"
-#~ msgid "Maximal stroke width"
-#~ msgstr "Макс. толщина обводки штриха"
-#~ msgid "Pen roundness"
-#~ msgstr "Округлость пера"
-#~ msgid "angle"
-#~ msgstr "угол"
-
-#, fuzzy
-#~ msgid "Choose start capping type"
-#~ msgstr "Выберите тип сегмента линии"
-
-#, fuzzy
-#~ msgid "Choose end capping type"
-#~ msgstr "Выберите тип сегмента линии"
-
-#, fuzzy
-#~ msgid "Grow for"
-#~ msgstr "Режим наращивания объёма"
-
-#, fuzzy
-#~ msgid "Fade for"
-#~ msgstr "Масштаб:"
-
-#, fuzzy
-#~ msgid "Round ends"
-#~ msgstr "Закругление"
-
-#, fuzzy
-#~ msgid "left capping"
-#~ msgstr "Включить прилипание"
-#~ msgid "Control handle 0"
-#~ msgstr "Регулятор 0"
-#~ msgid "Control handle 1"
-#~ msgstr "Регулятор 1"
-#~ msgid "Control handle 2"
-#~ msgstr "Регулятор 2"
-#~ msgid "Control handle 3"
-#~ msgstr "Регулятор 3"
-#~ msgid "Control handle 4"
-#~ msgstr "Регулятор 4"
-#~ msgid "Control handle 5"
-#~ msgstr "Регулятор 5"
-#~ msgid "Control handle 6"
-#~ msgstr "Регулятор 6"
-#~ msgid "Control handle 7"
-#~ msgstr "Регулятор 7"
-#~ msgid "Control handle 8"
-#~ msgstr "Регулятор 8"
-#~ msgid "Control handle 9"
-#~ msgstr "Регулятор 9"
-#~ msgid "Control handle 10"
-#~ msgstr "Регулятор 10"
-#~ msgid "Control handle 11"
-#~ msgstr "Регулятор 11"
-#~ msgid "Control handle 12"
-#~ msgstr "Регулятор 12"
-#~ msgid "Control handle 13"
-#~ msgstr "Регулятор 13"
-#~ msgid "Control handle 14"
-#~ msgstr "Регулятор 14"
-#~ msgid "Control handle 15"
-#~ msgstr "Регулятор 15"
-#~ msgid "End type"
-#~ msgstr "Тип сегмента"
-#~ msgid "Discard original path?"
-#~ msgstr "Отбросить исходный контур"
-#~ msgid "Reflection line"
-#~ msgstr "Линия зеркала"
-#~ msgid "Line which serves as 'mirror' for the reflection"
-#~ msgstr "Линия, выполняющая роль зеркала"
-#~ msgid "Adjust the offset"
-#~ msgstr "Изменить смещение"
-#~ msgid "Specifies the left end of the parallel"
-#~ msgstr "Определяет левый конец параллели"
-#~ msgid "Specifies the right end of the parallel"
-#~ msgstr "Определяет правый конец параллели"
-#~ msgid "Adjust the \"left\" end of the parallel"
-#~ msgstr "Изменить левый конец параллели"
-#~ msgid "Adjust the \"right\" end of the parallel"
-#~ msgstr "Изменить правый конец параллели"
-#~ msgid "Display unit"
-#~ msgstr "Показывать единицу измерения"
-#~ msgid "Print unit after path length"
-#~ msgstr "Указывать единицу измерения сразу после длины контура"
-#~ msgid "Adjust the bisector's \"left\" end"
-#~ msgstr "Изменить положение левого конца биссектрисы"
-#~ msgid "Adjust the bisector's \"right\" end"
-#~ msgstr "Изменить положение правого конца биссектрисы"
-
-#, fuzzy
-#~ msgid "Scale x"
-#~ msgstr "Масштабирование"
-
-#, fuzzy
-#~ msgid "Scale factor in x direction"
-#~ msgstr "Состояние точек схода в направлении X"
-
-#, fuzzy
-#~ msgid "Scale y"
-#~ msgstr "Масштабирование"
-
-#, fuzzy
-#~ msgid "Scale factor in y direction"
-#~ msgstr "Состояние точек схода в направлении X"
-#~ msgid "Offset x"
-#~ msgstr "Смещение по X"
-#~ msgid "Offset in x direction"
-#~ msgstr "Смещение по оси X"
-#~ msgid "Offset y"
-#~ msgstr "Смещение по Y"
-#~ msgid "Offset in y direction"
-#~ msgstr "Смещение по оси Y"
-#~ msgid "Uses XY plane?"
-#~ msgstr "Использовать плоскость XY?"
-#~ msgid "Adjust the origin"
-#~ msgstr "Изменить исходную точку"
-#~ msgid "Iterations"
-#~ msgstr "Итераций"
-#~ msgid "Additional angle between tangent and curve"
-#~ msgstr "Дополнительный угол между касательной и кривой"
-#~ msgid "Location along curve"
-#~ msgstr "Точка касания:"
-#~ msgid ""
-#~ "Location of the point of attachment along the curve (between 0.0 and "
-#~ "number-of-segments)"
-#~ msgstr "Точка касания на кривой (между 0.0 и числом сегментов)"
-#~ msgid "Specifies the left end of the tangent"
-#~ msgstr "Длина от точки касания до левого конца касательной"
-#~ msgid "Specifies the right end of the tangent"
-#~ msgstr "Длина от точки касания до правого конца касательной"
-#~ msgid "Adjust the point of attachment of the tangent"
-#~ msgstr "Изменить положение точки касания"
-#~ msgid "Adjust the \"left\" end of the tangent"
-#~ msgstr "Изменить положение левого конца касательной"
-#~ msgid "Adjust the \"right\" end of the tangent"
-#~ msgstr "Изменить положение правого конца касательной"
-#~ msgid "Stack step"
-#~ msgstr "Шаг складывания в стопку"
-
-#, fuzzy
-#~ msgid "point param"
-#~ msgstr "пентаграмма"
-
-#, fuzzy
-#~ msgid "path param"
-#~ msgstr "пентаграмма"
-#~ msgid "Label"
-#~ msgstr "Метка:"
-#~ msgid "Text label attached to the path"
-#~ msgstr "Текстовая метка, привязанная к контуру"
-#~ msgid "Choose a construction tool from the toolbar."
-#~ msgstr ""
-#~ "Выберите режим инструмента геометрических конструкций из его контекстной "
-#~ "панели"
 
