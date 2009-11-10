@@ -34,13 +34,7 @@
 #    at rounded corners)
 
 # Next Up:
-# + remove unused attributes in parent elements
-# + prevent elements from being stripped if they are referenced in a <style> element
-# + only move common attributes and remove unused attributes after removing duplicate gradients
-# + only move common attributes to parent if the parent contains non-whitespace text nodes
-# + do not pretty-print elements if whitespace is important (xml:space="preserve")
 # - TODO: fix the removal of comment elements (between <?xml?> and <svg>)
-#   (for instance, filter, marker, pattern) - need a crude CSS parser
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
 # - parse transform attribute
@@ -70,7 +64,7 @@ except ImportError:
 	Decimal = FixedPoint	
 
 APP = 'scour'
-VER = '0.21'
+VER = '0.22'
 COPYRIGHT = 'Copyright Jeff Schiller, 2009'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -426,12 +420,12 @@ def findReferencedElements(node, ids=None):
 	# if this node is a style element, parse its text into CSS
 	if node.nodeName == 'style' and node.namespaceURI == NS['SVG']:
 		# node.firstChild will be either a CDATA or a Text node
-		cssRules = parseCssString(node.firstChild.nodeValue)
-		for rule in cssRules:
-			for propname in rule['properties']:
-				propval = rule['properties'][propname]
-				findReferencingProperty(node, propname, propval, ids)
-		
+		if node.firstChild != None:
+			cssRules = parseCssString(node.firstChild.nodeValue)
+			for rule in cssRules:
+				for propname in rule['properties']:
+					propval = rule['properties'][propname]
+					findReferencingProperty(node, propname, propval, ids)
 		return ids
 	
 	# else if xlink:href is set, then grab the id
@@ -2104,8 +2098,7 @@ def serializeXML(element, options, ind = 0, preserveWhitespace = False):
 			elif child.nodeType == 3:
 				# trim it only in the case of not being a child of an element
 				# where whitespace might be important
-				if element.nodeName in ["text", "tspan", "textPath", "tref", "title", "desc", "textArea", 
-										"flowRoot", "flowDiv", "flowSpan", "flowPara", "flowRegion"]:
+				if preserveWhitespace:
 					outString += makeWellFormed(child.nodeValue)
 				else:
 					outString += makeWellFormed(child.nodeValue.strip())
@@ -2375,6 +2368,8 @@ def parse_args(args=None):
 		_options_parser.error("Can't have negative significant digits, see --help")
 	if not options.indent_type in ["tab", "space", "none"]:
 		_options_parser.error("Invalid value for --indent, see --help")
+	if options.infilename and options.outfilename and options.infilename == options.outfilename:
+		_options_parser.error("Input filename is the same as output filename")
 
 	if options.infilename:
 		infile = maybe_gziped_file(options.infilename)
