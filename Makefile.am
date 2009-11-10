@@ -47,6 +47,7 @@ EXTRA_DIST = \
 	TRANSLATORS \
 	inkscape.png \
 	inkscape.ico \
+	mingwenv.bat \
 	src/helper/sp-marshal.cpp.mingw src/helper/sp-marshal.h.mingw \
 	src/2geom/angle.h \
 	src/inkscape-manifest.xml src/inkview-manifest.xml \
@@ -183,6 +184,28 @@ EXTRA_DIST = \
 	packaging/win32/MessageBox.txt	\
 	packaging/win32/welcomefinish.bmp	\
 	packaging/win32/welcomefinish.svg	\
+	packaging/win32/portable/help.html \
+	packaging/win32/portable/portable.7z \
+	packaging/win32/portable/readme.packaging.txt \
+	packaging/win32/portable/App/readme.txt \
+	packaging/win32/portable/App/AppInfo/appicon.ico \
+	packaging/win32/portable/App/AppInfo/appicon_16.png \
+	packaging/win32/portable/App/AppInfo/appicon_32.png \
+	packaging/win32/portable/App/AppInfo/appinfo.ini \
+	packaging/win32/portable/App/AppInfo/installer.ini \
+	packaging/win32/portable/Other/Help/images/donation_button.png \
+	packaging/win32/portable/Other/Help/images/favicon.ico \
+	packaging/win32/portable/Other/Help/images/help_background_footer.png \
+	packaging/win32/portable/Other/Help/images/help_background_header.png \
+	packaging/win32/portable/Other/Help/images/help_logo_top.png \
+	packaging/win32/portable/Other/Source/InkscapePortable.ini \
+	packaging/win32/portable/Other/Source/InkscapePortable.jpg \
+	packaging/win32/portable/Other/Source/InkscapePortable.nsi \
+	packaging/win32/portable/Other/Source/License.txt \
+	packaging/win32/portable/Other/Source/PortableApps.comInstallerCustom.nsh \
+	packaging/win32/portable/Other/Source/PortableApps.comLauncherLANG_ENGLISH.nsh \
+	packaging/win32/portable/Other/Source/Readme.txt \
+	packaging/win32/portable/Other/Source/ReplaceInFileWithTextReplace.nsh \
         po/inkscape.pot \
         po/update_po_files.sh \
 	src/inkscape.rc	src/inkview.rc
