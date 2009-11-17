@@ -86,7 +86,7 @@ class MyEffect(inkex.Effect):
 			gridSpacingFunc = '(gimp-image-grid-set-spacing img %s %s)' % (spacingX[:-2], spacingY[:-2])
 			gridOriginFunc = '(gimp-image-grid-set-offset img %s %s)'% (originX[:-2], originY[:-2])
 
-        area = '--export-area-canvas'
+        area = '--export-area-page'
         pngs = []
         names = []
         path = "/svg:svg/*[name()='g' or @style][@id]"
