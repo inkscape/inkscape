@@ -73,6 +73,7 @@ Piecewise<D2<SBasis> > sectionize(D2<Piecewise<SBasis> > const &a);
 D2<Piecewise<SBasis> > make_cuts_independent(Piecewise<D2<SBasis> > const &a);
 Piecewise<D2<SBasis> > rot90(Piecewise<D2<SBasis> > const &a);
 Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
+Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Point const &b);
 Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
 
 Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Matrix const &m);

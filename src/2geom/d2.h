@@ -99,7 +99,7 @@ class D2{
         std::vector<Coord> x = f[X].valueAndDerivatives(t, n),
                            y = f[Y].valueAndDerivatives(t, n); // always returns a vector of size n+1
         std::vector<Point> res(n+1);
-        for (unsigned i = 0; i <= n; i++) {
+        for(unsigned i = 0; i <= n; i++) {
             res[i] = Point(x[i], y[i]);
         }
         return res;
@@ -321,6 +321,25 @@ dot(D2<T> const & a, D2<T> const & b) {
     return r;
 }
 
+/** @brief Calculates the 'dot product' or 'inner product' of \c a and \c b
+ * @return \f$a \bullet b = a_X b_X + a_Y b_Y\f$.
+ * @relates D2 */
+template <typename T>
+inline T
+dot(D2<T> const & a, Point const & b) {
+    boost::function_requires<AddableConcept<T> >();
+    boost::function_requires<ScalableConcept<T> >();
+
+    T r;
+    for(unsigned i = 0; i < 2; i++) {
+        r += a[i] * b[i];
+    }
+    return r;
+}
+
+/** @brief Calculates the 'cross product' or 'outer product' of \c a and \c b
+ * @return \f$a \times b = a_Y b_X - a_X b_Y\f$.
+ * @relates D2 */
 template <typename T>
 inline T
 cross(D2<T> const & a, D2<T> const & b) {

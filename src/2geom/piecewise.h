@@ -58,7 +58,7 @@ namespace Geom {
  *      \begin{array}{cc}
  *      s_1,& t <= c_2 \\
  *      s_2,& c_2 <= t <= c_3\\
- *      \ldots
+ *      \ldots \\
  *      s_n,& c_n <= t
  *      \end{array}\right.
  * \f]
@@ -105,6 +105,10 @@ class Piecewise {
     inline output_type lastValue() const {
         return valueAt(cuts.back());
     }
+
+    /**
+    *  The size of the returned vector equals n_derivs+1.
+    */
     std::vector<output_type> valueAndDerivatives(double t, unsigned n_derivs) const {
         unsigned n = segN(t);
         std::vector<output_type> ret, val = segs[n].valueAndDerivatives(segT(t, n), n_derivs);
@@ -115,6 +119,7 @@ class Piecewise {
         }
         return ret;
     }
+
     //TODO: maybe it is not a good idea to have this?
     Piecewise<T> operator()(SBasis f);
     Piecewise<T> operator()(Piecewise<SBasis>f);
@@ -773,10 +778,10 @@ Piecewise<T> reverse(Piecewise<T> const &f) {
     return ret;
 }
 
-
 /**
  *  Interpolates between a and b.
  *  \return a if t = 0, b if t = 1, or an interpolation between a and b for t in [0,1]
+ *  \relates Piecewise
  */
 template<typename T>
 Piecewise<T> lerp(double t, Piecewise<T> const &a, Piecewise<T> b) {

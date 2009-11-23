@@ -58,8 +58,19 @@ Piecewise<D2<SBasis> > rot90(Piecewise<D2<SBasis> > const &M){
   return result;
 }
 
-Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, 
-		      Piecewise<D2<SBasis> > const &b){
+/** @brief Calculates the 'dot product' or 'inner product' of \c a and \c b
+ * @return  \f[
+ *      f(t) \rightarrow \left\{ 
+ *      \begin{array}{c}
+ *      a_1 \bullet b_1 \\
+ *      a_2 \bullet b_2 \\
+ *      \ldots \\
+ *      a_n \bullet b_n \\
+ *      \end{array}\right.
+ * \f]
+ * @relates Piecewise */
+Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b)
+{
   Piecewise<SBasis > result;
   if (a.empty() || b.empty()) return result;
   Piecewise<D2<SBasis> > aa = partition(a,b.cuts);
@@ -71,6 +82,30 @@ Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a,
   }
   return result;
 }
+
+/** @brief Calculates the 'dot product' or 'inner product' of \c a and \c b
+ * @return  \f[
+ *      f(t) \rightarrow \left\{ 
+ *      \begin{array}{c}
+ *      a_1 \bullet b \\
+ *      a_2 \bullet b \\
+ *      \ldots \\
+ *      a_n \bullet b \\
+ *      \end{array}\right.
+ * \f]
+ * @relates Piecewise */
+Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Point const &b)
+{
+  Piecewise<SBasis > result;
+  if (a.empty()) return result;
+
+  result.push_cut(a.cuts.front());
+  for (unsigned i = 0; i < a.size(); ++i){
+    result.push(dot(a.segs[i],b), a.cuts[i+1]);
+  }
+  return result;
+}
+
 
 Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, 
 			Piecewise<D2<SBasis> > const &b){
