@@ -440,22 +440,9 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 		}
 	}
 
-    {
-        Geom::Matrix q;
-	    /* Compose additional transformation from scale and position */
-        q[0] = width / vb.width();
-        q[1] = 0.0;
-        q[2] = 0.0;
-        q[3] = height / vb.height();
-        q[4] = -vb.min()[Geom::X] * q[0] + x;
-        q[5] = -vb.min()[Geom::Y] * q[3] + y;
-	    /* Append viewbox transformation */
-	    marker->c2p = q * marker->c2p;
-    }
-
-	/* Append reference translation */
-	/* fixme: lala (Lauris) */
-        marker->c2p = Geom::Translate(-marker->refX.computed, -marker->refY.computed) * marker->c2p;
+	// viewbox transformation and reference translation
+	marker->c2p = Geom::Translate(-marker->refX.computed, -marker->refY.computed) *
+		Geom::Scale(width / vb.width(), height / vb.height());
 
 	rctx.i2doc = marker->c2p * rctx.i2doc;
 
