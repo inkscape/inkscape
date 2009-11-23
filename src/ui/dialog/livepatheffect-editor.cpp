@@ -305,7 +305,7 @@ LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
             row[columns.col_visible] = (*it)->lpeobject->get_lpe()->isVisible();
         } else {
             Gtk::TreeModel::Row row = *(effectlist_store->append());
-            row[columns.col_name] = "Unknown effect!";
+            row[columns.col_name] = _("Unknown effect");
             row[columns.lperef] = *it;
             row[columns.col_visible] = false;
         }
