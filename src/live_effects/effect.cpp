@@ -74,6 +74,7 @@
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
 #include "live_effects/lpe-recursiveskeleton.h"
+#include "live_effects/lpe-extrude.h"
 
 
 namespace Inkscape {
@@ -90,6 +91,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
     {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
+    {EXTRUDE,               N_("Extrude"),                 "extrude"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
     {LINE_SEGMENT,          N_("Line Segment"),            "line_segment"},
     {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
@@ -231,6 +233,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case RECURSIVE_SKELETON:
             neweffect = static_cast<Effect*> ( new LPERecursiveSkeleton(lpeobj) );
+            break;
+        case EXTRUDE:
+            neweffect = static_cast<Effect*> ( new LPEExtrude(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
