@@ -17,6 +17,7 @@
 
 #include "sp-object.h"
 #include "sp-item.h"
+#include "sp-lpe-item.h"
 #include "live_effects/lpeobject.h"
 #include "selection.h"
 #include "desktop.h"

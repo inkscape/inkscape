@@ -13,7 +13,6 @@
 #include "display/display-forward.h"
 #include <map>
 #include <glibmm/ustring.h>
-#include <2geom/path.h>
 #include <2geom/forward.h>
 #include "ui/widget/registry.h"
 #include "sp-lpe-item.h"
@@ -28,6 +27,9 @@ struct SPDesktop;
 struct SPItem;
 class SPNodeContext;
 struct LivePathEffectObject;
+class SPLPEItem;
+class KnotHolder;
+class KnotHolderEntity;
 
 namespace Gtk {
     class Widget;

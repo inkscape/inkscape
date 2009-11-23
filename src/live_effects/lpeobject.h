@@ -10,13 +10,16 @@
  */
  
 #include "sp-object.h"
-#include "effect.h"
+#include "effect-enum.h"
 
 namespace Inkscape {
-namespace XML {
-class Node;
-class Document;
-}
+    namespace XML {
+        class Node;
+        class Document;
+    }
+    namespace LivePathEffect {
+        class Effect;
+    }
 }
 
 #define TYPE_LIVEPATHEFFECT  (LivePathEffectObject::livepatheffect_get_type())

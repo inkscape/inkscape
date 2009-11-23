@@ -30,6 +30,7 @@
 #include "sp-pattern.h"
 #include "style.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/effect.h"
 #include "desktop.h"
 #include "display/sp-canvas.h"
 
