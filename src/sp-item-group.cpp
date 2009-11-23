@@ -43,6 +43,7 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "selection.h"
+#include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "sp-title.h"
@@ -871,7 +872,7 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
         } else if (SP_IS_SHAPE(subitem)) {
             SPCurve * c = NULL;
             if (SP_IS_PATH(subitem)) {
-                c = sp_path_get_curve_for_edit(SP_PATH(subitem));
+                c = sp_path_get_original_curve(SP_PATH(subitem));
             } else {
                 c = sp_shape_get_curve(SP_SHAPE(subitem));
             }
@@ -884,6 +885,9 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
                     Inkscape::XML::Node *repr = SP_OBJECT_REPR(subitem);
                     gchar *str = sp_svg_write_path(c->get_pathvector());
                     repr->setAttribute("d", str);
+#ifdef GROUP_VERBOSE
+g_message("sp_group_perform_patheffect writes 'd' attribute");
+#endif
                     g_free(str);
                 }
 

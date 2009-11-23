@@ -39,10 +39,10 @@ struct SPLPEItem : public SPItem {
     int path_effects_enabled;
 
     PathEffectList* path_effect_list;
+    std::list<sigc::connection> *lpe_modified_connection_list; // this list contains the connections for listening to lpeobject parameter changes
+
     Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
     std::vector<Inkscape::Display::TemporaryItem*> lpe_helperpaths;
-
-    sigc::connection lpe_modified_connection;
 };
 
 struct SPLPEItemClass {

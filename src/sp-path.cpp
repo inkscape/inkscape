@@ -320,6 +320,9 @@ sp_path_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         repr = xml_doc->createElement("svg:path");
     }
 
+#ifdef PATH_VERBOSE
+g_message("sp_path_write writes 'd' attribute");
+#endif
     if ( shape->curve != NULL ) {
         gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
         repr->setAttribute("d", str);
@@ -411,6 +414,10 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
     SPPath * const path = (SPPath *) lpeitem;
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
 
+#ifdef PATH_VERBOSE
+g_message("sp_path_update_patheffect");
+#endif
+
     if (path->original_curve && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
         SPCurve *curve = path->original_curve->copy();
         /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
@@ -420,6 +427,9 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         if (success && write) {
             // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
+#ifdef PATH_VERBOSE
+g_message("sp_path_update_patheffect writes 'd' attribute");
+#endif
             if ( shape->curve != NULL ) {
                 gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
                 repr->setAttribute("d", str);

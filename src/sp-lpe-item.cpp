@@ -56,7 +56,6 @@ static void sp_lpe_item_remove_child (SPObject * object, Inkscape::XML::Node * c
 
 static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable);
 
-static void lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPLPEItem *lpeitem);
 static void lpeobject_ref_modified(SPObject *href, guint flags, SPLPEItem *lpeitem);
 
 static void sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem);
@@ -120,7 +119,7 @@ sp_lpe_item_init(SPLPEItem *lpeitem)
     lpeitem->path_effect_list = new PathEffectList();
     lpeitem->current_path_effect = NULL;
 
-    new (&lpeitem->lpe_modified_connection) sigc::connection();
+    lpeitem->lpe_modified_connection_list = new std::list<sigc::connection>();
 }
 
 static void
@@ -154,8 +153,14 @@ sp_lpe_item_release(SPObject *object)
 {
     SPLPEItem *lpeitem = (SPLPEItem *) object;
 
-    lpeitem->lpe_modified_connection.disconnect();
-    lpeitem->lpe_modified_connection.~connection();
+    // disconnect all modified listeners:
+    for (std::list<sigc::connection>::iterator mod_it = lpeitem->lpe_modified_connection_list->begin();
+         mod_it != lpeitem->lpe_modified_connection_list->end(); ++mod_it)
+    {
+        mod_it->disconnect();
+    }
+    delete lpeitem->lpe_modified_connection_list;
+    lpeitem->lpe_modified_connection_list = NULL;
 
     PathEffectList::iterator it = lpeitem->path_effect_list->begin();
     while ( it != lpeitem->path_effect_list->end() ) {
@@ -165,7 +170,8 @@ sp_lpe_item_release(SPObject *object)
         it = lpeitem->path_effect_list->erase(it);
     }
     // delete the list itself
-    delete SP_LPE_ITEM(object)->path_effect_list;
+    delete lpeitem->path_effect_list;
+    lpeitem->path_effect_list = NULL;
 
     if (((SPObjectClass *) parent_class)->release)
         ((SPObjectClass *) parent_class)->release(object);
@@ -187,6 +193,14 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                 // Disable the path effects while populating the LPE list
                  sp_lpe_item_enable_path_effects(lpeitem, false);
 
+                // disconnect all modified listeners:
+                for ( std::list<sigc::connection>::iterator mod_it = lpeitem->lpe_modified_connection_list->begin();
+                      mod_it != lpeitem->lpe_modified_connection_list->end();
+                      ++mod_it)
+                {
+                    mod_it->disconnect();
+                }
+                lpeitem->lpe_modified_connection_list->clear();
                 // Clear the path effect list
                 PathEffectList::iterator it = lpeitem->path_effect_list->begin();
                 while ( it != lpeitem->path_effect_list->end() )
@@ -202,10 +216,7 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                     std::string href;
                     while (std::getline(iss, href, ';'))
                     {
-                        Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref = new Inkscape::LivePathEffect::LPEObjectReference(SP_OBJECT(lpeitem));
-                        path_effect_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(lpeobject_ref_changed), SP_LPE_ITEM(object)));
-                        // Now do the attaching, which emits the changed signal.
-                        // Fixme, it should not do this changed signal and updating before all effects are added to the path_effect_list
+                        Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref = new Inkscape::LivePathEffect::LPEObjectReference(object);
                         try {
                             path_effect_ref->link(href.c_str());
                         } catch (Inkscape::BadURIException e) {
@@ -216,7 +227,11 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                         }
 
                         lpeitem->path_effect_list->push_back(path_effect_ref);
-                        if ( !(path_effect_ref->lpeobject && path_effect_ref->lpeobject->get_lpe()) ) {
+                        if ( path_effect_ref->lpeobject && path_effect_ref->lpeobject->get_lpe() ) {
+                            // connect modified-listener
+                            lpeitem->lpe_modified_connection_list->push_back(
+                                                path_effect_ref->lpeobject->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), lpeitem)) );
+                        } else {
                             // something has gone wrong in finding the right patheffect.
                             g_warning("Unknown LPE type specified, LPE stack effectively disabled");
                             // keep the effect in the lpestack, so the whole stack is effectively disabled but maintained
@@ -407,28 +422,14 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
 }
 
 /**
- * Gets called when (re)attached to another lpeobject.
- */
-static void
-lpeobject_ref_changed(SPObject *old_ref, SPObject *ref, SPLPEItem *lpeitem)
-{
-    if (old_ref) {
-        sp_signal_disconnect_by_data(old_ref, lpeitem);
-    }
-    if ( IS_LIVEPATHEFFECT(ref) && ref != lpeitem )
-    {
-        lpeitem->lpe_modified_connection.disconnect();
-        lpeitem->lpe_modified_connection = ref->connectModified(sigc::bind(sigc::ptr_fun(&lpeobject_ref_modified), lpeitem));
-        lpeobject_ref_modified(ref, 0, lpeitem);
-    }
-}
-
-/**
- * Gets called when lpeobject repr contents change: i.e. parameter change.
+ * Gets called when any of the lpestack's lpeobject repr contents change: i.e. parameter change in any of the stacked LPEs
  */
 static void
 lpeobject_ref_modified(SPObject */*href*/, guint /*flags*/, SPLPEItem *lpeitem)
 {
+#ifdef SHAPE_VERBOSE
+    g_message("lpeobject_ref_modified");
+#endif
     sp_lpe_item_update_patheffect (lpeitem, true, true);
 }
 
@@ -753,8 +754,9 @@ PathEffectList sp_lpe_item_get_effect_list(SPLPEItem *lpeitem)
 
 Inkscape::LivePathEffect::LPEObjectReference* sp_lpe_item_get_current_lpereference(SPLPEItem *lpeitem)
 {
-    if (!lpeitem->current_path_effect && !lpeitem->path_effect_list->empty())
+    if (!lpeitem->current_path_effect && !lpeitem->path_effect_list->empty()) {
         sp_lpe_item_set_current_path_effect(lpeitem, lpeitem->path_effect_list->back());
+    }
 
     return lpeitem->current_path_effect;
 }
@@ -773,7 +775,6 @@ bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathE
 {
     for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++) {
         if ((*it)->lpeobject_repr == lperef->lpeobject_repr) {
-            lpeobject_ref_changed(NULL, (*it)->lpeobject, SP_LPE_ITEM(lpeitem)); // FIXME: explain why this is here?
             lpeitem->current_path_effect = (*it);  // current_path_effect should always be a pointer from the path_effect_list !
             return true;
         }
