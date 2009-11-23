@@ -16,7 +16,7 @@
 #include <2geom/forward.h>
 #include "ui/widget/registry.h"
 #include "sp-lpe-item.h"
-#include "knotholder.h"
+//#include "knotholder.h"
 #include "parameter/bool.h"
 #include "effect-enum.h"
 

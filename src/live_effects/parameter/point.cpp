@@ -16,6 +16,7 @@
 #include "ui/widget/registered-widget.h"
 #include "inkscape.h"
 #include "verbs.h"
+#include "knotholder.h"
 
 // needed for on-canvas editting:
 #include "desktop.h"

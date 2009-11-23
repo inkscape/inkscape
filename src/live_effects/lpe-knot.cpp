@@ -15,6 +15,7 @@
 #include "live_effects/lpe-knot.h"
 #include "svg/svg.h"
 #include "style.h"
+#include "knot-holder-entity.h"
 
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/sbasis.h>

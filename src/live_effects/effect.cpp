@@ -29,6 +29,7 @@
 #include "message-stack.h"
 #include "desktop.h"
 #include "nodepath.h"
+#include "knotholder.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/parameter/parameter.h"

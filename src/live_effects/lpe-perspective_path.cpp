@@ -16,6 +16,7 @@
 
 #include "live_effects/lpe-perspective_path.h"
 #include "sp-item-group.h"
+#include "knot-holder-entity.h"
 
 #include "inkscape.h"
 
