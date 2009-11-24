@@ -18,6 +18,8 @@ ink_common_sources += \
 	live_effects/lpe-boolops.h	\
 	live_effects/lpe-dynastroke.cpp	\
 	live_effects/lpe-dynastroke.h	\
+	live_effects/lpe-extrude.cpp	\
+	live_effects/lpe-extrude.h	\
 	live_effects/lpe-sketch.cpp	\
 	live_effects/lpe-sketch.h	\
 	live_effects/lpe-knot.cpp	\
