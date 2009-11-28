@@ -188,6 +188,26 @@ static PaperSizeRec const inkscape_papers[] = {
     { "Business Card (US)",             2,     3.5,  SP_UNIT_IN },
     { "Business Card (Europe)",        55,    85,    SP_UNIT_MM },
     { "Business Card (Aus/NZ)",        55,    90,    SP_UNIT_MM },
+
+    // Start Arch Series List
+
+
+    { "Arch A",         9,    12,    SP_UNIT_IN },  // 229 x 305 mm
+    { "Arch B",        12,    18,    SP_UNIT_IN },  // 305 x 457 mm
+    { "Arch C",        18,    24,    SP_UNIT_IN },  // 457 x 610 mm
+    { "Arch D",        24,    36,    SP_UNIT_IN },  // 610 x 914 mm
+    { "Arch E",        36,    48,    SP_UNIT_IN },  // 914 x 1219 mm
+    { "Arch E1",       30,    42,    SP_UNIT_IN },  // 762 x 1067 mm
+
+    /*
+     * The above list of Arch sizes were taken from the following site:
+     * http://en.wikipedia.org/wiki/Paper_size
+     * Further detail can be found at http://www.ansi.org
+     * Sizes are assumed to be arbitrary rounding to MM unless shown to be otherwise
+     * No conflicting information was found regarding sizes in MM
+     * September 2009 - DAK
+     */
+
     { NULL,                     0,    0, SP_UNIT_PX },
 };
 
