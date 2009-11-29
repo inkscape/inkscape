@@ -47,7 +47,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-10-15 12:45+0200\n"
-"PO-Revision-Date: 2009-10-03 09:02+0100\n"
+"PO-Revision-Date: 2009-11-25 21:08+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,18 +62,16 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "SVG-tekeningen (Scalable Vector Graphics) maken en bewerken"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Inkscape"
-msgstr "Inkscape afsluiten"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
-msgstr "Inkscape SVG-vector-illustrator"
+msgstr "Inkscape vector tekenpakket"
 
 #: ../inkscape.desktop.in.h:4
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape SVG-vector-illustrator"
+msgstr "Vector tekenpakket"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
@@ -7609,9 +7607,8 @@ msgstr "Sleep om een kruising te selecteren, klik om te spiegelen"
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:637
-#, fuzzy
 msgid "Change knot crossing"
-msgstr "Verbindingsafstanden aanpassen"
+msgstr "Kruising aanpassen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7893,7 +7890,7 @@ msgstr "Frequentie en richting krabbels instellen"
 #. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
-msgstr "Globaal buigen"
+msgstr "Globale buiging"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid ""
@@ -8141,7 +8138,7 @@ msgstr "Recursiediepte --- laag houden!!"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Generating path"
-msgstr "Pad genereren"
+msgstr "Genererend pad"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Path whose segments define the iterated transforms"
@@ -21460,7 +21457,7 @@ msgstr "Punt op"
 
 #: ../share/extensions/draw_from_triangle.inx.h:29
 msgid "Radius / px"
-msgstr "Straal / px"
+msgstr "Straal (px)"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
 msgid "Report this triangle's properties"
@@ -22793,7 +22790,7 @@ msgstr "Vulkleur (rood)"
 #: ../share/extensions/polyhedron_3d.inx.h:16
 #, no-c-format
 msgid "Fill opacity, %"
-msgstr "Ondoorzichtigheid opvulling / %"
+msgstr "Ondoorzichtigheid opvulling (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:17
 msgid "Great Dodecahedron"
@@ -22857,7 +22854,7 @@ msgstr "Roteren rond:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
 msgid "Rotation, degrees"
-msgstr "Rotatie / graden"
+msgstr "Rotatie (graden)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 msgid "Scaling factor"
@@ -22882,11 +22879,11 @@ msgstr "Stompe dodecaëder"
 #: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke opacity, %"
-msgstr "Ondoorzichtigheid lijn / %"
+msgstr "Ondoorzichtigheid lijn (%)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Stroke width, px"
-msgstr "Lijnbreedte / px"
+msgstr "Lijnbreedte (px)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
@@ -23447,15 +23444,15 @@ msgstr "alles in HOOFDLETTERS"
 
 #: ../share/extensions/triangle.inx.h:1
 msgid "Angle a / deg"
-msgstr "Hoek a / graden"
+msgstr "Hoek a (graden)"
 
 #: ../share/extensions/triangle.inx.h:2
 msgid "Angle b / deg"
-msgstr "Hoek b / graden"
+msgstr "Hoek b (graden)"
 
 #: ../share/extensions/triangle.inx.h:3
 msgid "Angle c / deg"
-msgstr "Hoek c / graden"
+msgstr "Hoek c (graden)"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
@@ -23479,15 +23476,15 @@ msgstr "Gebruik drie zijden"
 
 #: ../share/extensions/triangle.inx.h:11
 msgid "Side Length a / px"
-msgstr "Lengte zijde a / px"
+msgstr "Lengte zijde a (px)"
 
 #: ../share/extensions/triangle.inx.h:12
 msgid "Side Length b / px"
-msgstr "Lengte zijde b / px"
+msgstr "Lengte zijde b (px)"
 
 #: ../share/extensions/triangle.inx.h:13
 msgid "Side Length c / px"
-msgstr "Lengte zijde c / px"
+msgstr "Lengte zijde c (px)"
 
 #: ../share/extensions/triangle.inx.h:14
 msgid "Triangle"
