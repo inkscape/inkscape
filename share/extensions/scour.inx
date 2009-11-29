@@ -5,6 +5,35 @@
     <dependency type="executable" location="extensions">scour.py</dependency>
     <dependency type="executable" location="extensions">svg_regex.py</dependency>
     <dependency type="executable" location="extensions">yocto_css.py</dependency>
+    <param name="tab" type="notebook">
+        <page name="Options" _gui-text="Options">            
+            <param name="simplify-colors"  type="boolean" _gui-text="Simplify colors">true</param>
+            <param name="style-to-xml"  type="boolean" _gui-text="Style to xml">true</param>
+            <param name="group-collapsing"  type="boolean" _gui-text="Group collapsing">true</param>
+            <param name="enable-id-stripping"  type="boolean" _gui-text="Enable id stripping">false</param>
+            <param name="embed-rasters"  type="boolean" _gui-text="Embed rasters">true</param>
+            <param name="keep-editor-data"  type="boolean" _gui-text="Keep editor data">false</param>
+            <param name="strip-xml-prolog"  type="boolean" _gui-text="Strip xml prolog">false</param>
+            <param name="set-precision"  type="int" _gui-text="Set precision">5</param>
+      	    <param name="indent" type="enum" _gui-text="Indent">
+                <_item value="space">Space</_item>
+                <_item value="tab">Tab</_item>
+                <_item value="none">None</_item>
+            </param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="instructions" type="description" xml:space="preserve">This extension optimize the SVG file according to the following options:
+    * Simplify colors: convert all colors to #RRGGBB format.
+    * Style to xml: convert styles into XML attributes.
+    * Group collapsing: collapse &lt;g&gt; elements.
+    * Enable id stripping: remove all un-referenced ID attributes.
+    * Embed rasters: embed rasters as base64-encoded data.
+    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.
+    * Strip xml prolog: don't output the xml prolog.
+    * Set precision: set number of significant digits (default: 5).
+    * Indent: indentation of the output: none, space, tab (default: space).</_param>
+        </page>
+    </param>        
     <output>
         <extension>.svg</extension>
         <mimetype>image/svg+xml</mimetype>
