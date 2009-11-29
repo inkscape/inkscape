@@ -20,10 +20,12 @@ src/live_effects/lpe-path_length.cpp
 src/live_effects/lpe-perp_bisector.cpp
 src/live_effects/lpe-perspective_path.cpp
 src/live_effects/lpe-recursiveskeleton.cpp
+src/live_effects/lpe-skeleton.cpp
 src/live_effects/lpe-tangent_to_curve.cpp
 src/live_effects/lpe-test-doEffect-stack.cpp
 src/live_effects/lpe-text_label.cpp
 src/lpe-tool-context.cpp
+src/ui/dialog/session-player.cpp
 src/ui/dialog/whiteboard-connect.cpp
 src/ui/dialog/whiteboard-sharewithchat.cpp
 src/ui/dialog/whiteboard-sharewithuser.cpp

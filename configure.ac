@@ -7,7 +7,7 @@ AC_PREREQ(2.53)
 # `dpkg --compare-versions'.  (ii) We don't always know what the next
 # version is going to be called until about the time we release it
 # (whereas we always know what the previous version was called).
-AC_INIT(inkscape, 0.46+devel)
+AC_INIT(inkscape, 0.47+devel)
 
 AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR([src/main.cpp])

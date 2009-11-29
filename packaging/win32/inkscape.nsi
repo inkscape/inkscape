@@ -7,8 +7,9 @@
 ; DEFINES
 ; #######################################
 !define PRODUCT_NAME "Inkscape"
-!define PRODUCT_VERSION "0.46+devel"
-!define PRODUCT_REVISION 1
+!define PRODUCT_VERSION "0.47+devel"
+!define PRODUCT_REVISION 3
+!define PRODUCT_VERSION_4 "0.47.0.3"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 ;!define DUMMYINSTALL ; Define this to make it build quickly, not including any of the files or code in the sections, for quick testing of features of the installer and development thereof.
@@ -127,6 +128,16 @@ OutFile           "Inkscape-${PRODUCT_VERSION}-${PRODUCT_REVISION}.exe"
 !endif
 InstallDir        "$PROGRAMFILES\Inkscape"
 InstallDirRegKey  HKLM "${PRODUCT_DIR_REGKEY}" ""
+
+VIProductVersion "${PRODUCT_VERSION_4}"
+VIAddVersionKey ProductName "${PRODUCT_NAME}"
+VIAddVersionKey Comments "Licensed under the GNU GPL"
+VIAddVersionKey CompanyName "inkscape.org"
+VIAddVersionKey LegalCopyright "© 2009 Inkscape"
+VIAddVersionKey FileDescription "${PRODUCT_NAME}"
+VIAddVersionKey FileVersion "${PRODUCT_VERSION_4}"
+VIAddVersionKey ProductVersion "${PRODUCT_VERSION_4}"
+VIAddVersionKey InternalName "${PRODUCT_NAME}"
 
 Var askMultiUser
 Var filename

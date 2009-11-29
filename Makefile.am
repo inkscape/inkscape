@@ -185,7 +185,6 @@ EXTRA_DIST = \
 	packaging/win32/welcomefinish.bmp	\
 	packaging/win32/welcomefinish.svg	\
 	packaging/win32/portable/help.html \
-	packaging/win32/portable/portable.7z \
 	packaging/win32/portable/readme.packaging.txt \
 	packaging/win32/portable/App/readme.txt \
 	packaging/win32/portable/App/AppInfo/appicon.ico \
