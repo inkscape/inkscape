@@ -807,7 +807,7 @@ AlignAndDistribute::AlignAndDistribute()
                    _("Align left edges"),
                    0, 1);
     addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_CENTER,
-                   _("Center objects horizontally"),
+                   _("Center on vertical axis"),
                    0, 2);
     addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_RIGHT,
                    _("Align right sides"),
