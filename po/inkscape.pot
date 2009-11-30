@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-10-15 12:45+0200\n"
+"POT-Creation-Date: 2009-11-30 21:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1522,7 +1522,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:920
-#: ../src/widgets/desktop-widget.cpp:1577
+#: ../src/widgets/desktop-widget.cpp:1576
 msgid "Drawing"
 msgstr ""
 
@@ -2258,11 +2258,11 @@ msgstr ""
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 
-#: ../src/desktop.cpp:828
+#: ../src/desktop.cpp:830
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:853
+#: ../src/desktop.cpp:855
 msgid "No next zoom."
 msgstr ""
 
@@ -3047,7 +3047,7 @@ msgstr ""
 msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:484 ../src/ui/widget/page-sizer.cpp:230
 msgid "_Width:"
 msgstr ""
 
@@ -3059,7 +3059,7 @@ msgstr ""
 msgid "dp_i"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:211
+#: ../src/dialogs/export.cpp:498 ../src/ui/widget/page-sizer.cpp:231
 msgid "_Height:"
 msgstr ""
 
@@ -4151,11 +4151,11 @@ msgstr ""
 msgid "Draw path"
 msgstr ""
 
-#: ../src/draw-context.cpp:866
+#: ../src/draw-context.cpp:867
 msgid "Creating single dot"
 msgstr ""
 
-#: ../src/draw-context.cpp:867
+#: ../src/draw-context.cpp:868
 msgid "Create single dot"
 msgstr ""
 
@@ -4406,7 +4406,7 @@ msgid "Height"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:99
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr ""
@@ -5352,15 +5352,15 @@ msgstr ""
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 
-#: ../src/extension/internal/pov-out.cpp:688
+#: ../src/extension/internal/pov-out.cpp:700
 msgid "PovRay Output"
 msgstr ""
 
-#: ../src/extension/internal/pov-out.cpp:693
+#: ../src/extension/internal/pov-out.cpp:705
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr ""
 
-#: ../src/extension/internal/pov-out.cpp:694
+#: ../src/extension/internal/pov-out.cpp:706
 msgid "PovRay Raytracer File"
 msgstr ""
 
@@ -5464,7 +5464,7 @@ msgstr ""
 msgid "default.svg"
 msgstr ""
 
-#: ../src/file.cpp:265 ../src/file.cpp:1067
+#: ../src/file.cpp:265 ../src/file.cpp:1071
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr ""
@@ -5533,7 +5533,7 @@ msgid "Document saved."
 msgstr ""
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:770 ../src/file.cpp:1204
+#: ../src/file.cpp:770 ../src/file.cpp:1208
 #, c-format
 msgid "drawing%s"
 msgstr ""
@@ -5556,27 +5556,27 @@ msgstr ""
 msgid "Select file to save to"
 msgstr ""
 
-#: ../src/file.cpp:888
+#: ../src/file.cpp:892
 msgid "No changes need to be saved."
 msgstr ""
 
-#: ../src/file.cpp:905
+#: ../src/file.cpp:909
 msgid "Saving document..."
 msgstr ""
 
-#: ../src/file.cpp:1064
+#: ../src/file.cpp:1068
 msgid "Import"
 msgstr ""
 
-#: ../src/file.cpp:1114
+#: ../src/file.cpp:1118
 msgid "Select file to import"
 msgstr ""
 
-#: ../src/file.cpp:1226
+#: ../src/file.cpp:1230
 msgid "Select file to export to"
 msgstr ""
 
-#: ../src/file.cpp:1469 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1473 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -5764,6 +5764,7 @@ msgstr ""
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3887
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
+#: ../share/extensions/scour.inx.h:7
 msgid "None"
 msgstr ""
 
@@ -6418,24 +6419,24 @@ msgstr ""
 msgid "Node or handle drag canceled."
 msgstr ""
 
-#: ../src/knotholder.cpp:134
+#: ../src/knotholder.cpp:135
 msgid "Change handle"
 msgstr ""
 
-#: ../src/knotholder.cpp:213
+#: ../src/knotholder.cpp:214
 msgid "Move handle"
 msgstr ""
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
-#: ../src/knotholder.cpp:234
+#: ../src/knotholder.cpp:235
 msgid "<b>Move</b> the pattern fill inside the object"
 msgstr ""
 
-#: ../src/knotholder.cpp:237
+#: ../src/knotholder.cpp:238
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/knotholder.cpp:240
+#: ../src/knotholder.cpp:241
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
@@ -6662,7 +6663,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1410
-#: ../src/widgets/desktop-widget.cpp:1573
+#: ../src/widgets/desktop-widget.cpp:1572
 msgid "Page"
 msgstr ""
 
@@ -6670,7 +6671,7 @@ msgstr ""
 msgid "The index of the current page"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:237
 msgid "Name"
 msgstr ""
 
@@ -6827,155 +6828,159 @@ msgstr ""
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:86
+#: ../src/live_effects/effect.cpp:88
 msgid "doEffect stack test"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:87
+#: ../src/live_effects/effect.cpp:89
 msgid "Angle bisector"
 msgstr ""
 
 #. TRANSLATORS: boolean operations
-#: ../src/live_effects/effect.cpp:89
+#: ../src/live_effects/effect.cpp:91
 msgid "Boolops"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:90
+#: ../src/live_effects/effect.cpp:92
 msgid "Circle (by center and radius)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:91
+#: ../src/live_effects/effect.cpp:93
 msgid "Circle by 3 points"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:92
+#: ../src/live_effects/effect.cpp:94
 msgid "Dynamic stroke"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:93
+#: ../src/live_effects/effect.cpp:95 ../share/extensions/extrude.inx.h:1
+msgid "Extrude"
+msgstr ""
+
+#: ../src/live_effects/effect.cpp:96
 msgid "Lattice Deformation"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:94
+#: ../src/live_effects/effect.cpp:97
 msgid "Line Segment"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:98
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:97
+#: ../src/live_effects/effect.cpp:100
 msgid "Parallel"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:101
 msgid "Path length"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:102
 msgid "Perpendicular bisector"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:103
 msgid "Perspective path"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:104
 msgid "Rotate copies"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:105
 msgid "Recursive skeleton"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:106
 msgid "Tangent to curve"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:107
 msgid "Text label"
 msgstr ""
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:107
+#: ../src/live_effects/effect.cpp:110
 msgid "Bend"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:111
 msgid "Gears"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:112
 msgid "Pattern Along Path"
 msgstr ""
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:113
 msgid "Stitch Sub-Paths"
 msgstr ""
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:115
 msgid "VonKoch"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:116
 msgid "Knot"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:117
 msgid "Construct grid"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:118
 msgid "Spiro spline"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:119
 msgid "Envelope Deformation"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:120
 msgid "Interpolate Sub-Paths"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:121
 msgid "Hatches (rough)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:122
 msgid "Sketch"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:120
+#: ../src/live_effects/effect.cpp:123
 msgid "Ruler"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:279
 msgid "Is visible?"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:279
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:294
+#: ../src/live_effects/effect.cpp:300
 msgid "No effect"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:341
+#: ../src/live_effects/effect.cpp:347
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:639
+#: ../src/live_effects/effect.cpp:645
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:644
+#: ../src/live_effects/effect.cpp:650
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
@@ -7191,61 +7196,61 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Fixed width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:328
+#: ../src/live_effects/lpe-knot.cpp:329
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:329
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "In units of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:329
+#: ../src/live_effects/lpe-knot.cpp:330
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:330 ../src/widgets/stroke-style.cpp:1093
+#: ../src/live_effects/lpe-knot.cpp:331 ../src/widgets/stroke-style.cpp:1093
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:330
+#: ../src/live_effects/lpe-knot.cpp:331
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Crossing path stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:331
+#: ../src/live_effects/lpe-knot.cpp:332
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:332
+#: ../src/live_effects/lpe-knot.cpp:333
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:333
+#: ../src/live_effects/lpe-knot.cpp:334
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:333
+#: ../src/live_effects/lpe-knot.cpp:334
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:344
+#: ../src/live_effects/lpe-knot.cpp:345
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 
 #. / @todo Is this the right verb?
-#: ../src/live_effects/lpe-knot.cpp:637
+#: ../src/live_effects/lpe-knot.cpp:638
 msgid "Change knot crossing"
 msgstr ""
 
@@ -7824,7 +7829,7 @@ msgstr ""
 msgid "Link path parameter to path"
 msgstr ""
 
-#: ../src/live_effects/parameter/point.cpp:90
+#: ../src/live_effects/parameter/point.cpp:91
 msgid "Change point parameter"
 msgstr ""
 
@@ -8111,6 +8116,7 @@ msgstr ""
 msgid "Show/Hide"
 msgstr ""
 
+#. "       <verb verb-id=\"DialogScript\" />\n"
 #. Not quite ready to be in the menus.
 #. "       <verb verb-id=\"FocusToggle\" />\n"
 #: ../src/menus-skeleton.h:139
@@ -8654,7 +8660,7 @@ msgstr ""
 msgid "Toggle multiple vanishing points"
 msgstr ""
 
-#: ../src/preferences.cpp:101
+#: ../src/preferences.cpp:129
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
@@ -8662,7 +8668,7 @@ msgstr ""
 #. the creation failed
 #. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:116
+#: ../src/preferences.cpp:144
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr ""
@@ -8670,7 +8676,7 @@ msgstr ""
 #. The profile dir is not actually a directory
 #. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:134
+#: ../src/preferences.cpp:162
 #, c-format
 msgid "%s is not a valid directory."
 msgstr ""
@@ -8678,35 +8684,27 @@ msgstr ""
 #. The write failed.
 #. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:145
+#: ../src/preferences.cpp:173
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr ""
 
-#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
-#. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:163
+#: ../src/preferences.cpp:209
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr ""
 
-#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
-#. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:175
+#: ../src/preferences.cpp:219
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr ""
 
-#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
-#. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:188
+#: ../src/preferences.cpp:230
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr ""
 
-#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
-#. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:199
+#: ../src/preferences.cpp:239
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
@@ -8879,7 +8877,7 @@ msgstr ""
 msgid "Extent or scope of this document."
 msgstr ""
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:239
 msgid "Description"
 msgstr ""
 
@@ -9030,7 +9028,7 @@ msgstr ""
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:598 ../src/sp-item-group.cpp:515
+#: ../src/selection-chemistry.cpp:598 ../src/sp-item-group.cpp:516
 msgid "Ungroup"
 msgstr ""
 
@@ -9603,7 +9601,7 @@ msgid ""
 "with <b>Shift</b> to disable snapping"
 msgstr ""
 
-#: ../src/shape-editor.cpp:471
+#: ../src/shape-editor.cpp:472
 msgid "Drag curve"
 msgstr ""
 
@@ -9742,7 +9740,7 @@ msgstr ""
 msgid "%s; <i>filtered</i>"
 msgstr ""
 
-#: ../src/sp-item-group.cpp:760
+#: ../src/sp-item-group.cpp:761
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -9805,74 +9803,74 @@ msgstr ""
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
 msgstr ""
 
-#: ../src/splivarot.cpp:954
+#: ../src/splivarot.cpp:976
 msgid "Convert stroke to path"
 msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:957
+#: ../src/splivarot.cpp:979
 msgid "<b>No stroked paths</b> in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1040
+#: ../src/splivarot.cpp:1062
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1159 ../src/splivarot.cpp:1228
+#: ../src/splivarot.cpp:1181 ../src/splivarot.cpp:1250
 msgid "Create linked offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1160 ../src/splivarot.cpp:1229
+#: ../src/splivarot.cpp:1182 ../src/splivarot.cpp:1251
 msgid "Create dynamic offset"
 msgstr ""
 
-#: ../src/splivarot.cpp:1254
+#: ../src/splivarot.cpp:1276
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1472
+#: ../src/splivarot.cpp:1494
 msgid "Outset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1472
+#: ../src/splivarot.cpp:1494
 msgid "Inset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1474
+#: ../src/splivarot.cpp:1496
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1652
+#: ../src/splivarot.cpp:1674
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:1654
+#: ../src/splivarot.cpp:1676
 msgid "Simplifying paths:"
 msgstr ""
 
-#: ../src/splivarot.cpp:1691
+#: ../src/splivarot.cpp:1713
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1703
+#: ../src/splivarot.cpp:1725
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:1717
+#: ../src/splivarot.cpp:1739
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:1731
+#: ../src/splivarot.cpp:1753
 msgid "Simplify"
 msgstr ""
 
-#: ../src/splivarot.cpp:1733
+#: ../src/splivarot.cpp:1755
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
-#: ../src/sp-lpe-item.cpp:348
+#: ../src/sp-lpe-item.cpp:363
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -10750,7 +10748,7 @@ msgid "Align left edges"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:810
-msgid "Center objects horizontally"
+msgid "Center on vertical axis"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
@@ -10884,7 +10882,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:921
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1581
+#: ../src/widgets/desktop-widget.cpp:1580
 msgid "Selection"
 msgstr ""
 
@@ -11261,7 +11259,7 @@ msgstr ""
 #: ../share/extensions/dxf_input.inx.h:9
 #: ../share/extensions/dxf_outlines.inx.h:8
 #: ../share/extensions/lindenmayer.inx.h:23
-#: ../share/extensions/measure.inx.h:2
+#: ../share/extensions/measure.inx.h:2 ../share/extensions/scour.inx.h:4
 msgid "Help"
 msgstr ""
 
@@ -14076,6 +14074,10 @@ msgstr ""
 msgid "Empty selection"
 msgstr ""
 
+#: ../src/ui/dialog/livepatheffect-editor.cpp:308
+msgid "Unknown effect"
+msgstr ""
+
 #: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
 msgstr ""
@@ -14701,7 +14703,7 @@ msgstr ""
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:617 ../src/ui/dialog/tracedialog.cpp:623
 #: ../share/extensions/dxf_input.inx.h:11
-#: ../share/extensions/dxf_outlines.inx.h:9
+#: ../share/extensions/dxf_outlines.inx.h:9 ../share/extensions/scour.inx.h:10
 msgid "Options"
 msgstr ""
 
@@ -14999,50 +15001,50 @@ msgstr ""
 msgid "Change opacity"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:229
 msgid "U_nits:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:230
 msgid "Width of paper"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:211
+#: ../src/ui/widget/page-sizer.cpp:231
 msgid "Height of paper"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:257
+#: ../src/ui/widget/page-sizer.cpp:277
 msgid "P_age size:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:265
+#: ../src/ui/widget/page-sizer.cpp:285
 msgid "Page orientation:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:268
+#: ../src/ui/widget/page-sizer.cpp:288
 msgid "_Landscape"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:273
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Portrait"
 msgstr ""
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:280
+#: ../src/ui/widget/page-sizer.cpp:300
 msgid "Custom size"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:313
 msgid "_Fit page to selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:294
+#: ../src/ui/widget/page-sizer.cpp:314
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:357
+#: ../src/ui/widget/page-sizer.cpp:377
 msgid "Set page size"
 msgstr ""
 
@@ -17183,14 +17185,10 @@ msgstr ""
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2672
-msgid "_Instant Messaging..."
-msgstr ""
-
-#: ../src/verbs.cpp:2672
-msgid "Jabber Instant Messaging Client"
-msgstr ""
-
+#. #ifdef WITH_INKBOARD
+#. new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
+#. N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
+#. #endif
 #: ../src/verbs.cpp:2674
 msgid "_Input Devices..."
 msgstr ""
@@ -20416,10 +20414,6 @@ msgstr ""
 msgid "Path to save image"
 msgstr ""
 
-#: ../share/extensions/extrude.inx.h:1
-msgid "Extrude"
-msgstr ""
-
 #: ../share/extensions/extrude.inx.h:3
 msgid "Lines"
 msgstr ""
@@ -21789,15 +21783,74 @@ msgid "Strength (%):"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:1
-msgid "Optimized SVG (*.svg)"
+msgid "Embed rasters"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:2
-msgid "Optimized SVG Output"
+msgid "Enable id stripping"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:3
+msgid "Group collapsing"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:5
+msgid "Indent"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:6
+msgid "Keep editor data"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:8
+msgid "Optimized SVG (*.svg)"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:9
+msgid "Optimized SVG Output"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:11
 msgid "Scalable Vector Graphics"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:12
+msgid "Set precision"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:13
+msgid "Simplify colors"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:14
+msgid "Space"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:15
+msgid "Strip xml prolog"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:16
+msgid "Style to xml"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:17
+msgid "Tab"
+msgstr ""
+
+#: ../share/extensions/scour.inx.h:18
+msgid ""
+"This extension optimize the SVG file according to the following options:\n"
+"    * Simplify colors: convert all colors to #RRGGBB format.\n"
+"    * Style to xml: convert styles into XML attributes.\n"
+"    * Group collapsing: collapse &lt;g&gt; elements.\n"
+"    * Enable id stripping: remove all un-referenced ID attributes.\n"
+"    * Embed rasters: embed rasters as base64-encoded data.\n"
+"    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator "
+"elements and attributes.\n"
+"    * Strip xml prolog: don't output the xml prolog.\n"
+"    * Set precision: set number of significant digits (default: 5).\n"
+"    * Indent: indentation of the output: none, space, tab (default: space)."
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:1
