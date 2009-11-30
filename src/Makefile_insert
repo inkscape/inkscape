@@ -222,6 +222,7 @@ ink_common_sources +=	\
 	sp-tspan.cpp sp-tspan.h			\
 	sp-use.cpp sp-use.h			\
 	sp-use-reference.cpp sp-use-reference.h	\
+	spray-context.cpp spray-context.h	\
 	star-context.cpp star-context.h		\
 	streq.h					\
 	strneq.h				\

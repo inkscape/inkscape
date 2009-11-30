@@ -86,6 +86,7 @@
 #include "../svg/css-ostringstream.h"
 #include "../tools-switch.h"
 #include "../tweak-context.h"
+#include "../spray-context.h"
 #include "../ui/dialog/calligraphic-profile-rename.h"
 #include "../ui/icon-names.h"
 #include "../ui/widget/style-swatch.h"
@@ -107,6 +108,7 @@ typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext,
 
 static void       sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_zoom_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -146,6 +148,7 @@ static struct {
     { "SPSelectContext",   "select_tool",    SP_VERB_CONTEXT_SELECT,  SP_VERB_CONTEXT_SELECT_PREFS},
     { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
+    { "SPSprayContext",    "spray_tool",     SP_VERB_CONTEXT_SPRAY, SP_VERB_CONTEXT_SPRAY_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
     { "SPRectContext",     "rect_tool",      SP_VERB_CONTEXT_RECT, SP_VERB_CONTEXT_RECT_PREFS },
     { "Box3DContext",      "3dbox_tool",     SP_VERB_CONTEXT_3DBOX, SP_VERB_CONTEXT_3DBOX_PREFS },
@@ -181,6 +184,8 @@ static struct {
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_CONTEXT_TWEAK_PREFS, "/tools/tweak", N_("Color/opacity used for color tweaking")},
+    { "SPSprayContext",   "spray_toolbox",   0, sp_spray_toolbox_prep,              "SprayToolbar",
+      SP_VERB_CONTEXT_SPRAY_PREFS, "/tools/spray", N_("Color/opacity used for color spraying")},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPStarContext",   "star_toolbox",   0, sp_star_toolbox_prep,              "StarToolbar",
@@ -297,6 +302,21 @@ static gchar const * ui_descr =
         "    <toolitem action='TweakDoS' />"
         "    <toolitem action='TweakDoL' />"
         "    <toolitem action='TweakDoO' />"
+        "  </toolbar>"
+
+  "  <toolbar name='SprayToolbar'>"
+        "    <toolitem action='SprayModeAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayWidthAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayPressureAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayPopulationAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayMeanAction' />"
+        "    <toolitem action='SprayStandard_deviationAction' />"
+        "    <separator />"
+        "    <toolitem action='DialogSprayOption' />"
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"
@@ -718,6 +738,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         //SP_VERB_EDIT_TILE,
         //SP_VERB_EDIT_UNTILE,
         SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+        SP_VERB_DIALOG_SPRAY_OPTION,
         SP_VERB_DIALOG_DISPLAY,
         SP_VERB_DIALOG_FILL_STROKE,
         SP_VERB_DIALOG_NAMEDVIEW,
@@ -1627,6 +1648,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolSelector' />"
         "    <toolitem action='ToolNode' />"
         "    <toolitem action='ToolTweak' />"
+        "    <toolitem action='ToolSpray' />"
         "    <toolitem action='ToolZoom' />"
         "    <toolitem action='ToolRect' />"
         "    <toolitem action='Tool3DBox' />"
@@ -4368,6 +4390,198 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/usepressure", true) );
     }
 
+}
+
+
+//########################
+//##       Spray        ##
+//########################
+
+static void sp_spray_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/spray/width", adj->value );
+}
+
+static void sp_spray_force_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+{
+    //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    //prefs->setDouble( "/tools/spray/force", adj->value * 0.01 );
+}
+
+static void sp_spray_mean_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/spray/mean", adj->value );
+}
+
+static void sp_spray_standard_deviation_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/spray/standard_deviation", adj->value );
+}
+
+static void sp_spray_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/spray/usepressure", gtk_toggle_action_get_active(act));
+}
+
+static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    int mode = ege_select_one_action_get_active( act );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/tools/spray/mode", mode);
+}
+
+static void sp_spray_population_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/spray/population", adj->value );
+}
+
+/*static void spray_toggle_doh (GtkToggleAction *act, gpointer ) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/spray/doh", gtk_toggle_action_get_active(act));
+}
+static void spray_toggle_dos (GtkToggleAction *act, gpointer ) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/spray/dos", gtk_toggle_action_get_active(act));
+}
+static void spray_toggle_dol (GtkToggleAction *act, gpointer ) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/spray/dol", gtk_toggle_action_get_active(act));
+}
+static void spray_toggle_doo (GtkToggleAction *act, gpointer ) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/spray/doo", gtk_toggle_action_get_active(act));
+}
+*/
+static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    {
+        /* Width */
+        gchar const* labels[] = {_("(pinch spray)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad spray)")};
+        gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "SprayWidthAction",
+                                                              _("Width"), _("Width:"), _("The width of the spray area (relative to the visible canvas area)"),
+                                                              "/tools/spray/width", 15,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spray",
+                                                              1, 100, 1.0, 0.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_spray_width_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+    {
+        /* Mean */
+        gchar const* labels[] = {_("(minimum mean)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum mean)")};
+        gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "SprayMeanAction",
+                                                              _("Mean"), _("Mean:"), _("The mean of the spray action"),
+                                                              "/tools/spray/mean", 20,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-mean",
+                                                              1, 100, 1.0, 0.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_spray_mean_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+    {
+        /* Standard_deviation */
+        gchar const* labels[] = {_("(minimum standard_deviation)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum standard_deviation)")};
+        gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "SprayStandard_deviationAction",
+                                                              _("SD"), _("SD:"), _("The standard deviation of the spray action"),
+                                                              "/tools/spray/standard_deviation", 20,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-standard_deviation",
+                                                              1, 100, 1.0, 0.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_spray_standard_deviation_value_changed,  0.01, 0, 100 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+    }
+
+    /* Mode */
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Spray with copies"),
+                            1, _("Spray copies of the initial selection"),
+                            2, INKSCAPE_ICON_SPRAY_COPY_MODE,
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Spray with clones"),
+                            1, _("Spray clones of the initial selection"),
+                            2, INKSCAPE_ICON_SPRAY_CLONE_MODE,
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Spray single path"),
+                            1, _("Spray objects in a single path"),
+                            2, INKSCAPE_ICON_SPRAY_UNION_MODE,
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "SprayModeAction", _("Mode"), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act, "short_label", _("Mode:"), NULL );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "mode_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gint mode = prefs->getInt("/tools/spray/mode", 0);
+        ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_spray_mode_changed), holder );
+
+        g_object_set_data( G_OBJECT(holder), "spray_tool_mode", act);
+    }
+
+    {   /* Population */
+        gchar const* labels[] = {_("(rough, simplified)"), 0, 0, _("(default)"), 0, 0, _("(fine, but many nodes)")};
+        gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
+        EgeAdjustmentAction *eact = create_adjustment_action( "SprayPopulationAction",
+                                                              _("Population"), _("Population:"),
+                                                              _("This setting adjusts the number of items sprayed"),
+                                                              "/tools/spray/population", 50,
+                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-population",
+                                                              1, 100, 1.0, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_spray_population_value_changed,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "spray_population", eact );
+    }
+
+    /* Use Pressure button */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "SprayPressureAction",
+                                                      _("Pressure"),
+                                                      _("Use the pressure of the input device to alter the force of spray action"),
+                                                      "use_pressure",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_spray_pressure_state_changed), NULL);
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/usepressure", true) );
+    }
 }
 
 

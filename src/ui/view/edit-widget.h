@@ -70,6 +70,7 @@ public:
 
     void onDialogAbout();
     void onDialogAlignAndDistribute();
+    void onDialogSprayOptionClass();
     void onDialogInkscapePreferences();
     void onDialogDialog();
     void onDialogDocumentProperties();

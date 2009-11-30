@@ -43,6 +43,7 @@ enum {
     PREFS_PAGE_TOOLS_SELECTOR,
     PREFS_PAGE_TOOLS_NODE,
     PREFS_PAGE_TOOLS_TWEAK,
+  PREFS_PAGE_TOOLS_SPRAY,
     PREFS_PAGE_TOOLS_ZOOM,
     PREFS_PAGE_TOOLS_SHAPES,
     PREFS_PAGE_TOOLS_SHAPES_RECT,
@@ -118,7 +119,7 @@ protected:
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
         _page_ui, _page_save, _page_bitmaps, _page_spellcheck;
-    DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
+    DialogPage _page_selector, _page_node, _page_tweak, _page_spray, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
 

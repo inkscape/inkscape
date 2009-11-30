@@ -228,6 +228,12 @@ EditWidget::onDialogAlignAndDistribute()
 }
 
 void
+EditWidget::onDialogSprayOptionClass()
+{
+    _dlg_mgr.showDialog("SprayOptionClass");
+}
+
+void
 EditWidget::onDialogDocumentProperties()
 {
 //    manage (Inkscape::UI::Dialog::DocumentPreferences::create());

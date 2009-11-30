@@ -40,6 +40,7 @@
 #include "ui/dialog/icon-preview.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
+#include "ui/dialog/spray-option.h"
 #include "preferences.h"
 
 #ifdef ENABLE_SVG_FONTS
@@ -88,7 +89,6 @@ DialogManager::DialogManager() {
     int dialogs_type = prefs->getIntLimited("/options/dialogtype/value", DOCK, 0, 1);
 
     if (dialogs_type == FLOATING) {
-
         registerFactory("AlignAndDistribute",  &create<AlignAndDistribute,   FloatingBehavior>);
         registerFactory("DocumentMetadata",    &create<DocumentMetadata,     FloatingBehavior>);
         registerFactory("DocumentProperties",  &create<DocumentProperties,   FloatingBehavior>);
@@ -111,7 +111,8 @@ DialogManager::DialogManager() {
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
-        registerFactory("InputDevices",        &create<InputDialog,           FloatingBehavior>);
+        registerFactory("InputDevices",        &create<InputDialog,          FloatingBehavior>);
+        registerFactory("SprayOptionClass",    &create<SprayOptionClass,     FloatingBehavior>);
 
     } else {
 
@@ -138,6 +139,7 @@ DialogManager::DialogManager() {
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);
+        registerFactory("SprayOptionClass",    &create<SprayOptionClass,     DockBehavior>);
 
     }
 }

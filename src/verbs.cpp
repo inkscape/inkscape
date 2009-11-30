@@ -1464,6 +1464,9 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_CONTEXT_TWEAK:
             tools_switch(dt, TOOLS_TWEAK);
             break;
+        case SP_VERB_CONTEXT_SPRAY:
+            tools_switch(dt, TOOLS_SPRAY);
+            break;
         case SP_VERB_CONTEXT_RECT:
             tools_switch(dt, TOOLS_SHAPES_RECT);
             break;
@@ -1523,6 +1526,10 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_CONTEXT_TWEAK_PREFS:
             prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_TWEAK);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_SPRAY_PREFS:
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SPRAY);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_RECT_PREFS:
@@ -1796,6 +1803,9 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_DIALOG_ALIGN_DISTRIBUTE:
             dt->_dlg_mgr->showDialog("AlignAndDistribute");
+            break;
+        case SP_VERB_DIALOG_SPRAY_OPTION:
+            dt->_dlg_mgr->showDialog("SprayOptionClass");
             break;
         case SP_VERB_DIALOG_TEXT:
             sp_text_edit_dialog();
@@ -2503,6 +2513,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Edit paths by nodes"), INKSCAPE_ICON_TOOL_NODE_EDITOR),
     new ContextVerb(SP_VERB_CONTEXT_TWEAK, "ToolTweak", N_("Tweak"),
                     N_("Tweak objects by sculpting or painting"), INKSCAPE_ICON_TOOL_TWEAK),
+    new ContextVerb(SP_VERB_CONTEXT_SPRAY, "ToolSpray", N_("Spray"),
+                    N_("Spray objects by sculpting or painting"), INKSCAPE_ICON_TOOL_SPRAY), 
     new ContextVerb(SP_VERB_CONTEXT_RECT, "ToolRect", N_("Rectangle"),
                     N_("Create rectangles and squares"), INKSCAPE_ICON_DRAW_RECTANGLE),
     new ContextVerb(SP_VERB_CONTEXT_3DBOX, "Tool3DBox", N_("3D Box"),
@@ -2544,6 +2556,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Node tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_TWEAK_PREFS, "TweakPrefs", N_("Tweak Tool Preferences"),
                     N_("Open Preferences for the Tweak tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_SPRAY_PREFS, "SprayPrefs", N_("Spray Tool Preferences"),
+                    N_("Open Preferences for the Spray tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_RECT_PREFS, "RectPrefs", N_("Rectangle Preferences"),
                     N_("Open Preferences for the Rectangle tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_3DBOX_PREFS, "3DBoxPrefs", N_("3D Box Preferences"),
@@ -2645,6 +2659,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Precisely control objects' transformations"), INKSCAPE_ICON_DIALOG_TRANSFORM),
     new DialogVerb(SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "DialogAlignDistribute", N_("_Align and Distribute..."),
                    N_("Align and distribute objects"), INKSCAPE_ICON_DIALOG_ALIGN_AND_DISTRIBUTE),
+    new DialogVerb(SP_VERB_DIALOG_SPRAY_OPTION, "DialogSprayOption", N_("_Spray options..."),
+                   N_("Some options for the spray"), INKSCAPE_ICON_DIALOG_SPRAY_OPTIONS),
     new DialogVerb(SP_VERB_DIALOG_UNDO_HISTORY, "DialogUndoHistory", N_("Undo _History..."),
                    N_("Undo History"), INKSCAPE_ICON_EDIT_UNDO_HISTORY),
     new DialogVerb(SP_VERB_DIALOG_TEXT, "DialogText", N_("_Text and Font..."),

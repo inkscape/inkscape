@@ -456,6 +456,14 @@
     "snap-nodes-smooth"
 #define INKSCAPE_ICON_SNAP_PAGE \
     "snap-page"
+#define INKSCAPE_ICON_SPRAY_COPY_MODE \
+    "spray-copy-mode"
+#define INKSCAPE_ICON_SPRAY_CLONE_MODE \
+    "spray-clone-mode"
+#define INKSCAPE_ICON_SPRAY_UNION_MODE \
+    "spray-union-mode"
+#define INKSCAPE_ICON_DIALOG_SPRAY_OPTIONS \
+    "dialog-spray-options"
 #define INKSCAPE_ICON_STROKE_CAP_BUTT \
     "stroke-cap-butt"
 #define INKSCAPE_ICON_STROKE_CAP_ROUND \
@@ -488,6 +496,8 @@
     "tool-pointer"
 #define INKSCAPE_ICON_TOOL_TWEAK \
     "tool-tweak"
+#define INKSCAPE_ICON_TOOL_SPRAY \
+    "tool-spray"
 #define INKSCAPE_ICON_TRANSFORM_AFFECT_GRADIENT \
     "transform-affect-gradient"
 #define INKSCAPE_ICON_TRANSFORM_AFFECT_PATTERN \

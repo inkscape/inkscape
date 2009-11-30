@@ -449,6 +449,12 @@ void InkscapePreferences::initPageTools()
     AddSelcueCheckbox(_page_tweak, "/tools/tweak", true);
     AddGradientCheckbox(_page_tweak, "/tools/tweak", false);
 
+ //Spray
+    this->AddPage(_page_spray, _("Spray"), iter_tools, PREFS_PAGE_TOOLS_SPRAY);
+    this->AddNewObjectsStyle(_page_spray, "/tools/spray", _("Paint objects with:"));
+    AddSelcueCheckbox(_page_spray, "/tools/spray", true);
+    AddGradientCheckbox(_page_spray, "/tools/spray", false);
+
     //Zoom
     this->AddPage(_page_zoom, _("Zoom"), iter_tools, PREFS_PAGE_TOOLS_ZOOM);
     AddSelcueCheckbox(_page_zoom, "/tools/zoom", true);

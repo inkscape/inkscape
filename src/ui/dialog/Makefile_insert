@@ -73,6 +73,8 @@ ink_common_sources +=		\
 	ui/dialog/print.h			\
 	ui/dialog/scriptdialog.cpp		\
 	ui/dialog/scriptdialog.h		\
+	ui/dialog/spray-option.cpp		\
+	ui/dialog/spray-option.h		\
 	ui/dialog/svg-fonts-dialog.cpp		\
 	ui/dialog/svg-fonts-dialog.h		\
 	ui/dialog/swatches.cpp			\
