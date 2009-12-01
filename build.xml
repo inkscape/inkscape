@@ -101,9 +101,14 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
           
-    <makefile file="${src}/inkscape-version.cpp">
+    <!--makefile file="${src}/inkscape-version.cpp">
         namespace Inkscape {
             char const *version_string = "${version} ${svn.revision}";
+        }
+    </makefile-->
+    <makefile file="${src}/inkscape-version.cpp">
+        namespace Inkscape {
+            char const *version_string = "${version}";
         }
     </makefile>
     <makefile file="config.h">
@@ -183,7 +188,7 @@
         #define ENABLE_SVG_FONTS              1
 
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
-        // #define LPE_ENABLE_TEST_EFFECTS    1
+        #define LPE_ENABLE_TEST_EFFECTS    1
 
         #define HAVE_ASPELL                   1
 
@@ -471,7 +476,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
+           -mconsole
            -mthreads
        </flags>
        <fileset dir="${build}">
@@ -528,7 +533,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
+           -mconsole
            -mthreads
        </flags>
        <fileset dir="${build}">
