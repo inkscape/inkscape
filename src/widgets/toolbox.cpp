@@ -6733,17 +6733,25 @@ cell_data_func  (GtkCellLayout */*cell_layout*/,
     gtk_tree_model_get(tree_model, iter, 0, &family, -1);
     gchar *const family_escaped = g_markup_escape_text(family, -1);
 
-    static char const *const sample = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
-    gchar *const sample_escaped = g_markup_escape_text(sample, -1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int show_sample = prefs->getInt("/tools/text/show_sample_in_list", 1);
+    if (show_sample) {
+
+        Glib::ustring sample = prefs->getString("/tools/text/font_sample");
+        gchar *const sample_escaped = g_markup_escape_text(sample.data(), -1);
 
     std::stringstream markup;
     markup << family_escaped << "  <span foreground='darkgray' font_family='"
            << family_escaped << "'>" << sample_escaped << "</span>";
     g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
 
+        g_free(sample_escaped);
+    } else {
+        g_object_set (G_OBJECT (cell), "markup", family_escaped, NULL);
+    }
+
     g_free(family);
     g_free(family_escaped);
-    g_free(sample_escaped);
 }
 
 gboolean            text_toolbox_completion_match_selected    (GtkEntryCompletion *widget,
@@ -6873,7 +6881,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     // expand the field a bit so as to view more of the previews in the drop-down
     GtkRequisition req;
     gtk_widget_size_request (GTK_WIDGET (font_sel->gobj()), &req);
-    gtk_widget_set_size_request  (GTK_WIDGET (font_sel->gobj()), req.width + 40, -1);
+    gtk_widget_set_size_request  (GTK_WIDGET (font_sel->gobj()), MIN(req.width + 50, 500), -1);
 
     GtkWidget* entry = (GtkWidget*) font_sel->get_entry()->gobj();
     g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (sp_text_toolbox_family_changed), tbl);

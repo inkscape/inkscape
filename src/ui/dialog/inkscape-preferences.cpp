@@ -476,15 +476,15 @@ void InkscapePreferences::initPageTools()
     this->AddNewObjectsStyle(_page_3dbox, "/tools/shapes/3dbox");
     this->AddConvertGuidesCheckbox(_page_3dbox, "/tools/shapes/3dbox", true);
 
-    //ellipse
+    //Ellipse
     this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
     this->AddNewObjectsStyle(_page_ellipse, "/tools/shapes/arc");
 
-    //star
+    //Star
     this->AddPage(_page_star, _("Star"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_STAR);
     this->AddNewObjectsStyle(_page_star, "/tools/shapes/star");
 
-    //spiral
+    //Spiral
     this->AddPage(_page_spiral, _("Spiral"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
     this->AddNewObjectsStyle(_page_spiral, "/tools/shapes/spiral");
 
@@ -528,6 +528,11 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "/tools/text", true);
     this->AddGradientCheckbox(_page_text, "/tools/text", true);
+    {
+    PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
+    cb->init ( _("Show font samples in the drop-down list"), "/tools/text/show_sample_in_list", 1);
+    _page_text.add_line( false, "", *cb, "", _("Show font samples alongside font names in the drop-down list in Text bar"));
+    }
     this->AddNewObjectsStyle(_page_text, "/tools/text");
 
     //Gradient
