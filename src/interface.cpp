@@ -992,6 +992,9 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             gtk_recent_filter_add_application(inkscape_only_filter, g_get_prgname());
             gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(recent_menu), inkscape_only_filter);
 
+            gtk_recent_chooser_set_show_tips (GTK_RECENT_CHOOSER(recent_menu), TRUE);
+            gtk_recent_chooser_set_show_not_found (GTK_RECENT_CHOOSER(recent_menu), FALSE);
+
             GtkWidget *recent_item = gtk_menu_item_new_with_mnemonic(_("Open _Recent"));
             gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_item), recent_menu);
 
