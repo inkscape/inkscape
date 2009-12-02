@@ -2,7 +2,8 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *
+ * Copyright (C) 2004-2009  Monash University
  *
  * --------------------------------------------------------------------
  * Much of the code in this module is based on code published with
@@ -18,16 +19,17 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
+ * See the file LICENSE.LGPL distributed with the library.
+ *
+ * Licensees holding a valid commercial license may use this file in
+ * accordance with the commercial license agreement provided with the 
+ * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
 
 
@@ -35,21 +37,30 @@
 #define _GEOMETRY_H
 
 #include "libavoid/geomtypes.h"
+#include "libavoid/assertions.h"
 
 namespace Avoid {
 
 
-extern double dist(const Point& a, const Point& b);
-extern double totalLength(const Polygn& poly);
+extern double euclideanDist(const Point& a, const Point& b);
+extern double manhattanDist(const Point& a, const Point& b);
+extern double totalLength(const Polygon& poly);
 extern double angle(const Point& a, const Point& b, const Point& c);
 extern bool segmentIntersect(const Point& a, const Point& b,
         const Point& c, const Point& d);
-extern bool inPoly(const Polygn& poly, const Point& q);
-extern bool inPolyGen(const Polygn& poly, const Point& q);
+extern bool segmentShapeIntersect(const Point& e1, const Point& e2, 
+        const Point& s1, const Point& s2, bool& seenIntersectionAtEndpoint);
+extern bool inPoly(const Polygon& poly, const Point& q, bool countBorder = true);
+extern bool inPolyGen(const PolygonInterface& poly, const Point& q);
 extern bool inValidRegion(bool IgnoreRegions, const Point& a0,
         const Point& a1, const Point& a2, const Point& b);
 extern int cornerSide(const Point &c1, const Point &c2, const Point &c3,
         const Point& p);
+extern bool pointOnLine(const Point& a, const Point& b, const Point& c,
+        const double tolerance = 0.0);
+
+// To be used only when the points are known to be colinear.
+extern bool inBetween(const Point& a, const Point& b, const Point& c);
 
 
 // Direction from vector.
@@ -61,16 +72,22 @@ extern int cornerSide(const Point &c1, const Point &c2, const Point &c3,
 //
 // Based on the code of 'AreaSign'.
 //
-static inline int vecDir(const Point& a, const Point& b, const Point& c)
+// The 'maybeZero' argument can be used to adjust the tolerance of the 
+// function.  It will be most accurate when 'maybeZero' == 0.0, the default.
+//
+static inline int vecDir(const Point& a, const Point& b, const Point& c, 
+        const double maybeZero = 0.0)
 {
+    COLA_ASSERT(maybeZero >= 0);
+
     double area2 = ((b.x - a.x) * (c.y - a.y)) -
                    ((c.x - a.x) * (b.y - a.y));
     
-    if (area2 < -0.001)
+    if (area2 < (-maybeZero))
     {
         return -1;
     }
-    else if (area2 > 0.001)
+    else if (area2 > maybeZero)
     {
         return 1;
     }
@@ -99,6 +116,8 @@ static const int DONT_INTERSECT = 0;
 static const int DO_INTERSECT = 1;
 static const int PARALLEL = 3;
 extern int segmentIntersectPoint(const Point& a1, const Point& a2,
+        const Point& b1, const Point& b2, double *x, double *y);
+extern int rayIntersectPoint(const Point& a1, const Point& a2,
         const Point& b1, const Point& b2, double *x, double *y);
 
 

@@ -31,6 +31,7 @@
 #include "style.h"
 #include "conn-avoid-ref.h"
 #include "libavoid/connector.h"
+#include "libavoid/router.h"
 #include "libavoid/geomtypes.h"
 #include "libcola/cola.h"
 #include "libvpsc/generate-constraints.h"

@@ -11,6 +11,8 @@ static.cpp
 timer.cpp
 vertices.cpp
 visibility.cpp
+orthogonal.cpp
+vpsc.cpp
 )
 ADD_LIBRARY(avoid STATIC ${libavoid_SRC})
 TARGET_LINK_LIBRARIES(avoid

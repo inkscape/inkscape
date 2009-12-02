@@ -412,6 +412,7 @@ sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     sp_object_read_attr(object, "inkscape:transform-center-x");
     sp_object_read_attr(object, "inkscape:transform-center-y");
     sp_object_read_attr(object, "inkscape:connector-avoid");
+    sp_object_read_attr(object, "inkscape:connection-points");
 
     if (((SPObjectClass *) (parent_class))->build) {
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
@@ -513,6 +514,9 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             break;
         case SP_ATTR_CONNECTOR_AVOID:
             item->avoidRef->setAvoid(value);
+            break;
+        case SP_ATTR_CONNECTION_POINTS:
+            item->avoidRef->setConnectionPoints(value);
             break;
         case SP_ATTR_TRANSFORM_CENTER_X:
             if (value) {

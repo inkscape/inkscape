@@ -98,6 +98,9 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     const gchar *actionkey;
     /// Handler ID
     guint modified_id;
+    
+    /// Connector rerouting handler ID
+    guint rerouting_handler_id;
 
     Inkscape::ProfileManager* profileManager;
 

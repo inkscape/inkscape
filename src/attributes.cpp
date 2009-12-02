@@ -37,6 +37,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_SODIPODI_INSENSITIVE, "sodipodi:insensitive"},
     {SP_ATTR_SODIPODI_NONPRINTABLE, "sodipodi:nonprintable"},
     {SP_ATTR_CONNECTOR_AVOID, "inkscape:connector-avoid"},
+    {SP_ATTR_CONNECTION_POINTS, "inkscape:connection-points"},
     {SP_ATTR_STYLE, "style"},
     {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
     {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
@@ -124,6 +125,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_CONNECTOR_TYPE, "inkscape:connector-type"},
     {SP_ATTR_CONNECTION_START, "inkscape:connection-start"},
     {SP_ATTR_CONNECTION_END, "inkscape:connection-end"},
+    {SP_ATTR_CONNECTOR_CURVATURE, "inkscape:connector-curvature"},
     /* SPRect */
     {SP_ATTR_RX, "rx"},
     {SP_ATTR_RY, "ry"},

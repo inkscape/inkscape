@@ -20,6 +20,7 @@ ink_common_sources +=	\
 	composite-undo-stack-observer.cpp				\
 	composite-undo-stack-observer.h					\
 	conditions.cpp conditions.h					\
+	connection-points.cpp connection-points.h			\
 	conn-avoid-ref.cpp conn-avoid-ref.h				\
 	connection-pool.h						\
 	connector-context.cpp connector-context.h			\

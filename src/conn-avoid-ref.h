@@ -18,6 +18,8 @@
 
 struct SPDesktop;
 struct SPItem;
+struct ConnectionPoint;
+typedef std::map<int, ConnectionPoint> IdConnectionPointMap;
 namespace Avoid { class ShapeRef; }
 
 class SPAvoidRef {
@@ -28,9 +30,16 @@ public:
     // libavoid's internal representation of the item.
     Avoid::ShapeRef *shapeRef;
 
+    // Used for holding connection points for item
+    IdConnectionPointMap connection_points;
+
     void setAvoid(char const *value);
+    void setConnectionPoints(gchar const *value);
+    void addConnectionPoint(ConnectionPoint &cp);
+    void updateConnectionPoint(ConnectionPoint &cp);
+    void deleteConnectionPoint(ConnectionPoint &cp);
     void handleSettingChange(void);
-    
+
     // Returns a list of SPItems of all connectors/shapes attached to
     // this object.  Pass one of the following for 'type':
     //     Avoid::runningTo
@@ -38,6 +47,9 @@ public:
     //     Avoid::runningToAndFrom
     GSList *getAttachedShapes(const unsigned int type);
     GSList *getAttachedConnectors(const unsigned int type);
+    Geom::Point getConnectionPointPos(const int type, const int id);
+
+    bool isValidConnPointId( const int type, const int id );
 
 private:
     SPItem *item;
@@ -48,6 +60,7 @@ private:
 
     // A sigc connection for transformed signal.
     sigc::connection _transformed_connection;
+    void setConnectionPointsAttrUndoable(const gchar* value, const gchar* action);
 };
 
 extern GSList *get_avoided_items(GSList *list, SPObject *from,
@@ -56,6 +69,7 @@ extern void avoid_item_move(Geom::Matrix const *mp, SPItem *moved_item);
 extern void init_avoided_shape_geometry(SPDesktop *desktop);
 
 static const double defaultConnSpacing = 3.0;
+static const double defaultConnCurvature = 3.0;
 
 #endif /* !SEEN_CONN_AVOID_REF */
 

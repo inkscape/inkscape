@@ -66,6 +66,31 @@ operator<<(Inkscape::SVGOStringStream &os, Geom::Point const & p)
     return os;
 }
 
+Inkscape::SVGIStringStream::SVGIStringStream():std::istringstream()
+{
+    this->imbue(std::locale::classic());
+    this->setf(std::ios::showpoint);
+
+    /* This one is (currently) needed though, as we currently use ostr.precision as a sort of
+       variable for storing the desired precision: see our two precision methods and our operator<<
+       methods for float and double. */
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    this->precision(prefs->getInt("/options/svgoutput/numericprecision", 8));
+}
+
+Inkscape::SVGIStringStream::SVGIStringStream(const std::string& str):std::istringstream(str)
+{
+    this->imbue(std::locale::classic());
+    this->setf(std::ios::showpoint);
+
+    /* This one is (currently) needed though, as we currently use ostr.precision as a sort of
+       variable for storing the desired precision: see our two precision methods and our operator<<
+       methods for float and double. */
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    this->precision(prefs->getInt("/options/svgoutput/numericprecision", 8));
+}
+
+
 /*
   Local Variables:
   mode:c++

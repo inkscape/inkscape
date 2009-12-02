@@ -86,6 +86,7 @@ composite-undo-stack-observer.cpp
 common-context.cpp
 conditions.cpp
 conn-avoid-ref.cpp
+connection-points.cpp
 connector-context.cpp
 console-output-undo-observer.cpp
 context-fns.cpp

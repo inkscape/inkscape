@@ -74,6 +74,13 @@ public:
     }
 };
 
+class SVGIStringStream:public std::istringstream {
+
+public:
+    SVGIStringStream();
+    SVGIStringStream(const std::string &str);
+};
+
 }
 
 Inkscape::SVGOStringStream &operator<<(Inkscape::SVGOStringStream &os, float d);

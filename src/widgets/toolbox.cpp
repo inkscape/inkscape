@@ -470,13 +470,18 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='ConnectorToolbar'>"
+        "    <toolitem action='ConnectorEditModeAction' />"
         "    <toolitem action='ConnectorAvoidAction' />"
         "    <toolitem action='ConnectorIgnoreAction' />"
+        "    <toolitem action='ConnectorOrthogonalAction' />"
+        "    <toolitem action='ConnectorCurvatureAction' />"
         "    <toolitem action='ConnectorSpacingAction' />"
         "    <toolitem action='ConnectorGraphAction' />"
         "    <toolitem action='ConnectorLengthAction' />"
         "    <toolitem action='ConnectorDirectedAction' />"
         "    <toolitem action='ConnectorOverlapAction' />"
+        "    <toolitem action='ConnectorNewConnPointAction' />"
+        "    <toolitem action='ConnectorRemoveConnPointAction' />"
         "  </toolbar>"
 
         "</ui>"
@@ -7076,6 +7081,13 @@ sp_text_toolbox_new (SPDesktop *desktop)
 //##      Connector      ##
 //#########################
 
+static void sp_connector_mode_toggled( GtkToggleAction* act, GtkObject */*tbl*/ )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/connector/mode",
+                gtk_toggle_action_get_active( act ));
+}
+
 static void sp_connector_path_set_avoid(void)
 {
     cc_selection_set_avoid(true);
@@ -7087,6 +7099,106 @@ static void sp_connector_path_set_ignore(void)
     cc_selection_set_avoid(false);
 }
 
+static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl )
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    Inkscape::Selection * selection = sp_desktop_selection(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
+
+    if (!sp_document_get_undo_sensitive(doc))
+    {
+        return;
+    }
+    
+
+    // quit if run by the _changed callbacks
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent callbacks from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    bool is_orthog = gtk_toggle_action_get_active( act );
+    gchar orthog_str[] = "orthogonal";
+    gchar polyline_str[] = "polyline";
+    gchar *value = is_orthog ? orthog_str : polyline_str ;
+
+    bool modmade = false;
+    GSList *l = (GSList *) selection->itemList();
+    while (l) {
+        SPItem *item = (SPItem *) l->data;
+
+        if (cc_item_is_connector(item)) {
+            sp_object_setAttribute(item, "inkscape:connector-type",
+                    value, false);
+            item->avoidRef->handleSettingChange();
+            modmade = true;
+        }
+        l = l->next;
+    }
+
+    if (!modmade)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setBool("/tools/connector/orthogonal", is_orthog);
+    }
+
+    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
+            is_orthog ? _("Set connector type: orthogonal"): _("Set connector type: polyline"));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    Inkscape::Selection * selection = sp_desktop_selection(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
+
+    if (!sp_document_get_undo_sensitive(doc))
+    {
+        return;
+    }
+    
+
+    // quit if run by the _changed callbacks
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent callbacks from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    gdouble newValue = gtk_adjustment_get_value(adj);
+    gchar value[G_ASCII_DTOSTR_BUF_SIZE];
+    g_ascii_dtostr(value, G_ASCII_DTOSTR_BUF_SIZE, newValue);
+
+    bool modmade = false;
+    GSList *l = (GSList *) selection->itemList();
+    while (l) {
+        SPItem *item = (SPItem *) l->data;
+
+        if (cc_item_is_connector(item)) {
+            sp_object_setAttribute(item, "inkscape:connector-curvature",
+                    value, false);
+            item->avoidRef->handleSettingChange();
+            modmade = true;
+        }
+        l = l->next;
+    }
+
+    if (!modmade)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setDouble(Glib::ustring("/tools/connector/curvature"), newValue);
+    }
+
+    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
+            _("Change connector curvature"));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
 
 
 static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
@@ -7183,21 +7295,37 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
         return;
     }
-    if (strcmp(name, "inkscape:connector-spacing") != 0) {
-        return;
+    if (strcmp(name, "inkscape:connector-spacing") == 0)
+    {
+        GtkAdjustment *adj = (GtkAdjustment*)
+                gtk_object_get_data(GTK_OBJECT(tbl), "spacing");
+        gdouble spacing = defaultConnSpacing;
+        sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
+
+        gtk_adjustment_set_value(adj, spacing);
+        gtk_adjustment_value_changed(adj);
     }
-
-    GtkAdjustment *adj = (GtkAdjustment*)
-            gtk_object_get_data(GTK_OBJECT(tbl), "spacing");
-    gdouble spacing = defaultConnSpacing;
-    sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
-
-    gtk_adjustment_set_value(adj, spacing);
-    gtk_adjustment_value_changed(adj);
 
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
+static void sp_connector_new_connection_point(GtkWidget *, GObject *tbl)
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPConnectorContext* cc = SP_CONNECTOR_CONTEXT(desktop->event_context);
+
+    if (cc->mode == SP_CONNECTOR_CONTEXT_EDITING_MODE)
+        cc_create_connection_point(cc);
+}
+
+static void sp_connector_remove_connection_point(GtkWidget *, GObject *tbl)
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPConnectorContext* cc = SP_CONNECTOR_CONTEXT(desktop->event_context);
+
+    if (cc->mode == SP_CONNECTOR_CONTEXT_EDITING_MODE)
+        cc_remove_connection_point(cc);
+}
 
 static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
     NULL, /* child_added */
@@ -7207,11 +7335,41 @@ static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
     NULL  /* order_changed */
 };
 
+static void sp_connector_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
+{
+    GtkAdjustment *adj = GTK_ADJUSTMENT( g_object_get_data( tbl, "curvature" ) );
+    GtkToggleAction *act = GTK_TOGGLE_ACTION( g_object_get_data( tbl, "orthogonal" ) );
+    SPItem *item = selection->singleItem();
+    if (SP_IS_PATH(item))
+    {
+        gdouble curvature = SP_PATH(item)->connEndPair.getCurvature();
+        bool is_orthog = SP_PATH(item)->connEndPair.isOrthogonal();
+        gtk_toggle_action_set_active(act, is_orthog);
+        gtk_adjustment_set_value(adj, curvature);
+    }
+
+}
 
 static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+
+    // Editing mode toggle button
+    {
+        InkToggleAction* act = ink_toggle_action_new( "ConnectorEditModeAction",
+                                                      _("EditMode"),
+                                                      _("Switch between connection point editing and connector drawing mode"),
+                                                      INKSCAPE_ICON_CONNECTOR_EDIT,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+
+        bool tbuttonstate = prefs->getBool("/tools/connector/mode");
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
+        g_object_set_data( holder, "mode", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_connector_mode_toggled), holder );
+    }
+
 
     {
         InkAction* inky = ink_action_new( "ConnectorAvoidAction",
@@ -7233,17 +7391,42 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
+    // Orthogonal connectors toggle button
+    {
+        InkToggleAction* act = ink_toggle_action_new( "ConnectorOrthogonalAction",
+                                                      _("Orthogonal"),
+                                                      _("Make connector orthogonal or polyline"),
+                                                      INKSCAPE_ICON_CONNECTOR_ORTHOGONAL,
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+
+        bool tbuttonstate = prefs->getBool("/tools/connector/orthogonal");
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
+        g_object_set_data( holder, "orthogonal", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_connector_orthogonal_toggled), holder );
+    }
+
     EgeAdjustmentAction* eact = 0;
+    // Curvature spinbox
+    eact = create_adjustment_action( "ConnectorCurvatureAction",
+                                    _("Connector Curvature"), _("Curvature:"),
+                                    _("The amount of connectors curvature"),
+                                    "/tools/connector/curvature", defaultConnCurvature,
+                                    GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-curvature",
+                                    0, 100, 1.0, 10.0,
+                                    0, 0, 0,
+                                    connector_curvature_changed, 1, 0 );
+    gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
     // Spacing spinbox
     eact = create_adjustment_action( "ConnectorSpacingAction",
-                                     _("Connector Spacing"), _("Spacing:"),
-                                     _("The amount of space left around objects by auto-routing connectors"),
-                                     "/tools/connector/spacing", defaultConnSpacing,
-                                     GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
-                                     0, 100, 1.0, 10.0,
-                                     0, 0, 0,
-                                     connector_spacing_changed, 1, 0 );
+                                    _("Connector Spacing"), _("Spacing:"),
+                                    _("The amount of space left around objects by auto-routing connectors"),
+                                    "/tools/connector/spacing", defaultConnSpacing,
+                                    GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
+                                    0, 100, 1.0, 10.0,
+                                    0, 0, 0,
+                                    connector_spacing_changed, 1, 0 );
     gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
 
     // Graph (connector network) layout
@@ -7282,6 +7465,8 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
 
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_directed_graph_layout_toggled), holder );
+        sigc::connection *connection = new sigc::connection(sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), (GObject *)holder))
+        );
     }
 
     // Avoid overlaps toggle button
@@ -7298,6 +7483,31 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
 
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_nooverlaps_graph_layout_toggled), holder );
     }
+
+
+    // New connection point button
+    {
+        InkAction* inky = ink_action_new( "ConnectorNewConnPointAction",
+                                          _("New connection point"),
+                                          _("Add a new connection point to the currently selected item"),
+                                          INKSCAPE_ICON_CONNECTOR_NEW_CONNPOINT,
+                                          secondarySize );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_new_connection_point), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    
+    // Remove selected connection point button
+    
+    {
+        InkAction* inky = ink_action_new( "ConnectorRemoveConnPointAction",
+                                          _("Remove connection point"),
+                                          _("Remove the currently selected connection point"),
+                                          INKSCAPE_ICON_CONNECTOR_REMOVE_CONNPOINT,
+                                          secondarySize );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_remove_connection_point), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    
 
     // Code to watch for changes to the connector-spacing attribute in
     // the XML.

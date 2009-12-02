@@ -16,7 +16,7 @@
 #include "2geom/path-intersection.h"
 
 
-static void change_endpts(SPCurve *const curve, Geom::Point const h2endPt[2]);
+static void change_endpts(SPCurve *const curve, double const endPos[2]);
 
 SPConnEnd::SPConnEnd(SPObject *const owner) :
     ref(owner),
@@ -39,45 +39,37 @@ get_nearest_common_ancestor(SPObject const *const obj, SPItem const *const objs[
 }
 
 
-static bool try_get_intersect_point_with_item_recursive(SPCurve *conn_curve, SPItem& item, 
-        const Geom::Matrix& item_transform, const bool at_start, double* intersect_pos, 
-        unsigned *intersect_index) {
+static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_pv, SPItem* item,
+        const Geom::Matrix& item_transform, double& intersect_pos) {
 
-    double initial_pos = (at_start) ? 0.0 : std::numeric_limits<double>::max();
-
+    double initial_pos = intersect_pos;
     // if this is a group...
-    if (SP_IS_GROUP(&item)) {
-        SPGroup* group = SP_GROUP(&item);
+    if (SP_IS_GROUP(item)) {
+        SPGroup* group = SP_GROUP(item);
         
         // consider all first-order children
-        double child_pos = initial_pos;
-        unsigned child_index;
+        double child_pos = std::numeric_limits<double>::max();
         for (GSList const* i = sp_item_group_item_list(group); i != NULL; i = i->next) {
             SPItem* child_item = SP_ITEM(i->data);
-            try_get_intersect_point_with_item_recursive(conn_curve, *child_item, 
-                    item_transform * child_item->transform, at_start, &child_pos, &child_index);
-            if (fabs(initial_pos - child_pos) > fabs(initial_pos - *intersect_pos)) {
-                // It is further away from the initial point than the current intersection
-                // point (i.e. the "outermost" intersection), so use this one.
-                *intersect_pos = child_pos;
-                *intersect_index = child_index;
-            }
+            try_get_intersect_point_with_item_recursive(conn_pv, child_item,
+                    item_transform * child_item->transform, child_pos);
+            if (intersect_pos > child_pos)
+                intersect_pos = child_pos;
         }
-        return *intersect_pos != initial_pos;
+        return intersect_pos != initial_pos;
     }
 
-    // if this is a shape...
-    if (!SP_IS_SHAPE(&item)) return false;
+    // if this is not a shape, nothing to be done
+    if (!SP_IS_SHAPE(item)) return false;
 
     // make sure it has an associated curve
-    SPCurve* item_curve = sp_shape_get_curve(SP_SHAPE(&item));
+    SPCurve* item_curve = sp_shape_get_curve(SP_SHAPE(item));
     if (!item_curve) return false;
 
     // apply transformations (up to common ancestor)
     item_curve->transform(item_transform);
 
     const Geom::PathVector& curve_pv = item_curve->get_pathvector();
-    const Geom::PathVector& conn_pv = conn_curve->get_pathvector();
     Geom::CrossingSet cross = crossings(conn_pv, curve_pv);
     // iterate over all Crossings
     for (Geom::CrossingSet::const_iterator i = cross.begin(); i != cross.end(); i++) {
@@ -85,18 +77,14 @@ static bool try_get_intersect_point_with_item_recursive(SPCurve *conn_curve, SPI
 
         for (Geom::Crossings::const_iterator i = cr.begin(); i != cr.end(); i++) {
             const Geom::Crossing& cr_pt = *i;
-            if (fabs(initial_pos - cr_pt.ta) > fabs(initial_pos - *intersect_pos)) {
-                // It is further away from the initial point than the current intersection
-                // point (i.e. the "outermost" intersection), so use this one.
-                *intersect_pos = cr_pt.ta;
-                *intersect_index = cr_pt.a;
-            }
+            if ( intersect_pos > cr_pt.ta)
+                intersect_pos = cr_pt.ta;
         }
     }
 
     item_curve->unref();
 
-    return *intersect_pos != initial_pos;
+    return intersect_pos != initial_pos;
 }
 
 
@@ -104,22 +92,36 @@ static bool try_get_intersect_point_with_item_recursive(SPCurve *conn_curve, SPI
 // and the item given.  If the item is a group, then the component items are considered.
 // The transforms given should be to a common ancestor of both the path and item.
 //
-static bool try_get_intersect_point_with_item(SPPath& conn, SPItem& item, 
+static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
         const Geom::Matrix& item_transform, const Geom::Matrix& conn_transform, 
-        const bool at_start, double* intersect_pos, unsigned *intersect_index) {
+        const bool at_start, double& intersect_pos) {
  
-    // We start with the intersection point either at the beginning or end of the 
-    // path, depending on whether we are considering the source or target endpoint.
-    *intersect_pos = (at_start) ? 0.0 : std::numeric_limits<double>::max();
-
     // Copy the curve and apply transformations up to common ancestor.
-    SPCurve* conn_curve = conn.curve->copy();
+    SPCurve* conn_curve = conn->curve->copy();
     conn_curve->transform(conn_transform);
 
+    Geom::PathVector conn_pv = conn_curve->get_pathvector();
+
+    // If this is not the starting point, use Geom::Path::reverse() to reverse the path
+    if (!at_start)
+    {
+        // connectors are actually a single path, so consider the first element from a Geom::PathVector
+        conn_pv[0] = conn_pv[0].reverse();
+    }
+
+    // We start with the intersection point at the end of the path
+    intersect_pos = conn_pv[0].size();
+
     // Find the intersection.
-    bool result = try_get_intersect_point_with_item_recursive(conn_curve, item, item_transform, 
-            at_start, intersect_pos, intersect_index);
-    
+    bool result = try_get_intersect_point_with_item_recursive(conn_pv, item, item_transform, intersect_pos);
+
+    if (!result)
+        // No intersection point has been found (why?)
+        // just default to connector end
+        intersect_pos = 0;
+    // If not at the starting point, recompute position with respect to original path
+    if (!at_start)
+        intersect_pos = conn_pv[0].size() - intersect_pos;
     // Free the curve copy.
     conn_curve->unref();
 
@@ -128,18 +130,15 @@ static bool try_get_intersect_point_with_item(SPPath& conn, SPItem& item,
 
 
 static void
-sp_conn_end_move_compensate(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
-                            SPPath *const path,
-                            bool const updatePathRepr = true)
+sp_conn_get_route_and_redraw(SPPath *const path, 
+        const bool updatePathRepr = true)
 {
-    // TODO: SPItem::getBounds gives the wrong result for some objects
-    //       that have internal representations that are updated later
-    //       by the sp_*_update functions, e.g., text.
-    sp_document_ensure_up_to_date(path->document);
-
     // Get the new route around obstacles.
-    path->connEndPair.reroutePath();
-
+    bool rerouted = path->connEndPair.reroutePathFromLibavoid();
+    if (!rerouted) {
+        return;
+    }
+    
     SPItem *h2attItem[2];
     path->connEndPair.getAttachedItems(h2attItem);
 
@@ -147,72 +146,80 @@ sp_conn_end_move_compensate(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
     SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
     Geom::Matrix const path2anc(i2anc_affine(path_item, ancestor));
 
-    Geom::Point endPts[2] = { *(path->curve->first_point()), *(path->curve->last_point()) };
- 
+    // Set sensible values incase there the connector ends are not 
+    // attached to any shapes.
+    Geom::PathVector conn_pv = path->curve->get_pathvector();
+    double endPos[2] = { 0, conn_pv[0].size() };
+
+    SPConnEnd** _connEnd = path->connEndPair.getConnEnds();
     for (unsigned h = 0; h < 2; ++h) {
-        if (h2attItem[h]) {
-            // For each attached object, change the corresponding point to be
-            // at the outermost intersection with the object's path.
-            double intersect_pos;
-            unsigned intersect_index;
+        if (h2attItem[h] && _connEnd[h]->type == ConnPointDefault && _connEnd[h]->id == ConnPointPosCC) {
             Geom::Matrix h2i2anc = i2anc_affine(h2attItem[h], ancestor);
-            if ( try_get_intersect_point_with_item(*path, *h2attItem[h], h2i2anc, path2anc, 
-                        (h == 0), &intersect_pos, &intersect_index) ) {
-                const Geom::PathVector& curve = path->curve->get_pathvector();
-                endPts[h] = curve[intersect_index].pointAt(intersect_pos);
-            }
+            try_get_intersect_point_with_item(path, h2attItem[h], h2i2anc, path2anc,
+                        (h == 0), endPos[h]);
         }
     }
-    change_endpts(path->curve, endPts);
+    change_endpts(path->curve, endPos);
     if (updatePathRepr) {
-        path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         path->updateRepr();
+        path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     }
 }
 
-// TODO: This triggering of makeInvalidPath could be cleaned up to be
-//       another option passed to move_compensate.
+
 static void
-sp_conn_end_shape_move_compensate(Geom::Matrix const *mp, SPItem *moved_item,
+sp_conn_end_shape_move(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
                             SPPath *const path)
 {
     if (path->connEndPair.isAutoRoutingConn()) {
-        path->connEndPair.makePathInvalid();
+        path->connEndPair.tellLibavoidNewEndpoints();
     }
-    sp_conn_end_move_compensate(mp, moved_item, path);
 }
 
 
 void
-sp_conn_adjust_invalid_path(SPPath *const path)
-{
-    sp_conn_end_move_compensate(NULL, NULL, path);
-}
-
-void
-sp_conn_adjust_path(SPPath *const path)
+sp_conn_reroute_path(SPPath *const path)
 {
     if (path->connEndPair.isAutoRoutingConn()) {
-        path->connEndPair.makePathInvalid();
+        path->connEndPair.tellLibavoidNewEndpoints();
+    }
+}
+
+
+void
+sp_conn_reroute_path_immediate(SPPath *const path)
+{
+    if (path->connEndPair.isAutoRoutingConn()) {
+        bool processTransaction = true;
+        path->connEndPair.tellLibavoidNewEndpoints(processTransaction);
     }
     // Don't update the path repr or else connector dragging is slowed by
     // constant update of values to the xml editor, and each step is also
     // needlessly remembered by undo/redo.
     bool const updatePathRepr = false;
-    sp_conn_end_move_compensate(NULL, NULL, path, updatePathRepr);
+    sp_conn_get_route_and_redraw(path, updatePathRepr);
+}
+
+void sp_conn_redraw_path(SPPath *const path)
+{
+    sp_conn_get_route_and_redraw(path);
 }
 
 
 static void
-change_endpts(SPCurve *const curve, Geom::Point const h2endPt[2])
+change_endpts(SPCurve *const curve, double const endPos[2])
 {
-#if 0
-    curve->reset();
-    curve->moveto(h2endPt[0]);
-    curve->lineto(h2endPt[1]);
-#else
-    curve->move_endpoints(h2endPt[0], h2endPt[1]);
-#endif
+    // Use Geom::Path::portion to cut the curve at the end positions
+    if (endPos[0] > endPos[1])
+    {
+        // Path is "negative", reset the curve and return
+        curve->reset();
+        return;
+    }
+    const Geom::Path& old_path = curve->get_pathvector()[0];
+    Geom::PathVector new_path_vector;
+    new_path_vector.push_back(old_path.portion(endPos[0], endPos[1]));
+    curve->set_pathvector(new_path_vector);
 }
 
 static void
@@ -234,29 +241,150 @@ sp_conn_end_detach(SPObject *const owner, unsigned const handle_ix)
 }
 
 void
-SPConnEnd::setAttacherHref(gchar const *value)
+SPConnEnd::setAttacherHref(gchar const *value, SPPath* path)
 {
     if ( value && href && ( strcmp(value, href) == 0 ) ) {
         /* No change, do nothing. */
     } else {
-        g_free(href);
-        href = NULL;
-        if (value) {
-            // First, set the href field, because sp_conn_end_href_changed will need it.
-            href = g_strdup(value);
-
-            // Now do the attaching, which emits the changed signal.
-            try {
-                ref.attach(Inkscape::URI(value));
-            } catch (Inkscape::BadURIException &e) {
-                /* TODO: Proper error handling as per
-                 * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.  (Also needed for
-                 * sp-use.) */
-                g_warning("%s", e.what());
-                ref.detach();
-            }
-        } else {
+        if (!value)
+        {
             ref.detach();
+            g_free(href);
+            href = NULL;
+        }
+        else
+        {
+
+            /* References to the connection points have the following format
+               #svguri_t_id, where #svguri is the id of the item the
+               connector is attached to, t is the type of the point, which
+               can be either "d" for default or "u" for user-defined, and
+               id is the local (inside the item) id of the connection point.
+               In the case of default points id represents the position on the
+               item (i.e. Top-Left, Centre-Centre, etc.).
+            */
+
+            gchar ** href_strarray = NULL;
+            if (href)
+                href_strarray = g_strsplit(href, "_", 0);
+            gchar ** value_strarray = g_strsplit(value, "_", 0);
+
+            g_free(href);
+            href = NULL;
+
+            bool changed = false;
+            bool validRef = true;
+
+            if ( !href_strarray || g_strcmp0(href_strarray[0], value_strarray[0]) != 0 )
+            {
+                // The href has changed, so update it.
+                changed = true;
+                // Set the href field, because sp_conn_end_href_changed will need it.
+                href = g_strdup(value);
+                // Now do the attaching, which emits the changed signal.
+                try {
+                    ref.attach(Inkscape::URI(value_strarray[0]));
+                } catch (Inkscape::BadURIException &e) {
+                    /* TODO: Proper error handling as per
+                    * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.  (Also needed for
+                    * sp-use.) */
+                    g_warning("%s", e.what());
+                    validRef = false;
+                }
+            }
+            // Check to see if the connection point changed and update it.
+            // 
+
+            if ( !value_strarray[1] )
+            {
+                /* Treat the old references to connection points
+                   as default points that connect to the centre
+                   of the item.
+                */
+                if ( type != ConnPointDefault )
+                {
+                    type = ConnPointDefault;
+                    changed = true;
+                }
+                if ( id != ConnPointPosCC )
+                {
+                    id = ConnPointPosCC;
+                    changed = true;
+                }
+            }
+            else
+            {
+                switch (value_strarray[1][0])
+                {
+                    case 'd':
+                        if ( type != ConnPointDefault )
+                        {
+                            type = ConnPointDefault;
+                            changed = true;
+                        }
+                        break;
+                    case 'u':
+                        if ( type != ConnPointUserDefined)
+                        {
+                            type = ConnPointUserDefined;
+                            changed = true;
+                        }
+                        break;
+                    default:
+                        g_warning("Bad reference to a connection point.");
+                        validRef = false;
+                }
+                if ( value_strarray[2] )
+                {
+                    int newId = (int) g_ascii_strtod( value_strarray[2], 0 );
+                    if ( id != newId )
+                    {
+                        id = newId;
+                        changed = true;
+                    }
+
+                }
+                else
+                {
+                    // We have a malformed reference to a connection point,
+                    // emit a warning, clear href and detach ref.
+                    changed = true;
+                    g_warning("Bad reference to a connection point.");\
+                    validRef = false;
+                }
+            }
+            
+            if ( changed )
+            {
+                // We still have to verify that the reference to the
+                // connection point is a valid one.
+                
+                // Get the item the connector is attached to
+                SPItem* item = ref.getObject();
+                if ( item && !item->avoidRef->isValidConnPointId( type, id ) )
+                {
+                    g_warning("Bad reference to a connection point.");
+                    validRef = false;
+                }
+/*                else
+                    // Update the connector
+                    if (path->connEndPair.isAutoRoutingConn()) {
+                        path->connEndPair.tellLibavoidNewEndpoints();
+                    }*/
+            }
+
+            if ( !validRef )
+            {
+                ref.detach();
+                g_free(href);
+                href = NULL;
+            }
+            else
+                if (!href)
+                    href = g_strdup(value);
+
+            g_strfreev(href_strarray);
+            g_strfreev(value_strarray);
         }
     }
 }
@@ -277,7 +405,7 @@ sp_conn_end_href_changed(SPObject */*old_ref*/, SPObject */*ref*/,
                 = SP_OBJECT(refobj)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_conn_end_deleted),
                                                               SP_OBJECT(path), handle_ix));
             connEnd._transformed_connection
-                = SP_ITEM(refobj)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_conn_end_shape_move_compensate),
+                = SP_ITEM(refobj)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_conn_end_shape_move),
                                                                  path));
         }
     }

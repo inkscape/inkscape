@@ -2,53 +2,57 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *
+ * Copyright (C) 2004-2008  Monash University
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
+ * See the file LICENSE.LGPL distributed with the library.
+ *
+ * Licensees holding a valid commercial license may use this file in
+ * accordance with the commercial license agreement provided with the 
+ * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
 
-#include <cassert>
 
 #include "libavoid/shape.h"
 #include "libavoid/graph.h"  // For alertConns
 #include "libavoid/vertices.h"
-#include "libavoid/polyutil.h"
 #include "libavoid/router.h"
+#include "libavoid/debug.h"
+#include "libavoid/assertions.h"
 
 
 namespace Avoid {
 
 
-ShapeRef::ShapeRef(Router *router, unsigned int id, Polygn& ply)
+ShapeRef::ShapeRef(Router *router, Polygon& ply, const unsigned int id)
     : _router(router)
-    , _id(id)
-    , _poly(copyPoly(ply))
+    , _poly(ply)
     , _active(false)
     , _inMoveList(false)
     , _firstVert(NULL)
     , _lastVert(NULL)
 {
+    _id = router->assignId(id);
+
     bool isShape = true;
-    VertID i = VertID(id, isShape, 0);
+    VertID i = VertID(_id, isShape, 0);
     
+    const bool addToRouterNow = false;
     VertInf *last = NULL;
     VertInf *node = NULL;
-    for (int pt_i = 0; pt_i < _poly.pn; pt_i++)
+    for (size_t pt_i = 0; pt_i < _poly.size(); ++pt_i)
     {
-        node = new VertInf(_router, i, _poly.ps[pt_i]);
+        node = new VertInf(_router, i, _poly.ps[pt_i], addToRouterNow);
 
         if (!_firstVert)
         {
@@ -69,17 +73,22 @@ ShapeRef::ShapeRef(Router *router, unsigned int id, Polygn& ply)
     
     _lastVert->shNext = _firstVert;
     _firstVert->shPrev = _lastVert;
-    
-    makeActive();
 }
 
 
 ShapeRef::~ShapeRef()
 {
-    assert(_firstVert != NULL);
-    
-    makeInactive();
+    COLA_ASSERT(!_router->shapeInQueuedActionList(this));
 
+    if (_active)
+    {
+        // Destroying a shape without calling removeShape(), so do it now.
+        _router->removeShape(this);
+        _router->processTransaction();
+    }
+
+    COLA_ASSERT(_firstVert != NULL);
+    
     VertInf *it = _firstVert;
     do
     {
@@ -90,41 +99,37 @@ ShapeRef::~ShapeRef()
     }
     while (it != _firstVert);
     _firstVert = _lastVert = NULL;
-
-    freePoly(_poly);
 }
 
 
-void ShapeRef::setNewPoly(Polygn& poly)
+void ShapeRef::setNewPoly(const Polygon& poly)
 {
-    assert(_firstVert != NULL);
-    assert(_poly.pn == poly.pn);
+    COLA_ASSERT(_firstVert != NULL);
+    COLA_ASSERT(_poly.size() == poly.size());
     
     VertInf *curr = _firstVert;
-    for (int pt_i = 0; pt_i < _poly.pn; pt_i++)
+    for (size_t pt_i = 0; pt_i < _poly.size(); ++pt_i)
     {
-        assert(curr->visListSize == 0);
-        assert(curr->invisListSize == 0);
+        COLA_ASSERT(curr->visListSize == 0);
+        COLA_ASSERT(curr->invisListSize == 0);
 
         // Reset with the new polygon point.
         curr->Reset(poly.ps[pt_i]);
         curr->pathNext = NULL;
-        curr->pathDist = 0;
         
         curr = curr->shNext;
     }
-    assert(curr == _firstVert);
+    COLA_ASSERT(curr == _firstVert);
         
-    freePoly(_poly);
-    _poly = copyPoly(poly);
+    _poly = poly;
 }
 
 
 void ShapeRef::makeActive(void)
 {
-    assert(!_active);
+    COLA_ASSERT(!_active);
     
-    // Add to connRefs list.
+    // Add to shapeRefs list.
     _pos = _router->shapeRefs.insert(_router->shapeRefs.begin(), this);
 
     // Add points to vertex list.
@@ -144,9 +149,9 @@ void ShapeRef::makeActive(void)
 
 void ShapeRef::makeInactive(void)
 {
-    assert(_active);
+    COLA_ASSERT(_active);
     
-    // Remove from connRefs list.
+    // Remove from shapeRefs list.
     _router->shapeRefs.erase(_pos);
 
     // Remove points from vertex list.
@@ -162,7 +167,13 @@ void ShapeRef::makeInactive(void)
     
     _active = false;
 }
-    
+
+
+bool ShapeRef::isActive(void) const
+{
+    return _active;
+}
+
 
 VertInf *ShapeRef::firstVert(void)
 {
@@ -176,19 +187,19 @@ VertInf *ShapeRef::lastVert(void)
 }
 
 
-unsigned int ShapeRef::id(void)
+unsigned int ShapeRef::id(void) const
 {
     return _id;
 }
 
 
-Polygn ShapeRef::poly(void)
+const Polygon& ShapeRef::polygon(void) const
 {
     return _poly;
 }
 
 
-Router *ShapeRef::router(void)
+Router *ShapeRef::router(void) const
 {
     return _router;
 }
@@ -196,13 +207,13 @@ Router *ShapeRef::router(void)
 
 void ShapeRef::boundingBox(BBox& bbox)
 {
-    assert(_poly.pn > 0);
+    COLA_ASSERT(!_poly.empty());
 
     bbox.a = bbox.b = _poly.ps[0];
     Point& a = bbox.a;
     Point& b = bbox.b;
 
-    for (int i = 1; i < _poly.pn; ++i)
+    for (size_t i = 1; i < _poly.size(); ++i)
     {
         const Point& p = _poly.ps[i];
 
@@ -223,8 +234,8 @@ void ShapeRef::removeFromGraph(void)
         
         // For each vertex.
         EdgeInfList& visList = tmp->visList;
-        EdgeInfList::iterator finish = visList.end();
-        EdgeInfList::iterator edge;
+        EdgeInfList::const_iterator finish = visList.end();
+        EdgeInfList::const_iterator edge;
         while ((edge = visList.begin()) != finish)
         {
             // Remove each visibility edge
@@ -239,6 +250,15 @@ void ShapeRef::removeFromGraph(void)
             // Remove each invisibility edge
             delete (*edge);
         }
+
+        EdgeInfList& orthogList = tmp->orthogVisList;
+        finish = orthogList.end();
+        while ((edge = orthogList.begin()) != finish)
+        {
+            // Remove each orthogonal visibility edge
+            (*edge)->alertConns();
+            delete (*edge);
+        }
     }
 }
 
@@ -251,8 +271,8 @@ void ShapeRef::markForMove(void)
     }
     else
     {
-        fprintf(stderr, "WARNING: two moves queued for same shape prior to "
-                "rerouting.\n         This is not safe.\n");
+        db_printf("WARNING: two moves queued for same shape prior to rerouting."
+                "\n         This is not safe.\n");
     }
 }
 

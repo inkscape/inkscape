@@ -2,33 +2,36 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *
+ * Copyright (C) 2004-2009  Monash University
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
+ * See the file LICENSE.LGPL distributed with the library.
+ *
+ * Licensees holding a valid commercial license may use this file in
+ * accordance with the commercial license agreement provided with the 
+ * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
+
+
+#include <iostream>
+#include <cstdlib>
 
 #include "libavoid/vertices.h"
 #include "libavoid/geometry.h"
 #include "libavoid/graph.h"  // For alertConns
 #include "libavoid/debug.h"
 #include "libavoid/router.h"
-
-#include <iostream>
-#include <cstdlib>
-#include <cassert>
+#include "libavoid/assertions.h"
 
 using std::ostream;
 
@@ -76,7 +79,8 @@ bool VertID::operator==(const VertID& rhs) const
     {
         return false;
     }
-    assert(isShape == rhs.isShape);
+    // XXX RubberBand search breaks this:
+    // COLA_ASSERT(isShape == rhs.isShape);
     return true;
 }
 
@@ -87,7 +91,7 @@ bool VertID::operator!=(const VertID& rhs) const
     {
         return true;
     }
-    assert(isShape == rhs.isShape);
+    COLA_ASSERT(isShape == rhs.isShape);
     return false;
 }
 
@@ -133,8 +137,8 @@ void VertID::db_print(void) const
 }
 
 
-const int VertID::src = 1;
-const int VertID::tar = 2;
+const unsigned short VertID::src = 1;
+const unsigned short VertID::tar = 2;
 
 
 ostream& operator<<(ostream& os, const VertID& vID)
@@ -144,25 +148,57 @@ ostream& operator<<(ostream& os, const VertID& vID)
 
 
 
-VertInf::VertInf(Router *router, const VertID& vid, const Point& vpoint)
-    : _router(router)
-    , id(vid)
-    , point(vpoint)
-    , lstPrev(NULL)
-    , lstNext(NULL)
-    , shPrev(NULL)
-    , shNext(NULL)
-    , visListSize(0)
-    , invisListSize(0)
-    , pathNext(NULL)
-    , pathDist(0)
+VertInf::VertInf(Router *router, const VertID& vid, const Point& vpoint, 
+        const bool addToRouter)
+    : _router(router),
+      id(vid),
+      point(vpoint),
+      lstPrev(NULL),
+      lstNext(NULL),
+      shPrev(NULL),
+      shNext(NULL),
+      visListSize(0),
+      orthogVisListSize(0),
+      invisListSize(0),
+      pathNext(NULL),
+      visDirections(ConnDirNone)
 {
+    point.id = vid.objID;
+    point.vn = vid.vn;
+
+    if (addToRouter)
+    {
+        _router->vertices.addVertex(this);
+    }
+}
+
+
+VertInf::~VertInf()
+{
+}
+
+
+void VertInf::Reset(const VertID& vid, const Point& vpoint)
+{
+    id = vid;
+    point = vpoint;
+    point.id = id.objID;
+    point.vn = id.vn;
 }
 
 
 void VertInf::Reset(const Point& vpoint)
 {
     point = vpoint;
+    point.id = id.objID;
+    point.vn = id.vn;
+}
+
+
+// Returns true if this vertex is not involved in any (in)visibility graphs.
+bool VertInf::orphaned(void)
+{
+    return (visList.empty() && invisList.empty() && orthogVisList.empty());
 }
 
 
@@ -170,15 +206,12 @@ void VertInf::removeFromGraph(const bool isConnVert)
 {
     if (isConnVert)
     {
-        assert(!(id.isShape));
+        COLA_ASSERT(!(id.isShape));
     }
 
-    VertInf *tmp = this;
-
     // For each vertex.
-    EdgeInfList& visList = tmp->visList;
-    EdgeInfList::iterator finish = visList.end();
-    EdgeInfList::iterator edge;
+    EdgeInfList::const_iterator finish = visList.end();
+    EdgeInfList::const_iterator edge;
     while ((edge = visList.begin()) != finish)
     {
         // Remove each visibility edge
@@ -186,7 +219,14 @@ void VertInf::removeFromGraph(const bool isConnVert)
         delete (*edge);
     }
 
-    EdgeInfList& invisList = tmp->invisList;
+    finish = orthogVisList.end();
+    while ((edge = orthogVisList.begin()) != finish)
+    {
+        // Remove each orthogonal visibility edge.
+        (*edge)->alertConns();
+        delete (*edge);
+    }
+
     finish = invisList.end();
     while ((edge = invisList.begin()) != finish)
     {
@@ -208,7 +248,7 @@ bool directVis(VertInf *src, VertInf *dst)
 
     // We better be part of the same instance of libavoid.
     Router *router = src->_router;
-    assert(router == dst->_router);
+    COLA_ASSERT(router == dst->_router);
 
     ContainsMap& contains = router->contains;
     if (!(pID.isShape))
@@ -239,40 +279,40 @@ bool directVis(VertInf *src, VertInf *dst)
 
 
 VertInfList::VertInfList()
-    : _firstShapeVert(NULL)
-    , _firstConnVert(NULL)
-    , _lastShapeVert(NULL)
-    , _lastConnVert(NULL)
-    , _shapeVertices(0)
-    , _connVertices(0)
+    : _firstShapeVert(NULL),
+      _firstConnVert(NULL),
+      _lastShapeVert(NULL),
+      _lastConnVert(NULL),
+      _shapeVertices(0),
+      _connVertices(0)
 {
 }
 
 
 #define checkVertInfListConditions() \
         do { \
-            assert((!_firstConnVert && (_connVertices == 0)) || \
+            COLA_ASSERT((!_firstConnVert && (_connVertices == 0)) || \
                     ((_firstConnVert->lstPrev == NULL) && (_connVertices > 0))); \
-            assert((!_firstShapeVert && (_shapeVertices == 0)) || \
+            COLA_ASSERT((!_firstShapeVert && (_shapeVertices == 0)) || \
                     ((_firstShapeVert->lstPrev == NULL) && (_shapeVertices > 0))); \
-            assert(!_lastShapeVert || (_lastShapeVert->lstNext == NULL)); \
-            assert(!_lastConnVert || (_lastConnVert->lstNext == _firstShapeVert)); \
-            assert((!_firstConnVert && !_lastConnVert) || \
+            COLA_ASSERT(!_lastShapeVert || (_lastShapeVert->lstNext == NULL)); \
+            COLA_ASSERT(!_lastConnVert || (_lastConnVert->lstNext == _firstShapeVert)); \
+            COLA_ASSERT((!_firstConnVert && !_lastConnVert) || \
                     (_firstConnVert &&  _lastConnVert) ); \
-            assert((!_firstShapeVert && !_lastShapeVert) || \
+            COLA_ASSERT((!_firstShapeVert && !_lastShapeVert) || \
                     (_firstShapeVert &&  _lastShapeVert) ); \
-            assert(!_firstShapeVert || _firstShapeVert->id.isShape); \
-            assert(!_lastShapeVert || _lastShapeVert->id.isShape); \
-            assert(!_firstConnVert || !(_firstConnVert->id.isShape)); \
-            assert(!_lastConnVert || !(_lastConnVert->id.isShape)); \
+            COLA_ASSERT(!_firstShapeVert || _firstShapeVert->id.isShape); \
+            COLA_ASSERT(!_lastShapeVert || _lastShapeVert->id.isShape); \
+            COLA_ASSERT(!_firstConnVert || !(_firstConnVert->id.isShape)); \
+            COLA_ASSERT(!_lastConnVert || !(_lastConnVert->id.isShape)); \
         } while(0)
 
 
 void VertInfList::addVertex(VertInf *vert)
 {
     checkVertInfListConditions();
-    assert(vert->lstPrev == NULL);
-    assert(vert->lstNext == NULL);
+    COLA_ASSERT(vert->lstPrev == NULL);
+    COLA_ASSERT(vert->lstNext == NULL);
 
     if (!(vert->id.isShape))
     {
@@ -329,10 +369,18 @@ void VertInfList::addVertex(VertInf *vert)
 }
 
 
-void VertInfList::removeVertex(VertInf *vert)
+// Removes a vertex from the list and returns a pointer to the vertex
+// following the removed one.
+VertInf *VertInfList::removeVertex(VertInf *vert)
 {
+    if (vert == NULL)
+    {
+        return NULL;
+    }
     // Conditions for correct data structure
     checkVertInfListConditions();
+    
+    VertInf *following = vert->lstNext;
 
     if (!(vert->id.isShape))
     {
@@ -421,6 +469,50 @@ void VertInfList::removeVertex(VertInf *vert)
     vert->lstNext = NULL;
 
     checkVertInfListConditions();
+
+    return following;
+}
+
+
+VertInf *VertInfList::getVertexByID(const VertID& id)
+{
+    VertID searchID = id;
+    if (searchID.vn == kUnassignedVertexNumber)
+    {
+        unsigned int topbit = ((unsigned int) 1) << 31;
+        if (searchID.objID & topbit)
+        {
+            searchID.objID = searchID.objID & ~topbit;
+            searchID.vn = VertID::src;
+        }
+        else
+        {
+            searchID.vn = VertID::tar;
+        }
+    }
+    VertInf *last = end();
+    for (VertInf *curr = connsBegin(); curr != last; curr = curr->lstNext)
+    {
+        if (curr->id == searchID)
+        {
+            return curr;
+        }
+    }
+    return NULL;
+}
+
+
+VertInf *VertInfList::getVertexByPos(const Point& p)
+{
+    VertInf *last = end();
+    for (VertInf *curr = shapesBegin(); curr != last; curr = curr->lstNext)
+    {
+        if (curr->point == p)
+        {
+            return curr;
+        }
+    }
+    return NULL;
 }
 
 
@@ -444,6 +536,18 @@ VertInf *VertInfList::connsBegin(void)
 VertInf *VertInfList::end(void)
 {
     return NULL;
+}
+
+
+unsigned int VertInfList::connsSize(void) const
+{
+    return _connVertices;
+}
+
+
+unsigned int VertInfList::shapesSize(void) const
+{
+    return _shapeVertices;
 }
 
 

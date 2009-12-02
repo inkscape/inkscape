@@ -63,10 +63,16 @@
 #include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
 
-#define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 1)
+// Higher number means lower priority.
+#define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 2)
+
+// Should have a lower priority than SP_DOCUMENT_UPDATE_PRIORITY,
+// since we want it to happen when there are no more updates.
+#define SP_DOCUMENT_REROUTING_PRIORITY (G_PRIORITY_HIGH_IDLE - 1)
 
 
 static gint sp_document_idle_handler(gpointer data);
+static gint sp_document_rerouting_handler(gpointer data);
 
 gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer data);
 
@@ -88,15 +94,17 @@ SPDocument::SPDocument() :
     priv(0), // reset in ctor
     actionkey(0),
     modified_id(0),
+    rerouting_handler_id(0),
     profileManager(0), // deferred until after other initialization
-    router(new Avoid::Router()),
+    router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
     perspectives(0),
     current_persp3d(0),
     _collection_queue(0),
     oldSignalsConnected(false)
 {
-    // Don't use the Consolidate moves optimisation.
-    router->ConsolidateMoves = false;
+    // Penalise libavoid for choosing paths with needless extra segments.
+    // This results in much better looking orthogonal connector paths.
+    router->setRoutingPenalty(Avoid::segmentPenalty);
 
     SPDocumentPrivate *p = new SPDocumentPrivate();
 
@@ -130,6 +138,11 @@ SPDocument::~SPDocument() {
     if ( profileManager ) {
         delete profileManager;
         profileManager = 0;
+    }
+
+    if (router) {
+        delete router;
+        router = NULL;
     }
 
     if (priv) {
@@ -177,8 +190,13 @@ SPDocument::~SPDocument() {
     }
 
     if (modified_id) {
-        gtk_idle_remove(modified_id);
+        g_source_remove(modified_id);
         modified_id = 0;
+    }
+
+    if (rerouting_handler_id) {
+        g_source_remove(rerouting_handler_id);
+        rerouting_handler_id = 0;
     }
 
     if (oldSignalsConnected) {
@@ -195,13 +213,7 @@ SPDocument::~SPDocument() {
         keepalive = FALSE;
     }
 
-    if (router) {
-        delete router;
-        router = NULL;
-    }
-
     //delete this->_whiteboard_session_manager;
-
 }
 
 void SPDocument::add_persp3d (Persp3D * const /*persp*/)
@@ -852,7 +864,12 @@ void
 sp_document_request_modified(SPDocument *doc)
 {
     if (!doc->modified_id) {
-        doc->modified_id = gtk_idle_add_priority(SP_DOCUMENT_UPDATE_PRIORITY, sp_document_idle_handler, doc);
+        doc->modified_id = g_idle_add_full(SP_DOCUMENT_UPDATE_PRIORITY, 
+                sp_document_idle_handler, doc, NULL);
+    }
+    if (!doc->rerouting_handler_id) {
+        doc->rerouting_handler_id = g_idle_add_full(SP_DOCUMENT_REROUTING_PRIORITY, 
+                sp_document_rerouting_handler, doc, NULL);
     }
 }
 
@@ -908,25 +925,48 @@ SPDocument::_updateDocument()
  * Repeatedly works on getting the document updated, since sometimes
  * it takes more than one pass to get the document updated.  But it
  * usually should not take more than a few loops, and certainly never
- * more than 64 iterations.  So we bail out if we hit 64 iterations,
+ * more than 32 iterations.  So we bail out if we hit 32 iterations,
  * since this typically indicates we're stuck in an update loop.
  */
 gint
 sp_document_ensure_up_to_date(SPDocument *doc)
 {
-    int counter = 64;
-    while (!doc->_updateDocument()) {
-        if (counter == 0) {
-            g_warning("More than 64 iteration while updating document '%s'", doc->uri? doc->uri:"<unknown URI, probably clipboard>");
+    // Bring the document up-to-date, specifically via the following:
+    //   1a) Process all document updates.
+    //   1b) When completed, process connector routing changes.
+    //   2a) Process any updates resulting from connector reroutings.
+    int counter = 32;
+    for (unsigned int pass = 1; pass <= 2; ++pass) {
+        // Process document updates.
+        while (!doc->_updateDocument()) {
+            if (counter == 0) {
+                g_warning("More than 32 iteration while updating document '%s'", doc->uri);
+                break;
+            }
+            counter--;
+        }
+        if (counter == 0)
+        {
             break;
         }
-        counter--;
-    }
 
+        // After updates on the first pass we get libavoid to process all the 
+        // changed objects and provide new routings.  This may cause some objects
+            // to be modified, hence the second update pass.
+        if (pass == 1) {
+            doc->router->processTransaction();
+        }
+    }
+    
     if (doc->modified_id) {
         /* Remove handler */
-        gtk_idle_remove(doc->modified_id);
+        g_source_remove(doc->modified_id);
         doc->modified_id = 0;
+    }
+    if (doc->rerouting_handler_id) {
+        /* Remove handler */
+        g_source_remove(doc->rerouting_handler_id);
+        doc->rerouting_handler_id = 0;
     }
     return counter>0;
 }
@@ -945,6 +985,24 @@ sp_document_idle_handler(gpointer data)
     } else {
         return true;
     }
+}
+
+/**
+ * An idle handler to reroute connectors in the document.  
+ */
+static gint
+sp_document_rerouting_handler(gpointer data)
+{
+    // Process any queued movement actions and determine new routings for 
+    // object-avoiding connectors.  Callbacks will be used to update and 
+    // redraw affected connectors.
+    SPDocument *doc = static_cast<SPDocument *>(data);
+    doc->router->processTransaction();
+    
+    // We don't need to handle rerouting again until there are further 
+    // diagram updates.
+    doc->rerouting_handler_id = 0;
+    return false;
 }
 
 static bool is_within(Geom::Rect const &area, Geom::Rect const &box)

@@ -2,56 +2,61 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ *
+ * Copyright (C) 2004-2009  Monash University
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
+ * See the file LICENSE.LGPL distributed with the library.
+ *
+ * Licensees holding a valid commercial license may use this file in
+ * accordance with the commercial license agreement provided with the 
+ * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
+
+
+#include <cmath>
 
 #include "libavoid/debug.h"
 #include "libavoid/graph.h"
 #include "libavoid/connector.h"
 #include "libavoid/geometry.h"
-#include "libavoid/polyutil.h"
 #include "libavoid/timer.h"
 #include "libavoid/vertices.h"
 #include "libavoid/router.h"
+#include "libavoid/assertions.h"
 
-#include <math.h>
 
 using std::pair;
 
 namespace Avoid {
 
 
-EdgeInf::EdgeInf(VertInf *v1, VertInf *v2)
-    : lstPrev(NULL)
-    , lstNext(NULL)
-    , _blocker(0)
-    , _router(NULL)
-    , _added(false)
-    , _visible(false)
-    , _v1(v1)
-    , _v2(v2)
-    , _dist(-1)
+EdgeInf::EdgeInf(VertInf *v1, VertInf *v2, const bool orthogonal)
+    : lstPrev(NULL),
+      lstNext(NULL),
+      _blocker(0),
+      _router(NULL),
+      _added(false),
+      _visible(false),
+      _orthogonal(orthogonal),
+      _v1(v1),
+      _v2(v2),
+      _dist(-1)
 {
     // Not passed NULL values.
-    assert(v1 && v2);
+    COLA_ASSERT(v1 && v2);
 
     // We are in the same instance
-    assert(_v1->_router == _v2->_router);
+    COLA_ASSERT(_v1->_router == _v2->_router);
     _router = _v1->_router;
 
     _conns.clear();
@@ -67,25 +72,142 @@ EdgeInf::~EdgeInf()
 }
 
 
+// Gives an order value between 0 and 3 for the point c, given the last
+// segment was from a to b.  Returns the following value:
+//    0 : Point c is directly backwards from point b.
+//    1 : Point c is a left-hand 90 degree turn.
+//    2 : Point c is a right-hand 90 degree turn.
+//    3 : Point c is straight ahead (collinear).
+//
+static inline int orthogTurnOrder(const Point& a, const Point& b, 
+        const Point& c)
+{
+    // We should only be calling this with orthogonal points, 
+    COLA_ASSERT((c.x == b.x) || (c.y == b.y));
+    COLA_ASSERT((a.x == b.x) || (a.y == b.y));
+
+    int direction = vecDir(a, b, c);
+
+    if (direction > 0)
+    {
+        // Counterclockwise := left
+        return 1;
+    }
+    else if (direction < 0)
+    {
+        // Clockwise := right
+        return 2;
+    }
+
+    if (b.x == c.x)
+    {
+        if ( ((a.y < b.y) && (c.y < b.y)) || 
+             ((a.y > b.y) && (c.y > b.y)) ) 
+        {
+            // Behind.
+            return 0;
+        }
+    }
+    else
+    {
+        if ( ((a.x < b.x) && (c.x < b.x)) || 
+             ((a.x > b.x) && (c.x > b.x)) ) 
+        {
+            // Behind.
+            return 0;
+        }
+    }
+
+    // Ahead.
+    return 3;
+}
+
+
+// Returns a less than operation for a set exploration order for orthogonal
+// searching.  Forward, then left, then right.  Or if there is no previous 
+// point, then the order is north, east, south, then west.
+// Note: This method assumes the two Edges that share a common point.
+bool EdgeInf::rotationLessThan(const VertInf *lastV, const EdgeInf *rhs) const
+{
+    if ((_v1 == rhs->_v1) && (_v2 == rhs->_v2))
+    {
+        // Effectively the same visibility edge, so they are equal.
+        return false;
+    }
+    VertInf *lhsV = NULL, *rhsV = NULL, *commonV = NULL;
+    
+    // Determine common Point and the comparison point on the left- and
+    // the right-hand-side.
+    if (_v1 == rhs->_v1)
+    {
+        commonV = _v1;
+        lhsV = _v2;
+        rhsV = rhs->_v2;
+    }
+    else if (_v1 == rhs->_v2)
+    {
+        commonV = _v1;
+        lhsV = _v2;
+        rhsV = rhs->_v1;
+    }
+    else if (_v2 == rhs->_v1)
+    {
+        commonV = _v2;
+        lhsV = _v1;
+        rhsV = rhs->_v2;
+    }
+    else if (_v2 == rhs->_v2)
+    {
+        commonV = _v2;
+        lhsV = _v1;
+        rhsV = rhs->_v1;
+    }
+
+    const Point& lhsPt = lhsV->point;
+    const Point& rhsPt = rhsV->point;
+    const Point& commonPt = commonV->point;
+    
+    // If no lastPt, use one directly to the left;
+    Point lastPt = (lastV) ? lastV->point : Point(commonPt.x - 10,  commonPt.y);
+
+    int lhsVal = orthogTurnOrder(lastPt, commonPt, lhsPt);
+    int rhsVal = orthogTurnOrder(lastPt, commonPt, rhsPt);
+
+    return lhsVal < rhsVal;
+}
+
+
 void EdgeInf::makeActive(void)
 {
-    assert(_added == false);
+    COLA_ASSERT(_added == false);
 
-    if (_visible)
+    if (_orthogonal)
     {
-        _router->visGraph.addEdge(this);
-        _pos1 = _v1->visList.insert(_v1->visList.begin(), this);
-        _v1->visListSize++;
-        _pos2 = _v2->visList.insert(_v2->visList.begin(), this);
-        _v2->visListSize++;
+        COLA_ASSERT(_visible);
+        _router->visOrthogGraph.addEdge(this);
+        _pos1 = _v1->orthogVisList.insert(_v1->orthogVisList.begin(), this);
+        _v1->orthogVisListSize++;
+        _pos2 = _v2->orthogVisList.insert(_v2->orthogVisList.begin(), this);
+        _v2->orthogVisListSize++;
     }
-    else // if (invisible)
+    else
     {
-        _router->invisGraph.addEdge(this);
-        _pos1 = _v1->invisList.insert(_v1->invisList.begin(), this);
-        _v1->invisListSize++;
-        _pos2 = _v2->invisList.insert(_v2->invisList.begin(), this);
-        _v2->invisListSize++;
+        if (_visible)
+        {
+            _router->visGraph.addEdge(this);
+            _pos1 = _v1->visList.insert(_v1->visList.begin(), this);
+            _v1->visListSize++;
+            _pos2 = _v2->visList.insert(_v2->visList.begin(), this);
+            _v2->visListSize++;
+        }
+        else // if (invisible)
+        {
+            _router->invisGraph.addEdge(this);
+            _pos1 = _v1->invisList.insert(_v1->invisList.begin(), this);
+            _v1->invisListSize++;
+            _pos2 = _v2->invisList.insert(_v2->invisList.begin(), this);
+            _v2->invisListSize++;
+        }
     }
     _added = true;
 }
@@ -93,23 +215,35 @@ void EdgeInf::makeActive(void)
 
 void EdgeInf::makeInactive(void)
 {
-    assert(_added == true);
+    COLA_ASSERT(_added == true);
 
-    if (_visible)
+    if (_orthogonal)
     {
-        _router->visGraph.removeEdge(this);
-        _v1->visList.erase(_pos1);
-        _v1->visListSize--;
-        _v2->visList.erase(_pos2);
-        _v2->visListSize--;
+        COLA_ASSERT(_visible);
+        _router->visOrthogGraph.removeEdge(this);
+        _v1->orthogVisList.erase(_pos1);
+        _v1->orthogVisListSize--;
+        _v2->orthogVisList.erase(_pos2);
+        _v2->orthogVisListSize--;
     }
-    else // if (invisible)
+    else
     {
-        _router->invisGraph.removeEdge(this);
-        _v1->invisList.erase(_pos1);
-        _v1->invisListSize--;
-        _v2->invisList.erase(_pos2);
-        _v2->invisListSize--;
+        if (_visible)
+        {
+            _router->visGraph.removeEdge(this);
+            _v1->visList.erase(_pos1);
+            _v1->visListSize--;
+            _v2->visList.erase(_pos2);
+            _v2->visListSize--;
+        }
+        else // if (invisible)
+        {
+            _router->invisGraph.removeEdge(this);
+            _v1->invisList.erase(_pos1);
+            _v1->invisListSize--;
+            _v2->invisList.erase(_pos2);
+            _v2->invisListSize--;
+        }
     }
     _blocker = 0;
     _conns.clear();
@@ -119,11 +253,12 @@ void EdgeInf::makeInactive(void)
 
 void EdgeInf::setDist(double dist)
 {
-    //assert(dist != 0);
+    //COLA_ASSERT(dist != 0);
 
     if (_added && !_visible)
     {
         makeInactive();
+        COLA_ASSERT(!_added);
     }
     if (!_added)
     {
@@ -132,6 +267,12 @@ void EdgeInf::setDist(double dist)
     }
     _dist = dist;
     _blocker = 0;
+}
+
+
+bool EdgeInf::added(void)
+{
+    return _added;
 }
 
 
@@ -161,11 +302,12 @@ void EdgeInf::addCycleBlocker(void)
 
 void EdgeInf::addBlocker(int b)
 {
-    assert(_router->InvisibilityGrph);
+    COLA_ASSERT(_router->InvisibilityGrph);
 
     if (_added && _visible)
     {
         makeInactive();
+        COLA_ASSERT(!_added);
     }
     if (!_added)
     {
@@ -232,8 +374,11 @@ void EdgeInf::checkVis(void)
         cone1 = inValidRegion(_router->IgnoreRegions, i->shPrev->point,
                 iPoint, i->shNext->point, jPoint);
     }
-    else
+    else if (_router->IgnoreRegions == false)
     {
+        // If Ignoring regions then this case is already caught by 
+        // the invalid regions, so only check it when not ignoring
+        // regions.
         ShapeSet& ss = _router->contains[iID];
 
         if ((jID.isShape) && (ss.find(jID.objID) != ss.end()))
@@ -253,8 +398,11 @@ void EdgeInf::checkVis(void)
             cone2 = inValidRegion(_router->IgnoreRegions, j->shPrev->point,
                     jPoint, j->shNext->point, iPoint);
         }
-        else
+        else if (_router->IgnoreRegions == false)
         {
+            // If Ignoring regions then this case is already caught by 
+            // the invalid regions, so only check it when not ignoring
+            // regions.
             ShapeSet& ss = _router->contains[jID];
 
             if ((iID.isShape) && (ss.find(iID.objID) != ss.end()))
@@ -274,7 +422,7 @@ void EdgeInf::checkVis(void)
         db_printf("\tSetting visibility edge... \n\t\t");
         db_print();
 
-        double d = dist(iPoint, jPoint);
+        double d = euclideanDist(iPoint, jPoint);
 
         setDist(d);
 
@@ -316,26 +464,39 @@ int EdgeInf::firstBlocker(void)
     }
 
     VertInf *last = _router->vertices.end();
+    unsigned int lastId = 0;
+    bool seenIntersectionAtEndpoint = false;
     for (VertInf *k = _router->vertices.shapesBegin(); k != last; )
     {
         VertID kID = k->id;
-        if ((ss.find(kID.objID) != ss.end()))
+        if (k->id == dummyOrthogID)
         {
-            unsigned int shapeID = kID.objID;
-            db_printf("Endpoint is inside shape %u so ignore shape edges.\n",
-                    kID.objID);
-            // One of the endpoints is inside this shape so ignore it.
-            while ((k != last) && (k->id.objID == shapeID))
-            {
-                // And skip the other vertices from this shape.
-                k = k->lstNext;
-            }
+            // Don't include orthogonal dummy vertices.
+            k = k->lstNext;
             continue;
+        }
+        if (kID.objID != lastId)
+        {
+            if ((ss.find(kID.objID) != ss.end()))
+            {
+                unsigned int shapeID = kID.objID;
+                db_printf("Endpoint is inside shape %u so ignore shape "
+                        "edges.\n", kID.objID);
+                // One of the endpoints is inside this shape so ignore it.
+                while ((k != last) && (k->id.objID == shapeID))
+                {
+                    // And skip the other vertices from this shape.
+                    k = k->lstNext;
+                }
+                continue;
+            }
+            seenIntersectionAtEndpoint = false;
+            lastId = kID.objID;
         }
         Point& kPoint = k->point;
         Point& kPrevPoint = k->shPrev->point;
-
-        if (segmentIntersect(pti, ptj, kPrevPoint, kPoint))
+        if (segmentShapeIntersect(pti, ptj, kPrevPoint, kPoint, 
+                    seenIntersectionAtEndpoint))
         {
             ss.clear();
             return kID.objID;
@@ -358,9 +519,17 @@ bool EdgeInf::isBetween(VertInf *i, VertInf *j)
 }
 
 
+    // Returns true if this edge is a vertical or horizontal line segment.
+bool EdgeInf::isOrthogonal(void) const
+{
+    return ((_v1->point.x == _v2->point.x) || 
+            (_v1->point.y == _v2->point.y));
+}
+
+
 VertInf *EdgeInf::otherVert(VertInf *vert)
 {
-    assert((vert == _v1) || (vert == _v2));
+    COLA_ASSERT((vert == _v1) || (vert == _v2));
 
     if (vert == _v1)
     {
@@ -372,12 +541,17 @@ VertInf *EdgeInf::otherVert(VertInf *vert)
 
 EdgeInf *EdgeInf::checkEdgeVisibility(VertInf *i, VertInf *j, bool knownNew)
 {
+    // This is for polyline routing, so check we're not 
+    // considering orthogonal vertices.
+    COLA_ASSERT(i->id != dummyOrthogID);
+    COLA_ASSERT(j->id != dummyOrthogID);
+    
     Router *router = i->_router;
     EdgeInf *edge = NULL;
 
     if (knownNew)
     {
-        assert(existingEdge(i, j) == NULL);
+        COLA_ASSERT(existingEdge(i, j) == NULL);
         edge = new EdgeInf(i, j);
     }
     else
@@ -399,22 +573,17 @@ EdgeInf *EdgeInf::checkEdgeVisibility(VertInf *i, VertInf *j, bool knownNew)
 }
 
 
+    // XXX: This function is ineffecient, and shouldn't even really be
+    //      required.
 EdgeInf *EdgeInf::existingEdge(VertInf *i, VertInf *j)
 {
     VertInf *selected = NULL;
 
-    if (i->visListSize <= j->visListSize)
-    {
-        selected = i;
-    }
-    else
-    {
-        selected = j;
-    }
-
+    // Look through poly-line visibility edges.
+    selected = (i->visListSize <= j->visListSize) ? i : j;
     EdgeInfList& visList = selected->visList;
-    EdgeInfList::iterator finish = visList.end();
-    for (EdgeInfList::iterator edge = visList.begin(); edge != finish;
+    EdgeInfList::const_iterator finish = visList.end();
+    for (EdgeInfList::const_iterator edge = visList.begin(); edge != finish;
             ++edge)
     {
         if ((*edge)->isBetween(i, j))
@@ -423,18 +592,24 @@ EdgeInf *EdgeInf::existingEdge(VertInf *i, VertInf *j)
         }
     }
 
-    if (i->invisListSize <= j->invisListSize)
+    // Look through orthogonal visbility edges.
+    selected = (i->orthogVisListSize <= j->orthogVisListSize) ? i : j;
+    EdgeInfList& orthogVisList = selected->orthogVisList;
+    finish = orthogVisList.end();
+    for (EdgeInfList::const_iterator edge = orthogVisList.begin(); 
+            edge != finish; ++edge)
     {
-        selected = i;
-    }
-    else
-    {
-        selected = j;
+        if ((*edge)->isBetween(i, j))
+        {
+            return (*edge);
+        }
     }
 
+    // Look through poly-line invisbility edges.
+    selected = (i->invisListSize <= j->invisListSize) ? i : j;
     EdgeInfList& invisList = selected->invisList;
     finish = invisList.end();
-    for (EdgeInfList::iterator edge = invisList.begin(); edge != finish;
+    for (EdgeInfList::const_iterator edge = invisList.begin(); edge != finish;
             ++edge)
     {
         if ((*edge)->isBetween(i, j))
@@ -450,19 +625,45 @@ EdgeInf *EdgeInf::existingEdge(VertInf *i, VertInf *j)
 //===========================================================================
 
 
-EdgeList::EdgeList()
-    : _firstEdge(NULL)
-    , _lastEdge(NULL)
-    , _count(0)
+EdgeList::EdgeList(bool orthogonal)
+    : _orthogonal(orthogonal),
+      _firstEdge(NULL),
+      _lastEdge(NULL),
+      _count(0)
 {
+}
+
+
+EdgeList::~EdgeList()
+{
+    clear();
+}
+
+
+void EdgeList::clear(void)
+{
+    while (_firstEdge)
+    {
+        delete _firstEdge;
+    }
+    COLA_ASSERT(_count == 0);
+    _lastEdge = NULL;
+}
+
+
+int EdgeList::size(void) const
+{
+    return _count;
 }
 
 
 void EdgeList::addEdge(EdgeInf *edge)
 {
+    COLA_ASSERT(!_orthogonal || edge->isOrthogonal());
+    
     if (_firstEdge == NULL)
     {
-        assert(_lastEdge == NULL);
+        COLA_ASSERT(_lastEdge == NULL);
 
         _lastEdge = edge;
         _firstEdge = edge;
@@ -472,7 +673,7 @@ void EdgeList::addEdge(EdgeInf *edge)
     }
     else
     {
-        assert(_lastEdge != NULL);
+        COLA_ASSERT(_lastEdge != NULL);
 
         _lastEdge->lstNext = edge;
         edge->lstPrev = _lastEdge;
