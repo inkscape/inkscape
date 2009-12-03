@@ -4,9 +4,6 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = src doc share po
 
-appicondir = $(datadir)/pixmaps
-appicon_DATA = inkscape.png
-
 Graphicsdir = $(datadir)/applications
 Graphics_in_files = inkscape.desktop.in
 Graphics_DATA = $(Graphics_in_files:.desktop.in=.desktop)

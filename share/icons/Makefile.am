@@ -1,3 +1,5 @@
+SUBDIRS = application
+
 iconsdir = $(datadir)/inkscape/icons
 
 pixmaps = \

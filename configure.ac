@@ -968,6 +968,13 @@ share/filters/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
 share/icons/Makefile
+share/icons/application/Makefile
+share/icons/application/16x16/Makefile
+share/icons/application/22x22/Makefile
+share/icons/application/24x24/Makefile
+share/icons/application/32x32/Makefile
+share/icons/application/48x48/Makefile
+share/icons/application/256x256/Makefile
 share/keys/Makefile
 share/markers/Makefile
 share/palettes/Makefile
