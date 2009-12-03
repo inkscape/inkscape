@@ -38,7 +38,8 @@ u'xml'      :u'http://www.w3.org/XML/1998/namespace'
 }
 
 #a dictionary of unit to user unit conversion factors
-uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
+uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
+          'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
 def unittouu(string):
     '''Returns userunits given a string representation of units in another system'''
     unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))

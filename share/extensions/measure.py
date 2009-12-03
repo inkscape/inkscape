@@ -126,28 +126,7 @@ class Length(inkex.Effect):
                 p = cubicsuperpath.parsePath(node.get('d'))
                 num = 1
                 slengths, stotal = csplength(p)
-                ''' Wio: Umrechnung in unit '''
-                if self.options.unit=="mm":
-                    factor=25.4/90.0        # px->mm
-                elif self.options.unit=="pt":
-                    factor=0.80             # px->pt
-                elif self.options.unit=="cm":
-                    factor=25.4/900.0       # px->cm
-                elif self.options.unit=="m":
-                    factor=25.4/90000.0     # px->m
-                elif self.options.unit=="km":
-                    factor=25.4/90000000.0  # px->km
-                elif self.options.unit=="in":
-                    factor=1.0/90.0         # px->in
-                elif self.options.unit=="ft":
-                    factor=1.0/90.0/12.0    # px->ft
-                elif self.options.unit=="yd":
-                    factor=1.0/90.0/36.0    # px->yd
-                else :
-                    ''' Default unit is px'''
-                    factor=1
-                    self.options.unit="px"
-                    
+                factor = 1.0/inkex.unittouu('1'+self.options.unit)
                 # Format the length as string
                 lenstr = locale.format("%(len)25."+str(prec)+"f",{'len':round(stotal*factor*self.options.scale,prec)}).strip()
                 self.addTextOnPath(self.group,0, 0,lenstr+' '+self.options.unit, id, self.options.offset)
