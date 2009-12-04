@@ -295,6 +295,7 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_CONNECTOR_TYPE:
+        case SP_ATTR_CONNECTOR_CURVATURE:
         case SP_ATTR_CONNECTION_START:
         case SP_ATTR_CONNECTION_END:
             path->connEndPair.setAttr(key, value);
