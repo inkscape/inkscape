@@ -197,6 +197,7 @@ src/sp-text.cpp
 src/sp-tref.cpp
 src/sp-tspan.cpp
 src/sp-use.cpp
+src/spray-context.cpp
 src/star-context.cpp
 src/text-chemistry.cpp
 src/text-context.cpp
@@ -230,6 +231,7 @@ src/ui/dialog/messages.cpp
 src/ui/dialog/ocaldialogs.cpp
 src/ui/dialog/print.cpp
 src/ui/dialog/scriptdialog.cpp
+src/ui/dialog/spray-option.cpp
 src/ui/dialog/svg-fonts-dialog.cpp
 src/ui/dialog/swatches.cpp
 src/ui/dialog/tile.cpp
