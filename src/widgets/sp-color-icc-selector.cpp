@@ -17,12 +17,12 @@
 #include "inkscape.h"
 #include "profile-manager.h"
 
-#define noDEBUG_LCMS
+#define DEBUG_LCMS
 
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #include "color-profile.h"
-//#define DEBUG_LCMS
+
 #ifdef DEBUG_LCMS
 #include "preferences.h"
 #include <gtk/gtkmessagedialog.h>
@@ -603,7 +603,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
 void ColorICCSelector::_colorChanged()
 {
     _updating = TRUE;
-//     sp_color_icc_set_color( SP_COLOR_ICC( _icc ), &color );
+     //sp_color_icc_set_color( SP_COLOR_ICC( _icc ), &color );
 
 #ifdef DEBUG_LCMS
     g_message( "/^^^^^^^^^  %p::_colorChanged(%08x:%s)", this,

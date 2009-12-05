@@ -2,7 +2,7 @@
 # include "config.h"
 #endif
 
-//#define DEBUG_LCMS
+#define DEBUG_LCMS
 
 #include <glib/gstdio.h>
 #include <sys/fcntl.h>
@@ -23,6 +23,7 @@
 #endif
 
 #include "xml/repr.h"
+#include "color.h"
 #include "color-profile.h"
 #include "color-profile-fns.h"
 #include "attributes.h"
@@ -50,7 +51,7 @@ static cmsHPROFILE colorprofile_get_proof_profile_handle();
 
 #ifdef DEBUG_LCMS
 extern guint update_in_progress;
-#define DEBUG_MESSAGE(key, ...) \
+#define DEBUG_MESSAGE_SCISLAC(key, ...) \
 {\
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();\
     bool dump = prefs->getBool(Glib::ustring("/options/scislac/") + #key);\
@@ -76,6 +77,13 @@ extern guint update_in_progress;
         gtk_widget_show_all( dialog );\
     }\
 }
+
+
+#define DEBUG_MESSAGE(key, ...)\
+{\
+    g_message( __VA_ARGS__ );\
+}
+
 #endif // DEBUG_LCMS
 
 static SPObjectClass *cprof_parent_class;
@@ -89,6 +97,15 @@ cmsHPROFILE ColorProfile::getSRGBProfile() {
         _sRGBProf = cmsCreate_sRGBProfile();
     }
     return _sRGBProf;
+}
+
+cmsHPROFILE ColorProfile::_NullProf = 0;
+
+cmsHPROFILE ColorProfile::getNULLProfile() {
+    if ( !_NullProf ) {
+        _NullProf = cmsCreateNULLProfile();
+    }
+    return _NullProf;
 }
 
 #endif // ENABLE_LCMS
@@ -151,6 +168,7 @@ void ColorProfile::init( ColorProfile *cprof )
     cprof->_profileSpace = icSigRgbData;
     cprof->_transf = 0;
     cprof->_revTransf = 0;
+    cprof->_gamutTransf = 0;
 #endif // ENABLE_LCMS
 }
 
@@ -203,6 +221,10 @@ void ColorProfile::_clearProfile()
     if ( _revTransf ) {
         cmsDeleteTransform( _revTransf );
         _revTransf = 0;
+    }
+    if ( _gamutTransf ) {
+        cmsDeleteTransform( _gamutTransf );
+        _gamutTransf = 0;
     }
     if ( profHandle ) {
         cmsCloseProfile( profHandle );
@@ -506,6 +528,32 @@ cmsHTRANSFORM ColorProfile::getTransfFromSRGB8()
         _revTransf = cmsCreateTransform( getSRGBProfile(), TYPE_RGBA_8, profHandle, _getInputFormat(_profileSpace), intent, 0 );
     }
     return _revTransf;
+}
+
+cmsHTRANSFORM ColorProfile::getTransfGamutCheck()
+{
+    if ( !_gamutTransf ) {
+        _gamutTransf = cmsCreateProofingTransform(getSRGBProfile(), TYPE_RGBA_8, getNULLProfile(), TYPE_GRAY_8, profHandle, INTENT_RELATIVE_COLORIMETRIC, INTENT_RELATIVE_COLORIMETRIC, (cmsFLAGS_GAMUTCHECK|cmsFLAGS_SOFTPROOFING));
+    }
+    return _gamutTransf;
+}
+
+bool ColorProfile::GamutCheck(SPColor color){
+    BYTE outofgamut = 0;
+    
+    guint32 val = color.toRGBA32(0);
+    guchar check_color[4] = {
+        SP_RGBA32_R_U(val),
+        SP_RGBA32_G_U(val),
+        SP_RGBA32_B_U(val),
+        255};
+
+    int alarm_r, alarm_g, alarm_b;
+    cmsGetAlarmCodes(&alarm_r, &alarm_g, &alarm_b);
+    cmsSetAlarmCodes(255, 255, 255);
+    cmsDoTransform(ColorProfile::getTransfGamutCheck(), &check_color, &outofgamut, 1);
+    cmsSetAlarmCodes(alarm_r, alarm_g, alarm_b);
+    return (outofgamut == 255);
 }
 
 

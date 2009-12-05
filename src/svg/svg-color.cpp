@@ -36,6 +36,15 @@
 #include "svg-color.h"
 #include "svg-icc-color.h"
 
+#if ENABLE_LCMS
+#include <lcms.h>
+#include "color.h"
+#include "color-profile.h"
+#include "document.h"
+#include "inkscape.h"
+#include "profile-manager.h"
+#endif // ENABLE_LCMS
+
 using std::sprintf;
 
 struct SPSVGColor {
@@ -454,6 +463,40 @@ sp_svg_create_color_hash()
     return colors;
 }
 
+//helper function borrowed from src/widgets/sp-color-icc-selector.cpp:
+void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies );
+
+void icc_color_to_sRGB(SVGICCColor* icc, guchar* r, guchar* g, guchar* b){
+    guchar color_out[4];
+    guchar color_in[4];
+    if (icc){
+g_message("profile name: %s", icc->colorProfile.c_str());
+        Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(icc->colorProfile.c_str());
+        if ( prof ) {
+            cmsHTRANSFORM trans = prof->getTransfToSRGB8();
+            if ( trans ) {
+                gchar const** names = 0;
+                gchar const** tips = 0;
+                guint const* scales = 0;
+                getThings( prof->getColorSpace(), names, tips, scales );
+
+                guint count = _cmsChannelsOf( prof->getColorSpace() );
+                if (count>4) count=4; //do we need it? Should we allow an arbitrary number of color values? Or should we limit to a maximum? (max==4?)
+                for (guint i=0;i<count; i++){
+                    color_in[i] = (guchar) ((((gdouble)icc->colors[i])*256.0) * (gdouble)scales[i]);
+g_message("input[%d]: %d",i, color_in[i]);
+                }
+
+                cmsDoTransform( trans, color_in, color_out, 1 );
+g_message("transform to sRGB done");
+            }
+            *r = color_out[0];
+            *g = color_out[1];
+            *b = color_out[2];
+        }
+    }
+}
+
 /*
  * Some discussion at http://markmail.org/message/bhfvdfptt25kgtmj
  * Allowed ASCII first characters:  ':', 'A'-'Z', '_', 'a'-'z'
@@ -515,6 +558,7 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
                     if ( !errno ) {
                         if ( dest ) {
                             dest->colors.push_back( dbl );
+g_message("color: %f", dbl);
                         }
                         str = endPtr;
                     } else {
@@ -536,7 +580,7 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
             while ( g_ascii_isspace(*str) ) {
                 str++;
             }
-            good &= *str == ')';
+            good &= (*str == ')');
         }
     }
 
@@ -552,6 +596,12 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
     }
 
     return good;
+}
+
+
+bool sp_svg_read_icc_color( gchar const *str, SVGICCColor* dest )
+{
+    return sp_svg_read_icc_color(str, NULL, dest);
 }
 
 /*

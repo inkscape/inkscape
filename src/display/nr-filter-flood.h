@@ -15,6 +15,7 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
+#include "svg/svg-color.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -27,11 +28,13 @@ public:
     
     virtual void set_opacity(double o);
     virtual void set_color(guint32 c);
+    virtual void set_icc(SVGICCColor *icc_color);
     virtual int render(FilterSlot &slot, FilterUnits const &units);
     virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
 private:
     double opacity;
     guint32 color;
+    SVGICCColor *icc;
 };
 
 } /* namespace Filters */

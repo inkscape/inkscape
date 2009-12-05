@@ -51,8 +51,15 @@
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #include "color-profile.h"
-//#define DEBUG_LCMS
+#define DEBUG_LCMS
 #ifdef DEBUG_LCMS
+
+
+#define DEBUG_MESSAGE(key, ...)\
+{\
+    g_message( __VA_ARGS__ );\
+}
+
 #include "preferences.h"
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
@@ -105,7 +112,7 @@ extern "C"
 
 #ifdef DEBUG_LCMS
 extern guint update_in_progress;
-#define DEBUG_MESSAGE(key, ...) \
+#define DEBUG_MESSAGE_SCISLAC(key, ...) \
 {\
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();\
     bool dump = prefs->getBool("/options/scislac/" #key);\

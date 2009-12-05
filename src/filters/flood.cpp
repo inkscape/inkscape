@@ -17,12 +17,13 @@
 # include "config.h"
 #endif
 
+#include "strneq.h"
+
 #include "attributes.h"
 #include "svg/svg.h"
 #include "flood.h"
 #include "xml/repr.h"
 #include "helper-fns.h"
-#include "svg/svg-color.h"
 
 /* FeFlood base class */
 
@@ -79,6 +80,7 @@ static void
 sp_feFlood_init(SPFeFlood *feFlood)
 {
     feFlood->opacity = 1;
+    feFlood->icc = NULL;
 }
 
 /**
@@ -120,16 +122,34 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
     gchar *end_ptr = NULL;
     guint32 read_color;
     double read_num;
+    bool dirty = false;
     
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_PROP_FLOOD_COLOR:
             cend_ptr = NULL;
             read_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
+
             if (cend_ptr && read_color != feFlood->color){
                 feFlood->color = read_color;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                dirty=true;
             }
+
+            if (cend_ptr){
+                while (g_ascii_isspace(*cend_ptr)) {
+                    ++cend_ptr;
+                }
+                if (strneq(cend_ptr, "icc-color(", 10)) {
+                    if (!feFlood->icc) feFlood->icc = new SVGICCColor();
+                    if ( ! sp_svg_read_icc_color( cend_ptr, feFlood->icc ) ) {
+                        delete feFlood->icc;
+                        feFlood->icc = NULL;
+                    }
+                    dirty = true;
+                }
+            }
+            if (dirty)
+                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_PROP_FLOOD_OPACITY:
             if (value) {
@@ -208,6 +228,7 @@ static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, Inkscape::Fi
     
     nr_flood->set_opacity(sp_flood->opacity);
     nr_flood->set_color(sp_flood->color);
+    nr_flood->set_icc(sp_flood->icc);
 }
 
 

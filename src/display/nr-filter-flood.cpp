@@ -9,8 +9,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "display/nr-filter-flood.h"
 #include "display/nr-filter-utils.h"
+#include "svg/svg-icc-color.h"
+#include "svg/svg-color.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -26,6 +32,7 @@ FilterFlood::~FilterFlood()
 {}
 
 int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
+g_message("rendering feflood");
     NRPixBlock *in = slot.get(_input);
     if (!in) {
         g_warning("Missing source image for feFlood (in=%d)", _input);
@@ -43,12 +50,18 @@ int FilterFlood::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                            true);
 
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-
     unsigned char r,g,b,a;
-    r = CLAMP_D_TO_U8((color >> 24) % 256);
-    g = CLAMP_D_TO_U8((color >> 16) % 256);
-    b = CLAMP_D_TO_U8((color >>  8) % 256);
-    a = CLAMP_D_TO_U8(opacity*255);
+
+
+        r = CLAMP_D_TO_U8((color >> 24) % 256);
+        g = CLAMP_D_TO_U8((color >> 16) % 256);
+        b = CLAMP_D_TO_U8((color >>  8) % 256);
+        a = CLAMP_D_TO_U8(opacity*255);
+
+#if ENABLE_LCMS
+        icc_color_to_sRGB(icc, &r, &g, &b);
+g_message("result: r:%d g:%d b:%d", r, g, b);
+#endif //ENABLE_LCMS
 
     for(i=0; i < 4*in_h*in_w; i+=4){
             out_data[i]=r;
@@ -68,6 +81,10 @@ void FilterFlood::set_color(guint32 c) {
 
 void FilterFlood::set_opacity(double o) {
     opacity = o;
+}
+
+void FilterFlood::set_icc(SVGICCColor *icc_color) {
+    icc = icc_color;
 }
 
 void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)

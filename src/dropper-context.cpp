@@ -143,6 +143,14 @@ static void sp_dropper_context_finish(SPEventContext *ec)
 
 
 /**
+ * Returns the current dropper context icc-color.
+ */
+SPColor* sp_dropper_context_get_icc_color(SPEventContext *ec)
+{
+    //TODO: implement-me!
+}
+
+/**
  * Returns the current dropper context color.
  */
 guint32 sp_dropper_context_get_color(SPEventContext *ec)

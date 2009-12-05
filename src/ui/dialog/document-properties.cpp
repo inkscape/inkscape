@@ -414,7 +414,8 @@ static void sanitizeName( Glib::ustring& str )
     }
 }
 
-void DocumentProperties::linkSelectedProfile()
+void
+DocumentProperties::linkSelectedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
     // TODO remove use of 'active' desktop

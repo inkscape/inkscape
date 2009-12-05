@@ -15,6 +15,7 @@
 
 #include "sp-filter.h"
 #include "flood-fns.h"
+#include "svg/svg-icc-color.h"
 
 #include "display/nr-filter.h"
 #include "display/nr-filter-flood.h"
@@ -25,6 +26,7 @@ class SPFeFloodClass;
 struct SPFeFlood : public SPFilterPrimitive {
     /** FLOOD ATTRIBUTES HERE */
     guint32 color;
+    SVGICCColor *icc;
     double opacity;
 };
 

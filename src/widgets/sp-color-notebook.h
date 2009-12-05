@@ -61,6 +61,9 @@ protected:
     gulong _entryId;
     GtkWidget *_book;
     GtkWidget *_rgbal, *_rgbae; /* RGBA entry */
+#if ENABLE_LCMS
+    GtkWidget *_box_outofgamut, *_box_colormanaged;
+#endif //ENABLE_LCMS
     GtkWidget *_p; /* Color preview */
     GtkWidget *_btn;
     GtkWidget *_popup;

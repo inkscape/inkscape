@@ -10,6 +10,7 @@
 #include <glibmm/i18n.h>
 #include "../dialogs/dialog-events.h"
 #include "sp-color-scales.h"
+#include "svg/svg-icc-color.h"
 
 #define CSC_CHANNEL_R (1 << 0)
 #define CSC_CHANNEL_G (1 << 1)
@@ -241,6 +242,10 @@ void ColorScales::_recalcColor( gboolean changing )
             g_warning ("file %s: line %d: Illegal color selector mode %d", __FILE__, __LINE__, _mode);
             break;
         }
+
+        /* Preserve ICC */
+        color.icc = _color.icc ? new SVGICCColor(*_color.icc) : 0;
+
         _updateInternals( color, alpha, _dragging );
     }
     else

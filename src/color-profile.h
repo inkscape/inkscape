@@ -36,11 +36,15 @@ struct ColorProfile : public SPObject {
     static std::list<Glib::ustring> getProfileDirs();
 #if ENABLE_LCMS
     static cmsHPROFILE getSRGBProfile();
+    static cmsHPROFILE getNULLProfile();
 
     icColorSpaceSignature getColorSpace() const {return _profileSpace;}
     icProfileClassSignature getProfileClass() const {return _profileClass;}
     cmsHTRANSFORM getTransfToSRGB8();
     cmsHTRANSFORM getTransfFromSRGB8();
+    cmsHTRANSFORM getTransfGamutCheck();
+    bool GamutCheck(SPColor color);
+
 #endif // ENABLE_LCMS
 
     gchar* href;
@@ -64,11 +68,13 @@ private:
     void _clearProfile();
 
     static cmsHPROFILE _sRGBProf;
+    static cmsHPROFILE _NullProf;
 
     icProfileClassSignature _profileClass;
     icColorSpaceSignature _profileSpace;
     cmsHTRANSFORM _transf;
     cmsHTRANSFORM _revTransf;
+    cmsHTRANSFORM _gamutTransf;
 #endif // ENABLE_LCMS
 };
 
