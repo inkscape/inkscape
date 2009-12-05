@@ -430,11 +430,32 @@ sp_text_description(SPItem *item)
 
 static void sp_text_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
-    // the baseline anchor of the first char
+    // Choose a point on the baseline for snapping from or to, with the horizontal position
+	// of this point depending on the text alignment (left vs. right)
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
     if(layout != NULL) {
         int type = target ? int(Inkscape::SNAPTARGET_TEXT_BASELINE) : int(Inkscape::SNAPSOURCE_TEXT_BASELINE);
-    	p.push_back(std::make_pair(layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item), type));
+
+        Inkscape::Text::Layout::iterator pos = layout->begin();
+        Inkscape::Text::Layout::Alignment text_alignment = layout->paragraphAlignment(pos);
+
+        Geom::Point left_pt = layout->characterAnchorPoint(pos) * sp_item_i2d_affine(item);
+		pos.thisEndOfLine();
+		Geom::Point right_pt = layout->characterAnchorPoint(pos) * sp_item_i2d_affine(item);
+		Geom::Point mid_pt = (left_pt + right_pt)/2;
+
+        switch (text_alignment) {
+			case Inkscape::Text::Layout::LEFT:
+			case Inkscape::Text::Layout::FULL:
+				p.push_back(std::make_pair(left_pt, type));
+				break;
+			case Inkscape::Text::Layout::CENTER:
+				p.push_back(std::make_pair(mid_pt, type));
+				break;
+			default: //RIGHT
+				p.push_back(std::make_pair(right_pt, type));
+				break;
+        }
     }
 }
 
