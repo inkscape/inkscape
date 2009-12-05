@@ -5,7 +5,6 @@ libnr_mmx_sources =	\
 	libnr/have_mmx.S	\
 	libnr/nr_mmx_R8G8B8A8_P_EMPTY_A8_RGBAP.S	\
 	libnr/nr_mmx_R8G8B8A8_P_R8G8B8A8_P_A8_RGBAP.S	\
-	libnr/nr_mmx_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM.S	\
 	libnr/nr_mmx_R8G8B8_R8G8B8_R8G8B8A8_P.S
 endif
 
