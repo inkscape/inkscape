@@ -271,6 +271,7 @@ CXXTEST_TESTSUITES +=			\
 	$(srcdir)/color-profile-test.h	\
 	$(srcdir)/dir-util-test.h	\
 	$(srcdir)/extract-uri-test.h	\
+	$(srcdir)/marker-test.h		\
 	$(srcdir)/mod360-test.h		\
 	$(srcdir)/round-test.h		\
 	$(srcdir)/preferences-test.h	\

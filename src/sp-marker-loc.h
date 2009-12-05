@@ -5,6 +5,8 @@
  * These enums are to allow us to have 4-element arrays that represent a set of marker locations
  * (all, start, mid, and end).  This allows us to iterate through the array in places where we need
  * to do a process across all of the markers, instead of separate code stanzas for each.
+ *
+ * IMPORTANT:  the code assumes that the locations have the values as written below! so don't change the values!!!
  */
 enum SPMarkerLoc {
     SP_MARKER_LOC = 0,
