@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-06 02:47-0200\n"
+"POT-Creation-Date: 2009-12-03 13:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4161,35 +4161,35 @@ msgstr ""
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:310
+#: ../src/dropper-context.cpp:302
 #, c-format
 msgid " alpha %.3g"
 msgstr ""
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:312
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ""
 
-#: ../src/dropper-context.cpp:312
+#: ../src/dropper-context.cpp:304
 #, c-format
 msgid " under cursor"
 msgstr ""
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:314
+#: ../src/dropper-context.cpp:306
 msgid "<b>Release mouse</b> to set color."
 msgstr ""
 
-#: ../src/dropper-context.cpp:314 ../src/tools-switch.cpp:216
+#: ../src/dropper-context.cpp:306 ../src/tools-switch.cpp:216
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
 msgstr ""
 
-#: ../src/dropper-context.cpp:352
+#: ../src/dropper-context.cpp:344
 msgid "Set picked color"
 msgstr ""
 
@@ -4726,8 +4726,8 @@ msgstr ""
 #: ../src/extension/internal/bitmap/modulate.cpp:41
 #: ../src/flood-context.cpp:250 ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
-#: ../src/widgets/sp-color-scales.cpp:431
-#: ../src/widgets/sp-color-scales.cpp:432 ../src/widgets/toolbox.cpp:4308
+#: ../src/widgets/sp-color-scales.cpp:426
+#: ../src/widgets/sp-color-scales.cpp:427 ../src/widgets/toolbox.cpp:4308
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
 msgstr ""
@@ -4736,8 +4736,8 @@ msgstr ""
 #: ../src/flood-context.cpp:251 ../src/ui/dialog/inkscape-preferences.cpp:841
 #: ../src/widgets/sp-color-icc-selector.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:237
-#: ../src/widgets/sp-color-scales.cpp:434
-#: ../src/widgets/sp-color-scales.cpp:435 ../src/widgets/toolbox.cpp:4323
+#: ../src/widgets/sp-color-scales.cpp:429
+#: ../src/widgets/sp-color-scales.cpp:430 ../src/widgets/toolbox.cpp:4323
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Saturation"
 msgstr ""
@@ -5770,22 +5770,22 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:247
 #: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-scales.cpp:405
-#: ../src/widgets/sp-color-scales.cpp:406
+#: ../src/widgets/sp-color-scales.cpp:400
+#: ../src/widgets/sp-color-scales.cpp:401
 msgid "Red"
 msgstr ""
 
 #: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:248
 #: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-scales.cpp:408
-#: ../src/widgets/sp-color-scales.cpp:409
+#: ../src/widgets/sp-color-scales.cpp:403
+#: ../src/widgets/sp-color-scales.cpp:404
 msgid "Green"
 msgstr ""
 
 #: ../src/filter-enums.cpp:104 ../src/flood-context.cpp:249
 #: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-scales.cpp:411
-#: ../src/widgets/sp-color-scales.cpp:412
+#: ../src/widgets/sp-color-scales.cpp:406
+#: ../src/widgets/sp-color-scales.cpp:407
 msgid "Blue"
 msgstr ""
 
@@ -5822,8 +5822,8 @@ msgid "Visible Colors"
 msgstr ""
 
 #: ../src/flood-context.cpp:252 ../src/widgets/sp-color-icc-selector.cpp:237
-#: ../src/widgets/sp-color-scales.cpp:437
-#: ../src/widgets/sp-color-scales.cpp:438 ../src/widgets/toolbox.cpp:4338
+#: ../src/widgets/sp-color-scales.cpp:432
+#: ../src/widgets/sp-color-scales.cpp:433 ../src/widgets/toolbox.cpp:4338
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Lightness"
 msgstr ""
@@ -9484,8 +9484,7 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:211 ../src/spray-context.cpp:288
-#: ../src/tweak-context.cpp:202
+#: ../src/selection-describer.cpp:211 ../src/tweak-context.cpp:202
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -9685,16 +9684,16 @@ msgstr ""
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
 
-#: ../src/sp-image.cpp:1135
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr ""
 
-#: ../src/sp-image.cpp:1143
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr ""
 
-#: ../src/sp-image.cpp:1144
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
@@ -9994,51 +9993,6 @@ msgstr ""
 
 #: ../src/sp-use.cpp:339
 msgid "<b>Orphaned clone</b>"
-msgstr ""
-
-#: ../src/spray-context.cpp:290 ../src/tweak-context.cpp:204
-#, c-format
-msgid "<b>Nothing</b> selected"
-msgstr ""
-
-#: ../src/spray-context.cpp:296
-#, c-format
-msgid ""
-"%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
-msgstr ""
-
-#: ../src/spray-context.cpp:299
-#, c-format
-msgid ""
-"%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
-msgstr ""
-
-#: ../src/spray-context.cpp:302
-#, c-format
-msgid ""
-"%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
-"selection"
-msgstr ""
-
-#: ../src/spray-context.cpp:305
-#, c-format
-msgid "%s. Modify <b>spray</b> options"
-msgstr ""
-
-#: ../src/spray-context.cpp:917
-msgid "<b>Nothing selected!</b> Select objects to spray."
-msgstr ""
-
-#: ../src/spray-context.cpp:1025 ../src/widgets/toolbox.cpp:4525
-msgid "Spray with copies"
-msgstr ""
-
-#: ../src/spray-context.cpp:1029 ../src/widgets/toolbox.cpp:4532
-msgid "Spray with clones"
-msgstr ""
-
-#: ../src/spray-context.cpp:1033
-msgid "Spray in single path"
 msgstr ""
 
 #: ../src/star-context.cpp:333
@@ -10430,6 +10384,11 @@ msgstr ""
 msgid "Trace: Done. %ld nodes created"
 msgstr ""
 
+#: ../src/tweak-context.cpp:204
+#, c-format
+msgid "<b>Nothing</b> selected"
+msgstr ""
+
 #: ../src/tweak-context.cpp:210
 #, c-format
 msgid "%s. Drag to <b>move</b>."
@@ -10742,8 +10701,7 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/ui/dialog/spray-option.cpp:116 ../src/ui/dialog/spray-option.cpp:194
-#: ../src/ui/dialog/spray-option.cpp:212 ../src/widgets/toolbox.cpp:7475
+#: ../src/widgets/toolbox.cpp:7475
 msgid "Remove overlaps"
 msgstr ""
 
@@ -11238,61 +11196,61 @@ msgstr ""
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:452 ../src/verbs.cpp:2755
+#: ../src/ui/dialog/document-properties.cpp:451 ../src/verbs.cpp:2755
 msgid "Link Color Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:525
+#: ../src/ui/dialog/document-properties.cpp:524
 msgid "Remove linked color profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:539
+#: ../src/ui/dialog/document-properties.cpp:538
 msgid "<b>Linked Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:541
+#: ../src/ui/dialog/document-properties.cpp:540
 msgid "<b>Available Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:543
+#: ../src/ui/dialog/document-properties.cpp:542
 msgid "Link Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:574
+#: ../src/ui/dialog/document-properties.cpp:573
 msgid "Profile Name"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:605
+#: ../src/ui/dialog/document-properties.cpp:604
 msgid "<b>External script files:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:607
+#: ../src/ui/dialog/document-properties.cpp:606
 #: ../src/ui/dialog/swatches.cpp:463
 msgid "Add"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:630
+#: ../src/ui/dialog/document-properties.cpp:629
 msgid "Filename"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:670
+#: ../src/ui/dialog/document-properties.cpp:669
 msgid "Add external script..."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:694
+#: ../src/ui/dialog/document-properties.cpp:693
 msgid "Remove external script"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:775
+#: ../src/ui/dialog/document-properties.cpp:774
 msgid "<b>Creation</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:776
+#: ../src/ui/dialog/document-properties.cpp:775
 msgid "<b>Defined grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:986
+#: ../src/ui/dialog/document-properties.cpp:985
 msgid "Remove grid"
 msgstr ""
 
@@ -14284,99 +14242,6 @@ msgstr ""
 msgid "Errors"
 msgstr ""
 
-#: ../src/ui/dialog/spray-option.cpp:154
-#: ../share/extensions/polyhedron_3d.inx.h:26
-msgid "Minimum"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:156
-msgid "Min"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:164
-#: ../share/extensions/polyhedron_3d.inx.h:24
-msgid "Maximum"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:166
-msgid "Max:"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:245
-msgid "Distribution"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:246
-msgid "Cursor Options"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:247
-msgid "Random Options"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:251
-msgid "Uniform"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:252
-msgid "Gaussian   "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:253
-msgid "Distribution : "
-msgstr ""
-
-#. ComboBoxText
-#: ../src/ui/dialog/spray-option.cpp:260
-msgid "Uniforme"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:261
-msgid "Gaussienne"
-msgstr ""
-
-#. Hbox Random
-#: ../src/ui/dialog/spray-option.cpp:277
-msgid "Scale : "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:277
-msgid "Applique un facteur d'échelle"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:278
-msgid "Rotation : "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:278
-msgid "Fait tourner"
-msgstr ""
-
-#. Hbox Cursor
-#: ../src/ui/dialog/spray-option.cpp:287
-msgid "Ratio : "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:287
-msgid "Excentricité de l'ellipse"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:288
-msgid "Angle : "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:288
-msgid "Angle de l'ellipse"
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:289
-msgid "Width : "
-msgstr ""
-
-#: ../src/ui/dialog/spray-option.cpp:289
-msgid "Taille de l'ellipse"
-msgstr ""
-
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
 msgid "Set SVG Font attribute"
 msgstr ""
@@ -15481,8 +15346,8 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:236
 #: ../src/widgets/sp-color-icc-selector.cpp:238
-#: ../src/widgets/sp-color-scales.cpp:468
-#: ../src/widgets/sp-color-scales.cpp:469
+#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-scales.cpp:464
 msgid "Black"
 msgstr ""
 
@@ -17984,58 +17849,58 @@ msgid "CMS"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-scales.cpp:404
+#: ../src/widgets/sp-color-scales.cpp:399
 msgid "_R"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-icc-selector.cpp:221
-#: ../src/widgets/sp-color-scales.cpp:407
+#: ../src/widgets/sp-color-scales.cpp:402
 msgid "_G"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-scales.cpp:410
+#: ../src/widgets/sp-color-scales.cpp:405
 msgid "_B"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
-#: ../src/widgets/sp-color-scales.cpp:430
+#: ../src/widgets/sp-color-scales.cpp:425
 msgid "_H"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:222
 #: ../src/widgets/sp-color-icc-selector.cpp:223
-#: ../src/widgets/sp-color-scales.cpp:433
+#: ../src/widgets/sp-color-scales.cpp:428
 msgid "_S"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:223
-#: ../src/widgets/sp-color-scales.cpp:436
+#: ../src/widgets/sp-color-scales.cpp:431
 msgid "_L"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
-#: ../src/widgets/sp-color-scales.cpp:458
+#: ../src/widgets/sp-color-scales.cpp:453
 msgid "_C"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
-#: ../src/widgets/sp-color-scales.cpp:461
+#: ../src/widgets/sp-color-scales.cpp:456
 msgid "_M"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
 #: ../src/widgets/sp-color-icc-selector.cpp:225
-#: ../src/widgets/sp-color-scales.cpp:464
+#: ../src/widgets/sp-color-scales.cpp:459
 msgid "_Y"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:224
-#: ../src/widgets/sp-color-scales.cpp:467
+#: ../src/widgets/sp-color-scales.cpp:462
 msgid "_K"
 msgstr ""
 
@@ -18045,22 +17910,22 @@ msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:238
 #: ../src/widgets/sp-color-icc-selector.cpp:239
-#: ../src/widgets/sp-color-scales.cpp:459
-#: ../src/widgets/sp-color-scales.cpp:460
+#: ../src/widgets/sp-color-scales.cpp:454
+#: ../src/widgets/sp-color-scales.cpp:455
 msgid "Cyan"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:238
 #: ../src/widgets/sp-color-icc-selector.cpp:239
-#: ../src/widgets/sp-color-scales.cpp:462
-#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-scales.cpp:457
+#: ../src/widgets/sp-color-scales.cpp:458
 msgid "Magenta"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:238
 #: ../src/widgets/sp-color-icc-selector.cpp:239
-#: ../src/widgets/sp-color-scales.cpp:465
-#: ../src/widgets/sp-color-scales.cpp:466
+#: ../src/widgets/sp-color-scales.cpp:460
+#: ../src/widgets/sp-color-scales.cpp:461
 msgid "Yellow"
 msgstr ""
 
@@ -18074,56 +17939,43 @@ msgstr ""
 
 #. Label
 #: ../src/widgets/sp-color-icc-selector.cpp:380
-#: ../src/widgets/sp-color-scales.cpp:413
-#: ../src/widgets/sp-color-scales.cpp:439
-#: ../src/widgets/sp-color-scales.cpp:470
-#: ../src/widgets/sp-color-wheel-selector.cpp:135
+#: ../src/widgets/sp-color-scales.cpp:408
+#: ../src/widgets/sp-color-scales.cpp:434
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-wheel-selector.cpp:134
 msgid "_A"
 msgstr ""
 
 #: ../src/widgets/sp-color-icc-selector.cpp:390
 #: ../src/widgets/sp-color-icc-selector.cpp:402
-#: ../src/widgets/sp-color-scales.cpp:414
-#: ../src/widgets/sp-color-scales.cpp:415
-#: ../src/widgets/sp-color-scales.cpp:440
-#: ../src/widgets/sp-color-scales.cpp:441
-#: ../src/widgets/sp-color-scales.cpp:471
-#: ../src/widgets/sp-color-scales.cpp:472
-#: ../src/widgets/sp-color-wheel-selector.cpp:145
-#: ../src/widgets/sp-color-wheel-selector.cpp:157
+#: ../src/widgets/sp-color-scales.cpp:409
+#: ../src/widgets/sp-color-scales.cpp:410
+#: ../src/widgets/sp-color-scales.cpp:435
+#: ../src/widgets/sp-color-scales.cpp:436
+#: ../src/widgets/sp-color-scales.cpp:466
+#: ../src/widgets/sp-color-scales.cpp:467
+#: ../src/widgets/sp-color-wheel-selector.cpp:144
+#: ../src/widgets/sp-color-wheel-selector.cpp:156
 msgid "Alpha (opacity)"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:339
-msgid "Color Managed"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:347
-msgid "Out of gamut!"
-msgstr ""
-
-#: ../src/widgets/sp-color-notebook.cpp:355
-msgid "Too much ink!"
-msgstr ""
-
-#. Create RGBA entry and color preview
-#: ../src/widgets/sp-color-notebook.cpp:362
+#: ../src/widgets/sp-color-notebook.cpp:330
 msgid "RGBA_:"
 msgstr ""
 
-#: ../src/widgets/sp-color-notebook.cpp:370
+#: ../src/widgets/sp-color-notebook.cpp:338
 msgid "Hexadecimal RGBA value of the color"
 msgstr ""
 
-#: ../src/widgets/sp-color-scales.cpp:80
+#: ../src/widgets/sp-color-scales.cpp:79
 msgid "RGB"
 msgstr ""
 
-#: ../src/widgets/sp-color-scales.cpp:80
+#: ../src/widgets/sp-color-scales.cpp:79
 msgid "HSL"
 msgstr ""
 
-#: ../src/widgets/sp-color-scales.cpp:80
+#: ../src/widgets/sp-color-scales.cpp:79
 msgid "CMYK"
 msgstr ""
 
@@ -18131,7 +17983,7 @@ msgstr ""
 msgid "Unnamed"
 msgstr ""
 
-#: ../src/widgets/sp-color-wheel-selector.cpp:62
+#: ../src/widgets/sp-color-wheel-selector.cpp:61
 msgid "Wheel"
 msgstr ""
 
@@ -19332,8 +19184,16 @@ msgstr ""
 msgid "The standard deviation of the spray action"
 msgstr ""
 
+#: ../src/widgets/toolbox.cpp:4525
+msgid "Spray with copies"
+msgstr ""
+
 #: ../src/widgets/toolbox.cpp:4526
 msgid "Spray copies of the initial selection"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:4532
+msgid "Spray with clones"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4533
@@ -20045,7 +19905,7 @@ msgstr ""
 msgid "Unable to find image data."
 msgstr ""
 
-#: ../share/extensions/inkex.py:67
+#: ../share/extensions/inkex.py:66
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
 "this extension. Please download and install the latest version from http://"
@@ -20053,7 +19913,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:223
+#: ../share/extensions/inkex.py:222
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -21793,6 +21653,14 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Load from file"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:24
+msgid "Maximum"
+msgstr ""
+
+#: ../share/extensions/polyhedron_3d.inx.h:26
+msgid "Minimum"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
