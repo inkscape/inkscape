@@ -348,6 +348,14 @@ void ColorNotebook::init()
         gtk_widget_set_sensitive (_box_outofgamut, false);
 	gtk_box_pack_start(GTK_BOX(rgbabox), _box_outofgamut, FALSE, FALSE, 2);
 
+        _box_toomuchink = gtk_event_box_new ();
+        GtkWidget *toomuchink = gtk_image_new_from_icon_name ("too-much-ink-icon", GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_container_add (GTK_CONTAINER (_box_toomuchink), toomuchink);
+        GtkTooltips *tooltips_toomuchink = gtk_tooltips_new ();
+        gtk_tooltips_set_tip (tooltips_toomuchink, _box_toomuchink, _("Too much ink!"), "");
+        gtk_widget_set_sensitive (_box_toomuchink, false);
+	gtk_box_pack_start(GTK_BOX(rgbabox), _box_toomuchink, FALSE, FALSE, 2);
+
 #endif //ENABLE_LCMS
 
 	/* Create RGBA entry and color preview */
@@ -519,6 +527,21 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
         Inkscape::ColorProfile* target_profile = SP_ACTIVE_DOCUMENT->profileManager->find(color.icc->colorProfile.c_str());
         if ( target_profile )
             gtk_widget_set_sensitive (_box_outofgamut, target_profile->GamutCheck(color));
+    }
+
+    /* update too-much-ink icon */
+    gtk_widget_set_sensitive (_box_toomuchink, false);
+    if (color.icc){
+        double ink_sum = 0;
+        for (unsigned int i=0; i<color.icc->colors.size(); i++){
+            ink_sum += color.icc->colors[i];
+        }
+
+        /* Some literature states that when the sum of paint values exceed 320%, it is considered to be a satured color,
+            which means the paper can get too wet due to an excessive ammount of ink. This may lead to several issues
+            such as misalignment and poor quality of printing in general.*/
+        if ( ink_sum > 3.2 )
+            gtk_widget_set_sensitive (_box_toomuchink, true);
     }
 #endif //ENABLE_LCMS
 

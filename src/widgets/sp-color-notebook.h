@@ -62,7 +62,7 @@ protected:
     GtkWidget *_book;
     GtkWidget *_rgbal, *_rgbae; /* RGBA entry */
 #if ENABLE_LCMS
-    GtkWidget *_box_outofgamut, *_box_colormanaged;
+    GtkWidget *_box_outofgamut, *_box_colormanaged, *_box_toomuchink;
 #endif //ENABLE_LCMS
     GtkWidget *_p; /* Color preview */
     GtkWidget *_btn;
