@@ -245,7 +245,8 @@ std::string SPColor::toString() const
         for (vector<double>::const_iterator i(device->colors.begin()),
                  iEnd(device->colors.end());
              i != iEnd; ++i) {
-            css << ", " << *i;
+            if (i!=device->colors.begin()) css << ", ";
+            css << *i;
         }
         css << ')';
     }
