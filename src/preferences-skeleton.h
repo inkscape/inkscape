@@ -340,6 +340,7 @@ static char const preferences_skeleton[] =
 "    </group>\n"
 "    <group id=\"workarounds\"\n"
 "           colorsontop=\"0\"/>\n"
+"    <group id=\"threading\" numthreads=\"1\"/>\n"
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"

@@ -741,6 +741,11 @@ void InkscapePreferences::initPageFilters()
     _page_filters.add_line(true, "", _show_filters_info_box, "",
                         _("Show icons and descriptions for the filter primitives available at the filter effects dialog."));
 
+    /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
+    _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
+    _page_filters.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
+                           _("Configure number of processors/threads to use with rendering of gaussian blur."), false);
+
     this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
 }
 

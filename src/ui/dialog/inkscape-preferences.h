@@ -171,6 +171,7 @@ protected:
     PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
     PrefRadioButton _filter_quality_best, _filter_quality_better, _filter_quality_normal, _filter_quality_worse, _filter_quality_worst;
     PrefCheckButton _show_filters_info_box;
+    PrefSpinButton  _filter_multi_threaded;
 
     PrefCheckButton _trans_scale_stroke, _trans_scale_corner, _trans_gradient,_trans_pattern;
     PrefRadioButton _trans_optimized, _trans_preserved;
