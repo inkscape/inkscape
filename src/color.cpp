@@ -17,6 +17,7 @@
 #include <math.h>
 #include "color.h"
 #include "svg/svg-icc-color.h"
+#include "svg/svg-device-color.h"
 #include "svg/svg-color.h"
 
 #include "svg/css-ostringstream.h"
@@ -29,7 +30,8 @@ static bool profileMatches( SVGICCColor const* first, SVGICCColor const* second 
 #define PROFILE_EPSILON 0.00000001
 
 SPColor::SPColor() :
-    icc(0)
+    icc(0),
+    device(0)
 {
     v.c[0] = 0;
     v.c[1] = 0;
@@ -37,19 +39,22 @@ SPColor::SPColor() :
 }
 
 SPColor::SPColor( SPColor const& other ) :
-    icc(0)
+    icc(0),
+    device(0)
 {
     *this = other;
 }
 
 SPColor::SPColor( float r, float g, float b ) :
-    icc(0)
+    icc(0),
+    device(0)
 {
     set( r, g, b );
 }
 
 SPColor::SPColor( guint32 value ) :
-    icc(0)
+    icc(0),
+    device(0)
 {
     set( value );
 }
@@ -57,20 +62,29 @@ SPColor::SPColor( guint32 value ) :
 SPColor::~SPColor()
 {
     delete icc;
+    delete device;
     icc = 0;
+    device = 0;
 }
 
 
 SPColor& SPColor::operator= (SPColor const& other)
 {
-    SVGICCColor* tmp = other.icc ? new SVGICCColor(*other.icc) : 0;
+    SVGICCColor* tmp_icc = other.icc ? new SVGICCColor(*other.icc) : 0;
+    SVGDeviceColor* tmp_device = other.device ? new SVGDeviceColor(*other.device) : 0;
+
     v.c[0] = other.v.c[0];
     v.c[1] = other.v.c[1];
     v.c[2] = other.v.c[2];
     if ( icc ) {
         delete icc;
     }
-    icc = tmp;
+    icc = tmp_icc;
+
+    if ( device ) {
+        delete device;
+    }
+    device = tmp_device;
 
     return *this;
 }
@@ -86,6 +100,7 @@ bool SPColor::operator == (SPColor const& other) const
         && (v.c[2] != other.v.c[2]);
 
     match &= profileMatches( icc, other.icc );
+//TODO?:    match &= devicecolorMatches( device, other.device );
 
     return match;
 }
@@ -198,6 +213,37 @@ std::string SPColor::toString() const
         css << "icc-color(" << icc->colorProfile;
         for (vector<double>::const_iterator i(icc->colors.begin()),
                  iEnd(icc->colors.end());
+             i != iEnd; ++i) {
+            css << ", " << *i;
+        }
+        css << ')';
+    }
+
+    if ( device && device->type != DEVICE_COLOR_INVALID) {
+        if ( !css.str().empty() ) {
+            css << " ";
+        }
+
+        switch(device->type){
+            case DEVICE_GRAY:
+                css << "device-gray(";
+                break;
+            case DEVICE_RGB:
+                css << "device-rgb(";
+                break;
+            case DEVICE_CMYK:
+                css << "device-cmyk(";
+                break;
+            case DEVICE_NCHANNEL:
+                css << "device-nchannel(";
+                break;
+            case DEVICE_COLOR_INVALID:
+                //should not be reached
+                break;
+        }
+
+        for (vector<double>::const_iterator i(device->colors.begin()),
+                 iEnd(device->colors.end());
              i != iEnd; ++i) {
             css << ", " << *i;
         }
