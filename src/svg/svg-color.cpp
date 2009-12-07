@@ -559,7 +559,6 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
                     if ( !errno ) {
                         if ( dest ) {
                             dest->colors.push_back( dbl );
-g_message("color: %f", dbl);
                         }
                         str = endPtr;
                     } else {
@@ -662,7 +661,6 @@ bool sp_svg_read_device_color( gchar const *str, gchar const **end_ptr, SVGDevic
                     if ( !errno ) {
                         if ( dest ) {
                             dest->colors.push_back( dbl );
-g_message("color: %f", dbl);
                         }
                         str = endPtr;
                     } else {
