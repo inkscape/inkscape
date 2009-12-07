@@ -242,23 +242,23 @@ void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selecti
 
 SprayOptionClass::SprayOptionClass()
     : UI::Widget::Panel ("", "/dialogs/spray", SP_VERB_DIALOG_SPRAY_OPTION),
-      _distributionFrame(_("Distribution")),
-      _Frame(_("Cursor Options")),
-      _FFrame(_("Random Options")),
+      _distributionFrame(Q_("sprayOptions|Distribution")),
+      _Frame(Q_("sprayOptions|Cursor Options")),
+      _FFrame(Q_("sprayOptions|Random Options")),
       _gaussianTable(1, 5, false),
       _ETable(3,2,false),
       _FTable(2,5,false),
-      _unifLabel(_("Uniform")),
-      _gaussLabel(_("Gaussian")),
-      _anchorLabel(_("Distribution : "))
+      _unifLabel(Q_("sprayOptions|Uniform")),
+      _gaussLabel(Q_("sprayOptions|Gaussian")),
+      _anchorLabel(Q_("sprayOptions|Distribution:"))
       
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     //ComboBoxText
 
-    _combo.append_text(_("Uniform"));
-    _combo.append_text(_("Gaussian"));
+    _combo.append_text(Q_("sprayOptions|Uniform"));
+    _combo.append_text(Q_("sprayOptions|Gaussian"));
     
     _combo.set_active(prefs->getInt("/tools/spray/distribution", 1));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &SprayOptionClass::combo_action));
@@ -274,8 +274,8 @@ SprayOptionClass::SprayOptionClass()
 
 
     //Hbox Random
-    addFButton(_("Scale : ") ,_("Apply a scale factor"), 0, 0, "/tools/spray/scale_min","/tools/spray/scale_max");
-    addFButton(_("Rotation : ") ,_("Apply rotation"), 1, 0, "/tools/spray/rot_min","/tools/spray/rot_max");
+    addFButton(Q_("sprayOptions|Scale:") ,_("Apply a scale factor"), 0, 0, "/tools/spray/scale_min","/tools/spray/scale_max");
+    addFButton(Q_("sprayOptions|Rotation:") ,_("Apply rotation"), 1, 0, "/tools/spray/rot_min","/tools/spray/rot_max");
     _FHBox.pack_start(_FLabel);
     _FHBox.pack_start(_FTable);
 
@@ -284,9 +284,9 @@ SprayOptionClass::SprayOptionClass()
     _FFrame.add(_FVBox);    
 
     //Hbox Cursor
-    addEButton(_("Ratio : ") ,_("Eccentricity of the ellipse"), 0, 0, 0, 1,"/tools/spray/ratio");
-    addEButton(_("Angle : ") ,_("Angle of the ellipse"), 1, 0, 0, 5,"/tools/spray/tilt");
-    addEButton(_("Width : ") ,_("Size of the ellipse"), 2, 0, 0, 1,"/tools/spray/width");
+    addEButton(Q_("sprayOptions|Ratio:") ,_("Eccentricity of the ellipse"), 0, 0, 0, 1,"/tools/spray/ratio");
+    addEButton(Q_("sprayOptions|Angle:") ,_("Angle of the ellipse"), 1, 0, 0, 5,"/tools/spray/tilt");
+    addEButton(Q_("sprayOptions|Width:") ,_("Size of the ellipse"), 2, 0, 0, 1,"/tools/spray/width");
     _HBox.pack_start(_Label);
     _HBox.pack_start(_ETable);
 
