@@ -379,14 +379,14 @@ sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
     Glib::ustring path = val->getEntryName();
 
     if (path == "width") {
-        tc->width = CLAMP(val->getDouble(0.1), -1000.0, 1000.0);
+        tc->width = 0.01 * CLAMP(val->getInt(10), 1, 100);
     } else if (path == "mode") {
         tc->mode = val->getInt();
         sp_spray_update_cursor(tc, false);
     } else if (path == "distribution") {
         tc->distrib = val->getInt(1);
     } else if (path == "population") {
-        tc->population = CLAMP(val->getDouble(), 0.0, 1.0);
+        tc->population = 0.01 * CLAMP(val->getInt(10), 1, 100);
      } else if (path == "tilt") {
         tc->tilt = CLAMP(val->getDouble(0.1), 0, 1000.0);
      } else if (path == "ratio") {
@@ -402,9 +402,9 @@ sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
     } else if (path == "scale_max") {
         tc->scale_max = CLAMP(val->getDouble(1.0), 0, 10.0);
     } else if (path == "mean") {
-        tc->mean = CLAMP(val->getDouble(1.0), 0, 1.0);
+        tc->mean = 0.01 * CLAMP(val->getInt(10), 1, 100);
     } else if (path == "standard_deviation") {
-        tc->standard_deviation = CLAMP(val->getDouble(1.0), 0, 1.0);
+        tc->standard_deviation = 0.01 * CLAMP(val->getInt(10), 1, 100);
     } else if (path == "usepressure") {
         tc->usepressure = val->getBool();
     } else if (path == "doh") {

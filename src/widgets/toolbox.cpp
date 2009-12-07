@@ -4469,15 +4469,15 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
     {
         /* Width */
-        gchar const* labels[] = {_("(pinch spray)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad spray)")};
+        gchar const* labels[] = {_("(narrow spray)"), 0, 0, 0, _("(default)"), 0, 0, 0, 0, _("(broad spray)")};
         gdouble values[] = {1, 3, 5, 10, 15, 20, 30, 50, 75, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayWidthAction",
                                                               _("Width"), _("Width:"), _("The width of the spray area (relative to the visible canvas area)"),
                                                               "/tools/spray/width", 15,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spray",
-                                                              1, 100, 1.0, 0.0,
+                                                              1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_width_value_changed,  0.01, 0, 100 );
+                                                              sp_spray_width_value_changed,  1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -4491,9 +4491,9 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               _("Mean"), _("Mean:"), _("The mean of the spray action"),
                                                               "/tools/spray/mean", 20,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-mean",
-                                                              1, 100, 1.0, 0.0,
+                                                              1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_mean_value_changed,  0.01, 0, 100 );
+                                                              sp_spray_mean_value_changed,  1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -4507,9 +4507,9 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               _("SD"), _("SD:"), _("The standard deviation of the spray action"),
                                                               "/tools/spray/standard_deviation", 20,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-standard_deviation",
-                                                              1, 100, 1.0, 0.0,
+                                                              1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_standard_deviation_value_changed,  0.01, 0, 100 );
+                                                              sp_spray_standard_deviation_value_changed,  1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -4561,7 +4561,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     }
 
     {   /* Population */
-        gchar const* labels[] = {_("(rough, simplified)"), 0, 0, _("(default)"), 0, 0, _("(fine, but many nodes)")};
+        gchar const* labels[] = {_("(low population)"), 0, 0, _("(default)"), 0, 0, _("(high population)")};
         gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayPopulationAction",
                                                               _("Population"), _("Population:"),
@@ -4570,7 +4570,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-population",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_spray_population_value_changed,  0.01, 0, 100 );
+                                                              sp_spray_population_value_changed,  1, 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "spray_population", eact );
@@ -4937,7 +4937,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_width_value_changed,  1, 0);
+                                                              sp_ddc_width_value_changed,  1, 0 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
