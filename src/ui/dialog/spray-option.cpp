@@ -249,7 +249,7 @@ SprayOptionClass::SprayOptionClass()
       _ETable(3,2,false),
       _FTable(2,5,false),
       _unifLabel(_("Uniform")),
-      _gaussLabel(_("Gaussian   ")),
+      _gaussLabel(_("Gaussian")),
       _anchorLabel(_("Distribution : "))
       
 {
@@ -257,8 +257,8 @@ SprayOptionClass::SprayOptionClass()
 
     //ComboBoxText
 
-    _combo.append_text(_("Uniforme"));
-    _combo.append_text(_("Gaussienne"));
+    _combo.append_text(_("Uniform"));
+    _combo.append_text(_("Gaussian"));
     
     _combo.set_active(prefs->getInt("/tools/spray/distribution", 1));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &SprayOptionClass::combo_action));
@@ -274,8 +274,8 @@ SprayOptionClass::SprayOptionClass()
 
 
     //Hbox Random
-    addFButton(_("Scale : ") ,_("Applique un facteur d'échelle"), 0, 0, "/tools/spray/scale_min","/tools/spray/scale_max");
-    addFButton(_("Rotation : ") ,_("Fait tourner"), 1, 0, "/tools/spray/rot_min","/tools/spray/rot_max");
+    addFButton(_("Scale : ") ,_("Apply a scale factor"), 0, 0, "/tools/spray/scale_min","/tools/spray/scale_max");
+    addFButton(_("Rotation : ") ,_("Apply rotation"), 1, 0, "/tools/spray/rot_min","/tools/spray/rot_max");
     _FHBox.pack_start(_FLabel);
     _FHBox.pack_start(_FTable);
 
@@ -284,9 +284,9 @@ SprayOptionClass::SprayOptionClass()
     _FFrame.add(_FVBox);    
 
     //Hbox Cursor
-    addEButton(_("Ratio : ") ,_("Excentricité de l'ellipse"), 0, 0, 0, 1,"/tools/spray/ratio");
-    addEButton(_("Angle : ") ,_("Angle de l'ellipse"), 1, 0, 0, 5,"/tools/spray/tilt");
-    addEButton(_("Width : ") ,_("Taille de l'ellipse"), 2, 0, 0, 1,"/tools/spray/width");
+    addEButton(_("Ratio : ") ,_("Eccentricity of the ellipse"), 0, 0, 0, 1,"/tools/spray/ratio");
+    addEButton(_("Angle : ") ,_("Angle of the ellipse"), 1, 0, 0, 5,"/tools/spray/tilt");
+    addEButton(_("Width : ") ,_("Size of the ellipse"), 2, 0, 0, 1,"/tools/spray/width");
     _HBox.pack_start(_Label);
     _HBox.pack_start(_ETable);
 
