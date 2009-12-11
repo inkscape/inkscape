@@ -458,6 +458,9 @@ void SPDesktop::displayModeToggle() {
         _setDisplayMode(Inkscape::RENDERMODE_OUTLINE);
         break;
     case Inkscape::RENDERMODE_OUTLINE:
+        _setDisplayMode(Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
+        break;
+    case Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW:
     default:
         _setDisplayMode(Inkscape::RENDERMODE_NORMAL);
     }

@@ -613,12 +613,20 @@ SPDesktopWidget::updateTitle(gchar const* uri)
         if (this->desktop->number > 1) {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
                 g_string_printf (name, _("%s: %d (outline) - Inkscape"), fname, this->desktop->number);
+            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
+                g_string_printf (name, _("%s: %d (no filters) - Inkscape"), fname, this->desktop->number);
+            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW) {
+                g_string_printf (name, _("%s: %d (print colors preview) - Inkscape"), fname, this->desktop->number);
             } else {
                 g_string_printf (name, _("%s: %d - Inkscape"), fname, this->desktop->number);
             }
         } else {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
                 g_string_printf (name, _("%s (outline) - Inkscape"), fname);
+            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
+                g_string_printf (name, _("%s (no filters) - Inkscape"), fname);
+            } else if (this->desktop->getMode() == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW) {
+                g_string_printf (name, _("%s (print colors preview) - Inkscape"), fname);
             } else {
                 g_string_printf (name, _("%s - Inkscape"), fname);
             }

@@ -703,6 +703,8 @@ update_view_menu(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     	new_state = mode == Inkscape::RENDERMODE_NO_FILTERS;
     } else if (!strcmp(action->id, "ViewModeOutline")) {
     	new_state = mode == Inkscape::RENDERMODE_OUTLINE;
+    } else if (!strcmp(action->id, "ViewModePrintColorsPreview")) {
+    	new_state = mode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW;
     } else {
     	g_warning("update_view_menu does not handle this verb");
     }

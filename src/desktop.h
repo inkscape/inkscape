@@ -201,6 +201,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setDisplayModeOutline() {
         _setDisplayMode(Inkscape::RENDERMODE_OUTLINE);
     }
+    void setDisplayModePrintColorsPreview() {
+        _setDisplayMode(Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
+    }
     void displayModeToggle();
     Inkscape::RenderMode _display_mode;
     Inkscape::RenderMode getMode() const { return _display_mode; }

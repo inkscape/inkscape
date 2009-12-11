@@ -71,6 +71,8 @@ ink_common_sources +=		\
 	ui/dialog/panel-dialog.h		\
 	ui/dialog/print.cpp			\
 	ui/dialog/print.h			\
+	ui/dialog/print-colors-preview-dialog.cpp		\
+	ui/dialog/print-colors-preview-dialog.h		\
 	ui/dialog/scriptdialog.cpp		\
 	ui/dialog/scriptdialog.h		\
 	ui/dialog/spray-option.cpp		\

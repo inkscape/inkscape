@@ -312,7 +312,9 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                              NRPixBlock *pb, unsigned int flags)
 {
    bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
-    bool filter = (item->arena->rendermode == Inkscape::RENDERMODE_NORMAL);
+    bool filter = (item->arena->rendermode != Inkscape::RENDERMODE_OUTLINE &&
+                   item->arena->rendermode != Inkscape::RENDERMODE_NO_FILTERS);
+    bool print_colors = (item->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
 
     nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
     nr_return_val_if_fail (NR_IS_ARENA_ITEM (item),

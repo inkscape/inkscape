@@ -1749,6 +1749,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_VIEW_MODE_OUTLINE:
             dt->setDisplayModeOutline();
             break;
+        case SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW:
+            dt->setDisplayModePrintColorsPreview();
+            break;
         case SP_VERB_VIEW_MODE_TOGGLE:
             dt->displayModeToggle();
             break;
@@ -1870,6 +1873,9 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_DIALOG_SVG_FONTS:
             dt->_dlg_mgr->showDialog("SvgFontsDialog");
+            break;
+        case SP_VERB_DIALOG_PRINT_COLORS_PREVIEW:
+            dt->_dlg_mgr->showDialog("PrintColorsPreviewDialog");
             break;
         default:
             break;
@@ -2626,6 +2632,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to normal display without filters"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
+    new ZoomVerb(SP_VERB_VIEW_MODE_PRINT_COLORS_PREVIEW, "ViewModePrintColorsPreview", N_("_Print Colors Preview"),
+                 N_("Switch to print colors preview mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("_Toggle"),
                  N_("Toggle between normal and outline display modes"), NULL),
 
@@ -2701,6 +2709,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Manage, edit, and apply SVG filters"), NULL),
     new DialogVerb(SP_VERB_DIALOG_SVG_FONTS, "DialogSVGFonts", N_("SVG Font Editor..."),
                    N_("Edit SVG fonts"), NULL),
+    new DialogVerb(SP_VERB_DIALOG_PRINT_COLORS_PREVIEW, "DialogPrintColorsPreview", N_("Print Colors..."),
+                   N_("Select which color separations to render in Print Colors Preview rendermode"), NULL),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
