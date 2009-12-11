@@ -18,6 +18,7 @@
 #include "nr-filter-types.h"
 #include <libnr/nr-blit.h>
 #include "preferences.h"
+#include "color.h"
 
 static void nr_arena_class_init (NRArenaClass *klass);
 static void nr_arena_init (NRArena *arena);
@@ -179,6 +180,29 @@ nr_arena_set_renderoffscreen (NRArena *arena)
     // the real assignment to the quality indicators is in the update function
     arena->renderoffscreen = true;
 
+}
+
+#define FLOAT_TO_UINT8(f) (int(f*255))
+#define RGBA_R(v) ((v) >> 24)
+#define RGBA_G(v) (((v) >> 16) & 0xff)
+#define RGBA_B(v) (((v) >> 8) & 0xff)
+#define RGBA_A(v) ((v) & 0xff)
+
+void nr_arena_separate_color_plates(guint32* rgba){
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool render_cyan = prefs->getBool("/options/printcolorspreview/cyan", true);
+    bool render_magenta = prefs->getBool("/options/printcolorspreview/magenta", true);
+    bool render_yellow = prefs->getBool("/options/printcolorspreview/yellow", true);
+    bool render_black = prefs->getBool("/options/printcolorspreview/black", true);
+
+    float rgb_v[3];
+    float cmyk_v[4];
+    sp_color_rgb_to_cmyk_floatv (cmyk_v, RGBA_R(*rgba)/256.0, RGBA_G(*rgba)/256.0, RGBA_B(*rgba)/256.0); 
+    sp_color_cmyk_to_rgb_floatv (rgb_v, render_cyan ? cmyk_v[0] : 0,
+                                        render_magenta ? cmyk_v[1] : 0,
+                                        render_yellow ? cmyk_v[2] : 0,
+                                        render_black ? cmyk_v[3] : 0);
+    *rgba = (FLOAT_TO_UINT8(rgb_v[0])<<24) + (FLOAT_TO_UINT8(rgb_v[1])<<16) + (FLOAT_TO_UINT8(rgb_v[2])<<8) + 0xff;
 }
 
 /*

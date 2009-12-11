@@ -64,4 +64,6 @@ void nr_arena_set_renderoffscreen (NRArena *arena);
 
 void nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *painter, float opacity, NRPixBlock *mask);
 
+void nr_arena_separate_color_plates(guint32* rgba);
+
 #endif

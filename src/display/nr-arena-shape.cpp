@@ -36,7 +36,6 @@
 #include <typeinfo>
 #include <cairo.h>
 #include "preferences.h"
-#include "svg/svg-device-color.h"
 
 #include <glib.h>
 #include "svg/svg.h"
@@ -833,7 +832,6 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     pb->empty = FALSE;
 }
 
-
 /**
  * Renders the item.  Markers are just composed into the parent buffer.
  */
@@ -846,7 +844,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (!shape->style) return item->state;
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
-    bool print_colors = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
+    bool print_colors_preview = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
 
     if (outline) { // cairo outline rendering
 
@@ -876,21 +874,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
         }
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-
     SPStyle const *style = shape->style;
-    bool render_cyan = prefs->getBool("/options/printcolorspreview/cyan", true);
-    bool render_magenta = prefs->getBool("/options/printcolorspreview/magenta", true);
-    bool render_yellow = prefs->getBool("/options/printcolorspreview/yellow", true);
-    bool render_black = prefs->getBool("/options/printcolorspreview/black", true);
-
-    float rgb_v[3];
-    float cmyk_v[4];
-#define FLOAT_TO_UINT8(f) (int(f*255))
-#define RGBA_R(v) ((v) >> 24)
-#define RGBA_G(v) (((v) >> 16) & 0xff)
-#define RGBA_B(v) (((v) >> 8) & 0xff)
-#define RGBA_A(v) ((v) & 0xff)
 
     if (shape->fill_shp) {
         NRPixBlock m;
@@ -920,14 +904,8 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
                 rgba = fill_color->toRGBA32( shape->_fill.opacity );
             }
 
-            if (print_colors){
-                sp_color_rgb_to_cmyk_floatv (cmyk_v, RGBA_R(rgba)/256.0, RGBA_G(rgba)/256.0, RGBA_B(rgba)/256.0); 
-                sp_color_cmyk_to_rgb_floatv (rgb_v, render_cyan ? cmyk_v[0] : 0,
-                                                    render_magenta ? cmyk_v[1] : 0,
-                                                    render_yellow ? cmyk_v[2] : 0,
-                                                    render_black ? cmyk_v[3] : 0);
-                rgba = (FLOAT_TO_UINT8(rgb_v[0])<<24) + (FLOAT_TO_UINT8(rgb_v[1])<<16) + (FLOAT_TO_UINT8(rgb_v[2])<<8) + 0xff;
-            }
+            if (print_colors_preview)
+                nr_arena_separate_color_plates(&rgba);
 
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
@@ -967,14 +945,8 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
             rgba = stroke_color->toRGBA32( shape->_stroke.opacity );
         }
 
-        if (print_colors){
-            sp_color_rgb_to_cmyk_floatv (cmyk_v, RGBA_R(rgba)/256.0, RGBA_G(rgba)/256.0, RGBA_B(rgba)/256.0); 
-            sp_color_cmyk_to_rgb_floatv (rgb_v, render_cyan ? cmyk_v[0] : 0,
-                                                render_magenta ? cmyk_v[1] : 0,
-                                                render_yellow ? cmyk_v[2] : 0,
-                                                render_black ? cmyk_v[3] : 0);
-            rgba = (FLOAT_TO_UINT8(rgb_v[0])<<24) + (FLOAT_TO_UINT8(rgb_v[1])<<16) + (FLOAT_TO_UINT8(rgb_v[2])<<8) + 0xff;
-        }
+        if (print_colors_preview)
+            nr_arena_separate_color_plates(&rgba);
 
         nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
         pb->empty = FALSE;

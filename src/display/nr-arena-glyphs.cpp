@@ -444,6 +444,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
     SPStyle const *style = ggroup->style;
 
     guint ret = item->state;
+    bool print_colors_preview = (item->arena->rendermode == Inkscape::RENDERMODE_PRINT_COLORS_PREVIEW);
 
     if (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE) {
 
@@ -511,6 +512,10 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             } else {
                 rgba = style->fill.value.color.toRGBA32( SP_SCALE24_TO_FLOAT(style->fill_opacity.value) );
             }
+
+            if (print_colors_preview)
+                nr_arena_separate_color_plates(&rgba);
+
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
         }
@@ -551,6 +556,10 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             } else {
                 rgba = style->stroke.value.color.toRGBA32( SP_SCALE24_TO_FLOAT(style->stroke_opacity.value) );
             }
+
+            if (print_colors_preview)
+                nr_arena_separate_color_plates(&rgba);
+
             nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
         } else {
