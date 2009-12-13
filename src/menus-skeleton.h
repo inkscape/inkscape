@@ -40,8 +40,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"DialogMetadata\" />\n"
 "       <verb verb-id=\"DialogPreferences\" />\n"
 "       <verb verb-id=\"DialogInput\" />\n"
-// TODO look at some dynamic option for changing the menu tree:
-//"       <verb verb-id=\"DialogInput2\" />\n"
+"       <verb verb-id=\"DialogInput2\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"FileClose\" />\n"
 "       <verb verb-id=\"FileQuit\" />\n"
