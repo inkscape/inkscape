@@ -373,6 +373,10 @@ void ColorNotebook::init()
 
 	sp_set_font_size_smaller (rgbabox);
 	gtk_widget_show_all (rgbabox);
+
+        //the "too much ink" icon is initially hidden
+        gtk_widget_hide(GTK_WIDGET(_box_toomuchink));
+
         gtk_table_attach (GTK_TABLE (table), rgbabox, 0, 2, row, row + 1, GTK_FILL, GTK_SHRINK, XPAD, YPAD);
 
 #ifdef SPCS_PREVIEW
@@ -532,16 +536,22 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
     /* update too-much-ink icon */
     gtk_widget_set_sensitive (_box_toomuchink, false);
     if (color.icc){
-        double ink_sum = 0;
-        for (unsigned int i=0; i<color.icc->colors.size(); i++){
-            ink_sum += color.icc->colors[i];
-        }
+        Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(color.icc->colorProfile.c_str());
+        if (prof->getColorSpace() == icSigCmykData || prof->getColorSpace() == icSigCmyData){
+            gtk_widget_show(GTK_WIDGET(_box_toomuchink));
+            double ink_sum = 0;
+            for (unsigned int i=0; i<color.icc->colors.size(); i++){
+                ink_sum += color.icc->colors[i];
+            }
 
-        /* Some literature states that when the sum of paint values exceed 320%, it is considered to be a satured color,
-            which means the paper can get too wet due to an excessive ammount of ink. This may lead to several issues
-            such as misalignment and poor quality of printing in general.*/
-        if ( ink_sum > 3.2 )
-            gtk_widget_set_sensitive (_box_toomuchink, true);
+            /* Some literature states that when the sum of paint values exceed 320%, it is considered to be a satured color,
+                which means the paper can get too wet due to an excessive ammount of ink. This may lead to several issues
+                such as misalignment and poor quality of printing in general.*/
+            if ( ink_sum > 3.2 )
+                gtk_widget_set_sensitive (_box_toomuchink, true);
+        } else {
+            gtk_widget_hide(GTK_WIDGET(_box_toomuchink));
+        }
     }
 #endif //ENABLE_LCMS
 
