@@ -181,18 +181,20 @@ void Inkscape::SelCue::_newTextBaselines()
         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) { // visualize baseline
             Inkscape::Text::Layout const *layout = te_get_layout(item);
             if (layout != NULL && layout->outputExists()) {
-                Geom::Point a = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
-                baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
-                                                    "mode", SP_CTRL_MODE_XOR,
-                                                    "size", 4.0,
-                                                    "filled", 0,
-                                                    "stroked", 1,
-                                                    "stroke_color", 0x000000ff,
-                                                    NULL);
+                boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
+                if (pt) {
+                    baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
+                        "mode", SP_CTRL_MODE_XOR,
+                        "size", 4.0,
+                        "filled", 0,
+                        "stroked", 1,
+                        "stroke_color", 0x000000ff,
+                        NULL);
 
-                sp_canvas_item_show(baseline_point);
-                SP_CTRL(baseline_point)->moveto(a);
-                sp_canvas_item_move_to_z(baseline_point, 0);
+                    sp_canvas_item_show(baseline_point);
+                    SP_CTRL(baseline_point)->moveto((*pt) * sp_item_i2d_affine(item));
+                    sp_canvas_item_move_to_z(baseline_point, 0);
+                }
             }
         }
 

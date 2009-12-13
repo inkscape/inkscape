@@ -480,6 +480,10 @@ public:
     /** For latin text, the left side of the character, on the baseline */
     Geom::Point characterAnchorPoint(iterator const &it) const;
 
+    /** For left aligned text, the leftmost end of the baseline
+    For rightmost text, the rightmost... you probably got it by now ;-)*/
+    boost::optional<Geom::Point> baselineAnchorPoint() const;
+
     /** This is that value to apply to the x,y attributes of tspan role=line
     elements, and hence it takes alignment into account. */
     Geom::Point chunkAnchorPoint(iterator const &it) const;
