@@ -2,7 +2,7 @@
  * @brief SVG Fonts dialog - implementation
  */
 /* Authors:
- *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
+ *   Felipe C. da S. Sanches <juca@members.fsf.org>
  *
  * Copyright (C) 2008 Authors
  * Released under GNU GPLv2 (or later).  Read the file 'COPYING' for more information.

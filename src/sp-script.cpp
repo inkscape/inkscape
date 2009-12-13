@@ -4,7 +4,7 @@
  * SVG <script> implementation
  *
  * Authors:
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *
  * Copyright (C) 2008 authors
  *

@@ -2,7 +2,7 @@
  * feComponentTransfer filter primitive renderer
  *
  * Authors:
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * Copyright (C) 2007 authors

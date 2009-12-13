@@ -7,7 +7,7 @@
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>
  *   Niko Kiirala <niko@kiirala.com>
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *
  * Copyright (C) 2006, 2007, 2008 Authors
  *

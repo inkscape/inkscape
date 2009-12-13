@@ -3,7 +3,7 @@
  *
  * Authors:
  *   World Wide Web Consortium <http://www.w3.org/>
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *
  * This file has a considerable amount of code adapted from
  *  the W3C SVG filter specs, available at:

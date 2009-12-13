@@ -6,7 +6,7 @@
  */
 /*
  * Authors:
- *   Felipe Sanches <felipe.sanches@gmail.com>
+ *   Felipe Sanches <juca@members.fsf.org>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2007 Felipe C. da S. Sanches

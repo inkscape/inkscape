@@ -6,7 +6,7 @@
  */
 /*
  * Authors:
- *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *   hugo Rodrigues <haa.rodrigues@gmail.com>
  *
  * Copyright (C) 2007 Felipe Sanches

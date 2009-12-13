@@ -5,7 +5,7 @@
  * SVGFonts rendering headear
  *
  * Authors:
- *    Felipe C. da S. Sanches <felipe.sanches@gmail.com>
+ *    Felipe C. da S. Sanches <juca@members.fsf.org>
  *
  * Copyright (C) 2008 Felipe C. da S. Sanches
  *

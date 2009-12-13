@@ -4,7 +4,7 @@
 /* Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.org>
  *   Rodrigo Kumpera <kumpera@gmail.com>
- *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
+ *   Felipe C. da S. Sanches <juca@members.fsf.org>
  *
  * Copyright (C) 2007 Authors
  *
