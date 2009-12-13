@@ -47,7 +47,7 @@
 #include "display/nr-plain-stuff.h"
 #include "sp-gradient-reference.h"
 
-//#define USE_DOCUMENT_PALETTE 1
+#define USE_DOCUMENT_PALETTE 1
 
 namespace Inkscape {
 namespace UI {
