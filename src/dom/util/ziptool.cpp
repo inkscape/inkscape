@@ -2207,6 +2207,7 @@ ZipEntry *ZipFile::addFile(const std::string &fileName,
     ZipEntry *ze = new ZipEntry();
     if (!ze->readFile(fileName, comment))
         {
+        delete ze;
         return NULL;
         }
     entries.push_back(ze);

@@ -66,7 +66,7 @@ namespace Inkjar {
 
 JarFile::JarFile(gchar const*new_filename)
 {
-    _filename = strdup(new_filename);
+    _filename = g_strdup(new_filename);
     _last_filename = NULL;
     fd = -1;
 }
@@ -75,7 +75,7 @@ JarFile::JarFile(gchar const*new_filename)
 //       use strdup
 gchar *JarFile::get_last_filename() const
 {
-    return (_last_filename != NULL ? strdup(_last_filename) : NULL);
+    return (_last_filename != NULL ? g_strdup(_last_filename) : NULL);
 }
 
 JarFile::~JarFile()
@@ -445,11 +445,11 @@ JarFile& JarFile::operator=(JarFile const& rhs)
     if (_filename == NULL)
 	_filename = NULL;
     else
-	_filename = strdup(rhs._filename);
+	_filename = g_strdup(rhs._filename);
     if (_last_filename == NULL)
 	_last_filename = NULL;
     else 
-	_last_filename = strdup(rhs._last_filename);
+	_last_filename = g_strdup(rhs._last_filename);
     fd = rhs.fd;
     
     return *this;

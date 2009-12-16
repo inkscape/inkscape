@@ -1010,6 +1010,7 @@ bool JavaBinderyImpl::callStatic(int type,
             default:
                 {
                 err("Unknown value type: %d", v.getType());
+                delete [] jvals;
                 return false;
                 }
             }
@@ -1057,7 +1058,7 @@ bool JavaBinderyImpl::callStatic(int type,
             return false;
             }
         }
-    delete jvals;
+    delete [] jvals;
     String errStr = getException();
     if (errStr.size()>0)
         {
@@ -1131,6 +1132,7 @@ bool JavaBinderyImpl::callInstance(
             default:
                 {
                 err("Unknown value type: %d", v.getType());
+                delete [] jvals;
                 return false;
                 }
             }
@@ -1178,7 +1180,7 @@ bool JavaBinderyImpl::callInstance(
             return false;
             }
         }
-    delete jvals;
+    delete [] jvals;
     String errStr = getException();
     if (errStr.size()>0)
         {

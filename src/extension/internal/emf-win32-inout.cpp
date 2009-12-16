@@ -127,6 +127,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* Print document */
     ret = mod->begin(doc);
     if (ret) {
+        g_free(oldoutput);
         throw Inkscape::Extension::Output::save_failed();
     }
     sp_item_invoke_print(mod->base, &context);

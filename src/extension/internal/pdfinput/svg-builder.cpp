@@ -1536,7 +1536,7 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
             }
             png_write_row(png_ptr, (png_bytep)buffer);
         }
-        delete buffer;
+        delete [] buffer;
     } else if (color_map) {
         image_stream = new ImageStream(str, width,
                                        color_map->getNumPixelComps(),
@@ -1575,7 +1575,7 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
                 png_write_row(png_ptr, (png_bytep)buffer);
             }
         }
-        delete buffer;
+        delete [] buffer;
 
     } else {    // A colormap must be provided, so quit
         png_destroy_write_struct(&png_ptr, &info_ptr);

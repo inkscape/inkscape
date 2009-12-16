@@ -795,8 +795,8 @@ void SingularValueDecomposition::calculate()
          }
       }
 
-    delete e;
-    delete work;
+    delete [] e;
+    delete [] work;
 
 }
 

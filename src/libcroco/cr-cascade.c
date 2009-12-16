@@ -70,6 +70,7 @@ cr_cascade_new (CRStyleSheet * a_author_sheet,
 
         PRIVATE (result) = (CRCascadePriv *)g_try_malloc (sizeof (CRCascadePriv));
         if (!PRIVATE (result)) {
+                g_free(result);
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
         }

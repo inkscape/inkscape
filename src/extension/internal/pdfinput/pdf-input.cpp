@@ -734,6 +734,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     delete builder;
     g_free(docname);
     delete pdf_doc;
+    delete dlg;
 
     // Restore undo
     sp_document_set_undo_sensitive(doc, saved);

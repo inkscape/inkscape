@@ -80,7 +80,7 @@ void pline2svg(polyline pline, int type, int precision, char * units, double sca
 	// 2 is pline2polygon
 	
 	
-	char delim[1];
+	char delim[2];
 	double mag_bulge = 0;
 	double prev_mag_bulge = 0;
 	
@@ -185,7 +185,7 @@ void lwpline2svg(lwpolyline pline, int type, int precision, char * units, double
 	// 2 is pline2polygon
 	
 	
-	char delim[1];
+	char delim[2];
 	double mag_bulge = 0;
 	double prev_mag_bulge = 0;
 	
