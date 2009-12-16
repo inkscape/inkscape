@@ -51,7 +51,7 @@
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #include "color-profile.h"
-#define DEBUG_LCMS
+//#define DEBUG_LCMS
 #ifdef DEBUG_LCMS
 
 
