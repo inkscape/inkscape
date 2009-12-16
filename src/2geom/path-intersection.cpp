@@ -118,7 +118,7 @@ bool path_direction(Path const &p) {
     double x = p.initialPoint()[X];
     Cmp res = cmp(p[0].finalPoint()[Y], y);
     goto doh;
-    for(unsigned i = 1; i <= p.size(); i++) {
+    for(unsigned i = 1; i < p.size(); i++) {
         Cmp final_to_ray = cmp(p[i].finalPoint()[Y], y);
         Cmp initial_to_ray = cmp(p[i].initialPoint()[Y], y);
         // if y is included, these will have opposite values, giving order.
@@ -485,7 +485,7 @@ std::vector<double> path_mono_splits(Path const &p) {
     if(p.empty()) return ret;
     
     bool pdx=2, pdy=2;  //Previous derivative direction
-    for(unsigned i = 0; i <= p.size(); i++) {
+    for(unsigned i = 0; i < p.size(); i++) {
         std::vector<double> spl = offset_doubles(curve_mono_splits(p[i]), i);
         bool dx = p[i].initialPoint()[X] > (spl.empty()? p[i].finalPoint()[X] :
                                                          p.valueAt(spl.front(), X));
