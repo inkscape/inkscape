@@ -56,9 +56,8 @@ class Embedder(inkex.Effect):
         if xlink is None or xlink[:5] != 'data:':
             absref=node.get(inkex.addNS('absref','sodipodi'))
             url=urlparse.urlparse(xlink)
-            href=urllib.unquote(url.path)
-            if os.name == 'nt' and href[0] == '/':
-                href = href[1:]
+            href=urllib.url2pathname(url.path)
+            
             path=''
             #path selection strategy:
             # 1. href if absolute
@@ -69,6 +68,8 @@ class Embedder(inkex.Effect):
             if (not os.path.isfile(path)):
                 if (absref != None):
                     path=absref
+
+            path=unicode(path, "utf-8")
 
             if (not os.path.isfile(path)):
                 inkex.errormsg(_('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.'))
