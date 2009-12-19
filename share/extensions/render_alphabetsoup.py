@@ -31,6 +31,8 @@ import bezmisc
 import simplepath
 import os
 import sys
+import gettext
+_ = gettext.gettext
 
 syntax   = render_alphabetsoup_config.syntax
 alphabet = render_alphabetsoup_config.alphabet
@@ -306,7 +308,7 @@ def randomize_input_string( str, zoom ):					   # generate list of images based 
 		elif( char == " "):							  # add a " " space to the image list
 			imagelist.append( " " )
 		else:											# this character is not in config.alphabet, skip it
-			print "bad character", char 
+			inkex.errormsg(_("bad character") + " = 0x%x" % ord(char))
 	return imagelist
 
 def optikern( image, width, zoom ):                                   # optical kerning algorithm
