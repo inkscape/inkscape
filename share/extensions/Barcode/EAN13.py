@@ -42,8 +42,8 @@ class Object(Barcode):
 		if len(number) == 12:
 			number = number + self.getChecksum(number)
 		else:
-			if not self.varifyChecksum(number):
-				sys.stderr.write("EAN13 Checksum not correct for this barcode, omit last charicter to generate new checksum.\n")
+			if not self.verifyChecksum(number):
+				sys.stderr.write("EAN13 Checksum not correct for this barcode, omit last character to generate new checksum.\n")
 				return
 
 		result = result + guardBar
@@ -83,9 +83,9 @@ class Object(Barcode):
 
 		return str(z)
 
-	def varifyChecksum(self, number):
-		new = self.getChecksum(number[:12])
-		existing = number[12]
+	def verifyChecksum(self, number):
+		new = self.getChecksum(number[:-1])
+		existing = number[-1]
 		return new == existing
 
 	def getStyle(self, index):

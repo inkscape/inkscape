@@ -47,8 +47,8 @@ class Object(EAN13.Object):
 		if not echeck:
 			echeck = self.getChecksum(number)
 		else:
-			if not self.varifyChecksum(number + echeck):
-				sys.stderr.write("UPC-E Checksum not correct for this barcode, omit last charicter to generate new checksum.\n")
+			if not self.verifyChecksum(number + echeck):
+				sys.stderr.write("UPC-E Checksum not correct for this barcode, omit last character to generate new checksum.\n")
 				return
 
 		number = self.ConvertAtoE(number)
