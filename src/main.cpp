@@ -566,8 +566,12 @@ main(int argc, char **argv)
     // TODO these should use xxxW() calls explicitly and convert UTF-16 <--> UTF-8
     SetCurrentDirectory(homedir.c_str());
     _win32_set_inkscape_env(homedir);
-    RegistryTool rt;
-    rt.setPathInfo();
+    // Don't touch the registry (works fine without it) for Inkscape Portable
+    gchar const *val = g_getenv("INKSCAPE_PORTABLE_PROFILE_DIR");
+    if (!val) {
+        RegistryTool rt;
+        rt.setPathInfo();
+    }
 #endif
 
     // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
