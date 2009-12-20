@@ -130,6 +130,7 @@ sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
     SPItem      *base = SP_ITEM(sp_document_root(doc));
     NRArena    *arena = NRArena::create();
     unsigned int dkey = sp_item_display_key_new(1);
+    // TODO investigate why we are grabbing root and then ignoring it.
     NRArenaItem *root = sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
 
     // Run print dialog

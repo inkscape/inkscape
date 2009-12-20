@@ -4408,11 +4408,13 @@ static void sp_spray_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
     prefs->setDouble( "/tools/spray/width", adj->value );
 }
 
-static void sp_spray_force_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
+/*
+static void sp_spray_force_value_changed( GtkAdjustment * / *adj* /, GObject * / *tbl* / )
 {
     //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     //prefs->setDouble( "/tools/spray/force", adj->value * 0.01 );
 }
+*/
 
 static void sp_spray_mean_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
@@ -4432,7 +4434,7 @@ static void sp_spray_pressure_state_changed( GtkToggleAction *act, gpointer /*da
     prefs->setBool("/tools/spray/usepressure", gtk_toggle_action_get_active(act));
 }
 
-static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject */*tbl*/ )
 {
     int mode = ege_select_one_action_get_active( act );
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -6571,7 +6573,7 @@ sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *
 }
 
 gboolean
-sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject */*tbl*/)
+sp_text_toolbox_family_list_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject */*tbl*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) return FALSE;
@@ -6759,14 +6761,14 @@ cell_data_func  (GtkCellLayout */*cell_layout*/,
     g_free(family_escaped);
 }
 
-gboolean            text_toolbox_completion_match_selected    (GtkEntryCompletion *widget,
-                                                        GtkTreeModel       *model,
-                                                        GtkTreeIter        *iter,
-                                                        GObject *tbl)
+gboolean text_toolbox_completion_match_selected(GtkEntryCompletion */*widget*/,
+                                                GtkTreeModel       *model,
+                                                GtkTreeIter        *iter,
+                                                GObject            *tbl)
 {
     // We intercept this signal so as to fire family_changed at once (without it, you'd have to
     // press Enter again after choosing a completion)
-    gchar *family;
+    gchar *family = 0;
     gtk_tree_model_get(model, iter, 0, &family, -1);
 
     GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
@@ -6799,9 +6801,9 @@ cbe_add_completion (GtkComboBoxEntry *cbe, GObject *tbl){
     g_object_unref(completion);
 }
 
-void        sp_text_toolbox_family_popnotify          (GtkComboBox *widget,
-                                                       void *property,
-                                                        GObject *tbl)
+void sp_text_toolbox_family_popnotify(GtkComboBox *widget,
+                                      void */*property*/,
+                                      GObject *tbl)
 {
   // while the drop-down is open, we disable font family changing, reenabling it only when it closes
 
@@ -7109,7 +7111,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     {
         return;
     }
-    
+
 
     // quit if run by the _changed callbacks
     if (g_object_get_data( tbl, "freeze" )) {
@@ -7160,7 +7162,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
     {
         return;
     }
-    
+
 
     // quit if run by the _changed callbacks
     if (g_object_get_data( tbl, "freeze" )) {
@@ -7280,7 +7282,7 @@ static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject 
 }
 
 
-static void connector_length_changed(GtkAdjustment *adj, GObject* tbl)
+static void connector_length_changed(GtkAdjustment *adj, GObject* /*tbl*/)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble("/tools/connector/length", adj->value);
@@ -7495,9 +7497,9 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_new_connection_point), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
-    
+
     // Remove selected connection point button
-    
+
     {
         InkAction* inky = ink_action_new( "ConnectorRemoveConnPointAction",
                                           _("Remove connection point"),
@@ -7507,7 +7509,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_remove_connection_point), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
-    
+
 
     // Code to watch for changes to the connector-spacing attribute in
     // the XML.

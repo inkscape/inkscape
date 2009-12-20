@@ -12,12 +12,12 @@
  * See the file LICENSE.LGPL distributed with the library.
  *
  * Licensees holding a valid commercial license may use this file in
- * accordance with the commercial license agreement provided with the 
+ * accordance with the commercial license agreement provided with the
  * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
@@ -73,7 +73,7 @@ class ActionInfo {
         }
         ShapeRef *shape(void) const
         {
-            COLA_ASSERT((type == ShapeMove) || (type == ShapeAdd) || 
+            COLA_ASSERT((type == ShapeMove) || (type == ShapeAdd) ||
                     (type == ShapeRemove));
             return (static_cast<ShapeRef *> (objPtr));
         }
@@ -189,8 +189,8 @@ void Router::modifyConnector(ConnRef *conn, const unsigned int type,
         const ConnEnd& connEnd)
 {
     ActionInfo modInfo(ConnChange, conn);
-    
-    ActionInfoList::iterator found = 
+
+    ActionInfoList::iterator found =
             find(actionList.begin(), actionList.end(), modInfo);
     if (found == actionList.end())
     {
@@ -212,8 +212,8 @@ void Router::modifyConnector(ConnRef *conn, const unsigned int type,
 void Router::modifyConnector(ConnRef *conn)
 {
     ActionInfo modInfo(ConnChange, conn);
-    
-    ActionInfoList::iterator found = 
+
+    ActionInfoList::iterator found =
             find(actionList.begin(), actionList.end(), modInfo);
     if (found == actionList.end())
     {
@@ -231,7 +231,7 @@ void Router::removeQueuedConnectorActions(ConnRef *conn)
 {
     ActionInfo modInfo(ConnChange, conn);
 
-    ActionInfoList::iterator found = 
+    ActionInfoList::iterator found =
             find(actionList.begin(), actionList.end(), modInfo);
     if (found != actionList.end())
     {
@@ -245,14 +245,14 @@ void Router::addShape(ShapeRef *shape)
     // There shouldn't be remove events or move events for the same shape
     // already in the action list.
     // XXX: Possibly we could handle this by ordering them intelligently.
-    COLA_ASSERT(find(actionList.begin(), actionList.end(), 
+    COLA_ASSERT(find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeRemove, shape)) == actionList.end());
-    COLA_ASSERT(find(actionList.begin(), actionList.end(), 
+    COLA_ASSERT(find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeMove, shape)) == actionList.end());
 
     ActionInfo addInfo(ShapeAdd, shape);
-    
-    ActionInfoList::iterator found = 
+
+    ActionInfoList::iterator found =
             find(actionList.begin(), actionList.end(), addInfo);
     if (found == actionList.end())
     {
@@ -268,14 +268,14 @@ void Router::addShape(ShapeRef *shape)
 
 void Router::removeShape(ShapeRef *shape)
 {
-    // There shouldn't be add events events for the same shape already 
+    // There shouldn't be add events events for the same shape already
     // in the action list.
     // XXX: Possibly we could handle this by ordering them intelligently.
-    COLA_ASSERT(find(actionList.begin(), actionList.end(), 
+    COLA_ASSERT(find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeAdd, shape)) == actionList.end());
 
     // Delete any ShapeMove entries for this shape in the action list.
-    ActionInfoList::iterator found = find(actionList.begin(), 
+    ActionInfoList::iterator found = find(actionList.begin(),
             actionList.end(), ActionInfo(ShapeMove, shape));
     if (found != actionList.end())
     {
@@ -306,16 +306,16 @@ void Router::moveShape(ShapeRef *shape, const double xDiff, const double yDiff)
 }
 
 
-void Router::moveShape(ShapeRef *shape, const Polygon& newPoly, 
+void Router::moveShape(ShapeRef *shape, const Polygon& newPoly,
         const bool first_move)
 {
     // There shouldn't be remove events or add events for the same shape
     // already in the action list.
     // XXX: Possibly we could handle this by ordering them intelligently.
-    COLA_ASSERT(find(actionList.begin(), actionList.end(), 
+    COLA_ASSERT(find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeRemove, shape)) == actionList.end());
-    
-    if (find(actionList.begin(), actionList.end(), 
+
+    if (find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeAdd, shape)) != actionList.end())
     {
         // The Add is enough, no need for the Move action too.
@@ -325,7 +325,7 @@ void Router::moveShape(ShapeRef *shape, const Polygon& newPoly,
     ActionInfo moveInfo(ShapeMove, shape, newPoly, first_move);
     // Sanely cope with the case where the user requests moving the same
     // shape multiple times before rerouting connectors.
-    ActionInfoList::iterator found = 
+    ActionInfoList::iterator found =
             find(actionList.begin(), actionList.end(), moveInfo);
 
     if (found != actionList.end())
@@ -339,7 +339,7 @@ void Router::moveShape(ShapeRef *shape, const Polygon& newPoly,
         // leave the firstMove setting alone.
         found->newPoly = newPoly;
     }
-    else 
+    else
     {
         actionList.push_back(moveInfo);
     }
@@ -380,7 +380,7 @@ void Router::destroyOrthogonalVisGraph(void)
 
 void Router::regenerateStaticBuiltGraph(void)
 {
-    // Here we do talks involved in updating the static-built visibility 
+    // Here we do talks involved in updating the static-built visibility
     // graph (if necessary) before we do any routing.
     if (_staticGraphInvalidated)
     {
@@ -391,7 +391,7 @@ void Router::regenerateStaticBuiltGraph(void)
             timers.Register(tmOrthogGraph, timerStart);
             // Regenerate a new visibility graph.
             generateStaticOrthogonalVisGraph(this);
-            
+
             timers.Stop();
         }
         _staticGraphInvalidated = false;
@@ -401,11 +401,11 @@ void Router::regenerateStaticBuiltGraph(void)
 
 bool Router::shapeInQueuedActionList(ShapeRef *shape) const
 {
-    bool foundAdd = find(actionList.begin(), actionList.end(), 
+    bool foundAdd = find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeAdd, shape)) != actionList.end();
-    bool foundRem = find(actionList.begin(), actionList.end(), 
+    bool foundRem = find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeRemove, shape)) != actionList.end();
-    bool foundMove = find(actionList.begin(), actionList.end(), 
+    bool foundMove = find(actionList.begin(), actionList.end(),
                 ActionInfo(ShapeMove, shape)) != actionList.end();
 
     return (foundAdd || foundRem || foundMove);
@@ -456,21 +456,21 @@ bool Router::processTransaction(void)
 
         // o  Remove entries related to this shape's vertices
         shape->removeFromGraph();
-        
+
         if (SelectiveReroute && (!isMove || notPartialTime || first_move))
         {
             markConnectors(shape);
         }
 
         adjustContainsWithDel(pid);
-        
+
         // Ignore this shape for visibility.
         // XXX: We don't really need to do this if we're not using Partial
         //      Feedback.  Without this the blocked edges still route
         //      around the shape until it leaves the connector.
         shape->makeInactive();
     }
-    
+
     if (seenShapeMovesOrDeletes && _polyLineRouting)
     {
         if (InvisibilityGrph)
@@ -478,7 +478,7 @@ bool Router::processTransaction(void)
             for (curr = actionList.begin(); curr != finish; ++curr)
             {
                 ActionInfo& actInf = *curr;
-                if (!((actInf.type == ShapeRemove) || 
+                if (!((actInf.type == ShapeRemove) ||
                             (actInf.type == ShapeMove)))
                 {
                     // Not a move or remove action, so don't do anything.
@@ -513,7 +513,7 @@ bool Router::processTransaction(void)
 
         // Restore this shape for visibility.
         shape->makeActive();
-        
+
         if (isMove)
         {
             shape->setNewPoly(newPoly);
@@ -559,7 +559,7 @@ bool Router::processTransaction(void)
     }
     // Clear the actionList.
     actionList.clear();
-    
+
     _staticGraphInvalidated = true;
     rerouteAndCallbackConnectors();
 
@@ -570,7 +570,7 @@ bool Router::processTransaction(void)
 void Router::addCluster(ClusterRef *cluster)
 {
     cluster->makeActive();
-    
+
     unsigned int pid = cluster->id();
     ReferencingPolygon& poly = cluster->polygon();
 
@@ -581,9 +581,9 @@ void Router::addCluster(ClusterRef *cluster)
 void Router::delCluster(ClusterRef *cluster)
 {
     cluster->makeInactive();
-    
+
     unsigned int pid = cluster->id();
-    
+
     adjustClustersWithDel(pid);
 }
 
@@ -605,9 +605,9 @@ unsigned int Router::assignId(const unsigned int suggestedId)
 {
     // If the suggestedId is zero, then we assign the object the next
     // smallest unassigned ID, otherwise we trust the ID given is unique.
-    unsigned int assignedId = (suggestedId == 0) ? 
+    unsigned int assignedId = (suggestedId == 0) ?
             (_largestAssignedId + 1) : suggestedId;
-    
+
     // Have the router record if this ID is larger than the _largestAssignedId.
     _largestAssignedId = std::max(_largestAssignedId, assignedId);
 
@@ -619,17 +619,17 @@ unsigned int Router::assignId(const unsigned int suggestedId)
 
 
     // Returns whether the given ID is unique among all objects known by the
-    // router.  Outputs a warning if the ID is found ore than once. 
+    // router.  Outputs a warning if the ID is found ore than once.
     // It is expected this is only going to be called from assertions while
     // debugging, so efficiency is not an issue and we just iterate over all
     // objects.
-bool Router::idIsUnique(const unsigned int id) const 
+bool Router::idIsUnique(const unsigned int id) const
 {
     unsigned int count = 0;
 
     // Examine shapes.
-    for (ShapeRefList::const_iterator i = shapeRefs.begin(); 
-            i != shapeRefs.end(); ++i) 
+    for (ShapeRefList::const_iterator i = shapeRefs.begin();
+            i != shapeRefs.end(); ++i)
     {
         if ((*i)->id() == id)
         {
@@ -638,8 +638,8 @@ bool Router::idIsUnique(const unsigned int id) const
     }
 
     // Examine connectors.
-    for (ConnRefList::const_iterator i = connRefs.begin(); 
-            i != connRefs.end(); ++i) 
+    for (ConnRefList::const_iterator i = connRefs.begin();
+            i != connRefs.end(); ++i)
     {
         if ((*i)->id() == id)
         {
@@ -648,8 +648,8 @@ bool Router::idIsUnique(const unsigned int id) const
     }
 
     // Examine clusters.
-    for (ClusterRefList::const_iterator i = clusterRefs.begin(); 
-            i != clusterRefs.end(); ++i) 
+    for (ClusterRefList::const_iterator i = clusterRefs.begin();
+            i != clusterRefs.end(); ++i)
     {
         if ((*i)->id() == id)
         {
@@ -679,13 +679,13 @@ void Router::attachedConns(IntList &conns, const unsigned int shapeId,
         const unsigned int type)
 {
     ConnRefList::const_iterator fin = connRefs.end();
-    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i)
     {
-        if ((type & runningTo) && ((*i)->_dstId == shapeId)) 
+        if ((type & runningTo) && ((*i)->_dstId == shapeId))
         {
             conns.push_back((*i)->_id);
         }
-        else if ((type & runningFrom) && ((*i)->_srcId == shapeId)) 
+        else if ((type & runningFrom) && ((*i)->_srcId == shapeId))
         {
             conns.push_back((*i)->_id);
         }
@@ -699,9 +699,9 @@ void Router::attachedShapes(IntList &shapes, const unsigned int shapeId,
         const unsigned int type)
 {
     ConnRefList::const_iterator fin = connRefs.end();
-    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i)
     {
-        if ((type & runningTo) && ((*i)->_dstId == shapeId)) 
+        if ((type & runningTo) && ((*i)->_dstId == shapeId))
         {
             if ((*i)->_srcId != 0)
             {
@@ -709,7 +709,7 @@ void Router::attachedShapes(IntList &shapes, const unsigned int shapeId,
                 shapes.push_back((*i)->_srcId);
             }
         }
-        else if ((type & runningFrom) && ((*i)->_srcId == shapeId)) 
+        else if ((type & runningFrom) && ((*i)->_srcId == shapeId))
         {
             if ((*i)->_dstId != 0)
             {
@@ -721,19 +721,19 @@ void Router::attachedShapes(IntList &shapes, const unsigned int shapeId,
 }
 
 
-    // It's intended this function is called after visibility changes 
-    // resulting from shape movement have happened.  It will alert 
+    // It's intended this function is called after visibility changes
+    // resulting from shape movement have happened.  It will alert
     // rerouted connectors (via a callback) that they need to be redrawn.
 void Router::rerouteAndCallbackConnectors(void)
 {
     std::set<ConnRef *> reroutedConns;
     ConnRefList::const_iterator fin = connRefs.end();
-    
-    // Updating the orthogonal visibility graph if necessary. 
+
+    // Updating the orthogonal visibility graph if necessary.
     regenerateStaticBuiltGraph();
 
     timers.Register(tmOrthogRoute, timerStart);
-    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i)
     {
         (*i)->_needs_repaint = false;
         bool rerouted = (*i)->generatePath();
@@ -751,7 +751,7 @@ void Router::rerouteAndCallbackConnectors(void)
     improveOrthogonalRoutes(this);
 
     // Alert connectors that they need redrawing.
-    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::const_iterator i = connRefs.begin(); i != fin; ++i)
     {
         (*i)->_needs_repaint = true;
         (*i)->performCallback();
@@ -770,18 +770,18 @@ void Router::improveCrossings(void)
         // No penalties, return.
         return;
     }
-    
+
     // Find crossings and reroute connectors.
     _inCrossingPenaltyReroutingStage = true;
     ConnRefSet crossingConns;
     ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i)
     {
         Avoid::Polygon& iRoute = (*i)->routeRef();
         ConnRefList::iterator j = i;
-        for (++j; j != fin; ++j) 
+        for (++j; j != fin; ++j)
         {
-            if ((crossingConns.find(*i) != crossingConns.end()) && 
+            if ((crossingConns.find(*i) != crossingConns.end()) &&
                     (crossingConns.find(*j) != crossingConns.end()))
             {
                 // We already know both these have crossings.
@@ -795,13 +795,13 @@ void Router::improveCrossings(void)
             {
                 const bool finalSegment = ((jInd + 1) == jRoute.size());
                 CrossingsInfoPair crossingInfo = countRealCrossings(
-                        iRoute, true, jRoute, jInd, false, 
+                        iRoute, true, jRoute, jInd, false,
                         finalSegment, NULL, NULL, *i, *j);
-                
-                if ((shared_path_penalty > 0) && 
-                    (crossingInfo.second & CROSSING_SHARES_PATH) && 
-                    (crossingInfo.second & CROSSING_SHARES_FIXED_SEGMENT) && 
-                    !(crossingInfo.second & CROSSING_SHARES_PATH_AT_END)) 
+
+                if ((shared_path_penalty > 0) &&
+                    (crossingInfo.second & CROSSING_SHARES_PATH) &&
+                    (crossingInfo.second & CROSSING_SHARES_FIXED_SEGMENT) &&
+                    !(crossingInfo.second & CROSSING_SHARES_PATH_AT_END))
                 {
                     // We are penalising fixedSharedPaths and there is a
                     // fixedSharedPath.
@@ -823,7 +823,7 @@ void Router::improveCrossings(void)
         }
     }
 
-    for (ConnRefSet::iterator i = crossingConns.begin(); 
+    for (ConnRefSet::iterator i = crossingConns.begin();
             i != crossingConns.end(); ++i)
     {
         ConnRef *conn = *i;
@@ -831,7 +831,7 @@ void Router::improveCrossings(void)
         // XXX: Could we free these routes here for extra savings?
         // conn->freeRoutes();
     }
-    for (ConnRefSet::iterator i = crossingConns.begin(); 
+    for (ConnRefSet::iterator i = crossingConns.begin();
             i != crossingConns.end(); ++i)
     {
         ConnRef *conn = *i;
@@ -862,9 +862,9 @@ void Router::newBlockingShape(const Polygon& poly, int pid)
             bool blocked = false;
 
             bool countBorder = false;
-            bool ep_in_poly1 = !(eID1.isShape) ? 
+            bool ep_in_poly1 = !(eID1.isShape) ?
                     inPoly(poly, e1, countBorder) : false;
-            bool ep_in_poly2 = !(eID2.isShape) ? 
+            bool ep_in_poly2 = !(eID2.isShape) ?
                     inPoly(poly, e2, countBorder) : false;
             if (ep_in_poly1 || ep_in_poly2)
             {
@@ -879,7 +879,7 @@ void Router::newBlockingShape(const Polygon& poly, int pid)
                 size_t pt_n = (pt_i == (poly.size() - 1)) ? 0 : pt_i + 1;
                 const Point& pi = poly.ps[pt_i];
                 const Point& pn = poly.ps[pt_n];
-                if (segmentShapeIntersect(e1, e2, pi, pn, 
+                if (segmentShapeIntersect(e1, e2, pi, pn,
                         seenIntersectionAtEndpoint))
                 {
                     blocked = true;
@@ -983,7 +983,7 @@ void Router::generateContains(VertInf *pt)
 
     // Computer enclosing Clusters
     ClusterRefList::const_iterator clFinish = clusterRefs.end();
-    for (ClusterRefList::const_iterator i = clusterRefs.begin(); 
+    for (ClusterRefList::const_iterator i = clusterRefs.begin();
             i != clFinish; ++i)
     {
         if (inPolyGen((*i)->polygon(), pt->point))
@@ -994,7 +994,7 @@ void Router::generateContains(VertInf *pt)
 }
 
 
-void Router::adjustClustersWithAdd(const PolygonInterface& poly, 
+void Router::adjustClustersWithAdd(const PolygonInterface& poly,
         const int p_cluster)
 {
     for (VertInf *k = vertices.connsBegin(); k != vertices.shapesBegin();
@@ -1422,11 +1422,11 @@ static void reduceRange(double& val)
 bool Router::existsOrthogonalPathOverlap(void)
 {
     ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i)
     {
         Avoid::Polygon iRoute = (*i)->displayRoute();
         ConnRefList::iterator j = i;
-        for (++j; j != fin; ++j) 
+        for (++j; j != fin; ++j)
         {
             // Determine if this pair overlap
             Avoid::Polygon jRoute = (*j)->displayRoute();
@@ -1435,12 +1435,12 @@ bool Router::existsOrthogonalPathOverlap(void)
             {
                 const bool finalSegment = ((jInd + 1) == jRoute.size());
                 CrossingsInfoPair crossingInfo = countRealCrossings(
-                        iRoute, true, jRoute, jInd, true, 
+                        iRoute, true, jRoute, jInd, true,
                         finalSegment, NULL, NULL, *i, *j);
-                
-                if ((crossingInfo.second & CROSSING_SHARES_PATH) && 
-                    (crossingInfo.second & CROSSING_SHARES_FIXED_SEGMENT) && 
-                    !(crossingInfo.second & CROSSING_SHARES_PATH_AT_END)) 
+
+                if ((crossingInfo.second & CROSSING_SHARES_PATH) &&
+                    (crossingInfo.second & CROSSING_SHARES_FIXED_SEGMENT) &&
+                    !(crossingInfo.second & CROSSING_SHARES_PATH_AT_END))
                 {
                     // We looking for fixedSharedPaths and there is a
                     // fixedSharedPath.
@@ -1456,11 +1456,11 @@ bool Router::existsOrthogonalPathOverlap(void)
 bool Router::existsOrthogonalTouchingCorners(void)
 {
     ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) 
+    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i)
     {
         Avoid::Polygon iRoute = (*i)->displayRoute();
         ConnRefList::iterator j = i;
-        for (++j; j != fin; ++j) 
+        for (++j; j != fin; ++j)
         {
             // Determine if this pair overlap
             Avoid::Polygon jRoute = (*j)->displayRoute();
@@ -1469,10 +1469,10 @@ bool Router::existsOrthogonalTouchingCorners(void)
             {
                 const bool finalSegment = ((jInd + 1) == jRoute.size());
                 CrossingsInfoPair crossingInfo = countRealCrossings(
-                        iRoute, true, jRoute, jInd, true, 
+                        iRoute, true, jRoute, jInd, true,
                         finalSegment, NULL, NULL, *i, *j);
-                
-                if (crossingInfo.second & CROSSING_TOUCHES) 
+
+                if (crossingInfo.second & CROSSING_TOUCHES)
                 {
                     return true;
                 }
@@ -1514,7 +1514,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
 
         reduceRange(p.x);
         reduceRange(p.y);
-        
+
         if (p.x > -LIMIT)
         {
             minX = std::min(minX, p.x);
@@ -1550,8 +1550,8 @@ void Router::outputInstanceToSVG(std::string instanceName)
     fprintf(fp, "            PolyLineRouting | OrthogonalRouting);\n");
     for (size_t p = 0; p < lastPenaltyMarker; ++p)
     {
-        fprintf(fp, "    router->setRoutingPenalty((PenaltyType)%lu, %g);\n", 
-                p, _routingPenalties[p]);
+        fprintf(fp, "    router->setRoutingPenalty((PenaltyType)%lu, %g);\n",
+                static_cast<long unsigned int>(p), _routingPenalties[p]);
     }
     fprintf(fp, "    router->setOrthogonalNudgeDistance(%g);\n\n",
             orthogonalNudgeDistance());
@@ -1559,12 +1559,12 @@ void Router::outputInstanceToSVG(std::string instanceName)
     while (shRefIt != shapeRefs.end())
     {
         ShapeRef *shRef = *shRefIt;
-        fprintf(fp, "    Polygon poly%u(%lu);\n", 
-                shRef->id(), shRef->polygon().size());
+        fprintf(fp, "    Polygon poly%u(%lu);\n",
+                shRef->id(), static_cast<long unsigned int>(shRef->polygon().size()));
         for (size_t i = 0; i < shRef->polygon().size(); ++i)
         {
-            fprintf(fp, "    poly%u.ps[%lu] = Point(%g, %g);\n", 
-                    shRef->id(), i, shRef->polygon().at(i).x,
+            fprintf(fp, "    poly%u.ps[%lu] = Point(%g, %g);\n",
+                    shRef->id(), static_cast<long unsigned int>(i), shRef->polygon().at(i).x,
                     shRef->polygon().at(i).y);
         }
         fprintf(fp, "    ShapeRef *shapeRef%u = new ShapeRef(router, poly%u, "
@@ -1594,7 +1594,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
             fprintf(fp, "    connRef%u->setDestEndpoint(dstPt%u);\n",
                     connRef->id(), connRef->id());
         }
-        fprintf(fp, "    connRef%u->setRoutingType((ConnType)%u);\n\n", 
+        fprintf(fp, "    connRef%u->setRoutingType((ConnType)%u);\n\n",
                 connRef->id(), connRef->routingType());
         ++revConnRefIt;
     }
@@ -1605,20 +1605,20 @@ void Router::outputInstanceToSVG(std::string instanceName)
     fprintf(fp, "};\n");
     fprintf(fp, "-->\n");
 
-    
+
     fprintf(fp, "<g inkscape:groupmode=\"layer\" "
             "inkscape:label=\"ShapesPoly\">\n");
     shRefIt = shapeRefs.begin();
     while (shRefIt != shapeRefs.end())
     {
         ShapeRef *shRef = *shRefIt;
-    
+
         fprintf(fp, "<path id=\"poly-%u\" style=\"stroke-width: 1px; "
-                "stroke: black; fill: blue; fill-opacity: 0.3;\" d=\"", 
+                "stroke: black; fill: blue; fill-opacity: 0.3;\" d=\"",
                 shRef->id());
         for (size_t i = 0; i < shRef->polygon().size(); ++i)
         {
-            fprintf(fp, "%c %g,%g ", ((i == 0) ? 'M' : 'L'), 
+            fprintf(fp, "%c %g,%g ", ((i == 0) ? 'M' : 'L'),
                     shRef->polygon().at(i).x, shRef->polygon().at(i).y);
         }
         fprintf(fp, "Z\" />\n");
@@ -1635,7 +1635,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
         ShapeRef *shRef = *shRefIt;
         double minX, minY, maxX, maxY;
         shRef->polygon().getBoundingRect(&minX, &minY, &maxX, &maxY);
-    
+
         fprintf(fp, "<rect id=\"rect-%u\" x=\"%g\" y=\"%g\" width=\"%g\" height=\"%g\" "
                 "style=\"stroke-width: 1px; stroke: black; fill: blue; fill-opacity: 0.3;\" />\n",
                 shRef->id(), minX, minY, maxX - minX, maxY - minY);
@@ -1664,16 +1664,16 @@ void Router::outputInstanceToSVG(std::string instanceName)
         std::pair<Point, Point> ptpair = t->points();
         Point p1 = ptpair.first;
         Point p2 = ptpair.second;
-        
+
         reduceRange(p1.x);
         reduceRange(p1.y);
         reduceRange(p2.x);
         reduceRange(p2.y);
-        
+
         fprintf(fp, "<path d=\"M %g,%g L %g,%g\" "
-                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n", 
+                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n",
                 p1.x, p1.y, p2.x, p2.y,
-                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" : 
+                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" :
                 "red");
     }
     fprintf(fp, "</g>\n");
@@ -1694,16 +1694,16 @@ void Router::outputInstanceToSVG(std::string instanceName)
         std::pair<Point, Point> ptpair = t->points();
         Point p1 = ptpair.first;
         Point p2 = ptpair.second;
-        
+
         reduceRange(p1.x);
         reduceRange(p1.y);
         reduceRange(p2.x);
         reduceRange(p2.y);
-        
+
         fprintf(fp, "<path d=\"M %g,%g L %g,%g\" "
-                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n", 
+                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n",
                 p1.x, p1.y, p2.x, p2.y,
-                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" : 
+                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" :
                 "red");
     }
     fprintf(fp, "</g>\n");
@@ -1718,18 +1718,18 @@ void Router::outputInstanceToSVG(std::string instanceName)
         std::pair<Point, Point> ptpair = t->points();
         Point p1 = ptpair.first;
         Point p2 = ptpair.second;
-        
+
         reduceRange(p1.x);
         reduceRange(p1.y);
         reduceRange(p2.x);
         reduceRange(p2.y);
-        
+
         std::pair<VertID, VertID> ids = t->ids();
 
         fprintf(fp, "<path d=\"M %g,%g L %g,%g\" "
-                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n", 
+                "style=\"fill: none; stroke: %s; stroke-width: 1px;\" />\n",
                 p1.x, p1.y, p2.x, p2.y,
-                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" : 
+                (!(ids.first.isShape) || !(ids.second.isShape)) ? "green" :
                 "red");
     }
     fprintf(fp, "</g>\n");
@@ -1742,7 +1742,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
     while (connRefIt != connRefs.end())
     {
         ConnRef *connRef = *connRefIt;
-    
+
         PolyLine route = connRef->route();
         if (!route.empty())
         {
@@ -1762,7 +1762,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
             fprintf(fp, "style=\"fill: none; stroke: black; "
                     "stroke-width: 1px;\" />\n");
         }
-        
+
         ++connRefIt;
     }
     fprintf(fp, "</g>\n");
@@ -1775,7 +1775,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
     while (connRefIt != connRefs.end())
     {
         ConnRef *connRef = *connRefIt;
-    
+
         PolyLine route = connRef->displayRoute().curvedPolyline(8);
         if (!route.empty())
         {
@@ -1785,7 +1785,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
             {
                 if (route.ts[i] == 'C')
                 {
-                    fprintf(fp, "%c %g,%g %g,%g %g,%g", route.ts[i], 
+                    fprintf(fp, "%c %g,%g %g,%g %g,%g", route.ts[i],
                             route.ps[i].x, route.ps[i].y,
                             route.ps[i+1].x, route.ps[i+1].y,
                             route.ps[i+2].x, route.ps[i+2].y);
@@ -1793,7 +1793,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
                 }
                 else
                 {
-                    fprintf(fp, "%c %g,%g ", route.ts[i], 
+                    fprintf(fp, "%c %g,%g ", route.ts[i],
                             route.ps[i].x, route.ps[i].y);
                 }
             }
@@ -1807,7 +1807,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
             fprintf(fp, "style=\"fill: none; stroke: black; "
                     "stroke-width: 1px;\" />\n");
         }
-        
+
         ++connRefIt;
     }
     fprintf(fp, "</g>\n");
@@ -1820,7 +1820,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
     while (connRefIt != connRefs.end())
     {
         ConnRef *connRef = *connRefIt;
-    
+
         PolyLine route = connRef->displayRoute();
         if (!route.empty())
         {
@@ -1840,7 +1840,7 @@ void Router::outputInstanceToSVG(std::string instanceName)
             fprintf(fp, "style=\"fill: none; stroke: black; "
                     "stroke-width: 1px;\" />\n");
         }
-        
+
         ++connRefIt;
     }
     fprintf(fp, "</g>\n");

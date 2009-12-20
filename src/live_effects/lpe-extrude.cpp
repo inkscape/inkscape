@@ -73,6 +73,7 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
         return pwd2_out;
     }
 
+    default:
     case 1: {
         Piecewise<D2<SBasis> > pwd2_out;
         bool closed_path = are_near(pwd2_in.firstValue(), pwd2_in.lastValue());

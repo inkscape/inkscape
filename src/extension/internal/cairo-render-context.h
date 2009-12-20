@@ -71,12 +71,12 @@ public:
     CairoRenderer *getRenderer(void) const;
     cairo_t *getCairoContext(void) const;
 
-    typedef enum CairoRenderMode {
+    enum CairoRenderMode {
         RENDER_MODE_NORMAL,
         RENDER_MODE_CLIP
     };
 
-    typedef enum CairoClipMode {
+    enum CairoClipMode {
         CLIP_MODE_PATH,
         CLIP_MODE_MASK
     };

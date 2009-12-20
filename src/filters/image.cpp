@@ -43,8 +43,7 @@ static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, Inkscape::Fi
 
 static SPFilterPrimitiveClass *feImage_parent_class;
 
-GType
-sp_feImage_get_type()
+GType sp_feImage_get_type()
 {
     static GType feImage_type = 0;
 
@@ -64,8 +63,7 @@ sp_feImage_get_type()
     return feImage_type;
 }
 
-static void
-sp_feImage_class_init(SPFeImageClass *klass)
+static void sp_feImage_class_init(SPFeImageClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass * sp_primitive_class = (SPFilterPrimitiveClass *)klass;
@@ -81,8 +79,7 @@ sp_feImage_class_init(SPFeImageClass *klass)
     sp_primitive_class->build_renderer = sp_feImage_build_renderer;
 }
 
-static void
-sp_feImage_init(SPFeImage */*feImage*/)
+static void sp_feImage_init(SPFeImage */*feImage*/)
 {
 }
 
@@ -91,8 +88,7 @@ sp_feImage_init(SPFeImage */*feImage*/)
  * our name must be associated with a repr via "sp_object_type_register".  Best done through
  * sp-object-repr.cpp's repr_name_entries array.
  */
-static void
-sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     // Save document reference so we can load images with relative paths.
     SPFeImage *feImage = SP_FEIMAGE(object);
@@ -115,8 +111,7 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feImage_release(SPObject *object)
+static void sp_feImage_release(SPObject *object)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     feImage->_image_modified_connection.disconnect();
@@ -127,14 +122,12 @@ sp_feImage_release(SPObject *object)
         ((SPObjectClass *) feImage_parent_class)->release(object);
 }
 
-static void
-sp_feImage_elem_modified(SPObject* /*href*/, guint /*flags*/, SPObject* obj)
+static void sp_feImage_elem_modified(SPObject* /*href*/, guint /*flags*/, SPObject* obj)
 {
     obj->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void
-sp_feImage_href_modified(SPObject* old_elem, SPObject* new_elem, SPObject* obj)
+static void sp_feImage_href_modified(SPObject* /*old_elem*/, SPObject* new_elem, SPObject* obj)
 {
     SPFeImage *feImage = SP_FEIMAGE(obj);
     feImage->_image_modified_connection.disconnect();
@@ -151,8 +144,7 @@ sp_feImage_href_modified(SPObject* old_elem, SPObject* new_elem, SPObject* obj)
 /**
  * Sets a specific value in the SPFeImage.
  */
-static void
-sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
+static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
@@ -221,8 +213,7 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 /**
  * Receives update notifications.
  */
-static void
-sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
+static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
 {
 
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
@@ -239,8 +230,7 @@ sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
 /**
  * Writes its settings to an incoming repr object, if any.
  */
-static Inkscape::XML::Node *
-sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node * sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     /* TODO: Don't just clone, but create a new repr node and write all
      * relevant values into it */

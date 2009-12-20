@@ -40,8 +40,8 @@ static const Util::EnumDataConverter<BorderMarkType> BorderMarkTypeConverter(Bor
 
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    unit(_("Unit"), _("Unit"), "unit", &wr, this),
     mark_distance(_("Mark distance"), _("Distance between successive ruler marks"), "mark_distance", &wr, this, 20.0),
+    unit(_("Unit"), _("Unit"), "unit", &wr, this),
     mark_length(_("Major length"), _("Length of major ruler marks"), "mark_length", &wr, this, 14.0),
     minor_mark_length(_("Minor length"), _("Length of minor ruler marks"), "minor_mark_length", &wr, this, 7.0),
     major_mark_steps(_("Major steps"), _("Draw a major mark every ... steps"), "major_mark_steps", &wr, this, 5),

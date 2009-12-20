@@ -56,7 +56,7 @@ SPAvoidRef::~SPAvoidRef()
 {
     _transformed_connection.disconnect();
 
-    // If the document is being destroyed then the router instance 
+    // If the document is being destroyed then the router instance
     // and the ShapeRefs will have been destroyed with it.
     const bool routerInstanceExists = (item->document->router != NULL);
 
@@ -103,10 +103,10 @@ void SPAvoidRef::setConnectionPoints(gchar const *value)
            Update the connectors for which
            the endpoint has changed.
         */
-        
+
         gchar ** strarray = g_strsplit(value, "|", 0);
         gchar ** iter = strarray;
-        
+
         while (*iter != NULL) {
             ConnectionPoint cp;
             Inkscape::SVGIStringStream is(*iter);
@@ -167,17 +167,19 @@ void SPAvoidRef::setConnectionPoints(gchar const *value)
     {
         SPPath* path = SP_PATH(i->data);
         SPConnEnd** connEnds = path->connEndPair.getConnEnds();
-        for (int ix=0; ix<2; ++ix)
-            if (connEnds[ix]->type == ConnPointUserDefined)
-                if (updates.find(connEnds[ix]->id) != updates.end())
-                    if (path->connEndPair.isAutoRoutingConn())
+        for (int ix=0; ix<2; ++ix) {
+            if (connEnds[ix]->type == ConnPointUserDefined) {
+                if (updates.find(connEnds[ix]->id) != updates.end()) {
+                    if (path->connEndPair.isAutoRoutingConn()) {
                         path->connEndPair.tellLibavoidNewEndpoints();
-                    else
-                    {
+                    } else {
                     }
-                else
-                    if (deletes.find(connEnds[ix]->id) != deletes.end())
-                        sp_conn_end_detach(path, ix);
+                }
+                else if (deletes.find(connEnds[ix]->id) != deletes.end()) {
+                    sp_conn_end_detach(path, ix);
+                }
+            }
+        }
     }
     g_slist_free(conns);
     // Remove all deleted connection points
@@ -189,7 +191,7 @@ void SPAvoidRef::setConnectionPoints(gchar const *value)
 void SPAvoidRef::setConnectionPointsAttrUndoable(const gchar* value, const gchar* action)
 {
     SPDocument* doc = SP_OBJECT_DOCUMENT(item);
-    
+
     sp_object_setAttribute( SP_OBJECT(item), "inkscape:connection-points", value, 0 );
     item->updateRepr();
     sp_document_ensure_up_to_date(doc);
@@ -229,7 +231,7 @@ void SPAvoidRef::addConnectionPoint(ConnectionPoint &cp)
     }
     else
         ostr<<'|'<<cp;
-        
+
     this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Added a new connection point") );
 }
 
@@ -263,19 +265,17 @@ void SPAvoidRef::deleteConnectionPoint(ConnectionPoint &cp)
 {
     Inkscape::SVGOStringStream ostr;
     IdConnectionPointMap::iterator cp_pos = connection_points.find( cp.id );
-    if ( cp_pos != connection_points.end() )
-    {
+    if ( cp_pos != connection_points.end() ) {
         bool first = true;
-        for (IdConnectionPointMap::iterator it = connection_points.begin(); it != connection_points.end(); ++it)
-        {
-            if ( it != cp_pos )
-                if ( first )
-                {
+        for (IdConnectionPointMap::iterator it = connection_points.begin(); it != connection_points.end(); ++it) {
+            if ( it != cp_pos ) {
+                if ( first ) {
                     first = false;
                     ostr<<it->second;
-                }
-                else
+                } else {
                     ostr<<'|'<<it->second;
+                }
+            }
         }
         this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Removed a connection point") );
     }
@@ -304,7 +304,7 @@ void SPAvoidRef::handleSettingChange(void)
     setting = new_setting;
 
     Router *router = item->document->router;
-    
+
     _transformed_connection.disconnect();
     if (new_setting) {
         Avoid::Polygon poly = avoid_item_poly(item);
@@ -314,19 +314,19 @@ void SPAvoidRef::handleSettingChange(void)
 
             const char *id = SP_OBJECT_REPR(item)->attribute("id");
             g_assert(id != NULL);
-            
+
             // Get a unique ID for the item.
             GQuark itemID = g_quark_from_string(id);
 
             shapeRef = new Avoid::ShapeRef(router, poly, itemID);
-        
+
             router->addShape(shapeRef);
         }
     }
     else
     {
         g_assert(shapeRef);
-        
+
         router->removeShape(shapeRef);
         delete shapeRef;
         shapeRef = NULL;
@@ -341,7 +341,7 @@ GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
     Avoid::IntList shapes;
     GQuark shapeId = g_quark_from_string(item->id);
     item->document->router->attachedShapes(shapes, shapeId, type);
-    
+
     Avoid::IntList::iterator finish = shapes.end();
     for (Avoid::IntList::iterator i = shapes.begin(); i != finish; ++i) {
         const gchar *connId = g_quark_to_string(*i);
@@ -365,7 +365,7 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
     Avoid::IntList conns;
     GQuark shapeId = g_quark_from_string(item->id);
     item->document->router->attachedConns(conns, shapeId, type);
-    
+
     Avoid::IntList::iterator finish = conns.end();
     for (Avoid::IntList::iterator i = conns.begin(); i != finish; ++i) {
         const gchar *connId = g_quark_to_string(*i);
@@ -386,6 +386,7 @@ Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
     g_assert(item);
     Geom::Point pos;
     const Geom::Matrix& transform = sp_item_i2doc_affine(item);
+    // TODO investigate why this was asking for the active desktop:
     SPDesktop *desktop = inkscape_active_desktop();
 
     if ( type == ConnPointDefault )
@@ -419,7 +420,7 @@ bool SPAvoidRef::isValidConnPointId( const int type, const int id )
         else
             return connection_points.find( id ) != connection_points.end();
     }
-    
+
     return true;
 }
 
@@ -445,7 +446,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
         if ( convex_hull_approximation_enabled && SP_IS_SHAPE (item) ) {
             // The number of points to use for approximation
-            const unsigned NUM_POINTS = 64; 
+            const unsigned NUM_POINTS = 64;
 
 //             printf("[sommer] is a shape\n");
             SPCurve* curve = sp_shape_get_curve (SP_SHAPE (item));
@@ -460,7 +461,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
                 const Geom::PathVector& curve_pv = curve->get_pathvector();
                 std::vector<Geom::Point> hull_points;
                 for (Geom::PathVector::const_iterator i = curve_pv.begin(); i != curve_pv.end(); i++) {
-                    const Geom::Path& curve_pv_path = *i; 
+                    const Geom::Path& curve_pv_path = *i;
 //                     printf("[sommer] tracing sub-path\n");
 
                     // FIXME: enlarge path by "desktop->namedview->connector_spacing" (using sp_selected_path_do_offset)?
@@ -472,7 +473,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
                     // sample points along the path for approximation of convex hull
                     for (unsigned n = 0; n < num_points; n++) {
-                        double at = curve_pv_path.size() / static_cast<double>(num_points) * n;                        
+                        double at = curve_pv_path.size() / static_cast<double>(num_points) * n;
                         Geom::Point pt = curve_pv_path.pointAt(at);
                         hull_points.push_back(pt);
                     }
@@ -486,7 +487,9 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
                 // store expanded convex hull in Avoid::Polygn
                 unsigned n = 0;
                 Avoid::Polygon poly;
+/*
                 const Geom::Point& old_pt = *hull.boundary.begin();
+*/
 
                 Geom::Line hull_edge(*hull.boundary.begin(), *(hull.boundary.begin()+1));
                 Geom::Line parallel_hull_edge;
@@ -498,15 +501,17 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
                 if (int_pt)
                 {
-                    Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X], 
+                    Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
                                             (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
 //                     printf("[sommer] %f, %f\n", old_pt[Geom::X], old_pt[Geom::Y]);
-/*                    printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X], 
+/*                    printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
                                                 (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);*/
                     poly.ps.push_back(avoid_pt);
                 }
                 for (std::vector<Geom::Point>::const_iterator i = hull.boundary.begin() + 1; i != hull.boundary.end(); i++, n++) {
+/*
                         const Geom::Point& old_pt = *i;
+*/
                         Geom::Line hull_edge(*i, *(i+1));
                         Geom::Line parallel_hull_edge;
                         parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
@@ -516,21 +521,21 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
                         if (int_pt)
                         {
-                            Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X], 
+                            Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
                                                   (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
 /*                            printf("[sommer] %f, %f\n", old_pt[Geom::X], old_pt[Geom::Y]);
-                            printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X], 
+                            printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
                                                         (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);*/
                             poly.ps.push_back(avoid_pt);
                         }
                 }
-                
+
 
                 return poly;
             }// else printf("[sommer] is no curve\n");
         }// else printf("[sommer] is no shape\n");
     }
-    
+
     Geom::OptRect rHull = item->getBounds(sp_item_i2doc_affine(item));
     if (!rHull) {
         return Avoid::Polygon();
@@ -538,7 +543,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 
     // Add a little buffer around the edge of each object.
     Geom::Rect rExpandedHull = *rHull;
-    rExpandedHull.expandBy(spacing); 
+    rExpandedHull.expandBy(spacing);
     Avoid::Polygon poly(4);
 
     for (size_t n = 0; n < 4; ++n) {
@@ -551,14 +556,14 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 }
 
 
-GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop, 
+GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
         bool initialised)
 {
     for (SPObject *child = sp_object_first_child(SP_OBJECT(from)) ;
             child != NULL; child = SP_OBJECT_NEXT(child) ) {
         if (SP_IS_ITEM(child) &&
             !desktop->isLayer(SP_ITEM(child)) &&
-            !SP_ITEM(child)->isLocked() && 
+            !SP_ITEM(child)->isLocked() &&
             !desktop->itemIsHidden(SP_ITEM(child)) &&
             (!initialised || SP_ITEM(child)->avoidRef->shapeRef)
             )
@@ -595,7 +600,7 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
     SPDocument *document = sp_desktop_document(desktop);
     bool saved = sp_document_get_undo_sensitive(document);
     sp_document_set_undo_sensitive(document, false);
-    
+
     bool initialised = false;
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop,
             initialised);

@@ -2514,11 +2514,12 @@ int uni_to_title(int ch)
 
 int uni_block(int ch)
 {
-    int ret;
-    UcdBlockData *entry;
-    for (entry = ucd_blocks, ret=0 ; entry->name ; entry++, ret++)
-        if (ch >= entry->low && ch <= entry->high)
+    int ret = 0;
+    for (UcdBlockData *entry = ucd_blocks; entry->name ; entry++, ret++) {
+        if ((ch >= entry->low) && (ch <= entry->high)) {
             return ret;
+        }
+    }
     return UCD_BLOCK_NO_BLOCK;
 }
 

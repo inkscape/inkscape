@@ -351,9 +351,9 @@ sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
      * this check wrapper. */
     gchar const *end = str;
     guint32 const ret = internal_sp_svg_read_color(str, &end, dfl);
-    assert(ret == dfl && end == str
+    assert(((ret == dfl) && (end == str))
            || (((ret & 0xff) == 0)
-               && str < end));
+               && (str < end)));
     if (str < end) {
         gchar *buf = (gchar *) g_malloc(end + 1 - str);
         memcpy(buf, str, end - str);

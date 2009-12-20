@@ -1,6 +1,6 @@
 #define INKSCAPE_LPE_RECURSIVESKELETON_CPP
 /** \file
- * @brief 
+ * @brief
  *
  * Inspired by Hofstadter's 'Goedel Escher Bach', chapter V.
  */
@@ -52,7 +52,6 @@ LPERecursiveSkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > co
     std::vector<Piecewise<D2<SBasis> > > pre_output;
 
     double prop_scale = 1.0;
-    double fuse_tolerance = 0;
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
     Piecewise<SBasis> x0 = false /*vertical_pattern.get_value()*/ ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
@@ -95,9 +94,10 @@ LPERecursiveSkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > co
 
             double scaling = 1;
             scaling = (uskeleton.domain().extent() - toffset)/pattBndsX->extent();
-            
+
+            // TODO investigate why pattWidth is not being used:
             double pattWidth = pattBndsX->extent() * scaling;
-            
+
             if (scaling != 1.0) {
                 x*=scaling;
             }

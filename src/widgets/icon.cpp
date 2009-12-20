@@ -714,7 +714,7 @@ int sp_icon_get_phys_size(int size)
     static int lastSys[Inkscape::ICON_SIZE_DECORATION + 1];
     static int vals[Inkscape::ICON_SIZE_DECORATION + 1];
 
-    size = CLAMP( size, GTK_ICON_SIZE_MENU, Inkscape::ICON_SIZE_DECORATION );
+    size = CLAMP( size, static_cast<int>(GTK_ICON_SIZE_MENU), static_cast<int>(Inkscape::ICON_SIZE_DECORATION) );
 
     if ( !sizeMapDone ) {
         injectCustomSize();

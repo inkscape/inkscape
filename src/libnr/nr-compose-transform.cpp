@@ -19,9 +19,9 @@
 /*#ifdef WITH_MMX
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
-/* fixme: */
-/*int nr_have_mmx (void);
+#endif // __cplusplus
+/ * fixme: * /
+/ *int nr_have_mmx (void);
 #define NR_PIXOPS_MMX (1 && nr_have_mmx ())
 #ifdef __cplusplus
 }

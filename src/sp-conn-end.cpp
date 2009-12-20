@@ -46,7 +46,7 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
     // if this is a group...
     if (SP_IS_GROUP(item)) {
         SPGroup* group = SP_GROUP(item);
-        
+
         // consider all first-order children
         double child_pos = std::numeric_limits<double>::max();
         for (GSList const* i = sp_item_group_item_list(group); i != NULL; i = i->next) {
@@ -93,9 +93,9 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
 // The transforms given should be to a common ancestor of both the path and item.
 //
 static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
-        const Geom::Matrix& item_transform, const Geom::Matrix& conn_transform, 
+        const Geom::Matrix& item_transform, const Geom::Matrix& conn_transform,
         const bool at_start, double& intersect_pos) {
- 
+
     // Copy the curve and apply transformations up to common ancestor.
     SPCurve* conn_curve = conn->curve->copy();
     conn_curve->transform(conn_transform);
@@ -130,7 +130,7 @@ static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
 
 
 static void
-sp_conn_get_route_and_redraw(SPPath *const path, 
+sp_conn_get_route_and_redraw(SPPath *const path,
         const bool updatePathRepr = true)
 {
     // Get the new route around obstacles.
@@ -138,7 +138,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
     if (!rerouted) {
         return;
     }
-    
+
     SPItem *h2attItem[2];
     path->connEndPair.getAttachedItems(h2attItem);
 
@@ -146,7 +146,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
     SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
     Geom::Matrix const path2anc(i2anc_affine(path_item, ancestor));
 
-    // Set sensible values incase there the connector ends are not 
+    // Set sensible values incase there the connector ends are not
     // attached to any shapes.
     Geom::PathVector conn_pv = path->curve->get_pathvector();
     double endPos[2] = { 0, conn_pv[0].size() };
@@ -241,7 +241,7 @@ sp_conn_end_detach(SPObject *const owner, unsigned const handle_ix)
 }
 
 void
-SPConnEnd::setAttacherHref(gchar const *value, SPPath* path)
+SPConnEnd::setAttacherHref(gchar const *value, SPPath* /*path*/)
 {
     if ( value && href && ( strcmp(value, href) == 0 ) ) {
         /* No change, do nothing. */
@@ -293,7 +293,7 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* path)
                 }
             }
             // Check to see if the connection point changed and update it.
-            // 
+            //
 
             if ( !value_strarray[1] )
             {
@@ -353,12 +353,12 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* path)
                     validRef = false;
                 }
             }
-            
+
             if ( changed )
             {
                 // We still have to verify that the reference to the
                 // connection point is a valid one.
-                
+
                 // Get the item the connector is attached to
                 SPItem* item = ref.getObject();
                 if ( item && !item->avoidRef->isValidConnPointId( type, id ) )
@@ -370,7 +370,8 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* path)
                     // Update the connector
                     if (path->connEndPair.isAutoRoutingConn()) {
                         path->connEndPair.tellLibavoidNewEndpoints();
-                    }*/
+                    }
+*/
             }
 
             if ( !validRef )

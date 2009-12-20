@@ -42,22 +42,22 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-bool
-CairoPsOutput::check (Inkscape::Extension::Extension * module)
+bool CairoPsOutput::check (Inkscape::Extension::Extension * /*module*/)
 {
-	if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_PS))
-		return FALSE;
-
-	return TRUE;
+    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_PS)) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
 }
 
-bool
-CairoEpsOutput::check (Inkscape::Extension::Extension * module)
+bool CairoEpsOutput::check (Inkscape::Extension::Extension * /*module*/)
 {
-	if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_EPS))
-		return FALSE;
-
-	return TRUE;
+    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_CAIRO_EPS)) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
 }
 
 static bool

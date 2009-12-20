@@ -64,6 +64,7 @@ unsigned int sp_svg_number_read_d(gchar const *str, double *val)
     return 1;
 }
 
+// TODO must add a buffer length parameter for safety:
 static unsigned int sp_svg_number_write_ui(gchar *buf, unsigned int val)
 {
     unsigned int i = 0;

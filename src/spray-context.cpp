@@ -6,7 +6,7 @@
  * Authors:
  *   Pierre-Antoine MARC
  *   Pierre CACLIN
- *   Aurel-Aimé MARMION   
+ *   Aurel-Aimé MARMION
  *   Julien LERAY
  *   Benoît LAVORATA
  *   Vincent MONTAGNE
@@ -74,7 +74,7 @@
 #include "display/canvas-arena.h"
 #include "display/curve.h"
 #include "livarot/Shape.h"
-#include <2geom/isnan.h>        
+#include <2geom/isnan.h>
 #include <2geom/transforms.h>
 #include "preferences.h"
 #include "style.h"
@@ -104,7 +104,7 @@ static void sp_spray_context_setup(SPEventContext *ec);
 static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_spray_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
-static SPEventContextClass *parent_class;
+static SPEventContextClass *parent_class = 0;
 
 
 
@@ -143,8 +143,7 @@ double NormalDistribution(double mu,double sigma)
 
 //Fin de la création de NormalDistribution
 
-GtkType
-sp_spray_context_get_type(void)
+GtkType sp_spray_context_get_type(void)
 {
     static GType type = 0;
     if (!type) {
@@ -163,8 +162,7 @@ sp_spray_context_get_type(void)
     return type;
 }
 
-static void
-sp_spray_context_class_init(SPSprayContextClass *klass)
+static void sp_spray_context_class_init(SPSprayContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
@@ -177,9 +175,9 @@ sp_spray_context_class_init(SPSprayContextClass *klass)
     event_context_class->set = sp_spray_context_set;
     event_context_class->root_handler = sp_spray_context_root_handler;
 }
+
 /*Method to rotate items*/
-void
-sp_spray_rotate_rel(Geom::Point c,SPDesktop *desktop,SPItem *item, Geom::Rotate const &rotation)
+void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom::Rotate const &rotation)
 {
 
     Geom::Point center = c;
@@ -197,23 +195,23 @@ sp_spray_rotate_rel(Geom::Point c,SPDesktop *desktop,SPItem *item, Geom::Rotate 
         item->updateRepr();
     }
 }
-/*Method to scale items*/
-void
-sp_spray_scale_rel (Geom::Point c, SPDesktop *desktop, SPItem *item, Geom::Scale  const &scale)
-{
-        Geom::Translate const s(c); 
 
-        
+/*Method to scale items*/
+void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Scale  const &scale)
+{
+        Geom::Translate const s(c);
+
+
         sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * s.inverse() * scale * s  );
         sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 
 
 }
-static void
-sp_spray_context_init(SPSprayContext *tc)
-{   
+
+static void sp_spray_context_init(SPSprayContext *tc)
+{
    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
-    
+
 
 
     event_context->cursor_shape = cursor_spray_xpm;
@@ -247,8 +245,7 @@ sp_spray_context_init(SPSprayContext *tc)
     new (&tc->style_set_connection) sigc::connection();
 }
 
-static void
-sp_spray_context_dispose(GObject *object)
+static void sp_spray_context_dispose(GObject *object)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(object);
 
@@ -267,7 +264,7 @@ sp_spray_context_dispose(GObject *object)
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
-bool is_transform_modes (gint mode)
+bool is_transform_modes(gint mode)
 {
     return (mode == SPRAY_MODE_COPY ||
             mode == SPRAY_MODE_CLONE ||
@@ -275,8 +272,7 @@ bool is_transform_modes (gint mode)
             mode == SPRAY_OPTION);
 }
 
-void
-sp_spray_update_cursor (SPSprayContext *tc, bool with_shift)
+void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
 {
    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
    SPDesktop *desktop = event_context->desktop;
@@ -309,8 +305,7 @@ sp_spray_update_cursor (SPSprayContext *tc, bool with_shift)
    g_free(sel_message);
 }
 
-static void
-sp_spray_context_setup(SPEventContext *ec)
+static void sp_spray_context_setup(SPEventContext *ec)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
 
@@ -338,7 +333,7 @@ sp_spray_context_setup(SPEventContext *ec)
 
     tc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
-    sp_event_context_read(ec, "distrib");    
+    sp_event_context_read(ec, "distrib");
     sp_event_context_read(ec, "width");
     sp_event_context_read(ec, "ratio");
     sp_event_context_read(ec, "tilt");
@@ -372,8 +367,7 @@ sp_spray_context_setup(SPEventContext *ec)
     }
 }
 
-static void
-sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
+static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
     Glib::ustring path = val->getEntryName();
@@ -398,7 +392,7 @@ sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
     } else if (path == "rot_max") {
         tc->rot_max = CLAMP(val->getDouble(0), 0, 10.0);
     } else if (path == "scale_min") {
-        tc->scale_min = CLAMP(val->getDouble(1.0), 0, 10.0);    
+        tc->scale_min = CLAMP(val->getDouble(1.0), 0, 10.0);
     } else if (path == "scale_max") {
         tc->scale_max = CLAMP(val->getDouble(1.0), 0, 10.0);
     } else if (path == "mean") {
@@ -418,8 +412,7 @@ sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
     }
 }
 
-static void
-sp_spray_extinput(SPSprayContext *tc, GdkEvent *event)
+static void sp_spray_extinput(SPSprayContext *tc, GdkEvent *event)
 {
     if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &tc->pressure))
         tc->pressure = CLAMP (tc->pressure, TC_MIN_PRESSURE, TC_MAX_PRESSURE);
@@ -427,8 +420,7 @@ sp_spray_extinput(SPSprayContext *tc, GdkEvent *event)
         tc->pressure = TC_DEFAULT_PRESSURE;
 }
 
-double
-get_dilate_radius (SPSprayContext *tc)
+double get_dilate_radius(SPSprayContext *tc)
 {
 
     return 250 * tc->width/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
@@ -436,8 +428,7 @@ get_dilate_radius (SPSprayContext *tc)
 
 }
 
-double
-get_path_force (SPSprayContext *tc)
+double get_path_force(SPSprayContext *tc)
 {
     double force = 8 * (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE)
         /sqrt(SP_EVENT_CONTEXT(tc)->desktop->current_zoom());
@@ -447,33 +438,28 @@ get_path_force (SPSprayContext *tc)
     return force * tc->force;
 }
 
-double
-get_path_mean (SPSprayContext *tc)
+double get_path_mean(SPSprayContext *tc)
 {
     return tc->mean;
 }
 
-double
-get_path_standard_deviation (SPSprayContext *tc)
+double get_path_standard_deviation(SPSprayContext *tc)
 {
     return tc->standard_deviation;
 }
 
-double
-get_move_force (SPSprayContext *tc)
+double get_move_force(SPSprayContext *tc)
 {
     double force = (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE);
     return force * tc->force;
 }
 
-double
-get_move_mean (SPSprayContext *tc)
+double get_move_mean(SPSprayContext *tc)
 {
     return tc->mean;
 }
 
-double
-get_move_standard_deviation (SPSprayContext *tc)
+double get_move_standard_deviation(SPSprayContext *tc)
 {
     return tc->standard_deviation;
 }
@@ -511,8 +497,26 @@ while(!((r_temp>=0)&&(r_temp<=1)))
 
 
 
-bool
-sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, SPItem *item, Geom::Point p, Geom::Point vector, gint mode, double radius, double force, double population, double &scale, double scale_min, double scale_max, bool reverse, double mean, double standard_deviation, double ratio,double tilt, double rot_min, double rot_max, gint _distrib )
+bool sp_spray_dilate_recursive(SPDesktop *desktop,
+                               Inkscape::Selection *selection,
+                               SPItem *item,
+                               Geom::Point p,
+                               Geom::Point /*vector*/,
+                               gint mode,
+                               double radius,
+                               double /*force*/,
+                               double population,
+                               double &scale,
+                               double scale_min,
+                               double scale_max,
+                               bool /*reverse*/,
+                               double mean,
+                               double standard_deviation,
+                               double ratio,
+                               double tilt,
+                               double rot_min,
+                               double rot_max,
+                               gint _distrib )
 {
 
 
@@ -551,13 +555,13 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
 
             Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double dr; double dp; 
+                double dr; double dp;
                 random_position(dr,dp,mean,standard_deviation,_distrib);
                 dr=dr*radius;
                 double _fid = g_random_double_range(0,1);
                 SPItem *item_copied;
-                double angle = g_random_double_range(rot_min, rot_max);                
-                double _scale = g_random_double_range(scale_min, scale_max);  
+                double angle = g_random_double_range(rot_min, rot_max);
+                double _scale = g_random_double_range(scale_min, scale_max);
                 if(_fid<=population)
                 {
                           // duplicate
@@ -571,17 +575,17 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
                             SPObject *new_obj = doc->getObjectByRepr(copy);
                             item_copied = (SPItem *) new_obj;   //convertion object->item
                             Geom::Point center=item->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));  
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));   
-                            
-                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));                             
+                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
+                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
+
+                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                             Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());//Move the cursor p
                             sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
 
-                   
-                         
-                            
+
+
+
                         did = true;
                         }
             }
@@ -623,8 +627,8 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
                 random_position(dr,dp,mean,standard_deviation,_distrib);
                 dr=dr*radius;
                 double _fid = g_random_double_range(0,1);
-                double angle = (g_random_double_range(rot_min, rot_max)); 
-                double _scale = g_random_double_range(scale_min, scale_max);  
+                double angle = (g_random_double_range(rot_min, rot_max));
+                double _scale = g_random_double_range(scale_min, scale_max);
                 if (i==2) {
                     Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
                     parent->appendChild(copy1);
@@ -640,11 +644,11 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
                     parent->appendChild(copy2);
                     SPObject *new_obj2 = doc->getObjectByRepr(copy2);
                     item_copied = (SPItem *) new_obj2;
-                    
-                    Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());//Move around the cursor                          
+
+                    Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());//Move around the cursor
 
                             Geom::Point center=Pere->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));     
+                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
                             sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
                             sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                             sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
@@ -661,10 +665,10 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
 
             }
         } else if (mode == SPRAY_MODE_CLONE) {
-         
+
         Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
                 if (a) {
-                double dr; double dp; 
+                double dr; double dp;
                 random_position(dr,dp,mean,standard_deviation,_distrib);
                 dr=dr*radius;
                 double _fid = g_random_double_range(0,1);
@@ -673,7 +677,7 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
 
         if(_fid<=population)
                 {
-                            SPItem *item_copied; 
+                            SPItem *item_copied;
                             SPDocument *doc = SP_OBJECT_DOCUMENT(item);
                             Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
                             Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
@@ -683,33 +687,43 @@ sp_spray_dilate_recursive (SPDesktop *desktop, Inkscape::Selection *selection, S
                             Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
                             parent->appendChild(clone); //Ajout du clone à la liste d'enfants du père (selection initiale
                             clone->setAttribute("xlink:href", g_strdup_printf("#%s", old_repr->attribute("id")), false); //Génère le lien entre les attributs du père et du fils
-                            
-                            SPObject *clone_object = doc->getObjectByRepr(clone); 
+
+                            SPObject *clone_object = doc->getObjectByRepr(clone);
                             item_copied = (SPItem *) clone_object;//conversion object->item
                               Geom::Point center=item->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));     
+                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
                             sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
-                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle)); 
+                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                             Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
-                            sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));                               
+                            sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
                             Inkscape::GC::release(clone);
 
                             did = true;
                 } }}
                 return did;
-               
+
 }
 
 
-bool
-sp_spray_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
-                          guint32 fill_goal, bool do_fill,
-                          guint32 stroke_goal, bool do_stroke,
-                          float opacity_goal, bool do_opacity,
-                          bool do_blur, bool reverse,
-                          Geom::Point p, double radius, double force,
-                          bool do_h, bool do_s, bool do_l, bool do_o)
+bool sp_spray_color_recursive(guint /*mode*/,
+                              SPItem */*item*/,
+                              SPItem */*item_at_point*/,
+                              guint32 /*fill_goal*/,
+                              bool /*do_fill*/,
+                              guint32 /*stroke_goal*/,
+                              bool /*do_stroke*/,
+                              float /*opacity_goal*/,
+                              bool /*do_opacity*/,
+                              bool /*do_blur*/,
+                              bool /*reverse*/,
+                              Geom::Point /*p*/,
+                              double /*radius*/,
+                              double /*force*/,
+                              bool /*do_h*/,
+                              bool /*do_s*/,
+                              bool /*do_l*/,
+                              bool /*do_o*/)
 {
     bool did = false;
 
@@ -717,8 +731,7 @@ sp_spray_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 }
 
 
-bool
-sp_spray_dilate (SPSprayContext *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
+bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
@@ -815,8 +828,7 @@ sp_spray_dilate (SPSprayContext *tc, Geom::Point event_p, Geom::Point p, Geom::P
     return did;
 }
 
-void
-sp_spray_update_area (SPSprayContext *tc)
+void sp_spray_update_area(SPSprayContext *tc)
 {
         double radius = get_dilate_radius(tc);
         Geom::Matrix const sm ( Geom::Scale(radius/(1-tc->ratio), radius/(1+tc->ratio)) );
@@ -824,8 +836,7 @@ sp_spray_update_area (SPSprayContext *tc)
         sp_canvas_item_show(tc->dilate_area);
 }
 
-void
-sp_spray_switch_mode (SPSprayContext *tc, gint mode, bool with_shift)
+void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
 {
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("spray_tool_mode", mode); //sélectionne le bouton numéro "mode"
     // need to set explicitly, because the prefs may not have changed by the previous
@@ -833,8 +844,7 @@ sp_spray_switch_mode (SPSprayContext *tc, gint mode, bool with_shift)
     sp_spray_update_cursor (tc, with_shift);
 }
 
-void
-sp_spray_switch_mode_temporarily (SPSprayContext *tc, gint mode, bool with_shift)
+void sp_spray_switch_mode_temporarily(SPSprayContext *tc, gint mode, bool with_shift)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
@@ -847,8 +857,7 @@ sp_spray_switch_mode_temporarily (SPSprayContext *tc, gint mode, bool with_shift
    sp_spray_update_cursor (tc, with_shift);
 }
 
-gint
-sp_spray_context_root_handler(SPEventContext *event_context,
+gint sp_spray_context_root_handler(SPEventContext *event_context,
                                   GdkEvent *event)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(event_context);
@@ -922,7 +931,7 @@ sp_spray_context_root_handler(SPEventContext *event_context,
                 sp_spray_dilate (tc, motion_w, motion_doc, motion_doc - tc->last_push, event->button.state & GDK_SHIFT_MASK? true : false);
                 //tc->last_push = motion_doc;
                 tc->has_dilated = true;
-               
+
                 // it's slow, so prevent clogging up with events
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 return TRUE;
@@ -942,7 +951,7 @@ sp_spray_context_root_handler(SPEventContext *event_context,
                   Geom::Point const scroll_w(event->button.x,event->button.y);
                   Geom::Point const scroll_dt = desktop->point();;
                   Geom::Point motion_doc(desktop->dt2doc(scroll_dt));
-                       switch (event->scroll.direction) 
+                       switch (event->scroll.direction)
                        {
                          case GDK_SCROLL_UP:
                            {
@@ -957,16 +966,16 @@ sp_spray_context_root_handler(SPEventContext *event_context,
                                    tc->is_dilating = true;
                                    tc->has_dilated = false;
                                    if(tc->is_dilating && !event_context->space_panning)
- 
+
                                                         sp_spray_dilate (tc, scroll_w, desktop->dt2doc(scroll_dt), Geom::Point(0,0),false);
 
 
- 
+
                                    tc->has_dilated=true;
                                    tc->population=temp;
 
                                    desktop->setToolboxAdjustmentValue ("population", tc->population * 100);
-                                    
+
                                    ret = TRUE;
                            }
                                break;
@@ -1042,17 +1051,17 @@ case GDK_SCROLL_LEFT:
 case GDK_j:  if (MOD__SHIFT_ONLY) {
                 sp_spray_switch_mode(tc, SPRAY_MODE_COPY, MOD__SHIFT);
                 ret = TRUE;
-            }   
+            }
 case GDK_J: if (MOD__SHIFT_ONLY) {
                 sp_spray_switch_mode(tc, SPRAY_MODE_COPY, MOD__SHIFT);
                 ret = TRUE;
             }
-                
+
 break;
         case GDK_m:
         case GDK_M:
         case GDK_0:
-        
+
             break;
         case GDK_i:
         case GDK_I:
@@ -1065,12 +1074,12 @@ break;
                 ret = TRUE;
             }
 break;
-   
+
         case GDK_l: if (MOD__SHIFT_ONLY) {
                 sp_spray_switch_mode(tc, SPRAY_MODE_CLONE, MOD__SHIFT);
                 ret = TRUE;
             }
-            
+
         case GDK_L:
  if (MOD__SHIFT_ONLY) {
                 sp_spray_switch_mode(tc, SPRAY_MODE_CLONE, MOD__SHIFT);

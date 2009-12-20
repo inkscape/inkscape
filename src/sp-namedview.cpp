@@ -304,6 +304,7 @@ static void sp_namedview_release(SPObject *object)
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPNamedView *nv = SP_NAMEDVIEW(object);
+    // TODO investigate why we grab this and then never use it
     SPUnit const &px = sp_unit_get_by_id(SP_UNIT_PX);
 
     switch (key) {

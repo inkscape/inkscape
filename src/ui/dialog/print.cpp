@@ -31,11 +31,15 @@
 
 
 
-static void
-draw_page (GtkPrintOperation *operation,
-           GtkPrintContext   *context,
-           gint               /*page_nr*/,
-           gpointer           user_data)
+static void draw_page(
+#ifdef WIN32
+                      GtkPrintOperation *operation,
+#else
+                      GtkPrintOperation *,
+#endif
+                      GtkPrintContext   *context,
+                      gint               /*page_nr*/,
+                      gpointer           user_data)
 {
     struct workaround_gtkmm *junk = (struct workaround_gtkmm*)user_data;
     //printf("%s %d\n",__FUNCTION__, page_nr);

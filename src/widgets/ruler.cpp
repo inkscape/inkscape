@@ -727,6 +727,7 @@ sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 // code, those warnings are actually desired. They say "Hey! Fix this". We
 // definitely don't want to hide/ignore them. --JonCruz
 
+// TODO address const/non-const gchar* issue:
 /// Ruler metrics.
 static GtkRulerMetric const sp_ruler_metrics[] = {
   // NOTE: the order of records in this struct must correspond to the SPMetric enum.

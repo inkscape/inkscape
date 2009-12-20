@@ -33,11 +33,11 @@
 #include "graphlayout/graphlayout.h"
 #include "inkscape.h"
 #include "macros.h"
-#include "node-context.h" 
+#include "node-context.h"
 #include "preferences.h"
 #include "removeoverlap/removeoverlap.h"
 #include "selection.h"
-#include "shape-editor.h" 
+#include "shape-editor.h"
 #include "sp-flowtext.h"
 #include "sp-item-transform.h"
 #include "sp-text.h"
@@ -71,19 +71,19 @@ private:
 
     SprayOptionClass(SprayOptionClass const &d);
     SprayOptionClass& operator=(SprayOptionClass const &d);
-    
+
 public:
     SprayOptionClass();
-    virtual ~SprayOptionClass();   
+    virtual ~SprayOptionClass();
     void test() {    cout<<"appel de test !!"<<endl;  }
     static SprayOptionClass &getInstance() { return *new SprayOptionClass(); }
 
-    
+
     Gtk::Table &_Table(){return _ETable;}
     Gtk::Table &F_Table(){return _FTable;}
     Gtk::Tooltips &tooltips(){return _tooltips;}
     void action();
-    void combo_action(); 
+    void combo_action();
     Geom::OptRect randomize_bbox;
 
     SprayOptionClass &get_SprayOptionClass();
@@ -97,17 +97,32 @@ protected:
                 const Glib::ustring &pref1_path, const Glib::ustring &pref2_path);
 
     std::list<Action *> _actionList;
-    Gtk::Frame _distributionFrame,  _Frame, _FFrame ;
-    Gtk::Table _distributionTable, _gaussianTable, _ETable, _FTable;
+    Gtk::Frame _distributionFrame;
+    Gtk::Frame _Frame;
+    Gtk::Frame _FFrame;
+    Gtk::Table _distributionTable;
+    Gtk::Table _gaussianTable;
+    Gtk::Table _ETable;
+    Gtk::Table _FTable;
     Gtk::HBox _anchorBox;
-    Gtk::HBox _unifBox, _gaussianBox, _HBox, _FHBox, _BoutonBox;
-    Gtk::VBox _distributionBox,  _VBox, _FVBox, _ActionBox;
+    Gtk::HBox _unifBox;
+    Gtk::HBox _gaussianBox;
+    Gtk::HBox _HBox;
+    Gtk::HBox _FHBox;
+    Gtk::HBox _BoutonBox;
+    Gtk::VBox _distributionBox;
+    Gtk::VBox  _VBox;
+    Gtk::VBox _FVBox;
+    Gtk::VBox _ActionBox;
     Gtk::Label _anchorLabel;
-    Gtk::Label _unifLabel, _gaussLabel, _Label, _FLabel;
-    Gtk::CheckButton _unif, _gauss;
+    Gtk::Label _unifLabel;
+    Gtk::Label _gaussLabel;
+    Gtk::Label _Label;
+    Gtk::Label _FLabel;
+    Gtk::CheckButton _unif;
+    Gtk::CheckButton _gauss;
     Gtk::ComboBoxText _combo;
     Gtk::Tooltips _tooltips;
-
 };
 
 

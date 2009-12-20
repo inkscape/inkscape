@@ -586,7 +586,7 @@ Router *ConnRef::router(void) const
 }
 
 
-bool ConnRef::generatePath(Point p0, Point p1)
+bool ConnRef::generatePath(Point /*p0*/, Point /*p1*/)
 {
     // XXX Code to determine when connectors really need to be rerouted
     //     does not yet work for orthogonal connectors.

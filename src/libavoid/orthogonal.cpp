@@ -12,12 +12,12 @@
  * See the file LICENSE.LGPL distributed with the library.
  *
  * Licensees holding a valid commercial license may use this file in
- * accordance with the commercial license agreement provided with the 
+ * accordance with the commercial license agreement provided with the
  * library.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * Author(s):   Michael Wybrow <mjwybrow@users.sourceforge.net>
 */
@@ -52,11 +52,11 @@ static const size_t XDIM = 0;
 static const size_t YDIM = 1;
 
 
-class ShiftSegment 
+class ShiftSegment
 {
     public:
         // For shiftable segments.
-        ShiftSegment(ConnRef *conn, const size_t low, const size_t high, 
+        ShiftSegment(ConnRef *conn, const size_t low, const size_t high,
                 bool isSBend, const size_t dim, double minLim, double maxLim)
             : connRef(conn),
               indexLow(low),
@@ -69,8 +69,9 @@ class ShiftSegment
               maxSpaceLimit(maxLim)
         {
         }
+
         // For fixed segments.
-        ShiftSegment(ConnRef *conn, const size_t low, const size_t high, 
+        ShiftSegment(ConnRef *conn, const size_t low, const size_t high,
                 const size_t dim)
             : connRef(conn),
               indexLow(low),
@@ -84,23 +85,28 @@ class ShiftSegment
             minSpaceLimit = lowPoint()[dim];
             maxSpaceLimit = lowPoint()[dim];
         }
+
         Point& lowPoint(void)
         {
             return connRef->displayRoute().ps[indexLow];
         }
+
         Point& highPoint(void)
         {
             return connRef->displayRoute().ps[indexHigh];
         }
+
         const Point& lowPoint(void) const
         {
             return connRef->displayRoute().ps[indexLow];
         }
-        const Point& highPoint(void) const 
+
+        const Point& highPoint(void) const
         {
             return connRef->displayRoute().ps[indexHigh];
         }
-        const int fixedOrder(bool& isFixed) const
+
+        int fixedOrder(bool& isFixed) const
         {
             if (fixed)
             {
@@ -117,7 +123,8 @@ class ShiftSegment
             }
             return 0;
         }
-        const int order(void) const
+
+        int order(void) const
         {
             if (lowC())
             {
@@ -129,17 +136,19 @@ class ShiftSegment
             }
             return 0;
         }
+
         bool operator<(const ShiftSegment& rhs) const
         {
             const Point& lowPt = lowPoint();
             const Point& rhsLowPt = rhs.lowPoint();
-            
+
             if (lowPt[dimension] != rhsLowPt[dimension])
             {
                 return lowPt[dimension] < rhsLowPt[dimension];
             }
             return this < &rhs;
         }
+
         // This counts segments that are colliear and share an endpoint as
         // overlapping.  This allows them to be nudged apart where possible.
         bool overlapsWith(const ShiftSegment& rhs, const size_t dim) const
@@ -171,7 +180,7 @@ class ShiftSegment
         double minSpaceLimit;
         double maxSpaceLimit;
     private:
-        const bool lowC(void) const
+        bool lowC(void) const
         {
             // This is true if this is a cBend and its adjoining points
             // are at lower positions.
@@ -181,7 +190,8 @@ class ShiftSegment
             }
             return false;
         }
-        const bool highC(void) const
+
+        bool highC(void) const
         {
             // This is true if this is a cBend and its adjoining points
             // are at higher positions.
@@ -204,7 +214,7 @@ struct Node;
 struct CmpNodePos { bool operator()(const Node* u, const Node* v) const; };
 
 typedef std::set<Node*,CmpNodePos> NodeSet;
-struct Node 
+struct Node
 {
     ShapeRef *v;
     VertInf *c;
@@ -221,10 +231,10 @@ struct Node
           pos(p),
           firstAbove(NULL),
           firstBelow(NULL)
-    {   
+    {
         //COLA_ASSERT(r->width()<1e40);
         v->polygon().getBoundingRect(&min[0], &min[1], &max[0], &max[1]);
-    }   
+    }
     Node(VertInf *c, const double p)
         : v(NULL),
           c(c),
@@ -235,7 +245,7 @@ struct Node
     {
         min[0] = max[0] = c->point.x;
         min[1] = max[1] = c->point.y;
-    }   
+    }
     Node(ShiftSegment *ss, const double p)
         : v(NULL),
           c(NULL),
@@ -246,8 +256,8 @@ struct Node
     {
         // These values shouldn't ever be used, so they don't matter.
         min[0] = max[0] = min[1] = max[1] = 0;
-    }   
-    ~Node() 
+    }
+    ~Node()
     {
     }
     // Find the first Node above in the scanline that is a shape edge,
@@ -260,7 +270,7 @@ struct Node
         {
             curr = curr->firstAbove;
         }
-       
+
         if (curr)
         {
             return curr->max[dim];
@@ -277,14 +287,14 @@ struct Node
         {
             curr = curr->firstBelow;
         }
-        
+
         if (curr)
         {
             return curr->min[dim];
         }
         return DBL_MAX;
     }
-    // Mark all connector segments above in the scanline as being able 
+    // Mark all connector segments above in the scanline as being able
     // to see to this shape edge.
     void markShiftSegmentsAbove(size_t dim)
     {
@@ -293,13 +303,13 @@ struct Node
         {
             if (curr->ss && (curr->pos <= min[dim]))
             {
-                curr->ss->maxSpaceLimit = 
+                curr->ss->maxSpaceLimit =
                         std::min(min[dim], curr->ss->maxSpaceLimit);
             }
             curr = curr->firstAbove;
         }
     }
-    // Mark all connector segments below in the scanline as being able 
+    // Mark all connector segments below in the scanline as being able
     // to see to this shape edge.
     void markShiftSegmentsBelow(size_t dim)
     {
@@ -308,7 +318,7 @@ struct Node
         {
             if (curr->ss && (curr->pos >= max[dim]))
             {
-                curr->ss->minSpaceLimit = 
+                curr->ss->minSpaceLimit =
                         std::max(max[dim], curr->ss->minSpaceLimit);
             }
             curr = curr->firstBelow;
@@ -320,8 +330,8 @@ struct Node
         bool clearVisibility = true;
         firstAbovePos = -DBL_MAX;
         firstBelowPos = DBL_MAX;
-        // We start looking left from the right side of the shape, 
-        // and vice versa. 
+        // We start looking left from the right side of the shape,
+        // and vice versa.
         lastAbovePos = max[dim];
         lastBelowPos = min[dim];
 
@@ -353,7 +363,7 @@ struct Node
             }
             curr = curr->firstAbove;
         }
-        
+
         // Find the first blocking edge below this point.  Don't count the
         // edges as we are travelling out of shapes we are inside, but then
         // mark clearVisibility as false.
@@ -385,35 +395,35 @@ struct Node
 
         return clearVisibility;
     }
-    double firstPointAbove(size_t dim) 
-    { 
-        Node *curr = firstAbove; 
-        while (curr && (curr->max[dim] >= pos)) 
-        { 
-            curr = curr->firstAbove; 
-        } 
-        
-        if (curr) 
-        { 
-            return curr->max[dim]; 
-        } 
-        return -DBL_MAX; 
-    } 
-    double firstPointBelow(size_t dim) 
-    { 
-        Node *curr = firstBelow; 
-        while (curr && (curr->min[dim] <= pos)) 
-        { 
-            curr = curr->firstBelow; 
-        } 
-         
-        if (curr) 
-        { 
-            return curr->min[dim]; 
-        } 
-        return DBL_MAX; 
-    } 
-    // This is a bit inefficient, but we won't need to do it once we have 
+    double firstPointAbove(size_t dim)
+    {
+        Node *curr = firstAbove;
+        while (curr && (curr->max[dim] >= pos))
+        {
+            curr = curr->firstAbove;
+        }
+
+        if (curr)
+        {
+            return curr->max[dim];
+        }
+        return -DBL_MAX;
+    }
+    double firstPointBelow(size_t dim)
+    {
+        Node *curr = firstBelow;
+        while (curr && (curr->min[dim] <= pos))
+        {
+            curr = curr->firstBelow;
+        }
+
+        if (curr)
+        {
+            return curr->min[dim];
+        }
+        return DBL_MAX;
+    }
+    // This is a bit inefficient, but we won't need to do it once we have
     // connection points.
     bool isInsideShape(size_t dimension)
     {
@@ -436,17 +446,17 @@ struct Node
 };
 
 
-bool CmpNodePos::operator() (const Node* u, const Node* v) const 
+bool CmpNodePos::operator() (const Node* u, const Node* v) const
 {
-    if (u->pos != v->pos) 
+    if (u->pos != v->pos)
     {
         return u->pos < v->pos;
     }
-    
+
     // Use the pointers to the base objects to differentiate them.
-    void *up = (u->v) ? (void *) u->v : 
+    void *up = (u->v) ? (void *) u->v :
             ((u->c) ? (void *) u->c : (void *) u->ss);
-    void *vp = (v->v) ? (void *) v->v : 
+    void *vp = (v->v) ? (void *) v->v :
             ((v->c) ? (void *) v->c : (void *) v->ss);
     return up < vp;
 }
@@ -456,7 +466,7 @@ bool CmpNodePos::operator() (const Node* u, const Node* v) const
 typedef enum {
     Open = 1,
     SegOpen = 2,
-    ConnPoint = 3, 
+    ConnPoint = 3,
     SegClose = 4,
     Close = 5
 } EventType;
@@ -464,7 +474,7 @@ typedef enum {
 
 struct Event
 {
-    Event(EventType t, Node *v, double p) 
+    Event(EventType t, Node *v, double p)
         : type(t),
           v(v),
           pos(p)
@@ -496,7 +506,7 @@ int compare_events(const void *a, const void *b)
 
 
 // Returns a bitfield of the direction of visibility (in this dimension)
-// made up of ConnDirDown (for visibility towards lower position values) 
+// made up of ConnDirDown (for visibility towards lower position values)
 // and ConnDirUp (for visibility towards higher position values).
 //
 static ConnDirFlags getPosVertInfDirection(VertInf *v, size_t dim)
@@ -526,13 +536,13 @@ static ConnDirFlags getPosVertInfDirection(VertInf *v, size_t dim)
         }
         else if (dirs == ConnDirDown)
         {
-            // For libavoid the Y-axis points downwards, so in terms of 
+            // For libavoid the Y-axis points downwards, so in terms of
             // smaller or larger position values, Down is Up and vice versa.
             return ConnDirUp;
         }
         else if (dirs == ConnDirUp)
         {
-            // For libavoid the Y-axis points downwards, so in terms of 
+            // For libavoid the Y-axis points downwards, so in terms of
             // smaller or larger position values, Down is Up and vice versa.
             return ConnDirDown;
         }
@@ -551,8 +561,8 @@ struct PosVertInf
           dir(d)
     {
     }
-    
-    bool operator<(const PosVertInf& rhs) const 
+
+    bool operator<(const PosVertInf& rhs) const
     {
         if (pos != rhs.pos)
         {
@@ -565,7 +575,7 @@ struct PosVertInf
     VertInf *vert;
 
     // A bitfield marking the direction of visibility (in this dimension)
-    // made up of ConnDirDown (for visibility towards lower position values) 
+    // made up of ConnDirDown (for visibility towards lower position values)
     // and ConnDirUp (for visibility towards higher position values).
     //
     ConnDirFlags dir;
@@ -573,7 +583,7 @@ struct PosVertInf
 
 
 struct CmpVertInf
-{ 
+{
     bool operator()(const VertInf* u, const VertInf* v) const
     {
         // Comparator for VertSet, an ordered set of VertInf pointers.
@@ -596,17 +606,17 @@ struct CmpVertInf
 
 typedef std::set<VertInf *, CmpVertInf> VertSet;
 
-// A set of points to break the line segment, 
+// A set of points to break the line segment,
 // along with vertices for these points.
 typedef std::set<PosVertInf> BreakpointSet;
 
-// Temporary structure used to store the possible horizontal visibility 
+// Temporary structure used to store the possible horizontal visibility
 // lines arising from the vertical sweep.
-class LineSegment 
+class LineSegment
 {
 public:
-    LineSegment(const double& b, const double& f, const double& p, 
-            bool ss = false, VertInf *bvi = NULL, VertInf *fvi = NULL)
+    LineSegment(const double& b, const double& f, const double& p,
+                bool /*ss*/ = false, VertInf *bvi = NULL, VertInf *fvi = NULL)
         : begin(b),
           finish(f),
           pos(p),
@@ -623,6 +633,7 @@ public:
             vertInfs.insert(fvi);
         }
     }
+
     LineSegment(const double& bf, const double& p, VertInf *bfvi = NULL)
         : begin(bf),
           finish(bf),
@@ -634,9 +645,9 @@ public:
             vertInfs.insert(bfvi);
         }
     }
- 
+
     // Order by begin, pos, finish.
-    bool operator<(const LineSegment& rhs) const 
+    bool operator<(const LineSegment& rhs) const
     {
         if (begin != rhs.begin)
         {
@@ -662,7 +673,7 @@ public:
             // Lines are exactly equal.
             return true;
         }
-        
+
         if (pos == rhs.pos)
         {
             if (((begin >= rhs.begin) && (begin <= rhs.finish)) ||
@@ -681,7 +692,7 @@ public:
         finish = std::max(finish, segment.finish);
         vertInfs.insert(segment.vertInfs.begin(), segment.vertInfs.end());
     }
-    
+
     VertInf *beginVertInf(void) const
     {
         if (vertInfs.empty())
@@ -750,12 +761,12 @@ public:
         }
     }
 
-    // Converts a section of the points list to a set of breakPoints.  
+    // Converts a section of the points list to a set of breakPoints.
     // Returns the first of the intersection points occuring at finishPos.
-    VertSet::iterator addSegmentsUpTo(Router *router, double finishPos)
+    VertSet::iterator addSegmentsUpTo(Router */*router*/, double finishPos)
     {
         VertSet::iterator firstIntersectionPt = vertInfs.end();
-        for (VertSet::iterator vert = vertInfs.begin(); 
+        for (VertSet::iterator vert = vertInfs.begin();
                 vert != vertInfs.end(); ++vert)
         {
             if ((*vert)->point.x > finishPos)
@@ -763,11 +774,11 @@ public:
                 // We're done.
                 break;
             }
-            
+
             breakPoints.insert(PosVertInf((*vert)->point.x, (*vert),
                         getPosVertInfDirection(*vert, XDIM)));
 
-            if ((firstIntersectionPt == vertInfs.end()) && 
+            if ((firstIntersectionPt == vertInfs.end()) &&
                     ((*vert)->point.x == finishPos))
             {
                 firstIntersectionPt = vert;
@@ -777,22 +788,22 @@ public:
         return firstIntersectionPt;
     }
 
-    // Add visibility edge(s) for this segment.  There may be multiple if 
+    // Add visibility edge(s) for this segment.  There may be multiple if
     // one of the endpoints is shared by multiple connector endpoints.
     void addEdgeHorizontal(Router *router)
     {
         commitBegin(router);
         commitFinish(router);
-        
+
         addSegmentsUpTo(router, finish);
     }
 
     // Add visibility edge(s) for this segment up until an intersection.
     // Then, move the segment beginning to the intersection point, so we
     // later only consider the remainder of the segment.
-    // There may be multiple segments added to the graph if the beginning 
+    // There may be multiple segments added to the graph if the beginning
     // endpoint of the segment is shared by multiple connector endpoints.
-    VertSet addEdgeHorizontalTillIntersection(Router *router, 
+    VertSet addEdgeHorizontalTillIntersection(Router *router,
             LineSegment& vertLine)
     {
         VertSet intersectionSet;
@@ -801,14 +812,14 @@ public:
 
         // Does a vertex already exist for this point.
         commitPositionX(router, vertLine.pos);
-   
-        // Generate segments and set end iterator to the first point 
+
+        // Generate segments and set end iterator to the first point
         // at the intersection position.
         VertSet::iterator restBegin = addSegmentsUpTo(router, vertLine.pos);
 
         // Add the intersections points to intersectionSet.
         VertSet::iterator restEnd = restBegin;
-        while ((restEnd != vertInfs.end()) && 
+        while ((restEnd != vertInfs.end()) &&
                 (*restEnd)->point.x == vertLine.pos)
         {
             ++restEnd;
@@ -821,7 +832,7 @@ public:
 
         return intersectionSet;
     }
-                
+
     // Insert vertical breakpoints.
     void insertBreakpointsBegin(Router *router, LineSegment& vertLine)
     {
@@ -841,7 +852,7 @@ public:
         {
             if ((*v)->point.x == begin)
             {
-                vertLine.breakPoints.insert(PosVertInf(pos, *v, 
+                vertLine.breakPoints.insert(PosVertInf(pos, *v,
                         getPosVertInfDirection(*v, YDIM)));
             }
         }
@@ -911,7 +922,7 @@ public:
                 {
                     // Here we have a pair of two endpoints that are both
                     // connector endpoints and both are inside a shape.
-                    
+
                     // Give vert visibility back to the first non-connector
                     // endpoint vertex (i.e., the side of the shape).
                     BreakpointSet::iterator side = last;
@@ -926,16 +937,16 @@ public:
                     bool canSeeDown = (vert->dir & ConnDirDown);
                     if (canSeeDown && side->vert->id.isShape)
                     {
-                        EdgeInf *edge = new 
+                        EdgeInf *edge = new
                                 EdgeInf(side->vert, vert->vert, orthogonal);
-                        edge->setDist(vert->vert->point[dim] - 
+                        edge->setDist(vert->vert->point[dim] -
                                 side->vert->point[dim]);
                     }
 
                     // Give last visibility back to the first non-connector
                     // endpoint vertex (i.e., the side of the shape).
                     side = vert;
-                    while ((side != breakPoints.end()) && 
+                    while ((side != breakPoints.end()) &&
                             !side->vert->id.isShape)
                     {
                         ++side;
@@ -943,17 +954,17 @@ public:
                     bool canSeeUp = (last->dir & ConnDirUp);
                     if (canSeeUp && (side != breakPoints.end()))
                     {
-                        EdgeInf *edge = new 
+                        EdgeInf *edge = new
                                 EdgeInf(last->vert, side->vert, orthogonal);
-                        edge->setDist(side->vert->point[dim] - 
+                        edge->setDist(side->vert->point[dim] -
                                 last->vert->point[dim]);
                     }
                 }
-                
+
                 // The normal case.
                 //
-                // Note: It's okay to give two connector endpoints visbility 
-                // here since we only consider the partner endpoint as a 
+                // Note: It's okay to give two connector endpoints visbility
+                // here since we only consider the partner endpoint as a
                 // candidate while searching if it is the other endpoint of
                 // the connector in question.
                 //
@@ -968,9 +979,9 @@ public:
                 }
                 if (generateEdge)
                 {
-                    EdgeInf *edge = 
+                    EdgeInf *edge =
                             new EdgeInf(last->vert, vert->vert, orthogonal);
-                    edge->setDist(vert->vert->point[dim] - 
+                    edge->setDist(vert->vert->point[dim] -
                             last->vert->point[dim]);
                 }
 
@@ -997,12 +1008,12 @@ public:
     double finish;
     double pos;
     bool shapeSide;
-    
+
     VertSet vertInfs;
     BreakpointSet breakPoints;
 private:
-	// MSVC wants to generate the assignment operator and the default 
-	// constructor, but fails.  Therefore we declare them private and 
+	// MSVC wants to generate the assignment operator and the default
+	// constructor, but fails.  Therefore we declare them private and
 	// don't implement them.
     LineSegment & operator=(LineSegment const &);
     LineSegment();
@@ -1032,7 +1043,7 @@ class SegmentListWrapper
                     }
                     else
                     {
-                        // This is the first overlapping segment, so just 
+                        // This is the first overlapping segment, so just
                         // merge the new segment with this one.
                         curr->mergeVertInfs(segment);
                         found = curr;
@@ -1061,7 +1072,7 @@ class SegmentListWrapper
 // Given a router instance and a set of possible horizontal segments, and a
 // possible vertical visibility segment, compute and add edges to the
 // orthogonal visibility graph for all the visibility edges.
-static void intersectSegments(Router *router, SegmentList& segments, 
+static void intersectSegments(Router *router, SegmentList& segments,
         LineSegment& vertLine)
 {
     COLA_ASSERT(vertLine.beginVertInf() == NULL);
@@ -1104,9 +1115,9 @@ static void intersectSegments(Router *router, SegmentList& segments,
             {
                 // Add horizontal visibility segment.
                 horiLine.addEdgeHorizontal(router);
-            
+
                 horiLine.insertBreakpointsFinish(router, vertLine);
-                
+
                 size_t dim = XDIM; // x-dimension
                 horiLine.generateVisibilityEdgesFromBreakpointSet(router, dim);
 
@@ -1123,7 +1134,7 @@ static void intersectSegments(Router *router, SegmentList& segments,
             if (inVertSegRegion)
             {
                 // Add horizontal visibility segment.
-                VertSet intersectionVerts = 
+                VertSet intersectionVerts =
                         horiLine.addEdgeHorizontalTillIntersection(
                             router, vertLine);
 
@@ -1144,16 +1155,16 @@ static void intersectSegments(Router *router, SegmentList& segments,
 }
 
 
-// Processes an event for the vertical sweep used for computing the static 
-// orthogonal visibility graph.  This adds possible visibility sgments to 
+// Processes an event for the vertical sweep used for computing the static
+// orthogonal visibility graph.  This adds possible visibility sgments to
 // the segments list.
 // The first pass is adding the event to the scanline, the second is for
 // processing the event and the third for removing it from the scanline.
-static void processEventVert(Router *router, NodeSet& scanline, 
+static void processEventVert(Router *router, NodeSet& scanline,
         SegmentListWrapper& segments, Event *e, unsigned int pass)
 {
     Node *v = e->v;
-    
+
     if ( ((pass == 1) && (e->type == Open)) ||
          ((pass == 2) && (e->type == ConnPoint)) )
     {
@@ -1163,21 +1174,21 @@ static void processEventVert(Router *router, NodeSet& scanline,
 
         NodeSet::iterator it = v->iter;
         // Work out neighbours
-        if (it != scanline.begin()) 
+        if (it != scanline.begin())
         {
             Node *u = *(--it);
             v->firstAbove = u;
             u->firstBelow = v;
         }
         it = v->iter;
-        if (++it != scanline.end()) 
+        if (++it != scanline.end())
         {
             Node *u = *it;
             v->firstBelow = u;
             u->firstAbove = v;
         }
     }
-    
+
     if (pass == 2)
     {
         if ((e->type == Open) || (e->type == Close))
@@ -1198,18 +1209,18 @@ static void processEventVert(Router *router, NodeSet& scanline,
             if (minLimitMax >= maxLimitMin)
             {
                 // Insert possible visibility segments.
-                VertInf *vI1 = new VertInf(router, dummyOrthogID, 
+                VertInf *vI1 = new VertInf(router, dummyOrthogID,
                             Point(minShape, lineY));
-                VertInf *vI2 = new VertInf(router, dummyOrthogID, 
+                VertInf *vI2 = new VertInf(router, dummyOrthogID,
                             Point(maxShape, lineY));
-                
+
                 // There are no overlapping shapes, so give full visibility.
                 if (minLimit < minShape)
                 {
                     segments.insert(LineSegment(minLimit, minShape, lineY,
                                 true, NULL, vI1));
                 }
-                segments.insert(LineSegment(minShape, maxShape, lineY, 
+                segments.insert(LineSegment(minShape, maxShape, lineY,
                             true, vI1, vI2));
                 if (maxShape < maxLimit)
                 {
@@ -1245,12 +1256,12 @@ static void processEventVert(Router *router, NodeSet& scanline,
             LineSegment *line1 = NULL, *line2 = NULL;
             if (!inShape || (centreVert->visDirections & ConnDirLeft))
             {
-                line1 = segments.insert(LineSegment(minLimit, cp.x, e->pos, 
+                line1 = segments.insert(LineSegment(minLimit, cp.x, e->pos,
                         true, NULL, centreVert));
             }
             if (!inShape || (centreVert->visDirections & ConnDirRight))
             {
-                line2 = segments.insert(LineSegment(cp.x, maxLimit, e->pos, 
+                line2 = segments.insert(LineSegment(cp.x, maxLimit, e->pos,
                         true, centreVert, NULL));
             }
             if (!line1 && !line2)
@@ -1258,7 +1269,7 @@ static void processEventVert(Router *router, NodeSet& scanline,
                 // Add a point segment for the centre point.
                 segments.insert(LineSegment(cp.x, e->pos, centreVert));
             }
-            
+
             if (!inShape)
             {
                 // This is not contained within a shape so add a normal
@@ -1279,13 +1290,13 @@ static void processEventVert(Router *router, NodeSet& scanline,
             }
         }
     }
-    
+
     if ( ((pass == 3) && (e->type == Close)) ||
          ((pass == 2) && (e->type == ConnPoint)) )
     {
         // Clean up neighbour pointers.
         Node *l = v->firstAbove, *r = v->firstBelow;
-        if (l != NULL) 
+        if (l != NULL)
         {
             l->firstBelow = v->firstBelow;
         }
@@ -1310,16 +1321,16 @@ static void processEventVert(Router *router, NodeSet& scanline,
 }
 
 
-// Processes an event for the vertical sweep used for computing the static 
-// orthogonal visibility graph.  This adds possible visibility sgments to 
+// Processes an event for the vertical sweep used for computing the static
+// orthogonal visibility graph.  This adds possible visibility sgments to
 // the segments list.
 // The first pass is adding the event to the scanline, the second is for
 // processing the event and the third for removing it from the scanline.
-static void processEventHori(Router *router, NodeSet& scanline, 
+static void processEventHori(Router */*router*/, NodeSet& scanline,
         SegmentListWrapper& segments, Event *e, unsigned int pass)
 {
     Node *v = e->v;
-    
+
     if ( ((pass == 1) && (e->type == Open)) ||
          ((pass == 2) && (e->type == ConnPoint)) )
     {
@@ -1329,21 +1340,21 @@ static void processEventHori(Router *router, NodeSet& scanline,
 
         NodeSet::iterator it = v->iter;
         // Work out neighbours
-        if (it != scanline.begin()) 
+        if (it != scanline.begin())
         {
             Node *u = *(--it);
             v->firstAbove = u;
             u->firstBelow = v;
         }
         it = v->iter;
-        if (++it != scanline.end()) 
+        if (++it != scanline.end())
         {
             Node *u = *it;
             v->firstBelow = u;
             u->firstAbove = v;
         }
     }
-    
+
     if (pass == 2)
     {
         if ((e->type == Open) || (e->type == Close))
@@ -1370,13 +1381,13 @@ static void processEventHori(Router *router, NodeSet& scanline,
             {
                 if ((minLimitMax > minLimit) && (minLimitMax >= minShape))
                 {
-                    LineSegment vertSeg = 
+                    LineSegment vertSeg =
                             LineSegment(minLimit, minLimitMax, lineX);
                     segments.insert(vertSeg);
                 }
                 if ((maxLimitMin < maxLimit) && (maxLimitMin <= maxShape))
                 {
-                    LineSegment vertSeg = 
+                    LineSegment vertSeg =
                             LineSegment(maxLimitMin, maxLimit, lineX);
                     segments.insert(vertSeg);
                 }
@@ -1392,7 +1403,7 @@ static void processEventHori(Router *router, NodeSet& scanline,
             double minLimit = v->firstPointAbove(1);
             double maxLimit = v->firstPointBelow(1);
             bool inShape = v->isInsideShape(1);
-            
+
             if (!inShape || (centreVert->visDirections & ConnDirUp))
             {
                 segments.insert(LineSegment(minLimit, cp.y, e->pos));
@@ -1403,13 +1414,13 @@ static void processEventHori(Router *router, NodeSet& scanline,
             }
         }
     }
-    
+
     if ( ((pass == 3) && (e->type == Close)) ||
          ((pass == 2) && (e->type == ConnPoint)) )
     {
         // Clean up neighbour pointers.
         Node *l = v->firstAbove, *r = v->firstBelow;
-        if (l != NULL) 
+        if (l != NULL)
         {
             l->firstBelow = v->firstBelow;
         }
@@ -1455,8 +1466,8 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
 
         ++shRefIt;
     }
-    for (VertInf *curr = router->vertices.connsBegin(); 
-            curr && (curr != router->vertices.shapesBegin()); 
+    for (VertInf *curr = router->vertices.connsBegin();
+            curr && (curr != router->vertices.shapesBegin());
             curr = curr->lstNext)
     {
         Point& point = curr->point;
@@ -1485,7 +1496,7 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
             {
                 for (unsigned j = posStartIndex; j < posFinishIndex; ++j)
                 {
-                    processEventVert(router, scanline, segments, 
+                    processEventVert(router, scanline, segments,
                             events[j], pass);
                 }
             }
@@ -1500,7 +1511,7 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
             posStartIndex = i;
         }
 
-        // Do the first sweep event handling -- building the correct 
+        // Do the first sweep event handling -- building the correct
         // structure of the scanline.
         const int pass = 1;
         processEventVert(router, scanline, segments, events[i], pass);
@@ -1529,8 +1540,8 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
 
         ++shRefIt;
     }
-    for (VertInf *curr = router->vertices.connsBegin(); 
-            curr && (curr != router->vertices.shapesBegin()); 
+    for (VertInf *curr = router->vertices.connsBegin();
+            curr && (curr != router->vertices.shapesBegin());
             curr = curr->lstNext)
     {
         Point& point = curr->point;
@@ -1555,11 +1566,11 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
             {
                 for (unsigned j = posStartIndex; j < posFinishIndex; ++j)
                 {
-                    processEventHori(router, scanline, vertSegments, 
+                    processEventHori(router, scanline, vertSegments,
                             events[j], pass);
                 }
             }
-            
+
             // Process the merged line segments.
             vertSegments.list().sort();
             for (SegmentList::iterator curr = vertSegments.list().begin();
@@ -1579,7 +1590,7 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
             posStartIndex = i;
         }
 
-        // Do the first sweep event handling -- building the correct 
+        // Do the first sweep event handling -- building the correct
         // structure of the scanline.
         const int pass = 1;
         processEventHori(router, scanline, vertSegments, events[i], pass);
@@ -1593,13 +1604,13 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
 
     // Add portions of the horizontal line that are after the final vertical
     // position we considered.
-    for (SegmentList::iterator it = segments.list().begin(); 
+    for (SegmentList::iterator it = segments.list().begin();
             it != segments.list().end(); )
     {
         LineSegment& horiLine = *it;
 
         horiLine.addEdgeHorizontal(router);
-        
+
         size_t dim = XDIM; // x-dimension
         horiLine.generateVisibilityEdgesFromBreakpointSet(router, dim);
 
@@ -1615,20 +1626,20 @@ extern void generateStaticOrthogonalVisGraph(Router *router)
 
 
 
-// Processes sweep events used to determine each horizontal and vertical 
-// line segment in a connector's channel of visibility.  
+// Processes sweep events used to determine each horizontal and vertical
+// line segment in a connector's channel of visibility.
 // Four calls to this function are made at each position by the scanline:
 //   1) Handle all Close event processing.
 //   2) Remove Close event objects from the scanline.
 //   3) Add Open event objects to the scanline.
 //   4) Handle all Open event processing.
 //
-static void processShiftEvent(Router *router, NodeSet& scanline, 
-        ShiftSegmentList& segments, Event *e, size_t dim,
-        unsigned int pass)
+static void processShiftEvent(Router */*router*/, NodeSet& scanline,
+                              ShiftSegmentList& /*segments*/, Event *e, size_t dim,
+                              unsigned int pass)
 {
     Node *v = e->v;
-    
+
     if ( ((pass == 3) && (e->type == Open)) ||
          ((pass == 3) && (e->type == SegOpen)) )
     {
@@ -1638,21 +1649,21 @@ static void processShiftEvent(Router *router, NodeSet& scanline,
 
         NodeSet::iterator it = v->iter;
         // Work out neighbours
-        if (it != scanline.begin()) 
+        if (it != scanline.begin())
         {
             Node *u = *(--it);
             v->firstAbove = u;
             u->firstBelow = v;
         }
         it = v->iter;
-        if (++it != scanline.end()) 
+        if (++it != scanline.end())
         {
             Node *u = *it;
             v->firstBelow = u;
             u->firstAbove = v;
         }
     }
-    
+
     if ( ((pass == 4) && (e->type == Open)) ||
          ((pass == 4) && (e->type == SegOpen)) ||
          ((pass == 1) && (e->type == SegClose)) ||
@@ -1664,9 +1675,9 @@ static void processShiftEvent(Router *router, NodeSet& scanline,
             double minLimit = v->firstObstacleAbove(dim);
             double maxLimit = v->firstObstacleBelow(dim);
 
-            v->ss->minSpaceLimit = 
+            v->ss->minSpaceLimit =
                     std::max(minLimit, v->ss->minSpaceLimit);
-            v->ss->maxSpaceLimit = 
+            v->ss->maxSpaceLimit =
                     std::min(maxLimit, v->ss->maxSpaceLimit);
         }
         else
@@ -1675,13 +1686,13 @@ static void processShiftEvent(Router *router, NodeSet& scanline,
             v->markShiftSegmentsBelow(dim);
         }
     }
-    
+
     if ( ((pass == 2) && (e->type == SegClose)) ||
          ((pass == 2) && (e->type == Close)) )
     {
         // Clean up neighbour pointers.
         Node *l = v->firstAbove, *r = v->firstBelow;
-        if (l != NULL) 
+        if (l != NULL)
         {
             l->firstBelow = v->firstBelow;
         }
@@ -1698,7 +1709,7 @@ static void processShiftEvent(Router *router, NodeSet& scanline,
 }
 
 
-static void buildOrthogonalChannelInfo(Router *router, 
+static void buildOrthogonalChannelInfo(Router *router,
         const size_t dim, ShiftSegmentList& segmentList)
 {
     if (router->routingPenalty(segmentPenalty) == 0)
@@ -1710,15 +1721,15 @@ static void buildOrthogonalChannelInfo(Router *router,
 
     size_t altDim = (dim + 1) % 2;
     // For each connector.
-    for (ConnRefList::const_iterator curr = router->connRefs.begin(); 
-            curr != router->connRefs.end(); ++curr) 
+    for (ConnRefList::const_iterator curr = router->connRefs.begin();
+            curr != router->connRefs.end(); ++curr)
     {
         if ((*curr)->routingType() != ConnType_Orthogonal)
         {
             continue;
         }
         Polygon& displayRoute = (*curr)->displayRoute();
-        // Determine all line segments that we are interested in shifting. 
+        // Determine all line segments that we are interested in shifting.
         // We don't consider the first or last segment of a path.
         for (size_t i = 1; i < displayRoute.size(); ++i)
         {
@@ -1732,12 +1743,12 @@ static void buildOrthogonalChannelInfo(Router *router,
                     indexLow = i;
                     indexHigh = i - 1;
                 }
-                COLA_ASSERT(displayRoute.at(indexLow)[altDim] < 
+                COLA_ASSERT(displayRoute.at(indexLow)[altDim] <
                         displayRoute.at(indexHigh)[altDim]);
 
                 if ((i == 1) || ((i + 1) == displayRoute.size()))
                 {
-                    // The first and last segment of a connector can't be 
+                    // The first and last segment of a connector can't be
                     // shifted.  We call them fixed segments.  Note: this
                     // will change if we later allow connection channels.
                     segmentList.push_back(
@@ -1753,15 +1764,15 @@ static void buildOrthogonalChannelInfo(Router *router,
                 double prevPos = displayRoute.ps[i - 2][dim];
                 double nextPos = displayRoute.ps[i + 1][dim];
                 if (((prevPos < displayRoute.ps[i][dim]) &&
-                     (nextPos > displayRoute.ps[i][dim])) 
+                     (nextPos > displayRoute.ps[i][dim]))
                      ||
                     ((prevPos > displayRoute.ps[i][dim]) &&
                      (nextPos < displayRoute.ps[i][dim])) )
                 {
                     isSBend = true;
 
-                    // Determine limits if the s-bend is not due to an 
-                    // obstacle.  In this case we need to limit the channel 
+                    // Determine limits if the s-bend is not due to an
+                    // obstacle.  In this case we need to limit the channel
                     // to the span of the adjoining segments to this one.
                     if ((prevPos < displayRoute.ps[i][dim]) &&
                         (nextPos > displayRoute.ps[i][dim]))
@@ -1778,7 +1789,7 @@ static void buildOrthogonalChannelInfo(Router *router,
                 else
                 {
                     // isCBend: Both adjoining segments are in the same
-                    // direction.  We indicate this for later by setting 
+                    // direction.  We indicate this for later by setting
                     // the maxLim or minLim to the segment position.
                     if (prevPos < displayRoute.ps[i][dim])
                     {
@@ -1790,7 +1801,7 @@ static void buildOrthogonalChannelInfo(Router *router,
                     }
                 }
 
-                segmentList.push_back(ShiftSegment(*curr, indexLow, 
+                segmentList.push_back(ShiftSegment(*curr, indexLow,
                             indexHigh, isSBend, dim, minLim, maxLim));
             }
         }
@@ -1800,7 +1811,7 @@ static void buildOrthogonalChannelInfo(Router *router,
         // There are no segments, so we can just return now.
         return;
     }
-    
+
     // Do a sweep and shift these segments.
     const size_t n = router->shapeRefs.size();
     const size_t cpn = segmentList.size();
@@ -1821,7 +1832,7 @@ static void buildOrthogonalChannelInfo(Router *router,
 
         ++shRefIt;
     }
-    for (ShiftSegmentList::iterator curr = segmentList.begin(); 
+    for (ShiftSegmentList::iterator curr = segmentList.begin();
             curr != segmentList.end(); ++curr)
     {
         const Point& lowPt = curr->lowPoint();
@@ -1853,7 +1864,7 @@ static void buildOrthogonalChannelInfo(Router *router,
             {
                 for (unsigned j = posStartIndex; j < posFinishIndex; ++j)
                 {
-                    processShiftEvent(router, scanline, segmentList, events[j], 
+                    processShiftEvent(router, scanline, segmentList, events[j],
                             dim, pass);
                 }
             }
@@ -1868,7 +1879,7 @@ static void buildOrthogonalChannelInfo(Router *router,
             posStartIndex = i;
         }
 
-        // Do the first sweep event handling -- building the correct 
+        // Do the first sweep event handling -- building the correct
         // structure of the scanline.
         const int pass = 1;
         processShiftEvent(router, scanline, segmentList, events[i],
@@ -1886,8 +1897,8 @@ static void buildOrthogonalChannelInfo(Router *router,
 static void simplifyOrthogonalRoutes(Router *router)
 {
     // Simplify routes.
-    for (ConnRefList::const_iterator curr = router->connRefs.begin(); 
-            curr != router->connRefs.end(); ++curr) 
+    for (ConnRefList::const_iterator curr = router->connRefs.begin();
+            curr != router->connRefs.end(); ++curr)
     {
         if ((*curr)->routingType() != ConnType_Orthogonal)
         {
@@ -1898,7 +1909,7 @@ static void simplifyOrthogonalRoutes(Router *router)
 }
 
 
-static void buildOrthogonalNudgingOrderInfo(Router *router, 
+static void buildOrthogonalNudgingOrderInfo(Router *router,
         PtOrderMap& pointOrders)
 {
     // Simplify routes.
@@ -1907,46 +1918,46 @@ static void buildOrthogonalNudgingOrderInfo(Router *router,
     int crossingsN = 0;
 
     // Do segment splitting.
-    for (ConnRefList::const_iterator curr = router->connRefs.begin(); 
-            curr != router->connRefs.end(); ++curr) 
+    for (ConnRefList::const_iterator curr = router->connRefs.begin();
+            curr != router->connRefs.end(); ++curr)
     {
         if ((*curr)->routingType() != ConnType_Orthogonal)
         {
             continue;
         }
         ConnRef *conn = *curr;
-        
-        for (ConnRefList::const_iterator curr2 = router->connRefs.begin(); 
-                curr2 != router->connRefs.end(); ++curr2) 
+
+        for (ConnRefList::const_iterator curr2 = router->connRefs.begin();
+                curr2 != router->connRefs.end(); ++curr2)
         {
             if ((*curr2)->routingType() != ConnType_Orthogonal)
             {
                 continue;
             }
             ConnRef *conn2 = *curr2;
-            
+
             if (conn == conn2)
             {
                 continue;
             }
-            
+
             Avoid::Polygon& route = conn->displayRoute();
             Avoid::Polygon& route2 = conn2->displayRoute();
             splitBranchingSegments(route2, true, route);
         }
     }
 
-    for (ConnRefList::const_iterator curr = router->connRefs.begin(); 
-            curr != router->connRefs.end(); ++curr) 
+    for (ConnRefList::const_iterator curr = router->connRefs.begin();
+            curr != router->connRefs.end(); ++curr)
     {
         if ((*curr)->routingType() != ConnType_Orthogonal)
         {
             continue;
         }
         ConnRef *conn = *curr;
-        
-        for (ConnRefList::const_iterator curr2 = curr; 
-                curr2 != router->connRefs.end(); ++curr2) 
+
+        for (ConnRefList::const_iterator curr2 = curr;
+                curr2 != router->connRefs.end(); ++curr2)
         {
             if ((*curr2)->routingType() != ConnType_Orthogonal)
             {
@@ -1958,7 +1969,7 @@ static void buildOrthogonalNudgingOrderInfo(Router *router,
             {
                 continue;
             }
-            
+
             Avoid::Polygon& route = conn->displayRoute();
             Avoid::Polygon& route2 = conn2->displayRoute();
             bool checkForBranchingSegments = false;
@@ -1966,8 +1977,8 @@ static void buildOrthogonalNudgingOrderInfo(Router *router,
             for (size_t i = 1; i < route.size(); ++i)
             {
                 const bool finalSegment = ((i + 1) == route.size());
-                crossings += countRealCrossings(route2, true, route, i, 
-                        checkForBranchingSegments, finalSegment, NULL, 
+                crossings += countRealCrossings(route2, true, route, i,
+                        checkForBranchingSegments, finalSegment, NULL,
                         &pointOrders, conn2, conn).first;
             }
             if (crossings > 0)
@@ -1976,7 +1987,7 @@ static void buildOrthogonalNudgingOrderInfo(Router *router,
             }
         }
     }
-    
+
     // Sort the point orders.
     PtOrderMap::iterator finish = pointOrders.end();
     for (PtOrderMap::iterator it = pointOrders.begin(); it != finish; ++it)
@@ -1992,7 +2003,7 @@ static void buildOrthogonalNudgingOrderInfo(Router *router,
 }
 
 
-class CmpLineOrder 
+class CmpLineOrder
 {
     public:
         CmpLineOrder(PtOrderMap& ord, const size_t dim)
@@ -2007,11 +2018,11 @@ class CmpLineOrder
             {
                 *comparable = true;
             }
-            Point lhsLow  = lhs.lowPoint(); 
-            Point rhsLow  = rhs.lowPoint(); 
+            Point lhsLow  = lhs.lowPoint();
+            Point rhsLow  = rhs.lowPoint();
 #ifndef NDEBUG
-            const Point& lhsHigh = lhs.highPoint(); 
-            const Point& rhsHigh = rhs.highPoint(); 
+            const Point& lhsHigh = lhs.highPoint();
+            const Point& rhsHigh = rhs.highPoint();
 #endif
             size_t altDim = (dimension + 1) % 2;
 
@@ -2022,9 +2033,9 @@ class CmpLineOrder
             {
                 return lhsLow[dimension] < rhsLow[dimension];
             }
-            
-            // If one of these is fixed, then determine order based on 
-            // fixed segment, that is, order so the fixed segment doesn't 
+
+            // If one of these is fixed, then determine order based on
+            // fixed segment, that is, order so the fixed segment doesn't
             // block movement.
             bool oneIsFixed = false;
             const int lhsFixedOrder = lhs.fixedOrder(oneIsFixed);
@@ -2034,8 +2045,8 @@ class CmpLineOrder
                 return lhsFixedOrder < rhsFixedOrder;
             }
 
-            // C-bends that did not have a clear order with s-bends might 
-            // not have a good ordering here, so compare their order in 
+            // C-bends that did not have a clear order with s-bends might
+            // not have a good ordering here, so compare their order in
             // terms of C-bend direction and S-bends and use that if it
             // differs for the two segments.
             const int lhsOrder = lhs.order();
@@ -2056,7 +2067,7 @@ class CmpLineOrder
             {
                 // A value for rhsPos or lhsPos mean the points are not directly
                 // comparable, meaning they are at the same position but cannot
-                // overlap (they are just collinear.  The relative order for 
+                // overlap (they are just collinear.  The relative order for
                 // these segments is not important since we do not constrain
                 // them against each other.
                 //COLA_ASSERT(lhs.overlapsWith(rhs, dimension) == false);
@@ -2076,13 +2087,13 @@ class CmpLineOrder
 };
 
 
-// We can use the normaal sort algorithm for lists since it is not possible 
-// to comapre all elements, but there will be an ordering defined between 
-// most of the elements.  Hence we order these, using insertion sort, and 
-// the case of them not being able to be compared is handled by not setting 
+// We can use the normaal sort algorithm for lists since it is not possible
+// to comapre all elements, but there will be an ordering defined between
+// most of the elements.  Hence we order these, using insertion sort, and
+// the case of them not being able to be compared is handled by not setting
 // up any constraints between such segments when doing the nudging.
 //
-static ShiftSegmentList linesort(ShiftSegmentList origList, 
+static ShiftSegmentList linesort(ShiftSegmentList origList,
         CmpLineOrder& comparison)
 {
     ShiftSegmentList resultList;
@@ -2119,7 +2130,7 @@ static ShiftSegmentList linesort(ShiftSegmentList origList,
 typedef std::list<ShiftSegment *> ShiftSegmentPtrList;
 
 
-static void nudgeOrthogonalRoutes(Router *router, size_t dimension, 
+static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
         PtOrderMap& pointOrders, ShiftSegmentList& segmentList)
 {
     // Do the actual nudging.
@@ -2160,7 +2171,7 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
         }
         CmpLineOrder lineSortComp(pointOrders, dimension);
         currentRegion = linesort(currentRegion, lineSortComp);
-        
+
         if (currentRegion.size() == 1)
         {
             // Save creating the solver instance if there is just one
@@ -2188,7 +2199,7 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
                 currSegment != currentRegion.end(); ++currSegment)
         {
             Point& lowPt = currSegment->lowPoint();
-            
+
             // Create a solver variable for the position of this segment.
             int varID = freeID;
             double idealPos = lowPt[dimension];
@@ -2197,7 +2208,7 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
             {
                 COLA_ASSERT(currSegment->minSpaceLimit > -CHANNEL_MAX);
                 COLA_ASSERT(currSegment->maxSpaceLimit < CHANNEL_MAX);
-                
+
                 // For s-bends, take the middle as ideal.
                 idealPos = currSegment->minSpaceLimit +
                         ((currSegment->maxSpaceLimit -
@@ -2211,7 +2222,7 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
             }
             else
             {
-                // Set a higher weight for c-bends to stop them sometimes 
+                // Set a higher weight for c-bends to stop them sometimes
                 // getting pushed out into channels by more-free connectors
                 // to the "inner" side of them.
                 weight = strongWeight;
@@ -2234,10 +2245,10 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
                 if (currSegment->overlapsWith(*prevSeg, dimension) &&
                         (!(currSegment->fixed) || !(prevSeg->fixed)))
                 {
-                    // If there is a previous segment to the left that 
-                    // could overlap this in the shift direction, then 
+                    // If there is a previous segment to the left that
+                    // could overlap this in the shift direction, then
                     // constrain the two segments to be separated.
-                    // Though don't add the constraint if both the 
+                    // Though don't add the constraint if both the
                     // segments are fixed in place.
                     cs.push_back(new Constraint(prevVar, vs[index],
                             router->orthogonalNudgeDistance()));
@@ -2251,21 +2262,21 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
 
             if (!currSegment->fixed)
             {
-                // If this segment sees a channel boundary to its left, 
+                // If this segment sees a channel boundary to its left,
                 // then constrain its placement as such.
                 if (currSegment->minSpaceLimit > -CHANNEL_MAX)
                 {
-                    vs.push_back(new Variable(fixedID, 
+                    vs.push_back(new Variable(fixedID,
                                 currSegment->minSpaceLimit, fixedWeight));
-                    cs.push_back(new Constraint(vs[vs.size() - 1], vs[index], 
+                    cs.push_back(new Constraint(vs[vs.size() - 1], vs[index],
                                 0.0));
                 }
-                
-                // If this segment sees a channel boundary to its right, 
+
+                // If this segment sees a channel boundary to its right,
                 // then constrain its placement as such.
                 if (currSegment->maxSpaceLimit < CHANNEL_MAX)
                 {
-                    vs.push_back(new Variable(fixedID, 
+                    vs.push_back(new Variable(fixedID,
                                 currSegment->maxSpaceLimit, fixedWeight));
                     cs.push_back(new Constraint(vs[index], vs[vs.size() - 1],
                                 0.0));
@@ -2281,7 +2292,7 @@ static void nudgeOrthogonalRoutes(Router *router, size_t dimension,
         IncSolver f(vs,cs);
         f.solve();
         bool satisfied = true;
-        for (size_t i = 0; i < vs.size(); ++i) 
+        for (size_t i = 0; i < vs.size(); ++i)
         {
             if (vs[i]->id == fixedID)
             {
@@ -2323,7 +2334,7 @@ extern void improveOrthogonalRoutes(Router *router)
     {
         // Build nudging info.
         // XXX: We need to build the point orders separately in each
-        //      dimension since things move.  There is probably a more 
+        //      dimension since things move.  There is probably a more
         //      efficient way to do this.
         PtOrderMap pointOrders;
         buildOrthogonalNudgingOrderInfo(router, pointOrders);
