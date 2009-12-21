@@ -31,14 +31,14 @@
 ## P R O J E C T   :   I N K S C A P E
 ########################################################################
 -->
-<project name="Inkscape" default="dist-inkscape" basedir=".">
+<project name="Inkscape" default="dist-all" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
         was written for GTK-2.10 on Win32, but it should work
         well for other types of builds with only minor adjustments.
-        Note that the default target is 'dist'.  You can execute other
+        Note that the default target is 'dist-all'.  You can execute other
         targets instead, by "btool {target}",  like  "btool compile", if
-        you want to save time.
+        you want to save time, or "dist-inkscape" if you don't want inkview.
     </description>
 
   <!-- set global properties for this build -->
