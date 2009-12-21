@@ -74,6 +74,9 @@ def getBarcode(format, param={}):
 		elif format in ['ean13', 'ucc13','jan']:
 			import EAN13
 			return EAN13.Object(param)
+		elif format == 'ean5':
+			import EAN5
+			return EAN5.Object(param)
 		elif format in ['ean8', 'ucc8']:
 			import EAN8
 			return EAN8.Object(param)

@@ -9,6 +9,7 @@ barcode_SCRIPTS = \
 	Code93.py \
 	EAN13.py \
 	EAN8.py \
+	EAN5.py \
 	__init__.py \
 	RM4CC.py \
 	UPCA.py \
