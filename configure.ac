@@ -33,6 +33,9 @@ AC_PROG_INTLTOOL(0.22)
 AC_HEADER_STDC
 INK_SVN_SNAPSHOT_BUILD
 
+dnl If automake 1.11 shave the output to look nice
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+
 dnl These next few lines are needed only while libcroco is in our source tree.
 AC_PROG_CC
 AM_PROG_CC_C_O
