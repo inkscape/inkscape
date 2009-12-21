@@ -16,7 +16,10 @@
 #include "style.h"
 #include "svg/svg-length.h"
 #include "sp-object.h"
+#include "sp-string.h"
 #include "FontFactory.h"
+
+#include "text-editing.h" // for inputTruncated()
 
 namespace Inkscape {
 namespace Text {
@@ -319,6 +322,72 @@ PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() c
 Layout::InputStreamTextSource::~InputStreamTextSource()
 {
     sp_style_unref(style);
+}
+
+bool
+Layout::inputTruncated() const
+{
+	if (!inputExists())
+		return false;
+
+	// Find out the SPObject to which the last visible character corresponds:
+	Layout::iterator last = end();
+	if (last == begin()) {
+           // FIXME: this returns a wrong "not truncated" when a flowtext is entirely
+           // truncated, so there are no visible characters. But how can I find out the
+           // originator SPObject without having anything to do getSourceOfCharacter
+           // from?
+		return false; 
+	}
+	last.prevCharacter();
+	void *source;
+	Glib::ustring::iterator offset;
+	getSourceOfCharacter(last, &source, &offset);
+	SPObject *obj = SP_OBJECT(source);
+
+	// if that is SPString, see if it has further characters beyond the last visible
+	if (obj && SP_IS_STRING(obj)) {
+		Glib::ustring::iterator offset_next = offset;
+		offset_next ++;
+		if (offset_next != SP_STRING(obj)->string.end()) {
+			// truncated: source SPString has next char
+			return true;
+		}
+	}
+
+	// otherwise, see if the SPObject at end() or any of its text-tree ancestors
+	// (excluding top-level SPText or SPFlowText) have a text-tree next sibling with
+	// visible text
+	if (obj) {
+		for (SPObject *ascend = obj; 
+				 ascend && (is_part_of_text_subtree (ascend) && !is_top_level_text_object(ascend));
+				 ascend = SP_OBJECT_PARENT(ascend)) {
+			if (SP_OBJECT_NEXT(ascend)) {
+				SPObject *next = SP_OBJECT_NEXT(ascend);
+				if (next && is_part_of_text_subtree(next) && has_visible_text(next)) {
+					// truncated: source text object has next text sibling
+					return true;
+				}
+			}
+		}
+	}
+
+	// the above works for flowed text, but not for text on path.
+	// so now, we also check if the last of the _characters, if coming from a TEXT_SOURCE,
+	// has in_glyph different from -1
+	unsigned last_char = _characters.size() - 1;
+	unsigned span_index = _characters[last_char].in_span;
+	Glib::ustring::const_iterator iter_char = _spans[span_index].input_stream_first_character;
+
+	if (_input_stream[_spans[span_index].in_input_stream_item]->Type() == TEXT_SOURCE) {
+		if (_characters[last_char].in_glyph == -1) {
+			//truncated: last char has no glyph
+			return true;
+		}
+	}
+
+	// not truncated
+	return false;
 }
 
 }//namespace Text

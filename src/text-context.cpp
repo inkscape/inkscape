@@ -425,11 +425,18 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             // find out item under mouse, disregarding groups
             item_ungrouped = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
-                sp_canvas_item_show(tc->indicator);
+
+                Inkscape::Text::Layout const *layout = te_get_layout(item_ungrouped);
+                if (layout->inputTruncated()) {
+                    SP_CTRLRECT(tc->indicator)->setColor(0xff0000ff, false, 0);
+                } else {
+                    SP_CTRLRECT(tc->indicator)->setColor(0x0000ff7f, false, 0);
+                }
                 Geom::OptRect ibbox = sp_item_bbox_desktop(item_ungrouped);
                 if (ibbox) {
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
+                sp_canvas_item_show(tc->indicator);
 
                 event_context->cursor_shape = cursor_text_insert_xpm;
                 event_context->hot_x = 7;
@@ -1590,18 +1597,30 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 
         Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
         int const nChars = layout->iteratorToCharIndex(layout->end());
+        char *trunc = "";
+        bool truncated = false;
+        if (layout->inputTruncated()) {
+            truncated = true;
+            trunc = _(" [truncated]");
+        }
         if (SP_IS_FLOWTEXT(tc->text)) {
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
+                if (truncated) {
+                    SP_CTRLRECT(tc->frame)->setColor(0xff0000ff, false, 0);
+                } else {
+                    SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
+                }
                 sp_canvas_item_show(tc->frame);
                 Geom::OptRect frame_bbox = sp_item_bbox_desktop(frame);
                 if (frame_bbox) {
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }
             }
-            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters); <b>Enter</b> to start new paragraph."), nChars);
+
+            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."), nChars, trunc);
         } else {
-            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters); <b>Enter</b> to start new line."), nChars);
+            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters%s); <b>Enter</b> to start new line."), nChars, trunc);
         }
 
     } else {

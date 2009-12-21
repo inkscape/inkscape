@@ -212,6 +212,8 @@ public:
     bool inputExists() const
         {return !_input_stream.empty();}
 
+    bool inputTruncated() const;
+
     /** adds a new piece of text to the end of the current list of text to
     be processed. This method can only add text of a consistent style.
     To add lots of different styles, call it lots of times.

@@ -1843,6 +1843,37 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 }
 
+bool is_part_of_text_subtree (SPObject *obj)
+{
+    return (SP_IS_TSPAN(obj) 
+            || SP_IS_TEXT(obj) 
+            || SP_IS_FLOWTEXT(obj)
+            || SP_IS_FLOWTSPAN(obj)
+            || SP_IS_FLOWDIV(obj)
+            || SP_IS_FLOWPARA(obj)
+            || SP_IS_FLOWLINE(obj)
+            || SP_IS_FLOWREGIONBREAK(obj));
+}
+
+bool is_top_level_text_object (SPObject *obj)
+{
+    return (SP_IS_TEXT(obj) 
+            || SP_IS_FLOWTEXT(obj));
+}
+
+bool has_visible_text (SPObject *obj)
+{
+    if (SP_IS_STRING(obj) && !SP_STRING(obj)->string.empty()) 
+        return true; // maybe we should also check that it's not all whitespace?
+
+    for (SPObject const *child = obj->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
+        if (has_visible_text((SPObject *) child))
+            return true;
+    }
+
+    return false;
+}
+
 /*
   Local Variables:
   mode:c++

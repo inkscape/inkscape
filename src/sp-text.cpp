@@ -421,9 +421,15 @@ sp_text_description(SPItem *item)
 
     GString *xs = SP_PX_TO_METRIC_STRING(style->font_size.computed, sp_desktop_namedview(SP_ACTIVE_DESKTOP)->getDefaultMetric());
 
+    char *trunc = "";
+    Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
+    if (layout && layout->inputTruncated()) {
+        trunc = _(" [truncated]");
+    }
+
     char *ret = ( SP_IS_TEXT_TEXTPATH(item)
-                  ? g_strdup_printf(_("<b>Text on path</b> (%s, %s)"), n, xs->str)
-                  : g_strdup_printf(_("<b>Text</b> (%s, %s)"), n, xs->str) );
+                  ? g_strdup_printf(_("<b>Text on path</b>%s (%s, %s)"), trunc, n, xs->str)
+                  : g_strdup_printf(_("<b>Text</b>%s (%s, %s)"), trunc, n, xs->str) );
     g_free(n);
     return ret;
 }
