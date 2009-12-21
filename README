@@ -21,6 +21,10 @@ emphasizing a lightweight core with powerful features added through
 an extension mechanism, and the establishment of a friendly, open,
 community-oriented development processes.
 
+
+Basic Installation
+==================
+
 Inkscape uses the standard procedure for compilation and installation: 
 
   ./configure
@@ -31,6 +35,9 @@ If a "./configure" file is not present, you can create it by running
 the "./autogen.sh" command, which calls in turn a number of other
 programs such as automake and autoconf.  See INSTALL for more
 details. 
+
+For platform specific instructions please read the README file that
+is associated with that platform (e.g. for Mac OS X read README.osx)
 
 
 Required Dependencies

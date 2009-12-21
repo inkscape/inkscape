@@ -10,6 +10,9 @@ Basic Installation
    If you have problems compiling Inkscape, then see
 http://wiki.inkscape.org/wiki/index.php/CompilingInkscape .
 
+   If you are a Mac OS X user, please don't read on, keep to the wiki 
+pages instead: http://wiki.inkscape.org/wiki/index.php/CompilingMacOsX
+
    The remainder of this file gives generic installation instructions.
 
    The `configure' shell script attempts to guess correct values for
