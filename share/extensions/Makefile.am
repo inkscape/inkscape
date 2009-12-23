@@ -131,6 +131,7 @@ extensions = \
 	web-set-att.py \
 	web-transmit-att.py \
 	whirl.py \
+	wireframe_sphere.py \
 	wmf_output.py \
 	yocto_css.py
 
@@ -249,6 +250,7 @@ modules = \
 	web-set-att.inx \
 	web-transmit-att.inx \
 	whirl.inx \
+	wireframe_sphere.inx \
 	wmf_input.inx \
 	wmf_output.inx \
 	xaml2svg.inx
