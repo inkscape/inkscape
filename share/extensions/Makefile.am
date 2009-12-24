@@ -96,6 +96,7 @@ extensions = \
 	radiusrand.py \
 	restack.py \
 	render_barcode.py \
+	render_barcode_datamatrix.py \
 	render_alphabetsoup.py \
 	render_alphabetsoup_config.py \
 	rtree.py \
@@ -223,6 +224,7 @@ modules = \
 	ps_input.inx \
 	radiusrand.inx \
 	render_barcode.inx \
+	render_barcode_datamatrix.inx \
 	render_alphabetsoup.inx \
 	restack.inx \
 	rubberstretch.inx \
