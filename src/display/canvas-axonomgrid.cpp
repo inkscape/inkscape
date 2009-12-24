@@ -359,9 +359,9 @@ CanvasAxonomGrid::readRepr()
     }
 
     if ( (value = repr->attribute("snapvisiblegridlinesonly")) ) {
-		g_assert(snapper != NULL);
-		snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
-	}
+        g_assert(snapper != NULL);
+        snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
+    }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
@@ -671,9 +671,9 @@ CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapMan
  */
 Geom::Coord CanvasAxonomGridSnapper::getSnapperTolerance() const
 {
-	SPDesktop const *dt = _snapmanager->getDesktop();
-	double const zoom =  dt ? dt->current_zoom() : 1;
-	return _snapmanager->snapprefs.getGridTolerance() / zoom;
+    SPDesktop const *dt = _snapmanager->getDesktop();
+    double const zoom =  dt ? dt->current_zoom() : 1;
+    return _snapmanager->snapprefs.getGridTolerance() / zoom;
 }
 
 bool CanvasAxonomGridSnapper::getSnapperAlwaysSnap() const
@@ -694,22 +694,22 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     double spacing_v;
 
     if (getSnapVisibleOnly()) {
-		// Only snapping to visible grid lines
-		spacing_h = grid->spacing_ylines; // this is the spacing of the visible grid lines measured in screen pixels
-		spacing_v = grid->lyw; // vertical
-		// convert screen pixels to px
-		// FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
-		SPDesktop const *dt = _snapmanager->getDesktop();
-		if (dt) {
-			spacing_h /= dt->current_zoom();
-			spacing_v /= dt->current_zoom();
-		}
-	} else {
-		// Snapping to any grid line, whether it's visible or not
-		spacing_h = grid->lengthy  /(grid->tan_angle[X] + grid->tan_angle[Z]);
-		spacing_v = grid->lengthy;
+        // Only snapping to visible grid lines
+        spacing_h = grid->spacing_ylines; // this is the spacing of the visible grid lines measured in screen pixels
+        spacing_v = grid->lyw; // vertical
+        // convert screen pixels to px
+        // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+        SPDesktop const *dt = _snapmanager->getDesktop();
+        if (dt) {
+            spacing_h /= dt->current_zoom();
+            spacing_v /= dt->current_zoom();
+        }
+    } else {
+        // Snapping to any grid line, whether it's visible or not
+        spacing_h = grid->lengthy  /(grid->tan_angle[X] + grid->tan_angle[Z]);
+        spacing_v = grid->lengthy;
 
-	}
+    }
 
     // In an axonometric grid, any point will be surrounded by 6 grid lines:
     // - 2 vertical grid lines, one left and one right from the point
@@ -746,18 +746,18 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     Geom::Point p_x(0, y_proj_along_x_max);
     Geom::Line line_x(p_x, p_x + vers_x);
     Geom::Point p_z(0, y_proj_along_z_max);
-	Geom::Line line_z(p_z, p_z + vers_z);
+    Geom::Line line_z(p_z, p_z + vers_z);
 
     Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
-	try
-	{
-		inters = Geom::intersection(line_x, line_z);
-	}
-	catch (Geom::InfiniteSolutions e)
-	{
-		// We're probably dealing with parallel lines; this is useless!
-		return s;
-	}
+    try
+    {
+        inters = Geom::intersection(line_x, line_z);
+    }
+    catch (Geom::InfiniteSolutions e)
+    {
+        // We're probably dealing with parallel lines; this is useless!
+        return s;
+    }
 
     // Determine which half of the parallelogram to use
     bool use_left_half = true;
@@ -765,7 +765,7 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
 
     if (inters) {
         Geom::Point inters_pt = line_x.pointAt((*inters).ta);
-    	use_left_half = (p[Geom::X] - grid->origin[Geom::X]) < inters_pt[Geom::X];
+        use_left_half = (p[Geom::X] - grid->origin[Geom::X]) < inters_pt[Geom::X];
         use_right_half = !use_left_half;
     }
 
@@ -786,16 +786,16 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     return s;
 }
 
-void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
+void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
-    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, Inkscape::SNAPTARGET_GRID, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
+    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, source_num, Inkscape::SNAPTARGET_GRID, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);
 }
 
-void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source) const
+void CanvasAxonomGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num) const
 {
-	SnappedPoint dummy = SnappedPoint(snapped_point, source, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
-	sc.points.push_back(dummy);
+    SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+    sc.points.push_back(dummy);
 }
 
 bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const

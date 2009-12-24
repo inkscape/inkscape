@@ -11,12 +11,13 @@
 #include "snapped-line.h"
 #include <2geom/line.h>
 
-Inkscape::SnappedLineSegment::SnappedLineSegment(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &start_point_of_line, Geom::Point const &end_point_of_line)
+Inkscape::SnappedLineSegment::SnappedLineSegment(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &start_point_of_line, Geom::Point const &end_point_of_line)
     : _start_point_of_line(start_point_of_line), _end_point_of_line(end_point_of_line)
 {
     _point = snapped_point;
     _source = source;
-	_target = target;
+    _source_num = source_num;
+    _target = target;
     _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
@@ -32,7 +33,8 @@ Inkscape::SnappedLineSegment::SnappedLineSegment()
     _end_point_of_line = Geom::Point(0,0);
     _point = Geom::Point(0,0);
     _source = SNAPSOURCE_UNDEFINED;
-	_target = SNAPTARGET_UNDEFINED;
+    _source_num = 0;
+    _target = SNAPTARGET_UNDEFINED;
     _distance = NR_HUGE;
     _tolerance = 1;
     _always_snap = false;
@@ -50,19 +52,19 @@ Inkscape::SnappedLineSegment::~SnappedLineSegment()
 Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegment const &line) const
 {
     Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
-	try
-	{
-		inters = Geom::intersection(getLineSegment(), line.getLineSegment());
-	}
-	catch (Geom::InfiniteSolutions e)
-	{
-		// We're probably dealing with parallel lines, so they don't really cross
-		inters = Geom::OptCrossing();
-	}
+    try
+    {
+        inters = Geom::intersection(getLineSegment(), line.getLineSegment());
+    }
+    catch (Geom::InfiniteSolutions e)
+    {
+        // We're probably dealing with parallel lines, so they don't really cross
+        inters = Geom::OptCrossing();
+    }
 
     if (inters) {
         Geom::Point inters_pt = getLineSegment().pointAt((*inters).ta);
-    	/* If a snapper has been told to "always snap", then this one should be preferred
+        /* If a snapper has been told to "always snap", then this one should be preferred
          * over the other, if that other one has not been told so. (The preferred snapper
          * will be labeled "primary" below)
         */
@@ -78,22 +80,23 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
         Inkscape::SnappedLineSegment const *secondarySLS = use_this_as_primary ? &line : this;
         Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(inters_pt - this->getPoint()) : Geom::L2(inters_pt - line.getPoint());
         Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(inters_pt - line.getPoint()) : Geom::L2(inters_pt - this->getPoint());
-        return SnappedPoint(inters_pt, SNAPSOURCE_UNDEFINED, SNAPTARGET_PATH_INTERSECTION, primaryDist, primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, true,
+        return SnappedPoint(inters_pt, SNAPSOURCE_UNDEFINED, primarySLS->getSourceNum(), SNAPTARGET_PATH_INTERSECTION, primaryDist, primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, true,
                                           secondaryDist, secondarySLS->getTolerance(), secondarySLS->getAlwaysSnap());
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 };
 
 
 
-Inkscape::SnappedLine::SnappedLine(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &normal_to_line, Geom::Point const &point_on_line)
+Inkscape::SnappedLine::SnappedLine(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &normal_to_line, Geom::Point const &point_on_line)
     : _normal_to_line(normal_to_line), _point_on_line(point_on_line)
 {
-	_source = source;
-	_target = target;
-	_distance = snapped_distance;
+    _source = source;
+    _source_num = source_num;
+    _target = target;
+    _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
     _second_distance = NR_HUGE;
@@ -108,7 +111,8 @@ Inkscape::SnappedLine::SnappedLine()
     _normal_to_line = Geom::Point(0,0);
     _point_on_line = Geom::Point(0,0);
     _source = SNAPSOURCE_UNDEFINED;
-	_target = SNAPTARGET_UNDEFINED;
+    _source_num = 0;
+    _target = SNAPTARGET_UNDEFINED;
     _distance = NR_HUGE;
     _tolerance = 1;
     _always_snap = false;
@@ -130,19 +134,19 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
     // The point of intersection should be considered for snapping, but might be outside the snapping range
 
     Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
-	try
-	{
-		inters = Geom::intersection(getLine(), line.getLine());
-	}
-	catch (Geom::InfiniteSolutions e)
-	{
-		// We're probably dealing with parallel lines, so they don't really cross
-		inters = Geom::OptCrossing();
-	}
+    try
+    {
+        inters = Geom::intersection(getLine(), line.getLine());
+    }
+    catch (Geom::InfiniteSolutions e)
+    {
+        // We're probably dealing with parallel lines, so they don't really cross
+        inters = Geom::OptCrossing();
+    }
 
     if (inters) {
-    	Geom::Point inters_pt = getLine().pointAt((*inters).ta);
-    	/* If a snapper has been told to "always snap", then this one should be preferred
+        Geom::Point inters_pt = getLine().pointAt((*inters).ta);
+        /* If a snapper has been told to "always snap", then this one should be preferred
          * over the other, if that other one has not been told so. (The preferred snapper
          * will be labelled "primary" below)
         */
@@ -157,14 +161,14 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
         Inkscape::SnappedLine const *secondarySL = use_this_as_primary ? &line : this;
         Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(inters_pt - this->getPoint()) : Geom::L2(inters_pt - line.getPoint());
         Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(inters_pt - line.getPoint()) : Geom::L2(inters_pt - this->getPoint());
-        return SnappedPoint(inters_pt, Inkscape::SNAPSOURCE_UNDEFINED, Inkscape::SNAPTARGET_UNDEFINED, primaryDist, primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, true,
+        return SnappedPoint(inters_pt, Inkscape::SNAPSOURCE_UNDEFINED, primarySL->getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, primaryDist, primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, true,
                                           secondaryDist, secondarySL->getTolerance(), secondarySL->getAlwaysSnap());
         // The type of the snap target is yet undefined, as we cannot tell whether
         // we're snapping to grid or the guide lines; must be set by on a higher level
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line segment

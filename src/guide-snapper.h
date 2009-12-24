@@ -30,13 +30,13 @@ public:
     bool ThisSnapperMightSnap() const;
 
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
-	bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+    bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
 private:
     LineList _getSnapLines(Geom::Point const &p) const;
-    void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance,  SnapSourceType const &source, Geom::Point const normal_to_line, Geom::Point const point_on_line) const;
-    void _addSnappedLinesOrigin(SnappedConstraints &sc, Geom::Point const origin, Geom::Coord const snapped_distance, SnapSourceType const &source) const;
-    void _addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source) const;
+    void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance,  SnapSourceType const &source, long source_num, Geom::Point const normal_to_line, Geom::Point const point_on_line) const;
+    void _addSnappedLinesOrigin(SnappedConstraints &sc, Geom::Point const origin, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num) const;
+    void _addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num) const;
 };
 
 }

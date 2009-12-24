@@ -609,7 +609,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 dist = fabs(p[Geom::Y] - dragger->parent->hor_levels[i]);
                 if (dist < snap_dist) {
                     p[Geom::Y] = dragger->parent->hor_levels[i];
-                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
+                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
                     was_snapped = true;
                     sp_knot_moveto (knot, p);
                 }
@@ -618,7 +618,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 dist = fabs(p[Geom::X] - dragger->parent->vert_levels[i]);
                 if (dist < snap_dist) {
                     p[Geom::X] = dragger->parent->vert_levels[i];
-                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
+                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
                     was_snapped = true;
                     sp_knot_moveto (knot, p);
                 }

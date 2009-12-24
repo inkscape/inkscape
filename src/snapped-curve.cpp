@@ -12,7 +12,7 @@
 #include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
-Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, SnapTargetType target)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target)
 {
     _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
@@ -25,6 +25,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
     _at_intersection = false;
     _fully_constrained = fully_constrained;
     _source = source;
+    _source_num = source_num;
     _target = target;
 }
 
@@ -41,6 +42,7 @@ Inkscape::SnappedCurve::SnappedCurve()
     _at_intersection = false;
     _fully_constrained = false;
     _source = SNAPSOURCE_UNDEFINED;
+    _source_num = 0;
     _target = SNAPTARGET_UNDEFINED;
 }
 
@@ -83,12 +85,12 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // TODO: Investigate whether it is possible to use document coordinates everywhere
         // in the snapper code. Only the mouse position should be in desktop coordinates, I guess.
         // All paths are already in document coords and we are certainly not going to change THAT.
-        return SnappedPoint(best_p, Inkscape::SNAPSOURCE_UNDEFINED, Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
+        return SnappedPoint(best_p, Inkscape::SNAPSOURCE_UNDEFINED, primaryC->getSourceNum(), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
                 secondaryDist, secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line

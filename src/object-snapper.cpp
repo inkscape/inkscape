@@ -67,9 +67,9 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
  */
 Geom::Coord Inkscape::ObjectSnapper::getSnapperTolerance() const
 {
-	SPDesktop const *dt = _snapmanager->getDesktop();
-	double const zoom =  dt ? dt->current_zoom() : 1;
-	return _snapmanager->snapprefs.getObjectTolerance() / zoom;
+    SPDesktop const *dt = _snapmanager->getDesktop();
+    double const zoom =  dt ? dt->current_zoom() : 1;
+    return _snapmanager->snapprefs.getObjectTolerance() / zoom;
 }
 
 bool Inkscape::ObjectSnapper::getSnapperAlwaysSnap() const
@@ -81,7 +81,6 @@ bool Inkscape::ObjectSnapper::getSnapperAlwaysSnap() const
  *  Find all items within snapping range.
  *  \param parent Pointer to the document's root, or to a clipped path or mask object
  *  \param it List of items to ignore
- *  \param first_point If true then this point is the first one from a whole bunch of points
  *  \param bbox_to_snap Bounding box hulling the whole bunch of points, all from the same selection and having the same transformation
  *  \param DimensionToSnap Snap in X, Y, or both directions.
  */
@@ -173,7 +172,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
 
 
 void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType const &t,
-                                         bool const &first_point) const
+                                            bool const &first_point) const
 {
     // Now, let's first collect all points to snap to. If we have a whole bunch of points to snap,
     // e.g. when translating an item using the selector tool, then we will only do this for the
@@ -212,47 +211,47 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
             g_return_if_fail(root_item);
 
             //Collect all nodes so we can snap to them
-			if (p_is_a_node || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node) || p_is_a_guide) {
-				// Note: there are two ways in which intersections are considered:
-				// Method 1: Intersections are calculated for each shape individually, for both the
-				//           snap source and snap target (see sp_shape_snappoints)
-				// Method 2: Intersections are calculated for each curve or line that we've snapped to, i.e. only for
-				//           the target (see the intersect() method in the SnappedCurve and SnappedLine classes)
-				// Some differences:
-				// - Method 1 doesn't find intersections within a set of multiple objects
-				// - Method 2 only works for targets
-				// When considering intersections as snap targets:
-				// - Method 1 only works when snapping to nodes, whereas
-				// - Method 2 only works when snapping to paths
-				// - There will be performance differences too!
-				// If both methods are being used simultaneously, then this might lead to duplicate targets!
+            if (p_is_a_node || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node) || p_is_a_guide) {
+                // Note: there are two ways in which intersections are considered:
+                // Method 1: Intersections are calculated for each shape individually, for both the
+                //           snap source and snap target (see sp_shape_snappoints)
+                // Method 2: Intersections are calculated for each curve or line that we've snapped to, i.e. only for
+                //           the target (see the intersect() method in the SnappedCurve and SnappedLine classes)
+                // Some differences:
+                // - Method 1 doesn't find intersections within a set of multiple objects
+                // - Method 2 only works for targets
+                // When considering intersections as snap targets:
+                // - Method 1 only works when snapping to nodes, whereas
+                // - Method 2 only works when snapping to paths
+                // - There will be performance differences too!
+                // If both methods are being used simultaneously, then this might lead to duplicate targets!
 
-				// Well, here we will be looking for snap TARGETS. Both methods can therefore be used.
-				// When snapping to paths, we will get a collection of snapped lines and snapped curves. findBestSnap() will
-				// go hunting for intersections (but only when asked to in the prefs of course). In that case we can just
-				// temporarily block the intersections in sp_item_snappoints, we don't need duplicates. If we're not snapping to
-				// paths though but only to item nodes then we should still look for the intersections in sp_item_snappoints()
-				bool old_pref = _snapmanager->snapprefs.getSnapIntersectionCS();
-				if (_snapmanager->snapprefs.getSnapToItemPath()) {
-					_snapmanager->snapprefs.setSnapIntersectionCS(false);
-				}
+                // Well, here we will be looking for snap TARGETS. Both methods can therefore be used.
+                // When snapping to paths, we will get a collection of snapped lines and snapped curves. findBestSnap() will
+                // go hunting for intersections (but only when asked to in the prefs of course). In that case we can just
+                // temporarily block the intersections in sp_item_snappoints, we don't need duplicates. If we're not snapping to
+                // paths though but only to item nodes then we should still look for the intersections in sp_item_snappoints()
+                bool old_pref = _snapmanager->snapprefs.getSnapIntersectionCS();
+                if (_snapmanager->snapprefs.getSnapToItemPath()) {
+                    _snapmanager->snapprefs.setSnapIntersectionCS(false);
+                }
 
-				sp_item_snappoints(root_item, true, *_points_to_snap_to, &_snapmanager->snapprefs);
+                sp_item_snappoints(root_item, true, *_points_to_snap_to, &_snapmanager->snapprefs);
 
-				if (_snapmanager->snapprefs.getSnapToItemPath()) {
-					_snapmanager->snapprefs.setSnapIntersectionCS(old_pref);
-				}
-			}
+                if (_snapmanager->snapprefs.getSnapToItemPath()) {
+                    _snapmanager->snapprefs.setSnapIntersectionCS(old_pref);
+                }
+            }
 
             //Collect the bounding box's corners so we can snap to them
-			if (p_is_a_bbox || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_bbox) || p_is_a_guide) {
-				// Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
-				// of the item AND the bbox of the clipping path at the same time
-				if (!(*i).clip_or_mask) {
-					Geom::OptRect b = sp_item_bbox_desktop(root_item, bbox_type);
-					getBBoxPoints(b, _points_to_snap_to, true, _snapmanager->snapprefs.getSnapToBBoxNode(), _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints(), _snapmanager->snapprefs.getSnapBBoxMidpoints());
-				}
-			}
+            if (p_is_a_bbox || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_bbox) || p_is_a_guide) {
+                // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
+                // of the item AND the bbox of the clipping path at the same time
+                if (!(*i).clip_or_mask) {
+                    Geom::OptRect b = sp_item_bbox_desktop(root_item, bbox_type);
+                    getBBoxPoints(b, _points_to_snap_to, true, _snapmanager->snapprefs.getSnapToBBoxNode(), _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints(), _snapmanager->snapprefs.getSnapBBoxMidpoints());
+                }
+            }
         }
     }
 }
@@ -261,12 +260,12 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
                                          Inkscape::SnapPreferences::PointType const &t,
                                          Geom::Point const &p,
                                          SnapSourceType const &source_type,
-                                         bool const &first_point,
+                                         long source_num,
                                          std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const
 {
     // Iterate through all nodes, find out which one is the closest to p, and snap to it!
 
-    _collectNodes(t, first_point);
+    _collectNodes(t, source_num == 0);
 
     if (unselected_nodes != NULL) {
         _points_to_snap_to->insert(_points_to_snap_to->end(), unselected_nodes->begin(), unselected_nodes->end());
@@ -278,7 +277,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<std::pair<Geom::Point, int> >::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         Geom::Coord dist = Geom::L2((*k).first - p);
         if (dist < getSnapperTolerance() && dist < s.getSnapDistance()) {
-            s = SnappedPoint((*k).first, source_type, static_cast<Inkscape::SnapTargetType>((*k).second), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+            s = SnappedPoint((*k).first, source_type, source_num, static_cast<Inkscape::SnapTargetType>((*k).second), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
             success = true;
         }
     }
@@ -298,10 +297,10 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
 
     // Although we won't snap to paths here (which would give us under constrained snaps) we can still snap to intersections of paths.
     if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
-    	_collectPaths(t, true);
-    	_snapPaths(sc, t, p, SNAPSOURCE_GUIDE, true, NULL, NULL);
-    	// The paths themselves should be discarded in findBestSnap(), as we should only snap to their intersections
-	}
+        _collectPaths(t, true);
+        _snapPaths(sc, t, p, SNAPSOURCE_GUIDE, 0, NULL, NULL);
+        // The paths themselves should be discarded in findBestSnap(), as we should only snap to their intersections
+    }
 
     SnappedPoint s;
 
@@ -313,7 +312,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         Geom::Coord dist = Geom::L2((*k).first - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
-            s = SnappedPoint((*k).first, SNAPSOURCE_GUIDE, static_cast<Inkscape::SnapTargetType>((*k).second), dist, tol, getSnapperAlwaysSnap(), true);
+            s = SnappedPoint((*k).first, SNAPSOURCE_GUIDE, 0, static_cast<Inkscape::SnapTargetType>((*k).second), dist, tol, getSnapperAlwaysSnap(), true);
             sc.points.push_back(s);
         }
     }
@@ -428,11 +427,11 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                                      Inkscape::SnapPreferences::PointType const &t,
                                      Geom::Point const &p,
                                      SnapSourceType const &source_type,
-                                     bool const &first_point,
+                                     long source_num,
                                      std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
                                      SPPath const *selected_path) const
 {
-    _collectPaths(t, first_point);
+    _collectPaths(t, source_num == 0);
     // Now we can finally do the real snapping, using the paths collected above
 
     g_assert(_snapmanager->getDesktop() != NULL);
@@ -440,7 +439,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
 
     bool const node_tool_active = _snapmanager->snapprefs.getSnapToItemPath() && selected_path != NULL;
 
-    if (first_point) {
+    if (source_num == 0) {
         /* findCandidates() is used for snapping to both paths and nodes. It ignores the path that is
          * currently being edited, because that path requires special care: when snapping to nodes
          * only the unselected nodes of that path should be considered, and these will be passed on separately.
@@ -503,7 +502,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
-                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, source_type, it_p->second));
+                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, source_type, source_num, it_p->second));
                     }
                 }
             }
@@ -535,11 +534,11 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                                      Inkscape::SnapPreferences::PointType const &t,
                                      Geom::Point const &p,
                                      SnapSourceType const source_type,
-                                     bool const &first_point,
+                                     long source_num,
                                      ConstraintLine const &c) const
 {
 
-    _collectPaths(t, first_point);
+    _collectPaths(t, source_num == 0);
 
     // Now we can finally do the real snapping, using the paths collected above
 
@@ -577,7 +576,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)
                         Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), source_type, k->second, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), source_type, source_num, k->second, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
                         sc.points.push_back(s);
                     }
                 }
@@ -591,7 +590,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                                             Inkscape::SnapPreferences::PointType const &t,
                                             Geom::Point const &p,
                                             SnapSourceType const &source_type,
-                                            bool const &first_point,
+                                            long source_num,
                                             Geom::OptRect const &bbox_to_snap,
                                             std::vector<SPItem const *> const *it,
                                             std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const
@@ -601,17 +600,17 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
-    if (first_point) {
+    if (source_num == 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p, p);
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, source_num == 0, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
     }
 
     if (_snapmanager->snapprefs.getSnapToItemNode() || _snapmanager->snapprefs.getSnapSmoothNodes()
-    	|| _snapmanager->snapprefs.getSnapToBBoxNode() || _snapmanager->snapprefs.getSnapToPageBorder()
-		|| _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
-		|| _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
-		|| _snapmanager->snapprefs.getIncludeItemCenter()) {
-        _snapNodes(sc, t, p, source_type, first_point, unselected_nodes);
+        || _snapmanager->snapprefs.getSnapToBBoxNode() || _snapmanager->snapprefs.getSnapToPageBorder()
+        || _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
+        || _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
+        || _snapmanager->snapprefs.getIncludeItemCenter()) {
+        _snapNodes(sc, t, p, source_type, source_num, unselected_nodes);
     }
 
     if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
@@ -625,13 +624,13 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
             SPPath *path = NULL;
             if (it != NULL) {
                 if (it->size() == 1 && SP_IS_PATH(*it->begin())) {
-					path = SP_PATH(*it->begin());
+                    path = SP_PATH(*it->begin());
                 } // else: *it->begin() might be a SPGroup, e.g. when editing a LPE of text that has been converted to a group of paths
                 // as reported in bug #356743. In that case we can just ignore it, i.e. not snap to this item
             }
-            _snapPaths(sc, t, p, source_type, first_point, unselected_nodes, path);
+            _snapPaths(sc, t, p, source_type, source_num, unselected_nodes, path);
         } else {
-            _snapPaths(sc, t, p, source_type, first_point, NULL, NULL);
+            _snapPaths(sc, t, p, source_type, source_num, NULL, NULL);
         }
     }
 }
@@ -640,7 +639,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   Inkscape::SnapPreferences::PointType const &t,
                                                   Geom::Point const &p,
                                                   SnapSourceType const &source_type,
-                                                  bool const &first_point,
+                                                  long source_num,
                                                   Geom::OptRect const &bbox_to_snap,
                                                   ConstraintLine const &c,
                                                   std::vector<SPItem const *> const *it) const
@@ -650,9 +649,9 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
-    if (first_point) {
+    if (source_num == 0) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p, p);
-        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, source_num == 0, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
     }
 
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -665,7 +664,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
     // so we will more or less snap to them anyhow.
 
     if (_snapmanager->snapprefs.getSnapToItemPath() || _snapmanager->snapprefs.getSnapToBBoxPath() || _snapmanager->snapprefs.getSnapToPageBorder()) {
-        _snapPathsConstrained(sc, t, p, source_type, first_point, c);
+        _snapPathsConstrained(sc, t, p, source_type, 0, c);
     }
 }
 
@@ -723,13 +722,13 @@ void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
     bool snap_to_something = _snapmanager->snapprefs.getSnapToItemPath()
-						|| _snapmanager->snapprefs.getSnapToItemNode()
-						|| _snapmanager->snapprefs.getSnapToBBoxPath()
-						|| _snapmanager->snapprefs.getSnapToBBoxNode()
-						|| _snapmanager->snapprefs.getSnapToPageBorder()
-						|| _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
-						|| _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
-						|| _snapmanager->snapprefs.getIncludeItemCenter();
+                        || _snapmanager->snapprefs.getSnapToItemNode()
+                        || _snapmanager->snapprefs.getSnapToBBoxPath()
+                        || _snapmanager->snapprefs.getSnapToBBoxNode()
+                        || _snapmanager->snapprefs.getSnapToPageBorder()
+                        || _snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()
+                        || _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()
+                        || _snapmanager->snapprefs.getIncludeItemCenter();
 
     return (_snap_enabled && _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && snap_to_something);
 }
@@ -737,12 +736,12 @@ bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 bool Inkscape::ObjectSnapper::GuidesMightSnap() const // almost the same as ThisSnapperMightSnap above, but only looking at points (and not paths)
 {
     bool snap_to_something = _snapmanager->snapprefs.getSnapToItemNode()
-						|| _snapmanager->snapprefs.getSnapToPageBorder()
-						|| (_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxNode())
-						|| (_snapmanager->snapprefs.getSnapModeBBox() && (_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()))
-						|| (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()))
-						|| (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getIncludeItemCenter())
-						|| (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapToItemPath() && _snapmanager->snapprefs.getSnapIntersectionCS()));
+                        || _snapmanager->snapprefs.getSnapToPageBorder()
+                        || (_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxNode())
+                        || (_snapmanager->snapprefs.getSnapModeBBox() && (_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()))
+                        || (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()))
+                        || (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getIncludeItemCenter())
+                        || (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapToItemPath() && _snapmanager->snapprefs.getSnapIntersectionCS()));
 
     return (_snap_enabled && _snapmanager->snapprefs.getSnapModeGuide() && snap_to_something);
 }
@@ -784,21 +783,21 @@ void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<std::pair<Geom::Point,
 
 void Inkscape::getBBoxPoints(Geom::OptRect const bbox, std::vector<std::pair<Geom::Point, int> > *points, bool const isTarget, bool const includeCorners, bool const includeLineMidpoints, bool const includeObjectMidpoints)
 {
-	if (bbox) {
-		// collect the corners of the bounding box
-		for ( unsigned k = 0 ; k < 4 ; k++ ) {
-			if (includeCorners) {
-				points->push_back(std::make_pair((bbox->corner(k)), isTarget ? int(Inkscape::SNAPTARGET_BBOX_CORNER) : int(Inkscape::SNAPSOURCE_BBOX_CORNER)));
-			}
-			// optionally, collect the midpoints of the bounding box's edges too
-			if (includeLineMidpoints) {
-				points->push_back(std::make_pair((bbox->corner(k) + bbox->corner((k+1) % 4))/2, isTarget ? int(Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT) : int(Inkscape::SNAPSOURCE_BBOX_EDGE_MIDPOINT)));
-			}
-		}
-		if (includeObjectMidpoints) {
-			points->push_back(std::make_pair(bbox->midpoint(), isTarget ? int(Inkscape::SNAPTARGET_BBOX_MIDPOINT) : int(Inkscape::SNAPSOURCE_BBOX_MIDPOINT)));
-		}
-	}
+    if (bbox) {
+        // collect the corners of the bounding box
+        for ( unsigned k = 0 ; k < 4 ; k++ ) {
+            if (includeCorners) {
+                points->push_back(std::make_pair((bbox->corner(k)), isTarget ? int(Inkscape::SNAPTARGET_BBOX_CORNER) : int(Inkscape::SNAPSOURCE_BBOX_CORNER)));
+            }
+            // optionally, collect the midpoints of the bounding box's edges too
+            if (includeLineMidpoints) {
+                points->push_back(std::make_pair((bbox->corner(k) + bbox->corner((k+1) % 4))/2, isTarget ? int(Inkscape::SNAPTARGET_BBOX_EDGE_MIDPOINT) : int(Inkscape::SNAPSOURCE_BBOX_EDGE_MIDPOINT)));
+            }
+        }
+        if (includeObjectMidpoints) {
+            points->push_back(std::make_pair(bbox->midpoint(), isTarget ? int(Inkscape::SNAPTARGET_BBOX_MIDPOINT) : int(Inkscape::SNAPSOURCE_BBOX_MIDPOINT)));
+        }
+    }
 }
 
 /*

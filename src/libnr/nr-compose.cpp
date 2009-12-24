@@ -773,6 +773,7 @@ nr_R8G8B8A8_P_EMPTY_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const un
 		c[3] = a;
 		/* WARNING: MMX composer REQUIRES w > 0 and h > 0 */
 		nr_mmx_R8G8B8A8_P_EMPTY_A8_RGBAP (px, w, h, rs, mpx, mrs, c);
+		// This mmx optimized code is approx. 2x faster than the non-optimized code below (Measured by Diederik van Lierop, 2009-12-17)
 		return;
 	}
 #endif

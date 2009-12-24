@@ -52,14 +52,14 @@ class SPNamedView;
 class SnapManager
 {
 public:
-	enum Transformation {
+    enum Transformation {
         TRANSLATION,
         SCALE,
         STRETCH,
         SKEW
     };
 
-	SnapManager(SPNamedView const *v);
+    SnapManager(SPNamedView const *v);
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
@@ -67,30 +67,30 @@ public:
     bool gridSnapperMightSnap() const;
 
     void setup(SPDesktop const *desktop,
-			bool snapindicator = true,
-			SPItem const *item_to_ignore = NULL,
-			std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
-			SPGuide *guide_to_ignore = NULL);
+            bool snapindicator = true,
+            SPItem const *item_to_ignore = NULL,
+            std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+            SPGuide *guide_to_ignore = NULL);
 
     void setup(SPDesktop const *desktop,
-    		bool snapindicator,
-    		std::vector<SPItem const *> &items_to_ignore,
-    		std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
-    		SPGuide *guide_to_ignore = NULL);
+            bool snapindicator,
+            std::vector<SPItem const *> &items_to_ignore,
+            std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+            SPGuide *guide_to_ignore = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
     void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-    							Geom::Point &p,
-    							Inkscape::SnapSourceType const source_type,
-    							bool first_point = true,
-    							Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+                                Geom::Point &p,
+                                Inkscape::SnapSourceType const source_type,
+                                long source_num = 0,
+                                Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
 
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType point_type,
-									Geom::Point const &p,
-    							    Inkscape::SnapSourceType const &source_type,
-    		                        bool first_point = true,
+                                    Geom::Point const &p,
+                                    Inkscape::SnapSourceType const &source_type,
+                                    long source_num = 0,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
 
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
@@ -98,17 +98,17 @@ public:
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a
     // point, by overwriting p, if snapping has occurred; otherwise p is untouched
     void constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-									Geom::Point &p,
-									Inkscape::SnapSourceType const source_type,
-									Inkscape::Snapper::ConstraintLine const &constraint,
-									bool first_point = true,
-									Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
+                                    Geom::Point &p,
+                                    Inkscape::SnapSourceType const source_type,
+                                    Inkscape::Snapper::ConstraintLine const &constraint,
+                                    long source_num = 0,
+                                    Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
-										   Geom::Point const &p,
-										   Inkscape::SnapSourceType const &source_type,
-										   Inkscape::Snapper::ConstraintLine const &constraint,
-										   bool first_point = true,
+                                           Geom::Point const &p,
+                                           Inkscape::SnapSourceType const &source_type,
+                                           Inkscape::Snapper::ConstraintLine const &constraint,
+                                           long source_num = 0,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const;

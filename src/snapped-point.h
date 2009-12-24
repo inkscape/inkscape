@@ -78,8 +78,8 @@ class SnappedPoint
 
 public:
     SnappedPoint();
-    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
-    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
     Geom::Coord getSnapDistance() const {return _distance;}
@@ -115,13 +115,15 @@ public:
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
     void setSource(SnapSourceType const source) {_source = source;}
-	SnapSourceType getSource() const {return _source;}
+    SnapSourceType getSource() const {return _source;}
+    long getSourceNum() const {return _source_num;}
 
     bool isOtherSnapBetter(SnappedPoint const &other_one, bool weighted) const;
 
     /*void dump() const {
         std::cout << "_point              = " << _point << std::endl;
         std::cout << "_source             = " << _source << std::endl;
+        std::cout << "_source_num         = " << _source_num << std::endl;
         std::cout << "_target             = " << _target << std::endl;
         std::cout << "_at_intersection    = " << _at_intersection << std::endl;
         std::cout << "_fully_constrained  = " << _fully_constrained << std::endl;
@@ -138,6 +140,7 @@ public:
 protected:
     Geom::Point _point; // Location of the snapped point
     SnapSourceType _source; // Describes what snapped
+    long _source_num; // Sequence number of the source point that snapped, if that point is part of a set of points. (starting at zero)
     SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection
     bool _fully_constrained; // When snapping for example to a node, then the snap will be "fully constrained".
@@ -153,7 +156,7 @@ protected:
     bool _always_snap;
 
     /* If the snapped point is at an intersection of e.g. two lines, then this is
-       the distance to the fartest line */
+       the distance to the farthest line */
     Geom::Coord _second_distance;
     /* The snapping tolerance in screen pixels (depends on zoom)*/
     Geom::Coord _second_tolerance;

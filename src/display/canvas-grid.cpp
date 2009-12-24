@@ -635,9 +635,9 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("snapvisiblegridlinesonly")) ) {
-		g_assert(snapper != NULL);
-		snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
-	}
+        g_assert(snapper != NULL);
+        snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
+    }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
@@ -972,9 +972,9 @@ CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager *sm, Ge
  */
 Geom::Coord CanvasXYGridSnapper::getSnapperTolerance() const
 {
-	SPDesktop const *dt = _snapmanager->getDesktop();
-	double const zoom =  dt ? dt->current_zoom() : 1;
-	return _snapmanager->snapprefs.getGridTolerance() / zoom;
+    SPDesktop const *dt = _snapmanager->getDesktop();
+    double const zoom =  dt ? dt->current_zoom() : 1;
+    return _snapmanager->snapprefs.getGridTolerance() / zoom;
 }
 
 bool CanvasXYGridSnapper::getSnapperAlwaysSnap() const
@@ -993,20 +993,20 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
 
     for (unsigned int i = 0; i < 2; ++i) {
 
-    	double spacing;
+        double spacing;
 
-    	if (getSnapVisibleOnly()) {
-        	// Only snapping to visible grid lines
-        	spacing = grid->sw[i]; // this is the spacing of the visible grid lines measured in screen pixels
-			// convert screen pixels to px
-			// FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
-			SPDesktop const *dt = _snapmanager->getDesktop();
-        	if (dt) {
-        		spacing /= dt->current_zoom();
-        	}
+        if (getSnapVisibleOnly()) {
+            // Only snapping to visible grid lines
+            spacing = grid->sw[i]; // this is the spacing of the visible grid lines measured in screen pixels
+            // convert screen pixels to px
+            // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+            SPDesktop const *dt = _snapmanager->getDesktop();
+            if (dt) {
+                spacing /= dt->current_zoom();
+            }
         } else {
-        	// Snapping to any grid line, whether it's visible or not
-        	spacing = grid->spacing[i];
+            // Snapping to any grid line, whether it's visible or not
+            spacing = grid->spacing[i];
         }
 
         Geom::Coord rounded;
@@ -1024,16 +1024,16 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
     return s;
 }
 
-void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance,  SnapSourceType const &source, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
+void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance,  SnapSourceType const &source, long source_num, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
-    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, Inkscape::SNAPTARGET_GRID, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
+    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, source_num, Inkscape::SNAPTARGET_GRID, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);
 }
 
-void CanvasXYGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source) const
+void CanvasXYGridSnapper::_addSnappedPoint(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num) const
 {
-	SnappedPoint dummy = SnappedPoint(snapped_point, source, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
-	sc.points.push_back(dummy);
+    SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GRID, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+    sc.points.push_back(dummy);
 }
 
 /**

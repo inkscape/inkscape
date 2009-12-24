@@ -46,47 +46,47 @@ class ObjectSnapper : public Snapper
 {
 
 public:
-	ObjectSnapper(SnapManager *sm, Geom::Coord const d);
+    ObjectSnapper(SnapManager *sm, Geom::Coord const d);
     ~ObjectSnapper();
 
-	enum DimensionToSnap {
-		GUIDE_TRANSL_SNAP_X, // For snapping a vertical guide (normal in the X-direction) to objects,
-		GUIDE_TRANSL_SNAP_Y, // For snapping a horizontal guide (normal in the Y-direction) to objects
-		ANGLED_GUIDE_TRANSL_SNAP, // For snapping an angled guide, while translating it accross the desktop
-		TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
+    enum DimensionToSnap {
+        GUIDE_TRANSL_SNAP_X, // For snapping a vertical guide (normal in the X-direction) to objects,
+        GUIDE_TRANSL_SNAP_Y, // For snapping a horizontal guide (normal in the Y-direction) to objects
+        ANGLED_GUIDE_TRANSL_SNAP, // For snapping an angled guide, while translating it accross the desktop
+        TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
 
-	void guideFreeSnap(SnappedConstraints &sc,
-				   Geom::Point const &p,
-				   Geom::Point const &guide_normal) const;
+    void guideFreeSnap(SnappedConstraints &sc,
+                   Geom::Point const &p,
+                   Geom::Point const &guide_normal) const;
 
-	void guideConstrainedSnap(SnappedConstraints &sc,
-					   Geom::Point const &p,
-					   Geom::Point const &guide_normal,
-					   ConstraintLine const &c) const;
+    void guideConstrainedSnap(SnappedConstraints &sc,
+                       Geom::Point const &p,
+                       Geom::Point const &guide_normal,
+                       ConstraintLine const &c) const;
 
-	bool ThisSnapperMightSnap() const;
-	bool GuidesMightSnap() const;
+    bool ThisSnapperMightSnap() const;
+    bool GuidesMightSnap() const;
 
-	Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
-	bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+    Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+    bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
-	void freeSnap(SnappedConstraints &sc,
-				  Inkscape::SnapPreferences::PointType const &t,
-				  Geom::Point const &p,
-				  SnapSourceType const &source_type,
-				  bool const &first_point,
-				  Geom::OptRect const &bbox_to_snap,
-				  std::vector<SPItem const *> const *it,
-				  std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const;
+    void freeSnap(SnappedConstraints &sc,
+                  Inkscape::SnapPreferences::PointType const &t,
+                  Geom::Point const &p,
+                  SnapSourceType const &source_type,
+                  long source_num,
+                  Geom::OptRect const &bbox_to_snap,
+                  std::vector<SPItem const *> const *it,
+                  std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const;
 
-	void constrainedSnap(SnappedConstraints &sc,
-				  Inkscape::SnapPreferences::PointType const &t,
-				  Geom::Point const &p,
-				  SnapSourceType const &source_type,
-				  bool const &first_point,
-				  Geom::OptRect const &bbox_to_snap,
-				  ConstraintLine const &c,
-				  std::vector<SPItem const *> const *it) const;
+    void constrainedSnap(SnappedConstraints &sc,
+                  Inkscape::SnapPreferences::PointType const &t,
+                  Geom::Point const &p,
+                  SnapSourceType const &source_type,
+                  long source_num,
+                  Geom::OptRect const &bbox_to_snap,
+                  ConstraintLine const &c,
+                  std::vector<SPItem const *> const *it) const;
 
 private:
     //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
@@ -106,7 +106,7 @@ private:
                       Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p, // in desktop coordinates
                       SnapSourceType const &source_type,
-                      bool const &first_point,
+                      long source_num,
                       std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const; // in desktop coordinates
 
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
@@ -119,9 +119,9 @@ private:
 
     void _snapPaths(SnappedConstraints &sc,
                       Inkscape::SnapPreferences::PointType const &t,
-                      Geom::Point const &p,	// in desktop coordinates
+                      Geom::Point const &p,    // in desktop coordinates
                       SnapSourceType const &source_type,
-                      bool const &first_point,
+                      long source_num,
                       std::vector<std::pair<Geom::Point, int> > *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
 
@@ -129,7 +129,7 @@ private:
                  Inkscape::SnapPreferences::PointType const &t,
                  Geom::Point const &p, // in desktop coordinates
                  SnapSourceType const source_type,
-				 bool const &first_point,
+                 long source_num,
                  ConstraintLine const &c) const;
 
     bool isUnselectedNode(Geom::Point const &point, std::vector<std::pair<Geom::Point, int> > const *unselected_nodes) const;
