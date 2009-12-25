@@ -809,7 +809,7 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
 	  blendingColorSpace = NULL;
 	  isolated = knockout = gFalse;
 	  if (!obj4.dictLookup(const_cast<char*>("CS"), &obj5)->isNull()) {
-	    blendingColorSpace = GfxColorSpace::parse(&obj5,(Gfx*)this);
+	    blendingColorSpace = GfxColorSpace::parse(&obj5);
 	  }
 	  obj5.free();
 	  if (obj4.dictLookup(const_cast<char*>("I"), &obj5)->isBool()) {
@@ -1009,9 +1009,9 @@ void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
   state->setFillPattern(NULL);
   res->lookupColorSpace(args[0].getName(), &obj);
   if (obj.isNull()) {
-    colorSpace = GfxColorSpace::parse(&args[0],(Gfx*)this);
+    colorSpace = GfxColorSpace::parse(&args[0]);
   } else {
-    colorSpace = GfxColorSpace::parse(&obj,(Gfx*)this);
+    colorSpace = GfxColorSpace::parse(&obj);
   }
   obj.free();
   if (colorSpace) {
@@ -1032,9 +1032,9 @@ void PdfParser::opSetStrokeColorSpace(Object args[], int numArgs) {
   state->setStrokePattern(NULL);
   res->lookupColorSpace(args[0].getName(), &obj);
   if (obj.isNull()) {
-    colorSpace = GfxColorSpace::parse(&args[0],(Gfx*)this);
+    colorSpace = GfxColorSpace::parse(&args[0]);
   } else {
-    colorSpace = GfxColorSpace::parse(&obj,(Gfx*)this);
+    colorSpace = GfxColorSpace::parse(&obj);
   }
   obj.free();
   if (colorSpace) {
@@ -1101,7 +1101,7 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
       builder->updateStyle(state);
     }
     if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName(),(Gfx*)this))) {
+	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
       state->setFillPattern(pattern);
       builder->updateStyle(state);
     }
@@ -1145,7 +1145,7 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
       builder->updateStyle(state);
     }
     if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName(),(Gfx*)this))) {
+	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
       state->setStrokePattern(pattern);
       builder->updateStyle(state);
     }
@@ -1543,7 +1543,7 @@ void PdfParser::opShFill(Object args[], int numArgs) {
   double *matrix = NULL;
   GBool savedState = gFalse;
 
-  if (!(shading = res->lookupShading(args[0].getName(),(Gfx*)this))) {
+  if (!(shading = res->lookupShading(args[0].getName()))) {
     return;
   }
 
@@ -2507,7 +2507,7 @@ void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
       }
     }
     if (!obj1.isNull()) {
-      colorSpace = GfxColorSpace::parse(&obj1,(Gfx*)this);
+      colorSpace = GfxColorSpace::parse(&obj1);
     } else if (csMode == streamCSDeviceGray) {
       colorSpace = new GfxDeviceGrayColorSpace();
     } else if (csMode == streamCSDeviceRGB) {
@@ -2592,7 +2592,7 @@ void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
 	  obj2.free();
 	}
       }
-      maskColorSpace = GfxColorSpace::parse(&obj1,(Gfx*)this);
+      maskColorSpace = GfxColorSpace::parse(&obj1);
       obj1.free();
       if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
 	goto err1;
@@ -2767,7 +2767,7 @@ void PdfParser::doForm(Object *str) {
     if (obj1.dictLookup(const_cast<char*>("S"), &obj2)->isName(const_cast<char*>("Transparency"))) {
       transpGroup = gTrue;
       if (!obj1.dictLookup(const_cast<char*>("CS"), &obj3)->isNull()) {
-	blendingColorSpace = GfxColorSpace::parse(&obj3,(Gfx*)this);
+	blendingColorSpace = GfxColorSpace::parse(&obj3);
       }
       obj3.free();
       if (obj1.dictLookup(const_cast<char*>("I"), &obj3)->isBool()) {
