@@ -464,6 +464,7 @@ sp_svg_create_color_hash()
     return colors;
 }
 
+#if ENABLE_LCMS
 //helper function borrowed from src/widgets/sp-color-icc-selector.cpp:
 void getThings( DWORD space, gchar const**& namers, gchar const**& tippies, guint const*& scalies );
 
@@ -497,6 +498,7 @@ g_message("transform to sRGB done");
         }
     }
 }
+#endif //ENABLE_LCMS
 
 /*
  * Some discussion at http://markmail.org/message/bhfvdfptt25kgtmj

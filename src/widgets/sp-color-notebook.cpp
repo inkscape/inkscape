@@ -374,8 +374,10 @@ void ColorNotebook::init()
 	sp_set_font_size_smaller (rgbabox);
 	gtk_widget_show_all (rgbabox);
 
+#if ENABLE_LCMS
         //the "too much ink" icon is initially hidden
         gtk_widget_hide(GTK_WIDGET(_box_toomuchink));
+#endif //ENABLE_LCMS
 
         gtk_table_attach (GTK_TABLE (table), rgbabox, 0, 2, row, row + 1, GTK_FILL, GTK_SHRINK, XPAD, YPAD);
 
