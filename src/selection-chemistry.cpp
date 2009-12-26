@@ -76,6 +76,7 @@
 #include "helper/units.h"
 #include "sp-item.h"
 #include "box3d.h"
+#include "persp3d.h"
 #include "unit-constants.h"
 #include "xml/simple-document.h"
 #include "sp-filter-reference.h"
@@ -1171,7 +1172,6 @@ selection_contains_both_clone_and_original(Inkscape::Selection *selection)
     return clone_with_original;
 }
 
-
 /** Apply matrix to the selection.  \a set_i2d is normally true, which means objects are in the
 original transform, synced with their reprs, and need to jump to the new transform in one go. A
 value of set_i2d==false is only used by seltrans when it's dragging objects live (not outlines); in
@@ -1182,6 +1182,29 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 {
     if (selection->isEmpty())
         return;
+
+    // For each perspective with a box in selection, check whether all boxes are selected and
+    // unlink all non-selected boxes.
+    Persp3D *persp;
+    Persp3D *transf_persp;
+    std::list<Persp3D *> plist = selection->perspList();
+    for (std::list<Persp3D *>::iterator i = plist.begin(); i != plist.end(); ++i) {
+        persp = (Persp3D *) (*i);
+
+        if (!persp3d_has_all_boxes_in_selection (persp, selection)) {
+            std::list<SPBox3D *> selboxes = selection->box3DList(persp);
+
+            // create a new perspective as a copy of the current one and link the selected boxes to it
+            transf_persp = persp3d_create_xml_element (SP_OBJECT_DOCUMENT(persp), persp->perspective_impl);
+
+            for (std::list<SPBox3D *>::iterator b = selboxes.begin(); b != selboxes.end(); ++b)
+                box3d_switch_perspectives(*b, persp, transf_persp);
+        } else {
+            transf_persp = persp;
+        }
+
+        persp3d_apply_affine_transformation(transf_persp, affine);
+    }
 
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);

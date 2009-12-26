@@ -70,10 +70,6 @@ int box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, i
 void box3d_relabel_corners(SPBox3D *box);
 void box3d_check_for_swapped_coords(SPBox3D *box);
 
-void box3d_add_to_selection(SPBox3D *box);
-void box3d_remove_from_selection(SPBox3D *box);
-void box3d_mark_transformed(SPBox3D *box);
-
 std::list<SPBox3D *> box3d_extract_boxes(SPObject *obj);
 
 Persp3D *box3d_get_perspective(SPBox3D const *box);

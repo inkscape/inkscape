@@ -115,6 +115,7 @@ TransfMat3x4::pt_to_str (Proj::Axis axis) {
     return g_strdup(os.str().c_str());
 }
 
+/* Check for equality (with a small tolerance epsilon) */
 bool
 TransfMat3x4::operator==(const TransfMat3x4 &rhs) const
 {
@@ -129,29 +130,16 @@ TransfMat3x4::operator==(const TransfMat3x4 &rhs) const
     return true;
 }
 
-/* multiply a projective matrix by an affine matrix */
+/* Multiply a projective matrix by an affine matrix (by only multiplying the 'affine part' of the
+ * projective matrix) */
 TransfMat3x4
 TransfMat3x4::operator*(Geom::Matrix const &A) const {
     TransfMat3x4 ret;
 
-    // Is it safe to always use the currently active document?
-    double h = sp_document_height(inkscape_active_document());
-
-    /*
-     * Note: The strange multiplication involving the document height is due to the buggy
-     *       intertwining of SVG and document coordinates. Essentially, what we do is first
-     *       convert from "real-world" to SVG coordinates, then apply the transformation A
-     *       (by multiplying with the Geom::Matrix) and then convert back from SVG to real-world
-     *       coordinates. Maybe there is even a more Inkscape-ish way to achieve this?
-     *       Once Inkscape has gotton rid of the two different coordiate systems, we can change
-     *       this function to an ordinary matrix multiplication.
-     */
     for (int j = 0; j < 4; ++j) {
-        ret.tmat[0][j] = A[0]*tmat[0][j] + A[2]*(h*tmat[2][j] - tmat[1][j]) + A[4]*tmat[2][j];
-        ret.tmat[1][j] = A[1]*tmat[0][j] + A[3]*(h*tmat[2][j] - tmat[1][j]) + A[5]*tmat[2][j];
+        ret.tmat[0][j] = A[0]*tmat[0][j] + A[2]*tmat[1][j] + A[4]*tmat[2][j];
+        ret.tmat[1][j] = A[1]*tmat[0][j] + A[3]*tmat[1][j] + A[5]*tmat[2][j];
         ret.tmat[2][j] = tmat[2][j];
-
-        ret.tmat[1][j] = h*ret.tmat[2][j] - ret.tmat[1][j]; // switch back from SVG to desktop coordinates
     }
 
     return ret;

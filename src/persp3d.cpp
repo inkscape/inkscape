@@ -34,6 +34,9 @@ static Inkscape::XML::Node *persp3d_write(SPObject *object, Inkscape::XML::Docum
 
 static void persp3d_on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
+static void persp3d_update_with_point (Persp3DImpl *persp_impl, Proj::Axis const axis, Proj::Pt2 const &new_image);
+static gchar * persp3d_pt_to_str (Persp3DImpl *persp_impl, Proj::Axis const axis);
+
 static SPObjectClass *persp3d_parent_class;
 
 static int global_counter = 0;
@@ -42,16 +45,9 @@ static int global_counter = 0;
 
 Persp3DImpl::Persp3DImpl() {
     tmat = Proj::TransfMat3x4 ();
-
-    boxes_transformed = new std::map<SPBox3D *, bool>;
-    boxes_transformed->clear();
     document = NULL;
 
     my_counter = global_counter++;
-}
-
-Persp3DImpl::~Persp3DImpl() {
-    delete boxes_transformed;
 }
 
 /**
@@ -439,83 +435,6 @@ persp3d_has_box (Persp3D *persp, SPBox3D *box) {
 }
 
 void
-persp3d_add_box_transform (Persp3D *persp, SPBox3D *box) {
-    Persp3DImpl *persp_impl = persp->perspective_impl;
-
-    std::map<SPBox3D *, bool>::iterator i = persp_impl->boxes_transformed->find(box);
-    if (i != persp_impl->boxes_transformed->end() && (*i).second == true) {
-        g_print ("Warning! In %s (%d): trying to add transform status for box %d twice when it's already listed as true.\n", SP_OBJECT_REPR(persp_impl)->attribute("id"), persp_impl->my_counter, box->my_counter);
-        return;
-    }
- 
-    (*persp_impl->boxes_transformed)[box] = false;
-}
-
-void
-persp3d_remove_box_transform (Persp3D *persp, SPBox3D *box) {
-    persp->perspective_impl->boxes_transformed->erase(box);
-}
-
-void
-persp3d_set_box_transformed (Persp3D *persp, SPBox3D *box, bool transformed) {
-    Persp3DImpl *persp_impl = persp->perspective_impl;
-
-    if (persp_impl->boxes_transformed->find(box) == persp_impl->boxes_transformed->end()) {
-        g_print ("Warning! In %s (%d): trying to set transform status for box %d, but it is not listed in the perspective!! Aborting.\n",
-                 SP_OBJECT_REPR(persp)->attribute("id"), persp_impl->my_counter,
-                 box->my_counter);
-        return;
-    }
-
-    (*persp_impl->boxes_transformed)[box] = transformed;
-}
-
-bool
-persp3d_was_transformed (Persp3D *persp) {
-    Persp3DImpl *persp_impl = persp->perspective_impl;
-
-    if (persp_impl->boxes_transformed->size() == 1) {
-        /* either the transform has not been applied to the single box associated to this perspective yet
-           or the transform was already reset; in both cases we need to return false because upcoming
-           transforms need to be applied */
-        (*persp_impl->boxes_transformed->begin()).second = false; // make sure the box is marked as untransformed (in case more boxes are added later)
-        return false;
-    }
-
-    for (std::map<SPBox3D *, bool>::iterator i = persp_impl->boxes_transformed->begin();
-         i != persp_impl->boxes_transformed->end(); ++i) {
-        if ((*i).second == true) {
-            // at least one of the boxes in the perspective has already been transformed;
-            return true;
-        }
-    }
-    return false; // all boxes in the perspective are still untransformed; a pending transformation should be applied
-}
-
-bool
-persp3d_all_transformed(Persp3D *persp) {
-    Persp3DImpl *persp_impl = persp->perspective_impl;
-
-    for (std::map<SPBox3D *, bool>::iterator i = persp_impl->boxes_transformed->begin();
-         i != persp_impl->boxes_transformed->end(); ++i) {
-        if ((*i).second == false) {
-            return false;
-        }
-    }
-    return true;
-}
-
-void
-persp3d_unset_transforms(Persp3D *persp) {
-    Persp3DImpl *persp_impl = persp->perspective_impl;
-
-    for (std::map<SPBox3D *, bool>::iterator i = persp_impl->boxes_transformed->begin();
-         i != persp_impl->boxes_transformed->end(); ++i) {
-        (*i).second = false;
-    }
-}
-
-void
 persp3d_update_box_displays (Persp3D *persp) {
     Persp3DImpl *persp_impl = persp->perspective_impl;
 
@@ -607,10 +526,10 @@ persp3d_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
 
 /* checks whether all boxes linked to this perspective are currently selected */
 bool
-persp3d_has_all_boxes_in_selection (Persp3D *persp) {
+persp3d_has_all_boxes_in_selection (Persp3D *persp, Inkscape::Selection *selection) {
     Persp3DImpl *persp_impl = persp->perspective_impl;
 
-    std::list<SPBox3D *> selboxes = sp_desktop_selection(inkscape_active_desktop())->box3DList();
+    std::list<SPBox3D *> selboxes = selection->box3DList();
 
     for (std::vector<SPBox3D *>::iterator i = persp_impl->boxes.begin(); i != persp_impl->boxes.end(); ++i) {
         if (std::find(selboxes.begin(), selboxes.end(), *i) == selboxes.end()) {
@@ -619,59 +538,6 @@ persp3d_has_all_boxes_in_selection (Persp3D *persp) {
         }
     }
     return true;
-}
-
-/**
- * For each perspective having a box in \a selection, determine all its unselected boxes.
- */
-// TODO: Check where we can use pass-by-reference (or so) instead of recreating all the lists afresh.
-std::map<Persp3D *, std::list<SPBox3D *> >
-persp3d_unselected_boxes(Inkscape::Selection *selection) {
-    std::list<Persp3D *> plist = selection->perspList();
-    std::map<Persp3D *, std::list<SPBox3D *> > punsel;
-
-    std::list<Persp3D *>::iterator i;
-    std::vector<SPBox3D *>::iterator j;
-    // for all perspectives in the list ...
-    for (i = plist.begin(); i != plist.end(); ++i) {
-        Persp3D *persp = *i;
-        Persp3DImpl *persp_impl = persp->perspective_impl;
-        // ... and each box associated to it ...
-        for (j = persp_impl->boxes.begin(); j != persp_impl->boxes.end(); ++j) {
-            SPBox3D *box = *j;
-            // ... check whether it is unselected, and if so add it to the list
-            if (persp_impl->boxes_transformed->find(box) == persp_impl->boxes_transformed->end()) {
-                punsel[persp].push_back(box);
-            }
-        }
-    }
-    return punsel;
-}
-
-/**
- * Split all perspectives with a box in \a selection by moving their unselected boxes to newly
- * created perspectives.
- */
-void
-persp3d_split_perspectives_according_to_selection(Inkscape::Selection *selection) {
-    std::map<Persp3D *, std::list<SPBox3D *> > punsel = persp3d_unselected_boxes(selection);
-
-    std::map<Persp3D *, std::list<SPBox3D *> >::iterator i;
-    std::list<SPBox3D *>::iterator j;
-    // for all perspectives in the list ...
-    for (i = punsel.begin(); i != punsel.end(); ++i) {
-        Persp3D *persp = (*i).first;
-        // ... if the perspective has unselected boxes ...
-        if (!(*i).second.empty()) {
-            // create a new perspective and move these boxes over
-            SPDocument *document = SP_OBJECT_DOCUMENT(persp);
-            Persp3D * new_persp = persp3d_create_xml_element (document, persp->perspective_impl);
-            for (j = (*i).second.begin(); j != (*i).second.end(); ++j) {
-                SPBox3D *box = *j;
-                box3d_switch_perspectives(box, persp, new_persp);
-            }
-        }
-    }
 }
 
 /* some debugging stuff follows */
@@ -722,9 +588,9 @@ persp3d_print_all_selected() {
         Persp3D *persp = SP_PERSP3D(*j);
         Persp3DImpl *persp_impl = persp->perspective_impl;
         g_print ("  %s (%d):  ", SP_OBJECT_REPR(persp)->attribute("id"), persp->perspective_impl->my_counter);
-        for (std::map<SPBox3D *, bool>::iterator i = persp_impl->boxes_transformed->begin();
-             i != persp_impl->boxes_transformed->end(); ++i) {
-            g_print ("<%d,%d> ", (*i).first->my_counter, (*i).second);
+        for (std::vector<SPBox3D *>::iterator i = persp_impl->boxes.begin();
+             i != persp_impl->boxes.end(); ++i) {
+            g_print ("%d ", (*i)->my_counter);
         }
         g_print ("\n");
     }

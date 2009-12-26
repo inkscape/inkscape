@@ -244,16 +244,10 @@ box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box)
     if (old_ref) {
         sp_signal_disconnect_by_data(old_ref, box);
         persp3d_remove_box (SP_PERSP3D(old_ref), box);
-        /* Note: This sometimes leads to attempts to remove boxes twice from the list of selected/transformed
-           boxes in a perspectives, but this should be uncritical. */
-        persp3d_remove_box_transform (SP_PERSP3D(old_ref), box);
     }
     if ( SP_IS_PERSP3D(ref) && ref != box ) // FIXME: Comparisons sane?
     {
         persp3d_add_box (SP_PERSP3D(ref), box);
-        /* Note: This sometimes leads to attempts to add boxes twice to the list of selected/transformed
-           boxes in a perspectives, but this should be uncritical. */
-        persp3d_add_box_transform (SP_PERSP3D(ref), box);
     }
 }
 
@@ -349,37 +343,8 @@ box3d_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
     SPBox3D *box = SP_BOX3D(item);
 
-    /* check whether we need to unlink any boxes from their perspectives */
-    Persp3D *persp = box3d_get_perspective(box);
-    Persp3D *transf_persp;
-
-    if (sp_desktop_document(inkscape_active_desktop()) == SP_OBJECT_DOCUMENT(item) && 
-        !persp3d_has_all_boxes_in_selection (persp)) {
-        std::list<SPBox3D *> selboxes = sp_desktop_selection(inkscape_active_desktop())->box3DList();
-
-        /* create a new perspective as a copy of the current one and link the selected boxes to it */
-        transf_persp = persp3d_create_xml_element (SP_OBJECT_DOCUMENT(persp), persp->perspective_impl);
-
-        for (std::list<SPBox3D *>::iterator b = selboxes.begin(); b != selboxes.end(); ++b) {
-            box3d_switch_perspectives(*b, persp, transf_persp);
-        }
-    } else {
-        transf_persp = persp;
-    }
-
-    /* only transform the perspective once, even if it has several selected boxes */
-    if(!persp3d_was_transformed (transf_persp)) {
-        /* concatenate the affine transformation with the perspective mapping; this
-           function also triggers repr updates of boxes and the perspective itself */
-        persp3d_apply_affine_transformation(transf_persp, xform);
-    }
-
-    box3d_mark_transformed(box);
-
-    if (persp3d_all_transformed(transf_persp)) {
-        /* all boxes were transformed; make perspective sensitive for further transformations */
-        persp3d_unset_transforms(transf_persp);
-    }
+    // We don't apply the transform to the box directly but instead to its perspective (which is
+    // done in sp_selection_apply_affine). Here we only adjust strokes, patterns, etc.
 
     Geom::Matrix ret(Geom::Matrix(xform).without_translation());
     gdouble const sw = hypot(ret[0], ret[1]);
@@ -1323,31 +1288,6 @@ box3d_check_for_swapped_coords(SPBox3D *box) {
     box3d_exchange_coords(box);
 }
 
-void
-box3d_add_to_selection(SPBox3D *box) {
-    Persp3D *persp = box3d_get_perspective(box);
-    g_return_if_fail(persp);
-    persp3d_add_box_transform(persp, box);
-}
-
-void
-box3d_remove_from_selection(SPBox3D *box) {
-    Persp3D *persp = box3d_get_perspective(box);
-    if (!persp) {
-        /* this can happen if a box is deleted through undo and the persp_ref is already detached;
-           should we rebuild the boxes of each perspective in this case or is it safe to leave it alone? */
-        return;
-    }
-    persp3d_remove_box_transform(persp, box);
-}
-
-void
-box3d_mark_transformed(SPBox3D *box) {
-    Persp3D *persp = box3d_get_perspective(box);
-    g_return_if_fail(persp);
-    persp3d_set_box_transformed(persp, box, true);
-}
-
 static void
 box3d_extract_boxes_rec(SPObject *obj, std::list<SPBox3D *> &boxes) {
     if (SP_IS_BOX3D(obj)) {
@@ -1387,9 +1327,6 @@ box3d_switch_perspectives(SPBox3D *box, Persp3D *old_persp, Persp3D *new_persp, 
 
     persp3d_remove_box (old_persp, box);
     persp3d_add_box (new_persp, box);
-
-    persp3d_remove_box_transform (old_persp, box);
-    persp3d_add_box_transform (new_persp, box);
 
     gchar *href = g_strdup_printf("#%s", SP_OBJECT_REPR(new_persp)->attribute("id"));
     SP_OBJECT_REPR(box)->setAttribute("inkscape:perspectiveID", href);
