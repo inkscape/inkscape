@@ -6345,8 +6345,84 @@ sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
     int prop = GPOINTER_TO_INT(data);
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPCSSAttr *css = sp_repr_css_attr_new ();
 
+    // move the x of all texts to preserve the same bbox
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    GSList const *items = selection->itemList();
+    for (; items != NULL; items = items->next) {
+        if (SP_IS_TEXT((SPItem *) items->data)) {
+            SPItem *item = SP_ITEM(items->data);
+
+            unsigned writing_mode = SP_OBJECT_STYLE(item)->writing_mode.value;
+            // below, variable names suggest horizontal move, but we check the writing direction
+            // and move in the corresponding axis
+            int axis;
+            if (writing_mode == SP_CSS_WRITING_MODE_LR_TB || writing_mode == SP_CSS_WRITING_MODE_RL_TB)
+                axis = NR::X;
+            else
+                axis = NR::Y;
+
+            Geom::OptRect bbox
+                  = item->getBounds(Geom::identity(), SPItem::GEOMETRIC_BBOX); 
+            if (!bbox)
+                continue;
+            double width = bbox->dimensions()[axis];
+            // If you want to align within some frame, other than the text's own bbox, calculate
+            // the left and right (or top and bottom for tb text) slacks of the text inside that
+            // frame (currently unused)
+            double left_slack = 0;
+            double right_slack = 0;
+            unsigned old_align = SP_OBJECT_STYLE(item)->text_align.value;
+            double move = 0;
+            if (old_align == SP_CSS_TEXT_ALIGN_START || old_align == SP_CSS_TEXT_ALIGN_LEFT) {
+                switch (prop) {
+                    case 0:
+                        move = -left_slack;
+                        break;
+                    case 1:
+                        move = width/2 + (right_slack - left_slack)/2;
+                        break;
+                    case 2:
+                        move = width + right_slack;
+                        break;
+                }
+            } else if (old_align == SP_CSS_TEXT_ALIGN_CENTER) {
+                switch (prop) {
+                    case 0:
+                        move = -width/2 - left_slack;
+                        break;
+                    case 1:
+                        move = (right_slack - left_slack)/2;
+                        break;
+                    case 2:
+                        move = width/2 + right_slack;
+                        break;
+                }
+            } else if (old_align == SP_CSS_TEXT_ALIGN_END || old_align == SP_CSS_TEXT_ALIGN_RIGHT) {
+                switch (prop) {
+                    case 0:
+                        move = -width - left_slack;
+                        break;
+                    case 1:
+                        move = -width/2 + (right_slack - left_slack)/2;
+                        break;
+                    case 2:
+                        move = right_slack;
+                        break;
+                }
+            }
+            Geom::Point XY = SP_TEXT(item)->attributes.firstXY();
+            if (axis == NR::X)
+                XY = XY + Geom::Point (move, 0);
+            else
+                XY = XY + Geom::Point (0, move);
+            SP_TEXT(item)->attributes.setFirstXY(XY);
+            SP_OBJECT(item)->updateRepr();
+            SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        }
+    }
+
+    SPCSSAttr *css = sp_repr_css_attr_new ();
     switch (prop)
     {
         case 0:
