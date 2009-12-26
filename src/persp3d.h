@@ -29,7 +29,12 @@
 class SPBox3D;
 class Box3DContext;
 
-struct Persp3D : public SPObject {
+class Persp3DImpl {
+public:
+    Persp3DImpl();
+    ~Persp3DImpl();
+
+//private:
     Proj::TransfMat3x4 tmat;
 
     // Also write the list of boxes into the xml repr and vice versa link boxes to their persp3d?
@@ -39,6 +44,12 @@ struct Persp3D : public SPObject {
 
     // for debugging only
     int my_counter;
+
+//    friend class Persp3D;
+};
+
+struct Persp3D : public SPObject {
+    Persp3DImpl *perspective_impl;
 };
 
 struct Persp3DClass {
@@ -54,20 +65,18 @@ inline Persp3D * persp3d_get_from_repr (Inkscape::XML::Node *repr) {
     return SP_PERSP3D(SP_ACTIVE_DOCUMENT->getObjectByRepr(repr));
 }
 inline Proj::Pt2 persp3d_get_VP (Persp3D *persp, Proj::Axis axis) {
-    return persp->tmat.column(axis);
+    return persp->perspective_impl->tmat.column(axis);
 }
 Geom::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis); // convenience wrapper around the following two
 Geom::Point persp3d_get_finite_dir (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis);
 Geom::Point persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis);
 double persp3d_get_infinite_angle (Persp3D *persp, Proj::Axis axis);
-bool persp3d_VP_is_finite (Persp3D *persp, Proj::Axis axis);
+bool persp3d_VP_is_finite (Persp3DImpl *persp_impl, Proj::Axis axis);
 void persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo = true);
 void persp3d_toggle_VPs (std::list<Persp3D *>, Proj::Axis axis);
 void persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state);
 void persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_pressed); // angle is in degrees
-void persp3d_update_with_point (Persp3D *persp, Proj::Axis const axis, Proj::Pt2 const &new_image);
 void persp3d_apply_affine_transformation (Persp3D *persp, Geom::Matrix const &xform);
-gchar * persp3d_pt_to_str (Persp3D *persp, Proj::Axis const axis);
 
 void persp3d_add_box (Persp3D *persp, SPBox3D *box);
 void persp3d_remove_box (Persp3D *persp, SPBox3D *box);
@@ -83,13 +92,13 @@ void persp3d_unset_transforms(Persp3D *persp);
 void persp3d_update_box_displays (Persp3D *persp);
 void persp3d_update_box_reprs (Persp3D *persp);
 void persp3d_update_z_orders (Persp3D *persp);
-inline unsigned int persp3d_num_boxes (Persp3D *persp) { return persp->boxes.size(); }
+inline unsigned int persp3d_num_boxes (Persp3D *persp) { return persp->perspective_impl->boxes.size(); }
 std::list<SPBox3D *> persp3d_list_of_boxes(Persp3D *persp);
 
 bool persp3d_perspectives_coincide(const Persp3D *lhs, const Persp3D *rhs);
 void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 
-Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3D *dup = NULL);
+Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3DImpl *dup = NULL);
 Persp3D * persp3d_document_first_persp (SPDocument *document);
 
 bool persp3d_has_all_boxes_in_selection (Persp3D *persp);
@@ -99,6 +108,12 @@ void persp3d_split_perspectives_according_to_selection(Inkscape::Selection *sele
 void persp3d_print_debugging_info (Persp3D *persp);
 void persp3d_print_debugging_info_all(SPDocument *doc);
 void persp3d_print_all_selected();
+
+/* Internally used functions; maybe these should be made more private? */
+void persp3d_update_with_point (Persp3DImpl *persp_impl, Proj::Axis const axis, Proj::Pt2 const &new_image);
+gchar * persp3d_pt_to_str (Persp3DImpl *persp_impl, Proj::Axis const axis);
+
+void print_current_persp3d(gchar *func_name, Persp3D *persp);
 
 #endif /* __PERSP3D_H__ */
 

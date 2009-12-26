@@ -12,9 +12,9 @@
 
 #include "uri-references.h"
 #include <sigc++/sigc++.h>
+#include "persp3d.h"
 
 class SPObject;
-class Persp3D;
 
 namespace Inkscape {
 namespace XML {
@@ -28,7 +28,7 @@ public:
     ~Persp3DReference();
 
     Persp3D *getObject() const {
-        return (Persp3D *)URIReference::getObject();
+        return SP_PERSP3D(URIReference::getObject());
     }
 
     SPObject *owner;

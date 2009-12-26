@@ -123,16 +123,17 @@ static void sp_box3d_context_init(Box3DContext *box3d_context)
 
 static void sp_box3d_context_finish(SPEventContext *ec)
 {
-	Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
-	SPDesktop *desktop = ec->desktop;
+    Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
+    SPDesktop *desktop = ec->desktop;
 
-	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-	sp_box3d_finish(bc);
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+    sp_box3d_finish(bc);
     bc->sel_changed_connection.disconnect();
+//    sp_repr_remove_listener_by_data(cc->active_shape_repr, cc);
 
     if (((SPEventContextClass *) parent_class)->finish) {
-		((SPEventContextClass *) parent_class)->finish(ec);
-	}
+        ((SPEventContextClass *) parent_class)->finish(ec);
+    }
 }
 
 
@@ -179,13 +180,14 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
 
     if (selection->perspList().size() == 1) {
         // selecting a single box changes the current perspective
-        ec->desktop->doc()->current_persp3d = selection->perspList().front();
+        ec->desktop->doc()->setCurrentPersp3D(selection->perspList().front());
     }
 }
 
-/* create a default perspective in document defs if none is present
-   (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */
-static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
+/* Create a default perspective in document defs if none is present (which can happen, among other
+ * circumstances, after 'vacuum defs' or when a pre-0.46 file is opened).
+ */
+static void sp_box3d_context_ensure_persp_in_defs(SPDocument *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
     bool has_persp = false;
@@ -197,7 +199,7 @@ static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
     }
 
     if (!has_persp) {
-        document->current_persp3d = persp3d_create_xml_element (document);
+        document->setCurrentPersp3D(persp3d_create_xml_element (document));
     }
 }
 
@@ -208,8 +210,6 @@ static void sp_box3d_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) parent_class)->setup) {
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
-
-    sp_box3d_context_check_for_persp_in_defs(sp_desktop_document (ec->desktop));
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
 
@@ -267,13 +267,13 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
     static bool dragging;
 
     SPDesktop *desktop = event_context->desktop;
+    SPDocument *document = sp_desktop_document (desktop);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     Box3DContext *bc = SP_BOX3D_CONTEXT(event_context);
-    g_assert (SP_ACTIVE_DOCUMENT->current_persp3d);
-    Persp3D *cur_persp = SP_ACTIVE_DOCUMENT->current_persp3d;
+    Persp3D *cur_persp = document->getCurrentPersp3D();
 
     event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
@@ -300,8 +300,14 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             bc->drag_ptB = from_2geom(button_dt);
             bc->drag_ptC = from_2geom(button_dt);
 
+            // This can happen after saving when the last remaining perspective was purged and must be recreated.
+            if (!cur_persp) {
+                sp_box3d_context_ensure_persp_in_defs(document);
+                cur_persp = document->getCurrentPersp3D();
+            }
+
             /* Projective preimages of clicked point under current perspective */
-            bc->drag_origin_proj = cur_persp->tmat.preimage (from_2geom(button_dt), 0, Proj::Z);
+            bc->drag_origin_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(button_dt), 0, Proj::Z);
             bc->drag_ptB_proj = bc->drag_origin_proj;
             bc->drag_ptC_proj = bc->drag_origin_proj;
             bc->drag_ptC_proj.normalize();
@@ -355,7 +361,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             	bc->drag_ptB = from_2geom(motion_dt);
             	bc->drag_ptC = from_2geom(motion_dt);
 
-                bc->drag_ptB_proj = cur_persp->tmat.preimage (from_2geom(motion_dt), 0, Proj::Z);
+                bc->drag_ptB_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(motion_dt), 0, Proj::Z);
                 bc->drag_ptC_proj = bc->drag_ptB_proj;
                 bc->drag_ptC_proj.normalize();
                 bc->drag_ptC_proj[Proj::Z] = 0.25;
@@ -364,16 +370,16 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 // perspective line from drag_ptB to vanishing point Y.
                 if (!bc->ctrl_dragged) {
                     /* snapping */
-                    Box3D::PerspectiveLine pline (bc->drag_ptB, Proj::Z, SP_ACTIVE_DOCUMENT->current_persp3d);
+                    Box3D::PerspectiveLine pline (bc->drag_ptB, Proj::Z, document->getCurrentPersp3D());
                     bc->drag_ptC = pline.closest_to (from_2geom(motion_dt));
 
                     bc->drag_ptB_proj.normalize();
-                    bc->drag_ptC_proj = cur_persp->tmat.preimage (bc->drag_ptC, bc->drag_ptB_proj[Proj::X], Proj::X);
+                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (bc->drag_ptC, bc->drag_ptB_proj[Proj::X], Proj::X);
                 } else {
                     bc->drag_ptC = from_2geom(motion_dt);
 
                     bc->drag_ptB_proj.normalize();
-                    bc->drag_ptC_proj = cur_persp->tmat.preimage (from_2geom(motion_dt), bc->drag_ptB_proj[Proj::X], Proj::X);
+                    bc->drag_ptC_proj = cur_persp->perspective_impl->tmat.preimage (from_2geom(motion_dt), bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
                 Geom::Point pt2g = to_2geom(bc->drag_ptC);
                 m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
@@ -424,43 +430,43 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             break;
 
         case GDK_bracketright:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::X, -180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::X, -180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_bracketleft:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::X, 180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::X, 180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenright:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Y, -180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Y, -180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_parenleft:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Y, 180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Y, 180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceright:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Z, -180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Z, -180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
 
         case GDK_braceleft:
-            persp3d_rotate_VP (inkscape_active_document()->current_persp3d, Proj::Z, 180/snaps, MOD__ALT);
-            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,
+            persp3d_rotate_VP (document->getCurrentPersp3D(), Proj::Z, 180/snaps, MOD__ALT);
+            sp_document_done(document, SP_VERB_CONTEXT_3DBOX,
                              _("Change perspective (angle of PLs)"));
             ret = true;
             break;
@@ -468,7 +474,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         /* TODO: what is this???
         case GDK_O:
             if (MOD__CTRL && MOD__SHIFT) {
-                Box3D::create_canvas_point(persp3d_get_VP(inkscape_active_document()->current_persp3d, Proj::W).affine(),
+                Box3D::create_canvas_point(persp3d_get_VP(document()->getCurrentPersp3D(), Proj::W).affine(),
                                            6, 0xff00ff00);
             }
             ret = true;
@@ -479,6 +485,16 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_G:
             if (MOD__SHIFT_ONLY) {
                 sp_selection_to_guides(desktop);
+                ret = true;
+            }
+            break;
+
+        case GDK_p:
+        case GDK_P:
+            if (MOD__SHIFT_ONLY) {
+                if (document->getCurrentPersp3D()) {
+                    persp3d_print_debugging_info (document->getCurrentPersp3D());
+                }
                 ret = true;
             }
             break;
@@ -598,7 +614,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
 
         // TODO: It would be nice to show the VPs during dragging, but since there is no selection
         //       at this point (only after finishing the box), we must do this "manually"
-        /**** bc._vpdrag->updateDraggers(); ****/
+        /* bc._vpdrag->updateDraggers(); */
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
@@ -631,7 +647,7 @@ static void sp_box3d_finish(Box3DContext *bc)
     if ( bc->item != NULL ) {
         SPDesktop * desktop = SP_EVENT_CONTEXT_DESKTOP(bc);
         SPDocument *doc = sp_desktop_document(desktop);
-        if (!doc || !doc->current_persp3d)
+        if (!doc || !doc->getCurrentPersp3D())
             return;
 
         SPBox3D *box = SP_BOX3D(bc->item);

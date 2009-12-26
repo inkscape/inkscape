@@ -103,7 +103,7 @@ vp_knot_moved_handler (SPKnot */*knot*/, Geom::Point const *ppointer, guint stat
                 sel_boxes = (*vp)->selectedBoxes(sp_desktop_selection(inkscape_active_desktop()));
 
                 // we create a new perspective ...
-                Persp3D *new_persp = persp3d_create_xml_element (dragger->parent->document, old_persp);
+                Persp3D *new_persp = persp3d_create_xml_element (dragger->parent->document, old_persp->perspective_impl);
 
                 /* ... unlink the boxes from the old one and
                    FIXME: We need to unlink the _un_selected boxes of each VP so that
@@ -230,7 +230,7 @@ unsigned int VanishingPoint::global_counter = 0;
 void
 VanishingPoint::set_pos(Proj::Pt2 const &pt) {
     g_return_if_fail (_persp);
-    _persp->tmat.set_image_pt (_axis, pt);
+    _persp->perspective_impl->tmat.set_image_pt (_axis, pt);
 }
 
 std::list<SPBox3D *>

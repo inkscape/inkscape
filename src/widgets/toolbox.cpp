@@ -3226,7 +3226,7 @@ box3d_set_button_and_adjustment(Persp3D *persp, Proj::Axis axis,
     // TODO: Take all selected perspectives into account but don't touch the state button if not all of them
     //       have the same state (otherwise a call to box3d_vp_z_state_changed() is triggered and the states
     //       are reset).
-    bool is_infinite = !persp3d_VP_is_finite(persp, axis);
+    bool is_infinite = !persp3d_VP_is_finite(persp->perspective_impl, axis);
 
     if (is_infinite) {
         gtk_toggle_action_set_active(tact, TRUE);
@@ -3254,6 +3254,10 @@ box3d_resync_toolbar(Inkscape::XML::Node *persp_repr, GObject *data) {
     GtkAction *act = 0;
     GtkToggleAction *tact = 0;
     Persp3D *persp = persp3d_get_from_repr(persp_repr);
+    if (!persp) {
+        // Hmm, is it an error if this happens?
+        return;
+    }
     {
         adj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(tbl), "box3d_angle_x"));
         act = GTK_ACTION(g_object_get_data(G_OBJECT(tbl), "box3d_angle_x_action"));
@@ -3340,7 +3344,7 @@ box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
             sp_repr_synthesize_events(persp_repr, &box3d_persp_tb_repr_events, tbl);
         }
 
-        inkscape_active_document()->current_persp3d = persp3d_get_from_repr(persp_repr);
+        inkscape_active_document()->setCurrentPersp3D(persp3d_get_from_repr(persp_repr));
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString("/tools/shapes/3dbox/persp", persp_repr->attribute("id"));
 
@@ -3364,7 +3368,6 @@ box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis ax
     // in turn, prevent listener from responding
     g_object_set_data(dataKludge, "freeze", GINT_TO_POINTER(TRUE));
 
-    //Persp3D *persp = document->current_persp3d;
     std::list<Persp3D *> sel_persps = sp_desktop_selection(desktop)->perspList();
     if (sel_persps.empty()) {
         // this can happen when the document is created; we silently ignore it
@@ -3372,7 +3375,7 @@ box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis ax
     }
     Persp3D *persp = sel_persps.front();
 
-    persp->tmat.set_infinite_direction (axis, adj->value);
+    persp->perspective_impl->tmat.set_infinite_direction (axis, adj->value);
     SP_OBJECT(persp)->updateRepr();
 
     // TODO: use the correct axis here, too
@@ -3435,7 +3438,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     EgeAdjustmentAction* eact = 0;
     SPDocument *document = sp_desktop_document (desktop);
-    Persp3D *persp = document->current_persp3d;
+    Persp3DImpl *persp_impl = document->getCurrentPersp3DImpl();
 
     EgeAdjustmentAction* box3d_angle_x = 0;
     EgeAdjustmentAction* box3d_angle_y = 0;
@@ -3459,7 +3462,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_x = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp, Proj::X)) {
+    if (!persp3d_VP_is_finite(persp_impl, Proj::X)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -3499,7 +3502,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_y = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp, Proj::Y)) {
+    if (!persp3d_VP_is_finite(persp_impl, Proj::Y)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -3538,7 +3541,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_z = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp, Proj::Z)) {
+    if (!persp3d_VP_is_finite(persp_impl, Proj::Z)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -3988,6 +3991,7 @@ sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
+/*
 class PencilToleranceObserver : public Inkscape::Preferences::Observer {
 public:
     PencilToleranceObserver(Glib::ustring const &path, GObject *x) : Observer(path), _obj(x)
@@ -4015,7 +4019,7 @@ public:
 private:
     GObject *_obj;
 };
-
+*/
 
 static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -4040,9 +4044,6 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                          1, 2);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
-
-        PencilToleranceObserver *obs =
-            new PencilToleranceObserver("/tools/freehand/pencil/tolerance", G_OBJECT(holder));
     }
 
     /* advanced shape options */
@@ -6218,7 +6219,7 @@ sp_text_toolbox_selection_modified (Inkscape::Selection *selection, guint /*flag
 }
 
 void
-sp_text_toolbox_subselection_changed (gpointer /*dragger*/, GObject *tbl)
+sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
 {
     sp_text_toolbox_selection_changed (NULL, tbl);
 }

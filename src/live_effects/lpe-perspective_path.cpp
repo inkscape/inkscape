@@ -58,7 +58,7 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
 
     Persp3D *persp = persp3d_document_first_persp(inkscape_active_document());
 
-    Proj::TransfMat3x4 pmat = persp->tmat;
+    Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
 
     pmat.copy_tmat(tmat);
 }

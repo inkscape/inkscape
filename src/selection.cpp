@@ -224,7 +224,7 @@ void Selection::remove_box_perspective(SPBox3D *box) {
     Persp3D *persp = box3d_get_perspective(box);
     std::map<Persp3D *, unsigned int>::iterator p = _persps.find(persp);
     if (p == _persps.end()) {
-        g_print ("Warning! Trying to remove unselected perspective from selection!\n");
+        //g_print ("Warning! Trying to remove unselected perspective from selection!\n");
         return;
     }
     if ((*p).second > 1) {

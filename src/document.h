@@ -55,6 +55,7 @@ namespace Inkscape {
 
 class SP3DBox;
 class Persp3D;
+class Persp3DImpl;
 
 namespace Proj {
     class TransfMat3x4;
@@ -107,17 +108,26 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     // Instance of the connector router
     Avoid::Router *router;
 
-    GSList *perspectives;
-
-    Persp3D *current_persp3d; // "currently active" perspective (e.g., newly created boxes are attached to this one)
-
     GSList *_collection_queue;
 
     bool oldSignalsConnected;
 
-    void add_persp3d(Persp3D * const persp);
-    void remove_persp3d(Persp3D * const persp);
-    void initialize_current_persp3d();
+    void setCurrentPersp3D(Persp3D * const persp);
+    inline void setCurrentPersp3DImpl(Persp3DImpl * const persp_impl) { current_persp3d_impl = persp_impl; }
+    /*
+     * getCurrentPersp3D returns current_persp3d (if non-NULL) or the first
+     * perspective in the defs. If no perspective exists, returns NULL.
+     */
+    Persp3D * getCurrentPersp3D();
+    Persp3DImpl * getCurrentPersp3DImpl();
+    void getPerspectivesInDefs(std::vector<Persp3D*> &list);
+    unsigned int numPerspectivesInDefs() {
+        std::vector<Persp3D*> list;
+        getPerspectivesInDefs(list);
+        return list.size();
+    }
+
+    //void initialize_current_persp3d();
 
     sigc::connection connectModified(ModifiedSignal::slot_type slot);
     sigc::connection connectURISet(URISetSignal::slot_type slot);
@@ -154,6 +164,9 @@ sigc::connection connectCommit(CommitSignal::slot_type slot);
 private:
     SPDocument(SPDocument const &); // no copy
     void operator=(SPDocument const &); // no assign
+
+    Persp3D *current_persp3d; /**< Currently 'active' perspective (to which, e.g., newly created boxes are attached) */
+    Persp3DImpl *current_persp3d_impl;
 
 public:
     sigc::connection connectReconstructionStart(ReconstructionStart::slot_type slot);

@@ -97,7 +97,6 @@ SPDocument::SPDocument() :
     rerouting_handler_id(0),
     profileManager(0), // deferred until after other initialization
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
-    perspectives(0),
     current_persp3d(0),
     _collection_queue(0),
     oldSignalsConnected(false)
@@ -216,26 +215,43 @@ SPDocument::~SPDocument() {
     //delete this->_whiteboard_session_manager;
 }
 
-void SPDocument::add_persp3d (Persp3D * const /*persp*/)
-{
-    SPDefs *defs = SP_ROOT(this->root)->defs;
-    for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
-        if (SP_IS_PERSP3D(i)) {
-            g_print ("Encountered a Persp3D in defs\n");
-        }
+Persp3D *
+SPDocument::getCurrentPersp3D() {
+    // Check if current_persp3d is still valid
+    std::vector<Persp3D*> plist;
+    getPerspectivesInDefs(plist);
+    for (unsigned int i = 0; i < plist.size(); ++i) {
+        if (current_persp3d == plist[i])
+            return current_persp3d;
     }
 
-    g_print ("Adding Persp3D to defs\n");
-    persp3d_create_xml_element (this);
+    // If not, return the first perspective in defs (which may be NULL of none exists)
+    current_persp3d = persp3d_document_first_persp (this);
+
+    return current_persp3d;
 }
 
-void SPDocument::remove_persp3d (Persp3D * const /*persp*/)
-{
-    // TODO: Delete the repr, maybe perform a check if any boxes are still linked to the perspective.
-    //       Anything else?
-    g_print ("Please implement deletion of perspectives here.\n");
+Persp3DImpl *
+SPDocument::getCurrentPersp3DImpl() {
+    return current_persp3d_impl;
 }
 
+void
+SPDocument::setCurrentPersp3D(Persp3D * const persp) {
+    current_persp3d = persp;
+    //current_persp3d_impl = persp->perspective_impl;
+}
+
+void
+SPDocument::getPerspectivesInDefs(std::vector<Persp3D*> &list) {
+    SPDefs *defs = SP_ROOT(this->root)->defs;
+    for (SPObject *i = sp_object_first_child(SP_OBJECT(defs)); i != NULL; i = SP_OBJECT_NEXT(i) ) {
+        if (SP_IS_PERSP3D(i))
+            list.push_back(SP_PERSP3D(i));
+    }
+}
+
+/**
 void SPDocument::initialize_current_persp3d()
 {
     this->current_persp3d = persp3d_document_first_persp(this);
@@ -243,6 +259,7 @@ void SPDocument::initialize_current_persp3d()
         this->current_persp3d = persp3d_create_xml_element(this);
     }
 }
+**/
 
 unsigned long SPDocument::serial() const {
     return priv->serial;
@@ -390,10 +407,14 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         inkscape_ref();
     }
 
-    // Remark: Here, we used to create a "currentpersp3d" element in the document defs.
-    // But this is probably a bad idea since we need to adapt it for every change of selection, which will
-    // completely clutter the undo history. Maybe rather save it to prefs on exit and re-read it on startup?
-    document->initialize_current_persp3d();
+    // Check if the document already has a perspective (e.g., when opening an existing
+    // document). If not, create a new one and set it as the current perspective.
+    document->setCurrentPersp3D(persp3d_document_first_persp(document));
+    if (!document->getCurrentPersp3D()) {
+        //document->setCurrentPersp3D(persp3d_create_xml_element (document));
+        Persp3DImpl *persp_impl = new Persp3DImpl();
+        document->setCurrentPersp3DImpl(persp_impl);
+    }
 
     sp_document_set_undo_sensitive(document, true);
 
@@ -746,11 +767,13 @@ SPDocument::emitReconstructionFinish(void)
 {
     // printf("Finishing Reconstruction\n");
     priv->_reconstruction_finish_signal.emit();
-    
+
+/**    
     // Reference to the old persp3d object is invalid after reconstruction.
     initialize_current_persp3d();
     
     return;
+**/
 }
 
 sigc::connection SPDocument::connectCommit(SPDocument::CommitSignal::slot_type slot)
