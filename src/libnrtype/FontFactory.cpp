@@ -26,6 +26,10 @@
 /* Freetype2 */
 # include <pango/pangoft2.h>
 
+#include <ext/hash_map>
+
+
+typedef __gnu_cxx::hash_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
@@ -299,20 +303,25 @@ font_factory *font_factory::Default(void)
     return lUsine;
 }
 
-font_factory::font_factory(void)
-{
-    fontSize = 512;
-    nbEnt = 0;
-    maxEnt = 32;
-    ents = (font_entry*)g_malloc(maxEnt*sizeof(font_entry));
+font_factory::font_factory(void) :
+    nbEnt(0),
+    maxEnt(32),
+    ents(static_cast<font_entry*>(g_malloc(maxEnt*sizeof(font_entry)))),
 
 #ifdef USE_PANGO_WIN32
-    hScreenDC = pango_win32_get_dc();
-    fontServer = pango_win32_font_map_for_display();
-    fontContext = pango_win32_get_context();
-    pangoFontCache = pango_win32_font_map_get_font_cache(fontServer);
+    fontServer(pango_win32_font_map_for_display()),
+    fontContext(pango_win32_get_context()),
+    pangoFontCache(pango_win32_font_map_get_font_cache(fontServer)),
+    hScreenDC(pango_win32_get_dc()),
 #else
-    fontServer = pango_ft2_font_map_new();
+    fontServer(pango_ft2_font_map_new()),
+    fontContext(0),
+#endif
+    fontSize(512),
+    loadedPtr(new FaceMapType())
+{
+#ifdef USE_PANGO_WIN32
+#else
     pango_ft2_font_map_set_resolution((PangoFT2FontMap*)fontServer, 72, 72);
     fontContext = pango_ft2_font_map_create_context((PangoFT2FontMap*)fontServer);
     pango_ft2_font_map_set_default_substitute((PangoFT2FontMap*)fontServer,FactorySubstituteFunc,this,NULL);
@@ -321,6 +330,11 @@ font_factory::font_factory(void)
 
 font_factory::~font_factory(void)
 {
+    if (loadedPtr) {
+        FaceMapType* tmp = static_cast<FaceMapType*>(loadedPtr);
+        loadedPtr = 0;
+    }
+
     for (int i = 0;i < nbEnt;i++) ents[i].f->Unref();
     if ( ents ) g_free(ents);
 
@@ -793,6 +807,7 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
 
     font_instance *res = NULL;
 
+    FaceMapType& loadedFaces = *static_cast<FaceMapType*>(loadedPtr);
     if ( loadedFaces.find(descr) == loadedFaces.end() ) {
         // not yet loaded
         PangoFont *nFace = NULL;
@@ -849,8 +864,9 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
         res->Ref();
         AddInCache(res);
     }
-    if(res)
-	res->InitTheFace();
+    if (res) {
+        res->InitTheFace();
+    }
     return res;
 }
 
@@ -924,15 +940,18 @@ font_instance *font_factory::Face(char const *family, NRTypePosDef apos)
 
 void font_factory::UnrefFace(font_instance *who)
 {
-    if ( who == NULL ) return;
-    if ( loadedFaces.find(who->descr) == loadedFaces.end() ) {
-        // not found
-        char *tc = pango_font_description_to_string(who->descr);
-        g_warning("unrefFace %p=%s: failed\n",who,tc);
-        g_free(tc);
-    } else {
-        loadedFaces.erase(loadedFaces.find(who->descr));
-        //			printf("unrefFace %p: success\n",who);
+    if ( who ) {
+        FaceMapType& loadedFaces = *static_cast<FaceMapType*>(loadedPtr);
+
+        if ( loadedFaces.find(who->descr) == loadedFaces.end() ) {
+            // not found
+            char *tc = pango_font_description_to_string(who->descr);
+            g_warning("unrefFace %p=%s: failed\n",who,tc);
+            g_free(tc);
+        } else {
+            loadedFaces.erase(loadedFaces.find(who->descr));
+            //			printf("unrefFace %p: success\n",who);
+        }
     }
 }
 

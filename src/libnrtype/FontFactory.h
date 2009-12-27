@@ -11,7 +11,6 @@
 
 #include <functional>
 #include <algorithm>
-#include <ext/hash_map>
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -84,31 +83,29 @@ public:
     double fontSize; /**< The huge fontsize used as workaround for hinting.
                       *   Different between freetype and win32. */
 
-    __gnu_cxx::hash_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> loadedFaces;
-
     font_factory();
     virtual ~font_factory();
 
     /// Returns the default font_factory.
     static font_factory*  Default();
-    
+
     /// Constructs a pango string for use with the fontStringMap (see below)
     Glib::ustring         ConstructFontSpecification(PangoFontDescription *font);
     Glib::ustring         ConstructFontSpecification(font_instance *font);
-    
+
     /// Returns strings to be used in the UI for family and face (or "style" as the column is labeled)
     Glib::ustring         GetUIFamilyString(PangoFontDescription const *fontDescr);
     Glib::ustring         GetUIStyleString(PangoFontDescription const *fontDescr);
-    
+
     /// Modifiers for the font specification (returns new font specification)
     Glib::ustring         ReplaceFontSpecificationFamily(const Glib::ustring & fontSpec, const Glib::ustring & newFamily);
     Glib::ustring         FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn);
     Glib::ustring         FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn);
-    
+
     // Gathers all strings needed for UI while storing pango information in
     // fontInstanceMap and fontStringMap
     void                  GetUIFamiliesAndStyles(FamilyToStylesMap *map);
-    
+
     /// Retrieve a font_instance from a style object, first trying to use the font-specification, the CSS information
     font_instance*        FaceFromStyle(SPStyle const *style);
 
@@ -129,17 +126,19 @@ public:
 
     // internal
     void                  AddInCache(font_instance *who);
-    
+
 private:
+    void*                 loadedPtr;
+
     // These two maps are used for translating between what's in the UI and a pango
     // font description.  This is necessary because Pango cannot always
     // reproduce these structures from the names it gave us in the first place.
-    
+
     // Key: A string produced by font_factory::ConstructFontSpecification
     // Value: The associated PangoFontDescription
     typedef std::map<Glib::ustring, PangoFontDescription *> PangoStringToDescrMap;
     PangoStringToDescrMap fontInstanceMap;
-    
+
     // Key: Family name in UI + Style name in UI
     // Value: The associated string that should be produced with font_factory::ConstructFontSpecification
     typedef std::map<Glib::ustring, Glib::ustring> UIStringToPangoStringMap;

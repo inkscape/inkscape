@@ -29,6 +29,22 @@
 # include FT_TRUETYPE_TABLES_H
 # include <pango/pangoft2.h>
 
+#include <ext/hash_map>
+
+
+// the various raster_font in use at a given time are held in a hash_map whose indices are the
+// styles, hence the 2 following 'classes'
+struct font_style_hash : public std::unary_function<font_style, size_t> {
+    size_t operator()(font_style const &x) const;
+};
+
+struct font_style_equal : public std::binary_function<font_style, font_style, bool> {
+    bool operator()(font_style const &a, font_style const &b);
+};
+
+
+typedef __gnu_cxx::hash_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
+
 
 
 size_t  font_style_hash::operator()(const font_style &x) const {
@@ -155,36 +171,61 @@ static int ft2_cubic_to(FREETYPE_VECTOR *control1, FREETYPE_VECTOR *control2, FR
  *
  */
 
-font_instance::font_instance(void)
+font_instance::font_instance(void) :
+    pFont(0),
+    descr(0),
+    refCount(0),
+    daddy(0),
+    nbGlyph(0),
+    maxGlyph(0),
+    glyphs(0),
+    loadedPtr(new StyleMap()),
+    theFace(0)
 {
-	//printf("font instance born\n");
-	descr=NULL;
-	pFont=NULL;
-	refCount=0;
-	daddy=NULL;
-	nbGlyph=maxGlyph=0;
-	glyphs=NULL;
-	theFace=NULL;
+    //printf("font instance born\n");
 }
 
 font_instance::~font_instance(void)
 {
-	if ( daddy ) daddy->UnrefFace(this);
-	//printf("font instance death\n");
-	if ( pFont ) g_object_unref(pFont);
-	pFont=NULL;
-	if ( descr ) pango_font_description_free(descr);
-	descr=NULL;
-	//	if ( theFace ) FT_Done_Face(theFace); // owned by pFont. don't touch
-	theFace=NULL;
+    if ( loadedPtr ) {
+        StyleMap* tmp = static_cast<StyleMap*>(loadedPtr);
+        delete tmp;
+        loadedPtr = 0;
+    }
 
-	for (int i=0;i<nbGlyph;i++) {
-		if ( glyphs[i].outline ) delete glyphs[i].outline;
-        if ( glyphs[i].pathvector ) delete glyphs[i].pathvector;
-	}
-	if ( glyphs ) free(glyphs);
-	nbGlyph=maxGlyph=0;
-	glyphs=NULL;
+    if ( daddy ) {
+        daddy->UnrefFace(this);
+        daddy = 0;
+    }
+
+    //printf("font instance death\n");
+    if ( pFont ) {
+        g_object_unref(pFont);
+        pFont = 0;
+    }
+
+    if ( descr ) {
+        pango_font_description_free(descr);
+        descr = 0;
+    }
+
+    //	if ( theFace ) FT_Done_Face(theFace); // owned by pFont. don't touch
+    theFace = 0;
+
+    for (int i=0;i<nbGlyph;i++) {
+        if ( glyphs[i].outline ) {
+            delete glyphs[i].outline;
+        }
+        if ( glyphs[i].pathvector ) {
+            delete glyphs[i].pathvector;
+        }
+    }
+    if ( glyphs ) {
+        free(glyphs);
+        glyphs = 0;
+    }
+    nbGlyph = 0;
+    maxGlyph = 0;
 }
 
 void font_instance::Ref(void)
@@ -728,7 +769,8 @@ raster_font* font_instance::RasterFont(const font_style &inStyle)
 		nStyle.dashes=(double*)malloc(nStyle.nbDash*sizeof(double));
 		memcpy(nStyle.dashes,savDashes,nStyle.nbDash*sizeof(double));
 	}
-	if ( loadedStyles.find(nStyle) == loadedStyles.end() ) {
+        StyleMap& loadedStyles = *static_cast<StyleMap*>(loadedPtr);
+        if ( loadedStyles.find(nStyle) == loadedStyles.end() ) {
                 raster_font *nR = new raster_font(nStyle);
 		nR->Ref();
 		nR->daddy=this;
@@ -746,15 +788,17 @@ raster_font* font_instance::RasterFont(const font_style &inStyle)
 
 void font_instance::RemoveRasterFont(raster_font* who)
 {
-	if ( who == NULL ) return;
-	if ( loadedStyles.find(who->style) == loadedStyles.end() ) {
-		//g_print("RemoveRasterFont failed \n");
-		// not found
-	} else {
-		loadedStyles.erase(loadedStyles.find(who->style));
-		//g_print("RemoveRasterFont\n");
-		Unref();
-	}
+    if ( who ) {
+        StyleMap& loadedStyles = *static_cast<StyleMap*>(loadedPtr);
+        if ( loadedStyles.find(who->style) == loadedStyles.end() ) {
+            //g_print("RemoveRasterFont failed \n");
+            // not found
+        } else {
+            loadedStyles.erase(loadedStyles.find(who->style));
+            //g_print("RemoveRasterFont\n");
+            Unref();
+        }
+    }
 }
 
 
