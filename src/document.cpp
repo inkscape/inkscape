@@ -97,9 +97,9 @@ SPDocument::SPDocument() :
     rerouting_handler_id(0),
     profileManager(0), // deferred until after other initialization
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
-    current_persp3d(0),
     _collection_queue(0),
-    oldSignalsConnected(false)
+    oldSignalsConnected(false),
+    current_persp3d(0)
 {
     // Penalise libavoid for choosing paths with needless extra segments.
     // This results in much better looking orthogonal connector paths.
