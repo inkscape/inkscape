@@ -61,7 +61,7 @@ public:
                           SnapPreferences::PointType const &/*t*/,
                           Geom::Point const &/*p*/,
                           SnapSourceType const &/*source_type*/,
-                          long source_num,
+                          long /*source_num*/,
                           Geom::OptRect const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
                           std::vector<std::pair<Geom::Point, int> > */*unselected_nodes*/) const {};
@@ -106,7 +106,7 @@ public:
                                  SnapPreferences::PointType const &/*t*/,
                                  Geom::Point const &/*p*/,
                                  SnapSourceType const &/*source_type*/,
-                                 long source_num,
+                                 long /*source_num*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,
                                  std::vector<SPItem const *> const */*it*/) const {};
