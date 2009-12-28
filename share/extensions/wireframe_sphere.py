@@ -147,10 +147,13 @@ class Wireframe_Sphere(inkex.Effect):
                 
                 for i in range(0,so.NUM_LONG/2):
                     long_angle = so.ROT_OFFSET + (i*delta_long)*(pi/180.0); #The longitude of this particular line in radians
+                    if long_angle > pi:
+                        long_angle -= 2*pi
                     width      = so.RADIUS * cos(long_angle)
                     height     = so.RADIUS * sin(long_angle) * sin(so.TILT)       #the rise is scaled by the sine of the tilt
-                    length     = sqrt(width*width+height*height)  #by pythagorean theorem
-                    inverse    = sin(acos(length/so.RADIUS))
+                    # length     = sqrt(width*width+height*height)  #by pythagorean theorem
+                    # inverse    = sin(acos(length/so.RADIUS))
+                    inverse    = abs(sin(long_angle)) * cos(so.TILT)
                     
                     minorRad   = so.RADIUS * inverse
                     minorRad=minorRad + EPSILON
@@ -200,9 +203,7 @@ class Wireframe_Sphere(inkex.Effect):
                             if lat_angle > pi-so.TILT:               #this LoLat is fully visible
                                 draw_SVG_ellipse((majorRad, minorRad), (cx,cy), grp_lat)
                             else: #this LoLat is partially visible
-                                
-                                proportion = -(acos( (lat_angle - pi/2)/(pi/2 - so.TILT)) )/pi + 1 #this is a dirty hacky approximation
-                                #FIXME: if you can work out the right way to do this, please do it
+                                proportion = -(acos( tan(lat_angle - pi/2)/tan(pi/2 - so.TILT)) )/pi + 1
                                 start_end = ( pi/2 - proportion*pi, pi/2 + proportion*pi ) #make the start and end angles (mirror image around pi/2)
                                 draw_SVG_ellipse((majorRad, minorRad), (cx,cy), grp_lat, start_end)
                             
