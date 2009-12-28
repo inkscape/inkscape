@@ -227,7 +227,11 @@ boost::optional<Geom::Point> Layout::baselineAnchorPoint() const
     Geom::Point left_pt = this->characterAnchorPoint(pos);
     pos.thisEndOfLine();
     Geom::Point right_pt = this->characterAnchorPoint(pos);
-    Geom::Point mid_pt = (left_pt + right_pt)/2;
+
+    if (this->_blockProgression() == LEFT_TO_RIGHT || this->_blockProgression() == RIGHT_TO_LEFT) {
+        left_pt = Geom::Point(left_pt[Geom::Y], left_pt[Geom::X]);
+        right_pt = Geom::Point(right_pt[Geom::Y], right_pt[Geom::X]);
+    }
 
     switch (this->paragraphAlignment(pos)) {
         case LEFT:
@@ -235,7 +239,7 @@ boost::optional<Geom::Point> Layout::baselineAnchorPoint() const
             return left_pt;
             break;
         case CENTER:
-            return mid_pt;
+            return (left_pt + right_pt)/2; // middle point
             break;
         case RIGHT:
             return right_pt;
