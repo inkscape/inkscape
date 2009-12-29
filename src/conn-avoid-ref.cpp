@@ -19,6 +19,7 @@
 #include "2geom/line.h"
 #include "2geom/crossing.h"
 #include "2geom/convex-cover.h"
+#include "helper/geom-curves.h"
 #include "svg/stringstream.h"
 #include "conn-avoid-ref.h"
 #include "connection-points.h"
@@ -32,6 +33,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
+#include "sp-item-group.h"
 #include "inkscape.h"
 #include <glibmm/i18n.h>
 
@@ -232,7 +234,7 @@ void SPAvoidRef::addConnectionPoint(ConnectionPoint &cp)
     else
         ostr<<'|'<<cp;
 
-    this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Added a new connection point") );
+    this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Add a new connection point") );
 }
 
 void SPAvoidRef::updateConnectionPoint(ConnectionPoint &cp)
@@ -257,7 +259,7 @@ void SPAvoidRef::updateConnectionPoint(ConnectionPoint &cp)
             else
                 ostr<<'|'<<*to_write;
         }
-        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Moved a connection point") );
+        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Move a connection point") );
     }
 }
 
@@ -277,7 +279,7 @@ void SPAvoidRef::deleteConnectionPoint(ConnectionPoint &cp)
                 }
             }
         }
-        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Removed a connection point") );
+        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Remove a connection point") );
     }
 }
 
@@ -424,134 +426,123 @@ bool SPAvoidRef::isValidConnPointId( const int type, const int id )
     return true;
 }
 
+static std::vector<Geom::Point> approxCurveWithPoints(SPCurve *curve)
+{
+    // The number of segments to use for not straight curves approximation
+    const unsigned NUM_SEGS = 4;
+    
+    const Geom::PathVector& curve_pv = curve->get_pathvector();
+   
+    // The structure to hold the output
+    std::vector<Geom::Point> poly_points;
+
+    // Iterate over all curves, adding the endpoints for linear curves and
+    // sampling the other curves
+    double seg_size = 1.0 / NUM_SEGS;
+    double at;
+    at = 0;
+    Geom::PathVector::const_iterator pit = curve_pv.begin();
+    while (pit != curve_pv.end())
+    {
+        Geom::Path::const_iterator cit = pit->begin();
+        while (cit != pit->end())
+            if (dynamic_cast<Geom::CubicBezier const*>(&*cit))
+            {
+                at += seg_size;
+                if (at <= 1.0 )
+                    poly_points.push_back(cit->pointAt(at));
+                else
+                {
+                    at = 0.0;
+                    ++cit;
+                }
+            }
+            else
+            {
+                poly_points.push_back(cit->finalPoint());
+                ++cit;
+            }
+        ++pit;
+    }
+    return poly_points;
+}
+
+static std::vector<Geom::Point> approxItemWithPoints(SPItem const *item, const Geom::Matrix& item_transform)
+{
+    // The structure to hold the output
+    std::vector<Geom::Point> poly_points;
+
+    if (SP_IS_GROUP(item))
+    {
+        SPGroup* group = SP_GROUP(item);
+        // consider all first-order children
+        for (GSList const* i = sp_item_group_item_list(group); i != NULL; i = i->next) {
+            SPItem* child_item = SP_ITEM(i->data);
+            std::vector<Geom::Point> child_points = approxItemWithPoints(child_item, item_transform * child_item->transform);
+            poly_points.insert(poly_points.end(), child_points.begin(), child_points.end());
+        }
+    }
+    else if (SP_IS_SHAPE(item))
+    {
+        SPCurve* item_curve = sp_shape_get_curve(SP_SHAPE(item));
+        // make sure it has an associated curve
+        if (item_curve)
+        {
+            // apply transformations (up to common ancestor)
+            item_curve->transform(item_transform);
+            std::vector<Geom::Point> curve_points = approxCurveWithPoints(item_curve);
+            poly_points.insert(poly_points.end(), curve_points.begin(), curve_points.end());
+            item_curve->unref();
+        }
+    }
+
+    return poly_points;
+}
 static Avoid::Polygon avoid_item_poly(SPItem const *item)
 {
     SPDesktop *desktop = inkscape_active_desktop();
     g_assert(desktop != NULL);
-
-    // TODO: The right way to do this is to return the convex hull of
-    //       the object, or an approximation in the case of a rounded
-    //       object.  Specific SPItems will need to have a new
-    //       function that returns points for the convex hull.
-    //       For some objects it is enough to feed the snappoints to
-    //       some convex hull code, though not NR::ConvexHull as this
-    //       only keeps the bounding box of the convex hull currently.
-
     double spacing = desktop->namedview->connector_spacing;
 
-    // [sommer] If item is a shape, use an approximation of its convex hull
+    Geom::Matrix itd_mat = sp_item_i2doc_affine(item);
+    std::vector<Geom::Point> hull_points;
+    hull_points = approxItemWithPoints(item, itd_mat);
+
+    // create convex hull from all sampled points
+    Geom::ConvexHull hull(hull_points);
+
+    // enlarge path by "desktop->namedview->connector_spacing"
+    // store expanded convex hull in Avoid::Polygn
+    Avoid::Polygon poly;
+
+    Geom::Line hull_edge(hull[-1], hull[0]);
+    Geom::Line prev_parallel_hull_edge;
+    prev_parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
+    prev_parallel_hull_edge.versor(hull_edge.versor());
+    int hull_size = hull.boundary.size();
+    for (int i = 0; i <= hull_size; ++i)
     {
-        // MJW: Disable this for the moment.  It still has some issues.
-        const bool convex_hull_approximation_enabled = false;
-
-        if ( convex_hull_approximation_enabled && SP_IS_SHAPE (item) ) {
-            // The number of points to use for approximation
-            const unsigned NUM_POINTS = 64;
-
-//             printf("[sommer] is a shape\n");
-            SPCurve* curve = sp_shape_get_curve (SP_SHAPE (item));
-            if (curve) {
-//                 printf("[sommer] is a curve\n");
-
-                // apply all transformations
-                Geom::Matrix itd_mat = sp_item_i2doc_affine(item);
-                curve->transform(itd_mat);
-
-                // iterate over all paths
-                const Geom::PathVector& curve_pv = curve->get_pathvector();
-                std::vector<Geom::Point> hull_points;
-                for (Geom::PathVector::const_iterator i = curve_pv.begin(); i != curve_pv.end(); i++) {
-                    const Geom::Path& curve_pv_path = *i;
-//                     printf("[sommer] tracing sub-path\n");
-
-                    // FIXME: enlarge path by "desktop->namedview->connector_spacing" (using sp_selected_path_do_offset)?
-
-                    // use appropriate fraction of points for this path (first one gets any remainder)
-                    unsigned num_points = NUM_POINTS / curve_pv.size();
-                    if (i == curve_pv.begin()) num_points += NUM_POINTS - (num_points * curve_pv.size());
-                    printf("[sommer] using %d points for this path\n", num_points);
-
-                    // sample points along the path for approximation of convex hull
-                    for (unsigned n = 0; n < num_points; n++) {
-                        double at = curve_pv_path.size() / static_cast<double>(num_points) * n;
-                        Geom::Point pt = curve_pv_path.pointAt(at);
-                        hull_points.push_back(pt);
-                    }
-                }
-
-                curve->unref();
-
-                // create convex hull from all sampled points
-                Geom::ConvexHull hull(hull_points);
-
-                // store expanded convex hull in Avoid::Polygn
-                unsigned n = 0;
-                Avoid::Polygon poly;
-/*
-                const Geom::Point& old_pt = *hull.boundary.begin();
-*/
-
-                Geom::Line hull_edge(*hull.boundary.begin(), *(hull.boundary.begin()+1));
-                Geom::Line parallel_hull_edge;
-                parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
-                parallel_hull_edge.versor(hull_edge.versor());
-                Geom::Line bisector = Geom::make_angle_bisector_line( *(hull.boundary.end()), *hull.boundary.begin(),
-                                                                      *(hull.boundary.begin()+1));
-                Geom::OptCrossing int_pt = Geom::intersection(parallel_hull_edge, bisector);
-
-                if (int_pt)
-                {
-                    Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
-                                            (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
-//                     printf("[sommer] %f, %f\n", old_pt[Geom::X], old_pt[Geom::Y]);
-/*                    printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
-                                                (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);*/
-                    poly.ps.push_back(avoid_pt);
-                }
-                for (std::vector<Geom::Point>::const_iterator i = hull.boundary.begin() + 1; i != hull.boundary.end(); i++, n++) {
-/*
-                        const Geom::Point& old_pt = *i;
-*/
-                        Geom::Line hull_edge(*i, *(i+1));
-                        Geom::Line parallel_hull_edge;
-                        parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
-                        parallel_hull_edge.versor(hull_edge.versor());
-                        Geom::Line bisector = Geom::make_angle_bisector_line( *(i-1), *i, *(i+1));
-                        Geom::OptCrossing intersect_pt = Geom::intersection(parallel_hull_edge, bisector);
-
-                        if (int_pt)
-                        {
-                            Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
-                                                  (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
-/*                            printf("[sommer] %f, %f\n", old_pt[Geom::X], old_pt[Geom::Y]);
-                            printf("[sommer] %f, %f\n", (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
-                                                        (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);*/
-                            poly.ps.push_back(avoid_pt);
-                        }
-                }
-
-
-                return poly;
-            }// else printf("[sommer] is no curve\n");
-        }// else printf("[sommer] is no shape\n");
+        hull_edge.setBy2Points(hull[i], hull[i+1]);
+        Geom::Line parallel_hull_edge;
+        parallel_hull_edge.origin(hull_edge.origin()+hull_edge.versor().ccw()*spacing);
+        parallel_hull_edge.versor(hull_edge.versor());
+        
+        // determine the intersection point
+        
+        Geom::OptCrossing int_pt = Geom::intersection(parallel_hull_edge, prev_parallel_hull_edge);
+        if (int_pt)
+        {
+            Avoid::Point avoid_pt((parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::X],
+                                    (parallel_hull_edge.origin()+parallel_hull_edge.versor()*int_pt->ta)[Geom::Y]);
+            poly.ps.push_back(avoid_pt);
+        }
+        else
+        {
+            // something went wrong...
+            std::cout<<"conn-avoid-ref.cpp: avoid_item_poly: Geom:intersection failed."<<std::endl;
+        }
+        prev_parallel_hull_edge = parallel_hull_edge;
     }
-
-    Geom::OptRect rHull = item->getBounds(sp_item_i2doc_affine(item));
-    if (!rHull) {
-        return Avoid::Polygon();
-    }
-
-    // Add a little buffer around the edge of each object.
-    Geom::Rect rExpandedHull = *rHull;
-    rExpandedHull.expandBy(spacing);
-    Avoid::Polygon poly(4);
-
-    for (size_t n = 0; n < 4; ++n) {
-        Geom::Point hullPoint = rExpandedHull.corner(n);
-        poly.ps[n].x = hullPoint[Geom::X];
-        poly.ps[n].y = hullPoint[Geom::Y];
-    }
-
     return poly;
 }
 

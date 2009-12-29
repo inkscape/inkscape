@@ -48,12 +48,12 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
         SPGroup* group = SP_GROUP(item);
 
         // consider all first-order children
-        double child_pos = std::numeric_limits<double>::max();
+        double child_pos = 0.0;
         for (GSList const* i = sp_item_group_item_list(group); i != NULL; i = i->next) {
             SPItem* child_item = SP_ITEM(i->data);
             try_get_intersect_point_with_item_recursive(conn_pv, child_item,
                     item_transform * child_item->transform, child_pos);
-            if (intersect_pos > child_pos)
+            if (intersect_pos < child_pos)
                 intersect_pos = child_pos;
         }
         return intersect_pos != initial_pos;
@@ -77,7 +77,7 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
 
         for (Geom::Crossings::const_iterator i = cr.begin(); i != cr.end(); i++) {
             const Geom::Crossing& cr_pt = *i;
-            if ( intersect_pos > cr_pt.ta)
+            if ( intersect_pos < cr_pt.ta)
                 intersect_pos = cr_pt.ta;
         }
     }
@@ -109,8 +109,8 @@ static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
         conn_pv[0] = conn_pv[0].reverse();
     }
 
-    // We start with the intersection point at the end of the path
-    intersect_pos = conn_pv[0].size();
+    // We start with the intersection point at the beginning of the path
+    intersect_pos = 0.0;
 
     // Find the intersection.
     bool result = try_get_intersect_point_with_item_recursive(conn_pv, item, item_transform, intersect_pos);
