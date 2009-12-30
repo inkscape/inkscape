@@ -1367,7 +1367,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
          * must provide that information. */
 
         // Build a list of the unselected nodes to which the snapper should snap
-    	std::vector<std::pair<Geom::Point, int> > unselected_nodes;
+        std::vector<std::pair<Geom::Point, int> > unselected_nodes;
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
@@ -1388,39 +1388,39 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         Inkscape::NodePath::Node *closest_node = NULL;
         Geom::Coord closest_dist = NR_HUGE;
 
-    	if (closest_only) {
-	        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
-	        	Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-	        	Geom::Coord dist = Geom::L2(nodepath->drag_origin_mouse - n->origin);
-	        	if (dist < closest_dist) {
-	        		closest_node = n;
-	        		closest_dist = dist;
-	        	}
-	        }
+        if (closest_only) {
+            for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+                Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+                Geom::Coord dist = Geom::L2(nodepath->drag_origin_mouse - n->origin);
+                if (dist < closest_dist) {
+                    closest_node = n;
+                    closest_dist = dist;
+                }
+            }
         }
 
-    	// Iterate through all selected nodes
-    	m.setup(nodepath->desktop, false, nodepath->item, &unselected_nodes);
-    	for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+        // Iterate through all selected nodes
+        m.setup(nodepath->desktop, false, nodepath->item, &unselected_nodes);
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             if (!closest_only || n == closest_node) { //try to snap either all selected nodes or only the closest one
-	            Inkscape::SnappedPoint s;
-	            Inkscape::SnapSourceType source_type = (n->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPSOURCE_NODE_SMOOTH : Inkscape::SNAPSOURCE_NODE_CUSP);
-	            if (constrained) {
-	                Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
-	                dedicated_constraint.setPoint(n->pos);
-	                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type, dedicated_constraint, false);
-	            } else {
-	                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type);
-	            }
+                Inkscape::SnappedPoint s;
+                Inkscape::SnapSourceType source_type = (n->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPSOURCE_NODE_SMOOTH : Inkscape::SNAPSOURCE_NODE_CUSP);
+                if (constrained) {
+                    Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
+                    dedicated_constraint.setPoint(n->pos);
+                    s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type, dedicated_constraint, false);
+                } else {
+                    s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type);
+                }
 
-	            if (s.getSnapped()) {
-	            	s.setPointerDistance(Geom::L2(nodepath->drag_origin_mouse - n->origin));
-	            	if (!s.isOtherSnapBetter(best, true)) {
-		                best = s;
-		                best_pt = from_2geom(s.getPoint()) - n->pos;
-	            	}
-	            }
+                if (s.getSnapped()) {
+                    s.setPointerDistance(Geom::L2(nodepath->drag_origin_mouse - n->origin));
+                    if (!s.isOtherSnapBetter(best, true)) {
+                        best = s;
+                        best_pt = from_2geom(s.getPoint()) - n->pos;
+                    }
+                }
             }
         }
 
@@ -3955,9 +3955,9 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, g
     Inkscape::SnappedPoint s;
 
     if ((state & GDK_SHIFT_MASK) != 0) {
-    	// We will not try to snap when the shift-key is pressed
-    	// so remove the old snap indicator and don't wait for it to time-out
-    	desktop->snapindicator->remove_snaptarget();
+        // We will not try to snap when the shift-key is pressed
+        // so remove the old snap indicator and don't wait for it to time-out
+        desktop->snapindicator->remove_snaptarget();
     }
 
     Inkscape::NodePath::Node *othernode = opposite->other;

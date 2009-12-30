@@ -962,11 +962,11 @@ static void sp_item_private_snappoints(SPItem const *item, bool const target, Sn
         Geom::Point p1, p2;
         p1 = bbox->min();
         p2 = bbox->max();
-        int type = target ? int(Inkscape::SNAPSOURCE_CONVEX_HULL_CORNER) : int(Inkscape::SNAPSOURCE_CONVEX_HULL_CORNER);
+        int type = target ? int(Inkscape::SNAPTARGET_BBOX_CORNER) : int(Inkscape::SNAPSOURCE_BBOX_CORNER);
         p.push_back(std::make_pair(p1, type));
         p.push_back(std::make_pair(Geom::Point(p1[Geom::X], p2[Geom::Y]), type));
         p.push_back(std::make_pair(p2, type));
-        p.push_back(std::make_pair(Geom::Point(p1[Geom::Y], p2[Geom::X]), type));
+        p.push_back(std::make_pair(Geom::Point(p2[Geom::X], p1[Geom::Y]), type));
     }
 
 }

@@ -27,7 +27,7 @@
 #include "sp-rect.h"
 #include "text-tag-attributes.h"
 #include "text-chemistry.h"
-
+#include "text-editing.h"
 
 #include "livarot/Shape.h"
 
@@ -49,6 +49,7 @@ static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
+static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 static NRArenaItem *sp_flowtext_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
 static void sp_flowtext_hide(SPItem *item, unsigned key);
 
@@ -98,6 +99,7 @@ sp_flowtext_class_init(SPFlowtextClass *klass)
     item_class->bbox = sp_flowtext_bbox;
     item_class->print = sp_flowtext_print;
     item_class->description = sp_flowtext_description;
+    item_class->snappoints = sp_flowtext_snappoints;
     item_class->show = sp_flowtext_show;
     item_class->hide = sp_flowtext_hide;
 }
@@ -382,6 +384,20 @@ static gchar *sp_flowtext_description(SPItem *item)
         return g_strdup_printf(ngettext("<b>Flowed text</b> (%d character%s)", "<b>Flowed text</b> (%d characters%s)", nChars), nChars, trunc);
     else
         return g_strdup_printf(ngettext("<b>Linked flowed text</b> (%d character%s)", "<b>Linked flowed text</b> (%d characters%s)", nChars), nChars, trunc);
+}
+
+static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
+{
+    // Choose a point on the baseline for snapping from or to, with the horizontal position
+    // of this point depending on the text alignment (left vs. right)
+    Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
+    if (layout != NULL && layout->outputExists()) {
+        boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
+        if (pt) {
+            int type = target ? int(Inkscape::SNAPTARGET_TEXT_BASELINE) : int(Inkscape::SNAPSOURCE_TEXT_BASELINE);
+            p.push_back(std::make_pair((*pt) * sp_item_i2d_affine(item), type));
+        }
+    }
 }
 
 static NRArenaItem *

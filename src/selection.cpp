@@ -440,7 +440,7 @@ std::vector<std::pair<Geom::Point, int> > Selection::getSnapPoints(SnapPreferenc
         //Include the transformation origin for snapping
         //For a selection or group only the overall origin is considered
         if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-        	p.push_back(std::make_pair(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
+            p.push_back(std::make_pair(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
         }
     }
 
@@ -452,12 +452,12 @@ std::vector<std::pair<Geom::Point, int> > Selection::getSnapPointsConvexHull(Sna
 
     std::vector<std::pair<Geom::Point, int> > p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-		sp_item_snappoints(SP_ITEM(iter->data), false, p, snapprefs);
+        sp_item_snappoints(SP_ITEM(iter->data), false, p, snapprefs);
     }
 
     std::vector<std::pair<Geom::Point, int> > pHull;
     if (!p.empty()) {
-    	std::vector<std::pair<Geom::Point, int> >::iterator i;
+        std::vector<std::pair<Geom::Point, int> >::iterator i;
         Geom::RectHull cvh((p.front()).first);
         for (i = p.begin(); i != p.end(); i++) {
             // these are the points we get back

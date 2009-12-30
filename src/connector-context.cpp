@@ -625,7 +625,6 @@ sp_connector_context_item_handler(SPEventContext *event_context, SPItem *item, G
                 {
                     spcc_reset_colors(cc);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(event_context);
                 }
                 if (cc->state != SP_CONNECTOR_CONTEXT_IDLE) {
                     // Doing something else like rerouting.
@@ -757,7 +756,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
 
             switch (cc->state) {
                 case SP_CONNECTOR_CONTEXT_STOP:
-                    /* This is allowed, if we just cancelled curve */
+                    /* This is allowed, if we just canceled curve */
                 case SP_CONNECTOR_CONTEXT_IDLE:
                 {
                     if ( cc->npoints == 0 ) {
@@ -771,8 +770,6 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
 
                         // Test whether we clicked on a connection point
                         cc->sid = conn_pt_handle_test(cc, p);
-
-//                        sp_event_context_snap_window_open(event_context);
 
                         if (!cc->sid) {
                             // This is the first point, so just snap it to the grid
@@ -800,7 +797,6 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                     }
                     cc_set_active_conn(cc, cc->newconn);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(event_context);
                     ret = TRUE;
                     break;
                 }
@@ -819,7 +815,6 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                 cc_connector_rerouting_finish(cc, &p);
 
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                sp_event_context_snap_window_closed(event_context);
 
                 // Don't set ret to TRUE, so we drop through to the
                 // parent handler which will open the context menu.
@@ -827,7 +822,6 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
             else if (cc->npoints != 0) {
                 spcc_connector_finish(cc);
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                sp_event_context_snap_window_closed(event_context);
                 ret = TRUE;
             }
         }
@@ -879,7 +873,6 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
 
                     if ( cc->selected_handle )
                     {
-//                         sp_event_context_snap_window_open(event_context);
                         cc->state = SP_CONNECTOR_CONTEXT_DRAGGING;
                         cc->selection->set( SP_OBJECT( cc->active_shape ) );
                     }
@@ -1047,7 +1040,6 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                     }
                     cc_set_active_conn(cc, cc->newconn);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(event_context);
                     break;
                 }
                 case SP_CONNECTOR_CONTEXT_REROUTING:
@@ -1057,7 +1049,6 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
                     sp_document_ensure_up_to_date(doc);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(event_context);
                     return TRUE;
                     break;
                 }
@@ -1077,10 +1068,8 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
                     if (!cc->within_tolerance)
                     {
-//                        sp_event_context_snap_window_open(event_context);
                         m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                         sp_knot_set_position(cc->selected_handle, p, 0);
-//                        sp_event_context_snap_window_closed(event_context);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
                         cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
                         cc->active_shape->avoidRef->updateConnectionPoint(cp);
@@ -1092,11 +1081,9 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
 
                 case SP_CONNECTOR_CONTEXT_NEWCONNPOINT:
-//                    sp_event_context_snap_window_open( event_context );
                     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
 
                     sp_knot_set_position(cc->selected_handle, p, 0);
-//                    sp_event_context_snap_window_closed(event_context);
 
                     ConnectionPoint cp;
                     cp.type = ConnPointUserDefined;
@@ -1137,7 +1124,6 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                 if (cc->npoints != 0) {
                     spcc_connector_finish(cc);
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(SP_EVENT_CONTEXT(cc));
                     ret = TRUE;
                 }
                 break;
@@ -1152,7 +1138,6 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     sp_document_undo(doc);
 
                     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-//                    sp_event_context_snap_window_closed(SP_EVENT_CONTEXT(cc));
                     desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
                             _("Connector endpoint drag cancelled."));
                     ret = TRUE;
@@ -1160,7 +1145,6 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                 else if (cc->npoints != 0) {
                     // if drawing, cancel, otherwise pass it up for deselecting
                     cc->state = SP_CONNECTOR_CONTEXT_STOP;
-//                    sp_event_context_snap_window_closed(SP_EVENT_CONTEXT(cc));
                     spcc_reset_colors(cc);
                     ret = TRUE;
                 }
@@ -1200,10 +1184,8 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
 
                     if (!cc->within_tolerance)
                     {
-//                        sp_event_context_snap_window_open(event_context);
                         m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                         sp_knot_set_position(cc->selected_handle, p, 0);
-//                        sp_event_context_snap_window_closed(event_context);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
                         cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
                         cc->active_shape->avoidRef->updateConnectionPoint(cp);
@@ -1229,13 +1211,10 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     SnapManager &m = desktop->namedview->snap_manager;
                     m.setup(desktop);
                     Geom::Point p = cc->selected_handle->pos;
-//                     SPEventContext* event_context = SP_EVENT_CONTEXT( cc );
 
-//                    sp_event_context_snap_window_open( event_context );
                     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
 
                     sp_knot_set_position(cc->selected_handle, p, 0);
-//                    sp_event_context_snap_window_closed(event_context);
 
                     ConnectionPoint cp;
                     cp.type = ConnPointUserDefined;
@@ -1571,7 +1550,6 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
                 cc->clickedhandle = cc->active_handle;
                 cc_clear_active_conn(cc);
                 cc->state = SP_CONNECTOR_CONTEXT_REROUTING;
-//                sp_event_context_snap_window_open(SP_EVENT_CONTEXT(cc));
 
                 // Disconnect from attached shape
                 unsigned ind = (cc->active_handle == cc->endpt_handle[0]) ? 0 : 1;
