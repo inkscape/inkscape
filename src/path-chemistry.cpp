@@ -86,12 +86,20 @@ sp_selected_path_combine(SPDesktop *desktop)
     SPItem *first = NULL;
     Inkscape::XML::Node *parent = NULL; 
 
+    if (did) {
+        selection->clear();
+    }
+
     for (GSList *i = items; i != NULL; i = i->next) {  // going from top to bottom
 
         SPItem *item = (SPItem *) i->data;
         if (!SP_IS_PATH(item))
             continue;
-        did = true;
+
+        if (!did) {
+            selection->clear();
+            did = true;
+        }
 
         SPCurve *c = sp_path_get_curve_for_edit(SP_PATH(item));
         if (first == NULL) {  // this is the topmost path
@@ -124,11 +132,7 @@ sp_selected_path_combine(SPDesktop *desktop)
     g_slist_free(items);
 
     if (did) {
-        selection->clear();
-
-        // delete the topmost one so that its clones don't get alerted; this object will be
-        // restored shortly, with the same id
-        SP_OBJECT(first)->deleteObject(false);
+        // delete the topmost.
 
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
