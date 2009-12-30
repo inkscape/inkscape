@@ -107,10 +107,6 @@ static gint sp_spray_context_root_handler(SPEventContext *ec, GdkEvent *event);
 static SPEventContextClass *parent_class = 0;
 
 
-
-// The following code implements NormalDistribution wich is used for the density of the spray
-
-
 /*
    RAND is a macro which returns a pseudo-random numbers from a uniform
    distribution on the interval [0 1]
@@ -118,7 +114,7 @@ static SPEventContextClass *parent_class = 0;
 #define RAND ((double) rand())/((double) RAND_MAX)
 
 /*
-   TWOPI = 2.0*pi
+    TWOPI = 2.0*pi
 */
 #define TWOPI 2.0*3.141592653589793238462643383279502884197169399375
 
@@ -141,7 +137,6 @@ double NormalDistribution(double mu,double sigma)
 
 }
 
-//Fin de la création de NormalDistribution
 
 GtkType sp_spray_context_get_type(void)
 {
@@ -176,19 +171,16 @@ static void sp_spray_context_class_init(SPSprayContextClass *klass)
     event_context_class->root_handler = sp_spray_context_root_handler;
 }
 
-/*Method to rotate items*/
+/* Method to rotate items */
 void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom::Rotate const &rotation)
 {
-
     Geom::Point center = c;
     Geom::Translate const s(c);
     Geom::Matrix affine = Geom::Matrix(s).inverse() * Geom::Matrix(rotation) * Geom::Matrix(s);
-
     // Rotate item.
     sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * (Geom::Matrix)affine);
     // Use each item's own transform writer, consistent with sp_selection_apply_affine()
     sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
-
     // Restore the center position (it's changed because the bbox center changed)
     if (item->isCenterSet()) {
         item->setCenter(c);
@@ -196,23 +188,17 @@ void sp_spray_rotate_rel(Geom::Point c,SPDesktop */*desktop*/,SPItem *item, Geom
     }
 }
 
-/*Method to scale items*/
+/* Method to scale items */
 void sp_spray_scale_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Scale  const &scale)
 {
-        Geom::Translate const s(c);
-
-
-        sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * s.inverse() * scale * s  );
-        sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
-
-
+    Geom::Translate const s(c);
+    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * s.inverse() * scale * s  );
+    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 }
 
 static void sp_spray_context_init(SPSprayContext *tc)
 {
-   SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
-
-
+    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
 
     event_context->cursor_shape = cursor_spray_xpm;
     event_context->hot_x = 4;
@@ -226,12 +212,10 @@ static void sp_spray_context_init(SPSprayContext *tc)
     tc->ratio = 0;
     tc->tilt=0;
     tc->mean = 0.2;
-    tc->rot_min=0;
-    tc->rot_max=0;
+    tc->rotation_variation=0;
     tc->standard_deviation=0.2;
     tc->scale=1;
-    tc->scale_min = 1;
-    tc->scale_max=1;
+    tc->scale_variation = 1;
     tc->pressure = TC_DEFAULT_PRESSURE;
 
     tc->is_dilating = false;
@@ -297,8 +281,7 @@ void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
        case SPRAY_MODE_SINGLE_PATH:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or scroll to spray in a <b>single path</b> of the initial selection"), sel_message);
            break;
-       case SPRAY_OPTION:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Modify <b>spray</b> options"), sel_message);
+       default:
            break;
    }
    sp_event_context_update_cursor(event_context);
@@ -337,18 +320,14 @@ static void sp_spray_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "width");
     sp_event_context_read(ec, "ratio");
     sp_event_context_read(ec, "tilt");
-    sp_event_context_read(ec, "rot_min");
-    sp_event_context_read(ec, "rot_max");
-    sp_event_context_read(ec, "scale_min");
-    sp_event_context_read(ec, "scale_max");
+    sp_event_context_read(ec, "rotation_variation");
+    sp_event_context_read(ec, "scale_variation");
     sp_event_context_read(ec, "mode");
     sp_event_context_read(ec, "population");
     sp_event_context_read(ec, "force");
     sp_event_context_read(ec, "mean");
     sp_event_context_read(ec, "standard_deviation");
     sp_event_context_read(ec, "usepressure");
-    sp_event_context_read(ec, "Rotation min");
-    sp_event_context_read(ec, "Rotation max");
     sp_event_context_read(ec, "Scale");
     sp_event_context_read(ec, "doh");
     sp_event_context_read(ec, "dol");
@@ -387,14 +366,10 @@ static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entr
         tc->ratio = CLAMP(val->getDouble(), 0.0, 0.9);
     } else if (path == "force") {
         tc->force = CLAMP(val->getDouble(1.0), 0, 1.0);
-    } else if (path == "rot_min") {
-        tc->rot_min = CLAMP(val->getDouble(0), 0, 10.0);
-    } else if (path == "rot_max") {
-        tc->rot_max = CLAMP(val->getDouble(0), 0, 10.0);
-    } else if (path == "scale_min") {
-        tc->scale_min = CLAMP(val->getDouble(1.0), 0, 10.0);
-    } else if (path == "scale_max") {
-        tc->scale_max = CLAMP(val->getDouble(1.0), 0, 10.0);
+    } else if (path == "rotation_variation") {
+        tc->rotation_variation = CLAMP(val->getDouble(0.0), 0, 100.0);
+    } else if (path == "scale_variation") {
+        tc->scale_variation = CLAMP(val->getDouble(1.0), 0, 100.0);
     } else if (path == "mean") {
         tc->mean = 0.01 * CLAMP(val->getInt(10), 1, 100);
     } else if (path == "standard_deviation") {
@@ -464,32 +439,24 @@ double get_move_standard_deviation(SPSprayContext *tc)
     return tc->standard_deviation;
 }
 
-/* Method to handle the distribution of the items */
-
-
-void random_position( double &r, double &p, double &a, double &s, int choix)
+/** Method to handle the distribution of the items */
+void random_position( double &r, double &p, double &a, double &s, int choice)
 {
-       if (choix == 0) // Mode 1 : uniform repartition
+    if (choice == 0) // 1 : uniform repartition
     {
         r = (1-pow(g_random_double_range(0, 1),2));
         p = g_random_double_range(0, M_PI*2);
     }
-    if (choix == 1) //Mode 0 : gaussian repartition
+    if (choice == 1) // 0 : gaussian repartition
     {
         double r_temp =-1;
-while(!((r_temp>=0)&&(r_temp<=1)))
-{
-         r_temp = NormalDistribution(a,s/4);
-}
-// generates a number following a normal distribution
+        while(!((r_temp>=0)&&(r_temp<=1)))
+        {
+            r_temp = NormalDistribution(a,s/4);
+        }
+        // generates a number following a normal distribution
         p = g_random_double_range(0, M_PI*2);
         r=r_temp;
-       /* if (r_temp<=0) r=0;
-        else
-        {
-            if (r_temp>1) r=1;
-            else r = r_temp;
-        }*/
     }
 }
 
@@ -497,7 +464,7 @@ while(!((r_temp>=0)&&(r_temp<=1)))
 
 
 
-bool sp_spray_dilate_recursive(SPDesktop *desktop,
+bool sp_spray_recursive(SPDesktop *desktop,
                                Inkscape::Selection *selection,
                                SPItem *item,
                                Geom::Point p,
@@ -507,202 +474,155 @@ bool sp_spray_dilate_recursive(SPDesktop *desktop,
                                double /*force*/,
                                double population,
                                double &scale,
-                               double scale_min,
-                               double scale_max,
+                               double scale_variation,
                                bool /*reverse*/,
                                double mean,
                                double standard_deviation,
                                double ratio,
                                double tilt,
-                               double rot_min,
-                               double rot_max,
+                               double rotation_variation,
                                gint _distrib )
 {
-
-
-
     bool did = false;
-
-    if (SP_IS_BOX3D(item) /*&& !is_transform_modes(mode)*/) {
+    
+    if (SP_IS_BOX3D(item) ) {
         // convert 3D boxes to ordinary groups before spraying their shapes
         item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
         selection->add(item);
     }
 
-/*if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
-        GSList *items = g_slist_prepend (NULL, item);
-        GSList *selected = NULL;
-        GSList *to_select = NULL;
-        SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-        sp_item_list_to_curves (items, &selected, &to_select);
-        g_slist_free (items);
-        SPObject* newObj = doc->getObjectByRepr((Inkscape::XML::Node *) to_select->data);
-        g_slist_free (to_select);
-        item = (SPItem *) newObj;
-      //  selection->add(item);
-    }
-*/
-   /*if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
-        for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-            if (SP_IS_ITEM(child)) {
-                if (sp_spray_dilate_recursive (desktop,selection, SP_ITEM(child), p, vector, mode, radius, force, population, scale, scale_min, scale_max, reverse, mean, standard_deviation,ratio,tilt, rot_min, rot_max,_distrib))
-                    did = true;
+    double _fid = g_random_double_range(0,1);
+    double angle = g_random_double_range( - rotation_variation / 100.0 * M_PI , rotation_variation / 100.0 * M_PI );
+    double _scale = g_random_double_range( 1.0 - scale_variation / 100.0, 1.0 + scale_variation / 100.0 );
+    double dr; double dp;
+    random_position(dr,dp,mean,standard_deviation,_distrib);
+    dr=dr*radius;
+
+    if (mode == SPRAY_MODE_COPY) {
+        Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
+        if (a) {
+            SPItem *item_copied;
+            if(_fid<=population)
+            {
+                // duplicate
+                SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                Inkscape::XML::Node *parent = old_repr->parent();
+                Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                parent->appendChild(copy);
+
+                SPObject *new_obj = doc->getObjectByRepr(copy);
+                item_copied = (SPItem *) new_obj;   //convertion object->item
+                Geom::Point center=item->getCenter();
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
+
+                sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
+                //Move the cursor p
+                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                did = true;
             }
         }
+    } else if (mode == SPRAY_MODE_SINGLE_PATH) {
 
-    } else {*/
-        if (mode == SPRAY_MODE_COPY) {
+        SPItem *father;         //initial Object
+        SPItem *item_copied;    //Projected Object
+        SPItem *unionResult;    //previous union
+        SPItem *son;            //father copy
 
-            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
-            if (a) {
-                double dr; double dp;
-                random_position(dr,dp,mean,standard_deviation,_distrib);
-                dr=dr*radius;
-                double _fid = g_random_double_range(0,1);
-                SPItem *item_copied;
-                double angle = g_random_double_range(rot_min, rot_max);
-                double _scale = g_random_double_range(scale_min, scale_max);
-                if(_fid<=population)
-                {
-                          // duplicate
-                            SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-                            Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
-                            Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
-                            Inkscape::XML::Node *parent = old_repr->parent();
-                            Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
-                            parent->appendChild(copy);
+        int i=1;
+        for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+                items != NULL;
+                items = items->next) {
 
-                            SPObject *new_obj = doc->getObjectByRepr(copy);
-                            item_copied = (SPItem *) new_obj;   //convertion object->item
-                            Geom::Point center=item->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
-
-                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
-                            Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());//Move the cursor p
-                            sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
-
-
-
-
-
-                        did = true;
-                        }
+            SPItem *item1 = (SPItem *) items->data;
+            if (i==1) {
+                father=item1;
             }
-
-        } else if (mode == SPRAY_MODE_SINGLE_PATH) {
-
-
-            SPItem *Pere; //Objet initial
-            SPItem *item_copied;//Objet projeté
-            SPItem *Union;//Union précédente
-            SPItem *fils;//Copie du père
-
-           // GSList *items = g_slist_copy((GSList *) selection->itemList()); //Récupère la liste des objects sélectionnés
-//Pere = (SPItem *) items->data;//Le premier objet est le père du spray
-
-            int i=1;
-            for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-                    items != NULL;
-                    items = items->next) {
-
-                SPItem *item1 = (SPItem *) items->data;
-                if (i==1) {
-                    Pere=item1;
-                }
-                if (i==2) {
-                    Union=item1;
-                }
-                i++;
+            if (i==2) {
+                unionResult=item1;
             }
-            SPDocument *doc = SP_OBJECT_DOCUMENT(Pere);
-            Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
-            Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(Pere);
-            //SPObject *old_obj = doc->getObjectByRepr(old_repr);
-            Inkscape::XML::Node *parent = old_repr->parent();
+            i++;
+        }
+        SPDocument *doc = SP_OBJECT_DOCUMENT(father);
+        Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(father);
+        Inkscape::XML::Node *parent = old_repr->parent();
 
-            Geom::OptRect a = Pere->getBounds(sp_item_i2doc_affine(Pere));
-            if (a) {
-                double dr; double dp; //initialisation des variables
-                random_position(dr,dp,mean,standard_deviation,_distrib);
-                dr=dr*radius;
-                double _fid = g_random_double_range(0,1);
-                double angle = (g_random_double_range(rot_min, rot_max));
-                double _scale = g_random_double_range(scale_min, scale_max);
-                if (i==2) {
-                    Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
-                    parent->appendChild(copy1);
-                    SPObject *new_obj1 = doc->getObjectByRepr(copy1);
-                    fils = (SPItem *) new_obj1;   //conversion object->item
-                    Union=fils;
-                    Inkscape::GC::release(copy1);
-                   }
+        Geom::OptRect a = father->getBounds(sp_item_i2doc_affine(father));
+        if (a) {
+            if (i==2) {
+                Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
+                parent->appendChild(copy1);
+                SPObject *new_obj1 = doc->getObjectByRepr(copy1);
+                son = (SPItem *) new_obj1;   // conversion object->item
+                unionResult=son;
+                Inkscape::GC::release(copy1);
+               }
 
-                if (_fid<=population) { //Rules the population of objects sprayed
-                    // duplicates the father
-                    Inkscape::XML::Node *copy2 = old_repr->duplicate(xml_doc);
-                    parent->appendChild(copy2);
-                    SPObject *new_obj2 = doc->getObjectByRepr(copy2);
-                    item_copied = (SPItem *) new_obj2;
+            if (_fid<=population) { // Rules the population of objects sprayed
+                // duplicates the father
+                Inkscape::XML::Node *copy2 = old_repr->duplicate(xml_doc);
+                parent->appendChild(copy2);
+                SPObject *new_obj2 = doc->getObjectByRepr(copy2);
+                item_copied = (SPItem *) new_obj2;
 
-                    Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());//Move around the cursor
+                // Move around the cursor
+                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
 
-                            Geom::Point center=Pere->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
-                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
-                            sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                Geom::Point center=father->getCenter();
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
+                sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
-//UNION et surduplication
-                    selection->clear();
-                    selection->add(item_copied);
-                    selection->add(Union);
-                    sp_selected_path_union(selection->desktop());
-                    selection->add(Pere);
-                    Inkscape::GC::release(copy2);
-                    did = true;
-                }
-
+                // union and duplication
+                selection->clear();
+                selection->add(item_copied);
+                selection->add(unionResult);
+                sp_selected_path_union(selection->desktop());
+                selection->add(father);
+                Inkscape::GC::release(copy2);
+                did = true;
             }
-        } else if (mode == SPRAY_MODE_CLONE) {
-
+        }
+    } else if (mode == SPRAY_MODE_CLONE) {
         Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
-                if (a) {
-                double dr; double dp;
-                random_position(dr,dp,mean,standard_deviation,_distrib);
-                dr=dr*radius;
-                double _fid = g_random_double_range(0,1);
-                double angle = (g_random_double_range(rot_min, rot_max));
-                double _scale = g_random_double_range(scale_min, scale_max);
+        if (a) {
+            if(_fid<=population) {
+                SPItem *item_copied;
+                SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                Inkscape::XML::Node *parent = old_repr->parent();
 
-        if(_fid<=population)
-                {
-                            SPItem *item_copied;
-                            SPDocument *doc = SP_OBJECT_DOCUMENT(item);
-                            Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
-                            Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
-                            Inkscape::XML::Node *parent = old_repr->parent();
+                // Creation of the clone
+                Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
+                // Ad the clone to the list of the father's sons
+                parent->appendChild(clone);
+                // Generates the link between father and son attributes
+                clone->setAttribute("xlink:href", g_strdup_printf("#%s", old_repr->attribute("id")), false); 
 
-                            //Creation of the clone
-                            Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
-                            parent->appendChild(clone); //Ajout du clone à la liste d'enfants du père (selection initiale
-                            clone->setAttribute("xlink:href", g_strdup_printf("#%s", old_repr->attribute("id")), false); //Génère le lien entre les attributs du père et du fils
+                SPObject *clone_object = doc->getObjectByRepr(clone);
+                // conversion object->item
+                item_copied = (SPItem *) clone_object;
+                Geom::Point center=item->getCenter();
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
+                sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
+                sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
+                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
-                            SPObject *clone_object = doc->getObjectByRepr(clone);
-                            item_copied = (SPItem *) clone_object;//conversion object->item
-                              Geom::Point center=item->getCenter();
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
-                            sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
-                            sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
-                            Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
-                            sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                Inkscape::GC::release(clone);
 
-                            Inkscape::GC::release(clone);
+                did = true;
+            }
+        }
+    }
 
-                            did = true;
-                } }}
-                return did;
-
+    return did;
 }
 
 
@@ -751,23 +671,6 @@ bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p,
     guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "/tools/spray", false, &do_stroke);
     double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "/tools/spray", &do_opacity);
     if (reverse) {
-#if 0
-        // HSL inversion
-        float hsv[3];
-        float rgb[3];
-        sp_color_rgb_to_hsv_floatv (hsv,
-                                    SP_RGBA32_R_F(fill_goal),
-                                    SP_RGBA32_G_F(fill_goal),
-                                    SP_RGBA32_B_F(fill_goal));
-        sp_color_hsv_to_rgb_floatv (rgb, hsv[0]<.5? hsv[0]+.5 : hsv[0]-.5, 1 - hsv[1], 1 - hsv[2]);
-        fill_goal = SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1);
-        sp_color_rgb_to_hsv_floatv (hsv,
-                                    SP_RGBA32_R_F(stroke_goal),
-                                    SP_RGBA32_G_F(stroke_goal),
-                                    SP_RGBA32_B_F(stroke_goal));
-        sp_color_hsv_to_rgb_floatv (rgb, hsv[0]<.5? hsv[0]+.5 : hsv[0]-.5, 1 - hsv[1], 1 - hsv[2]);
-        stroke_goal = SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1);
-#else
         // RGB inversion
         fill_goal = SP_RGBA32_U_COMPOSE(
             (255 - SP_RGBA32_R_U(fill_goal)),
@@ -779,7 +682,6 @@ bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p,
             (255 - SP_RGBA32_G_U(stroke_goal)),
             (255 - SP_RGBA32_B_U(stroke_goal)),
             (255 - SP_RGBA32_A_U(stroke_goal)));
-#endif
         opacity_goal = 1 - opacity_goal;
     }
 
@@ -806,21 +708,11 @@ bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p,
 
         SPItem *item = (SPItem *) items->data;
 
-        /*if (is_color_modes (tc->mode)) {
-            if (do_fill || do_stroke || do_opacity) {
-                if (sp_spray_color_recursive (tc->mode, item, item_at_point,
-                                          fill_goal, do_fill,
-                                          stroke_goal, do_stroke,
-                                          opacity_goal, do_opacity,
-                                          tc->mode == SPRAY_MODE_BLUR, reverse,
-                                          p, radius, color_force, tc->do_h, tc->do_s, tc->do_l, tc->do_o))
-                did = true;
-            }
-        }else*/ if (is_transform_modes(tc->mode)) {
-            if (sp_spray_dilate_recursive (desktop,selection, item, p, vector, tc->mode, radius, move_force, tc->population,tc->scale, tc->scale_min, tc->scale_max, reverse, move_mean, move_standard_deviation,tc->ratio,tc->tilt, tc->rot_min, tc->rot_max, tc->distrib))
+        if (is_transform_modes(tc->mode)) {
+            if (sp_spray_recursive (desktop,selection, item, p, vector, tc->mode, radius, move_force, tc->population,tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation,tc->ratio,tc->tilt, tc->rotation_variation, tc->distrib))
                 did = true;
         } else {
-            if (sp_spray_dilate_recursive (desktop,selection, item, p, vector, tc->mode, radius, path_force, tc->population,tc->scale, tc->scale_min, tc->scale_max, reverse, path_mean, path_standard_deviation,tc->ratio,tc->tilt, tc->rot_min, tc->rot_max, tc->distrib))
+            if (sp_spray_recursive (desktop,selection, item, p, vector, tc->mode, radius, path_force, tc->population,tc->scale, tc->scale_variation, reverse, path_mean, path_standard_deviation,tc->ratio,tc->tilt, tc->rotation_variation, tc->distrib))
                 did = true;
         }
     }

@@ -71,12 +71,10 @@ struct SPSprayContext
     double width;
     double ratio;
     double tilt;
-    double rot_min;
-    double rot_max;
+    double rotation_variation;
     double force;
     double population;
-    double scale_min;
-    double scale_max;
+    double scale_variation;
     double scale;
     double mean;
     double standard_deviation;
