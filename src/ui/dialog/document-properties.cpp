@@ -353,6 +353,7 @@ DocumentProperties::populate_available_profiles(){
                 while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
                     gchar* full = g_build_filename(it->c_str(), filename, NULL);
                     if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
+                        cmsErrorAction( LCMS_ERROR_SHOW );
                         cmsHPROFILE hProfile = cmsOpenProfileFromFile(full, "r");
                         if (hProfile != NULL){
                             const gchar* name;
