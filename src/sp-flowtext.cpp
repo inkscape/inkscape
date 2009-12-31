@@ -375,15 +375,13 @@ static gchar *sp_flowtext_description(SPItem *item)
     Inkscape::Text::Layout const &layout = SP_FLOWTEXT(item)->layout;
     int const nChars = layout.iteratorToCharIndex(layout.end());
 
-    char *trunc = "";
-    if (layout.inputTruncated()) {
-        trunc = _(" [truncated]");
-    }
+    char const *trunc = (layout.inputTruncated()) ? _(" [truncated]") : "";
 
-    if (SP_FLOWTEXT(item)->has_internal_frame())
+    if (SP_FLOWTEXT(item)->has_internal_frame()) {
         return g_strdup_printf(ngettext("<b>Flowed text</b> (%d character%s)", "<b>Flowed text</b> (%d characters%s)", nChars), nChars, trunc);
-    else
+    } else {
         return g_strdup_printf(ngettext("<b>Linked flowed text</b> (%d character%s)", "<b>Linked flowed text</b> (%d characters%s)", nChars), nChars, trunc);
+    }
 }
 
 static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
