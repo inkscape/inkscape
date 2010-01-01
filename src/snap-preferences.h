@@ -24,10 +24,10 @@ public:
 	SnapPreferences();
 
 	/// Point types to snap.
-    typedef int PointType;
-    static const PointType SNAPPOINT_NODE;
-    static const PointType SNAPPOINT_BBOX;
-    static const PointType SNAPPOINT_GUIDE;
+    typedef int PointType; // can be only one of the types below, never two or more at the same time
+    static const PointType SNAPPOINT_NODE; // will in general not snap to bounding boxes
+    static const PointType SNAPPOINT_BBOX; // will in general not snap to nodes
+    static const PointType SNAPPOINT_OTHER;// e.g. guides, gradient knots
 
     void setSnapModeBBox(bool enabled);
     void setSnapModeNode(bool enabled);

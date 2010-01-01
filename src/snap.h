@@ -167,6 +167,8 @@ public:
 
     bool getSnapIndicator() const {return _snapindicator;}
 
+    Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, Inkscape::SnapSourceType const source_type, SnappedConstraints &sc, bool constrained, bool noCurves = false) const;
+
 protected:
     SPNamedView const *_named_view;
 
@@ -200,8 +202,6 @@ private:
                                             bool const uniform) const;
 
     void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, std::pair<Geom::Point, int> const &p) const;
-
-    Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, Inkscape::SnapSourceType const source_type, SnappedConstraints &sc, bool constrained, bool noCurves = false) const;
 };
 
 #endif /* !SEEN_SNAP_H */

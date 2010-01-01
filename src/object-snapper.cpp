@@ -185,10 +185,10 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
 
         bool p_is_a_node = t & Inkscape::SnapPreferences::SNAPPOINT_NODE;
         bool p_is_a_bbox = t & Inkscape::SnapPreferences::SNAPPOINT_BBOX;
-        bool p_is_a_guide = t & Inkscape::SnapPreferences::SNAPPOINT_GUIDE;
+        bool p_is_other = t & Inkscape::SnapPreferences::SNAPPOINT_OTHER;
 
         // A point considered for snapping should be either a node, a bbox corner or a guide. Pick only ONE!
-        g_assert(!((p_is_a_node && p_is_a_bbox) || (p_is_a_bbox && p_is_a_guide) || (p_is_a_node && p_is_a_guide)));
+        g_assert(!((p_is_a_node && p_is_a_bbox) || (p_is_a_bbox && p_is_other) || (p_is_a_node && p_is_other)));
 
         if (_snapmanager->snapprefs.getSnapToBBoxNode() || _snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -211,7 +211,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
             g_return_if_fail(root_item);
 
             //Collect all nodes so we can snap to them
-            if (p_is_a_node || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node) || p_is_a_guide) {
+            if (p_is_a_node || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node) || p_is_other) {
                 // Note: there are two ways in which intersections are considered:
                 // Method 1: Intersections are calculated for each shape individually, for both the
                 //           snap source and snap target (see sp_shape_snappoints)
@@ -244,7 +244,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
             }
 
             //Collect the bounding box's corners so we can snap to them
-            if (p_is_a_bbox || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_bbox) || p_is_a_guide) {
+            if (p_is_a_bbox || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_bbox) || p_is_other) {
                 // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                 // of the item AND the bbox of the clipping path at the same time
                 if (!(*i).clip_or_mask) {
@@ -336,7 +336,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
         SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX;
 
         bool p_is_a_node = t & Inkscape::SnapPreferences::SNAPPOINT_NODE;
-        bool p_is_a_guide = t & Inkscape::SnapPreferences::SNAPPOINT_GUIDE;
+        bool p_is_other = t & Inkscape::SnapPreferences::SNAPPOINT_OTHER;
 
         if (_snapmanager->snapprefs.getSnapToBBoxPath()) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -372,7 +372,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
 
             //Add the item's path to snap to
             if (_snapmanager->snapprefs.getSnapToItemPath()) {
-                if (p_is_a_guide || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node)) {
+                if (p_is_other || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node)) {
                     // Snapping to the path of characters is very cool, but for a large
                     // chunk of text this will take ages! So limit snapping to text paths
                     // containing max. 240 characters. Snapping the bbox will not be affected
@@ -406,7 +406,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
 
             //Add the item's bounding box to snap to
             if (_snapmanager->snapprefs.getSnapToBBoxPath()) {
-                if (p_is_a_guide || !(_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
+                if (p_is_other || !(_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {
@@ -688,7 +688,7 @@ void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
     }
 
     _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
-    _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, guide_normal);
+    _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, guide_normal);
 
 }
 
@@ -712,7 +712,7 @@ void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
     }
 
     _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
-    _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, guide_normal);
+    _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, guide_normal);
 
 }
 

@@ -97,9 +97,6 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
             case SNAPTARGET_BBOX_EDGE:
                 target_name = _("bounding box side");
                 break;
-            case SNAPTARGET_GRADIENTS_PARENT_BBOX:
-                target_name = _("bounding box");
-                break;
             case SNAPTARGET_PAGE_BORDER:
                 target_name = _("page border");
                 break;
@@ -138,6 +135,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
                 break;
             case SNAPTARGET_TEXT_BASELINE:
                 target_name = _("text baseline");
+                break;
+            case SNAPTARGET_CONSTRAINED_ANGLE:
+                target_name = _("constrained angle");
                 break;
             default:
                 g_warning("Snap target has not yet been defined!");

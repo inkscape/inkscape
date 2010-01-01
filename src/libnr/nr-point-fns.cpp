@@ -61,19 +61,6 @@ NR::Point abs(NR::Point const &b)
     return ret;
 }
 
-NR::Point *
-get_snap_vector (NR::Point p, NR::Point o, double snap, double initial)
-{
-    double r = NR::L2 (p - o);
-    if (r < 1e-3)
-        return NULL;
-    double angle = NR::atan2 (p - o);
-    // snap angle to snaps increments, starting from initial:
-    double a_snapped = initial + floor((angle - initial)/snap + 0.5) * snap;
-    // calculate the new position and subtract p to get the vector:
-    return new NR::Point (o + r * NR::Point(cos(a_snapped), sin(a_snapped)) - p);
-}
-
 NR::Point
 snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, double snap)
 {

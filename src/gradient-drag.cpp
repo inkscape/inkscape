@@ -594,48 +594,18 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
         }
     }
 
-    if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
-        // Try snapping to the grid or guides
-        m.setup(desktop);
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(p), Inkscape::SNAPSOURCE_HANDLE);
+    m.setup(desktop);
+    if (!((state & GDK_SHIFT_MASK) || (state & GDK_CONTROL_MASK))) {
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, Inkscape::SNAPSOURCE_HANDLE);
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
-        } else if (m.snapprefs.getSnapEnabledGlobally() && m.snapprefs.getSnapModeNode() && !(m.snapprefs.getSnapPostponedGlobally())) {
-            bool was_snapped = false;
-            double dist = NR_HUGE;
-            // No snapping so far, let's see if we need to snap to any of the levels
-            for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
-                dist = fabs(p[Geom::Y] - dragger->parent->hor_levels[i]);
-                if (dist < snap_dist) {
-                    p[Geom::Y] = dragger->parent->hor_levels[i];
-                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
-                    was_snapped = true;
-                    sp_knot_moveto (knot, p);
-                }
-            }
-            for (guint i = 0; i < dragger->parent->vert_levels.size(); i++) {
-                dist = fabs(p[Geom::X] - dragger->parent->vert_levels[i]);
-                if (dist < snap_dist) {
-                    p[Geom::X] = dragger->parent->vert_levels[i];
-                    s = Inkscape::SnappedPoint(p, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_GRADIENTS_PARENT_BBOX, dist, snap_dist, false, false);
-                    was_snapped = true;
-                    sp_knot_moveto (knot, p);
-                }
-            }
-            if (was_snapped) {
-                desktop->snapindicator->set_new_snaptarget(s);
-            }
         }
-    }
-
-    if (state & GDK_CONTROL_MASK) {
+    } else if (state & GDK_CONTROL_MASK) {
+        SnappedConstraints sc;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         unsigned snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
         /* 0 means no snapping. */
-
-        // This list will store snap vectors from all draggables of dragger
-        GSList *snap_vectors = NULL;
 
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) {
             GrDraggable *draggable = (GrDraggable *) i->data;
@@ -687,25 +657,27 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                     // with Ctrl, snap to M_PI/snaps
                     snap_vector = get_snap_vector (p, dr_snap, M_PI/snaps, 0);
                 }
-            }
-            if (snap_vector) {
-                snap_vectors = g_slist_prepend (snap_vectors, &(*snap_vector));
+                if (snap_vector) {
+                    Inkscape::Snapper::ConstraintLine cl(dr_snap, p + *snap_vector - dr_snap);
+                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE, cl);
+                    if (s.getSnapped()) {
+                        s.setTransformation(s.getPoint() - p);
+                        sc.points.push_back(s);
+                    } else {
+                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, false);
+                        dummy.setTransformation(*snap_vector);
+                        sc.points.push_back(dummy);
+                    }
+                }
             }
         }
 
-        // Move by the smallest of snap vectors:
-        Geom::Point move(9999, 9999);
-        for (GSList const *i = snap_vectors; i != NULL; i = i->next) {
-            Geom::Point *snap_vector = (Geom::Point *) i->data;
-            if (Geom::L2(*snap_vector) < Geom::L2(move))
-                move = *snap_vector;
-        }
-        if (move[Geom::X] < 9999) {
-            p += move;
+        Inkscape::SnappedPoint bsp = m.findBestSnap(p, Inkscape::SNAPSOURCE_HANDLE, sc, true); // snap indicator will be displayed if needed
+
+        if (bsp.getSnapped()) {
+            p += bsp.getTransformation();
             sp_knot_moveto (knot, p);
         }
-
-        g_slist_free(snap_vectors);
     }
 
     drag->keep_selection = (bool) g_list_find(drag->selected, dragger);

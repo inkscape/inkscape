@@ -433,7 +433,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal,
     SnapperList snappers = getGridSnappers();
     snappers.push_back(&guide);
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, 0, Geom::OptRect(), NULL, NULL);
+        (*i)->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, source_type, 0, Geom::OptRect(), NULL, NULL);
     }
 
     // Snap to intersections of curves, but not to the curves themselves! (see _snapTranslatingGuideToNodes in object-snapper.cpp)
@@ -472,14 +472,14 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
     SnappedConstraints sc;
     Inkscape::Snapper::ConstraintLine cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
     if (object.ThisSnapperMightSnap()) {
-        object.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, 0, Geom::OptRect(), cl, NULL);
+        object.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, source_type, 0, Geom::OptRect(), cl, NULL);
     }
 
     // Snap to guides & grid lines
     SnapperList snappers = getGridSnappers();
     snappers.push_back(&guide);
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, source_type, 0, Geom::OptRect(), cl, NULL);
+        (*i)->constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, source_type, 0, Geom::OptRect(), cl, NULL);
     }
 
     Inkscape::SnappedPoint const s = findBestSnap(p, source_type, sc, false);

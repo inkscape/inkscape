@@ -90,8 +90,6 @@ Point abs(Point const &b);
 
 } /* namespace NR */
 
-NR::Point *get_snap_vector (NR::Point p, NR::Point o, double snap, double initial);
-
 NR::Point snap_vector_midpoint (NR::Point p, NR::Point begin, NR::Point end, double snap);
 
 double get_offset_between_points (NR::Point p, NR::Point begin, NR::Point end);

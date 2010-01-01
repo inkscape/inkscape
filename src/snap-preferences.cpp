@@ -17,7 +17,7 @@
 
 Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_NODE  = 0x1;
 Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_BBOX  = 0x2;
-Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_GUIDE = 0x4;
+Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_OTHER = 0x4;
 
 
 Inkscape::SnapPreferences::SnapPreferences() :
@@ -32,7 +32,7 @@ Inkscape::SnapPreferences::SnapPreferences() :
 	_snap_to_page_border(false),
 	_strict_snapping(true)
 {
-	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE | SNAPPOINT_GUIDE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE | SNAPPOINT_OTHER, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /*
@@ -86,15 +86,15 @@ bool Inkscape::SnapPreferences::getSnapModeAny() const
 void Inkscape::SnapPreferences::setSnapModeGuide(bool enabled)
 {
 	if (enabled) {
-        _snap_from |= Inkscape::SnapPreferences::SNAPPOINT_GUIDE;
+        _snap_from |= Inkscape::SnapPreferences::SNAPPOINT_OTHER;
     } else {
-        _snap_from &= ~Inkscape::SnapPreferences::SNAPPOINT_GUIDE;
+        _snap_from &= ~Inkscape::SnapPreferences::SNAPPOINT_OTHER;
     }
 }
 
 bool Inkscape::SnapPreferences::getSnapModeGuide() const
 {
-	return (_snap_from & Inkscape::SnapPreferences::SNAPPOINT_GUIDE);
+	return (_snap_from & Inkscape::SnapPreferences::SNAPPOINT_OTHER);
 }
 
 /**
