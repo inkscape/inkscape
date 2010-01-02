@@ -225,7 +225,7 @@ inkview_LDADD = $(all_libs)
 
 libinkversion_a_SOURCES = inkscape-version.cpp inkscape-version.h
 
-if USE_SVN_VERSION
+if USE_BZR_VERSION
 inkscape_version_deps = $(top_srcdir)/.bzr/branch/last-revision
 endif
 
@@ -233,7 +233,7 @@ endif
 # someone updates the BZR working directory.
 inkscape-version.cpp: $(inkscape_version_deps)
 	VER_PREFIX="$(VERSION)";\
-	VER_BZRREV=" r`bzr log -r '-1..' | sed -n -e '/^revno:/s/revno: \(.*\)/\1/p'`"; \
+	VER_BZRREV=" r`bzr revno`"; \
 	if test ! -z "`bzr status -S -V $(srcdir)`"; then \
 	    VER_CUSTOM=" custom"; \
 	fi; \
