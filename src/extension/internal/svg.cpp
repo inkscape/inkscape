@@ -21,6 +21,7 @@
 #include "extension/system.h"
 #include "extension/output.h"
 #include <vector>
+#include "xml/attribute-record.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -31,6 +32,37 @@ namespace Extension {
 namespace Internal {
 
 #include "clear-n_.h"
+
+
+using Inkscape::Util::List;
+using Inkscape::XML::AttributeRecord;
+using Inkscape::XML::Node;
+
+
+
+void pruneExtendedAttributes( Inkscape::XML::Node *repr )
+{
+    if (repr) {
+        if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {
+            std::vector<gchar const*> toBeRemoved;
+            for ( List<AttributeRecord const> it = repr->attributeList(); it; ++it ) {
+                const gchar* attrName = g_quark_to_string(it->key);
+                if ((strncmp("inkscape:", attrName, 9) == 0) || (strncmp("sodipodi:", attrName, 9) == 0)) {
+                    toBeRemoved.push_back(attrName);
+                }
+            }
+            // Can't change the set we're interating over while we are iterating.
+            for ( std::vector<gchar const*>::iterator it = toBeRemoved.begin(); it != toBeRemoved.end(); ++it ) {
+                repr->setAttribute(*it, 0);
+            }
+        }
+
+        for ( Node *child = repr->firstChild(); child; child = child->next() ) {
+            pruneExtendedAttributes(child);
+        }
+    }
+}
+
 
 /**
     \return   None
@@ -179,7 +211,7 @@ Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
     we're getting good data.  It also checks the module ID of the
     incoming module to figure out whether this save should include
     the Inkscape namespace stuff or not.  The result of that comparison
-    is stored in the spns variable.
+    is stored in the exportExtensions variable.
 
     If there is not to be Inkscape name spaces a new document is created
     without.  (I think, I'm not sure on this code)
@@ -198,18 +230,20 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 
     gchar *save_path = g_path_get_dirname(filename);
 
-    bool const spns = ( !mod->get_id()
+    bool const exportExtensions = ( !mod->get_id()
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE));
 
     Inkscape::XML::Document *rdoc = NULL;
     Inkscape::XML::Node *repr = NULL;
-    if (spns) {
+    if (exportExtensions) {
         repr = sp_document_repr_root (doc);
     } else {
         rdoc = sp_repr_document_new ("svg:svg");
         repr = rdoc->root();
         repr = sp_document_root (doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
+
+        pruneExtendedAttributes(repr);
     }
 
     if (!sp_repr_save_rebased_file(repr->document(), filename, SP_SVG_NS_URI,
@@ -217,7 +251,7 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
         throw Inkscape::Extension::Output::save_failed();
     }
 
-    if (!spns) {
+    if (!exportExtensions) {
         Inkscape::GC::release(rdoc);
     }
 

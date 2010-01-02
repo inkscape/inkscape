@@ -378,6 +378,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:connector-type", true},
     {"inkscape:connection-start", true},
     {"inkscape:connection-end", true},
+    {"inkscape:connection-points", true},
+    {"inkscape:connector-curvature", true},
     {"inkscape:connector-avoid", true},
     {"inkscape:connector-spacing", true},
     {"sodipodi:cx", true},
