@@ -4583,6 +4583,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayRotationAction",
                                                               _("Rotation"), _("Rotation:"),
+                                                              // xgettext:no-c-format
                                                               _("Variation of the rotation of the sprayed objects. 0% for the same rotation than the original object."),
                                                               "/tools/spray/rotation_variation", 0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-rotation",
@@ -4599,6 +4600,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayScaleAction",
                                                               _("Scale"), _("Scale:"),
+                                                              // xgettext:no-c-format
                                                               _("Variation in the scale of the sprayed objects. 0% for the same scale than the original object."),
                                                               "/tools/spray/scale_variation", 0,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-scale",
