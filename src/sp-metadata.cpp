@@ -188,8 +188,7 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
     debug("0x%08x",(unsigned int)object);
     //SPMetadata *metadata = SP_METADATA(object);
 
-    // only create a repr when we're writing out an Inkscape SVG
-    if ( flags & SP_OBJECT_WRITE_EXT && repr != SP_OBJECT_REPR(object) ) {
+    if ( repr != SP_OBJECT_REPR(object) ) {
         if (repr) {
             repr->mergeFrom(SP_OBJECT_REPR (object), "id");
         } else {
@@ -197,8 +196,9 @@ sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
         }
     }
 
-    if (((SPObjectClass *) metadata_parent_class)->write)
+    if (((SPObjectClass *) metadata_parent_class)->write) {
         ((SPObjectClass *) metadata_parent_class)->write(object, doc, repr, flags);
+    }
 
     return repr;
 }
