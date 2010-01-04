@@ -232,7 +232,6 @@ src/ui/dialog/ocaldialogs.cpp
 src/ui/dialog/print.cpp
 src/ui/dialog/print-colors-preview-dialog.cpp
 src/ui/dialog/scriptdialog.cpp
-src/ui/dialog/spray-option.cpp
 src/ui/dialog/svg-fonts-dialog.cpp
 src/ui/dialog/swatches.cpp
 src/ui/dialog/tile.cpp
