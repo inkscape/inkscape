@@ -860,11 +860,11 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, GtkPositionType handlePos )
 
 GtkWidget *sp_tool_toolbox_new()
 {
-    GtkWidget *tb = gtk_toolbar_new();
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(tb), GTK_ORIENTATION_VERTICAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(tb), TRUE);
+    GtkWidget *toolBar = gtk_toolbar_new();
+    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_VERTICAL);
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
 
-    return toolboxNewCommon( tb, GTK_POS_TOP );
+    return toolboxNewCommon( toolBar, GTK_POS_TOP );
 }
 
 GtkWidget *sp_aux_toolbox_new()
@@ -1584,6 +1584,43 @@ toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_
 } // end of toolbox_set_desktop()
 
 
+static void setupToolboxCommon( GtkWidget *toolbox,
+                                SPDesktop *desktop,
+                                gchar const *descr,
+                                gchar const* toolbarName,
+                                gchar const* sizePref,
+                                GtkOrientation orientation )
+{
+    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, toolbarName );
+    if ( prefs->getBool("/toolbox/icononly", true) ) {
+        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    }
+
+    Inkscape::IconSize toolboxSize = prefToSize(sizePref);
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
+
+    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), orientation);
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
+
+    g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
+
+    GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
+    if ( child ) {
+        gtk_container_remove( GTK_CONTAINER(toolbox), child );
+    }
+
+    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
+}
+
 static void
 setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
@@ -1612,35 +1649,12 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolDropper' />"
         "  </toolbar>"
         "</ui>";
-    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
-    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
-
-    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/ToolToolbar" );
-    if ( prefs->getBool("/toolbox/icononly", true) ) {
-        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
-    }
-    Inkscape::IconSize toolboxSize = prefToSize("/toolbox/tools/small");
-    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
-
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_VERTICAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
-
-    g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
-
-    GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
-    if ( child ) {
-        gtk_container_remove( GTK_CONTAINER(toolbox), child );
-    }
-
-    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
-//     Inkscape::IconSize toolboxSize = prefToSize("/toolbox/tools/small");
+    setupToolboxCommon( toolbox, desktop, descr,
+                        "/ui/ToolToolbar",
+                        "/toolbox/tools/small",
+                        GTK_ORIENTATION_VERTICAL );
 }
-
 
 static void
 update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget */*toolbox*/ )
@@ -1687,9 +1701,9 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         } else {
 
             GtkWidget *sub_toolbox = 0;
-            if (aux_toolboxes[i].create_func == NULL)
+            if (aux_toolboxes[i].create_func == NULL) {
                 sub_toolbox = sp_empty_toolbox_new(desktop);
-            else {
+            } else {
                 sub_toolbox = aux_toolboxes[i].create_func(desktop);
             }
 
@@ -1806,35 +1820,11 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='DialogDocumentProperties' />"
         "  </toolbar>"
         "</ui>";
-    Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
-
-    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
-    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
-
-    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CommandsToolbar" );
-    if ( prefs->getBool("/toolbox/icononly", true) ) {
-        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
-    }
-
-    Inkscape::IconSize toolboxSize = prefToSize("/toolbox/small");
-    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), (GtkIconSize)toolboxSize );
-
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_HORIZONTAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
-
-
-    g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
-
-    GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
-    if ( child ) {
-        gtk_container_remove( GTK_CONTAINER(toolbox), child );
-    }
-
-    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
+    setupToolboxCommon( toolbox, desktop, descr,
+                        "/ui/CommandsToolbar",
+                        "/toolbox/small",
+                        GTK_ORIENTATION_HORIZONTAL );
 }
 
 static void
@@ -1958,7 +1948,6 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 
 void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions(desktop);
 
     gchar const * descr =
@@ -2153,32 +2142,10 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
       g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
       }*/
 
-    GtkUIManager* mgr = gtk_ui_manager_new();
-    GError* errVal = 0;
-
-    gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
-    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
-
-    GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, "/ui/SnapToolbar" );
-    if ( prefs->getBool("/toolbox/icononly", true) ) {
-        gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
-    }
-
-    Inkscape::IconSize toolboxSize = prefToSize("/toolbox/secondary");
-    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
-
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_HORIZONTAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
-
-    g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
-
-    GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
-    if ( child ) {
-        gtk_container_remove( GTK_CONTAINER(toolbox), child );
-    }
-
-    gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
-
+    setupToolboxCommon( toolbox, desktop, descr,
+                        "/ui/SnapToolbar",
+                        "/toolbox/secondary",
+                        GTK_ORIENTATION_HORIZONTAL );
 }
 
 void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, GtkWidget *toolbox)
