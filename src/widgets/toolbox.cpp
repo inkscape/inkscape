@@ -835,21 +835,14 @@ void handlebox_attached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer
 
 
 
-GtkWidget *
-sp_tool_toolbox_new()
+static GtkWidget* toolboxNewCommon( GtkWidget* tb, GtkPositionType handlePos )
 {
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget* tb = gtk_toolbar_new();
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(tb), GTK_ORIENTATION_VERTICAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(tb), TRUE);
-
     g_object_set_data(G_OBJECT(tb), "desktop", NULL);
-    g_object_set_data(G_OBJECT(tb), "tooltips", tt);
 
     gtk_widget_set_sensitive(tb, FALSE);
 
     GtkWidget *hb = gtk_handle_box_new();
-    gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), GTK_POS_TOP);
+    gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), handlePos);
     gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
     gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
 
@@ -865,90 +858,38 @@ sp_tool_toolbox_new()
     return hb;
 }
 
-GtkWidget *
-sp_aux_toolbox_new()
+GtkWidget *sp_tool_toolbox_new()
+{
+    GtkWidget *tb = gtk_toolbar_new();
+    gtk_toolbar_set_orientation(GTK_TOOLBAR(tb), GTK_ORIENTATION_VERTICAL);
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(tb), TRUE);
+
+    return toolboxNewCommon( tb, GTK_POS_TOP );
+}
+
+GtkWidget *sp_aux_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    gtk_box_set_spacing(GTK_BOX(tb), AUX_SPACING);
-
-    g_object_set_data(G_OBJECT(tb), "desktop", NULL);
-
-    gtk_widget_set_sensitive(tb, FALSE);
-
-    GtkWidget *hb = gtk_handle_box_new();
-    gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-    gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
-    gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-
-    gtk_container_add(GTK_CONTAINER(hb), tb);
-    gtk_widget_show(GTK_WIDGET(tb));
-
-    sigc::connection* conn = new sigc::connection;
-    g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
-
-    g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
-    g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
-
-    return hb;
+    return toolboxNewCommon( tb, GTK_POS_LEFT );
 }
 
 //####################################
 //# Commands Bar
 //####################################
 
-GtkWidget *
-sp_commands_toolbox_new()
+GtkWidget *sp_commands_toolbox_new()
 {
     GtkWidget *tb = gtk_toolbar_new();
 
-    g_object_set_data(G_OBJECT(tb), "desktop", NULL);
-    gtk_widget_set_sensitive(tb, FALSE);
-
-    GtkWidget *hb = gtk_handle_box_new();
-    gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-    gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
-    gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-
-    gtk_container_add(GTK_CONTAINER(hb), tb);
-    gtk_widget_show(GTK_WIDGET(tb));
-
-    sigc::connection* conn = new sigc::connection;
-    g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
-
-    g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
-    g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
-
-    return hb;
+    return toolboxNewCommon( tb, GTK_POS_LEFT );
 }
 
-GtkWidget *
-sp_snap_toolbox_new()
+GtkWidget *sp_snap_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
-    gtk_box_set_spacing(GTK_BOX(tb), AUX_SPACING);
-    g_object_set_data(G_OBJECT(tb), "desktop", NULL);
 
-    //GtkWidget *tb = gtk_toolbar_new();
-    //g_object_set_data(G_OBJECT(tb), "desktop", NULL);
-
-    gtk_widget_set_sensitive(tb, FALSE);
-
-    GtkWidget *hb = gtk_handle_box_new();
-    gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-    gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
-    gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-
-    gtk_container_add(GTK_CONTAINER(hb), tb);
-    gtk_widget_show(GTK_WIDGET(tb));
-
-    sigc::connection* conn = new sigc::connection;
-    g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
-
-    g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
-    g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
-
-    return hb;
+    return toolboxNewCommon( tb, GTK_POS_LEFT );
 }
 
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
@@ -2346,8 +2287,7 @@ void show_aux_toolbox(GtkWidget *toolbox_toplevel)
     gtk_widget_show_all(shown_toolbox);
 }
 
-static GtkWidget *
-sp_empty_toolbox_new(SPDesktop *desktop)
+static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop)
 {
     GtkWidget *tbl = gtk_toolbar_new();
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
@@ -6959,8 +6899,7 @@ void sp_text_toolbox_family_popnotify(GtkComboBox *widget,
   }
 }
 
-GtkWidget*
-sp_text_toolbox_new (SPDesktop *desktop)
+GtkWidget *sp_text_toolbox_new (SPDesktop *desktop)
 {
     GtkToolbar   *tbl = GTK_TOOLBAR(gtk_toolbar_new());
     GtkIconSize secondarySize = static_cast<GtkIconSize>(prefToSize("/toolbox/secondary", 1));
