@@ -40,7 +40,6 @@
 #include "ui/dialog/icon-preview.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
-#include "ui/dialog/spray-option.h"
 #include "ui/dialog/print-colors-preview-dialog.h"
 #include "preferences.h"
 
@@ -114,7 +113,6 @@ DialogManager::DialogManager() {
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          FloatingBehavior>);
-        registerFactory("SprayOptionClass",    &create<SprayOptionClass,     FloatingBehavior>);
 
     } else {
 
@@ -142,7 +140,6 @@ DialogManager::DialogManager() {
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);
-        registerFactory("SprayOptionClass",    &create<SprayOptionClass,     DockBehavior>);
 
     }
 }

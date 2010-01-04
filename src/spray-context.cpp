@@ -11,6 +11,7 @@
  *   Benoît LAVORATA
  *   Vincent MONTAGNE
  *   Pierre BARBRY-BLOT
+ *   Steren GIANNINI (steren.giannini@gmail.com)
  *
  * Copyright (C) 2009 authors
  *
@@ -39,14 +40,6 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-spray.xpm"
-//#include "pixmaps/cursor-spray-move.xpm"
-//#include "pixmaps/cursor-thin.xpm"
-//#include "pixmaps/cursor-thicken.xpm"
-//#include "pixmaps/cursor-attract.xpm"
-//#include "pixmaps/cursor-repel.xpm"
-//#include "pixmaps/cursor-push.xpm"
-//#include "pixmaps/cursor-roughen.xpm"
-//#include "pixmaps/cursor-color.xpm"
 #include <boost/optional.hpp>
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
@@ -107,34 +100,15 @@ static gint sp_spray_context_root_handler(SPEventContext *ec, GdkEvent *event);
 static SPEventContextClass *parent_class = 0;
 
 
-/*
-   RAND is a macro which returns a pseudo-random numbers from a uniform
-   distribution on the interval [0 1]
-*/
-#define RAND ((double) rand())/((double) RAND_MAX)
-
-/*
-    TWOPI = 2.0*pi
-*/
-#define TWOPI 2.0*3.141592653589793238462643383279502884197169399375
-
-/*
-   RANDN is a macro which returns a pseudo-random numbers from a normal
-   distribution with mean zero and standard deviation one. This macro uses Box
-   Muller's algorithm
-*/
-#define RANDN sqrt(-2.0*log(RAND))*cos(TWOPI*RAND)
-
-
-double NormalDistribution(double mu,double sigma)
+/**
+ * This function returns pseudo-random numbers from a normal distribution
+ * @param mu : mean
+ * @param sigma : standard deviation ( > 0 )
+ */
+inline double NormalDistribution(double mu,double sigma)
 {
-/*
-   This function returns a pseudo-random numbers from a normal distribution with
-   mean equal at mu and standard deviation equal at sigma > 0
-*/
-
-  return (mu+sigma*RANDN);
-
+  // use Box Muller's algorithm
+  return mu + sigma * sqrt( -2.0 * log(g_random_double_range(0, 1)) ) * cos( 2.0*M_PI*g_random_double_range(0, 1) );
 }
 
 
@@ -261,14 +235,14 @@ void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
    SPDesktop *desktop = event_context->desktop;
 
-                guint num = 0;
-                gchar *sel_message = NULL;
-                if (!desktop->selection->isEmpty()) {
-                    num = g_slist_length((GSList *) desktop->selection->itemList());
-                    sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
-                } else {
-                    sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
-                }
+    guint num = 0;
+    gchar *sel_message = NULL;
+    if (!desktop->selection->isEmpty()) {
+        num = g_slist_length((GSList *) desktop->selection->itemList());
+        sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
+    } else {
+        sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
+    }
 
 
    switch (tc->mode) {
@@ -439,25 +413,32 @@ double get_move_standard_deviation(SPSprayContext *tc)
     return tc->standard_deviation;
 }
 
-/** Method to handle the distribution of the items */
-void random_position( double &r, double &p, double &a, double &s, int choice)
+/**
+ * Method to handle the distribution of the items
+ * @param[out]  radius : radius of the position of the sprayed object
+ * @param[out]  angle : angle of the position of the sprayed object
+ * @param[in]   a : mean
+ * @param[in]   s : standard deviation
+ * @param[in]   choice : 
+
+ */
+void random_position( double &radius, double &angle, double &a, double &s, int choice)
 {
-    if (choice == 0) // 1 : uniform repartition
+    // angle is taken from an uniform distribution
+    angle = g_random_double_range(0, M_PI*2.0);
+
+    // radius is taken from a Normal Distribution
+    double radius_temp =-1;
+    while(!((radius_temp>=0)&&(radius_temp<=1)))
     {
-        r = (1-pow(g_random_double_range(0, 1),2));
-        p = g_random_double_range(0, M_PI*2);
+        radius_temp = NormalDistribution( a, s );
     }
-    if (choice == 1) // 0 : gaussian repartition
-    {
-        double r_temp =-1;
-        while(!((r_temp>=0)&&(r_temp<=1)))
-        {
-            r_temp = NormalDistribution(a,s/4);
-        }
-        // generates a number following a normal distribution
-        p = g_random_double_range(0, M_PI*2);
-        r=r_temp;
-    }
+    // Because we are in polar coordinates, a special treatment has to be done to the radius.
+    // Otherwise, positions taken from an uniform repartition on radius and angle will not seam to 
+    // be uniformily distributed on the disk (more at the center and less at the boundary).
+    // We counter this effect with a 0.5 exponent. This is empiric.
+    radius = pow( radius_temp, 0.5);
+
 }
 
 
@@ -495,7 +476,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
     double angle = g_random_double_range( - rotation_variation / 100.0 * M_PI , rotation_variation / 100.0 * M_PI );
     double _scale = g_random_double_range( 1.0 - scale_variation / 100.0, 1.0 + scale_variation / 100.0 );
     double dr; double dp;
-    random_position(dr,dp,mean,standard_deviation,_distrib);
+    random_position( dr, dp, mean, standard_deviation, _distrib );
     dr=dr*radius;
 
     if (mode == SPRAY_MODE_COPY) {
@@ -625,32 +606,6 @@ bool sp_spray_recursive(SPDesktop *desktop,
     return did;
 }
 
-
-bool sp_spray_color_recursive(guint /*mode*/,
-                              SPItem */*item*/,
-                              SPItem */*item_at_point*/,
-                              guint32 /*fill_goal*/,
-                              bool /*do_fill*/,
-                              guint32 /*stroke_goal*/,
-                              bool /*do_stroke*/,
-                              float /*opacity_goal*/,
-                              bool /*do_opacity*/,
-                              bool /*do_blur*/,
-                              bool /*reverse*/,
-                              Geom::Point /*p*/,
-                              double /*radius*/,
-                              double /*force*/,
-                              bool /*do_h*/,
-                              bool /*do_s*/,
-                              bool /*do_l*/,
-                              bool /*do_o*/)
-{
-    bool did = false;
-
-    return did;
-}
-
-
 bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
@@ -730,7 +685,8 @@ void sp_spray_update_area(SPSprayContext *tc)
 
 void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
 {
-    SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("spray_tool_mode", mode); //sélectionne le bouton numéro "mode"
+    // select the button mode
+    SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("spray_tool_mode", mode); 
     // need to set explicitly, because the prefs may not have changed by the previous
     tc->mode = mode;
     sp_spray_update_cursor (tc, with_shift);

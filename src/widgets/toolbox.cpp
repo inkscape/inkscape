@@ -4561,6 +4561,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_population_value_changed,  1, 0 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "spray_population", eact );
@@ -4590,6 +4591,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_rotation_value_changed,  1, 0 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "spray_rotation", eact );
@@ -4607,6 +4609,7 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_scale_value_changed,  1, 0 );
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "spray_scale", eact );
