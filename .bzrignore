@@ -2,8 +2,11 @@
 ./Makefile
 ./aclocal.m4
 ./autom4te.cache
+./btool.exe
 ./build
+./build.dep
 ./compile
+./compile.lst
 ./config.guess
 ./config.h
 ./config.h.in
@@ -13,6 +16,7 @@
 ./config.sub
 ./configure
 ./depcomp
+./inkscape
 ./inkscape.1
 ./inkscape.desktop
 ./inkscape.fr.1
