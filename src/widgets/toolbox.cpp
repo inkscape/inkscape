@@ -489,7 +489,7 @@ static gchar const * ui_descr =
 
 static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop );
 
-static void toolbox_set_desktop (GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func, sigc::connection*);
+static void toolbox_set_desktop (GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func);
 
 static void setup_tool_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
 static void update_tool_toolbox (SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -870,6 +870,8 @@ GtkWidget *sp_tool_toolbox_new()
 GtkWidget *sp_aux_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
+
+    g_object_set_data(G_OBJECT(tb), "MarkForChild", const_cast<gchar *>("MarkForChild"));
 
     return toolboxNewCommon( tb, GTK_POS_LEFT );
 }
@@ -1513,21 +1515,17 @@ sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
     toolbox_set_desktop(toolbox,
                         desktop,
                         setup_tool_toolbox,
-                        update_tool_toolbox,
-                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
-                                                                         "event_context_connection")));
+                        update_tool_toolbox);
 }
 
 
 void
 sp_aux_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
-    toolbox_set_desktop(gtk_bin_get_child(GTK_BIN(toolbox)),
+    toolbox_set_desktop(toolbox,
                         desktop,
                         setup_aux_toolbox,
-                        update_aux_toolbox,
-                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
-                                                                         "event_context_connection")));
+                        update_aux_toolbox);
 }
 
 void
@@ -1536,9 +1534,7 @@ sp_commands_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
     toolbox_set_desktop(toolbox,
                         desktop,
                         setup_commands_toolbox,
-                        update_commands_toolbox,
-                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
-                                                                         "event_context_connection")));
+                        update_commands_toolbox);
 }
 
 void
@@ -1547,15 +1543,21 @@ sp_snap_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
     toolbox_set_desktop(toolbox,
                         desktop,
                         setup_snap_toolbox,
-                        update_snap_toolbox,
-                        static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
-                                                                         "event_context_connection")));
+                        update_snap_toolbox);
 }
 
 
 static void
-toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func, sigc::connection *conn)
+toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func)
 {
+    sigc::connection *conn = static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
+                                                                              "event_context_connection"));
+    {
+        GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
+        if (g_object_get_data(G_OBJECT(child), "MarkForChild")) {
+            toolbox = child;
+        }
+    }
     gpointer ptr = g_object_get_data(G_OBJECT(toolbox), "desktop");
     SPDesktop *old_desktop = static_cast<SPDesktop*>(ptr);
 
