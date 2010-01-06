@@ -15,7 +15,7 @@ Requires/BuildRequires Zeilen entsprechend updaten.
 Patches
 =======
 
-Wenn Sie keinen SVN Zugang haben, benutzen Sie bitte den Patch Tracker
+Wenn Sie keinen BZR Zugang haben, benutzen Sie bitte den Patch Tracker
 <https://bugs.launchpad.net/inkscape>.
 
 Wiki
@@ -47,12 +47,12 @@ Mailinglisten zu beantworten.
 * Entwerfen Sie Dokumente mit Tips oder Hilfen, nutzen Sie unseren Wiki.
 
 
-SVN Zugang
+BZR Zugang
 ==========
-Lesen Sie bitte http://inkscape.org/svn.php
-wie man SVN nutzt oder den Quellenbaum mit einem Browser liest.
+Lesen Sie bitte http://inkscape.org/bzr.php
+wie man BZR nutzt oder den Quellenbaum mit einem Browser liest.
 
-Wir vergeben SVN Zugang an Leute, die ihr Interesse daran bewiesen
+Wir vergeben BZR Zugang an Leute, die ihr Interesse daran bewiesen
 haben, den Code zu verbessern. Der Beweis ist einfach: Reichen Sie
 zwei Verbesserungen ein und verlangen Sie Zugang.
 

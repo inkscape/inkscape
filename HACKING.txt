@@ -1,4 +1,4 @@
-Compiling the SVN version
+Compiling the BZR version
 =========================
 grep Build-Depends debian/control to see a list of (Debian) packages needed for
 compilation.
@@ -9,7 +9,7 @@ inkscape.spec.in has a partial list of requirements:
 
 At the time of writing, it contains only one package; if you use an RPM-based
 distribution, then please consider updating the Requires/BuildRequires lines to
-help other users of your distribution.  If you don't have SVN write access,
+help other users of your distribution.  If you don't have BZR write access,
 then you can submit a patch to the bug tracker
 <https://bugs.launchpad.net/inkscape>.
 
@@ -41,12 +41,12 @@ can help:
    * Author a HOWTO describing a trick or technique you've figured out
 
 
-SVN Access
+BZR Access
 ==========
-See http://inkscape.org/svn.php for how to access SVN,
-including browsing SVN from a web client.
+See http://inkscape.org/bzr.php for how to access BZR,
+including browsing BZR from a web client.
 
-We give SVN write access out to people with proven interest in helping develop
+We give BZR write access out to people with proven interest in helping develop
 the codebase.  Proving your interest is straightforward:  Make two
 contributions and request access.
 
