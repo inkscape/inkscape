@@ -16,21 +16,18 @@
 
 #include <gtk/gtkstyle.h>
 #include <gtk/gtktooltips.h>
+#include <glibmm/ustring.h>
 
 #include "forward.h"
 #include "icon-size.h"
 
 GtkWidget *sp_tool_toolbox_new ();
-void sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
-
 GtkWidget *sp_aux_toolbox_new ();
-void sp_aux_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
-
 GtkWidget *sp_commands_toolbox_new ();
-void sp_commands_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
-
 GtkWidget *sp_snap_toolbox_new ();
-void sp_snap_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
+
+void sp_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
+
 void update_snap_toolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 void setup_snap_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
 

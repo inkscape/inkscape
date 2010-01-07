@@ -4,6 +4,8 @@ ink_common_sources += \
 	util/compose.hpp	\
 	util/ucompose.hpp	\
 	util/enums.h \
+	util/ege-tags.h \
+	util/ege-tags.cpp \
 	util/filter-list.h \
 	util/fixed_point.h \
 	util/format.h	\

@@ -55,6 +55,7 @@
 #include "ui/widget/dock.h"
 #include "ui/widget/layer-selector.h"
 #include "ui/widget/selected-style.h"
+#include "ui/uxmanager.h"
 #include "widgets/button.h"
 #include "widgets/ruler.h"
 #include "widgets/spinbutton-events.h"
@@ -66,6 +67,10 @@
 #include "round.h"
 using Inkscape::round;
 #endif
+
+
+using Inkscape::UI::UXManager;
+
 
 #ifdef WITH_INKBOARD
 #endif
@@ -1374,10 +1379,12 @@ sp_desktop_widget_new (SPNamedView *namedview)
 
     sp_desktop_widget_layout (dtw);
 
-    sp_tool_toolbox_set_desktop (dtw->tool_toolbox, dtw->desktop);
-    sp_aux_toolbox_set_desktop (dtw->aux_toolbox, dtw->desktop);
-    sp_commands_toolbox_set_desktop (dtw->commands_toolbox, dtw->desktop);
-    sp_snap_toolbox_set_desktop (dtw->snap_toolbox, dtw->desktop);
+    std::vector<GtkWidget *> toolboxes;
+    toolboxes.push_back(dtw->tool_toolbox);
+    toolboxes.push_back(dtw->aux_toolbox);
+    toolboxes.push_back(dtw->commands_toolbox);
+    toolboxes.push_back(dtw->snap_toolbox);
+    UXManager::getInstance()->connectToDesktop( toolboxes, dtw->desktop );
 
     dtw->panels->setDesktop( dtw->desktop );
 

@@ -9,4 +9,6 @@ ink_common_sources +=		\
 	ui/previewable.h	\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\
-	ui/previewholder.h
+	ui/previewholder.h	\
+	ui/uxmanager.cpp	\
+	ui/uxmanager.h

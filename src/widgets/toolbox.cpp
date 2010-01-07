@@ -106,6 +106,16 @@ using Inkscape::UnitTracker;
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 
+enum BarId {
+    BAR_TOOL = 0,
+    BAR_AUX,
+    BAR_COMMANDS,
+    BAR_SNAP,
+};
+
+#define BAR_ID_KEY "BarIdValue"
+
+
 static void       sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
@@ -489,8 +499,6 @@ static gchar const * ui_descr =
 
 static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop );
 
-static void toolbox_set_desktop (GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func);
-
 static void setup_tool_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
 static void update_tool_toolbox (SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 
@@ -833,9 +841,7 @@ void handlebox_attached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer
     gtk_widget_set_size_request( widget, -1, -1 );
 }
 
-
-
-static GtkWidget* toolboxNewCommon( GtkWidget* tb, GtkPositionType handlePos )
+static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType handlePos )
 {
     g_object_set_data(G_OBJECT(tb), "desktop", NULL);
 
@@ -855,6 +861,9 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, GtkPositionType handlePos )
     g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
     g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
 
+    gpointer val = GINT_TO_POINTER(id);
+    g_object_set_data(G_OBJECT(hb), BAR_ID_KEY, val);
+
     return hb;
 }
 
@@ -864,16 +873,14 @@ GtkWidget *sp_tool_toolbox_new()
     gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_VERTICAL);
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
 
-    return toolboxNewCommon( toolBar, GTK_POS_TOP );
+    return toolboxNewCommon( toolBar, BAR_TOOL, GTK_POS_TOP );
 }
 
 GtkWidget *sp_aux_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    g_object_set_data(G_OBJECT(tb), "MarkForChild", const_cast<gchar *>("MarkForChild"));
-
-    return toolboxNewCommon( tb, GTK_POS_LEFT );
+    return toolboxNewCommon( tb, BAR_AUX, GTK_POS_LEFT );
 }
 
 //####################################
@@ -884,14 +891,14 @@ GtkWidget *sp_commands_toolbox_new()
 {
     GtkWidget *tb = gtk_toolbar_new();
 
-    return toolboxNewCommon( tb, GTK_POS_LEFT );
+    return toolboxNewCommon( tb, BAR_COMMANDS, GTK_POS_LEFT );
 }
 
 GtkWidget *sp_snap_toolbox_new()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    return toolboxNewCommon( tb, GTK_POS_LEFT );
+    return toolboxNewCommon( tb, BAR_SNAP, GTK_POS_LEFT );
 }
 
 static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
@@ -1509,55 +1516,41 @@ static void sp_zoom_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainA
     // no custom GtkAction setup needed
 } // end of sp_zoom_toolbox_prep()
 
-void
-sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
-{
-    toolbox_set_desktop(toolbox,
-                        desktop,
-                        setup_tool_toolbox,
-                        update_tool_toolbox);
-}
-
-
-void
-sp_aux_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
-{
-    toolbox_set_desktop(toolbox,
-                        desktop,
-                        setup_aux_toolbox,
-                        update_aux_toolbox);
-}
-
-void
-sp_commands_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
-{
-    toolbox_set_desktop(toolbox,
-                        desktop,
-                        setup_commands_toolbox,
-                        update_commands_toolbox);
-}
-
-void
-sp_snap_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
-{
-    toolbox_set_desktop(toolbox,
-                        desktop,
-                        setup_snap_toolbox,
-                        update_snap_toolbox);
-}
-
-
-static void
-toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_func, UpdateFunction update_func)
+void sp_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
     sigc::connection *conn = static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
                                                                               "event_context_connection"));
-    {
-        GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
-        if (g_object_get_data(G_OBJECT(child), "MarkForChild")) {
-            toolbox = child;
-        }
+
+    BarId id = static_cast<BarId>( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY)) );
+
+    SetupFunction setup_func = 0;
+    UpdateFunction update_func = 0;
+
+    switch (id) {
+        case BAR_TOOL:
+            setup_func = setup_tool_toolbox;
+            update_func = update_tool_toolbox;
+            break;
+
+        case BAR_AUX:
+            toolbox = gtk_bin_get_child(GTK_BIN(toolbox));
+            setup_func = setup_aux_toolbox;
+            update_func = update_aux_toolbox;
+            break;
+
+        case BAR_COMMANDS:
+            setup_func = setup_commands_toolbox;
+            update_func = update_commands_toolbox;
+            break;
+
+        case BAR_SNAP:
+            setup_func = setup_snap_toolbox;
+            update_func = update_snap_toolbox;
+            break;
+        default:
+            g_warning("Unexpected toolbox id encountered.");
     }
+
     gpointer ptr = g_object_get_data(G_OBJECT(toolbox), "desktop");
     SPDesktop *old_desktop = static_cast<SPDesktop*>(ptr);
 
@@ -1573,17 +1566,16 @@ toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop, SetupFunction setup_
 
     g_object_set_data(G_OBJECT(toolbox), "desktop", (gpointer)desktop);
 
-    if (desktop) {
+    if (desktop && setup_func && update_func) {
         gtk_widget_set_sensitive(toolbox, TRUE);
         setup_func(toolbox, desktop);
         update_func(desktop, desktop->event_context, toolbox);
-        *conn = desktop->connectEventContextChanged
-            (sigc::bind (sigc::ptr_fun(update_func), toolbox));
+        *conn = desktop->connectEventContextChanged(sigc::bind (sigc::ptr_fun(update_func), toolbox));
     } else {
         gtk_widget_set_sensitive(toolbox, FALSE);
     }
 
-} // end of toolbox_set_desktop()
+} // end of sp_toolbox_set_desktop()
 
 
 static void setupToolboxCommon( GtkWidget *toolbox,
