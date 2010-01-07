@@ -212,7 +212,9 @@ public:
     bool inputExists() const
         {return !_input_stream.empty();}
 
-    bool inputTruncated() const;
+    bool _input_truncated;
+    bool inputTruncated() const
+        {return _input_truncated;}
 
     /** adds a new piece of text to the end of the current list of text to
     be processed. This method can only add text of a consistent style.

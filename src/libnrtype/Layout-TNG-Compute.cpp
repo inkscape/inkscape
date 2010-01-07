@@ -1467,8 +1467,12 @@ bool Layout::Calculator::calculate()
     }
 
     para.free();
-    if (_scanline_maker)
+    if (_scanline_maker) {
         delete _scanline_maker;
+        _flow._input_truncated = false;
+    } else {
+        _flow._input_truncated = true;
+    }
 
     return true;
 }

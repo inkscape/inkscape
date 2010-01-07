@@ -513,8 +513,10 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
                 _glyphs[glyph_index].y = midpoint[1] - _lines.front().baseline_y + tangent[1] * tangent_shift + tangent[0] * normal_shift;
                 _glyphs[glyph_index].rotation += rotation;
             }
+            _input_truncated = false;
         } else {  // outside the bounds of the path: hide the glyphs
             _characters[char_index].in_glyph = -1;
+            _input_truncated = true;
         }
         g_free(midpoint_otp);
 
