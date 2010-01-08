@@ -5,6 +5,7 @@
  * SPDesktopWidget: handling Gtk events on a desktop.
  *
  * Authors:
+ *      Jon A. Cruz <jon@joncruz.org> (c) 2010
  *      John Bintz <jcoswell@coswellproductions.org> (c) 2006
  *      Ralf Stephan <ralf@ark.in-berlin.de> (c) 2005, distrib. under GPL2
  *      ? -2004
@@ -26,13 +27,11 @@
 typedef struct _EgeColorProfTracker EgeColorProfTracker;
 
 
-#define SP_TYPE_DESKTOP_WIDGET (sp_desktop_widget_get_type ())
+#define SP_TYPE_DESKTOP_WIDGET SPDesktopWidget::getType()
 #define SP_DESKTOP_WIDGET(o) (GTK_CHECK_CAST ((o), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidget))
 #define SP_DESKTOP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidgetClass))
 #define SP_IS_DESKTOP_WIDGET(o) (GTK_CHECK_TYPE ((o), SP_TYPE_DESKTOP_WIDGET))
 #define SP_IS_DESKTOP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_DESKTOP_WIDGET))
-
-GtkType sp_desktop_widget_get_type();
 
 void sp_desktop_widget_destroy (SPDesktopWidget* dtw);
 
@@ -40,13 +39,10 @@ void sp_desktop_widget_show_decorations(SPDesktopWidget *dtw, gboolean show);
 void sp_desktop_widget_iconify(SPDesktopWidget *dtw);
 void sp_desktop_widget_maximize(SPDesktopWidget *dtw);
 void sp_desktop_widget_fullscreen(SPDesktopWidget *dtw);
-void sp_desktop_widget_layout(SPDesktopWidget *dtw);
 void sp_desktop_widget_update_zoom(SPDesktopWidget *dtw);
 void sp_desktop_widget_update_rulers (SPDesktopWidget *dtw);
 void sp_desktop_widget_update_hruler (SPDesktopWidget *dtw);
 void sp_desktop_widget_update_vruler (SPDesktopWidget *dtw);
-
-void sp_desktop_widget_update_namedview (SPDesktopWidget *dtw);
 
 /* Show/hide rulers & scrollbars */
 void sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw);
@@ -85,8 +81,6 @@ struct SPDesktopWidget {
     Inkscape::UI::Dialogs::SwatchesPanel *panels;
 
     GtkWidget *hscrollbar, *vscrollbar, *vscrollbar_box;
-
-    GtkWidget *tool_toolbox, *aux_toolbox, *commands_toolbox, *snap_toolbox;
 
     /* Rulers */
     GtkWidget *hruler, *vruler;
@@ -129,8 +123,11 @@ struct SPDesktopWidget {
             { _dtw->updateTitle (uri); }
         virtual Gtk::Window* getWindow()
             { return _dtw->window; }
-        virtual void layout()
-            { sp_desktop_widget_layout (_dtw); }
+
+        virtual void layout() {
+            _dtw->layoutWidgets();
+        }
+
         virtual void present()
             { _dtw->presentWindow(); }
         virtual void getGeometry (gint &x, gint &y, gint &w, gint &h)
@@ -230,6 +227,22 @@ struct SPDesktopWidget {
     bool onFocusInEvent(GdkEventFocus*);
 
     Inkscape::UI::Widget::Dock* getDock();
+
+    static GtkType getType();
+    static SPDesktopWidget* createInstance(SPNamedView *namedview);
+
+    void updateNamedview();
+
+private:
+    GtkWidget *tool_toolbox;
+    GtkWidget *aux_toolbox;
+    GtkWidget *commands_toolbox,;
+    GtkWidget *snap_toolbox;
+
+    static void init(SPDesktopWidget *widget);
+    void layoutWidgets();
+
+    void namedviewModified(SPObject *obj, guint flags);
 
 };
 

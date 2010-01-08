@@ -605,8 +605,10 @@ SPDesktop::change_document (SPDocument *theDocument)
     Gtk::Window *parent = this->getToplevel();
     g_assert(parent != NULL);
     SPDesktopWidget *dtw = (SPDesktopWidget *) parent->get_data("desktopwidget");
-    if (dtw) dtw->desktop = this;
-    sp_desktop_widget_update_namedview(dtw);
+    if (dtw) {
+        dtw->desktop = this;
+    }
+    dtw->updateNamedview();
 
     _namedview_modified (namedview, SP_OBJECT_MODIFIED_FLAG, this);
     _document_replaced_signal.emit (this, theDocument);
