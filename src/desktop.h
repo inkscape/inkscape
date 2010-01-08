@@ -38,10 +38,7 @@
 #include "display/rendermode.h"
 #include "display/snap-indicator.h"
 
-class NRRect;
 class SPCSSAttr;
-struct _GtkWidget;
-typedef struct _GtkWidget GtkWidget;
 struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
