@@ -179,7 +179,7 @@ public:
     sigc::connection _selection_changed_connection;
     sigc::connection _desktop_activated_connection;
 
-    void fitToRect(Geom::Rect const &rect);
+    void fitToRect(Geom::Rect const &rect, bool with_margins = false);
 };
 
 SPDocument *sp_document_new(const gchar *uri, unsigned int keepalive, bool make_new = false);

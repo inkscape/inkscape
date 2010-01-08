@@ -2932,10 +2932,12 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 }
 
 /**
- * Returns true if an undoable change should be recorded.
+ * \param with_margins margins defined in the xml under <sodipodi:namedview>
+ *                     "fit-margin-..." attributes.  See SPDocument::fitToRect.
+ * \return true if an undoable change should be recorded.
  */
 bool
-fit_canvas_to_selection(SPDesktop *desktop)
+fit_canvas_to_selection(SPDesktop *desktop, bool with_margins)
 {
     g_return_val_if_fail(desktop != NULL, false);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -2949,7 +2951,7 @@ fit_canvas_to_selection(SPDesktop *desktop)
     }
     Geom::OptRect const bbox(desktop->selection->bounds());
     if (bbox) {
-        doc->fitToRect(*bbox);
+        doc->fitToRect(*bbox, with_margins);
         return true;
     } else {
         return false;
@@ -2968,8 +2970,12 @@ verb_fit_canvas_to_selection(SPDesktop *const desktop)
     }
 }
 
+/**
+ * \param with_margins margins defined in the xml under <sodipodi:namedview>
+ *                     "fit-margin-..." attributes.  See SPDocument::fitToRect.
+ */
 bool
-fit_canvas_to_drawing(SPDocument *doc)
+fit_canvas_to_drawing(SPDocument *doc, bool with_margins)
 {
     g_return_val_if_fail(doc != NULL, false);
 
@@ -2977,7 +2983,7 @@ fit_canvas_to_drawing(SPDocument *doc)
     SPItem const *const root = SP_ITEM(doc->root);
     Geom::OptRect const bbox(root->getBounds(sp_item_i2d_affine(root)));
     if (bbox) {
-        doc->fitToRect(*bbox);
+        doc->fitToRect(*bbox, with_margins);
         return true;
     } else {
         return false;
@@ -2993,6 +2999,11 @@ verb_fit_canvas_to_drawing(SPDesktop *desktop)
     }
 }
 
+/**
+ * Fits canvas to selection or drawing with margins from <sodipodi:namedview>
+ * "fit-margin-..." attributes.  See SPDocument::fitToRect and
+ * ui/dialog/page-sizer.
+ */
 void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
     g_return_if_fail(desktop != NULL);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -3001,8 +3012,8 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
     g_return_if_fail(desktop->selection != NULL);
 
     bool const changed = ( desktop->selection->isEmpty()
-                           ? fit_canvas_to_drawing(doc)
-                           : fit_canvas_to_selection(desktop) );
+                           ? fit_canvas_to_drawing(doc, true)
+                           : fit_canvas_to_selection(desktop, true) );
     if (changed) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING,
                          _("Fit Page to Selection or Drawing"));

@@ -222,7 +222,7 @@ DocumentProperties::build_page()
     Gtk::Label* label_bor = manage (new Gtk::Label);
     label_bor->set_markup (_("<b>Border</b>"));
     Gtk::Label *label_for = manage (new Gtk::Label);
-    label_for->set_markup (_("<b>Format</b>"));
+    label_for->set_markup (_("<b>Page Size</b>"));
     _page_sizer.init();
 
     Gtk::Widget *const widget_array[] =

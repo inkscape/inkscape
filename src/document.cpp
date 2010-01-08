@@ -615,26 +615,101 @@ Geom::Point sp_document_dimensions(SPDocument *doc)
 }
 
 /**
+ * Gets page fitting margin information from the namedview node in the XML.
+ * \param nv_repr reference to this document's namedview
+ * \param key the same key used by the RegisteredScalarUnit in
+ *        ui/widget/page-sizer.cpp
+ * \param margin_units units for the margin
+ * \param return_units units to return the result in
+ * \param width width in px (for percentage margins)
+ * \param height height in px (for percentage margins)
+ * \param use_width true if the this key is left or right margins, false
+ *        otherwise.  Used for percentage margins.
+ * \return the margin size in px, else 0.0 if anything is invalid.
+ */
+static double getMarginLength(Inkscape::XML::Node * const nv_repr,
+                             gchar const * const key,
+                             SPUnit const * const margin_units,
+                             SPUnit const * const return_units,
+                             double const width,
+                             double const height,
+                             bool const use_width)
+{
+    double value;
+    if (!sp_repr_get_double (nv_repr, key, &value)) {
+        return 0.0;
+    }
+    if (margin_units == &sp_unit_get_by_id (SP_UNIT_PERCENT)) {
+        return (use_width)? width * value : height * value; 
+    }
+    if (!sp_convert_distance (&value, margin_units, return_units)) {
+        return 0.0;
+    }
+    return value;
+}
+
+/**
  * Given a Geom::Rect that may, for example, correspond to the bbox of an object,
  * this function fits the canvas to that rect by resizing the canvas
  * and translating the document root into position.
+ * \param rect fit document size to this
+ * \param with_margins add margins to rect, by taking margins from this
+ *        document's namedview (<sodipodi:namedview> "fit-margin-..."
+ *        attributes, and "units")
  */
-void SPDocument::fitToRect(Geom::Rect const &rect)
+void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
 {
     double const w = rect.width();
     double const h = rect.height();
 
     double const old_height = sp_document_height(this);
     SPUnit const &px(sp_unit_get_by_id(SP_UNIT_PX));
-    sp_document_set_width(this, w, &px);
-    sp_document_set_height(this, h, &px);
-
-    Geom::Translate const tr(Geom::Point(0, (old_height - h))
-                             - to_2geom(rect.min()));
-    SP_GROUP(root)->translateChildItems(tr);
+    
+    /* in px */
+    double margin_top = 0.0;
+    double margin_left = 0.0;
+    double margin_right = 0.0;
+    double margin_bottom = 0.0;
+    
     SPNamedView *nv = sp_document_namedview(this, 0);
+    
+    if (with_margins && nv) {
+        Inkscape::XML::Node *nv_repr = SP_OBJECT_REPR (nv);
+        if (nv_repr != NULL) {
+            gchar const * const units_abbr = nv_repr->attribute("units");
+            SPUnit const *margin_units = NULL;
+            if (units_abbr != NULL) {
+                margin_units = sp_unit_get_by_abbreviation(units_abbr);
+            }
+            if (margin_units == NULL) {
+                margin_units = &sp_unit_get_by_id(SP_UNIT_PX);
+            }
+            margin_top = getMarginLength(nv_repr, "fit-margin-top",
+                                         margin_units, &px, w, h, false);
+            margin_left = getMarginLength(nv_repr, "fit-margin-left",
+                                          margin_units, &px, w, h, true);
+            margin_right = getMarginLength(nv_repr, "fit-margin-right",
+                                           margin_units, &px, w, h, true);
+            margin_bottom = getMarginLength(nv_repr, "fit-margin-bottom",
+                                            margin_units, &px, w, h, false);
+        }
+    }
+    
+    Geom::Rect const rect_with_margins(
+            rect.min() - Geom::Point(margin_left, margin_bottom),
+            rect.max() + Geom::Point(margin_right, margin_top));
+    
+    
+    sp_document_set_width(this, rect_with_margins.width(), &px);
+    sp_document_set_height(this, rect_with_margins.height(), &px);
+
+    Geom::Translate const tr(
+            Geom::Point(0, old_height - rect_with_margins.height())
+            - to_2geom(rect_with_margins.min()));
+    SP_GROUP(root)->translateChildItems(tr);
+
     if(nv) {
-        Geom::Translate tr2(-rect.min());
+        Geom::Translate tr2(-rect_with_margins.min());
         nv->translateGuides(tr2);
 
         // update the viewport so the drawing appears to stay where it was

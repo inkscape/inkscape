@@ -183,24 +183,38 @@ protected:
     Gtk::HBox           _orientationBox;
     Gtk::Label          _orientationLabel;
     Gtk::RadioButton    _portraitButton;
-	Gtk::RadioButton    _landscapeButton;
+    Gtk::RadioButton    _landscapeButton;
     //callbacks
     void on_portrait();
     void on_landscape();
     sigc::connection    _portrait_connection;
-	sigc::connection    _landscape_connection;
+    sigc::connection    _landscape_connection;
 
     //### Custom size frame
     Gtk::Frame           _customFrame;
-    Gtk::Table           _customTable;
+    Gtk::Table           _customDimTable;
     RegisteredUnitMenu   _dimensionUnits;
     RegisteredScalarUnit _dimensionWidth;
-	RegisteredScalarUnit _dimensionHeight;
-	Gtk::Button          _fitPageButton;
+    RegisteredScalarUnit _dimensionHeight;
+
+    //### Fit Page options
+    Gtk::Expander        _fitPageMarginExpander;
+    Gtk::Table           _marginTable;
+    Gtk::Alignment       _marginTopAlign;
+    Gtk::Alignment       _marginLeftAlign;
+    Gtk::Alignment       _marginRightAlign;
+    Gtk::Alignment       _marginBottomAlign;
+    RegisteredScalar     _marginTop;
+    RegisteredScalar     _marginLeft;
+    RegisteredScalar     _marginRight;
+    RegisteredScalar     _marginBottom;
+    Gtk::Alignment       _fitPageButtonAlign;
+    Gtk::Button          _fitPageButton;
+
     //callback
     void on_value_changed();
     sigc::connection    _changedw_connection;
-	sigc::connection    _changedh_connection;
+    sigc::connection    _changedh_connection;
 
     Registry            *_widgetRegistry;
 

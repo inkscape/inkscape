@@ -229,6 +229,11 @@ PageSizer::PageSizer(Registry & _wr)
       _dimensionUnits( _("U_nits:"), "units", _wr ),
       _dimensionWidth( _("_Width:"), _("Width of paper"), "width", _dimensionUnits, _wr ),
       _dimensionHeight( _("_Height:"), _("Height of paper"), "height", _dimensionUnits, _wr ),
+      _marginTop( _("T_op margin:"), _("Top margin"), "fit-margin-top", _wr ),
+      _marginLeft( _("L_eft:"), _("Left margin"), "fit-margin-left", _wr),
+      _marginRight( _("Ri_ght:"), _("Right margin"), "fit-margin-right", _wr),
+      _marginBottom( _("Botto_m:"), _("Bottom margin"), "fit-margin-bottom", _wr),
+      
       _widgetRegistry(&_wr)
 {
     //# Set up the Paper Size combo box
@@ -273,16 +278,11 @@ PageSizer::PageSizer(Registry & _wr)
     //    _paperSizeListSelection->select(iter);
 
 
-    pack_start (_paperSizeListBox, true, true, 0);
-    _paperSizeListLabel.set_label(_("P_age size:"));
-    _paperSizeListLabel.set_use_underline();
-    _paperSizeListBox.pack_start (_paperSizeListLabel, false, false, 0);
-    _paperSizeListLabel.set_mnemonic_widget (_paperSizeList);
-    _paperSizeListBox.pack_start (_paperSizeListScroller, true, true, 0);
+    pack_start (_paperSizeListScroller, true, true, 0);
 
     //## Set up orientation radio buttons
     pack_start (_orientationBox, false, false, 0);
-    _orientationLabel.set_label(_("Page orientation:"));
+    _orientationLabel.set_label(_("Orientation:"));
     _orientationBox.pack_start(_orientationLabel, false, false, 0);
     _landscapeButton.set_use_underline();
     _landscapeButton.set_label(_("_Landscape"));
@@ -299,19 +299,48 @@ PageSizer::PageSizer(Registry & _wr)
     //## Set up custom size frame
     _customFrame.set_label(_("Custom size"));
     pack_start (_customFrame, false, false, 0);
-    _customTable.resize(2, 2);
-    _customTable.set_border_width (4);
-    _customTable.set_row_spacings (4);
-    _customTable.set_col_spacings (4);
-    _customTable.attach(_dimensionWidth, 0,1,0,1);
-    _customTable.attach(_dimensionUnits, 1,2,0,1);
-    _customTable.attach(_dimensionHeight, 0,1,1,2);
-    _customTable.attach(_fitPageButton,              1,2,1,2);
-    _customFrame.add(_customTable);
+    _customFrame.add(_customDimTable);
 
+    _customDimTable.resize(3, 2);
+    _customDimTable.set_border_width(4);
+    _customDimTable.set_row_spacings(4);
+    _customDimTable.set_col_spacings(4);
+    _customDimTable.attach(_dimensionWidth,        0,1, 0,1);
+    _customDimTable.attach(_dimensionUnits,        1,2, 0,1);
+    _customDimTable.attach(_dimensionHeight,       0,1, 1,2);
+    _customDimTable.attach(_fitPageMarginExpander, 0,2, 2,3);
+    
+    //## Set up fit page expander
+    _fitPageMarginExpander.set_label(_("Resi_ze page to content..."));
+    _fitPageMarginExpander.set_use_underline();
+    _fitPageMarginExpander.add(_marginTable);
+    
+    //## Set up margin settings
+    _marginTable.resize(4, 2);
+    _marginTable.set_border_width(4);
+    _marginTable.set_row_spacings(4);
+    _marginTable.set_col_spacings(4);
+    _marginTable.attach(_fitPageButtonAlign, 0,2, 0,1);
+    _marginTable.attach(_marginTopAlign,     0,2, 1,2);
+    _marginTable.attach(_marginLeftAlign,    0,1, 2,3);
+    _marginTable.attach(_marginRightAlign,   1,2, 2,3);
+    _marginTable.attach(_marginBottomAlign,  0,2, 3,4);
+    
+    _marginTopAlign.set(0.5, 0.5, 0.0, 1.0);
+    _marginTopAlign.add(_marginTop);
+    _marginLeftAlign.set(0.0, 0.5, 0.0, 1.0);
+    _marginLeftAlign.add(_marginLeft);
+    _marginRightAlign.set(1.0, 0.5, 0.0, 1.0);
+    _marginRightAlign.add(_marginRight);
+    _marginBottomAlign.set(0.5, 0.5, 0.0, 1.0);
+    _marginBottomAlign.add(_marginBottom);
+    
+    _fitPageButtonAlign.set(0.5, 0.5, 0.0, 1.0);
+    _fitPageButtonAlign.add(_fitPageButton);
     _fitPageButton.set_use_underline();
-    _fitPageButton.set_label(_("_Fit page to selection"));
+    _fitPageButton.set_label(_("_Resize page to drawing or selection"));
     _tips.set_tip(_fitPageButton, _("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
+
 }
 
 
@@ -343,7 +372,7 @@ PageSizer::init ()
 /**
  * Set document dimensions (if not called by Doc prop's update()) and
  * set the PageSizer's widgets and text entries accordingly. If
- * 'chageList' is true, then adjust the paperSizeList to show the closest
+ * 'changeList' is true, then adjust the paperSizeList to show the closest
  * standard page size.
  *
  * \param w, h given in px
@@ -454,7 +483,7 @@ PageSizer::find_paper_size (double w, double h) const
 
 
 /**
- * Tell the desktop to change the page size
+ * Tell the desktop to fit the page size to the selection or drawing.
  */
 void
 PageSizer::fire_fit_canvas_to_selection_or_drawing()
