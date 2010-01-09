@@ -331,7 +331,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
 
     dtw->snap_toolbox = ToolboxFactory::createSnapToolbox();
-    gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->snap_toolbox, FALSE, TRUE, 0);
+    ToolboxFactory::setOrientation( dtw->snap_toolbox, GTK_ORIENTATION_VERTICAL );
+    gtk_box_pack_end (GTK_BOX (hbox), dtw->snap_toolbox, FALSE, TRUE, 0);
 
     dtw->commands_toolbox = ToolboxFactory::createCommandsToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->commands_toolbox, FALSE, TRUE, 0);
