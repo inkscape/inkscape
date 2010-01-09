@@ -511,9 +511,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
             /* Snap it along best vector */
             SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
             m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
-            Geom::Point pt2g = to_2geom(p);
-            m.constrainedSnapReturnByRef( Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE, Inkscape::Snapper::ConstraintLine(best), false);
-            p = from_2geom(pt2g);
+            m.constrainedSnapReturnByRef( Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE, Inkscape::Snapper::ConstraintLine(best));
         }
     }
 }

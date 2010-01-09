@@ -20,6 +20,7 @@
 #include "snapped-line.h"
 #include "snapped-curve.h"
 #include "snap-preferences.h"
+#include "snap-candidate.h"
 
 struct SnappedConstraints {
     std::list<Inkscape::SnappedPoint> points;
@@ -34,7 +35,6 @@ struct SPItem;
 
 namespace Inkscape
 {
-
 /// Parent for classes that can snap points to something
 class Snapper
 {
@@ -59,12 +59,10 @@ public:
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
                           SnapPreferences::PointType const &/*t*/,
-                          Geom::Point const &/*p*/,
-                          SnapSourceType const &/*source_type*/,
-                          long /*source_num*/,
+                          Inkscape::SnapCandidatePoint const &/*p*/,
                           Geom::OptRect const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
-                          std::vector<std::pair<Geom::Point, int> > */*unselected_nodes*/) const {};
+                          std::vector<SnapCandidatePoint> */*unselected_nodes*/) const {};
 
     class ConstraintLine
     {
@@ -104,9 +102,7 @@ public:
 
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
                                  SnapPreferences::PointType const &/*t*/,
-                                 Geom::Point const &/*p*/,
-                                 SnapSourceType const &/*source_type*/,
-                                 long /*source_num*/,
+                                 Inkscape::SnapCandidatePoint const &/*p*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,
                                  std::vector<SPItem const *> const */*it*/) const {};

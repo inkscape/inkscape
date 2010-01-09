@@ -9,7 +9,7 @@
 class SPGuideConstraint;
 
 void satisfied_guide_cns(SPDesktop const &desktop,
-                         SnapPointsWithType const &snappoints,
+                         std::vector<Inkscape::SnapCandidatePoint> const &snappoints,
                          std::vector<SPGuideConstraint> &cns);
 
 

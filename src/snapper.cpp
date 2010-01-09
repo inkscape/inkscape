@@ -19,9 +19,9 @@
  *  \param d Snap tolerance.
  */
 Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const /*t*/) :
-	_snapmanager(sm),
-	_snap_enabled(true),
-	_snap_visible_only(true)
+    _snapmanager(sm),
+    _snap_enabled(true),
+    _snap_visible_only(true)
 {
     g_assert(_snapmanager != NULL);
 }

@@ -20,7 +20,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
- * Copyright (C) 2000-2009 Authors
+ * Copyright (C) 2000-2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -69,13 +69,13 @@ public:
     void setup(SPDesktop const *desktop,
             bool snapindicator = true,
             SPItem const *item_to_ignore = NULL,
-            std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+            std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
             SPGuide *guide_to_ignore = NULL);
 
     void setup(SPDesktop const *desktop,
             bool snapindicator,
             std::vector<SPItem const *> &items_to_ignore,
-            std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+            std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
             SPGuide *guide_to_ignore = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
@@ -83,14 +83,10 @@ public:
     void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                                 Geom::Point &p,
                                 Inkscape::SnapSourceType const source_type,
-                                long source_num = 0,
                                 Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-
-    Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType point_type,
-                                    Geom::Point const &p,
-                                    Inkscape::SnapSourceType const &source_type,
-                                    long source_num = 0,
+    Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType const point_type,
+                                    Inkscape::SnapCandidatePoint const &p,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
 
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
@@ -101,44 +97,41 @@ public:
                                     Geom::Point &p,
                                     Inkscape::SnapSourceType const source_type,
                                     Inkscape::Snapper::ConstraintLine const &constraint,
-                                    long source_num = 0,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-    Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
-                                           Geom::Point const &p,
-                                           Inkscape::SnapSourceType const &source_type,
+    Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType const point_type,
+                                           Inkscape::SnapCandidatePoint const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
-                                           long source_num = 0,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const;
     void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
 
     Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
-                                               std::vector<std::pair<Geom::Point, int> > const &p,
+                                               std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
                                                Geom::Point const &tr) const;
 
     Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
-                                                      std::vector<std::pair<Geom::Point, int> > const &p,
+                                                      std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                       Geom::Point const &pointer,
                                                       Inkscape::Snapper::ConstraintLine const &constraint,
                                                       Geom::Point const &tr) const;
 
     Inkscape::SnappedPoint freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
-                                         std::vector<std::pair<Geom::Point, int> > const &p,
+                                         std::vector<Inkscape::SnapCandidatePoint> const &p,
                                          Geom::Point const &pointer,
                                          Geom::Scale const &s,
                                          Geom::Point const &o) const;
 
     Inkscape::SnappedPoint constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
-                                                std::vector<std::pair<Geom::Point, int> > const &p,
+                                                std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                 Geom::Point const &pointer,
                                                 Geom::Scale const &s,
                                                 Geom::Point const &o) const;
 
     Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
-                                                  std::vector<std::pair<Geom::Point, int> > const &p,
+                                                  std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                   Geom::Point const &pointer,
                                                   Geom::Coord const &s,
                                                   Geom::Point const &o,
@@ -146,7 +139,7 @@ public:
                                                   bool uniform) const;
 
     Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
-                                               std::vector<std::pair<Geom::Point, int> > const &p,
+                                               std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
@@ -167,7 +160,7 @@ public:
 
     bool getSnapIndicator() const {return _snapindicator;}
 
-    Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, Inkscape::SnapSourceType const source_type, SnappedConstraints &sc, bool constrained, bool noCurves = false) const;
+    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, SnappedConstraints const &sc, bool constrained, bool noCurves = false) const;
 
 protected:
     SPNamedView const *_named_view;
@@ -178,13 +171,13 @@ private:
     SPGuide *_guide_to_ignore; ///< A guide that should not be snapped to, e.g. the guide that is currently being dragged
     SPDesktop const *_desktop;
     bool _snapindicator; ///< When true, an indicator will be drawn at the position that was being snapped to
-    std::vector<std::pair<Geom::Point, int> > *_unselected_nodes; ///< Nodes of the path that is currently being edited and which have not been selected and which will therefore be stationary. Only these nodes will be considered for snapping to. Of each unselected node both the position (Geom::Point) and the type (Inkscape::SnapTargetType) will be stored
+    std::vector<Inkscape::SnapCandidatePoint> *_unselected_nodes; ///< Nodes of the path that is currently being edited and which have not been selected and which will therefore be stationary. Only these nodes will be considered for snapping to. Of each unselected node both the position (Geom::Point) and the type (Inkscape::SnapTargetType) will be stored
     //TODO: Make _unselected_nodes type safe; in the line above int is used for Inkscape::SnapTargetType, but if I remember
     //correctly then in other cases the int is being used for Inkscape::SnapSourceType, or for both. How to make
     //this type safe?
 
     Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
-                                            std::vector<std::pair<Geom::Point, int> > const &points,
+                                            std::vector<Inkscape::SnapCandidatePoint> const &points,
                                             Geom::Point const &pointer,
                                             bool constrained,
                                             Inkscape::Snapper::ConstraintLine const &constraint,
@@ -194,14 +187,14 @@ private:
                                             Geom::Dim2 dim,
                                             bool uniform) const;
 
-    Geom::Point _transformPoint(std::pair<Geom::Point, int> const &p,
+    Geom::Point _transformPoint(Inkscape::SnapCandidatePoint const &p,
                                             Transformation const transformation_type,
                                             Geom::Point const &transformation,
                                             Geom::Point const &origin,
                                             Geom::Dim2 const dim,
                                             bool const uniform) const;
 
-    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, std::pair<Geom::Point, int> const &p) const;
+    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Inkscape::SnapCandidatePoint const &p) const;
 };
 
 #endif /* !SEEN_SNAP_H */

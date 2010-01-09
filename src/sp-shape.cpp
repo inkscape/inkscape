@@ -68,7 +68,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
 static NRArenaItem *sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_shape_hide (SPItem *item, unsigned int key);
-static void sp_shape_snappoints (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_shape_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
 
@@ -1149,7 +1149,7 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 /**
  * Return all nodes in a path that are to be considered for snapping
  */
-static void sp_shape_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_SHAPE(item));
@@ -1161,7 +1161,7 @@ static void sp_shape_snappoints(SPItem const *item, bool const target, SnapPoint
 
     // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
     if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
-    	return;
+        return;
     }
 
     Geom::PathVector const &pathv = shape->curve->get_pathvector();
@@ -1170,20 +1170,16 @@ static void sp_shape_snappoints(SPItem const *item, bool const target, SnapPoint
 
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
 
-    int type;
-
-	if (snapprefs->getSnapObjectMidpoints()) {
-		Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
-		if (bbox) {
-			type = target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT);
-			p.push_back(std::make_pair(bbox->midpoint(), type));
-		}
-	}
+    if (snapprefs->getSnapObjectMidpoints()) {
+        Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
+        if (bbox) {
+            p.push_back(Inkscape::SnapCandidatePoint(bbox->midpoint(), Inkscape::SNAPSOURCE_OBJECT_MIDPOINT, Inkscape::SNAPTARGET_OBJECT_MIDPOINT));
+        }
+    }
 
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
         if (snapprefs->getSnapToItemNode()) {
-        	type = target ? int(Inkscape::SNAPTARGET_NODE_CUSP) : int(Inkscape::SNAPSOURCE_NODE_CUSP);
-        	p.push_back(std::make_pair(path_it->initialPoint() * i2d, type));
+            p.push_back(Inkscape::SnapCandidatePoint(path_it->initialPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
 
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
@@ -1202,17 +1198,15 @@ static void sp_shape_snappoints(SPItem const *item, bool const target, SnapPoint
             bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
 
             if (c1 || c2) {
-            	type = target ? int(Inkscape::SNAPTARGET_NODE_CUSP) : int(Inkscape::SNAPSOURCE_NODE_CUSP);
-				p.push_back(std::make_pair(curve_it1->finalPoint() * i2d, type));
+                p.push_back(Inkscape::SnapCandidatePoint(curve_it1->finalPoint() * i2d, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
             }
 
-			// Consider midpoints of line segments for snapping
-			if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
-				if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
-					type = target ? int(Inkscape::SNAPTARGET_LINE_MIDPOINT) : int(Inkscape::SNAPSOURCE_LINE_MIDPOINT);
-					p.push_back(std::make_pair(Geom::middle_point(*line_segment) * i2d, type));
-				}
-			}
+            // Consider midpoints of line segments for snapping
+            if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+                if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
+                    p.push_back(Inkscape::SnapCandidatePoint(Geom::middle_point(*line_segment) * i2d, Inkscape::SNAPSOURCE_LINE_MIDPOINT, Inkscape::SNAPTARGET_LINE_MIDPOINT));
+                }
+            }
 
             ++curve_it1;
             ++curve_it2;
@@ -1226,8 +1220,7 @@ static void sp_shape_snappoints(SPItem const *item, bool const target, SnapPoint
             if (cs.size() > 0) { // There might be multiple intersections...
                 for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
                     Geom::Point p_ix = (*path_it).pointAt((*i).ta);
-                    type = target ? int(Inkscape::SNAPTARGET_PATH_INTERSECTION) : int(Inkscape::SNAPSOURCE_PATH_INTERSECTION);
-                    p.push_back(std::make_pair(p_ix * i2d, type));
+                    p.push_back(Inkscape::SnapCandidatePoint(p_ix * i2d, Inkscape::SNAPSOURCE_PATH_INTERSECTION, Inkscape::SNAPTARGET_PATH_INTERSECTION));
                 }
             }
         }

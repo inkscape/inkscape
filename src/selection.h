@@ -272,13 +272,13 @@ public:
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */
-    std::vector<std::pair<Geom::Point, int> > getSnapPoints(SnapPreferences const *snapprefs) const;
+    std::vector<Inkscape::SnapCandidatePoint> getSnapPoints(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Gets the snap points of a selection that form a convex hull.
      * @return Selection's convex hull points
      */
-    std::vector<std::pair<Geom::Point, int> > getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
+    std::vector<Inkscape::SnapCandidatePoint> getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Connects a slot to be notified of selection changes

@@ -6,14 +6,14 @@
 #include <approx-equal.h>
 
 void satisfied_guide_cns(SPDesktop const &desktop,
-                         SnapPointsWithType const &snappoints,
+                         std::vector<Inkscape::SnapCandidatePoint> const &snappoints,
                          std::vector<SPGuideConstraint> &cns)
 {
     SPNamedView const &nv = *sp_desktop_namedview(&desktop);
     for (GSList const *l = nv.guides; l != NULL; l = l->next) {
         SPGuide &g = *SP_GUIDE(l->data);
         for (unsigned int i = 0; i < snappoints.size(); ++i) {
-            if (approx_equal( sp_guide_distance_from_pt(&g, snappoints[i].first), 0) ) {
+            if (approx_equal( sp_guide_distance_from_pt(&g, snappoints[i].getPoint()), 0) ) {
                 cns.push_back(SPGuideConstraint(&g, i));
             }
         }

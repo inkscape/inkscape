@@ -44,7 +44,7 @@
 #include <glibmm/i18n.h>
 #include "xml/quote.h"
 #include <xml/repr.h>
-
+#include "snap-candidate.h"
 #include "libnr/nr-matrix-fns.h"
 
 #include "io/sys.h"
@@ -86,7 +86,7 @@ static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Doc
 static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_image_description (SPItem * item);
-static void sp_image_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static NRArenaItem *sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static Geom::Matrix sp_image_set_transform (SPItem *item, Geom::Matrix const &xform);
 static void sp_image_set_curve(SPImage *image);
@@ -1332,7 +1332,7 @@ sp_image_update_canvas_image (SPImage *image)
     }
 }
 
-static void sp_image_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_image_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     /* An image doesn't have any nodes to snap, but still we want to be able snap one image
     to another. Therefore we will create some snappoints at the corner, similar to a rect. If
@@ -1354,12 +1354,10 @@ static void sp_image_snappoints(SPItem const *item, bool const target, SnapPoint
         double const x1 = x0 + image.width.computed;
         double const y1 = y0 + image.height.computed;
         Geom::Matrix const i2d (sp_item_i2d_affine (item));
-        Geom::Point pt;
-        int type = target ? int(Inkscape::SNAPTARGET_CORNER) : int(Inkscape::SNAPSOURCE_CORNER);
-        p.push_back(std::make_pair(Geom::Point(x0, y0) * i2d, type));
-        p.push_back(std::make_pair(Geom::Point(x0, y1) * i2d, type));
-        p.push_back(std::make_pair(Geom::Point(x1, y1) * i2d, type));
-        p.push_back(std::make_pair(Geom::Point(x1, y0) * i2d, type));
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x0, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y1) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
+        p.push_back(Inkscape::SnapCandidatePoint(Geom::Point(x1, y0) * i2d, Inkscape::SNAPSOURCE_CORNER, Inkscape::SNAPTARGET_CORNER));
     }
 }
 

@@ -52,7 +52,7 @@ static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
 static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
-static void sp_use_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_use_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
 static NRArenaItem *sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
@@ -742,7 +742,7 @@ sp_use_get_original(SPUse *use)
 }
 
 static void
-sp_use_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
+sp_use_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
@@ -755,7 +755,7 @@ sp_use_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, 
 
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(root);
     if (item_class.snappoints) {
-        item_class.snappoints(root, target, p, snapprefs);
+        item_class.snappoints(root, p, snapprefs);
     }
 }
 

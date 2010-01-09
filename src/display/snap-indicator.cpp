@@ -40,7 +40,7 @@ SnapIndicator::~SnapIndicator()
 }
 
 void
-SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
+SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
 {
     remove_snaptarget(); //only display one snaptarget at a time
 
@@ -264,7 +264,7 @@ SnapIndicator::remove_snaptarget()
 }
 
 void
-SnapIndicator::set_new_snapsource(std::pair<Geom::Point, int> const p)
+SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
 {
     remove_snapsource();
 
@@ -284,7 +284,7 @@ SnapIndicator::set_new_snapsource(std::pair<Geom::Point, int> const p)
                                                         "shape", SP_KNOT_SHAPE_CIRCLE,
                                                         NULL );
 
-        SP_CTRL(canvasitem)->moveto(p.first);
+        SP_CTRL(canvasitem)->moveto(p.getPoint());
         _snapsource = _desktop->add_temporary_canvasitem(canvasitem, 1000);
     }
 }

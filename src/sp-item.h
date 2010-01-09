@@ -26,14 +26,14 @@
 #include <2geom/forward.h>
 #include <libnr/nr-convert2geom.h>
 #include <snap-preferences.h>
-#include <snapped-point.h>
+#include "snap-candidate.h"
 
 class SPGuideConstraint;
 struct SPClipPathReference;
 struct SPMaskReference;
 struct SPAvoidRef;
 struct SPPrintContext;
-namespace Inkscape { class URIReference; }
+namespace Inkscape { class URIReference;}
 
 enum {
     SP_EVENT_INVALID,
@@ -171,8 +171,6 @@ private:
     mutable EvaluatedStatus _evaluated_status;
 };
 
-typedef std::vector<std::pair<Geom::Point, int> > SnapPointsWithType; // int is either of these enums: Inkscape::SnapTargetType or Inkscape::SnapSourceType
-
 /// The SPItem vtable.
 struct SPItemClass {
     SPObjectClass parent_class;
@@ -193,7 +191,7 @@ struct SPItemClass {
     /** Write to an iterator the points that should be considered for snapping
      * as the item's `nodes'.
      */
-    void (* snappoints) (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+    void (* snappoints) (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
     /** Apply the transform optimally, and return any residual transformation */
     Geom::Matrix (* set_transform)(SPItem *item, Geom::Matrix const &transform);
@@ -226,7 +224,7 @@ unsigned int sp_item_display_key_new(unsigned int numkeys);
 NRArenaItem *sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 void sp_item_invoke_hide(SPItem *item, unsigned int key);
 
-void sp_item_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+void sp_item_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
 void sp_item_adjust_pattern(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
 void sp_item_adjust_gradient(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);

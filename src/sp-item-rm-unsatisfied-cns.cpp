@@ -14,14 +14,14 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
     if (item.constraints.empty()) {
         return;
     }
-    SnapPointsWithType snappoints;
-    sp_item_snappoints(&item, false, snappoints, NULL);
+    std::vector<Inkscape::SnapCandidatePoint> snappoints;
+    sp_item_snappoints(&item, snappoints, NULL);
     for (unsigned i = item.constraints.size(); i--;) {
         g_assert( i < item.constraints.size() );
         SPGuideConstraint const &cn = item.constraints[i];
         int const snappoint_ix = cn.snappoint_ix;
         g_assert( snappoint_ix < int(snappoints.size()) );
-        if (!approx_equal( sp_guide_distance_from_pt(cn.g, snappoints[snappoint_ix].first), 0) ) {
+        if (!approx_equal( sp_guide_distance_from_pt(cn.g, snappoints[snappoint_ix].getPoint()), 0) ) {
             remove_last(cn.g->attached_items, SPGuideAttachment(&item, cn.snappoint_ix));
             g_assert( i < item.constraints.size() );
             vector<SPGuideConstraint>::iterator const ei(&item.constraints[i]);

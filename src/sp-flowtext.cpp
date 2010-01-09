@@ -49,7 +49,7 @@ static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
-static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 static NRArenaItem *sp_flowtext_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
 static void sp_flowtext_hide(SPItem *item, unsigned key);
 
@@ -384,7 +384,7 @@ static gchar *sp_flowtext_description(SPItem *item)
     }
 }
 
-static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     // Choose a point on the baseline for snapping from or to, with the horizontal position
     // of this point depending on the text alignment (left vs. right)
@@ -392,8 +392,7 @@ static void sp_flowtext_snappoints(SPItem const *item, bool const target, SnapPo
     if (layout != NULL && layout->outputExists()) {
         boost::optional<Geom::Point> pt = layout->baselineAnchorPoint();
         if (pt) {
-            int type = target ? int(Inkscape::SNAPTARGET_TEXT_BASELINE) : int(Inkscape::SNAPSOURCE_TEXT_BASELINE);
-            p.push_back(std::make_pair((*pt) * sp_item_i2d_affine(item), type));
+            p.push_back(Inkscape::SnapCandidatePoint((*pt) * sp_item_i2d_affine(item), Inkscape::SNAPSOURCE_TEXT_BASELINE, Inkscape::SNAPTARGET_TEXT_BASELINE));
         }
     }
 }

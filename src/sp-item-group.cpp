@@ -69,7 +69,7 @@ static void sp_group_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_group_description (SPItem * item);
 static NRArenaItem *sp_group_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_group_hide (SPItem * item, unsigned int key);
-static void sp_group_snappoints (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_group_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
 static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
@@ -320,14 +320,14 @@ sp_group_hide (SPItem *item, unsigned int key)
     SP_GROUP(item)->group->hide(key);
 }
 
-static void sp_group_snappoints (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_group_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     for (SPObject const *o = sp_object_first_child(SP_OBJECT(item));
          o != NULL;
          o = SP_OBJECT_NEXT(o))
     {
         if (SP_IS_ITEM(o)) {
-            sp_item_snappoints(SP_ITEM(o), target, p, snapprefs);
+            sp_item_snappoints(SP_ITEM(o), p, snapprefs);
         }
     }
 }

@@ -18,6 +18,7 @@
 
 namespace Inkscape
 {
+class SnapCandidatePoint;
 
 class LineSnapper : public Snapper
 {
@@ -26,18 +27,14 @@ public:
 
   void freeSnap(SnappedConstraints &sc,
                    Inkscape::SnapPreferences::PointType const &t,
-                   Geom::Point const &p,
-                   SnapSourceType const &source_type,
-                   long source_num,
+                   Inkscape::SnapCandidatePoint const &p,
                    Geom::OptRect const &bbox_to_snap,
                    std::vector<SPItem const *> const *it,
-                   std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const;
+                   std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes) const;
 
   void constrainedSnap(SnappedConstraints &sc,
                           Inkscape::SnapPreferences::PointType const &t,
-                          Geom::Point const &p,
-                          SnapSourceType const &source_type,
-                          long source_num,
+                          Inkscape::SnapCandidatePoint const &p,
                           Geom::OptRect const &bbox_to_snap,
                           ConstraintLine const &c,
                           std::vector<SPItem const *> const *it) const;

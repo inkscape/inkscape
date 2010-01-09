@@ -29,11 +29,10 @@
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
-
 #include "document.h"
 #include "sp-ellipse.h"
-
 #include "preferences.h"
+#include "snap-candidate.h"
 
 /* Common parent class */
 
@@ -73,7 +72,7 @@ static void sp_genericellipse_init(SPGenericEllipse *ellipse);
 
 static void sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags);
 
-static void sp_genericellipse_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_genericellipse_set_shape(SPShape *shape);
 static void sp_genericellipse_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -270,15 +269,15 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     curve->unref();
 }
 
-static void sp_genericellipse_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_GENERICELLIPSE(item));
 
     // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
-	if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
-		return;
-	}
+    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+        return;
+    }
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
@@ -305,19 +304,19 @@ static void sp_genericellipse_snappoints(SPItem const *item, bool const target, 
     // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
     if (snapprefs->getSnapToItemNode()) { //TODO: Make a separate snap option toggle for this?
-		double angle = 0;
-		for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
-			if (angle >= ellipse->start && angle <= ellipse->end) {
-				pt = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
-				p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT) : int(Inkscape::SNAPSOURCE_ELLIPSE_QUADRANT_POINT)));
-			}
-		}
+        double angle = 0;
+        for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
+            if (angle >= ellipse->start && angle <= ellipse->end) {
+                pt = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
+                p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_ELLIPSE_QUADRANT_POINT, Inkscape::SNAPTARGET_ELLIPSE_QUADRANT_POINT));
+            }
+        }
     }
 
     // Add the centre, if we have a closed slice or when explicitly asked for
     if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
-    	pt = Geom::Point(cx, cy) * i2d;
-    	p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_CENTER) : int(Inkscape::SNAPSOURCE_CENTER)));
+        pt = Geom::Point(cx, cy) * i2d;
+        p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_CENTER, Inkscape::SNAPTARGET_CENTER));
     }
 
     // And if we have a slice, also snap to the endpoints
@@ -325,12 +324,12 @@ static void sp_genericellipse_snappoints(SPItem const *item, bool const target, 
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
             pt = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
-            p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_NODE_CUSP) : int(Inkscape::SNAPSOURCE_NODE_CUSP)));
+            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
         // Add the end point, if it's not coincident with a quadrant point
         if (fmod(ellipse->end, M_PI_2) != 0.0 ) {
             pt = Geom::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
-            p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_NODE_CUSP) : int(Inkscape::SNAPSOURCE_NODE_CUSP)));
+            p.push_back(Inkscape::SnapCandidatePoint(pt, Inkscape::SNAPSOURCE_NODE_CUSP, Inkscape::SNAPTARGET_NODE_CUSP));
         }
     }
 }

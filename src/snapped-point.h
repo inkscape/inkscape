@@ -16,61 +16,10 @@
 #include <list>
 #include <libnr/nr-values.h> //Because of NR_HUGE
 #include <2geom/geom.h>
+#include <snap-candidate.h>
 
 namespace Inkscape
 {
-
-enum SnapTargetType {
-    SNAPTARGET_UNDEFINED = 0,
-    SNAPTARGET_GRID,
-    SNAPTARGET_GRID_INTERSECTION,
-    SNAPTARGET_GUIDE,
-    SNAPTARGET_GUIDE_INTERSECTION,
-    SNAPTARGET_GUIDE_ORIGIN,
-    SNAPTARGET_GRID_GUIDE_INTERSECTION,
-    SNAPTARGET_NODE_SMOOTH,
-    SNAPTARGET_NODE_CUSP,
-    SNAPTARGET_LINE_MIDPOINT,
-    SNAPTARGET_OBJECT_MIDPOINT,
-    SNAPTARGET_ROTATION_CENTER,
-    SNAPTARGET_HANDLE,
-    SNAPTARGET_PATH,
-    SNAPTARGET_PATH_INTERSECTION,
-    SNAPTARGET_BBOX_CORNER,
-    SNAPTARGET_BBOX_EDGE,
-    SNAPTARGET_BBOX_EDGE_MIDPOINT,
-    SNAPTARGET_BBOX_MIDPOINT,
-    SNAPTARGET_PAGE_BORDER,
-    SNAPTARGET_PAGE_CORNER,
-    SNAPTARGET_CONVEX_HULL_CORNER,
-    SNAPTARGET_ELLIPSE_QUADRANT_POINT,
-    SNAPTARGET_CENTER, // of ellipse
-    SNAPTARGET_CORNER, // of image or of rectangle
-    SNAPTARGET_TEXT_BASELINE,
-    SNAPTARGET_CONSTRAINED_ANGLE
-};
-
-enum SnapSourceType {
-    SNAPSOURCE_UNDEFINED = 0,
-    SNAPSOURCE_BBOX_CORNER,
-    SNAPSOURCE_BBOX_MIDPOINT,
-    SNAPSOURCE_BBOX_EDGE_MIDPOINT,
-    SNAPSOURCE_NODE_SMOOTH,
-    SNAPSOURCE_NODE_CUSP,
-    SNAPSOURCE_LINE_MIDPOINT,
-    SNAPSOURCE_OBJECT_MIDPOINT,
-    SNAPSOURCE_ROTATION_CENTER,
-    SNAPSOURCE_HANDLE,
-    SNAPSOURCE_PATH_INTERSECTION,
-    SNAPSOURCE_GUIDE,
-    SNAPSOURCE_GUIDE_ORIGIN,
-    SNAPSOURCE_CONVEX_HULL_CORNER,
-    SNAPSOURCE_ELLIPSE_QUADRANT_POINT,
-    SNAPSOURCE_CENTER, // of ellipse
-    SNAPSOURCE_CORNER, // of image or of rectangle
-    SNAPSOURCE_TEXT_BASELINE
-};
-
 
 /// Class describing the result of an attempt to snap.
 class SnappedPoint
@@ -78,8 +27,10 @@ class SnappedPoint
 
 public:
     SnappedPoint();
+    SnappedPoint(Geom::Point const &p);
     SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
     SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
+    SnappedPoint(SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
     Geom::Coord getSnapDistance() const {return _distance;}
@@ -114,6 +65,8 @@ public:
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
+    void setTargetBBox(Geom::Rect const target) {_target_bbox = target;}
+    Geom::Rect & getTargetBBox() {return _target_bbox;}
     void setSource(SnapSourceType const source) {_source = source;}
     SnapSourceType getSource() const {return _source;}
     long getSourceNum() const {return _source_num;}
@@ -164,13 +117,15 @@ protected:
     bool _second_always_snap;
     /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
     Geom::Point _transformation;
+    /* The bounding box we've snapped to (when applicable); will be used by the snapindicator */
+    Geom::Rect _target_bbox;
     /* Distance from the un-transformed point to the mouse pointer, measured at the point in time when dragging started */
     Geom::Coord _pointer_distance;
 };
 
 }// end of namespace Inkscape
 
-bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoint &result);
+bool getClosestSP(std::list<Inkscape::SnappedPoint> const &list, Inkscape::SnappedPoint &result);
 
 #endif /* !SEEN_SNAPPEDPOINT_H */
 

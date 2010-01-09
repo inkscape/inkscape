@@ -1367,13 +1367,13 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
          * must provide that information. */
 
         // Build a list of the unselected nodes to which the snapper should snap
-        std::vector<std::pair<Geom::Point, int> > unselected_nodes;
+        std::vector<Inkscape::SnapCandidatePoint> unselected_nodes;
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (!node->selected) {
-                    unselected_nodes.push_back(std::make_pair(to_2geom(node->pos), node->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPTARGET_NODE_SMOOTH : Inkscape::SNAPTARGET_NODE_CUSP));
+                    unselected_nodes.push_back(Inkscape::SnapCandidatePoint(node->pos, Inkscape::SNAPSOURCE_UNDEFINED, node->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPTARGET_NODE_SMOOTH : Inkscape::SNAPTARGET_NODE_CUSP));
                 }
             }
         }
@@ -1409,9 +1409,9 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
                 if (constrained) {
                     Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
                     dedicated_constraint.setPoint(n->pos);
-                    s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type, dedicated_constraint, false);
+                    s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, Inkscape::SnapCandidatePoint(n->pos + delta, source_type), dedicated_constraint);
                 } else {
-                    s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type);
+                    s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, Inkscape::SnapCandidatePoint(n->pos + delta, source_type));
                 }
 
                 if (s.getSnapped()) {
@@ -3975,16 +3975,16 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, g
                 p = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type, Inkscape::Snapper::ConstraintLine(p, ndelta), false);
+                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, Inkscape::SnapCandidatePoint(p, source_type), Inkscape::Snapper::ConstraintLine(p, ndelta));
             }
         } else {
             if ((state & GDK_SHIFT_MASK) == 0) {
-                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type);
+                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, Inkscape::SnapCandidatePoint(p, source_type));
             }
         }
     } else {
         if ((state & GDK_SHIFT_MASK) == 0) {
-            s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type);
+            s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, Inkscape::SnapCandidatePoint(p, source_type));
         }
     }
 

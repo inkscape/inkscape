@@ -295,7 +295,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // but as a snap source we still need some nodes though!
     _snap_points.clear();
     _snap_points = selection->getSnapPoints(&local_snapprefs);
-    std::vector<std::pair<Geom::Point, int> > snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
+    std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
     if (_snap_points.size() > 200) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because
@@ -313,11 +313,11 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // any other special points
     Geom::Rect snap_points_bbox;
     if ( snap_points_hull.empty() == false ) {
-        std::vector<std::pair<Geom::Point, int> >::iterator i = snap_points_hull.begin();
-        snap_points_bbox = Geom::Rect((*i).first, (*i).first);
+        std::vector<Inkscape::SnapCandidatePoint>::iterator i = snap_points_hull.begin();
+        snap_points_bbox = Geom::Rect((*i).getPoint(), (*i).getPoint());
         i++;
         while (i != snap_points_hull.end()) {
-            snap_points_bbox.expandTo((*i).first);
+            snap_points_bbox.expandTo((*i).getPoint());
             i++;
         }
     }
@@ -381,9 +381,9 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         }
 
         // Now let's reduce this to a single closest snappoint
-        Geom::Coord dsp    = _snap_points.size()                 == 1 ? Geom::L2((_snap_points.at(0)).first - p) : NR_HUGE;
-        Geom::Coord dbbp   = _bbox_points.size()                 == 1 ? Geom::L2((_bbox_points.at(0)).first - p) : NR_HUGE;
-        Geom::Coord dbbpft = _bbox_points_for_translating.size() == 1 ? Geom::L2((_bbox_points_for_translating.at(0)).first - p) : NR_HUGE;
+        Geom::Coord dsp    = _snap_points.size()                 == 1 ? Geom::L2((_snap_points.at(0)).getPoint() - p) : NR_HUGE;
+        Geom::Coord dbbp   = _bbox_points.size()                 == 1 ? Geom::L2((_bbox_points.at(0)).getPoint() - p) : NR_HUGE;
+        Geom::Coord dbbpft = _bbox_points_for_translating.size() == 1 ? Geom::L2((_bbox_points_for_translating.at(0)).getPoint() - p) : NR_HUGE;
 
         if (translating) {
             _bbox_points.clear();
@@ -1513,6 +1513,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
                 }
             }
         }
+
         if (best_snapped_point.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(best_snapped_point);
         } else {
@@ -1643,15 +1644,15 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
 }
 
-void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference)
+void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference)
 {
     if (points.size() < 2) return;
 
-    std::pair<Geom::Point, int> closest_point = std::make_pair(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED);
+    Inkscape::SnapCandidatePoint closest_point = Inkscape::SnapCandidatePoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, SNAPTARGET_UNDEFINED);
     Geom::Coord closest_dist = NR_HUGE;
 
-    for(std::vector<std::pair<Geom::Point, int> >::const_iterator i = points.begin(); i != points.end(); i++) {
-        Geom::Coord dist = Geom::L2((*i).first - reference);
+    for(std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
+        Geom::Coord dist = Geom::L2((*i).getPoint() - reference);
         if (i == points.begin() || dist < closest_dist) {
             closest_point = *i;
             closest_dist = dist;

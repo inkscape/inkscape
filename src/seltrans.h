@@ -102,7 +102,7 @@ private:
     Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
     Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
     Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
-    void _keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference);
+    void _keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference);
     void _display_snapsource();
 
     enum State {
@@ -117,9 +117,9 @@ private:
     std::vector<Geom::Matrix> _items_affines;
     std::vector<Geom::Point> _items_centers;
 
-    std::vector<std::pair<Geom::Point, int> > _snap_points;
-    std::vector<std::pair<Geom::Point, int> > _bbox_points; // the bbox point of the selection as a whole, i.e. max. 4 corners plus optionally some midpoints
-    std::vector<std::pair<Geom::Point, int> > _bbox_points_for_translating; // the bbox points of each selected item, only to be used for translating
+    std::vector<Inkscape::SnapCandidatePoint> _snap_points;
+    std::vector<Inkscape::SnapCandidatePoint> _bbox_points; // the bbox point of the selection as a whole, i.e. max. 4 corners plus optionally some midpoints
+    std::vector<Inkscape::SnapCandidatePoint> _bbox_points_for_translating; // the bbox points of each selected item, only to be used for translating
 
     Inkscape::SelCue _selcue;
 

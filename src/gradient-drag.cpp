@@ -596,7 +596,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
 
     m.setup(desktop);
     if (!((state & GDK_SHIFT_MASK) || (state & GDK_CONTROL_MASK))) {
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, p, Inkscape::SNAPSOURCE_HANDLE);
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_HANDLE));
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
@@ -659,7 +659,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 }
                 if (snap_vector) {
                     Inkscape::Snapper::ConstraintLine cl(dr_snap, p + *snap_vector - dr_snap);
-                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE, cl);
+                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, Inkscape::SnapCandidatePoint(p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE), cl);
                     if (s.getSnapped()) {
                         s.setTransformation(s.getPoint() - p);
                         sc.points.push_back(s);
@@ -672,7 +672,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
             }
         }
 
-        Inkscape::SnappedPoint bsp = m.findBestSnap(p, Inkscape::SNAPSOURCE_HANDLE, sc, true); // snap indicator will be displayed if needed
+        Inkscape::SnappedPoint bsp = m.findBestSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_HANDLE), sc, true); // snap indicator will be displayed if needed
 
         if (bsp.getSnapped()) {
             p += bsp.getTransformation();
