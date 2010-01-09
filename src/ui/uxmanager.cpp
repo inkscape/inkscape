@@ -48,7 +48,7 @@ UXManager::~UXManager()
 void UXManager::connectToDesktop( std::vector<GtkWidget *> const & toolboxes, SPDesktop *desktop )
 {
     for (std::vector<GtkWidget*>::const_iterator it = toolboxes.begin(); it != toolboxes.end(); ++it ) {
-        sp_toolbox_set_desktop( *it, desktop );
+        ToolboxFactory::setToolboxDesktop( *it, desktop );
     }
 }
 

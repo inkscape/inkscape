@@ -390,7 +390,7 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
 void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     Inkscape::UI::View::View *view = desktop;
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = Inkscape::UI::ToolboxFactory::prefToSize("/toolbox/secondary", 1);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     GtkAction* act = 0;

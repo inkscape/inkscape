@@ -71,7 +71,7 @@ using Inkscape::round;
 
 
 using Inkscape::UI::UXManager;
-
+using Inkscape::UI::ToolboxFactory;
 
 #ifdef WITH_INKBOARD
 #endif
@@ -327,16 +327,16 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_end (GTK_BOX (dtw->vbox), hbox, TRUE, TRUE, 0);
     gtk_widget_show (hbox);
 
-    dtw->aux_toolbox = sp_aux_toolbox_new ();
+    dtw->aux_toolbox = ToolboxFactory::createAuxToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
 
-    dtw->snap_toolbox = sp_snap_toolbox_new ();
+    dtw->snap_toolbox = ToolboxFactory::createSnapToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->snap_toolbox, FALSE, TRUE, 0);
 
-    dtw->commands_toolbox = sp_commands_toolbox_new ();
+    dtw->commands_toolbox = ToolboxFactory::createCommandsToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->commands_toolbox, FALSE, TRUE, 0);
 
-    dtw->tool_toolbox = sp_tool_toolbox_new ();
+    dtw->tool_toolbox = ToolboxFactory::createToolToolbox();
     gtk_box_pack_start (GTK_BOX (hbox), dtw->tool_toolbox, FALSE, TRUE, 0);
 
     tbl = gtk_table_new (2, 3, FALSE);
@@ -1240,7 +1240,7 @@ void SPDesktopWidget::layoutWidgets()
     } else {
         // we cannot just show_all because that will show all tools' panels;
         // this is a function from toolbox.cpp that shows only the current tool's panel
-        show_aux_toolbox (dtw->aux_toolbox);
+        ToolboxFactory::showAuxToolbox(dtw->aux_toolbox);
     }
 
     if (!prefs->getBool(pref_root + "toolbox/state", true)) {
@@ -1459,7 +1459,7 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
         gtk_tooltips_set_tip(this->tt, this->vruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
 
         sp_desktop_widget_update_rulers(this);
-        update_snap_toolbox(this->desktop, NULL, this->snap_toolbox);
+        ToolboxFactory::updateSnapToolbox(this->desktop, 0, this->snap_toolbox);
     }
 }
 

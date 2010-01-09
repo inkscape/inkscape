@@ -137,8 +137,10 @@ static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* ma
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
+using Inkscape::UI::ToolboxFactory;
 
-Inkscape::IconSize prefToSize( Glib::ustring const &path, int base ) {
+
+Inkscape::IconSize ToolboxFactory::prefToSize( Glib::ustring const &path, int base ) {
     static Inkscape::IconSize sizeChoices[] = {
         Inkscape::ICON_SIZE_LARGE_TOOLBAR,
         Inkscape::ICON_SIZE_SMALL_TOOLBAR,
@@ -499,6 +501,8 @@ static gchar const * ui_descr =
 
 static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop );
 
+void setup_snap_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
+
 static void setup_tool_toolbox (GtkWidget *toolbox, SPDesktop *desktop);
 static void update_tool_toolbox (SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 
@@ -580,7 +584,7 @@ Gtk::Widget* VerbAction::create_menu_item_vfunc()
 Gtk::Widget* VerbAction::create_tool_item_vfunc()
 {
 //     Gtk::Widget* widg = Gtk::Action::create_tool_item_vfunc();
-    Inkscape::IconSize toolboxSize = prefToSize("/toolbox/tools/small");
+    Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/tools/small");
     GtkWidget* toolbox = 0;
     GtkWidget *button = sp_toolbox_button_new_from_verb_with_doubleclick( toolbox, toolboxSize,
                                                                           SP_BUTTON_TYPE_TOGGLE,
@@ -788,7 +792,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         SP_VERB_ZOOM_SELECTION,
     };
 
-    Inkscape::IconSize toolboxSize = prefToSize("/toolbox/small");
+    Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
 
     static std::map<SPDesktop*, Glib::RefPtr<Gtk::ActionGroup> > groups;
     Glib::RefPtr<Gtk::ActionGroup> mainActions;
@@ -867,16 +871,14 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType han
     return hb;
 }
 
-GtkWidget *sp_tool_toolbox_new()
+GtkWidget *ToolboxFactory::createToolToolbox()
 {
-    GtkWidget *toolBar = gtk_toolbar_new();
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), GTK_ORIENTATION_VERTICAL);
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
+    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
-    return toolboxNewCommon( toolBar, BAR_TOOL, GTK_POS_TOP );
+    return toolboxNewCommon( tb, BAR_TOOL, GTK_POS_TOP );
 }
 
-GtkWidget *sp_aux_toolbox_new()
+GtkWidget *ToolboxFactory::createAuxToolbox()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
@@ -887,14 +889,14 @@ GtkWidget *sp_aux_toolbox_new()
 //# Commands Bar
 //####################################
 
-GtkWidget *sp_commands_toolbox_new()
+GtkWidget *ToolboxFactory::createCommandsToolbox()
 {
-    GtkWidget *tb = gtk_toolbar_new();
+    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
     return toolboxNewCommon( tb, BAR_COMMANDS, GTK_POS_LEFT );
 }
 
-GtkWidget *sp_snap_toolbox_new()
+GtkWidget *ToolboxFactory::createSnapToolbox()
 {
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
 
@@ -1257,7 +1259,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
     g_object_set_data( holder, "tracker", tracker );
 
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
         InkAction* inky = ink_action_new( "NodeInsertAction",
@@ -1516,7 +1518,7 @@ static void sp_zoom_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* /*mainA
     // no custom GtkAction setup needed
 } // end of sp_zoom_toolbox_prep()
 
-void sp_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
+void ToolboxFactory::setToolboxDesktop(GtkWidget *toolbox, SPDesktop *desktop)
 {
     sigc::connection *conn = static_cast<sigc::connection*>(g_object_get_data(G_OBJECT(toolbox),
                                                                               "event_context_connection"));
@@ -1545,7 +1547,7 @@ void sp_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop)
 
         case BAR_SNAP:
             setup_func = setup_snap_toolbox;
-            update_func = update_snap_toolbox;
+            update_func = updateSnapToolbox;
             break;
         default:
             g_warning("Unexpected toolbox id encountered.");
@@ -1582,14 +1584,15 @@ static void setupToolboxCommon( GtkWidget *toolbox,
                                 SPDesktop *desktop,
                                 gchar const *descr,
                                 gchar const* toolbarName,
-                                gchar const* sizePref,
-                                GtkOrientation orientation )
+                                gchar const* sizePref )
 {
     Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
+
+    GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
     gtk_ui_manager_insert_action_group( mgr, mainActions->gobj(), 0 );
     gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
@@ -1599,9 +1602,14 @@ static void setupToolboxCommon( GtkWidget *toolbox,
         gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
     }
 
-    Inkscape::IconSize toolboxSize = prefToSize(sizePref);
+    Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize(sizePref);
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
 
+    if (GTK_IS_HANDLE_BOX(toolbox)) {
+        // g_message("GRABBING ORIENTATION   [%s]", toolbarName);
+        GtkPositionType pos = gtk_handle_box_get_handle_position(GTK_HANDLE_BOX(toolbox));
+        orientation = ((pos == GTK_POS_LEFT) || (pos == GTK_POS_RIGHT)) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
+    }
     gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), orientation);
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
 
@@ -1613,6 +1621,48 @@ static void setupToolboxCommon( GtkWidget *toolbox,
     }
 
     gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
+}
+
+void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientation)
+{
+    //g_message("Set orientation for %p to be %d", toolbox, orientation);
+    //GType type = GTK_WIDGET_TYPE(toolbox);
+    //g_message("        [%s]", g_type_name(type));
+    //g_message("             %p", g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY));
+
+    if (GTK_IS_BIN(toolbox)) {
+        //g_message("            is a BIN");
+        GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
+        if (child) {
+            //GType type2 = GTK_WIDGET_TYPE(child);
+            //g_message("            child    [%s]", g_type_name(type2));
+
+            if (GTK_IS_BOX(child)) {
+                //g_message("                is a BOX");
+
+                GList* children = gtk_container_get_children(GTK_CONTAINER(child));
+                if (children && children->data) {
+                    //GtkWidget* child2 = GTK_WIDGET(children->data);
+                    //GType type3 = GTK_WIDGET_TYPE(child2);
+                    //g_message("                child    [%s]", g_type_name(type3));
+                    g_message("need to add dynamic switch");
+
+                    g_list_free(children);
+                } else {
+                    //g_message("                    has no children %p", children);
+                    // The call is being made before the toolbox proper has been setup.
+                    if (GTK_IS_HANDLE_BOX(toolbox)) {
+                        GtkPositionType pos = (orientation == GTK_ORIENTATION_HORIZONTAL) ? GTK_POS_LEFT : GTK_POS_TOP;
+                        gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(toolbox), pos);
+                        //g_message("Setting position");
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }
 
 static void
@@ -1646,8 +1696,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     setupToolboxCommon( toolbox, desktop, descr,
                         "/ui/ToolToolbar",
-                        "/toolbox/tools/small",
-                        GTK_ORIENTATION_VERTICAL );
+                        "/toolbox/tools/small");
 }
 
 static void
@@ -1728,7 +1777,7 @@ setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                 gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
             }
 
-            Inkscape::IconSize toolboxSize = prefToSize("/toolbox/small");
+            Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
             gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
 
             gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
@@ -1817,8 +1866,7 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     setupToolboxCommon( toolbox, desktop, descr,
                         "/ui/CommandsToolbar",
-                        "/toolbox/small",
-                        GTK_ORIENTATION_HORIZONTAL );
+                        "/toolbox/small" );
 }
 
 static void
@@ -1971,7 +2019,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "  </toolbar>"
         "</ui>";
 
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
         InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal",
@@ -2138,18 +2186,17 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
     setupToolboxCommon( toolbox, desktop, descr,
                         "/ui/SnapToolbar",
-                        "/toolbox/secondary",
-                        GTK_ORIENTATION_HORIZONTAL );
+                        "/toolbox/secondary" );
 }
 
-void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, GtkWidget *toolbox)
+void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, GtkWidget *toolbox)
 {
     g_assert(desktop != NULL);
     g_assert(toolbox != NULL);
 
     SPNamedView *nv = sp_desktop_namedview(desktop);
     if (nv == NULL) {
-        g_warning("Namedview cannot be retrieved (in update_snap_toolbox)!");
+        g_warning("Namedview cannot be retrieved (in updateSnapToolbox)!");
         return;
     }
 
@@ -2234,7 +2281,7 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
     g_object_set_data(G_OBJECT(toolbox), "freeze", GINT_TO_POINTER(FALSE)); // unfreeze (see above)
 }
 
-void show_aux_toolbox(GtkWidget *toolbox_toplevel)
+void ToolboxFactory::showAuxToolbox(GtkWidget *toolbox_toplevel)
 {
     gtk_widget_show(toolbox_toplevel);
     GtkWidget *toolbox = gtk_bin_get_child(GTK_BIN(toolbox_toplevel));
@@ -2629,7 +2676,7 @@ sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
 
 static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
         EgeOutputAction* act = ege_output_action_new( "StarStateAction", _("<b>New:</b>"), "", 0 );
@@ -2998,7 +3045,7 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
         EgeOutputAction* act = ege_output_action_new( "RectStateAction", _("<b>New:</b>"), "", 0 );
@@ -3640,7 +3687,7 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl
 static void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     EgeAdjustmentAction* eact = 0;
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
         EgeOutputAction* act = ege_output_action_new( "SpiralStateAction", _("<b>New:</b>"), "", 0 );
@@ -3747,7 +3794,7 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         guint freehandMode = prefs->getInt(( tool_is_pencil ? "/tools/freehand/pencil/freehand-mode" : "/tools/freehand/pen/freehand-mode" ), 0);
-        Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+        Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
         {
             GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
@@ -4041,7 +4088,7 @@ static void tweak_toggle_doo (GtkToggleAction *act, gpointer /*data*/) {
 
 static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     {
@@ -4355,7 +4402,7 @@ static void sp_spray_scale_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 
 static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     {
@@ -5302,7 +5349,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     EgeAdjustmentAction* eact = 0;
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
 
     {
@@ -6863,7 +6910,7 @@ void sp_text_toolbox_family_popnotify(GtkComboBox *widget,
 GtkWidget *sp_text_toolbox_new (SPDesktop *desktop)
 {
     GtkToolbar   *tbl = GTK_TOOLBAR(gtk_toolbar_new());
-    GtkIconSize secondarySize = static_cast<GtkIconSize>(prefToSize("/toolbox/secondary", 1));
+    GtkIconSize secondarySize = static_cast<GtkIconSize>(ToolboxFactory::prefToSize("/toolbox/secondary", 1));
 
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
@@ -7360,7 +7407,7 @@ static void sp_connector_toolbox_selection_changed(Inkscape::Selection *selectio
 static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     // Editing mode toggle button
     {
