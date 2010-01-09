@@ -132,6 +132,7 @@ sp_selected_path_combine(SPDesktop *desktop)
     g_slist_free(items);
 
     if (did) {
+        SP_OBJECT(first)->deleteObject(false);
         // delete the topmost.
 
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
