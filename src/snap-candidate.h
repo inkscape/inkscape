@@ -113,7 +113,7 @@ private:
 class SnapCandidateItem
 {
 public:
-    SnapCandidateItem(SPItem* item, bool clip_or_mask, Geom::Matrix _additional_affine)
+    SnapCandidateItem(SPItem* item, bool clip_or_mask, Geom::Matrix additional_affine)
         : item(item), clip_or_mask(clip_or_mask), additional_affine(additional_affine) {}
     ~SnapCandidateItem() {};
 
