@@ -3409,7 +3409,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_x = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp_impl, Proj::X)) {
+    if (!persp_impl || !persp3d_VP_is_finite(persp_impl, Proj::X)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -3449,7 +3449,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_y = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp_impl, Proj::Y)) {
+    if (!persp_impl || !persp3d_VP_is_finite(persp_impl, Proj::Y)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
@@ -3488,7 +3488,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
         box3d_angle_z = eact;
     }
 
-    if (!persp3d_VP_is_finite(persp_impl, Proj::Z)) {
+    if (!persp_impl || !persp3d_VP_is_finite(persp_impl, Proj::Z)) {
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     } else {
         gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
