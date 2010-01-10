@@ -98,10 +98,12 @@
 #include "../xml/attribute-record.h"
 #include "../xml/node-event-vector.h"
 #include "../xml/repr.h"
+#include "ui/uxmanager.h"
 
 #include "toolbox.h"
 
 using Inkscape::UnitTracker;
+using Inkscape::UI::UXManager;
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -136,6 +138,13 @@ static void       sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mai
 static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
+
+
+static void fireTaskChange( EgeSelectOneAction *act, SPDesktop *dt )
+{
+    gint selected = ege_select_one_action_get_active( act );
+    UXManager::getInstance()->setTask(dt, selected);
+}
 
 using Inkscape::UI::ToolboxFactory;
 
@@ -828,6 +837,39 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         }
     }
 
+    if ( !mainActions->get_action("TaskSetAction") ) {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Default"),
+                            1, _("Default interface setup"),
+                            2, 0,
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Custom"),
+                            1, _("Set the custom task"),
+                            2, 0,
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "TaskSetAction", _("Task"), (""), NULL, GTK_TREE_MODEL(model) );
+        g_object_set( act, "short_label", _("Task:"), NULL );
+        mainActions->add(Glib::wrap(GTK_ACTION(act)));
+        //g_object_set_data( holder, "mode_action", act );
+
+        ege_select_one_action_set_appearance( act, "minimal" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        //ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        //ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(fireTaskChange), desktop );
+    }
 
     return mainActions;
 }
@@ -1630,6 +1672,9 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
     //g_message("        [%s]", g_type_name(type));
     //g_message("             %p", g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY));
 
+    GtkPositionType pos = (orientation == GTK_ORIENTATION_HORIZONTAL) ? GTK_POS_LEFT : GTK_POS_TOP;
+    GtkHandleBox* handleBox = 0;
+
     if (GTK_IS_BIN(toolbox)) {
         //g_message("            is a BIN");
         GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
@@ -1646,23 +1691,37 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                     //GType type3 = GTK_WIDGET_TYPE(child2);
                     //g_message("                child    [%s]", g_type_name(type3));
                     g_message("need to add dynamic switch");
+                    for (GList* curr = children; curr; curr = g_list_next(curr)) {
+                        GtkWidget* child2 = GTK_WIDGET(curr->data);
 
+                        if (GTK_IS_TOOLBAR(child2)) {
+                            GtkToolbar* childBar = GTK_TOOLBAR(child2);
+                            gtk_toolbar_set_orientation(childBar, orientation);
+                            if (GTK_IS_HANDLE_BOX(toolbox)) {
+                                handleBox = GTK_HANDLE_BOX(toolbox);
+                            }
+                        }
+                    }
                     g_list_free(children);
                 } else {
-                    //g_message("                    has no children %p", children);
-                    // The call is being made before the toolbox proper has been setup.
                     if (GTK_IS_HANDLE_BOX(toolbox)) {
-                        GtkPositionType pos = (orientation == GTK_ORIENTATION_HORIZONTAL) ? GTK_POS_LEFT : GTK_POS_TOP;
-                        gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(toolbox), pos);
-                        //g_message("Setting position");
+                        handleBox = GTK_HANDLE_BOX(toolbox);
                     }
+                    // The call is being made before the toolbox proper has been setup.
+                }
+            } else if (GTK_IS_TOOLBAR(child)) {
+                GtkToolbar* toolbar = GTK_TOOLBAR(child);
+                gtk_toolbar_set_orientation( toolbar, orientation );
+                if (GTK_IS_HANDLE_BOX(toolbox)) {
+                    handleBox = GTK_HANDLE_BOX(toolbox);
                 }
             }
         }
     }
 
-
-
+    if (handleBox) {
+        gtk_handle_box_set_handle_position(handleBox, pos);
+    }
 }
 
 static void
@@ -1861,6 +1920,8 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
+        "    <separator />"
+        "    <toolitem action='TaskSetAction' />"
         "  </toolbar>"
         "</ui>";
 

@@ -571,6 +571,8 @@ sp_desktop_widget_destroy (GtkObject *object)
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (object);
 
+    UXManager::getInstance()->delTrack(dtw);
+
     if (dtw->desktop) {
         if ( watcher ) {
             watcher->remove(dtw);
@@ -1341,7 +1343,11 @@ SPDesktopWidget::isToolboxButtonActive (const gchar* id)
 
 SPViewWidget *sp_desktop_widget_new( SPNamedView *namedview )
 {
-    return SP_VIEW_WIDGET(SPDesktopWidget::createInstance(namedview));
+    SPDesktopWidget* dtw = SPDesktopWidget::createInstance(namedview);
+
+    UXManager::getInstance()->addTrack(dtw);
+
+    return SP_VIEW_WIDGET(dtw);
 }
 
 SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)

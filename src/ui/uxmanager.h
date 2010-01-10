@@ -11,10 +11,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
 #include <vector>
 
-typedef struct _GtkWidget GtkWidget;
+extern "C"
+{
+    typedef struct _GObject GObject;
+    typedef struct _GtkWidget GtkWidget;
+}
+
 class SPDesktop;
+
+struct SPDesktopWidget;
+
 
 namespace Inkscape {
 namespace UI {
@@ -25,7 +34,12 @@ public:
     static UXManager* getInstance();
     virtual ~UXManager();
 
+    void addTrack( SPDesktopWidget* dtw );
+    void delTrack( SPDesktopWidget* dtw );
+
     void connectToDesktop( std::vector<GtkWidget *> const & toolboxes, SPDesktop *desktop );
+
+    void setTask(SPDesktop* dt, gint val);
 
 private:
     UXManager();
