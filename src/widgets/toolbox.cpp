@@ -837,23 +837,20 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         }
     }
 
-/*
     if ( !mainActions->get_action("TaskSetAction") ) {
-        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+        GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_STRING );
 
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Default"),
                             1, _("Default interface setup"),
-                            2, 0,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Custom"),
                             1, _("Set the custom task"),
-                            2, 0,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TaskSetAction", _("Task"), (""), NULL, GTK_TREE_MODEL(model) );
@@ -863,15 +860,12 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
 
         ege_select_one_action_set_appearance( act, "minimal" );
         ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
-        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
-        ege_select_one_action_set_icon_column( act, 2 );
         //ege_select_one_action_set_icon_size( act, secondarySize );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
         //ege_select_one_action_set_active( act, mode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(fireTaskChange), desktop );
     }
-*/
 
     return mainActions;
 }
@@ -1922,10 +1916,8 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
-/*
         "    <separator />"
         "    <toolitem action='TaskSetAction' />"
-*/
         "  </toolbar>"
         "</ui>";
 
