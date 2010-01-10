@@ -837,6 +837,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         }
     }
 
+/*
     if ( !mainActions->get_action("TaskSetAction") ) {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
@@ -870,6 +871,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         //ege_select_one_action_set_active( act, mode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(fireTaskChange), desktop );
     }
+*/
 
     return mainActions;
 }
@@ -1920,8 +1922,10 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
+/*
         "    <separator />"
         "    <toolitem action='TaskSetAction' />"
+*/
         "  </toolbar>"
         "</ui>";
 
