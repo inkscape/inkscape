@@ -292,7 +292,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkWidget *tbl;
     GtkWidget *canvas_tbl;
 
-    GtkWidget *hbox;
     GtkWidget *eventbox;
     GtkStyle *style;
 
@@ -323,25 +322,25 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         gtk_box_pack_end( GTK_BOX( dtw->vbox ), GTK_WIDGET(dtw->panels->gobj()), FALSE, TRUE, 0 );
     }
 
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_end (GTK_BOX (dtw->vbox), hbox, TRUE, TRUE, 0);
-    gtk_widget_show (hbox);
+    dtw->hbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_end( GTK_BOX (dtw->vbox), dtw->hbox, TRUE, TRUE, 0 );
+    gtk_widget_show(dtw->hbox);
 
     dtw->aux_toolbox = ToolboxFactory::createAuxToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
 
     dtw->snap_toolbox = ToolboxFactory::createSnapToolbox();
     ToolboxFactory::setOrientation( dtw->snap_toolbox, GTK_ORIENTATION_VERTICAL );
-    gtk_box_pack_end (GTK_BOX (hbox), dtw->snap_toolbox, FALSE, TRUE, 0);
+    gtk_box_pack_end( GTK_BOX(dtw->hbox), dtw->snap_toolbox, FALSE, TRUE, 0 );
 
     dtw->commands_toolbox = ToolboxFactory::createCommandsToolbox();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->commands_toolbox, FALSE, TRUE, 0);
 
     dtw->tool_toolbox = ToolboxFactory::createToolToolbox();
-    gtk_box_pack_start (GTK_BOX (hbox), dtw->tool_toolbox, FALSE, TRUE, 0);
+    gtk_box_pack_start( GTK_BOX(dtw->hbox), dtw->tool_toolbox, FALSE, TRUE, 0 );
 
     tbl = gtk_table_new (2, 3, FALSE);
-    gtk_box_pack_start (GTK_BOX (hbox), tbl, TRUE, TRUE, 1);
+    gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl, TRUE, TRUE, 1 );
 
     canvas_tbl = gtk_table_new (3, 3, FALSE);
 
@@ -1340,6 +1339,47 @@ SPDesktopWidget::isToolboxButtonActive (const gchar* id)
 
     return isActive;
 }
+
+void SPDesktopWidget::setToolboxPosition(Glib::ustring const& id, GtkPositionType pos)
+{
+    // Note - later on these won't be individual member variables.
+    GtkWidget* toolbox = 0;
+    if (id == "ToolToolbar") {
+        toolbox = tool_toolbox;
+    } else if (id == "AuxToolbar") {
+        toolbox = aux_toolbox;
+    } else if (id == "CommandsToolbar") {
+        toolbox = commands_toolbox;
+    } else if (id == "SnapToolbar") {
+        toolbox = snap_toolbox;
+    }
+
+
+    if (toolbox) {
+        switch(pos) {
+            case GTK_POS_TOP:
+            case GTK_POS_BOTTOM:
+                if ( gtk_widget_is_ancestor(toolbox, hbox) ) {
+                    gtk_widget_reparent( toolbox, vbox );
+                    gtk_box_set_child_packing(GTK_BOX(vbox), toolbox, FALSE, TRUE, 0, GTK_PACK_START);
+                }
+                ToolboxFactory::setOrientation(toolbox, GTK_ORIENTATION_HORIZONTAL);
+                break;
+            case GTK_POS_LEFT:
+            case GTK_POS_RIGHT:
+                if ( !gtk_widget_is_ancestor(toolbox, hbox) ) {
+                    gtk_widget_reparent( toolbox, hbox );
+                    gtk_box_set_child_packing(GTK_BOX(hbox), toolbox, FALSE, TRUE, 0, GTK_PACK_START);
+                    if (pos == GTK_POS_LEFT) {
+                        gtk_box_reorder_child( GTK_BOX(hbox), toolbox, 0 );
+                    }
+                }
+                ToolboxFactory::setOrientation(toolbox, GTK_ORIENTATION_VERTICAL);
+                break;
+        }
+    }
+}
+
 
 SPViewWidget *sp_desktop_widget_new( SPNamedView *namedview )
 {

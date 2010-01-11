@@ -76,6 +76,8 @@ struct SPDesktopWidget {
     // The root vbox of the window layout.
     GtkWidget *vbox;
 
+    GtkWidget *hbox;
+
     GtkWidget *menubar, *statusbar;
 
     Inkscape::UI::Dialogs::SwatchesPanel *panels;
@@ -218,6 +220,7 @@ struct SPDesktopWidget {
     void setToolboxAdjustmentValue (gchar const * id, double value);
     void setToolboxSelectOneValue (gchar const * id, gint value);
     bool isToolboxButtonActive (gchar const *id);
+    void setToolboxPosition(Glib::ustring const& id, GtkPositionType pos);
     void setCoordinateStatus(Geom::Point p);
     void requestCanvasUpdate();
     void requestCanvasUpdateAndWait();

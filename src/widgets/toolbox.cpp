@@ -102,6 +102,8 @@
 
 #include "toolbox.h"
 
+//#define ENABLE_TASK_SUPPORT 1
+
 using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 

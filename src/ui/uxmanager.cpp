@@ -58,15 +58,19 @@ UXManager::~UXManager()
 
 void UXManager::setTask(SPDesktop* dt, gint val)
 {
-    GtkOrientation orientation = (val == 0)? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
     for (vector<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it) {
-        if ((*it)->desktop == dt) {
-            vector<GtkWidget*>& boxes = trackedBoxes[dt];
-            for (vector<GtkWidget*>::iterator it2 = boxes.begin(); it2 != boxes.end(); ++it2) {
-                gint id = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(*it2), "BarIdValue"));
-                if (id != 1) {
-                    //ToolboxFactory::setOrientation(*it2, orientation);
-                }
+        SPDesktopWidget* dtw = *it;
+        if (dtw->desktop == dt) {
+            if (val == 0) {
+                dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
+                dtw->setToolboxPosition("CommandsToolbar", GTK_POS_TOP);
+                dtw->setToolboxPosition("SnapToolbar", GTK_POS_TOP);
+                // for now skip "AuxToolbar";
+            } else {
+                dtw->setToolboxPosition("ToolToolbar", GTK_POS_TOP);
+                dtw->setToolboxPosition("CommandsToolbar", GTK_POS_LEFT);
+                dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
+                // for now skip "AuxToolbar";
             }
             break;
         }
@@ -95,8 +99,8 @@ void UXManager::connectToDesktop( vector<GtkWidget *> const & toolboxes, SPDeskt
 
     for (vector<GtkWidget*>::const_iterator it = toolboxes.begin(); it != toolboxes.end(); ++it ) {
         GtkWidget* toolbox = *it;
-        ToolboxFactory::setToolboxDesktop( toolbox, desktop );
 
+        ToolboxFactory::setToolboxDesktop( toolbox, desktop );
         vector<GtkWidget*>& tracked = trackedBoxes[desktop];
         if (find(tracked.begin(), tracked.end(), toolbox) == tracked.end()) {
             tracked.push_back(toolbox);
