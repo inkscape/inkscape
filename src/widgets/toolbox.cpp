@@ -140,11 +140,13 @@ static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* ma
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
 
+#if ENABLE_TASK_SUPPORT
 static void fireTaskChange( EgeSelectOneAction *act, SPDesktop *dt )
 {
     gint selected = ege_select_one_action_get_active( act );
     UXManager::getInstance()->setTask(dt, selected);
 }
+#endif // ENABLE_TASK_SUPPORT
 
 using Inkscape::UI::ToolboxFactory;
 
@@ -837,6 +839,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         }
     }
 
+#if ENABLE_TASK_SUPPORT
     if ( !mainActions->get_action("TaskSetAction") ) {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_STRING );
 
@@ -866,6 +869,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         //ege_select_one_action_set_active( act, mode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(fireTaskChange), desktop );
     }
+#endif // ENABLE_TASK_SUPPORT
 
     return mainActions;
 }
@@ -1916,8 +1920,10 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
+#if ENABLE_TASK_SUPPORT
         "    <separator />"
         "    <toolitem action='TaskSetAction' />"
+#endif // ENABLE_TASK_SUPPORT
         "  </toolbar>"
         "</ui>";
 
@@ -2244,6 +2250,28 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     setupToolboxCommon( toolbox, desktop, descr,
                         "/ui/SnapToolbar",
                         "/toolbox/secondary" );
+}
+
+Glib::ustring ToolboxFactory::getToolboxName(GtkWidget* toolbox)
+{
+    Glib::ustring name;
+    BarId id = static_cast<BarId>( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY)) );
+    switch(id) {
+        case BAR_TOOL:
+            name = "ToolToolbar";
+            break;
+        case BAR_AUX:
+            name = "AuxToolbar";
+            break;
+        case BAR_COMMANDS:
+            name = "CommandsToolbar";
+            break;
+        case BAR_SNAP:
+            name = "SnapToolbar";
+            break;
+    }
+
+    return name;
 }
 
 void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, GtkWidget *toolbox)

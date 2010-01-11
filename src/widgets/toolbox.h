@@ -7,6 +7,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -35,6 +36,8 @@ public:
     static GtkWidget *createAuxToolbox();
     static GtkWidget *createCommandsToolbox();
     static GtkWidget *createSnapToolbox();
+
+    static Glib::ustring getToolboxName(GtkWidget* toolbox);
 
     static void updateSnapToolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
 
