@@ -20,8 +20,17 @@
 #include "widgets/toolbox.h"
 #include "widgets/desktop-widget.h"
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif // GDK_WINDOWING_X11
+
 using std::map;
 using std::vector;
+
+
+gchar const* KDE_WINDOW_MANAGER_NAME = "KWin";
+gchar const* UNKOWN_WINDOW_MANAGER_NAME = "unknown";
+
 
 static vector<SPDesktop*> desktops;
 static vector<SPDesktopWidget*> dtws;
@@ -43,17 +52,36 @@ UXManager* UXManager::getInstance()
 }
 
 
-UXManager::UXManager()
+UXManager::UXManager() :
+    floatwindowIssues(false)
 {
     ege::TagSet tags;
     tags.setLang("en");
 
     tags.addTag(ege::Tag("General"));
     tags.addTag(ege::Tag("Icons"));
+
+#ifdef GDK_WINDOWING_X11
+    char const* wmName = gdk_x11_screen_get_window_manager_name( gdk_screen_get_default() );
+    //g_message("Window manager is [%s]", wmName);
+
+    //if (g_ascii_strcasecmp( wmName, UNKOWN_WINDOW_MANAGER_NAME ) == 0) {
+    if (g_ascii_strcasecmp( wmName, KDE_WINDOW_MANAGER_NAME ) == 0) {
+        floatwindowIssues = true;
+    }
+#elif GDK_WINDOWING_WIN32
+    floatwindowIssues = true;
+#endif // GDK_WINDOWING_WIN32
 }
 
 UXManager::~UXManager()
 {
+}
+
+
+bool UXManager::isFloatWindowProblem() const
+{
+    return floatwindowIssues;
 }
 
 void UXManager::setTask(SPDesktop* dt, gint val)

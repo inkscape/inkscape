@@ -337,6 +337,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->commands_toolbox, FALSE, TRUE, 0);
 
     dtw->tool_toolbox = ToolboxFactory::createToolToolbox();
+    ToolboxFactory::setOrientation( dtw->tool_toolbox, GTK_ORIENTATION_VERTICAL );
     gtk_box_pack_start( GTK_BOX(dtw->hbox), dtw->tool_toolbox, FALSE, TRUE, 0 );
 
     tbl = gtk_table_new (2, 3, FALSE);

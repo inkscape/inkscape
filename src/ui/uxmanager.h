@@ -41,8 +41,12 @@ public:
 
     void setTask(SPDesktop* dt, gint val);
 
+    bool isFloatWindowProblem() const;
+
 private:
     UXManager();
+
+    bool floatwindowIssues;
 };
 
 } // namespace UI
