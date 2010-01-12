@@ -22,9 +22,10 @@
 class SPClipPathView;
 
 #include "display/nr-arena-forward.h"
+#include "libnr/nr-forward.h"
 #include "sp-object-group.h"
 #include "uri-references.h"
-#include <libnr/nr-forward.h>
+#include "xml/node.h"
 
 struct SPClipPath : public SPObjectGroup {
 	class Reference;
@@ -48,8 +49,39 @@ public:
 		return (SPClipPath *)URIReference::getObject();
 	}
 protected:
+    /**
+     * If the owner element of this reference (the element with <... clippath="...">)
+     * is a child of the clippath it refers to, return false.
+     * \return false if obj is not a clippath or if obj is a parent of this
+     *         reference's owner element.  True otherwise.
+     */
 	virtual bool _acceptObject(SPObject *obj) const {
-		return SP_IS_CLIPPATH(obj);
+		if (!SP_IS_CLIPPATH(obj)) {
+		    return false;
+	    }
+	    SPObject * const owner = this->getOwner();
+        if (obj->isAncestorOf(owner)) {
+            Inkscape::XML::Node * const owner_repr = owner->repr;
+            Inkscape::XML::Node * const obj_repr = obj->repr;
+            gchar const * owner_name = NULL;
+            gchar const * owner_clippath = NULL;
+            gchar const * obj_name = NULL;
+            gchar const * obj_id = NULL;
+            if (owner_repr != NULL) {
+                owner_name = owner_repr->name();
+                owner_clippath = owner_repr->attribute("clippath");
+            }
+            if (obj_repr != NULL) {
+                obj_name = obj_repr->name();
+                obj_id = obj_repr->attribute("id");
+            }
+            g_warning("Ignoring recursive clippath reference "
+                      "<%s clippath=\"%s\"> in <%s id=\"%s\">",
+                      owner_name, owner_clippath,
+                      obj_name, obj_id);
+            return false;
+        }
+        return true;
 	}
 };
 
