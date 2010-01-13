@@ -89,18 +89,26 @@ void UXManager::setTask(SPDesktop* dt, gint val)
     for (vector<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it) {
         SPDesktopWidget* dtw = *it;
         if (dtw->desktop == dt) {
-            if (val == 0) {
-                dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
-                dtw->setToolboxPosition("CommandsToolbar", GTK_POS_TOP);
-                dtw->setToolboxPosition("SnapToolbar", GTK_POS_TOP);
-                // for now skip "AuxToolbar";
-            } else {
-                dtw->setToolboxPosition("ToolToolbar", GTK_POS_TOP);
-                dtw->setToolboxPosition("CommandsToolbar", GTK_POS_LEFT);
-                dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
-                // for now skip "AuxToolbar";
+            switch (val) {
+                default:
+                case 0:
+                    dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
+                    dtw->setToolboxPosition("CommandsToolbar", GTK_POS_TOP);
+                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    dtw->setToolboxPosition("SnapToolbar", GTK_POS_TOP);
+                    break;
+                case 1:
+                    dtw->setToolboxPosition("ToolToolbar", GTK_POS_TOP);
+                    dtw->setToolboxPosition("CommandsToolbar", GTK_POS_LEFT);
+                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
+                    break;
+                case 2:
+                    dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
+                    dtw->setToolboxPosition("CommandsToolbar", GTK_POS_RIGHT);
+                    dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
+                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_RIGHT);
             }
-            break;
         }
     }
 }

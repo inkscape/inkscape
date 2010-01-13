@@ -858,6 +858,12 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
                             1, _("Set the custom task"),
                             -1 );
 
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Wide"),
+                            1, _("Setup for widescreen work"),
+                            -1 );
+
         EgeSelectOneAction* act = ege_select_one_action_new( "TaskSetAction", _("Task"), (""), NULL, GTK_TREE_MODEL(model) );
         g_object_set( act, "short_label", _("Task:"), NULL );
         mainActions->add(Glib::wrap(GTK_ACTION(act)));
@@ -1677,34 +1683,63 @@ static void setupToolboxCommon( GtkWidget *toolbox,
     gtk_container_add( GTK_CONTAINER(toolbox), toolBar );
 }
 
+#define noDUMP_DETAILS 1
+
 void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientation)
 {
-    //g_message("Set orientation for %p to be %d", toolbox, orientation);
-    //GType type = GTK_WIDGET_TYPE(toolbox);
-    //g_message("        [%s]", g_type_name(type));
-    //g_message("             %p", g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY));
+#if DUMP_DETAILS
+    g_message("Set orientation for %p to be %d", toolbox, orientation);
+    GType type = GTK_WIDGET_TYPE(toolbox);
+    g_message("        [%s]", g_type_name(type));
+    g_message("             %p", g_object_get_data(G_OBJECT(toolbox), BAR_ID_KEY));
+#endif
 
     GtkPositionType pos = (orientation == GTK_ORIENTATION_HORIZONTAL) ? GTK_POS_LEFT : GTK_POS_TOP;
     GtkHandleBox* handleBox = 0;
 
     if (GTK_IS_BIN(toolbox)) {
-        //g_message("            is a BIN");
+#if DUMP_DETAILS
+        g_message("            is a BIN");
+#endif // DUMP_DETAILS
         GtkWidget* child = gtk_bin_get_child(GTK_BIN(toolbox));
         if (child) {
-            //GType type2 = GTK_WIDGET_TYPE(child);
-            //g_message("            child    [%s]", g_type_name(type2));
+#if DUMP_DETAILS
+            GType type2 = GTK_WIDGET_TYPE(child);
+            g_message("            child    [%s]", g_type_name(type2));
+#endif // DUMP_DETAILS
 
             if (GTK_IS_BOX(child)) {
-                //g_message("                is a BOX");
+#if DUMP_DETAILS
+                g_message("                is a BOX");
+#endif // DUMP_DETAILS
 
                 GList* children = gtk_container_get_children(GTK_CONTAINER(child));
-                if (children && children->data) {
-                    //GtkWidget* child2 = GTK_WIDGET(children->data);
-                    //GType type3 = GTK_WIDGET_TYPE(child2);
-                    //g_message("                child    [%s]", g_type_name(type3));
-                    g_message("need to add dynamic switch");
+                if (children) {
                     for (GList* curr = children; curr; curr = g_list_next(curr)) {
                         GtkWidget* child2 = GTK_WIDGET(curr->data);
+#if DUMP_DETAILS
+                        GType type3 = GTK_WIDGET_TYPE(child2);
+                        g_message("                child2   [%s]", g_type_name(type3));
+#endif // DUMP_DETAILS
+
+                        if (GTK_IS_CONTAINER(child2)) {
+                            GList* children2 = gtk_container_get_children(GTK_CONTAINER(child2));
+                            if (children2) {
+                                for (GList* curr2 = children2; curr2; curr2 = g_list_next(curr2)) {
+                                    GtkWidget* child3 = GTK_WIDGET(curr2->data);
+#if DUMP_DETAILS
+                                    GType type4 = GTK_WIDGET_TYPE(child3);
+                                    g_message("                    child3   [%s]", g_type_name(type4));
+#endif // DUMP_DETAILS
+                                    if (GTK_IS_TOOLBAR(child3)) {
+                                        GtkToolbar* childBar = GTK_TOOLBAR(child3);
+                                        gtk_toolbar_set_orientation(childBar, orientation);
+                                    }
+                                }
+                                g_list_free(children2);
+                            }
+                        }
+
 
                         if (GTK_IS_TOOLBAR(child2)) {
                             GtkToolbar* childBar = GTK_TOOLBAR(child2);
@@ -1712,6 +1747,8 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                             if (GTK_IS_HANDLE_BOX(toolbox)) {
                                 handleBox = GTK_HANDLE_BOX(toolbox);
                             }
+                        } else {
+                            g_message("need to add dynamic switch");
                         }
                     }
                     g_list_free(children);
