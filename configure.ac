@@ -657,10 +657,10 @@ PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4 giomm-2.4 gtkmm-2.4 >= 2.10.0 
 # Check for Apple Mac OS X Carbon framework
 carbon_ok=no
 AC_MSG_CHECKING([for Mac OS X Carbon support])
-AC_TRY_CPP([
+AC_COMPILE_IFELSE([
 #include <Carbon/Carbon.h>
 #include <CoreServices/CoreServices.h>
-], carbon_ok=yes)
+], [carbon_ok=yes])
 AC_MSG_RESULT($carbon_ok)
 if test "x$carbon_ok" = "xyes"; then
   AC_DEFINE(HAVE_CARBON, 1, [define to 1 if Carbon is available])
@@ -671,6 +671,25 @@ AM_CONDITIONAL(HAVE_CARBON, test "x$carbon_ok" = "xyes")
 
 # Check for some boost header files
 AC_CHECK_HEADERS([boost/concept_check.hpp], [], AC_MSG_ERROR([You need the boost package (e.g. libboost-dev)]))
+
+# test whether GCC emits a spurious warning when using boost::optional
+# if yes, turn off strict aliasing warnings
+AC_MSG_CHECKING([for overzealous strict aliasing warnings])
+ignore_strict_aliasing=no
+CXXFLAGS_SAVE=$CXXFLAGS
+CXXFLAGS="$CXXFLAGS -Werror=strict-aliasing"
+AC_COMPILE_IFELSE([
+#include <boost/optional.hpp>
+boost::optional<int> x;
+int func() {
+  return *x;
+}
+], [ignore_strict_aliasing=no], [ignore_strict_aliasing=yes])
+AC_MSG_RESULT($ignore_strict_aliasing)
+CXXFLAGS=$CXXFLAGS_SAVE
+if test "x$ignore_strict_aliasing" = "xyes"; then
+  CXXFLAGS="$CXXFLAGS -Wno-strict-aliasing"
+fi
 
 PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf, cairo_pdf=yes, cairo_pdf=no)
 if test "x$cairo_pdf" = "xyes"; then
