@@ -203,11 +203,10 @@ Path::nearestPointPerCurve(Point const& _point) const
 {
 	//return a single nearest point for each curve in this path
 	std::vector<double> np;
-	const Path& _path = *this;
-	for (Sequence::const_iterator it = _path.get_curves().begin() ; it != _path.get_curves().end()-1 ; ++it)
+	for (const_iterator it = begin() ; it != end_default(); ++it)
 	//for (std::vector<Path>::const_iterator it = _path.begin(); it != _path.end(), ++it){
 	{
-	    np.push_back((*it)->nearestPoint(_point));
+	    np.push_back(it->nearestPoint(_point));
     }
 	return np;
 }  

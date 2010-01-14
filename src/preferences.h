@@ -178,6 +178,11 @@ public:
         inline Glib::ustring getString() const;
 
         /**
+         * @brief Interpret the preference as an RGBA color value.
+         */
+        inline guint32 getColor(guint32 def) const;
+
+        /**
          * @brief Interpret the preference as a CSS style.
          * @return A CSS style that has to be unrefed when no longer necessary. Never NULL.
          */
@@ -329,6 +334,10 @@ public:
         return getEntry(pref_path).getString();
     }
 
+    guint32 getColor(Glib::ustring const &pref_path, guint32 def=0x000000ff) {
+        return getEntry(pref_path).getColor(def);
+    }
+
     /**
      * @brief Retrieve a CSS style
      * @param pref_path Path to the retrieved preference
@@ -382,6 +391,11 @@ public:
      * @brief Set an UTF-8 string value
      */
     void setString(Glib::ustring const &pref_path, Glib::ustring const &value);
+
+    /**
+     * @brief Set an RGBA color value
+     */
+    void setColor(Glib::ustring const &pref_path, guint32 value);
 
     /**
      * @brief Set a CSS style
@@ -459,6 +473,7 @@ protected:
     int _extractInt(Entry const &v);
     double _extractDouble(Entry const &v);
     Glib::ustring _extractString(Entry const &v);
+    guint32 _extractColor(Entry const &v);
     SPCSSAttr *_extractStyle(Entry const &v);
     SPCSSAttr *_extractInheritedStyle(Entry const &v);
 
@@ -564,6 +579,15 @@ inline Glib::ustring Preferences::Entry::getString() const
         return "";
     } else {
         return Inkscape::Preferences::get()->_extractString(*this);
+    }
+}
+
+inline guint32 Preferences::Entry::getColor(guint32 def) const
+{
+    if (!this->isValid()) {
+        return def;
+    } else {
+        return Inkscape::Preferences::get()->_extractColor(*this);
     }
 }
 

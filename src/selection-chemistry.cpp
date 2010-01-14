@@ -89,9 +89,7 @@
 
 // For clippath editing
 #include "tools-switch.h"
-#include "shape-editor.h"
-#include "node-context.h"
-#include "nodepath.h"
+#include "ui/tool/node-tool.h"
 
 #include "ui/clipboard.h"
 
@@ -1739,53 +1737,52 @@ void sp_selection_next_patheffect_param(SPDesktop * dt)
     }
 }
 
-void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
+/*bool has_path_recursive(SPObject *obj)
 {
-    if (!dt) return;
-
-    Inkscape::Selection *selection = sp_desktop_selection(dt);
-    if ( selection && !selection->isEmpty() ) {
-        SPItem *item = selection->singleItem();
-        if ( item ) {
-            SPObject *obj = NULL;
-            if (clip)
-                obj = item->clip_ref ? SP_OBJECT(item->clip_ref->getObject()) : NULL;
-            else
-                obj = item->mask_ref ? SP_OBJECT(item->mask_ref->getObject()) : NULL;
-
-            if (obj) {
-                // obj is a group object, the children are the actual clippers
-                for ( SPObject *child = obj->children ; child ; child = child->next ) {
-                    if ( SP_IS_ITEM(child) ) {
-                        // If not already in nodecontext, goto it!
-                        if (!tools_isactive(dt, TOOLS_NODES)) {
-                            tools_switch(dt, TOOLS_NODES);
-                        }
-
-                        ShapeEditor * shape_editor = dt->event_context->shape_editor;
-                        // TODO: should we set the item for nodepath or knotholder or both? seems to work with both.
-                        shape_editor->set_item(SP_ITEM(child), SH_NODEPATH);
-                        shape_editor->set_item(SP_ITEM(child), SH_KNOTHOLDER);
-                        Inkscape::NodePath::Path *np = shape_editor->get_nodepath();
-                        if (np) {
-                            // take colors from prefs (same as used in outline mode)
-                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                            np->helperpath_rgba = clip ?
-                                prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff) :
-                                prefs->getInt("/options/wireframecolors/masks", 0x0000ffff);
-                            np->helperpath_width = 1.0;
-                            sp_nodepath_show_helperpath(np, true);
-                        }
-                        break; // break out of for loop after 1st encountered item
-                    }
-                }
-            } else if (clip) {
-                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied clip path."));
-            } else {
-                dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("The selection has no applied mask."));
-            }
+    if (!obj) return false;
+    if (SP_IS_PATH(obj)) {
+        return true;
+    }
+    if (SP_IS_GROUP(obj) || SP_IS_OBJECTGROUP(obj)) {
+        for (SPObject *c = obj->children; c; c = c->next) {
+            if (has_path_recursive(c)) return true;
         }
     }
+    return false;
+}*/
+
+void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
+{
+    return;
+    /*if (!dt) return;
+    using namespace Inkscape::UI;
+
+    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    if (!selection || selection->isEmpty()) return;
+
+    GSList const *items = selection->itemList();
+    bool has_path = false;
+    for (GSList *i = const_cast<GSList*>(items); i; i= i->next) {
+        SPItem *item = SP_ITEM(i->data);
+        SPObject *search = clip
+            ? SP_OBJECT(item->clip_ref ? item->clip_ref->getObject() : NULL)
+            : SP_OBJECT(item->mask_ref ? item->mask_ref->getObject() : NULL);
+        has_path |= has_path_recursive(search);
+        if (has_path) break;
+    }
+    if (has_path) {
+        if (!tools_isactive(dt, TOOLS_NODES)) {
+            tools_switch(dt, TOOLS_NODES);
+        }
+        ink_node_tool_set_mode(INK_NODE_TOOL(dt->event_context),
+            clip ? NODE_TOOL_EDIT_CLIPPING_PATHS : NODE_TOOL_EDIT_MASKS);
+    } else if (clip) {
+        dt->messageStack()->flash(Inkscape::WARNING_MESSAGE,
+            _("The selection has no applied clip path."));
+    } else {
+        dt->messageStack()->flash(Inkscape::WARNING_MESSAGE,
+            _("The selection has no applied mask."));
+    }*/
 }
 
 

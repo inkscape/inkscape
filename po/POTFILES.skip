@@ -1,5 +1,6 @@
 # All source files whose translatable messages should not be seen as of now
 
+cxxtest/cxxtest.py
 src/jabber_whiteboard/invitation-confirm-dialog.cpp
 src/jabber_whiteboard/message-queue.cpp
 src/jabber_whiteboard/message-utilities.cpp

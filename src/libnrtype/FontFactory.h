@@ -45,7 +45,7 @@ struct font_descr_hash : public std::unary_function<PangoFontDescription*,size_t
     size_t operator()(PangoFontDescription *const &x) const;
 };
 struct font_descr_equal : public std::binary_function<PangoFontDescription*, PangoFontDescription*, bool> {
-    bool operator()(PangoFontDescription *const &a, PangoFontDescription *const &b);
+    bool operator()(PangoFontDescription *const &a, PangoFontDescription *const &b) const;
 };
 
 // Comparison functions for style names

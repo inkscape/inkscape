@@ -16,8 +16,6 @@
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 
-#include "nodepath.h"
-
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -79,13 +77,6 @@ LPEConstructGrid::doEffect_path (std::vector<Geom::Path> const & path_in)
     } else {
         return path_in;
     }
-}
-
-void
-LPEConstructGrid::setup_nodepath(Inkscape::NodePath::Path *np)
-{
-    Effect::setup_nodepath(np);
-    sp_nodepath_make_straight_path(np);
 }
 
 } //namespace LivePathEffect

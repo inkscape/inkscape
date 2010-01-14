@@ -91,6 +91,10 @@
 #include "widgets/desktop-widget.h"
 #include "box3d-context.h"
 
+// TODO those includes are only for node tool quick zoom. Remove them after fixing it.
+#include "ui/tool/node-tool.h"
+#include "ui/tool/control-point-selection.h"
+
 #include "display/sp-canvas.h"
 
 namespace Inkscape { namespace XML { class Node; }}
@@ -624,9 +628,12 @@ SPDesktop::set_event_context (GtkType type, const gchar *config)
     while (event_context) {
         ec = event_context;
         sp_event_context_deactivate (ec);
-        event_context = ec->next;
+        // we have to keep event_context valid during destruction - otherwise writing
+        // destructors is next to impossible
+        SPEventContext *next = ec->next;
         sp_event_context_finish (ec);
         g_object_unref (G_OBJECT (ec));
+        event_context = next;
     }
 
     ec = sp_event_context_new (type, this, config, SP_EVENT_CONTEXT_STATIC);
@@ -785,11 +792,12 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
 
     int clear = FALSE;
     if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
-        /* Set zoom factors */
+        // zoom changed - set new zoom factors
         _d2w = Geom::Scale(newscale, -newscale);
         _w2d = Geom::Scale(1/newscale, 1/-newscale);
         sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
         clear = TRUE;
+        signal_zoom_changed.emit(_d2w.descrim());
     }
 
     /* Calculate top left corner (in document pixels) */
@@ -875,11 +883,6 @@ SPDesktop::next_zoom()
     zooms_future = g_list_remove (zooms_future, ((NRRect *) zooms_future->data));
 }
 
-#include "tools-switch.h"
-#include "node-context.h"
-#include "shape-editor.h"
-#include "nodepath.h"
-
 /** \brief  Performs a quick zoom into what the user is working on
     \param  enable  Whether we're going in or out of quick zoom
 
@@ -895,67 +898,26 @@ SPDesktop::zoom_quick (bool enable)
         _quick_zoom_stored_area = get_display_area();
         bool zoomed = false;
 
-        if (!zoomed) {
-            SPItem * singleItem = selection->singleItem();
-            if (singleItem != NULL && tools_isactive(this, TOOLS_NODES)) {
-
-                Inkscape::NodePath::Path * nodepath = event_context->shape_editor->get_nodepath();
-                // printf("I've got a nodepath, crazy\n");
-
-				if (nodepath) {
-					Geom::Rect nodes;
-					bool firstnode = true;
-
-					if (nodepath->selected) {
-						for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
-						   Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-							for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
-							   Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
-								if (node->selected) {
-									// printf("\tSelected node\n");
-									if (firstnode) {
-										nodes = Geom::Rect(node->pos, node->pos);
-										firstnode = false;
-									} else {
-										nodes.expandTo(node->pos);
-									}
-
-									if (node->p.other != NULL) {
-										/* Include previous node pos */
-										nodes.expandTo(node->p.other->pos);
-
-										/* Include previous handle */
-										if (!sp_node_side_is_line(node, &node->p)) {
-											nodes.expandTo(node->p.pos);
-										}
-									}
-
-									if (node->n.other != NULL) {
-										/* Include previous node pos */
-										nodes.expandTo(node->n.other->pos);
-
-										/* Include previous handle */
-										if (!sp_node_side_is_line(node, &node->n)) {
-											nodes.expandTo(node->n.pos);
-										}
-									}
-								}
-							}
-						}
-
-						if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
-							set_display_area(nodes, 10);
-							zoomed = true;
-						}
-					}
-				}
+        // TODO This needs to migrate into the node tool, but currently the design
+        // of this method is sufficiently wrong to prevent this.
+        if (!zoomed && INK_IS_NODE_TOOL(event_context)) {
+            InkNodeTool *nt = static_cast<InkNodeTool*>(event_context);
+            if (!nt->_selected_nodes->empty()) {
+                Geom::Rect nodes = *nt->_selected_nodes->bounds();
+                double area = nodes.area();
+                // do not zoom if a single cusp node is selected aand the bounds
+                // have zero area.
+                if (!Geom::are_near(area, 0) && area * 2.0 < _quick_zoom_stored_area.area()) {
+                    set_display_area(nodes, true);
+                    zoomed = true;
+		}
             }
         }
 
         if (!zoomed) {
             Geom::OptRect const d = selection->bounds();
             if (d && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
-                set_display_area(*d, 10);
+                set_display_area(*d, true);
                 zoomed = true;
             }
         }
@@ -965,7 +927,7 @@ SPDesktop::zoom_quick (bool enable)
             zoomed = true;
         }
     } else {
-        set_display_area(_quick_zoom_stored_area, 0);
+        set_display_area(_quick_zoom_stored_area, false);
     }
 
     _quick_zoom_enabled = enable;
@@ -1806,7 +1768,7 @@ Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
 }
 
 
-/**
+/*
  * Pop event context from desktop's context stack. Never used.
  */
 // void
@@ -1848,4 +1810,4 @@ Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

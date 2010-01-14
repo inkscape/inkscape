@@ -28,7 +28,6 @@
 #include "tools-switch.h"
 #include "message-stack.h"
 #include "desktop.h"
-#include "nodepath.h"
 #include "knotholder.h"
 
 #include "live_effects/lpeobject.h"
@@ -662,13 +661,6 @@ Effect::resetDefaults(SPItem * /*item*/)
         (*p)->param_set_default();
         (*p)->write_to_SVG();
     }
-}
-
-void
-Effect::setup_nodepath(Inkscape::NodePath::Path *np)
-{
-    np->helperpath_rgba = 0xff0000ff;
-    np->helperpath_width = 1.0;
 }
 
 void

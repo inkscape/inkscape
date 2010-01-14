@@ -603,8 +603,11 @@ dnl 	with_inkboard="no"
 dnl fi
 
 dnl AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
-dnl AC_SUBST(INKBOARD_LIBS)
-dnl AC_SUBST(INKBOARD_CFLAGS)
+
+INKBOARD_CFLAGS=""
+INKBOARD_LIBS=""
+AC_SUBST(INKBOARD_LIBS)
+AC_SUBST(INKBOARD_CFLAGS)
 
 dnl ******************************
 dnl Check for libwpg for extension

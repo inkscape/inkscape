@@ -73,7 +73,7 @@ bool HttpClient::openGet(const URI &uri)
         socket.enableSSL(true);
     else
         {
-        printf("Bad proto scheme:%d\n", uri.getScheme());
+        //printf("Bad proto scheme:%d\n", uri.getScheme());
         return false;
         }
 
@@ -106,7 +106,7 @@ bool HttpClient::openGet(const URI &uri)
         {
         if (!socket.readLine(msg))
             return false;
-        printf("header:'%s'\n", msg.c_str());
+        //printf("header:'%s'\n", msg.c_str());
         if (msg.size() < 1)
             break;
         }

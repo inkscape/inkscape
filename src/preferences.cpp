@@ -11,6 +11,7 @@
  */
 
 #include <cstring>
+#include <sstream>
 #include <glibmm/fileutils.h>
 #include <glibmm/i18n.h>
 #include <glib.h>
@@ -446,6 +447,13 @@ void Preferences::setDouble(Glib::ustring const &pref_path, double value)
     _setRawValue(pref_path, buf);
 }
 
+void Preferences::setColor(Glib::ustring const &pref_path, guint32 value)
+{
+    gchar buf[16];
+    g_snprintf(buf, 16, "#%08x", value);
+    _setRawValue(pref_path, buf);
+}
+
 /**
  * @brief Set a string attribute of a preference
  * @param pref_path Path of the preference to modify
@@ -730,6 +738,20 @@ double Preferences::_extractDouble(Entry const &v)
 Glib::ustring Preferences::_extractString(Entry const &v)
 {
     return Glib::ustring(static_cast<gchar const *>(v._value));
+}
+
+guint32 Preferences::_extractColor(Entry const &v)
+{
+    gchar const *s = static_cast<gchar const *>(v._value);
+    std::istringstream hr(s);
+    guint32 color;
+    if (s[0] == '#') {
+        hr.ignore(1);
+        hr >> std::hex >> color;
+    } else {
+        hr >> color;
+    }
+    return color;
 }
 
 SPCSSAttr *Preferences::_extractStyle(Entry const &v)

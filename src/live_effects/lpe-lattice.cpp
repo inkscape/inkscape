@@ -22,7 +22,6 @@
 #include "sp-path.h"
 #include "display/curve.h"
 #include "svg/svg.h"
-#include "nodepath.h"
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>

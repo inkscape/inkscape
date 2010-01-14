@@ -1,17 +1,7 @@
-#ifndef SEEN_SNAP_H
-#define SEEN_SNAP_H
-
 /**
  * \file snap.h
- * \brief SnapManager class.
- *
- * The SnapManager class handles most (if not all) of the interfacing of the snapping mechanisms with the
- * other parts of the code base. It stores the references to the various types of snappers for grid, guides
- * and objects, and it stores most of the snapping preferences. Besides that it provides methods to setup
- * the snapping environment (e.g. keeps a list of the items to ignore when looking for snap target candidates,
- * and toggling of the snap indicator), and it provides many different methods for the snapping itself (free
- * snapping vs. constrained snapping, returning the result by reference or through a return statement, etc.)
- *
+ * \brief Per-desktop object that handles snapping queries
+ *//*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
@@ -25,8 +15,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <vector>
+#ifndef SEEN_SNAP_H
+#define SEEN_SNAP_H
 
+#include <vector>
 #include "guide-snapper.h"
 #include "object-snapper.h"
 #include "snap-preferences.h"
@@ -42,11 +34,33 @@ enum SPGuideDragType { // used both here and in desktop-events.cpp
 class SPNamedView;
 
 /// Class to coordinate snapping operations
-
 /**
- *  Each SPNamedView has one of these.  It offers methods to snap points to whatever
- *  snappers are defined (e.g. grid, guides etc.).  It also allows callers to snap
- *  points which have undergone some transformation (e.g. translation, scaling etc.)
+ * The SnapManager class handles most (if not all) of the interfacing of the snapping mechanisms
+ * with the other parts of the code base. It stores the references to the various types of snappers
+ * for grid, guides and objects, and it stores most of the snapping preferences. Besides that
+ * it provides methods to setup the snapping environment (e.g. keeps a list of the items to ignore
+ * when looking for snap target candidates, and toggling of the snap indicator), and it provides
+ * many different methods for snapping queries (free snapping vs. constrained snapping,
+ * returning the result by reference or through a return statement, etc.)
+ * 
+ * Each SPNamedView has one of these.  It offers methods to snap points to whatever
+ * snappers are defined (e.g. grid, guides etc.).  It also allows callers to snap
+ * points which have undergone some transformation (e.g. translation, scaling etc.)
+ *
+ * \par How snapping is implemented in Inkscape
+ * \par
+ * The snapping system consists of two key elements. The first one is the snap manager
+ * (this class), which keeps some data about objects in the document and answers queries
+ * of the type "given this point and type of transformation, what is the best place
+ * to snap to?".
+ * 
+ * The second is in event-context.cpp and implements the snapping timeout. Whenever a motion
+ * events happens over the canvas, it stores it for later use and initiates a timeout.
+ * This timeout is discarded whenever a new motion event occurs. When the timeout expires,
+ * a global flag in SnapManager, accessed via getSnapPostponedGlobally(), is set to true
+ * and the stored event is replayed, but this time with snapping enabled. This way you can
+ * write snapping code directly in your control point's dragged handler as if there was
+ * no timeout.
  */
 
 class SnapManager
@@ -73,10 +87,14 @@ public:
             SPGuide *guide_to_ignore = NULL);
 
     void setup(SPDesktop const *desktop,
-            bool snapindicator,
-            std::vector<SPItem const *> &items_to_ignore,
-            std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
-            SPGuide *guide_to_ignore = NULL);
+               bool snapindicator,
+               std::vector<SPItem const *> &items_to_ignore,
+               std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
+               SPGuide *guide_to_ignore = NULL);
+    void setupIgnoreSelection(SPDesktop const *desktop,
+                              bool snapindicator = true,
+                              std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes = NULL,
+                              SPGuide *guide_to_ignore = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
@@ -166,8 +184,7 @@ protected:
     SPNamedView const *_named_view;
 
 private:
-    std::vector<SPItem const *> *_items_to_ignore; ///< Items that should not be snapped to, for example the items that are currently being dragged. Set using the setup() method
-    SPItem const *_item_to_ignore; ///< Single item that should not be snapped to. If not NULL then this takes precedence over _items_to_ignore. Set using the setup() method
+    std::vector<SPItem const *> _items_to_ignore; ///< Items that should not be snapped to, for example the items that are currently being dragged. Set using the setup() method
     SPGuide *_guide_to_ignore; ///< A guide that should not be snapped to, e.g. the guide that is currently being dragged
     SPDesktop const *_desktop;
     bool _snapindicator; ///< When true, an indicator will be drawn at the position that was being snapped to

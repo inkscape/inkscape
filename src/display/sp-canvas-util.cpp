@@ -112,10 +112,11 @@ void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z)
     if (z == current_z)
         return;
 
-    if (z > current_z)
+    if (z > current_z) {
         sp_canvas_item_raise (item, z - current_z);
-
-    sp_canvas_item_lower (item, current_z - z);
+    } else {
+        sp_canvas_item_lower (item, current_z - z);
+    }
 }
 
 gint

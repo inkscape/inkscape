@@ -30,6 +30,7 @@
 
 #include "inkscape.h"
 #include "desktop.h"
+#include "selection.h"
 #include "sp-guide.h"
 #include "preferences.h"
 #include "event-context.h"
@@ -207,25 +208,11 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
-    std::vector<SPItem const *> *items_to_ignore;
-    if (_item_to_ignore) { // If we have only a single item to ignore
-        // then build a list containing this single item;
-        // This single-item list will prevail over any other _items_to_ignore list, should that exist
-        items_to_ignore = new std::vector<SPItem const *>;
-        items_to_ignore->push_back(_item_to_ignore);
-    } else {
-        items_to_ignore = _items_to_ignore;
-    }
-
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
 
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->freeSnap(sc, point_type, p, bbox_to_snap, items_to_ignore, _unselected_nodes);
-    }
-
-    if (_item_to_ignore) {
-        delete items_to_ignore;
+        (*i)->freeSnap(sc, point_type, p, bbox_to_snap, &_items_to_ignore, _unselected_nodes);
     }
 
     return findBestSnap(p, sc, false);
@@ -363,17 +350,6 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
-    std::vector<SPItem const *> *items_to_ignore;
-    if (_item_to_ignore) { // If we have only a single item to ignore
-        // then build a list containing this single item;
-        // This single-item list will prevail over any other _items_to_ignore list, should that exist
-        items_to_ignore = new std::vector<SPItem const *>;
-        items_to_ignore->push_back(_item_to_ignore);
-    } else {
-        items_to_ignore = _items_to_ignore;
-    }
-
-
     // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p.getPoint());
     // Then try to snap the projected point
@@ -382,11 +358,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, point_type, candidate, bbox_to_snap, constraint, items_to_ignore);
-    }
-
-    if (_item_to_ignore) {
-        delete items_to_ignore;
+        (*i)->constrainedSnap(sc, point_type, candidate, bbox_to_snap, constraint, &_items_to_ignore);
     }
 
     return findBestSnap(candidate, sc, true);
@@ -1036,22 +1008,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     return bestSnappedPoint;
 }
 
-/**
- * \brief Prepare the snap manager for the actual snapping, which includes building a list of snap targets
- * to ignore and toggling the snap indicator
- *
- * There are two overloaded setup() methods, of which this one only allows for a single item to be ignored
- * whereas the other one will take a list of items to ignore
- *
- * \param desktop Reference to the desktop to which this snap manager is attached
- * \param snapindicator If true then a snap indicator will be displayed automatically (when enabled in the preferences)
- * \param item_to_ignore This item will not be snapped to, e.g. the item that is currently being dragged. This avoids "self-snapping"
- * \param unselected_nodes Stationary nodes of the path that is currently being edited in the node tool and
- * that can be snapped too. Nodes not in this list will not be snapped to, to avoid "self-snapping". Of each
- * unselected node both the position (Geom::Point) and the type (Inkscape::SnapTargetType) will be stored
- * \param guide_to_ignore Guide that is currently being dragged and should not be snapped to
- */
-
+/// Convenience shortcut when there is only one item to ignore
 void SnapManager::setup(SPDesktop const *desktop,
                         bool snapindicator,
                         SPItem const *item_to_ignore,
@@ -1059,8 +1016,8 @@ void SnapManager::setup(SPDesktop const *desktop,
                         SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
-    _item_to_ignore = item_to_ignore;
-    _items_to_ignore = NULL;
+    _items_to_ignore.clear();
+    _items_to_ignore.push_back(item_to_ignore);
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
@@ -1090,12 +1047,30 @@ void SnapManager::setup(SPDesktop const *desktop,
                         SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
-    _item_to_ignore = NULL;
-    _items_to_ignore = &items_to_ignore;
+    _items_to_ignore = items_to_ignore;
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
     _guide_to_ignore = guide_to_ignore;
+}
+
+/// Setup, taking the list of items to ignore from the desktop's selection.
+void SnapManager::setupIgnoreSelection(SPDesktop const *desktop,
+                                      bool snapindicator,
+                                      std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes,
+                                      SPGuide *guide_to_ignore)
+{
+    _desktop = desktop;
+    _snapindicator = snapindicator;
+    _unselected_nodes = unselected_nodes;
+    _guide_to_ignore = guide_to_ignore;
+    _items_to_ignore.clear();
+
+    Inkscape::Selection *sel = _desktop->selection;
+    GSList const *items = sel->itemList();
+    for (GSList *i = const_cast<GSList*>(items); i; i = i->next) {
+        _items_to_ignore.push_back(static_cast<SPItem const *>(i->data));
+    }
 }
 
 SPDocument *SnapManager::getDocument() const

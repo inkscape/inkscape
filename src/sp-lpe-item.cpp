@@ -33,7 +33,6 @@
 #include "message-stack.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "node-context.h"
 #include "shape-editor.h"
 
 #include <algorithm>
@@ -261,18 +260,7 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     // update the helperpaths of all LPEs applied to the item
-    // TODO: is there a more canonical place for this, since we don't have instant access to the item's nodepath?
-    // FIXME: this is called multiple (at least 3) times; how can we avoid this?
-
-    // FIXME: ditch inkscape_active_event_context()
-    SPEventContext *ec = inkscape_active_event_context();
-    if (!SP_IS_NODE_CONTEXT(ec)) return;
-    ShapeEditor *sh = ec->shape_editor;
-    g_assert(sh);
-    if (!sh->has_nodepath()) return;
-
-    Inkscape::NodePath::Path *np = sh->get_nodepath();
-    sp_nodepath_update_helperpaths(np);
+    // TODO: re-add for the new node tool
 }
 
 /**
@@ -395,7 +383,8 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
             if (dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)) {
                 if (!lpe->isVisible()) {
                     // we manually disable text for LPEPathLength
-                    dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)->hideCanvasText();
+                    // use static_cast, because we already checked for the right type above
+                    static_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)->hideCanvasText();
                 }
             }
         }

@@ -26,10 +26,10 @@
 /* Freetype2 */
 # include <pango/pangoft2.h>
 
-#include <ext/hash_map>
+#include <tr1/unordered_map>
 
 
-typedef __gnu_cxx::hash_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
+typedef std::tr1::unordered_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
@@ -47,7 +47,7 @@ size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
     h += (int)pango_font_description_get_stretch(x);
     return h;
 }
-bool  font_descr_equal::operator()( PangoFontDescription *const&a, PangoFontDescription *const &b) {
+bool  font_descr_equal::operator()( PangoFontDescription *const&a, PangoFontDescription *const &b) const {
     //if ( pango_font_description_equal(a,b) ) return true;
     char const *fa = pango_font_description_get_family(a);
     char const *fb = pango_font_description_get_family(b);

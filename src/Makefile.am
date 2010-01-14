@@ -134,6 +134,7 @@ include algorithms/Makefile_insert
 include ui/Makefile_insert
 include ui/cache/Makefile_insert
 include ui/dialog/Makefile_insert
+include ui/tool/Makefile_insert
 include ui/view/Makefile_insert
 include ui/widget/Makefile_insert
 include util/Makefile_insert

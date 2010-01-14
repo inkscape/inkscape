@@ -27,8 +27,6 @@ public:
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
-    virtual void setup_nodepath(Inkscape::NodePath::Path *np);
-
 private:
     ScalarParam nr_x;
     ScalarParam nr_y;

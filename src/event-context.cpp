@@ -56,8 +56,8 @@
 #include "attributes.h"
 #include "rubberband.h"
 #include "selcue.h"
-#include "node-context.h"
 #include "lpe-tool-context.h"
+#include "ui/tool/control-point.h"
 
 static void sp_event_context_class_init(SPEventContextClass *klass);
 static void sp_event_context_init(SPEventContext *event_context);
@@ -1275,6 +1275,13 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data)
                 if (knot && SP_IS_KNOT(knot)) {
                     sp_knot_handler_request_position(dse->getEvent(), knot);
                 }
+            }
+            break;
+        case DelayedSnapEvent::CONTROL_POINT_HANDLER:
+            {
+                using Inkscape::UI::ControlPoint;
+                ControlPoint *point = reinterpret_cast<ControlPoint*>(dse->getKnot());
+                point->_eventHandler(dse->getEvent());
             }
             break;
         default:

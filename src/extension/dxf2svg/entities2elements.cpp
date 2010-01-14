@@ -20,10 +20,12 @@ SoC 2005
 
 */
 
-#include"entities2elements.h"
-#include"tables2svg_info.h"
-#include<iostream>
-#include<math.h>
+#include "entities2elements.h"
+#include "tables2svg_info.h"
+#include <iostream>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
 // The names indicate the DXF entitiy first and the SVG element last
 
 // Common elements

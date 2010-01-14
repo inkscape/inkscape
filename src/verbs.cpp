@@ -58,7 +58,6 @@
 #include "layer-fns.h"
 #include "layer-manager.h"
 #include "message-stack.h"
-#include "node-context.h"
 #include "path-chemistry.h"
 #include "preferences.h"
 #include "select-context.h"
@@ -80,6 +79,9 @@
 #include "ui/dialog/layers.h"
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
+#include "ui/tool/control-point-selection.h"
+#include "ui/tool/multi-path-manipulator.h"
+#include "ui/tool/node-tool.h"
 
 //#ifdef WITH_INKBOARD
 //#include "jabber_whiteboard/session-manager.h"
@@ -919,28 +921,32 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_EDIT_SELECT_ALL:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_all_from_subpath(false);
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_multipath->selectSubpaths();
             } else {
                 sp_edit_select_all(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_all_from_subpath(true);
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_multipath->invertSelectionInSubpaths();
             } else {
                 sp_edit_invert(dt);
             }
             break;
         case SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_all(false);
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_selected_nodes->selectAll();
             } else {
                 sp_edit_select_all_in_all_layers(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_all(true);
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_selected_nodes->invertSelection();
             } else {
                 sp_edit_invert_in_all_layers(dt);
             }
@@ -948,7 +954,8 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
         case SP_VERB_EDIT_SELECT_NEXT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_next();
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_multipath->shiftSelection(1);
             } else if (tools_isactive(dt, TOOLS_GRADIENT)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_next (ec);
@@ -958,7 +965,8 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_EDIT_SELECT_PREV:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->select_prev();
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_multipath->shiftSelection(-1);
             } else if (tools_isactive(dt, TOOLS_GRADIENT)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_prev (ec);
@@ -969,7 +977,8 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
         case SP_VERB_EDIT_DESELECT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                ec->shape_editor->deselect();
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_selected_nodes->clear();
             } else {
                 sp_desktop_selection(dt)->clear();
             }
@@ -1086,7 +1095,13 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_selected_path_simplify(dt);
             break;
         case SP_VERB_SELECTION_REVERSE:
-            sp_selected_path_reverse(dt);
+            // TODO make this a virtual method of event context!
+            if (tools_isactive(dt, TOOLS_NODES)) {
+                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+                nt->_multipath->reverseSubpaths();
+            } else {
+                sp_selected_path_reverse(dt);
+            }
             break;
         case SP_VERB_SELECTION_TRACE:
             inkscape_dialogs_unhide();
@@ -1365,41 +1380,12 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
             flowtext_to_text();
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
-            // When working with the node tool ...
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
-
-                // ... and one of the nodes is currently mouseovered ...
-                if (active_node) {
-
-                    // ... flip the selected nodes about that node
-                    ec->shape_editor->flip(Geom::X, active_node->pos);
-                } else {
-
-                    // ... or else about the center of their bounding box.
-                    ec->shape_editor->flip(Geom::X);
-                }
-
-            // When working with the selector tool, flip the selection about its rotation center
-            // (if it is visible) or about the center of the bounding box.
-            } else {
-                sp_selection_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
-            }
+            sp_selection_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_HORIZONTAL,
                              _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
-            // The behaviour is analogous to flipping horizontally
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
-                if (active_node) {
-                    ec->shape_editor->flip(Geom::Y, active_node->pos);
-                } else {
-                    ec->shape_editor->flip(Geom::Y);
-                }
-            } else {
-                sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
-            }
+            sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_VERTICAL,
                              _("Flip vertically"));
             break;

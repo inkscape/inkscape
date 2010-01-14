@@ -7,7 +7,6 @@
 #include "live_effects/lpe-spiro.h"
 
 #include "display/curve.h"
-#include "nodepath.h"
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/matrix.h>
@@ -113,14 +112,6 @@ LPESpiro::LPESpiro(LivePathEffectObject *lpeobject) :
 
 LPESpiro::~LPESpiro()
 {
-}
-
-void
-LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
-{
-    Effect::setup_nodepath(np);
-    sp_nodepath_show_handles(np, false);
-//    sp_nodepath_show_helperpath(np, false);
 }
 
 void

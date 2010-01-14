@@ -26,7 +26,7 @@
 #include <xml/repr.h>
 
 #include "select-context.h"
-#include "node-context.h"
+#include "ui/tool/node-tool.h"
 #include "tweak-context.h"
 #include "spray-context.h"
 #include "sp-path.h"
@@ -126,10 +126,9 @@ tools_switch(SPDesktop *dt, int num)
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             break;
         case TOOLS_NODES:
-            dt->set_event_context(SP_TYPE_NODE_CONTEXT, tool_names[num]);
+            dt->set_event_context(INK_TYPE_NODE_TOOL, tool_names[num]);
             dt->activate_guides(true);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."));
             break;
         case TOOLS_TWEAK:
             dt->set_event_context(SP_TYPE_TWEAK_CONTEXT, tool_names[num]);

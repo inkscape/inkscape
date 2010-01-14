@@ -103,6 +103,7 @@ static void group_remove (SPCanvasGroup *group, SPCanvasItem *item);
 /* SPCanvasItem */
 
 enum {ITEM_EVENT, ITEM_LAST_SIGNAL};
+enum {PROP_0, PROP_VISIBLE};
 
 
 static void sp_canvas_request_update (SPCanvas *canvas);
@@ -113,11 +114,10 @@ static void sp_canvas_item_init (SPCanvasItem *item);
 static void sp_canvas_item_dispose (GObject *object);
 static void sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
 
+
 static int emit_event (SPCanvas *canvas, GdkEvent *event);
 
 static guint item_signals[ITEM_LAST_SIGNAL] = { 0 };
-
-static GtkObjectClass *item_parent_class;
 
 /**
  * Registers the SPCanvasItem class with Glib and returns its type number.
@@ -151,9 +151,6 @@ sp_canvas_item_class_init (SPCanvasItemClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
 
-    /* fixme: Derive from GObject */
-    item_parent_class = (GtkObjectClass*)gtk_type_class (GTK_TYPE_OBJECT);
-
     item_signals[ITEM_EVENT] = g_signal_new ("event",
                                              G_TYPE_FROM_CLASS (klass),
                                              G_SIGNAL_RUN_LAST,
@@ -172,6 +169,9 @@ sp_canvas_item_class_init (SPCanvasItemClass *klass)
 static void
 sp_canvas_item_init (SPCanvasItem *item)
 {
+    // TODO items should not be visible on creation - this causes kludges with items
+    // that should be initially invisible; examples of such items: node handles, the CtrlRect
+    // used for rubberbanding, path outline, etc.
     item->flags |= SP_CANVAS_ITEM_VISIBLE;
     item->xform = Geom::Matrix(Geom::identity());
 }
@@ -277,7 +277,7 @@ sp_canvas_item_dispose (GObject *object)
         group_remove (SP_CANVAS_GROUP (item->parent), item);
     }
 
-    G_OBJECT_CLASS (item_parent_class)->dispose (object);
+    G_OBJECT_CLASS (g_type_class_peek(g_type_parent(sp_canvas_item_get_type())))->dispose (object);
 }
 
 /**
@@ -477,6 +477,13 @@ sp_canvas_item_lower (SPCanvasItem *item, int positions)
     item->canvas->need_repick = TRUE;
 }
 
+bool
+sp_canvas_item_is_visible (SPCanvasItem *item)
+{
+    return item->flags & SP_CANVAS_ITEM_VISIBLE;
+}
+
+
 /**
  * Sets visible flag on item and requests a redraw.
  */
@@ -542,8 +549,13 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
     if (item->canvas->grabbed_item)
         return -1;
 
-    if (!(item->flags & SP_CANVAS_ITEM_VISIBLE))
-        return -1;
+    // This test disallows grabbing events by an invisible item, which may be useful
+    // sometimes. An example is the hidden control point used for the selector component,
+    // where it is used for object selection and rubberbanding. There seems to be nothing
+    // preventing this except this test, so I removed it.
+    // -- Krzysztof Kosiński, 2009.08.12
+    //if (!(item->flags & SP_CANVAS_ITEM_VISIBLE))
+    //    return -1;
 
     if (HAS_BROKEN_MOTION_HINTS) {
         event_mask &= ~GDK_POINTER_MOTION_HINT_MASK;

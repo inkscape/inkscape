@@ -224,7 +224,7 @@ namespace XML {}
  *         - SPEllipse
  *       - SPLine [\ref sp-line.cpp, \ref sp-line.h]
  *       - SPOffset [\ref sp-offset.cpp, \ref sp-offset.h]
- *       - SPPath [\ref sp-path.cpp, \ref sp-path.h, \ref path-chemistry.cpp, \ref nodepath.cpp, \ref nodepath.h, \ref splivarot.cpp]
+ *       - SPPath [\ref sp-path.cpp, \ref sp-path.h, \ref path-chemistry.cpp, \ref splivarot.cpp]
  *       - SPPolygon [\ref sp-polygon.cpp, \ref sp-polygon.h]
  *         - SPStar [\ref sp-star.cpp, \ref sp-star.h]
  *       - SPPolyLine [\ref sp-polyline.cpp, \ref sp-polyline.h]

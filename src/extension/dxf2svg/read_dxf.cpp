@@ -11,11 +11,13 @@
 
 
 
-#include<fstream>
-#include<string>
-#include"read_dxf.h"
+#include <fstream>
+#include <string>
+#include "read_dxf.h"
 
-#include<iostream>
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
 using namespace std;
 
 

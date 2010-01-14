@@ -28,10 +28,8 @@
 // needed for on-canvas editting:
 #include "tools-switch.h"
 #include "shape-editor.h"
-#include "node-context.h"
 #include "desktop-handles.h"
 #include "selection.h"
-#include "nodepath.h"
 // clipboard support
 #include "ui/clipboard.h"
 // required for linking to other paths
@@ -39,6 +37,10 @@
 #include "sp-shape.h"
 #include "sp-text.h"
 #include "display/curve.h"
+
+#include "ui/tool/node-tool.h"
+#include "ui/tool/multi-path-manipulator.h"
+#include "ui/tool/shape-record.h"
 
 
 namespace Inkscape {
@@ -195,26 +197,33 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
 void
 PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 {
-    // If not already in nodecontext, goto it!
+    using namespace Inkscape::UI;
+
+    // TODO remove the tools_switch atrocity.
     if (!tools_isactive(dt, TOOLS_NODES)) {
         tools_switch(dt, TOOLS_NODES);
     }
 
-    ShapeEditor * shape_editor = dt->event_context->shape_editor;
+    InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+    std::set<ShapeRecord> shapes;
+    ShapeRecord r;
+
+    r.role = SHAPE_ROLE_LPE_PARAM;
+    r.edit_transform = Geom::identity(); // TODO this is almost certainly wrong
     if (!href) {
-        shape_editor->set_item_lpe_path_parameter(item, param_effect->getLPEObj(), param_key.c_str());
+        r.item = reinterpret_cast<SPItem*>(param_effect->getLPEObj());
+        r.lpe_key = param_key;
     } else {
-        // set referred item for editing
-        shape_editor->set_item(ref.getObject(), SH_NODEPATH);
+        r.item = ref.getObject();
     }
+    shapes.insert(r);
+    nt->_multipath->setItems(shapes);
 }
 
 void
-PathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
-{
-    np->show_helperpath = true;
-    np->helperpath_rgba = 0x009000ff;
-    np->helperpath_width = 1.0;
+PathParam::param_setup_nodepath(Inkscape::NodePath::Path *)
+{   
+    // TODO this method should not exist at all!
 }
 
 void

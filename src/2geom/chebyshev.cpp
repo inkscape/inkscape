@@ -93,7 +93,7 @@ SBasis chebyshev_approximant_interpolating (double (*f)(double,void*),
     wr.fa = fa;
     wr.fb = fb;
     wr.in = in;
-    printf("%f %f\n", fa, fb);
+    //printf("%f %f\n", fa, fb);
     wr.f = f;
     wr.pp = p;
     return compose(Linear(in[0], in[1]), Linear(fa, fb)) + chebyshev_approximant(f_interp, order, in, &wr) + Linear(fa, fb);

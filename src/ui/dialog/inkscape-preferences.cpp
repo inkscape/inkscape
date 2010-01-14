@@ -435,13 +435,22 @@ void InkscapePreferences::initPageTools()
     AddGradientCheckbox(_page_node, "/tools/nodes", true);
     _page_node.add_group_header( _("Path outline:"));
     _t_node_pathoutline_color.init(_("Path outline color"), "/tools/nodes/highlight_color", 0xff0000ff);
-    _page_node.add_line( false, _("Path outline color"), _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
-    _t_node_pathflash_enabled.init ( _("Path outline flash on mouse-over"), "/tools/nodes/pathflash_enabled", false);
+    _page_node.add_line( false, "", _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
+    _t_node_show_outline.init(_("Always show outline"), "/tools/nodes/show_outline", false);
+    _page_node.add_line( true, "", _t_node_show_outline, "", _("Show outlines for all paths, not only invisible paths"));
+    _t_node_show_path_direction.init(_("Show path direction on outlines"), "/tools/nodes/show_path_direction", false);
+    _page_node.add_line( true, "", _t_node_show_path_direction, "", _("Visualize the direction of selected paths by drawing small arrows in the middle of each outline segment"));
+    _t_node_pathflash_enabled.init ( _("Show temporary path outline"), "/tools/nodes/pathflash_enabled", false);
     _page_node.add_line( true, "", _t_node_pathflash_enabled, "", _("When hovering over a path, briefly flash its outline."));
-    _t_node_pathflash_unselected.init ( _("Suppress path outline flash when one path selected"), "/tools/nodes/pathflash_unselected", false);
-    _page_node.add_line( true, "", _t_node_pathflash_unselected, "", _("If a path is selected, do not continue flashing path outlines."));
+    _t_node_pathflash_selected.init ( _("Show temporary outline for selected paths"), "/tools/nodes/pathflash_selected", false);
+    _page_node.add_line( true, "", _t_node_pathflash_selected, "", _("Show temporary outline even when a path is selected for editing"));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
     _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
+    _page_node.add_group_header(_("Transform Handles:"));
+    _t_node_show_transform_handles.init(_("Show transform handles"), "/tools/nodes/show_transform_handles", true);
+    _page_node.add_line( true, "", _t_node_show_transform_handles, "", _("Show scaling, rotation and skew handles for node selections."));
+    _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
+    _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected."));
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);

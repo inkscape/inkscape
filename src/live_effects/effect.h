@@ -92,8 +92,6 @@ public:
      */
     virtual void resetDefaults(SPItem * item);
 
-    virtual void setup_nodepath(Inkscape::NodePath::Path *np);
-
     /// /todo: is this method really necessary? it causes UI inconsistensies... (johan)
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 

@@ -8,7 +8,6 @@
 
 #include <cstdio>
 #include "live_effects/lpe-vonkoch.h"
-#include "nodepath.h"
 #include <2geom/transforms.h>
 
 //using std::vector;
@@ -19,7 +18,7 @@ void
 VonKochPathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 {  
     PathParam::param_setup_nodepath(np);
-    sp_nodepath_make_straight_path(np);
+    //sp_nodepath_make_straight_path(np);
 }
 
 //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
@@ -27,12 +26,12 @@ void
 VonKochRefPathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
 {  
     PathParam::param_setup_nodepath(np);
-    sp_nodepath_make_straight_path(np);
+    //sp_nodepath_make_straight_path(np);
 }
 bool
 VonKochRefPathParam::param_readSVGValue(const gchar * strvalue)
 {  
-    std::vector<Geom::Path> old = _pathvector;
+    Geom::PathVector old = _pathvector;
     bool res = PathParam::param_readSVGValue(strvalue);
     if (res && _pathvector.size()==1 && _pathvector.front().size()==1){
         return true;

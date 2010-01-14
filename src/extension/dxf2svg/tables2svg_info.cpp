@@ -10,9 +10,11 @@
  */
 
 
-#include"tables2svg_info.h"
-#include<math.h>
-#include<iostream>
+#include "tables2svg_info.h"
+#include <math.h>
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
 
 char* pattern2dasharray(ltype info, int precision, double scaling, char* out){
 	std::vector< double > pattern = info.ret_pattern();

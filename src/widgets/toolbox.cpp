@@ -9,7 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   John Cliff <simarilius@yahoo.com>
  *   David Turner <novalis@gnu.org>
- *   Josh Andler <scislac@users.sf.net>
+ *   Josh Andler <scislac@scislac.com>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *
@@ -65,7 +65,6 @@
 #include "../live_effects/lpe-line_segment.h"
 #include "../lpe-tool-context.h"
 #include "../mod360.h"
-#include "../node-context.h"
 #include "../pen-context.h"
 #include "../preferences.h"
 #include "../selection-chemistry.h"
@@ -89,6 +88,9 @@
 #include "../spray-context.h"
 #include "../ui/dialog/calligraphic-profile-rename.h"
 #include "../ui/icon-names.h"
+#include "../ui/tool/control-point-selection.h"
+#include "../ui/tool/node-tool.h"
+#include "../ui/tool/multi-path-manipulator.h"
 #include "../ui/widget/style-swatch.h"
 #include "../verbs.h"
 #include "../widgets/button.h"
@@ -171,7 +173,7 @@ static struct {
     sp_verb_t doubleclick_verb;
 } const tools[] = {
     { "SPSelectContext",   "select_tool",    SP_VERB_CONTEXT_SELECT,  SP_VERB_CONTEXT_SELECT_PREFS},
-    { "SPNodeContext",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
+    { "InkNodeTool",     "node_tool",      SP_VERB_CONTEXT_NODE, SP_VERB_CONTEXT_NODE_PREFS },
     { "SPTweakContext",    "tweak_tool",     SP_VERB_CONTEXT_TWEAK, SP_VERB_CONTEXT_TWEAK_PREFS },
     { "SPSprayContext",    "spray_tool",     SP_VERB_CONTEXT_SPRAY, SP_VERB_CONTEXT_SPRAY_PREFS },
     { "SPZoomContext",     "zoom_tool",      SP_VERB_CONTEXT_ZOOM, SP_VERB_CONTEXT_ZOOM_PREFS },
@@ -205,7 +207,7 @@ static struct {
 } const aux_toolboxes[] = {
     { "SPSelectContext", "select_toolbox", 0, sp_select_toolbox_prep,            "SelectToolbar",
       SP_VERB_INVALID, 0, 0},
-    { "SPNodeContext",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
+    { "InkNodeTool",   "node_toolbox",   0, sp_node_toolbox_prep,              "NodeToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_CONTEXT_TWEAK_PREFS, "/tools/tweak", N_("Color/opacity used for color tweaking")},
@@ -1015,135 +1017,127 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
 //# node editing callbacks
 //####################################
 
-/**
- * FIXME: Returns current shape_editor in context. // later eliminate this function at all!
- */
-static ShapeEditor *get_current_shape_editor()
+/** Temporary hack: Returns the node tool in the active desktop.
+ * Will go away during tool refactoring. */
+static InkNodeTool *get_node_tool()
 {
-    if (!SP_ACTIVE_DESKTOP) {
-        return NULL;
-    }
-
-    SPEventContext *event_context = (SP_ACTIVE_DESKTOP)->event_context;
-
-    if (!SP_IS_NODE_CONTEXT(event_context)) {
-        return NULL;
-    }
-
-    return event_context->shape_editor;
+    if (!SP_ACTIVE_DESKTOP) return NULL;
+    SPEventContext *ec = SP_ACTIVE_DESKTOP->event_context;
+    if (!INK_IS_NODE_TOOL(ec)) return NULL;
+    return static_cast<InkNodeTool*>(ec);
 }
 
 
 void
 sp_node_path_edit_add(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->add_node();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->insertNodes();
 }
 
 void
 sp_node_path_edit_delete(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->delete_nodes_preserving_shape();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->deleteNodes();
 }
 
 void
 sp_node_path_edit_delete_segment(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->delete_segment();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->deleteSegments();
 }
 
 void
 sp_node_path_edit_break(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->break_at_nodes();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->breakNodes();
 }
 
 void
 sp_node_path_edit_join(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->join_nodes();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->joinNodes();
 }
 
 void
 sp_node_path_edit_join_segment(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->join_segments();
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->joinSegments();
 }
 
 void
 sp_node_path_edit_toline(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_type_of_segments(NR_LINETO);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_STRAIGHT);
 }
 
 void
 sp_node_path_edit_tocurve(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_type_of_segments(NR_CURVETO);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_CUBIC_BEZIER);
 }
 
 void
 sp_node_path_edit_cusp(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_CUSP);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_CUSP);
 }
 
 void
 sp_node_path_edit_smooth(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_SMOOTH);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_SMOOTH);
 }
 
 void
 sp_node_path_edit_symmetrical(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_SYMM);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_SYMMETRIC);
 }
 
 void
 sp_node_path_edit_auto(void)
 {
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->set_node_type(Inkscape::NodePath::NODE_AUTO);
+    InkNodeTool *nt = get_node_tool();
+    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_AUTO);
 }
 
 static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show = gtk_toggle_action_get_active( act );
     prefs->setBool("/tools/nodes/show_handles",  show);
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->show_handles(show);
 }
 
 static void toggle_show_helperpath (GtkToggleAction *act, gpointer /*data*/) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show = gtk_toggle_action_get_active( act );
-    prefs->setBool("/tools/nodes/show_helperpath",  show);
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor) shape_editor->show_helperpath(show);
+    prefs->setBool("/tools/nodes/show_outline",  show);
 }
 
 void sp_node_path_edit_nextLPEparam (GtkAction */*act*/, gpointer data) {
     sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
 }
 
-void sp_node_path_edit_clippath (GtkAction */*act*/, gpointer data) {
-    sp_selection_edit_clip_or_mask( reinterpret_cast<SPDesktop*>(data), true);
+void toggle_edit_clip (GtkToggleAction *act, gpointer data) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool edit = gtk_toggle_action_get_active( act );
+    prefs->setBool("/tools/nodes/edit_clipping_paths", edit);
 }
 
-void sp_node_path_edit_maskpath (GtkAction */*act*/, gpointer data) {
-    sp_selection_edit_clip_or_mask( reinterpret_cast<SPDesktop*>(data), false);
+void toggle_edit_mask (GtkToggleAction *act, gpointer data) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool edit = gtk_toggle_action_get_active( act );
+    prefs->setBool("/tools/nodes/edit_masks", edit);
 }
 
 /* is called when the node selection is modified */
@@ -1166,54 +1160,29 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
     SPUnit const *unit = tracker->getActiveUnit();
 
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor && shape_editor->has_nodepath()) {
-        Inkscape::NodePath::Path *nodepath = shape_editor->get_nodepath();
-        int n_selected = 0;
-        if (nodepath) {
-            n_selected = nodepath->numSelected();
-        }
-
-        if (n_selected == 0) {
-            gtk_action_set_sensitive(xact, FALSE);
-            gtk_action_set_sensitive(yact, FALSE);
-        } else {
-            gtk_action_set_sensitive(xact, TRUE);
-            gtk_action_set_sensitive(yact, TRUE);
-            Geom::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
-            Geom::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
-
-            if (n_selected == 1) {
-                Geom::Point sel_node = nodepath->singleSelectedCoords();
-                if (oldx != sel_node[Geom::X] || oldy != sel_node[Geom::Y]) {
-                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(sel_node[Geom::X], *unit));
-                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(sel_node[Geom::Y], *unit));
-                }
-            } else {
-                boost::optional<Geom::Coord> x = sp_node_selected_common_coord(nodepath, Geom::X);
-                boost::optional<Geom::Coord> y = sp_node_selected_common_coord(nodepath, Geom::Y);
-                if ((x && ((*x) != oldx)) || (y && ((*y) != oldy))) {
-                    /* Note: Currently x and y will always have a value, even if the coordinates of the
-                       selected nodes don't coincide (in this case we use the coordinates of the center
-                       of the bounding box). So the entries are never set to zero. */
-                    // FIXME: Maybe we should clear the entry if several nodes are selected
-                    //        instead of providing a kind of average value
-                    gtk_adjustment_set_value(xadj, sp_pixels_get_units(x ? (*x) : 0.0, *unit));
-                    gtk_adjustment_set_value(yadj, sp_pixels_get_units(y ? (*y) : 0.0, *unit));
-                }
-            }
-        }
-    } else {
-        // no shape-editor or nodepath yet (when we just switched to the tool); coord entries must be inactive
+    InkNodeTool *nt = get_node_tool();
+    if (!nt || nt->_selected_nodes->empty()) {
+        // no path selected
         gtk_action_set_sensitive(xact, FALSE);
         gtk_action_set_sensitive(yact, FALSE);
+    } else {
+        gtk_action_set_sensitive(xact, TRUE);
+        gtk_action_set_sensitive(yact, TRUE);
+        Geom::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+        Geom::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+        Geom::Point mid = nt->_selected_nodes->pointwiseBounds()->midpoint();
+
+        if (oldx != mid[Geom::X])
+            gtk_adjustment_set_value(xadj, sp_pixels_get_units(mid[Geom::X], *unit));
+        if (oldy != mid[Geom::Y])
+            gtk_adjustment_set_value(yadj, sp_pixels_get_units(mid[Geom::Y], *unit));
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
 static void
-sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name)
+sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::Dim2 d)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1222,7 +1191,8 @@ sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_
     SPUnit const *unit = tracker->getActiveUnit();
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        prefs->setDouble(Glib::ustring("/tools/nodes/") + value_name, sp_units_get_pixels(adj->value, *unit));
+        prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
+            sp_units_get_pixels(adj->value, *unit));
     }
 
     // quit if run by the attr_changed listener
@@ -1233,15 +1203,13 @@ sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_
     // in turn, prevent listener from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
-    ShapeEditor *shape_editor = get_current_shape_editor();
-    if (shape_editor && shape_editor->has_nodepath()) {
+    InkNodeTool *nt = get_node_tool();
+    if (nt && !nt->_selected_nodes->empty()) {
         double val = sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit);
-        if (!strcmp(value_name, "x")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, Geom::X);
-        }
-        if (!strcmp(value_name, "y")) {
-            sp_node_selected_move_absolute(shape_editor->get_nodepath(), val, Geom::Y);
-        }
+        double oldval = nt->_selected_nodes->pointwiseBounds()->midpoint()[d];
+        Geom::Point delta(0,0);
+        delta[d] = val - oldval;
+        nt->_multipath->move(delta);
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -1250,13 +1218,13 @@ sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_
 static void
 sp_node_path_x_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_node_path_value_changed(adj, tbl, "x");
+    sp_node_path_value_changed(adj, tbl, Geom::X);
 }
 
 static void
 sp_node_path_y_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    sp_node_path_value_changed(adj, tbl, "y");
+    sp_node_path_value_changed(adj, tbl, Geom::Y);
 }
 
 void
@@ -1271,26 +1239,6 @@ sp_node_toolbox_sel_changed (Inkscape::Selection *selection, GObject *tbl)
        } else {
            gtk_action_set_sensitive(w, FALSE);
        }
-    } else {
-       gtk_action_set_sensitive(w, FALSE);
-    }
-    }
-
-    {
-    GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_clippathedit" ) );
-    SPItem *item = selection->singleItem();
-    if (item && item->clip_ref && item->clip_ref->getObject()) {
-       gtk_action_set_sensitive(w, TRUE);
-    } else {
-       gtk_action_set_sensitive(w, FALSE);
-    }
-    }
-
-    {
-    GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "nodes_maskedit" ) );
-    SPItem *item = selection->singleItem();
-    if (item && item->mask_ref && item->mask_ref->getObject()) {
-       gtk_action_set_sensitive(w, TRUE);
     } else {
        gtk_action_set_sensitive(w, FALSE);
     }
@@ -1342,8 +1290,8 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     {
         InkAction* inky = ink_action_new( "NodeJoinAction",
-                                          _("Join endnodes"),
-                                          _("Join selected endnodes"),
+                                          _("Join nodes"),
+                                          _("Join selected nodes"),
                                           INKSCAPE_ICON_NODE_JOIN,
                                           secondarySize );
         g_object_set( inky, "short_label", _("Join"), NULL );
@@ -1461,7 +1409,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_helperpath), desktop );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_helperpath", false) );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_outline", false) );
     }
 
     {
@@ -1476,25 +1424,25 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     }
 
     {
-        InkAction* inky = ink_action_new( "ObjectEditClipPathAction",
-                                          _("Edit clipping path"),
-                                          _("Edit the clipping path of the object"),
+        InkToggleAction* inky = ink_toggle_action_new( "ObjectEditClipPathAction",
+                                          _("Edit clipping paths"),
+                                          _("Show editing controls for clipping paths of selected objects"),
                                           INKSCAPE_ICON_PATH_CLIP_EDIT,
                                           Inkscape::ICON_SIZE_DECORATION );
-        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_clippath), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
-        g_object_set_data( holder, "nodes_clippathedit", inky);
+        g_signal_connect_after( G_OBJECT(inky), "toggled", G_CALLBACK(toggle_edit_clip), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(inky), prefs->getBool("/tools/nodes/edit_clipping_paths") );
     }
 
     {
-        InkAction* inky = ink_action_new( "ObjectEditMaskPathAction",
-                                          _("Edit mask path"),
-                                          _("Edit the mask of the object"),
+        InkToggleAction* inky = ink_toggle_action_new( "ObjectEditMaskPathAction",
+                                          _("Edit masks"),
+                                          _("Show editing controls for masks of selected objects"),
                                           INKSCAPE_ICON_PATH_MASK_EDIT,
                                           Inkscape::ICON_SIZE_DECORATION );
-        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_maskpath), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
-        g_object_set_data( holder, "nodes_maskedit", inky);
+        g_signal_connect_after( G_OBJECT(inky), "toggled", G_CALLBACK(toggle_edit_mask), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(inky), prefs->getBool("/tools/nodes/edit_masks") );
     }
 
     /* X coord of selected node(s) */
@@ -6749,10 +6697,10 @@ sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *
         case GDK_Return:
             // unfreeze and update, which will defocus
             g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-            sp_text_toolbox_family_changed (NULL, tbl);
+            sp_text_toolbox_family_changed (NULL, tbl); 
             return TRUE; // I consumed the event
             break;
-        case GDK_Escape:
+        case GDK_Escape: 
             // defocus
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
             return TRUE; // I consumed the event
@@ -7028,10 +6976,10 @@ void sp_text_toolbox_family_popnotify(GtkComboBox *widget,
                          }
 
                          // update
-                         sp_text_toolbox_family_changed (NULL, tbl);
+                         sp_text_toolbox_family_changed (NULL, tbl); 
                          break;
                      }
-                 }
+                 } 
              }
          }
 
@@ -7069,7 +7017,7 @@ GtkWidget *sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect (G_OBJECT (font_sel->gobj()), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
 
     cbe_add_completion(font_sel->gobj(), G_OBJECT(tbl));
-
+    
     gtk_toolbar_append_widget( tbl, (GtkWidget*) font_sel->gobj(), "", "");
     g_object_set_data (G_OBJECT (tbl), "family-entry-combo", font_sel);
 
@@ -7082,7 +7030,7 @@ GtkWidget *sp_text_toolbox_new (SPDesktop *desktop)
     g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
 
     g_signal_connect (G_OBJECT (font_sel->gobj()), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown",
+    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown", 
              G_CALLBACK (sp_text_toolbox_family_popnotify), tbl);
     g_signal_connect (G_OBJECT (entry), "key-press-event", G_CALLBACK(sp_text_toolbox_family_keypress), tbl);
     g_signal_connect (G_OBJECT (entry),  "focus-in-event", G_CALLBACK (sp_text_toolbox_entry_focus_in), tbl);
@@ -7405,7 +7353,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 
     if ( !repr->attribute("inkscape:connector-spacing") &&
             ( adj->value == defaultConnSpacing )) {
-        // Don't need to update the repr if the attribute doesn't
+        // Don't need to update the repr if the attribute doesn't 
         // exist and it is being set to the default value -- as will
         // happen at startup.
         return;

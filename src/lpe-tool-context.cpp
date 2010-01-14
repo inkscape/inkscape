@@ -179,9 +179,6 @@ sp_lpetool_context_setup(SPEventContext *ec)
     }
 
     lc->_lpetool_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
-
-
-    lc->shape_editor->update_statusbar();
 }
 
 /**
@@ -193,13 +190,9 @@ sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer da
 {
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(data);
 
-    // TODO: update ShapeEditorsCollective instead
-    lc->shape_editor->unset_item(SH_NODEPATH);
     lc->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem();
-    lc->shape_editor->set_item(item, SH_NODEPATH);
     lc->shape_editor->set_item(item, SH_KNOTHOLDER);
-    lc->shape_editor->update_statusbar();
 }
 
 static void
@@ -280,7 +273,6 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->xp = (gint) event->button.x;
                 event_context->yp = (gint) event->button.y;
                 event_context->within_tolerance = true;
-                lc->shape_editor->cancel_hit();
 
                 using namespace Inkscape::LivePathEffect;
 
@@ -296,28 +288,6 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
             }
             break;
-        case GDK_MOTION_NOTIFY:
-        {
-            if (!lc->shape_editor->has_nodepath() || selection->singleItem() == NULL) {
-                break;
-            }
-
-            bool over_stroke = false;
-            over_stroke = lc->shape_editor->is_over_stroke(Geom::Point(event->motion.x, event->motion.y), false);
-
-            if (over_stroke) {
-                event_context->cursor_shape = cursor_node_xpm;
-                event_context->hot_x = 1;
-                event_context->hot_y = 1;
-                sp_event_context_update_cursor(event_context);
-            } else {
-                lc->cursor_shape = cursor_crosshairs_xpm;
-                lc->hot_x = 7;
-                lc->hot_y = 7;
-                sp_event_context_update_cursor(event_context);
-            }
-        }
-        break;
 
 
     case GDK_BUTTON_RELEASE:

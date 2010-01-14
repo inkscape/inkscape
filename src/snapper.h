@@ -69,6 +69,7 @@ public:
     public:
         ConstraintLine(Geom::Point const &d) : _has_point(false), _direction(d) {}
         ConstraintLine(Geom::Point const &p, Geom::Point const &d) : _has_point(true), _point(p), _direction(d) {}
+        ConstraintLine(Geom::Line const &l) : _has_point(true), _point(l.origin()), _direction(l.versor()) {}
 
         bool hasPoint() const {
             return _has_point;

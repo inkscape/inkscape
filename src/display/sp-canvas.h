@@ -101,6 +101,7 @@ void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Matrix const &aff)
 
 void sp_canvas_item_raise(SPCanvasItem *item, int positions);
 void sp_canvas_item_lower(SPCanvasItem *item, int positions);
+bool sp_canvas_item_is_visible(SPCanvasItem *item);
 void sp_canvas_item_show(SPCanvasItem *item);
 void sp_canvas_item_hide(SPCanvasItem *item);
 int sp_canvas_item_grab(SPCanvasItem *item, unsigned int event_mask, GdkCursor *cursor, guint32 etime);

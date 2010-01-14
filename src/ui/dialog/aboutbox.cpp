@@ -103,8 +103,8 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
 
     Gtk::Label *label=new Gtk::Label();
     gchar *label_text = 
-        g_strdup_printf("<small><i>Inkscape %s, built %s</i></small>",
-              Inkscape::version_string, __DATE__);
+        g_strdup_printf("<small><i>Inkscape %s</i></small>",
+              Inkscape::version_string);
     label->set_markup(label_text);
     label->set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
     g_free(label_text);

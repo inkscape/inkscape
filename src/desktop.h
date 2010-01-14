@@ -140,6 +140,11 @@ struct SPDesktop : public Inkscape::UI::View::View
     sigc::signal<void, SPObject *>     _layer_changed_signal;
     sigc::signal<bool, const SPCSSAttr *>::accumulated<StopOnTrue> _set_style_signal;
     sigc::signal<int, SPStyle *, int>::accumulated<StopOnNonZero> _query_style_signal;
+    
+    /// Emitted when the zoom factor changes (not emitted when scrolling).
+    /// The parameter is the new zoom factor
+    sigc::signal<void, double> signal_zoom_changed;
+    
     sigc::connection connectDocumentReplaced (const sigc::slot<void,SPDesktop*,SPDocument*> & slot)
     {
         return _document_replaced_signal.connect (slot);

@@ -1,4 +1,3 @@
-#line 1 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 /**
  * \file
  * \brief parse SVG path specifications

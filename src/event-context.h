@@ -49,7 +49,8 @@ public:
 		UNDEFINED_HANDLER = 0,
 		EVENTCONTEXT_ROOT_HANDLER,
 		EVENTCONTEXT_ITEM_HANDLER,
-		KNOT_HANDLER
+		KNOT_HANDLER,
+		CONTROL_POINT_HANDLER
 	};
 
 	DelayedSnapEvent(SPEventContext *event_context, SPItem* const item, SPKnot* knot, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)

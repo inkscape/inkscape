@@ -27,17 +27,17 @@
 #include "graphlayout/graphlayout.h"
 #include "inkscape.h"
 #include "macros.h"
-#include "node-context.h"  //For access to ShapeEditor
 #include "preferences.h"
 #include "removeoverlap/removeoverlap.h"
 #include "selection.h"
-#include "shape-editor.h" //For node align/distribute methods
 #include "sp-flowtext.h"
 #include "sp-item-transform.h"
 #include "sp-text.h"
 #include "text-editing.h"
 #include "tools-switch.h"
 #include "ui/icon-names.h"
+#include "ui/tool/node-tool.h"
+#include "ui/tool/multi-path-manipulator.h"
 #include "util/glib-list-iterators.h"
 #include "verbs.h"
 #include "widgets/icon.h"
@@ -429,12 +429,13 @@ private :
 
         if (!_dialog.getDesktop()) return;
         SPEventContext *event_context = sp_desktop_event_context(_dialog.getDesktop());
-        if (!SP_IS_NODE_CONTEXT (event_context)) return ;
+        if (!INK_IS_NODE_TOOL (event_context)) return;
+        InkNodeTool *nt = INK_NODE_TOOL(event_context);
 
         if (_distribute)
-            event_context->shape_editor->distribute((Geom::Dim2)_orientation);
+            nt->_multipath->distributeNodes(_orientation);
         else
-            event_context->shape_editor->align((Geom::Dim2)_orientation);
+            nt->_multipath->alignNodes(_orientation);
 
     }
 };
