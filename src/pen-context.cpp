@@ -557,20 +557,22 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
             default:
                 break;
         }
-    } else if (bevent.button == 3 || pc->expecting_clicks_for_LPE == 1) { // when the last click for a waiting LPE occurs we want to finish the path
-        if (pc->npoints != 0) {
-
-            spdc_pen_finish_segment(pc, event_dt, bevent.state);
-            if (pc->green_closed) {
-                // finishing at the start anchor, close curve
-                spdc_pen_finish(pc, TRUE);
-            } else {
-                // finishing at some other anchor, finish curve but not close
-                spdc_pen_finish(pc, FALSE);
-            }
-
-            ret = TRUE;
+    } else if (pc->expecting_clicks_for_LPE == 1 && pc->npoints != 0) {
+        // when the last click for a waiting LPE occurs we want to finish the path
+        spdc_pen_finish_segment(pc, event_dt, bevent.state);
+        if (pc->green_closed) {
+            // finishing at the start anchor, close curve
+            spdc_pen_finish(pc, TRUE);
+        } else {
+            // finishing at some other anchor, finish curve but not close
+            spdc_pen_finish(pc, FALSE);
         }
+
+        ret = TRUE;
+    } else if (bevent.button == 3 && pc->npoints != 0) {
+        // right click - finish path
+        spdc_pen_finish(pc, FALSE);
+        ret = TRUE;
     }
 
     if (pc->expecting_clicks_for_LPE > 0) {
