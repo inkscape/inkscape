@@ -146,7 +146,6 @@ protected:
     PrefCheckButton _t_node_pathflash_selected;
     PrefSpinButton  _t_node_pathflash_timeout;
     PrefCheckButton _t_node_show_path_direction;
-    PrefCheckButton _t_node_show_transform_handles;
     PrefCheckButton _t_node_single_node_transform_handles;
     PrefColorPicker _t_node_pathoutline_color;
 

@@ -447,8 +447,6 @@ void InkscapePreferences::initPageTools()
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
     _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
     _page_node.add_group_header(_("Transform Handles:"));
-    _t_node_show_transform_handles.init(_("Show transform handles"), "/tools/nodes/show_transform_handles", true);
-    _page_node.add_line( true, "", _t_node_show_transform_handles, "", _("Show scaling, rotation and skew handles for node selections."));
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
     _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected."));
 
