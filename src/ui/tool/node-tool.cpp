@@ -554,6 +554,7 @@ void ink_node_tool_select_area(InkNodeTool *nt, Geom::Rect const &sel, GdkEventB
         selection->setList(items);
         g_slist_free(items);
     } else {
+        if (!held_shift(*event)) nt->_selected_nodes->clear();
         nt->_selected_nodes->selectArea(sel);
     }
 }

@@ -49,8 +49,6 @@ ControlPointSelection::ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_gro
     , _dragging(false)
     , _handles_visible(true)
     , _one_node_handles(false)
-    , _sculpt_enabled(false)
-    , _sculpting(false)
 {
     signal_update.connect( sigc::bind(
         sigc::mem_fun(*this, &ControlPointSelection::_updateTransformHandles),
@@ -83,7 +81,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
     boost::shared_ptr<connlist_type> clist(new connlist_type());
 
     // hide event param and always return false
-    clist->push_back(
+    /*clist->push_back(
         x->signal_grabbed.connect(
             sigc::bind_return(
                 sigc::bind<0>(
@@ -93,11 +91,16 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
     clist->push_back(
         x->signal_dragged.connect(
                 sigc::mem_fun(*this, &ControlPointSelection::_selectionDragged)));
-    // hide event parameter
     clist->push_back(
         x->signal_ungrabbed.connect(
             sigc::hide(
                 sigc::mem_fun(*this, &ControlPointSelection::_selectionUngrabbed))));
+    clist->push_back(
+        x->signal_clicked.connect(
+            sigc::hide(
+                sigc::bind<0>(
+                    sigc::mem_fun(*this, &ControlPointSelection::_selectionClicked),
+                    x))));*/
 
     found = _points.insert(std::make_pair(x, clist)).first;
 
@@ -298,57 +301,52 @@ void ControlPointSelection::restoreTransformHandles()
     _updateTransformHandles(true);
 }
 
-void ControlPointSelection::_selectionGrabbed(SelectableControlPoint *p, GdkEventMotion *event)
+void ControlPointSelection::toggleTransformHandlesMode()
+{
+    if (_handles->mode() == TransformHandleSet::MODE_SCALE) {
+        _handles->setMode(TransformHandleSet::MODE_ROTATE_SKEW);
+        if (size() == 1) _handles->rotationCenter().setVisible(false);
+    } else {
+        _handles->setMode(TransformHandleSet::MODE_SCALE);
+    }
+}
+
+void ControlPointSelection::_pointGrabbed()
 {
     hideTransformHandles();
     _dragging = true;
-    if (held_alt(*event) && _sculpt_enabled) {
-        _sculpting = true;
-        _grabbed_point = p;
-    } else {
-        _sculpting = false;
-    }
 }
 
-void ControlPointSelection::_selectionDragged(Geom::Point const &old_pos, Geom::Point &new_pos,
+void ControlPointSelection::_pointDragged(Geom::Point const &old_pos, Geom::Point &new_pos,
     GdkEventMotion *event)
 {
     Geom::Point delta = new_pos - old_pos;
-    /*if (_sculpting) {
-        // for now we only support the default sculpting profile (bell)
-        // others will be added when preferences will be able to store enumerated values
-        double pressure, alpha;
-        if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &pressure)) {
-            pressure = CLAMP(pressure, 0.2, 0.8);
-        } else {
-            pressure = 0.5;
-        }
-
-        alpha = 1 - 2 * fabs(pressure - 0.5);
-        if (pressure > 0.5) alpha = 1/alpha;
-
-        for (iterator i = _points.begin(); i != _points.end(); ++i) {
-            SelectableControlPoint *cur = i->first;
-            double dist = Geom::distance(cur->position(), _grabbed_point->position());
-            
-            cur->move(cur->position() + delta);
-        }
-    } else*/ {
-        for (iterator i = _points.begin(); i != _points.end(); ++i) {
-            SelectableControlPoint *cur = i->first;
-            cur->move(cur->position() + delta);
-        }
-        _handles->rotationCenter().move(_handles->rotationCenter().position() + delta);
+    for (iterator i = _points.begin(); i != _points.end(); ++i) {
+        SelectableControlPoint *cur = i->first;
+        cur->move(cur->position() + delta);
     }
+    _handles->rotationCenter().move(_handles->rotationCenter().position() + delta);
     signal_update.emit();
 }
 
-void ControlPointSelection::_selectionUngrabbed()
+void ControlPointSelection::_pointUngrabbed()
 {
     _dragging = false;
     _grabbed_point = NULL;
     restoreTransformHandles();
     signal_commit.emit(COMMIT_MOUSE_MOVE);
+}
+
+bool ControlPointSelection::_pointClicked(SelectableControlPoint *p, GdkEventButton *event)
+{
+    // clicking a selected node should toggle the transform handles between rotate and scale mode,
+    // if they are visible
+    if (held_shift(*event)) return false;
+    if (_handles_visible && p->selected()) {
+        toggleTransformHandlesMode();
+        return true;
+    }
+    return false;
 }
 
 void ControlPointSelection::_updateTransformHandles(bool preserve_center)
@@ -544,13 +542,7 @@ bool ControlPointSelection::event(GdkEvent *event)
         case GDK_h:
         case GDK_H:
             if (held_shift(event->key)) {
-                // TODO make a method for mode switching
-                if (_handles->mode() == TransformHandleSet::MODE_SCALE) {
-                    _handles->setMode(TransformHandleSet::MODE_ROTATE_SKEW);
-                    if (size() == 1) _handles->rotationCenter().setVisible(false);
-                } else {
-                    _handles->setMode(TransformHandleSet::MODE_SCALE);
-                }
+                toggleTransformHandlesMode();
                 return true;
             }
             // any modifiers except shift should cause no action

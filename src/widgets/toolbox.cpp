@@ -282,6 +282,8 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='NodeToolbar'>"
+        "    <toolitem action='NodesShowTransformHandlesAction' />"
+        "    <separator />"
         "    <toolitem action='NodeInsertAction' />"
         "    <toolitem action='NodeDeleteAction' />"
         "    <separator />"
@@ -299,9 +301,9 @@ static gchar const * ui_descr =
         "    <toolitem action='NodeLineAction' />"
         "    <toolitem action='NodeCurveAction' />"
         "    <separator />"
-        "    <toolitem action='ObjectToPath' />"
-        "    <toolitem action='StrokeToPath' />"
-        "    <separator />"
+        //"    <toolitem action='ObjectToPath' />"
+        //"    <toolitem action='StrokeToPath' />"
+        //"    <separator />"
         "    <toolitem action='NodeXAction' />"
         "    <toolitem action='NodeYAction' />"
         "    <toolitem action='NodeUnitsAction' />"
@@ -1027,7 +1029,6 @@ static InkNodeTool *get_node_tool()
     return static_cast<InkNodeTool*>(ec);
 }
 
-
 void
 sp_node_path_edit_add(void)
 {
@@ -1110,6 +1111,12 @@ sp_node_path_edit_auto(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_AUTO);
+}
+
+static void toggle_show_transform_handles (GtkToggleAction *act, gpointer /*data*/) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool show = gtk_toggle_action_get_active( act );
+    prefs->setBool("/tools/nodes/show_transform_handles", show);
 }
 
 static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
@@ -1391,11 +1398,22 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     }
 
     {
+        InkToggleAction* act = ink_toggle_action_new( "NodesShowTransformHandlesAction",
+                                                      _("Show Transform Handles"),
+                                                      _("Show node transformation handles"),
+                                                      "node-transform",
+                                                      secondarySize );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_transform_handles), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_transform_handles", false) );
+    }
+
+    {
         InkToggleAction* act = ink_toggle_action_new( "NodesShowHandlesAction",
                                                       _("Show Handles"),
                                                       _("Show the Bezier handles of selected nodes"),
                                                       INKSCAPE_ICON_SHOW_NODE_HANDLES,
-                                                      Inkscape::ICON_SIZE_DECORATION );
+                                                      secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_handles", true) );
@@ -1406,7 +1424,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                       _("Show Outline"),
                                                       _("Show the outline of the path"),
                                                       INKSCAPE_ICON_SHOW_PATH_OUTLINE,
-                                                      Inkscape::ICON_SIZE_DECORATION );
+                                                      secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_helperpath), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_outline", false) );
@@ -1417,7 +1435,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Next path effect parameter"),
                                           _("Show next path effect parameter for editing"),
                                           INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT,
-                                          Inkscape::ICON_SIZE_DECORATION );
+                                          secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         g_object_set_data( holder, "nodes_lpeedit", inky);
@@ -1428,7 +1446,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Edit clipping paths"),
                                           _("Show editing controls for clipping paths of selected objects"),
                                           INKSCAPE_ICON_PATH_CLIP_EDIT,
-                                          Inkscape::ICON_SIZE_DECORATION );
+                                          secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         g_signal_connect_after( G_OBJECT(inky), "toggled", G_CALLBACK(toggle_edit_clip), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(inky), prefs->getBool("/tools/nodes/edit_clipping_paths") );
@@ -1439,7 +1457,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           _("Edit masks"),
                                           _("Show editing controls for masks of selected objects"),
                                           INKSCAPE_ICON_PATH_MASK_EDIT,
-                                          Inkscape::ICON_SIZE_DECORATION );
+                                          secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         g_signal_connect_after( G_OBJECT(inky), "toggled", G_CALLBACK(toggle_edit_mask), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(inky), prefs->getBool("/tools/nodes/edit_masks") );

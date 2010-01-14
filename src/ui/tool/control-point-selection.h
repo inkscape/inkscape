@@ -101,20 +101,23 @@ public:
 
     void showTransformHandles(bool v, bool one_node);
     // the two methods below do not modify the state; they are for use in manipulators
-    // that need to temporarily hide the handles
+    // that need to temporarily hide the handles, for example when moving a node
     void hideTransformHandles();
     void restoreTransformHandles();
-    
-    // TODO this is really only applicable to nodes... maybe derive a NodeSelection?
-    void setSculpting(bool v) { _sculpt_enabled = v; }
+    void toggleTransformHandlesMode();
 
     sigc::signal<void> signal_update;
     sigc::signal<void, SelectableControlPoint *, bool> signal_point_changed;
     sigc::signal<void, CommitEvent> signal_commit;
 private:
-    void _selectionGrabbed(SelectableControlPoint *, GdkEventMotion *);
-    void _selectionDragged(Geom::Point const &, Geom::Point &, GdkEventMotion *);
-    void _selectionUngrabbed();
+    // The functions below are invoked from SelectableControlPoint.
+    // Previously they were connected to handlers when selecting, but this
+    // creates problems when dragging a point that was not selected.
+    void _pointGrabbed();
+    void _pointDragged(Geom::Point const &, Geom::Point &, GdkEventMotion *);
+    void _pointUngrabbed();
+    bool _pointClicked(SelectableControlPoint *, GdkEventButton *);
+
     void _updateTransformHandles(bool preserve_center);
     bool _keyboardMove(GdkEventKey const &, Geom::Point const &);
     bool _keyboardRotate(GdkEventKey const &, int);
@@ -130,8 +133,8 @@ private:
     unsigned _dragging         : 1;
     unsigned _handles_visible  : 1;
     unsigned _one_node_handles : 1;
-    unsigned _sculpt_enabled   : 1;
-    unsigned _sculpting        : 1;
+
+    friend class SelectableControlPoint;
 };
 
 } // namespace UI
