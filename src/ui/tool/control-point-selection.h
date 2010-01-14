@@ -13,8 +13,11 @@
 #define SEEN_UI_TOOL_NODE_SELECTION_H
 
 #include <memory>
-#include <tr1/unordered_map>
-#include <tr1/unordered_set>
+// those are broken beyond hope on OSX.
+//#include <tr1/unordered_map>
+//#include <tr1/unordered_set>
+#include <ext/hash_map>
+#include <ext/hash_set>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/optional.hpp>
@@ -27,24 +30,37 @@
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 
-namespace std { using namespace tr1; }
+namespace std { using namespace __gnu_cxx; }
 
 class SPDesktop;
 
 namespace Inkscape {
 namespace UI {
-
 class TransformHandleSet;
 class SelectableControlPoint;
+}
+}
+
+namespace __gnu_cxx {
+template<>
+struct hash<Inkscape::UI::SelectableControlPoint*> {
+    size_t operator()(Inkscape::UI::SelectableControlPoint *p) const {
+        return reinterpret_cast<size_t>(p);
+    }
+};
+} // namespace __gnu_cxx
+
+namespace Inkscape {
+namespace UI {
 
 class ControlPointSelection : public Manipulator {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
     typedef std::list<sigc::connection> connlist_type;
-    typedef std::unordered_map< SelectableControlPoint *,
+    typedef std::hash_map< SelectableControlPoint *,
         boost::shared_ptr<connlist_type> > map_type;
-    typedef std::unordered_set< SelectableControlPoint * > set_type;
+    typedef std::hash_set< SelectableControlPoint * > set_type;
     typedef set_type Set; // convenience alias
 
     typedef map_type::iterator iterator;

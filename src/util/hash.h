@@ -13,8 +13,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace std {
-namespace tr1 {
+namespace __gnu_cxx {
 
 /** Hash function for Boost shared pointers */
 template <typename T>
@@ -24,8 +23,7 @@ struct hash< boost::shared_ptr<T> > : public std::unary_function<boost::shared_p
     }
 };
 
-} // namespace tr1
-} // namespace std
+} // namespace __gnu_cxx
 
 #endif
 

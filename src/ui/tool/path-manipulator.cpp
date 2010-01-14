@@ -1157,17 +1157,24 @@ bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
 {
     // cycle between node types on ctrl+click
     if (event->button != 1 || !held_control(*event)) return false;
-    if (n->isEndNode()) {
-        if (n->type() == NODE_CUSP) {
-            n->setType(NODE_SMOOTH);
+    /*if (held_alt(*event)) {
+        // TODO delete nodes with Ctrl+Alt+click
+        n->list()->erase(NodeList::get_iterator(n));
+        update();
+        _commit(_("Delete node"));
+    } else*/ {
+        if (n->isEndNode()) {
+            if (n->type() == NODE_CUSP) {
+                n->setType(NODE_SMOOTH);
+            } else {
+                n->setType(NODE_CUSP);
+            }
         } else {
-            n->setType(NODE_CUSP);
+            n->setType(static_cast<NodeType>((n->type() + 1) % NODE_LAST_REAL_TYPE));
         }
-    } else {
-        n->setType(static_cast<NodeType>((n->type() + 1) % NODE_LAST_REAL_TYPE));
+        update();
+        _commit(_("Cycle node type"));
     }
-    update();
-    _commit(_("Cycle node type"));
     return true;
 }
 
