@@ -910,7 +910,7 @@ SPDesktop::zoom_quick (bool enable)
                 if (!Geom::are_near(area, 0) && area * 2.0 < _quick_zoom_stored_area.area()) {
                     set_display_area(nodes, true);
                     zoomed = true;
-		}
+                }
             }
         }
 
