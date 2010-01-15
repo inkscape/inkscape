@@ -115,8 +115,8 @@ protected:
     void _setPixbuf(Glib::RefPtr<Gdk::Pixbuf>);
     /// @}
 
-    virtual Glib::ustring _getTip(unsigned state) { return ""; }
-    virtual Glib::ustring _getDragTip(GdkEventMotion *event) { return ""; }
+    virtual Glib::ustring _getTip(unsigned /*state*/) { return ""; }
+    virtual Glib::ustring _getDragTip(GdkEventMotion */*event*/) { return ""; }
     virtual bool _hasDragTips() { return false; }
 
     SPDesktop *const _desktop; ///< The desktop this control point resides on.

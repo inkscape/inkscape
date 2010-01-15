@@ -195,7 +195,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
 }
 
 void
-PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
+PathParam::param_editOncanvas(SPItem * /*item*/, SPDesktop * dt)
 {
     using namespace Inkscape::UI;
 
@@ -222,7 +222,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 
 void
 PathParam::param_setup_nodepath(Inkscape::NodePath::Path *)
-{   
+{
     // TODO this method should not exist at all!
 }
 

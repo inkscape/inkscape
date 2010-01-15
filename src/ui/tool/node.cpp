@@ -33,7 +33,7 @@
 #include "ui/tool/path-manipulator.h"
 
 namespace Inkscape {
-namespace UI {   
+namespace UI {
 
 static SelectableControlPoint::ColorSet node_colors = {
     {
@@ -261,7 +261,7 @@ void Handle::_ungrabbedHandler()
     // hide the handle if it's less than dragtolerance away from the node
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int drag_tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-    
+
     Geom::Point dist = _desktop->d2w(_parent->position()) - _desktop->d2w(position());
     if (dist.length() <= drag_tolerance) {
         move(_parent->position());
@@ -303,7 +303,7 @@ Glib::ustring Handle::_getTip(unsigned state)
     }
 }
 
-Glib::ustring Handle::_getDragTip(GdkEventMotion *event)
+Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
 {
     Geom::Point dist = position() - _last_drag_origin();
     // report angle in mathematical convention
@@ -396,14 +396,14 @@ void Node::_fixNeighbors(Geom::Point const &old_pos, Geom::Point const &new_pos)
 {
     /* This method restores handle invariants for neighboring nodes,
      * and invariants that are based on positions of those nodes for this one. */
-    
+
     /* Fix auto handles */
     if (_type == NODE_AUTO) _updateAutoHandles();
     if (old_pos != new_pos) {
         if (_next() && _next()->_type == NODE_AUTO) _next()->_updateAutoHandles();
         if (_prev() && _prev()->_type == NODE_AUTO) _prev()->_updateAutoHandles();
     }
-    
+
     /* Fix smooth handles at the ends of linear segments.
      * Rotate the appropriate handle to be colinear with the segment.
      * If there is a smooth node at the other end of the segment, rotate it too. */
@@ -538,7 +538,7 @@ void Node::setType(NodeType type, bool update_handles)
                 double len_next = vec_next.length(), len_prev = vec_prev.length();
                 double len = (len_next + len_prev) / 6; // take 1/3 of average
                 if (len == 0) return;
-                
+
                 Geom::Point dir = Geom::unit_vector((len_prev / len_next) * vec_next - vec_prev);
                 _back.setRelativePos(-dir * len);
                 _front.setRelativePos(dir * len);
@@ -960,14 +960,14 @@ Glib::ustring Node::_getTip(unsigned state)
         return C_("Path node tip",
             "<b>Ctrl:</b> move along axes, click to change node type");
     }
-    
+
     // assemble tip from node name
     char const *nodetype = node_type_to_localized_string(_type);
     return format_tip(C_("Path node tip",
         "<b>%s:</b> drag to shape the path, click to select this node"), nodetype);
 }
 
-Glib::ustring Node::_getDragTip(GdkEventMotion *event)
+Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)
 {
     Geom::Point dist = position() - _last_drag_origin();
     GString *x = SP_PX_TO_METRIC_STRING(dist[Geom::X], _desktop->namedview->getDefaultMetric());

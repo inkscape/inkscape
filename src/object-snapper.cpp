@@ -757,7 +757,12 @@ void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<SnapCandidatePoint> *p
     points->push_back(Inkscape::SnapCandidatePoint(Geom::Point(w,0), SNAPSOURCE_UNDEFINED, SNAPTARGET_PAGE_CORNER));
 }
 
-void Inkscape::getBBoxPoints(Geom::OptRect const bbox, std::vector<SnapCandidatePoint> *points, bool const isTarget, bool const includeCorners, bool const includeLineMidpoints, bool const includeObjectMidpoints)
+void Inkscape::getBBoxPoints(Geom::OptRect const bbox,
+                             std::vector<SnapCandidatePoint> *points,
+                             bool const /*isTarget*/,
+                             bool const includeCorners,
+                             bool const includeLineMidpoints,
+                             bool const includeObjectMidpoints)
 {
     if (bbox) {
         // collect the corners of the bounding box

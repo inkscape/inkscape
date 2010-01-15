@@ -422,7 +422,7 @@ double get_move_standard_deviation(SPSprayContext *tc)
  * @param[in]   choice : 
 
  */
-void random_position( double &radius, double &angle, double &a, double &s, int choice)
+void random_position( double &radius, double &angle, double &a, double &s, int /*choice*/)
 {
     // angle is taken from an uniform distribution
     angle = g_random_double_range(0, M_PI*2.0);

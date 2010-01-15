@@ -58,19 +58,19 @@ CurveDragPoint::CurveDragPoint(PathManipulator &pm)
         sigc::mem_fun(*this, &CurveDragPoint::_doubleclickedHandler));
 }
 
-void CurveDragPoint::_grabbedHandler(GdkEventMotion *event)
+void CurveDragPoint::_grabbedHandler(GdkEventMotion */*event*/)
 {
     _pm._selection.hideTransformHandles();
     NodeList::iterator second = first.next();
 
     // move the handles to 1/3 the length of the segment for line segments
     if (first->front()->isDegenerate() && second->back()->isDegenerate()) {
-        
+
         // delta is a vector equal 1/3 of distance from first to second
         Geom::Point delta = (second->position() - first->position()) / 3.0;
         first->front()->move(first->front()->position() + delta);
         second->back()->move(second->back()->position() - delta);
-        
+
         signal_update.emit();
     }
 }
@@ -146,7 +146,7 @@ bool CurveDragPoint::_doubleclickedHandler(GdkEventButton *event)
     NodeList::iterator inserted = _pm.subdivideSegment(first, _t);
     _pm._selection.clear();
     _pm._selection.insert(inserted.ptr());
-    
+
     signal_update.emit();
     _pm._commit(_("Add node"));
     return true;

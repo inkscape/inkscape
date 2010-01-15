@@ -1135,13 +1135,13 @@ void sp_node_path_edit_nextLPEparam (GtkAction */*act*/, gpointer data) {
     sp_selection_next_patheffect_param( reinterpret_cast<SPDesktop*>(data) );
 }
 
-void toggle_edit_clip (GtkToggleAction *act, gpointer data) {
+void toggle_edit_clip (GtkToggleAction *act, gpointer /*data*/) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool edit = gtk_toggle_action_get_active( act );
     prefs->setBool("/tools/nodes/edit_clipping_paths", edit);
 }
 
-void toggle_edit_mask (GtkToggleAction *act, gpointer data) {
+void toggle_edit_mask (GtkToggleAction *act, gpointer /*data*/) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool edit = gtk_toggle_action_get_active( act );
     prefs->setBool("/tools/nodes/edit_masks", edit);

@@ -558,7 +558,7 @@ void ink_node_tool_select_area(InkNodeTool *nt, Geom::Rect const &sel, GdkEventB
         nt->_selected_nodes->selectArea(sel);
     }
 }
-void ink_node_tool_select_point(InkNodeTool *nt, Geom::Point const &sel, GdkEventButton *event)
+void ink_node_tool_select_point(InkNodeTool *nt, Geom::Point const &/*sel*/, GdkEventButton *event)
 {
     using namespace Inkscape::UI; // pull in event helpers
     if (!event) return;
@@ -574,14 +574,14 @@ void ink_node_tool_select_point(InkNodeTool *nt, Geom::Point const &sel, GdkEven
         if (!(event->state & GDK_SHIFT_MASK)) {
             selection->clear();
         }
-        return;
-    }
-    if (held_shift(*event)) {
-        selection->toggle(item_clicked);
     } else {
-        selection->set(item_clicked);
+        if (held_shift(*event)) {
+            selection->toggle(item_clicked);
+        } else {
+            selection->set(item_clicked);
+        }
+        nt->desktop->updateNow();
     }
-    nt->desktop->updateNow();
 }
 
 void ink_node_tool_mouseover_changed(InkNodeTool *nt, Inkscape::UI::ControlPoint *p)

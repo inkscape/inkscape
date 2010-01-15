@@ -1597,7 +1597,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 
         Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
         int const nChars = layout->iteratorToCharIndex(layout->end());
-        char *trunc = "";
+        char const *trunc = "";
         bool truncated = false;
         if (layout->inputTruncated()) {
             truncated = true;

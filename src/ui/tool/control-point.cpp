@@ -355,7 +355,7 @@ void ControlPoint::_setPixbuf(Glib::RefPtr<Gdk::Pixbuf> p)
 }
 
 // re-routes events into the virtual function
-int ControlPoint::_event_handler(SPCanvasItem *item, GdkEvent *event, ControlPoint *point)
+int ControlPoint::_event_handler(SPCanvasItem */*item*/, GdkEvent *event, ControlPoint *point)
 {
     return point->_eventHandler(event) ? TRUE : FALSE;
 }

@@ -128,7 +128,7 @@ GList *ShapeEditor::save_nodepath_selection () {
     return NULL;
 }
 
-void ShapeEditor::restore_nodepath_selection (GList *saved) {
+void ShapeEditor::restore_nodepath_selection (GList */*saved*/) {
     // defunct stub
 }
 

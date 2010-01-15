@@ -318,7 +318,7 @@ void ControlPointSelection::_pointGrabbed()
 }
 
 void ControlPointSelection::_pointDragged(Geom::Point const &old_pos, Geom::Point &new_pos,
-    GdkEventMotion *event)
+                                          GdkEventMotion */*event*/)
 {
     Geom::Point delta = new_pos - old_pos;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
