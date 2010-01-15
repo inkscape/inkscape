@@ -333,6 +333,7 @@ font_factory::~font_factory(void)
 {
     if (loadedPtr) {
         FaceMapType* tmp = static_cast<FaceMapType*>(loadedPtr);
+        delete tmp;
         loadedPtr = 0;
     }
 
