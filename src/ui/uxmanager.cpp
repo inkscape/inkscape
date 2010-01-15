@@ -61,7 +61,7 @@ UXManager::UXManager() :
     tags.addTag(ege::Tag("General"));
     tags.addTag(ege::Tag("Icons"));
 
-#ifdef GDK_WINDOWING_X11
+#if defined(GDK_WINDOWING_X11)
     char const* wmName = gdk_x11_screen_get_window_manager_name( gdk_screen_get_default() );
     //g_message("Window manager is [%s]", wmName);
 
@@ -69,7 +69,7 @@ UXManager::UXManager() :
     if (g_ascii_strcasecmp( wmName, KDE_WINDOW_MANAGER_NAME ) == 0) {
         floatwindowIssues = true;
     }
-#elif GDK_WINDOWING_WIN32
+#elif defined(GDK_WINDOWING_WIN32)
     floatwindowIssues = true;
 #endif // GDK_WINDOWING_WIN32
 }
