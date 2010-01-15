@@ -1033,84 +1033,108 @@ void
 sp_node_path_edit_add(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->insertNodes();
+    if (nt) {
+        nt->_multipath->insertNodes();
+    }
 }
 
 void
 sp_node_path_edit_delete(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->deleteNodes();
+    if (nt) {
+        nt->_multipath->deleteNodes();
+    }
 }
 
 void
 sp_node_path_edit_delete_segment(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->deleteSegments();
+    if (nt) {
+        nt->_multipath->deleteSegments();
+    }
 }
 
 void
 sp_node_path_edit_break(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->breakNodes();
+    if (nt) {
+        nt->_multipath->breakNodes();
+    }
 }
 
 void
 sp_node_path_edit_join(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->joinNodes();
+    if (nt) {
+        nt->_multipath->joinNodes();
+    }
 }
 
 void
 sp_node_path_edit_join_segment(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->joinSegments();
+    if (nt) {
+        nt->_multipath->joinSegments();
+    }
 }
 
 void
 sp_node_path_edit_toline(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_STRAIGHT);
+    if (nt) {
+        nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_STRAIGHT);
+    }
 }
 
 void
 sp_node_path_edit_tocurve(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_CUBIC_BEZIER);
+    if (nt) {
+        nt->_multipath->setSegmentType(Inkscape::UI::SEGMENT_CUBIC_BEZIER);
+    }
 }
 
 void
 sp_node_path_edit_cusp(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_CUSP);
+    if (nt) {
+        nt->_multipath->setNodeType(Inkscape::UI::NODE_CUSP);
+    }
 }
 
 void
 sp_node_path_edit_smooth(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_SMOOTH);
+    if (nt) {
+        nt->_multipath->setNodeType(Inkscape::UI::NODE_SMOOTH);
+    }
 }
 
 void
 sp_node_path_edit_symmetrical(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_SYMMETRIC);
+    if (nt) {
+        nt->_multipath->setNodeType(Inkscape::UI::NODE_SYMMETRIC);
+    }
 }
 
 void
 sp_node_path_edit_auto(void)
 {
     InkNodeTool *nt = get_node_tool();
-    if (nt) nt->_multipath->setNodeType(Inkscape::UI::NODE_AUTO);
+    if (nt) {
+        nt->_multipath->setNodeType(Inkscape::UI::NODE_AUTO);
+    }
 }
 
 static void toggle_show_transform_handles (GtkToggleAction *act, gpointer /*data*/) {
