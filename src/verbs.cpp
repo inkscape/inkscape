@@ -16,6 +16,7 @@
  *   MenTaLguY <mental@rydia.net>
  *   David Turner <novalis@gnu.org>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) (date unspecified) Authors
@@ -49,7 +50,6 @@
 #include "draw-context.h"
 #include "extension/effect.h"
 #include "file.h"
-#include "gradient-context.h"
 #include "gradient-drag.h"
 #include "helper/action.h"
 #include "help.h"
@@ -79,8 +79,6 @@
 #include "ui/dialog/layers.h"
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
-#include "ui/tool/control-point-selection.h"
-#include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/node-tool.h"
 
 //#ifdef WITH_INKBOARD
@@ -835,7 +833,6 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
         return;
-    SPEventContext *ec = dt->event_context;
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
@@ -920,70 +917,26 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_edit_clear_all(dt);
             break;
         case SP_VERB_EDIT_SELECT_ALL:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_multipath->selectSubpaths();
-            } else {
-                sp_edit_select_all(dt);
-            }
+            SelectionHelper::selectAll(dt);
             break;
         case SP_VERB_EDIT_INVERT:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_multipath->invertSelectionInSubpaths();
-            } else {
-                sp_edit_invert(dt);
-            }
+            SelectionHelper::invert(dt);
             break;
         case SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_selected_nodes->selectAll();
-            } else {
-                sp_edit_select_all_in_all_layers(dt);
-            }
+            SelectionHelper::selectAllInAll(dt);
             break;
         case SP_VERB_EDIT_INVERT_IN_ALL_LAYERS:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_selected_nodes->invertSelection();
-            } else {
-                sp_edit_invert_in_all_layers(dt);
-            }
+            SelectionHelper::invertAllInAll(dt);
             break;
-
         case SP_VERB_EDIT_SELECT_NEXT:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_multipath->shiftSelection(1);
-            } else if (tools_isactive(dt, TOOLS_GRADIENT)
-                       && ec->_grdrag->isNonEmpty()) {
-                sp_gradient_context_select_next (ec);
-            } else {
-                sp_selection_item_next(dt);
-            }
+            SelectionHelper::selectNext(dt);
             break;
         case SP_VERB_EDIT_SELECT_PREV:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_multipath->shiftSelection(-1);
-            } else if (tools_isactive(dt, TOOLS_GRADIENT)
-                       && ec->_grdrag->isNonEmpty()) {
-                sp_gradient_context_select_prev (ec);
-            } else {
-                sp_selection_item_prev(dt);
-            }
+            SelectionHelper::selectPrev(dt);
             break;
-
         case SP_VERB_EDIT_DESELECT:
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_selected_nodes->clear();
-            } else {
-                sp_desktop_selection(dt)->clear();
-            }
+            SelectionHelper::selectNone(dt);
             break;
-
         case SP_VERB_EDIT_GUIDES_AROUND_PAGE:
             sp_guide_create_guides_around_page(dt);
             break;
@@ -1095,13 +1048,7 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_selected_path_simplify(dt);
             break;
         case SP_VERB_SELECTION_REVERSE:
-            // TODO make this a virtual method of event context!
-            if (tools_isactive(dt, TOOLS_NODES)) {
-                InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-                nt->_multipath->reverseSubpaths();
-            } else {
-                sp_selected_path_reverse(dt);
-            }
+            SelectionHelper::reverse(dt);
             break;
         case SP_VERB_SELECTION_TRACE:
             inkscape_dialogs_unhide();

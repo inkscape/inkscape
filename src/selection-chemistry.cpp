@@ -1,5 +1,3 @@
-#define __SP_SELECTION_CHEMISTRY_C__
-
 /** @file
  * @brief Miscellanous operations on selected items
  */
@@ -9,8 +7,9 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Andrius R. <knutux@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 1999-2006 authors
+ * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -21,6 +20,10 @@
 #endif
 
 #include "selection-chemistry.h"
+
+// TOOD fixme: This should be moved into preference repr
+SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
+
 
 #include <gtkmm/clipboard.h>
 
@@ -61,6 +64,7 @@
 #include "sp-linear-gradient-fns.h"
 #include "sp-pattern.h"
 #include "sp-radial-gradient-fns.h"
+#include "gradient-context.h"
 #include "sp-namedview.h"
 #include "preferences.h"
 #include "sp-offset.h"
@@ -86,6 +90,9 @@
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
 #include "inkscape-private.h"
+#include "path-chemistry.h"
+#include "ui/tool/control-point-selection.h"
+#include "ui/tool/multi-path-manipulator.h"
 
 // For clippath editing
 #include "tools-switch.h"
@@ -99,6 +106,102 @@ using Geom::Y;
 /* The clipboard handling is in ui/clipboard.cpp now. There are some legacy functions left here,
 because the layer manipulation code uses them. It should be rewritten specifically
 for that purpose. */
+
+
+
+namespace Inkscape {
+
+void SelectionHelper::selectAll(SPDesktop *dt)
+{
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_multipath->selectSubpaths();
+    } else {
+        sp_edit_select_all(dt);
+    }
+}
+
+void SelectionHelper::selectAllInAll(SPDesktop *dt)
+{
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_selected_nodes->selectAll();
+    } else {
+        sp_edit_select_all_in_all_layers(dt);
+    }
+}
+
+void SelectionHelper::selectNone(SPDesktop *dt)
+{
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_selected_nodes->clear();
+    } else {
+        sp_desktop_selection(dt)->clear();
+    }
+}
+
+void SelectionHelper::invert(SPDesktop *dt)
+{
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_multipath->invertSelectionInSubpaths();
+    } else {
+        sp_edit_invert(dt);
+    }
+}
+
+void SelectionHelper::invertAllInAll(SPDesktop *dt)
+{
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_selected_nodes->invertSelection();
+    } else {
+        sp_edit_invert_in_all_layers(dt);
+    }
+}
+
+void SelectionHelper::reverse(SPDesktop *dt)
+{
+    // TODO make this a virtual method of event context!
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_multipath->reverseSubpaths();
+    } else {
+        sp_selected_path_reverse(dt);
+    }
+}
+
+void SelectionHelper::selectNext(SPDesktop *dt)
+{
+    SPEventContext *ec = dt->event_context;
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_multipath->shiftSelection(1);
+    } else if (tools_isactive(dt, TOOLS_GRADIENT)
+               && ec->_grdrag->isNonEmpty()) {
+        sp_gradient_context_select_next(ec);
+    } else {
+        sp_selection_item_next(dt);
+    }
+}
+
+void SelectionHelper::selectPrev(SPDesktop *dt)
+{
+    SPEventContext *ec = dt->event_context;
+    if (tools_isactive(dt, TOOLS_NODES)) {
+        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt->_multipath->shiftSelection(-1);
+    } else if (tools_isactive(dt, TOOLS_GRADIENT)
+               && ec->_grdrag->isNonEmpty()) {
+        sp_gradient_context_select_prev(ec);
+    } else {
+        sp_selection_item_prev(dt);
+    }
+}
+
+} // namespace Inkscape
+
 
 /**
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',

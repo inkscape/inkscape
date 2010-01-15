@@ -1,5 +1,5 @@
-#ifndef __SP_SELECTION_CHEMISTRY_H__
-#define __SP_SELECTION_CHEMISTRY_H__
+#ifndef SEEN_SELECTION_CHEMISTRY_H
+#define SEEN_SELECTION_CHEMISTRY_H
 
 /*
  * Miscellanous operations on selected items
@@ -8,8 +8,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -27,6 +28,20 @@ namespace LivePathEffect {
 }
 
 class SPCSSAttr;
+
+namespace Inkscape {
+    class SelectionHelper {
+    public:
+        static void selectAll(SPDesktop *desktop);
+        static void selectAllInAll(SPDesktop *desktop);
+        static void selectNone(SPDesktop *desktop);
+        static void invert(SPDesktop *desktop);
+        static void invertAllInAll(SPDesktop *desktop);
+        static void reverse(SPDesktop *dt);
+        static void selectNext(SPDesktop *desktop);
+        static void selectPrev(SPDesktop *desktop);
+    };
+} // namespace Inkscape
 
 void sp_selection_delete(SPDesktop *desktop);
 void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false);
@@ -131,19 +146,14 @@ GSList *sp_degroup_list (GSList *items);
 /* selection cycling */
 typedef enum
 {
-	SP_CYCLE_SIMPLE,
-	SP_CYCLE_VISIBLE, /* cycle only visible items */
-	SP_CYCLE_FOCUS /* readjust visible area to view selected item */
+    SP_CYCLE_SIMPLE,
+    SP_CYCLE_VISIBLE, // cycle only visible items
+    SP_CYCLE_FOCUS // readjust visible area to view selected item
 } SPCycleType;
 
-/* fixme: This should be moved into preference repr */
-#ifndef __SP_SELECTION_CHEMISTRY_C__
+
+
+// TOOD fixme: This should be moved into preference repr
 extern SPCycleType SP_CYCLING;
-#else
-SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
-#endif
 
-#endif
-
-
-
+#endif // SEEN_SELECTION_CHEMISTRY_H
