@@ -154,7 +154,7 @@ bool CurveDragPoint::_doubleclickedHandler(GdkEventButton *event)
 
 Glib::ustring CurveDragPoint::_getTip(unsigned state)
 {
-    if (!first || !first.next()) return NULL;
+    if (!first || !first.next()) return "";
     bool linear = first->front()->isDegenerate() && first.next()->back()->isDegenerate();
     if (state_held_shift(state)) {
         return C_("Path segment statusbar tip",
