@@ -16,6 +16,7 @@
 #include <2geom/path.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>
+#include <algorithm>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -35,6 +36,24 @@ LPEExtrude::~LPEExtrude()
 
 }
 
+static bool are_colinear(Geom::Point a, Geom::Point b) {
+    return Geom::are_near(cross(a,b), 0., 0.5);
+}
+
+// find cusps, this should be factored out later.
+static std::vector<double> find_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in ) {
+    using namespace Geom;
+    Piecewise<D2<SBasis> > deriv = derivative(pwd2_in);
+    std::vector<double> cusps;
+    // cusps are spots where the derivative jumps.
+    for (unsigned i = 1 ; i < deriv.size() ; ++i) {
+        if ( ! are_colinear(deriv[i-1].at1(), deriv[i].at0()) ) {
+            // there is a jump in the derivative, so add it to the cusps list
+            cusps.push_back(deriv.cuts[i]);
+        }
+    }
+    return cusps;
+}
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
@@ -48,6 +67,9 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
 
     switch( 1 ) {
     case 0: {
+        /* This one results in the following subpaths: the original, a displaced copy, and connector lines between the two
+         */
+
         Piecewise<D2<SBasis> > pwd2_out = pwd2_in;
         // generate extrusion bottom: (just a copy of original path, displaced a bit)
         pwd2_out.concat( pwd2_in + extrude_vector.getVector() );
@@ -75,15 +97,33 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
 
     default:
     case 1: {
+        /* This one creates separate closed subpaths that correspond to the faces of the extruded shape.
+         * When the LPE is complete, one can convert the shape to a normal path, then break subpaths apart and start coloring them.
+         */
+
         Piecewise<D2<SBasis> > pwd2_out;
         bool closed_path = are_near(pwd2_in.firstValue(), pwd2_in.lastValue());
         // split input path in pieces between points where deriv == vector
         Piecewise<D2<SBasis> > deriv = derivative(pwd2_in);
         std::vector<double> rts = roots(dot(deriv, rot90(extrude_vector.getVector())));
+
+        std::vector<double> cusps = find_cusps(pwd2_in);
+
+        std::vector<double> connector_pts;
+        if (rts.size() < 1) {
+            connector_pts = cusps;
+        } else if (cusps.size() < 1) {
+            connector_pts = rts;
+        } else {
+            connector_pts = rts;
+            connector_pts.insert(connector_pts.begin(), cusps.begin(), cusps.end());
+            sort(connector_pts.begin(), connector_pts.end());
+        }
+
         double portion_t = 0.;
-        for (unsigned i = 0; i < rts.size() ; ++i) {
-            Piecewise<D2<SBasis> > cut = portion(pwd2_in, portion_t, rts[i] );
-            portion_t = rts[i];
+        for (unsigned i = 0; i < connector_pts.size() ; ++i) {
+            Piecewise<D2<SBasis> > cut = portion(pwd2_in, portion_t, connector_pts[i] );
+            portion_t = connector_pts[i];
             if (closed_path && i == 0) {
                 // if the path is closed, skip the first cut and add it to the last cut later
                 continue;
@@ -96,7 +136,7 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
         }
         if (closed_path) {
             Piecewise<D2<SBasis> > cut = portion(pwd2_in, portion_t, pwd2_in.domain().max() );
-            cut.continuousConcat(portion(pwd2_in, pwd2_in.domain().min(), rts[0] ));
+            cut.continuousConcat(portion(pwd2_in, pwd2_in.domain().min(), connector_pts[0] ));
             Piecewise<D2<SBasis> > part = cut;
             part.continuousConcat(connector + cut.lastValue());
             part.continuousConcat(reverse(cut) + extrude_vector.getVector());
