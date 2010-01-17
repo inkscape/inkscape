@@ -37,6 +37,7 @@ doc/Makefile.in
 packaging/autopackage/default.apspec
 po/.intltool-merge-cache
 po/*.gmo
+po/messages.mo
 po/Makefile
 po/Makefile.in.in
 po/POTFILES
