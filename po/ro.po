@@ -5768,7 +5768,7 @@ msgstr ""
 
 #: ../src/file.cpp:147
 msgid "default.svg"
-msgstr ""
+msgstr "default.ro.svg"
 
 #: ../src/file.cpp:265 ../src/file.cpp:1067
 #, c-format
