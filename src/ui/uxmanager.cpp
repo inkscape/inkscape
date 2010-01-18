@@ -19,6 +19,7 @@
 #include "util/ege-tags.h"
 #include "widgets/toolbox.h"
 #include "widgets/desktop-widget.h"
+#include "preferences.h"
 
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
@@ -88,26 +89,35 @@ void UXManager::setTask(SPDesktop* dt, gint val)
 {
     for (vector<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it) {
         SPDesktopWidget* dtw = *it;
+
+        gboolean notDone = Inkscape::Preferences::get()->getBool("/options/workarounds/dynamicnotdone", false);
+
         if (dtw->desktop == dt) {
             switch (val) {
                 default:
                 case 0:
                     dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
                     dtw->setToolboxPosition("CommandsToolbar", GTK_POS_TOP);
-                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    if (notDone) {
+                        dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    }
                     dtw->setToolboxPosition("SnapToolbar", GTK_POS_TOP);
                     break;
                 case 1:
                     dtw->setToolboxPosition("ToolToolbar", GTK_POS_TOP);
                     dtw->setToolboxPosition("CommandsToolbar", GTK_POS_LEFT);
-                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    if (notDone) {
+                        dtw->setToolboxPosition("AuxToolbar", GTK_POS_TOP);
+                    }
                     dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
                     break;
                 case 2:
                     dtw->setToolboxPosition("ToolToolbar", GTK_POS_LEFT);
                     dtw->setToolboxPosition("CommandsToolbar", GTK_POS_RIGHT);
                     dtw->setToolboxPosition("SnapToolbar", GTK_POS_RIGHT);
-                    //dtw->setToolboxPosition("AuxToolbar", GTK_POS_RIGHT);
+                    if (notDone) {
+                        dtw->setToolboxPosition("AuxToolbar", GTK_POS_RIGHT);
+                    }
             }
         }
     }
