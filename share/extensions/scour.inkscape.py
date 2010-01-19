@@ -37,10 +37,13 @@ class ScourInkscape (inkex.Effect):
         self.OptionParser.add_option("--indent",
             action="store", type="string", dest="indent_type", default="space",
             help="indentation of the output: none, space, tab (default: %default)")
+        self.OptionParser.add_option("--enable-viewboxing", type="inkbool",
+            action="store", dest="enable_viewboxing", default=False,
+            help="changes document width/height to 100%/100% and creates viewbox coordinates")
 
 
     def effect(self):   
-        input = file(sys.argv[11], "r")
+        input = file(sys.argv[12], "r")
         sys.stdout.write(scourString(input.read(), self.options).encode("UTF-8"))
         input.close()
         sys.stdout.close()

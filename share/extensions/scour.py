@@ -3,7 +3,7 @@
 
 #  Scour
 #
-#  Copyright 2009 Jeff Schiller
+#  Copyright 2010 Jeff Schiller
 #
 #  This file is part of Scour, http://www.codedread.com/scour/
 #
@@ -34,6 +34,7 @@
 #    at rounded corners)
 
 # Next Up:
+# - only remove unreferenced elements if they are not children of a referenced element
 # - TODO: fix the removal of comment elements (between <?xml?> and <svg>)
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
@@ -63,9 +64,16 @@ except ImportError:
 	from fixedpoint import *
 	Decimal = FixedPoint	
 
+# Import Psyco if available
+try:
+	import psyco
+	psyco.full()
+except ImportError:
+	pass
+
 APP = 'scour'
-VER = '0.22'
-COPYRIGHT = 'Copyright Jeff Schiller, 2009'
+VER = '0.23'
+COPYRIGHT = 'Copyright Jeff Schiller, 2010'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
 		'XLINK': 	'http://www.w3.org/1999/xlink', 
@@ -499,16 +507,20 @@ def removeUnusedDefs(doc, defElem, elemsToRemove=None):
 
 	identifiedElements = findElementsWithId(doc.documentElement)
 	referencedIDs = findReferencedElements(doc.documentElement)
-	
+
 	keepTags = ['font', 'style', 'metadata', 'script', 'title', 'desc']
 	for elem in defElem.childNodes:
-		if elem.nodeName == 'g' and elem.namespaceURI == NS['SVG']:
-			elemsToRemove = removeUnusedDefs(doc, elem, elemsToRemove)
-			continue
+		# only look at it if an element and not referenced anywhere else
 		if elem.nodeType == 1 and (elem.getAttribute('id') == '' or \
-				(not elem.getAttribute('id') in referencedIDs)) and \
-				not elem.nodeName in keepTags:
-			elemsToRemove.append(elem)
+				(not elem.getAttribute('id') in referencedIDs)):
+
+			# we only inspect the children of a group in a defs if the group
+			# is not referenced anywhere else
+			if elem.nodeName == 'g' and elem.namespaceURI == NS['SVG']:
+				elemsToRemove = removeUnusedDefs(doc, elem, elemsToRemove)
+			# we only remove if it is not one of our tags we always keep (see above)
+			elif not elem.nodeName in keepTags:
+				elemsToRemove.append(elem)
 	return elemsToRemove
 
 def removeUnreferencedElements(doc):
@@ -2092,7 +2104,7 @@ def serializeXML(element, options, ind = 0, preserveWhitespace = False):
 				if preserveWhitespace:
 					outString += serializeXML(child, options, 0, preserveWhitespace)
 				else:
-					outString += '\n' + serializeXML(child, options, indent + 1, preserveWhitespace)
+					outString += os.linesep + serializeXML(child, options, indent + 1, preserveWhitespace)
 					onNewLine = True
 			# text node
 			elif child.nodeType == 3:
@@ -2114,10 +2126,10 @@ def serializeXML(element, options, ind = 0, preserveWhitespace = False):
 				
 		if onNewLine: outString += (I * ind)
 		outString += '</' + element.nodeName + '>'
-		if indent > 0: outString += '\n'
+		if indent > 0: outString += os.linesep
 	else:
 		outString += '/>'
-		if indent > 0: outString += '\n'
+		if indent > 0: outString += os.linesep
 		
 	return outString
 	
@@ -2266,14 +2278,15 @@ def scourString(in_string, options=None):
 			embedRasters(elem, options)		
 
 	# properly size the SVG document (ideally width/height should be 100% with a viewBox)
-	properlySizeDoc(doc.documentElement)
+	if options.viewboxing:
+		properlySizeDoc(doc.documentElement)
 
 	# output the document as a pretty string with a single space for indent
 	# NOTE: removed pretty printing because of this problem:
 	# http://ronrothman.com/public/leftbraned/xml-dom-minidom-toprettyxml-and-silly-whitespace/
 	# rolled our own serialize function here to save on space, put id first, customize indentation, etc
 #	out_string = doc.documentElement.toprettyxml(' ')
-	out_string = serializeXML(doc.documentElement, options)
+	out_string = serializeXML(doc.documentElement, options) + os.linesep
 	
 	# now strip out empty lines
 	lines = []
@@ -2284,7 +2297,7 @@ def scourString(in_string, options=None):
 
 	# return the string stripped of empty lines
 	if options.strip_xml_prolog == False:
-		xmlprolog = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n'
+		xmlprolog = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + os.linesep
 	else:
 		xmlprolog = ""
 		
@@ -2340,6 +2353,9 @@ _options_parser.add_option("--keep-editor-data",
 _options_parser.add_option("--strip-xml-prolog",
 	action="store_true", dest="strip_xml_prolog", default=False,
 	help="won't output the <?xml ?> prolog")
+_options_parser.add_option("--enable-viewboxing",
+	action="store_true", dest="viewboxing", default=False,
+	help="changes document width/height to 100%/100% and creates viewbox coordinates")
 
 # GZ: this is confusing, most people will be thinking in terms of
 #     decimal places, which is not what decimal precision is doing
@@ -2385,15 +2401,15 @@ def parse_args(args=None):
 	return options, [infile, outfile]
 
 def getReport():
-	return ' Number of elements removed: ' + str(numElemsRemoved) + \
-		'\n Number of attributes removed: ' + str(numAttrsRemoved) + \
-		'\n Number of unreferenced id attributes removed: ' + str(numIDsRemoved) + \
-		'\n Number of style properties fixed: ' + str(numStylePropsFixed) + \
-		'\n Number of raster images embedded inline: ' + str(numRastersEmbedded) + \
-		'\n Number of path segments reduced/removed: ' + str(numPathSegmentsReduced) + \
-		'\n Number of bytes saved in path data: ' + str(numBytesSavedInPathData) + \
-		'\n Number of bytes saved in colors: ' + str(numBytesSavedInColors) + \
-		'\n Number of points removed from polygons: ' + str(numPointsRemovedFromPolygon)
+	return ' Number of elements removed: ' + str(numElemsRemoved) + os.linesep + \
+		' Number of attributes removed: ' + str(numAttrsRemoved) + os.linesep + \
+		' Number of unreferenced id attributes removed: ' + str(numIDsRemoved) + os.linesep + \
+		' Number of style properties fixed: ' + str(numStylePropsFixed) + os.linesep + \
+		' Number of raster images embedded inline: ' + str(numRastersEmbedded) + os.linesep + \
+		' Number of path segments reduced/removed: ' + str(numPathSegmentsReduced) + os.linesep + \
+		' Number of bytes saved in path data: ' + str(numBytesSavedInPathData) + os.linesep + \
+		' Number of bytes saved in colors: ' + str(numBytesSavedInColors) + os.linesep + \
+		' Number of points removed from polygons: ' + str(numPointsRemovedFromPolygon)
 
 if __name__ == '__main__':
 	if sys.platform == "win32":
@@ -2423,7 +2439,7 @@ if __name__ == '__main__':
 	# GZ: unless silenced by -q or something?
 	# GZ: not using globals would be good too
 	print >>sys.stderr, ' File:', input.name, \
-		'\n Time taken:', str(end-start) + 's\n', \
+		os.linesep + ' Time taken:', str(end-start) + 's' + os.linesep, \
 		getReport()
 	
 	oldsize = len(in_string)

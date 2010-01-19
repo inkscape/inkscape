@@ -13,6 +13,7 @@
             <param name="enable-id-stripping"  type="boolean" _gui-text="Enable id stripping">false</param>
             <param name="embed-rasters"  type="boolean" _gui-text="Embed rasters">true</param>
             <param name="keep-editor-data"  type="boolean" _gui-text="Keep editor data">false</param>
+            <param name="enable-viewboxing" type="boolean" _gui-text="Enable viewboxing">false</param>
             <param name="strip-xml-prolog"  type="boolean" _gui-text="Strip xml prolog">false</param>
             <param name="set-precision"  type="int" _gui-text="Set precision">5</param>
       	    <param name="indent" type="enum" _gui-text="Indent">
@@ -29,6 +30,7 @@
     * Enable id stripping: remove all un-referenced ID attributes.
     * Embed rasters: embed rasters as base64-encoded data.
     * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.
+    * Enable viewboxing: size image to 100%/100% and introduce a viewBox
     * Strip xml prolog: don't output the xml prolog.
     * Set precision: set number of significant digits (default: 5).
     * Indent: indentation of the output: none, space, tab (default: space).</_param>
