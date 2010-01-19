@@ -73,24 +73,38 @@ enum SnapSourceType {
 class SnapCandidatePoint
 {
 public:
-    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, long const source_num, Inkscape::SnapTargetType const target, Geom::Rect const &bbox)
-        : _point(point), _source_type(source), _target_type(target), _source_num(source_num), _target_bbox(bbox) {};
+    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, long const source_num, Inkscape::SnapTargetType const target, Geom::OptRect const &bbox)
+        : _point(point),
+        _source_type(source),
+        _target_type(target),
+        _source_num(source_num),
+        _target_bbox(bbox)
+    {
+    };
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, Inkscape::SnapTargetType const target)
-        : _point(point), _source_type(source), _target_type(target)
+        : _point(point),
+        _source_type(source),
+        _target_type(target)
     {
         _source_num = 0;
-        _target_bbox = Geom::Rect();
+        _target_bbox = Geom::OptRect();
     }
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, long const source_num = 0)
-        : _point(point), _source_type(source), _target_type(Inkscape::SNAPTARGET_UNDEFINED), _source_num(source_num) {_target_bbox = Geom::Rect();}
+        : _point(point),
+        _source_type(source),
+        _target_type(Inkscape::SNAPTARGET_UNDEFINED),
+        _source_num(source_num)
+    {
+        _target_bbox = Geom::OptRect();
+    }
 
     inline Geom::Point const & getPoint() const {return _point;}
     inline Inkscape::SnapSourceType getSourceType() const {return _source_type;}
     inline Inkscape::SnapTargetType getTargetType() const {return _target_type;}
     inline long getSourceNum() const {return _source_num;}
-    inline Geom::Rect const & getTargetBBox() const {return _target_bbox;}
+    inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
 
 private:
     // Coordinates of the point
@@ -107,7 +121,7 @@ private:
 
     // If this is a target and it belongs to a bounding box, e.g. when the target type is
     // SNAPTARGET_BBOX_EDGE_MIDPOINT, then _target_bbox stores the relevant bounding box
-    Geom::Rect _target_bbox;
+    Geom::OptRect _target_bbox;
 };
 
 class SnapCandidateItem
@@ -132,12 +146,13 @@ class SnapCandidatePath
 {
 
 public:
-    SnapCandidatePath(Geom::PathVector* path, SnapTargetType target, bool edited = false)
-        : path_vector(path), target_type(target), currently_being_edited(edited) {}
+    SnapCandidatePath(Geom::PathVector* path, SnapTargetType target, Geom::OptRect bbox, bool edited = false)
+        : path_vector(path), target_type(target), target_bbox(bbox), currently_being_edited(edited) {};
     ~SnapCandidatePath() {};
 
     Geom::PathVector* path_vector;
     SnapTargetType target_type;
+    Geom::OptRect target_bbox;
     bool currently_being_edited; // true for the path that's currently being edited in the node tool (if any)
 
 };

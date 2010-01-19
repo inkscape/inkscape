@@ -14,8 +14,8 @@
 #include "preferences.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
-    : _point(p), _source(source), _source_num(source_num), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained, Geom::OptRect target_bbox)
+    : _point(p), _source(source), _source_num(source_num), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a), _target_bbox(target_bbox)
 {
     // tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
     _at_intersection = false;
@@ -25,7 +25,6 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const 
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
-    _target_bbox = Geom::Rect();
 }
 
 Inkscape::SnappedPoint::SnappedPoint(Inkscape::SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
@@ -41,7 +40,7 @@ Inkscape::SnappedPoint::SnappedPoint(Inkscape::SnapCandidatePoint const &p, Snap
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
-    _target_bbox = Geom::Rect();
+    _target_bbox = p.getTargetBBox();
 
 }
 
@@ -53,7 +52,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const 
     // isOtherSnapBetter. We don't want a division by zero.
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
-    _target_bbox = Geom::Rect();
+    _target_bbox = Geom::OptRect();
 }
 
 Inkscape::SnappedPoint::SnappedPoint()
@@ -72,7 +71,7 @@ Inkscape::SnappedPoint::SnappedPoint()
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
-    _target_bbox = Geom::Rect();
+    _target_bbox = Geom::OptRect();
 }
 
 Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p)
@@ -91,7 +90,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p)
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
-    _target_bbox = Geom::Rect();
+    _target_bbox = Geom::OptRect();
 }
 
 Inkscape::SnappedPoint::~SnappedPoint()
@@ -104,7 +103,7 @@ void Inkscape::SnappedPoint::getPoint(Geom::Point &p) const
     if (getSnapped()) {
         // then return the snapped point by overwriting p
         p = _point;
-    } //otherwise p will be left untouched; this way the caller doesn't have to check wether we've snapped
+    } //otherwise p will be left untouched; this way the caller doesn't have to check whether we've snapped
 }
 
 // search for the closest snapped point

@@ -24,7 +24,7 @@ class SnappedCurve : public SnappedPoint
 {
 public:
     SnappedCurve();
-    SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target);
+    SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox);
     ~SnappedCurve();
     Inkscape::SnappedPoint intersect(SnappedCurve const &curve, Geom::Point const &p, Geom::Matrix dt2doc) const; //intersect with another SnappedCurve
 

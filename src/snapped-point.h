@@ -29,7 +29,7 @@ public:
     SnappedPoint();
     SnappedPoint(Geom::Point const &p);
     SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
-    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained, Geom::OptRect target_bbox = Geom::OptRect());
     SnappedPoint(SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
@@ -65,8 +65,8 @@ public:
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
-    void setTargetBBox(Geom::Rect const target) {_target_bbox = target;}
-    Geom::Rect & getTargetBBox() {return _target_bbox;}
+    void setTargetBBox(Geom::OptRect const target) {_target_bbox = target;}
+    Geom::OptRect const getTargetBBox() const {return _target_bbox;}
     void setSource(SnapSourceType const source) {_source = source;}
     SnapSourceType getSource() const {return _source;}
     long getSourceNum() const {return _source_num;}
@@ -118,7 +118,7 @@ protected:
     /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
     Geom::Point _transformation;
     /* The bounding box we've snapped to (when applicable); will be used by the snapindicator */
-    Geom::Rect _target_bbox;
+    Geom::OptRect _target_bbox;
     /* Distance from the un-transformed point to the mouse pointer, measured at the point in time when dragging started */
     Geom::Coord _pointer_distance;
 };

@@ -12,7 +12,7 @@
 #include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
-Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)
 {
     _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
@@ -27,6 +27,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
     _source = source;
     _source_num = source_num;
     _target = target;
+    _target_bbox = target_bbox;
 }
 
 Inkscape::SnappedCurve::SnappedCurve()
@@ -44,6 +45,7 @@ Inkscape::SnappedCurve::SnappedCurve()
     _source = SNAPSOURCE_UNDEFINED;
     _source_num = 0;
     _target = SNAPTARGET_UNDEFINED;
+    _target_bbox = Geom::OptRect();
 }
 
 Inkscape::SnappedCurve::~SnappedCurve()
@@ -114,22 +116,27 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
     bool success = false;
 
     for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
-        std::list<Inkscape::SnappedCurve>::const_iterator j = i;
-        j++;
-        for (; j != list.end(); j++) {
-            Inkscape::SnappedPoint sp = (*i).intersect(*j, p, dt2doc);
-            if (sp.getAtIntersection()) {
-                // if it's the first point
-                bool const c1 = !success;
-                // or, if it's closer
-                bool const c2 = sp.getSnapDistance() < result.getSnapDistance();
-                // or, if it's just as close then look at the other distance
-                // (only relevant for snapped points which are at an intersection)
-                bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance());
-                // then prefer this point over the previous one
-                if (c1 || c2 || c3) {
-                    result = sp;
-                    success = true;
+        if ((*i).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes,
+            // as this would require two bboxes two be flashed in the snap indicator
+            std::list<Inkscape::SnappedCurve>::const_iterator j = i;
+            j++;
+            for (; j != list.end(); j++) {
+                if ((*j).getTarget() != Inkscape::SNAPTARGET_BBOX_EDGE) { // We don't support snapping to intersections of bboxes
+                    Inkscape::SnappedPoint sp = (*i).intersect(*j, p, dt2doc);
+                    if (sp.getAtIntersection()) {
+                        // if it's the first point
+                        bool const c1 = !success;
+                        // or, if it's closer
+                        bool const c2 = sp.getSnapDistance() < result.getSnapDistance();
+                        // or, if it's just as close then look at the other distance
+                        // (only relevant for snapped points which are at an intersection)
+                        bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance());
+                        // then prefer this point over the previous one
+                        if (c1 || c2 || c3) {
+                            result = sp;
+                            success = true;
+                        }
+                    }
                 }
             }
         }

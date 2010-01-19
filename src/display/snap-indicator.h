@@ -35,6 +35,7 @@ public:
 protected:
     TemporaryItem *_snaptarget;
     TemporaryItem *_snaptarget_tooltip;
+    TemporaryItem *_snaptarget_bbox;
     TemporaryItem *_snapsource;
     SPDesktop *_desktop;
 

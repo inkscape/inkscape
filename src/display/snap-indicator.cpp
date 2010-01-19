@@ -16,7 +16,9 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrl.h"
+#include "display/sodipodi-ctrlrect.h"
 #include "display/canvas-text.h"
+#include "display/sp-canvas-util.h"
 #include "knot.h"
 #include "preferences.h"
 #include <glibmm/i18n.h>
@@ -27,6 +29,7 @@ namespace Display {
 SnapIndicator::SnapIndicator(SPDesktop * desktop)
     :   _snaptarget(NULL),
         _snaptarget_tooltip(NULL),
+        _snaptarget_bbox(NULL),
         _snapsource(NULL),
         _desktop(desktop)
 {
@@ -216,7 +219,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
                                             "anchor", GTK_ANCHOR_CENTER,
                                             "size", 10.0,
                                             "stroked", TRUE,
-                                            "stroke_color", 0xf000f0ff,
+                                            "stroke_color", 0xff0000ff,
                                             "mode", SP_KNOT_MODE_XOR,
                                             "shape", SP_KNOT_SHAPE_DIAMOND,
                                             NULL );
@@ -226,7 +229,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
                                             "anchor", GTK_ANCHOR_CENTER,
                                             "size", 10.0,
                                             "stroked", TRUE,
-                                            "stroke_color", 0xf000f0ff,
+                                            "stroke_color", 0xff0000ff,
                                             "mode", SP_KNOT_MODE_XOR,
                                             "shape", SP_KNOT_SHAPE_CROSS,
                                             NULL );
@@ -245,6 +248,19 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
 
         sp_canvastext_set_anchor((SPCanvasText* )canvas_tooltip, -1, 1);
         _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
+
+        Geom::OptRect const bbox = p.getTargetBBox();
+        if (bbox) {
+            SPCanvasItem* box = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
+                                                     SP_TYPE_CTRLRECT,
+                                                     NULL);
+
+            SP_CTRLRECT(box)->setRectangle(*bbox);
+            SP_CTRLRECT(box)->setColor(0xff0000ff, 0, 0);
+            SP_CTRLRECT(box)->setDashed(true);
+            sp_canvas_item_move_to_z(box, 0);
+            _snaptarget_bbox = _desktop->add_temporary_canvasitem(box, timeout_val);
+        }
     }
 }
 
@@ -259,6 +275,11 @@ SnapIndicator::remove_snaptarget()
     if (_snaptarget_tooltip) {
         _desktop->remove_temporary_canvasitem(_snaptarget_tooltip);
         _snaptarget_tooltip = NULL;
+    }
+
+    if (_snaptarget_bbox) {
+        _desktop->remove_temporary_canvasitem(_snaptarget_bbox);
+        _snaptarget_bbox = NULL;
     }
 
 }
@@ -279,7 +300,7 @@ SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
                                                         "anchor", GTK_ANCHOR_CENTER,
                                                         "size", 6.0,
                                                         "stroked", TRUE,
-                                                        "stroke_color", 0xf000f0ff,
+                                                        "stroke_color", 0xff0000ff,
                                                         "mode", SP_KNOT_MODE_XOR,
                                                         "shape", SP_KNOT_SHAPE_CIRCLE,
                                                         NULL );

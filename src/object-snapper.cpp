@@ -266,7 +266,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         Geom::Coord dist = Geom::L2((*k).getPoint() - p.getPoint());
         if (dist < getSnapperTolerance() && dist < s.getSnapDistance()) {
-            s = SnappedPoint((*k).getPoint(), p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+            s = SnappedPoint((*k).getPoint(), p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, (*k).getTargetBBox());
             success = true;
         }
     }
@@ -301,7 +301,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         Geom::Coord dist = Geom::L2((*k).getPoint() - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
-            s = SnappedPoint((*k).getPoint(), SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), true);
+            s = SnappedPoint((*k).getPoint(), SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), true, (*k).getTargetBBox());
             sc.points.push_back(s);
         }
     }
@@ -338,7 +338,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
         if (_snapmanager->snapprefs.getSnapToPageBorder()) {
             Geom::PathVector *border_path = _getBorderPathv();
             if (border_path != NULL) {
-                _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(border_path, SNAPTARGET_PAGE_BORDER));
+                _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(border_path, SNAPTARGET_PAGE_BORDER, Geom::OptRect()));
             }
         }
 
@@ -386,7 +386,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
                         if (curve) {
                             // We will get our own copy of the path, which must be freed at some point
                             Geom::PathVector *borderpathv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
-                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(borderpathv, SNAPTARGET_PATH)); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
+                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(borderpathv, SNAPTARGET_PATH, Geom::OptRect())); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                             curve->unref();
                         }
                     }
@@ -403,7 +403,8 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
                         sp_item_invoke_bbox(root_item, rect, i2doc, TRUE, bbox_type);
                         if (rect) {
                             Geom::PathVector *path = _getPathvFromRect(*rect);
-                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(path, SNAPTARGET_BBOX_EDGE));
+                            rect = sp_item_bbox_desktop(root_item, bbox_type);
+                            _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(path, SNAPTARGET_BBOX_EDGE, rect));
                         }
                     }
                 }
@@ -437,7 +438,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
             SPCurve *curve = curve_for_item(SP_ITEM(selected_path));
             if (curve) {
                 Geom::PathVector *pathv = pathvector_for_curve(SP_ITEM(selected_path), curve, true, true, Geom::identity(), Geom::identity()); // We will get our own copy of the path, which must be freed at some point
-                _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pathv, SNAPTARGET_PATH, true));
+                _paths_to_snap_to->push_back(Inkscape::SnapCandidatePath(pathv, SNAPTARGET_PATH, Geom::OptRect(), true));
                 curve->unref();
             }
         }
@@ -484,7 +485,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
-                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type));
+                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
                     }
                 }
             }
@@ -556,7 +557,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)
                         Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), p.getSourceType(), p.getSourceNum(), k->target_type, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, k->target_bbox);
                         sc.points.push_back(s);
                     }
                 }
