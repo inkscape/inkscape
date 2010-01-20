@@ -93,6 +93,7 @@ private:
 
     void _createControlPointsFromGeometry();
     void _createGeometryFromControlPoints();
+    unsigned _deleteStretch(NodeList::iterator first, NodeList::iterator last, bool keep_shape);
     std::string _createTypeString();
     void _updateOutline();
     //void _setOutline(Geom::PathVector const &);
@@ -102,13 +103,12 @@ private:
     Inkscape::XML::Node *_getXMLNode();
 
     void _attachNodeHandlers(Node *n);
-    void _removeNodeHandlers(Node *n);
-
     void _selectionChanged(SelectableControlPoint *p, bool selected);
     bool _nodeClicked(Node *, GdkEventButton *);
     void _handleGrabbed();
     bool _handleClicked(Handle *, GdkEventButton *);
     void _handleUngrabbed();
+
     void _externalChange(unsigned type);
     void _removeNodesFromSelection();
     void _commit(Glib::ustring const &annotation);

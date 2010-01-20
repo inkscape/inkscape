@@ -118,8 +118,11 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
 
     _subpaths.signal_insert_node.connect(
         sigc::mem_fun(*this, &PathManipulator::_attachNodeHandlers));
-    _subpaths.signal_remove_node.connect(
-        sigc::mem_fun(*this, &PathManipulator::_removeNodeHandlers));
+    // NOTE: signal_remove_node is called just before destruction. Nodes are trackable,
+    // so removing the signals manually is not necessary.
+    /*_subpaths.signal_remove_node.connect(
+        sigc::mem_fun(*this, &PathManipulator::_removeNodeHandlers));*/
+
     _selection.signal_update.connect(
         sigc::mem_fun(*this, &PathManipulator::update));
     _selection.signal_point_changed.connect(
@@ -489,9 +492,6 @@ void PathManipulator::deleteNodes(bool keep_shape)
 {
     if (_num_selected == 0) return;
     hideDragPoint();
-    
-    unsigned const samples_per_segment = 10;
-    double const t_step = 1.0 / samples_per_segment;
 
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end();) {
         SubpathPtr sp = *i;
@@ -521,57 +521,79 @@ void PathManipulator::deleteNodes(bool keep_shape)
         sel_end = sel_beg;
         
         while (num_selected > 0) {
-            while (!sel_beg->selected()) sel_beg = sel_beg.next();
+            while (!sel_beg->selected()) {
+                sel_beg = sel_beg.next();
+            }
             sel_end = sel_beg;
-            unsigned del_len = 0;
+
             while (sel_end && sel_end->selected()) {
-                ++del_len;
                 sel_end = sel_end.next();
             }
             
-            // set surrounding node types to cusp if:
-            // 1. keep_shape is on, or
-            // 2. we are deleting at the end or beginning of an open path
-            // if !sel_end then sel_beg.prev() must be valid, otherwise the entire subpath
-            // would be deleted before we get here
-            if ((keep_shape || !sel_end) && sel_beg.prev()) sel_beg.prev()->setType(NODE_CUSP, false);
-            if ((keep_shape || !sel_beg.prev()) && sel_end) sel_end->setType(NODE_CUSP, false);
-
-            if (keep_shape && sel_beg.prev() && sel_end) {
-                // Fill fit data
-                unsigned num_samples = (del_len + 1) * samples_per_segment + 1;
-                Geom::Point *bezier_data = new Geom::Point[num_samples];
-                Geom::Point result[4];
-                unsigned seg = 0;
-
-                for (NodeList::iterator cur = sel_beg.prev(); cur != sel_end; cur = cur.next()) {
-                    Geom::CubicBezier bc(*cur, *cur->front(), *cur.next(), *cur.next()->back());
-                    for (unsigned s = 0; s < samples_per_segment; ++s) {
-                        bezier_data[seg * samples_per_segment + s] = bc.pointAt(t_step * s);
-                    }
-                    ++seg;
-                }
-                // Fill last point
-                bezier_data[num_samples - 1] = sel_end->position();
-                // Compute replacement bezier curve
-                // TODO the fitting algorithm sucks - rewrite it to be awesome
-                bezier_fit_cubic(result, bezier_data, num_samples, 0.5);
-                delete[] bezier_data;
-
-                sel_beg.prev()->front()->setPosition(result[1]);
-                sel_end->back()->setPosition(result[2]);
-            }
-            // We cannot simply use sp->erase(sel_beg, sel_end), because it would break
-            // for cases when the selected stretch crosses the beginning of the path
-            while (sel_beg != sel_end) {
-                NodeList::iterator next = sel_beg.next();
-                sp->erase(sel_beg);
-                sel_beg = next;
-            }
-            num_selected -= del_len;
+            num_selected -= _deleteStretch(sel_beg, sel_end, keep_shape);
         }
         ++i;
     }
+}
+
+/** @brief Delete nodes between the two iterators.
+ * The given range can cross the beginning of the subpath in closed subpaths.
+ * @param start      Beginning of the range to delete
+ * @param end        End of the range
+ * @param keep_shape Whether to fit the handles at surrounding nodes to approximate
+ *                   the shape before deletion
+ * @return Number of deleted nodes */
+unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::iterator end, bool keep_shape)
+{
+    unsigned const samples_per_segment = 10;
+    double const t_step = 1.0 / samples_per_segment;
+
+    unsigned del_len = 0;
+    for (NodeList::iterator i = start; i != end; ++i) {
+        ++del_len;
+    }
+    if (del_len == 0) return 0;
+
+    // set surrounding node types to cusp if:
+    // 1. keep_shape is on, or
+    // 2. we are deleting at the end or beginning of an open path
+    if ((keep_shape || !end) && start.prev()) start.prev()->setType(NODE_CUSP, false);
+    if ((keep_shape || !start.prev()) && end) end->setType(NODE_CUSP, false);
+
+    if (keep_shape && start.prev() && end) {
+        unsigned num_samples = (del_len + 1) * samples_per_segment + 1;
+        Geom::Point *bezier_data = new Geom::Point[num_samples];
+        Geom::Point result[4];
+        unsigned seg = 0;
+
+        for (NodeList::iterator cur = start.prev(); cur != end; cur = cur.next()) {
+            Geom::CubicBezier bc(*cur, *cur->front(), *cur.next(), *cur.next()->back());
+            for (unsigned s = 0; s < samples_per_segment; ++s) {
+                bezier_data[seg * samples_per_segment + s] = bc.pointAt(t_step * s);
+            }
+            ++seg;
+        }
+        // Fill last point
+        bezier_data[num_samples - 1] = end->position();
+        // Compute replacement bezier curve
+        // TODO the fitting algorithm sucks - rewrite it to be awesome
+        bezier_fit_cubic(result, bezier_data, num_samples, 0.5);
+        delete[] bezier_data;
+
+        start.prev()->front()->setPosition(result[1]);
+        end->back()->setPosition(result[2]);
+    }
+
+    // We can't use nl->erase(start, end), because it would break when the stretch
+    // crosses the beginning of a closed subpath
+    NodeList *nl = start->list();
+    while (start != end) {
+        NodeList::iterator next = start.next();
+        nl->erase(start);
+        start = next;
+    }
+
+    return del_len;
 }
 
 /** Removes selected segments */
@@ -649,7 +671,9 @@ void PathManipulator::deleteSegments()
     }
 }
 
-/** Reverse the subpaths that have anything selected. */
+/** Reverse subpaths of the path.
+ * @param selected_only If true, only paths that have at least one selected node
+ *                      will be reversed. Otherwise all subpaths will be reversed. */
 void PathManipulator::reverseSubpaths(bool selected_only)
 {
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
@@ -1152,32 +1176,34 @@ void PathManipulator::_attachNodeHandlers(Node *node)
             sigc::mem_fun(*this, &PathManipulator::_nodeClicked),
             node));
 }
-void PathManipulator::_removeNodeHandlers(Node *node)
-{
-    // It is safe to assume that nobody else connected to handles' signals after us,
-    // so we pop our slots from the back. This preserves existing connections
-    // created by Node and Handle constructors.
-    Handle *handles[2] = { node->front(), node->back() };
-    for (int i = 0; i < 2; ++i) {
-        handles[i]->signal_update.slots().pop_back();
-        handles[i]->signal_grabbed.slots().pop_back();
-        handles[i]->signal_ungrabbed.slots().pop_back();
-        handles[i]->signal_clicked.slots().pop_back();
-    }
-    // Same for this one: CPS only connects to grab, drag, and ungrab
-    node->signal_clicked.slots().pop_back();
-}
 
 bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
 {
     // cycle between node types on ctrl+click
-    if (event->button != 1 || !held_control(*event)) return false;
-    /*if (held_alt(*event)) {
-        // TODO delete nodes with Ctrl+Alt+click
-        n->list()->erase(NodeList::get_iterator(n));
-        update();
-        _commit(_("Delete node"));
-    } else*/ {
+    if (event->button != 1) return false;
+    if (held_alt(*event) && held_control(*event)) {
+        // Ctrl+Alt+click: delete nodes
+        hideDragPoint();
+        NodeList::iterator iter = NodeList::get_iterator(n);
+        NodeList *nl = iter->list();
+
+        if (nl->size() <= 1 || (nl->size() <= 2 && !nl->closed())) {
+            // Removing last node of closed path - delete it
+            nl->kill();
+        } else {
+            // In other cases, delete the node under cursor
+            _deleteStretch(iter, iter.next(), true);
+        }
+
+        if (!empty()) { 
+            update();
+        }
+        // We need to call MPM's method because it could have been our last node
+        _multi_path_manipulator._doneWithCleanup(_("Delete node"));
+
+        return true;
+    } else if (held_control(*event)) {
+        // Ctrl+click: cycle between node types
         if (n->isEndNode()) {
             if (n->type() == NODE_CUSP) {
                 n->setType(NODE_SMOOTH);
@@ -1189,8 +1215,9 @@ bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
         }
         update();
         _commit(_("Cycle node type"));
+        return true;
     }
-    return true;
+    return false;
 }
 
 void PathManipulator::_handleGrabbed()
