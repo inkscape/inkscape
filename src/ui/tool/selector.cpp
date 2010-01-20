@@ -21,7 +21,9 @@ namespace Inkscape {
 namespace UI {
 
 /** A hidden control point used for rubberbanding and selection.
- * It uses a clever hack: the canvas item is hidden and only receives events when fed */
+ * It uses a clever hack: the canvas item is hidden and only receives events when they
+ * are passed to it using Selector's event() function. When left mouse button
+ * is pressed, it grabs events and handles drags and clicks in the usual way. */
 class SelectorPoint : public ControlPoint {
 public:
     SelectorPoint(SPDesktop *d, SPCanvasGroup *group, Selector *s)
@@ -109,8 +111,14 @@ Selector::~Selector()
 
 bool Selector::event(GdkEvent *event)
 {
+    // The hidden control point will capture all events after it obtains the grab,
+    // but it relies on this function to initiate it. Here we can filter what events
+    // it will receive.
     switch (event->type) {
     case GDK_BUTTON_PRESS:
+        // Do not pass button presses other than left button to the control point.
+        // This way middle click and right click can be handled in SPEventContext.
+        if (event->button.button != 1) return false;
         _dragger->setPosition(_desktop->w2d(event_point(event->motion)));
         break;
     default: break;
