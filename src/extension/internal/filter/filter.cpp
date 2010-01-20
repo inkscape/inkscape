@@ -71,7 +71,9 @@ Filter::get_filter (Inkscape::Extension::Extension * ext) {
 }
 
 void
-Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Inkscape::XML::Document * doc, gchar * srcGraphic, gchar * srcGraphicAlpha)
+Filter::merge_filters( Inkscape::XML::Node * to, Inkscape::XML::Node * from,
+		       Inkscape::XML::Document * doc,
+		       gchar const * srcGraphic, gchar const * srcGraphicAlpha)
 {
 	if (from == NULL) return;
 

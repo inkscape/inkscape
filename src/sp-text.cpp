@@ -421,7 +421,7 @@ sp_text_description(SPItem *item)
 
     GString *xs = SP_PX_TO_METRIC_STRING(style->font_size.computed, sp_desktop_namedview(SP_ACTIVE_DESKTOP)->getDefaultMetric());
 
-    char *trunc = "";
+    char const *trunc = "";
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
     if (layout && layout->inputTruncated()) {
         trunc = _(" [truncated]");
