@@ -368,8 +368,13 @@ void MultiPathManipulator::distributeNodes(Geom::Dim2 d)
 
 void MultiPathManipulator::reverseSubpaths()
 {
-    invokeForAll(&PathManipulator::reverseSubpaths);
-    _done("Reverse selected subpaths");
+    if (_selection.empty()) {
+        invokeForAll(&PathManipulator::reverseSubpaths, false);
+        _done("Reverse subpaths");
+    } else {
+        invokeForAll(&PathManipulator::reverseSubpaths, true);
+        _done("Reverse selected subpaths");
+    }
 }
 
 void MultiPathManipulator::move(Geom::Point const &delta)
@@ -413,11 +418,14 @@ bool MultiPathManipulator::event(GdkEvent *event)
         switch (shortcut_key(event->key)) {
         case GDK_Insert:
         case GDK_KP_Insert:
+            // Insert - insert nodes in the middle of selected segments
             insertNodes();
             return true;
         case GDK_i:
         case GDK_I:
             if (held_only_shift(event->key)) {
+                // Shift+I - insert nodes (alternate keybinding for Mac keyboards
+                //           that don't have the Insert key)
                 insertNodes();
                 return true;
             }
@@ -425,10 +433,12 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_j:
         case GDK_J:
             if (held_only_shift(event->key)) {
+                // Shift+J - join nodes
                 joinNodes();
                 return true;
             }
             if (held_only_alt(event->key)) {
+                // Alt+J - join segments
                 joinSegments();
                 return true;
             }
@@ -436,6 +446,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_b:
         case GDK_B:
             if (held_only_shift(event->key)) {
+                // Shift+B - break nodes
                 breakNodes();
                 return true;
             }
@@ -445,14 +456,18 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_BackSpace:
             if (held_shift(event->key)) break;
             if (held_alt(event->key)) {
+                // Alt+Delete - delete segments
                 deleteSegments();
             } else {
+                // Control+Delete - delete nodes
+                // Delete - delete nodes preserving shape
                 deleteNodes(!held_control(event->key));
             }
             return true;
         case GDK_c:
         case GDK_C:
             if (held_only_shift(event->key)) {
+                // Shift+C - make nodes cusp
                 setNodeType(NODE_CUSP);
                 return true;
             }
@@ -460,6 +475,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_s:
         case GDK_S:
             if (held_only_shift(event->key)) {
+                // Shift+S - make nodes smooth
                 setNodeType(NODE_SMOOTH);
                 return true;
             }
@@ -467,6 +483,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_a:
         case GDK_A:
             if (held_only_shift(event->key)) {
+                // Shift+A - make nodes auto-smooth
                 setNodeType(NODE_AUTO);
                 return true;
             }
@@ -474,6 +491,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_y:
         case GDK_Y:
             if (held_only_shift(event->key)) {
+                // Shift+Y - make nodes symmetric
                 setNodeType(NODE_SYMMETRIC);
                 return true;
             }
@@ -481,8 +499,8 @@ bool MultiPathManipulator::event(GdkEvent *event)
         case GDK_r:
         case GDK_R:
             if (held_only_shift(event->key)) {
+                // Shift+R - reverse subpaths
                 reverseSubpaths();
-                break;
             }
             break;
         default:

@@ -73,7 +73,7 @@ public:
     void breakNodes();
     void deleteNodes(bool keep_shape = true);
     void deleteSegments();
-    void reverseSubpaths();
+    void reverseSubpaths(bool selected_only);
     void setSegmentType(SegmentType);
 
     void showOutline(bool show);

@@ -100,7 +100,6 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _show_outline(false)
     , _lpe_key(lpe_key)
 {
-    /* Because curve drag point is always created first, it does not cover nodes */
     if (_lpe_key.empty()) {
         _i2d_transform = sp_item_i2d_affine(SP_ITEM(path));
     } else {
@@ -651,14 +650,18 @@ void PathManipulator::deleteSegments()
 }
 
 /** Reverse the subpaths that have anything selected. */
-void PathManipulator::reverseSubpaths()
+void PathManipulator::reverseSubpaths(bool selected_only)
 {
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
-        for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
-            if (j->selected()) {
-                (*i)->reverse();
-                break; // continue with the next subpath
+        if (selected_only) {
+            for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
+                if (j->selected()) {
+                    (*i)->reverse();
+                    break; // continue with the next subpath
+                }
             }
+        } else {
+            (*i)->reverse();
         }
     }
 }
