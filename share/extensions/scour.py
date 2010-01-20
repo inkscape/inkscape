@@ -2278,7 +2278,7 @@ def scourString(in_string, options=None):
 			embedRasters(elem, options)		
 
 	# properly size the SVG document (ideally width/height should be 100% with a viewBox)
-	if options.viewboxing:
+	if options.enable_viewboxing:
 		properlySizeDoc(doc.documentElement)
 
 	# output the document as a pretty string with a single space for indent
@@ -2354,7 +2354,7 @@ _options_parser.add_option("--strip-xml-prolog",
 	action="store_true", dest="strip_xml_prolog", default=False,
 	help="won't output the <?xml ?> prolog")
 _options_parser.add_option("--enable-viewboxing",
-	action="store_true", dest="viewboxing", default=False,
+	action="store_true", dest="enable_viewboxing", default=False,
 	help="changes document width/height to 100%/100% and creates viewbox coordinates")
 
 # GZ: this is confusing, most people will be thinking in terms of
