@@ -169,17 +169,21 @@ Glib::ustring CurveDragPoint::_getTip(unsigned state)
     if (!first || !first.next()) return "";
     bool linear = first->front()->isDegenerate() && first.next()->back()->isDegenerate();
     if (state_held_shift(state)) {
-        return C_("Path segment statusbar tip",
+        return C_("Path segment tip",
             "<b>Shift:</b> click to toggle segment selection");
     }
+    if (state_held_control(state) && state_held_alt(state)) {
+        return C_("Path segment tip",
+            "<b>Ctrl+Alt:</b> click to insert a node");
+    }
     if (linear) {
-        return C_("Path segment statusbar tip",
+        return C_("Path segment tip",
             "<b>Linear segment:</b> drag to convert to a Bezier segment, "
-            "doubleclick to insert node, click to select this segment");
+            "doubleclick to insert node, click to select");
     } else {
-        return C_("Path segment statusbar tip",
+        return C_("Path segment tip",
             "<b>Bezier segment:</b> drag to shape the segment, doubleclick to insert node, "
-            "click to select this segment");
+            "click to select");
     }
 }
 

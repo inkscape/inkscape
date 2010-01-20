@@ -339,8 +339,7 @@ bool ControlPointSelection::_pointClicked(SelectableControlPoint *p, GdkEventBut
 {
     // clicking a selected node should toggle the transform handles between rotate and scale mode,
     // if they are visible
-    if (held_shift(*event)) return false;
-    if (_handles_visible && p->selected()) {
+    if (held_no_modifiers(*event) && _handles_visible && p->selected()) {
         toggleTransformHandlesMode();
         return true;
     }
