@@ -29,12 +29,9 @@
 # include FT_TRUETYPE_TABLES_H
 # include <pango/pangoft2.h>
 
-//#include <tr1/unordered_map>
-#include <ext/hash_map>
+#include <tr1/unordered_map>
 
 
-// the various raster_font in use at a given time are held in a hash_map whose indices are the
-// styles, hence the 2 following 'classes'
 struct font_style_hash : public std::unary_function<font_style, size_t> {
     size_t operator()(font_style const &x) const;
 };
@@ -43,8 +40,7 @@ struct font_style_equal : public std::binary_function<font_style, font_style, bo
     bool operator()(font_style const &a, font_style const &b) const;
 };
 
-
-typedef __gnu_cxx::hash_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
+typedef std::tr1::unordered_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
 
 
 

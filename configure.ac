@@ -675,8 +675,8 @@ AM_CONDITIONAL(HAVE_CARBON, test "x$carbon_ok" = "xyes")
 # Check for some boost header files
 AC_CHECK_HEADERS([boost/concept_check.hpp], [], AC_MSG_ERROR([You need the boost package (e.g. libboost-dev)]))
 
-# test whether GCC emits a spurious warning when using boost::optional
-# if yes, turn off strict aliasing warnings
+# Test whether GCC emits a spurious warning when using boost::optional
+# If yes, turn off strict aliasing warnings to reduce noise
 AC_MSG_CHECKING([for overzealous strict aliasing warnings])
 ignore_strict_aliasing=no
 CXXFLAGS_SAVE=$CXXFLAGS
@@ -692,6 +692,23 @@ AC_MSG_RESULT($ignore_strict_aliasing)
 CXXFLAGS=$CXXFLAGS_SAVE
 if test "x$ignore_strict_aliasing" = "xyes"; then
   CXXFLAGS="$CXXFLAGS -Wno-strict-aliasing"
+fi
+
+# Test for broken unordered_set on GCC 4.0.0, shipped with Apple XCode tools
+AC_MSG_CHECKING([TR1 unordered_set usability])
+AC_COMPILE_IFELSE([
+#include <tr1/unordered_set>
+int main() {
+  std::tr1::unordered_set<int> i, j;
+  i = j;
+  return 0;
+}
+], [unordered_set_broken=no], [unordered_set_broken=yes])
+if test "x$unordered_set_broken" = "xyes"; then
+	AC_MSG_RESULT([broken])
+	AC_MSG_ERROR([You have a broken version of the <tr1/unordered_set> header. See http://wiki.inkscape.org/wiki/index.php/CompilingMacOsX for information on how to fix this problem.])
+else
+	AC_MSG_RESULT([ok])
 fi
 
 PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf, cairo_pdf=yes, cairo_pdf=no)

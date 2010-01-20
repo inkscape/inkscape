@@ -955,7 +955,7 @@ Glib::ustring Node::_getTip(unsigned state)
 
     if (state_held_control(state)) {
         if (state_held_alt(state)) {
-            return C_("Path node tip", "<b>Ctrl+Alt:</b> move along handle lines");
+            return C_("Path node tip", "<b>Ctrl+Alt:</b> move along handle lines, click to delete node");
         }
         return C_("Path node tip",
             "<b>Ctrl:</b> move along axes, click to change node type");

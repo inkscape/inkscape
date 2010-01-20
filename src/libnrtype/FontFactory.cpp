@@ -26,11 +26,9 @@
 /* Freetype2 */
 # include <pango/pangoft2.h>
 
-//#include <tr1/unordered_map>
-#include <ext/hash_map>
+#include <tr1/unordered_map>
 
-
-typedef __gnu_cxx::hash_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
+typedef std::tr1::unordered_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
@@ -826,9 +824,11 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
         if ( nFace ) {
             // duplicate FcPattern, the hard way
             res = new font_instance();
-            // store the descr of the font we asked for, since this is the key where we intend to put the font_instance at
-            // in the hash_map.  the descr of the returned pangofont may differ from what was asked, so we don't know (at this
-            // point) whether loadedFaces[that_descr] is free or not (and overwriting an entry will bring deallocation problems)
+            // store the descr of the font we asked for, since this is the key where we intend
+            // to put the font_instance at in the unordered_map.  the descr of the returned
+            // pangofont may differ from what was asked, so we don't know (at this
+            // point) whether loadedFaces[that_descr] is free or not (and overwriting
+            // an entry will bring deallocation problems)
             res->descr = pango_font_description_copy(descr);
             res->daddy = this;
             res->InstallFace(nFace);

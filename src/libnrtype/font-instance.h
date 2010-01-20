@@ -25,7 +25,7 @@ public:
     // depending on the rendering backend, different temporary data
 
     // that's the font's fingerprint; this particular PangoFontDescription gives the entry at which this font_instance
-    // resides in the font_factory loadedFaces hash_map
+    // resides in the font_factory loadedFaces unordered_map
     PangoFontDescription* descr;
     // refcount
     int                   refCount;
@@ -86,7 +86,7 @@ private:
     void                 FreeTheFace();
 
     // hashmap to get the raster_font for a given style
-    void*                loadedPtr; // Pointer to a hash_map. Moved into .cpp to not expose use of __gnu_cxx extension.
+    void*                loadedPtr;
 
 #ifdef USE_PANGO_WIN32
     HFONT                 theFace;

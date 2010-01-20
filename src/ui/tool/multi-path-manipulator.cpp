@@ -1,5 +1,5 @@
 /** @file
- * Path manipulator - implementation
+ * Multi path manipulator - implementation
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
@@ -8,8 +8,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-//#include <tr1/unordered_set>
-#include <ext/hash_set>
+#include <tr1/unordered_set>
 #include <boost/shared_ptr.hpp>
 #include <glib.h>
 #include <glibmm/i18n.h>
@@ -26,16 +25,7 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
 
-namespace std { using namespace __gnu_cxx; }
-
-namespace __gnu_cxx {
-template<>
-struct hash<Inkscape::UI::NodeList::iterator> {
-    size_t operator()(Inkscape::UI::NodeList::iterator const &n) const {
-        return reinterpret_cast<size_t>(n.ptr());
-    }
-};
-}
+namespace std { using namespace tr1; }
 
 namespace Inkscape {
 namespace UI {
@@ -43,7 +33,7 @@ namespace UI {
 namespace {
 typedef std::pair<NodeList::iterator, NodeList::iterator> IterPair;
 typedef std::vector<IterPair> IterPairList;
-typedef std::hash_set<NodeList::iterator> IterSet;
+typedef std::unordered_set<NodeList::iterator> IterSet;
 typedef std::multimap<double, IterPair> DistanceMap;
 typedef std::pair<double, IterPair> DistanceMapItem;
 
