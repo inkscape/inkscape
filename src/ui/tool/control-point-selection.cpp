@@ -81,26 +81,24 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
     boost::shared_ptr<connlist_type> clist(new connlist_type());
 
     // hide event param and always return false
-    /*clist->push_back(
+    clist->push_back(
         x->signal_grabbed.connect(
             sigc::bind_return(
-                sigc::bind<0>(
-                    sigc::mem_fun(*this, &ControlPointSelection::_selectionGrabbed),
-                    x),
+                sigc::hide(
+                    sigc::mem_fun(*this, &ControlPointSelection::_pointGrabbed)),
                 false)));
     clist->push_back(
         x->signal_dragged.connect(
-                sigc::mem_fun(*this, &ControlPointSelection::_selectionDragged)));
+                sigc::mem_fun(*this, &ControlPointSelection::_pointDragged)));
     clist->push_back(
         x->signal_ungrabbed.connect(
             sigc::hide(
-                sigc::mem_fun(*this, &ControlPointSelection::_selectionUngrabbed))));
+                sigc::mem_fun(*this, &ControlPointSelection::_pointUngrabbed))));
     clist->push_back(
         x->signal_clicked.connect(
-            sigc::hide(
-                sigc::bind<0>(
-                    sigc::mem_fun(*this, &ControlPointSelection::_selectionClicked),
-                    x))));*/
+            sigc::bind<0>(
+                sigc::mem_fun(*this, &ControlPointSelection::_pointClicked),
+                x)));
 
     found = _points.insert(std::make_pair(x, clist)).first;
 

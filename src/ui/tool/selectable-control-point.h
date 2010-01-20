@@ -51,8 +51,6 @@ private:
     void _takeSelection();
     
     void _grabbedHandler();
-    void _draggedHandler(Geom::Point const &, Geom::Point &, GdkEventMotion *);
-    void _ungrabbedHandler();
     bool _clickedHandler(GdkEventButton *);
 };
 

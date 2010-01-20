@@ -61,11 +61,6 @@ void SelectableControlPoint::_connectHandlers()
             sigc::hide(
                 sigc::mem_fun(*this, &SelectableControlPoint::_grabbedHandler)),
             false));
-    signal_dragged.connect(
-        sigc::mem_fun(*this, &SelectableControlPoint::_draggedHandler));
-    signal_ungrabbed.connect(
-        sigc::hide(
-            sigc::mem_fun(*this, &SelectableControlPoint::_ungrabbedHandler)));
     signal_clicked.connect(
         sigc::mem_fun(*this, &SelectableControlPoint::_clickedHandler));
 }
@@ -75,20 +70,11 @@ void SelectableControlPoint::_grabbedHandler()
     // if a point is dragged while not selected, it should select itself
     if (!selected()) {
         _takeSelection();
-        _selection._pointGrabbed();
     }
 }
-void SelectableControlPoint::_draggedHandler(Geom::Point const &old_pos, Geom::Point &new_pos, GdkEventMotion *event)
-{
-    _selection._pointDragged(old_pos, new_pos, event);
-}
-void SelectableControlPoint::_ungrabbedHandler()
-{
-    _selection._pointUngrabbed();
-}
+
 bool SelectableControlPoint::_clickedHandler(GdkEventButton *event)
 {
-    if (selected() && _selection._pointClicked(this, event)) return true;
     if (event->button != 1) return false;
     if (held_shift(*event)) {
         if (selected()) {
