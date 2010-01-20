@@ -116,6 +116,12 @@ bool CurveDragPoint::_clickedHandler(GdkEventButton *event)
     NodeList::iterator second = first.next();
     if (!second) return false;
 
+    // insert nodes on Ctrl+Alt+click
+    if (held_control(*event) && held_alt(*event)) {
+        _insertNode(false);
+        return true;
+    }
+
     if (held_shift(*event)) {
         // if both nodes of the segment are selected, deselect;
         // otherwise add to selection
@@ -138,18 +144,24 @@ bool CurveDragPoint::_clickedHandler(GdkEventButton *event)
 bool CurveDragPoint::_doubleclickedHandler(GdkEventButton *event)
 {
     if (event->button != 1 || !first || !first.next()) return false;
+    _insertNode(true);
+    return true;
+}
 
+void CurveDragPoint::_insertNode(bool take_selection)
+{
     // The purpose of this call is to make way for the just created node.
     // Otherwise clicks on the new node would only work after the user moves the mouse a bit.
     // PathManipulator will restore visibility when necessary.
     setVisible(false);
     NodeList::iterator inserted = _pm.subdivideSegment(first, _t);
-    _pm._selection.clear();
+    if (take_selection) {
+        _pm._selection.clear();
+    }
     _pm._selection.insert(inserted.ptr());
 
     signal_update.emit();
     _pm._commit(_("Add node"));
-    return true;
 }
 
 Glib::ustring CurveDragPoint::_getTip(unsigned state)

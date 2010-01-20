@@ -36,6 +36,7 @@ private:
     bool _clickedHandler(GdkEventButton *);
     bool _doubleclickedHandler(GdkEventButton *);
     void _ungrabbedHandler();
+    void _insertNode(bool take_selection);
     double _t;
     PathManipulator &_pm;
     NodeList::iterator first;
