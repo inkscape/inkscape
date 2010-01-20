@@ -95,6 +95,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _dragpoint(new CurveDragPoint(*this))
     , _observer(new PathManipulatorObserver(this))
     , _edit_transform(et)
+    , _num_selected(0)
     , _show_handles(true)
     , _show_outline(false)
     , _lpe_key(lpe_key)
@@ -219,6 +220,15 @@ void PathManipulator::selectSubpaths()
 void PathManipulator::shiftSelection(int dir)
 {
     if (dir == 0) return;
+    if (_num_selected == 0) {
+        // select the first node of the path.
+        SubpathList::iterator s = _subpaths.begin();
+        if (s == _subpaths.end()) return;
+        NodeList::iterator n = (*s)->begin();
+        if (n != (*s)->end())
+            _selection.insert(n.ptr());
+        return;
+    }
     // We cannot do any tricks here, like iterating in different directions based on
     // the sign and only setting the selection of nodes behind us, because it would break
     // for closed paths.
@@ -231,7 +241,7 @@ void PathManipulator::shiftSelection(int dir)
             _selection.erase(j.ptr());
             ++num;
         }
-        if (num == 0) continue; // should never happen!
+        if (num == 0) continue; // should never happen! zero-node subpaths are not allowed
 
         num = 0;
         // In closed subpath, shift the selection cyclically. In an open one,
@@ -283,7 +293,7 @@ void PathManipulator::invertSelectionInSubpaths()
 /** Insert a new node in the middle of each selected segment. */
 void PathManipulator::insertNodes()
 {
-    if (!_num_selected) return;
+    if (_num_selected < 2) return;
 
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
         for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
@@ -299,8 +309,8 @@ void PathManipulator::insertNodes()
 /** Replace contiguous selections of nodes in each subpath with one node. */
 void PathManipulator::weldNodes(NodeList::iterator preserve_pos)
 {
-    if (!_num_selected) return;
-    _dragpoint->setVisible(false);
+    if (_num_selected < 2) return;
+    hideDragPoint();
 
     bool pos_valid = preserve_pos;
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
@@ -375,8 +385,8 @@ void PathManipulator::weldNodes(NodeList::iterator preserve_pos)
 /** Remove nodes in the middle of selected segments. */
 void PathManipulator::weldSegments()
 {
-    if (!_num_selected) return;
-    _dragpoint->setVisible(false);
+    if (_num_selected < 2) return;
+    hideDragPoint();
 
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
         SubpathPtr sp = *i;
@@ -478,7 +488,7 @@ void PathManipulator::breakNodes()
  * in a way that attempts to preserve the original shape of the curve. */
 void PathManipulator::deleteNodes(bool keep_shape)
 {
-    if (!_num_selected) return;
+    if (_num_selected == 0) return;
     hideDragPoint();
     
     unsigned const samples_per_segment = 10;
@@ -656,7 +666,7 @@ void PathManipulator::reverseSubpaths()
 /** Make selected segments curves / lines. */
 void PathManipulator::setSegmentType(SegmentType type)
 {
-    if (!_num_selected) return;
+    if (_num_selected == 0) return;
     for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
         for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
             NodeList::iterator k = j.next();
@@ -729,7 +739,9 @@ void PathManipulator::setControlsTransform(Geom::Matrix const &tnew)
     _createGeometryFromControlPoints();
 }
 
-/** Hide the curve drag point until the next motion event. */
+/** Hide the curve drag point until the next motion event.
+ * This should be called at the beginning of every method that can delete nodes.
+ * Otherwise the invalidated iterator in the dragpoint can cause crashes. */
 void PathManipulator::hideDragPoint()
 {
     _dragpoint->setVisible(false);
