@@ -582,7 +582,6 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
         snapped_point.setPointerDistance(Geom::L2(pointer - (*i).getPoint()));
 
         Geom::Point result;
-        Geom::Point scale_metric(NR_HUGE, NR_HUGE);
 
         if (snapped_point.getSnapped()) {
             /* We snapped.  Find the transformation that describes where the snapped point has
@@ -623,8 +622,17 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                             // if scaling didn't occur in the other direction
                         }
                     }
+                    if (uniform) {
+                        if (fabs(result[0]) < fabs(result[1])) {
+                            result[1] = result[0];
+                        } else {
+                            result[0] = result[1];
+                        }
+                    }
                     // Compare the resulting scaling with the desired scaling
-                    scale_metric = result - transformation; // One or both of its components might be NR_HUGE
+                    Geom::Point scale_metric = Geom::abs(result - transformation); // One or both of its components might be NR_HUGE
+                    snapped_point.setSnapDistance(std::min(scale_metric[0], scale_metric[1]));
+                    snapped_point.setSecondSnapDistance(std::max(scale_metric[0], scale_metric[1]));
                     break;
                 }
                 case STRETCH:
@@ -656,32 +664,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             // When scaling, we're considering the best transformation in each direction separately. We will have a metric in each
             // direction, whereas for all other transformation we only a single one-dimensional metric. That's why we need to handle
             // the scaling metric differently
-            if (transformation_type == SCALE) {
-                for (int index = 0; index < 2; index++) {
-                    if (fabs(scale_metric[index]) < fabs(best_scale_metric[index])) {
-                        best_transformation[index] = result[index];
-                        best_scale_metric[index] = fabs(scale_metric[index]);
-                        // When scaling, we're considering the best transformation in each direction separately
-                        // Therefore two different snapped points might together make a single best transformation
-                        // We will however return only a single snapped point (e.g. to display the snapping indicator)
-                        best_snapped_point = snapped_point;
-                        // std::cout << "SEL ";
-                    } // else { std::cout << "    ";}
-                }
-                if (uniform) {
-                    if (best_scale_metric[0] < best_scale_metric[1]) {
-                        best_transformation[1] = best_transformation[0];
-                        best_scale_metric[1] = best_scale_metric[0];
-                    } else {
-                        best_transformation[0] = best_transformation[1];
-                        best_scale_metric[0] = best_scale_metric[1];
-                    }
-                }
-            } else { // For all transformations other than scaling
-                if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
-                    best_transformation = result;
-                    best_snapped_point = snapped_point;
-                }
+            if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
+                best_transformation = result;
+                best_snapped_point = snapped_point;
             }
         }
 
@@ -700,11 +685,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 }
             }
         }
-        best_metric = std::min(best_scale_metric[0], best_scale_metric[1]);
-    } else { // For all transformations other than scaling
-        best_metric = best_snapped_point.getSnapDistance();
     }
 
+    best_metric = best_snapped_point.getSnapDistance();
     best_snapped_point.setTransformation(best_transformation);
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301
