@@ -61,6 +61,7 @@ extensions = \
 	fractalize.py \
 	funcplot.py \
 	gears.py\
+	generate_voronoi.py \
 	gimp_xcf.py \
 	grid_cartesian.py \
 	grid_polar.py \
@@ -129,6 +130,7 @@ extensions = \
 	txt2svg.pl \
 	uniconv-ext.py \
 	uniconv_output.py \
+	voronoi.py \
 	web-set-att.py \
 	web-transmit-att.py \
 	whirl.py \
@@ -190,6 +192,7 @@ modules = \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
+	generate_voronoi.inx \
 	gimp_xcf.inx \
 	grid_cartesian.inx \
 	grid_polar.inx \
