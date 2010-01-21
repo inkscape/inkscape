@@ -532,8 +532,10 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
 #if ENABLE_LCMS
-    {
+    bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
+    if ( fromDisplay ) {
         Glib::ustring id = Inkscape::colorprofile_get_display_id( 0, 0 );
+
         bool enabled = false;
         if ( dtw->canvas->cms_key ) {
             *(dtw->canvas->cms_key) = id;
@@ -795,6 +797,11 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
         dtw->requestCanvasUpdate();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool("/options/displayprofile/enable", down);
+        if (down) {
+            dtw->setMessage (Inkscape::NORMAL_MESSAGE, _("Color-managed display is <b>enabled</b> in this window"));
+        } else {
+            dtw->setMessage (Inkscape::NORMAL_MESSAGE, _("Color-managed display is <b>disabled</b> in this window"));
+        }
     }
 #endif // ENABLE_LCMS
 }
@@ -905,8 +912,8 @@ SPDesktopWidget::shutdown()
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_NONE,
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
-                  "Do you want to save this file as an Inkscape SVG?"),
-                SP_DOCUMENT_NAME(doc),
+                  "Do you want to save this file as Inkscape SVG?"),
+                SP_DOCUMENT_NAME(doc)? SP_DOCUMENT_NAME(doc) : "Unnamed",
                 SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE);
             // fix for bug 1767940:
             GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), GTK_CAN_FOCUS);
