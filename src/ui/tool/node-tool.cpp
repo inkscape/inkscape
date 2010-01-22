@@ -377,10 +377,6 @@ void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Sh
     }
 }
 
-struct IsPath {
-    bool operator()(SPItem *i) const { return SP_IS_PATH(i); }
-};
-
 void ink_node_tool_selection_changed(InkNodeTool *nt, Inkscape::Selection *sel)
 {
     using namespace Inkscape::UI;
@@ -401,7 +397,9 @@ void ink_node_tool_selection_changed(InkNodeTool *nt, Inkscape::Selection *sel)
     bool something_set = false;
     for (std::set<ShapeRecord>::iterator i = shapes.begin(); i != shapes.end(); ++i) {
         ShapeRecord const &r = *i;
-        if (SP_IS_SHAPE(r.item) && !SP_IS_PATH(r.item)) {
+        if (SP_IS_SHAPE(r.item) ||
+            (SP_IS_PATH(r.item) && r.item->repr->attribute("inkscape:original-d") != NULL))
+        {
             nt->shape_editor->set_item(r.item, SH_KNOTHOLDER);
             something_set = true;
             break;
