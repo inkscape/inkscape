@@ -45,42 +45,42 @@ void sp_event_context_discard_delayed_snap_event(SPEventContext *ec);
 class DelayedSnapEvent
 {
 public:
-	enum DelayedSnapEventOrigin {
-		UNDEFINED_HANDLER = 0,
-		EVENTCONTEXT_ROOT_HANDLER,
-		EVENTCONTEXT_ITEM_HANDLER,
-		KNOT_HANDLER,
-		CONTROL_POINT_HANDLER
-	};
+    enum DelayedSnapEventOrigin {
+        UNDEFINED_HANDLER = 0,
+        EVENTCONTEXT_ROOT_HANDLER,
+        EVENTCONTEXT_ITEM_HANDLER,
+        KNOT_HANDLER,
+        CONTROL_POINT_HANDLER
+    };
 
-	DelayedSnapEvent(SPEventContext *event_context, SPItem* const item, SPKnot* knot, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
-	: _timer_id(0), _event(NULL), _item(item), _knot(knot), _origin(origin), _event_context(event_context)
-	{
-		Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-		double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
-		_timer_id = g_timeout_add(value, &sp_event_context_snap_watchdog_callback, this);
-		_event = gdk_event_copy((GdkEvent*) event);
-		((GdkEventMotion *)_event)->time = GDK_CURRENT_TIME;
-	}
+    DelayedSnapEvent(SPEventContext *event_context, SPItem* const item, SPKnot* knot, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
+    : _timer_id(0), _event(NULL), _item(item), _knot(knot), _origin(origin), _event_context(event_context)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
+        _timer_id = g_timeout_add(value, &sp_event_context_snap_watchdog_callback, this);
+        _event = gdk_event_copy((GdkEvent*) event);
+        ((GdkEventMotion *)_event)->time = GDK_CURRENT_TIME;
+    }
 
-	~DelayedSnapEvent()	{
-		if (_timer_id > 0) g_source_remove(_timer_id); // Kill the watchdog
-		if (_event != NULL) gdk_event_free(_event); // Remove the copy of the original event
-	}
+    ~DelayedSnapEvent()    {
+        if (_timer_id > 0) g_source_remove(_timer_id); // Kill the watchdog
+        if (_event != NULL) gdk_event_free(_event); // Remove the copy of the original event
+    }
 
-	SPEventContext* getEventContext() {return _event_context;}
-	DelayedSnapEventOrigin getOrigin() {return _origin;}
-	GdkEvent* getEvent() {return _event;}
-	SPItem* getItem() {return _item;}
-	SPKnot* getKnot() {return _knot;}
+    SPEventContext* getEventContext() {return _event_context;}
+    DelayedSnapEventOrigin getOrigin() {return _origin;}
+    GdkEvent* getEvent() {return _event;}
+    SPItem* getItem() {return _item;}
+    SPKnot* getKnot() {return _knot;}
 
 private:
-	guint _timer_id;
-	GdkEvent* _event;
-	SPItem* _item;
-	SPKnot* _knot;
-	DelayedSnapEventOrigin _origin;
-	SPEventContext* _event_context;
+    guint _timer_id;
+    GdkEvent* _event;
+    SPItem* _item;
+    SPKnot* _knot;
+    DelayedSnapEventOrigin _origin;
+    SPEventContext* _event_context;
 };
 
 void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item, SPKnot* const knot, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);

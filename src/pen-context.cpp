@@ -468,14 +468,14 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                     case SP_PEN_CONTEXT_POINT:
                         if (pc->npoints == 0) {
 
-                        	Geom::Point p;
+                            Geom::Point p;
                           if ((bevent.state & GDK_CONTROL_MASK) && (pc->polylines_only || pc->polylines_paraxial)) {
-                            	p = event_dt;
-                            	if (!(bevent.state & GDK_SHIFT_MASK)) {
-                            		SnapManager &m = desktop->namedview->snap_manager;
-                            		m.setup(desktop);
-									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
-                            	}
+                                p = event_dt;
+                                if (!(bevent.state & GDK_SHIFT_MASK)) {
+                                    SnapManager &m = desktop->namedview->snap_manager;
+                                    m.setup(desktop);
+                                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                                }
                               spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
                               ret = TRUE;
                               break;
@@ -970,7 +970,7 @@ static gint
 pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 {
 
-	gint ret = FALSE;
+    gint ret = FALSE;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
 

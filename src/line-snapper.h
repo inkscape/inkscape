@@ -26,14 +26,12 @@ public:
   LineSnapper(SnapManager *sm, Geom::Coord const d);
 
   void freeSnap(SnappedConstraints &sc,
-                   Inkscape::SnapPreferences::PointType const &t,
                    Inkscape::SnapCandidatePoint const &p,
                    Geom::OptRect const &bbox_to_snap,
                    std::vector<SPItem const *> const *it,
                    std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes) const;
 
   void constrainedSnap(SnappedConstraints &sc,
-                          Inkscape::SnapPreferences::PointType const &t,
                           Inkscape::SnapCandidatePoint const &p,
                           Geom::OptRect const &bbox_to_snap,
                           ConstraintLine const &c,

@@ -22,13 +22,12 @@ Inkscape::LineSnapper::LineSnapper(SnapManager *sm, Geom::Coord const d) : Snapp
 }
 
 void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
-                                                    Inkscape::SnapPreferences::PointType const &t,
                                                     Inkscape::SnapCandidatePoint const &p,
                                                     Geom::OptRect const &/*bbox_to_snap*/,
                                                     std::vector<SPItem const *> const */*it*/,
                                                     std::vector<Inkscape::SnapCandidatePoint> */*unselected_nodes*/) const
 {
-    if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(t)) ) {
+    if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(p.getSourceType())) ) {
         return;
     }
 
@@ -62,14 +61,13 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
 }
 
 void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
-                                               Inkscape::SnapPreferences::PointType const &t,
                                                Inkscape::SnapCandidatePoint const &p,
                                                Geom::OptRect const &/*bbox_to_snap*/,
                                                ConstraintLine const &c,
                                                std::vector<SPItem const *> const */*it*/) const
 
 {
-    if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(t) == false) {
+    if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false) {
         return;
     }
 

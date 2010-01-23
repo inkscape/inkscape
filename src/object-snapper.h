@@ -55,14 +55,12 @@ public:
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
     void freeSnap(SnappedConstraints &sc,
-                  Inkscape::SnapPreferences::PointType const &t,
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
                   std::vector<SPItem const *> const *it,
                   std::vector<SnapCandidatePoint> *unselected_nodes) const;
 
     void constrainedSnap(SnappedConstraints &sc,
-                  Inkscape::SnapPreferences::PointType const &t,
                   Inkscape::SnapCandidatePoint const &p,
                   Geom::OptRect const &bbox_to_snap,
                   ConstraintLine const &c,
@@ -83,32 +81,28 @@ private:
                        Geom::Matrix const additional_affine) const;
 
     void _snapNodes(SnappedConstraints &sc,
-                      Inkscape::SnapPreferences::PointType const &t,
                       Inkscape::SnapCandidatePoint const &p,
                       std::vector<SnapCandidatePoint> *unselected_nodes) const; // in desktop coordinates
 
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
-                     Inkscape::SnapPreferences::PointType const &t,
                      Geom::Point const &p,
                      Geom::Point const &guide_normal) const;
 
-    void _collectNodes(Inkscape::SnapPreferences::PointType const &t,
+    void _collectNodes(Inkscape::SnapSourceType const &t,
                   bool const &first_point) const;
 
     void _snapPaths(SnappedConstraints &sc,
-                      Inkscape::SnapPreferences::PointType const &t,
                       Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                       std::vector<Inkscape::SnapCandidatePoint> *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
 
     void _snapPathsConstrained(SnappedConstraints &sc,
-                 Inkscape::SnapPreferences::PointType const &t,
                  Inkscape::SnapCandidatePoint const &p, // in desktop coordinates
                  ConstraintLine const &c) const;
 
     bool isUnselectedNode(Geom::Point const &point, std::vector<Inkscape::SnapCandidatePoint> const *unselected_nodes) const;
 
-    void _collectPaths(Inkscape::SnapPreferences::PointType const &t,
+    void _collectPaths(Inkscape::SnapCandidatePoint const &p,
                   bool const &first_point) const;
 
     void _clear_paths() const;

@@ -558,7 +558,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt, Inkscape::SNAPSOURCE_HANDLE);
+                m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
                 rc->origin = from_2geom(button_dt);
             }
 

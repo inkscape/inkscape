@@ -176,7 +176,8 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
             case SNAPSOURCE_ROTATION_CENTER:
                 source_name = _("Object rotation center");
                 break;
-            case SNAPSOURCE_HANDLE:
+            case SNAPSOURCE_NODE_HANDLE:
+            case SNAPSOURCE_OTHER_HANDLE:
                 source_name = _("Handle");
                 break;
             case SNAPSOURCE_PATH_INTERSECTION:

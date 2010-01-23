@@ -253,13 +253,13 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 break;
             default:
                 /* Set first point of sequence */
-            	SnapManager &m = desktop->namedview->snap_manager;
-				m.setup(desktop);
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
 
                 if (bevent.state & GDK_CONTROL_MASK) {
                     if (!(bevent.state & GDK_SHIFT_MASK)) {
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
-                	  }
+                        m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                      }
                     spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
                     ret = true;
                     break;
@@ -270,15 +270,15 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 } else {
 
                     if (!(bevent.state & GDK_SHIFT_MASK)) {
-						// This is the first click of a new curve; deselect item so that
+                        // This is the first click of a new curve; deselect item so that
                         // this curve is not combined with it (unless it is drawn from its
                         // anchor, which is handled by the sibling branch above)
                         selection->clear();
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                        m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                        m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_NODE_HANDLE);
                     }
                 }
                 pc->sa = anchor;
@@ -295,9 +295,9 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 static gint
 pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
 {
-   	SPDesktop *const dt = pc->desktop;
+       SPDesktop *const dt = pc->desktop;
 
-	if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
+    if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
         // mouse was accidentally moved during Ctrl+click;
         // ignore the motion and create a single point
         pc->is_drawing = false;
@@ -356,9 +356,9 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
             /* We may be idle or already freehand */
             if ( mevent.state & GDK_BUTTON1_MASK && pc->is_drawing ) {
                 if (pc->state == SP_PENCIL_CONTEXT_IDLE) {
-                	sp_event_context_discard_delayed_snap_event(event_context);
+                    sp_event_context_discard_delayed_snap_event(event_context);
                 }
-            	pc->state = SP_PENCIL_CONTEXT_FREEHAND;
+                pc->state = SP_PENCIL_CONTEXT_FREEHAND;
 
                 if ( !pc->sa && !pc->green_anchor ) {
                     /* Create green anchor */
@@ -373,8 +373,8 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 }
 
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
-					spdc_add_freehand_point(pc, p, mevent.state);
-					ret = TRUE;
+                    spdc_add_freehand_point(pc, p, mevent.state);
+                    ret = TRUE;
                 }
 
                 if (anchor && !pc->anchor_statusbar) {

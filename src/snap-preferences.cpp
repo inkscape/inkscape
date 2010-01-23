@@ -15,24 +15,19 @@
 #include "inkscape.h"
 #include "snap-preferences.h"
 
-Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_NODE  = 0x1;
-Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_BBOX  = 0x2;
-Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_OTHER = 0x4;
-
-
 Inkscape::SnapPreferences::SnapPreferences() :
-	_include_item_center(false),
-	_intersectionGG(true),
-	_snap_to_grids(true),
-	_snap_to_guides(true),
+    _include_item_center(false),
+    _intersectionGG(true),
+    _snap_to_grids(true),
+    _snap_to_guides(true),
     _snap_enabled_globally(true),
     _snap_postponed_globally(false),
     _snap_to_itemnode(true), _snap_to_itempath(true),
-	_snap_to_bboxnode(true), _snap_to_bboxpath(true),
-	_snap_to_page_border(false),
-	_strict_snapping(true)
+    _snap_to_bboxnode(true), _snap_to_bboxpath(true),
+    _snap_to_page_border(false),
+    _strict_snapping(true)
 {
-	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE | SNAPPOINT_OTHER, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_OTHER_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /*
@@ -47,54 +42,54 @@ Inkscape::SnapPreferences::SnapPreferences() :
 
 void Inkscape::SnapPreferences::setSnapModeBBox(bool enabled)
 {
-	if (enabled) {
-        _snap_from |= Inkscape::SnapPreferences::SNAPPOINT_BBOX;
+    if (enabled) {
+        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_BBOX_CATEGORY);
     } else {
-        _snap_from &= ~Inkscape::SnapPreferences::SNAPPOINT_BBOX;
+        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_BBOX_CATEGORY);
     }
 }
 
 bool Inkscape::SnapPreferences::getSnapModeBBox() const
 {
-	return (_snap_from & Inkscape::SnapPreferences::SNAPPOINT_BBOX);
+    return (_snap_from & Inkscape::SNAPSOURCE_BBOX_CATEGORY);
 }
 
 void Inkscape::SnapPreferences::setSnapModeNode(bool enabled)
 {
-	if (enabled) {
-        _snap_from |= Inkscape::SnapPreferences::SNAPPOINT_NODE;
+    if (enabled) {
+        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_NODE_CATEGORY);
     } else {
-        _snap_from &= ~Inkscape::SnapPreferences::SNAPPOINT_NODE;
+        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_NODE_CATEGORY);
     }
 }
 
 bool Inkscape::SnapPreferences::getSnapModeNode() const
 {
-	return (_snap_from & Inkscape::SnapPreferences::SNAPPOINT_NODE);
+    return (_snap_from & Inkscape::SNAPSOURCE_NODE_CATEGORY);
 }
 
 bool Inkscape::SnapPreferences::getSnapModeBBoxOrNodes() const
 {
-	return (_snap_from & (Inkscape::SnapPreferences::SNAPPOINT_BBOX | Inkscape::SnapPreferences::SNAPPOINT_NODE) );
+    return (_snap_from & (Inkscape::SNAPSOURCE_BBOX_CATEGORY | Inkscape::SNAPSOURCE_NODE_CATEGORY) );
 }
 
 bool Inkscape::SnapPreferences::getSnapModeAny() const
 {
-	return (_snap_from != 0);
+    return (_snap_from != 0);
 }
 
 void Inkscape::SnapPreferences::setSnapModeGuide(bool enabled)
 {
-	if (enabled) {
-        _snap_from |= Inkscape::SnapPreferences::SNAPPOINT_OTHER;
+    if (enabled) {
+        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_OTHER_CATEGORY);
     } else {
-        _snap_from &= ~Inkscape::SnapPreferences::SNAPPOINT_OTHER;
+        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_OTHER_CATEGORY);
     }
 }
 
 bool Inkscape::SnapPreferences::getSnapModeGuide() const
 {
-	return (_snap_from & Inkscape::SnapPreferences::SNAPPOINT_OTHER);
+    return (_snap_from & Inkscape::SNAPSOURCE_OTHER_CATEGORY);
 }
 
 /**
@@ -102,12 +97,12 @@ bool Inkscape::SnapPreferences::getSnapModeGuide() const
  *  \param t Point type.
  *  \param s true to snap to this point type, otherwise false;
  */
-void Inkscape::SnapPreferences::setSnapFrom(PointType t, bool s)
+void Inkscape::SnapPreferences::setSnapFrom(Inkscape::SnapSourceType t, bool s)
 {
     if (s) {
-        _snap_from |= t;
+        _snap_from = SnapSourceType(_snap_from | t);
     } else {
-        _snap_from &= ~t;
+        _snap_from = SnapSourceType(_snap_from & ~t);
     }
 }
 
@@ -115,7 +110,7 @@ void Inkscape::SnapPreferences::setSnapFrom(PointType t, bool s)
  *  \param t Point type.
  *  \return true if snapper will snap this type of point, otherwise false.
  */
-bool Inkscape::SnapPreferences::getSnapFrom(PointType t) const
+bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
 {
     return (_snap_from & t);
 }

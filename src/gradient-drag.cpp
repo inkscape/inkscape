@@ -542,8 +542,8 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
     Geom::Point p = ppointer;
 
     SPDesktop *desktop = dragger->parent->desktop;
-	SnapManager &m = desktop->namedview->snap_manager;
-	double snap_dist = m.snapprefs.getObjectTolerance() / dragger->parent->desktop->current_zoom();
+    SnapManager &m = desktop->namedview->snap_manager;
+    double snap_dist = m.snapprefs.getObjectTolerance() / dragger->parent->desktop->current_zoom();
 
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
@@ -596,7 +596,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
 
     m.setup(desktop);
     if (!((state & GDK_SHIFT_MASK) || (state & GDK_CONTROL_MASK))) {
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_HANDLE));
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
@@ -659,12 +659,12 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 }
                 if (snap_vector) {
                     Inkscape::Snapper::ConstraintLine cl(dr_snap, p + *snap_vector - dr_snap);
-                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_OTHER, Inkscape::SnapCandidatePoint(p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE), cl);
+                    Inkscape::SnappedPoint s = m.constrainedSnap(Inkscape::SnapCandidatePoint(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE), cl);
                     if (s.getSnapped()) {
                         s.setTransformation(s.getPoint() - p);
                         sc.points.push_back(s);
                     } else {
-                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, false);
+                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, false);
                         dummy.setTransformation(*snap_vector);
                         sc.points.push_back(dummy);
                     }
@@ -672,7 +672,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
             }
         }
 
-        Inkscape::SnappedPoint bsp = m.findBestSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_HANDLE), sc, true); // snap indicator will be displayed if needed
+        Inkscape::SnappedPoint bsp = m.findBestSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE), sc, true); // snap indicator will be displayed if needed
 
         if (bsp.getSnapped()) {
             p += bsp.getTransformation();
@@ -897,45 +897,45 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
 
     if ( (state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK ) ) {
     // delete this knot from vector
-    	SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
+        SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
         gradient = sp_gradient_get_vector (gradient, false);
-    	if (gradient->vector.stops.size() > 2) { // 2 is the minimum
-        	SPStop *stop = NULL;
-        	switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge
-        	case POINT_LG_BEGIN:
-        	case POINT_RG_CENTER:
-        	    stop = sp_first_stop(gradient);
-    			{
-    			    SPStop *next = sp_next_stop (stop);
-        			if (next) {
-        				next->offset = 0;
-        				sp_repr_set_css_double (SP_OBJECT_REPR (next), "offset", 0);
-        			}
-        		}
-        	    break;
-        	case POINT_LG_END:
-        	case POINT_RG_R1:
-        	case POINT_RG_R2:
-        	    stop = sp_last_stop(gradient);
-        	    {
-    			    SPStop *prev = sp_prev_stop (stop, gradient);
-    			    if (prev) {
-    				    prev->offset = 1;
-    				    sp_repr_set_css_double (SP_OBJECT_REPR (prev), "offset", 1);
-    			    }
-    			}
-        	    break;
-        	case POINT_LG_MID:
-        	case POINT_RG_MID1:
-        	case POINT_RG_MID2:
-        	    stop = sp_get_stop_i(gradient, draggable->point_i);
-        	    break;
-        	}
+        if (gradient->vector.stops.size() > 2) { // 2 is the minimum
+            SPStop *stop = NULL;
+            switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge
+            case POINT_LG_BEGIN:
+            case POINT_RG_CENTER:
+                stop = sp_first_stop(gradient);
+                {
+                    SPStop *next = sp_next_stop (stop);
+                    if (next) {
+                        next->offset = 0;
+                        sp_repr_set_css_double (SP_OBJECT_REPR (next), "offset", 0);
+                    }
+                }
+                break;
+            case POINT_LG_END:
+            case POINT_RG_R1:
+            case POINT_RG_R2:
+                stop = sp_last_stop(gradient);
+                {
+                    SPStop *prev = sp_prev_stop (stop, gradient);
+                    if (prev) {
+                        prev->offset = 1;
+                        sp_repr_set_css_double (SP_OBJECT_REPR (prev), "offset", 1);
+                    }
+                }
+                break;
+            case POINT_LG_MID:
+            case POINT_RG_MID1:
+            case POINT_RG_MID2:
+                stop = sp_get_stop_i(gradient, draggable->point_i);
+                break;
+            }
 
-    		SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
-    		sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
-    				  _("Delete gradient stop"));
-    	}
+            SP_OBJECT_REPR(gradient)->removeChild(SP_OBJECT_REPR(stop));
+            sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT,
+                      _("Delete gradient stop"));
+        }
     } else {
     // select the dragger
         dragger->point_original = dragger->point;
@@ -1086,10 +1086,10 @@ Updates the statusbar tip of the dragger knot, based on its draggables
 void
 GrDragger::updateTip ()
 {
-	if (this->knot && this->knot->tip) {
-		g_free (this->knot->tip);
-		this->knot->tip = NULL;
-	}
+    if (this->knot && this->knot->tip) {
+        g_free (this->knot->tip);
+        this->knot->tip = NULL;
+    }
 
     if (g_slist_length (this->draggables) == 1) {
         GrDraggable *draggable = (GrDraggable *) this->draggables->data;

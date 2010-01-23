@@ -774,7 +774,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                         if (!cc->sid) {
                             // This is the first point, so just snap it to the grid
                             // as there's no other points to go off.
-                            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                            m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                         }
                         spcc_connector_set_initial_point(cc, p);
 
@@ -786,7 +786,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                 case SP_CONNECTOR_CONTEXT_DRAGGING:
                 {
                     // This is the second click of a connector creation.
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
 
                     spcc_connector_set_subsequent_point(cc, p);
                     spcc_connector_finish_segment(cc, p);
@@ -934,8 +934,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 gobble_motion_events(mevent.state);
                 // This is movement during a connector creation.
                 if ( cc->npoints > 0 ) {
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p,
-                            Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                     cc->selection->clear();
                     spcc_connector_set_subsequent_point(cc, p);
                     ret = TRUE;
@@ -947,8 +946,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 gobble_motion_events(GDK_BUTTON1_MASK);
                 g_assert( SP_IS_PATH(cc->clickeditem));
 
-                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p,
-                        Inkscape::SNAPSOURCE_HANDLE);
+                m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
 
                 // Update the hidden path
                 Geom::Matrix i2d = sp_item_i2d_affine(cc->clickeditem);
@@ -1023,7 +1021,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                 //case SP_CONNECTOR_CONTEXT_POINT:
                 case SP_CONNECTOR_CONTEXT_DRAGGING:
                 {
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
 
                     if (cc->within_tolerance)
                     {
@@ -1044,7 +1042,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                 }
                 case SP_CONNECTOR_CONTEXT_REROUTING:
                 {
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                     cc_connector_rerouting_finish(cc, &p);
 
                     sp_document_ensure_up_to_date(doc);
@@ -1068,7 +1066,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
                     if (!cc->within_tolerance)
                     {
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                        m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                         sp_knot_set_position(cc->selected_handle, p, 0);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
                         cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
@@ -1081,7 +1079,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
 
 
                 case SP_CONNECTOR_CONTEXT_NEWCONNPOINT:
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
 
                     sp_knot_set_position(cc->selected_handle, p, 0);
 
@@ -1184,7 +1182,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
 
                     if (!cc->within_tolerance)
                     {
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                        m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
                         sp_knot_set_position(cc->selected_handle, p, 0);
                         ConnectionPoint& cp = cc->connpthandles[cc->selected_handle];
                         cp.pos = p * sp_item_dt2i_affine(cc->active_shape);
@@ -1212,7 +1210,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
                     m.setup(desktop);
                     Geom::Point p = cc->selected_handle->pos;
 
-                    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+                    m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
 
                     sp_knot_set_position(cc->selected_handle, p, 0);
 

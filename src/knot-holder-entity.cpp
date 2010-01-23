@@ -95,7 +95,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
 
-    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE);
+    m.freeSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE);
 
     return s * i2d.inverse();
 }
@@ -119,12 +119,12 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
 
         // freeSnap() will try snapping point p. This will not take into account the constraint, which
         // is therefore to be enforced after snap_knot_position_constrained() has finished
-        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE);
+        m.freeSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE);
     } else {
         // constrainedSnap() will first project the point p onto the constraint line and then try to snap along that line.
         // This way the constraint is already enforced, no need to worry about that later on
         Inkscape::Snapper::ConstraintLine transformed_constraint = Inkscape::Snapper::ConstraintLine(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
-        m.constrainedSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE, transformed_constraint);
+        m.constrainedSnapReturnByRef(s, Inkscape::SNAPSOURCE_NODE_HANDLE, transformed_constraint);
     }
 
     return s * i2d.inverse();

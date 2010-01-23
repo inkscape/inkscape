@@ -847,7 +847,6 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
 {
     // For a note on how snapping is implemented in Inkscape, see snap.h.
     SnapManager &sm = _desktop->namedview->snap_manager;
-    Inkscape::SnapPreferences::PointType t = Inkscape::SnapPreferences::SNAPPOINT_NODE;
     bool snap = sm.someSnapperMightSnap();
     std::vector<Inkscape::SnapCandidatePoint> unselected;
     if (snap) {
@@ -882,8 +881,8 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
             // TODO: combine these two branches by modifying snap.h / snap.cpp
             if (snap) {
                 Inkscape::SnappedPoint fp, bp;
-                fp = sm.constrainedSnap(t, Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_front);
-                bp = sm.constrainedSnap(t, Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_back);
+                fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_front);
+                bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_back);
 
                 if (fp.isOtherSnapBetter(bp, false)) {
                     bp.getPoint(new_pos);
@@ -906,8 +905,8 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
                 Inkscape::SnappedPoint fp, bp;
                 Inkscape::Snapper::ConstraintLine line_x(origin, Geom::Point(1, 0));
                 Inkscape::Snapper::ConstraintLine line_y(origin, Geom::Point(0, 1));
-                fp = sm.constrainedSnap(t, Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_x);
-                bp = sm.constrainedSnap(t, Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_y);
+                fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_x);
+                bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_y);
 
                 if (fp.isOtherSnapBetter(bp, false)) {
                     fp = bp;
@@ -921,7 +920,7 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
             }
         }
     } else if (snap) {
-        sm.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, new_pos, _snapSourceType());
+        sm.freeSnapReturnByRef(new_pos, _snapSourceType());
     }
 }
 

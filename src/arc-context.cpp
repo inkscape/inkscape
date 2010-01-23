@@ -244,9 +244,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 /* Snap center */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                Geom::Point pt2g = to_2geom(ac->center);
-                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
-                ac->center = from_2geom(pt2g);
+                m.freeSnapReturnByRef(ac->center, Inkscape::SNAPSOURCE_NODE_HANDLE);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |

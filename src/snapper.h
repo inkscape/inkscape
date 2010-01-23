@@ -58,7 +58,6 @@ public:
     bool getSnapVisibleOnly() const {return _snap_visible_only;}
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
-                          SnapPreferences::PointType const &/*t*/,
                           Inkscape::SnapCandidatePoint const &/*p*/,
                           Geom::OptRect const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
@@ -102,7 +101,6 @@ public:
     };
 
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
-                                 SnapPreferences::PointType const &/*t*/,
                                  Inkscape::SnapCandidatePoint const &/*p*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,

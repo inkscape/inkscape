@@ -98,66 +98,56 @@ public:
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
-    void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-                                Geom::Point &p,
+    void freeSnapReturnByRef(Geom::Point &p,
                                 Inkscape::SnapSourceType const source_type,
                                 Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-    Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType const point_type,
-                                    Inkscape::SnapCandidatePoint const &p,
+    Inkscape::SnappedPoint freeSnap(Inkscape::SnapCandidatePoint const &p,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
 
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
 
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a
     // point, by overwriting p, if snapping has occurred; otherwise p is untouched
-    void constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-                                    Geom::Point &p,
+    void constrainedSnapReturnByRef(Geom::Point &p,
                                     Inkscape::SnapSourceType const source_type,
                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-    Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType const point_type,
-                                           Inkscape::SnapCandidatePoint const &p,
+    Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapCandidatePoint const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
     void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const;
     void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
 
-    Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
-                                               std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint freeSnapTranslation(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
                                                Geom::Point const &tr) const;
 
-    Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
-                                                      std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint constrainedSnapTranslation(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                       Geom::Point const &pointer,
                                                       Inkscape::Snapper::ConstraintLine const &constraint,
                                                       Geom::Point const &tr) const;
 
-    Inkscape::SnappedPoint freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
-                                         std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint freeSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                          Geom::Point const &pointer,
                                          Geom::Scale const &s,
                                          Geom::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
-                                                std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint constrainedSnapScale(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                 Geom::Point const &pointer,
                                                 Geom::Scale const &s,
                                                 Geom::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
-                                                  std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint constrainedSnapStretch(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                   Geom::Point const &pointer,
                                                   Geom::Coord const &s,
                                                   Geom::Point const &o,
                                                   Geom::Dim2 d,
                                                   bool uniform) const;
 
-    Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
-                                               std::vector<Inkscape::SnapCandidatePoint> const &p,
+    Inkscape::SnappedPoint constrainedSnapSkew(std::vector<Inkscape::SnapCandidatePoint> const &p,
                                                Geom::Point const &pointer,
                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
@@ -193,8 +183,7 @@ private:
     //correctly then in other cases the int is being used for Inkscape::SnapSourceType, or for both. How to make
     //this type safe?
 
-    Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
-                                            std::vector<Inkscape::SnapCandidatePoint> const &points,
+    Inkscape::SnappedPoint _snapTransformed(std::vector<Inkscape::SnapCandidatePoint> const &points,
                                             Geom::Point const &pointer,
                                             bool constrained,
                                             Inkscape::Snapper::ConstraintLine const &constraint,
@@ -211,7 +200,7 @@ private:
                                             Geom::Dim2 const dim,
                                             bool const uniform) const;
 
-    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Inkscape::SnapCandidatePoint const &p) const;
+    void _displaySnapsource(Inkscape::SnapCandidatePoint const &p) const;
 };
 
 #endif /* !SEEN_SNAP_H */
