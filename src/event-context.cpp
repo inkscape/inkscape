@@ -934,25 +934,21 @@ gint sp_event_context_item_handler(SPEventContext * event_context,
         SPItem * item, GdkEvent * event) {
     switch (event->type) {
     case GDK_MOTION_NOTIFY:
-        sp_event_context_snap_delay_handler(event_context, item, NULL,
-                (GdkEventMotion *) event,
-                DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
+        sp_event_context_snap_delay_handler(event_context, item, NULL, (GdkEventMotion *) event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
         break;
     case GDK_BUTTON_RELEASE:
         if (event_context->_delayed_snap_event) {
             // If we have any pending snapping action, then invoke it now
-            sp_event_context_snap_watchdog_callback(
-                    event_context->_delayed_snap_event);
+            sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event);
         }
         break;
-        /*case GDK_BUTTON_PRESS:
-         case GDK_2BUTTON_PRESS:
-         case GDK_3BUTTON_PRESS:
-         // Snapping will be on hold if we're moving the mouse at high speeds. When starting
-         // drawing a new shape we really should snap though.
-         event_context->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
-         break;
-         */
+    case GDK_BUTTON_PRESS:
+    case GDK_2BUTTON_PRESS:
+    case GDK_3BUTTON_PRESS:
+        // Snapping will be on hold if we're moving the mouse at high speeds. When starting
+        // drawing a new shape we really should snap though.
+        event_context->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+        break;
     default:
         break;
     }

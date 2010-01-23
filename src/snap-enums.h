@@ -64,7 +64,7 @@ enum SnapSourceType {
     SNAPSOURCE_CORNER, // of image or of rectangle
     SNAPSOURCE_CONVEX_HULL_CORNER,
     SNAPSOURCE_ELLIPSE_QUADRANT_POINT,
-    SNAPSOURCE_NODE_HANDLE,
+    SNAPSOURCE_NODE_HANDLE, // eg. nodes in the path editor, handles of stars or rectangles, etc. (tied to a stroke)
     //-------------------------------------------------------------------
     // Other points (e.g. guides, gradient knots) will snap to both bounding boxes and nodes
     SNAPSOURCE_OTHER_CATEGORY = 1024, // will be used as a flag and must therefore be a power of two
@@ -74,7 +74,7 @@ enum SnapSourceType {
     SNAPSOURCE_GUIDE,
     SNAPSOURCE_GUIDE_ORIGIN,
     SNAPSOURCE_TEXT_BASELINE,
-    SNAPSOURCE_OTHER_HANDLE
+    SNAPSOURCE_OTHER_HANDLE // eg. the handle of a gradient of a connector (ie not being tied to a stroke)
 };
 
 }
