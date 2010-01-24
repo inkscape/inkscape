@@ -317,8 +317,6 @@ src/lpe-tool-context.cpp
 src/main-cmdlineact.cpp
 src/main.cpp
 src/menus-skeleton.h
-src/node-context.cpp
-src/nodepath.cpp
 src/object-edit.cpp
 src/path-chemistry.cpp
 src/pen-context.cpp
@@ -352,12 +350,9 @@ src/sp-text.cpp
 src/sp-tref.cpp
 src/sp-tspan.cpp
 src/sp-use.cpp
-<<<<<<< TREE
 src/spiral-context.cpp
 src/splivarot.cpp
-=======
 src/spray-context.cpp
->>>>>>> MERGE-SOURCE
 src/star-context.cpp
 src/text-chemistry.cpp
 src/text-context.cpp
