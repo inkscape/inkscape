@@ -30,6 +30,7 @@ tutorial_DATA = \
     tutorial-advanced.de.svg \
     tutorial-advanced.es.svg \
     tutorial-advanced.eu.svg \
+    tutorial-advanced.fa.svg \
     tutorial-advanced.fr.svg \
     tutorial-advanced.hu.svg \
     tutorial-advanced.it.svg \
@@ -52,6 +53,7 @@ tutorial_DATA = \
     tutorial-basic.eo.svg \
     tutorial-basic.es.svg \
     tutorial-basic.eu.svg \
+    tutorial-basic.fa.svg \
     tutorial-basic.fr.svg \
     tutorial-basic.hu.svg \
     tutorial-basic.it.svg \
@@ -73,6 +75,7 @@ tutorial_DATA = \
     tutorial-calligraphy.de.svg \
     tutorial-calligraphy.es.svg \
     tutorial-calligraphy.eu.svg \
+    tutorial-calligraphy.fa.svg \
     tutorial-calligraphy.fr.svg \
     tutorial-calligraphy.hu.svg \
     tutorial-calligraphy.ja.svg \
@@ -88,6 +91,7 @@ tutorial_DATA = \
     tutorial-elements.de.svg \
     tutorial-elements.es.svg \
     tutorial-elements.eu.svg \
+    tutorial-elements.fa.svg \
     tutorial-elements.fr.svg \
     tutorial-elements.hu.svg \
     tutorial-elements.ja.svg \
@@ -110,6 +114,7 @@ tutorial_DATA = \
     tutorial-shapes.de.svg \
     tutorial-shapes.es.svg \
     tutorial-shapes.eu.svg \
+    tutorial-shapes.fa.svg \
     tutorial-shapes.fr.svg \
     tutorial-shapes.hu.svg \
     tutorial-shapes.it.svg \
@@ -128,6 +133,7 @@ tutorial_DATA = \
     tutorial-tips.de.svg \
     tutorial-tips.es.svg \
     tutorial-tips.eu.svg \
+    tutorial-tips.fa.svg \
     tutorial-tips.fr.svg \
     tutorial-tips.hu.svg \
     tutorial-tips.ja.svg \
@@ -144,6 +150,7 @@ tutorial_DATA = \
     tutorial-tracing.de.svg \
     tutorial-tracing.es.svg \
     tutorial-tracing.eu.svg \
+    tutorial-tracing.fa.svg \
     tutorial-tracing.fr.svg \
     tutorial-tracing.hu.svg \
     tutorial-tracing.ja.svg \
