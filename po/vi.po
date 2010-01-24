@@ -20289,9 +20289,8 @@ msgstr "tutorial-calligraphy.vi.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1881
-#, fuzzy
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-tips.vi.svg"
+msgstr "tutorial-interpolate.vi.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1885

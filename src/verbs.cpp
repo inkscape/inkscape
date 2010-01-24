@@ -1855,8 +1855,8 @@ TutorialVerb::perform(SPAction */*action*/, void *data, void */*pdata*/)
 {
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_TUTORIAL_BASIC:
-            /* TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
-               then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
+            /* TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
+               then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
                code); otherwise leave as "tutorial-basic.svg". */
             sp_help_open_tutorial(NULL, (gpointer)_("tutorial-basic.svg"));
             break;
@@ -1875,6 +1875,10 @@ TutorialVerb::perform(SPAction */*action*/, void *data, void */*pdata*/)
         case SP_VERB_TUTORIAL_CALLIGRAPHY:
             // TRANSLATORS: See "tutorial-basic.svg" comment.
             sp_help_open_tutorial(NULL, (gpointer)_("tutorial-calligraphy.svg"));
+            break;
+        case SP_VERB_TUTORIAL_INTERPOLATE:
+            // TRANSLATORS: See "tutorial-basic.svg" comment.
+            sp_help_open_tutorial(NULL, (gpointer)_("tutorial-interpolate.svg"));
             break;
         case SP_VERB_TUTORIAL_DESIGN:
             // TRANSLATORS: See "tutorial-basic.svg" comment.
@@ -2667,6 +2671,8 @@ Verb *Verb::_base_verbs[] = {
                      N_("Using bitmap tracing"), NULL/*"tutorial_tracing"*/),
     new TutorialVerb(SP_VERB_TUTORIAL_CALLIGRAPHY, "TutorialsCalligraphy", N_("Inkscape: _Calligraphy"),
                      N_("Using the Calligraphy pen tool"), NULL),
+    new TutorialVerb(SP_VERB_TUTORIAL_INTERPOLATE, "TutorialsInterpolate", N_("Inkscape: _Interpolate"),
+                     N_("Using the interpolate extension"), NULL/*"tutorial_interpolate"*/),
     new TutorialVerb(SP_VERB_TUTORIAL_DESIGN, "TutorialsDesign", N_("_Elements of Design"),
                      N_("Principles of design in the tutorial form"), NULL/*"tutorial_design"*/),
     new TutorialVerb(SP_VERB_TUTORIAL_TIPS, "TutorialsTips", N_("_Tips and Tricks"),
