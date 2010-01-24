@@ -549,7 +549,7 @@ unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::ite
     double const t_step = 1.0 / samples_per_segment;
 
     unsigned del_len = 0;
-    for (NodeList::iterator i = start; i != end; ++i) {
+    for (NodeList::iterator i = start; i != end; i = i.next()) {
         ++del_len;
     }
     if (del_len == 0) return 0;
