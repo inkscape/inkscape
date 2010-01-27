@@ -1,6 +1,6 @@
 ;Language: French (1036, CP1252)
 ;By matiphas@free.fr, Nicolas Dufour <nicoduf@yahoo.fr>
-${LangFileString} CaptionDescription "Editeur vectoriel SVG libre"
+${LangFileString} CaptionDescription "Éditeur vectoriel SVG libre"
 ${LangFileString} LICENSE_BOTTOM_TEXT "$(^Name) est diffusé sous la licence publique générale (GPL) GNU. La licence est fournie ici pour information uniquement. $_CLICK"
 ${LangFileString} DIFFERENT_USER "Inkscape a déjà été installé par l'utilisateur $0.$\r$\nSi vous continuez, l'installation pourrait devenir défectueuse!$\r$\nVeuillez, svp, vous connecter en tant que $0 et essayer de nouveau."
 ${LangFileString} WANT_UNINSTALL_BEFORE "$R1 a déjà été installé. $\nVoulez-vous supprimer la version précédente avant l'installation d' $(^Name) ?"
@@ -62,6 +62,7 @@ ${LangFileString} lng_es "Espagnol"
 ${LangFileString} lng_es_MX "Espagnol (Mexique)"
 ${LangFileString} lng_et "Estonien"
 ${LangFileString} lng_eu "Basque"
+${LangFileString} lng_fa "Farsi"
 ${LangFileString} lng_fi "Finnois"
 ${LangFileString} lng_fr "Français"
 ${LangFileString} lng_he "Hébreu"
