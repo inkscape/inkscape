@@ -944,7 +944,9 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>  
     <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>  
     <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>  
+    <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
+    <xsl:if test="@rx and not(@ry)"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
+    <xsl:if test="@ry and not(@rx)"><xsl:attribute name="RadiusX"><xsl:value-of select="@ry" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
     <xsl:apply-templates mode="template_stroke" select="." />
