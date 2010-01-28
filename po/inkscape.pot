@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-24 14:52+0100\n"
+"POT-Creation-Date: 2010-01-28 07:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -801,7 +801,6 @@ msgstr ""
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:19 ../src/helper/units.cpp:37
-#: ../src/live_effects/lpe-path_length.cpp:27
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Unit"
 msgstr ""
@@ -1351,7 +1350,6 @@ msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1640
 #: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../src/widgets/toolbox.cpp:4678
@@ -1550,7 +1548,6 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 msgid "Angle"
 msgstr ""
 
@@ -1970,7 +1967,6 @@ msgid "Rotation, degrees"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#: ../src/live_effects/lpe-path_length.cpp:25
 msgid "Scaling factor"
 msgstr ""
 
@@ -6790,8 +6786,6 @@ msgid "New element node..."
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:1333
-#: ../src/ui/dialog/whiteboard-connect.cpp:119
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:104
 msgid "Cancel"
 msgstr ""
 
@@ -7409,11 +7403,8 @@ msgstr ""
 msgid "Adaptive Threshold"
 msgstr ""
 
-#. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:98
-#: ../src/live_effects/lpe-offset.cpp:30
-#: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr ""
@@ -9302,47 +9293,6 @@ msgstr ""
 msgid "Failed to execute helper program (%s)"
 msgstr ""
 
-#: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
-#: ../src/jabber_whiteboard/session-file-selector.cpp:24
-msgid "_Write session file:"
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2630
-msgid "Shared SVG whiteboard tool."
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2631
-msgid "Based on the Pedro XMPP client"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:60
-msgid "Select a location and filename"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:62
-msgid "Set filename"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:308
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:310
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:314
-msgid "Accept invitation"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:315
-msgid "Decline invitation"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:370
-msgid "Inkboard session (%1 to %2)"
-msgstr ""
-
 #: ../src/knot.cpp:431
 msgid "Node or handle drag canceled."
 msgstr ""
@@ -9908,38 +9858,6 @@ msgstr ""
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-parallel.cpp:47
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Length left"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-msgid "Specifies the left end of the bisector"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-parallel.cpp:48
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Length right"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-msgid "Specifies the right end of the bisector"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:59
-msgid "Adjust the \"left\" end of the bisector"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:60
-msgid "Adjust the \"right\" of the bisector"
-msgstr ""
-
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
 msgstr ""
@@ -9969,55 +9887,6 @@ msgstr ""
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr ""
 
-#: ../src/live_effects/lpe-boolops.cpp:23
-msgid "Null"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:24
-msgid "Intersect"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:25
-msgid "Subtract A-B"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:26
-msgid "Identity A"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:27
-msgid "Subtract B-A"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:28
-msgid "Identity B"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:29 ../src/splivarot.cpp:96
-msgid "Exclusion"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:30 ../src/splivarot.cpp:66
-#: ../src/splivarot.cpp:72
-msgid "Union"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "2nd path"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "Path to which the original path will be boolop'ed."
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Boolop type"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Determines which kind of boolop will be performed."
-msgstr ""
-
 #: ../src/live_effects/lpe-constructgrid.cpp:26
 msgid "Size X"
 msgstr ""
@@ -10032,46 +9901,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "The size of the grid in Y direction."
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Starting"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Angle of the first copy"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Rotation angle"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Angle between two successive copies"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies of the original path"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin of the rotation"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Adjust the starting angle"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Adjust the rotation angle"
 msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
@@ -10144,110 +9973,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Elliptic Pen"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:61
-msgid "Thick-Thin strokes (fast)"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:62
-msgid "Thick-Thin strokes (slow)"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:67
-msgid "Sharp"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:68
-msgid "Round"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Method"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Choose pen type"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Pen width"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Maximal stroke width"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Pen roundness"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Min/Max width ratio"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "angle"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr ""
-
-#. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5491
-msgid "Start"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-msgid "Choose start capping type"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5504
-msgid "End"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-msgid "Choose end capping type"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Grow for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Make the stroke thiner near it's start"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Fade for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Make the stroke thiner near it's end"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Round ends"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Strokes end with a round end"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "Capping"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "left capping"
 msgstr ""
 
 #: ../src/live_effects/lpe-envelope.cpp:33
@@ -10398,143 +10123,6 @@ msgstr ""
 msgid "Change knot crossing"
 msgstr ""
 
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-lattice.cpp:46
-msgid "Control handle 0"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:47
-msgid "Control handle 1"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:48
-msgid "Control handle 2"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:49
-msgid "Control handle 3"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:50
-msgid "Control handle 4"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:51
-msgid "Control handle 5"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:52
-msgid "Control handle 6"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:53
-msgid "Control handle 7"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:54
-msgid "Control handle 8"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:55
-msgid "Control handle 9"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:56
-msgid "Control handle 10"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:57
-msgid "Control handle 11"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:58
-msgid "Control handle 12"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:59
-msgid "Control handle 13"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:60
-msgid "Control handle 14"
-msgstr ""
-
-#: ../src/live_effects/lpe-lattice.cpp:61
-msgid "Control handle 15"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5832
-msgid "Closed"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5834
-msgid "Open start"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:29 ../src/widgets/toolbox.cpp:5836
-msgid "Open end"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:30 ../src/widgets/toolbox.cpp:5838
-msgid "Open both"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "End type"
-msgstr ""
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "Determines on which side the line or line segment is infinite."
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Discard original path?"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Reflection line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr ""
-
-#: ../src/live_effects/lpe-offset.cpp:30
-msgid "Handle to control the distance of the offset from the curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:46
-msgid "Adjust the offset"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:47
-msgid "Specifies the left end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:48
-msgid "Specifies the right end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:56
-msgid "Adjust the \"left\" end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:57
-msgid "Adjust the \"right\" end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Display unit"
-msgstr ""
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Print unit after path length"
-msgstr ""
-
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
 msgstr ""
@@ -10590,69 +10178,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:113
-msgid "Adjust the bisector's \"left\" end"
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:114
-msgid "Adjust the bisector's \"right\" end"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale x"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale factor in x direction"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Scale y"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Scale factor in y direction"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset x"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset in x direction"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "Offset y"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "Offset in y direction"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:46
-msgid "Uses XY plane?"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:46
-msgid ""
-"If true, put the path on the left side of an imaginary box, otherwise on the "
-"right side"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:55
-msgid "Adjust the origin"
-msgstr ""
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "Iterations"
-msgstr ""
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "recursivity"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
@@ -10832,6 +10357,14 @@ msgstr ""
 msgid "Both"
 msgstr ""
 
+#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5491
+msgid "Start"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5504
+msgid "End"
+msgstr ""
+
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Mark distance"
 msgstr ""
@@ -10890,15 +10423,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "Float parameter"
-msgstr ""
-
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "just a real number like 1.4!"
 msgstr ""
 
 #. initialise your parameters here:
@@ -11031,60 +10555,6 @@ msgstr ""
 msgid "max curvature"
 msgstr ""
 
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-msgid "Additional angle between tangent and curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location along curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid ""
-"Location of the point of attachment along the curve (between 0.0 and number-"
-"of-segments)"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Specifies the left end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Specifies the right end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:68
-msgid "Adjust the point of attachment of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-msgid "Adjust the \"left\" end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-msgid "Adjust the \"right\" end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-msgid "Stack step"
-msgstr ""
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-msgid "point param"
-msgstr ""
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-msgid "path param"
-msgstr ""
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Label"
-msgstr ""
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Text label attached to the path"
-msgstr ""
-
 #: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "Nb of generations"
 msgstr ""
@@ -11189,10 +10659,6 @@ msgstr ""
 
 #: ../src/live_effects/parameter/unit.cpp:77
 msgid "Change unit parameter"
-msgstr ""
-
-#: ../src/lpe-tool-context.cpp:267
-msgid "Choose a construction tool from the toolbar."
 msgstr ""
 
 #: ../src/main-cmdlineact.cpp:49
@@ -12933,12 +12399,20 @@ msgstr ""
 msgid "Create spiral"
 msgstr ""
 
+#: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
+msgid "Union"
+msgstr ""
+
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
 msgstr ""
 
 #: ../src/splivarot.cpp:84 ../src/splivarot.cpp:90
 msgid "Difference"
+msgstr ""
+
+#: ../src/splivarot.cpp:96
+msgid "Exclusion"
 msgstr ""
 
 #: ../src/splivarot.cpp:101
@@ -16600,6 +16074,10 @@ msgid "Estonian (et)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1079
+msgid "Farsi (fa)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1079
 msgid "Finnish (fi)"
 msgstr ""
 
@@ -17377,67 +16855,6 @@ msgstr ""
 msgid "Errors"
 msgstr ""
 
-#. Dialog organization
-#: ../src/ui/dialog/session-player.cpp:70
-msgid "Session file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:71
-msgid "Playback controls"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:72
-msgid "Message information"
-msgstr ""
-
-#. Active session file display
-#. fixme: Does this mean the active file for the session, or the file for the active session?
-#. Please indicate which with a TRANSLATORS comment.
-#: ../src/ui/dialog/session-player.cpp:82
-msgid "Active session file:"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:83
-msgid "Delay (milliseconds):"
-msgstr ""
-
-#. Unload/load buttons
-#: ../src/ui/dialog/session-player.cpp:91
-msgid "Close file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:92
-msgid "Open new file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:93
-msgid "Set delay"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:127
-msgid "Rewind"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:128
-msgid "Go back one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:129
-msgid "Pause"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:130
-msgid "Go forward one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:131
-msgid "Play"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:166
-msgid "Open session file"
-msgstr ""
-
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
 msgid "Set SVG Font attribute"
 msgstr ""
@@ -18096,116 +17513,6 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:846
 msgid "Edit transformation matrix"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Use SSL"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Register"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:78
-msgid "_Server:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:79
-msgid "_Username:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:80
-msgid "_Password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:81
-msgid "P_ort:"
-msgstr ""
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:118
-msgid "Connect"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:149
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:176
-#: ../src/ui/dialog/whiteboard-connect.cpp:222
-#: ../src/ui/dialog/whiteboard-connect.cpp:260
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:215
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:227
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:232
-#: ../src/ui/dialog/whiteboard-connect.cpp:270
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:238
-#: ../src/ui/dialog/whiteboard-connect.cpp:276
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:265
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
-msgid "Chatroom _name:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
-msgid "Chatroom _server:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-msgid "Chatroom _password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:79
-msgid "Chatroom _handle:"
-msgstr ""
-
-#. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
-msgid "Connect to chatroom"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:138
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
-msgid "_User's Jabber ID:"
-msgstr ""
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
-msgid "_Invite user"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-msgid "_Cancel"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
-msgid "Buddy List"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
-msgid "Sending whiteboard invitation to <b>%1</b>"
 msgstr ""
 
 #: ../src/ui/tool/curve-drag-point.cpp:107
@@ -23100,6 +22407,22 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5646
 msgid "Assign"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:5832
+msgid "Closed"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:5834
+msgid "Open start"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:5836
+msgid "Open end"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:5838
+msgid "Open both"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5897
