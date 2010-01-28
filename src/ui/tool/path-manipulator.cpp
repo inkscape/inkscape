@@ -1245,6 +1245,9 @@ bool PathManipulator::_handleClicked(Handle *h, GdkEventButton *event)
 
 void PathManipulator::_selectionChanged(SelectableControlPoint *p, bool selected)
 {
+    if (selected) ++_num_selected;
+    else --_num_selected;
+
     // don't do anything if we do not show handles
     if (!_show_handles) return;
 
@@ -1279,9 +1282,6 @@ void PathManipulator::_selectionChanged(SelectableControlPoint *p, bool selected
             }
         }
     }
-
-    if (selected) ++_num_selected;
-    else --_num_selected;
 }
 
 /** Removes all nodes belonging to this manipulator from the control pont selection */
