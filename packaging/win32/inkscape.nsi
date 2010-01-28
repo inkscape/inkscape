@@ -1,4 +1,4 @@
-; Instructions for compilers {{{1
+; Instructions for compilers
 ; ==========================
 ; This file generates the Inkscape installer, which is currently the
 ; preferred deployment method on Windows.
@@ -1002,4 +1002,4 @@ SectionEnd ; Uninstall }}}
 ; }}}
 
 ; This file has been optimised for use in Vim with folding.
-; (If you can't cope, :set nofoldenable) vim:foldenable
+; (If you can't cope, :set nofoldenable) vim:fen:fdm=marker
