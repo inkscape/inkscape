@@ -289,7 +289,6 @@ src/live_effects/parameter/random.cpp
 src/live_effects/parameter/text.cpp
 src/live_effects/parameter/unit.cpp
 src/live_effects/parameter/vector.cpp
-src/lpe-tool-context.cpp
 src/main-cmdlineact.cpp
 src/main.cpp
 src/menus-skeleton.h
