@@ -36,8 +36,12 @@ struct ShapeRecord :
     ShapeRole role;
     Glib::ustring lpe_key; // name of LPE shape param being edited
 
-    inline bool operator==(ShapeRecord const &o) const { return item == o.item; }
-    inline bool operator<(ShapeRecord const &o) const { return item < o.item; }
+    inline bool operator==(ShapeRecord const &o) const {
+        return item == o.item && lpe_key == o.lpe_key;
+    }
+    inline bool operator<(ShapeRecord const &o) const {
+        return item == o.item ? (lpe_key < o.lpe_key) : (item < o.item);
+    }
 };
 
 } // namespace UI
