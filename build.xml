@@ -495,7 +495,7 @@
            ${devlibs}/bin/libxslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
-           ${devlibs}/lib/iconv.lib
+           -liconv
            ${pcl.ImageMagick++}
            ${pcl.fontconfig} ${pcl.freetype2}
            -lssl -lcrypto
