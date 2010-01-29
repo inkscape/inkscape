@@ -1,7 +1,7 @@
 # Japanese translation of Inkscape
 # This file is distributed under the same license as the Inkscape package.
 #
-# Copyright (C) 2000-2009 Free Software Foundation, Inc.
+# Copyright (C) 2000-2010 Free Software Foundation, Inc.
 # Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000-2001.
 # Mitsuru Oka <oka@debian.or.jp>, 2001.
@@ -11,14 +11,14 @@
 # shivaken <shivaken@owls-nest.net>, 2004, 2005.
 # KATSURAGAWA Naoki <naopon@private.email.ne.jp>, 2006.
 # Kenji Inoue <kenz@oct.zaq.ne.jp>, 2006-2007.
-# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009.
+# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2009-10-20 16:24+0900\n"
+"POT-Creation-Date: 2010-01-29 23:25+0900\n"
+"PO-Revision-Date: 2010-01-29 23:12+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -857,7 +857,6 @@ msgstr "タブの比率"
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:19 ../src/helper/units.cpp:37
-#: ../src/live_effects/lpe-path_length.cpp:27
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Unit"
 msgstr "単位"
@@ -1346,7 +1345,7 @@ msgstr "SVG 1.1 仕様書 (英語)"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
-msgstr "補間終端パスを複製する"
+msgstr "終端パスを複製する"
 
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
@@ -1362,11 +1361,11 @@ msgstr "スタイルを補間する"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
-msgstr "補間の方法"
+msgstr "補間方式"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr "補間の段階数"
+msgstr "補間のステップ数"
 
 #: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
@@ -1425,7 +1424,6 @@ msgstr "その他の属性のタイプ"
 
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1640
 #: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../src/widgets/toolbox.cpp:4678
@@ -1653,7 +1651,6 @@ msgstr ""
 "を 250 と設定しなければなりません。"
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 msgid "Angle"
 msgstr "角度"
 
@@ -2084,7 +2081,6 @@ msgid "Rotation, degrees"
 msgstr "回転 / 角度"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
-#: ../src/live_effects/lpe-path_length.cpp:25
 msgid "Scaling factor"
 msgstr "拡縮係数"
 
@@ -2405,32 +2401,28 @@ msgid "Strength (%):"
 msgstr "強さ (%)"
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Embed rasters"
-msgstr "画像を埋め込む"
+msgstr "ラスターイメージの埋め込み"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Enable id stripping"
-msgstr "スナップ有効"
+msgstr "ID ストリップを有効"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Enable viewboxing"
-msgstr "プレビューを有効にする"
+msgstr "viewBox を有効"
 
 #: ../share/extensions/scour.inx.h:4
 msgid "Group collapsing"
-msgstr ""
+msgstr "グループの破棄"
 
 #: ../share/extensions/scour.inx.h:6
-#, fuzzy
 msgid "Indent"
-msgstr "インセット"
+msgstr "インデント"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Keep editor data"
-msgstr ""
+msgstr "エディタデータの保存"
 
 #: ../share/extensions/scour.inx.h:9
 msgid "Optimized SVG (*.svg)"
@@ -2445,33 +2437,28 @@ msgid "Scalable Vector Graphics"
 msgstr "スケーラブル ベクター グラフィック"
 
 #: ../share/extensions/scour.inx.h:13
-#, fuzzy
 msgid "Set precision"
-msgstr "精度"
+msgstr "精度の設定"
 
 #: ../share/extensions/scour.inx.h:14
-#, fuzzy
 msgid "Simplify colors"
-msgstr "パスの簡略化"
+msgstr "色の簡略化"
 
 #: ../share/extensions/scour.inx.h:15
-#, fuzzy
 msgid "Space"
-msgstr "スペックル"
+msgstr "スペース"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Strip xml prolog"
-msgstr ""
+msgstr "XML 宣言の除去"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Style to xml"
-msgstr "スタイル(_S): "
+msgstr "スタイルを XML へ"
 
 #: ../share/extensions/scour.inx.h:18
-#, fuzzy
 msgid "Tab"
-msgstr "テーブル"
+msgstr "タブ"
 
 #: ../share/extensions/scour.inx.h:20
 #, no-c-format
@@ -2489,6 +2476,20 @@ msgid ""
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
 msgstr ""
+"このエクステンションは以下のオプションに従って SVG ファイルを最適化します:\n"
+"    * 色の簡素化: すべての色を #RRGGBB 形式に変換します。\n"
+"    * スタイルを XML へ: スタイルを XML 属性に変換します。\n"
+"    * グループの破棄: &lt;g&gt; 要素を破棄します。\n"
+"    * ID ストリップの有効化: 参照されていない ID 属性をすべて除去します。\n"
+"    * ラスターイメージの埋め込み: ラスターイメージを base64 エンコードデータ"
+"で埋め込みます。\n"
+"    * エディタデータの保持: Inkscape、Sodipodi、および Adobe Illustrator 要素"
+"および属性を除去しません。\n"
+"    * viewBox を有効: 画像のサイズを 100%/100% にし viewBox を使用する\n"
+"    * XML 宣言の除去: XML 宣言を出力しません。\n"
+"    * 精度の設定: 有効桁数を設定します (デフォルト: 5)。\n"
+"    * インデント: 出力のインデントで使用する文字を なし、スペース、タブ から"
+"設定します (デフォルト: スペース)。"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -3373,7 +3374,7 @@ msgid ""
 "force"
 msgstr ""
 "オブジェクトを水平方向に飛ばした時のようなぼかしをつけます。標準偏差を力変化"
-"に合わせます。"
+"にあわせます。"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
@@ -3385,7 +3386,7 @@ msgid ""
 "force"
 msgstr ""
 "オブジェクトを垂直方向に飛ばした時のようなぼかしをつけます。標準偏差を力変化"
-"に合わせます。"
+"にあわせます。"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Apparition"
@@ -5492,9 +5493,8 @@ msgid "Connector endpoint drag cancelled."
 msgstr "コネクタ端点のドラッグをキャンセルしました。"
 
 #: ../src/connector-context.cpp:1170
-#, fuzzy
 msgid "Connection point drag cancelled."
-msgstr "コネクタ端点のドラッグをキャンセルしました。"
+msgstr "接続点のドラッグをキャンセルしました。"
 
 #: ../src/connector-context.cpp:1283
 msgid "Reroute connector"
@@ -7042,8 +7042,6 @@ msgid "New element node..."
 msgstr "要素ノードの新規作成..."
 
 #: ../src/dialogs/xml-tree.cpp:1333
-#: ../src/ui/dialog/whiteboard-connect.cpp:119
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:104
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -7261,7 +7259,7 @@ msgstr "シャープノード"
 
 #: ../src/display/snap-indicator.cpp:89
 msgid "smooth node"
-msgstr "平滑化ノード"
+msgstr "スムーズノード"
 
 #: ../src/display/snap-indicator.cpp:92
 msgid "path"
@@ -7332,9 +7330,8 @@ msgid "text baseline"
 msgstr "テキストベースライン"
 
 #: ../src/display/snap-indicator.cpp:143
-#, fuzzy
 msgid "constrained angle"
-msgstr "行間隔を縮める"
+msgstr "拘束角度"
 
 #: ../src/display/snap-indicator.cpp:156
 msgid "Bounding box corner"
@@ -7342,7 +7339,7 @@ msgstr "境界枠の角"
 
 #: ../src/display/snap-indicator.cpp:159
 msgid "Bounding box midpoint"
-msgstr "境界枠をの中間点"
+msgstr "境界枠の中間点"
 
 #: ../src/display/snap-indicator.cpp:162
 msgid "Bounding box side midpoint"
@@ -7692,11 +7689,8 @@ msgstr ""
 msgid "Adaptive Threshold"
 msgstr "適応しきい値"
 
-#. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:98
-#: ../src/live_effects/lpe-offset.cpp:30
-#: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr "オフセット"
@@ -8930,22 +8924,22 @@ msgstr "アルファの輝度"
 msgid "Default"
 msgstr "デフォルト"
 
-# FIXME: Operator of feComposite filter
+# FIXME: Operator of feComposite filter primitive
 #: ../src/filter-enums.cpp:73
 msgid "Over"
 msgstr "Over"
 
-# FIXME: Operator of feComposite filter
+# FIXME: Operator of feComposite filter primitive
 #: ../src/filter-enums.cpp:74
 msgid "In"
 msgstr "In"
 
-# FIXME: Operator of feComposite filter
+# FIXME: Operator of feComposite filter primitive
 #: ../src/filter-enums.cpp:75
 msgid "Out"
 msgstr "Out"
 
-# FIXME: Operator of feComposite filter
+# FIXME: Operator of feComposite filter primitive
 #: ../src/filter-enums.cpp:76
 msgid "Atop"
 msgstr "Atop"
@@ -8960,7 +8954,7 @@ msgstr "計算"
 
 #: ../src/filter-enums.cpp:84
 msgid "Identity"
-msgstr ""
+msgstr "恒等"
 
 #: ../src/filter-enums.cpp:85
 msgid "Table"
@@ -8968,11 +8962,11 @@ msgstr "テーブル"
 
 #: ../src/filter-enums.cpp:86
 msgid "Discrete"
-msgstr ""
+msgstr "離散"
 
 #: ../src/filter-enums.cpp:87
 msgid "Linear"
-msgstr ""
+msgstr "線形"
 
 #: ../src/filter-enums.cpp:88
 msgid "Gamma"
@@ -9647,51 +9641,6 @@ msgstr "不正な作業ディレクトリ: %s"
 msgid "Failed to execute helper program (%s)"
 msgstr "ヘルパープログラムの実行に失敗しました (%s)"
 
-#: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
-#: ../src/jabber_whiteboard/session-file-selector.cpp:24
-msgid "_Write session file:"
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2630
-msgid "Shared SVG whiteboard tool."
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2631
-msgid "Based on the Pedro XMPP client"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:60
-#, fuzzy
-msgid "Select a location and filename"
-msgstr "全レイヤーの全てのオブジェクトを選択"
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:62
-#, fuzzy
-msgid "Set filename"
-msgstr "ファイル名"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:308
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:310
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:314
-#, fuzzy
-msgid "Accept invitation"
-msgstr "出力先"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:315
-#, fuzzy
-msgid "Decline invitation"
-msgstr "方向"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:370
-msgid "Inkboard session (%1 to %2)"
-msgstr ""
-
 #: ../src/knot.cpp:431
 msgid "Node or handle drag canceled."
 msgstr "ノードまたはハンドルのドラッグはキャンセルされました。"
@@ -10137,7 +10086,7 @@ msgstr "Pango をクラッシュさせるファミリがないフォントを無
 
 #: ../src/live_effects/effect.cpp:87
 msgid "doEffect stack test"
-msgstr ""
+msgstr "doEffect スタックテスト"
 
 #: ../src/live_effects/effect.cpp:88
 msgid "Angle bisector"
@@ -10166,7 +10115,7 @@ msgstr "格子変形"
 
 #: ../src/live_effects/effect.cpp:96
 msgid "Line Segment"
-msgstr "線分"
+msgstr "直線セグメント"
 
 #: ../src/live_effects/effect.cpp:97
 msgid "Mirror symmetry"
@@ -10261,13 +10210,15 @@ msgstr "ルーラ"
 
 #: ../src/live_effects/effect.cpp:278
 msgid "Is visible?"
-msgstr ""
+msgstr "表示する?"
 
 #: ../src/live_effects/effect.cpp:278
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
 msgstr ""
+"チェックマークをはずすと、オブジェクトに適用されたエフェクトは残りますが、一"
+"時的にキャンバス上で無効になります。"
 
 #: ../src/live_effects/effect.cpp:299
 msgid "No effect"
@@ -10288,43 +10239,6 @@ msgstr "パラメータ <b>%s</b> を編集します。"
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "適用パスエフェクトにパラメータのないものはキャンバス上で編集可能です。"
 
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-parallel.cpp:47
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-#, fuzzy
-msgid "Length left"
-msgstr "左に揃える"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#, fuzzy
-msgid "Specifies the left end of the bisector"
-msgstr "光源の色を定義します。"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-parallel.cpp:48
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-#, fuzzy
-msgid "Length right"
-msgstr "長さの単位:"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#, fuzzy
-msgid "Specifies the right end of the bisector"
-msgstr "色の明度を採取します"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:59
-msgid "Adjust the \"left\" end of the bisector"
-msgstr ""
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:60
-#, fuzzy
-msgid "Adjust the \"right\" of the bisector"
-msgstr "オブジェクトのクリッピングパスを編集"
-
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
 msgstr "ベンドパス"
@@ -10340,7 +10254,7 @@ msgstr "パスの幅"
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Width in units of length"
-msgstr "幅を長さの単位に合わせる"
+msgstr "幅を長さの単位にあわせる"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
@@ -10353,61 +10267,6 @@ msgstr "オリジナルパスは縦方向"
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "曲げる前にベンドパスに沿ってオリジナルを 90°回転します"
-
-#: ../src/live_effects/lpe-boolops.cpp:23
-msgid "Null"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:24
-#, fuzzy
-msgid "Intersect"
-msgstr "交差"
-
-#: ../src/live_effects/lpe-boolops.cpp:25
-msgid "Subtract A-B"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:26
-#, fuzzy
-msgid "Identity A"
-msgstr "識別子"
-
-#: ../src/live_effects/lpe-boolops.cpp:27
-msgid "Subtract B-A"
-msgstr ""
-
-#: ../src/live_effects/lpe-boolops.cpp:28
-#, fuzzy
-msgid "Identity B"
-msgstr "識別子"
-
-#: ../src/live_effects/lpe-boolops.cpp:29 ../src/splivarot.cpp:96
-msgid "Exclusion"
-msgstr "排他"
-
-#: ../src/live_effects/lpe-boolops.cpp:30 ../src/splivarot.cpp:66
-#: ../src/splivarot.cpp:72
-msgid "Union"
-msgstr "統合"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-#, fuzzy
-msgid "2nd path"
-msgstr "ベンドパス"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-#, fuzzy
-msgid "Path to which the original path will be boolop'ed."
-msgstr "オリジナルのパスを曲げるパス"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-#, fuzzy
-msgid "Boolop type"
-msgstr "ブール演算"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Determines which kind of boolop will be performed."
-msgstr ""
 
 #: ../src/live_effects/lpe-constructgrid.cpp:26
 msgid "Size X"
@@ -10424,55 +10283,6 @@ msgstr "Y 軸サイズ"
 #: ../src/live_effects/lpe-constructgrid.cpp:27
 msgid "The size of the grid in Y direction."
 msgstr "Y 軸方向のグリッドのサイズ"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-#, fuzzy
-msgid "Starting"
-msgstr "サテン"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Angle of the first copy"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-#, fuzzy
-msgid "Rotation angle"
-msgstr "回転中心"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-#, fuzzy
-msgid "Angle between two successive copies"
-msgstr "ルーラの目盛りと目盛りの間の距離"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
-msgid "Number of copies"
-msgstr "行の数"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
-msgid "Number of copies of the original path"
-msgstr "多角形または星形の角の数"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-#, fuzzy
-msgid "Origin"
-msgstr "X 軸の開始位置:"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-#, fuzzy
-msgid "Origin of the rotation"
-msgstr "方向"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-#, fuzzy
-msgid "Adjust the starting angle"
-msgstr "カーニング値の調整"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-#, fuzzy
-msgid "Adjust the rotation angle"
-msgstr "カーニング値の調整"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -10550,123 +10360,6 @@ msgstr "幅の基準を長さと相対的にする"
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "幅の基準をステッチパスの長さと相対的にします。"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
-msgid "Elliptic Pen"
-msgstr "円/弧"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:61
-msgid "Thick-Thin strokes (fast)"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:62
-msgid "Thick-Thin strokes (slow)"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:67
-#, fuzzy
-msgid "Sharp"
-msgstr "シャープ"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:68
-#, fuzzy
-msgid "Round"
-msgstr "丸め"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-#, fuzzy
-msgid "Method"
-msgstr "モード"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-#, fuzzy
-msgid "Choose pen type"
-msgstr "プリセットを選択してください"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
-msgid "Pen width"
-msgstr "ペンの幅"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
-msgid "Maximal stroke width"
-msgstr "ストローク幅を拡大縮小する"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-#, fuzzy
-msgid "Pen roundness"
-msgstr "配置のランダム性"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Min/Max width ratio"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-#, fuzzy
-msgid "angle"
-msgstr "角度"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr ""
-
-#. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5491
-msgid "Start"
-msgstr "始点"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-msgid "Choose start capping type"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5504
-msgid "End"
-msgstr "終点"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-msgid "Choose end capping type"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Grow for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Make the stroke thiner near it's start"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Fade for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Make the stroke thiner near it's end"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
-msgid "Round ends"
-msgstr "丸め"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
-msgid "Strokes end with a round end"
-msgstr "エッジが圧延されプレスされた金属です。"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-#, fuzzy
-msgid "Capping"
-msgstr "ラッピング"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-#, fuzzy
-msgid "left capping"
-msgstr "スナップ有効"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -10803,11 +10496,11 @@ msgstr "方向インジケータ/スイッチャのサイズです"
 
 #: ../src/live_effects/lpe-knot.cpp:334
 msgid "Crossing Signs"
-msgstr ""
+msgstr "交点記号"
 
 #: ../src/live_effects/lpe-knot.cpp:334
 msgid "Crossings signs"
-msgstr ""
+msgstr "交点記号"
 
 #: ../src/live_effects/lpe-knot.cpp:345
 msgid "Drag to select a crossing, click to flip it"
@@ -10817,164 +10510,6 @@ msgstr "ドラッグで交点を選択、クリックで切り替えます。"
 #: ../src/live_effects/lpe-knot.cpp:638
 msgid "Change knot crossing"
 msgstr "ノット交点の変更"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-lattice.cpp:46
-#, fuzzy
-msgid "Control handle 0"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:47
-#, fuzzy
-msgid "Control handle 1"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:48
-#, fuzzy
-msgid "Control handle 2"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:49
-#, fuzzy
-msgid "Control handle 3"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:50
-#, fuzzy
-msgid "Control handle 4"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:51
-#, fuzzy
-msgid "Control handle 5"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:52
-#, fuzzy
-msgid "Control handle 6"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:53
-#, fuzzy
-msgid "Control handle 7"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:54
-#, fuzzy
-msgid "Control handle 8"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:55
-#, fuzzy
-msgid "Control handle 9"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:56
-#, fuzzy
-msgid "Control handle 10"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:57
-#, fuzzy
-msgid "Control handle 11"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:58
-#, fuzzy
-msgid "Control handle 12"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:59
-#, fuzzy
-msgid "Control handle 13"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:60
-#, fuzzy
-msgid "Control handle 14"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-lattice.cpp:61
-#, fuzzy
-msgid "Control handle 15"
-msgstr "ノードハンドルを移動"
-
-#: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5832
-msgid "Closed"
-msgstr "完結"
-
-#: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5834
-msgid "Open start"
-msgstr "始点を開放"
-
-#: ../src/live_effects/lpe-line_segment.cpp:29 ../src/widgets/toolbox.cpp:5836
-msgid "Open end"
-msgstr "終点を開放"
-
-#: ../src/live_effects/lpe-line_segment.cpp:30 ../src/widgets/toolbox.cpp:5838
-msgid "Open both"
-msgstr "両端を開放"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-#, fuzzy
-msgid "End type"
-msgstr "終点の t 値"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "Determines on which side the line or line segment is infinite."
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Discard original path?"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-#, fuzzy
-msgid "Reflection line"
-msgstr "クローンを再リンク"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr ""
-
-#: ../src/live_effects/lpe-offset.cpp:30
-msgid "Handle to control the distance of the offset from the curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:46
-#, fuzzy
-msgid "Adjust the offset"
-msgstr "<b>オフセット距離</b>を調整します。"
-
-#: ../src/live_effects/lpe-parallel.cpp:47
-msgid "Specifies the left end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:48
-msgid "Specifies the right end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:56
-msgid "Adjust the \"left\" end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-parallel.cpp:57
-msgid "Adjust the \"right\" end of the parallel"
-msgstr ""
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-#, fuzzy
-msgid "Display unit"
-msgstr "ディスプレイ調整"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-#, fuzzy
-msgid "Print unit after path length"
-msgstr "幅を長さの単位に合わせる"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
@@ -11034,79 +10569,6 @@ msgstr "近接する終点の結合"
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr "この数値より近い終点を結合します。0 にすると結合しません。"
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:113
-msgid "Adjust the bisector's \"left\" end"
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:114
-msgid "Adjust the bisector's \"right\" end"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-#, fuzzy
-msgid "Scale x"
-msgstr "拡大縮小"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-#, fuzzy
-msgid "Scale factor in x direction"
-msgstr "X 軸方向の消失点の状態"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-#, fuzzy
-msgid "Scale y"
-msgstr "拡大縮小"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-#, fuzzy
-msgid "Scale factor in y direction"
-msgstr "X 軸方向の消失点の状態"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-#, fuzzy
-msgid "Offset x"
-msgstr "オフセット"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-#, fuzzy
-msgid "Offset in x direction"
-msgstr "X 軸方向の角度"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-#, fuzzy
-msgid "Offset y"
-msgstr "オフセット"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-#, fuzzy
-msgid "Offset in y direction"
-msgstr "X 軸方向の角度"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:46
-msgid "Uses XY plane?"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:46
-msgid ""
-"If true, put the path on the left side of an imaginary box, otherwise on the "
-"right side"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective_path.cpp:55
-#, fuzzy
-msgid "Adjust the origin"
-msgstr "色相の調整"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-#, fuzzy
-msgid "Iterations"
-msgstr "交差"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "recursivity"
-msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -11295,6 +10757,14 @@ msgstr "基準点への相対位置が全体的に曲げる量と方向を定義
 msgid "Both"
 msgstr "両側"
 
+#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5491
+msgid "Start"
+msgstr "始点"
+
+#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5504
+msgid "End"
+msgstr "終点"
+
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Mark distance"
 msgstr "目盛り間の距離"
@@ -11354,16 +10824,6 @@ msgstr "境界の目盛り"
 #: ../src/live_effects/lpe-ruler.cpp:51
 msgid "Choose whether to draw marks at the beginning and end of the path"
 msgstr "パスの始点および終点の目盛りの描画"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-skeleton.cpp:32
-#, fuzzy
-msgid "Float parameter"
-msgstr "エフェクトパラメータ"
-
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "just a real number like 1.4!"
-msgstr ""
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
@@ -11499,65 +10959,6 @@ msgstr ""
 msgid "max curvature"
 msgstr "最大曲率"
 
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-msgid "Additional angle between tangent and curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location along curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid ""
-"Location of the point of attachment along the curve (between 0.0 and number-"
-"of-segments)"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Specifies the left end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Specifies the right end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:68
-msgid "Adjust the point of attachment of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-#, fuzzy
-msgid "Adjust the \"left\" end of the tangent"
-msgstr "グラデーションの色フェーズを編集"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-msgid "Adjust the \"right\" end of the tangent"
-msgstr ""
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-#, fuzzy
-msgid "Stack step"
-msgstr "スキャンを積み重ねる"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-#, fuzzy
-msgid "point param"
-msgstr "星型五角形"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-#, fuzzy
-msgid "path param"
-msgstr "パスパラメータの貼り付け"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-#, fuzzy
-msgid "Label"
-msgstr "ラベル(_L)"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Text label attached to the path"
-msgstr ""
-
 #: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "Nb of generations"
 msgstr "生成数"
@@ -11666,11 +11067,6 @@ msgstr "テキストパラメータの変更"
 #: ../src/live_effects/parameter/unit.cpp:77
 msgid "Change unit parameter"
 msgstr "単位パラメータの変更"
-
-#: ../src/lpe-tool-context.cpp:267
-#, fuzzy
-msgid "Choose a construction tool from the toolbar."
-msgstr "ツールバーからサブツールを選択してください。"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -12999,20 +12395,20 @@ msgstr "マスクを解除"
 
 #: ../src/selection-chemistry.cpp:3049
 msgid "Select <b>object(s)</b> to fit canvas to."
-msgstr "キャンバスサイズを合わせるの<b>オブジェクト</b>を選択して下さい。"
+msgstr "キャンバスサイズをあわせるの<b>オブジェクト</b>を選択して下さい。"
 
 #. Fit Page
 #: ../src/selection-chemistry.cpp:3069 ../src/verbs.cpp:2688
 msgid "Fit Page to Selection"
-msgstr "ページを選択オブジェクトに合わせる"
+msgstr "ページを選択オブジェクトにあわせる"
 
 #: ../src/selection-chemistry.cpp:3098 ../src/verbs.cpp:2690
 msgid "Fit Page to Drawing"
-msgstr "ページを描画全体に合わせる"
+msgstr "ページを描画全体にあわせる"
 
 #: ../src/selection-chemistry.cpp:3119 ../src/verbs.cpp:2692
 msgid "Fit Page to Selection or Drawing"
-msgstr "ページを選択オブジェクトまたは描画全体に合わせる"
+msgstr "ページを選択オブジェクトまたは描画全体にあわせる"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -13456,19 +12852,18 @@ msgid "&lt;no name found&gt;"
 msgstr "&lt;名前が見つかりません&gt;"
 
 #: ../src/sp-text.cpp:427 ../src/text-context.cpp:1604
-#, fuzzy
 msgid " [truncated]"
-msgstr "切頂立方体"
+msgstr " [溢れあり]"
 
 #: ../src/sp-text.cpp:431
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text on path</b>%s (%s, %s)"
-msgstr "<b>パス上テキスト</b> (%s、%s)"
+msgstr "<b>パス上テキスト</b>%s (%s、%s)"
 
 #: ../src/sp-text.cpp:432
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text</b>%s (%s, %s)"
-msgstr "<b>テキスト</b> (%s、%s)"
+msgstr "<b>テキスト</b>%s (%s、%s)"
 
 #: ../src/sp-tref.cpp:368
 #, c-format
@@ -13477,7 +12872,7 @@ msgstr "<b>クローン文字データ</b>%s%s"
 
 #: ../src/sp-tref.cpp:369
 msgid " from "
-msgstr ""
+msgstr " 参照元 "
 
 #: ../src/sp-tref.cpp:374
 msgid "<b>Orphaned cloned character data</b>"
@@ -13521,6 +12916,10 @@ msgstr ""
 msgid "Create spiral"
 msgstr "螺旋を作成"
 
+#: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
+msgid "Union"
+msgstr "統合"
+
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
 msgstr "交差"
@@ -13528,6 +12927,10 @@ msgstr "交差"
 #: ../src/splivarot.cpp:84 ../src/splivarot.cpp:90
 msgid "Difference"
 msgstr "差分"
+
+#: ../src/splivarot.cpp:96
+msgid "Exclusion"
+msgstr "排他"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
@@ -13651,12 +13054,16 @@ msgstr "<b>何も</b>選択されていません"
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
 msgstr ""
+"%s。ドラッグ、クリック、またはスクロールで最初に選択したオブジェクトの<b>コ"
+"ピー</b>をスプレーします。"
 
 #: ../src/spray-context.cpp:253
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
 msgstr ""
+"%s。ドラッグ、クリック、またはスクロールで最初に選択したオブジェクトの<b>ク"
+"ローン</b>をスプレーします。"
 
 #: ../src/spray-context.cpp:256
 #, c-format
@@ -13664,27 +13071,25 @@ msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
 msgstr ""
+"%s。ドラッグ、クリック、またはスクロールで最初に選択したオブジェクトを<b>単一"
+"パス</b>でスプレーします。"
 
 #: ../src/spray-context.cpp:774
-#, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
-"<b>何も選択されていません!</b> 微調整するオブジェクトを選択してください。"
+"<b>何も選択されていません!</b> スプレーするオブジェクトを選択してください。"
 
 #: ../src/spray-context.cpp:882 ../src/widgets/toolbox.cpp:4589
-#, fuzzy
 msgid "Spray with copies"
-msgstr "コピー間の間隔"
+msgstr "コピーでスプレー"
 
 #: ../src/spray-context.cpp:886 ../src/widgets/toolbox.cpp:4596
-#, fuzzy
 msgid "Spray with clones"
-msgstr "クローンを検索します"
+msgstr "クローンでスプレー"
 
 #: ../src/spray-context.cpp:890
-#, fuzzy
 msgid "Spray in single path"
-msgstr "単一ドットを作成しています"
+msgstr "単一パスのスプレー"
 
 #: ../src/star-context.cpp:331
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
@@ -13755,7 +13160,7 @@ msgstr "カーニングを元に戻す<b>テキスト</b>を選択してくだ�
 
 #: ../src/text-chemistry.cpp:293
 msgid "Remove manual kerns"
-msgstr "手動カーニングを元に戻す"
+msgstr "手動カーニングを除去"
 
 #: ../src/text-chemistry.cpp:313
 msgid ""
@@ -13921,20 +13326,19 @@ msgid "Paste text"
 msgstr "テキストの貼り付け"
 
 #: ../src/text-context.cpp:1621
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"流し込みテキストの編集 (%d 個の文字); <b>Enter</b>キーで新しい段落を開始しま"
-"す。"
+"流し込みテキストの編集 (%d 個の文字%s); <b>Enter</b>キーで新しい段落を開始し"
+"ます。"
 
 #: ../src/text-context.cpp:1623
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr ""
-"流し込みテキストの編集 (%d 個の文字); <b>Enter</b>キーで新しい行を開始しま"
-"す。"
+"テキストの編集 (%d 個の文字%s); <b>Enter</b>キーで新しい行を開始します。"
 
 #: ../src/text-context.cpp:1631 ../src/tools-switch.cpp:197
 msgid ""
@@ -13957,9 +13361,8 @@ msgid "To tweak a path by pushing, select it and drag over it."
 msgstr "パスを押して微調整するには、選択してその上でドラッグしてください。"
 
 #: ../src/tools-switch.cpp:143
-#, fuzzy
 msgid "To spray a path by pushing, select it and drag over it."
-msgstr "パスを押して微調整するには、選択してその上でドラッグしてください。"
+msgstr "パスを押してスプレーするには、選択してその上でドラッグしてください。"
 
 #: ../src/tools-switch.cpp:149
 msgid ""
@@ -14502,9 +13905,8 @@ msgid "Align left edges"
 msgstr "左揃え"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
-#, fuzzy
 msgid "Center on vertical axis"
-msgstr "中心を水平軸に合わせる"
+msgstr "中心を垂直軸にあわせる"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align right sides"
@@ -14524,7 +13926,7 @@ msgstr "上端揃え"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Center on horizontal axis"
-msgstr "中心を水平軸に合わせる"
+msgstr "中心を水平軸にあわせる"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Align bottom edges"
@@ -14847,9 +14249,8 @@ msgid "<b>Border</b>"
 msgstr "<b>境界線</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:225
-#, fuzzy
 msgid "<b>Page Size</b>"
-msgstr "<b>直線</b>"
+msgstr "<b>ページサイズ</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:253
 msgid "<b>Guides</b>"
@@ -16042,7 +15443,7 @@ msgstr "スナップインジケータを有効にする"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "After snapping, a symbol is drawn at the point that has snapped"
-msgstr "スナップ後、シンボルはスナップされたポイントに描画されます"
+msgstr "スナップ後、スナップされたポイントにシンボルが描画されます"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
 msgid "Delay (in ms):"
@@ -16403,41 +15804,39 @@ msgid "Selects the color used for showing the path outline."
 msgstr "パスアウトラインを表示する色を選択してください"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:439
-#, fuzzy
 msgid "Always show outline"
-msgstr "アウトラインを表示"
+msgstr "常にアウトラインを表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Show outlines for all paths, not only invisible paths"
-msgstr ""
+msgstr "見えないパスだけでなく、すべてのパスのアウトラインを表示します"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Show path direction on outlines"
-msgstr ""
+msgstr "アウトラインでパスの方向を表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid ""
 "Visualize the direction of selected paths by drawing small arrows in the "
 "middle of each outline segment"
 msgstr ""
+"選択したパスの方向を各アウトラインセグメントの中間点に小さな矢印で表示します"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
-#, fuzzy
 msgid "Show temporary path outline"
-msgstr "スムーズな外郭線"
+msgstr "作業パスのアウトラインを表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "When hovering over a path, briefly flash its outline."
 msgstr "マウスポインタがパス上にあるとき、そのアウトラインを一時点滅します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
-#, fuzzy
 msgid "Show temporary outline for selected paths"
-msgstr "パスのアウトラインを表示"
+msgstr "選択パスの一時アウトラインを表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
 msgid "Show temporary outline even when a path is selected for editing"
-msgstr ""
+msgstr "パスが編集のために選択されている時もアウトラインを表示します"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Flash time"
@@ -16453,18 +15852,16 @@ msgstr ""
 "い。0 を指定するとマウスがパス上から移動されるまで表示されます。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
-#, fuzzy
 msgid "Transform Handles:"
-msgstr "グラデーションを変形する"
+msgstr "変形ハンドル:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
-#, fuzzy
 msgid "Show transform handles for single nodes"
-msgstr "選択ノードのベジエ曲線ハンドルを表示"
+msgstr "単一ノードの変形ハンドルを表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Show transform handles even when only a single node is selected."
-msgstr ""
+msgstr "単一ノードのみが選択されている時も変形ハンドルを表示します。"
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:454 ../src/verbs.cpp:2457
@@ -16478,9 +15875,8 @@ msgstr "オブジェクトのペイント:"
 
 #. Spray
 #: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Spray"
-msgstr "螺旋"
+msgstr "スプレー"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
@@ -16550,12 +15946,14 @@ msgstr "LPE ツール"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Show font samples in the drop-down list"
-msgstr ""
+msgstr "ドロップダウンリストにフォントのサンプルを表示する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid ""
 "Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
+"テキストツールコントロールバーのドロップダウンリストで、フォント名をフォント"
+"のサンプルで表示します"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:546 ../src/verbs.cpp:2479
@@ -16744,7 +16142,7 @@ msgid ""
 "example, a rotated clone will move in a different direction than its "
 "original."
 msgstr ""
-"それぞれのクローンを transform 属性の値に合わせて移動します。例えば、回転され"
+"それぞれのクローンを transform 属性の値にあわせて移動します。例えば、回転され"
 "ているクローンはオリジナルと違う方向に移動します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:643
@@ -16954,9 +16352,8 @@ msgstr ""
 "明を表示します"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:753
-#, fuzzy
 msgid "Number of Threads:"
-msgstr "行の数"
+msgstr "スレッド数"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:753
 #: ../src/ui/dialog/inkscape-preferences.cpp:1315
@@ -16968,6 +16365,7 @@ msgid ""
 "Configure number of processors/threads to use with rendering of gaussian "
 "blur."
 msgstr ""
+"ガウスぼかしのレンダリングで使用するスレッド (プロセッサ) 数を設定します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:762
 msgid "Select in all layers"
@@ -17496,6 +16894,10 @@ msgid "Estonian (et)"
 msgstr "エストニア語 (et)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1079
+msgid "Farsi (fa)"
+msgstr "ファルシ語 (fa)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1079
 msgid "Finnish (fi)"
 msgstr "フィンランド語 (fi)"
 
@@ -17720,13 +17122,15 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1132
 msgid "Enable dynamic relayout for incomplete sections."
-msgstr ""
+msgstr "不完全な部分の動的再配置を有効にする"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1134
 msgid ""
 "When on, will allow dynamic layout of components that are not completely "
 "finished being refactored."
 msgstr ""
+"このオプションをオンにすると、リファクタリングが完了していないコンポーネント"
+"の動的配置が行えます。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1137
 msgid "Interface"
@@ -18125,9 +17529,8 @@ msgid "Empty selection"
 msgstr "選択されていません"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:308
-#, fuzzy
 msgid "Unknown effect"
-msgstr "未知のエフェクトが適用されました"
+msgstr "未知のエフェクト"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
@@ -18310,76 +17713,6 @@ msgstr "出力"
 #: ../src/ui/dialog/scriptdialog.cpp:244
 msgid "Errors"
 msgstr "エラー"
-
-#. Dialog organization
-#: ../src/ui/dialog/session-player.cpp:70
-#, fuzzy
-msgid "Session file"
-msgstr "フィルのセット"
-
-#: ../src/ui/dialog/session-player.cpp:71
-msgid "Playback controls"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:72
-#, fuzzy
-msgid "Message information"
-msgstr "メモリ使用状況の情報"
-
-#. Active session file display
-#. fixme: Does this mean the active file for the session, or the file for the active session?
-#. Please indicate which with a TRANSLATORS comment.
-#: ../src/ui/dialog/session-player.cpp:82
-msgid "Active session file:"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:83
-#, fuzzy
-msgid "Delay (milliseconds):"
-msgstr "遅延 (ms):"
-
-#. Unload/load buttons
-#: ../src/ui/dialog/session-player.cpp:91
-#, fuzzy
-msgid "Close file"
-msgstr "フィルノイズ"
-
-#: ../src/ui/dialog/session-player.cpp:92
-#, fuzzy
-msgid "Open new file"
-msgstr "フィルタ名の変更"
-
-#: ../src/ui/dialog/session-player.cpp:93
-#, fuzzy
-msgid "Set delay"
-msgstr "デフォルトとして設定"
-
-#: ../src/ui/dialog/session-player.cpp:127
-#, fuzzy
-msgid "Rewind"
-msgstr "レンダリング"
-
-#: ../src/ui/dialog/session-player.cpp:128
-msgid "Go back one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:129
-#, fuzzy
-msgid "Pause"
-msgstr "貼り付け"
-
-#: ../src/ui/dialog/session-player.cpp:130
-msgid "Go forward one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:131
-#, fuzzy
-msgid "Play"
-msgstr "プラスティファイ"
-
-#: ../src/ui/dialog/session-player.cpp:166
-msgid "Open session file"
-msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
 msgid "Set SVG Font attribute"
@@ -19064,126 +18397,6 @@ msgstr "変形を選択オブジェクトに適用"
 msgid "Edit transformation matrix"
 msgstr "変形行列を編集"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Use SSL"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-#, fuzzy
-msgid "_Register"
-msgstr "ラスター"
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:78
-#, fuzzy
-msgid "_Server:"
-msgstr "向きを逆に(_R)"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:79
-#, fuzzy
-msgid "_Username:"
-msgstr "名前の変更(_R)"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:80
-msgid "_Password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:81
-#, fuzzy
-msgid "P_ort:"
-msgstr "エクスポート(_E)"
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:118
-#, fuzzy
-msgid "Connect"
-msgstr "コネクタ"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:149
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:176
-#: ../src/ui/dialog/whiteboard-connect.cpp:222
-#: ../src/ui/dialog/whiteboard-connect.cpp:260
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:215
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:227
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:232
-#: ../src/ui/dialog/whiteboard-connect.cpp:270
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:238
-#: ../src/ui/dialog/whiteboard-connect.cpp:276
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:265
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
-#, fuzzy
-msgid "Chatroom _name:"
-msgstr "レイヤー名:"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
-msgid "Chatroom _server:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-msgid "Chatroom _password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:79
-#, fuzzy
-msgid "Chatroom _handle:"
-msgstr "ハンドルの変更"
-
-#. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
-#, fuzzy
-msgid "Connect to chatroom"
-msgstr "コネクタ"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:138
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
-msgid "_User's Jabber ID:"
-msgstr ""
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
-#, fuzzy
-msgid "_Invite user"
-msgstr "色相反転"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-#, fuzzy
-msgid "_Cancel"
-msgstr "キャンセル"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
-msgid "Buddy List"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
-msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr ""
-
 #: ../src/ui/tool/curve-drag-point.cpp:107
 msgid "Drag curve"
 msgstr "曲線をドラッグ"
@@ -19197,14 +18410,12 @@ msgid "Change node type"
 msgstr "ノードの種類を変更"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:215
-#, fuzzy
 msgid "Straighten segments"
-msgstr "セグメントの直線化"
+msgstr "セグメントを直線に"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:217
-#, fuzzy
 msgid "Make segments curves"
-msgstr "選択セグメントを曲線に"
+msgstr "弓形曲線を作成"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:224
 msgid "Add nodes"
@@ -19243,63 +18454,52 @@ msgstr "ノードを回転"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:535
 #: ../src/ui/tool/multi-path-manipulator.cpp:541
-#, fuzzy
 msgid "Scale nodes uniformly"
-msgstr "ノードを拡大縮小"
+msgstr "ノードを均等に拡大縮小"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:538
 msgid "Scale nodes"
 msgstr "ノードを拡大縮小"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:545
-#, fuzzy
 msgid "Scale nodes horizontally"
-msgstr "ノードを水平に移動"
+msgstr "ノードを水平方向に拡大縮小"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:549
-#, fuzzy
 msgid "Scale nodes vertically"
-msgstr "ノードを垂直に移動"
+msgstr "ノードを垂直方向に拡大縮小"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:553
-#, fuzzy
 msgid "Flip nodes horizontally"
-msgstr "水平方向に反転"
+msgstr "ノードを水平方向に反転"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:556
-#, fuzzy
 msgid "Flip nodes vertically"
-msgstr "垂直方向に反転"
+msgstr "ノードを垂直方向に反転"
 
 #: ../src/ui/tool/node.cpp:227
-#, fuzzy
 msgid "Cusp node handle"
-msgstr "ノードハンドルを移動"
+msgstr "シャープノードハンドル"
 
 #: ../src/ui/tool/node.cpp:228
-#, fuzzy
 msgid "Smooth node handle"
-msgstr "ノードハンドルをずらす"
+msgstr "スムーズノードハンドル"
 
 #: ../src/ui/tool/node.cpp:229
-#, fuzzy
 msgid "Symmetric node handle"
-msgstr "ノードハンドルをずらす"
+msgstr "対称ノードハンドル"
 
 #: ../src/ui/tool/node.cpp:230
-#, fuzzy
 msgid "Auto-smooth node handle"
-msgstr "ノードハンドルを移動"
+msgstr "自動スムーズノードハンドル"
 
 #: ../src/ui/tool/node.cpp:986
-#, fuzzy
 msgid "Symmetric node"
-msgstr "シンメトリック"
+msgstr "対称ノード"
 
 #: ../src/ui/tool/node.cpp:987
-#, fuzzy
 msgid "Auto-smooth node"
-msgstr "平滑化ノード"
+msgstr "自動スムーズノード"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1202 ../src/widgets/toolbox.cpp:1313
@@ -19307,14 +18507,12 @@ msgid "Delete node"
 msgstr "ノードを削除"
 
 #: ../src/ui/tool/path-manipulator.cpp:1217
-#, fuzzy
 msgid "Cycle node type"
-msgstr "ノードの種類を変更"
+msgstr "ノードタイプを切り替え"
 
 #: ../src/ui/tool/path-manipulator.cpp:1231
-#, fuzzy
 msgid "Drag handle"
-msgstr "ハンドルを描く"
+msgstr "ハンドルをドラッグ"
 
 #: ../src/ui/tool/path-manipulator.cpp:1240
 msgid "Retract handle"
@@ -19444,47 +18642,39 @@ msgstr "用紙の高さ"
 
 #: ../src/ui/widget/page-sizer.cpp:232
 msgid "T_op margin:"
-msgstr ""
+msgstr "上マージン(_O):"
 
 #: ../src/ui/widget/page-sizer.cpp:232
-#, fuzzy
 msgid "Top margin"
-msgstr "月のマージン"
+msgstr "上マージン"
 
 #: ../src/ui/widget/page-sizer.cpp:233
-#, fuzzy
 msgid "L_eft:"
-msgstr "左:"
+msgstr "左(_E):"
 
 #: ../src/ui/widget/page-sizer.cpp:233
-#, fuzzy
 msgid "Left margin"
-msgstr "左角度"
+msgstr "左マージン"
 
 #: ../src/ui/widget/page-sizer.cpp:234
-#, fuzzy
 msgid "Ri_ght:"
-msgstr "右:"
+msgstr "右(_G):"
 
 #: ../src/ui/widget/page-sizer.cpp:234
-#, fuzzy
 msgid "Right margin"
-msgstr "右角度"
+msgstr "右マージン"
 
 #: ../src/ui/widget/page-sizer.cpp:235
-#, fuzzy
 msgid "Botto_m:"
-msgstr "下:"
+msgstr "下(_M):"
 
 #: ../src/ui/widget/page-sizer.cpp:235
-#, fuzzy
 msgid "Bottom margin"
-msgstr "月のマージン"
+msgstr "下マージン"
 
 #: ../src/ui/widget/page-sizer.cpp:285
-#, fuzzy
 msgid "Orientation:"
-msgstr "方向"
+msgstr "方向:"
 
 #: ../src/ui/widget/page-sizer.cpp:288
 msgid "_Landscape"
@@ -19502,12 +18692,11 @@ msgstr "カスタムサイズ"
 #. ## Set up fit page expander
 #: ../src/ui/widget/page-sizer.cpp:314
 msgid "Resi_ze page to content..."
-msgstr ""
+msgstr "ページサイズをコンテンツにあわせて変更(_Z)..."
 
 #: ../src/ui/widget/page-sizer.cpp:341
-#, fuzzy
 msgid "_Resize page to drawing or selection"
-msgstr "ページを選択オブジェクトにフィット(_F)"
+msgstr "ページサイズを描画全体または選択オブジェクトにあわせる(_R)"
 
 #: ../src/ui/widget/page-sizer.cpp:342
 msgid ""
@@ -19515,7 +18704,7 @@ msgid ""
 "is no selection"
 msgstr ""
 "現在の選択オブジェクトか、選択オブジェクトがない場合は描画全体にフィットする"
-"ようにページサイズを変更"
+"ようにページサイズを変更します"
 
 #: ../src/ui/widget/page-sizer.cpp:406
 msgid "Set page size"
@@ -20183,9 +19372,8 @@ msgstr "tutorial-calligraphy.ja.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1881
-#, fuzzy
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-tips.ja.svg"
+msgstr "tutorial-interpolate.ja.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1885
@@ -20699,7 +19887,7 @@ msgstr "パスからテキストを削除(_R)"
 
 #: ../src/verbs.cpp:2320
 msgid "Remove Manual _Kerns"
-msgstr "手動カーニングを削除(_K)"
+msgstr "手動カーニングを除去(_K)"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
@@ -21138,12 +20326,11 @@ msgstr "ノードでパスを編集"
 
 #: ../src/verbs.cpp:2458
 msgid "Tweak objects by sculpting or painting"
-msgstr "彫りや塗りでオブジェクトを微調整"
+msgstr "オブジェクトを微調整"
 
 #: ../src/verbs.cpp:2460
-#, fuzzy
 msgid "Spray objects by sculpting or painting"
-msgstr "彫りや塗りでオブジェクトを微調整"
+msgstr "オブジェクトをスプレー"
 
 #: ../src/verbs.cpp:2462
 msgid "Create rectangles and squares"
@@ -21243,14 +20430,12 @@ msgid "Open Preferences for the Tweak tool"
 msgstr "微調整ツールの設定を開く"
 
 #: ../src/verbs.cpp:2502
-#, fuzzy
 msgid "Spray Tool Preferences"
-msgstr "螺旋の設定"
+msgstr "スプレーツールの設定"
 
 #: ../src/verbs.cpp:2503
-#, fuzzy
 msgid "Open Preferences for the Spray tool"
-msgstr "螺旋ツールの設定を開く"
+msgstr "スプレーツールの設定を開く"
 
 #: ../src/verbs.cpp:2504
 msgid "Rectangle Preferences"
@@ -21533,14 +20718,12 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "アウトライン (ワイヤフレーム) 表示モードに切り替えます。"
 
 #: ../src/verbs.cpp:2572
-#, fuzzy
 msgid "_Print Colors Preview"
-msgstr "印刷プレビュー(_W)"
+msgstr "印刷色プレビュー(_P)"
 
 #: ../src/verbs.cpp:2573
-#, fuzzy
 msgid "Switch to print colors preview mode"
-msgstr "通常の表示モードに切り替えます。"
+msgstr "印刷色のプレビューモードに切り替えます。"
 
 #: ../src/verbs.cpp:2574
 msgid "_Toggle"
@@ -21570,7 +20753,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2583
 msgid "Zoom to fit page in window"
-msgstr "ページをウインドウに合わせるようにズーム"
+msgstr "ページをウインドウにあわせるようにズーム"
 
 #: ../src/verbs.cpp:2584
 msgid "Page _Width"
@@ -21578,15 +20761,15 @@ msgstr "ページ幅(_W)"
 
 #: ../src/verbs.cpp:2585
 msgid "Zoom to fit page width in window"
-msgstr "ページ幅をウインドウに合わせるようにズーム"
+msgstr "ページ幅をウインドウにあわせるようにズーム"
 
 #: ../src/verbs.cpp:2587
 msgid "Zoom to fit drawing in window"
-msgstr "描画全体をウインドウに合わせるようにズーム"
+msgstr "描画全体をウインドウにあわせるようにズーム"
 
 #: ../src/verbs.cpp:2589
 msgid "Zoom to fit selection in window"
-msgstr "選択オブジェクトをウインドウに合わせるようにズーム"
+msgstr "選択オブジェクトをウインドウにあわせるようにズーム"
 
 #. Dialogs
 #: ../src/verbs.cpp:2592
@@ -21649,12 +20832,11 @@ msgstr "オブジェクトを整列および配置"
 
 #: ../src/verbs.cpp:2607
 msgid "_Spray options..."
-msgstr ""
+msgstr "スプレーオプション(_S)..."
 
 #: ../src/verbs.cpp:2608
-#, fuzzy
 msgid "Some options for the spray"
-msgstr "パスのアウトラインを表示"
+msgstr "いくつかのスプレーのオプション"
 
 #: ../src/verbs.cpp:2609
 msgid "Undo _History..."
@@ -21806,14 +20988,13 @@ msgid "Edit SVG fonts"
 msgstr "SVG フォントを編集します。"
 
 #: ../src/verbs.cpp:2649
-#, fuzzy
 msgid "Print Colors..."
-msgstr "印刷(_P)..."
+msgstr "印刷色..."
 
 #: ../src/verbs.cpp:2650
 msgid ""
 "Select which color separations to render in Print Colors Preview rendermode"
-msgstr ""
+msgstr "印刷色プレビューモードで描画する色成分を選択します。"
 
 #. Help
 #: ../src/verbs.cpp:2653
@@ -21830,7 +21011,7 @@ msgstr "メモリ情報(_M)"
 
 #: ../src/verbs.cpp:2656
 msgid "Memory usage information"
-msgstr "メモリ使用状況の情報"
+msgstr "メモリの使用状況を表示します"
 
 #: ../src/verbs.cpp:2657
 msgid "_About Inkscape"
@@ -21838,7 +21019,7 @@ msgstr "Inkscapeについて(_A)"
 
 #: ../src/verbs.cpp:2658
 msgid "Inkscape version, authors, license"
-msgstr "Inkscapeのバージョン、作者、ライセンス"
+msgstr "Inkscapeのバージョン、作者、ライセンスを表示します"
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
@@ -21858,7 +21039,7 @@ msgstr "Inkscape: シェイプ(_S)"
 
 #: ../src/verbs.cpp:2666
 msgid "Using shape tools to create and edit shapes"
-msgstr "シェイプツールを使ったシェイプの作成と編集"
+msgstr "シェイプツールを使ったシェイプの作成と編集について説明します"
 
 #: ../src/verbs.cpp:2667
 msgid "Inkscape: _Advanced"
@@ -21866,7 +21047,7 @@ msgstr "Inkscape: 上級(_A)"
 
 #: ../src/verbs.cpp:2668
 msgid "Advanced Inkscape topics"
-msgstr "Inkscape 上級テクニック"
+msgstr "Inkscape の上級テクニックをお教えします"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
@@ -21876,7 +21057,7 @@ msgstr "Inkscape: トレース(_R)"
 
 #: ../src/verbs.cpp:2671
 msgid "Using bitmap tracing"
-msgstr "ビットマップトレースを使う"
+msgstr "ビットマップトレースを使ってみましょう"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2672
@@ -21885,16 +21066,15 @@ msgstr "Inkscape: カリグラフィ(_C)"
 
 #: ../src/verbs.cpp:2673
 msgid "Using the Calligraphy pen tool"
-msgstr "カリグラフィペンツールを使う"
+msgstr "カリグラフィペンツールを使ってみましょう"
 
 #: ../src/verbs.cpp:2674
-#, fuzzy
 msgid "Inkscape: _Interpolate"
-msgstr "Inkscape: シェイプ(_S)"
+msgstr "Inkscape: 補間(_I)"
 
 #: ../src/verbs.cpp:2675
 msgid "Using the interpolate extension"
-msgstr ""
+msgstr "補間エクステンションを使ってみましょう"
 
 #. "tutorial_interpolate"
 #: ../src/verbs.cpp:2676
@@ -21903,7 +21083,7 @@ msgstr "デザインの要素(_E)"
 
 #: ../src/verbs.cpp:2677
 msgid "Principles of design in the tutorial form"
-msgstr "デザインの基本についてのチュートリアル"
+msgstr "デザインの基本についてのチュートリアルです"
 
 #. "tutorial_design"
 #: ../src/verbs.cpp:2678
@@ -21912,7 +21092,7 @@ msgstr "ヒントやコツ (_T)"
 
 #: ../src/verbs.cpp:2679
 msgid "Miscellaneous tips and tricks"
-msgstr "いろんなヒントと裏技"
+msgstr "いろんなヒントやコツをお教えします"
 
 #. "tutorial_tips"
 #. Effect -- renamed Extension
@@ -21934,18 +21114,18 @@ msgstr "新しい設定で前回のエクステンションを繰り返します
 
 #: ../src/verbs.cpp:2689
 msgid "Fit the page to the current selection"
-msgstr "ページを現在の選択オブジェクトに合わせる"
+msgstr "ページを現在の選択オブジェクトにあわせる"
 
 #: ../src/verbs.cpp:2691
 msgid "Fit the page to the drawing"
-msgstr "ページを描画全体に合わせる"
+msgstr "ページを描画全体にあわせる"
 
 #: ../src/verbs.cpp:2693
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
-"ページを、現在の選択オブジェクトに合わせるか、選択オブジェクトがない場合は描"
-"画全体に合わせる"
+"ページを現在の選択オブジェクトにあわせるか、選択オブジェクトがない場合は描画"
+"全体にあわせる"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2695
@@ -22000,14 +21180,14 @@ msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (アウトライン) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:625
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (no filters) - Inkscape"
-msgstr "%s: %d (アウトライン) - Inkscape"
+msgstr "%s: %d (フィルタなし) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:627
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (print colors preview) - Inkscape"
-msgstr "%s: %d (アウトライン) - Inkscape"
+msgstr "%s: %d (印刷色プレビュー) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:629
 #, c-format
@@ -22020,14 +21200,14 @@ msgid "%s (outline) - Inkscape"
 msgstr "%s (アウトライン) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:635
-#, fuzzy, c-format
+#, c-format
 msgid "%s (no filters) - Inkscape"
-msgstr "%s (アウトライン) - Inkscape"
+msgstr "%s (フィルタなし) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:637
-#, fuzzy, c-format
+#, c-format
 msgid "%s (print colors preview) - Inkscape"
-msgstr "%s (アウトライン) - Inkscape"
+msgstr "%s (印刷色プレビュー) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:639
 #, c-format
@@ -22035,19 +21215,17 @@ msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:801
-#, fuzzy
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
-"このドキュメントウィンドウのカラーマネジメントのオン/オフを切り替えます。"
+"このウィンドウではカラーマネジメントディスプレイは<b>有効</b>になっています"
 
 #: ../src/widgets/desktop-widget.cpp:803
-#, fuzzy
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
-"このドキュメントウィンドウのカラーマネジメントのオン/オフを切り替えます。"
+"このウィンドウではカラーマネジメントディスプレイは<b>無効</b>になっています"
 
 #: ../src/widgets/desktop-widget.cpp:914
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
 "format (%s) that may cause data loss!</span>\n"
@@ -22340,7 +21518,7 @@ msgid ""
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
 "これ以降、オブジェクトが変形 (移動、拡大縮小、回転、傾斜) されたとき、<b>グラ"
-"デーション</b>はオブジェクトに合わせて<b>変形されます</b>。"
+"デーション</b>はオブジェクトにあわせて<b>変形されます</b>。"
 
 #: ../src/widgets/select-toolbar.cpp:332
 msgid ""
@@ -22356,7 +21534,7 @@ msgid ""
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
 "これ以降、オブジェクトが変形 (移動、拡大縮小、回転、傾斜) されたとき、<b>パ"
-"ターン</b>はオブジェクトに合わせて<b>変形されます</b>。"
+"ターン</b>はオブジェクトにあわせて<b>変形されます</b>。"
 
 #: ../src/widgets/select-toolbar.cpp:345
 msgid ""
@@ -22554,19 +21732,16 @@ msgid "Alpha (opacity)"
 msgstr "不透明度"
 
 #: ../src/widgets/sp-color-notebook.cpp:339
-#, fuzzy
 msgid "Color Managed"
-msgstr "カラーマネジメント"
+msgstr "カラーマネジメントされています"
 
 #: ../src/widgets/sp-color-notebook.cpp:347
-#, fuzzy
 msgid "Out of gamut!"
-msgstr "色域外警告色:"
+msgstr "色域の範囲外です!"
 
 #: ../src/widgets/sp-color-notebook.cpp:355
-#, fuzzy
 msgid "Too much ink!"
-msgstr "ズームイン"
+msgstr "インクが多すぎます!"
 
 #. Create RGBA entry and color preview
 #: ../src/widgets/sp-color-notebook.cpp:362
@@ -22738,9 +21913,8 @@ msgid "Color/opacity used for color tweaking"
 msgstr "色の微調整で使用する色/不透明度"
 
 #: ../src/widgets/toolbox.cpp:215
-#, fuzzy
 msgid "Color/opacity used for color spraying"
-msgstr "色の微調整で使用する色/不透明度"
+msgstr "色のスプレーで使用する色/不透明度"
 
 #: ../src/widgets/toolbox.cpp:219
 msgid "Style of new stars"
@@ -22783,32 +21957,28 @@ msgid "Style of Paint Bucket fill objects"
 msgstr "バケツの塗りつぶしオブジェクトのスタイル"
 
 #: ../src/widgets/toolbox.cpp:856
-#, fuzzy
 msgid "Default interface setup"
-msgstr "デフォルトのタイトル"
+msgstr "インターフェイスセットアップのデフォルト"
 
 #: ../src/widgets/toolbox.cpp:862
 msgid "Set the custom task"
-msgstr ""
+msgstr "カスタムタスクを設定"
 
 #: ../src/widgets/toolbox.cpp:867
-#, fuzzy
 msgid "Wide"
-msgstr "隠す"
+msgstr "ワイド"
 
 #: ../src/widgets/toolbox.cpp:868
 msgid "Setup for widescreen work"
-msgstr ""
+msgstr "ワイドスクリーン用セットアップ"
 
 #: ../src/widgets/toolbox.cpp:871
-#, fuzzy
 msgid "Task"
-msgstr "マスク(_K)"
+msgstr "タスク"
 
 #: ../src/widgets/toolbox.cpp:872
-#, fuzzy
 msgid "Task:"
-msgstr "マスク(_K)"
+msgstr "タスク:"
 
 #: ../src/widgets/toolbox.cpp:1302
 msgid "Insert node"
@@ -22816,7 +21986,7 @@ msgstr "ノードを挿入"
 
 #: ../src/widgets/toolbox.cpp:1303
 msgid "Insert new nodes into selected segments"
-msgstr "新しいノードを選択セグメントに挿入"
+msgstr "新規ノードを選択セグメントに挿入"
 
 #: ../src/widgets/toolbox.cpp:1306
 msgid "Insert"
@@ -22827,9 +21997,8 @@ msgid "Delete selected nodes"
 msgstr "選択したノードを削除"
 
 #: ../src/widgets/toolbox.cpp:1325
-#, fuzzy
 msgid "Join selected nodes"
-msgstr "選択した端点ノード同士を連結"
+msgstr "選択した端点ノードを連結"
 
 #: ../src/widgets/toolbox.cpp:1328
 msgid "Join"
@@ -22873,7 +22042,7 @@ msgstr "選択ノードの種類をスムーズに"
 
 #: ../src/widgets/toolbox.cpp:1386
 msgid "Node Symmetric"
-msgstr "ノードをシンメトリックに"
+msgstr "ノードを対称に"
 
 #: ../src/widgets/toolbox.cpp:1387
 msgid "Make selected nodes symmetric"
@@ -22904,14 +22073,12 @@ msgid "Make selected segments curves"
 msgstr "選択セグメントを曲線に"
 
 #: ../src/widgets/toolbox.cpp:1426
-#, fuzzy
 msgid "Show Transform Handles"
-msgstr "ハンドルを表示"
+msgstr "変形ハンドルを表示"
 
 #: ../src/widgets/toolbox.cpp:1427
-#, fuzzy
 msgid "Show node transformation handles"
-msgstr "オブジェクトの移動/変形の記録:"
+msgstr "ノードの変形ハンドルを表示"
 
 #: ../src/widgets/toolbox.cpp:1437
 msgid "Show Handles"
@@ -22938,24 +22105,20 @@ msgid "Show next path effect parameter for editing"
 msgstr "次のパスエフェクトパラメータを表示"
 
 #: ../src/widgets/toolbox.cpp:1470
-#, fuzzy
 msgid "Edit clipping paths"
 msgstr "クリッピングパスを編集"
 
 #: ../src/widgets/toolbox.cpp:1471
-#, fuzzy
 msgid "Show editing controls for clipping paths of selected objects"
-msgstr "オブジェクトのクリッピングパスを編集"
+msgstr "選択オブジェクトのクリッピングパスの編集コントロールを表示"
 
 #: ../src/widgets/toolbox.cpp:1481
-#, fuzzy
 msgid "Edit masks"
 msgstr "マスクを編集"
 
 #: ../src/widgets/toolbox.cpp:1482
-#, fuzzy
 msgid "Show editing controls for masks of selected objects"
-msgstr "選択したオブジェクトの色を揺らす"
+msgstr "選択オブジェクトのマスクの編集コントロールを表示"
 
 #: ../src/widgets/toolbox.cpp:1496
 msgid "X coordinate:"
@@ -23055,7 +22218,7 @@ msgstr "線の中間点"
 
 #: ../src/widgets/toolbox.cpp:2229
 msgid "Snap from and to midpoints of line segments"
-msgstr "線の中間点から中間点にスナップ"
+msgstr "線分の中間点から中間点にスナップ"
 
 #: ../src/widgets/toolbox.cpp:2238
 msgid "Object Centers"
@@ -23702,7 +22865,7 @@ msgstr "色の揺れモード"
 
 #: ../src/widgets/toolbox.cpp:4338
 msgid "Jitter the colors of selected objects"
-msgstr "選択したオブジェクトの色を揺らす"
+msgstr "選択オブジェクトの色を揺らす"
 
 #: ../src/widgets/toolbox.cpp:4344
 msgid "Blur mode"
@@ -23788,128 +22951,110 @@ msgstr "微調整アクションの強さの調整に入力デバイスの筆圧
 
 #. Width
 #: ../src/widgets/toolbox.cpp:4536
-#, fuzzy
 msgid "(narrow spray)"
-msgstr "とても狭い"
+msgstr "(細いスプレー)"
 
 #: ../src/widgets/toolbox.cpp:4536
-#, fuzzy
 msgid "(broad spray)"
-msgstr "(ブロードストローク)"
+msgstr "(太いスプレー)"
 
 #: ../src/widgets/toolbox.cpp:4539
-#, fuzzy
 msgid "The width of the spray area (relative to the visible canvas area)"
-msgstr "微調整領域の幅 (可視キャンバス領域に対する相対値)"
+msgstr "スプレー領域の幅 (可視キャンバス領域に対する相対値)"
 
 #. Mean
 #: ../src/widgets/toolbox.cpp:4552
-#, fuzzy
 msgid "(minimum mean)"
-msgstr "(最弱)"
+msgstr "(最小平均)"
 
 #: ../src/widgets/toolbox.cpp:4552
-#, fuzzy
 msgid "(maximum mean)"
-msgstr "(最大の慣性)"
+msgstr "(最大平均)"
 
 #: ../src/widgets/toolbox.cpp:4555
-#, fuzzy
 msgid "Focus"
-msgstr "シャープ"
+msgstr "フォーカス"
 
 #: ../src/widgets/toolbox.cpp:4555
-#, fuzzy
 msgid "Focus:"
-msgstr "強さ:"
+msgstr "フォーカス:"
 
 #: ../src/widgets/toolbox.cpp:4555
 msgid "0 to spray a spot. Increase to enlarge the ring radius."
 msgstr ""
+"0 でクリックした点を中心にスプレーします。大きくすると円半径を拡大します。"
 
 #. Standard_deviation
 #: ../src/widgets/toolbox.cpp:4568
-#, fuzzy
 msgid "(minimum scatter)"
-msgstr "(最弱)"
+msgstr "(最小の散らばり)"
 
 #: ../src/widgets/toolbox.cpp:4568
-#, fuzzy
 msgid "(maximum scatter)"
-msgstr "(最大の震え)"
+msgstr "(最大の散らばり)"
 
 #: ../src/widgets/toolbox.cpp:4571
-#, fuzzy
 msgid "Scatter:"
-msgstr "散乱"
+msgstr "散乱:"
 
 #: ../src/widgets/toolbox.cpp:4571
 msgid "Increase to scatter sprayed objects."
-msgstr ""
+msgstr "大きくするとスプレーされたオブジェクトを散らばらせます。"
 
 #: ../src/widgets/toolbox.cpp:4590
-#, fuzzy
 msgid "Spray copies of the initial selection"
-msgstr "パスの交差点にスナップ"
+msgstr "最初に選択したオブジェクトのコピーをスプレー"
 
 #: ../src/widgets/toolbox.cpp:4597
-#, fuzzy
 msgid "Spray clones of the initial selection"
-msgstr "選択オブジェクトのタイルクローンを作成します"
+msgstr "最初に選択したオブジェクトのクローンをスプレー"
 
 #: ../src/widgets/toolbox.cpp:4603
-#, fuzzy
 msgid "Spray single path"
-msgstr "既存のパスを消す"
+msgstr "単一パスのスプレー"
 
 #: ../src/widgets/toolbox.cpp:4604
 msgid "Spray objects in a single path"
-msgstr ""
+msgstr "単一パスでオブジェクトをスプレー"
 
 #. Population
 #: ../src/widgets/toolbox.cpp:4628
 msgid "(low population)"
-msgstr ""
+msgstr "(低密度)"
 
 #: ../src/widgets/toolbox.cpp:4628
-#, fuzzy
 msgid "(high population)"
-msgstr "(わずかなずれ)"
+msgstr "(高密度)"
 
 #: ../src/widgets/toolbox.cpp:4631
-#, fuzzy
 msgid "Amount:"
-msgstr "量"
+msgstr "量:"
 
 #: ../src/widgets/toolbox.cpp:4632
 msgid "Adjusts the number of items sprayed per clic."
-msgstr ""
+msgstr "クリックごとにスプレーされるアイテムの数を調整します。"
 
 #: ../src/widgets/toolbox.cpp:4648
-#, fuzzy
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects."
-msgstr "ペン幅の変更に入力デバイスの筆圧を使用する"
+msgstr "スプレーオブジェクト量の変更に入力デバイスの筆圧を使用する"
 
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4657
 msgid "(low rotation variation)"
-msgstr ""
+msgstr "(小さな回転変動)"
 
 #: ../src/widgets/toolbox.cpp:4657
-#, fuzzy
 msgid "(high rotation variation)"
-msgstr "(わずかなずれ)"
+msgstr "(大きな回転変動)"
 
 #: ../src/widgets/toolbox.cpp:4660
-#, fuzzy
 msgid "Rotation"
-msgstr "回転(_R)"
+msgstr "回転"
 
 #: ../src/widgets/toolbox.cpp:4660
-#, fuzzy
 msgid "Rotation:"
-msgstr "回転(_R)"
+msgstr "回転:"
 
 #: ../src/widgets/toolbox.cpp:4662
 #, no-c-format
@@ -23917,17 +23062,17 @@ msgid ""
 "Variation of the rotation of the sprayed objects. 0% for the same rotation "
 "than the original object."
 msgstr ""
+"スプレーされるオブジェクトに回転の変化をつけます。0% でオリジナルオブジェクト"
+"と同じ回転量になります。"
 
 #. Scale
 #: ../src/widgets/toolbox.cpp:4675
-#, fuzzy
 msgid "(low scale variation)"
-msgstr "ストローク長変動量"
+msgstr "(小さな拡縮変動)"
 
 #: ../src/widgets/toolbox.cpp:4675
-#, fuzzy
 msgid "(high scale variation)"
-msgstr "(わずかなずれ)"
+msgstr "(大きな拡縮変動)"
 
 #: ../src/widgets/toolbox.cpp:4680
 #, no-c-format
@@ -23935,6 +23080,8 @@ msgid ""
 "Variation in the scale of the sprayed objects. 0% for the same scale than "
 "the original object."
 msgstr ""
+"スプレーされるオブジェクトに大きさの変化をつけます。0% でオリジナルオブジェク"
+"トと同じ大きさになります。"
 
 #: ../src/widgets/toolbox.cpp:4866
 msgid "No preset"
@@ -24273,35 +23420,52 @@ msgstr ""
 msgid "Assign"
 msgstr "割り当て"
 
+#: ../src/widgets/toolbox.cpp:5832
+msgid "Closed"
+msgstr "完結"
+
+#: ../src/widgets/toolbox.cpp:5834
+msgid "Open start"
+msgstr "始点を開放"
+
+#: ../src/widgets/toolbox.cpp:5836
+msgid "Open end"
+msgstr "終点を開放"
+
+#: ../src/widgets/toolbox.cpp:5838
+msgid "Open both"
+msgstr "両端を開放"
+
 #: ../src/widgets/toolbox.cpp:5897
 msgid "All inactive"
-msgstr ""
+msgstr "全て無効"
 
 #: ../src/widgets/toolbox.cpp:5898
 msgid "No geometric tool is active"
-msgstr ""
+msgstr "幾何学系ツール以外は有効"
 
 #: ../src/widgets/toolbox.cpp:5931
 msgid "Show limiting bounding box"
-msgstr ""
+msgstr "制限境界枠を表示"
 
 #: ../src/widgets/toolbox.cpp:5932
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
+msgstr "(無限線をカットする) 境界枠を表示します"
 
 #: ../src/widgets/toolbox.cpp:5943
 msgid "Get limiting bounding box from selection"
-msgstr ""
+msgstr "選択オブジェクトから制限境界枠を取得"
 
 #: ../src/widgets/toolbox.cpp:5944
 msgid ""
 "Set limiting bounding box (used to cut infinite lines) to the bounding box "
 "of current selection"
 msgstr ""
+"現在の選択オブジェクトの境界枠を (無限線をカットする) 制限境界枠に設定します"
 
 #: ../src/widgets/toolbox.cpp:5956
 msgid "Choose a line segment type"
-msgstr ""
+msgstr "直線セグメントのタイプを選択してください"
 
 #: ../src/widgets/toolbox.cpp:5972
 msgid "Display measuring info"
@@ -24389,29 +23553,27 @@ msgstr "斜体"
 
 #: ../src/widgets/toolbox.cpp:7328
 msgid "Set connector type: orthogonal"
-msgstr ""
+msgstr "コネクタタイプの設定: 直角"
 
 #: ../src/widgets/toolbox.cpp:7328
 msgid "Set connector type: polyline"
-msgstr ""
+msgstr "コネクタタイプの設定: ポリライン"
 
 #: ../src/widgets/toolbox.cpp:7378
-#, fuzzy
 msgid "Change connector curvature"
-msgstr "コネクタ間隔の変更"
+msgstr "コネクタ曲率の変更"
 
 #: ../src/widgets/toolbox.cpp:7427
 msgid "Change connector spacing"
 msgstr "コネクタ間隔の変更"
 
 #: ../src/widgets/toolbox.cpp:7541
-#, fuzzy
 msgid "EditMode"
-msgstr "エッジモード:"
+msgstr "編集モード"
 
 #: ../src/widgets/toolbox.cpp:7542
 msgid "Switch between connection point editing and connector drawing mode"
-msgstr ""
+msgstr "接続点編集モードとコネクタ描画モードの切り替え"
 
 #: ../src/widgets/toolbox.cpp:7556
 msgid "Avoid"
@@ -24423,25 +23585,23 @@ msgstr "無視"
 
 #: ../src/widgets/toolbox.cpp:7577
 msgid "Orthogonal"
-msgstr ""
+msgstr "直角"
 
 #: ../src/widgets/toolbox.cpp:7578
 msgid "Make connector orthogonal or polyline"
-msgstr ""
+msgstr "直角またはポリラインのコネクタを作成"
 
 #: ../src/widgets/toolbox.cpp:7592
-#, fuzzy
 msgid "Connector Curvature"
-msgstr "コネクタの設定"
+msgstr "コネクタ曲率"
 
 #: ../src/widgets/toolbox.cpp:7592
-#, fuzzy
 msgid "Curvature:"
-msgstr "最小曲率"
+msgstr "曲率:"
 
 #: ../src/widgets/toolbox.cpp:7593
 msgid "The amount of connectors curvature"
-msgstr ""
+msgstr "コネクタの曲率"
 
 #: ../src/widgets/toolbox.cpp:7603
 msgid "Connector Spacing"
@@ -24469,7 +23629,7 @@ msgstr "長さ:"
 
 #: ../src/widgets/toolbox.cpp:7626
 msgid "Ideal length for connectors when layout is applied"
-msgstr "レイアウト適用時のコネクタの理想長さ"
+msgstr "レイアウト適用時のコネクタの理想長"
 
 #: ../src/widgets/toolbox.cpp:7638
 msgid "Downwards"
@@ -24484,22 +23644,20 @@ msgid "Do not allow overlapping shapes"
 msgstr "シェイプの重なりを許可しない"
 
 #: ../src/widgets/toolbox.cpp:7671
-#, fuzzy
 msgid "New connection point"
-msgstr "コネクタ間隔の変更"
+msgstr "新規接続点"
 
 #: ../src/widgets/toolbox.cpp:7672
 msgid "Add a new connection point to the currently selected item"
-msgstr ""
+msgstr "現在選択されているアイテムに新規接続点を追加"
 
 #: ../src/widgets/toolbox.cpp:7683
-#, fuzzy
 msgid "Remove connection point"
-msgstr "コネクタの経路変更"
+msgstr "接続点を削除"
 
 #: ../src/widgets/toolbox.cpp:7684
 msgid "Remove the currently selected connection point"
-msgstr ""
+msgstr "現在選択されている接続点を削除"
 
 #: ../src/widgets/toolbox.cpp:7784
 msgid "Fill by"
@@ -24560,60 +23718,48 @@ msgstr ""
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
 #: ../share/extensions/render_barcode_datamatrix.inx.h:1
-#, fuzzy
 msgid "Barcode - Datamatrix"
-msgstr "バーコードデータ:"
+msgstr "バーコード - データマトリクス"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#, fuzzy
 msgid "Cols"
-msgstr "色"
+msgstr "列"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
-#, fuzzy
 msgid "Rows"
-msgstr "行:"
+msgstr "行"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
-#, fuzzy
 msgid "Square Size / px"
-msgstr "四角"
+msgstr "サイズ / px"
 
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Hide lines behind the sphere"
-msgstr ""
+msgstr "球体の裏側の線を隠す"
 
 #: ../share/extensions/wireframe_sphere.inx.h:2
 msgid "Lines of latitude"
-msgstr ""
+msgstr "緯度線の数"
 
 #: ../share/extensions/wireframe_sphere.inx.h:3
 msgid "Lines of longitude"
-msgstr ""
+msgstr "経度線の数"
 
 #: ../share/extensions/wireframe_sphere.inx.h:4
-#, fuzzy
 msgid "Radius [px]"
-msgstr "半径 / px"
+msgstr "半径 [px]"
 
 #: ../share/extensions/wireframe_sphere.inx.h:6
-#, fuzzy
 msgid "Rotation [deg]"
-msgstr "回転 (度)"
+msgstr "回転 [度]"
 
 #: ../share/extensions/wireframe_sphere.inx.h:7
 msgid "Tilt [deg]"
-msgstr ""
+msgstr "傾斜 [度]"
 
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
-msgstr ""
-
-#~ msgid "<b>Connection point</b>: click or drag to create a new connector"
-#~ msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成します。"
-
-#~ msgid "bounding box"
-#~ msgstr "境界枠"
+msgstr "ワイヤーフレーム球体"
 
 #~ msgid ""
 #~ "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
@@ -24702,6 +23848,9 @@ msgstr ""
 
 #~ msgid "end node"
 #~ msgstr "端点ノード"
+
+#~ msgid "cusp"
+#~ msgstr "シャープ"
 
 #~ msgid "smooth"
 #~ msgstr "スムーズ"
@@ -24795,15 +23944,15 @@ msgstr ""
 #~ msgid "The selection has no applied mask."
 #~ msgstr "選択オブジェクトに適用されているマスクはありません。"
 
-#~ msgid "<b>Flowed text</b> (%d character)"
-#~ msgid_plural "<b>Flowed text</b> (%d characters)"
-#~ msgstr[0] "<b>流し込みテキスト</b> (%d 文字)"
-#~ msgstr[1] "<b>流し込みテキスト</b> (%d 文字)"
+#~ msgid "<b>Flowed text</b> (%d character%s)"
+#~ msgid_plural "<b>Flowed text</b> (%d characters%s)"
+#~ msgstr[0] "<b>流し込みテキスト</b> (%d 文字%s)"
+#~ msgstr[1] "<b>流し込みテキスト</b> (%d 文字%s)"
 
-#~ msgid "<b>Linked flowed text</b> (%d character)"
-#~ msgid_plural "<b>Linked flowed text</b> (%d characters)"
-#~ msgstr[0] "<b>リンクされた流し込みテキスト</b> (%d 文字)"
-#~ msgstr[1] "<b>リンクされた流し込みテキスト</b> (%d 文字)"
+#~ msgid "<b>Linked flowed text</b> (%d character%s)"
+#~ msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
+#~ msgstr[0] "<b>リンク付き流し込みテキスト</b> (%d 文字%s)"
+#~ msgstr[1] "<b>リンク付き流し込みテキスト</b> (%d 文字%s)"
 
 #~ msgid "<b>Path</b> (%i node, path effect: %s)"
 #~ msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
@@ -24839,12 +23988,6 @@ msgstr ""
 #~ "<b>囲むようにドラッグ</b>して選択してから、ノードとハンドルを<b>ドラッグ</"
 #~ "b>。オブジェクトを<b>クリック</b>して選択。"
 
-#~ msgid "Center objects horizontally"
-#~ msgstr "オブジェクトを水平方向に中央揃え"
-
-#~ msgid "<b>Format</b>"
-#~ msgstr "<b>書式</b>"
-
 #~ msgid "Path outline flash on mouse-over"
 #~ msgstr "マウスオーバー時パスアウトラインを点滅する"
 
@@ -24854,12 +23997,6 @@ msgstr ""
 #~ msgid "If a path is selected, do not continue flashing path outlines."
 #~ msgstr "パスが選択されたとき、パスアウトラインの点滅を止めます。"
 
-#~ msgid "P_age size:"
-#~ msgstr "ページサイズ(_A):"
-
-#~ msgid "Page orientation:"
-#~ msgstr "ページの向き:"
-
 #~ msgid "Join endnodes"
 #~ msgstr "端点ノードを結合"
 
@@ -24868,6 +24005,24 @@ msgstr ""
 
 #~ msgid "Edit the mask of the object"
 #~ msgstr "オブジェクトのマスクを編集"
+
+#~ msgid "<b>Format</b>"
+#~ msgstr "<b>書式</b>"
+
+#~ msgid "P_age size:"
+#~ msgstr "ページサイズ(_A):"
+
+#~ msgid "Page orientation:"
+#~ msgstr "ページの向き:"
+
+#~ msgid "<b>Connection point</b>: click or drag to create a new connector"
+#~ msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成します。"
+
+#~ msgid "bounding box"
+#~ msgstr "境界枠"
+
+#~ msgid "Center objects horizontally"
+#~ msgstr "オブジェクトを水平方向に中央揃え"
 
 #~ msgid "_Instant Messaging..."
 #~ msgstr "インスタントメッセージング(_I)..."
