@@ -28,27 +28,27 @@ class SPStarContext;
 class SPStarContextClass;
 
 struct SPStarContext : public SPEventContext {
-	SPItem *item;
-	Geom::Point center;
+    SPItem *item;
+    Geom::Point center;
 
-	/* Number of corners */
-	gint magnitude;
-	/* Outer/inner radius ratio */
-	gdouble proportion;
-	/* flat sides or not? */
-	bool isflatsided;
-	/* rounded corners ratio */
-	gdouble rounded;
-	// randomization
-	gdouble randomized;
+    /* Number of corners */
+    gint magnitude;
+    /* Outer/inner radius ratio */
+    gdouble proportion;
+    /* flat sides or not? */
+    bool isflatsided;
+    /* rounded corners ratio */
+    gdouble rounded;
+    // randomization
+    gdouble randomized;
 
     sigc::connection sel_changed_connection;
 
-	Inkscape::MessageContext *_message_context;
+    Inkscape::MessageContext *_message_context;
 };
 
 struct SPStarContextClass {
-	SPEventContextClass parent_class;
+    SPEventContextClass parent_class;
 };
 
 GtkType sp_star_context_get_type (void);

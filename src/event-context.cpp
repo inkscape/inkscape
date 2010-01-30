@@ -58,6 +58,7 @@
 #include "selcue.h"
 #include "lpe-tool-context.h"
 #include "ui/tool/control-point.h"
+#include "shape-editor.h"
 
 static void sp_event_context_class_init(SPEventContextClass *klass);
 static void sp_event_context_init(SPEventContext *event_context);
@@ -741,6 +742,15 @@ gint sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item,
     }
 
     return ret;
+}
+
+bool sp_event_context_knot_mouseover(SPEventContext *ec)
+{
+    if (ec->shape_editor) {
+        return !(ec->shape_editor->knot_mouseover());
+    }
+
+    return false;
 }
 
 /**

@@ -593,6 +593,15 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             ret = TRUE;
         } else {
+            if (sp_event_context_knot_mouseover(event_context)) {
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point const motion_dt = event_context->desktop->w2d(motion_w);
+                m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
+            }
+
             bool over_line = false;
             if (drag->lines) {
                 for (GSList *l = drag->lines; l != NULL; l = l->next) {

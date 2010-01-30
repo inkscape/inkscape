@@ -49,6 +49,8 @@ public:
 
     const SPItem *getItem() { return item; }
 
+    bool knot_mouseover();
+
     friend class ShapeEditor;
 
 protected:

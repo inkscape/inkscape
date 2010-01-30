@@ -62,6 +62,8 @@ public:
     // this one is only public because it's called from non-C++ repr changed callback
     void shapeeditor_event_attr_changed(gchar const *name);
 
+    bool knot_mouseover();
+
 private:
     bool has_knotholder ();
     void reset_item (SubType type, bool keep_knotholder = true);

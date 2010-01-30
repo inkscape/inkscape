@@ -214,6 +214,22 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
     return findBestSnap(p, sc, false);
 }
 
+void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
+{
+    // setup() must have been called before calling this method!
+
+    if (_snapindicator) {
+        _snapindicator = false; // prevent other methods from drawing a snap indicator; we want to control this here
+        Inkscape::SnappedPoint s = freeSnap(p);
+        if (s.getSnapped()) {
+            _desktop->snapindicator->set_new_snaptarget(s, true);
+        } else {
+            _desktop->snapindicator->remove_snaptarget();
+        }
+        _snapindicator = true; // restore the original value
+    }
+}
+
 /**
  * \brief Snap to the closest multiple of a grid pitch
  *

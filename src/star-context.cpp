@@ -291,6 +291,13 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             gobble_motion_events(GDK_BUTTON1_MASK);
 
             ret = TRUE;
+        } else if (sp_event_context_knot_mouseover(event_context)) {
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop);
+
+            Geom::Point const motion_w(event->motion.x, event->motion.y);
+            Geom::Point motion_dt(desktop->w2d(motion_w));
+            m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
         }
         break;
     case GDK_BUTTON_RELEASE:
@@ -472,13 +479,13 @@ sp_star_finish (SPStarContext * sc)
     sc->_message_context->clear();
 
     if (sc->item != NULL) {
-    	SPStar *star = SP_STAR(sc->item);
-    	if (star->r[1] == 0) {
-    		sp_star_cancel(sc); // Don't allow the creating of zero sized arc, for example when the start and and point snap to the snap grid point
-    		return;
-    	}
+        SPStar *star = SP_STAR(sc->item);
+        if (star->r[1] == 0) {
+            sp_star_cancel(sc); // Don't allow the creating of zero sized arc, for example when the start and and point snap to the snap grid point
+            return;
+        }
 
-    	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+        SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
         SPObject *object = SP_OBJECT(sc->item);
 
         sp_shape_set_shape(SP_SHAPE(sc->item));
@@ -497,14 +504,14 @@ sp_star_finish (SPStarContext * sc)
 
 static void sp_star_cancel(SPStarContext *sc)
 {
-	SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
+    SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
-	sp_desktop_selection(desktop)->clear();
-	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
+    sp_desktop_selection(desktop)->clear();
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
 
     if (sc->item != NULL) {
-    	SP_OBJECT(sc->item)->deleteObject();
-    	sc->item = NULL;
+        SP_OBJECT(sc->item)->deleteObject();
+        sc->item = NULL;
     }
 
     sc->within_tolerance = false;

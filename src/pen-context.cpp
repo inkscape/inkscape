@@ -469,7 +469,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                         if (pc->npoints == 0) {
 
                             Geom::Point p;
-                          if ((bevent.state & GDK_CONTROL_MASK) && (pc->polylines_only || pc->polylines_paraxial)) {
+                            if ((bevent.state & GDK_CONTROL_MASK) && (pc->polylines_only || pc->polylines_paraxial)) {
                                 p = event_dt;
                                 if (!(bevent.state & GDK_SHIFT_MASK)) {
                                     SnapManager &m = desktop->namedview->snap_manager;
@@ -479,7 +479,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                               spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
                               ret = TRUE;
                               break;
-                          }
+                            }
 
                             // TODO: Perhaps it would be nicer to rearrange the following case
                             // distinction so that the case of a waiting LPE is treated separately
@@ -632,6 +632,10 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                         spdc_endpoint_snap(pc, p, mevent.state);
                         spdc_pen_set_subsequent_point(pc, p, true);
                         ret = TRUE;
+                    } else if (sp_event_context_knot_mouseover(pc)) {
+                        SnapManager &m = dt->namedview->snap_manager;
+                        m.setup(dt);
+                        m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
                     }
                     break;
                 case SP_PEN_CONTEXT_CONTROL:
@@ -677,6 +681,11 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                             pc->_message_context->clear();
                             pc->anchor_statusbar = false;
                         }
+                        if (sp_event_context_knot_mouseover(pc)) {
+                            SnapManager &m = dt->namedview->snap_manager;
+                            m.setup(dt);
+                            m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                        }
                     }
                     break;
                 case SP_PEN_CONTEXT_CONTROL:
@@ -698,6 +707,11 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                     /* This is perfectly valid */
                     break;
                 default:
+                    if (sp_event_context_knot_mouseover(pc)) {
+                        SnapManager &m = dt->namedview->snap_manager;
+                        m.setup(dt);
+                        m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
+                    }
                     break;
             }
             break;

@@ -105,6 +105,8 @@ public:
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapCandidatePoint const &p,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
 
+    void preSnap(Inkscape::SnapCandidatePoint const &p);
+
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
 
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a

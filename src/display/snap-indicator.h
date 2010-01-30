@@ -26,7 +26,7 @@ public:
     SnapIndicator(SPDesktop *desktop);
     virtual ~SnapIndicator();
 
-    void set_new_snaptarget(Inkscape::SnappedPoint const &p);
+    void set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap = false);
     void remove_snaptarget();
 
     void set_new_snapsource(Inkscape::SnapCandidatePoint const &p);

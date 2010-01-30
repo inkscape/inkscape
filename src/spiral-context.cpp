@@ -277,6 +277,13 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 ret = TRUE;
+            } else if (sp_event_context_knot_mouseover(sc)) {
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point motion_dt(desktop->w2d(motion_w));
+                m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_NODE_HANDLE));
             }
             break;
         case GDK_BUTTON_RELEASE:

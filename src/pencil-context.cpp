@@ -295,7 +295,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 static gint
 pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
 {
-       SPDesktop *const dt = pc->desktop;
+    SPDesktop *const dt = pc->desktop;
 
     if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
         // mouse was accidentally moved during Ctrl+click;
@@ -394,6 +394,11 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 } else if (!anchor && pc->anchor_statusbar) {
                     pc->_message_context->clear();
                     pc->anchor_statusbar = false;
+                }
+                if (sp_event_context_knot_mouseover(pc)) {
+                    SnapManager &m = dt->namedview->snap_manager;
+                    m.setup(dt);
+                    m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
                 }
             }
             break;

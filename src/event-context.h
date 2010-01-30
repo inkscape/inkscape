@@ -171,6 +171,7 @@ SPItem *sp_event_context_find_item (SPDesktop *desktop, Geom::Point const &p, bo
 SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const &p);
 
 ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
+bool sp_event_context_knot_mouseover(SPEventContext *ec);
 
 void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
                                      gchar const *name, gchar const *old_value, gchar const *new_value,

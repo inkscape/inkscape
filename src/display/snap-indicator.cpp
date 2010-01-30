@@ -43,7 +43,7 @@ SnapIndicator::~SnapIndicator()
 }
 
 void
-SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
+SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap)
 {
     remove_snaptarget(); //only display one snaptarget at a time
 
@@ -220,7 +220,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
                                             "anchor", GTK_ANCHOR_CENTER,
                                             "size", 10.0,
                                             "stroked", TRUE,
-                                            "stroke_color", 0xff0000ff,
+                                            "stroke_color", pre_snap ? 0x7f7f7fff : 0xff0000ff,
                                             "mode", SP_KNOT_MODE_XOR,
                                             "shape", SP_KNOT_SHAPE_DIAMOND,
                                             NULL );
@@ -230,7 +230,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
                                             "anchor", GTK_ANCHOR_CENTER,
                                             "size", 10.0,
                                             "stroked", TRUE,
-                                            "stroke_color", 0xff0000ff,
+                                            "stroke_color", pre_snap ? 0x7f7f7fff : 0xff0000ff,
                                             "mode", SP_KNOT_MODE_XOR,
                                             "shape", SP_KNOT_SHAPE_CROSS,
                                             NULL );
@@ -241,15 +241,20 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
         SP_CTRL(canvasitem)->moveto(p.getPoint());
         _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
 
+        // Display the tooltip, which reveals the type of snap source and the type of snap target
         gchar *tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
         Geom::Point tooltip_pos = p.getPoint() + _desktop->w2d(Geom::Point(15, -15));
 
         SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
+        if (pre_snap) {
+            SP_CANVASTEXT(canvas_tooltip)->rgba = 0x7f7f7fff;
+        }
         g_free(tooltip_str);
 
         sp_canvastext_set_anchor((SPCanvasText* )canvas_tooltip, -1, 1);
         _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
 
+        // Display the bounding box, if we snapped to one
         Geom::OptRect const bbox = p.getTargetBBox();
         if (bbox) {
             SPCanvasItem* box = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
@@ -257,7 +262,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p)
                                                      NULL);
 
             SP_CTRLRECT(box)->setRectangle(*bbox);
-            SP_CTRLRECT(box)->setColor(0xff0000ff, 0, 0);
+            SP_CTRLRECT(box)->setColor(pre_snap ? 0x7f7f7fff : 0xff0000ff, 0, 0);
             SP_CTRLRECT(box)->setDashed(true);
             sp_canvas_item_move_to_z(box, 0);
             _snaptarget_bbox = _desktop->add_temporary_canvasitem(box, timeout_val);

@@ -226,6 +226,16 @@ bool ShapeEditor::has_selection() {
     return false; //  so far, knotholder cannot have selection
 }
 
+/**
+ * \brief Returns true if this ShapeEditor has a knot above which the mouse currently hovers
+ */
+bool ShapeEditor::knot_mouseover()
+{
+    if (this->knotholder) {
+        return knotholder->knot_mouseover();
+    }
+}
+
 /*
   Local Variables:
   mode:c++
