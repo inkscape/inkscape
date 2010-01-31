@@ -501,7 +501,7 @@
            -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff -lpopt ${devlibs}/lib/zdll.lib
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -556,7 +556,7 @@
            -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -608,7 +608,7 @@
            -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg.dll -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -660,13 +660,14 @@
     <copy todir="${dist}" file="${devlibs}/bin/libfontconfig-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxml2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libexpat.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
     <!--<copy file="${devlibs}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/jpeg62.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng13.dll"/>
     <!-- GTK changed their dep file name for PNG!   :-(  -->
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
