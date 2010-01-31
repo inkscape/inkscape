@@ -328,6 +328,16 @@ static GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, g
                                 );
                             if ( pngPtr )
                             {
+                                if ( setjmp(png_jmpbuf(pngPtr)) )
+                                {
+                                    // libpng calls longjmp to return here if an error occurs.
+                                    png_destroy_read_struct( &pngPtr, &infoPtr, NULL );
+                                    fclose(fp);
+                                    gdk_pixbuf_loader_close(loader, NULL);
+                                    g_object_unref(loader);
+                                    return NULL;
+                                }
+
                                 infoPtr = png_create_info_struct( pngPtr );
                                 //endPtr = png_create_info_struct( pngPtr );
 
