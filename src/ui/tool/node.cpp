@@ -872,6 +872,7 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
 
     if (held_control(*event)) {
         Geom::Point origin = _last_drag_origin();
+        Inkscape::SnappedPoint fp, bp;
         if (held_alt(*event)) {
             // with Ctrl+Alt, constrain to handle lines
             // project the new position onto a handle line that is closer
@@ -880,10 +881,10 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
 
             // TODO: combine these two branches by modifying snap.h / snap.cpp
             if (snap) {
-                Inkscape::SnappedPoint fp, bp;
                 fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_front);
                 bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_back);
-
+            }
+            if (fp.getSnapped() || bp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
                     bp.getPoint(new_pos);
                 } else {
@@ -902,12 +903,12 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
             // with Ctrl, constrain to axes
             // TODO combine the two branches
             if (snap) {
-                Inkscape::SnappedPoint fp, bp;
                 Inkscape::Snapper::ConstraintLine line_x(origin, Geom::Point(1, 0));
                 Inkscape::Snapper::ConstraintLine line_y(origin, Geom::Point(0, 1));
                 fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_x);
                 bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_y);
-
+            }
+            if (fp.getSnapped() || bp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
                     fp = bp;
                 }
