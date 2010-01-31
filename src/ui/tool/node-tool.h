@@ -58,6 +58,8 @@ struct InkNodeTool : public SPEventContext
 
     unsigned cursor_drag : 1;
     unsigned show_outline : 1;
+    unsigned live_outline : 1;
+    unsigned live_objects : 1;
     unsigned show_path_direction : 1;
     unsigned show_transform_handles : 1;
     unsigned single_node_transform_handles : 1;

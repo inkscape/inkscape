@@ -98,6 +98,9 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _num_selected(0)
     , _show_handles(true)
     , _show_outline(false)
+    , _show_path_direction(false)
+    , _live_outline(true)
+    , _live_objects(true)
     , _lpe_key(lpe_key)
 {
     if (_lpe_key.empty()) {
@@ -190,6 +193,13 @@ void PathManipulator::writeXML()
         _path = 0;
     }
     _observer->unblock();
+
+    if (!empty()) {
+        if (!_live_outline)
+            _updateOutline();
+        if (!_live_objects)
+            _setGeometry();
+    }
 }
 
 /** Remove all nodes from the path. */
@@ -754,6 +764,16 @@ void PathManipulator::showPathDirection(bool show)
     _updateOutline();
 }
 
+void PathManipulator::setLiveOutline(bool set)
+{
+    _live_outline = set;
+}
+
+void PathManipulator::setLiveObjects(bool set)
+{
+    _live_objects = set;
+}
+
 void PathManipulator::setControlsTransform(Geom::Matrix const &tnew)
 {
     Geom::Matrix delta = _i2d_transform.inverse() * _edit_transform.inverse() * tnew * _i2d_transform;
@@ -1016,8 +1036,10 @@ void PathManipulator::_createGeometryFromControlPoints()
     }
     builder.finish();
     _spcurve->set_pathvector(builder.peek() * (_edit_transform * _i2d_transform).inverse());
-    _updateOutline();
-    _setGeometry();
+    if (_live_outline)
+        _updateOutline();
+    if (_live_objects)
+        _setGeometry();
 }
 
 /** Build one segment of the geometric representation.

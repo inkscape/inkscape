@@ -286,6 +286,8 @@ void ink_node_tool_setup(SPEventContext *ec)
     // read prefs before adding items to selection to prevent momentarily showing the outline
     sp_event_context_read(nt, "show_handles");
     sp_event_context_read(nt, "show_outline");
+    sp_event_context_read(nt, "live_outline");
+    sp_event_context_read(nt, "live_objects");
     sp_event_context_read(nt, "show_path_direction");
     sp_event_context_read(nt, "show_transform_handles");
     sp_event_context_read(nt, "single_node_transform_handles");
@@ -316,6 +318,12 @@ void ink_node_tool_set(SPEventContext *ec, Inkscape::Preferences::Entry *value)
     } else if (entry_name == "show_outline") {
         nt->show_outline = value->getBool();
         nt->_multipath->showOutline(nt->show_outline);
+    } else if (entry_name == "live_outline") {
+        nt->live_outline = value->getBool();
+        nt->_multipath->setLiveOutline(nt->live_outline);
+    } else if (entry_name == "live_objects") {
+        nt->live_objects = value->getBool();
+        nt->_multipath->setLiveObjects(nt->live_objects);
     } else if (entry_name == "show_path_direction") {
         nt->show_path_direction = value->getBool();
         nt->_multipath->showPathDirection(nt->show_path_direction);

@@ -79,6 +79,8 @@ public:
     void showOutline(bool show);
     void showHandles(bool show);
     void showPathDirection(bool show);
+    void setLiveOutline(bool set);
+    void setLiveObjects(bool set);
     void setControlsTransform(Geom::Matrix const &);
     void hideDragPoint();
 
@@ -130,6 +132,8 @@ private:
     bool _show_handles;
     bool _show_outline;
     bool _show_path_direction;
+    bool _live_outline;
+    bool _live_objects;
     Glib::ustring _lpe_key;
 
     friend class PathManipulatorObserver;

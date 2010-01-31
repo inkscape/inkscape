@@ -142,6 +142,8 @@ protected:
                     _t_sel_cue_box, _t_bbox_visual, _t_bbox_geometric;
     PrefCheckButton _t_cvg_keep_objects, _t_cvg_convert_whole_groups;
     PrefCheckButton _t_node_show_outline;
+    PrefCheckButton _t_node_live_outline;
+    PrefCheckButton _t_node_live_objects;
     PrefCheckButton _t_node_pathflash_enabled;
     PrefCheckButton _t_node_pathflash_selected;
     PrefSpinButton  _t_node_pathflash_timeout;

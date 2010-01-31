@@ -174,6 +174,8 @@ void MultiPathManipulator::setItems(std::set<ShapeRecord> const &s)
         // always show outlines for clips and masks
         newpm->showOutline(_show_outline || r.role != SHAPE_ROLE_NORMAL);
         newpm->showPathDirection(_show_path_direction);
+        newpm->setLiveOutline(_live_outline);
+        newpm->setLiveObjects(_live_objects);
         _mmap.insert(std::make_pair(r, newpm));
     }
 }
@@ -392,6 +394,26 @@ void MultiPathManipulator::showPathDirection(bool show)
 {
     invokeForAll(&PathManipulator::showPathDirection, show);
     _show_path_direction = show;
+}
+
+/** @brief Set live outline update status
+ * When set to true, outline will be updated continuously when dragging
+ * or transforming nodes. Otherwise it will only update when changes are committed
+ * to XML. */
+void MultiPathManipulator::setLiveOutline(bool set)
+{
+    invokeForAll(&PathManipulator::setLiveOutline, set);
+    _live_outline = set;
+}
+
+/** @brief Set live object update status
+ * When set to true, objects will be updated continuously when dragging
+ * or transforming nodes. Otherwise they will only update when changes are committed
+ * to XML. */
+void MultiPathManipulator::setLiveObjects(bool set)
+{
+    invokeForAll(&PathManipulator::setLiveObjects, set);
+    _live_objects = set;
 }
 
 void MultiPathManipulator::updateOutlineColors()
