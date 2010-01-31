@@ -241,36 +241,33 @@ void MultiPathManipulator::joinNodes()
 
     for (IterPairList::iterator i = joins.begin(); i != joins.end(); ++i) {
         bool same_path = prepare_join(*i);
-        bool mouseover = true;
         NodeList &sp_first = NodeList::get(i->first);
         NodeList &sp_second = NodeList::get(i->second);
         i->first->setType(NODE_CUSP, false);
 
-        Geom::Point joined_pos, pos_front, pos_back;
-        pos_front = *i->second->front();
-        pos_back = *i->first->back();
+        Geom::Point joined_pos, pos_handle_front, pos_handle_back;
+        pos_handle_front = *i->second->front();
+        pos_handle_back = *i->first->back();
+
+        // When we encounter the mouseover node, we unset the iterator - it will be invalidated
         if (i->first == preserve_pos) {
             joined_pos = *i->first;
+            preserve_pos = NodeList::iterator();
         } else if (i->second == preserve_pos) {
             joined_pos = *i->second;
+            preserve_pos = NodeList::iterator();
         } else {
-            joined_pos = Geom::middle_point(pos_back, pos_front);
-            mouseover = false;
+            joined_pos = Geom::middle_point(*i->first, *i->second);
         }
 
         // if the handles aren't degenerate, don't move them
         i->first->move(joined_pos);
         Node *joined_node = i->first.ptr();
         if (!i->second->front()->isDegenerate()) {
-            joined_node->front()->setPosition(pos_front);
+            joined_node->front()->setPosition(pos_handle_front);
         }
         if (!i->first->back()->isDegenerate()) {
-            joined_node->back()->setPosition(pos_back);
-        }
-        if (mouseover) {
-            // Second node could be mouseovered, but it will be deleted, so we must change
-            // the preserve_pos iterator to the first node.
-            preserve_pos = i->first;
+            joined_node->back()->setPosition(pos_handle_back);
         }
         sp_second.erase(i->second);
 
