@@ -666,11 +666,11 @@
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/jpeg62.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng13.dll"/>
     <!-- GTK changed their dep file name for PNG!   :-(  -->
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libtiff3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libtiff-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr71.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/zlib1.dll"/>
