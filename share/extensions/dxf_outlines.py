@@ -7,6 +7,7 @@ Copyright (C) 2008 Alvin Penner, penner@vaxxine.com
 - ROBO-Master output option added Aug 2008
 - ROBO-Master multispline output added Sept 2008
 - LWPOLYLINE output modification added Dec 2008
+- toggle between LINE/LWPOLYLINE added Jan 2010
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -53,6 +54,7 @@ class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
+        self.OptionParser.add_option("-P", "--POLY", action="store", type="string", dest="POLY")
         self.OptionParser.add_option("--tab", action="store", type="string", dest="tab")
         self.OptionParser.add_option("--inputhelp", action="store", type="string", dest="inputhelp")
         self.dxf = []
@@ -65,6 +67,10 @@ class MyEffect(inkex.Effect):
     def dxf_add(self, str):
         self.dxf.append(str)
     def dxf_line(self,csp):
+        self.handle += 1
+        self.dxf_add("  0\nLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n 62\n%d\n100\nAcDbLine\n" % (self.handle, self.color))
+        self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n 11\n%f\n 21\n%f\n 31\n0.0\n" % (csp[0][0],csp[0][1],csp[1][0],csp[1][1]))
+    def LWPOLY_line(self,csp):
         if (abs(csp[0][0] - self.poly[-1][0]) > .0001
             or abs(csp[0][1] - self.poly[-1][1]) > .0001):
             self.LWPOLY_output()                            # terminate current polyline
@@ -174,14 +180,18 @@ class MyEffect(inkex.Effect):
                         s = sub[i]
                         e = sub[i+1]
                         if s[1] == s[2] and e[0] == e[1]:
-                            self.dxf_line([s[1],e[1]])
+                            if (self.options.POLY == 'true'):
+                                self.LWPOLY_line([s[1],e[1]])
+                            else:
+                                self.dxf_line([s[1],e[1]])
                         elif (self.options.ROBO == 'true'):
                             self.ROBO_spline([s[1],s[2],e[0],e[1]])
                         else:
                             self.dxf_spline([s[1],s[2],e[0],e[1]])
         if self.options.ROBO == 'true':
             self.ROBO_output()
-        self.LWPOLY_output()
+        if self.options.POLY == 'true':
+            self.LWPOLY_output()
         self.dxf_add(dxf_templates.r14_footer)
 
 if __name__ == '__main__':
