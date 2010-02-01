@@ -1373,10 +1373,10 @@ void FileOpenDialogImplWin32::render_preview()
     if(_preview_bitmap_image)    // Is the image a pixbuf?
     {
         // Set the transformation
-        const Matrix matrix = {
+        const Cairo::Matrix matrix(
             scaleFactor, 0,
             0, scaleFactor,
-            svgX, svgY };
+            svgX, svgY);
         context->set_matrix (matrix);
 
         // Render the image

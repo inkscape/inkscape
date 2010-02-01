@@ -53,7 +53,8 @@
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
   <property name="devlibs"       location="${env.DEVLIBS_PATH}"/>
-  <property name="mingw_bin"     location="${env.MINGW_BIN}"/>
+  <property name="mingw"         location="${env.MINGW_PATH}"/>
+  <property name="mingw_bin"     location="${env.MINGW_PATH}/bin"/>
   <property name="cxxtest"       location="cxxtest"/>
   <property name="python"        location="${devlibs}/python/python.exe"/>
   <!-- -->
@@ -391,7 +392,8 @@
             <!-- GTK / GTKMM -->
             ${pcc.gtkmm-2.4}
             <!-- OTHER -->
-            -I${devlibs}/include/libxml2 
+			${pcc.Magick++}
+			${pcc.libxml-2.0}
             ${pcc.freetype2}
             ${pcc.cairo}
             ${pcc.poppler}
@@ -496,12 +498,11 @@
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
-           ${pcl.ImageMagick++}
+           ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -551,12 +552,11 @@
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
-           ${pcl.ImageMagick++}
+           ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -603,12 +603,11 @@
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
-           ${pcl.ImageMagick++}
+           ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           -lssl -lcrypto
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff.dll -lpopt ${devlibs}/lib/zdll.lib
+           -lpng -ljpeg -ltiff -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -635,6 +634,7 @@
     <copy todir="${dist}" file="TRANSLATORS"/>
     <copy todir="${dist}" file="${devlibs}/bin/libatkmm-1.6-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libglibmm-2.4-1.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libgiomm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgtkmm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdkmm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangomm-1.4-1.dll"/>
@@ -651,7 +651,8 @@
     <copy todir="${dist}" file="${devlibs}/bin/libgthread-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgio-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcairo-2.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-5.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-4.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
@@ -661,28 +662,30 @@
     <copy todir="${dist}" file="${devlibs}/bin/libxml2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
-    <!--<copy file="${devlibs}/bin/libexpat.dll" tofile="${dist}/xmlparse.dll"/>-->
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/jpeg62.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpng13.dll"/>
-    <!-- GTK changed their dep file name for PNG!   :-(  -->
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libtiff-3.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libopenjpeg-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr71.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/zlib1.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/bzip2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/iconv.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpopt-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/liblcms-1.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libMagick++-3.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
+	<copy todir="${dist}" file="${devlibs}/bin/libMagickWand-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/intl.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/pthreadGC2.dll"/>
     <copy file="${devlibs}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
-    <!-- MINGW dll needed, I think for openmp support  -->
+    <!-- MINGW support DLLs needed for openmp support  -->
     <copy todir="${dist}" file="${mingw_bin}/mingwm10.dll"/>
+	<copy todir="${dist}" file="${mingw}/lib/gcc/mingw32/bin/libgomp-1.dll"/>
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">

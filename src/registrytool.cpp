@@ -27,6 +27,7 @@
 
 #include <windows.h>
 #include <string>
+#include <cstdio>
 
 #include "registrytool.h"
 
