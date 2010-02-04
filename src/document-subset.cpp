@@ -184,9 +184,6 @@ private:
 
     void _doRemove(SPObject *obj) {
         Record &record=records[obj];
-        record.release_connection.disconnect();
-        record.position_changed_connection.disconnect();
-        records.erase(obj);
 
         if ( record.parent == NULL ) {
             Record &root = records[NULL];
@@ -198,6 +195,9 @@ private:
             }
         }
 
+        record.release_connection.disconnect();
+        record.position_changed_connection.disconnect();
+        records.erase(obj);
         removed_signal.emit(obj);
         sp_object_unref(obj);
     }
