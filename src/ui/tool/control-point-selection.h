@@ -44,14 +44,12 @@ public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
     typedef std::list<sigc::connection> connlist_type;
-    typedef std::tr1::unordered_map< SelectableControlPoint *,
-        boost::shared_ptr<connlist_type> > map_type;
     typedef std::tr1::unordered_set< SelectableControlPoint * > set_type;
     typedef set_type Set; // convenience alias
 
-    typedef map_type::iterator iterator;
-    typedef map_type::const_iterator const_iterator;
-    typedef map_type::size_type size_type;
+    typedef set_type::iterator iterator;
+    typedef set_type::const_iterator const_iterator;
+    typedef set_type::size_type size_type;
     typedef SelectableControlPoint *value_type;
     typedef SelectableControlPoint *key_type;
 
@@ -127,7 +125,7 @@ private:
     bool _keyboardFlip(Geom::Dim2);
     void _keyboardTransform(Geom::Matrix const &);
     void _commitTransform(CommitEvent ce);
-    map_type _points;
+    set_type _points;
     set_type _all_points;
     boost::optional<double> _rot_radius;
     TransformHandleSet *_handles;

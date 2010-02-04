@@ -45,13 +45,14 @@ protected:
 
     virtual void _setState(State state);
 
+    virtual void dragged(Geom::Point &, GdkEventMotion *);
+    virtual bool grabbed(GdkEventMotion *);
+    virtual void ungrabbed(GdkEventButton *);
+    virtual bool clicked(GdkEventButton *);
+
     ControlPointSelection &_selection;
 private:
-    void _connectHandlers();
     void _takeSelection();
-    
-    void _grabbedHandler();
-    bool _clickedHandler(GdkEventButton *);
 };
 
 } // namespace UI

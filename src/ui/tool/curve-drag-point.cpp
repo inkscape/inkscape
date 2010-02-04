@@ -42,23 +42,9 @@ CurveDragPoint::CurveDragPoint(PathManipulator &pm)
     , _pm(pm)
 {
     setVisible(false);
-    signal_grabbed.connect(
-        sigc::bind_return(
-            sigc::mem_fun(*this, &CurveDragPoint::_grabbedHandler),
-            false));
-    signal_dragged.connect(
-            sigc::hide(
-                sigc::mem_fun(*this, &CurveDragPoint::_draggedHandler)));
-    signal_ungrabbed.connect(
-        sigc::hide(
-            sigc::mem_fun(*this, &CurveDragPoint::_ungrabbedHandler)));
-    signal_clicked.connect(
-        sigc::mem_fun(*this, &CurveDragPoint::_clickedHandler));
-    signal_doubleclicked.connect(
-        sigc::mem_fun(*this, &CurveDragPoint::_doubleclickedHandler));
 }
 
-void CurveDragPoint::_grabbedHandler(GdkEventMotion */*event*/)
+bool CurveDragPoint::grabbed(GdkEventMotion */*event*/)
 {
     _pm._selection.hideTransformHandles();
     NodeList::iterator second = first.next();
@@ -71,44 +57,41 @@ void CurveDragPoint::_grabbedHandler(GdkEventMotion */*event*/)
         first->front()->move(first->front()->position() + delta);
         second->back()->move(second->back()->position() - delta);
 
-        signal_update.emit();
+        _pm.update();
     }
+    return false;
 }
 
-void CurveDragPoint::_draggedHandler(Geom::Point const &old_pos, Geom::Point const &new_pos)
+void CurveDragPoint::dragged(Geom::Point &new_pos, GdkEventMotion *)
 {
-    if (_drags_stroke) {
-        // TODO
-    } else {
-        NodeList::iterator second = first.next();
-        // Magic Bezier Drag Equations follow!
-        // "weight" describes how the influence of the drag should be distributed
-        // among the handles; 0 = front handle only, 1 = back handle only.
-        double weight, t = _t;
-        if (t <= 1.0 / 6.0) weight = 0;
-        else if (t <= 0.5) weight = (pow((6 * t - 1) / 2.0, 3)) / 2;
-        else if (t <= 5.0 / 6.0) weight = (1 - pow((6 * (1-t) - 1) / 2.0, 3)) / 2 + 0.5;
-        else weight = 1;
+    NodeList::iterator second = first.next();
+    // Magic Bezier Drag Equations follow!
+    // "weight" describes how the influence of the drag should be distributed
+    // among the handles; 0 = front handle only, 1 = back handle only.
+    double weight, t = _t;
+    if (t <= 1.0 / 6.0) weight = 0;
+    else if (t <= 0.5) weight = (pow((6 * t - 1) / 2.0, 3)) / 2;
+    else if (t <= 5.0 / 6.0) weight = (1 - pow((6 * (1-t) - 1) / 2.0, 3)) / 2 + 0.5;
+    else weight = 1;
 
-        Geom::Point delta = new_pos - old_pos;
-        Geom::Point offset0 = ((1-weight)/(3*t*(1-t)*(1-t))) * delta;
-        Geom::Point offset1 = (weight/(3*t*t*(1-t))) * delta;
+    Geom::Point delta = new_pos - position();
+    Geom::Point offset0 = ((1-weight)/(3*t*(1-t)*(1-t))) * delta;
+    Geom::Point offset1 = (weight/(3*t*t*(1-t))) * delta;
 
-        first->front()->move(first->front()->position() + offset0);
-        second->back()->move(second->back()->position() + offset1);
-    }
+    first->front()->move(first->front()->position() + offset0);
+    second->back()->move(second->back()->position() + offset1);
 
-    signal_update.emit();
+    _pm.update();
 }
 
-void CurveDragPoint::_ungrabbedHandler()
+void CurveDragPoint::ungrabbed(GdkEventButton *)
 {
     _pm._updateDragPoint(_desktop->d2w(position()));
     _pm._commit(_("Drag curve"));
     _pm._selection.restoreTransformHandles();
 }
 
-bool CurveDragPoint::_clickedHandler(GdkEventButton *event)
+bool CurveDragPoint::clicked(GdkEventButton *event)
 {
     // This check is probably redundant
     if (!first || event->button != 1) return false;
@@ -141,7 +124,7 @@ bool CurveDragPoint::_clickedHandler(GdkEventButton *event)
     return true;
 }
 
-bool CurveDragPoint::_doubleclickedHandler(GdkEventButton *event)
+bool CurveDragPoint::doubleclicked(GdkEventButton *event)
 {
     if (event->button != 1 || !first || !first.next()) return false;
     _insertNode(true);
@@ -160,7 +143,7 @@ void CurveDragPoint::_insertNode(bool take_selection)
     }
     _pm._selection.insert(inserted.ptr());
 
-    signal_update.emit();
+    _pm.update();
     _pm._commit(_("Add node"));
 }
 

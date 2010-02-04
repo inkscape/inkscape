@@ -36,17 +36,6 @@ public:
         _rubber = static_cast<CtrlRect*>(sp_canvas_item_new(sp_desktop_controls(_desktop),
         SP_TYPE_CTRLRECT, NULL));
         sp_canvas_item_hide(_rubber);
-
-        signal_clicked.connect(sigc::mem_fun(*this, &SelectorPoint::_clicked));
-        signal_grabbed.connect(
-            sigc::bind_return(
-                sigc::hide(
-                    sigc::mem_fun(*this, &SelectorPoint::_grabbed)),
-                false));
-        signal_dragged.connect(
-                sigc::hide<0>( sigc::hide(
-                    sigc::mem_fun(*this, &SelectorPoint::_dragged))));
-        signal_ungrabbed.connect(sigc::mem_fun(*this, &SelectorPoint::_ungrabbed));
     }
     ~SelectorPoint() {
         gtk_object_destroy(_rubber);
@@ -69,26 +58,27 @@ protected:
     }
 
 private:
-    bool _clicked(GdkEventButton *event) {
-        if (event->button != 1) return false;
-        _selector->signal_point.emit(position(), event);
-        return true;
-    }
-    void _grabbed() {
+    virtual bool grabbed(GdkEventMotion *) {
         _cancel = false;
         _start = position();
         sp_canvas_item_show(_rubber);
+        return false;
     }
-    void _dragged(Geom::Point &new_pos) {
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *) {
         if (_cancel) return;
         Geom::Rect sel(_start, new_pos);
         _rubber->setRectangle(sel);
     }
-    void _ungrabbed(GdkEventButton *event) {
+    virtual void ungrabbed(GdkEventButton *event) {
         if (_cancel) return;
         sp_canvas_item_hide(_rubber);
         Geom::Rect sel(_start, position());
         _selector->signal_area.emit(sel, event);
+    }
+    virtual bool clicked(GdkEventButton *event) {
+        if (event->button != 1) return false;
+        _selector->signal_point.emit(position(), event);
+        return true;
     }
     CtrlRect *_rubber;
     Selector *_selector;

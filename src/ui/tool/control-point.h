@@ -73,11 +73,11 @@ public:
 
     /// @name Receive notifications about control point events
     /// @{
-    sigc::signal<void, Geom::Point const &, Geom::Point &, GdkEventMotion*> signal_dragged;
+    /*sigc::signal<void, Geom::Point const &, Geom::Point &, GdkEventMotion*> signal_dragged;
     sigc::signal<bool, GdkEventButton*>::accumulated<RInt> signal_clicked;
     sigc::signal<bool, GdkEventButton*>::accumulated<RInt> signal_doubleclicked;
     sigc::signal<bool, GdkEventMotion*>::accumulated<Int> signal_grabbed;
-    sigc::signal<void, GdkEventButton*> signal_ungrabbed;
+    sigc::signal<void, GdkEventButton*> signal_ungrabbed;*/
     /// @}
 
     /// @name Inspect the state of the control point
@@ -90,7 +90,7 @@ public:
     static sigc::signal<void, ControlPoint*> signal_mouseover_change;
     static Glib::ustring format_tip(char const *format, ...) G_GNUC_PRINTF(1,2);
 
-    // temporarily public, until snapping is refactored a little
+    // temporarily public, until snap delay is refactored a little
     virtual bool _eventHandler(GdkEvent *event);
 
 protected:
@@ -98,6 +98,39 @@ protected:
         SPCtrlShapeType shape, unsigned int size, ColorSet *cset = 0, SPCanvasGroup *group = 0);
     ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, Gtk::AnchorType anchor,
         Glib::RefPtr<Gdk::Pixbuf> pixbuf, ColorSet *cset = 0, SPCanvasGroup *group = 0);
+
+    /// @name Handle control point events in subclasses
+    /// @{
+    /**
+     * Called when the user moves the point beyond the drag tolerance with the first button held
+     * down. Return true if you called transferGrab() during this method.
+     * @param event Motion event when drag tolerance was exceeded */
+    virtual bool grabbed(GdkEventMotion *event);
+    /**
+     * Called while dragging, but before moving the knot to new position.
+     * @param pos Old position, always equal to position()
+     * @param new_pos New position (after drag). This is passed as a non-const reference,
+     *   so you can change it from the handler - that's how constrained dragging is implemented.
+     * @param event Motion event */
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event);
+    /**
+     * @var ControlPoint::signal_ungrabbed
+     * Emitted when the control point finishes a drag.
+     * @param event Button release event
+     */
+    virtual void ungrabbed(GdkEventButton *event);
+    /**
+     * Called when the control point is clicked, at mouse button release. Your override should
+     * return true if the click had some effect. If it did nothing, return false. Improperly
+     * implementing this method can cause the default context menu not to appear when a control
+     * point is right-clicked.
+     * @param event Button release event */
+    virtual bool clicked(GdkEventButton *event);
+    /**
+     * Called when the control point is doubleclicked, at mouse button release.
+     * @param event Button release event */
+    virtual bool doubleclicked(GdkEventButton *);
+    /// @}
 
     /// @name Manipulate the control point's appearance in subclasses
     /// @{

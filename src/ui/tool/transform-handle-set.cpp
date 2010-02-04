@@ -84,17 +84,6 @@ public:
         , _th(th)
     {
         setVisible(false);
-        signal_grabbed.connect(
-            sigc::bind_return(
-                sigc::hide(
-                    sigc::mem_fun(*this, &TransformHandle::_grabbedHandler)),
-                false));
-        signal_dragged.connect(
-            sigc::hide<0>(
-                sigc::mem_fun(*this, &TransformHandle::_draggedHandler)));
-        signal_ungrabbed.connect(
-            sigc::hide(
-                sigc::mem_fun(*this, &TransformHandle::_ungrabbedHandler)));
     }
 protected:
     virtual void startTransform() {}
@@ -106,7 +95,7 @@ protected:
     Geom::Point _origin;
     TransformHandleSet &_th;
 private:
-    void _grabbedHandler() {
+    virtual bool grabbed(GdkEventMotion *) {
         _origin = position();
         _last_transform.setIdentity();
         startTransform();
@@ -114,8 +103,9 @@ private:
         _th._setActiveHandle(this);
         _cset = &invisible_cset;
         _setState(_state);
+        return false;
     }
-    void _draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event)
     {
         Geom::Matrix t = computeTransform(new_pos, event);
         // protect against degeneracies
@@ -125,7 +115,7 @@ private:
         _th.signal_transform.emit(incr);
         _last_transform = t;
     }
-    void _ungrabbedHandler() {
+    virtual void ungrabbed(GdkEventButton *) {
         _th._clearActiveHandle();
         _cset = &thandle_cset;
         _setState(_state);

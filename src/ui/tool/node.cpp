@@ -89,20 +89,10 @@ Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node 
     _cset = &handle_colors;
     _handle_line = sp_canvas_item_new(data.handle_line_group, SP_TYPE_CTRLLINE, NULL);
     setVisible(false);
-    signal_grabbed.connect(
-        sigc::bind_return(
-            sigc::hide(
-                sigc::mem_fun(*this, &Handle::_grabbedHandler)),
-            false));
-    signal_dragged.connect(
-        sigc::hide<0>(
-            sigc::mem_fun(*this, &Handle::_draggedHandler)));
-    signal_ungrabbed.connect(
-        sigc::hide(sigc::mem_fun(*this, &Handle::_ungrabbedHandler)));
 }
 Handle::~Handle()
 {
-    sp_canvas_item_hide(_handle_line);
+    //sp_canvas_item_hide(_handle_line);
     gtk_object_destroy(GTK_OBJECT(_handle_line));
 }
 
@@ -232,12 +222,14 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
     }
 }
 
-void Handle::_grabbedHandler()
+bool Handle::grabbed(GdkEventMotion *)
 {
     _saved_length = _drag_out ? 0 : length();
+    _pm()._handleGrabbed();
+    return false;
 }
 
-void Handle::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
+void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     Geom::Point parent_pos = _parent->position();
     // with Alt, preserve length
@@ -253,12 +245,13 @@ void Handle::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
         new_pos = parent_pos + Geom::constrain_angle(Geom::Point(0,0), new_pos - parent_pos, snaps,
             _drag_out ? Geom::Point(1,0) : Geom::unit_vector(rel_origin));
     }
-    signal_update.emit();
+    _pm().update();
 }
 
-void Handle::_ungrabbedHandler()
+void Handle::ungrabbed(GdkEventButton *)
 {
     // hide the handle if it's less than dragtolerance away from the node
+    // TODO is this actually desired?
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int drag_tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
@@ -267,6 +260,14 @@ void Handle::_ungrabbedHandler()
         move(_parent->position());
     }
     _drag_out = false;
+
+    _pm()._handleUngrabbed();
+}
+
+bool Handle::clicked(GdkEventButton *event)
+{
+    _pm()._handleClicked(this, event);
+    return true;
 }
 
 static double snap_increment_degrees() {
@@ -337,11 +338,6 @@ Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos)
     , _handles_shown(false)
 {
     // NOTE we do not set type here, because the handles are still degenerate
-    // connect to own grabbed signal - dragging out handles
-    signal_grabbed.connect(
-        sigc::mem_fun(*this, &Node::_grabbedHandler));
-    signal_dragged.connect( sigc::hide<0>(
-        sigc::mem_fun(*this, &Node::_draggedHandler)));
 }
 
 // NOTE: not using iterators won't make this much quicker because iterators can be 100% inlined.
@@ -807,8 +803,11 @@ void Node::_setState(State state)
     SelectableControlPoint::_setState(state);
 }
 
-bool Node::_grabbedHandler(GdkEventMotion *event)
+bool Node::grabbed(GdkEventMotion *event)
 {
+    if (SelectableControlPoint::grabbed(event))
+        return true;
+
     // Dragging out handles with Shift + drag on a node.
     if (!held_shift(*event)) return false;
 
@@ -843,7 +842,7 @@ bool Node::_grabbedHandler(GdkEventMotion *event)
     return true;
 }
 
-void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
+void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     // For a note on how snapping is implemented in Inkscape, see snap.h.
     SnapManager &sm = _desktop->namedview->snap_manager;
@@ -923,6 +922,15 @@ void Node::_draggedHandler(Geom::Point &new_pos, GdkEventMotion *event)
     } else if (snap) {
         sm.freeSnapReturnByRef(new_pos, _snapSourceType());
     }
+
+    SelectableControlPoint::dragged(new_pos, event);
+}
+
+bool Node::clicked(GdkEventButton *event)
+{
+    if(_pm()._nodeClicked(this, event))
+        return true;
+    return SelectableControlPoint::clicked(event);
 }
 
 Inkscape::SnapSourceType Node::_snapSourceType()
@@ -1080,7 +1088,6 @@ NodeList::iterator NodeList::insert(iterator i, Node *x)
     ins->prev->next = x;
     ins->prev = x;
     x->ListNode::list = this;
-    _list.signal_insert_node.emit(x);
     return iterator(x);
 }
 
@@ -1100,9 +1107,7 @@ void NodeList::splice(iterator pos, NodeList &list, iterator first, iterator las
 {
     ListNode *ins_beg = first._node, *ins_end = last._node, *at = pos._node;
     for (ListNode *ln = ins_beg; ln != ins_end; ln = ln->next) {
-        list._list.signal_remove_node.emit(static_cast<Node*>(ln));
         ln->list = this;
-        _list.signal_insert_node.emit(static_cast<Node*>(ln));
     }
     ins_beg->prev->next = ins_end;
     ins_end->prev->next = at;
@@ -1157,7 +1162,6 @@ NodeList::iterator NodeList::erase(iterator i)
     Node *rm = static_cast<Node*>(i._node);
     ListNode *rmnext = rm->next, *rmprev = rm->prev;
     ++i;
-    _list.signal_remove_node.emit(rm);
     delete rm;
     rmprev->next = rmnext;
     rmnext->prev = rmprev;

@@ -34,46 +34,24 @@ namespace UI {
  * point in the drawing. The drawing can be changed by dragging the point and the things that are
  * attached to it with the mouse. Example things that could be edited with draggable points
  * are gradient stops, the place where text is attached to a path, text kerns, nodes and handles
- * in a path, and many more. Control points use signals heavily - <b>read the libsigc++
- * tutorial on the wiki</b> before using this class.</b>
+ * in a path, and many more.
  *
- * @par Control point signals
+ * @par Control point event handlers
  * @par
- * The control point has several signals which allow you to react to things that happen to it.
- * The most important singals are the grabbed, dragged, ungrabbed and moved signals.
- * When a drag happens, the order of emission is as follows:
- * - <tt>signal_grabbed</tt>
- * - <tt>signal_dragged</tt>
- * - <tt>signal_dragged</tt>
- * - <tt>signal_dragged</tt>
+ * The control point has several virtual methods which allow you to react to things that
+ * happen to it. The most important ones are the grabbed, dragged, ungrabbed and moved functions.
+ * When a drag happens, the order of calls is as follows:
+ * - <tt>grabbed()</tt>
+ * - <tt>dragged()</tt>
+ * - <tt>dragged()</tt>
+ * - <tt>dragged()</tt>
  * - ...
- * - <tt>signal_dragged</tt>
- * - <tt>signal_ungrabbed</tt>
+ * - <tt>dragged()</tt>
+ * - <tt>ungrabbed()</tt>
  *
  * The control point can also respond to clicks and double clicks. On a double click,
- * <tt>signal_clicked</tt> is emitted, followed by <tt>signal_doubleclicked</tt>.
- *
- * A few signal usage hints if you can't be bothered to read the tutorial:
- * - If you want some other object or a global function to react to signals of a control point
- *   from some other object, and you want to access the control point that emitted the signal
- *   in the handler, use <tt>sigc::bind</tt> like this:
- *   @code
- *   void handle_clicked_signal(ControlPoint *point, int button);
- *   point->signal_clicked.connect(
- *       sigc::bind<0>( sigc::ptr_fun(handle_clicked_signal),
- *                      point ));
- *   @endcode
- * - You can ignore unneeded parameters using sigc::hide.
- * - If you want to get rid of the handlers added by constructors in superclasses,
- *   use the <tt>clear()</tt> method: @code signal_clicked.clear(); @endcode
- * - To connect at the front of the slot list instead of at the end, use:
- *   @code
- *   signal_clicked.slots().push_front(
- *       sigc::mem_fun(*this, &FunkyPoint::_clickedHandler));
- *   @endcode
- * - Note that calling <tt>slots()</tt> does not copy anything. You can disconnect
- *   and reorder slots by manipulating the elements of the slot list. The returned object is
- *   of type @verbatim (signal type)::slot_list @endverbatim.
+ * clicked() is called, followed by doubleclicked(). When deriving from SelectableControlPoint,
+ * you need to manually call the superclass version at the appropriate point in your handler.
  *
  * @par Which method to override?
  * @par
@@ -85,46 +63,6 @@ namespace UI {
  *   position argument.
  * - If the point has additional canvas items tied to it (like handle lines), override
  *   the setPosition() method.
- */
-
-/**
- * @var ControlPoint::signal_dragged
- * Emitted while dragging, but before moving the knot to new position.
- * Old position will always be the same as position() - there are two parameters
- * only for convenience.
- * - First parameter: old position, always equal to position()
- * - Second parameter: new position (after drag). This is passed as a non-const reference,
- *   so you can change it from the handler - that's how constrained dragging is implemented.
- * - Third parameter: motion event
- */
-
-/**
- * @var ControlPoint::signal_clicked
- * Emitted when the control point is clicked, at mouse button release. The parameter contains
- * the event that caused the signal to be emitted. Your signal handler should return true
- * if the click had some effect. If it did nothing, return false. Improperly handling this signal
- * can cause the context menu not to appear when a control point is right-clicked.
- */
-
-/**
- * @var ControlPoint::signal_doubleclicked
- * Emitted when the control point is doubleclicked, at mouse button release. The parameter
- * contains the event that caused the signal to be emitted. Your signal handler should return true
- * if the double click had some effect. If it did nothing, return false.
- */
-
-/**
- * @var ControlPoint::signal_grabbed
- * Emitted when the control point is grabbed and a drag starts. The parameter contains
- * the causing event. Return true to prevent further processing. Because all control points
- * handle drag tolerance, <tt>signal_dragged</tt> will be emitted immediately after this signal
- * to move the point to its new position.
- */
-
-/**
- * @var ControlPoint::signal_ungrabbed
- * Emitted when the control point finishes a drag. The parameter contains the event which
- * caused the signal, but it can be NULL if the grab was broken.
  */
 
 /**
@@ -247,9 +185,9 @@ ControlPoint::~ControlPoint()
 
 void ControlPoint::_commonInit()
 {
+    SP_CTRL(_canvas_item)->moveto(_position);
     _event_handler_connection = g_signal_connect(G_OBJECT(_canvas_item), "event",
                                                  G_CALLBACK(_event_handler), this);
-    SP_CTRL(_canvas_item)->moveto(_position);
 }
 
 /** Relocate the control point without side effects.
@@ -408,8 +346,8 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 // if we are here, it means the tolerance was just exceeded.
                 next_release_doubleclick = 0;
                 _drag_origin = _position;
-                transferred = signal_grabbed.emit(&event->motion);
-                // _drag_initiated might change during the above signal emission
+                transferred = grabbed(&event->motion);
+                // _drag_initiated might change during the above virtual call
                 if (!_drag_initiated) {
                     // this guarantees smooth redraws while dragging
                     sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
@@ -421,7 +359,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 Geom::Point new_pos = _desktop->w2d(event_point(event->motion)) + pointer_offset;
                 
                 // the new position is passed by reference and can be changed in the handlers.
-                signal_dragged.emit(_position, new_pos, &event->motion);
+                dragged(new_pos, &event->motion);
                 move(new_pos);
                 _updateDragTip(&event->motion); // update dragging tip after moving to new position
                 
@@ -453,17 +391,17 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
 
         if (event->button.button == next_release_doubleclick) {
             _drag_initiated = false;
-            return signal_doubleclicked.emit(&event->button);
+            return doubleclicked(&event->button);
         }
         if (event->button.button == 1) {
             if (_drag_initiated) {
                 // it is the end of a drag
-                signal_ungrabbed.emit(&event->button);
+                ungrabbed(&event->button);
                 _drag_initiated = false;
                 return true;
             } else {
                 // it is the end of a click
-                return signal_clicked.emit(&event->button);
+                return clicked(&event->button);
             }
         }
         _drag_initiated = false;
@@ -479,7 +417,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
     case GDK_GRAB_BROKEN:
         if (!event->grab_broken.keyboard && _event_grab) {
             {
-                signal_ungrabbed.emit(0);
+                ungrabbed(NULL);
                 if (_drag_initiated)
                     sp_canvas_end_forced_full_redraws(_desktop->canvas);
             }
@@ -578,7 +516,7 @@ void ControlPoint::transferGrab(ControlPoint *prev_point, GdkEventMotion *event)
 {
     if (!_event_grab) return;
 
-    signal_grabbed.emit(event);
+    grabbed(event);
     sp_canvas_item_ungrab(prev_point->_canvas_item, event->time);
     sp_canvas_item_grab(_canvas_item, _grab_event_mask, NULL, event->time);
 
@@ -614,6 +552,14 @@ void ControlPoint::_setColors(ColorEntry colors)
 {
     g_object_set(_canvas_item, "fill_color", colors.fill, "stroke_color", colors.stroke, NULL);
 }
+
+// dummy implementations for handlers
+// they are here to avoid unused param warnings
+bool ControlPoint::grabbed(GdkEventMotion *) { return false; }
+void ControlPoint::dragged(Geom::Point &, GdkEventMotion *) {}
+void ControlPoint::ungrabbed(GdkEventButton *) {}
+bool ControlPoint::clicked(GdkEventButton *) { return false; }
+bool ControlPoint::doubleclicked(GdkEventButton *) { return false; }
 
 } // namespace UI
 } // namespace Inkscape

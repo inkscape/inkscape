@@ -27,15 +27,15 @@ public:
     void setSize(double sz) { _setSize(sz); }
     void setTimeValue(double t) { _t = t; }
     void setIterator(NodeList::iterator i) { first = i; }
-    sigc::signal<void> signal_update;
 protected:
     virtual Glib::ustring _getTip(unsigned state);
 private:
-    void _grabbedHandler(GdkEventMotion *);
-    void _draggedHandler(Geom::Point const &, Geom::Point const &);
-    bool _clickedHandler(GdkEventButton *);
-    bool _doubleclickedHandler(GdkEventButton *);
-    void _ungrabbedHandler();
+    virtual void dragged(Geom::Point &, GdkEventMotion *);
+    virtual bool grabbed(GdkEventMotion *);
+    virtual void ungrabbed(GdkEventButton *);
+    virtual bool clicked(GdkEventButton *);
+    virtual bool doubleclicked(GdkEventButton *);
+
     void _insertNode(bool take_selection);
     double _t;
     PathManipulator &_pm;

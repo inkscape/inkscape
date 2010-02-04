@@ -11,6 +11,7 @@
 #ifndef SEEN_UI_TOOL_NODE_H
 #define SEEN_UI_TOOL_NODE_H
 
+#include <glib.h>
 #include <iterator>
 #include <iosfwd>
 #include <stdexcept>
@@ -97,16 +98,19 @@ public:
     Node *parent() { return _parent; }
 
     static char const *handle_type_to_localized_string(NodeType type);
-    sigc::signal<void> signal_update;
 protected:
     Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent);
+
+    virtual void dragged(Geom::Point &, GdkEventMotion *);
+    virtual bool grabbed(GdkEventMotion *);
+    virtual void ungrabbed(GdkEventButton *);
+    virtual bool clicked(GdkEventButton *);
+
     virtual Glib::ustring _getTip(unsigned state);
     virtual Glib::ustring _getDragTip(GdkEventMotion *event);
     virtual bool _hasDragTips() { return true; }
 private:
-    void _grabbedHandler();
-    void _draggedHandler(Geom::Point &, GdkEventMotion *);
-    void _ungrabbedHandler();
+    inline PathManipulator &_pm();
     Node *_parent; // the handle's lifetime does not extend beyond that of the parent node,
     // so a naked pointer is OK and allows setting it during Node's construction
     SPCanvasItem *_handle_line;
@@ -140,14 +144,16 @@ public:
     // temporarily public
     virtual bool _eventHandler(GdkEvent *event);
 protected:
+    virtual void dragged(Geom::Point &, GdkEventMotion *);
+    virtual bool grabbed(GdkEventMotion *);
+    virtual bool clicked(GdkEventButton *);
+
     virtual void _setState(State state);
     virtual Glib::ustring _getTip(unsigned state);
     virtual Glib::ustring _getDragTip(GdkEventMotion *event);
     virtual bool _hasDragTips() { return true; }
 private:
     Node(Node const &);
-    bool _grabbedHandler(GdkEventMotion *);
-    void _draggedHandler(Geom::Point &, GdkEventMotion *);
     void _fixNeighbors(Geom::Point const &old_pos, Geom::Point const &new_pos);
     void _updateAutoHandles();
     void _linearGrow(int dir);
@@ -155,6 +161,7 @@ private:
     Node *_prev();
     Inkscape::SnapSourceType _snapSourceType();
     Inkscape::SnapTargetType _snapTargetType();
+    inline PathManipulator &_pm();
     static SPCtrlShapeType _node_type_to_shape(NodeType type);
     static bool _is_line_segment(Node *first, Node *second);
 
@@ -327,8 +334,6 @@ public:
 
     SubpathList(PathManipulator &pm) : _path_manipulator(pm) {}
 
-    sigc::signal<void, Node *> signal_insert_node;
-    sigc::signal<void, Node *> signal_remove_node;
 private:
     list_type _nodelists;
     PathManipulator &_path_manipulator;
@@ -349,6 +354,12 @@ inline void Handle::setRelativePos(Geom::Point const &p) {
 inline double Handle::length() {
     return relativePos().length();
 }
+inline PathManipulator &Handle::_pm() {
+    return _parent->_pm();
+}
+inline PathManipulator &Node::_pm() {
+    return list()->_list._path_manipulator;
+}
 
 // definitions for node iterator
 template <typename N>
@@ -359,14 +370,14 @@ template <typename N>
 NodeIterator<N> NodeIterator<N>::next() const {
     NodeIterator<N> ret(*this);
     ++ret;
-    if (!ret && _node->list->closed()) ++ret;
+    if (G_UNLIKELY(!ret) && _node->list->closed()) ++ret;
     return ret;
 }
 template <typename N>
 NodeIterator<N> NodeIterator<N>::prev() const {
     NodeIterator<N> ret(*this);
     --ret;
-    if (!ret && _node->list->closed()) --ret;
+    if (G_UNLIKELY(!ret) && _node->list->closed()) --ret;
     return ret;
 }
 

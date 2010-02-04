@@ -104,7 +104,6 @@ private:
     Glib::ustring _nodetypesKey();
     Inkscape::XML::Node *_getXMLNode();
 
-    void _attachNodeHandlers(Node *n);
     void _selectionChanged(SelectableControlPoint *p, bool selected);
     bool _nodeClicked(Node *, GdkEventButton *);
     void _handleGrabbed();
@@ -139,6 +138,7 @@ private:
     friend class PathManipulatorObserver;
     friend class CurveDragPoint;
     friend class Node;
+    friend class Handle;
 };
 
 } // namespace UI

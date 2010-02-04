@@ -119,19 +119,10 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
         SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(_outline), 0, SP_WIND_RULE_NONZERO);
 
-    _subpaths.signal_insert_node.connect(
-        sigc::mem_fun(*this, &PathManipulator::_attachNodeHandlers));
-    // NOTE: signal_remove_node is called just before destruction. Nodes are trackable,
-    // so removing the signals manually is not necessary.
-    /*_subpaths.signal_remove_node.connect(
-        sigc::mem_fun(*this, &PathManipulator::_removeNodeHandlers));*/
-
     _selection.signal_update.connect(
         sigc::mem_fun(*this, &PathManipulator::update));
     _selection.signal_point_changed.connect(
         sigc::mem_fun(*this, &PathManipulator::_selectionChanged));
-    _dragpoint->signal_update.connect(
-        sigc::mem_fun(*this, &PathManipulator::update));
     _desktop->signal_zoom_changed.connect(
         sigc::hide( sigc::mem_fun(*this, &PathManipulator::_updateOutlineOnZoomChange)));
 
@@ -1174,34 +1165,8 @@ Inkscape::XML::Node *PathManipulator::_getXMLNode()
     return LIVEPATHEFFECT(_path)->repr;
 }
 
-void PathManipulator::_attachNodeHandlers(Node *node)
-{
-    Handle *handles[2] = { node->front(), node->back() };
-    for (int i = 0; i < 2; ++i) {
-        handles[i]->signal_update.connect(
-            sigc::mem_fun(*this, &PathManipulator::update));
-        handles[i]->signal_ungrabbed.connect(
-            sigc::hide(
-                sigc::mem_fun(*this, &PathManipulator::_handleUngrabbed)));
-        handles[i]->signal_grabbed.connect(
-            sigc::bind_return(
-                sigc::hide(
-                    sigc::mem_fun(*this, &PathManipulator::_handleGrabbed)),
-                false));
-        handles[i]->signal_clicked.connect(
-            sigc::bind<0>(
-                sigc::mem_fun(*this, &PathManipulator::_handleClicked),
-                handles[i]));
-    }
-    node->signal_clicked.connect(
-        sigc::bind<0>(
-            sigc::mem_fun(*this, &PathManipulator::_nodeClicked),
-            node));
-}
-
 bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
 {
-    // cycle between node types on ctrl+click
     if (event->button != 1) return false;
     if (held_alt(*event) && held_control(*event)) {
         // Ctrl+Alt+click: delete nodes

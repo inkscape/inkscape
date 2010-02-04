@@ -78,29 +78,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
         return std::pair<iterator, bool>(found, false);
     }
 
-    boost::shared_ptr<connlist_type> clist(new connlist_type());
-
-    // hide event param and always return false
-    clist->push_back(
-        x->signal_grabbed.connect(
-            sigc::bind_return(
-                sigc::hide(
-                    sigc::mem_fun(*this, &ControlPointSelection::_pointGrabbed)),
-                false)));
-    clist->push_back(
-        x->signal_dragged.connect(
-                sigc::mem_fun(*this, &ControlPointSelection::_pointDragged)));
-    clist->push_back(
-        x->signal_ungrabbed.connect(
-            sigc::hide(
-                sigc::mem_fun(*this, &ControlPointSelection::_pointUngrabbed))));
-    clist->push_back(
-        x->signal_clicked.connect(
-            sigc::bind<0>(
-                sigc::mem_fun(*this, &ControlPointSelection::_pointClicked),
-                x)));
-
-    found = _points.insert(std::make_pair(x, clist)).first;
+    found = _points.insert(x).first;
 
     x->updateState();
     _rot_radius.reset();
@@ -112,11 +90,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
 /** Remove a point from the selection. */
 void ControlPointSelection::erase(iterator pos)
 {
-    SelectableControlPoint *erased = pos->first;
-    boost::shared_ptr<connlist_type> clist = pos->second;
-    for (connlist_type::iterator i = clist->begin(); i != clist->end(); ++i) {
-        i->disconnect();
-    }
+    SelectableControlPoint *erased = *pos;
     _points.erase(pos);
     erased->updateState();
     _rot_radius.reset();
@@ -198,7 +172,7 @@ void ControlPointSelection::spatialGrow(SelectableControlPoint *origin, int dir)
 void ControlPointSelection::transform(Geom::Matrix const &m)
 {
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = i->first;
+        SelectableControlPoint *cur = *i;
         cur->transform(m);
     }
     // TODO preserving the rotation radius needs some rethinking...
@@ -214,14 +188,14 @@ void ControlPointSelection::align(Geom::Dim2 axis)
 
     Geom::OptInterval bound;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        bound.unionWith(Geom::OptInterval(i->first->position()[d]));
+        bound.unionWith(Geom::OptInterval((*i)->position()[d]));
     }
 
     double new_coord = bound->middle();
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        Geom::Point pos = i->first->position();
+        Geom::Point pos = (*i)->position();
         pos[d] = new_coord;
-        i->first->move(pos);
+        (*i)->move(pos);
     }
 }
 
@@ -238,8 +212,8 @@ void ControlPointSelection::distribute(Geom::Dim2 d)
     // first we insert all points into a multimap keyed by the aligned coord to sort them
     // simultaneously we compute the extent of selection
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        Geom::Point pos = i->first->position();
-        sm.insert(std::make_pair(pos[d], i->first));
+        Geom::Point pos = (*i)->position();
+        sm.insert(std::make_pair(pos[d], (*i)));
         bound.unionWith(Geom::OptInterval(pos[d]));
     }
 
@@ -261,7 +235,7 @@ Geom::OptRect ControlPointSelection::pointwiseBounds()
 {
     Geom::OptRect bound;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = i->first;
+        SelectableControlPoint *cur = (*i);
         Geom::Point p = cur->position();
         if (!bound) {
             bound = Geom::Rect(p, p);
@@ -276,7 +250,7 @@ Geom::OptRect ControlPointSelection::bounds()
 {
     Geom::OptRect bound;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = i->first;
+        SelectableControlPoint *cur = (*i);
         Geom::OptRect r = cur->bounds();
         bound.unionWith(r);
     }
@@ -320,7 +294,7 @@ void ControlPointSelection::_pointDragged(Geom::Point const &old_pos, Geom::Poin
 {
     Geom::Point delta = new_pos - old_pos;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = i->first;
+        SelectableControlPoint *cur = (*i);
         cur->move(cur->position() + delta);
     }
     _handles->rotationCenter().move(_handles->rotationCenter().position() + delta);
@@ -355,7 +329,7 @@ void ControlPointSelection::_updateTransformHandles(bool preserve_center)
         _handles->setBounds(*b, preserve_center);
         _handles->setVisible(true);
     } else if (_one_node_handles && size() == 1) { // only one control point in selection
-        SelectableControlPoint *p = begin()->first;
+        SelectableControlPoint *p = *begin();
         _handles->setBounds(p->bounds());
         _handles->rotationCenter().move(p->position());
         _handles->rotationCenter().setVisible(false);

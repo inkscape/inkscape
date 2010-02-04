@@ -34,7 +34,7 @@ SelectableControlPoint::SelectableControlPoint(SPDesktop *d, Geom::Point const &
         : reinterpret_cast<ControlPoint::ColorSet*>(&default_scp_color_set), group)
     , _selection (sel)
 {
-    _connectHandlers();
+    _selection.allPoints().insert(this);
 }
 SelectableControlPoint::SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
         Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
@@ -44,7 +44,7 @@ SelectableControlPoint::SelectableControlPoint(SPDesktop *d, Geom::Point const &
         : reinterpret_cast<ControlPoint::ColorSet*>(&default_scp_color_set), group)
     , _selection (sel)
 {
-    _connectHandlers();
+    _selection.allPoints().insert(this);
 }
 
 SelectableControlPoint::~SelectableControlPoint()
@@ -53,28 +53,31 @@ SelectableControlPoint::~SelectableControlPoint()
     _selection.allPoints().erase(this);
 }
 
-void SelectableControlPoint::_connectHandlers()
-{
-    _selection.allPoints().insert(this);
-    signal_grabbed.connect(
-        sigc::bind_return(
-            sigc::hide(
-                sigc::mem_fun(*this, &SelectableControlPoint::_grabbedHandler)),
-            false));
-    signal_clicked.connect(
-        sigc::mem_fun(*this, &SelectableControlPoint::_clickedHandler));
-}
-
-void SelectableControlPoint::_grabbedHandler()
+bool SelectableControlPoint::grabbed(GdkEventMotion *)
 {
     // if a point is dragged while not selected, it should select itself
     if (!selected()) {
         _takeSelection();
     }
+    _selection._pointGrabbed();
+    return false;
 }
 
-bool SelectableControlPoint::_clickedHandler(GdkEventButton *event)
+void SelectableControlPoint::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
+    _selection._pointDragged(position(), new_pos, event);
+}
+
+void SelectableControlPoint::ungrabbed(GdkEventButton *)
+{
+    _selection._pointUngrabbed();
+}
+
+bool SelectableControlPoint::clicked(GdkEventButton *event)
+{
+    if (_selection._pointClicked(this, event))
+        return true;
+
     if (event->button != 1) return false;
     if (held_shift(*event)) {
         if (selected()) {

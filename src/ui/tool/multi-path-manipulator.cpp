@@ -45,7 +45,7 @@ void find_join_iterators(ControlPointSelection &sel, IterPairList &pairs)
 
     // find all endnodes in selection
     for (ControlPointSelection::iterator i = sel.begin(); i != sel.end(); ++i) {
-        Node *node = dynamic_cast<Node*>(i->first);
+        Node *node = dynamic_cast<Node*>(*i);
         if (!node) continue;
         NodeList::iterator iter = NodeList::get_iterator(node);
         if (!iter.next() || !iter.prev()) join_iters.insert(iter);
@@ -203,7 +203,7 @@ void MultiPathManipulator::setNodeType(NodeType type)
 {
     if (_selection.empty()) return;
     for (ControlPointSelection::iterator i = _selection.begin(); i != _selection.end(); ++i) {
-        Node *node = dynamic_cast<Node*>(i->first);
+        Node *node = dynamic_cast<Node*>(*i);
         if (node) node->setType(type);
     }
     _done(_("Change node type"));
