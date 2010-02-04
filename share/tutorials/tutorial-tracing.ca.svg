@@ -57,7 +57,7 @@
   <flowRegion id="flowRegion44">
    <use id="use46" xlink:href="#d0e10" height="3962.5" width="320" y="0" x="0"/>
   </flowRegion>
-  <flowDiv id="flowDiv48" xml:space="preserve">Una de les característiques de l'Inkscape és una eina per a vectoritzar una imatge de mapa de bits en un element <path&gt; per al vostre dibuix SVG. Aquestes breus notes us permetran familiaritzar-vos-hi.  </flowDiv>
+  <flowDiv id="flowDiv48" xml:space="preserve">Una de les característiques de l'Inkscape és una eina per a vectoritzar una imatge de mapa de bits en un element &lt;path> per al vostre dibuix SVG. Aquestes breus notes us permetran familiaritzar-vos-hi.  </flowDiv>
  </flowRoot>
  <rect id="d0e16" display="none" height="1000px" width="288" y="76.568" x="10"/>
  <flowRoot id="flowRoot51" style="writing-mode:lr-tb;text-anchor:start;" font-family="serif" font-size="8.39999962px" line-height="133.00000429%" font-style="normal" font-weight="normal" fill="#000000">
@@ -85,14 +85,14 @@
   <flowRegion id="flowRegion82">
    <use id="use84" xlink:href="#d0e28" height="3962.5" width="320" y="0" x="0"/>
   </flowRegion>
-  <flowDiv id="flowDiv86" xml:space="preserve">Generalment, quant més píxels foscos hi hagi al mapa de bits intermedi, més traçats farà el Potrace.  A mida que creix el nombre de traçats, es requerirà més temps de CPU, i l'element <path&gt; serà més gran.  Se suggereix que l'usuari experimenti primer amb imatges intermèdies més clares, fent-les més fosques progressivament per a obtenir la proporció i complexitat desitjats del camí de sortida. </flowDiv>
+  <flowDiv id="flowDiv86" xml:space="preserve">Generalment, quant més píxels foscos hi hagi al mapa de bits intermedi, més traçats farà el Potrace.  A mida que creix el nombre de traçats, es requerirà més temps de CPU, i l'element &lt;path> serà més gran.  Se suggereix que l'usuari experimenti primer amb imatges intermèdies més clares, fent-les més fosques progressivament per a obtenir la proporció i complexitat desitjats del camí de sortida. </flowDiv>
  </flowRoot>
  <rect id="d0e31" display="none" height="1000px" width="288" y="304.1" x="10"/>
  <flowRoot id="flowRoot89" style="writing-mode:lr-tb;text-anchor:start;" font-family="serif" font-size="8.39999962px" line-height="133.00000429%" font-style="normal" font-weight="normal" fill="#000000">
   <flowRegion id="flowRegion91">
    <use id="use93" xlink:href="#d0e31" height="3962.5" width="320" y="0" x="0"/>
   </flowRegion>
-  <flowDiv id="flowDiv95" xml:space="preserve">Per a usar el vectoritzador, carregueu o importeu una imatge, seleccioneu-la i seleccioneu l'element <flowSpan id="flowSpan97" font-family="sans serif">Camins &gt; Vectoritza un mapa de bits</flowSpan>, o <flowSpan id="flowSpan99" font-weight="bold">Maj+Alt+B</flowSpan>.  </flowDiv>
+  <flowDiv id="flowDiv95" xml:space="preserve">Per a usar el vectoritzador, carregueu o importeu una imatge, seleccioneu-la i seleccioneu l'element <flowSpan id="flowSpan97" font-family="sans serif">Camins > Vectoritza un mapa de bits</flowSpan>, o <flowSpan id="flowSpan99" font-weight="bold">Maj+Alt+B</flowSpan>.  </flowDiv>
  </flowRoot>
  <text id="tracing-f01.svgtext7000" style="writing-mode:lr-tb;text-anchor:start;" font-weight="bold" display="block" sodipodi:linespacing="100.00000%" transform="translate(10, 341.424712) " font-style="normal" font-stretch="normal" xml:space="preserve" line-height="100.00000%" font-size="5.7038479" font-variant="normal" y="99.753128" x="101.47987" font-family="sans" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">opcions principals en el diàleg de vectorització</tspan></text>
  <image id="tracing-f01.svgimage2577" width="189.28" xlink:href="potrace.png" transform="translate(10, 341.424712) " height="91.738" sodipodi:absref="/export/SVN/doc-inkscape/no-po/potrace.png" display="block" y="-0.000017236" x="65.359"/>
@@ -178,7 +178,7 @@
   <flowRegion id="flowRegion218">
    <use id="use220" xlink:href="#d0e116" height="3962.5" width="320" y="0" x="0"/>
   </flowRegion>
-  <flowDiv id="flowDiv222" xml:space="preserve">Després de vectoritzar es suggereix que l'usuari provi <flowSpan id="flowSpan224" font-family="sans serif">Camí &gt; Simplifica</flowSpan> (<flowSpan id="flowSpan226" font-weight="bold">Ctrl+L</flowSpan>) al camí de sortida, per a reduir el nombre de nodes.  Això pot fer que la sortida del Potrace sigui molt més fàcil d'editar.  Per exemple, aquí hi ha un traçat típic del vell tocant la guitarra: </flowDiv>
+  <flowDiv id="flowDiv222" xml:space="preserve">Després de vectoritzar es suggereix que l'usuari provi <flowSpan id="flowSpan224" font-family="sans serif">Camí > Simplifica</flowSpan> (<flowSpan id="flowSpan226" font-weight="bold">Ctrl+L</flowSpan>) al camí de sortida, per a reduir el nombre de nodes.  Això pot fer que la sortida del Potrace sigui molt més fàcil d'editar.  Per exemple, aquí hi ha un traçat típic del vell tocant la guitarra: </flowDiv>
  </flowRoot>
  <text id="tracing-f05.svgtext2879" style="writing-mode:lr-tb;text-anchor:middle;" font-weight="bold" display="block" sodipodi:linespacing="100.00000%" transform="translate(10, 1276.2703314999997) " font-style="normal" font-stretch="normal" xml:space="preserve" line-height="100.00000%" font-size="6.0000000" font-variant="normal" y="128.14566" x="81.327339" font-family="sans" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f05.svgtspan2880" y="128.14566" x="81.327339" sodipodi:role="line">Imatge original</tspan></text>
  <text id="tracing-f05.svgtext2882" style="writing-mode:lr-tb;text-anchor:middle;" font-weight="bold" display="block" sodipodi:linespacing="100.00000%" transform="translate(10, 1276.2703314999997) " font-style="normal" font-stretch="normal" xml:space="preserve" line-height="100.00000%" font-size="6.0000000" font-variant="normal" y="124.44067" x="227.33034" font-family="sans" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f05.svgtspan2883" y="124.44067" x="227.33034" sodipodi:role="line">Imatge vectoritzada / Camí de sortida</tspan><tspan id="tracing-f05.svgtspan2893" y="130.44067" x="227.33034" sodipodi:role="line">(1.551 nodes)</tspan></text>
