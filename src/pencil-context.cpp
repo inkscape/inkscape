@@ -622,6 +622,7 @@ spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const p)
     pc->red_curve_is_valid = false;
     if (in_svg_plane(p)) {
         pc->p[pc->npoints++] = p;
+        pc->ps.push_back(p);
     }
 }
 

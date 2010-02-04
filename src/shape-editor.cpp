@@ -234,6 +234,7 @@ bool ShapeEditor::knot_mouseover()
     if (this->knotholder) {
         return knotholder->knot_mouseover();
     }
+    return false;
 }
 
 /*
