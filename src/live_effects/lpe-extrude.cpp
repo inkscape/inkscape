@@ -40,7 +40,8 @@ static bool are_colinear(Geom::Point a, Geom::Point b) {
     return Geom::are_near(cross(a,b), 0., 0.5);
 }
 
-// find cusps, this should be factored out later.
+// find cusps, except at start/end for closed paths.
+// this should be factored out later.
 static std::vector<double> find_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in ) {
     using namespace Geom;
     Piecewise<D2<SBasis> > deriv = derivative(pwd2_in);
@@ -102,12 +103,21 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
          */
 
         Piecewise<D2<SBasis> > pwd2_out;
-        bool closed_path = are_near(pwd2_in.firstValue(), pwd2_in.lastValue());
         // split input path in pieces between points where deriv == vector
         Piecewise<D2<SBasis> > deriv = derivative(pwd2_in);
         std::vector<double> rts = roots(dot(deriv, rot90(extrude_vector.getVector())));
 
         std::vector<double> cusps = find_cusps(pwd2_in);
+
+        // see if we should treat the path as being closed.
+        bool closed_path = false;
+        if ( are_near(pwd2_in.firstValue(), pwd2_in.lastValue()) ) {
+            // the path is closed, however if there is a cusp at the closing point, we should treat it as being an open path.
+            if ( are_colinear(deriv.firstValue(), deriv.lastValue()) ) {
+                // there is no jump in the derivative, so treat path as being closed
+                closed_path = true;
+            }
+        }
 
         std::vector<double> connector_pts;
         if (rts.size() < 1) {
