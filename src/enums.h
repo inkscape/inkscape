@@ -81,5 +81,13 @@ enum PrefsSelectionContext {
     PREFS_SELECTION_LAYER_RECURSIVE = 2,
 };
 
+/* clip/mask group enclosing behavior preference values */
+
+enum PrefsMaskobjectGrouping {
+    PREFS_MASKOBJECT_GROUPING_NONE = 0,
+    PREFS_MASKOBJECT_GROUPING_SEPARATE = 1,
+    PREFS_MASKOBJECT_GROUPING_ALL = 2,
+};
+
 #endif
 

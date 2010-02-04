@@ -172,6 +172,8 @@ protected:
 
     PrefCheckButton _mask_mask_on_top;
     PrefCheckButton _mask_mask_remove;
+    PrefRadioButton _mask_grouping_none, _mask_grouping_separate, _mask_grouping_all;
+    PrefCheckButton _mask_ungrouping;
 
     PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
     PrefRadioButton _filter_quality_best, _filter_quality_better, _filter_quality_normal, _filter_quality_worse, _filter_quality_worst;

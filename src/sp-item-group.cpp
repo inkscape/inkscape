@@ -258,6 +258,8 @@ sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
         const char *value;
         if ( group->_layer_mode == SPGroup::LAYER ) {
             value = "layer";
+        } else if ( group->_layer_mode == SPGroup::MASK_HELPER ) {
+            value = "maskhelper";
         } else if ( flags & SP_OBJECT_WRITE_ALL ) {
             value = "group";
         } else {
@@ -296,6 +298,8 @@ static void sp_group_set(SPObject *object, unsigned key, char const *value) {
         case SP_ATTR_INKSCAPE_GROUPMODE:
             if ( value && !strcmp(value, "layer") ) {
                 group->setLayerMode(SPGroup::LAYER);
+            } else if ( value && !strcmp(value, "maskhelper") ) {
+                group->setLayerMode(SPGroup::MASK_HELPER);
             } else {
                 group->setLayerMode(SPGroup::GROUP);
             }
@@ -532,7 +536,7 @@ void SPGroup::setLayerMode(LayerMode mode) {
     if ( _layer_mode != mode ) {
         if ( mode == LAYER ) {
             sp_document_add_resource(SP_OBJECT_DOCUMENT(this), "layer", this);
-        } else {
+        } else if ( _layer_mode == LAYER ) {
             sp_document_remove_resource(SP_OBJECT_DOCUMENT(this), "layer", this);
         }
         _layer_mode = mode;

@@ -63,6 +63,7 @@ void sp_selection_to_guides(SPDesktop *desktop);
 void sp_selection_tile(SPDesktop *desktop, bool apply = true);
 void sp_selection_untile(SPDesktop *desktop);
 
+//void sp_selection_group_impl(GSList const *reprs_to_group, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc);
 void sp_selection_group(SPDesktop *desktop);
 void sp_selection_ungroup(SPDesktop *desktop);
 

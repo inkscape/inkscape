@@ -668,6 +668,28 @@ void InkscapePreferences::initPageMasks()
     _mask_mask_remove.init ( _("Remove clippath/mask object after applying"), "/options/maskobject/remove", true);
     _page_mask.add_line(true, "", _mask_mask_remove, "",
                         _("After applying, remove the object used as the clipping path or mask from the drawing"));
+    
+    _page_mask.add_group_header( _("Before applying clippath/mask:"));
+    
+    _mask_grouping_none.init( _("Do not group clipped/masked objects"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_NONE, true, 0);
+    _mask_grouping_separate.init( _("Enclose every clipped/masked object in its own group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_SEPARATE, false, &_mask_grouping_none);
+    _mask_grouping_all.init( _("Put all clipped/masked objects into one group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_ALL, false, &_mask_grouping_none);
+    
+    _page_mask.add_line(true, "", _mask_grouping_none, "",
+                        _("Apply clippath/mask to every object"));
+    
+    _page_mask.add_line(true, "", _mask_grouping_separate, "",
+                        _("Apply clippath/mask to groups containing single object"));
+    
+    _page_mask.add_line(true, "", _mask_grouping_all, "",
+                        _("Apply clippath/mask to group containing all objects"));
+                        
+    _page_mask.add_group_header( _("After releasing clippath/mask:"));
+    
+    _mask_ungrouping.init ( _("Ungroup automatically created groups"), "/options/maskobject/ungrouping", true);
+    _page_mask.add_line(true, "", _mask_ungrouping, "",
+                        _("Ungroup groups created when setting clip/mask"));
+    
     this->AddPage(_page_mask, _("Clippaths and masks"), PREFS_PAGE_MASKS);
 }
 

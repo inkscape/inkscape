@@ -27,7 +27,7 @@
 class CGroup;
 
 struct SPGroup : public SPLPEItem {
-    enum LayerMode { GROUP, LAYER };
+    enum LayerMode { GROUP, LAYER, MASK_HELPER };
 
     LayerMode _layer_mode;
     std::map<unsigned int, LayerMode> _display_modes;
