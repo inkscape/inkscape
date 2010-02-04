@@ -23,8 +23,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 """
 
-# Run a command that generates an SVG file from an input file.
-# On success, outputs the contents of the SVG file to stdout, and exits
+# Run a command that generates an SVG (or PDF) file from an input file.
+# On success, outputs the contents of the resulting file to stdout, and exits
 # with a return code of 0.
 # On failure, outputs an error message to stderr, and exits with a return
 # code of 1.
@@ -32,6 +32,12 @@ def run(command_format, prog_name):
     svgfile = tempfile.mktemp(".svg")
     command = command_format % svgfile
     msg = None
+    # ps2pdf may attempt to write to the current directory, which may not
+    # be writeable, so we switch to the temp directory first.
+    try:
+        os.chdir(tempfile.gettempdir())
+    except Exception:
+        pass
     # In order to get a return code from the process, we use subprocess.Popen
     # if it's available (Python 2.4 onwards) and otherwise use popen2.Popen3
     # (Unix only).  As the Inkscape package for Windows includes Python 2.5,
@@ -59,7 +65,7 @@ def run(command_format, prog_name):
     except Exception, inst:
         msg = "Error attempting to run %s: %s" % (prog_name, str(inst))
 
-    # If successful, copy the SVG file to stdout.
+    # If successful, copy the output file to stdout.
     if msg is None:
         if os.name == 'nt':  # make stdout work in binary on Windows
             import msvcrt
@@ -70,7 +76,7 @@ def run(command_format, prog_name):
             sys.stdout.write(data)
             f.close()
         except IOError, inst:
-            msg = "Error reading temporary SVG file: %s" % str(inst)
+            msg = "Error reading temporary file: %s" % str(inst)
 
     # Clean up.
     try:
