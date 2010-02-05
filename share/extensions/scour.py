@@ -34,8 +34,8 @@
 #    at rounded corners)
 
 # Next Up:
+# - Bug 511186: option to keep XML comments between prolog and root element
 # - only remove unreferenced elements if they are not children of a referenced element
-# - TODO: fix the removal of comment elements (between <?xml?> and <svg>)
 # - add an option to remove ids if they match the Inkscape-style of IDs
 # - investigate point-reducing algorithms
 # - parse transform attribute
@@ -72,7 +72,7 @@ except ImportError:
 	pass
 
 APP = 'scour'
-VER = '0.23'
+VER = '0.24'
 COPYRIGHT = 'Copyright Jeff Schiller, 2010'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -2021,21 +2021,17 @@ def remapNamespacePrefix(node, oldprefix, newprefix):
 		remapNamespacePrefix(child, oldprefix, newprefix)	
 
 def makeWellFormed(str):
-	newstr = str
+	xml_ents = { '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;'}
 	
-	# encode & as &amp; ( must do this first so that &lt; does not become &amp;lt; )
-	if str.find('&') != -1:
-		newstr = str.replace('&', '&amp;')
+#	starr = []
+#	for c in str:
+#		if c in xml_ents:
+#			starr.append(xml_ents[c])
+#		else:
+#			starr.append(c)
 			
-	# encode < as &lt;
-	if str.find("<") != -1:
-		newstr = str.replace('<', '&lt;')
-		
-	# encode > as &gt; (TODO: is this necessary?)
-	if str.find('>') != -1:
-		newstr = str.replace('>', '&gt;')
-	
-	return newstr
+	# this list comprehension is short-form for the above for-loop:
+	return ''.join([xml_ents[c] if c in xml_ents else c for c in str])
 
 # hand-rolled serialization function that has the following benefits:
 # - pretty printing
@@ -2295,13 +2291,19 @@ def scourString(in_string, options=None):
 		if line.strip():
 			lines.append(line)
 
-	# return the string stripped of empty lines
+	# return the string with its XML prolog and surrounding comments
 	if options.strip_xml_prolog == False:
-		xmlprolog = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + os.linesep
+		total_output = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' + os.linesep
 	else:
-		xmlprolog = ""
+		total_output = ""
+	
+	for child in doc.childNodes:
+		if child.nodeType == 1:
+			total_output += "".join(lines)
+		else: # doctypes, entities, comments
+			total_output += child.toxml() + os.linesep
 		
-	return xmlprolog + "".join(lines)
+	return total_output
 
 # used mostly by unit tests
 # input is a filename
