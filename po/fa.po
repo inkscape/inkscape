@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2010-02-04 14:27+0330\n"
+"PO-Revision-Date: 2010-02-05 21:19+0330\n"
 "Last-Translator: Ali Ghanavatian <ghanvatian.ali@gmail.com>\n"
 "Language-Team: Farsi <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,23 +18,23 @@ msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
-msgstr ""
+msgstr "افزودن گره"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "By max. segment length"
-msgstr ""
+msgstr "با حداکثر. طول سگمنت"
 
 #: ../share/extensions/addnodes.inx.h:3
 msgid "By number of segments"
-msgstr ""
+msgstr "بر اساس تعداد سگمنت‌ها"
 
 #: ../share/extensions/addnodes.inx.h:4
 msgid "Division method"
-msgstr ""
+msgstr "متد تقسیم"
 
 #: ../share/extensions/addnodes.inx.h:5
 msgid "Maximum segment length (px)"
-msgstr ""
+msgstr "حداکثر طول سگمنت (پیکسل)"
 
 #: ../share/extensions/addnodes.inx.h:6
 #: ../share/extensions/convert2dashes.inx.h:2
@@ -50,99 +50,99 @@ msgstr ""
 #: ../share/extensions/summersnight.inx.h:2
 #: ../share/extensions/whirl.inx.h:2
 msgid "Modify Path"
-msgstr ""
+msgstr "ویرایش مسیر"
 
 #: ../share/extensions/addnodes.inx.h:7
 msgid "Number of segments"
-msgstr ""
+msgstr "تعداد سگمنت‌ها"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI 8.0 Input"
-msgstr ""
+msgstr "ورود AI 8.0"
 
 #: ../share/extensions/ai_input.inx.h:2
 msgid "Adobe Illustrator 8.0 and below (*.ai)"
-msgstr ""
+msgstr "Adobe Illustrator 8.0 و قبل از آن (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator 8.0 or older"
-msgstr ""
+msgstr "باز کردن فایل‌های ذخیره شده به فرمت Adobe Illustrator 8.0 یا قبل از آن"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
-msgstr ""
+msgstr "ورود AI SVG"
 
 #: ../share/extensions/aisvg.inx.h:2
 msgid "Adobe Illustrator SVG (*.ai.svg)"
-msgstr ""
+msgstr "Adobe Illustrator SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr ""
+msgstr "حذف اضافات ناخواسته از SVGهای Adobe Illustrator قبل از باز کردن"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
-msgstr ""
+msgstr "Corel DRAW Compressed Exchange files (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr ""
+msgstr "ورود فایل‌های Corel DRAW Compressed Exchange"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "باز کردن فایل‌های Corel DRAW Compressed Exchange ذخیره‌ شده در Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
-msgstr ""
+msgstr "Corel DRAW 7-X4 (*.cdr) فایل‌های "
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "ورود Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr ""
+msgstr "باز کردن فایل‌های ذخیره شده در Corel DRAW 7-X4"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
-msgstr ""
+msgstr "Corel DRAW 7-13 template (.cdt) فایل‌های "
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr ""
+msgstr "ورود قالب‌های Corel DRAW"
 
 #: ../share/extensions/cdt_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr ""
+msgstr "باز کردن فایل‌های ذخیره شده در Corel DRAW 7-13"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
-msgstr ""
+msgstr "Computer Graphics Metafile (.cgm)فایل‌های "
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr ""
+msgstr "ورود فایل‌های Computer Graphics Metafile"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr ""
+msgstr "فایل‌های Open Computer Graphics Metafile"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
-msgstr ""
+msgstr "Corel DRAW Presentation Exchange (.cmx) فایل‌های"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "ورود فایل‌های Corel DRAW Presentation Exchange"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "باز کردن فایل‌های presentation exchange ذخیره شده در Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
-msgstr ""
+msgstr "روشن‌تر"
 
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
@@ -181,66 +181,66 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 msgid "Color"
-msgstr ""
+msgstr "رنگ"
 
 #: ../share/extensions/color_custom.inx.h:1
 msgid "Blue Function"
-msgstr ""
+msgstr "تابع آبی"
 
 #: ../share/extensions/color_custom.inx.h:3
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../src/widgets/toolbox.cpp:861
 msgid "Custom"
-msgstr ""
+msgstr "سفارشی"
 
 #: ../share/extensions/color_custom.inx.h:4
 msgid "Green Function"
-msgstr ""
+msgstr "تابع سبز"
 
 #: ../share/extensions/color_custom.inx.h:5
 msgid "Red Function"
-msgstr ""
+msgstr "تابع قرمز"
 
 #: ../share/extensions/color_darker.inx.h:2
 msgid "Darker"
-msgstr ""
+msgstr "تاریک‌تر"
 
 #: ../share/extensions/color_desaturate.inx.h:2
 #: ../share/filters/filters.svg.h:31
 msgid "Desaturate"
-msgstr ""
+msgstr "حذف رنگ"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
-msgstr ""
+msgstr "سیاه و سفید"
 
 #: ../share/extensions/color_lesshue.inx.h:2
 msgid "Less Hue"
-msgstr ""
+msgstr "تن رنگ کمتر"
 
 #: ../share/extensions/color_lesslight.inx.h:2
 msgid "Less Light"
-msgstr ""
+msgstr "نور کمتر"
 
 #: ../share/extensions/color_lesssaturation.inx.h:2
 msgid "Less Saturation"
-msgstr ""
+msgstr "رنگ کمتر"
 
 #: ../share/extensions/color_morehue.inx.h:2
 msgid "More Hue"
-msgstr ""
+msgstr "تن رنگ بیشتر"
 
 #: ../share/extensions/color_morelight.inx.h:2
 msgid "More Light"
-msgstr ""
+msgstr "نور بیشتر"
 
 #: ../share/extensions/color_moresaturation.inx.h:2
 msgid "More Saturation"
-msgstr ""
+msgstr "رنگ بیشتر"
 
 #: ../share/extensions/color_negative.inx.h:2
 msgid "Negative"
-msgstr ""
+msgstr "نگاتیو"
 
 #: ../share/extensions/color_randomize.inx.h:2
 #: ../src/extension/internal/bitmap/modulate.cpp:41
@@ -251,7 +251,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/toolbox.cpp:4382
 msgid "Hue"
-msgstr ""
+msgstr "تن رنگ"
 
 #: ../share/extensions/color_randomize.inx.h:3
 #: ../src/flood-context.cpp:252
@@ -260,11 +260,11 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:445
 #: ../src/widgets/toolbox.cpp:4412
 msgid "Lightness"
-msgstr ""
+msgstr "روشنایی"
 
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Randomize"
-msgstr ""
+msgstr "تصادفی‌سازی"
 
 #: ../share/extensions/color_randomize.inx.h:5
 #: ../src/extension/internal/bitmap/modulate.cpp:42
@@ -276,134 +276,134 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:442
 #: ../src/widgets/toolbox.cpp:4397
 msgid "Saturation"
-msgstr ""
+msgstr "رنگ‌آمیزی"
 
 #: ../share/extensions/color_removeblue.inx.h:2
 msgid "Remove Blue"
-msgstr ""
+msgstr "حذف آبی"
 
 #: ../share/extensions/color_removegreen.inx.h:2
 msgid "Remove Green"
-msgstr ""
+msgstr "حذف سبز"
 
 #: ../share/extensions/color_removered.inx.h:2
 msgid "Remove Red"
-msgstr ""
+msgstr "حذف قرمز"
 
 #: ../share/extensions/color_replace.inx.h:1
 msgid "By color (RRGGBB hex):"
-msgstr ""
+msgstr "بر اساس رنگ (RRGGBB هگزادسیمال)"
 
 #: ../share/extensions/color_replace.inx.h:3
 msgid "Replace color"
-msgstr ""
+msgstr "جایگزینی رنگ"
 
 #: ../share/extensions/color_replace.inx.h:4
 msgid "Replace color (RRGGBB hex):"
-msgstr ""
+msgstr "جایگزینی رنگ (RRGGBB هگزادسیمال)"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
-msgstr ""
+msgstr "خمره‌ رنگ RGB"
 
 #: ../share/extensions/convert2dashes.inx.h:1
 msgid "Convert to Dashes"
-msgstr ""
+msgstr "تبدیل به خطوط با فاصله"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
-msgstr ""
+msgstr "دیاگرامی که با برنامه‌ی Dia ساخته شده"
 
 #: ../share/extensions/dia.inx.h:2
 msgid "Dia Diagram (*.dia)"
-msgstr ""
+msgstr "Dia Diagram (*.dia)"
 
 #: ../share/extensions/dia.inx.h:3
 msgid "Dia Input"
-msgstr ""
+msgstr "ورود Dia"
 
 #: ../share/extensions/dia.inx.h:4
 msgid "In order to import Dia files, Dia itself must be installed.  You can get Dia at http://live.gnome.org/Dia"
-msgstr ""
+msgstr "برای وارد کردن فایل‌های Dia، خود Dia باید نصب باشد. می‌توانید آن‌ را از http://live.gnome.org/Dia بگیرید"
 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
-msgstr ""
+msgstr "اسکریپت dia2svg.sh باید با توزیع Inkscape شما نصب شده باشد. اگر آن را ندارید، احتمالا در فرآید نصب Inkscape مشکلی وجود داشته است."
 
 #: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
-msgstr ""
+msgstr "ابعاد"
 
 #: ../share/extensions/dimension.inx.h:2
 #: ../share/extensions/dots.inx.h:4
 #: ../share/extensions/handles.inx.h:2
 #: ../share/extensions/measure.inx.h:11
 msgid "Visualize Path"
-msgstr ""
+msgstr "بصری سازی مسیر"
 
 #: ../share/extensions/dimension.inx.h:3
 msgid "X Offset"
-msgstr ""
+msgstr "افست X"
 
 #: ../share/extensions/dimension.inx.h:4
 msgid "Y Offset"
-msgstr ""
+msgstr "افست Y"
 
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
-msgstr ""
+msgstr "اندازه‌ی نقطه"
 
 #: ../share/extensions/dots.inx.h:2
 msgid "Font size"
-msgstr ""
+msgstr "اندازه‌ی فونت"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr ""
+msgstr "تعداد نقاط"
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
 msgid "Altitudes"
-msgstr ""
+msgstr "بلندی‌ها"
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
 msgid "Angle Bisectors"
-msgstr ""
+msgstr "نیمساز زاویه"
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
 msgid "Centroid"
-msgstr ""
+msgstr "مرکز ثقل"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
 msgid "Circumcentre"
-msgstr ""
+msgstr "مرکز دایره"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
 msgid "Circumcircle"
-msgstr ""
+msgstr "درون دایره"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
 msgid "Common Objects"
-msgstr ""
+msgstr "اشیاء متداول"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
 msgid "Contact Triangle"
-msgstr ""
+msgstr "تماس مثلث"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
-msgstr ""
+msgstr "نقطه‌ی سفارشی مشخص شده:"
 
 #: ../share/extensions/draw_from_triangle.inx.h:9
 msgid "Custom Points and Options"
-msgstr ""
+msgstr "نقاط و آپشن‌های سفارشی"
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
 msgid "Draw Circle Around This Point"
-msgstr ""
+msgstr "رسم دایره حول این نقطه"
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
 msgid "Draw From Triangle"
-msgstr ""
+msgstr "ترسیم از مثلث"
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
 msgid "Draw Isogonal Conjugate"
