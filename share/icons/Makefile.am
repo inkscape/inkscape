@@ -51,5 +51,7 @@ icons_DATA = \
 	inkscape.file.png \
 	README
 
-EXTRA_DIST = $(icons_DATA)
+EXTRA_DIST = \
+	$(icons_DATA) \
+	hicolor/index.theme
 
