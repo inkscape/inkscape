@@ -23,7 +23,7 @@ class MessageStack;
 
 class SelectionDescriber : public sigc::trackable {
 public:
-    SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack);
+    SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack, char *when_selected, char *when_nothing);
     ~SelectionDescriber();
 
 private:
@@ -34,6 +34,9 @@ private:
     sigc::connection *_selection_modified_connection;
 
     MessageContext _context;
+
+    char *_when_selected;
+    char *_when_nothing;
 };
 
 }

@@ -97,8 +97,10 @@ GSList *collect_terms (GSList *items)
 
 namespace Inkscape {
 
-SelectionDescriber::SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack)
-: _context(stack)
+SelectionDescriber::SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack, char *when_selected, char *when_nothing)
+    : _context(stack),
+      _when_selected (when_selected),
+      _when_nothing (when_nothing)
 {
     _selection_changed_connection = new sigc::connection (
              selection->connectChanged(
@@ -125,9 +127,8 @@ void SelectionDescriber::_selectionModified(Inkscape::Selection *selection, guin
 void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *selection) {
     GSList const *items = selection->itemList();
 
-    char const *when_selected = _("Click selection to toggle scale/rotation handles");
     if (!items) { // no items
-        _context.set(Inkscape::NORMAL_MESSAGE, _("No objects selected. Click, Shift+click, or drag around objects to select."));
+        _context.set(Inkscape::NORMAL_MESSAGE, _when_nothing);
     } else {
         SPItem *item = SP_ITEM(items->data);
         SPObject *layer = selection->desktop()->layerForObject (SP_OBJECT (item));
@@ -185,18 +186,18 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up original"), when_selected);
+                              _("Use <b>Shift+D</b> to look up original"), _when_selected);
             } else if (SP_IS_TEXT_TEXTPATH(item)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up path"), when_selected);
+                              _("Use <b>Shift+D</b> to look up path"), _when_selected);
             } else if (SP_IS_FLOWTEXT(item) && !SP_FLOWTEXT(item)->has_internal_frame()) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
-                              _("Use <b>Shift+D</b> to look up frame"), when_selected);
+                              _("Use <b>Shift+D</b> to look up frame"), _when_selected);
             } else {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
-                              item_desc, in_phrase, when_selected);
+                              item_desc, in_phrase, _when_selected);
             }
             g_free(item_desc);
         } else { // multiple items
@@ -233,7 +234,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             }
             g_slist_free (terms);
 
-            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."), objects_str, in_phrase, when_selected);
+            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."), objects_str, in_phrase, _when_selected);
 
             if (objects_str)
                 g_free ((gchar *) objects_str);

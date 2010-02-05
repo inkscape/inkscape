@@ -172,7 +172,12 @@ sp_select_context_setup(SPEventContext *ec)
 
     SPDesktop *desktop = ec->desktop;
 
-    select_context->_describer = new Inkscape::SelectionDescriber(desktop->selection, desktop->messageStack());
+    select_context->_describer = new Inkscape::SelectionDescriber(
+                desktop->selection, 
+                desktop->messageStack(),
+                _("Click selection to toggle scale/rotation handles"),
+                _("No objects selected. Click, Shift+click, or drag around objects to select.")
+        );
 
     select_context->_seltrans = new Inkscape::SelTrans(desktop);
 
@@ -362,7 +367,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
         case GDK_ENTER_NOTIFY:
         {
             if (!desktop->isWaitingCursor()) {
-                GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
+                GdkCursor *cursor = gdk_cursor_new(GDK_CENTER_PTR);
                 gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
                 gdk_cursor_destroy(cursor);
             }
@@ -723,7 +728,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                                 _("<b>Alt</b>: click to select under; drag to move selected or select by touch"));
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-                        GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
+                        GdkCursor *cursor = gdk_cursor_new(GDK_CENTER_PTR);
                         gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
                         gdk_cursor_destroy(cursor);
                     }
