@@ -88,6 +88,7 @@ extensions = \
 	pathmodifier.py\
 	perfectboundcover.py \
 	perspective.py \
+	pixelsnap.py \
 	plt_output.py \
 	polyhedron_3d.py \
 	printing-marks.py \
@@ -220,6 +221,7 @@ modules = \
 	pathscatter.inx\
 	perfectboundcover.inx \
 	perspective.inx	\
+	pixelsnap.inx \
 	plt_input.inx \
 	plt_output.inx \
 	polyhedron_3d.inx	\
