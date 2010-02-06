@@ -976,7 +976,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 /* This is perfectly valid */
                 break;
             default:
-                if (sp_event_context_knot_mouseover(cc)) {
+                if (!sp_event_context_knot_mouseover(cc)) {
                     m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_OTHER_HANDLE));
                 }
                 break;

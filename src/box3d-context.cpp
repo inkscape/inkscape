@@ -387,7 +387,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             sp_box3d_drag(*bc, event->motion.state);
 
             ret = TRUE;
-        } else if (sp_event_context_knot_mouseover(bc)) {
+        } else if (!sp_event_context_knot_mouseover(bc)) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 

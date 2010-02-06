@@ -291,7 +291,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             gobble_motion_events(GDK_BUTTON1_MASK);
 
             ret = TRUE;
-        } else if (sp_event_context_knot_mouseover(event_context)) {
+        } else if (!sp_event_context_knot_mouseover(event_context)) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 

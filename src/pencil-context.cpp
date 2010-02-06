@@ -364,10 +364,6 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     /* Create green anchor */
                     pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, pc->p[0]);
                 }
-                /** \todo
-                 * fixme: I am not sure whether we want to snap to anchors
-                 * in middle of freehand (Lauris)
-                 */
                 if (anchor) {
                     p = anchor->dp;
                 }
@@ -395,7 +391,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     pc->_message_context->clear();
                     pc->anchor_statusbar = false;
                 }
-                if (sp_event_context_knot_mouseover(pc)) {
+                if (!sp_event_context_knot_mouseover(pc)) {
                     SnapManager &m = dt->namedview->snap_manager;
                     m.setup(dt);
                     m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));

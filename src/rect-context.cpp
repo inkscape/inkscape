@@ -317,7 +317,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
-        } else if (sp_event_context_knot_mouseover(rc)) {
+        } else if (!sp_event_context_knot_mouseover(rc)) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
 

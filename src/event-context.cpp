@@ -744,10 +744,14 @@ gint sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item,
     return ret;
 }
 
+/**
+ * @brief: Returns true if we're hovering above a knot (needed because we don't want to pre-snap in that case)
+ */
+
 bool sp_event_context_knot_mouseover(SPEventContext *ec)
 {
     if (ec->shape_editor) {
-        return !(ec->shape_editor->knot_mouseover());
+        return ec->shape_editor->knot_mouseover();
     }
 
     return false;

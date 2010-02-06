@@ -632,7 +632,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                         spdc_endpoint_snap(pc, p, mevent.state);
                         spdc_pen_set_subsequent_point(pc, p, true);
                         ret = TRUE;
-                    } else if (sp_event_context_knot_mouseover(pc)) {
+                    } else if (!sp_event_context_knot_mouseover(pc)) {
                         SnapManager &m = dt->namedview->snap_manager;
                         m.setup(dt);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
@@ -681,7 +681,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                             pc->_message_context->clear();
                             pc->anchor_statusbar = false;
                         }
-                        if (sp_event_context_knot_mouseover(pc)) {
+                        if (!sp_event_context_knot_mouseover(pc)) {
                             SnapManager &m = dt->namedview->snap_manager;
                             m.setup(dt);
                             m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
@@ -707,7 +707,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                     /* This is perfectly valid */
                     break;
                 default:
-                    if (sp_event_context_knot_mouseover(pc)) {
+                    if (!sp_event_context_knot_mouseover(pc)) {
                         SnapManager &m = dt->namedview->snap_manager;
                         m.setup(dt);
                         m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
