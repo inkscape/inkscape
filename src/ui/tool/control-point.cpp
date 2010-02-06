@@ -302,10 +302,11 @@ int ControlPoint::_event_handler(SPCanvasItem */*item*/, GdkEvent *event, Contro
 bool ControlPoint::_eventHandler(GdkEvent *event)
 {
     // NOTE the static variables below are shared for all points!
+    // TODO handle clicks and drags from other buttons too
 
     // offset from the pointer hotspot to the center of the grabbed knot in desktop coords
     static Geom::Point pointer_offset;
-    // number of last doubleclicked button, to be
+    // number of last doubleclicked button
     static unsigned next_release_doubleclick = 0;
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -321,7 +322,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
     case GDK_BUTTON_PRESS:
         next_release_doubleclick = 0;
         if (event->button.button == 1) {
-            // mouse click. internally, start dragging, but do not emit signals
+            // 1st mouse button click. internally, start dragging, but do not emit signals
             // or change position until drag tolerance is exceeded.
             _drag_event_origin[Geom::X] = event->button.x;
             _drag_event_origin[Geom::Y] = event->button.y;
@@ -331,11 +332,12 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
             sp_canvas_item_grab(_canvas_item, _grab_event_mask, NULL, event->button.time);
             _event_grab = true;
             _setState(STATE_CLICKED);
+            return true;
         }
-        return true;
+        return false;
         
     case GDK_MOTION_NOTIFY:
-        if (held_button<1>(event->motion) && !_desktop->event_context->space_panning) {
+        if (_event_grab && !_desktop->event_context->space_panning) {
             _desktop->snapindicator->remove_snaptarget(); 
             bool transferred = false;
             if (!_drag_initiated) {
@@ -374,37 +376,37 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
         break;
         
     case GDK_BUTTON_RELEASE:
-        if (!_event_grab) break;
+        if (_event_grab && event->button.button == 1) {
+            // TODO I think snapping on release is wrong, or at least counter-intuitive.
+            sp_event_context_snap_watchdog_callback(_desktop->event_context->_delayed_snap_event);
+            sp_event_context_discard_delayed_snap_event(_desktop->event_context);
+            _desktop->snapindicator->remove_snaptarget();
 
-        // TODO I think snapping on release is wrong, or at least counter-intuitive.
-        sp_event_context_snap_watchdog_callback(_desktop->event_context->_delayed_snap_event);
-        sp_event_context_discard_delayed_snap_event(_desktop->event_context);
-        _desktop->snapindicator->remove_snaptarget();
+            sp_canvas_item_ungrab(_canvas_item, event->button.time);
+            _setMouseover(this, event->button.state);
+            _event_grab = false;
 
-        sp_canvas_item_ungrab(_canvas_item, event->button.time);
-        _setMouseover(this, event->button.state);
-        _event_grab = false;
-
-        if (_drag_initiated) {
-            sp_canvas_end_forced_full_redraws(_desktop->canvas);
-        }
-
-        if (event->button.button == next_release_doubleclick) {
-            _drag_initiated = false;
-            return doubleclicked(&event->button);
-        }
-        if (event->button.button == 1) {
             if (_drag_initiated) {
-                // it is the end of a drag
-                ungrabbed(&event->button);
-                _drag_initiated = false;
-                return true;
-            } else {
-                // it is the end of a click
-                return clicked(&event->button);
+                sp_canvas_end_forced_full_redraws(_desktop->canvas);
             }
+
+            if (next_release_doubleclick) {
+                _drag_initiated = false;
+                return doubleclicked(&event->button);
+            }
+            if (event->button.button == 1) {
+                if (_drag_initiated) {
+                    // it is the end of a drag
+                    ungrabbed(&event->button);
+                    _drag_initiated = false;
+                    return true;
+                } else {
+                    // it is the end of a click
+                    return clicked(&event->button);
+                }
+            }
+            _drag_initiated = false;
         }
-        _drag_initiated = false;
         break;
 
     case GDK_ENTER_NOTIFY:
@@ -415,7 +417,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
         return true;
 
     case GDK_GRAB_BROKEN:
-        if (!event->grab_broken.keyboard && _event_grab) {
+        if (_event_grab && !event->grab_broken.keyboard) {
             {
                 ungrabbed(NULL);
                 if (_drag_initiated)
@@ -429,6 +431,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
         break;
 
     // update tips on modifier state change
+    // TODO add ESC keybinding as drag cancel
     case GDK_KEY_PRESS:
     case GDK_KEY_RELEASE: 
         if (mouseovered_point != this) return false;
