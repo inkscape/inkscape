@@ -14,6 +14,8 @@
 #include <gdk/gdk.h>
 #include <2geom/point.h>
 
+struct SPCanvas;
+
 namespace Inkscape {
 namespace UI {
 
@@ -109,7 +111,8 @@ inline bool held_button(E const &event) {
 }
 
 guint shortcut_key(GdkEventKey const &event);
-unsigned consume_same_key_events(guint keyval, gint mask);
+unsigned combine_key_events(guint keyval, gint mask);
+unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mask);
 unsigned state_after_event(GdkEvent *event);
 
 } // namespace UI

@@ -15,8 +15,6 @@
 #include <memory>
 #include <tr1/unordered_map>
 #include <tr1/unordered_set>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 #include <boost/optional.hpp>
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
@@ -43,7 +41,6 @@ class ControlPointSelection : public Manipulator {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
-    typedef std::list<sigc::connection> connlist_type;
     typedef std::tr1::unordered_set< SelectableControlPoint * > set_type;
     typedef set_type Set; // convenience alias
 

@@ -337,6 +337,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
         return false;
         
     case GDK_MOTION_NOTIFY:
+        combine_motion_events(_desktop->canvas, event->motion, 0);
         if (_event_grab && !_desktop->event_context->space_panning) {
             _desktop->snapindicator->remove_snaptarget(); 
             bool transferred = false;

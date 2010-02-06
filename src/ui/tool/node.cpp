@@ -858,7 +858,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 
         // Build the list of unselected nodes.
         typedef ControlPointSelection::Set Set;
-        Set nodes = _selection.allPoints();
+        Set &nodes = _selection.allPoints();
         for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
             if (!(*i)->selected()) {
                 Node *n = static_cast<Node*>(*i);

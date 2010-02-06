@@ -516,12 +516,15 @@ bool MultiPathManipulator::event(GdkEvent *event)
             break;
         }
         break;
+    case GDK_MOTION_NOTIFY:
+        combine_motion_events(_desktop->canvas, event->motion, 0);
+        for (MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
+            if (i->second->event(event)) return true;
+        }
+        break;
     default: break;
     }
 
-    for (MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
-        if (i->second->event(event)) return true;
-    }
     return false;
 }
 

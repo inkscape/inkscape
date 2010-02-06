@@ -522,7 +522,7 @@ void PathManipulator::deleteNodes(bool keep_shape)
         sel_end = sel_beg;
         
         while (num_selected > 0) {
-            while (!sel_beg->selected()) {
+            while (sel_beg && !sel_beg->selected()) {
                 sel_beg = sel_beg.next();
             }
             sel_end = sel_beg;
@@ -532,6 +532,7 @@ void PathManipulator::deleteNodes(bool keep_shape)
             }
             
             num_selected -= _deleteStretch(sel_beg, sel_end, keep_shape);
+            sel_beg = sel_end;
         }
         ++i;
     }
@@ -1294,11 +1295,12 @@ void PathManipulator::_commit(Glib::ustring const &annotation)
 void PathManipulator::_updateDragPoint(Geom::Point const &evp)
 {
     // TODO find a way to make this faster (no transform required)
-    Geom::PathVector pv = _spcurve->get_pathvector() * (_edit_transform * _i2d_transform);
+    Geom::Matrix to_desktop = _edit_transform * _i2d_transform;
+    Geom::PathVector pv = _spcurve->get_pathvector();
     boost::optional<Geom::PathVectorPosition> pvp
-        = Geom::nearestPoint(pv, _desktop->w2d(evp));
+        = Geom::nearestPoint(pv, _desktop->w2d(evp) * to_desktop.inverse());
     if (!pvp) return;
-    Geom::Point nearest_point = _desktop->d2w(pv.at(pvp->path_nr).pointAt(pvp->t));
+    Geom::Point nearest_point = _desktop->d2w(pv.at(pvp->path_nr).pointAt(pvp->t) * to_desktop);
     
     double fracpart;
     std::list<SubpathPtr>::iterator spi = _subpaths.begin();

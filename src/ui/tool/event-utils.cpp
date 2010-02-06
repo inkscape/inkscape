@@ -8,8 +8,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstring>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
+#include "display/sp-canvas.h"
 #include "ui/tool/event-utils.h"
 
 namespace Inkscape {
@@ -28,7 +30,7 @@ guint shortcut_key(GdkEventKey const &event)
     return shortcut_key;
 }
 
-unsigned consume_same_key_events(guint keyval, gint mask)
+unsigned combine_key_events(guint keyval, gint mask)
 {
     GdkEvent *event_next;
     gint i = 0;
@@ -37,7 +39,7 @@ unsigned consume_same_key_events(guint keyval, gint mask)
     // while the next event is also a key notify with the same keyval and mask,
     while (event_next && (event_next->type == GDK_KEY_PRESS || event_next->type == GDK_KEY_RELEASE)
            && event_next->key.keyval == keyval
-           && (!mask || (event_next->key.state & mask))) {
+           && (!mask || event_next->key.state & mask)) {
         if (event_next->type == GDK_KEY_PRESS)
             i ++;
         // kill it
@@ -47,6 +49,47 @@ unsigned consume_same_key_events(guint keyval, gint mask)
     }
     // otherwise, put it back onto the queue
     if (event_next) gdk_event_put(event_next);
+
+    return i;
+}
+
+unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mask)
+{
+    GdkEvent *event_next;
+    gint i = 0;
+    event.x -= canvas->x0;
+    event.y -= canvas->y0;
+
+    event_next = gdk_event_get();
+    // while the next event is also a motion notify
+    while (event_next && event_next->type == GDK_MOTION_NOTIFY
+            && (!mask || event_next->motion.state & mask))
+    {
+        if (event_next->motion.device == event.device) {
+            GdkEventMotion &next = event_next->motion;
+            event.send_event = next.send_event;
+            event.time = next.time;
+            event.x = next.x;
+            event.y = next.y;
+            event.state = next.state;
+            event.is_hint = next.is_hint;
+            event.x_root = next.x_root;
+            event.y_root = next.y_root;
+            if (event.axes && next.axes) {
+                memcpy(event.axes, next.axes, event.device->num_axes);
+            }
+        }
+
+        // kill it
+        gdk_event_free(event_next);
+        event_next = gdk_event_get();
+        i++;
+    }
+    // otherwise, put it back onto the queue
+    if (event_next)
+        gdk_event_put(event_next);
+    event.x += canvas->x0;
+    event.y += canvas->y0;
 
     return i;
 }
