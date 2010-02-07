@@ -170,6 +170,11 @@ void PathManipulator::update()
 /** Store the changes to the path in XML. */
 void PathManipulator::writeXML()
 {
+    if (!_live_outline)
+        _updateOutline();
+    if (!_live_objects)
+        _setGeometry();
+
     if (!_path) return;
     _observer->block();
     if (!empty()) {
@@ -184,13 +189,6 @@ void PathManipulator::writeXML()
         _path = 0;
     }
     _observer->unblock();
-
-    if (!empty()) {
-        if (!_live_outline)
-            _updateOutline();
-        if (!_live_objects)
-            _setGeometry();
-    }
 }
 
 /** Remove all nodes from the path. */
