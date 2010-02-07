@@ -235,6 +235,15 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             return TRUE;
         }
 
+        if (!pc->grab) {
+            /* Grab mouse, so release will not pass unnoticed */
+            pc->grab = SP_CANVAS_ITEM(desktop->acetate);
+            sp_canvas_item_grab(pc->grab, ( GDK_KEY_PRESS_MASK | GDK_BUTTON_PRESS_MASK   |
+                                            GDK_BUTTON_RELEASE_MASK |
+                                            GDK_POINTER_MOTION_MASK  ),
+                                NULL, bevent.time);
+        }
+
         Geom::Point const button_w(bevent.x, bevent.y);
 
         /* Find desktop coordinates */
@@ -391,11 +400,15 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     pc->_message_context->clear();
                     pc->anchor_statusbar = false;
                 }
-                if (!sp_event_context_knot_mouseover(pc)) {
-                    SnapManager &m = dt->namedview->snap_manager;
-                    m.setup(dt);
-                    m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
-                }
+            }
+
+            // Show the pre-snap indicator to communicate to the user where we would snap to if he/she were to
+            // a) press the mousebutton to start a freehand drawing, or
+            // b) release the mousebutton to finish a freehand drawing
+            if (!sp_event_context_knot_mouseover(pc)) {
+                SnapManager &m = dt->namedview->snap_manager;
+                m.setup(dt);
+                m.preSnap(Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_NODE_HANDLE));
             }
             break;
     }
@@ -460,7 +473,15 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                     /// \todo fixme: Clean up what follows (Lauris)
                     if (anchor) {
                         p = anchor->dp;
+                    } else {
+                        Geom::Point p_end = p;
+                        spdc_endpoint_snap(pc, p_end, revent.state);
+                        if (p_end != p) {
+                            // then we must have snapped!
+                            spdc_add_freehand_point(pc, p_end, revent.state);
+                        }
                     }
+
                     pc->ea = anchor;
                     /* Write curves to object */
 
