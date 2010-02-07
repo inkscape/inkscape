@@ -5213,6 +5213,7 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
     FILE *destf = fopen(destNative.c_str(), "wb");
     if (!destf)
         {
+        fclose(srcf);
         error("copyFile cannot open %s for writing", srcNative.c_str());
         return false;
         }
