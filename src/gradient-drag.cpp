@@ -1154,7 +1154,10 @@ Moves this dragger to the point of the given draggable, acting upon all other dr
 void
 GrDragger::moveThisToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr)
 {
-    this->point = sp_item_gradient_get_coords (item, point_type, point_i, fill_or_stroke);
+    GrDraggable *dr_first = (GrDraggable *) this->draggables->data;
+    if (!dr_first) return;
+
+    this->point = sp_item_gradient_get_coords (dr_first->item, dr_first->point_type, dr_first->point_i, dr_first->fill_or_stroke);
     this->point_original = this->point;
 
     sp_knot_moveto (this->knot, this->point);

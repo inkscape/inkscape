@@ -216,7 +216,7 @@ class HLineSegment : public Curve
     {
         Point ip = initialPoint() * m;
         Point ep = finalPoint() * m;
-        if (m.onlyScaleAndTranslation()) {
+        if (ip[Y] == ep[Y]) {
             return new HLineSegment(ip[X], ep[X], ip[Y]);
         } else {
             return new LineSegment(ip, ep);
@@ -457,7 +457,7 @@ class VLineSegment : public Curve
     {
         Point ip = initialPoint() * m;
         Point ep = finalPoint() * m;
-        if (m.onlyScaleAndTranslation()) {
+        if (ip[X] == ep[X]) {
             return new VLineSegment(ip[X], ip[Y], ep[Y]);
         } else {
             return new LineSegment(ip, ep);

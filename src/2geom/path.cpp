@@ -89,8 +89,17 @@ Path &Path::operator*=(Matrix const &m) {
     }
     prev = (*it)->finalPoint();
   }
-  for ( int i = 0 ; i < 2 ; ++i ) {
-    final_->setPoint(i, (*final_)[i] * m);
+  if (closed_) {
+    Geom::Point pt = front().initialPoint();
+    if (size_open() > 0) {
+        Curve *l = const_cast<Curve*>((get_curves().end() - 2)->get());
+        l->setFinal(pt);
+    }
+    final_->setInitial(pt);
+    final_->setFinal(pt);
+  } else {
+    final_->setInitial(back().finalPoint());
+    final_->setFinal(front().initialPoint());
   }
   if (get_curves().size() > 1) {
     if ( front().initialPoint() != initialPoint() || back().finalPoint() != finalPoint() ) {
