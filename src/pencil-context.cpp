@@ -378,6 +378,13 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 }
 
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
+                    if (pc->ps.size() == 0) {
+                        // Only in freehand mode we have to add the first point also to pc->ps (apparently)
+                        // - We cannot add this point in spdc_set_startpoint, because we only need it for freehand
+                        // - We cannot do this in the button press handler because at that point we don't know yet
+                        //   wheter we're going into freehand mode or not
+                        pc->ps.push_back(pc->p[0]);
+                    }
                     spdc_add_freehand_point(pc, p, mevent.state);
                     ret = TRUE;
                 }
@@ -639,7 +646,6 @@ spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const p)
     pc->red_curve_is_valid = false;
     if (in_svg_plane(p)) {
         pc->p[pc->npoints++] = p;
-        pc->ps.push_back(p);
     }
 }
 
