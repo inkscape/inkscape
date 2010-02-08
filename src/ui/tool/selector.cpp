@@ -108,12 +108,14 @@ bool Selector::event(GdkEvent *event)
     case GDK_BUTTON_PRESS:
         // Do not pass button presses other than left button to the control point.
         // This way middle click and right click can be handled in SPEventContext.
-        if (event->button.button != 1) return false;
-        _dragger->setPosition(_desktop->w2d(event_point(event->motion)));
+        if (event->button.button == 1) {
+            _dragger->setPosition(_desktop->w2d(event_point(event->motion)));
+            return _dragger->event(event);
+        }
         break;
     default: break;
     }
-    return _dragger->event(event);
+    return false;
 }
 
 } // namespace UI
