@@ -115,11 +115,11 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
+!insertmacro INKLANGFILE Romanian
 !insertmacro INKLANGFILE Russian
 !insertmacro INKLANGFILE Slovak
 !insertmacro INKLANGFILE Slovenian
 !insertmacro INKLANGFILE Spanish
-!insertmacro INKLANGFILE Romanian
 !insertmacro INKLANGFILE SimpChinese
 !insertmacro INKLANGFILE TradChinese
 !verbose pop
@@ -639,11 +639,11 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Italian       1040
   !insertmacro LanguageAutoSelect Japanese      1041
   !insertmacro LanguageAutoSelect Polish        1045
+  !insertmacro LanguageAutoSelect Romanian      1048
   !insertmacro LanguageAutoSelect Russian       1049
   !insertmacro LanguageAutoSelect Slovak        1051
   !insertmacro LanguageAutoSelect Slovenian     1060
   !insertmacro LanguageAutoSelect Spanish       1034
-  !insertmacro LanguageAutoSelect Romanian      1048
   !insertmacro LanguageAutoSelect ChineseTaiwan 1028 ; TradChinese, but section is called ChineseTaiwan
   ; End of language detection }}}
 
