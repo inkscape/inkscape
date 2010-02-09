@@ -55,6 +55,7 @@ struct InkNodeTool : public SPEventContext
     SelectorPtr _selector;
     PathSharedDataPtr _path_data;
     SPCanvasGroup *_transform_handle_group;
+    SPItem *_last_over;
 
     unsigned cursor_drag : 1;
     unsigned show_outline : 1;

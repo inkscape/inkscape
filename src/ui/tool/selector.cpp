@@ -102,8 +102,8 @@ Selector::~Selector()
 bool Selector::event(GdkEvent *event)
 {
     // The hidden control point will capture all events after it obtains the grab,
-    // but it relies on this function to initiate it. Here we can filter what events
-    // it will receive.
+    // but it relies on this function to initiate it. If we pass only first button
+    // press events here, it won't interfere with any other event handling.
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         // Do not pass button presses other than left button to the control point.

@@ -280,7 +280,9 @@ void ink_node_tool_setup(SPEventContext *ec)
     nt->single_node_transform_handles = false;
     nt->flash_tempitem = NULL;
     nt->flashed_item = NULL;
-    // TODO remove this!
+    nt->_last_over = NULL;
+    // TODO long term, fold ShapeEditor into MultiPathManipulator and rename MPM
+    // to something better
     nt->shape_editor = new ShapeEditor(nt->desktop);
 
     // read prefs before adding items to selection to prevent momentarily showing the outline
@@ -442,11 +444,17 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     switch (event->type)
     {
-    case GDK_MOTION_NOTIFY:
-        // create outline
-        if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
-            SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
+    case GDK_MOTION_NOTIFY: {
+        combine_motion_events(desktop->canvas, event->motion, 0);
+        SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
                 FALSE, TRUE);
+        if (over_item != nt->_last_over) {
+            nt->_last_over = over_item;
+            ink_node_tool_update_tip(nt, event);
+        }
+
+        // create pathflash outline
+        if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
             if (over_item == nt->flashed_item) break;
             if (!prefs->getBool("/tools/nodes/pathflash_selected") && selection->includes(over_item)) break;
             if (nt->flash_tempitem) {
@@ -468,7 +476,7 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
                 prefs->getInt("/tools/nodes/pathflash_timeout", 500));
             c->unref();
         }
-        return true;
+        } return true;
     case GDK_KEY_PRESS:
         switch (get_group0_keyval(&event->key))
         {
@@ -481,14 +489,9 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
             ink_node_tool_update_tip(nt, event);
             return TRUE;
         case GDK_a:
-            if (held_control(event->key)) {
-                if (held_alt(event->key)) {
-                    nt->_selected_nodes->selectAll();
-                } else {
-                    // select all nodes in subpaths that have something selected
-                    // if nothing is selected, select everything
-                    nt->_multipath->selectSubpaths();
-                }
+            if (held_control(event->key) && held_alt(event->key)) {
+                nt->_selected_nodes->selectAll();
+                // Ctrl+A is handled in selection-chemistry.cpp via verb
                 ink_node_tool_update_tip(nt, event);
                 return TRUE;
             }
@@ -517,26 +520,49 @@ void ink_node_tool_update_tip(InkNodeTool *nt, GdkEvent *event)
         unsigned new_state = state_after_event(event);
         if (new_state == event->key.state) return;
         if (state_held_shift(new_state)) {
-            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
-                C_("Node tool tip", "<b>Shift:</b> drag to add nodes to the selection, "
-                "click to toggle object selection"));
+            if (nt->_last_over) {
+                nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
+                    C_("Node tool tip", "<b>Shift:</b> drag to add nodes to the selection, "
+                    "click to toggle object selection"));
+            } else {
+                nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
+                    C_("Node tool tip", "<b>Shift:</b> drag to add nodes to the selection"));
+            }
             return;
         }
     }
     unsigned sz = nt->_selected_nodes->size();
+    unsigned total = nt->_selected_nodes->allPoints().size();
     if (sz != 0) {
-        char *dyntip = g_strdup_printf(C_("Node tool tip",
-            "Selected <b>%d nodes</b>. Drag to select nodes, click to select a single object "
-            "or unselect all objects"), sz);
-        nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
-        g_free(dyntip);
-    } else if (nt->_multipath->empty()) {
-        nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
-            C_("Node tool tip", "Drag or click to select objects to edit"));
+        if (nt->_last_over) {
+            char *dyntip = g_strdup_printf(C_("Node tool tip",
+                "<b>%u of %u nodes</b> selected. "
+                "Drag to select nodes, click to edit only this object (more: Shift)"), sz, total);
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
+            g_free(dyntip);
+        } else {
+            char *dyntip = g_strdup_printf(C_("Node tool tip",
+                "<b>%u of %u nodes</b> selected. "
+                "Drag to select nodes, click clear the selection"), sz, total);
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, dyntip);
+            g_free(dyntip);
+        }
+    } else if (!nt->_multipath->empty()) {
+        if (nt->_last_over) {
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, C_("Node tool tip",
+                "Drag to select nodes, click to edit only this object"));
+        } else {
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, C_("Node tool tip",
+                "Drag to select nodes, click to clear the selection"));
+        }
     } else {
-        nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE,
-            C_("Node tool tip", "Drag to select nodes, click to select an object "
-            "or clear the selection"));
+        if (nt->_last_over) {
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, C_("Node tool tip",
+                "Drag to select objects to edit, click to edit this object (more: Shift)"));
+        } else {
+            nt->_node_message_context->set(Inkscape::NORMAL_MESSAGE, C_("Node tool tip",
+                "Drag to select objects to edit"));
+        }
     }
 }
 

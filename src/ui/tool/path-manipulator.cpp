@@ -1331,7 +1331,7 @@ double PathManipulator::_getStrokeTolerance()
      * drag tolerance setting.  */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double ret = prefs->getIntLimited("/options/dragtolerance/value", 2, 0, 100);
-    if (_path && !SP_OBJECT_STYLE(_path)->stroke.isNone()) {
+    if (_path && SP_OBJECT_STYLE(_path) && !SP_OBJECT_STYLE(_path)->stroke.isNone()) {
         ret += SP_OBJECT_STYLE(_path)->stroke_width.computed * 0.5
             * (_edit_transform * _i2d_transform).descrim() // scale to desktop coords
             * _desktop->current_zoom(); // == _d2w.descrim() - scale to window coords

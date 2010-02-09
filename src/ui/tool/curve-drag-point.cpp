@@ -44,6 +44,16 @@ CurveDragPoint::CurveDragPoint(PathManipulator &pm)
     setVisible(false);
 }
 
+bool CurveDragPoint::_eventHandler(GdkEvent *event)
+{
+    // do not process any events when the manipulator is empty
+    if (_pm.empty()) {
+        setVisible(false);
+        return false;
+    }
+    return ControlPoint::_eventHandler(event);
+}
+
 bool CurveDragPoint::grabbed(GdkEventMotion */*event*/)
 {
     _pm._selection.hideTransformHandles();
@@ -149,6 +159,7 @@ void CurveDragPoint::_insertNode(bool take_selection)
 
 Glib::ustring CurveDragPoint::_getTip(unsigned state)
 {
+    if (_pm.empty()) return "";
     if (!first || !first.next()) return "";
     bool linear = first->front()->isDegenerate() && first.next()->back()->isDegenerate();
     if (state_held_shift(state)) {
@@ -162,11 +173,11 @@ Glib::ustring CurveDragPoint::_getTip(unsigned state)
     if (linear) {
         return C_("Path segment tip",
             "<b>Linear segment:</b> drag to convert to a Bezier segment, "
-            "doubleclick to insert node, click to select");
+            "doubleclick to insert node, click to select (more: Shift, Ctrl+Alt)");
     } else {
         return C_("Path segment tip",
             "<b>Bezier segment:</b> drag to shape the segment, doubleclick to insert node, "
-            "click to select");
+            "click to select (more: Shift, Ctrl+Alt)");
     }
 }
 

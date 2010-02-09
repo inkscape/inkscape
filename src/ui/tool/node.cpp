@@ -77,6 +77,7 @@ static Geom::Point direction(Geom::Point const &first, Geom::Point const &second
  * Keeping the invariant on node moves is left to the %Node class.
  */
 
+Geom::Point Handle::_saved_other_pos(0, 0);
 double Handle::_saved_length = 0.0;
 bool Handle::_drag_out = false;
 
@@ -224,6 +225,7 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
 
 bool Handle::grabbed(GdkEventMotion *)
 {
+    _saved_other_pos = other().position();
     _saved_length = _drag_out ? 0 : length();
     _pm()._handleGrabbed();
     return false;
@@ -232,23 +234,45 @@ bool Handle::grabbed(GdkEventMotion *)
 void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     Geom::Point parent_pos = _parent->position();
+    Geom::Point origin = _last_drag_origin();
     // with Alt, preserve length
     if (held_alt(*event)) {
         new_pos = parent_pos + Geom::unit_vector(new_pos - parent_pos) * _saved_length;
     }
-    // with Ctrl, constrain to M_PI/rotationsnapsperpi increments.
+    // with Ctrl, constrain to M_PI/rotationsnapsperpi increments from vertical
+    // and the original position.
     if (held_control(*event)) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int snaps = 2 * prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
-        Geom::Point origin = _last_drag_origin();
-        Geom::Point rel_origin = origin - parent_pos;
-        new_pos = parent_pos + Geom::constrain_angle(Geom::Point(0,0), new_pos - parent_pos, snaps,
-            _drag_out ? Geom::Point(1,0) : Geom::unit_vector(rel_origin));
+
+        // note: if snapping to the original position is only desired in the original
+        // direction of the handle, change 2nd line below to Ray instead of Line
+        Geom::Line original_line(parent_pos, origin);
+        Geom::Point snap_pos = parent_pos + Geom::constrain_angle(
+            Geom::Point(0,0), new_pos - parent_pos, snaps, Geom::Point(1,0));
+        Geom::Point orig_pos = original_line.pointAt(original_line.nearestPoint(new_pos));
+
+        if (Geom::distance(snap_pos, new_pos) < Geom::distance(orig_pos, new_pos)) {
+            new_pos = snap_pos;
+        } else {
+            new_pos = orig_pos;
+        }
+    }
+    // with Shift, if the node is cusp, rotate the other handle as well
+    if (_parent->type() == NODE_CUSP && !_drag_out) {
+        if (held_shift(*event)) {
+            Geom::Point other_relpos = _saved_other_pos - parent_pos;
+            other_relpos *= Geom::Rotate(Geom::angle_between(origin - parent_pos, new_pos - parent_pos));
+            other().setRelativePos(other_relpos);
+        } else {
+            // restore the position
+            other().setPosition(_saved_other_pos);
+        }
     }
     _pm().update();
 }
 
-void Handle::ungrabbed(GdkEventButton *)
+void Handle::ungrabbed(GdkEventButton *event)
 {
     // hide the handle if it's less than dragtolerance away from the node
     // TODO is this actually desired?
@@ -258,6 +282,12 @@ void Handle::ungrabbed(GdkEventButton *)
     Geom::Point dist = _desktop->d2w(_parent->position()) - _desktop->d2w(position());
     if (dist.length() <= drag_tolerance) {
         move(_parent->position());
+    }
+
+    // HACK: If the handle was dragged out, call parent's ungrabbed handler,
+    // so that transform handles reappear
+    if (_drag_out) {
+        _parent->ungrabbed(event);
     }
     _drag_out = false;
 
@@ -270,6 +300,12 @@ bool Handle::clicked(GdkEventButton *event)
     return true;
 }
 
+Handle &Handle::other()
+{
+    if (this == &_parent->_front) return _parent->_back;
+    return _parent->_front;
+}
+
 static double snap_increment_degrees() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
@@ -278,29 +314,59 @@ static double snap_increment_degrees() {
 
 Glib::ustring Handle::_getTip(unsigned state)
 {
+    char const *more;
+    bool can_shift_rotate = _parent->type() == NODE_CUSP && !other().isDegenerate();
+    if (can_shift_rotate) {
+        more = C_("Path handle tip", "more: Ctrl, Alt, Ctrl+Alt, Shift");
+    } else {
+        more = C_("Path handle tip", "more: Ctrl, Alt, Ctrl+Alt");
+    }
     if (state_held_alt(state)) {
         if (state_held_control(state)) {
-            return format_tip(C_("Path handle tip",
-                "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %f° increments"),
-                snap_increment_degrees());
+            if (state_held_shift(state) && can_shift_rotate) {
+                return format_tip(C_("Path handle tip",
+                    "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %f° "
+                    "increments while rotating both handles"),
+                    snap_increment_degrees());
+            } else {
+                return format_tip(C_("Path handle tip",
+                    "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %f° increments"),
+                    snap_increment_degrees());
+            }
         } else {
-            return C_("Path handle tip",
-                "<b>Alt:</b> preserve handle length while dragging");
+            if (state_held_shift(state) && can_shift_rotate) {
+                return C_("Path handle tip",
+                    "<b>Shift+Alt:</b> preserve handle length and rotate both handles");
+            } else {
+                return C_("Path handle tip",
+                    "<b>Alt:</b> preserve handle length while dragging");
+            }
         }
     } else {
         if (state_held_control(state)) {
-            return format_tip(C_("Path handle tip",
-                "<b>Ctrl:</b> snap rotation angle to %f° increments, click to retract"),
-                snap_increment_degrees());
+            if (state_held_shift(state) && can_shift_rotate) {
+                return format_tip(C_("Path handle tip",
+                    "<b>Ctrl:</b> snap rotation angle to %f° increments, click to retract"),
+                    snap_increment_degrees());
+            } else {
+                return format_tip(C_("Path handle tip",
+                    "<b>Shift+Ctrl:</b> snap rotation angle to %f° increments and rotate both handles"),
+                    snap_increment_degrees());
+            }
+        } else if (state_held_shift(state) && can_shift_rotate) {
+            return C_("Path hande tip",
+                "<b>Shift</b>: rotate both handles by the same angle");
         }
     }
+
     switch (_parent->type()) {
     case NODE_AUTO:
-        return C_("Path handle tip",
-            "<b>Auto node handle:</b> drag to convert to smooth node");
+        return format_tip(C_("Path handle tip",
+            "<b>Auto node handle:</b> drag to convert to smooth node (%s)"), more);
     default:
-        return format_tip(C_("Path handle tip", "<b>%s:</b> drag to shape the curve"),
-            handle_type_to_localized_string(_parent->type()));
+        return format_tip(C_("Path handle tip",
+            "<b>%s:</b> drag to shape the segment (%s)"),
+            handle_type_to_localized_string(_parent->type()), more);
     }
 }
 
@@ -497,7 +563,16 @@ void Node::setType(NodeType type, bool update_handles)
             // for degenerate nodes set positions like auto handles
             bool prev_line = _is_line_segment(_prev(), this);
             bool next_line = _is_line_segment(this, _next());
-            if (isDegenerate()) {
+            if (_type == NODE_SMOOTH) {
+                // for a node that is already smooth and at the end of a linear segment,
+                // drag out the second handle to 1/3 the length of the linear segment
+                if (next_line) {
+                    _front.setRelativePos((_prev()->position() - position()) / 3);
+                }
+                if (prev_line) {
+                    _back.setRelativePos((_next()->position() - position()) / 3);
+                }
+            } else if (isDegenerate()) {
                 _updateAutoHandles();
             } else if (_front.isDegenerate()) {
                 // if the front handle is degenerate and this...next is a line segment,
@@ -507,14 +582,14 @@ void Node::setType(NodeType type, bool update_handles)
                     _back.setDirection(*_next(), *this);
                 } else if (_prev()) {
                     Geom::Point dir = direction(_back, *this);
-                    _front.setRelativePos((_prev()->position() - position()).length() / 3 * dir);
+                    _front.setRelativePos(Geom::distance(_prev()->position(), position()) / 3 * dir);
                 }
             } else if (_back.isDegenerate()) {
                 if (prev_line) {
                     _front.setDirection(*_prev(), *this);
                 } else if (_next()) {
                     Geom::Point dir = direction(_front, *this);
-                    _back.setRelativePos((_next()->position() - position()).length() / 3 * dir);
+                    _back.setRelativePos(Geom::distance(_next()->position(), position()) / 3 * dir);
                 }
             } else {
                 // both handles are extended. make colinear while keeping length
@@ -875,13 +950,35 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         if (held_alt(*event)) {
             // with Ctrl+Alt, constrain to handle lines
             // project the new position onto a handle line that is closer
-            Inkscape::Snapper::ConstraintLine line_front(origin, _front.relativePos());
-            Inkscape::Snapper::ConstraintLine line_back(origin, _back.relativePos());
+            boost::optional<Geom::Point> front_point, back_point;
+            boost::optional<Inkscape::Snapper::ConstraintLine> line_front, line_back;
+            if (_front.isDegenerate()) {
+                if (_is_line_segment(this, _next()))
+                    front_point = _next()->position() - origin;
+            } else {
+                front_point = _front.relativePos();
+            }
+            if (_back.isDegenerate()) {
+                if (_is_line_segment(_prev(), this))
+                    back_point = _prev()->position() - origin;
+            } else {
+                back_point = _back.relativePos();
+            }
+            if (front_point)
+                line_front = Inkscape::Snapper::ConstraintLine(origin, *front_point);
+            if (back_point)
+                line_back = Inkscape::Snapper::ConstraintLine(origin, *back_point);
 
-            // TODO: combine these two branches by modifying snap.h / snap.cpp
+            // TODO: combine the snap and non-snap branches by modifying snap.h / snap.cpp
             if (snap) {
-                fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_front);
-                bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_back);
+                if (line_front) {
+                    fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(),
+                        _snapSourceType()), *line_front);
+                }
+                if (line_back) {
+                    bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(),
+                        _snapSourceType()), *line_back);
+                }
             }
             if (fp.getSnapped() || bp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
@@ -890,12 +987,19 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                     fp.getPoint(new_pos);
                 }
             } else {
-                Geom::Point p_front = line_front.projection(new_pos);
-                Geom::Point p_back = line_back.projection(new_pos);
-                if (Geom::distance(new_pos, p_front) < Geom::distance(new_pos, p_back)) {
-                    new_pos = p_front;
+                boost::optional<Geom::Point> pos;
+                if (line_front) {
+                    pos = line_front->projection(new_pos);
+                }
+                if (line_back) {
+                    Geom::Point pos2 = line_back->projection(new_pos);
+                    if (!pos || (pos && Geom::distance(new_pos, *pos) > Geom::distance(new_pos, pos2)))
+                        pos = pos2;
+                }
+                if (pos) {
+                    new_pos = *pos;
                 } else {
-                    new_pos = p_back;
+                    new_pos = origin;
                 }
             }
         } else {
@@ -949,12 +1053,13 @@ Inkscape::SnapTargetType Node::_snapTargetType()
 Glib::ustring Node::_getTip(unsigned state)
 {
     if (state_held_shift(state)) {
-        if ((_next() && _front.isDegenerate()) || (_prev() && _back.isDegenerate())) {
-            if (state_held_control(state)) {
+        bool can_drag_out = (_next() && _front.isDegenerate()) || (_prev() && _back.isDegenerate());
+        if (can_drag_out) {
+            /*if (state_held_control(state)) {
                 return format_tip(C_("Path node tip",
                     "<b>Shift+Ctrl:</b> drag out a handle and snap its angle "
                     "to %f° increments"), snap_increment_degrees());
-            }
+            }*/
             return C_("Path node tip",
                 "<b>Shift:</b> drag out a handle, click to toggle selection");
         }
@@ -971,8 +1076,16 @@ Glib::ustring Node::_getTip(unsigned state)
 
     // assemble tip from node name
     char const *nodetype = node_type_to_localized_string(_type);
+    if (_selection.transformHandlesEnabled() && selected()) {
+        if (_selection.size() == 1) {
+            return format_tip(C_("Path node tip",
+                "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
+        }
+        return format_tip(C_("Path node tip",
+            "<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
+    }
     return format_tip(C_("Path node tip",
-        "<b>%s:</b> drag to shape the path, click to select this node"), nodetype);
+        "<b>%s:</b> drag to shape the path, click to select only this node (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
 }
 
 Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)

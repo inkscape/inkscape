@@ -96,6 +96,7 @@ public:
     void setDirection(Geom::Point const &from, Geom::Point const &to);
     void setDirection(Geom::Point const &dir);
     Node *parent() { return _parent; }
+    Handle &other();
 
     static char const *handle_type_to_localized_string(NodeType type);
 protected:
@@ -116,6 +117,7 @@ private:
     SPCanvasItem *_handle_line;
     bool _degenerate; // this is used often internally so it makes sense to cache this
 
+    static Geom::Point _saved_other_pos;
     static double _saved_length;
     static bool _drag_out;
     friend class Node;

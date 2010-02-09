@@ -19,6 +19,7 @@
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
 #include <2geom/point.h>
+#include <2geom/rect.h>
 #include "display/display-forward.h"
 #include "util/accumulators.h"
 #include "util/hash.h"
@@ -96,6 +97,7 @@ public:
     Geom::OptRect pointwiseBounds();
     Geom::OptRect bounds();
 
+    bool transformHandlesEnabled() { return _handles_visible; }
     void showTransformHandles(bool v, bool one_node);
     // the two methods below do not modify the state; they are for use in manipulators
     // that need to temporarily hide the handles, for example when moving a node
@@ -114,17 +116,24 @@ private:
     void _pointDragged(Geom::Point const &, Geom::Point &, GdkEventMotion *);
     void _pointUngrabbed();
     bool _pointClicked(SelectableControlPoint *, GdkEventButton *);
+    void _pointChanged(SelectableControlPoint *, bool);
+    void _mouseoverChanged();
 
     void _updateTransformHandles(bool preserve_center);
+    void _updateBounds();
     bool _keyboardMove(GdkEventKey const &, Geom::Point const &);
     bool _keyboardRotate(GdkEventKey const &, int);
     bool _keyboardScale(GdkEventKey const &, int);
     bool _keyboardFlip(Geom::Dim2);
     void _keyboardTransform(Geom::Matrix const &);
-    void _commitTransform(CommitEvent ce);
+    void _commitHandlesTransform(CommitEvent ce);
+    double _rotationRadius(Geom::Point const &);
+
     set_type _points;
     set_type _all_points;
     boost::optional<double> _rot_radius;
+    boost::optional<double> _mouseover_rot_radius;
+    Geom::OptRect _bounds;
     TransformHandleSet *_handles;
     SelectableControlPoint *_grabbed_point;
     unsigned _dragging         : 1;

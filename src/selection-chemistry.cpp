@@ -118,10 +118,12 @@ void SelectionHelper::selectAll(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
         InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
-        nt->_multipath->selectSubpaths();
-    } else {
-        sp_edit_select_all(dt);
+        if (!nt->_multipath->empty()) {
+            nt->_multipath->selectSubpaths();
+            return;
+        }
     }
+    sp_edit_select_all(dt);
 }
 
 void SelectionHelper::selectAllInAll(SPDesktop *dt)

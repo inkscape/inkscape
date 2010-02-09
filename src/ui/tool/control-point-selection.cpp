@@ -8,6 +8,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <boost/none.hpp>
 #include <2geom/transforms.h>
 #include "desktop.h"
 #include "preferences.h"
@@ -53,15 +54,13 @@ ControlPointSelection::ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_gro
     signal_update.connect( sigc::bind(
         sigc::mem_fun(*this, &ControlPointSelection::_updateTransformHandles),
         true));
-    signal_point_changed.connect(
-        sigc::hide( sigc::hide(
-            sigc::bind(
-                sigc::mem_fun(*this, &ControlPointSelection::_updateTransformHandles),
-                false))));
+    ControlPoint::signal_mouseover_change.connect(
+        sigc::hide(
+            sigc::mem_fun(*this, &ControlPointSelection::_mouseoverChanged)));
     _handles->signal_transform.connect(
         sigc::mem_fun(*this, &ControlPointSelection::transform));
     _handles->signal_commit.connect(
-        sigc::mem_fun(*this, &ControlPointSelection::_commitTransform));
+        sigc::mem_fun(*this, &ControlPointSelection::_commitHandlesTransform));
 }
 
 ControlPointSelection::~ControlPointSelection()
@@ -81,8 +80,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
     found = _points.insert(x).first;
 
     x->updateState();
-    _rot_radius.reset();
-    signal_point_changed.emit(x, true);
+    _pointChanged(x, true);
 
     return std::pair<iterator, bool>(found, true);
 }
@@ -93,8 +91,7 @@ void ControlPointSelection::erase(iterator pos)
     SelectableControlPoint *erased = *pos;
     _points.erase(pos);
     erased->updateState();
-    _rot_radius.reset();
-    signal_point_changed.emit(erased, false);
+    _pointChanged(erased, false);
 }
 ControlPointSelection::size_type ControlPointSelection::erase(const key_type &k)
 {
@@ -175,8 +172,10 @@ void ControlPointSelection::transform(Geom::Matrix const &m)
         SelectableControlPoint *cur = *i;
         cur->transform(m);
     }
+    _updateBounds();
     // TODO preserving the rotation radius needs some rethinking...
     if (_rot_radius) (*_rot_radius) *= m.descrim();
+    if (_mouseover_rot_radius) (*_mouseover_rot_radius) *= m.descrim();
     signal_update.emit();
 }
 
@@ -233,28 +232,12 @@ void ControlPointSelection::distribute(Geom::Dim2 d)
  *         or nothing if the selection is empty */
 Geom::OptRect ControlPointSelection::pointwiseBounds()
 {
-    Geom::OptRect bound;
-    for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = (*i);
-        Geom::Point p = cur->position();
-        if (!bound) {
-            bound = Geom::Rect(p, p);
-        } else {
-            bound->expandTo(p);
-        }
-    }
-    return bound;
+    return _bounds;
 }
 
 Geom::OptRect ControlPointSelection::bounds()
 {
-    Geom::OptRect bound;
-    for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = (*i);
-        Geom::OptRect r = cur->bounds();
-        bound.unionWith(r);
-    }
-    return bound;
+    return size() == 1 ? (*_points.begin())->bounds() : _bounds;
 }
 
 void ControlPointSelection::showTransformHandles(bool v, bool one_node)
@@ -305,6 +288,7 @@ void ControlPointSelection::_pointUngrabbed()
 {
     _dragging = false;
     _grabbed_point = NULL;
+    _updateBounds();
     restoreTransformHandles();
     signal_commit.emit(COMMIT_MOUSE_MOVE);
 }
@@ -320,13 +304,42 @@ bool ControlPointSelection::_pointClicked(SelectableControlPoint *p, GdkEventBut
     return false;
 }
 
+void ControlPointSelection::_pointChanged(SelectableControlPoint *p, bool selected)
+{
+    _updateBounds();
+    _updateTransformHandles(false);
+    if (_bounds)
+        _handles->rotationCenter().move(_bounds->midpoint());
+
+    signal_point_changed.emit(p, selected);
+}
+
+void ControlPointSelection::_mouseoverChanged()
+{
+    _mouseover_rot_radius = boost::none;
+}
+
+void ControlPointSelection::_updateBounds()
+{
+    _rot_radius = boost::none;
+    _bounds = Geom::OptRect();
+    for (iterator i = _points.begin(); i != _points.end(); ++i) {
+        SelectableControlPoint *cur = (*i);
+        Geom::Point p = cur->position();
+        if (!_bounds) {
+            _bounds = Geom::Rect(p, p);
+        } else {
+            _bounds->expandTo(p);
+        }
+    }
+}
+
 void ControlPointSelection::_updateTransformHandles(bool preserve_center)
 {
     if (_dragging) return;
 
     if (_handles_visible && size() > 1) {
-        Geom::OptRect b = pointwiseBounds();
-        _handles->setBounds(*b, preserve_center);
+        _handles->setBounds(*bounds(), preserve_center);
         _handles->setVisible(true);
     } else if (_one_node_handles && size() == 1) { // only one control point in selection
         SelectableControlPoint *p = *begin();
@@ -365,6 +378,20 @@ bool ControlPointSelection::_keyboardMove(GdkEventKey const &event, Geom::Point 
     return true;
 }
 
+/** @brief Computes the distance to the farthest corner of the bounding box.
+ * Used to determine what it means to "rotate by one pixel". */
+double ControlPointSelection::_rotationRadius(Geom::Point const &rc)
+{
+    if (empty()) return 1.0; // some safe value
+    Geom::Rect b = *bounds();
+    double maxlen = 0;
+    for (unsigned i = 0; i < 4; ++i) {
+        double len = Geom::distance(b.corner(i), rc);
+        if (len > maxlen) maxlen = len;
+    }
+    return maxlen;
+}
+
 /** Rotates the selected points in the given direction according to the modifier state
  * from the supplied event.
  * @param event Key event to take modifier state from
@@ -374,15 +401,25 @@ bool ControlPointSelection::_keyboardRotate(GdkEventKey const &event, int dir)
 {
     if (empty()) return false;
 
-    Geom::Point rc = _handles->rotationCenter();
-    if (!_rot_radius) {
-        Geom::Rect b = *(size() == 1 ? bounds() : pointwiseBounds());
-        double maxlen = 0;
-        for (unsigned i = 0; i < 4; ++i) {
-            double len = (b.corner(i) - rc).length();
-            if (len > maxlen) maxlen = len;
+    Geom::Point rc;
+
+    // rotate around the mouseovered point, or the selection's rotation center
+    // if nothing is mouseovered
+    double radius;
+    SelectableControlPoint *scp =
+        dynamic_cast<SelectableControlPoint*>(ControlPoint::mouseovered_point);
+    if (scp) {
+        rc = scp->position();
+        if (!_mouseover_rot_radius) {
+            _mouseover_rot_radius = _rotationRadius(rc);
         }
-        _rot_radius = maxlen;
+        radius = *_mouseover_rot_radius;
+    } else {
+        rc = _handles->rotationCenter();
+        if (!_rot_radius) {
+            _rot_radius = _rotationRadius(rc);
+        }
+        radius = *_rot_radius;
     }
 
     double angle;
@@ -390,7 +427,7 @@ bool ControlPointSelection::_keyboardRotate(GdkEventKey const &event, int dir)
         // Rotate by "one pixel". We interpret this as rotating by an angle that causes
         // the topmost point of a circle circumscribed about the selection's bounding box
         // to move on an arc 1 screen pixel long.
-        angle = atan2(1.0 / _desktop->current_zoom(), *_rot_radius) * dir;
+        angle = atan2(1.0 / _desktop->current_zoom(), radius) * dir;
     } else {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
@@ -410,11 +447,17 @@ bool ControlPointSelection::_keyboardScale(GdkEventKey const &event, int dir)
 {
     if (empty()) return false;
 
-    // TODO should the saved rotation center or the current center be used?
-    Geom::Rect bound = (size() == 1 ? *bounds() : *pointwiseBounds());
-    double maxext = bound.maxExtent();
+    double maxext = bounds()->maxExtent();
     if (Geom::are_near(maxext, 0)) return false;
-    Geom::Point center = _handles->rotationCenter().position();
+
+    Geom::Point center;
+    SelectableControlPoint *scp =
+        dynamic_cast<SelectableControlPoint*>(ControlPoint::mouseovered_point);
+    if (scp) {
+        center = scp->position();
+    } else {
+        center = _handles->rotationCenter().position();
+    }
 
     double length_change;
     if (held_alt(event)) {
@@ -455,8 +498,9 @@ bool ControlPointSelection::_keyboardFlip(Geom::Dim2 d)
     return true;
 }
 
-void ControlPointSelection::_commitTransform(CommitEvent ce)
+void ControlPointSelection::_commitHandlesTransform(CommitEvent ce)
 {
+    _updateBounds();
     _updateTransformHandles(true);
     signal_commit.emit(ce);
 }
