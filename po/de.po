@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2010-02-08 12:40+0100\n"
+"PO-Revision-Date: 2010-02-09 21:59+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2065,7 +2065,7 @@ msgstr "Rotieren um:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:33
 msgid "Rotation, degrees"
-msgstr "Rotation (Grad)"
+msgstr "Rotation [Grad]"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 #: ../src/live_effects/lpe-path_length.cpp:25
@@ -10178,9 +10178,8 @@ msgstr "Länge links"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:51
 #: ../src/live_effects/lpe-perp_bisector.cpp:103
-#, fuzzy
 msgid "Specifies the left end of the bisector"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das linke Ende der Halbierenden fest"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:52
 #: ../src/live_effects/lpe-parallel.cpp:48
@@ -10191,9 +10190,8 @@ msgstr "Länge rechts"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:52
 #: ../src/live_effects/lpe-perp_bisector.cpp:104
-#, fuzzy
 msgid "Specifies the right end of the bisector"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das rechte Ende der Halbierenden fest"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:59
 #, fuzzy
@@ -10409,9 +10407,8 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "Skalieren der Breite des Stichpfades relativ zu seiner Länge"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "Elliptic Pen"
-msgstr "Ellipse"
+msgstr "Elliptischer Stift"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
 msgid "Thick-Thin strokes (fast)"
@@ -10427,7 +10424,7 @@ msgstr "Schärfen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:68
 msgid "Round"
-msgstr "Verrunden"
+msgstr "Abrunden"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-dynastroke.cpp:75
@@ -10439,7 +10436,6 @@ msgid "Choose pen type"
 msgstr "Wähle den Stifttyp"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
 msgid "Pen width"
 msgstr "Stiftbreite"
 
@@ -10505,14 +10501,12 @@ msgid "Round ends"
 msgstr "Runde Enden ab"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
-#, fuzzy
 msgid "Strokes end with a round end"
-msgstr "Gepresster Stahl mit einer runden Kante"
+msgstr "Strich endet abgerundet"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
-#, fuzzy
 msgid "Capping"
-msgstr "Läppen"
+msgstr "Kappung"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 msgid "left capping"
@@ -10747,13 +10741,12 @@ msgid "Open both"
 msgstr "Öffne beide"
 
 #: ../src/live_effects/lpe-line_segment.cpp:36
-#, fuzzy
 msgid "End type"
-msgstr "  Typ: "
+msgstr "End- Typ"
 
 #: ../src/live_effects/lpe-line_segment.cpp:36
 msgid "Determines on which side the line or line segment is infinite."
-msgstr ""
+msgstr "Bestimmt, welche Seite der Linie oder des Segments unendlich ist."
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Discard original path?"
@@ -10773,21 +10766,19 @@ msgstr "Linie, die als 'Spiegel' für die Rflektion dienen soll."
 
 #: ../src/live_effects/lpe-offset.cpp:30
 msgid "Handle to control the distance of the offset from the curve"
-msgstr ""
+msgstr "Anfasser zum Einstellen der Entfernung des Offset der Kurve"
 
 #: ../src/live_effects/lpe-parallel.cpp:46
 msgid "Adjust the offset"
 msgstr "<b>Versatz-Abstand</b> anpassen"
 
 #: ../src/live_effects/lpe-parallel.cpp:47
-#, fuzzy
 msgid "Specifies the left end of the parallel"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das linke Ende der Parallele fest"
 
 #: ../src/live_effects/lpe-parallel.cpp:48
-#, fuzzy
 msgid "Specifies the right end of the parallel"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das rechte Ende der Parallele fest"
 
 #: ../src/live_effects/lpe-parallel.cpp:56
 #, fuzzy
@@ -10877,18 +10868,16 @@ msgid "Scale x"
 msgstr "X Skalieren"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:42
-#, fuzzy
 msgid "Scale factor in x direction"
-msgstr "VP in X-Richtung umschalten"
+msgstr "Skaliere den Faktor in X-Richtung"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
 msgid "Scale y"
 msgstr "Y Skalieren"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
-#, fuzzy
 msgid "Scale factor in y direction"
-msgstr "VP in X-Richtung umschalten"
+msgstr "Skaliere den Faktor in Y-Richtung"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
 msgid "Offset x"
@@ -10920,9 +10909,8 @@ msgid "Adjust the origin"
 msgstr "Anpassen des Startwinkels"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-#, fuzzy
 msgid "Iterations"
-msgstr "Überschneidung"
+msgstr "Iterationen"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
 msgid "recursivity"
@@ -11302,14 +11290,12 @@ msgid "Location of the point of attachment along the curve (between 0.0 and numb
 msgstr ""
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-#, fuzzy
 msgid "Specifies the left end of the tangent"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das linke Ende der Tangente fest"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-#, fuzzy
 msgid "Specifies the right end of the tangent"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Legt das rechte Ende der Tangente fest"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:68
 #, fuzzy
@@ -13112,9 +13098,9 @@ msgid " [truncated]"
 msgstr "Hexaederstumpf"
 
 #: ../src/sp-text.cpp:431
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text on path</b>%s (%s, %s)"
-msgstr "<b>Text auf Pfad</b> (%s, %s)"
+msgstr "<b>Text an Pfad</b>%s (%s, %s)"
 
 #: ../src/sp-text.cpp:432
 #, c-format
@@ -13293,17 +13279,17 @@ msgstr "Es wurde <b>nichts</b> gewählt"
 #: ../src/spray-context.cpp:250
 #, c-format
 msgid "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
-msgstr ""
+msgstr "%s. Ziehen oder Klicken zum Scrollen oder Sprühen von <b>Kopien</b> der letzten Auswahl"
 
 #: ../src/spray-context.cpp:253
 #, c-format
 msgid "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
-msgstr ""
+msgstr "%s. Ziehen oder Klicken zum Scrollen oder Sprühen von <b>Klonen</b> der letzten Auswahl"
 
 #: ../src/spray-context.cpp:256
 #, c-format
 msgid "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial selection"
-msgstr ""
+msgstr "%s. Ziehen oder Klicken zum Scrollen oder Sprühen in einen <b>Einzelpfad</b> der letzten Auswahl"
 
 #: ../src/spray-context.cpp:774
 #, fuzzy
@@ -14394,9 +14380,8 @@ msgstr "<b>Rand</b>"
 
 # !!!
 #: ../src/ui/dialog/document-properties.cpp:225
-#, fuzzy
 msgid "<b>Page Size</b>"
-msgstr "<b>Linie</b>"
+msgstr "<b>Seitengröße</b>"
 
 # !!!
 #: ../src/ui/dialog/document-properties.cpp:253
@@ -15686,18 +15671,16 @@ msgid "Visualize the direction of selected paths by drawing small arrows in the 
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
-#, fuzzy
 msgid "Show temporary path outline"
-msgstr "Weiche Außenlinie"
+msgstr "Zeige temporär Pfadumrandung"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "When hovering over a path, briefly flash its outline."
 msgstr "Wenn die Maus über den Pfad bewegt wird, wird dessen Entwurfspfad kurz angezeigt."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
-#, fuzzy
 msgid "Show temporary outline for selected paths"
-msgstr "Zeige Entwurfspfad"
+msgstr "Zeige temporär Umrandung für ausgewählte Pfade"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
 msgid "Show temporary outline even when a path is selected for editing"
@@ -15717,9 +15700,8 @@ msgid "Transform Handles:"
 msgstr "Farbverläufe transformieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
-#, fuzzy
 msgid "Show transform handles for single nodes"
-msgstr "Die Bézier-Anfasser von ausgewählten Knoten anzeigen"
+msgstr "Zeige Anfasser für einzelne Knoten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Show transform handles even when only a single node is selected."
@@ -18167,15 +18149,13 @@ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr "Verbindungsaufbau zum Jabber-Server <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:227
-#, fuzzy
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Verbunden mit Jabber-Server <b>%1</b> als <b>%2</b>"
+msgstr "Authentifizierung schlug fehl mit Jabber-Server <b>%1</b> als <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:232
 #: ../src/ui/dialog/whiteboard-connect.cpp:270
-#, fuzzy
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr "Verbindungsaufbau zum Jabber-Server <b>%1</b>"
+msgstr "SSL Initialisierung schlug fehl  beim Verbindungsaufbau zum Jabber-Server <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:238
 #: ../src/ui/dialog/whiteboard-connect.cpp:276
@@ -18183,9 +18163,8 @@ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Verbunden mit Jabber-Server <b>%1</b> als <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:265
-#, fuzzy
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Verbunden mit Jabber-Server <b>%1</b> als <b>%2</b>"
+msgstr "Registrierung fehlgeschlagen mit Jabber-Server <b>%1</b> als <b>%2</b>"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
@@ -18249,12 +18228,10 @@ msgid "Change node type"
 msgstr "Knotentyp ändern"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:215
-#, fuzzy
 msgid "Straighten segments"
 msgstr "Segmente begradigen"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:217
-#, fuzzy
 msgid "Make segments curves"
 msgstr "Die gewählten Abschnitte in Kurven umwandeln"
 
@@ -20507,14 +20484,12 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "In den Umriss-(Drahtgitter)-Anzeigemodus wechseln"
 
 #: ../src/verbs.cpp:2572
-#, fuzzy
 msgid "_Print Colors Preview"
-msgstr "Druck_vorschau"
+msgstr "_Druckfarben-Vorschau"
 
 #: ../src/verbs.cpp:2573
-#, fuzzy
 msgid "Switch to print colors preview mode"
-msgstr "In den normalen Anzeigemodus wechseln"
+msgstr "In den Druckfarben-Modus wechseln"
 
 #: ../src/verbs.cpp:2574
 msgid "_Toggle"
@@ -20774,9 +20749,8 @@ msgid "Edit SVG fonts"
 msgstr "SVG-Schriften bearbeiten"
 
 #: ../src/verbs.cpp:2649
-#, fuzzy
 msgid "Print Colors..."
-msgstr "_Drucken…"
+msgstr "Druckfarben…"
 
 #: ../src/verbs.cpp:2650
 msgid "Select which color separations to render in Print Colors Preview rendermode"
@@ -20855,9 +20829,8 @@ msgid "Using the Calligraphy pen tool"
 msgstr "Verwendung des kalligrafischen Füllers"
 
 #: ../src/verbs.cpp:2674
-#, fuzzy
 msgid "Inkscape: _Interpolate"
-msgstr "Inkscape: _Formen"
+msgstr "Inkscape: _Interpolieren"
 
 #: ../src/verbs.cpp:2675
 msgid "Using the interpolate extension"
@@ -20963,9 +20936,9 @@ msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (Umriss) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:625
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %d (no filters) - Inkscape"
-msgstr "%s: %d (Umriss) - Inkscape"
+msgstr "%s: %d (keine Filter) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:627
 #, fuzzy, c-format
@@ -20983,9 +20956,9 @@ msgid "%s (outline) - Inkscape"
 msgstr "%s (Umriss) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:635
-#, fuzzy, c-format
+#, c-format
 msgid "%s (no filters) - Inkscape"
-msgstr "%s (Umriss) - Inkscape"
+msgstr "%s (keine Filter) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:637
 #, fuzzy, c-format
@@ -21723,23 +21696,20 @@ msgid "Set the custom task"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:867
-#, fuzzy
 msgid "Wide"
-msgstr "_Ausblenden"
+msgstr "Breit"
 
 #: ../src/widgets/toolbox.cpp:868
 msgid "Setup for widescreen work"
 msgstr "Setup für die Breitbild-Arbeit"
 
 #: ../src/widgets/toolbox.cpp:871
-#, fuzzy
 msgid "Task"
-msgstr "_Maskierung"
+msgstr "Funktion"
 
 #: ../src/widgets/toolbox.cpp:872
-#, fuzzy
 msgid "Task:"
-msgstr "_Maskierung"
+msgstr "Funktion:"
 
 #: ../src/widgets/toolbox.cpp:1302
 msgid "Insert node"
@@ -21840,7 +21810,7 @@ msgstr "Anfasser zeigen"
 
 #: ../src/widgets/toolbox.cpp:1427
 msgid "Show node transformation handles"
-msgstr "Anzeigen der Auswahl-Griffe"
+msgstr "Anzeigen der Anfasser"
 
 #: ../src/widgets/toolbox.cpp:1437
 msgid "Show Handles"
@@ -21871,18 +21841,16 @@ msgid "Edit clipping paths"
 msgstr "Ausschneidepfad bearbeiten"
 
 #: ../src/widgets/toolbox.cpp:1471
-#, fuzzy
 msgid "Show editing controls for clipping paths of selected objects"
-msgstr "Ausschneidepfad bearbeiten"
+msgstr "Zeige Bézier-Anfasser für Ausschneidungspfade an ausgewählten Objekten"
 
 #: ../src/widgets/toolbox.cpp:1481
 msgid "Edit masks"
 msgstr "Maskierung bearbeiten"
 
 #: ../src/widgets/toolbox.cpp:1482
-#, fuzzy
 msgid "Show editing controls for masks of selected objects"
-msgstr "Farben der gewählten Objekte verrauschen"
+msgstr "Zeige Bézier-Anfasser für Maskierungen an ausgewählten Objekten"
 
 #: ../src/widgets/toolbox.cpp:1496
 msgid "X coordinate:"
@@ -22724,9 +22692,8 @@ msgid "(broad spray)"
 msgstr "(breit sprühen)"
 
 #: ../src/widgets/toolbox.cpp:4539
-#, fuzzy
 msgid "The width of the spray area (relative to the visible canvas area)"
-msgstr "Breite des Justagebereichs (relativ zum sichtbaren Dokumentausschnitt)"
+msgstr "Breite des Sprühbereichs (relativ zum sichtbaren Dokumentausschnitt)"
 
 #. Mean
 #: ../src/widgets/toolbox.cpp:4552
@@ -22768,7 +22735,7 @@ msgstr "Streuung"
 
 #: ../src/widgets/toolbox.cpp:4571
 msgid "Increase to scatter sprayed objects."
-msgstr ""
+msgstr "Vergrößern der Streuung gesprühter Objekte"
 
 #: ../src/widgets/toolbox.cpp:4590
 msgid "Spray copies of the initial selection"
@@ -22805,9 +22772,8 @@ msgid "Adjusts the number of items sprayed per clic."
 msgstr "Anzahl der Objekte festlegen, die per Klick gesprüht werden."
 
 #: ../src/widgets/toolbox.cpp:4648
-#, fuzzy
 msgid "Use the pressure of the input device to alter the amount of sprayed objects."
-msgstr "Druckempfindlichkeit des Eingabegeräts benutzen, um die Strichbreite des Füllers zu beeinflussen"
+msgstr "Druckempfindlichkeit des Eingabegeräts benutzen, um die Anzahl der zu sprühenden Objekte zu beeinflussen"
 
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4657
@@ -22830,7 +22796,7 @@ msgstr "_Rotation"
 #: ../src/widgets/toolbox.cpp:4662
 #, no-c-format
 msgid "Variation of the rotation of the sprayed objects. 0% for the same rotation than the original object."
-msgstr ""
+msgstr "Variiert die Drehung der zu sprühenden Objekte. 0% bedeutet gleiche Drehung wie das Originalobjekt."
 
 #. Scale
 #: ../src/widgets/toolbox.cpp:4675
@@ -22846,7 +22812,7 @@ msgstr "(leichte Abweichung)"
 #: ../src/widgets/toolbox.cpp:4680
 #, no-c-format
 msgid "Variation in the scale of the sprayed objects. 0% for the same scale than the original object."
-msgstr ""
+msgstr "Variiert die Größe der zu sprühenden Objekte. 0% bedeutet gleiche Größe wie das Originalobjekt."
 
 #: ../src/widgets/toolbox.cpp:4866
 msgid "No preset"
@@ -23457,15 +23423,15 @@ msgstr "Quadratisches Ende"
 
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Hide lines behind the sphere"
-msgstr ""
+msgstr "Linien hinter der Sphäre verstecken"
 
 #: ../share/extensions/wireframe_sphere.inx.h:2
 msgid "Lines of latitude"
-msgstr ""
+msgstr "Anzahl Breitengrade"
 
 #: ../share/extensions/wireframe_sphere.inx.h:3
 msgid "Lines of longitude"
-msgstr ""
+msgstr "Anzahl Längengrade"
 
 #: ../share/extensions/wireframe_sphere.inx.h:4
 msgid "Radius [px]"
@@ -23477,11 +23443,11 @@ msgstr "Rotation (Grad)"
 
 #: ../share/extensions/wireframe_sphere.inx.h:7
 msgid "Tilt [deg]"
-msgstr ""
+msgstr "Kippen [Grad]"
 
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
-msgstr ""
+msgstr "Draht-Sphäre (Kugel)"
 
 #~ msgid "<b>Connection point</b>: click or drag to create a new connector"
 #~ msgstr ""
