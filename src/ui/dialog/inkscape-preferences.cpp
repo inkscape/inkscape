@@ -441,7 +441,7 @@ void InkscapePreferences::initPageTools()
     _t_node_live_outline.init(_("Update outline when dragging nodes"), "/tools/nodes/live_outline", false);
     _page_node.add_line( true, "", _t_node_live_outline, "", _("Update the outline when dragging or transforming nodes. If this is off, the outline will only update when completing a drag."));
     _t_node_live_objects.init(_("Update paths when dragging nodes"), "/tools/nodes/live_objects", false);
-    _page_node.add_line( true, "", _t_node_live_objects, "", _("Update pahs when dragging or transforming nodes. If this is off, paths will only be updated when completing a drag."));
+    _page_node.add_line( true, "", _t_node_live_objects, "", _("Update paths when dragging or transforming nodes. If this is off, paths will only be updated when completing a drag."));
     _t_node_show_path_direction.init(_("Show path direction on outlines"), "/tools/nodes/show_path_direction", false);
     _page_node.add_line( true, "", _t_node_show_path_direction, "", _("Visualize the direction of selected paths by drawing small arrows in the middle of each outline segment"));
     _t_node_pathflash_enabled.init ( _("Show temporary path outline"), "/tools/nodes/pathflash_enabled", false);
