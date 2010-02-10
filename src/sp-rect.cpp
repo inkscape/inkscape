@@ -278,10 +278,9 @@ sp_rect_set_shape(SPShape *shape)
         c->lineto(x + w, y + 0.0);
         c->lineto(x + w, y + h);
         c->lineto(x + 0.0, y + h);
-        c->lineto(x + 0.0, y + 0.0);
     }
 
-    c->closepath_current();
+    c->closepath();
     sp_shape_set_curve_insync(SP_SHAPE(rect), c, TRUE);
     c->unref();
 }
