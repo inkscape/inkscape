@@ -285,7 +285,11 @@ SPCurve::closepath()
 void
 SPCurve::closepath_current()
 {
-    _pathv.back().setFinal(_pathv.back().initialPoint());
+    if (_pathv.back().size() > 0 && dynamic_cast<Geom::LineSegment const *>(&_pathv.back().back_open())) {
+        _pathv.back().erase_last();
+    } else {
+        _pathv.back().setFinal(_pathv.back().initialPoint());
+    }
     _pathv.back().close(true);
 }
 
