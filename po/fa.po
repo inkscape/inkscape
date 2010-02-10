@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2010-02-05 21:19+0330\n"
+"PO-Revision-Date: 2010-02-10 01:23+0330\n"
 "Last-Translator: Ali Ghanavatian <ghanvatian.ali@gmail.com>\n"
 "Language-Team: Farsi <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11494,93 +11494,93 @@ msgstr ""
 #: ../src/ui/dialog/messages.cpp:52
 #: ../src/ui/dialog/scriptdialog.cpp:208
 msgid "_File"
-msgstr ""
+msgstr "پر_ونده"
 
 #: ../src/menus-skeleton.h:17
 msgid "_New"
-msgstr ""
+msgstr "جدید_"
 
 #: ../src/menus-skeleton.h:48
 #: ../src/verbs.cpp:2441
 #: ../src/verbs.cpp:2447
 msgid "_Edit"
-msgstr ""
+msgstr "و_یرایش"
 
 #: ../src/menus-skeleton.h:58
 #: ../src/verbs.cpp:2241
 msgid "Paste Si_ze"
-msgstr ""
+msgstr "چسباندن اندا_زه"
 
 #: ../src/menus-skeleton.h:70
 msgid "Clo_ne"
-msgstr ""
+msgstr "تکثیر _همگن"
 
 #: ../src/menus-skeleton.h:90
 msgid "_View"
-msgstr ""
+msgstr "نمایش_"
 
 #: ../src/menus-skeleton.h:91
 msgid "_Zoom"
-msgstr ""
+msgstr "ز_وم"
 
 #: ../src/menus-skeleton.h:107
 msgid "_Display mode"
-msgstr ""
+msgstr "حالت _نمایش"
 
 #: ../src/menus-skeleton.h:121
 msgid "Show/Hide"
-msgstr ""
+msgstr "پنهان/آشکار"
 
 #. "       <verb verb-id=\"DialogScript\" />\n"
 #. Not quite ready to be in the menus.
 #. "       <verb verb-id=\"FocusToggle\" />\n"
 #: ../src/menus-skeleton.h:140
 msgid "_Layer"
-msgstr ""
+msgstr "_لایه"
 
 #: ../src/menus-skeleton.h:160
 msgid "_Object"
-msgstr ""
+msgstr "_شئ"
 
 #: ../src/menus-skeleton.h:167
 msgid "Cli_p"
-msgstr ""
+msgstr "کلیپ_"
 
 #: ../src/menus-skeleton.h:171
 msgid "Mas_k"
-msgstr ""
+msgstr "ماسک_"
 
 #: ../src/menus-skeleton.h:175
 msgid "Patter_n"
-msgstr ""
+msgstr "ا_لگو"
 
 #: ../src/menus-skeleton.h:199
 msgid "_Path"
-msgstr ""
+msgstr "مسیر_"
 
 #: ../src/menus-skeleton.h:226
 msgid "_Text"
-msgstr ""
+msgstr "متن_"
 
 #: ../src/menus-skeleton.h:245
 msgid "Filter_s"
-msgstr ""
+msgstr "فیلتر‌ها_"
 
 #: ../src/menus-skeleton.h:251
 msgid "Exte_nsions"
-msgstr ""
+msgstr "افز_ونه‌ها"
 
 #: ../src/menus-skeleton.h:258
 msgid "Whiteboa_rd"
-msgstr ""
+msgstr "وایت_ بُرد"
 
 #: ../src/menus-skeleton.h:262
 msgid "_Help"
-msgstr ""
+msgstr "ر_اهنما"
 
 #: ../src/menus-skeleton.h:266
 msgid "Tutorials"
-msgstr ""
+msgstr "آموزش_ گام به گام"
 
 #: ../src/object-edit.cpp:439
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
@@ -13618,99 +13618,99 @@ msgstr ""
 #. Item dialog
 #: ../src/ui/context-menu.cpp:105
 msgid "Object _Properties"
-msgstr ""
+msgstr "ویژ_گی‌های شئ"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:115
 msgid "_Select This"
-msgstr ""
+msgstr "انتخاب_ این"
 
 #. Create link
 #: ../src/ui/context-menu.cpp:125
 msgid "_Create Link"
-msgstr ""
+msgstr "ایجاد ارتباط_"
 
 #. Set mask
 #: ../src/ui/context-menu.cpp:132
 msgid "Set Mask"
-msgstr ""
+msgstr "تنظیم_ ماسک"
 
 #. Release mask
 #: ../src/ui/context-menu.cpp:143
 msgid "Release Mask"
-msgstr ""
+msgstr "جداسازی_ ماسک"
 
 #. Set Clip
 #: ../src/ui/context-menu.cpp:154
 msgid "Set Clip"
-msgstr ""
+msgstr "بستن کلیپ"
 
 #. Release Clip
 #: ../src/ui/context-menu.cpp:165
 msgid "Release Clip"
-msgstr ""
+msgstr "انتشار کلیپ"
 
 #: ../src/ui/context-menu.cpp:288
 msgid "Create link"
-msgstr ""
+msgstr "ساختن ارتباط_"
 
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:306
 #: ../src/verbs.cpp:2313
 msgid "_Ungroup"
-msgstr ""
+msgstr "منفردسازی_"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:346
 msgid "Link _Properties"
-msgstr ""
+msgstr "ویژ_گی‌های ارتباط"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:352
 msgid "_Follow Link"
-msgstr ""
+msgstr "پیرو ارتباط_"
 
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:357
 msgid "_Remove Link"
-msgstr ""
+msgstr "حذف ار_تباط"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:405
 msgid "Image _Properties"
-msgstr ""
+msgstr "و_یژگی‌های شئ"
 
 #: ../src/ui/context-menu.cpp:411
 msgid "Edit Externally..."
-msgstr ""
+msgstr "ویرایش_ خارجی..."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
 msgid "_Fill and Stroke"
-msgstr ""
+msgstr "پُرشدگی و خط حاشیه"
 
 #. *
 #. * Constructor
 #.
 #: ../src/ui/dialog/aboutbox.cpp:77
 msgid "About Inkscape"
-msgstr ""
+msgstr "درباره Inkscape"
 
 #: ../src/ui/dialog/aboutbox.cpp:88
 msgid "_Splash"
-msgstr ""
+msgstr "صحنه‌_ی نمایشی"
 
 #: ../src/ui/dialog/aboutbox.cpp:92
 msgid "_Authors"
-msgstr ""
+msgstr "نویسندگان_"
 
 #: ../src/ui/dialog/aboutbox.cpp:94
 msgid "_Translators"
-msgstr ""
+msgstr "مترجما_ن"
 
 #: ../src/ui/dialog/aboutbox.cpp:96
 msgid "_License"
-msgstr ""
+msgstr "مجوز_"
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -13725,7 +13725,7 @@ msgstr ""
 #. should be in UTF-*8..
 #: ../src/ui/dialog/aboutbox.cpp:149
 msgid "about.svg"
-msgstr ""
+msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
@@ -13736,12 +13736,12 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
 msgid "Align"
-msgstr ""
+msgstr "تراز"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:397
 #: ../src/ui/dialog/align-and-distribute.cpp:794
 msgid "Distribute"
-msgstr ""
+msgstr "توزیع"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:467
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
@@ -13752,7 +13752,7 @@ msgstr ""
 #. "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:471
 msgid "gap|H:"
-msgstr ""
+msgstr ":ا|فاصله‌ خالی"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:479
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -13971,11 +13971,11 @@ msgstr ""
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
 #: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: ../src/ui/dialog/debug.cpp:68
 msgid "Messages"
-msgstr ""
+msgstr "پیام‌ها"
 
 #: ../src/ui/dialog/debug.cpp:77
 #: ../src/ui/dialog/messages.cpp:55
@@ -13989,11 +13989,11 @@ msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:73
 msgid "Metadata"
-msgstr ""
+msgstr "اَبَرداده"
 
 #: ../src/ui/dialog/document-metadata.cpp:74
 msgid "License"
-msgstr ""
+msgstr "مجوز"
 
 #: ../src/ui/dialog/document-metadata.cpp:154
 msgid "<b>Dublin Core Entities</b>"
@@ -14001,7 +14001,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:176
 msgid "<b>License</b>"
-msgstr ""
+msgstr "<b>مجوز</b>"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:90
@@ -14054,17 +14054,17 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:95
 msgid "Default _units:"
-msgstr ""
+msgstr "واحد‌های پیش‌فرض_"
 
 #. ---------------------------------------------------------------
 #. General snap options
 #: ../src/ui/dialog/document-properties.cpp:99
 msgid "Show _guides"
-msgstr ""
+msgstr "نمایش خطوط_ راهنما"
 
 #: ../src/ui/dialog/document-properties.cpp:99
 msgid "Show or hide guides"
-msgstr ""
+msgstr "خطوط راهنما آشکار یا پنهان"
 
 #: ../src/ui/dialog/document-properties.cpp:100
 msgid "_Snap guides while dragging"
@@ -14103,44 +14103,44 @@ msgstr ""
 #. "New" refers to grid
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Grid|_New"
-msgstr ""
+msgstr "جدید_|شبکه"
 
 #: ../src/ui/dialog/document-properties.cpp:109
 msgid "Create new grid."
-msgstr ""
+msgstr "ساختن شبکه جدید."
 
 #: ../src/ui/dialog/document-properties.cpp:110
 msgid "_Remove"
-msgstr ""
+msgstr "حذف_"
 
 #: ../src/ui/dialog/document-properties.cpp:110
 msgid "Remove selected grid."
-msgstr ""
+msgstr "حذف شبکه انتخاب_ شده"
 
 #: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/widgets/toolbox.cpp:2274
 msgid "Guides"
-msgstr ""
+msgstr "خطوط راهنما"
 
 #: ../src/ui/dialog/document-properties.cpp:120
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 #: ../src/widgets/toolbox.cpp:2265
 msgid "Grids"
-msgstr ""
+msgstr "شبکه‌ها"
 
 #: ../src/ui/dialog/document-properties.cpp:121
 #: ../src/verbs.cpp:2544
 #: ../src/widgets/toolbox.cpp:2130
 msgid "Snap"
-msgstr ""
+msgstr "چسبناکی"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 msgid "Color Management"
-msgstr ""
+msgstr "مدیریت رنگ"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "Scripting"
-msgstr ""
+msgstr "اسکریپت نویسی"
 
 #: ../src/ui/dialog/document-properties.cpp:221
 msgid "<b>General</b>"
@@ -18934,31 +18934,31 @@ msgstr ""
 
 #: ../src/verbs.cpp:2192
 msgid "Does nothing"
-msgstr ""
+msgstr "کاری نکند"
 
 #: ../src/verbs.cpp:2195
 msgid "Create new document from the default template"
-msgstr ""
+msgstr "ساختن سند جدید از روی قالب پیش فرض"
 
 #: ../src/verbs.cpp:2197
 msgid "_Open..."
-msgstr ""
+msgstr "گشو_دن..."
 
 #: ../src/verbs.cpp:2198
 msgid "Open an existing document"
-msgstr ""
+msgstr "گشودن سند موجود"
 
 #: ../src/verbs.cpp:2199
 msgid "Re_vert"
-msgstr ""
+msgstr "باز_گرداندن"
 
 #: ../src/verbs.cpp:2200
 msgid "Revert to the last saved version of document (changes will be lost)"
-msgstr ""
+msgstr "بازگرداندن به آخرین نسخه‌ی ذخیره شده از سند (نادیده گرفتن تغییرات)"
 
 #: ../src/verbs.cpp:2201
 msgid "_Save"
-msgstr ""
+msgstr "ذ_خیره"
 
 #: ../src/verbs.cpp:2201
 msgid "Save document"
@@ -18966,23 +18966,23 @@ msgstr "ذخیره سند"
 
 #: ../src/verbs.cpp:2203
 msgid "Save _As..."
-msgstr ""
+msgstr "ذخیره_ با عنوان..."
 
 #: ../src/verbs.cpp:2204
 msgid "Save document under a new name"
-msgstr ""
+msgstr "ذخیره کردن سند با اسمی جدید"
 
 #: ../src/verbs.cpp:2205
 msgid "Save a Cop_y..."
-msgstr ""
+msgstr "ذخیره کردن_ یک کپی..."
 
 #: ../src/verbs.cpp:2206
 msgid "Save a copy of the document under a new name"
-msgstr ""
+msgstr "ذخیره کردن یک کپی از سند با اسمی جدید"
 
 #: ../src/verbs.cpp:2207
 msgid "_Print..."
-msgstr ""
+msgstr "چاپ_..."
 
 #: ../src/verbs.cpp:2207
 msgid "Print document"
@@ -18991,19 +18991,19 @@ msgstr "چاپ سند"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2210
 msgid "Vac_uum Defs"
-msgstr ""
+msgstr "جا_روی Defs"
 
 #: ../src/verbs.cpp:2210
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
-msgstr ""
+msgstr "حذف تعاریف استفاده نشده (مثل گرادیان‌ها یا مسیر‌های کلیپی) از  &lt;defs&gt; سند"
 
 #: ../src/verbs.cpp:2212
 msgid "Print Previe_w"
-msgstr ""
+msgstr "پیش_ نمایش چاپ"
 
 #: ../src/verbs.cpp:2213
 msgid "Preview document printout"
-msgstr ""
+msgstr "پیش نمایش سند بدون چاپ کردن"
 
 #: ../src/verbs.cpp:2214
 msgid "_Import..."
@@ -19028,19 +19028,19 @@ msgstr ""
 #. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2220
 msgid "N_ext Window"
-msgstr ""
+msgstr "پنجره‌ی بعدی"
 
 #: ../src/verbs.cpp:2221
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "سوییچ به پنجره‌ی سند بعدی"
 
 #: ../src/verbs.cpp:2222
 msgid "P_revious Window"
-msgstr ""
+msgstr "پنجره‌ی قبلی"
 
 #: ../src/verbs.cpp:2223
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "سوییچ به پنجره‌ی سند قبلی"
 
 #: ../src/verbs.cpp:2224
 msgid "_Close"
@@ -19060,75 +19060,75 @@ msgstr "خروج از Inkscape"
 
 #: ../src/verbs.cpp:2229
 msgid "Undo last action"
-msgstr ""
+msgstr "ملغی کردن آخرین اقدام"
 
 #: ../src/verbs.cpp:2232
 msgid "Do again the last undone action"
-msgstr ""
+msgstr "اجرای دوباره‌ی آخرین اقدام"
 
 #: ../src/verbs.cpp:2233
 msgid "Cu_t"
-msgstr ""
+msgstr "بر_ش"
 
 #: ../src/verbs.cpp:2234
 msgid "Cut selection to clipboard"
-msgstr ""
+msgstr "برش ناحیه انتخابی به کلیپ‌بُرد"
 
 #: ../src/verbs.cpp:2235
 msgid "_Copy"
-msgstr ""
+msgstr "کپی_"
 
 #: ../src/verbs.cpp:2236
 msgid "Copy selection to clipboard"
-msgstr ""
+msgstr "کپی کردن ناحیه‌ی انتخابی به کلیپ‌برد"
 
 #: ../src/verbs.cpp:2237
 msgid "_Paste"
-msgstr ""
+msgstr "چسباندن_"
 
 #: ../src/verbs.cpp:2238
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr ""
+msgstr "چسباندن اشیاء از کلیپ‌‌برد به محل ماوس، یا چسباندن متن"
 
 #: ../src/verbs.cpp:2239
 msgid "Paste _Style"
-msgstr ""
+msgstr "چسباندن سبک_"
 
 #: ../src/verbs.cpp:2240
 msgid "Apply the style of the copied object to selection"
-msgstr ""
+msgstr "اعمال سبک شئ کپی شده در کلیپ‌برد به ناحیه انتخابی"
 
 #: ../src/verbs.cpp:2242
 msgid "Scale selection to match the size of the copied object"
-msgstr ""
+msgstr "مقیاس کردن ناحیه انتخابی برای تطبیق با شئ کپی‌شده"
 
 #: ../src/verbs.cpp:2243
 msgid "Paste _Width"
-msgstr ""
+msgstr "چسباند_ن پهنا"
 
 #: ../src/verbs.cpp:2244
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr ""
+msgstr "افقی مقیاس کردن ناحیه‌ انتخاب برای مطابقت با عرض شئ کپی شده"
 
 #: ../src/verbs.cpp:2245
 msgid "Paste _Height"
-msgstr ""
+msgstr "چسباندن ارتفاع_"
 
 #: ../src/verbs.cpp:2246
 msgid "Scale selection vertically to match the height of the copied object"
-msgstr ""
+msgstr "عمودی مقیاس کردن ناحیه‌ی انتخابی برای مطابقت با طول شئ کپی شده"
 
 #: ../src/verbs.cpp:2247
 msgid "Paste Size Separately"
-msgstr ""
+msgstr "چسباندن جداگانه‌ی اندازه"
 
 #: ../src/verbs.cpp:2248
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
+msgstr "مقیاس کردن هر یک از اشیا انتخاب شده برای مطابقت با اندازه‌ی شئ کپی شده"
 
 #: ../src/verbs.cpp:2249
 msgid "Paste Width Separately"
-msgstr ""
+msgstr "چسباندن جداگانه‌ی پهنا"
 
 #: ../src/verbs.cpp:2250
 msgid "Scale each selected object horizontally to match the width of the copied object"
