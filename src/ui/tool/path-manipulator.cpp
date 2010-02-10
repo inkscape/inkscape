@@ -58,8 +58,19 @@ enum PathChange {
  */
 class PathManipulatorObserver : public Inkscape::XML::NodeObserver {
 public:
-    PathManipulatorObserver(PathManipulator *p) : _pm(p), _blocked(false) {}
-    virtual void notifyAttributeChanged(Inkscape::XML::Node &, GQuark attr,
+    PathManipulatorObserver(PathManipulator *p, Inkscape::XML::Node *node)
+        : _pm(p)
+        , _node(node)
+        , _blocked(false)
+    {
+        Inkscape::GC::anchor(_node);
+        _node->addObserver(*this);
+    }
+    ~PathManipulatorObserver() {
+        _node->removeObserver(*this);
+        Inkscape::GC::release(_node);
+    }
+    virtual void notifyAttributeChanged(Inkscape::XML::Node &node, GQuark attr,
         Util::ptr_shared<char>, Util::ptr_shared<char>)
     {
         // do nothing if blocked
@@ -80,6 +91,7 @@ public:
     void unblock() { _blocked = false; }
 private:
     PathManipulator *_pm;
+    Inkscape::XML::Node *_node;
     bool _blocked;
 };
 
@@ -93,7 +105,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _path(path)
     , _spcurve(NULL)
     , _dragpoint(new CurveDragPoint(*this))
-    , _observer(new PathManipulatorObserver(this))
+    , _observer(new PathManipulatorObserver(this, SP_OBJECT(path)->repr))
     , _edit_transform(et)
     , _num_selected(0)
     , _show_handles(true)
@@ -127,14 +139,11 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
         sigc::hide( sigc::mem_fun(*this, &PathManipulator::_updateOutlineOnZoomChange)));
 
     _createControlPointsFromGeometry();
-
-    _path->repr->addObserver(*_observer);
 }
 
 PathManipulator::~PathManipulator()
 {
     delete _dragpoint;
-    if (_path) _path->repr->removeObserver(*_observer);
     delete _observer;
     gtk_object_destroy(_outline);
     if (_spcurve) _spcurve->unref();

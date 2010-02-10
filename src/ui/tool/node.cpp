@@ -317,20 +317,20 @@ Glib::ustring Handle::_getTip(unsigned state)
     char const *more;
     bool can_shift_rotate = _parent->type() == NODE_CUSP && !other().isDegenerate();
     if (can_shift_rotate) {
-        more = C_("Path handle tip", "more: Ctrl, Alt, Ctrl+Alt, Shift");
+        more = C_("Path handle tip", "more: Shift, Ctrl, Alt");
     } else {
-        more = C_("Path handle tip", "more: Ctrl, Alt, Ctrl+Alt");
+        more = C_("Path handle tip", "more: Ctrl, Alt");
     }
     if (state_held_alt(state)) {
         if (state_held_control(state)) {
             if (state_held_shift(state) && can_shift_rotate) {
                 return format_tip(C_("Path handle tip",
-                    "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %f° "
+                    "<b>Shift+Ctrl+Alt</b>: preserve length and snap rotation angle to %g° "
                     "increments while rotating both handles"),
                     snap_increment_degrees());
             } else {
                 return format_tip(C_("Path handle tip",
-                    "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %f° increments"),
+                    "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"),
                     snap_increment_degrees());
             }
         } else {
@@ -346,11 +346,11 @@ Glib::ustring Handle::_getTip(unsigned state)
         if (state_held_control(state)) {
             if (state_held_shift(state) && can_shift_rotate) {
                 return format_tip(C_("Path handle tip",
-                    "<b>Ctrl:</b> snap rotation angle to %f° increments, click to retract"),
+                    "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"),
                     snap_increment_degrees());
             } else {
                 return format_tip(C_("Path handle tip",
-                    "<b>Shift+Ctrl:</b> snap rotation angle to %f° increments and rotate both handles"),
+                    "<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both handles"),
                     snap_increment_degrees());
             }
         } else if (state_held_shift(state) && can_shift_rotate) {
@@ -381,7 +381,7 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
     GString *y = SP_PX_TO_METRIC_STRING(dist[Geom::Y], _desktop->namedview->getDefaultMetric());
     GString *len = SP_PX_TO_METRIC_STRING(length(), _desktop->namedview->getDefaultMetric());
     Glib::ustring ret = format_tip(C_("Path handle tip",
-        "Move by %s, %s; angle %.2f°, length %s"), x->str, y->str, angle, len->str);
+        "Move handle by %s, %s; angle %.2f°, length %s"), x->str, y->str, angle, len->str);
     g_string_free(x, TRUE);
     g_string_free(y, TRUE);
     g_string_free(len, TRUE);
@@ -564,13 +564,15 @@ void Node::setType(NodeType type, bool update_handles)
             bool prev_line = _is_line_segment(_prev(), this);
             bool next_line = _is_line_segment(this, _next());
             if (_type == NODE_SMOOTH) {
-                // for a node that is already smooth and at the end of a linear segment,
+                // for a node that is already smooth and has a degenerate handle,
                 // drag out the second handle to 1/3 the length of the linear segment
-                if (next_line) {
-                    _front.setRelativePos((_prev()->position() - position()) / 3);
+                if (_front.isDegenerate()) {
+                    double dist = Geom::distance(_next()->position(), position());
+                    _front.setRelativePos(Geom::unit_vector(-_back.relativePos()) * dist / 3);
                 }
-                if (prev_line) {
-                    _back.setRelativePos((_next()->position() - position()) / 3);
+                if (_back.isDegenerate()) {
+                    double dist = Geom::distance(_prev()->position(), position());
+                    _back.setRelativePos(Geom::unit_vector(-_front.relativePos()) * dist / 3);
                 }
             } else if (isDegenerate()) {
                 _updateAutoHandles();
@@ -1079,13 +1081,13 @@ Glib::ustring Node::_getTip(unsigned state)
     if (_selection.transformHandlesEnabled() && selected()) {
         if (_selection.size() == 1) {
             return format_tip(C_("Path node tip",
-                "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
+                "<b>%s:</b> drag to shape the path (more: Shift, Ctrl, Alt)"), nodetype);
         }
         return format_tip(C_("Path node tip",
-            "<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
+            "<b>%s:</b> drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"), nodetype);
     }
     return format_tip(C_("Path node tip",
-        "<b>%s:</b> drag to shape the path, click to select only this node (more: Shift, Ctrl, Ctrl+Alt)"), nodetype);
+        "<b>%s:</b> drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"), nodetype);
 }
 
 Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)
@@ -1093,7 +1095,7 @@ Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)
     Geom::Point dist = position() - _last_drag_origin();
     GString *x = SP_PX_TO_METRIC_STRING(dist[Geom::X], _desktop->namedview->getDefaultMetric());
     GString *y = SP_PX_TO_METRIC_STRING(dist[Geom::Y], _desktop->namedview->getDefaultMetric());
-    Glib::ustring ret = format_tip(C_("Path node tip", "Move by %s, %s"),
+    Glib::ustring ret = format_tip(C_("Path node tip", "Move node by %s, %s"),
         x->str, y->str);
     g_string_free(x, TRUE);
     g_string_free(y, TRUE);
