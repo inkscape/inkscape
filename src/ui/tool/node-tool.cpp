@@ -445,8 +445,6 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
     switch (event->type)
     {
     case GDK_MOTION_NOTIFY: {
-        if (event->button.button == 1) {
-
         combine_motion_events(desktop->canvas, event->motion, 0);
         SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
                 FALSE, TRUE);
@@ -478,11 +476,9 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
                 prefs->getInt("/tools/nodes/pathflash_timeout", 500));
             c->unref();
         }
+        } break; // do not return true, because we need to pass this event to the parent context
+        // otherwise some features cease to work
 
-        return true;
-        } 
-        }
-        break;
     case GDK_KEY_PRESS:
         switch (get_group0_keyval(&event->key))
         {
