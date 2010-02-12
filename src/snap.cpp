@@ -354,12 +354,14 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    if (!someSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
-    }
-
     // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p.getPoint());
+
+    if (!someSnapperMightSnap()) {
+        // The constraint should always be enforce, so we return pp here instead of p
+        return Inkscape::SnappedPoint(pp, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
+    }
+
     // Then try to snap the projected point
     Inkscape::SnapCandidatePoint candidate(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, Geom::Rect());
 
