@@ -359,7 +359,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
 
     if (!someSnapperMightSnap()) {
         // The constraint should always be enforce, so we return pp here instead of p
-        return Inkscape::SnappedPoint(pp, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
+        return Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
     // Then try to snap the projected point
