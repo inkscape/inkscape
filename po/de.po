@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2010-02-09 21:59+0100\n"
+"PO-Revision-Date: 2010-02-12 15:07+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -841,7 +841,7 @@ msgstr "Tiefe"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr "Faltschacktel"
+msgstr "Faltschachtel"
 
 #: ../share/extensions/foldablebox.inx.h:4
 #: ../share/extensions/interp_att_g.inx.h:6
@@ -2013,7 +2013,7 @@ msgstr "Großes überschlagenes Dodekaeder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
-msgstr "Ikosaeder (Zwanzigfläcnher)"
+msgstr "Ikosaeder (Zwanzigflächner)"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 msgid "Light X"
@@ -2029,7 +2029,7 @@ msgstr "Erhellen Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Load from file"
-msgstr "Lade von datei"
+msgstr "Lade von Datei"
 
 #: ../share/extensions/polyhedron_3d.inx.h:24
 msgid "Maximum"
@@ -2079,7 +2079,7 @@ msgstr "Schattierung"
 #: ../share/extensions/polyhedron_3d.inx.h:36
 #: ../src/dialogs/object-attributes.cpp:43
 msgid "Show:"
-msgstr "Show:"
+msgstr "Zeige:"
 
 # Für "Triambic" gibt es eigentlich keine deutsche Entsprechung...
 #: ../share/extensions/polyhedron_3d.inx.h:37
@@ -2388,36 +2388,32 @@ msgid "Strength (%):"
 msgstr "Stärke (%):"
 
 #: ../share/extensions/scour.inx.h:1
-#, fuzzy
 msgid "Embed rasters"
-msgstr "Alle Bilder einbetten"
+msgstr "Alle Raster einbetten"
 
 #: ../share/extensions/scour.inx.h:2
-#, fuzzy
 msgid "Enable id stripping"
-msgstr "Einrasten einschalten"
+msgstr "ID-Herauslösen einschalten"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Enable viewboxing"
 msgstr "Vorschau einschalten"
 
 #: ../share/extensions/scour.inx.h:4
 msgid "Group collapsing"
-msgstr ""
+msgstr "Guppen zusammenklappen"
 
 #: ../share/extensions/scour.inx.h:6
-#, fuzzy
 msgid "Indent"
-msgstr "Einlage"
+msgstr "Einzug"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Keep editor data"
-msgstr ""
+msgstr "Behalten der Editor-Daten"
 
 #: ../share/extensions/scour.inx.h:9
 msgid "Optimized SVG (*.svg)"
-msgstr "Optimierte Inkscape-SVG (*.svg)"
+msgstr "Optimiertes Inkscape-SVG (*.svg)"
 
 #: ../share/extensions/scour.inx.h:10
 msgid "Optimized SVG Output"
@@ -2432,28 +2428,24 @@ msgid "Set precision"
 msgstr "Genauigkeit"
 
 #: ../share/extensions/scour.inx.h:14
-#, fuzzy
 msgid "Simplify colors"
-msgstr "Vereinfachen"
+msgstr "Farben vereinfachen"
 
 #: ../share/extensions/scour.inx.h:15
-#, fuzzy
 msgid "Space"
-msgstr "Beflecken"
+msgstr "Space"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Strip xml prolog"
-msgstr ""
+msgstr "Herauslösen des XML Prologes"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Style to xml"
-msgstr "_Stil: "
+msgstr "Stil nach XML"
 
 #: ../share/extensions/scour.inx.h:18
-#, fuzzy
 msgid "Tab"
-msgstr "Tabelle"
+msgstr "Tab"
 
 #: ../share/extensions/scour.inx.h:20
 #, no-c-format
@@ -2470,6 +2462,17 @@ msgid ""
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
 msgstr ""
+"Diese Erweiterung optimiert die SVG-Datei gemäß nachfolgender Optionen: \n"
+"    * Farben vereinfachen: Konvertiert alle Farben in das #RRGGBB Format.\n"
+"    * Stil nach XML: Konvertiert Stile in XML-Attribute.\n"
+"    * Guppen zusammenklappen: Klappt &lt;g&gt; Elemente zusammen.\n"
+"    * ID-Herauslösen einschalten: Löscht alle nicht verweisenden ID-Attribute.\n"
+"    * Raster einbetten: Bettet Raster als base64-encoded Data ein.\n"
+"    * Behalten der Editor-Daten: Behalten von Inkscape-, Sodipodi- oder Adobe Illustrator-Elementen und Attribute.\n"
+"    * Vorschau einschalten: Setzt Bildgröße auf 100%/100% und fügt eine Vorschau ein.\n"
+"    * Herauslösen des XML Prologes:   Es wird kein XML-Prolog ausgegeben.\n"
+"    * Genauigkeit: Anzahl der maßgeblichen Stellen setzen (Vorgabe: 5).\n"
+"    * Einzug: Einrücken der Ausgabe: Kein, Space, Tab (Vorgabe: Space)."
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -5449,7 +5452,6 @@ msgid "Connector endpoint drag cancelled."
 msgstr "Ziehen von Verbinder-Endpunkten abgebrochen."
 
 #: ../src/connector-context.cpp:1170
-#, fuzzy
 msgid "Connection point drag cancelled."
 msgstr "Ziehen von Verbinder-Endpunkten abgebrochen."
 
@@ -10086,7 +10088,7 @@ msgstr "Tangente an Kurve"
 
 #: ../src/live_effects/effect.cpp:106
 msgid "Text label"
-msgstr "Text-bezeichner"
+msgstr "Text-Bezeichner"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:109
@@ -10194,14 +10196,12 @@ msgid "Specifies the right end of the bisector"
 msgstr "Legt das rechte Ende der Halbierenden fest"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:59
-#, fuzzy
 msgid "Adjust the \"left\" end of the bisector"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Einstellen des \"linken\" Endes der Halbierenden"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:60
-#, fuzzy
 msgid "Adjust the \"right\" of the bisector"
-msgstr "Helligkeit des Farbwertes übernehmen"
+msgstr "Einstellen des \"rechten\" Endes der Halbierenden"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
@@ -10277,9 +10277,8 @@ msgid "Path to which the original path will be boolop'ed."
 msgstr "Dynamischen Versatz am Objekt erstellen. Verknüpfung zum originalen Pfad bleibt bestehen."
 
 #: ../src/live_effects/lpe-boolops.cpp:37
-#, fuzzy
 msgid "Boolop type"
-msgstr "Alle Typen"
+msgstr "Operationstyp"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Determines which kind of boolop will be performed."
@@ -10490,7 +10489,7 @@ msgstr "Strich dünner starten"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Fade for"
-msgstr ""
+msgstr "Ausblenden ab"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Make the stroke thiner near it's end"
@@ -10781,14 +10780,12 @@ msgid "Specifies the right end of the parallel"
 msgstr "Legt das rechte Ende der Parallele fest"
 
 #: ../src/live_effects/lpe-parallel.cpp:56
-#, fuzzy
 msgid "Adjust the \"left\" end of the parallel"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Einstellen des \"linken\" Endes der Parallele"
 
 #: ../src/live_effects/lpe-parallel.cpp:57
-#, fuzzy
 msgid "Adjust the \"right\" end of the parallel"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Einstellen des \"rechten\" Endes der Parallele"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
 msgid "Display unit"
@@ -10853,14 +10850,12 @@ msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr "Verschmelze Enden näher zusammen als diese Zahl. 0 für keine Verschmelzung."
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:113
-#, fuzzy
 msgid "Adjust the bisector's \"left\" end"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Stellt das \"linke\" Ende der Halbierenden ein"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:114
-#, fuzzy
 msgid "Adjust the bisector's \"right\" end"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Stellt das \"rechte\" Ende der Halbierenden ein"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:42
@@ -10904,9 +10899,8 @@ msgid "If true, put the path on the left side of an imaginary box, otherwise on 
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective_path.cpp:55
-#, fuzzy
 msgid "Adjust the origin"
-msgstr "Anpassen des Startwinkels"
+msgstr "Einstellen des Ursprungs"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
 msgid "Iterations"
@@ -11303,14 +11297,12 @@ msgid "Adjust the point of attachment of the tangent"
 msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-#, fuzzy
 msgid "Adjust the \"left\" end of the tangent"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Einstellen des \"linken\" Endes der Tangente"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-#, fuzzy
 msgid "Adjust the \"right\" end of the tangent"
-msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
+msgstr "Einstellen des \"rechten\" Endes der Tangente"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
 #, fuzzy
@@ -13292,9 +13284,8 @@ msgid "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial
 msgstr "%s. Ziehen oder Klicken zum Scrollen oder Sprühen in einen <b>Einzelpfad</b> der letzten Auswahl"
 
 #: ../src/spray-context.cpp:774
-#, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to spray."
-msgstr "<b>Nichts ausgewählt!</b> Wähle Objekte zum Justieren aus."
+msgstr "<b>Nichts ausgewählt!</b> Wähle Objekte zum Sprühen aus."
 
 #: ../src/spray-context.cpp:882
 #: ../src/widgets/toolbox.cpp:4589
@@ -13524,14 +13515,14 @@ msgid "Paste text"
 msgstr "Text einfügen"
 
 #: ../src/text-context.cpp:1621
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."
-msgstr "Fließtext schreiben (%d Zeichen); <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
+msgstr "Fließtext schreiben (%d Zeichen%s); <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
 
 #: ../src/text-context.cpp:1623
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
-msgstr "Text schreiben (%d Zeichen); <b>Eingabe</b>, um eine neue Zeile zu beginnen."
+msgstr "Text schreiben (%d Zeichen%s); <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
 #: ../src/text-context.cpp:1631
 #: ../src/tools-switch.cpp:197
@@ -13551,9 +13542,8 @@ msgid "To tweak a path by pushing, select it and drag over it."
 msgstr "Um eine Pfadform zu justieren, selektieren Sie diesen und ziehen über ihn."
 
 #: ../src/tools-switch.cpp:143
-#, fuzzy
 msgid "To spray a path by pushing, select it and drag over it."
-msgstr "Um eine Pfadform zu justieren, selektieren Sie diesen und ziehen über ihn."
+msgstr "Um einen Pfad zu sprühen, selektieren Sie diesen und ziehen über ihn."
 
 #: ../src/tools-switch.cpp:149
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
@@ -16139,9 +16129,8 @@ msgid "Show icons and descriptions for the filter primitives available at the fi
 msgstr "Zeigt Symbole und Beschreibungen für die verfügbaren Filterbausteine im Filtereffektdialog."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:753
-#, fuzzy
 msgid "Number of Threads:"
-msgstr "Anzahl der Zeilen"
+msgstr "Anzahl der Threads:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:753
 #: ../src/ui/dialog/inkscape-preferences.cpp:1315
@@ -16150,7 +16139,7 @@ msgstr "(erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid "Configure number of processors/threads to use with rendering of gaussian blur."
-msgstr ""
+msgstr "Einstellen der Anzahl an Prozessoren/Threads die für das Rendern mit dem Gaus'schem Weichzeichner genutzt werden sollen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:762
 msgid "Select in all layers"
@@ -17181,11 +17170,11 @@ msgstr "Neuen Effekt anwenden"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:79
 msgid "Current effect"
-msgstr "Aktion"
+msgstr "Derzeitiger Effekt"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:80
 msgid "Effect list"
-msgstr "E_ffekte"
+msgstr "Effekt-Liste"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:269
 msgid "Unknown effect is applied"
@@ -17417,9 +17406,8 @@ msgid "Close file"
 msgstr "Datei schließen"
 
 #: ../src/ui/dialog/session-player.cpp:92
-#, fuzzy
 msgid "Open new file"
-msgstr "Öffne Sitzungsdatei:"
+msgstr "Öffne neue Datei"
 
 #: ../src/ui/dialog/session-player.cpp:93
 msgid "Set delay"
@@ -18144,9 +18132,8 @@ msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "Fehler beim Verbindungsaufbau zum Jabber-Server <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:215
-#, fuzzy
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr "Verbindungsaufbau zum Jabber-Server <b>%1</b>"
+msgstr "Herstellen der Verbindung zum Jabber-Server <b>%1</b> als Benutzer <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:227
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
@@ -18317,9 +18304,8 @@ msgid "Symmetric node"
 msgstr "symmetrischer Knoten"
 
 #: ../src/ui/tool/node.cpp:987
-#, fuzzy
 msgid "Auto-smooth node"
-msgstr "weicher Knoten"
+msgstr "Knoten automatisch glätten"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1202
@@ -20834,7 +20820,7 @@ msgstr "Inkscape: _Interpolieren"
 
 #: ../src/verbs.cpp:2675
 msgid "Using the interpolate extension"
-msgstr ""
+msgstr "Benutzt die Erweiterung Interpolieren"
 
 #. "tutorial_interpolate"
 #: ../src/verbs.cpp:2676
@@ -20983,13 +20969,13 @@ msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr "Ansicht mit Farbverwaltung ein-/ausschalten"
 
 #: ../src/widgets/desktop-widget.cpp:914
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Das Dokument \"%s\" wurde in einem möglicherweise verlustbehafteten Format (%s) gespeichert!</span>\n"
+"<span weight=\"bold\" size=\"larger\">Die Datei \"%s\" wurde in einem möglicherweise verlustbehafteten Format (%s) gespeichert!</span>\n"
 "\n"
 "Möchten Sie das Dokument als ein Inkscape SVG speichern?"
 
@@ -23266,7 +23252,7 @@ msgstr "Kanten-Modus:"
 
 #: ../src/widgets/toolbox.cpp:7542
 msgid "Switch between connection point editing and connector drawing mode"
-msgstr ""
+msgstr "Umschalten zwischen dem Bearbeiten der Verbindungspunkte und dem Zeichnen der Verbindungen"
 
 #: ../src/widgets/toolbox.cpp:7556
 msgid "Avoid"
@@ -23346,9 +23332,8 @@ msgid "Add a new connection point to the currently selected item"
 msgstr "Füge einen neuen Verbindungspunkt zum derzeit ausgewählten Objekt"
 
 #: ../src/widgets/toolbox.cpp:7683
-#, fuzzy
 msgid "Remove connection point"
-msgstr "Objektverbinder neu verlegen"
+msgstr "Verbindungspunkt entfernen"
 
 #: ../src/widgets/toolbox.cpp:7684
 msgid "Remove the currently selected connection point"
@@ -23417,9 +23402,8 @@ msgid "Rows"
 msgstr "Reihen:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
-#, fuzzy
 msgid "Square Size / px"
-msgstr "Quadratisches Ende"
+msgstr "Quadratische Größe / px"
 
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Hide lines behind the sphere"
