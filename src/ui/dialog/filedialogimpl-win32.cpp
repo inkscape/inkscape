@@ -61,7 +61,7 @@ namespace Dialog
 
 const int PreviewWidening = 150;
 const char PreviewWindowClassName[] = "PreviewWnd";
-const unsigned long MaxPreviewFileSize = 1344; // kB
+const unsigned long MaxPreviewFileSize = 10240; // kB
 
 #define IDC_SHOW_PREVIEW    1000
 
