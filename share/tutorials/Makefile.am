@@ -7,6 +7,7 @@ tutorial_DATA = \
     gpl-2.svg \
     making_markers.svg \
     oldguitar.jpg \
+    potrace-be.png \
     potrace-ca.png \
     potrace-de.png \
     potrace-en.png \
@@ -25,6 +26,7 @@ tutorial_DATA = \
     potrace-zh_CN.png \
     potrace-zh_TW.png \
     tutorial-advanced.svg \
+    tutorial-advanced.be.svg \
     tutorial-advanced.ca.svg \
     tutorial-advanced.cs.svg \
     tutorial-advanced.de.svg \
@@ -45,6 +47,7 @@ tutorial_DATA = \
     tutorial-advanced.zh_CN.svg \
     tutorial-advanced.zh_TW.svg \
     tutorial-basic.svg \
+    tutorial-basic.be.svg \
     tutorial-basic.bg.svg \
     tutorial-basic.ca.svg \
     tutorial-basic.cs.svg \
@@ -70,6 +73,7 @@ tutorial_DATA = \
     tutorial-basic.zh_CN.svg \
     tutorial-basic.zh_TW.svg \
     tutorial-calligraphy.svg \
+    tutorial-calligraphy.be.svg \
     tutorial-calligraphy.ca.svg \
     tutorial-calligraphy.cs.svg \
     tutorial-calligraphy.de.svg \
@@ -87,6 +91,7 @@ tutorial_DATA = \
     tutorial-calligraphy.vi.svg \
     tutorial-calligraphy.zh_TW.svg \
     tutorial-elements.svg \
+    tutorial-elements.be.svg \
     tutorial-elements.ca.svg \
     tutorial-elements.de.svg \
     tutorial-elements.es.svg \
@@ -102,6 +107,7 @@ tutorial_DATA = \
     tutorial-elements.sl.svg \
     tutorial-elements.zh_TW.svg \
     tutorial-interpolate.svg \
+    tutorial-interpolate.be.svg \
     tutorial-interpolate.de.svg \
     tutorial-interpolate.fr.svg \
     tutorial-interpolate.hu.svg \
@@ -110,6 +116,7 @@ tutorial_DATA = \
     tutorial-interpolate.sl.svg \
     tutorial-interpolate.vi.svg \
     tutorial-shapes.svg \
+    tutorial-shapes.be.svg \
     tutorial-shapes.ca.svg \
     tutorial-shapes.cs.svg \
     tutorial-shapes.de.svg \
@@ -130,6 +137,7 @@ tutorial_DATA = \
     tutorial-shapes.zh_CN.svg \
     tutorial-shapes.zh_TW.svg \
     tutorial-tips.svg \
+    tutorial-tips.be.svg \
     tutorial-tips.ca.svg \
     tutorial-tips.de.svg \
     tutorial-tips.es.svg \
@@ -147,6 +155,7 @@ tutorial_DATA = \
     tutorial-tips.vi.svg \
     tutorial-tips.zh_TW.svg \
     tutorial-tracing.svg \
+    tutorial-tracing.be.svg \
     tutorial-tracing.ca.svg \
     tutorial-tracing.de.svg \
     tutorial-tracing.es.svg \
