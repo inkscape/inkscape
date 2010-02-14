@@ -369,7 +369,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 _desktop->scroll_to_point(new_pos);
                 _desktop->set_coordinate_status(_position);
                 sp_event_context_snap_delay_handler(_desktop->event_context, NULL,
-                    reinterpret_cast<SPKnot*>(this), &event->motion,
+                    (gpointer) this, &event->motion,
                     DelayedSnapEvent::CONTROL_POINT_HANDLER);
             }
             return true;

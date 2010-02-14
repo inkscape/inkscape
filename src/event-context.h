@@ -50,11 +50,14 @@ public:
         EVENTCONTEXT_ROOT_HANDLER,
         EVENTCONTEXT_ITEM_HANDLER,
         KNOT_HANDLER,
-        CONTROL_POINT_HANDLER
+        CONTROL_POINT_HANDLER,
+        GUIDE_HANDLER,
+        GUIDE_HRULER,
+        GUIDE_VRULER
     };
 
-    DelayedSnapEvent(SPEventContext *event_context, SPItem* const item, SPKnot* knot, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
-    : _timer_id(0), _event(NULL), _item(item), _knot(knot), _origin(origin), _event_context(event_context)
+    DelayedSnapEvent(SPEventContext *event_context, gpointer const dse_item, gpointer dse_item2, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
+    : _timer_id(0), _event(NULL), _item(dse_item), _item2(dse_item2), _origin(origin), _event_context(event_context)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
@@ -71,19 +74,19 @@ public:
     SPEventContext* getEventContext() {return _event_context;}
     DelayedSnapEventOrigin getOrigin() {return _origin;}
     GdkEvent* getEvent() {return _event;}
-    SPItem* getItem() {return _item;}
-    SPKnot* getKnot() {return _knot;}
+    gpointer getItem() {return _item;}
+    gpointer getItem2() {return _item2;}
 
 private:
     guint _timer_id;
     GdkEvent* _event;
-    SPItem* _item;
-    SPKnot* _knot;
+    gpointer _item;
+    gpointer _item2;
     DelayedSnapEventOrigin _origin;
     SPEventContext* _event_context;
 };
 
-void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item, SPKnot* const knot, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
+void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
 
 /**
  * Base class for Event processors.
@@ -124,6 +127,7 @@ struct SPEventContext : public GObject {
     bool space_panning;
 
     DelayedSnapEvent *_delayed_snap_event;
+    bool _dse_callback_in_process;
 };
 
 /**
