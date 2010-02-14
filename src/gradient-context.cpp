@@ -593,7 +593,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             ret = TRUE;
         } else {
-            if (!sp_event_context_knot_mouseover(event_context)) {
+            if (!drag->mouseOver()) {
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
 

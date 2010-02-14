@@ -154,6 +154,8 @@ public: // FIXME: make more of this private!
     void updateLines ();
     void updateLevels ();
 
+    bool mouseOver();
+
     void selected_move_nowrite (double x, double y, bool scale_radial);
     void selected_move (double x, double y, bool write_repr = true, bool scale_radial = false);
     void selected_move_screen (double x, double y);

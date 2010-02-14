@@ -1662,6 +1662,22 @@ GrDrag::updateDraggers ()
     }
 }
 
+
+/**
+ * \brief Returns true if at least one of the draggers' knots has the mouse hovering above it
+ */
+
+bool
+GrDrag::mouseOver()
+{
+    for (GList const* i = this->draggers; i != NULL; i = i->next) {
+        GrDragger *d = (GrDragger *) i->data;
+        if (d->knot && (d->knot->flags & SP_KNOT_MOUSEOVER)) {
+            return true;
+        }
+    }
+    return false;
+}
 /**
 Regenerates the lines list from the current selection; is called on each move of a dragger, so that
 lines are always in sync with the actual gradient
