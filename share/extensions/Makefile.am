@@ -18,6 +18,7 @@ extensions = \
 	addnodes.py \
 	bezmisc.py \
 	chardataeffect.py\
+	color_blackandwhite.py\
 	color_brighter.py\
 	color_custom.py\
 	color_darker.py\
@@ -154,6 +155,7 @@ modules = \
 	cdt_input.inx \
 	cgm_input.inx \
 	cmx_input.inx \
+	color_blackandwhite.inx\
 	color_brighter.inx\
 	color_custom.inx \
 	color_darker.inx\
