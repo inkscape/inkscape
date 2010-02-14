@@ -807,6 +807,12 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &ppointer, gu
         p = snap_vector_midpoint (p, low_lim, high_lim, snap_fraction);
     } else {
         p = snap_vector_midpoint (p, low_lim, high_lim, 0);
+        if (!(state & GDK_SHIFT_MASK)) {
+            SPDesktop *desktop = dragger->parent->desktop;
+            SnapManager &m = desktop->namedview->snap_manager;
+            Inkscape::Snapper::ConstraintLine cl(low_lim, high_lim - low_lim);
+            m.constrainedSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE, cl);
+        }
     }
     Geom::Point displacement = p - dragger->point;
 
