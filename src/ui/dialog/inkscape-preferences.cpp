@@ -1020,7 +1020,7 @@ void InkscapePreferences::initPageGrids()
     _page_grids.add_line( false, "", _grids_notebook, "", "", false);
     _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
     _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));
-        _grids_xy_units.init("/options/grids/units");
+        _grids_xy_units.init("/options/grids/xy/units");
         _grids_xy.add_line( false, _("Grid units:"), _grids_xy_units, "", "", false);
         _grids_xy_origin_x.init("/options/grids/xy/origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
         _grids_xy_origin_y.init("/options/grids/xy/origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);

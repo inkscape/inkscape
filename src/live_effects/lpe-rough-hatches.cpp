@@ -279,6 +279,10 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     front_thickness.param_set_range(0, NR_HUGE);
     back_thickness.param_set_range(0, NR_HUGE);
 
+    // hide the widgets for direction and bender vectorparams
+    direction.widget_is_visible = false;
+    bender.widget_is_visible = false;
+
     concatenate_before_pwd2 = false;
     show_orig_path = true;
 }

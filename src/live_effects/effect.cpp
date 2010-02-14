@@ -673,7 +673,6 @@ Effect::transform_multiply(Geom::Matrix const& postmul, bool set)
     }
 }
 
-// TODO: take _all_ parameters into account, not only PointParams
 bool
 Effect::providesKnotholder()
 {

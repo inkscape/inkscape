@@ -13,8 +13,9 @@
 #include "svg/stringstream.h"
 #include <gtkmm.h>
 
-// needed for on-canvas editting:
-class SPDesktop;
+#include "ui/widget/registered-widget.h"
+#include "live_effects/effect.h"
+#include "desktop.h"
 
 namespace Inkscape {
 
@@ -82,28 +83,23 @@ VectorParam::param_getSVGValue() const
 Gtk::Widget *
 VectorParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
 {
-/*
-    Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
-        new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
-                                                              param_tooltip,
-                                                              param_key,
-                                                              *param_wr,
-                                                              param_effect->getRepr(),
-                                                              param_effect->getSPDoc() ) );
-    // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Geom::Matrix transf = desktop->doc2dt();
-    pointwdg->setTransform(transf);
-    pointwdg->setValue( *this );
+    Inkscape::UI::Widget::RegisteredVector * pointwdg = Gtk::manage(
+        new Inkscape::UI::Widget::RegisteredVector( param_label,
+                                                    param_tooltip,
+                                                    param_key,
+                                                    *param_wr,
+                                                    param_effect->getRepr(),
+                                                    param_effect->getSPDoc() ) );
+    pointwdg->setPolarCoords();
+    pointwdg->setValue( vector, origin );
     pointwdg->clearProgrammatically();
-    pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
+    pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change vector parameter"));
 
     Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
     static_cast<Gtk::HBox*>(hbox)->pack_start(*pointwdg, true, true);
     static_cast<Gtk::HBox*>(hbox)->show_all_children();
 
     return dynamic_cast<Gtk::Widget *> (hbox);
-    */ return NULL;
 }
 
 void

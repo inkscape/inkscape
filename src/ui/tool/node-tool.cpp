@@ -362,7 +362,7 @@ void gather_items(InkNodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Sh
         ShapeRecord r;
         r.item = static_cast<SPItem*>(obj);
         r.edit_transform = Geom::identity(); // TODO wrong?
-        r.role = SHAPE_ROLE_LPE_PARAM;
+        r.role = role;
         s.insert(r);
     } else if (role != SHAPE_ROLE_NORMAL && (SP_IS_GROUP(obj) || SP_IS_OBJECTGROUP(obj))) {
         for (SPObject *c = obj->children; c; c = c->next) {

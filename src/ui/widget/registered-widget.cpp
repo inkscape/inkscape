@@ -587,6 +587,96 @@ RegisteredTransformedPoint::on_value_changed()
 }
 
 /*#########################################
+ * Registered TRANSFORMEDPOINT
+ */
+
+RegisteredVector::~RegisteredVector()
+{
+    _value_x_changed_connection.disconnect();
+    _value_y_changed_connection.disconnect();
+}
+
+RegisteredVector::RegisteredVector ( const Glib::ustring& label, const Glib::ustring& tip,
+                        const Glib::ustring& key, Registry& wr, Inkscape::XML::Node* repr_in,
+                        SPDocument* doc_in )
+    : RegisteredWidget<Point> (label, tip),
+      _polar_coords(false)
+{
+    init_parent(key, wr, repr_in, doc_in);
+
+    setRange (-1e6, 1e6);
+    setDigits (2);
+    setIncrements(0.1, 1.0);
+    _value_x_changed_connection = signal_x_value_changed().connect (sigc::mem_fun (*this, &RegisteredVector::on_value_changed));
+    _value_y_changed_connection = signal_y_value_changed().connect (sigc::mem_fun (*this, &RegisteredVector::on_value_changed));
+}
+
+void
+RegisteredVector::setValue(Geom::Point const & p)
+{
+    if (!_polar_coords) {
+        Point::setValue(p);
+    } else {
+        Geom::Point polar;
+        polar[Geom::X] = atan2(p) *180/M_PI;
+        polar[Geom::Y] = p.length();
+        Point::setValue(polar);
+    }
+}
+
+void
+RegisteredVector::setValue(Geom::Point const & p, Geom::Point const & origin)
+{
+    RegisteredVector::setValue(p);
+    _origin = origin;
+}
+
+/**
+ * Changes the widgets text to polar coordinates. The SVG output will still be a normal carthesian vector.
+ * Careful: when calling getValue(), the return value's X-coord will be the angle, Y-value will be the distance/length. 
+ * After changing the coords type (polar/non-polar), the value has to be reset (setValue).
+ */
+void
+RegisteredVector::setPolarCoords(bool polar_coords)
+{
+    _polar_coords = polar_coords;
+    if (polar_coords) {
+        xwidget.setLabelText("Angle:");
+        ywidget.setLabelText("Distance:");
+    } else {
+        xwidget.setLabelText("X:");
+        ywidget.setLabelText("Y:");
+    }
+}
+
+void
+RegisteredVector::on_value_changed()
+{
+    if (setProgrammatically()) {
+        clearProgrammatically();
+        return;
+    }
+
+    if (_wr->isUpdating())
+        return;
+
+    _wr->setUpdating (true);
+
+    Geom::Point origin = _origin;
+    Geom::Point vector = getValue();
+    if (_polar_coords) {
+        vector = Geom::Point::polar(vector[Geom::X]*M_PI/180, vector[Geom::Y]);
+    }
+
+    Inkscape::SVGOStringStream os;
+    os << origin << " , " << vector;
+
+    write_to_xml(os.str().c_str());
+
+    _wr->setUpdating (false);
+}
+
+/*#########################################
  * Registered RANDOM
  */
 

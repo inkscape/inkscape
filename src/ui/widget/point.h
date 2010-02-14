@@ -64,7 +64,7 @@ public:
     void    setDigits(unsigned digits);
     void    setIncrements(double step, double page);
     void    setRange(double min, double max);
-    void    setValue(Geom::Point & p);
+    void    setValue(Geom::Point const & p);
 
     void    update();
 

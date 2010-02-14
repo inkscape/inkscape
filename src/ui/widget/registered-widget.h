@@ -334,6 +334,31 @@ protected:
 };
 
 
+class RegisteredVector : public RegisteredWidget<Point> {
+public:
+    virtual ~RegisteredVector();
+    RegisteredVector (const Glib::ustring& label,
+                      const Glib::ustring& tip,
+                      const Glib::ustring& key,
+                      Registry& wr,
+                      Inkscape::XML::Node* repr_in = NULL,
+                      SPDocument *doc_in = NULL );
+
+    // redefine setValue, because transform must be applied
+    void setValue(Geom::Point const & p);
+    void setValue(Geom::Point const & p, Geom::Point const & origin);
+    void setPolarCoords(bool polar_coords = true);
+
+protected:
+    sigc::connection  _value_x_changed_connection;
+    sigc::connection  _value_y_changed_connection;
+    void on_value_changed();
+
+    Geom::Point _origin;
+    bool _polar_coords;
+};
+
+
 class RegisteredRandom : public RegisteredWidget<Random> {
 public:
     virtual ~RegisteredRandom();

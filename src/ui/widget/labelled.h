@@ -39,6 +39,8 @@ public:
     Gtk::Widget const *getWidget() const;
     Gtk::Label const *getLabel() const;
 
+    void setLabelText(const Glib::ustring &str) { _label->set_text(str); };
+
 protected:
     Gtk::Widget  *_widget;
     Gtk::Label   *_label;

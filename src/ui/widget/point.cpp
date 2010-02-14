@@ -194,7 +194,7 @@ Point::setRange(double min, double max)
 
 /** Sets the value of the spin button */
 void
-Point::setValue(Geom::Point & p)
+Point::setValue(Geom::Point const & p)
 {
     xwidget.setValue(p[0]);
     ywidget.setValue(p[1]);
