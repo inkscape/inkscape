@@ -91,7 +91,9 @@ sp_canvastext_destroy (GtkObject *object)
 
     SPCanvasText *canvastext = SP_CANVASTEXT (object);
 
-    canvastext->item=NULL;
+    g_free(canvastext->text);
+    canvastext->text = NULL;
+    canvastext->item = NULL;
 
     if (GTK_OBJECT_CLASS (parent_class_ct)->destroy)
         (* GTK_OBJECT_CLASS (parent_class_ct)->destroy) (object);
