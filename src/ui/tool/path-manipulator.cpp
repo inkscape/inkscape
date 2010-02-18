@@ -923,8 +923,11 @@ void PathManipulator::_createControlPointsFromGeometry()
     // so that _updateDragPoint doesn't crash on paths with naked movetos
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers(_spcurve->get_pathvector());
     for (Geom::PathVector::iterator i = pathv.begin(); i != pathv.end(); ) {
+        // NOTE: this utilizes the fact that Geom::PathVector is an std::vector.
+        // When we erase an element, the next one slides into position,
+        // so we do not increment the iterator even though it is theoretically invalidated.
         if (i->empty()) {
-            pathv.erase(i++);
+            pathv.erase(i);
         } else {
             ++i;
         }
