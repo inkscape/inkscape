@@ -103,7 +103,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     , _subpaths(*this)
     , _multi_path_manipulator(mpm)
     , _path(path)
-    , _spcurve(NULL)
+    , _spcurve(new SPCurve())
     , _dragpoint(new CurveDragPoint(*this))
     , _observer(new PathManipulatorObserver(this, SP_OBJECT(path)->repr))
     , _edit_transform(et)
@@ -146,7 +146,7 @@ PathManipulator::~PathManipulator()
     delete _dragpoint;
     delete _observer;
     gtk_object_destroy(_outline);
-    if (_spcurve) _spcurve->unref();
+    _spcurve->unref();
     clear();
 }
 
@@ -923,8 +923,11 @@ void PathManipulator::_createControlPointsFromGeometry()
     // so that _updateDragPoint doesn't crash on paths with naked movetos
     Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers(_spcurve->get_pathvector());
     for (Geom::PathVector::iterator i = pathv.begin(); i != pathv.end(); ) {
-        if (i->empty()) pathv.erase(i++);
-        else ++i;
+        if (i->empty()) {
+            pathv.erase(i++);
+        } else {
+            ++i;
+        }
     }
     _spcurve->set_pathvector(pathv);
 
@@ -1123,13 +1126,11 @@ void PathManipulator::_getGeometry()
         Effect *lpe = LIVEPATHEFFECT(_path)->get_lpe();
         if (lpe) {
             PathParam *pathparam = dynamic_cast<PathParam *>(lpe->getParameter(_lpe_key.data()));
-            if (!_spcurve)
-                _spcurve = new SPCurve(pathparam->get_pathvector());
-            else
-                _spcurve->set_pathvector(pathparam->get_pathvector());
+            _spcurve->unref();
+            _spcurve = new SPCurve(pathparam->get_pathvector());
         }
     } else {
-        if (_spcurve) _spcurve->unref();
+        _spcurve->unref();
         _spcurve = sp_path_get_curve_for_edit(_path);
     }
 }
@@ -1152,7 +1153,7 @@ void PathManipulator::_setGeometry()
         }
     } else {
         if (_path->repr->attribute("inkscape:original-d"))
-            sp_path_set_original_curve(_path, _spcurve, true, false);
+            sp_path_set_original_curve(_path, _spcurve, false, false);
         else
             sp_shape_set_curve(SP_SHAPE(_path), _spcurve, false);
     }
@@ -1301,7 +1302,6 @@ void PathManipulator::_commit(Glib::ustring const &annotation)
  * point of the path. */
 void PathManipulator::_updateDragPoint(Geom::Point const &evp)
 {
-    // TODO find a way to make this faster (no transform required)
     Geom::Matrix to_desktop = _edit_transform * _i2d_transform;
     Geom::PathVector pv = _spcurve->get_pathvector();
     boost::optional<Geom::PathVectorPosition> pvp

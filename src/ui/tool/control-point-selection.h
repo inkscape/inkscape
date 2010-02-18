@@ -38,7 +38,7 @@ class SelectableControlPoint;
 namespace Inkscape {
 namespace UI {
 
-class ControlPointSelection : public Manipulator {
+class ControlPointSelection : public Manipulator, public sigc::trackable {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
