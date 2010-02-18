@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-24 14:52+0100\n"
-"PO-Revision-Date: 2010-02-10 01:23+0330\n"
+"PO-Revision-Date: 2010-02-16 22:50+0330\n"
 "Last-Translator: Ali Ghanavatian <ghanvatian.ali@gmail.com>\n"
 "Language-Team: Farsi <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -445,7 +445,7 @@ msgstr ""
 #: ../share/extensions/scour.inx.h:5
 #: ../src/ui/dialog/extension-editor.cpp:81
 msgid "Help"
-msgstr ""
+msgstr "راهنما"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
 msgid "Incentre"
@@ -506,7 +506,7 @@ msgstr ""
 #: ../share/extensions/render_barcode_datamatrix.inx.h:3
 #: ../share/extensions/wireframe_sphere.inx.h:5
 msgid "Render"
-msgstr ""
+msgstr "رندر"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
 msgid "Report this triangle's properties"
@@ -684,7 +684,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:617
 #: ../src/ui/dialog/find.cpp:83
 msgid "Images"
-msgstr ""
+msgstr "تصاویر"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -744,7 +744,7 @@ msgstr ""
 #: ../share/extensions/pathscatter.inx.h:5
 #: ../src/extension/internal/bluredge.cpp:141
 msgid "Generate from Path"
-msgstr ""
+msgstr "تولید از مسیر"
 
 #: ../share/extensions/extrude.inx.h:3
 msgid "Lines"
@@ -1290,7 +1290,7 @@ msgstr "گزارش یک باگ"
 
 #: ../share/extensions/inkscape_help_svgspec.inx.h:1
 msgid "SVG 1.1 Specification"
-msgstr ""
+msgstr "مشخصات SVG 1.1"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -1519,7 +1519,7 @@ msgstr ""
 #: ../src/verbs.cpp:2477
 #: ../share/extensions/render_barcode_datamatrix.inx.h:6
 msgid "Text"
-msgstr ""
+msgstr "متن"
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
 msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer."
@@ -1746,7 +1746,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:86
 #: ../src/widgets/toolbox.cpp:4571
 msgid "Scatter"
-msgstr ""
+msgstr "متفرقکردن"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Arrange"
-msgstr ""
+msgstr "مرتب سازی"
 
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
@@ -2801,7 +2801,7 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
-msgstr ""
+msgstr "وب"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When should the set be done?"
@@ -3118,7 +3118,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
-msgstr ""
+msgstr "ژلاتینی مات"
 
 #: ../share/filters/filters.svg.h:2
 #: ../share/filters/filters.svg.h:10
@@ -3131,15 +3131,15 @@ msgstr ""
 #: ../share/filters/filters.svg.h:167
 #: ../share/filters/filters.svg.h:206
 msgid "ABCs"
-msgstr ""
+msgstr "الفبا"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr ""
+msgstr "پوشش محدب، ژلاتینی مات"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Smart jelly"
-msgstr ""
+msgstr "ژلاتینی هوشمند"
 
 #: ../share/filters/filters.svg.h:3
 #: ../share/filters/filters.svg.h:4
@@ -3164,23 +3164,23 @@ msgstr ""
 #: ../share/filters/filters.svg.h:210
 #: ../share/filters/filters.svg.h:211
 msgid "Bevels"
-msgstr ""
+msgstr "تیزی لبه‌ها"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
+msgstr "شبیه ژلاتینی مات ولی با کنترل بیشتر"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
-msgstr ""
+msgstr "ریخته‌گری فلزی"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "نرم کردن لبه‌ها شبیه نرم کردن لبه با پایان فلزی"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Motion blur, horizontal"
-msgstr ""
+msgstr "محو کردن حرکت، افقی"
 
 #: ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:6
@@ -3191,23 +3191,23 @@ msgstr ""
 #: ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:159
 msgid "Blurs"
-msgstr ""
+msgstr "محو کردن"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Blur as if the object flies horizontally; adjust Standard Deviation to vary force"
-msgstr ""
+msgstr "محو کردن اشیاء در حال حرکت افقی؛ تنظیم انحراف استاندارد به نیروهای متفاوت"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, vertical"
-msgstr ""
+msgstr "محو کردن در حال حرکت، عمودی"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Blur as if the object flies vertically; adjust Standard Deviation to vary force"
-msgstr ""
+msgstr "محو کردن اشیاء در حال حرکت عمودی؛ تنظیم انحراف استاندارد به نیرو‌های متفاوت"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Apparition"
-msgstr ""
+msgstr "صورت تجسم"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Edges are partly feathered out"
@@ -3230,7 +3230,7 @@ msgstr ""
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
-msgstr ""
+msgstr "سایه‌ها و تابش‌ها"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Drop shadow under the cut-out of the shape"
@@ -3246,11 +3246,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:10
 msgid "Roughen"
-msgstr ""
+msgstr "زِبر کردن"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Small-scale roughening to edges and content"
-msgstr ""
+msgstr "زِبر کردن گوشه‌ها و محتوا در مقیاس کوچک"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Rubber stamp"
@@ -3274,7 +3274,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:183
 #: ../share/filters/filters.svg.h:217
 msgid "Overlays"
-msgstr ""
+msgstr "پوشش"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Random whiteouts inside"
@@ -3289,7 +3289,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:166
 msgid "Protrusions"
-msgstr ""
+msgstr "جلو افتادگی"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Inky splotches underneath the object"
@@ -3321,7 +3321,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ripple"
-msgstr ""
+msgstr "سطح ناهموار"
 
 #: ../share/filters/filters.svg.h:16
 #: ../share/filters/filters.svg.h:43
@@ -3332,11 +3332,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:173
 #: ../share/filters/filters.svg.h:194
 msgid "Distort"
-msgstr ""
+msgstr "از شکل انداختن"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Horizontal rippling of edges"
-msgstr ""
+msgstr "ناهموار کردن افقی زوایا"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Speckle"
@@ -3381,7 +3381,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:152
 #: ../share/filters/filters.svg.h:153
 msgid "Materials"
-msgstr ""
+msgstr "مواد"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Leopard spots (loses object's own color)"
@@ -3406,7 +3406,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:23
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
 msgid "Sharpen"
-msgstr ""
+msgstr "تیز کردن"
 
 #: ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:24
@@ -3423,70 +3423,70 @@ msgstr ""
 #: ../share/filters/filters.svg.h:175
 #: ../share/filters/filters.svg.h:190
 msgid "Image effects"
-msgstr ""
+msgstr "افکت‌های تصویر"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr ""
+msgstr "تیز کردن گوشه‌ها و مرزهای درون شئ، نیرو=۰.۱۵"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen more"
-msgstr ""
+msgstr "بیشتر تیز کردن"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.3"
-msgstr ""
+msgstr "تیز کردن گوشه‌ها و مرز‌های درون شئ، نیرو=۰.۳"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Oil painting"
-msgstr ""
+msgstr "رنگ روغن"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Simulate oil painting style"
-msgstr ""
+msgstr "شبیه‌سازی حالت رنگ روغن"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Edge detect"
-msgstr ""
+msgstr "شناسایی گوشه‌ها"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "شناسایی گوشه‌های رنگ در شئ"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Horizontal edge detect"
-msgstr ""
+msgstr "شناسایی گوشه‌های افقی"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Detect horizontal color edges in object"
-msgstr ""
+msgstr "شناسایی گوشه‌های افقی رنگ در شئ"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Vertical edge detect"
-msgstr ""
+msgstr "شناسایی گوشه‌های عمودی رنگ"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "شناسایی گوشه‌های عمودی رنگ در شئ"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:29
 #: ../src/ui/dialog/inkscape-preferences.cpp:499
 #: ../src/verbs.cpp:2471
 msgid "Pencil"
-msgstr ""
+msgstr "مداد"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "شناسایی گوشه‌های رنگ و پویش‌ آن‌ها با خاکستری"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Blueprint"
-msgstr ""
+msgstr "بلوپرینت"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "شناسایی گوشه‌ها و پویش‌ آن‌ها به رنگ آبی"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Render in shades of gray by reducing saturation to zero"
@@ -3511,15 +3511,15 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:34
 msgid "Age"
-msgstr ""
+msgstr "قدمت‌دار"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Imitate aged photograph"
-msgstr ""
+msgstr "شبیه ساز عکس قدیمی"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Organic"
-msgstr ""
+msgstr "بنیانی"
 
 #: ../share/filters/filters.svg.h:35
 #: ../share/filters/filters.svg.h:42
@@ -3545,11 +3545,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:187
 #: ../share/filters/filters.svg.h:200
 msgid "Textures"
-msgstr ""
+msgstr "بافت‌ها"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "محدب کردن، گره‌دار کردن، سطح ابریشمی ۳ بعدی"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Barbed wire"
@@ -3601,19 +3601,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:42
 msgid "Jam spread"
-msgstr ""
+msgstr "پارازیت پخش شده"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Glossy clumpy jam spread"
-msgstr ""
+msgstr "انبوه پارازیت شیشه‌ای پخش شده"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Pixel smear"
-msgstr ""
+msgstr "لکه‌ پیکسل"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Van Gogh painting effect for bitmaps"
-msgstr ""
+msgstr "اثر رنگ‌ آمیزی ونکوک برای bitmap ها"
 
 #: ../share/filters/filters.svg.h:44
 msgid "HSL Bumps"
@@ -3640,7 +3640,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:213
 #: ../share/filters/filters.svg.h:216
 msgid "Bumps"
-msgstr ""
+msgstr "ضربه"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Highly flexible bump combining diffuse and specular lightings"
@@ -3648,19 +3648,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:45
 msgid "Cracked glass"
-msgstr ""
+msgstr "شیشه شکسته"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Under a cracked glass"
-msgstr ""
+msgstr "زیر شیشه شکسته"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Bubbly Bumps"
-msgstr ""
+msgstr "حباب‌های ضربتی"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "افکت حباب‌های منعطف با چند جابه‌جایی"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Glowing bubble"
@@ -3674,7 +3674,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:70
 msgid "Ridges"
-msgstr ""
+msgstr "مرز"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Bubble effect with refraction and glow"
@@ -3786,11 +3786,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:61
 msgid "Bark"
-msgstr ""
+msgstr "پوست درخت"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Bark texture, vertical; use with deep colors"
-msgstr ""
+msgstr "بافت پوست درخت، عمودی؛ با رنگ‌های عمیق استفاده شود"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Lizard skin"
@@ -3899,7 +3899,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:168
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
-msgstr ""
+msgstr "ریخت شناسی"
 
 #: ../share/filters/filters.svg.h:73
 msgid "A blurry hollow going parallel to the edge on the inside"
@@ -3963,11 +3963,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:81
 msgid "Crumpled plastic"
-msgstr ""
+msgstr "پلاستیک مچاله"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "پلاستیک مات مچاله شده، با گوشه‌های جمع شده"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Enamel jewelry"
@@ -4116,11 +4116,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft focus lens"
-msgstr ""
+msgstr "لنز فوکوس نرم"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "تابان کردن تصویر بدون محو کردن محتویات آن"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Stained glass"
@@ -4140,7 +4140,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:103
 msgid "HSL Bumps alpha"
-msgstr ""
+msgstr "ضربت HSL آلفا"
 
 #: ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:104
@@ -4156,19 +4156,19 @@ msgstr ""
 #: ../share/filters/filters.svg.h:193
 #: ../share/filters/filters.svg.h:204
 msgid "Image effects, transparent"
-msgstr ""
+msgstr "افکت‌های تصویر، شفاف"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr ""
+msgstr "شبیه ضربت HSL ولی با هایلایت‌های شفاف"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Bubbly Bumps alpha"
-msgstr ""
+msgstr "آلفا حباب‌های ضربتی"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Same as Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "شبیه حباب‌های ضربتی ولی با هایلایت‌های شفاف"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Smooth edges"
@@ -4181,20 +4181,20 @@ msgstr ""
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
 msgid "Torn edges"
-msgstr ""
+msgstr "تکه تکه کردن گوشه‌ها"
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:128
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr ""
+msgstr "جایگزین کردن محیط شئ و تصاویر بدون تغییر محتویات درونی آن‌ها"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Feather"
-msgstr ""
+msgstr "محو کردن حاشیه"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "ایجاد ماسک محو روی گوشه‌ها بدون تغییر محتوا"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Blur content"
@@ -4206,20 +4206,20 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:109
 msgid "Specular light"
-msgstr ""
+msgstr "نور آیینه‌ای"
 
 #: ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:211
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "سطح ساده‌ی حالت آیینه‌ای برای استفاده در ساخت بافت‌ها"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Roughen inside"
-msgstr ""
+msgstr "زِبر کردن درون"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Roughen all inside shapes"
-msgstr ""
+msgstr "زِبر کردن همه‌ی اشکال داخلی"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Evanescent"
@@ -4231,11 +4231,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
-msgstr ""
+msgstr "گچ و اسفنج"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "آشفتگی کم که ظاهری شبیه اسفنج و گچ نامنطم نتیجه می‌دهد"
 
 #: ../share/filters/filters.svg.h:113
 msgid "People"
@@ -4255,19 +4255,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:115
 msgid "Noise transparency"
-msgstr ""
+msgstr "پارازیت شفاف"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "بافت ساده‌ی پارازیت شفاف"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Noise fill"
-msgstr ""
+msgstr "پُر کردن با پارازیت"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "پُر کردن با بافت ساده‌ی پارازیت، تعیین رنگ در Flood"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Garden of Delights"
@@ -4279,11 +4279,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:118
 msgid "Diffuse light"
-msgstr ""
+msgstr "انتشار نور"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "سطح ابتدایی انتشار برای استفاده در ساخت بافت‌ها"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Cutout Glow"
@@ -4311,11 +4311,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple blur"
-msgstr ""
+msgstr "محو کردن ساده"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr ""
+msgstr "محو کردن گاوسی ساده، شبیه نوار محو‌ کردن در کادر محاوره پُر کردن و خط حاشیه"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Bubbly Bumps, matte"
@@ -4336,11 +4336,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:125
 msgid "Blotting paper"
-msgstr ""
+msgstr "کاغذ خشک‌کن"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Inkblot on blotting paper"
-msgstr ""
+msgstr "لکه جوهر روی کاغذ خشک‌کن"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Wax print"
@@ -4352,11 +4352,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot"
-msgstr ""
+msgstr "لکه جوهر"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Inkblot on tissue or rough paper"
-msgstr ""
+msgstr "لکه جوهر روی دستمال کاغذی یا کاغذ زمخت"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Color outline, in"
@@ -4368,11 +4368,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:130
 msgid "Liquid"
-msgstr ""
+msgstr "مایع"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Colorizable filling with liquid transparency"
-msgstr ""
+msgstr "رنگ کردن با مایع شفاف"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Watercolor"
@@ -4384,19 +4384,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:132
 msgid "Felt"
-msgstr ""
+msgstr "نمد"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "بافت شبیه نمد با رنگ نامنظم و تاریک شدن آهسته نزدیک گوشه‌ها"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint"
-msgstr ""
+msgstr "رنگ جوهر"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "رنگ جوهر روی کاغذ با مقداری جابه‌جایی نامنظم رنگ"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Tinted rainbow"
@@ -4408,11 +4408,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:135
 msgid "Melted rainbow"
-msgstr ""
+msgstr "رنگین کمان آب شده"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "رنگ‌های نرم رنگین‌کمان که آهسته در گوشه‌ها آب شده‌"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Flex metal"
@@ -4441,7 +4441,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:149
 #: ../share/filters/filters.svg.h:156
 msgid "Non realistic 3D shaders"
-msgstr ""
+msgstr "سایه‌زن‌های ۳بعدی غیر واقعی"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Draft painted cartoon shading with a glassy look"
@@ -4617,7 +4617,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:198
 #: ../share/filters/filters.svg.h:199
 msgid "Transparency utilities"
-msgstr ""
+msgstr "تجهیزات شفاف‌سازی"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Make the lightest parts of the object progressively transparent"
@@ -4633,29 +4633,29 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:160
 msgid "Film grain"
-msgstr ""
+msgstr "بافت فیلم"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Adds a small scale graininess"
-msgstr ""
+msgstr "اضافه کردن بافت‌های دانه‌مانند کوچک"
 
 #: ../share/filters/filters.svg.h:161
 msgid "HSL Bumps, transparent"
-msgstr ""
+msgstr "ضربت HSL، شفاف"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "ضربت آینه مانند فوق العاده منطعف شفاف"
 
 #: ../share/filters/filters.svg.h:162
 #: ../src/ui/dialog/align-and-distribute.cpp:926
 #: ../src/widgets/desktop-widget.cpp:1647
 msgid "Drawing"
-msgstr ""
+msgstr "طراحی"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
-msgstr ""
+msgstr "دادن نمونه مداد یا رنگ نگاری یا حکاکی یا دیگر افکت‌ها به تصاویر و اشیاء پُر شده با مواد"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Velvet Bumps"
@@ -4667,19 +4667,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:164
 msgid "Alpha draw"
-msgstr ""
+msgstr "طرح آلفا"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Gives a transparent drawing effect to bitmaps and materials"
-msgstr ""
+msgstr "دادن یک افکت شفاف به bitmapها و مواد"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Alpha draw, color"
-msgstr ""
+msgstr "طرح آلفا، رنگ"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Gives a transparent color fill effect to bitmaps and materials"
-msgstr ""
+msgstr "دادن یک افکت شفاف با رنگ پُر شده به bitmapها و مواد"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Chewing gum"
@@ -4691,11 +4691,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
-msgstr ""
+msgstr "نمای سیاه"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
-msgstr ""
+msgstr "رسم یک خط سیاه دور اشیاء"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Color outline"
@@ -4739,11 +4739,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:173
 msgid "Rough and dilate"
-msgstr ""
+msgstr "سخت و بزرگ کردن"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Create a turbulent contour around"
-msgstr ""
+msgstr "ایجاد یک مرز نامنظم حول شئ"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Quadritone fantasy"
@@ -4755,11 +4755,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:175
 msgid "Old postcard"
-msgstr ""
+msgstr "کارت پستال قدیمی"
 
 #: ../share/filters/filters.svg.h:175
 msgid "Slightly posterize and draw edges like on old printed postcards"
-msgstr ""
+msgstr "پُسترایز کردن نرم و رسم گوشه‌ها مثل یک کارت پستال چاپ شده قدیمی "
 
 #: ../share/filters/filters.svg.h:176
 msgid "Fuzzy Glow"
@@ -4771,27 +4771,27 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:177
 msgid "Dots transparency"
-msgstr ""
+msgstr "شفافیت نقاط"
 
 #: ../share/filters/filters.svg.h:177
 msgid "Gives a pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "ایجاد یک مجموعه نقاط HSL حساس به شفافیت"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Canvas transparency"
-msgstr ""
+msgstr "شفافیت صفحه"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr ""
+msgstr "صفحه‌ای شبیه HSL حساس به شفافیت می‌دهد"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Smear transparency"
-msgstr ""
+msgstr "رنگ آمیزی شفاف"
 
 #: ../share/filters/filters.svg.h:179
 msgid "Paint objects with a transparent turbulence which turns around color edges"
-msgstr ""
+msgstr "رنگ آمیزی اشیاء با شفافیت زمخت طوریکه رنگ گوشه‌ها را برگرداند"
 
 #: ../share/filters/filters.svg.h:180
 msgid "Thick paint"
@@ -4803,11 +4803,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst"
-msgstr ""
+msgstr "انفجار"
 
 #: ../share/filters/filters.svg.h:181
 msgid "Burst balloon texture crumpled and with holes"
-msgstr ""
+msgstr "بافت انفجار جباب مچاله شده با حفره"
 
 #: ../share/filters/filters.svg.h:182
 msgid "Embossed leather"
@@ -4843,51 +4843,51 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:186
 msgid "Rough transparency"
-msgstr ""
+msgstr "شفافیت زمخت"
 
 #: ../share/filters/filters.svg.h:186
 msgid "Adds a turbulent transparency which displaces pixels at the same time"
-msgstr ""
+msgstr "اضافه کردن شفافیت نامنظمی که همزمان جایگزین پیکسل‌ها می‌شود"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Gouache"
-msgstr ""
+msgstr "آب رنگ مات"
 
 #: ../share/filters/filters.svg.h:187
 msgid "Partly opaque water color effect with bleed"
-msgstr ""
+msgstr "افکت آب رنگ مات نسبی حالت سیال"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Alpha engraving"
-msgstr ""
+msgstr "حکاکی آلفا"
 
 #: ../share/filters/filters.svg.h:188
 msgid "Gives a transparent engraving effect with rough line and filling"
-msgstr ""
+msgstr "ایجاد یک افکت حکاکی شفاف با خطوط زمخت و پُر شدگی"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Alpha draw, liquid"
-msgstr ""
+msgstr "طراحی آلفا، آبرنگ"
 
 #: ../share/filters/filters.svg.h:189
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr ""
+msgstr "ایجاد یک افکت آبرنگ شفاف با خطوط زمخت و پُرشدگی"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Liquid drawing"
-msgstr ""
+msgstr "طراحی آبرنگ"
 
 #: ../share/filters/filters.svg.h:190
 msgid "Gives a fluid and wavy expressionist drawing effect to images"
-msgstr ""
+msgstr "دادن حالت مایع و موج مانند طراحی آبرنگ به تصاویر"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled ink"
-msgstr ""
+msgstr "جوهر مرمرنما"
 
 #: ../share/filters/filters.svg.h:191
 msgid "Marbled transparency effect which conforms to image detected edges"
-msgstr ""
+msgstr "افکت مرمرنمای شفاف که بر گوشه‌های تشخیص داده شده‌ی شئ اثر می‌کند"
 
 #: ../share/filters/filters.svg.h:192
 msgid "Thick acrylic"
@@ -4899,19 +4899,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:193
 msgid "Alpha engraving B"
-msgstr ""
+msgstr "حکاکی آلفا B"
 
 #: ../share/filters/filters.svg.h:193
 msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
-msgstr ""
+msgstr "ایجاد یک افکت حکاکی نرم و قابل کنترل به botmapها و سایر مواد"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Lapping"
-msgstr ""
+msgstr "آبکی"
 
 #: ../share/filters/filters.svg.h:194
 msgid "Something like a water noise"
-msgstr ""
+msgstr "چیزی پارازیت آب"
 
 #: ../share/filters/filters.svg.h:195
 msgid "Monochrome transparency"
@@ -4971,11 +4971,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas Bumps"
-msgstr ""
+msgstr "ضربات صفحه"
 
 #: ../share/filters/filters.svg.h:202
 msgid "Canvas texture with an HSL sensitive height map"
-msgstr ""
+msgstr "بافت صفحه با حساسیت ارتفاع نقشه‌ی HSL"
 
 #: ../share/filters/filters.svg.h:203
 msgid "Canvas Bumps, matte"
@@ -4987,11 +4987,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:204
 msgid "Canvas Bumps alpha"
-msgstr ""
+msgstr "ضربات صفحه آلفا"
 
 #: ../share/filters/filters.svg.h:204
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "شبیه ضربات صفحه ولی با هایلایت‌های شفاف"
 
 #: ../share/filters/filters.svg.h:205
 msgid "Lightness-Contrast"
@@ -5003,11 +5003,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:206
 msgid "Clean edges"
-msgstr ""
+msgstr "تمیز کردن گوشه‌ها"
 
 #: ../share/filters/filters.svg.h:206
 msgid "Removes or decreases glows and jaggeries around objects edges after applying some filters"
-msgstr ""
+msgstr "حذف یا کاهش نور و دندانه‌ایها اطراف گوشه‌های اشیاء پس از اعمال چند فیلتر"
 
 #: ../share/filters/filters.svg.h:207
 msgid "Bright metal"
@@ -6096,17 +6096,17 @@ msgstr ""
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2582
 msgid "_Page"
-msgstr ""
+msgstr "_صفحه"
 
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2586
 msgid "_Drawing"
-msgstr ""
+msgstr "_طرح"
 
 #: ../src/dialogs/export.cpp:146
 #: ../src/verbs.cpp:2588
 msgid "_Selection"
-msgstr ""
+msgstr "انت_خاب"
 
 #: ../src/dialogs/export.cpp:146
 msgid "_Custom"
@@ -6521,7 +6521,7 @@ msgstr ""
 #: ../src/verbs.cpp:2439
 #: ../src/verbs.cpp:2445
 msgid "_Set"
-msgstr ""
+msgstr "_اعمال کردن"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:152
@@ -7386,17 +7386,17 @@ msgstr ""
 #: ../src/event-log.cpp:267
 #: ../src/verbs.cpp:2229
 msgid "_Undo"
-msgstr ""
+msgstr "_لغو اقدام اخیر"
 
 #: ../src/event-log.cpp:274
 #: ../src/event-log.cpp:278
 #: ../src/verbs.cpp:2231
 msgid "_Redo"
-msgstr ""
+msgstr "_تکرار اقدام اخیر"
 
 #: ../src/extension/dependency.cpp:246
 msgid "Dependency:"
-msgstr ""
+msgstr "وابستگی:"
 
 #: ../src/extension/dependency.cpp:247
 msgid "  type: "
@@ -7566,11 +7566,11 @@ msgstr ""
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:49
 #: ../src/extension/internal/bitmap/wave.cpp:44
 msgid "Raster"
-msgstr ""
+msgstr "رستر"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)."
-msgstr ""
+msgstr "اعمال آستانه تطبیقی به bitmapهای انتخاب شده"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
 msgid "Add Noise"
@@ -8611,7 +8611,7 @@ msgstr ""
 #: ../src/file.cpp:1473
 #: ../src/verbs.cpp:2218
 msgid "Import From Open Clip Art Library"
-msgstr ""
+msgstr "وارد کردن از Open Clip Art Library"
 
 #: ../src/filter-enums.cpp:20
 msgid "Blend"
@@ -8635,7 +8635,7 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:25
 msgid "Diffuse Lighting"
-msgstr ""
+msgstr "انتشار نور"
 
 #: ../src/filter-enums.cpp:26
 msgid "Displacement Map"
@@ -9280,51 +9280,51 @@ msgstr ""
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:870
 msgid "Commands Bar"
-msgstr ""
+msgstr "نوار دستورات"
 
 #: ../src/interface.cpp:870
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr ""
+msgstr "نوار دستورات (نوار زیر منو) را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:872
 msgid "Snap Controls Bar"
-msgstr ""
+msgstr "نوار کنترل‌های چسبناک"
 
 #: ../src/interface.cpp:872
 msgid "Show or hide the snapping controls"
-msgstr ""
+msgstr "کنترل‌های چسبناکی را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:874
 msgid "Tool Controls Bar"
-msgstr ""
+msgstr "نوار کنترل‌های ابزار"
 
 #: ../src/interface.cpp:874
 msgid "Show or hide the Tool Controls bar"
-msgstr ""
+msgstr "نوار کنترل‌های ابزار را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:876
 msgid "_Toolbox"
-msgstr ""
+msgstr "_جعبه ابزار"
 
 #: ../src/interface.cpp:876
 msgid "Show or hide the main toolbox (on the left)"
-msgstr ""
+msgstr "جعبه ابزار اصلی (سمت چپ) را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:882
 msgid "_Palette"
-msgstr ""
+msgstr "_پالت‌"
 
 #: ../src/interface.cpp:882
 msgid "Show or hide the color palette"
-msgstr ""
+msgstr "پالت رنگ را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:884
 msgid "_Statusbar"
-msgstr ""
+msgstr "_نوار وضعیت"
 
 #: ../src/interface.cpp:884
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr ""
+msgstr "نوار وضعیت (منتها الیه پایین پنجره) را نمایش داده یا پنهان می‌کند"
 
 #: ../src/interface.cpp:958
 #, c-format
@@ -9333,7 +9333,7 @@ msgstr ""
 
 #: ../src/interface.cpp:1000
 msgid "Open _Recent"
-msgstr ""
+msgstr "گشودن فایل‌های _اخیر"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:1101
@@ -11494,17 +11494,17 @@ msgstr ""
 #: ../src/ui/dialog/messages.cpp:52
 #: ../src/ui/dialog/scriptdialog.cpp:208
 msgid "_File"
-msgstr "پر_ونده"
+msgstr "_پرونده"
 
 #: ../src/menus-skeleton.h:17
 msgid "_New"
-msgstr "جدید_"
+msgstr "_جدید"
 
 #: ../src/menus-skeleton.h:48
 #: ../src/verbs.cpp:2441
 #: ../src/verbs.cpp:2447
 msgid "_Edit"
-msgstr "و_یرایش"
+msgstr "_ویرایش"
 
 #: ../src/menus-skeleton.h:58
 #: ../src/verbs.cpp:2241
@@ -11513,11 +11513,11 @@ msgstr "چسباندن اندا_زه"
 
 #: ../src/menus-skeleton.h:70
 msgid "Clo_ne"
-msgstr "تکثیر _همگن"
+msgstr "تکثیر هم_گن"
 
 #: ../src/menus-skeleton.h:90
 msgid "_View"
-msgstr "نمایش_"
+msgstr "_نمایش"
 
 #: ../src/menus-skeleton.h:91
 msgid "_Zoom"
@@ -11544,31 +11544,31 @@ msgstr "_شئ"
 
 #: ../src/menus-skeleton.h:167
 msgid "Cli_p"
-msgstr "کلیپ_"
+msgstr "ک_لیپ"
 
 #: ../src/menus-skeleton.h:171
 msgid "Mas_k"
-msgstr "ماسک_"
+msgstr "ما_سک"
 
 #: ../src/menus-skeleton.h:175
 msgid "Patter_n"
-msgstr "ا_لگو"
+msgstr "_الگو"
 
 #: ../src/menus-skeleton.h:199
 msgid "_Path"
-msgstr "مسیر_"
+msgstr "_مسیر"
 
 #: ../src/menus-skeleton.h:226
 msgid "_Text"
-msgstr "متن_"
+msgstr "م_تن"
 
 #: ../src/menus-skeleton.h:245
 msgid "Filter_s"
-msgstr "فیلتر‌ها_"
+msgstr "_فیلتر‌ها"
 
 #: ../src/menus-skeleton.h:251
 msgid "Exte_nsions"
-msgstr "افز_ونه‌ها"
+msgstr "_افزونه‌ها"
 
 #: ../src/menus-skeleton.h:258
 msgid "Whiteboa_rd"
@@ -11576,7 +11576,7 @@ msgstr "وایت_ بُرد"
 
 #: ../src/menus-skeleton.h:262
 msgid "_Help"
-msgstr "ر_اهنما"
+msgstr "_راهنما"
 
 #: ../src/menus-skeleton.h:266
 msgid "Tutorials"
@@ -12553,7 +12553,7 @@ msgstr ""
 #. no items
 #: ../src/selection-describer.cpp:130
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
-msgstr ""
+msgstr "هیچ شئ‌ای انتخاب نشده است. برای انتخاب شئ کلیک یا shift+کلیک کنید یا اطراف اشیاء درگ کنید"
 
 #: ../src/selection-describer.cpp:139
 msgid "root"
@@ -13658,7 +13658,7 @@ msgstr "ساختن ارتباط_"
 #: ../src/ui/context-menu.cpp:306
 #: ../src/verbs.cpp:2313
 msgid "_Ungroup"
-msgstr "منفردسازی_"
+msgstr "_منفردسازی"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:346
@@ -18942,7 +18942,7 @@ msgstr "ساختن سند جدید از روی قالب پیش فرض"
 
 #: ../src/verbs.cpp:2197
 msgid "_Open..."
-msgstr "گشو_دن..."
+msgstr "_گشودن..."
 
 #: ../src/verbs.cpp:2198
 msgid "Open an existing document"
@@ -18950,7 +18950,7 @@ msgstr "گشودن سند موجود"
 
 #: ../src/verbs.cpp:2199
 msgid "Re_vert"
-msgstr "باز_گرداندن"
+msgstr "با_زگرداندن"
 
 #: ../src/verbs.cpp:2200
 msgid "Revert to the last saved version of document (changes will be lost)"
@@ -18958,7 +18958,7 @@ msgstr "بازگرداندن به آخرین نسخه‌ی ذخیره شده ا�
 
 #: ../src/verbs.cpp:2201
 msgid "_Save"
-msgstr "ذ_خیره"
+msgstr "_ذخیره کردن"
 
 #: ../src/verbs.cpp:2201
 msgid "Save document"
@@ -18966,7 +18966,7 @@ msgstr "ذخیره سند"
 
 #: ../src/verbs.cpp:2203
 msgid "Save _As..."
-msgstr "ذخیره_ با عنوان..."
+msgstr "ذخیره با _عنوان..."
 
 #: ../src/verbs.cpp:2204
 msgid "Save document under a new name"
@@ -18974,7 +18974,7 @@ msgstr "ذخیره کردن سند با اسمی جدید"
 
 #: ../src/verbs.cpp:2205
 msgid "Save a Cop_y..."
-msgstr "ذخیره کردن_ یک کپی..."
+msgstr "ذخیره کردن _یک کپی..."
 
 #: ../src/verbs.cpp:2206
 msgid "Save a copy of the document under a new name"
@@ -18982,7 +18982,7 @@ msgstr "ذخیره کردن یک کپی از سند با اسمی جدید"
 
 #: ../src/verbs.cpp:2207
 msgid "_Print..."
-msgstr "چاپ_..."
+msgstr "_چاپ..."
 
 #: ../src/verbs.cpp:2207
 msgid "Print document"
@@ -18991,7 +18991,7 @@ msgstr "چاپ سند"
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2210
 msgid "Vac_uum Defs"
-msgstr "جا_روی Defs"
+msgstr "و_کیوم Defs"
 
 #: ../src/verbs.cpp:2210
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
@@ -19007,7 +19007,7 @@ msgstr "پیش نمایش سند بدون چاپ کردن"
 
 #: ../src/verbs.cpp:2214
 msgid "_Import..."
-msgstr ""
+msgstr "_وارد کردن..."
 
 #: ../src/verbs.cpp:2215
 msgid "Import a bitmap or SVG image into this document"
@@ -19015,7 +19015,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2216
 msgid "_Export Bitmap..."
-msgstr ""
+msgstr "_صدور Bitmap"
 
 #: ../src/verbs.cpp:2217
 msgid "Export this document or a selection as a bitmap image"
@@ -19023,12 +19023,12 @@ msgstr ""
 
 #: ../src/verbs.cpp:2218
 msgid "Import a document from Open Clip Art Library"
-msgstr ""
+msgstr "ورود سند از کتابخانه Open Clip Art"
 
 #. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
 #: ../src/verbs.cpp:2220
 msgid "N_ext Window"
-msgstr "پنجره‌ی بعدی"
+msgstr "پنجره‌ی _بعدی"
 
 #: ../src/verbs.cpp:2221
 msgid "Switch to the next document window"
@@ -19036,7 +19036,7 @@ msgstr "سوییچ به پنجره‌ی سند بعدی"
 
 #: ../src/verbs.cpp:2222
 msgid "P_revious Window"
-msgstr "پنجره‌ی قبلی"
+msgstr "پنجره‌ی _قبلی"
 
 #: ../src/verbs.cpp:2223
 msgid "Switch to the previous document window"
@@ -19044,7 +19044,7 @@ msgstr "سوییچ به پنجره‌ی سند قبلی"
 
 #: ../src/verbs.cpp:2224
 msgid "_Close"
-msgstr "بستن_"
+msgstr "_بستن"
 
 #: ../src/verbs.cpp:2225
 msgid "Close this document window"
@@ -19052,7 +19052,7 @@ msgstr "بستن پنجره‌ی این سند"
 
 #: ../src/verbs.cpp:2226
 msgid "_Quit"
-msgstr "خروج_"
+msgstr "_خروج"
 
 #: ../src/verbs.cpp:2226
 msgid "Quit Inkscape"
@@ -19068,7 +19068,7 @@ msgstr "اجرای دوباره‌ی آخرین اقدام"
 
 #: ../src/verbs.cpp:2233
 msgid "Cu_t"
-msgstr "بر_ش"
+msgstr "_برش"
 
 #: ../src/verbs.cpp:2234
 msgid "Cut selection to clipboard"
@@ -19076,7 +19076,7 @@ msgstr "برش ناحیه انتخابی به کلیپ‌بُرد"
 
 #: ../src/verbs.cpp:2235
 msgid "_Copy"
-msgstr "کپی_"
+msgstr "_کپی"
 
 #: ../src/verbs.cpp:2236
 msgid "Copy selection to clipboard"
@@ -19084,7 +19084,7 @@ msgstr "کپی کردن ناحیه‌ی انتخابی به کلیپ‌برد"
 
 #: ../src/verbs.cpp:2237
 msgid "_Paste"
-msgstr "چسباندن_"
+msgstr "_چسباندن"
 
 #: ../src/verbs.cpp:2238
 msgid "Paste objects from clipboard to mouse point, or paste text"
@@ -19092,7 +19092,7 @@ msgstr "چسباندن اشیاء از کلیپ‌‌برد به محل ماوس
 
 #: ../src/verbs.cpp:2239
 msgid "Paste _Style"
-msgstr "چسباندن سبک_"
+msgstr "چسباندن _سبک"
 
 #: ../src/verbs.cpp:2240
 msgid "Apply the style of the copied object to selection"
@@ -19104,7 +19104,7 @@ msgstr "مقیاس کردن ناحیه انتخابی برای تطبیق با �
 
 #: ../src/verbs.cpp:2243
 msgid "Paste _Width"
-msgstr "چسباند_ن پهنا"
+msgstr "چسباندن _پهنا"
 
 #: ../src/verbs.cpp:2244
 msgid "Scale selection horizontally to match the width of the copied object"
@@ -19112,7 +19112,7 @@ msgstr "افقی مقیاس کردن ناحیه‌ انتخاب برای مطا�
 
 #: ../src/verbs.cpp:2245
 msgid "Paste _Height"
-msgstr "چسباندن ارتفاع_"
+msgstr "چسباندن _ارتفاع"
 
 #: ../src/verbs.cpp:2246
 msgid "Scale selection vertically to match the height of the copied object"
@@ -19136,7 +19136,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2251
 msgid "Paste Height Separately"
-msgstr ""
+msgstr "چسباندن جداگانه ارتفاع"
 
 #: ../src/verbs.cpp:2252
 msgid "Scale each selected object vertically to match the height of the copied object"
@@ -19144,7 +19144,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2253
 msgid "Paste _In Place"
-msgstr ""
+msgstr "چسباندن در _محل"
 
 #: ../src/verbs.cpp:2254
 msgid "Paste objects from clipboard to the original location"
@@ -19152,31 +19152,31 @@ msgstr ""
 
 #: ../src/verbs.cpp:2255
 msgid "Paste Path _Effect"
-msgstr ""
+msgstr "_چسباندن افکت مسیر"
 
 #: ../src/verbs.cpp:2256
 msgid "Apply the path effect of the copied object to selection"
-msgstr ""
+msgstr "اعمال اقکت مسیر شئ کپی شده به ناحیه‌ی انتخاب شده"
 
 #: ../src/verbs.cpp:2257
 msgid "Remove Path _Effect"
-msgstr ""
+msgstr "_حذف افکت مسیر"
 
 #: ../src/verbs.cpp:2258
 msgid "Remove any path effects from selected objects"
-msgstr ""
+msgstr "حذف همه‌ی افکت‌های مسیر از اشیاء انتخاب شده"
 
 #: ../src/verbs.cpp:2259
 msgid "Remove Filters"
-msgstr ""
+msgstr "حذف فیلتر‌ها"
 
 #: ../src/verbs.cpp:2260
 msgid "Remove any filters from selected objects"
-msgstr ""
+msgstr "حذف همه‌ی فیلترها از اشیاء انتخاب شده"
 
 #: ../src/verbs.cpp:2261
 msgid "_Delete"
-msgstr ""
+msgstr "_حذف"
 
 #: ../src/verbs.cpp:2262
 msgid "Delete selection"
@@ -19184,7 +19184,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2263
 msgid "Duplic_ate"
-msgstr ""
+msgstr "تک_ثیر"
 
 #: ../src/verbs.cpp:2264
 msgid "Duplicate selected objects"
@@ -19224,35 +19224,35 @@ msgstr ""
 
 #: ../src/verbs.cpp:2273
 msgid "Objects to _Marker"
-msgstr ""
+msgstr "اشیاء به ن_شانه‌گذار"
 
 #: ../src/verbs.cpp:2274
 msgid "Convert selection to a line marker"
-msgstr ""
+msgstr "تبدیل ناحیه‌ی انتخاب شده به یک نشانگر خط"
 
 #: ../src/verbs.cpp:2275
 msgid "Objects to Gu_ides"
-msgstr ""
+msgstr "اشیاء به _خطوط راهنما"
 
 #: ../src/verbs.cpp:2276
 msgid "Convert selected objects to a collection of guidelines aligned with their edges"
-msgstr ""
+msgstr "تبدیل اشیاء انتخاب شده به یک مجموعه از خطوط راهنما که با گوشه‌های اشیاء تراز شده‌اند"
 
 #: ../src/verbs.cpp:2277
 msgid "Objects to Patter_n"
-msgstr ""
+msgstr "اشیاء به ا_لگو"
 
 #: ../src/verbs.cpp:2278
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr ""
+msgstr "تبدیل ناحیه‌ی انتخاب شده به یک مستطیل که با الگوی کاشی پُر شده"
 
 #: ../src/verbs.cpp:2279
 msgid "Pattern to _Objects"
-msgstr ""
+msgstr "الگو به ا_شیاء"
 
 #: ../src/verbs.cpp:2280
 msgid "Extract objects from a tiled pattern fill"
-msgstr ""
+msgstr "خارج کردن اشیاء از یک الگو کاشی شده"
 
 #: ../src/verbs.cpp:2281
 msgid "Clea_r All"
@@ -19264,7 +19264,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2283
 msgid "Select Al_l"
-msgstr ""
+msgstr "انتخاب _همه"
 
 #: ../src/verbs.cpp:2284
 msgid "Select all objects or all nodes"
@@ -19272,7 +19272,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2285
 msgid "Select All in All La_yers"
-msgstr ""
+msgstr "انتخاب همه در همه‌ لا_یه‌ها"
 
 #: ../src/verbs.cpp:2286
 msgid "Select all objects in all visible and unlocked layers"
@@ -19280,7 +19280,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2287
 msgid "In_vert Selection"
-msgstr ""
+msgstr "وا_رون کردن انتخاب"
 
 #: ../src/verbs.cpp:2288
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -19312,7 +19312,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2295
 msgid "D_eselect"
-msgstr ""
+msgstr "_خارج کردن از انتخاب"
 
 #: ../src/verbs.cpp:2296
 msgid "Deselect any selected objects or nodes"
@@ -19320,7 +19320,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2297
 msgid "_Guides Around Page"
-msgstr ""
+msgstr "راهنماهای ا_طراف"
 
 #: ../src/verbs.cpp:2298
 msgid "Create four guides aligned with the page borders"
@@ -19337,126 +19337,126 @@ msgstr ""
 #. Selection
 #: ../src/verbs.cpp:2303
 msgid "Raise to _Top"
-msgstr ""
+msgstr "ب_ردن به بالاترین"
 
 #: ../src/verbs.cpp:2304
 msgid "Raise selection to top"
-msgstr ""
+msgstr "بردن ناحیه‌ی انتخاب شده بالاترین سطح"
 
 #: ../src/verbs.cpp:2305
 msgid "Lower to _Bottom"
-msgstr ""
+msgstr "بر_دن به پایین‌ترین"
 
 #: ../src/verbs.cpp:2306
 msgid "Lower selection to bottom"
-msgstr ""
+msgstr "بردن ناحیه‌ی انتخاب شده با پایین‌ترین سطح"
 
 #: ../src/verbs.cpp:2307
 msgid "_Raise"
-msgstr ""
+msgstr "_بالا بردن"
 
 #: ../src/verbs.cpp:2308
 msgid "Raise selection one step"
-msgstr ""
+msgstr "بالا بردن ناحیه‌ی انتخاب شده به اندازه یک گام"
 
 #: ../src/verbs.cpp:2309
 msgid "_Lower"
-msgstr ""
+msgstr "_پایین بردن"
 
 #: ../src/verbs.cpp:2310
 msgid "Lower selection one step"
-msgstr ""
+msgstr "پایین بردن ناحیه‌ی انتخاب شده با اندازه یک گام"
 
 #: ../src/verbs.cpp:2311
 msgid "_Group"
-msgstr ""
+msgstr "_گروه‌بندی"
 
 #: ../src/verbs.cpp:2312
 msgid "Group selected objects"
-msgstr ""
+msgstr "گروه‌بندی اشیاء انتخاب شده"
 
 #: ../src/verbs.cpp:2314
 msgid "Ungroup selected groups"
-msgstr ""
+msgstr "منفرد سازی گروه‌های انتخاب شده"
 
 #: ../src/verbs.cpp:2316
 msgid "_Put on Path"
-msgstr ""
+msgstr "_نصب روی مسیر"
 
 #: ../src/verbs.cpp:2318
 msgid "_Remove from Path"
-msgstr ""
+msgstr "ح_ذف از مسیر"
 
 #: ../src/verbs.cpp:2320
 msgid "Remove Manual _Kerns"
-msgstr ""
+msgstr "ح_ذف دستی از خط خارج شدگی"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2323
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr ""
+msgstr "حذف تمام از خط خارج شدگی‌های دستی از یک شئ متنی"
 
 #: ../src/verbs.cpp:2325
 msgid "_Union"
-msgstr ""
+msgstr "_اتحاد"
 
 #: ../src/verbs.cpp:2326
 msgid "Create union of selected paths"
-msgstr ""
+msgstr "ساخت یک اتحاد از مسیر‌های انتخاب شده"
 
 #: ../src/verbs.cpp:2327
 msgid "_Intersection"
-msgstr ""
+msgstr "ف_صل مشترک"
 
 #: ../src/verbs.cpp:2328
 msgid "Create intersection of selected paths"
-msgstr ""
+msgstr "ساخت فصل مشترک از مسیر‌های انتخاب شده"
 
 #: ../src/verbs.cpp:2329
 msgid "_Difference"
-msgstr ""
+msgstr "_تفاضل"
 
 #: ../src/verbs.cpp:2330
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr ""
+msgstr "ساخت تقاضل از مسیر‌های انتخاب شده (پایینی منهای بالایی)"
 
 #: ../src/verbs.cpp:2331
 msgid "E_xclusion"
-msgstr ""
+msgstr "اخراج"
 
 #: ../src/verbs.cpp:2332
 msgid "Create exclusive OR of selected paths (those parts that belong to only one path)"
-msgstr ""
+msgstr "ساخت یک «یای انحصاری» از مسیر‌های انتخاب شده (قطعاتی که فقط به یک مسیر تعلق دارند"
 
 #: ../src/verbs.cpp:2333
 msgid "Di_vision"
-msgstr ""
+msgstr "ت_قسیم"
 
 #: ../src/verbs.cpp:2334
 msgid "Cut the bottom path into pieces"
-msgstr ""
+msgstr "برش مسیر پایینی به بخش‌هایی"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2337
 msgid "Cut _Path"
-msgstr ""
+msgstr "_برش مسیر"
 
 #: ../src/verbs.cpp:2338
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr ""
+msgstr "برش خط حاشیه‌ی مسیر پایینی به بخش‌هایی و حذف پُر شدگی"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2342
 msgid "Outs_et"
-msgstr ""
+msgstr "برون‌گ_ذاری"
 
 #: ../src/verbs.cpp:2343
 msgid "Outset selected paths"
-msgstr ""
+msgstr "افزایش مسیر انتخاب شده به سمت بیرون"
 
 #: ../src/verbs.cpp:2345
 msgid "O_utset Path by 1 px"
@@ -19479,11 +19479,11 @@ msgstr ""
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2353
 msgid "I_nset"
-msgstr ""
+msgstr "درون‌گذاری"
 
 #: ../src/verbs.cpp:2354
 msgid "Inset selected paths"
-msgstr ""
+msgstr "کاهش مسیر انتخاب شده به سمت داخل"
 
 #: ../src/verbs.cpp:2356
 msgid "I_nset Path by 1 px"
@@ -19503,56 +19503,56 @@ msgstr ""
 
 #: ../src/verbs.cpp:2362
 msgid "D_ynamic Offset"
-msgstr ""
+msgstr "آف_ست پویا"
 
 #: ../src/verbs.cpp:2362
 msgid "Create a dynamic offset object"
-msgstr ""
+msgstr "ساخت یک شئ آقست پویا (دینامیک)"
 
 #: ../src/verbs.cpp:2364
 msgid "_Linked Offset"
-msgstr ""
+msgstr "آفست متص_ل شده"
 
 #: ../src/verbs.cpp:2365
 msgid "Create a dynamic offset object linked to the original path"
-msgstr ""
+msgstr "ساخت یک شئ آفست پویا که به مسیر اصلی متصل شده"
 
 #: ../src/verbs.cpp:2367
 msgid "_Stroke to Path"
-msgstr ""
+msgstr "خط حاشیه به _مسیر"
 
 #: ../src/verbs.cpp:2368
 msgid "Convert selected object's stroke to paths"
-msgstr ""
+msgstr "تبدیل خط حاشیه‌ی شئ انتخاب شده به مسیر"
 
 #: ../src/verbs.cpp:2369
 msgid "Si_mplify"
-msgstr ""
+msgstr "ساد_ه سازی"
 
 #: ../src/verbs.cpp:2370
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr ""
+msgstr "ساده سازی مسیر‌های انتخاب شده (حذف نود‌های اضافی)"
 
 #: ../src/verbs.cpp:2371
 msgid "_Reverse"
-msgstr ""
+msgstr "م_عکوس سازی"
 
 #: ../src/verbs.cpp:2372
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr ""
+msgstr "معکوس سازی جهت مسیر‌های انتخاب شده (برای وارون کردن نشانگر‌ها مناسب است)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2374
 msgid "_Trace Bitmap..."
-msgstr ""
+msgstr "_پویش bitmap..."
 
 #: ../src/verbs.cpp:2375
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
+msgstr "ساختن یک یا چند مسیر از یک bitmap با پویش کردن آن"
 
 #: ../src/verbs.cpp:2376
 msgid "_Make a Bitmap Copy"
-msgstr ""
+msgstr "_ایجاد یک کپی Bitmap"
 
 #: ../src/verbs.cpp:2377
 msgid "Export selection to a bitmap and insert it into document"
@@ -19560,34 +19560,34 @@ msgstr ""
 
 #: ../src/verbs.cpp:2378
 msgid "_Combine"
-msgstr ""
+msgstr "تر_کیب"
 
 #: ../src/verbs.cpp:2379
 msgid "Combine several paths into one"
-msgstr ""
+msgstr "ترکیب چند مسیر در یکی"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2382
 msgid "Break _Apart"
-msgstr ""
+msgstr "ت_فکیک"
 
 #: ../src/verbs.cpp:2383
 msgid "Break selected paths into subpaths"
-msgstr ""
+msgstr "تفکیک مسیر‌های انتخاب شده به زیرمسیرها"
 
 #: ../src/verbs.cpp:2384
 msgid "Rows and Columns..."
-msgstr ""
+msgstr "ردیف‌ها و _ستون‌ها..."
 
 #: ../src/verbs.cpp:2385
 msgid "Arrange selected objects in a table"
-msgstr ""
+msgstr "مرتب سازی اشیاء انتخاب شده در یک جدول"
 
 #. Layer
 #: ../src/verbs.cpp:2387
 msgid "_Add Layer..."
-msgstr "...اضافه کردن لایه_"
+msgstr "ا_ضافه کردن لایه..."
 
 #: ../src/verbs.cpp:2388
 msgid "Create a new layer"
@@ -19595,63 +19595,63 @@ msgstr "ایجاد یک لایه‌ی جدید"
 
 #: ../src/verbs.cpp:2389
 msgid "Re_name Layer..."
-msgstr ""
+msgstr "ت_غییر اسم لایه..."
 
 #: ../src/verbs.cpp:2390
 msgid "Rename the current layer"
-msgstr ""
+msgstr "تغییر اسم لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2391
 msgid "Switch to Layer Abov_e"
-msgstr ""
+msgstr "سوییچ به لایه‌ی _بالایی"
 
 #: ../src/verbs.cpp:2392
 msgid "Switch to the layer above the current"
-msgstr ""
+msgstr "سوییچ به لایه‌ای که بالای لایه‌ی فعلی است"
 
 #: ../src/verbs.cpp:2393
 msgid "Switch to Layer Belo_w"
-msgstr ""
+msgstr "سوییچ به لایه‌ی _پایینی"
 
 #: ../src/verbs.cpp:2394
 msgid "Switch to the layer below the current"
-msgstr ""
+msgstr "سوییچ به لایه‌ای که زیر لایه‌ی فعلی است"
 
 #: ../src/verbs.cpp:2395
 msgid "Move Selection to Layer Abo_ve"
-msgstr ""
+msgstr "انتقال انتخاب شده به لایه‌ی با_لایی"
 
 #: ../src/verbs.cpp:2396
 msgid "Move selection to the layer above the current"
-msgstr ""
+msgstr "انتقال ناحیه‌ی انتخاب شده به لایه‌ی بالای لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2397
 msgid "Move Selection to Layer Bel_ow"
-msgstr ""
+msgstr "انتقال انتخاب به لایه‌ی پا_یینی"
 
 #: ../src/verbs.cpp:2398
 msgid "Move selection to the layer below the current"
-msgstr ""
+msgstr "انتقال ناحیه‌ی انتخاب شده به لایه‌ی پایین لایه‌ی فعلی "
 
 #: ../src/verbs.cpp:2399
 msgid "Layer to _Top"
-msgstr ""
+msgstr "لایه به ب_الاترین"
 
 #: ../src/verbs.cpp:2400
 msgid "Raise the current layer to the top"
-msgstr ""
+msgstr "بردن لایه‌ی فعلی به بالاترین لایه"
 
 #: ../src/verbs.cpp:2401
 msgid "Layer to _Bottom"
-msgstr ""
+msgstr "لایه به پایی_ن‌ترین"
 
 #: ../src/verbs.cpp:2402
 msgid "Lower the current layer to the bottom"
-msgstr ""
+msgstr "بردن لایه فعلی به پایین‌ترین لایه"
 
 #: ../src/verbs.cpp:2403
 msgid "_Raise Layer"
-msgstr ""
+msgstr "بالا ب_ردن لایه"
 
 #: ../src/verbs.cpp:2404
 msgid "Raise the current layer"
@@ -19659,27 +19659,27 @@ msgstr ""
 
 #: ../src/verbs.cpp:2405
 msgid "_Lower Layer"
-msgstr ""
+msgstr "پایین بر_دن لایه"
 
 #: ../src/verbs.cpp:2406
 msgid "Lower the current layer"
-msgstr ""
+msgstr "پایین آوردن لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2407
 msgid "Duplicate Current Layer"
-msgstr ""
+msgstr "تکثیر لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2408
 msgid "Duplicate an existing layer"
-msgstr ""
+msgstr "تکثیر لایه‌ی موجود"
 
 #: ../src/verbs.cpp:2409
 msgid "_Delete Current Layer"
-msgstr ""
+msgstr "_حذف لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2410
 msgid "Delete the current layer"
-msgstr ""
+msgstr "حذف کردن لایه‌ی فعلی"
 
 #: ../src/verbs.cpp:2411
 msgid "_Show/hide other layers"
@@ -19692,23 +19692,23 @@ msgstr ""
 #. Object
 #: ../src/verbs.cpp:2415
 msgid "Rotate _90&#176; CW"
-msgstr " ساعتگرد ;176#&90_چرخش "
+msgstr "چرخش &#176;_۹۰ ساعتگرد"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2418
 msgid "Rotate selection 90° clockwise"
-msgstr ""
+msgstr "چرخش ۹۰ درجه ناحیه‌‌ی انتخاب شده در جهت ساعتگرد"
 
 #: ../src/verbs.cpp:2419
 msgid "Rotate 9_0&#176; CCW"
-msgstr ""
+msgstr "چرخش &#176;۹_۰ پادساعتگرد"
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2422
 msgid "Rotate selection 90° counter-clockwise"
-msgstr ""
+msgstr "چرخش ۹۰ درجه ناحیه‌ی انتخاب شده در جهت پادساعتگرد"
 
 #: ../src/verbs.cpp:2423
 msgid "Remove _Transformations"
@@ -19720,72 +19720,72 @@ msgstr ""
 
 #: ../src/verbs.cpp:2425
 msgid "_Object to Path"
-msgstr ""
+msgstr "شئ به _مسیر"
 
 #: ../src/verbs.cpp:2426
 msgid "Convert selected object to path"
-msgstr ""
+msgstr "تبدیل شئ انتخاب شده به مسیر"
 
 #: ../src/verbs.cpp:2427
 msgid "_Flow into Frame"
-msgstr ""
+msgstr "_جریان در قاب"
 
 #: ../src/verbs.cpp:2428
 msgid "Put text into a frame (path or shape), creating a flowed text linked to the frame object"
-msgstr ""
+msgstr "قرار دادن متن در یک قابل (مسیر یا شکل)، ساختنیک متن شناور متصل شده به شئ قاب"
 
 #: ../src/verbs.cpp:2429
 msgid "_Unflow"
-msgstr ""
+msgstr "حذ_ف جریان"
 
 #: ../src/verbs.cpp:2430
 msgid "Remove text from frame (creates a single-line text object)"
-msgstr ""
+msgstr "حذف متن از قاب (ایجاد یک شئ متنی یک خطی)"
 
 #: ../src/verbs.cpp:2431
 msgid "_Convert to Text"
-msgstr ""
+msgstr "تبدیل _به متن"
 
 #: ../src/verbs.cpp:2432
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr ""
+msgstr "تبدیل متن جریان شده به شئ متنی عادی (با حفظ ظاهر)"
 
 #: ../src/verbs.cpp:2434
 msgid "Flip _Horizontal"
-msgstr ""
+msgstr "وارون ا_فقی"
 
 #: ../src/verbs.cpp:2434
 msgid "Flip selected objects horizontally"
-msgstr ""
+msgstr "وارون کردن افقی اشیاء انتخاب شده"
 
 #: ../src/verbs.cpp:2437
 msgid "Flip _Vertical"
-msgstr ""
+msgstr "وارون _عمودی"
 
 #: ../src/verbs.cpp:2437
 msgid "Flip selected objects vertically"
-msgstr ""
+msgstr "وارون کردن عمودی اشیاء انتخاب شده"
 
 #: ../src/verbs.cpp:2440
 msgid "Apply mask to selection (using the topmost object as mask)"
-msgstr ""
+msgstr "اعمال ماسک به ناحیه‌ی انتخاب شده (با استفاده از بالاترین شئ به عنوان ماسک)"
 
 #: ../src/verbs.cpp:2442
 msgid "Edit mask"
-msgstr ""
+msgstr "ویرایش ماسک"
 
 #: ../src/verbs.cpp:2443
 #: ../src/verbs.cpp:2449
 msgid "_Release"
-msgstr ""
+msgstr "_حذف کردن..."
 
 #: ../src/verbs.cpp:2444
 msgid "Remove mask from selection"
-msgstr ""
+msgstr "حذف کردن ماسک از ناحیه‌ی انتخاب شده"
 
 #: ../src/verbs.cpp:2446
 msgid "Apply clipping path to selection (using the topmost object as clipping path)"
-msgstr ""
+msgstr "اعمال کلیپ مسیر به ناحیه‌ی انتخاب شده (با استفاده از بالاترین شئ به عنوان مسیر کلیپ)"
 
 #: ../src/verbs.cpp:2448
 msgid "Edit clipping path"
@@ -19793,7 +19793,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2450
 msgid "Remove clipping path from selection"
-msgstr ""
+msgstr "حذف کلیپ مسیر از ناحیه‌ی انتخاب شده"
 
 #. Tools
 #: ../src/verbs.cpp:2453
@@ -20056,51 +20056,51 @@ msgstr ""
 #. Zoom/View
 #: ../src/verbs.cpp:2538
 msgid "Zoom In"
-msgstr ""
+msgstr "زوم به درون"
 
 #: ../src/verbs.cpp:2538
 msgid "Zoom in"
-msgstr ""
+msgstr "زوم به درون"
 
 #: ../src/verbs.cpp:2539
 msgid "Zoom Out"
-msgstr ""
+msgstr "بر گشت از زوم"
 
 #: ../src/verbs.cpp:2539
 msgid "Zoom out"
-msgstr ""
+msgstr "برگشت از زوم"
 
 #: ../src/verbs.cpp:2540
 msgid "_Rulers"
-msgstr ""
+msgstr "_خط کش‌ها"
 
 #: ../src/verbs.cpp:2540
 msgid "Show or hide the canvas rulers"
-msgstr ""
+msgstr "خط کش‌های عمود بر هم را نشان می‌دهد یا پنهان می‌کند"
 
 #: ../src/verbs.cpp:2541
 msgid "Scroll_bars"
-msgstr ""
+msgstr "نوار‌های پیمای_شگر"
 
 #: ../src/verbs.cpp:2541
 msgid "Show or hide the canvas scrollbars"
-msgstr ""
+msgstr "نوار‌های عمود بر هم پیمایشگر را نشان داده یا پنهان می‌کند"
 
 #: ../src/verbs.cpp:2542
 msgid "_Grid"
-msgstr ""
+msgstr "_شبکه راهنما"
 
 #: ../src/verbs.cpp:2542
 msgid "Show or hide the grid"
-msgstr ""
+msgstr "شبکه خطوط راهنما را نشان داده یا پنهان می‌کند"
 
 #: ../src/verbs.cpp:2543
 msgid "G_uides"
-msgstr ""
+msgstr "_خطوط راهنما"
 
 #: ../src/verbs.cpp:2543
 msgid "Show or hide guides (drag from a ruler to create a guide)"
-msgstr ""
+msgstr "خطوط راهنما را نشان داده یا پنهان می‌کند ( از خط کش درگ کنید تا یک خط راهنما بسازید)"
 
 #: ../src/verbs.cpp:2544
 msgid "Toggle snapping on or off"
@@ -20108,51 +20108,51 @@ msgstr ""
 
 #: ../src/verbs.cpp:2545
 msgid "Nex_t Zoom"
-msgstr ""
+msgstr "زوم ب_عدی"
 
 #: ../src/verbs.cpp:2545
 msgid "Next zoom (from the history of zooms)"
-msgstr ""
+msgstr "زوم بعدی (از تاریخچه زوم‌ها)"
 
 #: ../src/verbs.cpp:2547
 msgid "Pre_vious Zoom"
-msgstr ""
+msgstr "زوم _قبلی"
 
 #: ../src/verbs.cpp:2547
 msgid "Previous zoom (from the history of zooms)"
-msgstr ""
+msgstr "زوم قبلی (از تاریخچه‌ی زوم‌ها)"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom 1:_1"
-msgstr ""
+msgstr "زوم _۱:۱"
 
 #: ../src/verbs.cpp:2549
 msgid "Zoom to 1:1"
-msgstr ""
+msgstr "زوم به ۱:۱"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom 1:_2"
-msgstr ""
+msgstr "زوم _۱:۲"
 
 #: ../src/verbs.cpp:2551
 msgid "Zoom to 1:2"
-msgstr ""
+msgstr "زوم به ۱:۲"
 
 #: ../src/verbs.cpp:2553
 msgid "_Zoom 2:1"
-msgstr ""
+msgstr "_زوم ۲:۱"
 
 #: ../src/verbs.cpp:2553
 msgid "Zoom to 2:1"
-msgstr ""
+msgstr "زوم به ۲:۱"
 
 #: ../src/verbs.cpp:2556
 msgid "_Fullscreen"
-msgstr ""
+msgstr "تمام _صفحه"
 
 #: ../src/verbs.cpp:2556
 msgid "Stretch this document window to full screen"
-msgstr ""
+msgstr "گسترش پنجره‌ی این سند به تمام صفحه"
 
 #: ../src/verbs.cpp:2559
 msgid "Toggle _Focus Mode"
@@ -20164,7 +20164,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2561
 msgid "Duplic_ate Window"
-msgstr ""
+msgstr "_تکثیر پنجره"
 
 #: ../src/verbs.cpp:2561
 msgid "Open a new window with the same document"
@@ -20181,27 +20181,27 @@ msgstr ""
 #. "view_new_preview"
 #: ../src/verbs.cpp:2566
 msgid "_Normal"
-msgstr ""
+msgstr "_عادی"
 
 #: ../src/verbs.cpp:2567
 msgid "Switch to normal display mode"
-msgstr ""
+msgstr "سوییچ به حالت نمایش عادی"
 
 #: ../src/verbs.cpp:2568
 msgid "No _Filters"
-msgstr ""
+msgstr "_بدون فیلتر"
 
 #: ../src/verbs.cpp:2569
 msgid "Switch to normal display without filters"
-msgstr ""
+msgstr "سوییچ به نمایش عادی بدون فیلتر"
 
 #: ../src/verbs.cpp:2570
 msgid "_Outline"
-msgstr ""
+msgstr "‌_‌طرح کلی"
 
 #: ../src/verbs.cpp:2571
 msgid "Switch to outline (wireframe) display mode"
-msgstr ""
+msgstr "سوییچ به حالت نمایش طرح کلی (اسکلت خطی)"
 
 #: ../src/verbs.cpp:2572
 msgid "_Print Colors Preview"
@@ -20213,23 +20213,23 @@ msgstr ""
 
 #: ../src/verbs.cpp:2574
 msgid "_Toggle"
-msgstr ""
+msgstr "_سوییچ"
 
 #: ../src/verbs.cpp:2575
 msgid "Toggle between normal and outline display modes"
-msgstr ""
+msgstr "تغییر بین حالت نمایش عادی و طرح اجمالی"
 
 #: ../src/verbs.cpp:2577
 msgid "Color-managed view"
-msgstr ""
+msgstr "نمایش مدیریت-رنگ"
 
 #: ../src/verbs.cpp:2578
 msgid "Toggle color-managed display for this document window"
-msgstr ""
+msgstr "سوییچ بین نمایش‌های مدیریت رنگ برای این پنجره‌ی سند"
 
 #: ../src/verbs.cpp:2580
 msgid "Ico_n Preview..."
-msgstr ""
+msgstr "پیش‌نمای_ش آیکن..."
 
 #: ../src/verbs.cpp:2581
 msgid "Open a window to preview objects at different icon resolutions"
@@ -20237,28 +20237,28 @@ msgstr ""
 
 #: ../src/verbs.cpp:2583
 msgid "Zoom to fit page in window"
-msgstr ""
+msgstr "زوم برای قرار گرفتن کامل صفحه در پنجره"
 
 #: ../src/verbs.cpp:2584
 msgid "Page _Width"
-msgstr ""
+msgstr "_عرض صفحه"
 
 #: ../src/verbs.cpp:2585
 msgid "Zoom to fit page width in window"
-msgstr ""
+msgstr "زوم برای قرار گرفتن کامل عرض صفحه در پنجره"
 
 #: ../src/verbs.cpp:2587
 msgid "Zoom to fit drawing in window"
-msgstr ""
+msgstr "زوم برای قرار گرفتن طرح در پنجره"
 
 #: ../src/verbs.cpp:2589
 msgid "Zoom to fit selection in window"
-msgstr ""
+msgstr "زوم برای قرار گرفتن ناحیه‌ی انتخاب شده در پنجره"
 
 #. Dialogs
 #: ../src/verbs.cpp:2592
 msgid "In_kscape Preferences..."
-msgstr ""
+msgstr "تن_ظیمات Inkscape"
 
 #: ../src/verbs.cpp:2593
 msgid "Edit global Inkscape preferences"
@@ -20266,7 +20266,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2594
 msgid "_Document Properties..."
-msgstr ""
+msgstr "وی_ژگی‌های سند..."
 
 #: ../src/verbs.cpp:2595
 msgid "Edit properties of this document (to be saved with the document)"
@@ -20274,7 +20274,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2596
 msgid "Document _Metadata..."
-msgstr ""
+msgstr "اَبَرداده‌های _سند"
 
 #: ../src/verbs.cpp:2597
 msgid "Edit document metadata (to be saved with the document)"
@@ -20282,36 +20282,36 @@ msgstr ""
 
 #: ../src/verbs.cpp:2598
 msgid "_Fill and Stroke..."
-msgstr ""
+msgstr "پُرشدگی و خط _حاشیه..."
 
 #: ../src/verbs.cpp:2599
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr ""
+msgstr "ویرایش رنگ‌های اشیاء، گرادیان‌ها، عرض خطوط حاشیه، تیزی گوشه‌ها و الگو‌های خط چین..."
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2601
 msgid "S_watches..."
-msgstr ""
+msgstr "_سواچ‌ها..."
 
 #: ../src/verbs.cpp:2602
 msgid "Select colors from a swatches palette"
-msgstr ""
+msgstr "انتخاب رنگ‌ها از پالت سواچ‌ها"
 
 #: ../src/verbs.cpp:2603
 msgid "Transfor_m..."
-msgstr ""
+msgstr "تغییر ش_کل..."
 
 #: ../src/verbs.cpp:2604
 msgid "Precisely control objects' transformations"
-msgstr ""
+msgstr "کنترل دقیق تغییر شکل اشیاء"
 
 #: ../src/verbs.cpp:2605
 msgid "_Align and Distribute..."
-msgstr ""
+msgstr "ترا_ز و توزیع..."
 
 #: ../src/verbs.cpp:2606
 msgid "Align and distribute objects"
-msgstr ""
+msgstr "تراز و توزیع کردن اشیاء"
 
 #: ../src/verbs.cpp:2607
 msgid "_Spray options..."
@@ -20323,7 +20323,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2609
 msgid "Undo _History..."
-msgstr ""
+msgstr "تاریخچه‌ لغو ا_قدامات..."
 
 #: ../src/verbs.cpp:2610
 msgid "Undo History"
@@ -20331,15 +20331,15 @@ msgstr ""
 
 #: ../src/verbs.cpp:2611
 msgid "_Text and Font..."
-msgstr ""
+msgstr "_متن و فونت..."
 
 #: ../src/verbs.cpp:2612
 msgid "View and select font family, font size and other text properties"
-msgstr ""
+msgstr "نمایش و انتخاب خانواده فونت، اندازه فونت و سایر ویژگی‌های فونت"
 
 #: ../src/verbs.cpp:2613
 msgid "_XML Editor..."
-msgstr ""
+msgstr "ویرایش_گر XML..."
 
 #: ../src/verbs.cpp:2614
 msgid "View and edit the XML tree of the document"
@@ -20347,7 +20347,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2615
 msgid "_Find..."
-msgstr ""
+msgstr "_جستجو..."
 
 #: ../src/verbs.cpp:2616
 msgid "Find objects in document"
@@ -20371,7 +20371,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2621
 msgid "_Messages..."
-msgstr ""
+msgstr "پی_غام‌ها..."
 
 #: ../src/verbs.cpp:2622
 msgid "View debug messages"
@@ -20379,7 +20379,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2623
 msgid "S_cripts..."
-msgstr ""
+msgstr "اسکری_پت‌ها..."
 
 #: ../src/verbs.cpp:2624
 msgid "Run scripts"
@@ -20387,11 +20387,11 @@ msgstr ""
 
 #: ../src/verbs.cpp:2625
 msgid "Show/Hide D_ialogs"
-msgstr ""
+msgstr "آشکار/پنهان کر_دن محاوره‌ها"
 
 #: ../src/verbs.cpp:2626
 msgid "Show or hide all open dialogs"
-msgstr ""
+msgstr "آشکار کردن یا پنهان کردن همه‌ی محاوره‌های باز شده"
 
 #: ../src/verbs.cpp:2627
 msgid "Create Tiled Clones..."
@@ -20403,11 +20403,11 @@ msgstr ""
 
 #: ../src/verbs.cpp:2629
 msgid "_Object Properties..."
-msgstr ""
+msgstr "وی_ژگی‌های شئ..."
 
 #: ../src/verbs.cpp:2630
 msgid "Edit the ID, locked and visible status, and other object properties"
-msgstr ""
+msgstr "ویرایش ID، قفل بودن و وضعیت مرئی بودن و سایر ویژگی‌های شئ"
 
 #. #ifdef WITH_INKBOARD
 #. new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
@@ -20415,7 +20415,7 @@ msgstr ""
 #. #endif
 #: ../src/verbs.cpp:2635
 msgid "_Input Devices..."
-msgstr ""
+msgstr "ابزارآلا_ت ورودی..."
 
 #: ../src/verbs.cpp:2636
 #: ../src/verbs.cpp:2638
@@ -20436,35 +20436,35 @@ msgstr ""
 
 #: ../src/verbs.cpp:2641
 msgid "Layer_s..."
-msgstr ""
+msgstr "لایه‌_ها..."
 
 #: ../src/verbs.cpp:2642
 msgid "View Layers"
-msgstr ""
+msgstr "مشاهده لایه‌ها"
 
 #: ../src/verbs.cpp:2643
 msgid "Path Effect Editor..."
-msgstr ""
+msgstr "ویرایشگر افکت مسیر..."
 
 #: ../src/verbs.cpp:2644
 msgid "Manage, edit, and apply path effects"
-msgstr ""
+msgstr "مدیریت، ویرایش و اعمال افکت‌های مسیر"
 
 #: ../src/verbs.cpp:2645
 msgid "Filter Editor..."
-msgstr ""
+msgstr "ویرایشگر فیلتر..."
 
 #: ../src/verbs.cpp:2646
 msgid "Manage, edit, and apply SVG filters"
-msgstr ""
+msgstr "مدیریت، ویرایش و اعمال فیلتر‌های SVG"
 
 #: ../src/verbs.cpp:2647
 msgid "SVG Font Editor..."
-msgstr ""
+msgstr "ویرایش_گر فونت SVG..."
 
 #: ../src/verbs.cpp:2648
 msgid "Edit SVG fonts"
-msgstr ""
+msgstr "ویرایش فونت‌های SVG"
 
 #: ../src/verbs.cpp:2649
 msgid "Print Colors..."
@@ -20485,19 +20485,19 @@ msgstr ""
 
 #: ../src/verbs.cpp:2655
 msgid "About _Memory"
-msgstr ""
+msgstr "درباره‌ی _حافظه"
 
 #: ../src/verbs.cpp:2656
 msgid "Memory usage information"
-msgstr ""
+msgstr "اطلاعات مصرف حافظه"
 
 #: ../src/verbs.cpp:2657
 msgid "_About Inkscape"
-msgstr ""
+msgstr "_درباره Inkscape"
 
 #: ../src/verbs.cpp:2658
 msgid "Inkscape version, authors, license"
-msgstr ""
+msgstr "نسخه، نویسندگان و مجوز Inkscape"
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
@@ -20576,15 +20576,15 @@ msgstr ""
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2682
 msgid "Previous Extension"
-msgstr ""
+msgstr "افزونه قبلی"
 
 #: ../src/verbs.cpp:2683
 msgid "Repeat the last extension with the same settings"
-msgstr ""
+msgstr "تکرار آخرین افزونه با همان تنظیمات"
 
 #: ../src/verbs.cpp:2684
 msgid "Previous Extension Settings..."
-msgstr ""
+msgstr "تنظیمات افزونه قبلی..."
 
 #: ../src/verbs.cpp:2685
 msgid "Repeat the last extension with new settings"
@@ -20605,19 +20605,19 @@ msgstr ""
 #. LockAndHide
 #: ../src/verbs.cpp:2695
 msgid "Unlock All"
-msgstr ""
+msgstr "قفل برداری همه"
 
 #: ../src/verbs.cpp:2697
 msgid "Unlock All in All Layers"
-msgstr ""
+msgstr "قبل برداری از همه در تمام لایه‌ها"
 
 #: ../src/verbs.cpp:2699
 msgid "Unhide All"
-msgstr ""
+msgstr "مرئی کردن همه"
 
 #: ../src/verbs.cpp:2701
 msgid "Unhide All in All Layers"
-msgstr ""
+msgstr "مرئی کردن همه چیز در تمام لایه‌ها"
 
 #: ../src/verbs.cpp:2705
 msgid "Link an ICC color profile"
