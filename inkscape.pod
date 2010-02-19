@@ -17,7 +17,7 @@ options:
 
     -e, --export-png=FILENAME         
     -a, --export-area=x0:y0:x1:y1     
-    -C, --export-area-canvas
+    -C, --export-area-page
     -D, --export-area-drawing
         --export-area-snap
     -i, --export-id=ID     
@@ -103,21 +103,21 @@ Show Inkscape version and build date.
 =item B<-a> I<x0:y0:x1:y1>, B<--export-area>=I<x0:y0:x1:y1>
 
 In PNG export, set the exported area in SVG user units (anonymous length units normally used
-in Inkscape SVG).  The default is to export the entire document canvas.  The point (0,0)
+in Inkscape SVG).  The default is to export the entire document page.  The point (0,0)
 is the lower-left corner.
 
-=item B<-C>, B<--export-area-canvas>
+=item B<-C>, B<--export-area-page>
 
-In PNG, PDF, PS, and EPS export, exported area is the canvas (page). This is the default
+In PNG, PDF, PS, and EPS export, exported area is the page. This is the default
 for PNG, PDF, and PS, so you don't need to specify this unless you are using --export-id 
 to export a specific object. In EPS, however, this is not the default; moreover, for EPS, 
 the specification of the format does not allow its bounding box to extend beyond its content. 
-This means that when --export-area-canvas is used with EPS export, the canvas bounding box 
+This means that when --export-area-page is used with EPS export, the page bounding box 
 will be trimmed inwards to the bounding box of the content if it is smaller.
 
 =item B<-D>, B<--export-area-drawing>
 
-In PNG, PDF, PS, and EPS export, exported area is the drawing (not canvas), i.e. the bounding box
+In PNG, PDF, PS, and EPS export, exported area is the drawing (not page), i.e. the bounding box
 of all objects of the document (or of the exported object if --export-id is used). 
 With this option, the exported image will
 display all the visible objects of the document without margins or cropping. This is the default
@@ -170,7 +170,7 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 For PNG, PS, EPS, and PDF export, the id attribute value of the object that you want 
 to export from the document; all other objects are not exported.  By
 default the exported area is the bounding box of the object; you can override this using
---export-area (PNG only) or --export-area-canvas.
+--export-area (PNG only) or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
@@ -251,21 +251,21 @@ then the value of 255 (full opacity) will be used.
 
 =item B<-P> I<FILENAME>, B<--export-ps>=I<FILENAME>
 
-Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is canvas; you can set it to drawing by --export-area-drawing. You can 
+Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is page; you can set it to drawing by --export-area-drawing. You can 
 specify --export-id to export a single object (all other are hidden); in that case 
-export area is that object's bounding box, but can be set to canvas by --export-area-canvas.
+export area is that object's bounding box, but can be set to page by --export-area-page.
 
 =item B<-E> I<FILENAME>, B<--export-eps>=I<FILENAME>
 
-Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is drawing; you can set it to canvas, however see --export-area-canvas for applicable limitation. You can specify --export-id to export a single object (all other are hidden).
+Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is drawing; you can set it to page, however see --export-area-page for applicable limitation. You can specify --export-id to export a single object (all other are hidden).
 
 =item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
 
 Export document(s) to PDF format. This format preserves the 
 transparency in the original SVG. Used fonts are subset and embedded. 
-The default export area is canvas; you can set it to drawing by --export-area-drawing. You can 
+The default export area is page; you can set it to drawing by --export-area-drawing. You can 
 specify --export-id to export a single object (all other are hidden); in that case 
-export area is that object's bounding box, but can be set to canvas by --export-area-canvas.
+export area is that object's bounding box, but can be set to page by --export-area-page.
 
 =item B<-T>, B<--export-text-to-path>
 
