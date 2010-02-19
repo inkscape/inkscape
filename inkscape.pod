@@ -337,17 +337,17 @@ Display a brief usage message.
 
 =head1 CONFIGURATION
 
-The main configuration file is located in ~/.config/Inkscape/preferences.xml; it stores
+The main configuration file is located in ~/.config/inkscape/preferences.xml; it stores
 a variety of customization settings that you can change in Inkscape (mostly in the
 Inkscape Preferences dialog).  Also in the subdirectories there, you can place your own:
 
-B<$HOME>/.config/Inkscape/extensions/ - extension effects.
+B<$HOME>/.config/inkscape/extensions/ - extension effects.
 
-B<$HOME>/.config/Inkscape/icons/ - icons.
+B<$HOME>/.config/inkscape/icons/ - icons.
 
-B<$HOME>/.config/Inkscape/keys/ - keyboard maps.
+B<$HOME>/.config/inkscape/keys/ - keyboard maps.
 
-B<$HOME>/.config/Inkscape/templates/ - new file templates.
+B<$HOME>/.config/inkscape/templates/ - new file templates.
 
 =head1 DIAGNOSTICS
 
@@ -421,7 +421,7 @@ files.  The directory must exist.
 
 To load different icons sets instead of the default
 B<$PREFIX>/share/inkscape/icons/icons.svg file, the directory
-B<$HOME>/.inkscape/icons/ is used.  Icons are loaded by name
+B<$HOME>/.config/inkscape/icons/ is used.  Icons are loaded by name
 (e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If the
 icon is not loaded from either of those locations, it falls back to the
 default system location.
@@ -556,7 +556,7 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
-B<Copyright (C)> 1999-2008 by Authors.
+B<Copyright (C)> 1999-2010 by Authors.
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
 under the terms of the GPL.
