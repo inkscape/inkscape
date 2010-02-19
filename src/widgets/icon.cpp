@@ -1115,6 +1115,26 @@ static guchar *load_svg_pixels(gchar const *name,
             /* Create ArenaItem and set transform */
             unsigned visionkey = sp_item_display_key_new(1);
             /* fixme: Memory manage root if needed (Lauris) */
+            // This needs to be fixed indeed; this leads to a memory leak of a few megabytes these days
+            // because shapes are being rendered which are not being freed
+            // Valgrind output:
+            /*==7014== 1,548,344 bytes in 599 blocks are possibly lost in loss record 20,361 of 20,362
+            ==7014==    at 0x4A05974: operator new(unsigned long) (vg_replace_malloc.c:220)
+            ==7014==    by 0x4F1015: __gnu_cxx::new_allocator<Shape::point_data>::allocate(unsigned long, void const*) (new_allocator.h:89)
+            ==7014==    by 0x4F02AC: std::_Vector_base<Shape::point_data, std::allocator<Shape::point_data> >::_M_allocate(unsigned long) (stl_vector.h:140)
+            ==7014==    by 0xCF62D7: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::_M_fill_insert(__gnu_cxx::__normal_iterator<Shape::point_data*, std::vector<Shape::point_data, std::allocator<Shape::point_data> > >, unsigned long, Shape::point_data const&) (vector.tcc:414)
+            ==7014==    by 0xCF4D45: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::insert(__gnu_cxx::__normal_iterator<Shape::point_data*, std::vector<Shape::point_data, std::allocator<Shape::point_data> > >, unsigned long, Shape::point_data const&) (stl_vector.h:851)
+            ==7014==    by 0xCF3DCD: std::vector<Shape::point_data, std::allocator<Shape::point_data> >::resize(unsigned long, Shape::point_data) (stl_vector.h:557)
+            ==7014==    by 0xCEA771: Shape::AddPoint(Geom::Point) (Shape.cpp:326)
+            ==7014==    by 0xD0F413: Shape::ConvertToShape(Shape*, fill_typ, bool) (ShapeSweep.cpp:257)
+            ==7014==    by 0x5ECD4F: nr_arena_shape_update_stroke(NRArenaShape*, NRGC*, NRRectL*) (nr-arena-shape.cpp:651)
+            ==7014==    by 0x5EE0DA: nr_arena_shape_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-shape.cpp:862)
+            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
+            ==7014==    by 0x5E9DDE: nr_arena_group_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-group.cpp:228)
+            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
+            ==7014==    by 0x5E9DDE: nr_arena_group_render(_cairo*, NRArenaItem*, NRRectL*, NRPixBlock*, unsigned int) (nr-arena-group.cpp:228)
+            ==7014==    by 0x5E72FB: nr_arena_item_invoke_render(_cairo*, NRArenaItem*, NRRectL const*, NRPixBlock*, unsigned int) (nr-arena-item.cpp:578)
+            */
             root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT(doc)),
                                         arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 

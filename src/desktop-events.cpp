@@ -87,9 +87,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             if (event->button.button == 1) {
                 dragging = true;
 
-                // FIXME: The snap delay mechanism won't work here, because it has been implemented for the event context. Dragging
-                // guides off the ruler will send event to the ruler and not to the context, which bypasses sp_event_context_snap_delay_handler
-
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
