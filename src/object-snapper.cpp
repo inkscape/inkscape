@@ -720,7 +720,7 @@ bool Inkscape::ObjectSnapper::GuidesMightSnap() const // almost the same as This
 void Inkscape::ObjectSnapper::_clear_paths() const
 {
     for (std::vector<Inkscape::SnapCandidatePath >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
-        g_free(k->path_vector);
+        delete k->path_vector;
     }
     _paths_to_snap_to->clear();
 }
