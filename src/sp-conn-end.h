@@ -35,6 +35,8 @@ public:
     sigc::connection _transformed_connection;
 
     void setAttacherHref(gchar const *, SPPath *);
+    void setAttacherEndpoint(gchar const *, SPPath *);
+
 
 private:
     SPConnEnd(SPConnEnd const &);

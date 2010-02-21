@@ -499,7 +499,7 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='ConnectorToolbar'>"
-        "    <toolitem action='ConnectorEditModeAction' />"
+//        "    <toolitem action='ConnectorEditModeAction' />"
         "    <toolitem action='ConnectorAvoidAction' />"
         "    <toolitem action='ConnectorIgnoreAction' />"
         "    <toolitem action='ConnectorOrthogonalAction' />"
@@ -509,8 +509,8 @@ static gchar const * ui_descr =
         "    <toolitem action='ConnectorLengthAction' />"
         "    <toolitem action='ConnectorDirectedAction' />"
         "    <toolitem action='ConnectorOverlapAction' />"
-        "    <toolitem action='ConnectorNewConnPointAction' />"
-        "    <toolitem action='ConnectorRemoveConnPointAction' />"
+//        "    <toolitem action='ConnectorNewConnPointAction' />"
+//        "    <toolitem action='ConnectorRemoveConnPointAction' />"
         "  </toolbar>"
 
         "</ui>"

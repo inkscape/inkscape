@@ -298,6 +298,8 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_ATTR_CONNECTOR_CURVATURE:
         case SP_ATTR_CONNECTION_START:
         case SP_ATTR_CONNECTION_END:
+        case SP_ATTR_CONNECTION_START_POINT:
+        case SP_ATTR_CONNECTION_END_POINT:
             path->connEndPair.setAttr(key, value);
             break;
         default:

@@ -103,8 +103,10 @@ struct SPConnectorContext : public SPEventContext {
     ConnectionPointMap connpthandles;
     SPKnot *endpt_handle[2];
     guint  endpt_handler_id[2];
-    gchar *sid;
-    gchar *eid;
+    gchar *shref;
+    gchar *scpid;
+    gchar *ehref;
+    gchar *ecpid;
     SPCanvasItem *c0, *c1, *cl0, *cl1;
 };
 

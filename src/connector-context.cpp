@@ -218,7 +218,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item);
 static void cc_clear_active_shape(SPConnectorContext *cc);
 static void cc_set_active_conn(SPConnectorContext *cc, SPItem *item);
 static void cc_clear_active_conn(SPConnectorContext *cc);
-static gchar *conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& w);
+static bool conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p, gchar **href, gchar **cpid);
 static void cc_select_handle(SPKnot* knot);
 static void cc_deselect_handle(SPKnot* knot);
 static bool cc_item_is_shape(SPItem *item);
@@ -338,8 +338,10 @@ sp_connector_context_init(SPConnectorContext *cc)
         cc->endpt_handle[i] = NULL;
         cc->endpt_handler_id[i] = 0;
     }
-    cc->sid = NULL;
-    cc->eid = NULL;
+    cc->shref = NULL;
+    cc->scpid = NULL;
+    cc->ehref = NULL;
+    cc->ecpid = NULL;
     cc->npoints = 0;
     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
 }
@@ -366,13 +368,21 @@ sp_connector_context_dispose(GObject *object)
             cc->endpt_handle[i] = NULL;
         }
     }
-    if (cc->sid) {
-        g_free(cc->sid);
-        cc->sid = NULL;
+    if (cc->shref) {
+        g_free(cc->shref);
+        cc->shref = NULL;
     }
-    if (cc->eid) {
-        g_free(cc->eid);
-        cc->eid = NULL;
+    if (cc->scpid) {
+        g_free(cc->scpid);
+        cc->scpid = NULL;
+    }
+    if (cc->ehref) {
+        g_free(cc->shref);
+        cc->shref = NULL;
+    }
+    if (cc->ecpid) {
+        g_free(cc->scpid);
+        cc->scpid = NULL;
     }
     g_assert( cc->newConnRef == NULL );
 
@@ -570,8 +580,8 @@ cc_clear_active_conn(SPConnectorContext *cc)
 }
 
 
-static gchar *
-conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p)
+static bool
+conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p, gchar **href, gchar **cpid)
 {
     // TODO: this will need to change when there are more connection
     //       points available for each shape.
@@ -580,10 +590,13 @@ conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p)
     {
         p = cc->active_handle->pos;
         const ConnectionPoint& cp = cc->connpthandles[cc->active_handle];
-        return g_strdup_printf("#%s_%c_%d", SP_OBJECT_ID(cc->active_shape),
-                               cp.type == ConnPointDefault ? 'd' : 'u' , cp.id);
+        *href = g_strdup_printf("#%s", SP_OBJECT_ID(cc->active_shape));
+        *cpid = g_strdup_printf("%c%d", cp.type == ConnPointDefault ? 'd' : 'u' , cp.id);
+        return true;
     }
-    return NULL;
+    *href = NULL;
+    *cpid = NULL;
+    return false;
 }
 
 static void
@@ -769,9 +782,9 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                         Geom::Point p = event_dt;
 
                         // Test whether we clicked on a connection point
-                        cc->sid = conn_pt_handle_test(cc, p);
+                        bool found = conn_pt_handle_test(cc, p, &cc->shref, &cc->scpid);
 
-                        if (!cc->sid) {
+                        if (!found) {
                             // This is the first point, so just snap it to the grid
                             // as there's no other points to go off.
                             m.freeSnapReturnByRef(p, Inkscape::SNAPSOURCE_OTHER_HANDLE);
@@ -791,7 +804,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                     spcc_connector_set_subsequent_point(cc, p);
                     spcc_connector_finish_segment(cc, p);
                     // Test whether we clicked on a connection point
-                    cc->eid = conn_pt_handle_test(cc, p);
+                    /*bool found = */conn_pt_handle_test(cc, p, &cc->ehref, &cc->ecpid);
                     if (cc->npoints != 0) {
                         spcc_connector_finish(cc);
                     }
@@ -1035,7 +1048,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                     spcc_connector_set_subsequent_point(cc, p);
                     spcc_connector_finish_segment(cc, p);
                     // Test whether we clicked on a connection point
-                    cc->eid = conn_pt_handle_test(cc, p);
+                    /*bool found = */conn_pt_handle_test(cc, p, &cc->ehref, &cc->ecpid);
                     if (cc->npoints != 0) {
                         spcc_connector_finish(cc);
                     }
@@ -1265,16 +1278,21 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
     if (p != NULL)
     {
         // Test whether we clicked on a connection point
-        gchar *shape_label = conn_pt_handle_test(cc, *p);
+        gchar *shape_label, *cpid;
+        bool found = conn_pt_handle_test(cc, *p, &shape_label, &cpid);
 
-        if (shape_label) {
+        if (found) {
             if (cc->clickedhandle == cc->endpt_handle[0]) {
                 sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-start",shape_label, false);
+                        "inkscape:connection-start", shape_label, false);
+                sp_object_setAttribute(cc->clickeditem,
+                        "inkscape:connection-start-point", cpid, false);
             }
             else {
                 sp_object_setAttribute(cc->clickeditem,
-                        "inkscape:connection-end",shape_label, false);
+                        "inkscape:connection-end", shape_label, false);
+                sp_object_setAttribute(cc->clickeditem,
+                        "inkscape:connection-end-point", cpid, false);
             }
             g_free(shape_label);
         }
@@ -1417,17 +1435,23 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
                 cc->isOrthogonal ? "orthogonal" : "polyline", false);
         sp_object_setAttribute(cc->newconn, "inkscape:connector-curvature",
                 Glib::Ascii::dtostr(cc->curvature).c_str(), false);
-        if (cc->sid)
+        if (cc->shref)
         {
             sp_object_setAttribute(cc->newconn, "inkscape:connection-start",
-                    cc->sid, false);
+                    cc->shref, false);
+            if (cc->scpid)
+                sp_object_setAttribute(cc->newconn, "inkscape:connection-start-point",
+                        cc->scpid, false);
             connection = true;
         }
 
-        if (cc->eid)
+        if (cc->ehref)
         {
             sp_object_setAttribute(cc->newconn, "inkscape:connection-end",
-                    cc->eid, false);
+                    cc->ehref, false);
+            if (cc->ecpid)
+                sp_object_setAttribute(cc->newconn, "inkscape:connection-end-point",
+                        cc->ecpid, false);
             connection = true;
         }
         // Process pending updates.

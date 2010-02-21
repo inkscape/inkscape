@@ -21,6 +21,9 @@ static void change_endpts(SPCurve *const curve, double const endPos[2]);
 SPConnEnd::SPConnEnd(SPObject *const owner) :
     ref(owner),
     href(NULL),
+    // Default to center connection endpoint
+    type(ConnPointDefault),
+    id(4),
     _changed_connection(),
     _delete_connection(),
     _transformed_connection()
@@ -228,9 +231,10 @@ sp_conn_end_deleted(SPObject *, SPObject *const owner, unsigned const handle_ix)
     // todo: The first argument is the deleted object, or just NULL if
     //       called by sp_conn_end_detach.
     g_return_if_fail(handle_ix < 2);
-    char const *const attr_str[] = {"inkscape:connection-start",
-                                    "inkscape:connection-end"};
-    SP_OBJECT_REPR(owner)->setAttribute(attr_str[handle_ix], NULL);
+    char const * const attr_strs[] = {"inkscape:connection-start", "inkscape:connection-start-point",
+                                      "inkscape:connection-end", "inkscape:connection-end-point"};
+    SP_OBJECT_REPR(owner)->setAttribute(attr_strs[2*handle_ix], NULL);
+    SP_OBJECT_REPR(owner)->setAttribute(attr_strs[2*handle_ix+1], NULL);
     /* I believe this will trigger sp_conn_end_href_changed. */
 }
 
@@ -245,7 +249,9 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* /*path*/)
 {
     if ( value && href && ( strcmp(value, href) == 0 ) ) {
         /* No change, do nothing. */
-    } else {
+    } 
+    else 
+    {
         if (!value)
         {
             ref.detach();
@@ -254,124 +260,17 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* /*path*/)
         }
         else
         {
-
-            /* References to the connection points have the following format
-               #svguri_t_id, where #svguri is the id of the item the
-               connector is attached to, t is the type of the point, which
-               can be either "d" for default or "u" for user-defined, and
-               id is the local (inside the item) id of the connection point.
-               In the case of default points id represents the position on the
-               item (i.e. Top-Left, Centre-Centre, etc.).
-            */
-
-            gchar ** href_strarray = NULL;
-            if (href)
-                href_strarray = g_strsplit(href, "_", 0);
-            gchar ** value_strarray = g_strsplit(value, "_", 0);
-
-            g_free(href);
-            href = NULL;
-
-            bool changed = false;
             bool validRef = true;
-
-            if ( !href_strarray || g_strcmp0(href_strarray[0], value_strarray[0]) != 0 )
-            {
-                // The href has changed, so update it.
-                changed = true;
-                // Set the href field, because sp_conn_end_href_changed will need it.
-                href = g_strdup(value);
-                // Now do the attaching, which emits the changed signal.
-                try {
-                    ref.attach(Inkscape::URI(value_strarray[0]));
-                } catch (Inkscape::BadURIException &e) {
-                    /* TODO: Proper error handling as per
-                    * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.  (Also needed for
-                    * sp-use.) */
-                    g_warning("%s", e.what());
-                    validRef = false;
-                }
-            }
-            // Check to see if the connection point changed and update it.
-            //
-
-            if ( !value_strarray[1] )
-            {
-                /* Treat the old references to connection points
-                   as default points that connect to the centre
-                   of the item.
-                */
-                if ( type != ConnPointDefault )
-                {
-                    type = ConnPointDefault;
-                    changed = true;
-                }
-                if ( id != ConnPointPosCC )
-                {
-                    id = ConnPointPosCC;
-                    changed = true;
-                }
-            }
-            else
-            {
-                switch (value_strarray[1][0])
-                {
-                    case 'd':
-                        if ( type != ConnPointDefault )
-                        {
-                            type = ConnPointDefault;
-                            changed = true;
-                        }
-                        break;
-                    case 'u':
-                        if ( type != ConnPointUserDefined)
-                        {
-                            type = ConnPointUserDefined;
-                            changed = true;
-                        }
-                        break;
-                    default:
-                        g_warning("Bad reference to a connection point.");
-                        validRef = false;
-                }
-                if ( value_strarray[2] )
-                {
-                    int newId = (int) g_ascii_strtod( value_strarray[2], 0 );
-                    if ( id != newId )
-                    {
-                        id = newId;
-                        changed = true;
-                    }
-
-                }
-                else
-                {
-                    // We have a malformed reference to a connection point,
-                    // emit a warning, clear href and detach ref.
-                    changed = true;
-                    g_warning("Bad reference to a connection point.");\
-                    validRef = false;
-                }
-            }
-
-            if ( changed )
-            {
-                // We still have to verify that the reference to the
-                // connection point is a valid one.
-
-                // Get the item the connector is attached to
-                SPItem* item = ref.getObject();
-                if ( item && !item->avoidRef->isValidConnPointId( type, id ) )
-                {
-                    g_warning("Bad reference to a connection point.");
-                    validRef = false;
-                }
-/*                else
-                    // Update the connector
-                    if (path->connEndPair.isAutoRoutingConn()) {
-                        path->connEndPair.tellLibavoidNewEndpoints();
-                    }
-*/
+            href = g_strdup(value);
+            // Now do the attaching, which emits the changed signal.
+            try {
+                ref.attach(Inkscape::URI(value));
+            } catch (Inkscape::BadURIException &e) {
+                /* TODO: Proper error handling as per
+                * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.  (Also needed for
+                * sp-use.) */
+                g_warning("%s", e.what());
+                validRef = false;
             }
 
             if ( !validRef )
@@ -380,12 +279,85 @@ SPConnEnd::setAttacherHref(gchar const *value, SPPath* /*path*/)
                 g_free(href);
                 href = NULL;
             }
-            else
-                if (!href)
-                    href = g_strdup(value);
+        }
+    }
+}
 
-            g_strfreev(href_strarray);
-            g_strfreev(value_strarray);
+void
+SPConnEnd::setAttacherEndpoint(gchar const *value, SPPath* /*path*/)
+{
+    
+    /* References to the connection points have the following format
+        <t><id>, where t is the type of the point, which
+        can be either "d" for default or "u" for user-defined, and
+        id is the local (inside the item) id of the connection point.
+        In the case of default points id represents the position on the
+        item (i.e. Top-Left, Center-Center, etc.).
+    */
+    
+    bool changed = false;
+    ConnPointType newtype = type;
+    
+    if (!value)
+    {
+        // Default to center endpoint
+        type = ConnPointDefault;
+        id = 4;
+    }
+    else
+    {
+        switch (value[0])
+        {
+            case 'd':
+                if ( newtype != ConnPointDefault )
+                {
+                    newtype = ConnPointDefault;
+                    changed = true;
+                }
+                break;
+            case 'u':
+                if ( newtype != ConnPointUserDefined)
+                {
+                    newtype = ConnPointUserDefined;
+                    changed = true;
+                }
+                break;
+            default:
+                g_warning("Bad reference to a connection point.");
+        }
+        
+        int newid = (int) g_ascii_strtod( value+1, 0 );
+        if ( id != newid )
+        {
+            id = newid;
+            changed = true;
+        }
+
+        // We have to verify that the reference to the
+        // connection point is a valid one.
+        
+        if ( changed )
+        {
+
+            // Get the item the connector is attached to
+            SPItem* item = ref.getObject();
+            if ( item )
+            {
+                if (!item->avoidRef->isValidConnPointId( newtype, newid ) )
+                {
+                    g_warning("Bad reference to a connection point.");
+                }
+                else
+                {
+                    type = newtype;
+                    id = newid;
+                }
+    /*          // Update the connector
+                if (path->connEndPair.isAutoRoutingConn()) {
+                    path->connEndPair.tellLibavoidNewEndpoints();
+                }
+    */
+            }
         }
     }
 }
