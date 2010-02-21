@@ -6,7 +6,7 @@
  *   Diederik van Lierop
  *
  * Copyright (C) Johan Engelen 2009 <j.b.c.engelen@utwente.nl>
- * Copyright (C) Diederik van Lierop 2009 <mail@diedenrezi.nl>
+ * Copyright (C) Diederik van Lierop 2010 <mail@diedenrezi.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -31,6 +31,7 @@ SnapIndicator::SnapIndicator(SPDesktop * desktop)
         _snaptarget_tooltip(NULL),
         _snaptarget_bbox(NULL),
         _snapsource(NULL),
+        _snaptarget_is_presnap(false),
         _desktop(desktop)
 {
 }
@@ -240,6 +241,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
 
         SP_CTRL(canvasitem)->moveto(p.getPoint());
         _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
+        _snaptarget_is_presnap = pre_snap;
 
         // Display the tooltip, which reveals the type of snap source and the type of snap target
         gchar *tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
@@ -271,11 +273,16 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
 }
 
 void
-SnapIndicator::remove_snaptarget()
+SnapIndicator::remove_snaptarget(bool only_if_presnap)
 {
+    if (only_if_presnap && !_snaptarget_is_presnap) {
+        return;
+    }
+
     if (_snaptarget) {
         _desktop->remove_temporary_canvasitem(_snaptarget);
         _snaptarget = NULL;
+        _snaptarget_is_presnap = false;
     }
 
     if (_snaptarget_tooltip) {

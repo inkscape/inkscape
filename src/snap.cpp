@@ -224,7 +224,7 @@ void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
         if (s.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(s, true);
         } else {
-            _desktop->snapindicator->remove_snaptarget();
+            _desktop->snapindicator->remove_snaptarget(true);
         }
         _snapindicator = true; // restore the original value
     }

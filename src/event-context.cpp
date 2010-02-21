@@ -8,7 +8,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1194,8 +1194,7 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec,
         // Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
         // i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
         // be fully at stand still and might keep spitting out motion events.
-        ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(
-                true); // put snapping on hold
+        ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
 
         Geom::Point event_pos(event->x, event->y);
         guint32 event_t = gdk_event_get_time((GdkEvent *) event);
@@ -1331,6 +1330,7 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
 void sp_event_context_discard_delayed_snap_event(SPEventContext *ec) {
     delete ec->_delayed_snap_event;
     ec->_delayed_snap_event = NULL;
+    ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
 }
 
 /*

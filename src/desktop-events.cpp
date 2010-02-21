@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
+ * Copyright (C) 1999-2010 Others
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -156,6 +157,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             break;
     case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
+                sp_event_context_discard_delayed_snap_event(desktop->event_context);
+
                 gdk_pointer_ungrab(event->button.time);
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
@@ -168,8 +171,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
 
                 dragging = false;
-
-                sp_event_context_discard_delayed_snap_event(desktop->event_context);
 
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
@@ -184,14 +185,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                                      _("Create guide"));
                 }
                 desktop->set_coordinate_status(from_2geom(event_dt));
-
-                // A dt_ruler_event might be emitted when dragging a guide of the rulers
-                // while drawing a Bezier curve. In such a situation, we're already in that
-                // specific context and the snap delay is already active. We should interfere
-                // with that context and we should therefore leave the snap delay status
-                // as it is. So although it might have been set to active above on
-                // GDK_BUTTON_PRESS, we should not set it back to inactive here. That must be
-                // done by the context.
             }
     default:
             break;
@@ -341,6 +334,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
     case GDK_BUTTON_RELEASE:
             if (drag_type != SP_DRAG_NONE && event->button.button == 1) {
+                sp_event_context_discard_delayed_snap_event(desktop->event_context);
+
                 if (moved) {
                     Geom::Point const event_w(event->button.x,
                                               event->button.y);
@@ -402,7 +397,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Delete guide"));
                     }
-                    sp_event_context_discard_delayed_snap_event(desktop->event_context);
                     moved = false;
                     desktop->set_coordinate_status(from_2geom(event_dt));
                     desktop->setPosition (from_2geom(event_dt));

@@ -9,7 +9,7 @@
  *   Diederik van Lierop
  *
  * Copyright (C) Johan Engelen 2008 <j.b.c.engelen@utwente.nl>
- * Copyright (C) Diederik van Lierop 2008 <mail@diedenrezi.nl>
+ * Copyright (C) Diederik van Lierop 2010 <mail@diedenrezi.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -27,7 +27,7 @@ public:
     virtual ~SnapIndicator();
 
     void set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap = false);
-    void remove_snaptarget();
+    void remove_snaptarget(bool only_if_presnap = false);
 
     void set_new_snapsource(Inkscape::SnapCandidatePoint const &p);
     void remove_snapsource();
@@ -37,6 +37,7 @@ protected:
     TemporaryItem *_snaptarget_tooltip;
     TemporaryItem *_snaptarget_bbox;
     TemporaryItem *_snapsource;
+    bool _snaptarget_is_presnap;
     SPDesktop *_desktop;
 
 private:
