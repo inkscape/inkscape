@@ -76,7 +76,7 @@ static bool pen_within_tolerance = false;
 static SPDrawContextClass *pen_parent_class;
 
 static int pen_next_paraxial_direction(const SPPenContext *const pc, Geom::Point const &pt, Geom::Point const &origin, guint state);
-static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state);
+static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state, bool snap);
 
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
@@ -298,20 +298,21 @@ sp_pen_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 static void
 spdc_endpoint_snap(SPPenContext const *const pc, Geom::Point &p, guint const state)
 {
-    if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
+    if ((state & GDK_CONTROL_MASK) && !pc->polylines_paraxial) { //CTRL enables angular snapping
         if (pc->npoints > 0) {
             spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
         }
     } else {
-        if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
-                                         //After all, the user explicitely asked for angular snapping by
-                                         //pressing CTRL
+        // We cannot use shift here to disable snapping because the shift-key is already used
+        // to toggle the paraxial direction; if the user wants to disable snapping (s)he will
+        // have to use the %-key, the menu, or the snap toolbar
+        if ((pc->npoints > 0) && pc->polylines_paraxial) {
+            // snap constrained
+            pen_set_to_nearest_horiz_vert(pc, p, state, true);
+        } else {
+            // snap freely
             spdc_endpoint_snap_free(pc, p, state);
         }
-    }
-    if (pc->polylines_paraxial) {
-        // TODO: must we avoid one of the snaps in the previous case distinction in some situations?
-        pen_set_to_nearest_horiz_vert(pc, p, state);
     }
 }
 
@@ -507,11 +508,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
                                 /* Create green anchor */
                                 p = event_dt;
-                                if (!pc->polylines_paraxial) {
-                                    // only snap the starting point if we're not in horizontal/vertical mode
-                                    // because otherwise it gets shifted; TODO: why do we snap here at all??
-                                    spdc_endpoint_snap(pc, p, bevent.state);
-                                }
+                                spdc_endpoint_snap(pc, p, bevent.state);
                                 pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, p);
                             }
                             spdc_pen_set_initial_point(pc, p);
@@ -1259,7 +1256,7 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, Geom::Point const p, bool 
     if (pc->polylines_paraxial && !statusbar) {
         // we are drawing horizontal/vertical lines and hit an anchor; draw an L-shaped path
         Geom::Point intermed = p;
-        pen_set_to_nearest_horiz_vert(pc, intermed, status);
+        pen_set_to_nearest_horiz_vert(pc, intermed, status, false);
         pc->red_curve->lineto(intermed);
         pc->red_curve->lineto(p);
         is_curve = false;
@@ -1446,18 +1443,33 @@ static int pen_next_paraxial_direction(const SPPenContext *const pc,
     }
 }
 
-void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state)
+void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state, bool snap)
 {
     Geom::Point const &origin = pc->p[0];
 
     int next_dir = pen_next_paraxial_direction(pc, pt, origin, state);
 
-    if (next_dir == 0) {
-        // line is forced to be horizontal
-        pt[Geom::Y] = origin[Geom::Y];
+    if (!snap) {
+        if (next_dir == 0) {
+            // line is forced to be horizontal
+            pt[Geom::Y] = origin[Geom::Y];
+        } else {
+            // line is forced to be vertical
+            pt[Geom::X] = origin[Geom::X];
+        }
     } else {
-        // line is forced to be vertical
-        pt[Geom::X] = origin[Geom::X];
+        // Create a horizontal or vertical constraint line
+        Inkscape::Snapper::ConstraintLine cl(origin, next_dir ? Geom::Point(0, 1) : Geom::Point(1, 0));
+
+        // Snap along the constraint line; if we didn't snap then still the constraint will be applied
+        SnapManager &m = pc->desktop->namedview->snap_manager;
+
+        Inkscape::Selection *selection = sp_desktop_selection (pc->desktop);
+        // selection->singleItem() is the item that is currently being drawn. This item will not be snapped to (to avoid self-snapping)
+        // TODO: Allow snapping to the stationary parts of the item, and only ignore the last segment
+
+        m.setup(pc->desktop, true, selection->singleItem());
+        m.constrainedSnapReturnByRef(pt, Inkscape::SNAPSOURCE_NODE_HANDLE, cl);
     }
 }
 

@@ -42,7 +42,8 @@ enum SnapTargetType {
     SNAPTARGET_CENTER, // of ellipse
     SNAPTARGET_CORNER, // of image or of rectangle
     SNAPTARGET_TEXT_BASELINE,
-    SNAPTARGET_CONSTRAINED_ANGLE
+    SNAPTARGET_CONSTRAINED_ANGLE,
+    SNAPTARGET_CONSTRAINT
 };
 
 enum SnapSourceType {

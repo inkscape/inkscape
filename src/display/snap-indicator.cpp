@@ -143,6 +143,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_CONSTRAINED_ANGLE:
                 target_name = _("constrained angle");
                 break;
+            case SNAPTARGET_CONSTRAINT:
+                target_name = _("constraint");
+                break;
             default:
                 g_warning("Snap target has not yet been defined!");
                 break;

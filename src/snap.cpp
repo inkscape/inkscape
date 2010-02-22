@@ -357,9 +357,14 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
     // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p.getPoint());
 
+    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, Geom::L2(pp - p.getPoint()), 0, false, false);
+
     if (!someSnapperMightSnap()) {
-        // The constraint should always be enforce, so we return pp here instead of p
-        return Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
+        // The constraint should always be enforced, so we return pp here instead of p
+        if (_snapindicator) {
+            _desktop->snapindicator->set_new_snaptarget(no_snap);
+        }
+        return no_snap;
     }
 
     // Then try to snap the projected point
@@ -371,7 +376,17 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
         (*i)->constrainedSnap(sc, candidate, bbox_to_snap, constraint, &_items_to_ignore);
     }
 
-    return findBestSnap(candidate, sc, true);
+    Inkscape::SnappedPoint result = findBestSnap(candidate, sc, true);
+
+    if (result.getSnapped()) {
+        return result;
+    }
+
+    // The constraint should always be enforced, so we return pp here instead of p
+    if (_snapindicator) {
+        _desktop->snapindicator->set_new_snaptarget(no_snap);
+    }
+    return no_snap;
 }
 
 /**
