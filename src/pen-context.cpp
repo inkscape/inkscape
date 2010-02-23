@@ -1331,6 +1331,7 @@ spdc_pen_finish_segment(SPPenContext *const pc, Geom::Point const p, guint const
     if (pc->polylines_paraxial) {
         pen_last_paraxial_dir = pen_next_paraxial_direction(pc, p, pc->p[0], state);
     }
+
     ++pc->num_clicks;
 
     if (!pc->red_curve->is_empty()) {
@@ -1430,7 +1431,11 @@ static int pen_next_paraxial_direction(const SPPenContext *const pc,
      * horizontal or vertical segment; for all subsequent mouse clicks, we use the direction
      * orthogonal to the last one; pressing Shift toggles the direction
      */
-    if (pc->num_clicks == 0) {
+    // num_clicks is not reliable because spdc_pen_finish_segment is sometimes called too early
+    // (on first mouse release), in which case num_clicks immediately becomes 1.
+    // if (pc->num_clicks == 0) {
+
+    if (pc->green_curve->is_empty()) {
         // first mouse click
         double dist_h = fabs(pt[Geom::X] - origin[Geom::X]);
         double dist_v = fabs(pt[Geom::Y] - origin[Geom::Y]);
