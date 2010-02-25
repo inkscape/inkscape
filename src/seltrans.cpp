@@ -1439,13 +1439,17 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 
     if (alt) {
 
-        /* Alt pressed means keep offset: snap the moved distance to the grid.
-        ** FIXME: this will snap to more than just the grid, nowadays.
-        */
+        // Alt pressed means: move only by integer multiples of the grid spacing
 
+        if (control) { // ... if also constrained to the orthogonal axes
+            if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
+                dxy[Geom::Y] = 0;
+            } else {
+                dxy[Geom::X] = 0;
+            }
+        }
         m.setup(_desktop, true, _items_const);
-        m.freeSnapReturnByRef(dxy, Inkscape::SNAPSOURCE_UNDEFINED);
-
+        dxy = m.multipleOfGridPitch(dxy, _point);
     } else if (shift) {
         if (control) { // shift & control: constrained movement without snapping
             if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {

@@ -75,7 +75,8 @@ enum SnapSourceType {
     SNAPSOURCE_GUIDE,
     SNAPSOURCE_GUIDE_ORIGIN,
     SNAPSOURCE_TEXT_BASELINE,
-    SNAPSOURCE_OTHER_HANDLE // eg. the handle of a gradient of a connector (ie not being tied to a stroke)
+    SNAPSOURCE_OTHER_HANDLE, // eg. the handle of a gradient of a connector (ie not being tied to a stroke)
+    SNAPSOURCE_GRID_PITCH, // eg. when pasting or alt-dragging in the selector tool; not realy a snap source
 };
 
 }

@@ -107,7 +107,7 @@ public:
 
     void preSnap(Inkscape::SnapCandidatePoint const &p);
 
-    Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
+    Geom::Point multipleOfGridPitch(Geom::Point const &t, Geom::Point const &origin);
 
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a
     // point, by overwriting p, if snapping has occurred; otherwise p is untouched

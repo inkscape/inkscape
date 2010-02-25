@@ -57,6 +57,7 @@ public:
      * determine itself which point is most appropriate
      */
     Geom::Point getPoint() const {return _point;}
+    void setPoint(Geom::Point const &p) {_point = p;}
 
     bool getAtIntersection() const {return _at_intersection;}
     bool getFullyConstrained() const {return _fully_constrained;}

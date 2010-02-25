@@ -208,6 +208,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPSOURCE_TEXT_BASELINE:
                 source_name = _("Text baseline");
                 break;
+            case SNAPSOURCE_GRID_PITCH:
+                source_name = _("Multiple of grid spacing");
+                break;
             default:
                 g_warning("Snap source has not yet been defined!");
                 break;
@@ -247,7 +250,12 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         _snaptarget_is_presnap = pre_snap;
 
         // Display the tooltip, which reveals the type of snap source and the type of snap target
-        gchar *tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
+        gchar *tooltip_str = NULL;
+        if (p.getSource() != SNAPSOURCE_GRID_PITCH) {
+            tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
+        } else {
+            tooltip_str = g_strdup(source_name);
+        }
         Geom::Point tooltip_pos = p.getPoint() + _desktop->w2d(Geom::Point(15, -15));
 
         SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);

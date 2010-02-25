@@ -249,15 +249,16 @@ void SnapManager::preSnap(Inkscape::SnapCandidatePoint const &p)
  * \return Offset vector after snapping to the closest multiple of a grid pitch
  */
 
-Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
+Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point const &origin)
 {
-    if (!snapprefs.getSnapEnabledGlobally()) // No need to check for snapprefs.getSnapPostponedGlobally() here
+    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally())
         return t;
 
     if (_desktop && _desktop->gridsEnabled()) {
         bool success = false;
         Geom::Point nearest_multiple;
         Geom::Coord nearest_distance = NR_HUGE;
+        Inkscape::SnappedPoint bestSnappedPoint(t);
 
         // It will snap to the grid for which we find the closest snap. This might be a different
         // grid than to which the objects were initially aligned. I don't see an easy way to fix
@@ -276,21 +277,28 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
                 Geom::Point const t_offset = t + grid->origin;
                 SnappedConstraints sc;
                 // Only the first three parameters are being used for grid snappers
-                snapper->freeSnap(sc, Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_UNDEFINED),Geom::OptRect(), NULL, NULL);
+                snapper->freeSnap(sc, Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH),Geom::OptRect(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
-                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_UNDEFINED), sc, false);
+                bool old_val = _snapindicator;
+                _snapindicator = false;
+                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false);
+                _snapindicator = old_val;
                 if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) {
                     // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
                     // doesn't tell us anything about which node to snap
                     success = true;
                     nearest_multiple = s.getPoint() - to_2geom(grid->origin);
                     nearest_distance = s.getSnapDistance();
+                    bestSnappedPoint = s;
                 }
             }
         }
 
-        if (success)
+        if (success) {
+            bestSnappedPoint.setPoint(origin + nearest_multiple);
+            _desktop->snapindicator->set_new_snaptarget(bestSnappedPoint);
             return nearest_multiple;
+        }
     }
 
     return t;

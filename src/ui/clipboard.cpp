@@ -822,11 +822,12 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
 
         if (!in_place) {
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, false); // Don't display the snapindicator
+            m.setup(desktop);
+            sp_event_context_discard_delayed_snap_event(desktop->event_context);
 
             // get offset from mouse pointer to bbox center, snap to grid if enabled
             Geom::Point mouse_offset = desktop->point() - sel_bbox->midpoint();
-            offset = m.multipleOfGridPitch(mouse_offset - offset) + offset;
+            offset = m.multipleOfGridPitch(mouse_offset - offset, sel_bbox->midpoint() + offset) + offset;
         }
 
         sp_selection_move_relative(selection, offset);
