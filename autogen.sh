@@ -86,7 +86,10 @@ fi
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 # Prefer earlier versions just so that the earliest supported version gets test coverage by developers.
-if (automake-1.10 --version) < /dev/null > /dev/null 2>&1; then
+if (automake-1.11 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.11
+   ACLOCAL=aclocal-1.11
+elif (automake-1.10 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.10
    ACLOCAL=aclocal-1.10
 elif (automake --version) < /dev/null > /dev/null 2>&1; then
