@@ -56,6 +56,10 @@ public:
 
     /** Traverses the object tree and invokes the render methods. */
     void renderItem(CairoRenderContext *ctx, SPItem *item);
+
+    /** If _omitText is true, no text will be output to the PDF document.
+        The PDF will be exactly the same as if the text was written to it and then erased. */
+    bool _omitText;
 };
 
 // FIXME: this should be a static method of CairoRenderer

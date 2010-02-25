@@ -109,6 +109,8 @@ ink_common_sources +=	\
 	extension/internal/javafx-out.h	\
 	extension/internal/gdkpixbuf-input.h	\
 	extension/internal/gdkpixbuf-input.cpp	\
+	extension/internal/latex-text-renderer.h \
+	extension/internal/latex-text-renderer.cpp \
 	extension/internal/pdfinput/svg-builder.h \
 	extension/internal/pdfinput/svg-builder.cpp \
 	extension/internal/pdfinput/pdf-parser.h \

@@ -5,8 +5,9 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *   Ulf Erikson <ulferikson@users.sf.net>
+ *   Johan Engelen <goejendaagh@zonnet.nl>
  *
- * Copyright (C) 2004-2006 Authors
+ * Copyright (C) 2004-2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -20,6 +21,7 @@
 #include "cairo-renderer-pdf-out.h"
 #include "cairo-render-context.h"
 #include "cairo-renderer.h"
+#include "latex-text-renderer.h"
 #include <print.h>
 #include "extension/system.h"
 #include "extension/print.h"
@@ -32,6 +34,8 @@
 #include "display/canvas-bpath.h"
 #include "sp-item.h"
 #include "sp-root.h"
+
+#include <2geom/matrix.h>
 
 namespace Inkscape {
 namespace Extension {
@@ -48,7 +52,7 @@ CairoRendererPdfOutput::check (Inkscape::Extension::Extension * module)
 
 static bool
 pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level,
-                            bool texttopath, bool filtertobitmap, int resolution,
+                            bool texttopath, bool omittext, bool filtertobitmap, int resolution,
                             const gchar * const exportId, bool exportDrawing, bool exportCanvas)
 {
     sp_document_ensure_up_to_date(doc);
@@ -83,6 +87,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     CairoRenderContext *ctx = renderer->createContext();
     ctx->setPDFLevel(level);
     ctx->setTextToPath(texttopath);
+    renderer->_omitText = omittext;
     ctx->setFilterToBitmap(filtertobitmap);
     ctx->setBitmapResolution(resolution);
 
@@ -105,7 +110,6 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
 
     return ret;
 }
-
 
 /**
     \brief  This function calls the output module with the filename
@@ -144,6 +148,14 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
     }
     catch(...) {
         g_warning("Parameter <textToPath> might not exist");
+    }
+
+    bool new_textToLaTeX  = FALSE;
+    try {
+        new_textToLaTeX  = mod->get_param_bool("textToLaTeX");
+    }
+    catch(...) {
+        g_warning("Parameter <textToLaTeX> might not exist");
     }
 
     bool new_blurToBitmap  = FALSE;
@@ -186,15 +198,31 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
         g_warning("Parameter <exportCanvas> might not exist");
     }
 
-    gchar * final_name;
-    final_name = g_strdup_printf("> %s", filename);
-    ret = pdf_render_document_to_file(doc, final_name, level,
-                                      new_textToPath, new_blurToBitmap, new_bitmapResolution,
-                                      new_exportId, new_exportDrawing, new_exportCanvas);
-    g_free(final_name);
+    // Create PDF file
+    {
+        gchar * final_name;
+        final_name = g_strdup_printf("> %s", filename);
+        ret = pdf_render_document_to_file(doc, final_name, level,
+                                          new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution,
+                                          new_exportId, new_exportDrawing, new_exportCanvas);
+        g_free(final_name);
 
-    if (!ret)
-        throw Inkscape::Extension::Output::save_failed();
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
+
+    // Create LaTeX file (if requested)
+    if (new_textToLaTeX) {
+        gchar * tex_filename;
+        //strip filename of ".pdf", do not add ".tex" here.
+        gsize n = g_str_has_suffix(filename, ".pdf") ? strlen(filename)-4 : strlen(filename);
+        tex_filename = g_strndup(filename, n);
+        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_exportDrawing, new_exportCanvas);
+        g_free(tex_filename);
+
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
 }
 
 #include "clear-n_.h"
@@ -217,6 +245,7 @@ CairoRendererPdfOutput::init (void)
 				"<_item value='PDF14'>" N_("PDF 1.4") "</_item>\n"
 			"</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">false</param>\n"

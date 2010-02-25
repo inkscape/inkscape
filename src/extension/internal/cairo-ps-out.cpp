@@ -21,6 +21,7 @@
 #include "cairo-ps-out.h"
 #include "cairo-render-context.h"
 #include "cairo-renderer.h"
+#include "latex-text-renderer.h"
 #include <print.h>
 #include "extension/system.h"
 #include "extension/print.h"
@@ -61,7 +62,8 @@ bool CairoEpsOutput::check (Inkscape::Extension::Extension * /*module*/)
 }
 
 static bool
-ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
+ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool omittext,
+                          bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
 {
     sp_document_ensure_up_to_date(doc);
 
@@ -93,6 +95,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     ctx->setPSLevel(level);
     ctx->setEPS(eps);
     ctx->setTextToPath(texttopath);
+    renderer->_omitText = omittext;
     ctx->setFilterToBitmap(filtertobitmap);
     ctx->setBitmapResolution(resolution);
 
@@ -146,6 +149,14 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
         new_textToPath  = mod->get_param_bool("textToPath");
     } catch(...) {}
 
+    bool new_textToLaTeX  = FALSE;
+    try {
+        new_textToLaTeX  = mod->get_param_bool("textToLaTeX");
+    }
+    catch(...) {
+        g_warning("Parameter <textToLaTeX> might not exist");
+    }
+
     bool new_blurToBitmap  = FALSE;
     try {
         new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
@@ -171,13 +182,29 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
         new_exportId = mod->get_param_string("exportId");
     } catch(...) {}
 
-	gchar * final_name;
-	final_name = g_strdup_printf("> %s", filename);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage);
-	g_free(final_name);
+    // Create PS
+    {
+        gchar * final_name;
+        final_name = g_strdup_printf("> %s", filename);
+        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage);
+        g_free(final_name);
 
-	if (!ret)
-	    throw Inkscape::Extension::Output::save_failed();
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
+
+    // Create LaTeX file (if requested)
+    if (new_textToLaTeX) {
+        gchar * tex_filename;
+        //strip filename of ".ps", do not add ".tex" here.
+        gsize n = g_str_has_suffix(filename, ".ps") ? strlen(filename)-3 : strlen(filename);
+        tex_filename = g_strndup(filename, n);
+        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage);
+        g_free(tex_filename);
+
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
 }
 
 
@@ -210,6 +237,14 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
         new_textToPath  = mod->get_param_bool("textToPath");
     } catch(...) {}
 
+    bool new_textToLaTeX  = FALSE;
+    try {
+        new_textToLaTeX  = mod->get_param_bool("textToLaTeX");
+    }
+    catch(...) {
+        g_warning("Parameter <textToLaTeX> might not exist");
+    }
+
     bool new_blurToBitmap  = FALSE;
     try {
         new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
@@ -235,13 +270,29 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
         new_exportId = mod->get_param_string("exportId");
     } catch(...) {}
 
-	gchar * final_name;
-	final_name = g_strdup_printf("> %s", filename);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage, true);
-	g_free(final_name);
+    // Create EPS
+    {
+        gchar * final_name;
+        final_name = g_strdup_printf("> %s", filename);
+        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage, true);
+        g_free(final_name);
 
-	if (!ret)
-	    throw Inkscape::Extension::Output::save_failed();
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
+
+    // Create LaTeX file (if requested)
+    if (new_textToLaTeX) {
+        gchar * tex_filename;
+        //strip filename of ".eps", do not add ".tex" here.
+        gsize n = g_str_has_suffix(filename, ".eps") ? strlen(filename)-4 : strlen(filename);
+        tex_filename = g_strndup(filename, n);
+        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage);
+        g_free(tex_filename);
+
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
+    }
 }
 
 
@@ -280,6 +331,7 @@ CairoPsOutput::init (void)
 #endif
             "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"textToLaTeX\" gui-text=\"" N_("PS+LaTeX: Omit text in PS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"
@@ -317,6 +369,7 @@ CairoEpsOutput::init (void)
 #endif
             "</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"textToLaTeX\" gui-text=\"" N_("EPS+LaTeX: Omit text in EPS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi)") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
 			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"

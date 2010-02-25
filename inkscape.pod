@@ -32,6 +32,7 @@ options:
     -P, --export-ps=FILENAME
     -E, --export-eps=FILENAME
     -A, --export-pdf=FILENAME
+        --export-latex
 
     -T, --export-text-to-path
         --export-ignore-filters
@@ -266,6 +267,18 @@ transparency in the original SVG. Used fonts are subset and embedded.
 The default export area is page; you can set it to drawing by --export-area-drawing. You can 
 specify --export-id to export a single object (all other are hidden); in that case 
 export area is that object's bounding box, but can be set to page by --export-area-page.
+
+=item B<--export-latex>
+
+(for PS, EPS, and PDF export)
+Used for creating images for LaTeX documents, where the image's text is typeset by LaTeX.
+When exporting to PDF/PS/EPS format, this option splits the output into a PDF/PS/EPS file 
+(e.g. as specified by --export-pdf) and a LaTeX file. Text will not be output in 
+the PDF/PS/EPS file, but instead will appear in the LaTeX file. This LaTeX file 
+includes the PDF/PS/EPS. Inputting (\input{image.tex}) the LaTeX file in your LaTeX
+document will show the image and all text will be typeset by LaTeX. See the
+resulting LaTeX file for more information.
+Also see GNUPlot's `epslatex' output terminal.
 
 =item B<-T>, B<--export-text-to-path>
 
