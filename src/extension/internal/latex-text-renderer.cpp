@@ -317,7 +317,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
 }
 
 void
-LaTeXTextRenderer::sp_flowtext_render(SPItem *item)
+LaTeXTextRenderer::sp_flowtext_render(SPItem * /*item*/)
 {
 /*    SPFlowtext *group = SP_FLOWTEXT(item);
 
@@ -402,8 +402,6 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 
     if (!pageBoundingBox)
     {
-        double high = sp_document_height(doc);
-
         push_transform( Geom::Translate( - d->min() ) );
     }
 
