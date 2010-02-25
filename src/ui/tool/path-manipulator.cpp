@@ -66,11 +66,13 @@ public:
         Inkscape::GC::anchor(_node);
         _node->addObserver(*this);
     }
+
     ~PathManipulatorObserver() {
         _node->removeObserver(*this);
         Inkscape::GC::release(_node);
     }
-    virtual void notifyAttributeChanged(Inkscape::XML::Node &node, GQuark attr,
+
+    virtual void notifyAttributeChanged(Inkscape::XML::Node &/*node*/, GQuark attr,
         Util::ptr_shared<char>, Util::ptr_shared<char>)
     {
         // do nothing if blocked
@@ -87,6 +89,7 @@ public:
             _pm->_externalChange(PATH_CHANGE_TRANSFORM);
         }
     }
+
     void block() { _blocked = true; }
     void unblock() { _blocked = false; }
 private:

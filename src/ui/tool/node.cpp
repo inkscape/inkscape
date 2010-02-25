@@ -1218,7 +1218,7 @@ void NodeList::splice(iterator pos, NodeList &list, iterator i)
     splice(pos, list, i, j);
 }
 
-void NodeList::splice(iterator pos, NodeList &list, iterator first, iterator last)
+void NodeList::splice(iterator pos, NodeList &/*list*/, iterator first, iterator last)
 {
     ListNode *ins_beg = first._node, *ins_end = last._node, *at = pos._node;
     for (ListNode *ln = ins_beg; ln != ins_end; ln = ln->next) {
