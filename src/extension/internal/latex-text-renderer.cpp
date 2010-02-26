@@ -54,7 +54,8 @@ namespace Internal {
  */
 bool
 latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
-                                    const gchar * const exportId, bool exportDrawing, bool exportCanvas)
+                                    const gchar * const exportId, bool exportDrawing, bool exportCanvas,
+                                    bool pdflatex)
 {
     sp_document_ensure_up_to_date(doc);
 
@@ -76,7 +77,7 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
         return false;
 
     /* Create renderer */
-    LaTeXTextRenderer *renderer = new LaTeXTextRenderer();
+    LaTeXTextRenderer *renderer = new LaTeXTextRenderer(pdflatex);
 
     bool ret = renderer->setTargetFile(filename);
     if (ret) {
@@ -92,9 +93,10 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
     return ret;
 }
 
-LaTeXTextRenderer::LaTeXTextRenderer(void)
+LaTeXTextRenderer::LaTeXTextRenderer(bool pdflatex)
   : _stream(NULL),
-    _filename(NULL)
+    _filename(NULL),
+    _pdflatex(pdflatex)
 {
     push_transform(Geom::identity());
 }
@@ -185,11 +187,12 @@ static char const preamble[] =
 "\\begingroup\n"
 "  \\makeatletter\n"
 "  \\providecommand\\color[2][]{%\n"
-"    \\GenericError{(Inkscape) \\space\\space\\@spaces}{%\n"
-"      Color is used for the text in Inkscape, but the color package color is not loaded.\n"
-"    }{Either use black text in Inkscape or load the package\n"
-"      color.sty in LaTeX.}%\n"
+"    \\errmessage{(Inkscape) Color is used for the text in Inkscape, but the package \'color.sty\' is not loaded}\n"
 "    \\renewcommand\\color[2][]{}%\n"
+"  }\n"
+"  \\providecommand\\transparent[1]{%\n"
+"    \\errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package \'transparent.sty\' is not loaded}\n"
+"    \\renewcommand\\transparent[1]{}%\n"
 "  }\n"
 "  \\providecommand\\rotatebox[2]{#2}\n";
 
@@ -274,19 +277,25 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     Geom::Point anchor = textobj->attributes.firstXY() * transform();
     Geom::Point pos(anchor);
 
-    // determine color (for now, use rgb color model as it is most native to Inkscape)
+    // determine color and transparency (for now, use rgb color model as it is most native to Inkscape)
     bool has_color = false; // if the item has no color set, don't force black color
+    bool has_transparency = false;
     // TODO: how to handle ICC colors?
     // give priority to fill color
     guint32 rgba = 0;
+    float opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
     if (style->fill.set && style->fill.isColor()) {
         has_color = true;
         rgba = style->fill.value.color.toRGBA32(1.);
+        opacity *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
     } else if (style->stroke.set && style->stroke.isColor()) {
         has_color = true;
         rgba = style->stroke.value.color.toRGBA32(1.);
+        opacity *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
     }
-
+    if (opacity < 1.0) {
+        has_transparency = true;
+    }
 
     // get rotation
     Geom::Matrix i2doc = sp_item_i2doc_affine(item);
@@ -301,6 +310,9 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     os << "    \\put(" << pos[Geom::X] << "," << pos[Geom::Y] << "){";
     if (has_color) {
         os << "\\color[rgb]{" << SP_RGBA32_R_F(rgba) << "," << SP_RGBA32_G_F(rgba) << "," << SP_RGBA32_B_F(rgba) << "}";
+    }
+    if (_pdflatex && has_transparency) {
+        os << "\\transparent{" << opacity << "}";
     }
     if (has_rotation) {
         os << "\\rotatebox{" << degrees << "}{";

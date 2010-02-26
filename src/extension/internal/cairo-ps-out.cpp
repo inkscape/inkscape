@@ -199,7 +199,7 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
         //strip filename of ".ps", do not add ".tex" here.
         gsize n = g_str_has_suffix(filename, ".ps") ? strlen(filename)-3 : strlen(filename);
         tex_filename = g_strndup(filename, n);
-        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage);
+        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage, false);
         g_free(tex_filename);
 
         if (!ret)
@@ -287,7 +287,7 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
         //strip filename of ".eps", do not add ".tex" here.
         gsize n = g_str_has_suffix(filename, ".eps") ? strlen(filename)-4 : strlen(filename);
         tex_filename = g_strndup(filename, n);
-        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage);
+        ret = latex_render_document_text_to_file(doc, tex_filename, new_exportId, new_areaDrawing, new_areaPage, false);
         g_free(tex_filename);
 
         if (!ret)

@@ -27,11 +27,13 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-bool latex_render_document_text_to_file(SPDocument *doc, gchar const *filename, const gchar * const exportId, bool exportDrawing, bool exportCanvas);
+bool latex_render_document_text_to_file(SPDocument *doc, gchar const *filename,
+                                        const gchar * const exportId, bool exportDrawing, bool exportCanvas,
+                                        bool pdflatex);
 
 class LaTeXTextRenderer {
 public:
-    LaTeXTextRenderer();
+    LaTeXTextRenderer(bool pdflatex);
     virtual ~LaTeXTextRenderer();
 
     bool setTargetFile(gchar const *filename);
@@ -46,6 +48,8 @@ public:
 protected:
     FILE * _stream;
     gchar * _filename;
+
+    bool _pdflatex; /** true if ouputting for pdfLaTeX*/
 
     void push_transform(Geom::Matrix const &transform);
     Geom::Matrix const & transform();
