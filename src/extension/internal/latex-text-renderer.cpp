@@ -414,12 +414,12 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 
     // scaling of the image when including it in LaTeX
 
-    os << "  \\ifx \\svgwidth \\@empty\n";
+    os << "  \\ifx\\svgwidth\\undefined\n";
     os << "    \\setlength{\\unitlength}{" << d->width() * PT_PER_PX << "pt}\n";
     os << "  \\else\n";
     os << "    \\setlength{\\unitlength}{\\svgwidth}\n";
     os << "  \\fi\n";
-    os << "  \\global\\let\\svgwidth\\@empty\n";
+    os << "  \\global\\let\\svgwidth\\undefined\n";
     os << "  \\makeatother\n";
 
     os << "  \\begin{picture}(" << _width << "," << _height << ")%\n";
