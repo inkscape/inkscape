@@ -1169,6 +1169,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 sp_canvas_item_hide(pc->cl1);
                 pc->state = SP_PEN_CONTEXT_POINT;
                 spdc_pen_set_subsequent_point(pc, pt, true);
+                pen_last_paraxial_dir = !pen_last_paraxial_dir;
                 ret = TRUE;
             }
             break;
