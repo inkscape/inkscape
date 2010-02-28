@@ -36,6 +36,7 @@
 #include "sp-use.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
+#include "sp-rect.h"
 #include "text-editing.h"
 
 #include <unit-constants.h>
@@ -261,7 +262,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     // get position and alignment
     // Align vertically on the baseline of the font (retreived from the anchor point)
     // Align horizontally on anchorpoint
-    gchar *alignment = NULL;
+    gchar const *alignment = NULL;
     switch (style->text_anchor.computed) {
     case SP_CSS_TEXT_ANCHOR_START:
         alignment = "[lb]";
@@ -329,21 +330,107 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
 }
 
 void
-LaTeXTextRenderer::sp_flowtext_render(SPItem * /*item*/)
+LaTeXTextRenderer::sp_flowtext_render(SPItem * item)
 {
-/*    SPFlowtext *group = SP_FLOWTEXT(item);
+/*
+Flowtext is possible by using a minipage! :)
+Flowing in rectangle is possible, not in arb shape.
+*/
+
+    SPFlowtext *flowtext = SP_FLOWTEXT(item);
+    SPStyle *style = SP_OBJECT_STYLE (SP_OBJECT(item));
+
+    gchar *strtext = sp_te_get_string_multiline(item);
+    if (!strtext) {
+        return;
+    }
+    // replace carriage return with double slash
+    gchar ** splitstr = g_strsplit(strtext, "\n", -1);
+    gchar *str = g_strjoinv("\\\\ ", splitstr);
+    g_free(strtext);
+    g_strfreev(splitstr);
+
+    if (!flowtext->has_internal_frame()) {
+        // has_internal_frame includes a check that frame is a SPRect
+        g_warning("LaTeX export: non-rectangular flowed text shapes are not supported, skipping text.");
+        return; // don't know how to handle non-rect frames yet. is quite uncommon for latex users i think
+    }
+
+    SPRect *frame = SP_RECT(flowtext->get_frame(NULL));
+    Geom::Rect framebox = sp_rect_get_rect(frame) * transform();
+
+    // get position and alignment
+    // Align on topleft corner.
+    gchar const *alignment = "[lt]";
+    gchar const *justification = "";
+    switch (flowtext->layout.paragraphAlignment(flowtext->layout.begin())) {
+    case Inkscape::Text::Layout::LEFT:
+        justification = "\\raggedright";
+        break;
+    case Inkscape::Text::Layout::RIGHT:
+        justification = "\\raggedleft";
+        break;
+    case Inkscape::Text::Layout::CENTER:
+        justification = "\\centering";
+    case Inkscape::Text::Layout::FULL:
+    default:
+        // no need to add LaTeX code for standard justified output :)
+        break;
+    }
+    Geom::Point pos(framebox.corner(3)); //topleft corner
+
+    // determine color and transparency (for now, use rgb color model as it is most native to Inkscape)
+    bool has_color = false; // if the item has no color set, don't force black color
+    bool has_transparency = false;
+    // TODO: how to handle ICC colors?
+    // give priority to fill color
+    guint32 rgba = 0;
+    float opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
+    if (style->fill.set && style->fill.isColor()) {
+        has_color = true;
+        rgba = style->fill.value.color.toRGBA32(1.);
+        opacity *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
+    } else if (style->stroke.set && style->stroke.isColor()) {
+        has_color = true;
+        rgba = style->stroke.value.color.toRGBA32(1.);
+        opacity *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
+    }
+    if (opacity < 1.0) {
+        has_transparency = true;
+    }
+
+    // get rotation
+    Geom::Matrix i2doc = sp_item_i2doc_affine(item);
+    Geom::Matrix wotransl = i2doc.without_translation();
+    double degrees = -180/M_PI * Geom::atan2(wotransl.xAxis());
+    bool has_rotation = !Geom::are_near(degrees,0.);
 
     // write to LaTeX
     Inkscape::SVGOStringStream os;
-    os.setf(std::ios::fixed); // no scientific notation
+    os.setf(std::ios::fixed); // don't use scientific notation
 
-    os << "  \\begin{picture}(" << _width << "," << _height << ")%%\n";
-    os << "    \\gplgaddtomacro\\gplbacktext{%%\n";
-    os << "      \\csname LTb\\endcsname%%\n";
-    os << "\\put(0,0){\\makebox(0,0)[lb]{\\strut{}Position}}%%\n";
+    os << "    \\put(" << pos[Geom::X] << "," << pos[Geom::Y] << "){";
+    if (has_color) {
+        os << "\\color[rgb]{" << SP_RGBA32_R_F(rgba) << "," << SP_RGBA32_G_F(rgba) << "," << SP_RGBA32_B_F(rgba) << "}";
+    }
+    if (_pdflatex && has_transparency) {
+        os << "\\transparent{" << opacity << "}";
+    }
+    if (has_rotation) {
+        os << "\\rotatebox{" << degrees << "}{";
+    }
+    os << "\\makebox(0,0)" << alignment << "{";
+    os << "\\begin{minipage}{" << framebox.width() << "\\unitlength}";
+    os << justification;
+    os << str;
+    os << "\\end{minipage}";
+    if (has_rotation) {
+        os << "}"; // rotatebox end
+    }
+    os << "}"; //makebox end
+    os << "}%\n"; // put end
 
     fprintf(_stream, "%s", os.str().c_str());
-*/
 }
 
 void
