@@ -2,6 +2,7 @@
 Copyright (C) 2007 Martin Owens
 
 Debugged by Ralf Heinecke & Martin Siepmann 09/07/2007
+Debugged by Horst Schottky Feb. 27. 2010
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,7 +52,7 @@ class Object(Barcode):
 		# Split up into sections of numbers, or charicters
 		# This makes sure that all the charicters are encoded
 		# In the best way posible for Code128
-		for datum in re.findall(r'(?:(?:\d\d){2,})|.', text):
+		for datum in re.findall(r'(?:(?:\d\d){2,})|(?:^\d\d)|.', text):
 			if len(datum) == 1:
 				block = block + datum
 			else:
@@ -96,7 +97,7 @@ class Object(Barcode):
 
 			i = pos
 			if pos:
-				num = num + (math.abs(num - 102) * 2)
+				num = 204 - num
 			else:
 				i = 1
 
