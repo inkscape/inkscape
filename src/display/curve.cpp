@@ -51,10 +51,10 @@ SPCurve::new_from_rect(Geom::Rect const &rect)
     Geom::Point p = rect.corner(0);
     c->moveto(p);
 
-    for (int i=3; i>=0; i--) {
+    for (int i=3; i>=1; i--) {
         c->lineto(rect.corner(i));
     }
-    c->closepath_current();
+    c->closepath();
 
     return c;
 }

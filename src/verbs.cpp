@@ -767,7 +767,7 @@ FileVerb::perform(SPAction *action, void *data, void */*pdata*/)
     Gtk::Window *parent = desktop->getToplevel();
     g_assert(parent != NULL);
 
-    switch ((long) data) {
+    switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_FILE_NEW:
             sp_file_new_default();
             break;
@@ -1079,7 +1079,7 @@ void
 LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    unsigned int verb = reinterpret_cast<std::size_t>(data);
+    size_t verb = reinterpret_cast<std::size_t>(data);
 
     if ( !dt || !dt->currentLayer() ) {
         return;
@@ -1568,7 +1568,7 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
     gdouble zoom_inc =
         prefs->getDoubleLimited( "/options/zoomincrement/value", 1.414213562, 1.01, 10 );
 
-    switch (GPOINTER_TO_INT(data)) {
+    switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_ZOOM_IN:
         {
             gint mul = 1 + gobble_key_events(
@@ -2025,7 +2025,7 @@ EffectLastVerb::perform(SPAction *action, void *data, void */*pdata*/)
     if (effect == NULL) return;
     if (current_view == NULL) return;
 
-    switch ((long) data) {
+    switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EFFECT_LAST_PREF:
             effect->prefs(current_view);
             break;
@@ -2090,7 +2090,7 @@ FitCanvasVerb::perform(SPAction *action, void *data, void */*pdata*/)
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
 
-    switch ((long) data) {
+    switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_FIT_CANVAS_TO_SELECTION:
             verb_fit_canvas_to_selection(dt);
             break;
@@ -2159,7 +2159,7 @@ LockAndHideVerb::perform(SPAction *action, void *data, void */*pdata*/)
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
 
-    switch ((long) data) {
+    switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_UNLOCK_ALL:
             unlock_all(dt);
             sp_document_done(doc, SP_VERB_UNLOCK_ALL, _("Unlock all objects in the current layer"));
