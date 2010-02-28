@@ -657,9 +657,10 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
 
                         if (!anchor) {   /* Snap node only if not hitting anchor */
                             spdc_endpoint_snap(pc, p, mevent.state);
+                            spdc_pen_set_subsequent_point(pc, p, true, mevent.state);
+                        } else {
+                            spdc_pen_set_subsequent_point(pc, anchor->dp, false, mevent.state);
                         }
-
-                        spdc_pen_set_subsequent_point(pc, p, !anchor, mevent.state);
 
                         if (anchor && !pc->anchor_statusbar) {
                             pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to close and finish the path."));
@@ -1255,16 +1256,20 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, Geom::Point const p, bool 
     bool is_curve;
     pc->red_curve->moveto(pc->p[0]);
     if (pc->polylines_paraxial && !statusbar) {
-        // we are drawing horizontal/vertical lines and hit an anchor; draw an L-shaped path
-        Geom::Point intermed = p;
-        pen_set_to_nearest_horiz_vert(pc, intermed, status, false);
-        pc->red_curve->lineto(intermed);
+        // we are drawing horizontal/vertical lines and hit an anchor;
+        Geom::Point const origin = pc->p[0];
+        // if the previous point and the anchor are not aligned either horizontally or vertically...
+        if ((abs(p[Geom::X] - origin[Geom::X]) > 1e-9) && (abs(p[Geom::Y] - origin[Geom::Y]) > 1e-9)) {
+            // ...then we should draw an L-shaped path, consisting of two paraxial segments
+            Geom::Point intermed = p;
+            pen_set_to_nearest_horiz_vert(pc, intermed, status, false);
+            pc->red_curve->lineto(intermed);
+        }
         pc->red_curve->lineto(p);
         is_curve = false;
     } else {
         // one of the 'regular' modes
-        if (pc->p[1] != pc->p[0])
-        {
+        if (pc->p[1] != pc->p[0]) {
             pc->red_curve->curveto(pc->p[1], p, p);
             is_curve = true;
         } else {
@@ -1451,7 +1456,7 @@ static int pen_next_paraxial_direction(const SPPenContext *const pc,
 
 void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state, bool snap)
 {
-    Geom::Point const &origin = pc->p[0];
+    Geom::Point const origin = pc->p[0];
 
     int next_dir = pen_next_paraxial_direction(pc, pt, origin, state);
 
