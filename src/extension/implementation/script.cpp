@@ -156,7 +156,7 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     char szExePath[MAX_PATH];
     char szCurrentDir[MAX_PATH];
     GetCurrentDirectory(sizeof(szCurrentDir), szCurrentDir);
-    HINSTANCE ret = (unsigned int)FindExecutable(
+    HINSTANCE ret = FindExecutable(
                   interpName.c_str(), szCurrentDir, szExePath);
     if (ret > 32) {
         interpName = szExePath;
