@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Create a slicer rectangle</_name>
+  <id>org.inkscape.web.slicer.create-rect</id>
+  <dependency type="executable" location="extensions">webslicer-create-rect.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="name" type="string" _gui-text="Name"></param>
+  <param name="format" type="enum" _gui-text="Format">
+    <item value="png">PNG</item>
+    <item value="jpg">JPG</item>
+    <item value="gif">GIF</item>
+  </param>
+  <param name="dpi" type="float" min="1" max="9999" _gui-text="DPI">90</param>
+  <param name="dimension" type="string" _gui-text="Force Dimension"></param>
+  <_param name="help-dimension1" type="description">Force Dimension must be set as "&lt;width&gt;x&lt;height&gt;"</_param>
+  <_param name="help-dimension2" type="description">If had set, this will replace DPI.</_param>
+  <param name="bg-color" type="string" _gui-text="Background color"></param>
+  <param name="tab" type="notebook">
+    <page name="tabJPG" gui-text="JPG">
+      <_param name="help-jpg" type="description">JPG specific options</_param>
+      <param name="quality" type="int" min="0" max="100" _gui-text="Quality">85</param>
+      <_param name="help-quality" type="description">0 is the lowest image quality and highest compression, and 100 is the best quality but least effective compression</_param>
+    </page>
+    <page name="tabGIF" gui-text="GIF">
+      <_param name="help-gif" type="description">GIF specific options</_param>
+      <param name="gif-type" type="enum" _gui-text="Type">
+        <_item value="grayscale">Grayscale</_item>
+        <_item value="palette">Palette</_item>
+      </param>
+      <param name="palette-size" type="int" min="2" max="256" _gui-text="Palette size">256</param>
+    </page>
+    <page name="tabHTML" gui-text="HTML">
+      <param name="html-id" type="string" _gui-text="HTML id atribute"></param>
+      <param name="html-class" type="string" _gui-text="HTML class atribute"></param>
+      <_param name="help-gif" type="description">Options for HTML export</_param>
+      <param name="layout-disposition" type="enum" _gui-text="Layout disposition">
+        <_item value="bg-parent-repeat">Tiled Background (on parent group)</_item>
+        <_item value="bg-parent-repeat-x">Background — repeat horizontally (on parent group)</_item>
+        <_item value="bg-parent-repeat-y">Background — repeat vertically (on parent group)</_item>
+        <_item value="bg-parent-norepeat">Background — no repeat (on parent group)</_item>
+        <_item value="bg-div-norepeat">Positioned &lt;div&gt; width the image as Background</_item>
+        <_item value="img-pos">Positioned Image</_item>
+        <_item value="img-nonpos">Non Positioned Image</_item>
+        <_item value="img-float-left">Left Floated Image</_item>
+        <_item value="img-float-right">Right Floated Image</_item>
+      </param>
+      <param name="layout-position-anchor" type="enum" _gui-text="Position anchor">
+        <_item value="tl">Top and Left</_item>
+        <_item value="tr">Top and right</_item>
+        <_item value="bl">Bottom and Left</_item>
+        <_item value="br">Bottom and Right</_item>
+      </param>
+    </page>
+  </param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Web">
+        <submenu name="Slicer"/>
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">webslicer-create-rect.py</command>
+  </script>
+</inkscape-extension>
