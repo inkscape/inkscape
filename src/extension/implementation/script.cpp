@@ -739,7 +739,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
         while ( selected != NULL ) {
             Glib::ustring selected_id;
             selected_id += "--id=";
-            selected_id += SP_OBJECT_ID(*selected);
+            selected_id += (*selected)->id;
             params.insert(params.begin(), selected_id);
             ++selected;
         }
