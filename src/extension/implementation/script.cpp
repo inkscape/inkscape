@@ -5,6 +5,7 @@
  * Authors:
  *   Bryce Harrington <bryce@osdl.org>
  *   Ted Gould <ted@gould.cx>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2002-2005,2007 Authors
  *
@@ -67,10 +68,10 @@ namespace Implementation {
 	This just keeps coming the events through so that we'll make the GUI
 	update and look pretty.
 */
-void
-Script::pump_events (void) {
-    while( Gtk::Main::events_pending() )
+void Script::pump_events (void) {
+    while ( Gtk::Main::events_pending() ) {
         Gtk::Main::iteration();
+    }
     return;
 }
 
@@ -100,13 +101,11 @@ Script::interpreter_t const Script::interpreterTab[] = {
     \param interpNameArg  The name of the interpreter that we're looking
 	                      for, should be an entry in interpreterTab
 */
-Glib::ustring
-Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
+Glib::ustring Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 {
-
     Glib::ustring interpName = interpNameArg;
 
-    interpreter_t const *interp;
+    interpreter_t const *interp = 0;
     bool foundInterp = false;
     for (interp =  interpreterTab ; interp->identity ; interp++ ){
         if (interpName == interp->identity) {
@@ -116,8 +115,9 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     }
 
     // Do we have a supported interpreter type?
-    if (!foundInterp)
+    if (!foundInterp) {
         return "";
+    }
     interpName = interp->defaultval;
 
     // 1.  Check preferences
@@ -137,6 +137,7 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     Glib::ustring path;
     Glib::ustring exeName;
     if (rt.getExeInfo(fullPath, path, exeName)) {
+// TODO replace with proper glib/glibmm path building routines:
         Glib::ustring interpPath = path;
         interpPath.append("\\");
         interpPath.append(interpNameArg);
@@ -144,7 +145,7 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
         interpPath.append(interpName);
         interpPath.append(".exe");
         struct stat finfo;
-        if (stat(interpPath .c_str(), &finfo) ==0) {
+        if (stat(interpPath .c_str(), &finfo) == 0) {
             g_message("Found local interpreter, '%s',  Size: %d",
                       interpPath .c_str(),
                       (int)finfo.st_size);
@@ -153,12 +154,11 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     }
 
     // 3. Try searching the path
-    char szExePath[MAX_PATH];
-    char szCurrentDir[MAX_PATH];
+    char szExePath[MAX_PATH] = {0};
+    char szCurrentDir[MAX_PATH] = {0};
     GetCurrentDirectory(sizeof(szCurrentDir), szCurrentDir);
-    HINSTANCE ret = FindExecutable(
-                  interpName.c_str(), szCurrentDir, szExePath);
-    if (((unsigned long) ret) > 32) {
+    HINSTANCE ret = FindExecutable(interpName.c_str(), szCurrentDir, szExePath);
+    if (ret > reinterpret_cast<HINSTANCE>(32)) {
         interpName = szExePath;
         return interpName;
     }
@@ -231,9 +231,9 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
             Glib::ustring filename = fname;
             g_free(fname);
 
-            if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) )
+            if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) ) {
                 return filename;
-
+            }
         }
     } else {
         Glib::ustring str = sp_repr_children(reprin)->content();
@@ -261,8 +261,7 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
     then a TRUE is returned.  If we get all the way through the path
     then a FALSE is returned, the command could not be found.
 */
-bool
-Script::check_existance(const Glib::ustring &command)
+bool Script::check_existance(const Glib::ustring &command)
 {
 
     // Check the simple case first
@@ -272,21 +271,23 @@ Script::check_existance(const Glib::ustring &command)
 
     //Don't search when it contains a slash. */
     if (command.find(G_DIR_SEPARATOR) != command.npos) {
-        if (Inkscape::IO::file_test(command.c_str(), G_FILE_TEST_EXISTS))
+        if (Inkscape::IO::file_test(command.c_str(), G_FILE_TEST_EXISTS)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
 
     Glib::ustring path;
     gchar *s = (gchar *) g_getenv("PATH");
-    if (s)
+    if (s) {
         path = s;
-    else
+    } else {
        /* There is no `PATH' in the environment.
            The default search path is the current directory */
         path = G_SEARCHPATH_SEPARATOR_S;
+    }
 
     std::string::size_type pos  = 0;
     std::string::size_type pos2 = 0;
@@ -339,11 +340,11 @@ Script::check_existance(const Glib::ustring &command)
     and should error out at a higher level.
 */
 
-bool
-Script::load(Inkscape::Extension::Extension *module)
+bool Script::load(Inkscape::Extension::Extension *module)
 {
-    if (module->loaded())
+    if (module->loaded()) {
         return true;
+    }
 
     helper_extension = "";
 
@@ -392,8 +393,7 @@ Script::load(Inkscape::Extension::Extension *module)
     This function just sets the module to unloaded.  It free's the
     command if it has been allocated.
 */
-void
-Script::unload(Inkscape::Extension::Extension */*module*/)
+void Script::unload(Inkscape::Extension::Extension */*module*/)
 {
     command.clear();
     helper_extension = "";
@@ -411,11 +411,11 @@ Script::unload(Inkscape::Extension::Extension */*module*/)
 bool
 Script::check(Inkscape::Extension::Extension *module)
 {
-	int script_count = 0;
+    int script_count = 0;
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "script")) {
-			script_count++;
+            script_count++;
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "check")) {
@@ -443,9 +443,9 @@ Script::check(Inkscape::Extension::Extension *module)
         child_repr = sp_repr_next(child_repr);
     }
 
-	if (script_count == 0) {
-		return false;
-	}
+    if (script_count == 0) {
+        return false;
+    }
 
     return true;
 }
@@ -488,8 +488,7 @@ ScriptDocCache::~ScriptDocCache ( )
     unlink(_filename.c_str());
 }
 
-ImplementationDocumentCache *
-Script::newDocCache( Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::View::View * view ) {
+ImplementationDocumentCache *Script::newDocCache( Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::View::View * view ) {
     return new ScriptDocCache(view);
 }
 
@@ -502,8 +501,7 @@ Script::newDocCache( Inkscape::Extension::Extension * /*ext*/, Inkscape::UI::Vie
 
     This function should really do something, right now it doesn't.
 */
-Gtk::Widget *
-Script::prefs_input(Inkscape::Extension::Input *module,
+Gtk::Widget *Script::prefs_input(Inkscape::Extension::Input *module,
                     const gchar */*filename*/)
 {
     return module->autogui(NULL, NULL);
@@ -518,8 +516,7 @@ Script::prefs_input(Inkscape::Extension::Input *module,
 
     This function should really do something, right now it doesn't.
 */
-Gtk::Widget *
-Script::prefs_output(Inkscape::Extension::Output *module)
+Gtk::Widget *Script::prefs_output(Inkscape::Extension::Output *module)
 {
     return module->autogui(NULL, NULL);
 }
@@ -545,8 +542,7 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     the incoming filename (so that it's not the temporary filename).
     That document is then returned from this function.
 */
-SPDocument *
-Script::open(Inkscape::Extension::Input *module,
+SPDocument *Script::open(Inkscape::Extension::Input *module,
              const gchar *filenameArg)
 {
     std::list<std::string> params;
@@ -621,8 +617,7 @@ Script::open(Inkscape::Extension::Input *module,
     put the output of the script into the final output file.  We then
     delete the temporary file.
 */
-void
-Script::save(Inkscape::Extension::Output *module,
+void Script::save(Inkscape::Extension::Output *module,
              SPDocument *doc,
              const gchar *filenameArg)
 {
@@ -662,7 +657,7 @@ Script::save(Inkscape::Extension::Output *module,
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
     unlink(tempfilename_in.c_str());
 
-    if(success == false) {
+    if (success == false) {
         throw Inkscape::Extension::Output::save_failed();
     }
 
@@ -699,8 +694,7 @@ Script::save(Inkscape::Extension::Output *module,
     exists at the time, the other is created by that script).  At that
     point both should be full, and the second one is loaded.
 */
-void
-Script::effect(Inkscape::Extension::Effect *module,
+void Script::effect(Inkscape::Extension::Effect *module,
                Inkscape::UI::View::View *doc,
                ImplementationDocumentCache * docCache)
 {
@@ -801,8 +795,7 @@ Script::effect(Inkscape::Extension::Effect *module,
     elements and putting them into the old document.  The copy
     is then complete.
 */
-void
-Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
+void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
 {
     std::vector<Inkscape::XML::Node *> delete_list;
     Inkscape::XML::Node * oldroot_namedview = NULL;
@@ -821,8 +814,9 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
             delete_list.push_back(child);
         }
     }
-    for (unsigned int i = 0; i < delete_list.size(); i++)
+    for (unsigned int i = 0; i < delete_list.size(); i++) {
         sp_repr_unparent(delete_list[i]);
+    }
 
     for (Inkscape::XML::Node * child = newroot->firstChild();
             child != NULL;
@@ -851,8 +845,9 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
         }
 
         // Delete the attributes of the old root nodes.
-        for (std::vector<gchar const *>::const_iterator it = attribs.begin(); it != attribs.end(); it++)
+        for (std::vector<gchar const *>::const_iterator it = attribs.begin(); it != attribs.end(); it++) {
             oldroot->setAttribute(*it, NULL);
+        }
 
         // Set the new attributes.
         for (List<AttributeRecord const> iter = newroot->attributeList(); iter; ++iter) {
@@ -869,8 +864,7 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
              shows it in a warning dialog to the user
      \param  filename  Filename of the stderr file
 */
-void
-Script::checkStderr (const Glib::ustring &data,
+void Script::checkStderr (const Glib::ustring &data,
                            Gtk::MessageType type,
                      const Glib::ustring &message)
 {
@@ -902,8 +896,7 @@ Script::checkStderr (const Glib::ustring &data,
     return;
 }
 
-bool
-Script::cancelProcessing (void) {
+bool Script::cancelProcessing (void) {
     _canceled = true;
     _main_loop->quit();
     Glib::spawn_close_pid(_pid);
@@ -939,8 +932,7 @@ Script::cancelProcessing (void) {
     At the very end (after the data has been copied) both of the files
     are closed, and we return to what we were doing.
 */
-int
-Script::execute (const std::list<std::string> &in_command,
+int Script::execute (const std::list<std::string> &in_command,
                  const std::list<std::string> &in_params,
                  const Glib::ustring &filein,
                  file_listener &fileout)
@@ -968,52 +960,51 @@ Script::execute (const std::list<std::string> &in_command,
             //std::cout << "first space " << first_space << std::endl;
             //std::cout << "first quote " << first_quote << std::endl;
 
-            if((first_quote != std::string::npos) && (first_quote == 0)) {
+            if ((first_quote != std::string::npos) && (first_quote == 0)) {
                 size_t next_quote = param_str.find_first_of('"', first_quote + 1);
                 //std::cout << "next quote " << next_quote << std::endl;
 
-                if(next_quote != std::string::npos) {
+                if (next_quote != std::string::npos) {
                     //std::cout << "now split " << next_quote << std::endl;
                     //std::cout << "now split " << param_str.substr(1, next_quote - 1) << std::endl;
                     //std::cout << "now split " << param_str.substr(next_quote + 1) << std::endl;
                     std::string part_str = param_str.substr(1, next_quote - 1);
-                    if(part_str.size() > 0)
+                    if (part_str.size() > 0)
                         argv.push_back(part_str);
                     param_str = param_str.substr(next_quote + 1);
 
-                }
-                else {
-                    if(param_str.size() > 0)
+                } else {
+                    if (param_str.size() > 0)
                         argv.push_back(param_str);
                     param_str = "";
                 }
 
-            }
-            else if(first_space != std::string::npos) {
+            } else if (first_space != std::string::npos) {
                 //std::cout << "now split " << first_space << std::endl;
                 //std::cout << "now split " << param_str.substr(0, first_space) << std::endl;
                 //std::cout << "now split " << param_str.substr(first_space + 1) << std::endl;
                 std::string part_str = param_str.substr(0, first_space);
-                if(part_str.size() > 0)
+                if (part_str.size() > 0) {
                     argv.push_back(part_str);
+                }
                 param_str = param_str.substr(first_space + 1);
-            }
-            else {
-                if(param_str.size() > 0)
+            } else {
+                if (param_str.size() > 0) {
                     argv.push_back(param_str);
+                }
                 param_str = "";
             }
-        } while(param_str.size() > 0);
+        } while (param_str.size() > 0);
     }
 
     for (std::list<std::string>::const_iterator i = in_params.begin();
             i != in_params.end(); i++) {
-    	//g_message("Script parameter: %s",(*i)g.c_str());
+        //g_message("Script parameter: %s",(*i)g.c_str());
         argv.push_back(*i);
     }
 
     if (!(filein.empty())) {
-		argv.push_back(filein);
+        argv.push_back(filein);
     }
 
     int stdout_pipe, stderr_pipe;
@@ -1042,10 +1033,12 @@ Script::execute (const std::list<std::string> &in_command,
     _main_loop->run();
 
     // Ensure all the data is out of the pipe
-    while (!fileout.isDead())
+    while (!fileout.isDead()) {
         fileout.read(Glib::IO_IN);
-    while (!fileerr.isDead())
+    }
+    while (!fileerr.isDead()) {
         fileerr.read(Glib::IO_IN);
+    }
 
     if (_canceled) {
         // std::cout << "Script Canceled" << std::endl;

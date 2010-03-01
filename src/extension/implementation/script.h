@@ -10,8 +10,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef __INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H__
-#define __INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H__
+#ifndef INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H_SEEN
+#define INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H_SEEN
 
 #include "implementation.h"
 #include <gtkmm/messagedialog.h>
@@ -62,7 +62,7 @@ public:
      */
     virtual bool check(Inkscape::Extension::Extension *module);
 
-	ImplementationDocumentCache * newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view);
+    ImplementationDocumentCache * newDocCache(Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * view);
 
     /**
      *
@@ -93,7 +93,7 @@ public:
      */
     virtual void effect(Inkscape::Extension::Effect *module,
                         Inkscape::UI::View::View *doc,
-						ImplementationDocumentCache * docCache);
+                        ImplementationDocumentCache * docCache);
 
     virtual bool cancelProcessing (void);
 
@@ -204,18 +204,18 @@ private:
                  const Glib::ustring &filein,
                  file_listener &fileout);
 
-	void pump_events (void);
+    void pump_events(void);
 
-	/** \brief  A definition of an interpreter, which can be specified
-	            in the INX file, but we need to know what to call */
-	struct interpreter_t {
-			gchar const *identity;    /**< The ID that is in the INX file */
-			gchar const *prefstring;  /**< The preferences key that can override the default */
-			gchar const *defaultval;  /**< The default value if there are no preferences */
-	};
+    /** \brief  A definition of an interpreter, which can be specified
+        in the INX file, but we need to know what to call */
+    struct interpreter_t {
+        gchar const *identity;    /**< The ID that is in the INX file */
+        gchar const *prefstring;  /**< The preferences key that can override the default */
+        gchar const *defaultval;  /**< The default value if there are no preferences */
+    };
     static interpreter_t const interpreterTab[];
 
-	Glib::ustring resolveInterpreterExecutable(const Glib::ustring &interpNameArg);
+    Glib::ustring resolveInterpreterExecutable(const Glib::ustring &interpNameArg);
 
 }; // class Script
 
@@ -227,7 +227,7 @@ private:
 }  // namespace Extension
 }  // namespace Inkscape
 
-#endif /* __INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H__ */
+#endif // INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H_SEEN
 
 /*
   Local Variables:
