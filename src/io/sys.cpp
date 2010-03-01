@@ -412,9 +412,8 @@ dup_noninherited (int fd,
 		   GetCurrentProcess (), &filehandle,
 		   0, FALSE, DUPLICATE_SAME_ACCESS);
   close (fd);
-  return _open_osfhandle ((LONG_PTR) filehandle, mode | _O_NOINHERIT);
+  return _open_osfhandle(reinterpret_cast<LONG_PTR>(filehandle), mode | _O_NOINHERIT);
 }
-
 
 /* The helper process writes a status report back to us, through a
  * pipe, consisting of two ints.

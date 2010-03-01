@@ -455,14 +455,14 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
 
             // Subclass the parent
             pImpl->_base_window_proc = (WNDPROC)GetWindowLongPtr(hParentWnd, GWLP_WNDPROC);
-            SetWindowLongPtr(hParentWnd, GWLP_WNDPROC, (LONG_PTR)file_dialog_subclass_proc);
+            SetWindowLongPtr(hParentWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(file_dialog_subclass_proc));
 
             // Add a button to the toolbar
             pImpl->_toolbar_wnd = FindWindowEx(hParentWnd, NULL, "ToolbarWindow32", NULL);
 
             pImpl->_show_preview_button_bitmap = LoadBitmap(
                 hInstance, MAKEINTRESOURCE(IDC_SHOW_PREVIEW));
-            TBADDBITMAP tbAddBitmap = {NULL, (UINT_PTR)pImpl->_show_preview_button_bitmap};
+            TBADDBITMAP tbAddBitmap = {NULL, reinterpret_cast<UINT_PTR>(pImpl->_show_preview_button_bitmap)};
             const int iBitmapIndex = SendMessage(pImpl->_toolbar_wnd,
                 TB_ADDBITMAP, 1, (LPARAM)&tbAddBitmap);
 
