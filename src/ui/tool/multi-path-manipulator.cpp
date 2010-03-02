@@ -8,7 +8,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <tr1/unordered_set>
+#include <boost/unordered_set.hpp>
 #include <boost/shared_ptr.hpp>
 #include <glib.h>
 #include <glibmm/i18n.h>
@@ -25,15 +25,13 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
 
-namespace std { using namespace tr1; }
-
 namespace Inkscape {
 namespace UI {
 
 namespace {
 typedef std::pair<NodeList::iterator, NodeList::iterator> IterPair;
 typedef std::vector<IterPair> IterPairList;
-typedef std::unordered_set<NodeList::iterator> IterSet;
+typedef boost::unordered_set<NodeList::iterator> IterSet;
 typedef std::multimap<double, IterPair> DistanceMap;
 typedef std::pair<double, IterPair> DistanceMapItem;
 

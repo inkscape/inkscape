@@ -13,16 +13,14 @@
 #define SEEN_UI_TOOL_NODE_SELECTION_H
 
 #include <memory>
-#include <tr1/unordered_map>
-#include <tr1/unordered_set>
 #include <boost/optional.hpp>
+#include <boost/unordered_set.hpp>
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
 #include "display/display-forward.h"
 #include "util/accumulators.h"
-#include "util/hash.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 
@@ -42,7 +40,7 @@ class ControlPointSelection : public Manipulator, public sigc::trackable {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
-    typedef std::tr1::unordered_set< SelectableControlPoint * > set_type;
+    typedef boost::unordered_set< SelectableControlPoint * > set_type;
     typedef set_type Set; // convenience alias
 
     typedef set_type::iterator iterator;

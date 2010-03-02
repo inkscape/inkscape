@@ -125,27 +125,6 @@ if test "x$GXX" = "xyes"; then
 	fi
 fi
 
-# Test for broken unordered_set on GCC 4.0.0, shipped with Apple XCode tools
-# This is a system header so we check it as soon as possible
-AC_MSG_CHECKING([TR1 unordered_set usability])
-AC_COMPILE_IFELSE([
-#include <tr1/unordered_set>
-int main() {
-  std::tr1::unordered_set<int> i, j;
-  i = j;
-  return 0;
-}
-], [unordered_set_broken=no], [unordered_set_broken=yes])
-if test "x$unordered_set_broken" = "xyes"; then
-	AC_MSG_RESULT([broken])
-	AC_MSG_ERROR([
-You have a broken version of the <tr1/unordered_set> header. See
-http://wiki.inkscape.org/wiki/index.php/HashtableFixOSX
-for information on how to fix this problem.])
-else
-	AC_MSG_RESULT([ok])
-fi
-
 # Test whether GCC emits a spurious warning when using boost::optional
 # If yes, turn off strict aliasing warnings to reduce noise
 # and allow the legitimate warnings to stand out

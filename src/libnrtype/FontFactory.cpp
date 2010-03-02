@@ -26,9 +26,9 @@
 /* Freetype2 */
 # include <pango/pangoft2.h>
 
-#include <tr1/unordered_map>
+#include <boost/unordered_map.hpp>
 
-typedef std::tr1::unordered_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
+typedef boost::unordered_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {
