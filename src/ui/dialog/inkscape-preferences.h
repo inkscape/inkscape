@@ -149,6 +149,7 @@ protected:
     PrefSpinButton  _t_node_pathflash_timeout;
     PrefCheckButton _t_node_show_path_direction;
     PrefCheckButton _t_node_single_node_transform_handles;
+    PrefCheckButton _t_node_delete_preserves_shape;
     PrefColorPicker _t_node_pathoutline_color;
 
     PrefRadioButton _win_dockable, _win_floating;

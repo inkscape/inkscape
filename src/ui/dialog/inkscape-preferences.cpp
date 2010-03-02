@@ -433,7 +433,7 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_node, "/tools/nodes", true);
     AddGradientCheckbox(_page_node, "/tools/nodes", true);
-    _page_node.add_group_header( _("Path outline:"));
+    _page_node.add_group_header( _("Path outline"));
     _t_node_pathoutline_color.init(_("Path outline color"), "/tools/nodes/highlight_color", 0xff0000ff);
     _page_node.add_line( false, "", _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
     _t_node_show_outline.init(_("Always show outline"), "/tools/nodes/show_outline", false);
@@ -450,9 +450,11 @@ void InkscapePreferences::initPageTools()
     _page_node.add_line( true, "", _t_node_pathflash_selected, "", _("Show temporary outline even when a path is selected for editing"));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
     _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
-    _page_node.add_group_header(_("Transform Handles:"));
+    _page_node.add_group_header(_("Editing preferences"));
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
     _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected."));
+    _t_node_delete_preserves_shape.init(_("Deleting nodes preserves shape"), "/tools/nodes/delete_preserves_shape", true);
+    _page_node.add_line( true, "", _t_node_delete_preserves_shape, "", _("Move handles next to deleted nodes to resemble original shape. Hold Ctrl to get the other behavior."));
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);

@@ -466,9 +466,13 @@ bool MultiPathManipulator::event(GdkEvent *event)
                 // Alt+Delete - delete segments
                 deleteSegments();
             } else {
-                // Control+Delete - delete nodes
-                // Delete - delete nodes preserving shape
-                deleteNodes(!held_control(event->key));
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                bool del_preserves_shape = prefs->getBool("/tools/nodes/delete_preserves_shape", true);
+                // pass keep_shape = true when:
+                // a) del preserves shape, and control is not pressed
+                // b) ctrl+del preserves shape (del_preserves_shape is false), and control is pressed
+                // Hence xor
+                deleteNodes(del_preserves_shape ^ held_control(event->key));
             }
             return true;
         case GDK_c:

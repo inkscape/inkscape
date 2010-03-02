@@ -1043,7 +1043,8 @@ sp_node_path_edit_delete(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) {
-        nt->_multipath->deleteNodes();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        nt->_multipath->deleteNodes(prefs->getBool("/tools/nodes/delete_preserves_shape", true));
     }
 }
 
@@ -7645,8 +7646,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
 
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_directed_graph_layout_toggled), holder );
-        sigc::connection *connection = new sigc::connection(sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), (GObject *)holder))
-        );
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), (GObject *)holder));
     }
 
     // Avoid overlaps toggle button
