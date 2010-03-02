@@ -63,7 +63,7 @@ SPConnEndPair::release()
         this->_connEnd[handle_ix]->ref.detach();
     }
 
-    // If the document is being destroyed then the router instance 
+    // If the document is being destroyed then the router instance
     // and the ConnRefs will have been destroyed with it.
     const bool routerInstanceExists = (_path->document->router != NULL);
 
@@ -106,12 +106,12 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
         case SP_ATTR_CONNECTOR_TYPE:
             if (value && (strcmp(value, "polyline") == 0 || strcmp(value, "orthogonal") == 0)) {
                 int newconnType = strcmp(value, "polyline") ? SP_CONNECTOR_ORTHOGONAL : SP_CONNECTOR_POLYLINE;
-                
+
                 if (!_connRef)
                 {
                     _connType = newconnType;
                     Avoid::Router *router = _path->document->router;
-                    GQuark itemID = g_quark_from_string(SP_OBJECT(_path)->id);
+                    GQuark itemID = g_quark_from_string(_path->getId());
                     _connRef = new Avoid::ConnRef(router, itemID);
                     switch (newconnType)
                     {
@@ -339,7 +339,7 @@ void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, const gdouble curvat
     if (!straight)
         route = route.curvedPolyline(curvature);
     connRef->calcRouteDist();
-    
+
     curve->reset();
 
     curve->moveto( Geom::Point(route.ps[0].x, route.ps[0].y) );
@@ -359,7 +359,7 @@ void recreateCurve(SPCurve *curve, Avoid::ConnRef *connRef, const gdouble curvat
                     break;
                 case 'C':
                     g_assert( i+2<pn );
-                    curve->curveto( p, Geom::Point(route.ps[i+1].x, route.ps[i+1].y), 
+                    curve->curveto( p, Geom::Point(route.ps[i+1].x, route.ps[i+1].y),
                             Geom::Point(route.ps[i+2].x, route.ps[i+2].y) );
                     i+=2;
                     break;
@@ -404,10 +404,10 @@ SPConnEndPair::reroutePathFromLibavoid(void)
     SPCurve *curve = _path->original_curve ?_path->original_curve : _path->curve;
 
     recreateCurve( curve, _connRef, _connCurvature );
-    
+
     Geom::Matrix doc2item = sp_item_i2doc_affine(SP_ITEM(_path)).inverse();
-    curve->transform(doc2item); 
-    
+    curve->transform(doc2item);
+
     return true;
 }
 

@@ -124,10 +124,10 @@ update_pref(Glib::ustring const &pref_path,
     /*
     gboolean missing=TRUE;
     for (GSList *list = extension_family; list; list = g_slist_next(list)) {
-	g_assert( list->data );
+        g_assert( list->data );
 
-	Inkscape::Extension *extension;
-       	extension = reinterpret_cast<Inkscape::Extension *>(list->data);
+        Inkscape::Extension *extension;
+        extension = reinterpret_cast<Inkscape::Extension *>(list->data);
 
         if (!strcmp(extension->get_id(),pref)) missing=FALSE;
     }
@@ -185,7 +185,7 @@ init()
     Internal::BlurEdge::init();
     Internal::GimpGrad::init();
     Internal::Grid::init();
-	
+
     /* Raster Effects */
 #ifdef WITH_IMAGE_MAGICK
     Internal::Bitmap::AdaptiveThreshold::init();
@@ -224,14 +224,14 @@ init()
     Internal::Bitmap::Wave::init();
 #endif /* WITH_IMAGE_MAGICK */
 
-	Internal::Filter::Filter::filters_all();
+    Internal::Filter::Filter::filters_all();
 
     /* Load search path for extensions */
     if (Inkscape::Extension::Extension::search_path.size() == 0)
     {
-	Inkscape::Extension::Extension::search_path.push_back(profile_path("extensions"));
-	
-	Inkscape::Extension::Extension::search_path.push_back(g_strdup(INKSCAPE_EXTENSIONDIR));
+        Inkscape::Extension::Extension::search_path.push_back(profile_path("extensions"));
+
+        Inkscape::Extension::Extension::search_path.push_back(g_strdup(INKSCAPE_EXTENSIONDIR));
 
     }
 

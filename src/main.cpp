@@ -1212,11 +1212,11 @@ static void
 do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
-    if (o->id && SP_IS_ITEM(item)) {
+    if (o->getId() && SP_IS_ITEM(item)) {
         Geom::OptRect area = item->getBounds(sp_item_i2doc_affine(item));
         if (area) {
             Inkscape::SVGOStringStream os;
-            os << o->id;
+            os << o->getId();
             os << "," << area->min()[Geom::X];
             os << "," << area->min()[Geom::Y];
             os << "," << area->dimensions()[Geom::X];

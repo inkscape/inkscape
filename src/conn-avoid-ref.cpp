@@ -341,7 +341,7 @@ GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
     GSList *list = NULL;
 
     Avoid::IntList shapes;
-    GQuark shapeId = g_quark_from_string(item->id);
+    GQuark shapeId = g_quark_from_string(item->getId());
     item->document->router->attachedShapes(shapes, shapeId, type);
 
     Avoid::IntList::iterator finish = shapes.end();
@@ -365,7 +365,7 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
     GSList *list = NULL;
 
     Avoid::IntList conns;
-    GQuark shapeId = g_quark_from_string(item->id);
+    GQuark shapeId = g_quark_from_string(item->getId());
     item->document->router->attachedConns(conns, shapeId, type);
 
     Avoid::IntList::iterator finish = conns.end();

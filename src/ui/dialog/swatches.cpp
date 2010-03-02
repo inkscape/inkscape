@@ -386,7 +386,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
             const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
             for (const GSList *item = gradients; item; item = item->next) {
                 SPGradient* grad = SP_GRADIENT(item->data);
-                if ( targetName == grad->id ) {
+                if ( targetName == grad->getId() ) {
                     editGradientImpl( grad );
                     break;
                 }
@@ -867,7 +867,7 @@ void ColorItem::buttonClicked(bool secondary)
                 } else {
                     SPGradient* grad = gradMap[this];
                     colorspec = "url(#";
-                    colorspec += grad->id;
+                    colorspec += grad->getId();
                     colorspec += ")";
                 }
                 sp_repr_css_set_property( css, attrName, colorspec.c_str() );
@@ -1433,7 +1433,7 @@ void SwatchesPanel::handleGradientsChange()
 
                     if ( (grad->vector.stops.size() <= 2) && (together == together2) ) {
                         // Treat as solid-color
-                        Glib::ustring name( grad->id );
+                        Glib::ustring name( grad->getId() );
                         unsigned int r = SP_RGBA32_R_U(together);
                         unsigned int g = SP_RGBA32_G_U(together);
                         unsigned int b = SP_RGBA32_B_U(together);
@@ -1443,7 +1443,7 @@ void SwatchesPanel::handleGradientsChange()
                         gradMap[item] = grad;
                     } else {
                         // Treat as gradient
-                        Glib::ustring name( grad->id );
+                        Glib::ustring name( grad->getId() );
                         unsigned int r = SP_RGBA32_R_U(together);
                         unsigned int g = SP_RGBA32_G_U(together);
                         unsigned int b = SP_RGBA32_B_U(together);

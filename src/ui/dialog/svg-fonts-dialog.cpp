@@ -252,7 +252,7 @@ void SvgFontsDialog::update_fonts()
         row[_columns.spfont] = f;
         row[_columns.svgfont] = new SvgFont(f);
         const gchar* lbl = f->label();
-        const gchar* id = SP_OBJECT_ID(f);
+        const gchar* id = f->getId();
         row[_columns.label] = lbl ? lbl : (id ? id : "font");
     }
 
@@ -653,7 +653,7 @@ Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     missing_glyph_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::missing_glyph_description_from_selected_path));
     missing_glyph_reset_button.set_label(_("Reset"));
     missing_glyph_reset_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::reset_missing_glyph_description));
-    
+
     glyphs_vbox.pack_start(*missing_glyph_hbox, false,false);
 
     glyphs_vbox.add(_GlyphsListScroller);

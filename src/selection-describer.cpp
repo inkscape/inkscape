@@ -158,7 +158,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
 
         // Parent name
         SPObject *parent = SP_OBJECT_PARENT (item);
-        gchar *parent_label = SP_OBJECT_ID(parent);
+        gchar const *parent_label = parent->getId();
         char *quoted_parent_label = xml_quote_strdup(parent_label);
         gchar *parent_name = g_strdup_printf(_("<i>%s</i>"), quoted_parent_label);
         g_free(quoted_parent_label);

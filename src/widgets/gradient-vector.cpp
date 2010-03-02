@@ -305,7 +305,7 @@ sp_gvs_rebuild_gui_full (SPGradientVectorSelector *gvs)
                 GtkWidget *hb, *l;
                 hb = gtk_hbox_new (FALSE, 4);
                 gtk_widget_show (hb);
-                l = gtk_label_new (SP_OBJECT_ID (gr));
+                l = gtk_label_new(gr->getId());
                 gtk_widget_show (l);
                 gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
                 gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);

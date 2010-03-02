@@ -304,7 +304,7 @@ bool LayersPanel::_checkForUpdated(const Gtk::TreePath &/*path*/, const Gtk::Tre
     Glib::ustring tmp = row[_model->_colLabel];
     if ( layer == row[_model->_colObject] )
     {
-        row[_model->_colLabel] = layer->label() ? layer->label() : SP_OBJECT_ID(layer);
+        row[_model->_colLabel] = layer->label() ? layer->label() : layer->getId();
         row[_model->_colVisible] = SP_IS_ITEM(layer) ? !SP_ITEM(layer)->isHidden() : false;
         row[_model->_colLocked] = SP_IS_ITEM(layer) ? SP_ITEM(layer)->isLocked() : false;
 
@@ -381,7 +381,7 @@ void LayersPanel::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::R
                 Gtk::TreeModel::iterator iter = parentRow ? _store->prepend(parentRow->children()) : _store->prepend();
                 Gtk::TreeModel::Row row = *iter;
                 row[_model->_colObject] = child;
-                row[_model->_colLabel] = child->label() ? child->label() : SP_OBJECT_ID(child);
+                row[_model->_colLabel] = child->label() ? child->label() : child->getId();
                 row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
                 row[_model->_colLocked] = SP_IS_ITEM(child) ? SP_ITEM(child)->isLocked() : false;
 

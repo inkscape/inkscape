@@ -112,6 +112,37 @@ Inkscape::XML::NodeEventVector object_event_vector = {
     sp_object_repr_order_changed
 };
 
+// A friend class used to set internal members on SPObject so as to not expose settors in SPObject's public API
+class SPObjectImpl
+{
+public:
+
+/**
+ * Null's the id member of an SPObject without attempting to free prior contents.
+ */
+    static void setIdNull( SPObject* obj ) {
+        if (obj) {
+            obj->id = 0;
+        }
+    }
+
+/**
+ * Sets the id member of an object, freeing any prior content.
+ */
+    static void setId( SPObject* obj, gchar const* id ) {
+        if (obj && (id != obj->id) ) {
+            if (obj->id) {
+                g_free(obj->id);
+                obj->id = 0;
+            }
+            if (id) {
+                obj->id = g_strdup(id);
+            }
+        }
+    }
+};
+
+
 static GObjectClass *parent_class;
 
 /**
@@ -177,7 +208,7 @@ sp_object_init(SPObject *object)
     object->children = object->_last_child = NULL;
     object->parent = object->next = NULL;
     object->repr = NULL;
-    object->id = NULL;
+    SPObjectImpl::setIdNull(object);
 
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;
 
@@ -188,8 +219,8 @@ sp_object_init(SPObject *object)
     object->_successor = NULL;
 
     // FIXME: now we create style for all objects, but per SVG, only the following can have style attribute:
-    // vg, g, defs, desc, title, symbol, use, image, switch, path, rect, circle, ellipse, line, polyline, 
-    // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient, 
+    // vg, g, defs, desc, title, symbol, use, image, switch, path, rect, circle, ellipse, line, polyline,
+    // polygon, text, tspan, tref, textPath, altGlyph, glyphRef, marker, linearGradient, radialGradient,
     // stop, pattern, clipPath, mask, filter, feImage, a, font, glyph, missing-glyph, foreignObject
     object->style = sp_style_new_from_object(object);
 
@@ -257,6 +288,10 @@ public:
     {}
 };
 
+}
+
+gchar const* SPObject::getId() const {
+    return id;
 }
 
 /**
@@ -808,8 +843,7 @@ sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     }
 }
 
-void
-sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned)
+void sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
 
@@ -820,7 +854,7 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
 
     g_assert(object->document == NULL);
     g_assert(object->repr == NULL);
-    g_assert(object->id == NULL);
+    g_assert(object->getId() == NULL);
 
     /* Bookkeeping */
 
@@ -837,27 +871,30 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
             /* If we are not cloned, and not seeking, force unique id */
             gchar const *id = object->repr->attribute("id");
             if (!document->isSeeking()) {
-                gchar *realid = sp_object_get_unique_id(object, id);
-                g_assert(realid != NULL);
+                {
+                    gchar *realid = sp_object_get_unique_id(object, id);
+                    g_assert(realid != NULL);
 
-                object->document->bindObjectToId(realid, object);
-                object->id = realid;
+                    object->document->bindObjectToId(realid, object);
+                    SPObjectImpl::setId(object, realid);
+                    g_free(realid);
+                }
 
                 /* Redefine ID, if required */
-                if ((id == NULL) || (strcmp(id, realid) != 0)) {
-                    object->repr->setAttribute("id", realid);
+                if ((id == NULL) || (strcmp(id, object->getId()) != 0)) {
+                    object->repr->setAttribute("id", object->getId());
                 }
             } else if (id) {
                 // bind if id, but no conflict -- otherwise, we can expect
                 // a subsequent setting of the id attribute
                 if (!object->document->getObjectById(id)) {
                     object->document->bindObjectToId(id, object);
-                    object->id = g_strdup(id);
+                    SPObjectImpl::setId(object, id);
                 }
             }
         }
     } else {
-        g_assert(object->id == NULL);
+        g_assert(object->getId() == NULL);
     }
 
     /* Invoke derived methods, if any */
@@ -982,16 +1019,14 @@ sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
                     }
                 }
 
-                if (object->id) {
-                    document->bindObjectToId(object->id, NULL);
-                    g_free(object->id);
+                if (object->getId()) {
+                    document->bindObjectToId(object->getId(), NULL);
+                    SPObjectImpl::setId(object, 0);
                 }
 
                 if (new_id) {
-                    object->id = g_strdup((char const*)new_id);
-                    document->bindObjectToId(object->id, object);
-                } else {
-                    object->id = NULL;
+                    SPObjectImpl::setId(object, new_id);
+                    document->bindObjectToId(object->getId(), object);
                 }
 
                 g_free(object->_default_label);
@@ -1130,7 +1165,7 @@ sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape
             repr->setAttribute("inkscape:collect", NULL);
         }
     } else {
-        repr->setAttribute("id", object->id);
+        repr->setAttribute("id", object->getId());
 
         if (object->xml_space.set) {
             char const *xml_space;
@@ -1145,7 +1180,7 @@ sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape
         } else {
             repr->setAttribute("inkscape:collect", NULL);
         }
- 
+
         SPStyle const *const obj_style = SP_OBJECT_STYLE(object);
         if (obj_style) {
             gchar *s = sp_style_write_string(obj_style, SP_STYLE_FLAG_IFSET);
@@ -1201,7 +1236,7 @@ SPObject::updateRepr(unsigned int flags) {
     }
 }
 
-/** Used both to create reprs in the original document, and to create 
+/** Used both to create reprs in the original document, and to create
  *  reprs in another document (e.g. a temporary document used when
  *  saving as "Plain SVG"
  */
@@ -1311,7 +1346,7 @@ SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
     }
     catch(...)
     {
-        /** \todo 
+        /** \todo
         * in case of catching an exception we need to inform the user somehow that the document is corrupted
         * maybe by implementing an document flag documentOk
         * or by a modal error dialog
@@ -1323,8 +1358,8 @@ SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
 }
 
 /**
- * Request modified always bubbles *up* the tree, as opposed to 
- * request display update, which trickles down and relies on the 
+ * Request modified always bubbles *up* the tree, as opposed to
+ * request display update, which trickles down and relies on the
  * flags set during this pass...
  */
 void
@@ -1355,9 +1390,9 @@ SPObject::requestModified(unsigned int flags)
     }
 }
 
-/** 
+/**
  *  Emits the MODIFIED signal with the object's flags.
- *  The object's mflags are the original set aside during the update pass for 
+ *  The object's mflags are the original set aside during the update pass for
  *  later delivery here.  Once emitModified() is called, those flags don't
  *  need to be stored any longer.
  */
@@ -1748,7 +1783,7 @@ SPObject::textualContent() const
     for (const SPObject *child = firstChild(); child; child = child->next)
     {
         Inkscape::XML::NodeType child_type = child->repr->type();
-        
+
         if (child_type == Inkscape::XML::ELEMENT_NODE) {
             GString * new_text = child->textualContent();
             g_string_append(text, new_text->str);

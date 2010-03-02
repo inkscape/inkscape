@@ -829,7 +829,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
         sp_repr_set_int(view, "inkscape:window-maximized", desktop->is_maximized());
     }
 
-    view->setAttribute("inkscape:current-layer", SP_OBJECT_ID(desktop->currentLayer()));
+    view->setAttribute("inkscape:current-layer", desktop->currentLayer()->getId());
 
     // restore undoability
     sp_document_set_undo_sensitive(sp_desktop_document(desktop), saved);
@@ -978,7 +978,7 @@ SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
         return (SPNamedView *) nv;
     }
 
-    while (nv && strcmp(nv->id, id)) {
+    while (nv && strcmp(nv->getId(), id)) {
         nv = sp_item_group_get_child_by_name((SPGroup *) document->root, nv, "sodipodi:namedview");
     }
 

@@ -1098,7 +1098,7 @@ sp_ui_context_menu(Inkscape::UI::View::View *view, SPItem *item)
 
     if ( group && group != dt->currentLayer() ) {
         /* TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number. */
-        gchar *label=g_strdup_printf(_("Enter group #%s"), SP_OBJECT_ID(group));
+        gchar *label=g_strdup_printf(_("Enter group #%s"), group->getId());
         GtkWidget *w = gtk_menu_item_new_with_label(label);
         g_free(label);
         g_object_set_data(G_OBJECT(w), "group", group);
@@ -1316,7 +1316,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
                         for (const GSList *item = gradients; item; item = item->next) {
                             SPGradient* grad = SP_GRADIENT(item->data);
-                            if ( color.descr == grad->id ) {
+                            if ( color.descr == grad->getId() ) {
                                 if ( grad->has_stops ) {
                                     matches = grad;
                                     break;
@@ -1325,7 +1325,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         }
                         if (matches) {
                             colorspec = "url(#";
-                            colorspec += matches->id;
+                            colorspec += matches->getId();
                             colorspec += ")";
                         } else {
                             gchar* tmp = g_strdup_printf("#%02x%02x%02x", r, g, b);

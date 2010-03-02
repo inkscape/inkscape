@@ -1635,7 +1635,7 @@ static void
 _reconstruction_start (SPDesktop * desktop)
 {
     // printf("Desktop, starting reconstruction\n");
-    desktop->_reconstruction_old_layer_id = g_strdup(SP_OBJECT_ID(desktop->currentLayer()));
+    desktop->_reconstruction_old_layer_id = g_strdup(desktop->currentLayer()->getId());
     desktop->_layer_hierarchy->setBottom(desktop->currentRoot());
 
     /*

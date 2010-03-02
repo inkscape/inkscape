@@ -333,7 +333,7 @@ void add_ids_recursive(std::vector<const gchar *> &ids, SPObject *obj)
     if (!obj)
         return;
 
-    ids.push_back(SP_OBJECT_ID(obj));
+    ids.push_back(obj->getId());
 
     if (SP_IS_GROUP(obj)) {
         for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
@@ -403,7 +403,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
                 if (!orig) // orphaned
                     continue;
                 for (unsigned int j = 0; j < old_ids.size(); j++) {
-                    if (!strcmp(SP_OBJECT_ID(orig), old_ids[j])) {
+                    if (!strcmp(orig->getId(), old_ids[j])) {
                         // we have both orig and clone in selection, relink
                         // std::cout << id  << " old, its ori: " << SP_OBJECT_ID(orig) << "; will relink:" << new_ids[i] << " to " << new_ids[j] << "\n";
                         gchar *newref = g_strdup_printf("#%s", new_ids[j]);

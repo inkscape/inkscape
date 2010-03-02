@@ -62,7 +62,7 @@ sp_gradient_ensure_vector_normalized(SPGradient *gr)
     if (gr->state == SP_GRADIENT_STATE_VECTOR) return gr;
     /* Fail, if we have wrong state set */
     if (gr->state != SP_GRADIENT_STATE_UNKNOWN) {
-        g_warning("file %s: line %d: Cannot normalize private gradient to vector (%s)", __FILE__, __LINE__, SP_OBJECT_ID(gr));
+        g_warning("file %s: line %d: Cannot normalize private gradient to vector (%s)", __FILE__, __LINE__, gr->getId());
         return NULL;
     }
 
@@ -1193,7 +1193,7 @@ sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *link)
 
     gchar *ref;
     if (link) {
-        gchar const *id = SP_OBJECT_ID(link);
+        gchar const *id = link->getId();
         size_t const len = strlen(id);
         ref = (gchar*) alloca(len + 2);
         *ref = '#';

@@ -132,7 +132,7 @@ find_references(SPObject *elem, refmap_type *refmap)
         if (paint->isPaintserver() && paint->value.href) {
             const SPObject *obj = paint->value.href->getObject();
             if (obj) {
-                const gchar *id = SP_OBJECT_ID(obj);
+                const gchar *id = obj->getId();
                 IdReference idref = { REF_STYLE, elem, SPIPaint_properties[i] };
                 (*refmap)[id].push_back(idref);
             }
@@ -144,7 +144,7 @@ find_references(SPObject *elem, refmap_type *refmap)
     if (filter->href) {
         const SPObject *obj = filter->href->getObject();
         if (obj) {
-            const gchar *id = SP_OBJECT_ID(obj);
+            const gchar *id = obj->getId();
             IdReference idref = { REF_STYLE, elem, "filter" };
             (*refmap)[id].push_back(idref);
         }
@@ -181,7 +181,7 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
                     SPObject *elem, const refmap_type *refmap,
                     id_changelist_type *id_changes)
 {
-    const gchar *id = SP_OBJECT_ID(elem);
+    const gchar *id = elem->getId();
 
     if (id && current_doc->getObjectById(id)) {
         // Choose a new ID.
@@ -226,7 +226,7 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
         const std::list<IdReference>::const_iterator it_end = pos->second.end();
         for (it = pos->second.begin(); it != it_end; ++it) {
             if (it->type == REF_HREF) {
-                gchar *new_uri = g_strdup_printf("#%s", SP_OBJECT_ID(obj));
+                gchar *new_uri = g_strdup_printf("#%s", obj->getId());
                 SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, new_uri);
                 g_free(new_uri);
             }
@@ -234,13 +234,13 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
                 sp_style_set_property_url(it->elem, it->attr, obj, false);
             }
             else if (it->type == REF_URL) {
-                gchar *url = g_strdup_printf("url(#%s)", SP_OBJECT_ID(obj));
+                gchar *url = g_strdup_printf("url(#%s)", obj->getId());
                 SP_OBJECT_REPR(it->elem)->setAttribute(it->attr, url);
                 g_free(url);
             }
             else if (it->type == REF_CLIPBOARD) {
                 SPCSSAttr *style = sp_repr_css_attr(SP_OBJECT_REPR(it->elem), "style");
-                gchar *url = g_strdup_printf("url(#%s)", SP_OBJECT_ID(obj));
+                gchar *url = g_strdup_printf("url(#%s)", obj->getId());
                 sp_repr_css_set_property(style, it->attr, url);
                 g_free(url);
                 gchar *style_string = sp_repr_css_write_string(style);

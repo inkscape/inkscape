@@ -590,7 +590,7 @@ conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p, gchar **href, gchar 
     {
         p = cc->active_handle->pos;
         const ConnectionPoint& cp = cc->connpthandles[cc->active_handle];
-        *href = g_strdup_printf("#%s", SP_OBJECT_ID(cc->active_shape));
+        *href = g_strdup_printf("#%s", cc->active_shape->getId());
         *cpid = g_strdup_printf("%c%d", cp.type == ConnPointDefault ? 'd' : 'u' , cp.id);
         return true;
     }

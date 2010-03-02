@@ -312,12 +312,12 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     int segmentCount = 0;
     /**
      * For all Subpaths in the <path>
-     */	     
+     */
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
     {
         /**
          * For all segments in the subpath, including extra closing segment defined by 2geom
-         */		         
+         */
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
         {
 
@@ -340,14 +340,14 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
     nrSegments += segmentCount;
 
     /**
-     *	 at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
-     */     
-    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() ); 
-   
-   
+     *   at moment of writing, 2geom lacks proper initialization of empty intervals in rect...
+     */
+    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );
+
+
     /**
      * For all Subpaths in the <path>
-     */	     
+     */
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
         {
 
@@ -355,7 +355,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
 
         /**
          * For all segments in the subpath, including extra closing segment defined by 2geom
-         */		         
+         */
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
             {
 
@@ -372,7 +372,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
                 nrNodes += 8;
                 }
             else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
-			    {
+            {
                 std::vector<Geom::Point> points = cubic->points();
                 Geom::Point p0 = points[0];
                 Geom::Point p1 = points[1];
@@ -383,7 +383,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
                 nrNodes += 8;
                 }
             else
-		{
+            {
                 err("logical error, because pathv_to_linear_and_cubic_beziers was used");
                 return false;
                 }
@@ -444,7 +444,7 @@ bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
 {
 
     String id;
-    if (!obj->id)
+    if (!obj->getId())
         {
         char buf[16];
         sprintf(buf, "id%d", idIndex++);
@@ -452,7 +452,7 @@ bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
         }
     else
         {
-        id = obj->id;
+            id = obj->getId();
         }
 
     if (SP_IS_ITEM(obj))
@@ -467,9 +467,9 @@ bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
      */
     for (SPObject *child = obj->firstChild() ; child ; child = child->next)
         {
-		if (!doTreeRecursive(doc, child))
-		    return false;
-		}
+            if (!doTreeRecursive(doc, child))
+                return false;
+        }
 
     return true;
 }
@@ -610,7 +610,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
         err("Could not output curves for %s", filename_utf8);
         return;
         }
-        
+
     String curveBuf = outbuf;
     outbuf.clear();
 

@@ -58,7 +58,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Imp
              sp_desktop_selection(desktop)->itemList();
         while ( selected != NULL ) {
             Glib::ustring selected_id;
-            selected_id = SP_OBJECT_ID(*selected);
+            selected_id = (*selected)->getId();
             _selected.insert(_selected.end(), selected_id);
             //std::cout << "Selected: " << selected_id << std::endl;
             ++selected;
@@ -127,7 +127,7 @@ ExecutionEnv::createWorkingDialog (void) {
 
     SPDesktop *desktop = (SPDesktop *)_doc;
     GtkWidget *toplevel = gtk_widget_get_toplevel(&(desktop->canvas->widget));
-    if (!toplevel || !GTK_WIDGET_TOPLEVEL (toplevel)) 
+    if (!toplevel || !GTK_WIDGET_TOPLEVEL (toplevel))
         return;
     Gtk::Window *window = Glib::wrap(GTK_WINDOW(toplevel), false);
 

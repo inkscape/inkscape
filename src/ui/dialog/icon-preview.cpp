@@ -90,7 +90,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
     std::vector<Glib::ustring> pref_sizes = prefs->getAllDirs("/iconpreview/sizes/default");
     std::vector<int> rawSizes;
-    
+
     for (std::vector<Glib::ustring>::iterator i = pref_sizes.begin(); i != pref_sizes.end(); ++i) {
         if (prefs->getBool(*i + "/show", true)) {
             int sizeVal = prefs->getInt(*i + "/value", -1);
@@ -215,7 +215,7 @@ void IconPreviewPanel::refreshPreview()
                 while ( items && !target ) {
                     SPItem* item = SP_ITEM( items->data );
                     SPObject * obj = SP_OBJECT(item);
-                    gchar const *id = SP_OBJECT_ID( obj );
+                    gchar const *id = obj->getId();
                     if ( id ) {
                         target = obj;
                     }
@@ -248,7 +248,7 @@ void IconPreviewPanel::modeToggled()
 void IconPreviewPanel::renderPreview( SPObject* obj )
 {
     SPDocument * doc = SP_OBJECT_DOCUMENT(obj);
-    gchar * id = SP_OBJECT_ID(obj);
+    gchar const * id = obj->getId();
 
 //    g_message(" setting up to render '%s' as the icon", id );
 

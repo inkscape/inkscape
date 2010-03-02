@@ -16,7 +16,7 @@
 // Taking bbox of an item is an expensive operation, and we need to do it many times, so here we
 // cache the centers, widths, and heights of items
 
-//FIXME: make a class with these cashes as members instead of globals 
+//FIXME: make a class with these cashes as members instead of globals
 std::map<const gchar *, Geom::Point> c_cache;
 std::map<const gchar *, Geom::Point> wh_cache;
 
@@ -26,18 +26,18 @@ Center of bbox of item
 Geom::Point
 unclump_center (SPItem *item)
 {
-    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(item));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(item->getId());
     if ( i != c_cache.end() ) {
         return i->second;
     }
 
     Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
     if (r) {
-    	Geom::Point const c = r->midpoint();
-    	c_cache[SP_OBJECT_ID(item)] = c;
-        return c; 
+        Geom::Point const c = r->midpoint();
+        c_cache[item->getId()] = c;
+        return c;
     } else {
-	// FIXME
+        // FIXME
         return Geom::Point(0, 0);
     }
 }
@@ -46,16 +46,16 @@ Geom::Point
 unclump_wh (SPItem *item)
 {
     Geom::Point wh;
-    std::map<const gchar *, Geom::Point>::iterator i = wh_cache.find(SP_OBJECT_ID(item));
+    std::map<const gchar *, Geom::Point>::iterator i = wh_cache.find(item->getId());
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
         Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
-	if (r) {
+        if (r) {
             wh = r->dimensions();
-            wh_cache[SP_OBJECT_ID(item)] = wh;
+            wh_cache[item->getId()] = wh;
         } else {
-	    wh = Geom::Point(0, 0);
+            wh = Geom::Point(0, 0);
         }
     }
 
@@ -63,7 +63,7 @@ unclump_wh (SPItem *item)
 }
 
 /**
-Distance between "edges" of item1 and item2. An item is considered to be an ellipse inscribed into its w/h, 
+Distance between "edges" of item1 and item2. An item is considered to be an ellipse inscribed into its w/h,
 so its radius (distance from center to edge) depends on the w/h and the angle towards the other item.
 May be negative if the edge of item1 is between the center and the edge of item2.
 */
@@ -287,7 +287,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
 
     Geom::Matrix move = Geom::Translate (by);
 
-    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(what->getId());
     if ( i != c_cache.end() ) {
         i->second *= move;
     }
@@ -310,7 +310,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
 
     Geom::Matrix move = Geom::Translate (by);
 
-    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(what->getId());
     if ( i != c_cache.end() ) {
         i->second *= move;
     }
@@ -325,7 +325,7 @@ unclump_pull (SPItem *to, SPItem *what, double dist)
 /**
 Unclumps the items in \a items, reducing local unevenness in their distribution. Produces an effect
 similar to "engraver dots". The only distribution which is unchanged by unclumping is a hexagonal
-grid. May be called repeatedly for stronger effect. 
+grid. May be called repeatedly for stronger effect.
  */
 void
 unclump (GSList *items)
@@ -333,7 +333,7 @@ unclump (GSList *items)
     c_cache.clear();
     wh_cache.clear();
 
-    for (GSList *i = items; i != NULL; i = i->next) { //  for each original/clone x: 
+    for (GSList *i = items; i != NULL; i = i->next) { //  for each original/clone x:
         SPItem *item = SP_ITEM (i->data);
 
         GSList *nei = NULL;
@@ -353,7 +353,7 @@ unclump (GSList *items)
                 g_slist_free (rest);
                 break;
             }
-        } 
+        }
 
         if (g_slist_length (nei) >= 2) {
             double ave = unclump_average (item, nei);
@@ -369,7 +369,7 @@ unclump (GSList *items)
             if (fabs (ave) < 1e6 && fabs (dist_closest) < 1e6 && fabs (dist_farest) < 1e6) { // otherwise the items are bogus
                 // increase these coefficients to make unclumping more aggressive and less stable
                 // the pull coefficient is a bit bigger to counteract the long-term expansion trend
-                unclump_push (closest, item, 0.3 * (ave - dist_closest)); 
+                unclump_push (closest, item, 0.3 * (ave - dist_closest));
                 unclump_pull (farest, item, 0.35 * (dist_farest - ave));
             }
         }

@@ -155,7 +155,15 @@ struct SPObject : public GObject {
     SPObject *_last_child; /* Remembered last child */
     SPObject *next; /* Next object in linked list */
     Inkscape::XML::Node *repr; /* Our xml representation */
+
+private:
     gchar *id; /* Our very own unique id */
+public:
+
+    /**
+     * Returns the objects current ID string.
+     */
+    gchar const* getId() const;
 
     /** @brief cleans up an SPObject, releasing its references and
      *         requesting that references to it be released
@@ -495,6 +503,8 @@ private:
     gchar * getTitleOrDesc(gchar const *svg_tagname) const;
     SPObject * findFirstChild(gchar const *tagname) const;
     GString * textualContent() const;
+
+    friend class SPObjectImpl;
 };
 
 /// The SPObject vtable.

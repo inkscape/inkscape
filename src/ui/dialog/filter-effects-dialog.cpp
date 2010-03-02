@@ -1265,7 +1265,7 @@ void FilterEffectsDialog::FilterModifier::update_filters()
         SPFilter* f = (SPFilter*)l->data;
         row[_columns.filter] = f;
         const gchar* lbl = f->label();
-        const gchar* id = SP_OBJECT_ID(f);
+        const gchar* id = f->getId();
         row[_columns.label] = lbl ? lbl : (id ? id : "filter");
     }
 
@@ -1485,7 +1485,7 @@ void FilterEffectsDialog::PrimitiveList::update()
                 row[_columns.primitive] = prim;
                 row[_columns.type_id] = FPConverter.get_id_from_key(prim->repr->name());
                 row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
-                row[_columns.id] = SP_OBJECT_ID(prim);
+                row[_columns.id] = prim->getId();
 
                 if(prim == active_prim) {
                     get_selection()->select(row);

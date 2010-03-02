@@ -707,7 +707,7 @@ bool JavaFXOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
      * Check the type of node and process
      */
     String id;
-    if (!obj->id)
+    if (!obj->getId())
         {
         char buf[16];
         sprintf(buf, "id%d", idindex++);
@@ -715,7 +715,7 @@ bool JavaFXOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
         }
     else
         {
-        id = obj->id;
+            id = obj->getId();
         }
     if (SP_IS_ITEM(obj))
         {
@@ -773,7 +773,7 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
      * Check the type of node and process
      */
     String id;
-    if (!obj->id)
+    if (!obj->getId())
         {
         char buf[16];
         sprintf(buf, "id%d", idindex++);
@@ -781,7 +781,7 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
         }
     else
         {
-        id = obj->id;
+            id = obj->getId();
         }
 
     if (SP_IS_ITEM(obj)) {

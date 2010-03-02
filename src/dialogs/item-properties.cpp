@@ -328,7 +328,7 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
 
         /* ID */
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id"));
-        gtk_entry_set_text (GTK_ENTRY (w), obj->id);
+        gtk_entry_set_text (GTK_ENTRY (w), obj->getId());
         gtk_widget_set_sensitive (w, TRUE);
         w = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id_label"));
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (w), _("_Id"));
@@ -439,7 +439,7 @@ sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
     gchar *id = (gchar *) gtk_entry_get_text (GTK_ENTRY (id_entry));
     g_strcanon (id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
     GtkWidget *id_label = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (spw), "id_label"));
-    if (!strcmp (id, SP_OBJECT_ID(item))) {
+    if (!strcmp (id, item->getId())) {
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_Id"));
     } else if (!*id || !isalnum (*id)) {
         gtk_label_set_text (GTK_LABEL (id_label), _("Id invalid! "));

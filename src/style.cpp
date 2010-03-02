@@ -363,7 +363,7 @@ sp_style_filter_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style)
     }
     if ( SP_IS_FILTER(ref))
     {
-        style->filter_modified_connection = 
+        style->filter_modified_connection =
            ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_filter_ref_modified), style));
     }
 
@@ -416,7 +416,7 @@ sp_style_fill_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle
         style->fill_ps_modified_connection.disconnect();
     }
     if (SP_IS_PAINT_SERVER(ref)) {
-        style->fill_ps_modified_connection = 
+        style->fill_ps_modified_connection =
            ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
@@ -433,7 +433,7 @@ sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPSty
         style->stroke_ps_modified_connection.disconnect();
     }
     if (SP_IS_PAINT_SERVER(ref)) {
-        style->stroke_ps_modified_connection = 
+        style->stroke_ps_modified_connection =
           ref->connectModified(sigc::bind(sigc::ptr_fun(&sp_style_paint_server_ref_modified), style));
     }
 
@@ -724,7 +724,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
             style->stroke_dashoffset_set = FALSE;
         }
     }
-    
+
     /* -inkscape-font-specification */
     if (!style->text_private || !style->text->font_specification.set) {
         val = repr->attribute("-inkscape-font-specification");
@@ -751,7 +751,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->filter.set) {
         val = repr->attribute("filter");
         if (val) {
-		      sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+            sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
         }
     }
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
@@ -805,21 +805,21 @@ sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path)
 {
     g_return_if_fail(style != NULL);
     g_return_if_fail(path != "");
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // not optimal: we reconstruct the node based on the prefs, then pass it to
     // sp_style_read for actual processing.
     Inkscape::XML::SimpleDocument *tempdoc = new Inkscape::XML::SimpleDocument;
     Inkscape::XML::Node *tempnode = tempdoc->createElement("temp");
-    
+
     std::vector<Inkscape::Preferences::Entry> attrs = prefs->getAllEntries(path);
     for (std::vector<Inkscape::Preferences::Entry>::iterator i = attrs.begin(); i != attrs.end(); ++i) {
         tempnode->setAttribute(i->getEntryName().data(), i->getString().data());
     }
 
     sp_style_read(style, NULL, tempnode);
-    
+
     Inkscape::GC::release(tempnode);
     Inkscape::GC::release(tempdoc);
     delete tempdoc;
@@ -1949,7 +1949,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
     if (style->text && parent->text) {
         sp_style_merge_string_prop_from_dying_parent(style->text->font_specification,
                                                      parent->text->font_specification);
-        
+
         sp_style_merge_string_prop_from_dying_parent(style->text->font_family,
                                                      parent->text->font_family);
     }
@@ -2287,10 +2287,10 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &style->stroke, NULL, flags);
 
     // stroke width affects markers, so write it if there's stroke OR any markers
-    if (!style->stroke.noneSet || 
+    if (!style->stroke.noneSet ||
         style->marker[SP_MARKER_LOC].set ||
         style->marker[SP_MARKER_LOC_START].set ||
-        style->marker[SP_MARKER_LOC_MID].set || 
+        style->marker[SP_MARKER_LOC_MID].set ||
         style->marker[SP_MARKER_LOC_END].set) {
         p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &style->stroke_width, NULL, flags);
     }
@@ -2349,7 +2349,7 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
         p += g_snprintf(p, c + BMAX - p, "marker:none;");
         marker_none = true;
     }
-    if (style->marker[SP_MARKER_LOC_START].set 
+    if (style->marker[SP_MARKER_LOC_START].set
        && (!master || strcmp(master, style->marker[SP_MARKER_LOC_START].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-start:%s;", style->marker[SP_MARKER_LOC_START].value);
     } else if (flags == SP_STYLE_FLAG_ALWAYS && !marker_none) {
@@ -2450,10 +2450,10 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_ipaint(p, c + BMAX - p, "stroke", &from->stroke, &to->stroke, SP_STYLE_FLAG_IFDIFF);
 
     // stroke width affects markers, so write it if there's stroke OR any markers
-    if (!from->stroke.noneSet || 
+    if (!from->stroke.noneSet ||
         from->marker[SP_MARKER_LOC].set ||
         from->marker[SP_MARKER_LOC_START].set ||
-        from->marker[SP_MARKER_LOC_MID].set || 
+        from->marker[SP_MARKER_LOC_MID].set ||
         from->marker[SP_MARKER_LOC_END].set) {
         p += sp_style_write_ilength(p, c + BMAX - p, "stroke-width", &from->stroke_width, &to->stroke_width, SP_STYLE_FLAG_IFDIFF);
     }
@@ -3281,12 +3281,12 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
         f->set = TRUE;
         f->inherit = TRUE;
         if (f->href && f->href->getObject())
-            f->href->detach(); 
+            f->href->detach();
     } else if(streq(str, "none")) {
         f->set = TRUE;
         f->inherit = FALSE;
         if (f->href && f->href->getObject())
-           f->href->detach(); 
+           f->href->detach();
     } else if (strneq(str, "url", 3)) {
         char *uri = extract_uri(str);
         if(uri == NULL || uri[0] == '\0') {
@@ -3320,7 +3320,7 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
         f->set = FALSE;
         f->inherit = FALSE;
         if (f->href && f->href->getObject())
-            f->href->detach(); 
+            f->href->detach();
     }
 }
 
@@ -3887,7 +3887,7 @@ sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *link
 
     SPCSSAttr *css = sp_repr_css_attr_new();
     if (linked) {
-        gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(linked));
+        gchar *val = g_strdup_printf("url(#%s)", linked->getId());
         sp_repr_css_set_property(css, property, val);
         g_free(val);
     } else {

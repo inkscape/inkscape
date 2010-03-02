@@ -65,8 +65,8 @@ namespace Implementation {
 
 /** \brief  Make GTK+ events continue to come through a little bit
 
-	This just keeps coming the events through so that we'll make the GUI
-	update and look pretty.
+    This just keeps coming the events through so that we'll make the GUI
+    update and look pretty.
 */
 void Script::pump_events (void) {
     while ( Gtk::Main::events_pending() ) {
@@ -97,9 +97,9 @@ Script::interpreter_t const Script::interpreterTab[] = {
 
 
 /** \brief Look up an interpreter name, and translate to something that
-           is executable
+    is executable
     \param interpNameArg  The name of the interpreter that we're looking
-	                      for, should be an entry in interpreterTab
+    for, should be an entry in interpreterTab
 */
 Glib::ustring Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 {
@@ -739,7 +739,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
         while ( selected != NULL ) {
             Glib::ustring selected_id;
             selected_id += "--id=";
-            selected_id += (*selected)->id;
+            selected_id += (*selected)->getId();
             params.insert(params.begin(), selected_id);
             ++selected;
         }
