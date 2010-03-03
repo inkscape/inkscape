@@ -7,7 +7,7 @@
   <_param name="about" type="description">All sliced images, and optionaly code, will be generated as you had configured and saved to one directory.</_param>
   <param name="dir" type="string" _gui-text="Directory path to export"></param>
   <param name="with-code" type="boolean" _gui-text="With HTML and CSS">true</param>
-  <effect>
+  <effect needs-live-preview="false">
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Web">

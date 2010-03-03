@@ -52,7 +52,7 @@
       </param>
     </page>
   </param>
-  <effect>
+  <effect needs-live-preview="false">
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Web">

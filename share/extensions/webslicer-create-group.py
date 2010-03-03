@@ -50,17 +50,23 @@ class WebSlicer_CreateGroup(inkex.Effect):
                                      help="")
 
     def effect(self):
-        if len(self.selected) == 0:
-            inkex.errormsg(_('You must to select some "Slicer rectangles".'))
-            return
         layer = self.document.xpath(
                      '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
                      namespaces=inkex.NSS)[0]
-        group = inkex.etree.SubElement(layer, 'g')
+        if len(self.selected) == 0:
+            inkex.errormsg(_('You must to select some "Slicer rectangles" or other "Layout groups".'))
+            exit(1)
+        descendants = get_descendants_in_array(layer)
+        for id,node in self.selected.iteritems():
+            if node not in descendants:
+                inkex.errormsg(_('Opss... The element "%s" is not in the Web Slicer layer') % id)
+                exit(2)
+        g_parent = self.find_node_parent(node)
+        group = inkex.etree.SubElement(g_parent, 'g')
         desc = inkex.etree.SubElement(group, 'desc')
         conf_txt = ''
         if not is_empty(self.options.html_id):
-            conf_txt += 'html-id:'    + self.options.html_class +'\n'
+            conf_txt += 'html-id:'    + self.options.html_id +'\n'
         if not is_empty(self.options.html_class):
             conf_txt += 'html-class:' + self.options.html_class +'\n'
         conf_txt += 'width-unity:' + self.options.width_unity +'\n'
@@ -69,6 +75,18 @@ class WebSlicer_CreateGroup(inkex.Effect):
         for id,node in self.selected.iteritems():
             group.insert( 1, node )
 
+
+    def find_node_parent(self, node):
+        #TODO: make it real!
+        return self.document.xpath(
+                    '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
+                    namespaces=inkex.NSS)[0]
+
+def get_descendants_in_array(el):
+    descendants = el.getchildren()
+    for e in descendants:
+        descendants.extend( get_descendants_in_array(e) )
+    return descendants
 
 if __name__ == '__main__':
     e = WebSlicer_CreateGroup()

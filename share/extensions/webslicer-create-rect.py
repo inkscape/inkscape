@@ -83,12 +83,30 @@ class WebSlicer_CreateRect(inkex.Effect):
         # inkscape param workarround
         self.OptionParser.add_option("--tab")
 
+
+    def unique_slice_name(self):
+        name = self.options.name
+        el = self.document.xpath( '//*[@id="'+name+'"]', namespaces=inkex.NSS )
+        if len(el) > 0:
+            if name[-3:] == '-00': name = name[:-3]
+            num = 0
+            num_s = '00'
+            while len(el) > 0:
+                num += 1
+                num_s = str(num)
+                if len(num_s)==1 : num_s = '0'+num_s
+                el = self.document.xpath( '//*[@id="'+name+'-'+num_s+'"]',
+                                          namespaces=inkex.NSS )
+            self.options.name = name+'-'+num_s
+
+
     def effect(self):
         layer = self.get_slicer_layer()
         #TODO: get selected elements to define location and size
         rect = inkex.etree.SubElement(layer, 'rect')
         if is_empty(self.options.name):
-            self.options.name = 'rect0001'
+            self.options.name = 'slice-00'
+        self.unique_slice_name()
         rect.set('id', self.options.name)
         rect.set('fill', 'red')
         rect.set('opacity', '0.5')
