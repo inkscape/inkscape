@@ -59,13 +59,13 @@ bool SelectableControlPoint::grabbed(GdkEventMotion *)
     if (!selected()) {
         _takeSelection();
     }
-    _selection._pointGrabbed();
+    _selection._pointGrabbed(this);
     return false;
 }
 
 void SelectableControlPoint::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
-    _selection._pointDragged(position(), new_pos, event);
+    _selection._pointDragged(new_pos, event);
 }
 
 void SelectableControlPoint::ungrabbed(GdkEventButton *)

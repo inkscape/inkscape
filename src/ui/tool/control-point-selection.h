@@ -15,6 +15,7 @@
 #include <memory>
 #include <boost/optional.hpp>
 #include <boost/unordered_set.hpp>
+#include <boost/unordered_map.hpp>
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
 #include <2geom/point.h>
@@ -110,8 +111,8 @@ private:
     // The functions below are invoked from SelectableControlPoint.
     // Previously they were connected to handlers when selecting, but this
     // creates problems when dragging a point that was not selected.
-    void _pointGrabbed();
-    void _pointDragged(Geom::Point const &, Geom::Point &, GdkEventMotion *);
+    void _pointGrabbed(SelectableControlPoint *);
+    void _pointDragged(Geom::Point &, GdkEventMotion *);
     void _pointUngrabbed();
     bool _pointClicked(SelectableControlPoint *, GdkEventButton *);
     void _pointChanged(SelectableControlPoint *, bool);
@@ -129,11 +130,12 @@ private:
 
     set_type _points;
     set_type _all_points;
+    boost::unordered_map<SelectableControlPoint *, Geom::Point> _original_positions;
     boost::optional<double> _rot_radius;
     boost::optional<double> _mouseover_rot_radius;
     Geom::OptRect _bounds;
     TransformHandleSet *_handles;
-    SelectableControlPoint *_grabbed_point;
+    SelectableControlPoint *_grabbed_point, *_farthest_point;
     unsigned _dragging         : 1;
     unsigned _handles_visible  : 1;
     unsigned _one_node_handles : 1;

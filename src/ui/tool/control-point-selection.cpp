@@ -266,28 +266,51 @@ void ControlPointSelection::toggleTransformHandlesMode()
     }
 }
 
-void ControlPointSelection::_pointGrabbed()
+void ControlPointSelection::_pointGrabbed(SelectableControlPoint *point)
 {
     hideTransformHandles();
     _dragging = true;
+    _grabbed_point = point;
+    _farthest_point = point;
+    double maxdist = 0;
+    for (iterator i = _points.begin(); i != _points.end(); ++i) {
+        _original_positions.insert(std::make_pair(*i, (*i)->position()));
+        double dist = Geom::distance(*_grabbed_point, **i);
+        if (dist > maxdist) {
+            maxdist = dist;
+            _farthest_point = *i;
+        }
+    }
 }
 
-void ControlPointSelection::_pointDragged(Geom::Point const &old_pos, Geom::Point &new_pos,
-                                          GdkEventMotion */*event*/)
+void ControlPointSelection::_pointDragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
-    Geom::Point delta = new_pos - old_pos;
-    for (iterator i = _points.begin(); i != _points.end(); ++i) {
-        SelectableControlPoint *cur = (*i);
-        cur->move(cur->position() + delta);
+    Geom::Point abs_delta = new_pos - _original_positions[_grabbed_point];
+    double fdist = Geom::distance(_original_positions[_grabbed_point], _original_positions[_farthest_point]);
+    if (held_alt(*event) && fdist > 0) {
+        // sculpting
+        for (iterator i = _points.begin(); i != _points.end(); ++i) {
+            SelectableControlPoint *cur = (*i);
+            double dist = Geom::distance(_original_positions[cur], _original_positions[_grabbed_point]);
+            double deltafrac = 0.5 + 0.5 * cos(M_PI * dist/fdist);
+            cur->move(_original_positions[cur] + abs_delta * deltafrac);
+        }
+    } else {
+        Geom::Point delta = new_pos - _grabbed_point->position();
+        for (iterator i = _points.begin(); i != _points.end(); ++i) {
+            SelectableControlPoint *cur = (*i);
+            cur->move(_original_positions[cur] + abs_delta);
+        }
+        _handles->rotationCenter().move(_handles->rotationCenter().position() + delta);
     }
-    _handles->rotationCenter().move(_handles->rotationCenter().position() + delta);
     signal_update.emit();
 }
 
 void ControlPointSelection::_pointUngrabbed()
 {
+    _original_positions.clear();
     _dragging = false;
-    _grabbed_point = NULL;
+    _grabbed_point = _farthest_point = NULL;
     _updateBounds();
     restoreTransformHandles();
     signal_commit.emit(COMMIT_MOUSE_MOVE);
