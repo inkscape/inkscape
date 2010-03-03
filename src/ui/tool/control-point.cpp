@@ -313,12 +313,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
     int drag_tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
     
     switch(event->type)
-    {
-    case GDK_2BUTTON_PRESS:
-        // store the button number for next release
-        next_release_doubleclick = event->button.button;
-        return true;
-        
+    {   
     case GDK_BUTTON_PRESS:
         next_release_doubleclick = 0;
         if (event->button.button == 1) {
@@ -335,6 +330,11 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
             return true;
         }
         return false;
+
+    case GDK_2BUTTON_PRESS:
+        // store the button number for next release
+        next_release_doubleclick = event->button.button;
+        return true;
         
     case GDK_MOTION_NOTIFY:
         combine_motion_events(_desktop->canvas, event->motion, 0);
@@ -347,7 +347,6 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 if (t) return true;
 
                 // if we are here, it means the tolerance was just exceeded.
-                next_release_doubleclick = 0;
                 _drag_origin = _position;
                 transferred = grabbed(&event->motion);
                 // _drag_initiated might change during the above virtual call
@@ -396,22 +395,19 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 sp_canvas_end_forced_full_redraws(_desktop->canvas);
             }
 
-            if (next_release_doubleclick) {
+            if (_drag_initiated) {
+                // it is the end of a drag
                 _drag_initiated = false;
-                return doubleclicked(&event->button);
-            }
-            if (event->button.button == 1) {
-                if (_drag_initiated) {
-                    // it is the end of a drag
-                    ungrabbed(&event->button);
-                    _drag_initiated = false;
-                    return true;
+                ungrabbed(&event->button);
+                return true;
+            } else {
+                // it is the end of a click
+                if (next_release_doubleclick) {
+                    return doubleclicked(&event->button);
                 } else {
-                    // it is the end of a click
                     return clicked(&event->button);
                 }
             }
-            _drag_initiated = false;
         }
         break;
 
