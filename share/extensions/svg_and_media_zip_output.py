@@ -23,11 +23,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-Version 0.4 (Nicolas Dufour, nicoduf@yahoo.fr)
-  fix a coding bug: now use UTF-8 to save filenames in the archive.
-  fix xlink href parsing (now a real URL in 0.47).
-  fix Win32 stdout \r\r\n bug (stdout now set to bin mode).
-  fix a double .svg extension bug (added svg and svgz in the docstripped extensions).
+Version 0.5 (Nicolas Dufour, nicoduf@yahoo.fr)
+    Fix a bug related to special caracters in the path (LP #456248).
 
 TODO
 - fix bug: not saving existing .zip after a Collect for Output is run
@@ -35,6 +32,7 @@ TODO
      the file name is still xxx.zip. after saving again the file xxx.zip is written with a plain .svg which
      looks like a corrupt zip
 - maybe add better extention
+- consider switching to lzma in order to allow cross platform compression with no encoding problem...
 """
 
 import inkex
@@ -52,6 +50,10 @@ _ = gettext.gettext
 class SVG_and_Media_ZIP_Output(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        if os.name == 'nt':
+            self.encoding = "cp437"
+        else:
+            self.encoding = "latin-1"     
 
     def output(self):
         out = open(self.zip_file,'rb')
@@ -98,7 +100,7 @@ class SVG_and_Media_ZIP_Output(inkex.Effect):
 
         stream.close()
 
-        z.write(dst_file,docstripped.encode("utf_8")+'.svg')
+        z.write(dst_file,docstripped.encode(self.encoding)+'.svg')
 
         z.close()
 
@@ -107,20 +109,21 @@ class SVG_and_Media_ZIP_Output(inkex.Effect):
         if (xlink[:4]!='data'):
             absref=node.get(inkex.addNS('absref',u'sodipodi'))
             url=urlparse.urlparse(xlink)
-            href=urllib.unquote(url.path)
-            if os.name == 'nt' and href[0] == '/':
-                href = href[1:]
+            href=urllib.url2pathname(url.path)
+            
             if (href != None):
                 absref=os.path.realpath(href)
 
+            absref=unicode(absref, "utf-8")
+
             if (os.path.isfile(absref)):
                 shutil.copy(absref, self.tmp_dir)
-                z.write(absref, os.path.basename(absref).encode("utf_8"))
+                z.write(absref, os.path.basename(absref).encode(self.encoding))
             elif (os.path.isfile(os.path.join(self.tmp_dir, absref))):
                 #TODO: please explain why this clause is necessary
                 shutil.copy(os.path.join(self.tmp_dir, absref), self.tmp_dir)
                 z.write(os.path.join(self.tmp_dir, absref),
-                        os.path.basename(absref).encode("utf_8"))
+                        os.path.basename(absref).encode(self.encoding))
             else:
                 inkex.errormsg(_('Could not locate file: %s') % absref)
 
