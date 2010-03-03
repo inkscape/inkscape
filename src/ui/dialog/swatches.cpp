@@ -275,6 +275,7 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
                     | (0x0000ff00 & (item->def.getB() <<  8));
                 thumb->fill( fillWith );
                 pixbuf = thumb->gobj();
+                g_object_ref(G_OBJECT(pixbuf));
             } else {
                 SPGradient* grad = gradMap[item];
 
