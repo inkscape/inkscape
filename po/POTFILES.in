@@ -143,6 +143,10 @@ share/filters/filters.svg.h
 share/filters/i18n.py
 share/patterns/i18n.py
 share/patterns/patterns.svg.h
+src/conn-avoid-ref.cpp
+src/connector-context.h
+src/live_effects/lpe-extrude.cpp
+src/sp-flowtext.cpp
 src/arc-context.cpp
 src/box3d-context.cpp
 src/box3d.cpp
