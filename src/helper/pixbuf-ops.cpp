@@ -26,6 +26,7 @@
 #include <document.h>
 #include <sp-item.h>
 #include <sp-root.h>
+#include <sp-use.h>
 #include <sp-defs.h>
 #include "unit-constants.h"
 
@@ -47,6 +48,7 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
          && !SP_IS_DEFS(o)
          && !SP_IS_ROOT(o)
          && !SP_IS_GROUP(o)
+         && !SP_IS_USE(o)
          && !g_slist_find(list, o) )
     {
         sp_item_invoke_hide(SP_ITEM(o), dkey);
