@@ -14,8 +14,7 @@
 
 #include <memory>
 #include <boost/optional.hpp>
-#include <boost/unordered_set.hpp>
-#include <boost/unordered_map.hpp>
+#include "util/set-types.h"
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
 #include <2geom/point.h>
@@ -34,6 +33,17 @@ class SelectableControlPoint;
 }
 }
 
+#ifdef USE_GNU_HASHES
+namespace __gnu_cxx {
+template<>
+struct hash<Inkscape::UI::SelectableControlPoint*> {
+    size_t operator()(Inkscape::UI::SelectableControlPoint *p) const {
+        return reinterpret_cast<size_t>(p);
+    }
+};
+} // namespace __gnu_cxx
+#endif // USE_GNU_HASHES
+
 namespace Inkscape {
 namespace UI {
 
@@ -41,7 +51,7 @@ class ControlPointSelection : public Manipulator, public sigc::trackable {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
-    typedef boost::unordered_set< SelectableControlPoint * > set_type;
+    typedef optim_set< SelectableControlPoint * > set_type;
     typedef set_type Set; // convenience alias
 
     typedef set_type::iterator iterator;
@@ -76,7 +86,9 @@ public:
     void erase(iterator first, iterator last);
 
     // find
-    iterator find(const key_type &k) { return _points.find(k); }
+    iterator find(const key_type &k) {
+        return _points.find(k);
+    }
 
     // Sometimes it is very useful to keep a list of all selectable points.
     set_type const &allPoints() const { return _all_points; }
@@ -130,7 +142,7 @@ private:
 
     set_type _points;
     set_type _all_points;
-    boost::unordered_map<SelectableControlPoint *, Geom::Point> _original_positions;
+    optim_map<SelectableControlPoint *, Geom::Point> _original_positions;
     boost::optional<double> _rot_radius;
     boost::optional<double> _mouseover_rot_radius;
     Geom::OptRect _bounds;

@@ -125,6 +125,30 @@ if test "x$GXX" = "xyes"; then
 	fi
 fi
 
+# Test for various hash_set/unordered_set issues:
+# This is a system header so we check it as soon as possible
+AC_CHECK_HEADER(tr1/unordered_set,
+	AC_MSG_CHECKING([TR1 unordered_set usability])
+	AC_COMPILE_IFELSE([
+#include <tr1/unordered_set>
+int main() {
+  std::tr1::unordered_set<int> i, j;
+  i = j;
+  return 0;
+}
+], [unordered_set_broken=no], [unordered_set_broken=yet])
+if test "x$unordered_set_broken" = "xyes"; then
+	AC_MSG_RESULT([broken])
+else
+	AC_MSG_RESULT([ok])
+	AC_DEFINE(HAVE_TR1_UNORDERED_SET, 1, [Has the standard TR1 unordered_set])
+fi
+, [])
+
+AC_CHECK_HEADER(ext/hash_set, AC_DEFINE(HAVE_EXT_HASH_SET, 1, [Legacy ext/hash_set]), [])
+AC_CHECK_HEADER(unordered_set, AC_DEFINE(HAVE_UNORDERED_SET, 1, [Legacy unordered_set]), [])
+
+
 # Test whether GCC emits a spurious warning when using boost::optional
 # If yes, turn off strict aliasing warnings to reduce noise
 # and allow the legitimate warnings to stand out

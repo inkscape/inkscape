@@ -29,7 +29,7 @@
 # include FT_TRUETYPE_TABLES_H
 # include <pango/pangoft2.h>
 
-#include <boost/unordered_map.hpp>
+#include "util/set-types.h"
 
 
 struct font_style_hash : public std::unary_function<font_style, size_t> {
@@ -40,7 +40,7 @@ struct font_style_equal : public std::binary_function<font_style, font_style, bo
     bool operator()(font_style const &a, font_style const &b) const;
 };
 
-typedef boost::unordered_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
+typedef optim_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
 
 
 

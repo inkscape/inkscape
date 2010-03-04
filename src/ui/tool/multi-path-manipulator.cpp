@@ -8,7 +8,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <boost/unordered_set.hpp>
+#include "util/set-types.h"
 #include <boost/shared_ptr.hpp>
 #include <glib.h>
 #include <glibmm/i18n.h>
@@ -25,13 +25,24 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
 
+#ifdef USE_GNU_HASHES
+namespace __gnu_cxx {
+template<>
+struct hash<Inkscape::UI::NodeList::iterator> {
+    size_t operator()(Inkscape::UI::NodeList::iterator const &n) const {
+        return reinterpret_cast<size_t>(n.ptr());
+    }
+};
+} // namespace __gnu_cxx
+#endif // USE_GNU_HASHES
+
 namespace Inkscape {
 namespace UI {
 
 namespace {
 typedef std::pair<NodeList::iterator, NodeList::iterator> IterPair;
 typedef std::vector<IterPair> IterPairList;
-typedef boost::unordered_set<NodeList::iterator> IterSet;
+typedef optim_set<NodeList::iterator> IterSet;
 typedef std::multimap<double, IterPair> DistanceMap;
 typedef std::pair<double, IterPair> DistanceMapItem;
 
