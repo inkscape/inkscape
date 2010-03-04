@@ -22,7 +22,6 @@
 
 #include "macros.h"
 #include "forward.h"
-#include "pixmaps/cursor-node.xpm"
 #include "pixmaps/cursor-crosshairs.xpm"
 #include <gtk/gtk.h>
 #include "desktop.h"
