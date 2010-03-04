@@ -14,13 +14,13 @@
 
 #include <memory>
 #include <boost/optional.hpp>
-#include "util/set-types.h"
 #include <sigc++/sigc++.h>
 #include <2geom/forward.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
 #include "display/display-forward.h"
 #include "util/accumulators.h"
+#include "util/unordered-containers.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
 
@@ -33,17 +33,6 @@ class SelectableControlPoint;
 }
 }
 
-#ifdef USE_GNU_HASHES
-namespace __gnu_cxx {
-template<>
-struct hash<Inkscape::UI::SelectableControlPoint*> {
-    size_t operator()(Inkscape::UI::SelectableControlPoint *p) const {
-        return reinterpret_cast<size_t>(p);
-    }
-};
-} // namespace __gnu_cxx
-#endif // USE_GNU_HASHES
-
 namespace Inkscape {
 namespace UI {
 
@@ -51,7 +40,7 @@ class ControlPointSelection : public Manipulator, public sigc::trackable {
 public:
     ControlPointSelection(SPDesktop *d, SPCanvasGroup *th_group);
     ~ControlPointSelection();
-    typedef optim_set< SelectableControlPoint * > set_type;
+    typedef INK_UNORDERED_SET<SelectableControlPoint *> set_type;
     typedef set_type Set; // convenience alias
 
     typedef set_type::iterator iterator;
@@ -142,7 +131,7 @@ private:
 
     set_type _points;
     set_type _all_points;
-    optim_map<SelectableControlPoint *, Geom::Point> _original_positions;
+    INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Point> _original_positions;
     boost::optional<double> _rot_radius;
     boost::optional<double> _mouseover_rot_radius;
     Geom::OptRect _bounds;

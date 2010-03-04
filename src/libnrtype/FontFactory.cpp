@@ -10,25 +10,19 @@
 
 #define PANGO_ENABLE_ENGINE
 
-#include "FontFactory.h"
-#include <libnrtype/font-instance.h>
-
-#include <glibmm.h>
-
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
+#include <glibmm.h>
 #include <glib/gmem.h>
 #include <glibmm/i18n.h> // _()
+#include <pango/pangoft2.h>
+#include "libnrtype/FontFactory.h"
+#include "libnrtype/font-instance.h"
+#include "util/unordered-containers.h"
 
-/* Freetype2 */
-# include <pango/pangoft2.h>
-
-#include "util/set-types.h"
-
-typedef optim_map<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
+typedef INK_UNORDERED_MAP<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
 size_t font_descr_hash::operator()( PangoFontDescription *const &x) const {

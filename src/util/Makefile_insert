@@ -16,12 +16,12 @@ ink_common_sources += \
 	util/map-list.h \
 	util/mathfns.h \
 	util/reverse-list.h \
-	util/set-types.h \
 	util/share.h \
 	util/share.cpp \
 	util/tuple.h \
 	util/units.cpp \
-	util/units.h
+	util/units.h \
+	util/unordered-containers.h
 
 # ######################
 # ### CxxTest stuff ####

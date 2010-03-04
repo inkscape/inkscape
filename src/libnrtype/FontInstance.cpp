@@ -11,25 +11,22 @@
 #define PANGO_ENABLE_ENGINE
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
-#include <libnr/nr-rect.h>
-#include <libnrtype/font-glyph.h>
-#include <libnrtype/font-instance.h>
+
+#include <ft2build.h>
+#include FT_OUTLINE_H
+#include FT_BBOX_H
+#include FT_TRUETYPE_TAGS_H
+#include FT_TRUETYPE_TABLES_H
+#include <pango/pangoft2.h>
 #include <2geom/pathvector.h>
-#include <livarot/Path.h>
-
-#include "RasterFont.h"
-
-/* Freetype 2 */
-# include <ft2build.h>
-# include FT_OUTLINE_H
-# include FT_BBOX_H
-# include FT_TRUETYPE_TAGS_H
-# include FT_TRUETYPE_TABLES_H
-# include <pango/pangoft2.h>
-
-#include "util/set-types.h"
+#include "libnr/nr-rect.h"
+#include "libnrtype/font-glyph.h"
+#include "libnrtype/font-instance.h"
+#include "libnrtype/RasterFont.h"
+#include "livarot/Path.h"
+#include "util/unordered-containers.h"
 
 
 struct font_style_hash : public std::unary_function<font_style, size_t> {
@@ -40,7 +37,7 @@ struct font_style_equal : public std::binary_function<font_style, font_style, bo
     bool operator()(font_style const &a, font_style const &b) const;
 };
 
-typedef optim_map<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
+typedef INK_UNORDERED_MAP<font_style, raster_font*, font_style_hash, font_style_equal> StyleMap;
 
 
 

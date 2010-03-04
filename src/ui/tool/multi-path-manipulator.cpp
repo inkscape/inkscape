@@ -8,7 +8,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "util/set-types.h"
 #include <boost/shared_ptr.hpp>
 #include <glib.h>
 #include <glibmm/i18n.h>
@@ -24,6 +23,7 @@
 #include "ui/tool/node.h"
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
+#include "util/unordered-containers.h"
 
 #ifdef USE_GNU_HASHES
 namespace __gnu_cxx {
@@ -40,9 +40,18 @@ namespace Inkscape {
 namespace UI {
 
 namespace {
+
+struct hash_nodelist_iterator
+    : public std::unary_function<NodeList::iterator, std::size_t>
+{
+    std::size_t operator()(NodeList::iterator i) const {
+        return INK_HASH<NodeList::iterator::pointer>()(&*i);
+    }
+};
+
 typedef std::pair<NodeList::iterator, NodeList::iterator> IterPair;
 typedef std::vector<IterPair> IterPairList;
-typedef optim_set<NodeList::iterator> IterSet;
+typedef INK_UNORDERED_SET<NodeList::iterator, hash_nodelist_iterator> IterSet;
 typedef std::multimap<double, IterPair> DistanceMap;
 typedef std::pair<double, IterPair> DistanceMapItem;
 
