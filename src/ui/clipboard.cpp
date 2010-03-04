@@ -873,26 +873,25 @@ bool ClipboardManagerImpl::_pasteImage()
     Glib::RefPtr<Gdk::Pixbuf> img = _clipboard->wait_for_image();
     if (!img) return false;
 
-    // Very stupid hack: Write into a file, then import the file into the document.
-    // To avoid using tmpfile and POSIX file handles, make the filename based on current time.
-    // This wasn't my idea, I just copied this from selection-chemistry.cpp
-    // and just can't think of something saner at the moment. Pasting more than
-    // one image per second will overwrite the image.
-    // However, I don't think anyone is able to copy a _different_ image into inkscape
-    // in 1 second.
-    time_t rawtime;
-    char image_filename[128];
+    // AARGH stupid
+    Inkscape::Extension::DB::InputList o;
+    Inkscape::Extension::db.get_input_list(o);
+    Inkscape::Extension::DB::InputList::const_iterator i = o.begin();
+    while (i != o.end() && strcmp( (*i)->get_mimetype(), "image/png" ) != 0) {
+        ++i;
+    }
+    Inkscape::Extension::Extension *png = *i;
+    bool save = png->get_param_bool("link");
+    png->set_param_bool("link", false);
+    png->set_gui(false);
 
-    time(&rawtime);
-    strftime(image_filename, 128, "inkscape_pasted_image_%Y%m%d_%H%M%S.png", localtime( &rawtime ));
-    /// @todo Check whether the encoding is correct here
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    std::string save_folder = Glib::filename_from_utf8(prefs->getString("/dialogs/save_as/path"));
+    gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
+    img->save(filename, "png");
+    file_import(doc, filename, png);
+    g_free(filename);
 
-    gchar *image_path = g_build_filename(save_folder.data(), image_filename, NULL);
-    img->save(image_path, "png");
-    file_import(doc, image_path, NULL);
-    g_free(image_path);
+    png->set_param_bool("link", save);
+    png->set_gui(true);
 
     return true;
 }

@@ -11,6 +11,7 @@
 #ifndef INKSCAPE_EXTENSION_INPUT_H__
 #define INKSCAPE_EXTENSION_INPUT_H__
 
+#include <exception>
 #include <glib.h>
 #include "extension.h"
 #include "xml/repr.h"
@@ -30,8 +31,14 @@ public: /* this is a hack for this release, this will be private shortly */
     gchar *output_extension;     /**< Setting of what output extension should be used */
 
 public:
-    class open_failed {};        /**< Generic failure for an undescribed reason */
-    class no_extension_found {}; /**< Failed because we couldn't find an extension to match the filename */
+    struct open_failed : public std::exception {
+        virtual ~open_failed() throw() {}
+        const char *what() const throw() { return "Open failed"; }
+    };
+    struct no_extension_found : public std::exception {
+        virtual ~no_extension_found() throw() {}
+        const char *what() const throw() { return "No suitable input extension found"; }
+    };
 
                   Input                (Inkscape::XML::Node * in_repr,
                                         Implementation::Implementation * in_imp);

@@ -99,6 +99,7 @@ private:
     state_t    _state;                    /**< Which state the Extension is currently in */
     std::vector<Dependency *>  _deps;     /**< Dependencies for this extension */
     static std::ofstream error_file;      /**< This is the place where errors get reported */
+    bool _gui;
 
 protected:
     Inkscape::XML::Node *repr;            /**< The XML description of the Extension */
@@ -219,6 +220,7 @@ public:
 public:
     Gtk::Widget *    autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal = NULL);
     void paramListString (std::list <std::string> & retlist);
+    void set_gui(bool s) { _gui = s; }
 
     /* Extension editor dialog stuff */
 public:

@@ -57,7 +57,9 @@ Parameter * param_shared (const gchar * name, GSList * list);
     not related to the module directly.  If the Repr does not include
     a name and an ID the module will be left in an errored state.
 */
-Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp) : _help(NULL)
+Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
+    : _help(NULL)
+    , _gui(true)
 {
     repr = in_repr;
     Inkscape::GC::anchor(in_repr);
@@ -673,7 +675,7 @@ public:
 Gtk::Widget *
 Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-    if (param_visible_count() == 0) return NULL;
+    if (!_gui || param_visible_count() == 0) return NULL;
 
     AutoGUI * agui = Gtk::manage(new AutoGUI());
 

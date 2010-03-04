@@ -23,7 +23,9 @@
 #include <glib.h>
 
 #include "inkscape-private.h"
+#include "extension/db.h"
 #include "extension/effect.h"
+#include "extension/input.h"
 #include "widgets/icon.h"
 #include "preferences.h"
 #include "path-prefix.h"
@@ -1454,48 +1456,26 @@ sp_ui_drag_data_received(GtkWidget *widget,
         case PNG_DATA:
         case JPEG_DATA:
         case IMAGE_DATA: {
-            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-            Inkscape::XML::Node *newImage = xml_doc->createElement("svg:image");
-            gchar *atom_name = gdk_atom_name(data->type);
+            const char *mime = (info == JPEG_DATA ? "image/jpeg" : "image/png");
 
-            // this formula taken from Glib docs
-            guint needed_size = data->length * 4 / 3 + data->length * 4 / (3 * 72) + 7;
-            needed_size += 5 + 8 + strlen(atom_name); // 5 bytes for data:, 8 for ;base64,
-
-            gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
-            buf_work += g_sprintf(buffer, "data:%s;base64,", atom_name);
-
-            gint state = 0, save = 0;
-            g_base64_encode_step(data->data, data->length, TRUE, buf_work, &state, &save);
-            g_base64_encode_close(TRUE, buf_work, &state, &save);
-
-            newImage->setAttribute("xlink:href", buffer);
-            g_free(buffer);
-
-            GError *error = NULL;
-            GdkPixbufLoader *loader = gdk_pixbuf_loader_new_with_mime_type( gdk_atom_name(data->type), &error );
-            if ( loader ) {
-                error = NULL;
-                if ( gdk_pixbuf_loader_write( loader, data->data, data->length, &error) ) {
-                    GdkPixbuf *pbuf = gdk_pixbuf_loader_get_pixbuf(loader);
-                    if ( pbuf ) {
-                        char tmp[1024];
-                        int width = gdk_pixbuf_get_width(pbuf);
-                        int height = gdk_pixbuf_get_height(pbuf);
-                        snprintf( tmp, sizeof(tmp), "%d", width );
-                        newImage->setAttribute("width", tmp);
-
-                        snprintf( tmp, sizeof(tmp), "%d", height );
-                        newImage->setAttribute("height", tmp);
-                    }
-                }
+            Inkscape::Extension::DB::InputList o;
+            Inkscape::Extension::db.get_input_list(o);
+            Inkscape::Extension::DB::InputList::const_iterator i = o.begin();
+            while (i != o.end() && strcmp( (*i)->get_mimetype(), mime ) != 0) {
+                ++i;
             }
-            g_free(atom_name);
+            Inkscape::Extension::Extension *ext = *i;
+            bool save = ext->get_param_bool("link");
+            ext->set_param_bool("link", false);
+            ext->set_gui(false);
 
-            // Add it to the current layer
-            desktop->currentLayer()->appendChildRepr(newImage);
+            gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-dnd-import", NULL );
+            g_file_set_contents(filename, reinterpret_cast<gchar const *>(data->data), data->length, NULL);
+            file_import(doc, filename, ext);
+            g_free(filename);
 
-            Inkscape::GC::release(newImage);
+            ext->set_param_bool("link", save);
+            ext->set_gui(true);
             sp_document_done( doc , SP_VERB_NONE,
                               _("Drop bitmap image"));
             break;
