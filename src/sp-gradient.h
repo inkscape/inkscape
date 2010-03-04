@@ -27,15 +27,15 @@
 struct SPGradientReference;
 
 typedef enum {
-	SP_GRADIENT_TYPE_UNKNOWN,
-	SP_GRADIENT_TYPE_LINEAR,
-	SP_GRADIENT_TYPE_RADIAL
+    SP_GRADIENT_TYPE_UNKNOWN,
+    SP_GRADIENT_TYPE_LINEAR,
+    SP_GRADIENT_TYPE_RADIAL
 } SPGradientType;
 
 typedef enum {
-	SP_GRADIENT_STATE_UNKNOWN,
-	SP_GRADIENT_STATE_VECTOR,
-	SP_GRADIENT_STATE_PRIVATE
+    SP_GRADIENT_STATE_UNKNOWN,
+    SP_GRADIENT_STATE_VECTOR,
+    SP_GRADIENT_STATE_PRIVATE
 } SPGradientState;
 
 typedef enum {
@@ -49,7 +49,7 @@ typedef enum {
     POINT_RG_MID1,
     POINT_RG_MID2,
     // insert new point types here.
-    
+
     POINT_G_INVALID
 } GrPointType;
 
@@ -61,41 +61,44 @@ typedef enum {
  */
 struct SPGradient : public SPPaintServer {
 
-	/** Reference (href) */
-	SPGradientReference *ref;
+    /** Reference (href) */
+    SPGradientReference *ref;
 
-	/** State in Inkscape gradient system */
-	guint state : 2;
+    /** State in Inkscape gradient system */
+    guint state : 2;
 
-	/** gradientUnits attribute */
-	SPGradientUnits units;
-	guint units_set : 1;
+    /** gradientUnits attribute */
+    SPGradientUnits units;
+    guint units_set : 1;
 
-	/** gradientTransform attribute */
-	Geom::Matrix gradientTransform;
-	guint gradientTransform_set : 1;
+    /** gradientTransform attribute */
+    Geom::Matrix gradientTransform;
+    guint gradientTransform_set : 1;
 
-	/** spreadMethod attribute */
-	SPGradientSpread spread;
-	guint spread_set : 1;
+    /** spreadMethod attribute */
+    SPGradientSpread spread;
+    guint spread_set : 1;
 
-	/** Gradient stops */
-	guint has_stops : 1;
+    /** Gradient stops */
+    guint has_stops : 1;
 
-	/** Composed vector */
-	SPGradientVector vector;
+    /** Composed vector */
+    SPGradientVector vector;
 
-	/** Rendered color array (4 * 1024 bytes) */
-	guchar *color;
+    /** Rendered color array (4 * 1024 bytes) */
+    guchar *color;
 
-        sigc::connection modified_connection;
+    sigc::connection modified_connection;
+
+
+    bool isSolid() const;
 };
 
 /**
  * The SPGradient vtable.
  */
 struct SPGradientClass {
-	SPPaintServerClass parent_class;
+    SPPaintServerClass parent_class;
 };
 
 

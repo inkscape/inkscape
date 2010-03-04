@@ -638,6 +638,20 @@ sp_gradient_modified(SPObject *object, guint flags)
     }
 }
 
+
+bool SPGradient::isSolid() const
+{
+    bool solid = false;
+    if ( SP_GRADIENT_HAS_STOPS(this) && (sp_number_of_stops(this) == 0) ) {
+        gchar const * attr = repr->attribute("osb:paint");
+        if (attr && !strcmp(attr, "solid")) {
+            solid = true;
+        }
+    }
+    return solid;
+}
+
+
 /**
  * Write gradient attributes to repr.
  */
