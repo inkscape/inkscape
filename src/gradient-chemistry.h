@@ -59,8 +59,8 @@ SPStop* sp_last_stop(SPGradient *gradient);
 SPStop* sp_prev_stop(SPStop *stop, SPGradient *gradient);
 SPStop* sp_next_stop(SPStop *stop);
 SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
-guint sp_number_of_stops(SPGradient *gradient);
-guint sp_number_of_stops_before_stop(SPGradient *gradient, SPStop *target);
+guint sp_number_of_stops(SPGradient const *gradient);
+guint sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target);
 
 guint32 average_color (guint32 c1, guint32 c2, gdouble p = 0.5);
 
