@@ -151,6 +151,7 @@
         #define HAVE_SYS_STAT_H               1
         #define HAVE_INTTYPES_H               1
         #define HAVE_OPENMP                   1
+		#define HAVE_TR1_UNORDERED_SET        1
 
         #define ENABLE_LCMS                   1
 
