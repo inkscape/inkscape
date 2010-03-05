@@ -532,6 +532,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
             if (held_only_shift(event->key)) {
                 // Shift+R - reverse subpaths
                 reverseSubpaths();
+                return true;
             }
             break;
         default:
