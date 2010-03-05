@@ -8,6 +8,7 @@
 #ifdef G_OS_WIN32
 #undef DATADIR
 
+#include <stdio.h>
 #include <io.h>
 #include <conio.h>
 #define _WIN32_WINNT 0x0501
