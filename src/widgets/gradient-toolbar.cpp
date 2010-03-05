@@ -164,8 +164,7 @@ gr_prepare_label (SPObject *obj)
     return g_strdup_printf ("<small>%s</small>", id);
 }
 
-GtkWidget *
-gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
+GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
 {
     SPDocument *document = sp_desktop_document (desktop);
 
@@ -175,7 +174,8 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
     GSList *gl = NULL;
     const GSList *gradients = sp_document_get_resource_list (document, "gradient");
     for (const GSList *i = gradients; i != NULL; i = i->next) {
-        if (SP_GRADIENT_HAS_STOPS (i->data)) {
+        SPGradient *grad = SP_GRADIENT(i->data);
+        if (SP_GRADIENT_HAS_STOPS(grad) && !grad->isSolid()) {
             gl = g_slist_prepend (gl, i->data);
         }
     }
@@ -185,6 +185,7 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
     guint idx = 0;
 
     if (!gl) {
+        // The document has no gradients
         GtkWidget *l = gtk_label_new("");
         gtk_label_set_markup (GTK_LABEL(l), _("<small>No gradients</small>"));
         GtkWidget *i = gtk_menu_item_new ();
@@ -194,6 +195,7 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
         gtk_menu_append (GTK_MENU (m), i);
         gtk_widget_set_sensitive (om, FALSE);
     } else if (selection_empty) {
+        // Document has gradients, but nothing is currently selected.
         GtkWidget *l = gtk_label_new("");
         gtk_label_set_markup (GTK_LABEL(l), _("<small>Nothing selected</small>"));
         GtkWidget *i = gtk_menu_item_new ();
@@ -268,29 +270,37 @@ gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selecte
 }
 
 
-void
-gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr_selected, bool *gr_multi, SPGradientSpread *spr_selected, bool *spr_multi)
+void gr_read_selection( Inkscape::Selection *selection,
+                        GrDrag *drag,
+                        SPGradient *&gr_selected,
+                        bool &gr_multi,
+                        SPGradientSpread &spr_selected,
+                        bool &spr_multi )
 {
     if (drag && drag->selected) {
         // GRADIENTFIXME: make this work for more than one selected dragger?
-        GrDragger *dragger = (GrDragger*) drag->selected->data;
-        for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-            GrDraggable *draggable = (GrDraggable *) i->data;
-            SPGradient *gradient = sp_item_gradient_get_vector (draggable->item, draggable->fill_or_stroke);
-            SPGradientSpread spread = sp_item_gradient_get_spread (draggable->item, draggable->fill_or_stroke);
+        GrDragger *dragger = static_cast<GrDragger*>(drag->selected->data);
+        for (GSList const* i = dragger->draggables; i; i = i->next) { // for all draggables of dragger
+            GrDraggable *draggable = static_cast<GrDraggable *>(i->data);
+            SPGradient *gradient = sp_item_gradient_get_vector(draggable->item, draggable->fill_or_stroke);
+            SPGradientSpread spread = sp_item_gradient_get_spread(draggable->item, draggable->fill_or_stroke);
 
-            if (gradient != *gr_selected) {
-                if (*gr_selected != NULL) {
-                    *gr_multi = true;
+            if (gradient && gradient->isSolid()) {
+                gradient = 0;
+            }
+
+            if (gradient && (gradient != gr_selected)) {
+                if (gr_selected) {
+                    gr_multi = true;
                 } else {
-                    *gr_selected = gradient;
+                    gr_selected = gradient;
                 }
             }
-            if (spread != *spr_selected) {
-                if (*spr_selected != INT_MAX) {
-                    *spr_multi = true;
+            if (spread != spr_selected) {
+                if (spr_selected != INT_MAX) {
+                    spr_multi = true;
                 } else {
-                    *spr_selected = spread;
+                    spr_selected = spread;
                 }
             }
          }
@@ -298,48 +308,59 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
     }
 
    // If no selected dragger, read desktop selection
-   for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
+   for (GSList const* i = selection->itemList(); i; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
         SPStyle *style = SP_OBJECT_STYLE (item);
 
         if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
-            if (SP_IS_GRADIENT (server)) {
+            if (SP_IS_GRADIENT(server)) {
                 SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);
                 SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
-                if (gradient != *gr_selected) {
-                    if (*gr_selected != NULL) {
-                        *gr_multi = true;
+
+                if (gradient && gradient->isSolid()) {
+                    gradient = 0;
+                }
+
+                if (gradient && (gradient != gr_selected)) {
+                    if (gr_selected) {
+                        gr_multi = true;
                     } else {
-                        *gr_selected = gradient;
+                        gr_selected = gradient;
                     }
                 }
-                if (spread != *spr_selected) {
-                    if (*spr_selected != INT_MAX) {
-                        *spr_multi = true;
+                if (spread != spr_selected) {
+                    if (spr_selected != INT_MAX) {
+                        spr_multi = true;
                     } else {
-                        *spr_selected = spread;
+                        spr_selected = spread;
                     }
                 }
             }
         }
         if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
-            if (SP_IS_GRADIENT (server)) {
+            if (SP_IS_GRADIENT(server)) {
                 SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);
                 SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
-                if (gradient != *gr_selected) {
-                    if (*gr_selected != NULL) {
-                        *gr_multi = true;
+
+                if (gradient && gradient->isSolid()) {
+                    gradient = 0;
+
+                }
+
+                if (gradient && (gradient != gr_selected)) {
+                    if (gr_selected) {
+                        gr_multi = true;
                     } else {
-                        *gr_selected = gradient;
+                        gr_selected = gradient;
                     }
                 }
-                if (spread != *spr_selected) {
-                    if (*spr_selected != INT_MAX) {
-                        *spr_multi = true;
+                if (spread != spr_selected) {
+                    if (spr_selected != INT_MAX) {
+                        spr_multi = true;
                     } else {
-                        *spr_selected = spread;
+                        spr_selected = spread;
                     }
                 }
             }
@@ -347,41 +368,41 @@ gr_read_selection (Inkscape::Selection *selection, GrDrag *drag, SPGradient **gr
     }
  }
 
-static void
-gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
+static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointer data)
 {
-    GtkWidget *widget = (GtkWidget *) data;
+    GtkWidget *widget = GTK_WIDGET(data);
 
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data (G_OBJECT(widget), "desktop");
-    if (!desktop)
-        return;
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(G_OBJECT(widget), "desktop"));
+    if (desktop) {
+        Inkscape::Selection *selection = sp_desktop_selection(desktop); // take from desktop, not from args
+        if (selection) {
+            SPEventContext *ev = sp_desktop_event_context(desktop);
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop); // take from desktop, not from args
-    if (!selection)
-        return;
+            GtkWidget *om = (GtkWidget *) g_object_get_data(G_OBJECT(widget), "menu");
+            if (om) {
+                gtk_widget_destroy(om);
+                om = 0;
+            }
 
-    SPEventContext *ev = sp_desktop_event_context (desktop);
+            SPGradient *gr_selected = 0;
+            bool gr_multi = false;
 
-    GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT (widget), "menu");
-    if (om) gtk_widget_destroy (om);
+            SPGradientSpread spr_selected = static_cast<SPGradientSpread>(INT_MAX); // meaning undefined
+            bool spr_multi = false;
 
-    SPGradient *gr_selected = NULL;
-    bool gr_multi = false;
+            gr_read_selection(selection, ev ? ev->get_drag() : 0, gr_selected, gr_multi, spr_selected, spr_multi);
 
-    SPGradientSpread spr_selected = (SPGradientSpread) INT_MAX; // meaning undefined
-    bool spr_multi = false;
+            om = gr_vector_list(desktop, selection->isEmpty(), gr_selected, gr_multi);
+            g_object_set_data(G_OBJECT(widget), "menu", om);
 
-    gr_read_selection (selection, ev? ev->get_drag() : NULL, &gr_selected, &gr_multi, &spr_selected, &spr_multi);
+            GtkWidget *buttons = (GtkWidget *) g_object_get_data(G_OBJECT(widget), "buttons");
+            gtk_widget_set_sensitive(buttons, (gr_selected && !gr_multi));
 
-    om = gr_vector_list (desktop, selection->isEmpty(), gr_selected, gr_multi);
-    g_object_set_data (G_OBJECT (widget), "menu", om);
+            gtk_box_pack_start(GTK_BOX(widget), om, TRUE, TRUE, 0);
 
-    GtkWidget *buttons = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "buttons");
-    gtk_widget_set_sensitive (buttons, (gr_selected && !gr_multi));
-
-    gtk_box_pack_start (GTK_BOX (widget), om, TRUE, TRUE, 0);
-
-    gtk_widget_show_all (widget);
+            gtk_widget_show_all(widget);
+        }
+    }
 }
 
 static void
@@ -431,8 +452,7 @@ gr_edit (GtkWidget */*button*/, GtkWidget *widget)
     }
 }
 
-GtkWidget *
-gr_change_widget (SPDesktop *desktop)
+GtkWidget * gr_change_widget(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     SPDocument *document = sp_desktop_document (desktop);
@@ -446,7 +466,7 @@ gr_change_widget (SPDesktop *desktop)
 
     GtkTooltips *tt = gtk_tooltips_new();
 
-    gr_read_selection (selection, ev? ev->get_drag() : NULL, &gr_selected, &gr_multi, &spr_selected, &spr_multi);
+    gr_read_selection (selection, ev? ev->get_drag() : 0, gr_selected, gr_multi, spr_selected, spr_multi);
 
     GtkWidget *widget = gtk_hbox_new(FALSE, FALSE);
     gtk_object_set_data(GTK_OBJECT(widget), "dtw", desktop->canvas);
