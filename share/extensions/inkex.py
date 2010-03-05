@@ -175,6 +175,13 @@ class Effect:
         else:
           return None
 
+    def getParentNode(self, node):
+        for parent in self.document.getiterator():
+            if node in parent.getchildren():
+                return parent
+                break
+
+
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
         for m in docIdNodes:
