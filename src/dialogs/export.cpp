@@ -62,7 +62,7 @@
 
 #ifdef WIN32
 #include <windows.h>
-#include <COMMDLG.h>
+#include <commdlg.h>
 #include <gdk/gdkwin32.h>
 #endif
 

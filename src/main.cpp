@@ -56,6 +56,10 @@
 
 #include "gc-core.h"
 
+#ifdef AND
+#undef AND
+#endif
+
 #include "macros.h"
 #include "file.h"
 #include "document.h"
@@ -94,14 +98,9 @@
 #include <extension/input.h>
 
 #ifdef WIN32
-//#define REPLACEARGS_ANSI
-//#define REPLACEARGS_DEBUG
-
 #include "registrytool.h"
-
 #include "extension/internal/win32.h"
 using Inkscape::Extension::Internal::PrintWin32;
-
 #endif // WIN32
 
 #include "extension/init.h"

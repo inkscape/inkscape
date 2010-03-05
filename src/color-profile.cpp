@@ -35,7 +35,7 @@
 #include "dom/util/digest.h"
 
 #ifdef WIN32
-#include <Icm.h>
+#include <icm.h>
 #endif // WIN32
 
 using Inkscape::ColorProfile;

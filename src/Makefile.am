@@ -88,7 +88,8 @@ CXXTEST_TESTSUITES =
 
 if PLATFORM_WIN32
 win32_sources = winmain.cpp registrytool.cpp registrytool.h
-win32ldflags = -lcomdlg32
+win32ldflags = -lcomdlg32 -lmscms
+mwindows = -mwindows
 endif 
 
 if INKJAR
@@ -215,10 +216,11 @@ libinkscape_a_SOURCES = $(ink_common_sources)
 
 inkscape_SOURCES += main.cpp $(win32_sources)
 inkscape_LDADD = $(all_libs)
-inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
+inkscape_LDFLAGS = --export-dynamic $(kdeldflags) $(mwindows)
 
 inkview_SOURCES += inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
+inkview_LDFLAGS = $(mwindows) 
 
 # ################################################
 #  VERSION REPORTING
