@@ -49,19 +49,32 @@ class WebSlicer_CreateGroup(inkex.Effect):
                                      dest="height_unity",
                                      help="")
 
-    def effect(self):
-        layer = self.document.xpath(
+
+    def get_base_elements(self):
+        self.layer = self.document.xpath(
                      '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
                      namespaces=inkex.NSS)[0]
+        self.layer_descendants = self.get_descendants_in_array(self.layer)
+
+
+    def get_descendants_in_array(self, el):
+        descendants = el.getchildren()
+        for e in descendants:
+            descendants.extend( self.get_descendants_in_array(e) )
+        return descendants
+
+
+    def effect(self):
+        self.get_base_elements()
         if len(self.selected) == 0:
             inkex.errormsg(_('You must to select some "Slicer rectangles" or other "Layout groups".'))
             exit(1)
-        descendants = get_descendants_in_array(layer)
         for id,node in self.selected.iteritems():
-            if node not in descendants:
+            if node not in self.layer_descendants:
                 inkex.errormsg(_('Opss... The element "%s" is not in the Web Slicer layer') % id)
                 exit(2)
-        g_parent = self.find_node_parent(node)
+        g_parent = self.getParentNode(node)
+        inkex.errormsg( g_parent.get('id') )
         group = inkex.etree.SubElement(g_parent, 'g')
         desc = inkex.etree.SubElement(group, 'desc')
         conf_txt = ''
@@ -75,18 +88,6 @@ class WebSlicer_CreateGroup(inkex.Effect):
         for id,node in self.selected.iteritems():
             group.insert( 1, node )
 
-
-    def find_node_parent(self, node):
-        #TODO: make it real!
-        return self.document.xpath(
-                    '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
-                    namespaces=inkex.NSS)[0]
-
-def get_descendants_in_array(el):
-    descendants = el.getchildren()
-    for e in descendants:
-        descendants.extend( get_descendants_in_array(e) )
-    return descendants
 
 if __name__ == '__main__':
     e = WebSlicer_CreateGroup()
