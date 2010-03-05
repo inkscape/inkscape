@@ -8,6 +8,7 @@
 #include "extension/system.h"
 #include "gdkpixbuf-input.h"
 #include "selection-chemistry.h"
+#include "sp-image.h"
 
 namespace Inkscape {
 
@@ -82,27 +83,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         sp_repr_set_svg_double(image_node, "height", height);
 
         if (embed) {
-            // Save pixbuf as JPEG or PNG for embedding
-            gchar *data;
-            gsize length;
-            gdk_pixbuf_save_to_buffer(pb, &data, &length, is_lossy ? "jpeg" : "png", NULL, NULL);
-
-            // Save base64 encoded data in image node
-            // this formula taken from Glib docs
-            guint needed_size = length * 4 / 3 + length * 4 / (3 * 72) + 7;
-            needed_size += 5 + 8 + mime_type.size(); // 5 bytes for data:, 8 for ;base64,
-
-            gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
-            buf_work += g_sprintf(buffer, "data:%s;base64,", mime_type.data());
-
-            gint state = 0, save = 0;
-            gsize written = 0;
-            written += g_base64_encode_step((guchar*) data, length, TRUE, buf_work, &state, &save);
-            written += g_base64_encode_close(TRUE, buf_work + written, &state, &save);
-            buf_work[written] = 0; // null terminate
-
-            image_node->setAttribute("xlink:href", buffer);
-            g_free(buffer);
+            sp_embed_image(image_node, pb, mime_type);
         } else {
             // convert filename to uri
             gchar* _uri = g_filename_to_uri(uri, NULL, NULL);

@@ -1590,6 +1590,40 @@ sp_image_get_curve (SPImage *image)
     return result;
 }
 
+void
+sp_embed_image(Inkscape::XML::Node *image_node, GdkPixbuf *pb, Glib::ustring const &mime_in)
+{
+    Glib::ustring format, mime;
+    if (mime_in == "image/jpeg") {
+        mime = mime_in;
+        format = "jpeg";
+    } else {
+        mime = "image/png";
+        format = "png";
+    }
+
+    gchar *data;
+    gsize length;
+    gdk_pixbuf_save_to_buffer(pb, &data, &length, format.data(), NULL, NULL);
+
+    // Save base64 encoded data in image node
+    // this formula taken from Glib docs
+    guint needed_size = length * 4 / 3 + length * 4 / (3 * 72) + 7;
+    needed_size += 5 + 8 + mime.size(); // 5 bytes for data:, 8 for ;base64,
+
+    gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
+    buf_work += g_sprintf(buffer, "data:%s;base64,", mime.data());
+
+    gint state = 0, save = 0;
+    gsize written = 0;
+    written += g_base64_encode_step((guchar*) data, length, TRUE, buf_work, &state, &save);
+    written += g_base64_encode_close(TRUE, buf_work + written, &state, &save);
+    buf_work[written] = 0; // null terminate
+
+    image_node->setAttribute("xlink:href", buffer);
+    g_free(buffer);
+}
+
 void sp_image_refresh_if_outdated( SPImage* image )
 {
     if ( image->href && image->lastMod ) {

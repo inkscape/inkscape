@@ -43,6 +43,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-tref.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
+#include "sp-image.h"
 #include "text-editing.h"
 #include "text-context.h"
 #include "connector-context.h"
@@ -2770,12 +2771,7 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (pb) {
         // Create the repr for the image
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
-        {
-            repr->setAttribute("sodipodi:absref", filepath);
-            gchar *abs_base = Inkscape::XML::calc_abs_doc_base(document->base);
-            repr->setAttribute("xlink:href", sp_relative_path_from_path(filepath, abs_base));
-            g_free(abs_base);
-        }
+        sp_embed_image(repr, pb, "image/png");
         if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
             sp_repr_set_svg_double(repr, "width", width);
             sp_repr_set_svg_double(repr, "height", height);
