@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-03 11:50-0300\n"
+"POT-Creation-Date: 2010-03-06 09:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -664,7 +664,7 @@ msgid "Shades"
 msgstr ""
 
 #: ../share/extensions/edge3d.inx.h:9 ../src/live_effects/lpe-knot.cpp:331
-#: ../src/widgets/stroke-style.cpp:1093
+#: ../src/widgets/stroke-style.cpp:1099
 msgid "Stroke width"
 msgstr ""
 
@@ -1120,7 +1120,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/inkscape-preferences.cpp:1273 ../src/verbs.cpp:2192
-#: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3991
+#: ../src/widgets/stroke-style.cpp:771 ../src/widgets/toolbox.cpp:3991
 msgid "None"
 msgstr ""
 
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1649
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1650
 #: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../src/widgets/toolbox.cpp:4679
 msgid "Scale"
@@ -2744,7 +2744,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:5
-#: ../share/extensions/web-transmit-att.inx.h:5 ../src/interface.cpp:1599
+#: ../share/extensions/web-transmit-att.inx.h:5 ../src/interface.cpp:1579
 msgid "Replace"
 msgstr ""
 
@@ -3017,7 +3017,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:223
+#: ../share/extensions/inkex.py:230
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -5229,6 +5229,53 @@ msgstr ""
 msgid "Old paint (bitmap)"
 msgstr ""
 
+#: ../src/conn-avoid-ref.cpp:237
+msgid "Add a new connection point"
+msgstr ""
+
+#: ../src/conn-avoid-ref.cpp:262
+msgid "Move a connection point"
+msgstr ""
+
+#: ../src/conn-avoid-ref.cpp:282
+msgid "Remove a connection point"
+msgstr ""
+
+#: ../src/connector-context.h:50
+msgid "<b>Connection point</b>: click or drag to create a new connector"
+msgstr ""
+
+#: ../src/connector-context.h:51
+msgid "<b>Connection point</b>: click to select, drag to move"
+msgstr ""
+
+#: ../src/live_effects/lpe-extrude.cpp:26
+msgid "Direction"
+msgstr ""
+
+#: ../src/live_effects/lpe-extrude.cpp:26
+msgid "Defines the direction and magnitude of the extrusion"
+msgstr ""
+
+#: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
+#: ../src/text-context.cpp:1604
+msgid " [truncated]"
+msgstr ""
+
+#: ../src/sp-flowtext.cpp:381
+#, c-format
+msgid "<b>Flowed text</b> (%d character%s)"
+msgid_plural "<b>Flowed text</b> (%d characters%s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/sp-flowtext.cpp:383
+#, c-format
+msgid "<b>Linked flowed text</b> (%d character%s)"
+msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../src/arc-context.cpp:324
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -5382,7 +5429,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2015
+#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2016
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
@@ -7324,71 +7371,71 @@ msgstr ""
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
-#: ../src/extension/extension.cpp:252
+#: ../src/extension/extension.cpp:254
 msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
 msgstr ""
 
-#: ../src/extension/extension.cpp:255
+#: ../src/extension/extension.cpp:257
 msgid "an ID was not defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:259
+#: ../src/extension/extension.cpp:261
 msgid "there was no name defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:263
+#: ../src/extension/extension.cpp:265
 msgid "the XML description of it got lost."
 msgstr ""
 
-#: ../src/extension/extension.cpp:267
+#: ../src/extension/extension.cpp:269
 msgid "no implementation was defined for the extension."
 msgstr ""
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
-#: ../src/extension/extension.cpp:274
+#: ../src/extension/extension.cpp:276
 msgid "a dependency was not met."
 msgstr ""
 
-#: ../src/extension/extension.cpp:294
+#: ../src/extension/extension.cpp:296
 msgid "Extension \""
 msgstr ""
 
-#: ../src/extension/extension.cpp:294
+#: ../src/extension/extension.cpp:296
 msgid "\" failed to load because "
 msgstr ""
 
-#: ../src/extension/extension.cpp:625
+#: ../src/extension/extension.cpp:627
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr ""
 
-#: ../src/extension/extension.cpp:723
+#: ../src/extension/extension.cpp:725
 msgid "Name:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:724
+#: ../src/extension/extension.cpp:726
 msgid "ID:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:727
 msgid "State:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:727
 msgid "Loaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:727
 msgid "Unloaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:727
 msgid "Deactivated"
 msgstr ""
 
-#: ../src/extension/extension.cpp:756
+#: ../src/extension/extension.cpp:758
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
@@ -8095,9 +8142,13 @@ msgstr ""
 msgid "Snow has fallen on object"
 msgstr ""
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:127
+#: ../src/extension/internal/gdkpixbuf-input.cpp:148
 #, c-format
 msgid "%s GDK pixbuf Input"
+msgstr ""
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:151
+msgid "Link image (leave unchecked if in doubt)"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
@@ -8692,7 +8743,7 @@ msgstr ""
 msgid "Gamma"
 msgstr ""
 
-#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:423
+#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:424
 #: ../src/widgets/gradient-selector.cpp:139
 msgid "Duplicate"
 msgstr ""
@@ -8808,35 +8859,35 @@ msgstr ""
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
-#: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:75
+#: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:76
 msgid "Linear gradient <b>start</b>"
 msgstr ""
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:76
+#: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:77
 msgid "Linear gradient <b>end</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
+#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:78
 msgid "Linear gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
+#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:79
 msgid "Radial gradient <b>center</b>"
 msgstr ""
 
 #: ../src/gradient-context.cpp:136 ../src/gradient-context.cpp:137
-#: ../src/gradient-drag.cpp:79 ../src/gradient-drag.cpp:80
+#: ../src/gradient-drag.cpp:80 ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>radius</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:81
+#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:82
 msgid "Radial gradient <b>focus</b>"
 msgstr ""
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
-#: ../src/gradient-drag.cpp:82 ../src/gradient-drag.cpp:83
+#: ../src/gradient-drag.cpp:83 ../src/gradient-drag.cpp:84
 msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
@@ -8930,44 +8981,44 @@ msgstr[1] ""
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
-#: ../src/gradient-drag.cpp:591
+#: ../src/gradient-drag.cpp:592
 msgid "Merge gradient handles"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:890
+#: ../src/gradient-drag.cpp:891
 msgid "Move gradient handle"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:943 ../src/widgets/gradient-vector.cpp:776
+#: ../src/gradient-drag.cpp:944 ../src/widgets/gradient-vector.cpp:776
 msgid "Delete gradient stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1107
+#: ../src/gradient-drag.cpp:1108
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1111 ../src/gradient-drag.cpp:1118
+#: ../src/gradient-drag.cpp:1112 ../src/gradient-drag.cpp:1119
 msgid " (stroke)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1115
+#: ../src/gradient-drag.cpp:1116
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1123
+#: ../src/gradient-drag.cpp:1124
 #, c-format
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1126
+#: ../src/gradient-drag.cpp:1127
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -8978,15 +9029,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-drag.cpp:1820
+#: ../src/gradient-drag.cpp:1821
 msgid "Move gradient handle(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1856
+#: ../src/gradient-drag.cpp:1857
 msgid "Move gradient mid stop(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2144
+#: ../src/gradient-drag.cpp:2145
 msgid "Delete gradient stop(s)"
 msgstr ""
 
@@ -9178,95 +9229,95 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:870
+#: ../src/interface.cpp:872
 msgid "Commands Bar"
 msgstr ""
 
-#: ../src/interface.cpp:870
+#: ../src/interface.cpp:872
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/interface.cpp:872
+#: ../src/interface.cpp:874
 msgid "Snap Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:872
+#: ../src/interface.cpp:874
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/interface.cpp:874
+#: ../src/interface.cpp:876
 msgid "Tool Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:874
+#: ../src/interface.cpp:876
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/interface.cpp:876
+#: ../src/interface.cpp:878
 msgid "_Toolbox"
 msgstr ""
 
-#: ../src/interface.cpp:876
+#: ../src/interface.cpp:878
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/interface.cpp:882
+#: ../src/interface.cpp:884
 msgid "_Palette"
 msgstr ""
 
-#: ../src/interface.cpp:882
+#: ../src/interface.cpp:884
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/interface.cpp:884
+#: ../src/interface.cpp:886
 msgid "_Statusbar"
 msgstr ""
 
-#: ../src/interface.cpp:884
+#: ../src/interface.cpp:886
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/interface.cpp:958
+#: ../src/interface.cpp:960
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr ""
 
-#: ../src/interface.cpp:1000
+#: ../src/interface.cpp:1002
 msgid "Open _Recent"
 msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1101
+#: ../src/interface.cpp:1103
 #, c-format
 msgid "Enter group #%s"
 msgstr ""
 
-#: ../src/interface.cpp:1112
+#: ../src/interface.cpp:1114
 msgid "Go to parent"
 msgstr ""
 
-#: ../src/interface.cpp:1203 ../src/interface.cpp:1289
-#: ../src/interface.cpp:1392 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1205 ../src/interface.cpp:1291
+#: ../src/interface.cpp:1394 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr ""
 
-#: ../src/interface.cpp:1242 ../src/interface.cpp:1352
+#: ../src/interface.cpp:1244 ../src/interface.cpp:1354
 msgid "Drop color on gradient"
 msgstr ""
 
-#: ../src/interface.cpp:1405
+#: ../src/interface.cpp:1407
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1444
+#: ../src/interface.cpp:1446
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1500
+#: ../src/interface.cpp:1480
 msgid "Drop bitmap image"
 msgstr ""
 
-#: ../src/interface.cpp:1592
+#: ../src/interface.cpp:1572
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -9729,7 +9780,7 @@ msgstr ""
 msgid "Dock #%d"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:821
+#: ../src/libnrtype/FontFactory.cpp:815
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
@@ -10702,228 +10753,228 @@ msgstr ""
 msgid "Unable to find node ID: '%s'\n"
 msgstr ""
 
-#: ../src/main.cpp:268
+#: ../src/main.cpp:267
 msgid "Print the Inkscape version number"
 msgstr ""
 
-#: ../src/main.cpp:273
+#: ../src/main.cpp:272
 msgid "Do not use X server (only process files from console)"
 msgstr ""
 
-#: ../src/main.cpp:278
+#: ../src/main.cpp:277
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr ""
 
-#: ../src/main.cpp:283
+#: ../src/main.cpp:282
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr ""
 
-#: ../src/main.cpp:284 ../src/main.cpp:289 ../src/main.cpp:294
-#: ../src/main.cpp:361 ../src/main.cpp:366 ../src/main.cpp:371
-#: ../src/main.cpp:376 ../src/main.cpp:387
+#: ../src/main.cpp:283 ../src/main.cpp:288 ../src/main.cpp:293
+#: ../src/main.cpp:360 ../src/main.cpp:365 ../src/main.cpp:370
+#: ../src/main.cpp:375 ../src/main.cpp:386
 msgid "FILENAME"
 msgstr ""
 
-#: ../src/main.cpp:288
+#: ../src/main.cpp:287
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 
-#: ../src/main.cpp:293
+#: ../src/main.cpp:292
 msgid "Export document to a PNG file"
 msgstr ""
 
-#: ../src/main.cpp:298
+#: ../src/main.cpp:297
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:299 ../src/ui/widget/rendering-options.cpp:43
+#: ../src/main.cpp:298 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr ""
 
-#: ../src/main.cpp:303
+#: ../src/main.cpp:302
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:303
 msgid "x0:y0:x1:y1"
 msgstr ""
 
-#: ../src/main.cpp:308
+#: ../src/main.cpp:307
 msgid "Exported area is the entire drawing (not page)"
 msgstr ""
 
-#: ../src/main.cpp:313
+#: ../src/main.cpp:312
 msgid "Exported area is the entire page"
 msgstr ""
 
-#: ../src/main.cpp:318
+#: ../src/main.cpp:317
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
 
-#: ../src/main.cpp:323
+#: ../src/main.cpp:322
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:323
 msgid "WIDTH"
 msgstr ""
 
-#: ../src/main.cpp:328
+#: ../src/main.cpp:327
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:328
 msgid "HEIGHT"
 msgstr ""
 
-#: ../src/main.cpp:333
+#: ../src/main.cpp:332
 msgid "The ID of the object to export"
 msgstr ""
 
-#: ../src/main.cpp:334 ../src/main.cpp:432
+#: ../src/main.cpp:333 ../src/main.cpp:431
 msgid "ID"
 msgstr ""
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:340
+#: ../src/main.cpp:339
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:345
+#: ../src/main.cpp:344
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:350
+#: ../src/main.cpp:349
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 
-#: ../src/main.cpp:351
+#: ../src/main.cpp:350
 msgid "COLOR"
 msgstr ""
 
-#: ../src/main.cpp:355
+#: ../src/main.cpp:354
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:355
 msgid "VALUE"
 msgstr ""
 
-#: ../src/main.cpp:360
+#: ../src/main.cpp:359
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 
-#: ../src/main.cpp:365
+#: ../src/main.cpp:364
 msgid "Export document to a PS file"
 msgstr ""
 
-#: ../src/main.cpp:370
+#: ../src/main.cpp:369
 msgid "Export document to an EPS file"
 msgstr ""
 
-#: ../src/main.cpp:375
+#: ../src/main.cpp:374
 msgid "Export document to a PDF file"
 msgstr ""
 
-#: ../src/main.cpp:380
+#: ../src/main.cpp:379
 msgid ""
 "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is "
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
 
-#: ../src/main.cpp:386
+#: ../src/main.cpp:385
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr ""
 
-#: ../src/main.cpp:392
+#: ../src/main.cpp:391
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr ""
 
-#: ../src/main.cpp:397
+#: ../src/main.cpp:396
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:403
+#: ../src/main.cpp:402
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:409
+#: ../src/main.cpp:408
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:415
+#: ../src/main.cpp:414
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:421
+#: ../src/main.cpp:420
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
-#: ../src/main.cpp:426
+#: ../src/main.cpp:425
 msgid "List id,x,y,w,h for all objects"
 msgstr ""
 
-#: ../src/main.cpp:431
+#: ../src/main.cpp:430
 msgid "The ID of the object whose dimensions are queried"
 msgstr ""
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:437
+#: ../src/main.cpp:436
 msgid "Print out the extension directory and exit"
 msgstr ""
 
-#: ../src/main.cpp:442
+#: ../src/main.cpp:441
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr ""
 
-#: ../src/main.cpp:447
+#: ../src/main.cpp:446
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr ""
 
-#: ../src/main.cpp:452
+#: ../src/main.cpp:451
 msgid "Verb to call when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:452
 msgid "VERB-ID"
 msgstr ""
 
-#: ../src/main.cpp:457
+#: ../src/main.cpp:456
 msgid "Object ID to select when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:458
+#: ../src/main.cpp:457
 msgid "OBJECT-ID"
 msgstr ""
 
-#: ../src/main.cpp:462
+#: ../src/main.cpp:461
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:775 ../src/main.cpp:1101
+#: ../src/main.cpp:774 ../src/main.cpp:1100
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11612,54 +11663,54 @@ msgstr ""
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:302
+#: ../src/selection-chemistry.cpp:303
 msgid "Delete text"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:310
+#: ../src/selection-chemistry.cpp:311
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:328 ../src/text-context.cpp:1002
+#: ../src/selection-chemistry.cpp:329 ../src/text-context.cpp:1002
 #: ../src/ui/dialog/swatches.cpp:472 ../src/widgets/toolbox.cpp:1318
 #: ../src/widgets/toolbox.cpp:6076
 msgid "Delete"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:356
+#: ../src/selection-chemistry.cpp:357
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:448
+#: ../src/selection-chemistry.cpp:449
 msgid "Delete all"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:635
+#: ../src/selection-chemistry.cpp:636
 msgid "Select <b>some objects</b> to group."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:647 ../src/selection-describer.cpp:53
+#: ../src/selection-chemistry.cpp:648 ../src/selection-describer.cpp:53
 msgid "Group"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:662
+#: ../src/selection-chemistry.cpp:663
 msgid "Select a <b>group</b> to ungroup."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:703
+#: ../src/selection-chemistry.cpp:704
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:709 ../src/sp-item-group.cpp:500
+#: ../src/selection-chemistry.cpp:710 ../src/sp-item-group.cpp:500
 msgid "Ungroup"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:799
+#: ../src/selection-chemistry.cpp:800
 msgid "Select <b>object(s)</b> to raise."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:805 ../src/selection-chemistry.cpp:867
-#: ../src/selection-chemistry.cpp:901 ../src/selection-chemistry.cpp:965
+#: ../src/selection-chemistry.cpp:806 ../src/selection-chemistry.cpp:868
+#: ../src/selection-chemistry.cpp:902 ../src/selection-chemistry.cpp:966
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
@@ -11667,294 +11718,294 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:847
-msgid "undo_action|Raise"
+#: ../src/selection-chemistry.cpp:848
+msgid "undo action|Raise"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:859
+#: ../src/selection-chemistry.cpp:860
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:882
+#: ../src/selection-chemistry.cpp:883
 msgid "Raise to top"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:895
+#: ../src/selection-chemistry.cpp:896
 msgid "Select <b>object(s)</b> to lower."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:945
+#: ../src/selection-chemistry.cpp:946
 msgid "Lower"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:957
+#: ../src/selection-chemistry.cpp:958
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:992
+#: ../src/selection-chemistry.cpp:993
 msgid "Lower to bottom"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:999
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing to undo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1006
+#: ../src/selection-chemistry.cpp:1007
 msgid "Nothing to redo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1066
+#: ../src/selection-chemistry.cpp:1067
 msgid "Paste"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1073
+#: ../src/selection-chemistry.cpp:1074
 msgid "Paste style"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1082
+#: ../src/selection-chemistry.cpp:1083
 msgid "Paste live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1102
+#: ../src/selection-chemistry.cpp:1103
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1114
+#: ../src/selection-chemistry.cpp:1115
 msgid "Remove live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1125
+#: ../src/selection-chemistry.cpp:1126
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1135
+#: ../src/selection-chemistry.cpp:1136
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1144
+#: ../src/selection-chemistry.cpp:1145
 msgid "Paste size"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1152
+#: ../src/selection-chemistry.cpp:1153
 msgid "Paste size separately"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1161
+#: ../src/selection-chemistry.cpp:1162
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1187
+#: ../src/selection-chemistry.cpp:1188
 msgid "Raise to next layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1194
+#: ../src/selection-chemistry.cpp:1195
 msgid "No more layers above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1206
+#: ../src/selection-chemistry.cpp:1207
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1232
+#: ../src/selection-chemistry.cpp:1233
 msgid "Lower to previous layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1239
+#: ../src/selection-chemistry.cpp:1240
 msgid "No more layers below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1448
+#: ../src/selection-chemistry.cpp:1449
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1551
+#: ../src/selection-chemistry.cpp:1552
 msgid "Rotate 90&#176; CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1551
+#: ../src/selection-chemistry.cpp:1552
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1572 ../src/seltrans.cpp:534
+#: ../src/selection-chemistry.cpp:1573 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1619
+#: ../src/selection-chemistry.cpp:1620
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1674
+#: ../src/selection-chemistry.cpp:1675
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1689
+#: ../src/selection-chemistry.cpp:1690
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1692
+#: ../src/selection-chemistry.cpp:1693
 msgid "Move horizontally"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1695 ../src/selection-chemistry.cpp:1721
+#: ../src/selection-chemistry.cpp:1696 ../src/selection-chemistry.cpp:1722
 #: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1715
+#: ../src/selection-chemistry.cpp:1716
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1718
+#: ../src/selection-chemistry.cpp:1719
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1846
+#: ../src/selection-chemistry.cpp:1847
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2051
+#: ../src/selection-chemistry.cpp:2052
 msgid "action|Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2067
+#: ../src/selection-chemistry.cpp:2068
 msgid "Select <b>clones</b> to relink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2074
+#: ../src/selection-chemistry.cpp:2075
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2098
+#: ../src/selection-chemistry.cpp:2099
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2101
+#: ../src/selection-chemistry.cpp:2102
 msgid "Relink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2115
+#: ../src/selection-chemistry.cpp:2116
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2164
+#: ../src/selection-chemistry.cpp:2165
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2168
+#: ../src/selection-chemistry.cpp:2169
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2181
+#: ../src/selection-chemistry.cpp:2182
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2204
+#: ../src/selection-chemistry.cpp:2205
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2210
+#: ../src/selection-chemistry.cpp:2211
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2256
+#: ../src/selection-chemistry.cpp:2257
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2324
+#: ../src/selection-chemistry.cpp:2325
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2352
+#: ../src/selection-chemistry.cpp:2353
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2364
+#: ../src/selection-chemistry.cpp:2365
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2380
+#: ../src/selection-chemistry.cpp:2381
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2468
+#: ../src/selection-chemistry.cpp:2469
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2484
+#: ../src/selection-chemistry.cpp:2485
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2537
+#: ../src/selection-chemistry.cpp:2538
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2540
+#: ../src/selection-chemistry.cpp:2541
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2625
+#: ../src/selection-chemistry.cpp:2626
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2629
+#: ../src/selection-chemistry.cpp:2630
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2808
+#: ../src/selection-chemistry.cpp:2804
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2840
+#: ../src/selection-chemistry.cpp:2836
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2843
+#: ../src/selection-chemistry.cpp:2839
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3008
+#: ../src/selection-chemistry.cpp:3004
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3010
+#: ../src/selection-chemistry.cpp:3006
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3023
+#: ../src/selection-chemistry.cpp:3019
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3123
+#: ../src/selection-chemistry.cpp:3119
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3125
+#: ../src/selection-chemistry.cpp:3121
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3143
+#: ../src/selection-chemistry.cpp:3139
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3163 ../src/verbs.cpp:2688
+#: ../src/selection-chemistry.cpp:3159 ../src/verbs.cpp:2688
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3192 ../src/verbs.cpp:2690
+#: ../src/selection-chemistry.cpp:3188 ../src/verbs.cpp:2690
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3213 ../src/verbs.cpp:2692
+#: ../src/selection-chemistry.cpp:3209 ../src/verbs.cpp:2692
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -12370,10 +12421,6 @@ msgstr ""
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
 msgid "&lt;no name found&gt;"
-msgstr ""
-
-#: ../src/sp-text.cpp:427 ../src/text-context.cpp:1604
-msgid " [truncated]"
 msgstr ""
 
 #: ../src/sp-text.cpp:431
@@ -17147,7 +17194,7 @@ msgid "Set stroke"
 msgstr ""
 
 #: ../src/ui/dialog/swatches.cpp:477 ../src/widgets/gradient-selector.cpp:144
-#: ../src/widgets/gradient-toolbar.cpp:466
+#: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Edit..."
 msgstr ""
 
@@ -17630,75 +17677,75 @@ msgstr ""
 msgid "Add node"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:207
+#: ../src/ui/tool/multi-path-manipulator.cpp:227
 msgid "Change node type"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:215
+#: ../src/ui/tool/multi-path-manipulator.cpp:235
 msgid "Straighten segments"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:217
+#: ../src/ui/tool/multi-path-manipulator.cpp:237
 msgid "Make segments curves"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:224
+#: ../src/ui/tool/multi-path-manipulator.cpp:244
 msgid "Add nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:286
+#: ../src/ui/tool/multi-path-manipulator.cpp:306
 #: ../src/widgets/toolbox.cpp:1325
 msgid "Join nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:293
+#: ../src/ui/tool/multi-path-manipulator.cpp:313
 #: ../src/widgets/toolbox.cpp:1336
 msgid "Break nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:300
+#: ../src/ui/tool/multi-path-manipulator.cpp:320
 msgid "Delete nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:541
+#: ../src/ui/tool/multi-path-manipulator.cpp:562
 msgid "Move nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:544
+#: ../src/ui/tool/multi-path-manipulator.cpp:565
 msgid "Move nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:548
+#: ../src/ui/tool/multi-path-manipulator.cpp:569
 msgid "Move nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:552
-#: ../src/ui/tool/multi-path-manipulator.cpp:555
+#: ../src/ui/tool/multi-path-manipulator.cpp:573
+#: ../src/ui/tool/multi-path-manipulator.cpp:576
 msgid "Rotate nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:559
-#: ../src/ui/tool/multi-path-manipulator.cpp:565
+#: ../src/ui/tool/multi-path-manipulator.cpp:580
+#: ../src/ui/tool/multi-path-manipulator.cpp:586
 msgid "Scale nodes uniformly"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:562
+#: ../src/ui/tool/multi-path-manipulator.cpp:583
 msgid "Scale nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:569
+#: ../src/ui/tool/multi-path-manipulator.cpp:590
 msgid "Scale nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:573
+#: ../src/ui/tool/multi-path-manipulator.cpp:594
 msgid "Scale nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:577
+#: ../src/ui/tool/multi-path-manipulator.cpp:598
 msgid "Flip nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:580
+#: ../src/ui/tool/multi-path-manipulator.cpp:601
 msgid "Flip nodes vertically"
 msgstr ""
 
@@ -18071,12 +18118,13 @@ msgid "No stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:166
-#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:189
+#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:193
 msgid "Pattern"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:169
-#: ../src/ui/widget/style-swatch.cpp:279 ../src/widgets/paint-selector.cpp:997
+#: ../src/ui/widget/style-swatch.cpp:279
+#: ../src/widgets/paint-selector.cpp:1015
 msgid "Pattern fill"
 msgstr ""
 
@@ -18134,14 +18182,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:499
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:528
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:534
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:515
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:462
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:468
 msgid "Unset stroke"
 msgstr ""
 
@@ -18223,12 +18271,12 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:385
+#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:387
 msgid "Remove fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:336
+#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:338
 msgid "Remove stroke"
 msgstr ""
 
@@ -20389,19 +20437,19 @@ msgstr ""
 msgid "remove"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:283
+#: ../src/widgets/fill-style.cpp:285
 msgid "Change fill rule"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:323 ../src/widgets/fill-style.cpp:397
+#: ../src/widgets/fill-style.cpp:325 ../src/widgets/fill-style.cpp:399
 msgid "Set fill color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:466
+#: ../src/widgets/fill-style.cpp:468
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:513
+#: ../src/widgets/fill-style.cpp:515
 msgid "Set pattern on fill"
 msgstr ""
 
@@ -20454,27 +20502,27 @@ msgstr ""
 msgid "Assign gradient to object"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:189
+#: ../src/widgets/gradient-toolbar.cpp:190
 msgid "<small>No gradients</small>"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:198
+#: ../src/widgets/gradient-toolbar.cpp:200
 msgid "<small>Nothing selected</small>"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:209
+#: ../src/widgets/gradient-toolbar.cpp:211
 msgid "<small>No gradients in selection</small>"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:219
+#: ../src/widgets/gradient-toolbar.cpp:221
 msgid "<small>Multiple gradients</small>"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:467
+#: ../src/widgets/gradient-toolbar.cpp:487
 msgid "Edit the stops of the gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:527 ../src/widgets/toolbox.cpp:2731
+#: ../src/widgets/gradient-toolbar.cpp:547 ../src/widgets/toolbox.cpp:2731
 #: ../src/widgets/toolbox.cpp:2809 ../src/widgets/toolbox.cpp:3140
 #: ../src/widgets/toolbox.cpp:3178 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3820 ../src/widgets/toolbox.cpp:5454
@@ -20482,30 +20530,30 @@ msgstr ""
 msgid "<b>New:</b>"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:540
+#: ../src/widgets/gradient-toolbar.cpp:560
 msgid "Create linear gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:554
+#: ../src/widgets/gradient-toolbar.cpp:574
 msgid "Create radial (elliptic or circular) gradient"
 msgstr ""
 
 #. TODO replace aux_toolbox_space(tbl, AUX_SPACING);
-#: ../src/widgets/gradient-toolbar.cpp:569
+#: ../src/widgets/gradient-toolbar.cpp:589
 msgid "on"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:582
+#: ../src/widgets/gradient-toolbar.cpp:602
 msgid "Create gradient in the fill"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:596
+#: ../src/widgets/gradient-toolbar.cpp:616
 msgid "Create gradient in the stroke"
 msgstr ""
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:610 ../src/widgets/toolbox.cpp:2733
+#: ../src/widgets/gradient-toolbar.cpp:630 ../src/widgets/toolbox.cpp:2733
 #: ../src/widgets/toolbox.cpp:3148 ../src/widgets/toolbox.cpp:3166
 #: ../src/widgets/toolbox.cpp:3798 ../src/widgets/toolbox.cpp:3809
 #: ../src/widgets/toolbox.cpp:5457 ../src/widgets/toolbox.cpp:5468
@@ -20513,7 +20561,7 @@ msgid "<b>Change:</b>"
 msgstr ""
 
 #: ../src/widgets/gradient-vector.cpp:270
-#: ../src/widgets/paint-selector.cpp:885 ../src/widgets/stroke-style.cpp:820
+#: ../src/widgets/paint-selector.cpp:903 ../src/widgets/stroke-style.cpp:826
 msgid "No document selected"
 msgstr ""
 
@@ -20563,56 +20611,68 @@ msgstr ""
 msgid "Change gradient stop color"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:181 ../src/widgets/paint-selector.cpp:564
+#: ../src/widgets/paint-selector.cpp:185 ../src/widgets/paint-selector.cpp:581
 msgid "No paint"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:183 ../src/widgets/paint-selector.cpp:636
+#: ../src/widgets/paint-selector.cpp:187 ../src/widgets/paint-selector.cpp:653
 msgid "Flat color"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:185 ../src/widgets/paint-selector.cpp:707
+#: ../src/widgets/paint-selector.cpp:189 ../src/widgets/paint-selector.cpp:724
 msgid "Linear gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:187 ../src/widgets/paint-selector.cpp:710
+#: ../src/widgets/paint-selector.cpp:191 ../src/widgets/paint-selector.cpp:727
 msgid "Radial gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:191
+#: ../src/widgets/paint-selector.cpp:195
+msgid "Swatch"
+msgstr ""
+
+#: ../src/widgets/paint-selector.cpp:197
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:203
+#: ../src/widgets/paint-selector.cpp:209
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:214
+#: ../src/widgets/paint-selector.cpp:220
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:531
+#: ../src/widgets/paint-selector.cpp:548
 msgid "No objects"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:542
+#: ../src/widgets/paint-selector.cpp:559
 msgid "Multiple styles"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:553
+#: ../src/widgets/paint-selector.cpp:570
 msgid "Paint is undefined"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:984
+#: ../src/widgets/paint-selector.cpp:1002
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
+msgstr ""
+
+#: ../src/widgets/paint-selector.cpp:1083
+msgid "Represents a swatch fill."
+msgstr ""
+
+#: ../src/widgets/paint-selector.cpp:1096
+msgid "Swatch fill"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:247
@@ -20667,11 +20727,11 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
-msgid "select_toolbar|X position"
+msgid "select toolbar|X position"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:460
-msgid "select_toolbar|X"
+msgid "select toolbar|X"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:462
@@ -20681,11 +20741,11 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
-msgid "select_toolbar|Y position"
+msgid "select toolbar|Y position"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:468
-msgid "select_toolbar|Y"
+msgid "select toolbar|Y"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:470
@@ -20695,11 +20755,11 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
-msgid "select_toolbar|Width"
+msgid "select toolbar|Width"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:476
-msgid "select_toolbar|W"
+msgid "select toolbar|W"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:478
@@ -20717,11 +20777,11 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
-msgid "select_toolbar|Height"
+msgid "select toolbar|Height"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:497
-msgid "select_toolbar|H"
+msgid "select toolbar|H"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:499
@@ -20897,54 +20957,54 @@ msgstr ""
 msgid "Type text in a text node"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:286 ../src/widgets/stroke-style.cpp:345
+#: ../src/widgets/stroke-style.cpp:288 ../src/widgets/stroke-style.cpp:347
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:397
+#: ../src/widgets/stroke-style.cpp:399
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:441
+#: ../src/widgets/stroke-style.cpp:443
 msgid "Set pattern on stroke"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:904
+#: ../src/widgets/stroke-style.cpp:910
 msgid "Set markers"
 msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. Stroke width
-#: ../src/widgets/stroke-style.cpp:1079
+#: ../src/widgets/stroke-style.cpp:1085
 msgid "StrokeWidth|Width:"
 msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:1117
+#: ../src/widgets/stroke-style.cpp:1123
 msgid "Join:"
 msgstr ""
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1129
+#: ../src/widgets/stroke-style.cpp:1135
 msgid "Miter join"
 msgstr ""
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1139
+#: ../src/widgets/stroke-style.cpp:1145
 msgid "Round join"
 msgstr ""
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1149
+#: ../src/widgets/stroke-style.cpp:1155
 msgid "Bevel join"
 msgstr ""
 
@@ -20955,72 +21015,72 @@ msgstr ""
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1161
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1169
+#: ../src/widgets/stroke-style.cpp:1175
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1181
+#: ../src/widgets/stroke-style.cpp:1187
 msgid "Cap:"
 msgstr ""
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1193
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Butt cap"
 msgstr ""
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1201
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Round cap"
 msgstr ""
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1209
+#: ../src/widgets/stroke-style.cpp:1215
 msgid "Square cap"
 msgstr ""
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1215
+#: ../src/widgets/stroke-style.cpp:1221
 msgid "Dashes:"
 msgstr ""
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1232
+#: ../src/widgets/stroke-style.cpp:1238
 msgid "Start Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1234
+#: ../src/widgets/stroke-style.cpp:1240
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1243
+#: ../src/widgets/stroke-style.cpp:1249
 msgid "Mid Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1245
+#: ../src/widgets/stroke-style.cpp:1251
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1254
+#: ../src/widgets/stroke-style.cpp:1260
 msgid "End Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1256
+#: ../src/widgets/stroke-style.cpp:1262
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1605 ../src/widgets/stroke-style.cpp:1701
+#: ../src/widgets/stroke-style.cpp:1611 ../src/widgets/stroke-style.cpp:1707
 msgid "Set stroke style"
 msgstr ""
 
