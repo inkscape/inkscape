@@ -7,9 +7,10 @@
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org.
  *
  * Copyright (C) 2007 Johan Engelen
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005,2010 Authors
  *
  * Released under GNU GPL
  */
@@ -29,13 +30,13 @@ class SPGradientContextClass;
 struct SPGradientContext : public SPEventContext {
 
     Geom::Point origin;
-        
+
     bool cursor_addnode;
-    
+
     bool node_added;
 
     Geom::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
-        
+
     Inkscape::MessageContext *_message_context;
 
     sigc::connection *selcon;

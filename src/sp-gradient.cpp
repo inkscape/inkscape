@@ -638,19 +638,27 @@ sp_gradient_modified(SPObject *object, guint flags)
     }
 }
 
-
-bool SPGradient::isSolid() const
+SPStop* SPGradient::getFirstStop()
 {
-    bool solid = false;
-    if ( SP_GRADIENT_HAS_STOPS(this) && (sp_number_of_stops(this) == 0) ) {
-        gchar const * attr = repr->attribute("osb:paint");
-        if (attr && !strcmp(attr, "solid")) {
-            solid = true;
+    SPStop* first = 0;
+    for (SPObject *ochild = sp_object_first_child(this); ochild && !first; ochild = SP_OBJECT_NEXT(ochild)) {
+        if (SP_IS_STOP(ochild)) {
+            first = SP_STOP(ochild);
         }
     }
-    return solid;
+    return first;
 }
 
+int SPGradient::getStopCount() const
+{
+    int count = 0;
+
+    for (SPStop *stop = const_cast<SPGradient*>(this)->getFirstStop(); stop && sp_next_stop(stop); stop = sp_next_stop(stop)) {
+        count++;
+    }
+
+    return count;
+}
 
 /**
  * Write gradient attributes to repr.

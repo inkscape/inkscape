@@ -6,9 +6,10 @@
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007 Johan Engelen
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005,2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -332,7 +333,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 
     if (addknot) {
         SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
-        SPStop* prev_stop = sp_first_stop(vector);
+        SPStop* prev_stop = vector->getFirstStop();
         SPStop* next_stop = sp_next_stop(prev_stop);
         guint i = 1;
         while ( (next_stop) && (next_stop->offset < offset) ) {
@@ -910,7 +911,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
             switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge
             case POINT_LG_BEGIN:
             case POINT_RG_CENTER:
-                stop = sp_first_stop(gradient);
+                stop = gradient->getFirstStop();
                 {
                     SPStop *next = sp_next_stop (stop);
                     if (next) {
@@ -1955,7 +1956,7 @@ GrDrag::deleteSelected (bool just_one)
                     {
                         SPStop *stop = NULL;
                         if ( (draggable->point_type == POINT_LG_BEGIN) || (draggable->point_type == POINT_RG_CENTER) ) {
-                            stop = sp_first_stop(vector);
+                            stop = vector->getFirstStop();
                         } else {
                             stop = sp_last_stop(vector);
                         }
@@ -2016,7 +2017,7 @@ GrDrag::deleteSelected (bool just_one)
                         SPLinearGradient *lg = SP_LINEARGRADIENT(stopinfo->gradient);
                         Geom::Point oldbegin = Geom::Point (lg->x1.computed, lg->y1.computed);
                         Geom::Point end = Geom::Point (lg->x2.computed, lg->y2.computed);
-                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        SPStop *stop = stopinfo->vector->getFirstStop();
                         gdouble offset = stop->offset;
                         Geom::Point newbegin = oldbegin + offset * (end - oldbegin);
                         lg->x1.computed = newbegin[Geom::X];
@@ -2058,7 +2059,7 @@ GrDrag::deleteSelected (bool just_one)
                         sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
-                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        SPStop *stop = stopinfo->vector->getFirstStop();
                         stop = sp_next_stop(stop);
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;
@@ -2094,7 +2095,7 @@ GrDrag::deleteSelected (bool just_one)
                         sp_repr_set_css_double (SP_OBJECT_REPR (laststop), "offset", 1);
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
-                        SPStop *stop = sp_first_stop(stopinfo->vector);
+                        SPStop *stop = stopinfo->vector->getFirstStop();
                         stop = sp_next_stop(stop);
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;

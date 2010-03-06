@@ -184,7 +184,7 @@ sp_fill_style_widget_update (SPWidget *spw)
     // create temporary style
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FILL); 
+    int result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FILL);
 
     switch (result) {
         case QUERY_STYLE_NOTHING:
@@ -196,12 +196,12 @@ sp_fill_style_widget_update (SPWidget *spw)
 
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently, e.g. display "averaged" somewhere in paint selector
-        case QUERY_STYLE_MULTIPLE_SAME: 
+        case QUERY_STYLE_MULTIPLE_SAME:
         {
             SPPaintSelectorMode pselmode = sp_style_determine_paint_selector_mode (query, true);
             sp_paint_selector_set_mode (psel, pselmode);
 
-            sp_paint_selector_set_fillrule (psel, query->fill_rule.computed == ART_WIND_RULE_NONZERO? 
+            sp_paint_selector_set_fillrule (psel, query->fill_rule.computed == ART_WIND_RULE_NONZERO?
                                      SP_PAINT_SELECTOR_FILLRULE_NONZERO : SP_PAINT_SELECTOR_FILLRULE_EVENODD);
 
             if (query->fill.set && query->fill.isColor()) {
@@ -210,7 +210,9 @@ sp_fill_style_widget_update (SPWidget *spw)
 
                 SPPaintServer *server = SP_STYLE_FILL_SERVER (query);
 
-                if (SP_IS_LINEARGRADIENT (server)) {
+                if (server && server->isSwatch()) {
+                    sp_paint_selector_set_swatch( psel, server );
+                } else if (SP_IS_LINEARGRADIENT (server)) {
                     SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
                     sp_paint_selector_set_gradient_linear (psel, vector);
 
@@ -279,7 +281,7 @@ sp_fill_style_widget_fillrule_changed ( SPPaintSelector */*psel*/,
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILL_STROKE, 
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILL_STROKE,
                       _("Change fill rule"));
 }
 
@@ -305,8 +307,8 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
     }
 
     if (g_object_get_data (G_OBJECT (spw), "local")) {
-        // previous local flag not cleared yet; 
-        // this means dragged events come too fast, so we better skip this one to speed up display 
+        // previous local flag not cleared yet;
+        // this means dragged events come too fast, so we better skip this one to speed up display
         // (it's safe to do this in any case)
         return;
     }
@@ -319,7 +321,7 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "fill", "fill-opacity");
-            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set fill color"));
             g_object_set_data (G_OBJECT (spw), "local", GINT_TO_POINTER (TRUE)); // local change, do not update from selection
             break;
@@ -381,7 +383,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
             sp_repr_css_attr_unref (css);
 
-            sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+            sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                               _("Remove fill"));
             break;
         }
@@ -462,7 +464,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
                 sp_repr_css_attr_unref (css);
 
-                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                                   _("Set gradient on fill"));
             }
             break;
@@ -509,11 +511,15 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
                 } // end if
 
-                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                                   _("Set pattern on fill"));
 
             } // end if
 
+            break;
+
+        case SP_PAINT_SELECTOR_MODE_SWATCH:
+            // TODO
             break;
 
         case SP_PAINT_SELECTOR_MODE_UNSET:
@@ -524,7 +530,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                     sp_desktop_set_style (desktop, css);
                     sp_repr_css_attr_unref (css);
 
-                    sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                    sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE,
                                       _("Unset fill"));
             }
             break;

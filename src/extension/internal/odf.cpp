@@ -1660,7 +1660,7 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
     GradientInfo gi;
 
     SPGradient *grvec = sp_gradient_get_vector(gradient, FALSE);
-    for (SPStop *stop = sp_first_stop(grvec) ;
+    for (SPStop *stop = grvec->getFirstStop() ;
           stop ; stop = sp_next_stop(stop))
         {
         unsigned long rgba = sp_stop_get_rgba32(stop);

@@ -1,14 +1,16 @@
-#ifndef __SP_PAINT_SERVER_H__
-#define __SP_PAINT_SERVER_H__
+#ifndef SEEN_SP_PAINT_SERVER_H
+#define SEEN_SP_PAINT_SERVER_H
 
 /*
  * Base class for gradients and patterns
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -26,32 +28,35 @@ class SPPainter;
 #define SP_IS_PAINT_SERVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_PAINT_SERVER))
 
 typedef enum {
-	SP_PAINTER_IND,
-	SP_PAINTER_DEP
+    SP_PAINTER_IND,
+    SP_PAINTER_DEP
 } SPPainterType;
 
 typedef void (* SPPainterFillFunc) (SPPainter *painter, NRPixBlock *pb);
 
 /* fixme: I do not like that class thingie (Lauris) */
 struct SPPainter {
-	SPPainter *next;
-	SPPaintServer *server;
-	GType server_type;
-	SPPainterType type;
-	SPPainterFillFunc fill;
+    SPPainter *next;
+    SPPaintServer *server;
+    GType server_type;
+    SPPainterType type;
+    SPPainterFillFunc fill;
 };
 
 struct SPPaintServer : public SPObject {
-	/* List of paints */
-	SPPainter *painters;
+    /** List of paints */
+    SPPainter *painters;
+
+    bool isSwatch() const;
+    bool isSolid() const;
 };
 
 struct SPPaintServerClass {
-	SPObjectClass sp_object_class;
-	/* Get SPPaint instance */
-	SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
-	/* Free SPPaint instance */
-	void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
+    SPObjectClass sp_object_class;
+    /** Get SPPaint instance. */
+    SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
+    /** Free SPPaint instance. */
+    void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
 };
 
 GType sp_paint_server_get_type (void);
@@ -62,15 +67,25 @@ SPPainter *sp_painter_free (SPPainter *painter);
 
 class SPPaintServerReference : public Inkscape::URIReference {
 public:
-        SPPaintServerReference (SPObject *obj) : URIReference(obj) {}
-        SPPaintServerReference (SPDocument *doc) : URIReference(doc) {}
-        SPPaintServer *getObject() const {
-                return (SPPaintServer *)URIReference::getObject();
-        }
+    SPPaintServerReference (SPObject *obj) : URIReference(obj) {}
+    SPPaintServerReference (SPDocument *doc) : URIReference(doc) {}
+    SPPaintServer *getObject() const {
+        return static_cast<SPPaintServer *>(URIReference::getObject());
+    }
 protected:
-        virtual bool _acceptObject(SPObject *obj) const {
-                return SP_IS_PAINT_SERVER (obj);
-        }
+    virtual bool _acceptObject(SPObject *obj) const {
+        return SP_IS_PAINT_SERVER (obj);
+    }
 };
 
-#endif
+#endif // SEEN_SP_PAINT_SERVER_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

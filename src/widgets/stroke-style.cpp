@@ -204,7 +204,9 @@ sp_stroke_style_paint_update (SPWidget *spw)
 
                 SPPaintServer *server = SP_STYLE_STROKE_SERVER (query);
 
-                if (SP_IS_LINEARGRADIENT (server)) {
+                if (server && server->isSwatch()) {
+                    sp_paint_selector_set_swatch( psel, server );
+                } else if (SP_IS_LINEARGRADIENT (server)) {
                     SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
                     sp_paint_selector_set_gradient_linear (psel, vector);
 
@@ -441,6 +443,10 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                                   _("Set pattern on stroke"));
             } // end if
 
+            break;
+
+        case SP_PAINT_SELECTOR_MODE_SWATCH:
+            // TODO
             break;
 
         case SP_PAINT_SELECTOR_MODE_UNSET:

@@ -1,5 +1,5 @@
-#ifndef __SP_GRADIENT_CHEMISTRY_H__
-#define __SP_GRADIENT_CHEMISTRY_H__
+#ifndef SEEN_SP_GRADIENT_CHEMISTRY_H
+#define SEEN_SP_GRADIENT_CHEMISTRY_H
 
 /*
  * Various utility methods for gradients
@@ -8,7 +8,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Authors
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -54,7 +56,6 @@ SPGradient *sp_gradient_fork_vector_if_necessary (SPGradient *gr);
 SPGradient *sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector);
 
 
-SPStop* sp_first_stop(SPGradient *gradient);
 SPStop* sp_last_stop(SPGradient *gradient);
 SPStop* sp_prev_stop(SPStop *stop, SPGradient *gradient);
 SPStop* sp_next_stop(SPStop *stop);
@@ -80,7 +81,7 @@ guint32 sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint
 void sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 void sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke);
 
-#endif
+#endif // SEEN_SP_GRADIENT_CHEMISTRY_H
 
 /*
   Local Variables:

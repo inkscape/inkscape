@@ -1,5 +1,3 @@
-#define __SP_GRADIENT_CHEMISTRY_C__
-
 /*
  * Various utility methods for gradients
  *
@@ -7,7 +5,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Authors
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2001-2005 authors
  * Copyright (C) 2001 Ximian, Inc.
@@ -482,18 +482,6 @@ sp_item_gradient (SPItem *item, bool fill_or_stroke)
    return gradient;
 }
 
-
-SPStop*
-sp_first_stop(SPGradient *gradient)
-{
-  for (SPObject *ochild = sp_object_first_child(gradient); ochild != NULL; ochild = SP_OBJECT_NEXT(ochild)) {
-      if (SP_IS_STOP (ochild)) {
-          return SP_STOP(ochild);
-      }
-  }
-  return NULL;
-}
-
 SPStop*
 sp_prev_stop(SPStop *stop, SPGradient *gradient)
 {
@@ -525,44 +513,17 @@ sp_next_stop(SPStop *stop)
 SPStop*
 sp_last_stop(SPGradient *gradient)
 {
-    for (SPStop *stop = sp_first_stop (gradient); stop != NULL; stop = sp_next_stop (stop)) {
+    for (SPStop *stop = gradient->getFirstStop(); stop != NULL; stop = sp_next_stop (stop)) {
         if (sp_next_stop (stop) == NULL)
             return stop;
     }
     return NULL;
 }
 
-guint sp_number_of_stops(SPGradient const *gradient)
-{
-    guint n = 0;
-    for (SPStop *stop = sp_first_stop(const_cast<SPGradient*>(gradient)); stop; stop = sp_next_stop(stop)) {
-        if ( sp_next_stop(stop) ) {
-            n++;
-        } else {
-            break;
-        }
-    }
-    return n;
-}
-
-guint sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target)
-{
-    guint n = 0;
-    for (SPStop *stop = sp_first_stop(const_cast<SPGradient*>(gradient)); stop; stop = sp_next_stop(stop)) {
-        if (stop != target) {
-            n++;
-        } else {
-            break;
-        }
-    }
-    return n;
-}
-
-
 SPStop*
 sp_get_stop_i(SPGradient *gradient, guint stop_i)
 {
-    SPStop *stop = sp_first_stop (gradient);
+    SPStop *stop = gradient->getFirstStop();
 
     // if this is valid but weird gradient without an offset-zero stop element,
     // inkscape has created a handle for the start of gradient anyway,
@@ -627,7 +588,7 @@ sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool 
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
-            GtkWidget *dialog = sp_gradient_vector_editor_new (vector, sp_first_stop (vector));
+            GtkWidget *dialog = sp_gradient_vector_editor_new (vector, vector->getFirstStop());
             gtk_widget_show (dialog);
         }
         break;
@@ -672,7 +633,7 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint point_i
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
-            SPStop *first = sp_first_stop (vector);
+            SPStop *first = vector->getFirstStop();
             if (first) {
                 return sp_stop_get_rgba32(first);
             }
@@ -730,7 +691,7 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, 
         case POINT_RG_CENTER:
         case POINT_RG_FOCUS:
         {
-            SPStop *first = sp_first_stop (vector);
+            SPStop *first = vector->getFirstStop();
             if (first) {
                 sp_repr_css_change (SP_OBJECT_REPR (first), stop, "style");
             }

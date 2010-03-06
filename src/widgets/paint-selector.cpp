@@ -1,13 +1,16 @@
-#define __SP_PAINT_SELECTOR_C__
-
 /** \file
  * SPPaintSelector: Generic paint selector widget.
  */
 
 /*
- * Copyright (C) Lauris Kaplinski 2002
+ * Authors:
+ *   Lauris Kaplinski
  *   bulia byak <buliabyak@users.sf.net>
  *   John Cliff <simarilius@yahoo.com>
+ *   Jon A. Cruz <jon@joncruz.org>
+ *
+ * Copyright (C) Lauris Kaplinski 2002
+ * Copyright (C) 2010 Authors
 */
 
 #define noSP_PS_VERBOSE
@@ -80,6 +83,7 @@ static void sp_paint_selector_set_mode_none(SPPaintSelector *psel);
 static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode);
 static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelectorMode mode);
 static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mode);
+static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelectorMode mode);
 static void sp_paint_selector_set_mode_unset(SPPaintSelector *psel);
 
 
@@ -187,6 +191,8 @@ sp_paint_selector_init(SPPaintSelector *psel)
                                                       SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL, tt, _("Radial gradient"));
     psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_PATTERN,
                                                        SP_PAINT_SELECTOR_MODE_PATTERN, tt, _("Pattern"));
+    psel->swatch = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SWATCH,
+                                                       SP_PAINT_SELECTOR_MODE_SWATCH, tt, _("Swatch"));
     psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_UNKNOWN,
                                                      SP_PAINT_SELECTOR_MODE_UNSET, tt, _("Unset paint (make it undefined so it can be inherited)"));
 
@@ -347,6 +353,9 @@ sp_paint_selector_set_mode(SPPaintSelector *psel, SPPaintSelectorMode mode)
             case SP_PAINT_SELECTOR_MODE_PATTERN:
                 sp_paint_selector_set_mode_pattern(psel, mode);
                 break;
+            case SP_PAINT_SELECTOR_MODE_SWATCH:
+                sp_paint_selector_set_mode_swatch(psel, mode);
+                break;
             case SP_PAINT_SELECTOR_MODE_UNSET:
                 sp_paint_selector_set_mode_unset(psel);
                 break;
@@ -396,6 +405,14 @@ sp_paint_selector_set_color_alpha(SPPaintSelector *psel, SPColor const *color, f
     csel = (SPColorSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "color-selector");
     rgba = color->toRGBA32( alpha );
     csel->base->setColorAlpha( *color, alpha );
+}
+
+void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPPaintServer */*server*/ )
+{
+#ifdef SP_PS_VERBOSE
+    g_print("PaintSelector set SWATCH\n");
+#endif
+    sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_SWATCH);
 }
 
 void
@@ -722,6 +739,7 @@ sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget *active)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->gradient), (active == psel->gradient));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->radial), (active == psel->radial));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->pattern), (active == psel->pattern));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->swatch), (active == psel->swatch));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->unset), (active == psel->unset));
 }
 
@@ -1039,6 +1057,49 @@ sp_paint_selector_get_pattern(SPPaintSelector *psel)
     return NULL;
 }
 
+static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelectorMode mode)
+{
+    if (mode == SP_PAINT_SELECTOR_MODE_SWATCH) {
+        sp_paint_selector_set_style_buttons(psel, psel->swatch); // TODO swatch
+    }
+
+    gtk_widget_set_sensitive(psel->style, TRUE);
+
+    GtkWidget *tbl = NULL;
+
+    if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH){
+        /* Already have pattern menu */
+        tbl = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector");
+    } else {
+        sp_paint_selector_clear_frame(psel);
+
+        /* Create vbox */
+        tbl = gtk_vbox_new(FALSE, 4);
+        gtk_widget_show(tbl);
+
+        {
+            GtkWidget *hb = gtk_hbox_new(FALSE, 0);
+            GtkWidget *l = gtk_label_new(NULL);
+            gtk_label_set_markup(GTK_LABEL(l), _("Represents a swatch fill."));
+            gtk_label_set_line_wrap(GTK_LABEL(l), true);
+            gtk_widget_set_size_request(l, 180, -1);
+            gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
+            gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+        }
+
+        gtk_widget_show_all(tbl);
+
+        gtk_container_add(GTK_CONTAINER(psel->frame), tbl);
+        psel->selector = tbl;
+        gtk_object_set_data(GTK_OBJECT(psel->selector), "swatch-selector", tbl);
+
+        gtk_frame_set_label(GTK_FRAME(psel->frame), _("Swatch fill"));
+    }
+#ifdef SP_PS_VERBOSE
+    g_print("Swatch req\n");
+#endif
+}
+
 void
 sp_paint_selector_set_flat_color(SPPaintSelector *psel, SPDesktop *desktop, gchar const *color_property, gchar const *opacity_property)
 {
@@ -1068,8 +1129,7 @@ sp_paint_selector_set_flat_color(SPPaintSelector *psel, SPDesktop *desktop, gcha
     sp_repr_css_attr_unref(css);
 }
 
-SPPaintSelectorMode
-sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
+SPPaintSelectorMode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
 {
     SPPaintSelectorMode mode = SP_PAINT_SELECTOR_MODE_UNSET;
     SPIPaint& target = isfill ? style->fill : style->stroke;
@@ -1079,7 +1139,9 @@ sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
     } else if ( target.isPaintserver() ) {
         SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 
-        if (SP_IS_LINEARGRADIENT(server)) {
+        if (server && server->isSwatch()) {
+            mode = SP_PAINT_SELECTOR_MODE_SWATCH;
+        } else if (SP_IS_LINEARGRADIENT(server)) {
             mode = SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;
         } else if (SP_IS_RADIALGRADIENT(server)) {
             mode = SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL;

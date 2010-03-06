@@ -350,6 +350,8 @@
     "paint-pattern"
 #define INKSCAPE_ICON_PAINT_SOLID \
     "paint-solid"
+#define INKSCAPE_ICON_PAINT_SWATCH \
+    "paint-swatch"
 #define INKSCAPE_ICON_PAINT_UNKNOWN \
     "paint-unknown"
 #define INKSCAPE_ICON_PATH_BREAK_APART \

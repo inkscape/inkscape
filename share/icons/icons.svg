@@ -2129,6 +2129,12 @@ http://www.inkscape.org/</dc:description>
 <path style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1" d="m 676.7274,66.00001 -3.2727,3.42857 4.0909,4.28572 4.0909,-4.28572 -3.2727,-3.42857 -1.6364,0 z m 4.9091,3.42857 4.0909,4.28572 3.2727,-3.42858 0,-1.71428 -2.4545,-2.57143 -1.6364,0 -3.2727,3.42857 z m 4.0909,4.28572 -4.0909,4.28571 4.0909,4.28572 3.2727,-3.42858 0,-1.71428 -3.2727,-3.42857 z m 0,8.57143 -1.6364,1.71428 3.2728,0 -1.6364,-1.71428 z m -4.0909,-4.28572 -4.0909,-4.28571 -4.0909,4.28571 4.0909,4.28572 4.0909,-4.28572 z m -4.0909,4.28572 -1.6364,1.71428 3.2727,0 -1.6363,-1.71428 z m -4.0909,-4.28572 -2.4546,-2.57143 0,5.14286 2.4546,-2.57143 z m 0,-8.57143 -2.4546,-2.57143 0,5.14286 2.4546,-2.57143 z" id="rect4545" />
 <rect style="color:#000000;fill:none;stroke:#000000;stroke-width:0.99999893;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" id="rect4381" width="19.000811" height="18.99999" x="670.49939" y="65.5" />
 </g>
+<g id="paint-swatch" transform="translate(395.00061,282)" inkscape:label="#fill_swatch">
+<rect inkscape:label="#ccc" y="66" x="671" height="18" width="18" id="rect4541" style="color:#000000;fill:#99b6d4;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.00000036;marker:none;display:inline" />
+<rect style="color:#000000;fill:none;stroke:#000000;stroke-width:0.99999893;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" id="rect4381" width="19.000811" height="18.99999" x="670.49939" y="65.5" />
+<rect style="fill:#000000;stroke:none;marker:none;display:inline" id="rect4382" width="13.000811" height="12.99999" x="674.49939" y="69.5" />
+<rect style="fill:#ffffff;stroke:none;marker:none;display:inline" id="rect4382" width="13.000811" height="12.99999" x="673.49939" y="68.5" />
+</g>
 <g id="distribute-graph" transform="matrix(0.173978,0,0,0.208504,867.70076,70.054562)" inkscape:label="#graph_layout">
 <g transform="matrix(4.416533,0,0,3.725389,-3265.91,88.05639)" id="g3559" />
 <path id="path3569" d="M 1003.929,599.4599 980.8144,612.551" style="fill:none;stroke:#000000;stroke-width:4.125;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" sodipodi:nodetypes="cc" />

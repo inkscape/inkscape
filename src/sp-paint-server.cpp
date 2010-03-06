@@ -1,19 +1,24 @@
-#define __SP_PAINT_SERVER_C__
-
 /*
  * Base class for gradients and patterns
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 2010 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <libnr/nr-pixblock-pattern.h>
+#include <string.h>
+#include "libnr/nr-pixblock-pattern.h"
 #include "sp-paint-server.h"
+
+#include "sp-gradient.h"
+#include "xml/node.h"
 
 static void sp_paint_server_class_init(SPPaintServerClass *psc);
 static void sp_paint_server_init(SPPaintServer *ps);
@@ -31,15 +36,15 @@ GType sp_paint_server_get_type (void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPPaintServerClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_paint_server_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPPaintServer),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_paint_server_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPPaintServer", &info, (GTypeFlags) 0);
     }
@@ -149,6 +154,29 @@ static void sp_painter_stale_fill(SPPainter */*painter*/, NRPixBlock *pb)
 {
     nr_pixblock_render_gray_noise(pb, NULL);
 }
+
+bool SPPaintServer::isSwatch() const
+{
+    // Temporary for now. Later expand to more
+    return isSolid();
+}
+
+bool SPPaintServer::isSolid() const
+{
+    bool solid = false;
+    if (SP_IS_GRADIENT(this)) {
+        SPGradient *grad = SP_GRADIENT(this);
+        if ( SP_GRADIENT_HAS_STOPS(grad) && (grad->getStopCount() == 0) ) {
+            gchar const * attr = repr->attribute("osb:paint");
+            if (attr && !strcmp(attr, "solid")) {
+                solid = true;
+            }
+        }
+    }
+    return solid;
+}
+
+
 
 
 /*

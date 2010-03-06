@@ -1170,7 +1170,7 @@ sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object)
 
     /* Set start parameters */
     /* We rely on normalized vector, i.e. stops HAVE to exist */
-    g_return_if_fail (sp_first_stop(ngr) != NULL);
+    g_return_if_fail(ngr->getFirstStop() != NULL);
 
     GtkOptionMenu *mnu = (GtkOptionMenu *)g_object_get_data (G_OBJECT(object), "stopmenu");
     SPStop *stop = SP_STOP(g_object_get_data (G_OBJECT(gtk_menu_get_active (GTK_MENU(gtk_option_menu_get_menu (mnu)))), "stop"));

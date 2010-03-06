@@ -91,7 +91,8 @@ struct SPGradient : public SPPaintServer {
     sigc::connection modified_connection;
 
 
-    bool isSolid() const;
+    SPStop* getFirstStop();
+    int getStopCount() const;
 };
 
 /**
