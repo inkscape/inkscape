@@ -114,8 +114,8 @@ static void sp_canvas_item_init (SPCanvasItem *item);
 static void sp_canvas_item_dispose (GObject *object);
 static void sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
 
-
 static int emit_event (SPCanvas *canvas, GdkEvent *event);
+static int pick_current_item (SPCanvas *canvas, GdkEvent *event);
 
 static guint item_signals[ITEM_LAST_SIGNAL] = { 0 };
 
@@ -1326,6 +1326,16 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
     if (canvas->grabbed_item && !is_descendant (canvas->current_item, canvas->grabbed_item)) {
         item = canvas->grabbed_item;
     } else {
+        // Make sure that current_item is up-to-date. If a snap indicator was just deleted, then
+        // sp_canvas_item_dispose has been called and there is no current_item specified. We need
+        // that though because otherwise we don't know where to send this event to, leading to a
+        // lost event. We can't wait for idle events to have current_item updated, we need it now!
+        // Otherwise, scrolling when hovering above a pre-snap indicator won't work (for example)
+        // See this bug report: https://bugs.launchpad.net/inkscape/+bug/522335/comments/8
+        while (canvas->need_repick) {
+            canvas->need_repick = FALSE;
+            pick_current_item (canvas, (GdkEvent *) event);
+        }
         item = canvas->current_item;
     }
 
@@ -1491,6 +1501,8 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         retval = emit_event (canvas, &new_event);
     }
 
+
+
     return retval;
 }
 
@@ -1588,7 +1600,7 @@ static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
 static int
 sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 {
-	int status;
+    int status;
     SPCanvas *canvas = SP_CANVAS (widget);
 
     track_latency((GdkEvent *)event);
@@ -1600,11 +1612,11 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
         return FALSE;
 
     canvas->state = event->state;
-	pick_current_item (canvas, (GdkEvent *) event);
-	status = emit_event (canvas, (GdkEvent *) event);
-	if (event->is_hint) {
-		request_motions(widget->window, event);
-	}
+    pick_current_item (canvas, (GdkEvent *) event);
+    status = emit_event (canvas, (GdkEvent *) event);
+    if (event->is_hint) {
+        request_motions(widget->window, event);
+    }
 
     return status;
 }
@@ -2095,7 +2107,7 @@ paint (SPCanvas *canvas)
 static int
 do_update (SPCanvas *canvas)
 {
-    if (!canvas->root || !canvas->pixmap_gc) // canvas may have already be destroyed by closing desktop durring interrupted display!
+    if (!canvas->root || !canvas->pixmap_gc) // canvas may have already be destroyed by closing desktop during interrupted display!
         return TRUE;
 
     /* Cause the update if necessary */
@@ -2196,6 +2208,7 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     } else {
         // scrolling as part of zoom; do nothing here - the next do_update will perform full redraw
     }
+
 }
 
 /**
