@@ -297,7 +297,9 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         m.guideConstrainedSnap(motion_dt, *guide);
                     }
                 } else if (!(event->motion.state & GDK_SHIFT_MASK)) {
-                    m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
+                    if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
+                        m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
+                    }
                 }
 
                 switch (drag_type) {
@@ -310,7 +312,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     {
                         Geom::Point pt = motion_dt - guide->point_on_line;
                         double angle = std::atan2(pt[Geom::Y], pt[Geom::X]);
-                        if  (event->motion.state & GDK_CONTROL_MASK) {
+                        if (event->motion.state & GDK_CONTROL_MASK) {
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
                             if (snaps) {
@@ -360,7 +362,9 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             m.guideConstrainedSnap(event_dt, *guide);
                         }
                     } else if (!(event->button.state & GDK_SHIFT_MASK)) {
-                        m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
+                        if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
+                            m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
+                        }
                     }
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
@@ -420,7 +424,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             Geom::Point const event_w(event->crossing.x, event->crossing.y);
             Geom::Point const event_dt(desktop->w2d(event_w));
 
-            if (event->crossing.state & GDK_SHIFT_MASK) {
+            if ((event->crossing.state & GDK_SHIFT_MASK) && (drag_type != SP_DRAG_MOVE_ORIGIN)) {
                 GdkCursor *guide_cursor;
                 guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
                 gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
@@ -455,11 +459,15 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 }
                 case GDK_Shift_L:
                 case GDK_Shift_R:
-                    GdkCursor *guide_cursor;
-                    guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
-                    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
-                    gdk_cursor_unref(guide_cursor);
-                    ret = TRUE;
+                    if (drag_type != SP_DRAG_MOVE_ORIGIN) {
+                        GdkCursor *guide_cursor;
+                        guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
+                        gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
+                        gdk_cursor_unref(guide_cursor);
+                        ret = TRUE;
+                        break;
+                    }
+
                 default:
                     // do nothing;
                     break;
