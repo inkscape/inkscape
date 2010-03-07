@@ -143,12 +143,14 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
 
-                SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop);
-                // We only have a temporary guide which is not stored in our document yet.
-                // Because the guide snapper only looks in the document for guides to snap to,
-                // we don't have to worry about a guide snapping to itself here
-                m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                if (!(event->motion.state & GDK_SHIFT_MASK)) {
+                    SnapManager &m = desktop->namedview->snap_manager;
+                    m.setup(desktop);
+                    // We only have a temporary guide which is not stored in our document yet.
+                    // Because the guide snapper only looks in the document for guides to snap to,
+                    // we don't have to worry about a guide snapping to itself here
+                    m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                }
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
                 desktop->set_coordinate_status(to_2geom(event_dt));
@@ -163,12 +165,14 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
 
-                SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop);
-                // We only have a temporary guide which is not stored in our document yet.
-                // Because the guide snapper only looks in the document for guides to snap to,
-                // we don't have to worry about a guide snapping to itself here
-                m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                if (!(event->button.state & GDK_SHIFT_MASK)) {
+                    SnapManager &m = desktop->namedview->snap_manager;
+                    m.setup(desktop);
+                    // We only have a temporary guide which is not stored in our document yet.
+                    // Because the guide snapper only looks in the document for guides to snap to,
+                    // we don't have to worry about a guide snapping to itself here
+                    m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                }
 
                 dragging = false;
 
@@ -286,12 +290,13 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     // be forced to be on the guide. If we don't snap however, then
                     // the origin should still be constrained to the guide. So let's do
                     // that explicitly first:
-
                     Geom::Line line(guide->point_on_line, guide->angle());
                     Geom::Coord t = line.nearestPoint(motion_dt);
                     motion_dt = line.pointAt(t);
-                    m.guideConstrainedSnap(motion_dt, *guide);
-                } else {
+                    if (!(event->motion.state & GDK_SHIFT_MASK)) {
+                        m.guideConstrainedSnap(motion_dt, *guide);
+                    }
+                } else if (!(event->motion.state & GDK_SHIFT_MASK)) {
                     m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
                 }
 
@@ -351,8 +356,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         Geom::Line line(guide->point_on_line, guide->angle());
                         Geom::Coord t = line.nearestPoint(event_dt);
                         event_dt = line.pointAt(t);
-                        m.guideConstrainedSnap(event_dt, *guide);
-                    } else {
+                        if (!(event->button.state & GDK_SHIFT_MASK)) {
+                            m.guideConstrainedSnap(event_dt, *guide);
+                        }
+                    } else if (!(event->button.state & GDK_SHIFT_MASK)) {
                         m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
                     }
 
