@@ -104,12 +104,12 @@
           
     <!--makefile file="${src}/inkscape-version.cpp">
         namespace Inkscape {
-            char const *version_string = "${version} ${svn.revision}";
+            char const *version_string = "${version}";
         }
     </makefile-->
     <makefile file="${src}/inkscape-version.cpp">
         namespace Inkscape {
-            char const *version_string = "${version}";
+            char const *version_string = "${version} ${bzr.revision}";
         }
     </makefile>
     <makefile file="config.h">

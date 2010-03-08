@@ -3196,11 +3196,11 @@ protected:
 
     /**
      *    If this prefix is seen in a substitution, use as a
-     *    Subversion "svn info" query
-     *             example:  <property subversion="svn"/>
-     *             ${svn.Revision}
+     *    Bazaar "bzr revno" query
+     *             example:  <property subversion="svn"/> ???
+     *             ${bzr.Revision}
      */
-    String svnPrefix;
+    String bzrPrefix;
 
 
 
@@ -3640,7 +3640,33 @@ private:
     int parselen;
 };
 
+/**
+ * Execute the "bzr revno" command and return the result.
+ * This is a simple, small class.
+ */
+class BzrRevno : public MakeBase
+{
+public:
 
+    /**
+     * Safe way. Execute "bzr revno" and return the result.
+     * Safe from changes in format.
+     */
+    bool query(String &res)
+    {
+        String cmd = "bzr revno";
+
+        String outString, errString;
+        bool ret = executeCommand(cmd.c_str(), "", outString, errString);
+        if (!ret)
+            {
+            error("error executing '%s': %s", cmd.c_str(), errString.c_str());
+            return false;
+            }
+        res = outString;
+        return true;
+    } 
+};
 
 /**
  * Execute the "svn info" command and parse the result.
@@ -4698,21 +4724,22 @@ bool MakeBase::lookupProperty(const String &propertyName, String &result)
             return false;
         result = val;
         }
-    else if (svnPrefix.size() > 0 &&
-        varname.compare(0, svnPrefix.size(), svnPrefix) == 0)
+    else if (bzrPrefix.size() > 0 &&
+        varname.compare(0, bzrPrefix.size(), bzrPrefix) == 0)
         {
-        varname = varname.substr(svnPrefix.size());
+        varname = varname.substr(bzrPrefix.size());
         String val;
-        SvnInfo svnInfo;
+        //SvnInfo svnInfo;
+        BzrRevno bzrRevno;
         if (varname == "revision")
 	    {
-            if (!svnInfo.query(varname, val))
+            if (!bzrRevno.query(val))
                 return "";
             result = "r"+val;
-            }
-        if (!svnInfo.query(varname, val))
+        }
+        /*if (!svnInfo.query(varname, val))
             return false;
-        result = val;
+        result = val;*/
         }
     else
         {
@@ -9503,7 +9530,7 @@ void Make::init()
     pcPrefix        = "pc.";
     pccPrefix       = "pcc.";
     pclPrefix       = "pcl.";
-    svnPrefix       = "svn.";
+    bzrPrefix       = "bzr.";
     properties.clear();
     for (unsigned int i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
@@ -9926,11 +9953,11 @@ bool Make::parseProperty(Element *elem)
             {
             if (attrVal.find('.') != attrVal.npos)
                 {
-                error("subversion prefix cannot have a '.' in it");
+                error("bzr prefix cannot have a '.' in it");
                 return false;
                 }
-            svnPrefix = attrVal;
-            svnPrefix.push_back('.');
+            bzrPrefix = attrVal;
+            bzrPrefix.push_back('.');
             }
         }
 
