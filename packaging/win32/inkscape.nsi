@@ -959,8 +959,9 @@ Section Uninstall ; do the uninstalling {{{
         ${Else}
           md5dll::GetMD5File /NOUNLOAD $filename
           Pop $5 ;md5 of file
-          ${If} $3 != $5
-          ${AndIf} $6 != never
+          ${If} $3 = $5
+            StrCpy $3 1 ; yes
+          ${ElseIf} $6 != never
             ; the md5 sums does not match so we ask
             messagebox::show MB_DEFBUTTON3|MB_TOPMOST "" 0,103 \
               "$(FileChanged)" "$(Yes)" "$(AlwaysYes)" "$(No)" "$(AlwaysNo)"
