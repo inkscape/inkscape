@@ -4,9 +4,11 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -120,7 +122,7 @@ sp_gradient_selector_init (SPGradientSelector *sel)
 {
     GtkWidget *hb, *l, *m, *mi;
 
-    sel->mode = SP_GRADIENT_SELECTOR_MODE_LINEAR;
+    sel->mode = SPGradientSelector::MODE_LINEAR;
 
     sel->gradientUnits = SP_GRADIENT_UNITS_USERSPACEONUSE;
     sel->gradientSpread = SP_GRADIENT_SPREAD_PAD;
@@ -206,77 +208,58 @@ sp_gradient_selector_new (void)
     return (GtkWidget *) sel;
 }
 
-void
-sp_gradient_selector_set_mode (SPGradientSelector *sel, guint mode)
+void SPGradientSelector::setMode(SelectorMode mode)
 {
-    g_return_if_fail (sel != NULL);
-    g_return_if_fail (SP_IS_GRADIENT_SELECTOR (sel));
-
-    sel->mode = mode;
+    this->mode = mode;
 }
 
-void
-sp_gradient_selector_set_units (SPGradientSelector *sel, guint units)
+void SPGradientSelector::setUnits(SPGradientUnits units)
 {
-    g_return_if_fail (sel != NULL);
-    g_return_if_fail (SP_IS_GRADIENT_SELECTOR (sel));
-
-    sel->gradientUnits = (SPGradientUnits)units;
+    gradientUnits = units;
 }
 
-void
-sp_gradient_selector_set_spread (SPGradientSelector *sel, guint spread)
+void SPGradientSelector::setSpread(SPGradientSpread spread)
 {
-    g_return_if_fail (sel != NULL);
-    g_return_if_fail (SP_IS_GRADIENT_SELECTOR (sel));
+    gradientSpread = spread;
 
-    sel->gradientSpread = (SPGradientSpread)spread;
-
-    gtk_option_menu_set_history (GTK_OPTION_MENU (sel->spread), sel->gradientSpread);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(spread), gradientSpread);
 }
 
-SPGradientUnits
-sp_gradient_selector_get_units (SPGradientSelector *sel)
+SPGradientUnits SPGradientSelector::getUnits()
 {
-    return (SPGradientUnits) sel->gradientUnits;
+    //return (SPGradientUnits) sel->gradientUnits;
+    return gradientUnits;
 }
 
-SPGradientSpread
-sp_gradient_selector_get_spread (SPGradientSelector *sel)
+SPGradientSpread SPGradientSelector::getSpread()
 {
-    return (SPGradientSpread) sel->gradientSpread;
+    return gradientSpread;
 }
 
-void
-sp_gradient_selector_set_vector (SPGradientSelector *sel, SPDocument *doc, SPGradient *vector)
+void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
 {
-    g_return_if_fail (sel != NULL);
-    g_return_if_fail (SP_IS_GRADIENT_SELECTOR (sel));
-    g_return_if_fail (!vector || SP_IS_GRADIENT (vector));
-    g_return_if_fail (!vector || (SP_OBJECT_DOCUMENT (vector) == doc));
+    g_return_if_fail(!vector || SP_IS_GRADIENT(vector));
+    g_return_if_fail(!vector || (SP_OBJECT_DOCUMENT(vector) == doc));
 
-    if (vector && !SP_GRADIENT_HAS_STOPS (vector))
+    if (vector && !SP_GRADIENT_HAS_STOPS(vector)) {
         return;
+    }
 
-    sp_gradient_vector_selector_set_gradient (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors), doc, vector);
+    sp_gradient_vector_selector_set_gradient(SP_GRADIENT_VECTOR_SELECTOR(vectors), doc, vector);
 
     if (vector) {
-        gtk_widget_set_sensitive (sel->edit, TRUE);
-        gtk_widget_set_sensitive (sel->add, TRUE);
+        gtk_widget_set_sensitive(edit, TRUE);
+        gtk_widget_set_sensitive(add, TRUE);
     } else {
-        gtk_widget_set_sensitive (sel->edit, FALSE);
-        gtk_widget_set_sensitive (sel->add, (doc != NULL));
+        gtk_widget_set_sensitive(edit, FALSE);
+        gtk_widget_set_sensitive(add, (doc != NULL));
     }
 }
 
-SPGradient *
-sp_gradient_selector_get_vector (SPGradientSelector *sel)
+SPGradient *SPGradientSelector::getVector()
 {
-    if (sel == NULL || !SP_IS_GRADIENT_SELECTOR (sel))
-        return NULL;
-
     /* fixme: */
-    return SP_GRADIENT_VECTOR_SELECTOR (sel->vectors)->gr;
+    return SP_GRADIENT_VECTOR_SELECTOR(vectors)->gr;
 }
 
 static void
@@ -287,7 +270,7 @@ sp_gradient_selector_vector_set (SPGradientVectorSelector */*gvs*/, SPGradient *
     if (!blocked) {
         blocked = TRUE;
         gr = sp_gradient_ensure_vector_normalized (gr);
-        sp_gradient_selector_set_vector (sel, (gr) ? SP_OBJECT_DOCUMENT (gr) : NULL, gr);
+        sel->setVector((gr) ? SP_OBJECT_DOCUMENT (gr) : 0, gr);
         g_signal_emit (G_OBJECT (sel), signals[CHANGED], 0, gr);
         blocked = FALSE;
     }

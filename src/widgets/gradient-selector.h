@@ -6,16 +6,21 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include <glib.h>
+#include <gtk/gtkvbox.h>
+#include "sp-gradient.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
+
 class SPGradient;
 
 #define SP_TYPE_GRADIENT_SELECTOR (sp_gradient_selector_get_type ())
@@ -24,32 +29,41 @@ class SPGradient;
 #define SP_IS_GRADIENT_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_GRADIENT_SELECTOR))
 #define SP_IS_GRADIENT_SELECTOR_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_GRADIENT_SELECTOR))
 
-#include <libnr/nr-forward.h>
-#include <gtk/gtkvbox.h>
-#include "../forward.h"
-#include <sp-gradient.h>
 
-enum {
-    SP_GRADIENT_SELECTOR_MODE_LINEAR,
-    SP_GRADIENT_SELECTOR_MODE_RADIAL
-};
 
 struct SPGradientSelector {
     GtkVBox vbox;
 
-    guint mode : 1;
+    enum SelectorMode {
+        MODE_LINEAR,
+        MODE_RADIAL
+    };
 
-    SPGradientUnits gradientUnits : 1;
-    SPGradientSpread gradientSpread : 2;
+    SelectorMode mode;
+
+    SPGradientUnits gradientUnits;
+    SPGradientSpread gradientSpread;
 
     /* Vector selector */
     GtkWidget *vectors;
+
     /* Editing buttons */
-    GtkWidget *edit, *add;
+    GtkWidget *edit;
+    GtkWidget *add;
+
     /* Position widget */
     GtkWidget *position;
+
     /* Spread selector */
     GtkWidget *spread;
+
+    void setMode(SelectorMode mode);
+    void setUnits(SPGradientUnits units);
+    void setSpread(SPGradientSpread spread);
+    void setVector(SPDocument *doc, SPGradient *vector);
+    SPGradientUnits getUnits();
+    SPGradientSpread getSpread();
+    SPGradient *getVector();
 };
 
 struct SPGradientSelectorClass {
@@ -65,16 +79,7 @@ GType sp_gradient_selector_get_type(void);
 
 GtkWidget *sp_gradient_selector_new (void);
 
-void sp_gradient_selector_set_mode (SPGradientSelector *sel, guint mode);
-void sp_gradient_selector_set_units (SPGradientSelector *sel, guint units);
-void sp_gradient_selector_set_spread (SPGradientSelector *sel, guint spread);
-void sp_gradient_selector_set_vector (SPGradientSelector *sel, SPDocument *doc, SPGradient *vector);
 void sp_gradient_selector_set_bbox (SPGradientSelector *sel, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
-
-SPGradientUnits sp_gradient_selector_get_units (SPGradientSelector *sel);
-SPGradientSpread sp_gradient_selector_get_spread (SPGradientSelector *sel);
-
-SPGradient *sp_gradient_selector_get_vector (SPGradientSelector *sel);
 
 #endif // SEEN_GRADIENT_SELECTOR_H
 
