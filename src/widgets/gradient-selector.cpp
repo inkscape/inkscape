@@ -222,7 +222,7 @@ void SPGradientSelector::setSpread(SPGradientSpread spread)
 {
     gradientSpread = spread;
 
-    gtk_option_menu_set_history(GTK_OPTION_MENU(spread), gradientSpread);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(this->spread), gradientSpread);
 }
 
 SPGradientUnits SPGradientSelector::getUnits()
