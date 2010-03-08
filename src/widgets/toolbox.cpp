@@ -282,7 +282,6 @@ static gchar const * ui_descr =
         "  </toolbar>"
 
         "  <toolbar name='NodeToolbar'>"
-        "    <toolitem action='NodesShowTransformHandlesAction' />"
         "    <separator />"
         "    <toolitem action='NodeInsertAction' />"
         "    <toolitem action='NodeDeleteAction' />"
@@ -312,6 +311,7 @@ static gchar const * ui_descr =
         "    <toolitem action='ObjectEditMaskPathAction' />"
         "    <toolitem action='EditNextLPEParameterAction' />"
         "    <separator />"
+        "    <toolitem action='NodesShowTransformHandlesAction' />"
         "    <toolitem action='NodesShowHandlesAction' />"
         "    <toolitem action='NodesShowHelperpath' />"
         "  </toolbar>"
