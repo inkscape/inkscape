@@ -170,7 +170,7 @@ public:
 
     bool getSnapIndicator() const {return _snapindicator;}
 
-    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, SnappedConstraints const &sc, bool constrained, bool noCurves = false) const;
+    Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, SnappedConstraints const &sc, bool constrained, bool noCurves = false, bool allowOffScreen = false) const;
 
 protected:
     SPNamedView const *_named_view;

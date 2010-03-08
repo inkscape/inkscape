@@ -281,7 +281,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
                 // Find the best snap for this grid, including intersections of the grid-lines
                 bool old_val = _snapindicator;
                 _snapindicator = false;
-                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false);
+                Inkscape::SnappedPoint s = findBestSnap(Inkscape::SnapCandidatePoint(t_offset, Inkscape::SNAPSOURCE_GRID_PITCH), sc, false, false, true);
                 _snapindicator = old_val;
                 if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) {
                     // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
@@ -898,13 +898,15 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
  * \param sc A structure holding all snap targets that have been found so far
  * \param constrained True if the snap is constrained, e.g. for stretching or for purely horizontal translation.
  * \param noCurves If true, then do consider snapping to intersections of curves, but not to the curves themselves
+ * \param allowOffScreen If true, then snapping to points which are off the screen is allowed (needed for example when pasting to the grid)
  * \return An instance of the SnappedPoint class, which holds data on the snap source, snap target, and various metrics
  */
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint const &p,
                                                  SnappedConstraints const &sc,
                                                  bool constrained,
-                                                 bool noCurves) const
+                                                 bool noCurves,
+                                                 bool allowOffScreen) const
 {
 
     /*
@@ -992,13 +994,15 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     Inkscape::SnappedPoint bestSnappedPoint(p.getPoint());
     // std::cout << "Finding the best snap..." << std::endl;
     for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
-        // first find out if this snapped point is within snapping range
         // std::cout << "sp = " << (*i).getPoint() << " | source = " << (*i).getSource() << " | target = " << (*i).getTarget();
-        if ((*i).getSnapDistance() <= (*i).getTolerance()) {
-            // if it's the first point, or if it is closer than the best snapped point so far
-            if (i == sp_list.begin() || bestSnappedPoint.isOtherSnapBetter(*i, false)) {
-                // then prefer this point over the previous one
-                bestSnappedPoint = *i;
+        bool onScreen = _desktop->get_display_area().contains((*i).getPoint());
+        if (onScreen || allowOffScreen) { // Only snap to points which are not off the screen
+            if ((*i).getSnapDistance() <= (*i).getTolerance()) { // Only snap to points within snapping range
+                // if it's the first point, or if it is closer than the best snapped point so far
+                if (i == sp_list.begin() || bestSnappedPoint.isOtherSnapBetter(*i, false)) {
+                    // then prefer this point over the previous one
+                    bestSnappedPoint = *i;
+                }
             }
         }
         // std::cout << std::endl;
