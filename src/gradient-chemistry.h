@@ -57,8 +57,6 @@ SPGradient *sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, boo
 
 
 SPStop* sp_last_stop(SPGradient *gradient);
-SPStop* sp_prev_stop(SPStop *stop, SPGradient *gradient);
-SPStop* sp_next_stop(SPStop *stop);
 SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
 guint sp_number_of_stops(SPGradient const *gradient);
 guint sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target);

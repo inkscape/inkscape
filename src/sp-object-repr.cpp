@@ -26,7 +26,7 @@
 #include "persp3d.h"
 #include "sp-ellipse.h"
 #include "sp-star.h"
-#include "sp-stop-fns.h"
+#include "sp-stop.h"
 #include "sp-spiral.h"
 #include "sp-offset.h"
 #include "sp-line.h"

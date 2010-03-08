@@ -946,6 +946,17 @@ void SPObject::releaseReferences() {
     this->repr = NULL;
 }
 
+
+SPObject *SPObject::getNext()
+{
+    return next;
+}
+
+SPObject *SPObject::getPrev()
+{
+    return sp_object_prev(this);
+}
+
 /**
  * Callback for child_added node event.
  */

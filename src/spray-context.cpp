@@ -56,7 +56,6 @@
 #include "path-chemistry.h"
 #include "sp-gradient.h"
 #include "sp-stop.h"
-#include "sp-stop-fns.h"
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"

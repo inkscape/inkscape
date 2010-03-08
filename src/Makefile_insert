@@ -206,8 +206,7 @@ ink_common_sources +=	\
 	sp-shape.cpp sp-shape.h			\
 	sp-spiral.cpp sp-spiral.h		\
 	sp-star.cpp sp-star.h			\
-	sp-stop-fns.h				\
-	sp-stop.h				\
+	sp-stop.cpp sp-stop.h			\
 	sp-string.cpp sp-string.h		\
 	sp-style-elem.cpp sp-style-elem.h	\
 	sp-switch.cpp sp-switch.h		\

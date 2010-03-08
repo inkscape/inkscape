@@ -61,6 +61,7 @@ sp-shape.cpp
 sp-skeleton.cpp
 sp-spiral.cpp
 sp-star.cpp
+sp-stop.cpp
 sp-string.cpp
 sp-style-elem.cpp
 sp-switch.cpp

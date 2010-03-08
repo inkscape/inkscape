@@ -653,7 +653,7 @@ int SPGradient::getStopCount() const
 {
     int count = 0;
 
-    for (SPStop *stop = const_cast<SPGradient*>(this)->getFirstStop(); stop && sp_next_stop(stop); stop = sp_next_stop(stop)) {
+    for (SPStop *stop = const_cast<SPGradient*>(this)->getFirstStop(); stop && stop->getNextStop(); stop = stop->getNextStop()) {
         count++;
     }
 

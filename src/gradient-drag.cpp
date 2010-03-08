@@ -334,11 +334,11 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
     if (addknot) {
         SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
         SPStop* prev_stop = vector->getFirstStop();
-        SPStop* next_stop = sp_next_stop(prev_stop);
+        SPStop* next_stop = prev_stop->getNextStop();
         guint i = 1;
         while ( (next_stop) && (next_stop->offset < offset) ) {
             prev_stop = next_stop;
-            next_stop = sp_next_stop(next_stop);
+            next_stop = next_stop->getNextStop();
             i++;
         }
         if (!next_stop) {
@@ -913,7 +913,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
             case POINT_RG_CENTER:
                 stop = gradient->getFirstStop();
                 {
-                    SPStop *next = sp_next_stop (stop);
+                    SPStop *next = stop->getNextStop();
                     if (next) {
                         next->offset = 0;
                         sp_repr_set_css_double (SP_OBJECT_REPR (next), "offset", 0);
@@ -925,7 +925,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
             case POINT_RG_R2:
                 stop = sp_last_stop(gradient);
                 {
-                    SPStop *prev = sp_prev_stop (stop, gradient);
+                    SPStop *prev = stop->getPrevStop();
                     if (prev) {
                         prev->offset = 1;
                         sp_repr_set_css_double (SP_OBJECT_REPR (prev), "offset", 1);
@@ -2031,11 +2031,11 @@ GrDrag::deleteSelected (bool just_one)
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *laststop = sp_last_stop(stopinfo->vector);
-                        stop = sp_next_stop(stop);
+                        stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = (stop->offset - offset)/(1 - offset);
                             sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
-                            stop = sp_next_stop(stop);
+                            stop = stop->getNextStop();
                         }
                     }
                     break;
@@ -2060,17 +2060,17 @@ GrDrag::deleteSelected (bool just_one)
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *stop = stopinfo->vector->getFirstStop();
-                        stop = sp_next_stop(stop);
+                        stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;
                             sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
-                            stop = sp_next_stop(stop);
+                            stop = stop->getNextStop();
                         }
                     }
                     break;
                 case POINT_RG_CENTER:
                     {
-                        SPStop *newfirst = sp_next_stop (stopinfo->spstop);
+                        SPStop *newfirst = stopinfo->spstop->getNextStop();
                         if (newfirst) {
                             newfirst->offset = 0;
                             sp_repr_set_css_double (SP_OBJECT_REPR (newfirst), "offset", 0);
@@ -2096,11 +2096,11 @@ GrDrag::deleteSelected (bool just_one)
 
                         // iterate through midstops to set new offset values such that they won't move on canvas.
                         SPStop *stop = stopinfo->vector->getFirstStop();
-                        stop = sp_next_stop(stop);
+                        stop = stop->getNextStop();
                         while ( stop != laststop ) {
                             stop->offset = stop->offset / offset;
                             sp_repr_set_css_double (SP_OBJECT_REPR (stop), "offset", stop->offset);
-                            stop = sp_next_stop(stop);
+                            stop = stop->getNextStop();
                         }
                         break;
             }

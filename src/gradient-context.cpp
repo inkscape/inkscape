@@ -291,7 +291,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
 
             // from draggables to stops
             SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
-            SPStop *next_stop = sp_next_stop (this_stop);
+            SPStop *next_stop = this_stop->getNextStop();
             SPStop *last_stop = sp_last_stop (vector);
 
             gint fs = d->fill_or_stroke;
@@ -362,7 +362,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
             SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
             SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
-            SPStop *next_stop = sp_next_stop (this_stop);
+            SPStop *next_stop = this_stop->getNextStop();
             if (this_stop && next_stop) {
                 these_stops = g_slist_prepend (these_stops, this_stop);
                 next_stops = g_slist_prepend (next_stops, next_stop);

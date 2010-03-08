@@ -583,8 +583,6 @@ static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_
 // user selected existing stop from list
 static void sp_grad_edit_select(GtkOptionMenu *mnu, GtkWidget *tbl)
 {
-    SPGradient *gradient = (SPGradient *)g_object_get_data(G_OBJECT(tbl), "gradient");
-
     GObject *item = G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu))));
     SPStop *stop = SP_STOP(g_object_get_data(item, "stop"));
     if (!stop) {
@@ -607,7 +605,7 @@ static void sp_grad_edit_select(GtkOptionMenu *mnu, GtkWidget *tbl)
     bool isEndStop = false;
 
     SPStop *prev = NULL;
-    prev = sp_prev_stop(stop, gradient);
+    prev = stop->getPrevStop();
     if (prev != NULL )  {
         adj->lower = prev->offset;
     } else {
@@ -616,7 +614,7 @@ static void sp_grad_edit_select(GtkOptionMenu *mnu, GtkWidget *tbl)
     }
 
     SPStop *next = NULL;
-    next = sp_next_stop(stop);
+    next = stop->getNextStop();
     if (next != NULL ) {
         adj->upper = next->offset;
     } else {
@@ -691,10 +689,10 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
 
     Inkscape::XML::Node *new_stop_repr = NULL;
 
-    SPStop *next = sp_next_stop(stop);
+    SPStop *next = stop->getNextStop();
 
     if (next == NULL) {
-        SPStop *prev = sp_prev_stop(stop, gradient);
+        SPStop *prev = stop->getPrevStop();
         if (prev != NULL) {
             next = stop;
             stop = prev;
@@ -706,8 +704,8 @@ static void sp_grd_ed_add_stop(GtkWidget */*widget*/,  GtkWidget *vb)
         SP_OBJECT_REPR(gradient)->addChild(new_stop_repr, SP_OBJECT_REPR(stop));
     } else {
         next = stop;
-        new_stop_repr = SP_OBJECT_REPR(sp_prev_stop(stop, gradient))->duplicate(SP_OBJECT_REPR(gradient)->document());
-        SP_OBJECT_REPR(gradient)->addChild(new_stop_repr, SP_OBJECT_REPR(sp_prev_stop(stop, gradient)));
+        new_stop_repr = SP_OBJECT_REPR(stop->getPrevStop())->duplicate(SP_OBJECT_REPR(gradient)->document());
+        SP_OBJECT_REPR(gradient)->addChild(new_stop_repr, SP_OBJECT_REPR(stop->getPrevStop()));
     }
 
     SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(gradient)->getObjectByRepr(new_stop_repr);
@@ -748,13 +746,13 @@ static void sp_grd_ed_del_stop(GtkWidget */*widget*/,  GtkWidget *vb)
 
         // if we delete first or last stop, move the next/previous to the edge
         if (stop->offset == 0) {
-            SPStop *next = sp_next_stop(stop);
+            SPStop *next = stop->getNextStop();
             if (next) {
                 next->offset = 0;
                 sp_repr_set_css_double(SP_OBJECT_REPR(next), "offset", 0);
             }
         } else if (stop->offset == 1) {
-            SPStop *prev = sp_prev_stop(stop, gradient);
+            SPStop *prev = stop->getPrevStop();
             if (prev) {
                 prev->offset = 1;
                 sp_repr_set_css_double(SP_OBJECT_REPR(prev), "offset", 1);

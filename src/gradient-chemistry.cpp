@@ -482,39 +482,10 @@ sp_item_gradient (SPItem *item, bool fill_or_stroke)
    return gradient;
 }
 
-SPStop*
-sp_prev_stop(SPStop *stop, SPGradient *gradient)
+SPStop* sp_last_stop(SPGradient *gradient)
 {
-    if (sp_object_first_child(SP_OBJECT(gradient)) == SP_OBJECT(stop)) {
-        return NULL;
-    }
-    SPObject *found = NULL;
-    for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
-        if (SP_IS_STOP (ochild)) {
-            found = ochild;
-        }
-        if (SP_OBJECT_NEXT(ochild) == SP_OBJECT(stop) || SP_OBJECT(ochild) == SP_OBJECT(stop)) {
-            break;
-        }
-    }
-    return SP_STOP(found);
-}
-
-SPStop*
-sp_next_stop(SPStop *stop)
-{
-    for (SPObject *ochild = SP_OBJECT_NEXT(stop); ochild != NULL; ochild = SP_OBJECT_NEXT(ochild)) {
-        if (SP_IS_STOP (ochild))
-            return SP_STOP(ochild);
-    }
-    return NULL;
-}
-
-SPStop*
-sp_last_stop(SPGradient *gradient)
-{
-    for (SPStop *stop = gradient->getFirstStop(); stop != NULL; stop = sp_next_stop (stop)) {
-        if (sp_next_stop (stop) == NULL)
+    for (SPStop *stop = gradient->getFirstStop(); stop != NULL; stop = stop->getNextStop()) {
+        if (stop->getNextStop() == NULL)
             return stop;
     }
     return NULL;
@@ -531,9 +502,11 @@ sp_get_stop_i(SPGradient *gradient, guint stop_i)
     if (stop->offset != 0)
         stop_i --;
 
-    for (guint i=0; i < stop_i; i++) {
-        if (!stop) return NULL;
-        stop = sp_next_stop (stop);
+    for (guint i = 0; i < stop_i; i++) {
+        if (!stop) {
+            return NULL;
+        }
+        stop = stop->getNextStop();
     }
 
     return stop;

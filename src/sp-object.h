@@ -221,6 +221,9 @@ public:
     /* A non-const version can be similarly constructed if you want one.
      * (Don't just cast away the constness, which would be ill-formed.) */
 
+    SPObject *getNext();
+    SPObject *getPrev();
+
     bool hasChildren() const { return ( children != NULL ); }
 
     SPObject *firstChild() { return children; }
