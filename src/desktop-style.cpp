@@ -475,8 +475,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
                 if (!SP_IS_LINEARGRADIENT(server))
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
 
-                SPGradient *vector = sp_gradient_get_vector ( SP_GRADIENT (server), FALSE );
-                SPGradient *vector_res = sp_gradient_get_vector ( SP_GRADIENT (server_res), FALSE );
+                SPGradient *vector = SP_GRADIENT(server)->getVector();
+                SPGradient *vector_res = SP_GRADIENT(server_res)->getVector();
                 if (vector_res != vector)
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different gradient vectors
 
@@ -485,8 +485,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
                 if (!SP_IS_RADIALGRADIENT(server))
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
 
-                SPGradient *vector = sp_gradient_get_vector ( SP_GRADIENT (server), FALSE );
-                SPGradient *vector_res = sp_gradient_get_vector ( SP_GRADIENT (server_res), FALSE );
+                SPGradient *vector = SP_GRADIENT(server)->getVector();
+                SPGradient *vector_res = SP_GRADIENT(server_res)->getVector();
                 if (vector_res != vector)
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different gradient vectors
 

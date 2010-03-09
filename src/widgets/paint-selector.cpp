@@ -92,6 +92,40 @@ static void sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget
 static GtkVBoxClass *parent_class;
 static guint psel_signals[LAST_SIGNAL] = {0};
 
+#ifdef SP_PS_VERBOSE
+static gchar const* modeStrings[] = {
+    "MODE_EMPTY",
+    "MODE_MULTIPLE",
+    "MODE_NONE",
+    "MODE_COLOR_RGB",
+    "MODE_COLOR_CMYK",
+    "MODE_GRADIENT_LINEAR",
+    "MODE_GRADIENT_RADIAL",
+    "MODE_PATTERN",
+    "MODE_SWATCH",
+    "MODE_UNSET",
+    ".",
+    ".",
+    ".",
+};
+#endif
+
+static bool isPaintModeGradient( SPPaintSelectorMode mode )
+{
+    bool isGrad = (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) ||
+        (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL) ||
+        (mode == SP_PAINT_SELECTOR_MODE_SWATCH);
+
+    return isGrad;
+}
+
+static SPGradientSelector *getGradientFromData(SPPaintSelector *psel)
+{
+    gchar const* key = (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH) ? "swatch-selector" : "gradient-selector";
+    SPGradientSelector *grad = reinterpret_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), key));
+    return grad;
+}
+
 GType sp_paint_selector_get_type(void)
 {
     static GtkType type = 0;
@@ -330,7 +364,7 @@ sp_paint_selector_set_mode(SPPaintSelector *psel, SPPaintSelectorMode mode)
     if (psel->mode != mode) {
         psel->update = TRUE;
 #ifdef SP_PS_VERBOSE
-        g_print("Mode change %d -> %d\n", psel->mode, mode);
+        g_print("Mode change %d -> %d   %s -> %s\n", psel->mode, mode, modeStrings[psel->mode], modeStrings[mode]);
 #endif
         switch (mode) {
             case SP_PAINT_SELECTOR_MODE_EMPTY:
@@ -407,24 +441,27 @@ sp_paint_selector_set_color_alpha(SPPaintSelector *psel, SPColor const *color, f
     csel->base->setColorAlpha( *color, alpha );
 }
 
-void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPPaintServer */*server*/ )
+void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPGradient *vector )
 {
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set SWATCH\n");
 #endif
     sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_SWATCH);
+
+    SPGradientSelector *gsel = static_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector"));
+
+    gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
 }
 
 void
 sp_paint_selector_set_gradient_linear(SPPaintSelector *psel, SPGradient *vector)
 {
-    SPGradientSelector *gsel;
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set GRADIENT LINEAR\n");
 #endif
     sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR);
 
-    gsel = (SPGradientSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
+    SPGradientSelector *gsel = getGradientFromData(psel);
 
     gsel->setMode(SPGradientSelector::MODE_LINEAR);
     gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
@@ -433,39 +470,34 @@ sp_paint_selector_set_gradient_linear(SPPaintSelector *psel, SPGradient *vector)
 void
 sp_paint_selector_set_gradient_radial(SPPaintSelector *psel, SPGradient *vector)
 {
-    SPGradientSelector *gsel;
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set GRADIENT RADIAL\n");
 #endif
     sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL);
 
-    gsel = (SPGradientSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
+    SPGradientSelector *gsel = getGradientFromData(psel);
 
     gsel->setMode(SPGradientSelector::MODE_RADIAL);
 
     gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
 }
 
-void
-sp_paint_selector_set_gradient_properties(SPPaintSelector *psel, SPGradientUnits units, SPGradientSpread spread)
+void sp_paint_selector_set_gradient_properties(SPPaintSelector *psel, SPGradientUnits units, SPGradientSpread spread)
 {
-    SPGradientSelector *gsel;
     g_return_if_fail(SP_IS_PAINT_SELECTOR(psel));
-    g_return_if_fail((psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) ||
-                     (psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL));
-    gsel = (SPGradientSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
+    g_return_if_fail(isPaintModeGradient(psel->mode));
+
+    SPGradientSelector *gsel = getGradientFromData(psel);
     gsel->setUnits(units);
     gsel->setSpread(spread);
 }
 
-void
-sp_paint_selector_get_gradient_properties(SPPaintSelector *psel, SPGradientUnits *units, SPGradientSpread *spread)
+void sp_paint_selector_get_gradient_properties(SPPaintSelector *psel, SPGradientUnits *units, SPGradientSpread *spread)
 {
-    SPGradientSelector *gsel;
     g_return_if_fail(SP_IS_PAINT_SELECTOR(psel));
-    g_return_if_fail((psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) ||
-                     (psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL));
-    gsel = (SPGradientSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
+    g_return_if_fail(isPaintModeGradient(psel->mode));
+
+    SPGradientSelector *gsel = getGradientFromData(psel);
     if (units) {
         *units = gsel->getUnits();
     }
@@ -491,24 +523,23 @@ sp_paint_selector_get_color_alpha(SPPaintSelector *psel, SPColor *color, gfloat 
                    && ( *alpha <= 1.0 ) ) );
 }
 
-SPGradient *
-sp_paint_selector_get_gradient_vector(SPPaintSelector *psel)
+SPGradient *sp_paint_selector_get_gradient_vector(SPPaintSelector *psel)
 {
-    SPGradientSelector *gsel;
+    SPGradient* vect = 0;
 
-    g_return_val_if_fail((psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) ||
-                         (psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL), NULL);
+    if (isPaintModeGradient(psel->mode)) {
+        SPGradientSelector *gsel = getGradientFromData(psel);
+        vect = gsel->getVector();
+    }
 
-    gsel = (SPGradientSelector*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
-
-    return gsel->getVector();
+    return vect;
 }
 
 void
 sp_gradient_selector_attrs_to_gradient(SPGradient *gr, SPPaintSelector *psel)
 {
-    SPGradientUnits units;
-    SPGradientSpread spread;
+    SPGradientUnits units = SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX;
+    SPGradientSpread spread = SP_GRADIENT_SPREAD_PAD;
     sp_paint_selector_get_gradient_properties(psel, &units, &spread);
     sp_gradient_set_units(gr, units);
     sp_gradient_set_spread(gr, spread);
@@ -1066,38 +1097,30 @@ sp_paint_selector_get_pattern(SPPaintSelector *psel)
 static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelectorMode mode)
 {
     if (mode == SP_PAINT_SELECTOR_MODE_SWATCH) {
-        sp_paint_selector_set_style_buttons(psel, psel->swatch); // TODO swatch
+        sp_paint_selector_set_style_buttons(psel, psel->swatch);
     }
 
     gtk_widget_set_sensitive(psel->style, TRUE);
 
-    GtkWidget *tbl = NULL;
+    GtkWidget *tbl = 0;
 
     if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH){
         /* Already have pattern menu */
-        tbl = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector");
+        tbl = static_cast<GtkWidget*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
-
-        /* Create vbox */
-        tbl = gtk_vbox_new(FALSE, 4);
-        gtk_widget_show(tbl);
-
-        {
-            GtkWidget *hb = gtk_hbox_new(FALSE, 0);
-            GtkWidget *l = gtk_label_new(NULL);
-            gtk_label_set_markup(GTK_LABEL(l), _("Represents a swatch fill."));
-            gtk_label_set_line_wrap(GTK_LABEL(l), true);
-            gtk_widget_set_size_request(l, 180, -1);
-            gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
-            gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-        }
-
-        gtk_widget_show_all(tbl);
-
-        gtk_container_add(GTK_CONTAINER(psel->frame), tbl);
-        psel->selector = tbl;
-        gtk_object_set_data(GTK_OBJECT(psel->selector), "swatch-selector", tbl);
+        /* Create new gradient selector */
+        GtkWidget *gsel = sp_gradient_selector_new();
+        SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_SWATCH);
+        gtk_widget_show(gsel);
+        gtk_signal_connect(GTK_OBJECT(gsel), "grabbed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_grabbed), psel);
+        gtk_signal_connect(GTK_OBJECT(gsel), "dragged", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_dragged), psel);
+        gtk_signal_connect(GTK_OBJECT(gsel), "released", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_released), psel);
+        gtk_signal_connect(GTK_OBJECT(gsel), "changed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_changed), psel);
+        // Pack everything to frame
+        gtk_container_add(GTK_CONTAINER(psel->frame), gsel);
+        psel->selector = gsel;
+        gtk_object_set_data(GTK_OBJECT(psel->selector), "swatch-selector", gsel);
 
         gtk_frame_set_label(GTK_FRAME(psel->frame), _("Swatch fill"));
     }
@@ -1145,7 +1168,13 @@ SPPaintSelectorMode sp_style_determine_paint_selector_mode(SPStyle *style, bool 
     } else if ( target.isPaintserver() ) {
         SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 
-        if (server && server->isSwatch()) {
+
+#ifdef SP_PS_VERBOSE
+        g_message("==== server:%p %s  grad:%s   swatch:%s", server, server->getId(), (SP_IS_GRADIENT(server)?"Y":"n"), (SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()?"Y":"n"));
+#endif // SP_PS_VERBOSE
+
+
+        if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
             mode = SP_PAINT_SELECTOR_MODE_SWATCH;
         } else if (SP_IS_LINEARGRADIENT(server)) {
             mode = SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;

@@ -315,7 +315,7 @@ void gr_read_selection( Inkscape::Selection *selection,
         if (style && (style->fill.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_GRADIENT(server)) {
-                SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);
+                SPGradient *gradient = SP_GRADIENT(server)->getVector();
                 SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
 
                 if (gradient && gradient->isSolid()) {
@@ -341,7 +341,7 @@ void gr_read_selection( Inkscape::Selection *selection,
         if (style && (style->stroke.isPaintserver())) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_GRADIENT(server)) {
-                SPGradient *gradient = sp_gradient_get_vector (SP_GRADIENT (server), false);
+                SPGradient *gradient = SP_GRADIENT(server)->getVector();
                 SPGradientSpread spread = sp_gradient_get_spread (SP_GRADIENT (server));
 
                 if (gradient && gradient->isSolid()) {

@@ -103,7 +103,7 @@ static guint nui_drop_target_entries = ENTRIES_SIZE(ui_drop_target_entries);
 static Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop);
 
 SelectedStyle::SelectedStyle(bool /*layout*/)
-    : 
+    :
       current_stroke_width(0),
 
       _desktop (NULL),
@@ -955,13 +955,13 @@ SelectedStyle::update()
                     _paintserver_id[i] += ")";
 
                     if (SP_IS_LINEARGRADIENT (server)) {
-                        SPGradient *vector = sp_gradient_get_vector(SP_GRADIENT(server), false);
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
                         sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_l[i], vector);
                         place->add(_gradient_box_l[i]);
                         _tooltips.set_tip(*place, __lgradient[i]);
                         _mode[i] = SS_LGRADIENT;
                     } else if (SP_IS_RADIALGRADIENT (server)) {
-                        SPGradient *vector = sp_gradient_get_vector(SP_GRADIENT(server), false);
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
                         sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_r[i], vector);
                         place->add(_gradient_box_r[i]);
                         _tooltips.set_tip(*place, __rgradient[i]);
@@ -1165,7 +1165,7 @@ RotateableSwatch::RotateableSwatch(SelectedStyle *parent, guint mode) :
     undokey("ssrot1"),
     cr(0),
     cr_set(false)
-    
+
 {
 }
 
@@ -1426,14 +1426,14 @@ RotateableStrokeWidth::do_release(double by, guint modifier) {
 
 Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop)
 {
-    if (Dialog::PanelDialogBase *panel_dialog = 
+    if (Dialog::PanelDialogBase *panel_dialog =
         dynamic_cast<Dialog::PanelDialogBase *>(desktop->_dlg_mgr->getDialog("FillAndStroke"))) {
         try {
-            Dialog::FillAndStroke &fill_and_stroke = 
+            Dialog::FillAndStroke &fill_and_stroke =
                 dynamic_cast<Dialog::FillAndStroke &>(panel_dialog->getPanel());
             return &fill_and_stroke;
         } catch (std::exception e) { }
-    }        
+    }
 
     return 0;
 }

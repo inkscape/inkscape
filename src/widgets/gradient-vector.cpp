@@ -116,6 +116,8 @@ static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
 {
     gvs->idlabel = TRUE;
 
+    gvs->swatched = false;
+
     gvs->doc = NULL;
     gvs->gr = NULL;
 
@@ -250,7 +252,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
         const GSList *gradients = sp_document_get_resource_list(SP_OBJECT_DOCUMENT(gvs->gr), "gradient");
         for (const GSList *curr = gradients; curr; curr = curr->next) {
             SPGradient* grad = SP_GRADIENT(curr->data);
-            if (SP_GRADIENT_HAS_STOPS(grad) && !grad->isSwatch()) {
+            if (SP_GRADIENT_HAS_STOPS(grad) && (grad->isSwatch() == gvs->swatched)) {
                 gl = g_slist_prepend(gl, curr->data);
             }
         }
@@ -400,6 +402,12 @@ static void sp_gvs_defs_modified(SPObject */*defs*/, guint /*flags*/, SPGradient
     /* fixme: We probably have to check some flags here (Lauris) */
 
     sp_gvs_rebuild_gui_full(gvs);
+}
+
+void SPGradientVectorSelector::setSwatched()
+{
+    swatched = true;
+    sp_gvs_rebuild_gui_full(this);
 }
 
 /*##################################################################

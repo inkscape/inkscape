@@ -101,7 +101,7 @@ void sp_paint_selector_set_gradient_linear (SPPaintSelector *psel, SPGradient *v
 
 void sp_paint_selector_set_gradient_radial (SPPaintSelector *psel, SPGradient *vector);
 
-void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPPaintServer *server );
+void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPGradient *vector );
 
 void sp_paint_selector_set_gradient_properties (SPPaintSelector *psel, SPGradientUnits units, SPGradientSpread spread);
 void sp_paint_selector_get_gradient_properties (SPPaintSelector *psel, SPGradientUnits *units, SPGradientSpread *spread);

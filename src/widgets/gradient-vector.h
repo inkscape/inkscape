@@ -6,7 +6,9 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Jon A. Cruz
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  *
@@ -31,6 +33,8 @@ struct SPGradientVectorSelector {
 
     guint idlabel : 1;
 
+    bool swatched;
+
     SPDocument *doc;
     SPGradient *gr;
 
@@ -40,6 +44,9 @@ struct SPGradientVectorSelector {
     sigc::connection gradient_release_connection;
     sigc::connection defs_release_connection;
     sigc::connection defs_modified_connection;
+
+
+    void setSwatched();
 };
 
 struct SPGradientVectorSelectorClass {

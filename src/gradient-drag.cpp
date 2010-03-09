@@ -905,7 +905,7 @@ gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
     if ( (state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK ) ) {
     // delete this knot from vector
         SPGradient *gradient = sp_item_gradient (draggable->item, draggable->fill_or_stroke);
-        gradient = sp_gradient_get_vector (gradient, false);
+        gradient = gradient->getVector();
         if (gradient->vector.stops.size() > 2) { // 2 is the minimum
             SPStop *stop = NULL;
             switch (draggable->point_type) {  // if we delete first or last stop, move the next/previous to the edge

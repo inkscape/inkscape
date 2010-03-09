@@ -1,5 +1,5 @@
-#ifndef __SP_GRADIENT_H__
-#define __SP_GRADIENT_H__
+#ifndef SEEN_SP_GRADIENT_H
+#define SEEN_SP_GRADIENT_H
 
 /** \file
  * SVG <stop> <linearGradient> and <radialGradient> implementation
@@ -7,7 +7,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyrigt  (C) 2010 Jon A. Cruz
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -25,6 +27,15 @@
 #include <sigc++/connection.h>
 
 struct SPGradientReference;
+
+
+#define SP_TYPE_GRADIENT (sp_gradient_get_type())
+#define SP_GRADIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_GRADIENT, SPGradient))
+#define SP_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_GRADIENT, SPGradientClass))
+#define SP_IS_GRADIENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GRADIENT))
+#define SP_IS_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GRADIENT))
+
+GType sp_gradient_get_type();
 
 typedef enum {
     SP_GRADIENT_TYPE_UNKNOWN,
@@ -93,6 +104,15 @@ struct SPGradient : public SPPaintServer {
 
     SPStop* getFirstStop();
     int getStopCount() const;
+
+/**
+ * Returns private vector of given gradient (the gradient at the end of the href chain which has
+ * stops), optionally normalizing it.
+ *
+ * \pre SP_IS_GRADIENT(gradient).
+ * \pre There exists a gradient in the chain that has stops.
+ */
+    SPGradient *getVector(bool force_private = false);
 };
 
 /**
@@ -105,7 +125,7 @@ struct SPGradientClass {
 
 #include "sp-gradient-fns.h"
 
-#endif /* !__SP_GRADIENT_H__ */
+#endif // SEEN_SP_GRADIENT_H
 
 /*
   Local Variables:

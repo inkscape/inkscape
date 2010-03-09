@@ -120,7 +120,7 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
 static void
 sp_gradient_selector_init (SPGradientSelector *sel)
 {
-    GtkWidget *hb, *l, *m, *mi;
+    GtkWidget *hb, *m, *mi;
 
     sel->mode = SPGradientSelector::MODE_LINEAR;
 
@@ -182,9 +182,9 @@ sp_gradient_selector_init (SPGradientSelector *sel)
 
     gtk_option_menu_set_menu (GTK_OPTION_MENU (sel->spread), m);
 
-    l = gtk_label_new (_("Repeat:"));
-    gtk_widget_show (l);
-    gtk_box_pack_end (GTK_BOX (hb), l, FALSE, FALSE, 4);
+    sel->spreadLbl = gtk_label_new (_("Repeat:"));
+    gtk_widget_show(sel->spreadLbl);
+    gtk_box_pack_end(GTK_BOX(hb), sel->spreadLbl, FALSE, FALSE, 4);
 }
 
 static void
@@ -210,7 +210,28 @@ sp_gradient_selector_new (void)
 
 void SPGradientSelector::setMode(SelectorMode mode)
 {
-    this->mode = mode;
+    if (mode != this->mode) {
+        this->mode = mode;
+        if (mode == MODE_SWATCH) {
+            if (spread) {
+                GtkWidget *parent = gtk_widget_get_parent(spread);
+                if (parent) {
+                    gtk_container_remove(GTK_CONTAINER(parent), spread);
+                    spread = 0;
+                }
+            }
+            if (spreadLbl) {
+                GtkWidget *parent = gtk_widget_get_parent(spreadLbl);
+                if (parent) {
+                    gtk_container_remove(GTK_CONTAINER(parent), spreadLbl);
+                    spreadLbl = 0;
+                }
+            }
+
+            SPGradientVectorSelector* vs = SP_GRADIENT_VECTOR_SELECTOR(vectors);
+            vs->setSwatched();
+        }
+    }
 }
 
 void SPGradientSelector::setUnits(SPGradientUnits units)
@@ -227,7 +248,6 @@ void SPGradientSelector::setSpread(SPGradientSpread spread)
 
 SPGradientUnits SPGradientSelector::getUnits()
 {
-    //return (SPGradientUnits) sel->gradientUnits;
     return gradientUnits;
 }
 

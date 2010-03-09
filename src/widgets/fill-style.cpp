@@ -210,10 +210,11 @@ sp_fill_style_widget_update (SPWidget *spw)
 
                 SPPaintServer *server = SP_STYLE_FILL_SERVER (query);
 
-                if (server && server->isSwatch()) {
-                    sp_paint_selector_set_swatch( psel, server );
+                if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
+                    sp_paint_selector_set_swatch( psel, vector );
                 } else if (SP_IS_LINEARGRADIENT (server)) {
-                    SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
                     sp_paint_selector_set_gradient_linear (psel, vector);
 
                     SPLinearGradient *lg = SP_LINEARGRADIENT (server);
@@ -221,7 +222,7 @@ sp_fill_style_widget_update (SPWidget *spw)
                                                        SP_GRADIENT_UNITS (lg),
                                                        SP_GRADIENT_SPREAD (lg));
                 } else if (SP_IS_RADIALGRADIENT (server)) {
-                    SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
                     sp_paint_selector_set_gradient_radial (psel, vector);
 
                     SPRadialGradient *rg = SP_RADIALGRADIENT (server);
@@ -411,8 +412,9 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
         case SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR:
         case SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL:
+        case SP_PAINT_SELECTOR_MODE_SWATCH:
             if (items) {
-                SPGradientType const gradient_type = ( psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR
+                SPGradientType const gradient_type = ( psel->mode != SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL
                                                        ? SP_GRADIENT_TYPE_LINEAR
                                                        : SP_GRADIENT_TYPE_RADIAL );
 
@@ -516,10 +518,6 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
             } // end if
 
-            break;
-
-        case SP_PAINT_SELECTOR_MODE_SWATCH:
-            // TODO
             break;
 
         case SP_PAINT_SELECTOR_MODE_UNSET:

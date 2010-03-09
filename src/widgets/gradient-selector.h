@@ -36,7 +36,8 @@ struct SPGradientSelector {
 
     enum SelectorMode {
         MODE_LINEAR,
-        MODE_RADIAL
+        MODE_RADIAL,
+        MODE_SWATCH
     };
 
     SelectorMode mode;
@@ -56,6 +57,7 @@ struct SPGradientSelector {
 
     /* Spread selector */
     GtkWidget *spread;
+    GtkWidget *spreadLbl;
 
     void setMode(SelectorMode mode);
     void setUnits(SPGradientUnits units);

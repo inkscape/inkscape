@@ -205,9 +205,10 @@ sp_stroke_style_paint_update (SPWidget *spw)
                 SPPaintServer *server = SP_STYLE_STROKE_SERVER (query);
 
                 if (server && server->isSwatch()) {
-                    sp_paint_selector_set_swatch( psel, server );
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
+                    sp_paint_selector_set_swatch( psel, vector );
                 } else if (SP_IS_LINEARGRADIENT (server)) {
-                    SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
                     sp_paint_selector_set_gradient_linear (psel, vector);
 
                     SPLinearGradient *lg = SP_LINEARGRADIENT (server);
@@ -215,7 +216,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
                                                        SP_GRADIENT_UNITS (lg),
                                                        SP_GRADIENT_SPREAD (lg));
                 } else if (SP_IS_RADIALGRADIENT (server)) {
-                    SPGradient *vector = sp_gradient_get_vector (SP_GRADIENT (server), FALSE);
+                    SPGradient *vector = SP_GRADIENT(server)->getVector();
                     sp_paint_selector_set_gradient_radial (psel, vector);
 
                     SPRadialGradient *rg = SP_RADIALGRADIENT (server);

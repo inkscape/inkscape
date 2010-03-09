@@ -13,26 +13,12 @@
 
 class SPGradient;
 
-namespace Inkscape {
-namespace XML {
-class Node;
-}
-}
-
-#define SP_TYPE_GRADIENT (sp_gradient_get_type())
-#define SP_GRADIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_GRADIENT, SPGradient))
-#define SP_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_GRADIENT, SPGradientClass))
-#define SP_IS_GRADIENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GRADIENT))
-#define SP_IS_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GRADIENT))
-
 #define SP_GRADIENT_STATE_IS_SET(g) (SP_GRADIENT(g)->state != SP_GRADIENT_STATE_UNKNOWN)
 #define SP_GRADIENT_IS_VECTOR(g) (SP_GRADIENT(g)->state == SP_GRADIENT_STATE_VECTOR)
 #define SP_GRADIENT_IS_PRIVATE(g) (SP_GRADIENT(g)->state == SP_GRADIENT_STATE_PRIVATE)
 #define SP_GRADIENT_HAS_STOPS(g) (SP_GRADIENT(g)->has_stops)
 #define SP_GRADIENT_SPREAD(g) (SP_GRADIENT(g)->spread)
 #define SP_GRADIENT_UNITS(g) (SP_GRADIENT(g)->units)
-
-GType sp_gradient_get_type();
 
 /** Forces vector to be built, if not present (i.e. changed) */
 void sp_gradient_ensure_vector(SPGradient *gradient);
@@ -43,7 +29,6 @@ void sp_gradient_ensure_colors(SPGradient *gradient);
 void sp_gradient_set_units(SPGradient *gr, SPGradientUnits units);
 void sp_gradient_set_spread(SPGradient *gr, SPGradientSpread spread);
 
-SPGradient *sp_gradient_get_vector (SPGradient *gradient, bool force_private);
 SPGradientSpread sp_gradient_get_spread (SPGradient *gradient);
 
 /* Gradient repr methods */

@@ -264,7 +264,7 @@ sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 SPGradient *
 sp_gradient_get_forked_vector_if_necessary(SPGradient *gradient, bool force_vector)
 {
-    SPGradient *vector = sp_gradient_get_vector (gradient, force_vector);
+    SPGradient *vector = gradient->getVector(force_vector);
     vector = sp_gradient_fork_vector_if_necessary (vector);
     if ( gradient != vector && gradient->ref->getObject() != vector ) {
         sp_gradient_repr_set_link(SP_OBJECT_REPR(gradient), vector);
@@ -336,7 +336,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
     g_return_val_if_fail(SP_IS_GRADIENT(gr), NULL);
 
     // First, fork it if it is shared
-    gr = sp_gradient_fork_private_if_necessary(gr, sp_gradient_get_vector(gr, FALSE),
+    gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(),
                                                SP_IS_RADIALGRADIENT(gr) ? SP_GRADIENT_TYPE_RADIAL : SP_GRADIENT_TYPE_LINEAR, SP_OBJECT(item));
 
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
@@ -555,7 +555,7 @@ sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool 
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    SPGradient *vector = sp_gradient_get_vector (gradient, false);
+    SPGradient *vector = gradient->getVector();
     switch (point_type) {
         case POINT_LG_BEGIN:
         case POINT_RG_CENTER:
@@ -596,7 +596,7 @@ sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint point_i
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return 0;
 
-    SPGradient *vector = sp_gradient_get_vector (gradient, false);
+    SPGradient *vector = gradient->getVector();
 
     if (!vector) // orphan!
         return 0; // what else to do?
@@ -649,7 +649,7 @@ sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, 
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    SPGradient *vector = sp_gradient_get_vector (gradient, false);
+    SPGradient *vector = gradient->getVector();
 
     if (!vector) // orphan!
         return;
@@ -705,7 +705,7 @@ sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke)
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    SPGradient *vector = sp_gradient_get_vector (gradient, false);
+    SPGradient *vector = gradient->getVector();
     if (!vector) // orphan!
         return;
 
@@ -958,8 +958,9 @@ sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
-    if (gradient)
-        return sp_gradient_get_vector (gradient, false);
+    if (gradient) {
+        return gradient->getVector();
+    }
     return NULL;
 }
 
@@ -1087,7 +1088,7 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
             // current is private and it's either used once, or all its uses are by children of item;
             // so just change its href to vector
 
-            if ( current != gr && sp_gradient_get_vector(current, false) != gr ) {
+            if ( current != gr && current->getVector() != gr ) {
                 /* href is not the vector */
                 sp_gradient_repr_set_link(SP_OBJECT_REPR(current), gr);
             }
@@ -1123,25 +1124,20 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
     }
 }
 
-static void
-sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *link)
+static void sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *link)
 {
     g_return_if_fail(repr != NULL);
-    g_return_if_fail(link != NULL);
-    g_return_if_fail(SP_IS_GRADIENT(link));
-
-    gchar *ref;
     if (link) {
-        gchar const *id = link->getId();
-        size_t const len = strlen(id);
-        ref = (gchar*) alloca(len + 2);
-        *ref = '#';
-        memcpy(ref + 1, id, len + 1);
-    } else {
-        ref = NULL;
+        g_return_if_fail(SP_IS_GRADIENT(link));
     }
 
-    repr->setAttribute("xlink:href", ref);
+    if (link) {
+        Glib::ustring ref("#");
+        ref += link->getId();
+        repr->setAttribute("xlink:href", ref.c_str());
+    } else {
+        repr->setAttribute("xlink:href", 0);
+    }
 }
 
 /*
@@ -1225,7 +1221,7 @@ sp_gradient_vector_for_object(SPDocument *const doc, SPDesktop *const desktop,
         if (paint.isPaintserver()) {
             SPObject *server = is_fill? SP_OBJECT_STYLE_FILL_SERVER(o) : SP_OBJECT_STYLE_STROKE_SERVER(o);
             if (SP_IS_GRADIENT (server)) {
-                return sp_gradient_get_vector(SP_GRADIENT (server), TRUE);
+                return SP_GRADIENT(server)->getVector(true);
             } else {
                 rgba = sp_desktop_get_color(desktop, is_fill);
             }

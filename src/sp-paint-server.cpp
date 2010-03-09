@@ -157,8 +157,17 @@ static void sp_painter_stale_fill(SPPainter */*painter*/, NRPixBlock *pb)
 
 bool SPPaintServer::isSwatch() const
 {
-    // Temporary for now. Later expand to more
-    return isSolid();
+    bool swatch = false;
+    if (SP_IS_GRADIENT(this)) {
+        SPGradient *grad = SP_GRADIENT(this);
+        if ( SP_GRADIENT_HAS_STOPS(grad) ) {
+            gchar const * attr = repr->attribute("osb:paint");
+            if (attr && !strcmp(attr, "solid")) {
+                swatch = true;
+            }
+        }
+    }
+    return swatch;
 }
 
 bool SPPaintServer::isSolid() const

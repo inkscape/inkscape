@@ -23,7 +23,7 @@
 
 
 #include <xml/repr.h>
-#include "sp-gradient-fns.h"
+#include "sp-gradient.h"
 #include "document-private.h"
 #include "sp-pattern.h"
 #include "marker.h"
