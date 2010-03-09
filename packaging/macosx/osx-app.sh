@@ -356,6 +356,8 @@ do
 	cp -f $libfile $package/Contents/Resources/lib
 done
 
+# Some libraries don't seem to have write permission, fix this.
+chmod -R u+w $package/Contents/Resources/lib
 
 # Strip libraries and executables if requested
 #----------------------------------------------------------

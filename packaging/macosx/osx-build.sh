@@ -12,7 +12,7 @@
 #	Kees Cook
 #	Michael Wybrow
 #
-# Copyright (C) 2006-2007
+# Copyright (C) 2006-2010
 # Released under GNU GPL, read the file 'COPYING' for more information
 #
 
@@ -44,10 +44,10 @@ Compilation script for Inkscape on Mac OS X.
   \033[1mh,help\033[0m	
     display this help message
   \033[1mu,up,update\033[0m
-    update an existing checkout from svn (run svn up)
+    update an existing checkout from bzr (run bzr pull)
   \033[1ma,auto,autogen\033[0m
     prepare configure script (run autogen.sh). This is only necessary
-    for a fresh svn checkout or after make distclean.
+    for a fresh bzr checkout or after make distclean.
   \033[1mc,conf,configure\033[0m
     configure the build (run configure). Edit your configuration
     options in $0
@@ -63,6 +63,8 @@ Compilation script for Inkscape on Mac OS X.
     \033[1m-py,--with-python\033[0m	specify python modules path for inclusion into the app bundle
   \033[1md,dist,distrib\033[0m
     store Inkscape.app in a disk image (dmg) for distribution
+  \033[1mf,fat,universal\033[0m
+    compile inkscape as a universal binary as both i386 and ppc architectures
   \033[1mput,upload\033[0m
     upload the dmg and the associate info file on Modevia server
   \033[1mall\033[0m
@@ -73,7 +75,7 @@ Compilation script for Inkscape on Mac OS X.
     configure, build and install a dowloaded version of Inkscape in the default
     directory, keeping debugging information.	
   \033[1m$0 u a c b -p ~ i -s -py ~/site-packages/ p d\033[0m
-    update an svn checkout, prepare configure script, configure,
+    update an bzr checkout, prepare configure script, configure,
     build and install Inkscape in the user home directory (~). 	
     Then package Inkscape without debugging information,
     with python packages from ~/site-packages/ and prepare 
@@ -91,7 +93,7 @@ if [ "$INSTALLPREFIX" = "" ]
 then
 	INSTALLPREFIX=$SRCROOT/Build/
 fi
-SVNUPDATE="f"
+BZRUPDATE="f"
 AUTOGEN="f"
 CONFIGURE="f"
 BUILD="f"
@@ -99,6 +101,7 @@ INSTALL="f"
 PACKAGE="f"
 DISTRIB="f"
 UPLOAD="f"
+UNIVERSAL="f"
 
 STRIP=""
 PYTHON_MODULES=""
@@ -112,18 +115,20 @@ do
 		help 
 		exit 1 ;;
 	all)            
-		SVNUPDATE="t"
+		BZRUPDATE="t"
 		CONFIGURE="t"
 		BUILD="t" 
 		INSTALL="t"
 		PACKAGE="t"
 		DISTRIB="t" ;;
-   u|up|update)
-		SVNUPDATE="t" ;;
-   a|auto|autogen)
+	u|up|update)
+		BZRUPDATE="t" ;;
+	a|auto|autogen)
 		AUTOGEN="t" ;;
 	c|conf|configure)
 		CONFIGURE="t" ;;
+	-u|--universal)
+		UNIVERSAL="t" ;;
 	b|build)
 		BUILD="t" ;;
 	i|install)
@@ -149,6 +154,7 @@ do
 	shift 1
 done
 
+OSXMINORVER=`/usr/bin/sw_vers | grep ProductVersion | cut -d'	' -f2 | cut -f1-2 -d.`
 
 # Set environment variables
 # ----------------------------------------------------------
@@ -165,24 +171,82 @@ export LDFLAGS="-L$LIBPREFIX/lib"
 export CFLAGS="-O3 -Wall"
 export CXXFLAGS="$CFLAGS"
 
+if [[ "$UNIVERSAL" == "t" ]]
+then
+	MINOSXVER="$OSXMINORVER"
+	
+	export SDK=/Developer/SDKs/MacOSX${MINOSXVER}.sdk
+	
+	export CFLAGS="$CFLAGS -isysroot $SDK -arch ppc -arch i386"
+	export CXXFLAGS="$CFLAGS"
+
+	export CONFFLAGS="$CONFLAGS --disable-dependency-tracking"
+fi
 
 # Actions
 # ----------------------------------------------------------
-if [[ "$SVNUPDATE" == "t" ]]
+if [[ "$BZRUPDATE" == "t" ]]
 then
 	cd $SRCROOT
-	svn up
+	bzr pull
 	status=$?
 	if [[ $status -ne 0 ]]; then
-		echo -e "\nSVN update failed"
+		echo -e "\nBZR update failed"
 		exit $status
 	fi
 	cd $HERE
 fi
 
+# Fetch some information
+REVISION=`bzr version-info 2>/dev/null | grep revno | cut -d' ' -f2`
+ARCH=`arch | tr [p,c] [P,C]`
+OSXVERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -d'	' -f2`
+
+if [[ "$OSXMINORVER" == "10.3" ]]; then
+	TARGETNAME="PANTHER"
+	TARGETVERSION="10.3"
+elif [[ "$OSXMINORVER" == "10.4" ]]; then
+        TARGETNAME="TIGER"
+	TARGETVERSION="10.4"
+elif [[ "$OSXMINORVER" == "10.5" ]]; then
+	TARGETNAME="LEOPARD+"
+	TARGETVERSION="10.5+"
+fi
+
+TARGETARCH="$ARCH"
+if [[ "$UNIVERSAL" == "t" ]]; then
+	TARGETARCH="UNIVERSAL"
+fi
+
+NEWNAME="Inkscape-r$REVISION-$TARGETVERSION-$TARGETARCH"
+DMGFILE="$NEWNAME.dmg"
+INFOFILE="$NEWNAME-info.txt"
+
+
+if [[ "$UPLOAD" == "t" ]]
+then
+	# If we are uploading, we are probably building nightlies and don't
+	# need to build a new one if the repository hasn't changed since the
+	# last.  Hence, if a dmg for this version already exists, then just
+	# exit here.
+	if [[ -f "$DMGFILE" ]]; then
+		echo -e "\nRepository hasn't changed: $DMGFILE already exists."
+		exit 0
+	fi
+fi
+
 if [[ "$AUTOGEN" == "t" ]]
 then
 	cd $SRCROOT
+	if [[ "$UNIVERSAL" == "t" ]]
+	then
+		# Universal builds have to be built with the option
+		# --disable-dependency-tracking.  So they need to be
+		# started from scratch each time.
+		if [[ -f Makefile ]]; then
+			make distclean
+		fi
+	fi
 	./autogen.sh
 	status=$?
 	if [[ $status -ne 0 ]]; then
@@ -264,13 +328,14 @@ then
 	fi
 fi
 
-# Fetch some information
-REVISION=`head -n 4 ../../.svn/entries | tail -n 1`
-ARCH=`arch | tr [p,c] [P,C]`
-MINORVERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \.`
-NEWNAME="Inkscape-$REVISION-10.$MINORVERSION-$ARCH"
-DMGFILE="$NEWNAME.dmg"
-INFOFILE="$NEWNAME-info.txt"
+function checkversion {
+	DEPVER=`pkg-config --modversion $1 2>/dev/null`
+	if [[ "$?" == "1" ]]; then
+		DEPVER="Not included"
+	fi
+	echo "$DEPVER"
+}
+
 
 if [[ "$DISTRIB" == "t" ]]
 then
@@ -285,17 +350,32 @@ then
 	mv Inkscape.dmg $DMGFILE
 	
 	# Prepare information file
-	echo "Version information on $DATE for `whoami`:
-	OS X       `/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d \:`
-	Architecture $ARCH
-	DarwinPorts  `port version | cut -f2 -d \ `
-	GCC          `gcc --version | grep GCC`
-	GTK          `pkg-config --modversion gtk+-2.0`
-	GTKmm        `pkg-config --modversion gtkmm-2.4`
-	Cairo        `pkg-config --modversion cairo`
-	Cairomm      `pkg-config --modversion cairomm-1.0`
-	CairoPDF     `pkg-config --modversion cairo-pdf`
-	Pango        `pkg-config --modversion pango`
+	echo "Build information on `date` for `whoami`:
+	For OS X Ver  $TARGETNAME ($TARGETVERSION)
+	Architecture  $TARGETARCH
+Build system information:
+	OS X Version  $OSXVERSION
+	Architecture  $ARCH
+	DarwinPorts   `port version | cut -f2 -d \ `
+	GCC           `$CXX --version | grep GCC`
+Included dependency versions:
+	GTK           `checkversion gtk+-2.0`
+	GTKmm         `checkversion gtkmm-2.4`
+	Cairo         `checkversion cairo`
+	Cairomm       `checkversion cairomm-1.0`
+	CairoPDF      `checkversion cairo-pdf`
+	Fontconfig    `checkversion fontconfig`
+	Pango         `checkversion pango`
+	LibXML2       `checkversion libxml-2.0`
+	LibXSLT       `checkversion libxslt`
+	LibSigC++     `checkversion sigc++-2.0`
+	LibPNG        `checkversion libpng`
+	GSL           `checkversion gsl`
+	ImageMagick   `checkversion ImageMagick`
+	Poppler       `checkversion poppler-cairo`
+	LittleCMS     `checkversion lcms`
+	GnomeVFS      `checkversion gnome-vfs-2.0`
+	LibWPG        `checkversion libwpg-0.1`
 Configure options:
 	$CONFFLAGS" > $INFOFILE
 	if [[ "$STRIP" == "t" ]]; then
