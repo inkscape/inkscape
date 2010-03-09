@@ -180,7 +180,7 @@ then
 	export CFLAGS="$CFLAGS -isysroot $SDK -arch ppc -arch i386"
 	export CXXFLAGS="$CFLAGS"
 
-	export CONFFLAGS="$CONFLAGS --disable-dependency-tracking"
+	export CONFFLAGS="$CONFFLAGS --disable-dependency-tracking"
 fi
 
 # Actions
