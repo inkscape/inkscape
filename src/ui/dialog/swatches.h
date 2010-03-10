@@ -41,6 +41,7 @@ public:
 
     virtual int getSelectedIndex() {return _currentIndex;} // temporary
     virtual void handleGradientsChange(); // temporary
+    virtual void handleDefsModified();
 
 protected:
     virtual void _updateFromSelection();
@@ -65,6 +66,8 @@ private:
     sigc::connection _selChanged;
     sigc::connection _setModified;
     sigc::connection _subselChanged;
+    sigc::connection _defsChanged;
+    sigc::connection _defsModified;
 };
 
 } //namespace Dialogs

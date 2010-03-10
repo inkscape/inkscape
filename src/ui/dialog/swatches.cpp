@@ -1326,6 +1326,8 @@ SwatchesPanel::~SwatchesPanel()
     _selChanged.disconnect();
     _setModified.disconnect();
     _subselChanged.disconnect();
+    _defsChanged.disconnect();
+    _defsModified.disconnect();
 
     if ( _clear ) {
         delete _clear;
@@ -1388,91 +1390,121 @@ void SwatchesPanel::_setDocument( SPDocument *document )
     if ( document != _currentDocument ) {
         if ( _currentDocument ) {
             _resourceConnection.disconnect();
+            _defsChanged.disconnect();
+            _defsModified.disconnect();
         }
         _currentDocument = document;
         if ( _currentDocument ) {
             _resourceConnection = sp_document_resources_changed_connect(document,
                                                                         "gradient",
                                                                         sigc::mem_fun(*this, &SwatchesPanel::handleGradientsChange));
+
+            // connect to release and modified signals of the defs (i.e. when someone changes gradient)
+            _defsChanged = SP_DOCUMENT_DEFS(document)->connectRelease(sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::handleDefsModified)));
+            _defsModified = SP_DOCUMENT_DEFS(document)->connectModified(sigc::hide(sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::handleDefsModified))));
         }
 
         handleGradientsChange();
     }
 }
 
-void SwatchesPanel::handleGradientsChange()
+#if USE_DOCUMENT_PALETTE
+static void recalSwatchContents(SPDocument* doc,
+                std::vector<ColorItem*> &tmpColors,
+                std::map<ColorItem*, guchar*> previewMappings,
+                std::map<ColorItem*, SPGradient*> &gradMappings,
+                void* ptr)
 {
     std::vector<SPGradient*> newList;
 
-    const GSList *gradients = sp_document_get_resource_list(_currentDocument, "gradient");
+    const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
     for (const GSList *item = gradients; item; item = item->next) {
         SPGradient* grad = SP_GRADIENT(item->data);
-        if ( grad->has_stops ) {
+        if ( grad->isSwatch() ) {
             newList.push_back(SP_GRADIENT(item->data));
         }
     }
 
-#if USE_DOCUMENT_PALETTE
-    if ( _ptr ) {
-        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
-        // TODO delete pointed to objects
-        docPalette->_colors.clear();
-        if ( !newList.empty() ) {
-            for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
-            {
-                SPGradient* grad = *it;
-                if ( grad->repr->attribute("osb:paint") ) {
-                    sp_gradient_ensure_vector( grad );
-                    SPGradientStop first = grad->vector.stops[0];
-                    SPColor color = first.color;
-                    guint32 together = color.toRGBA32(first.opacity);
+    if ( !newList.empty() ) {
+        for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
+        {
+            SPGradient* grad = *it;
+            sp_gradient_ensure_vector( grad );
+            SPGradientStop first = grad->vector.stops[0];
+            SPColor color = first.color;
+            guint32 together = color.toRGBA32(first.opacity);
 
-                    // At the moment we can't trust the count of 1 vs 2 stops.
-                    SPGradientStop second = (*it)->vector.stops[1];
-                    SPColor color2 = second.color;
-                    guint32 together2 = color2.toRGBA32(second.opacity);
+            // At the moment we can't trust the count of 1 vs 2 stops.
+            SPGradientStop second = (*it)->vector.stops[1];
+            SPColor color2 = second.color;
+            guint32 together2 = color2.toRGBA32(second.opacity);
 
-                    if ( (grad->vector.stops.size() <= 2) && (together == together2) ) {
-                        // Treat as solid-color
-                        Glib::ustring name( grad->getId() );
-                        unsigned int r = SP_RGBA32_R_U(together);
-                        unsigned int g = SP_RGBA32_G_U(together);
-                        unsigned int b = SP_RGBA32_B_U(together);
-                        ColorItem* item = new ColorItem( r, g, b, name );
-                        item->ptr = this;
-                        docPalette->_colors.push_back(item);
-                        gradMap[item] = grad;
-                    } else {
-                        // Treat as gradient
-                        Glib::ustring name( grad->getId() );
-                        unsigned int r = SP_RGBA32_R_U(together);
-                        unsigned int g = SP_RGBA32_G_U(together);
-                        unsigned int b = SP_RGBA32_B_U(together);
-                        ColorItem* item = new ColorItem( r, g, b, name );
-                        item->ptr = this;
-                        docPalette->_colors.push_back(item);
+            if ( (grad->vector.stops.size() <= 2) && (together == together2) ) {
+                // Treat as solid-color
+                Glib::ustring name( grad->getId() );
+                unsigned int r = SP_RGBA32_R_U(together);
+                unsigned int g = SP_RGBA32_G_U(together);
+                unsigned int b = SP_RGBA32_B_U(together);
+                ColorItem* item = new ColorItem( r, g, b, name );
+                item->ptr = ptr;
+                tmpColors.push_back(item);
+                gradMappings[item] = grad;
+            } else {
+                // Treat as gradient
+                Glib::ustring name( grad->getId() );
+                unsigned int r = SP_RGBA32_R_U(together);
+                unsigned int g = SP_RGBA32_G_U(together);
+                unsigned int b = SP_RGBA32_B_U(together);
+                ColorItem* item = new ColorItem( r, g, b, name );
+                item->ptr = ptr;
+                tmpColors.push_back(item);
 
-                        gint width = 128;
-                        gint height = VBLOCK;
-                        guchar* px = g_new( guchar, 3 * height * width );
-                        nr_render_checkerboard_rgb( px, width, VBLOCK, 3 * width, 0, 0 );
+                gint width = 128;
+                gint height = VBLOCK;
+                guchar* px = g_new( guchar, 3 * height * width );
+                nr_render_checkerboard_rgb( px, width, VBLOCK, 3 * width, 0, 0 );
 
-                        sp_gradient_render_vector_block_rgb( grad,
-                                                             px, width, height, 3 * width,
-                                                             0, width, TRUE );
+                sp_gradient_render_vector_block_rgb( grad,
+                                                     px, width, height, 3 * width,
+                                                     0, width, TRUE );
 
-                        previewMap[item] = px;
-                        gradMap[item] = grad;
-                    }
-                }
+                previewMappings[item] = px;
+                gradMappings[item] = grad;
             }
         }
+    }
+}
+#endif // USE_DOCUMENT_PALETTE
+
+void SwatchesPanel::handleGradientsChange()
+{
+#if USE_DOCUMENT_PALETTE
+    if ( _ptr ) {
+        std::vector<ColorItem*> tmpColors;
+        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, SPGradient*> tmpGrads;
+
+        recalSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
+        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
+
+        previewMap.swap(tmpPrevs);
+        gradMap.swap(tmpGrads);
+        docPalette->_colors.swap(tmpColors);
+        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
+            delete *it;
+        }
+
         JustForNow* curr = possible[_currentIndex];
         if (curr == docPalette) {
             _rebuild();
         }
     }
 #endif // USE_DOCUMENT_PALETTE
+}
+
+void SwatchesPanel::handleDefsModified()
+{
+    handleGradientsChange();
 }
 
 void SwatchesPanel::_updateFromSelection()
