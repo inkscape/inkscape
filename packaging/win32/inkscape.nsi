@@ -151,8 +151,8 @@ ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
 !define BrandingText `Inkscape ${INKSCAPE_VERSION}`
 
 ; Check for the Bazaar revision number for lp:inkscape {{{3
-!if `${BZR_REVISION}` == ``
-  ${!ifexist} ..\..\.bzr\branch\last-revision
+${!ifexist} ..\..\.bzr\branch\last-revision
+  !if `${BZR_REVISION}` == ``
     !searchparse /noerrors /file ..\..\.bzr\branch\last-revision "" BZR_REVISION " "
     !if `${BZR_REVISION}` != ``
       !define _FILENAME `${FILENAME}-r${BZR_REVISION}`
