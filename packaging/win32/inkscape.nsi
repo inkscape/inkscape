@@ -153,6 +153,9 @@ ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
 ; Check for the Bazaar revision number for lp:inkscape {{{3
 ${!ifexist} ..\..\.bzr\branch\last-revision
   !if `${BZR_REVISION}` == ``
+    !undef BZR_REVISION
+  !endif
+  !ifndef BZR_REVISION
     !searchparse /noerrors /file ..\..\.bzr\branch\last-revision "" BZR_REVISION " "
     !if `${BZR_REVISION}` != ``
       !define _FILENAME `${FILENAME}-r${BZR_REVISION}`
