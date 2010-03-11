@@ -123,26 +123,32 @@ private:
 ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     def(type),
     ptr(0),
+    tips(),
+    _previews(),
     _isFill(false),
     _isStroke(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
     _linkGray(0),
-    _linkSrc(0)
+    _linkSrc(0),
+    _listeners()
 {
 }
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
     ptr(0),
+    tips(),
+    _previews(),
     _isFill(false),
     _isStroke(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
     _linkGray(0),
-    _linkSrc(0)
+    _linkSrc(0),
+    _listeners()
 {
 }
 
@@ -1504,7 +1510,35 @@ void SwatchesPanel::handleGradientsChange()
 
 void SwatchesPanel::handleDefsModified()
 {
-    handleGradientsChange();
+#if USE_DOCUMENT_PALETTE
+    if ( _ptr ) {
+        std::vector<ColorItem*> tmpColors;
+        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, SPGradient*> tmpGrads;
+
+        recalSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
+
+        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
+        if (docPalette) {
+            int cap = std::min(docPalette->_colors.size(), tmpColors.size());
+            for (int i = 0; i < cap; i++) {
+                ColorItem* newColor = tmpColors[i];
+                ColorItem* oldColor = docPalette->_colors[i];
+                if ( (newColor->def.getType() != oldColor->def.getType()) ||
+                     (newColor->def.getR() != oldColor->def.getR()) ||
+                     (newColor->def.getG() != oldColor->def.getG()) ||
+                     (newColor->def.getB() != oldColor->def.getB()) ) {
+                    oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
+                }
+            }
+        }
+
+        for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it)
+        {
+            g_free(it->second);
+        }
+    }
+#endif // USE_DOCUMENT_PALETTE
 }
 
 void SwatchesPanel::_updateFromSelection()
