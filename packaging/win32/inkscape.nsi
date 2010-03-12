@@ -33,6 +33,16 @@ RequestExecutionLevel admin
 !include LogicLib.nsh
 !include Sections.nsh
 
+!macro !redef VAR VAL
+  !define _!redef_${VAR} `${VAL}`
+  !ifdef ${VAR}
+    !undef ${VAR}
+  !endif
+  !define ${VAR} `${VAL}`
+  !undef _!redef_${VAR}
+!macroend
+!define !redef `!insertmacro !redef`
+
 ; Advanced Uninstall Log {{{3
 ; We're abusing this script terribly and it's time to fix the broken uninstaller.
 ; However, for the moment, this is what we're using.
@@ -157,47 +167,33 @@ ${!ifexist} ..\..\.bzr\branch\last-revision
   !endif
   !ifndef BZR_REVISION
     !searchparse /noerrors /file ..\..\.bzr\branch\last-revision "" BZR_REVISION " "
-    !if `${BZR_REVISION}` != ``
-      !define _FILENAME `${FILENAME}-r${BZR_REVISION}`
-      !undef FILENAME
-      !define FILENAME `${_FILENAME}`
-      !undef _FILENAME
-      !define _BrandingText `${BrandingText} r${BZR_REVISION}`
-      !undef BrandingText
-      !define BrandingText `${_BrandingText}`
-      !undef _BrandingText
-      !undef RELEASE_REVISION ; don't want the -1 on devel releases
-    !endif
   !endif
 !endif
 
-; Handle the installer revision number {{{3
-!ifdef RELEASE_REVISION
-  !define _FILENAME ${FILENAME}-${RELEASE_REVISION}
-  !undef FILENAME
-  !define FILENAME ${_FILENAME}
-  !undef _FILENAME
-  !define _BrandingText `${BrandingText}, revision ${RELEASE_REVISION}`
-  !undef BrandingText
-  !define BrandingText `${_BrandingText}`
-  !undef _BrandingText
+; Check for devel builds and clear up bzr revision number define {{{3
+!searchparse /noerrors ${INKSCAPE_VERSION} "" INKSCAPE_VERSION_NUMBER "+devel"
+!if ${INKSCAPE_VERSION_NUMBER} != ${INKSCAPE_VERSION}
+  !define DEVEL
+!endif
+!if `${BZR_REVISION}` == ``
+  !undef BZR_REVISION
 !endif
 
-; Complete X.X version numbers into X.X.X.X {{{3
-!searchparse /noerrors ${INKSCAPE_VERSION} "" _TMP "+devel"
-!if ${_TMP} != ${INKSCAPE_VERSION} ; If it's a devel build,
-  !if `${BZR_REVISION}` != `` ; and we have the bzr revision
-    !define VERSION_X.X.X.X_REVISION ${BZR_REVISION}
-  !endif
+; Handle display version number and complete X.X version numbers into X.X.X.X {{{3
+!ifdef DEVEL & BZR_REVISION
+  ${!redef} FILENAME `${FILENAME}-r${BZR_REVISION}`
+  ${!redef} BrandingText `${BrandingText} r${BZR_REVISION}`
+  !define VERSION_X.X.X.X_REVISION ${BZR_REVISION}
+; Handle the installer revision number {{{4
+!else ifdef RELEASE_REVISION
+  ${!redef} FILENAME `${FILENAME}-${RELEASE_REVISION}`
+  ${!redef} BrandingText `${BrandingText}, revision ${BZR_REVISION}`
+  !define VERSION_X.X.X.X_REVISION ${RELEASE_REVISION}
+!else
+  !define VERSION_X.X.X.X_REVISION 0
 !endif
-!ifndef VERSION_X.X.X.X_REVISION ; it wasn't a devel build or we didn't have the bzr revision
-  !ifdef RELEASE_REVISION
-    !define VERSION_X.X.X.X_REVISION ${RELEASE_REVISION}
-  !else
-    !define VERSION_X.X.X.X_REVISION 0
-  !endif
-!endif
-${VersionCompleteXXXN} ${_TMP} VERSION_X.X.X.X ${VERSION_X.X.X.X_REVISION}
+
+${VersionCompleteXXXN} ${INKSCAPE_VERSION_NUMBER} VERSION_X.X.X.X ${VERSION_X.X.X.X_REVISION}
 
 ; Product definitions {{{3
 !define PRODUCT_NAME "Inkscape" ; TODO: fix up the language files to not use this and kill this line
