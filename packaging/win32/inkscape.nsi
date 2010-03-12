@@ -962,7 +962,7 @@ Section Uninstall ; do the uninstalling {{{
         ${Else}
           md5dll::GetMD5File /NOUNLOAD $filename
           Pop $5 ;md5 of file
-          ${If} $3 = $5
+          ${If} $3 == $5
             StrCpy $3 1 ; yes
           ${ElseIf} $6 != never
             ; the md5 sums does not match so we ask
