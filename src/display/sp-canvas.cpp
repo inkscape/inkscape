@@ -1332,7 +1332,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
         // lost event. We can't wait for idle events to have current_item updated, we need it now!
         // Otherwise, scrolling when hovering above a pre-snap indicator won't work (for example)
         // See this bug report: https://bugs.launchpad.net/inkscape/+bug/522335/comments/8
-        while (canvas->need_repick) {
+        if (canvas->need_repick && !canvas->in_repick) {
             canvas->need_repick = FALSE;
             pick_current_item (canvas, (GdkEvent *) event);
         }
