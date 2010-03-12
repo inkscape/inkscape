@@ -63,9 +63,23 @@ sp_input_dialog_delete (GtkObject */*object*/, GdkEvent */*event*/, gpointer /*d
 
 }
 
-static const gchar *axis_use_strings[GDK_AXIS_LAST] = {
+static gchar const *axis_use_strings[GDK_AXIS_LAST] = {
     "ignore", "x", "y", "pressure", "xtilt", "ytilt", "wheel"
 };
+
+static Glib::ustring sanitized_device_path(gchar const *str)
+{
+    // LP #334800: device names on Windows sometimes contain funny junk like
+    // \x03, \xf2, etc. We need to get rid of this to properly access the settings.
+    gchar *escaped = g_strescape(str, NULL);
+
+    for (gchar *s = escaped; *s; ++s) {
+        if (*s == '/') *s = '_';
+    }
+    Glib::ustring device_path = Glib::ustring("/devices/") + escaped;
+    g_free(escaped);
+    return device_path;
+}
 
 void
 sp_input_load_from_preferences (void)
@@ -74,60 +88,59 @@ sp_input_load_from_preferences (void)
 
     for (GList *list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
         GdkDevice *device = static_cast<GdkDevice *>(list_ptr->data);
-        //repr = sp_repr_lookup_child(devices, "id", device->name);
-        Glib::ustring device_path = Glib::ustring("/devices/") + device->name;
-        if (/*repr != NULL*/ 1) {
-            GdkInputMode mode;
-            Glib::ustring device_mode = prefs->getString(device_path + "/mode");
 
-            if (device_mode.empty())
-                mode = GDK_MODE_DISABLED;
-            else if (device_mode == "screen")
-                mode = GDK_MODE_SCREEN;
-            else if (device_mode == "window")
-                mode = GDK_MODE_WINDOW;
-            else
-                mode = GDK_MODE_DISABLED;
+        Glib::ustring device_path = sanitized_device_path(device->name);
 
-            if (device->mode != mode) {
-                gdk_device_set_mode(device, mode);
-            }
+        GdkInputMode mode;
+        Glib::ustring device_mode = prefs->getString(device_path + "/mode");
 
-            Glib::ustring::size_type pos0, pos1;
-            GdkAxisUse axis_use;
+        if (device_mode.empty())
+            mode = GDK_MODE_DISABLED;
+        else if (device_mode == "screen")
+            mode = GDK_MODE_SCREEN;
+        else if (device_mode == "window")
+            mode = GDK_MODE_WINDOW;
+        else
+            mode = GDK_MODE_DISABLED;
 
-            //temp_ptr = repr->attribute("axes");
-            Glib::ustring const axes_str = prefs->getString(device_path + "/axes");
-            pos0 = pos1 = 0;
-            for (gint i=0; i < device->num_axes; i++) {
-                pos1 = axes_str.find(';', pos0);
-                if (pos1 == Glib::ustring::npos)
-                    break;  // Too few axis specifications
+        if (device->mode != mode) {
+            gdk_device_set_mode(device, mode);
+        }
 
-                axis_use = GDK_AXIS_IGNORE;
-                for (gint j=0; j < GDK_AXIS_LAST; j++)
-                    if (!strcmp(axes_str.substr(pos0, pos1-pos0).c_str(), axis_use_strings[j])) {
-                        axis_use = static_cast<GdkAxisUse>(j);
-                        break;
-                    }
-                gdk_device_set_axis_use(device, i, axis_use);
-                pos0 = pos1 + 1;
-            }
+        Glib::ustring::size_type pos0, pos1;
+        GdkAxisUse axis_use;
 
-            guint keyval;
-            GdkModifierType modifier;
+        //temp_ptr = repr->attribute("axes");
+        Glib::ustring const axes_str = prefs->getString(device_path + "/axes");
+        pos0 = pos1 = 0;
+        for (gint i=0; i < device->num_axes; i++) {
+            pos1 = axes_str.find(';', pos0);
+            if (pos1 == Glib::ustring::npos)
+                break;  // Too few axis specifications
 
-            Glib::ustring const keys_str = prefs->getString(device_path + "/keys");
-            pos0 = pos1 = 0;
-            for (gint i=0; i < device->num_keys; i++) {
-                pos1 = keys_str.find(';', pos0);
-                if (pos1 == Glib::ustring::npos)
-                    break;  // Too few key specifications
+            axis_use = GDK_AXIS_IGNORE;
+            for (gint j=0; j < GDK_AXIS_LAST; j++)
+                if (!strcmp(axes_str.substr(pos0, pos1-pos0).c_str(), axis_use_strings[j])) {
+                    axis_use = static_cast<GdkAxisUse>(j);
+                    break;
+                }
+            gdk_device_set_axis_use(device, i, axis_use);
+            pos0 = pos1 + 1;
+        }
 
-                gtk_accelerator_parse(keys_str.substr(pos0, pos1-pos0).c_str(), &keyval, &modifier);
-                gdk_device_set_key(device, i, keyval, modifier);
-                pos0 = pos1 + 1;
-            }
+        guint keyval;
+        GdkModifierType modifier;
+
+        Glib::ustring const keys_str = prefs->getString(device_path + "/keys");
+        pos0 = pos1 = 0;
+        for (gint i=0; i < device->num_keys; i++) {
+            pos1 = keys_str.find(';', pos0);
+            if (pos1 == Glib::ustring::npos)
+                break;  // Too few key specifications
+
+            gtk_accelerator_parse(keys_str.substr(pos0, pos1-pos0).c_str(), &keyval, &modifier);
+            gdk_device_set_key(device, i, keyval, modifier);
+            pos0 = pos1 + 1;
         }
     }
 }
@@ -140,8 +153,7 @@ sp_input_save_to_preferences (void)
     for (GList *list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
         GdkDevice *device = static_cast<GdkDevice *>(list_ptr->data);
 
-        //repr = sp_repr_lookup_child(devices, "id", device->name);
-        Glib::ustring device_path = Glib::ustring("/devices/") + device->name;
+        Glib::ustring device_path = sanitized_device_path(device->name);
 
         switch (device->mode) {
             default:
