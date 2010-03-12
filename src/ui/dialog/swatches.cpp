@@ -54,6 +54,7 @@ namespace UI {
 namespace Dialogs {
 
 #define VBLOCK 16
+#define PREVIEW_PIXBUF_WIDTH 128
 
 void _loadPaletteFile( gchar const *filename );
 
@@ -75,6 +76,8 @@ public:
                                     ::PreviewSize size,
                                     guint ratio);
     void buttonClicked(bool secondary = false);
+
+    void setPixData(guchar* px, int width, int height);
 
     void setState( bool fill, bool stroke );
     bool isFill() { return _isFill; }
@@ -102,6 +105,9 @@ private:
     static void _wireMagicColors( void* p );
     static void _colorDefChanged(void* data);
 
+    void _updatePreviews();
+    void _regenPreview(EekPreview * preview);
+
     void _linkTint( ColorItem& other, int percent );
     void _linkTone( ColorItem& other, int percent, int grayLevel );
 
@@ -116,6 +122,9 @@ private:
     int _linkGray;
     ColorItem* _linkSrc;
     std::vector<ColorItem*> _listeners;
+    guchar *_pixData;
+    int _pixWidth;
+    int _pixHeight;
 };
 
 
@@ -132,7 +141,10 @@ ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     _linkPercent(0),
     _linkGray(0),
     _linkSrc(0),
-    _listeners()
+    _listeners(),
+    _pixData(0),
+    _pixWidth(0),
+    _pixHeight(0)
 {
 }
 
@@ -148,7 +160,10 @@ ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustr
     _linkPercent(0),
     _linkGray(0),
     _linkSrc(0),
-    _listeners()
+    _listeners(),
+    _pixData(0),
+    _pixWidth(0),
+    _pixHeight(0)
 {
 }
 
@@ -201,6 +216,20 @@ void ColorItem::setState( bool fill, bool stroke )
     }
 }
 
+void ColorItem::setPixData(guchar* px, int width, int height)
+{
+    if (px != _pixData) {
+        if (_pixData) {
+            g_free(_pixData);
+        }
+        _pixData = px;
+        _pixWidth = width;
+        _pixHeight = height;
+
+        _updatePreviews();
+    }
+}
+
 
 class JustForNow
 {
@@ -218,7 +247,6 @@ static std::vector<JustForNow*> possible;
 static std::vector<std::string> mimeStrings;
 static std::map<std::string, guint> mimeToInt;
 
-static std::map<ColorItem*, guchar*> previewMap;
 static std::map<ColorItem*, SPGradient*> gradMap; // very temporary workaround.
 
 void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
@@ -585,83 +613,123 @@ void ColorItem::_colorDefChanged(void* data)
 {
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item ) {
-        for ( std::vector<Gtk::Widget*>::iterator it =  item->_previews.begin(); it != item->_previews.end(); ++it ) {
-            Gtk::Widget* widget = *it;
-            if ( IS_EEK_PREVIEW(widget->gobj()) ) {
-                EekPreview * preview = EEK_PREVIEW(widget->gobj());
-                eek_preview_set_color( preview,
-                                       (item->def.getR() << 8) | item->def.getR(),
-                                       (item->def.getG() << 8) | item->def.getG(),
-                                       (item->def.getB() << 8) | item->def.getB() );
+        item->_updatePreviews();
+    }
+}
 
-                eek_preview_set_linked( preview, (LinkType)((item->_linkSrc ? PREVIEW_LINK_IN:0)
-                                                            | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT)
-                                                            | (item->_isLive ? PREVIEW_LINK_OTHER:0)) );
+void ColorItem::_updatePreviews()
+{
+    for ( std::vector<Gtk::Widget*>::iterator it =  _previews.begin(); it != _previews.end(); ++it ) {
+        Gtk::Widget* widget = *it;
+        if ( IS_EEK_PREVIEW(widget->gobj()) ) {
+            EekPreview * preview = EEK_PREVIEW(widget->gobj());
 
-                widget->queue_draw();
-            }
+            _regenPreview(preview);
+
+            widget->queue_draw();
+        }
+    }
+
+    for ( std::vector<ColorItem*>::iterator it = _listeners.begin(); it != _listeners.end(); ++it ) {
+        guint r = def.getR();
+        guint g = def.getG();
+        guint b = def.getB();
+
+        if ( (*it)->_linkIsTone ) {
+            r = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * r) ) / 100;
+            g = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * g) ) / 100;
+            b = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * b) ) / 100;
+        } else {
+            r = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * r) ) / 100;
+            g = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * g) ) / 100;
+            b = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * b) ) / 100;
         }
 
-        for ( std::vector<ColorItem*>::iterator it = item->_listeners.begin(); it != item->_listeners.end(); ++it ) {
-            guint r = item->def.getR();
-            guint g = item->def.getG();
-            guint b = item->def.getB();
-
-            if ( (*it)->_linkIsTone ) {
-                r = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * r) ) / 100;
-                g = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * g) ) / 100;
-                b = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * b) ) / 100;
-            } else {
-                r = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * r) ) / 100;
-                g = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * g) ) / 100;
-                b = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * b) ) / 100;
-            }
-
-            (*it)->def.setRGB( r, g, b );
-        }
+        (*it)->def.setRGB( r, g, b );
+    }
 
 
-        // Look for objects using this color
-        {
-            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-            if ( desktop ) {
-                SPDocument* document = sp_desktop_document( desktop );
-                Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
-                if ( rroot ) {
+    // Look for objects using this color
+    {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        if ( desktop ) {
+            SPDocument* document = sp_desktop_document( desktop );
+            Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
+            if ( rroot ) {
 
-                    // Find where this thing came from
-                    Glib::ustring paletteName;
-                    bool found = false;
-                    int index = 0;
-                    for ( std::vector<JustForNow*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
-                        JustForNow* curr = *it2;
-                        index = 0;
-                        for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
-                            if ( item == *zz ) {
-                                found = true;
-                                paletteName = curr->_name;
-                                break;
-                            } else {
-                                index++;
-                            }
+                // Find where this thing came from
+                Glib::ustring paletteName;
+                bool found = false;
+                int index = 0;
+                for ( std::vector<JustForNow*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
+                    JustForNow* curr = *it2;
+                    index = 0;
+                    for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
+                        if ( this == *zz ) {
+                            found = true;
+                            paletteName = curr->_name;
+                            break;
+                        } else {
+                            index++;
                         }
                     }
+                }
 
-                    if ( !paletteName.empty() ) {
-                        gchar* str = g_strdup_printf("%d|", index);
-                        paletteName.insert( 0, str );
-                        g_free(str);
-                        str = 0;
+                if ( !paletteName.empty() ) {
+                    gchar* str = g_strdup_printf("%d|", index);
+                    paletteName.insert( 0, str );
+                    g_free(str);
+                    str = 0;
 
-                        if ( bruteForce( document, rroot, paletteName, item->def.getR(), item->def.getG(), item->def.getB() ) ) {
-                            sp_document_done( document , SP_VERB_DIALOG_SWATCHES,
-                                              _("Change color definition"));
-                        }
+                    if ( bruteForce( document, rroot, paletteName, def.getR(), def.getG(), def.getB() ) ) {
+                        sp_document_done( document , SP_VERB_DIALOG_SWATCHES,
+                                          _("Change color definition"));
                     }
                 }
             }
         }
     }
+
+}
+
+void ColorItem::_regenPreview(EekPreview * preview)
+{
+    if ( def.getType() != ege::PaintDef::RGB ) {
+        using Inkscape::IO::Resource::get_path;
+        using Inkscape::IO::Resource::ICONS;
+        using Inkscape::IO::Resource::SYSTEM;
+        GError *error = NULL;
+        gsize bytesRead = 0;
+        gsize bytesWritten = 0;
+        gchar *localFilename = g_filename_from_utf8( get_path(SYSTEM, ICONS, "remove-color.png"),
+                                                     -1,
+                                                     &bytesRead,
+                                                     &bytesWritten,
+                                                     &error);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(localFilename, &error);
+        if (!pixbuf) {
+            g_warning("Null pixbuf for %p [%s]", localFilename, localFilename );
+        }
+        g_free(localFilename);
+
+        eek_preview_set_pixbuf( preview, pixbuf );
+    }
+    else if ( !_pixData ){
+        eek_preview_set_color( preview,
+                               (def.getR() << 8) | def.getR(),
+                               (def.getG() << 8) | def.getG(),
+                               (def.getB() << 8) | def.getB() );
+    } else {
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( _pixData, GDK_COLORSPACE_RGB, FALSE, 8,
+                                                      _pixWidth, _pixHeight, _pixWidth * 3,
+                                                      0, // add delete function
+                                                      0 );
+        eek_preview_set_pixbuf( preview, pixbuf );
+    }
+
+    eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)
+                                                | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)
+                                                | (_isLive ? PREVIEW_LINK_OTHER:0)) );
 }
 
 
@@ -682,45 +750,9 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
-        if ( previewMap.find(this) == previewMap.end() ){
-            eek_preview_set_color( preview, (def.getR() << 8) | def.getR(),
-                                   (def.getG() << 8) | def.getG(),
-                                   (def.getB() << 8) | def.getB());
-        } else {
-            guchar* px = previewMap[this];
-            int width = 128;
-            int height = 16;
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8,
-                                                          width, height, width * 3,
-                                                          0, // add delete function
-                                                          0 );
-            eek_preview_set_pixbuf( preview, pixbuf );
-        }
-        if ( def.getType() != ege::PaintDef::RGB ) {
-            using Inkscape::IO::Resource::get_path;
-            using Inkscape::IO::Resource::ICONS;
-            using Inkscape::IO::Resource::SYSTEM;
-            GError *error = NULL;
-            gsize bytesRead = 0;
-            gsize bytesWritten = 0;
-            gchar *localFilename = g_filename_from_utf8( get_path(SYSTEM, ICONS, "remove-color.png"),
-                                                 -1,
-                                                 &bytesRead,
-                                                 &bytesWritten,
-                                                 &error);
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(localFilename, &error);
-            if (!pixbuf) {
-                g_warning("Null pixbuf for %p [%s]", localFilename, localFilename );
-            }
-            g_free(localFilename);
-
-            eek_preview_set_pixbuf( preview, pixbuf );
-        }
+        _regenPreview(preview);
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio );
-        eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)
-                                                    | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)
-                                                    | (_isLive ? PREVIEW_LINK_OTHER:0)) );
 
         def.addCallback( _colorDefChanged, this );
 
@@ -1415,9 +1447,9 @@ void SwatchesPanel::_setDocument( SPDocument *document )
 }
 
 #if USE_DOCUMENT_PALETTE
-static void recalSwatchContents(SPDocument* doc,
+static void recalcSwatchContents(SPDocument* doc,
                 std::vector<ColorItem*> &tmpColors,
-                std::map<ColorItem*, guchar*> previewMappings,
+                std::map<ColorItem*, guchar*> &previewMappings,
                 std::map<ColorItem*, SPGradient*> &gradMappings,
                 void* ptr)
 {
@@ -1465,10 +1497,10 @@ static void recalSwatchContents(SPDocument* doc,
                 item->ptr = ptr;
                 tmpColors.push_back(item);
 
-                gint width = 128;
+                gint width = PREVIEW_PIXBUF_WIDTH;
                 gint height = VBLOCK;
                 guchar* px = g_new( guchar, 3 * height * width );
-                nr_render_checkerboard_rgb( px, width, VBLOCK, 3 * width, 0, 0 );
+                nr_render_checkerboard_rgb( px, width, height, 3 * width, 0, 0 );
 
                 sp_gradient_render_vector_block_rgb( grad,
                                                      px, width, height, 3 * width,
@@ -1486,23 +1518,26 @@ void SwatchesPanel::handleGradientsChange()
 {
 #if USE_DOCUMENT_PALETTE
     if ( _ptr ) {
-        std::vector<ColorItem*> tmpColors;
-        std::map<ColorItem*, guchar*> tmpPrevs;
-        std::map<ColorItem*, SPGradient*> tmpGrads;
-
-        recalSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
         JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
+        if (docPalette) {
+            std::vector<ColorItem*> tmpColors;
+            std::map<ColorItem*, guchar*> tmpPrevs;
+            std::map<ColorItem*, SPGradient*> tmpGrads;
+            recalcSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
 
-        previewMap.swap(tmpPrevs);
-        gradMap.swap(tmpGrads);
-        docPalette->_colors.swap(tmpColors);
-        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
-            delete *it;
-        }
+            for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
+                it->first->setPixData(it->second, PREVIEW_PIXBUF_WIDTH, VBLOCK);
+            }
+            gradMap.swap(tmpGrads);
+            docPalette->_colors.swap(tmpColors);
+            for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
+                delete *it;
+            }
 
-        JustForNow* curr = possible[_currentIndex];
-        if (curr == docPalette) {
-            _rebuild();
+            JustForNow* curr = possible[_currentIndex];
+            if (curr == docPalette) {
+                _rebuild();
+            }
         }
     }
 #endif // USE_DOCUMENT_PALETTE
@@ -1512,14 +1547,13 @@ void SwatchesPanel::handleDefsModified()
 {
 #if USE_DOCUMENT_PALETTE
     if ( _ptr ) {
-        std::vector<ColorItem*> tmpColors;
-        std::map<ColorItem*, guchar*> tmpPrevs;
-        std::map<ColorItem*, SPGradient*> tmpGrads;
-
-        recalSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
-
         JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
         if (docPalette) {
+            std::vector<ColorItem*> tmpColors;
+            std::map<ColorItem*, guchar*> tmpPrevs;
+            std::map<ColorItem*, SPGradient*> tmpGrads;
+            recalcSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
+
             int cap = std::min(docPalette->_colors.size(), tmpColors.size());
             for (int i = 0; i < cap; i++) {
                 ColorItem* newColor = tmpColors[i];
@@ -1530,12 +1564,10 @@ void SwatchesPanel::handleDefsModified()
                      (newColor->def.getB() != oldColor->def.getB()) ) {
                     oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
                 }
+                if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
+                    oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
+                }
             }
-        }
-
-        for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it)
-        {
-            g_free(it->second);
         }
     }
 #endif // USE_DOCUMENT_PALETTE
