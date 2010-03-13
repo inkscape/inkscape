@@ -69,15 +69,30 @@ static gchar const *axis_use_strings[GDK_AXIS_LAST] = {
 
 static Glib::ustring sanitized_device_path(gchar const *str)
 {
-    // LP #334800: device names on Windows sometimes contain funny junk like
-    // \x03, \xf2, etc. We need to get rid of this to properly access the settings.
-    gchar *escaped = g_strescape(str, NULL);
-
-    for (gchar *s = escaped; *s; ++s) {
-        if (*s == '/') *s = '_';
+    // LP #334800: tablet device names on Windows sometimes contain funny junk like
+    // \x03, \xf2, etc. Moreover this junk changes between runs.
+    // If the tablet name contains unprintable or non-ASCII characters,
+    // we use some default name.
+    // This might break if someone has two tablets with broken names, but it's
+    // not possible to do anything 100% correct then.
+    bool broken = false;
+    if (!str || *str == 0) {
+        broken = true;
+    } else {
+        for (gchar const *s = str; *s; ++s) {
+            if (*s < 0x20 || *s >= 0x7f) {
+                broken = true;
+                break;
+            }
+        }
     }
-    Glib::ustring device_path = Glib::ustring("/devices/") + escaped;
-    g_free(escaped);
+
+    Glib::ustring device_path = "/devices/";
+    if (broken) {
+        device_path += "Tablet";
+    } else {
+        device_path += str;
+    }
     return device_path;
 }
 
