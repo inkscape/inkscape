@@ -11,17 +11,18 @@
 #define SEEN_DIALOGS_SWATCHES_H
 
 #include <gtkmm/textview.h>
-#include <gtkmm/tooltips.h>
 
 #include "ui/widget/panel.h"
-#include "ui/previewholder.h"
-#include "widgets/ege-paint-def.h"
 
 namespace Inkscape {
 namespace UI {
+
+class PreviewHolder;
+
 namespace Dialogs {
 
 class ColorItem;
+
 
 /**
  * A panel that displays paint swatches.

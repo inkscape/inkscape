@@ -9,6 +9,7 @@ ENDIF(WIN32)
 SET(ui_dialog_SRC
 aboutbox.cpp
 align-and-distribute.cpp
+color-item.cpp
 debug.cpp
 dialog.cpp
 dialog-manager.cpp
