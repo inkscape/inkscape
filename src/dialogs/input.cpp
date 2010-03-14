@@ -18,6 +18,7 @@
 #include <gtk/gtkinputdialog.h>
 #include <glibmm/ustring.h>
 #include <list>
+#include <set>
 
 #include "macros.h"
 #include "verbs.h"
@@ -136,7 +137,31 @@ static gchar const *axis_use_strings[GDK_AXIS_LAST] = {
     "ignore", "x", "y", "pressure", "xtilt", "ytilt", "wheel"
 };
 
-static Glib::ustring sanitized_device_path(gchar const *str)
+static const int RUNAWAY_MAX = 1000;
+
+static Glib::ustring getBaseDeviceName(GdkInputSource source)
+{
+    Glib::ustring name;
+    switch (source) {
+        case GDK_SOURCE_MOUSE:
+            name ="pointer";
+            break;
+        case GDK_SOURCE_PEN:
+            name ="pen";
+            break;
+        case GDK_SOURCE_ERASER:
+            name ="eraser";
+            break;
+        case GDK_SOURCE_CURSOR:
+            name ="cursor";
+            break;
+        default:
+            name = "tablet";
+    }
+    return name;
+}
+
+static Glib::ustring createSanitizedPath(GdkDevice* device, std::set<Glib::ustring> &seenPaths)
 {
     // LP #334800: tablet device names on Windows sometimes contain funny junk like
     // \x03, \xf2, etc. Moreover this junk changes between runs.
@@ -146,10 +171,10 @@ static Glib::ustring sanitized_device_path(gchar const *str)
     // not possible to do anything 100% correct then.
     bool broken = false;
 
-    if (!str || (*str == 0)) {
+    if (!device->name || (*(device->name) == 0)) {
         broken = true;
     } else {
-        for (gchar const *s = str; *s; ++s) {
+        for (gchar const *s = device->name; *s; ++s) {
             if ((*s < 0x20) || (*s >= 0x7f)) {
                 broken = true;
                 break;
@@ -157,12 +182,20 @@ static Glib::ustring sanitized_device_path(gchar const *str)
         }
     }
 
-    Glib::ustring device_path = "/devices/";
+    Glib::ustring device_path;
     if (broken) {
-        device_path += "Tablet";
+        Glib::ustring base = Glib::ustring("/devices/") + getBaseDeviceName(device->source);
+        int num = 1;
+        device_path = base;
+        while ((seenPaths.find(device_path) != seenPaths.end()) && (num < RUNAWAY_MAX)) {
+            device_path = Glib::ustring::compose("%1%2", base, ++num);
+        }
     } else {
-        device_path += str;
+        device_path += Glib::ustring("/devices/") + device->name;
     }
+
+    seenPaths.insert(device_path);
+
     return device_path;
 }
 
@@ -171,6 +204,7 @@ void sp_input_load_from_preferences(void)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     std::list<GdkDevice *> devices = getInputDevices();
+    std::set<Glib::ustring> seenPaths;
     for (std::list<GdkDevice *>::iterator it = devices.begin(); it != devices.end(); ++it) {
         GdkDevice *device = *it;
 
@@ -180,7 +214,7 @@ void sp_input_load_from_preferences(void)
 //             g_message("        axis[%d] u:%d  min:%f max:%f", i, axis.use, axis.min, axis.max);
 //         }
 
-        Glib::ustring device_path = sanitized_device_path(device->name);
+        Glib::ustring device_path = createSanitizedPath(device, seenPaths);
 //         if (device_path != (Glib::ustring("/devices/") + device->name)) {
 //             g_message("        re-name [%s]", device_path.c_str());
 //         }
@@ -244,10 +278,11 @@ void sp_input_save_to_preferences(void)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     std::list<GdkDevice *> devices = getInputDevices();
+    std::set<Glib::ustring> seenPaths;
     for (std::list<GdkDevice *>::iterator it = devices.begin(); it != devices.end(); ++it) {
         GdkDevice *device = *it;
 
-        Glib::ustring device_path = sanitized_device_path(device->name);
+        Glib::ustring device_path = createSanitizedPath(device, seenPaths);
 
         switch (device->mode) {
             default:
@@ -500,6 +535,25 @@ static void initTestDevices()
             devs[i].name = g_strdup("\346\205\227\347\221\254\347\201\257\345\220\240\346\211\241\346\225\254t\303\265\006 \347\211\220\347\215\245\347\225\263\346\225\262\345\214\240\347\245\264\347\225\254s\357\227\230#\354\234\274C\356\232\210\307\255\350\271\214\310\201\350\222\200\310\201\356\202\250\310\200\350\223\260\310\201\356\202\250\310\200");
             perturbName(devs[i].name);
             devs[i].source = GDK_SOURCE_ERASER;
+            devs[i].mode = GDK_MODE_DISABLED;
+            devs[i].has_cursor = 0;
+            static GdkDeviceAxis tmp[] = {{GDK_AXIS_X, 0, 0},
+                                          {GDK_AXIS_Y, 0, 0},
+                                          {GDK_AXIS_PRESSURE, 0, 1},
+                                          {GDK_AXIS_XTILT, -1, 1},
+                                          {GDK_AXIS_YTILT, -1, 1}};
+            devs[i].num_axes = G_N_ELEMENTS(tmp);
+            devs[i].axes = tmp;
+            devs[i].num_keys = 0;
+            devs[i].keys = 0;
+            i++;
+        }
+
+        {
+            // Tablet stylus
+            devs[i].name = g_strdup("\346\205\227\347\221\254\347\201\257\345\220\240\346\211\241\346\225\254t\303\265\006 \347\211\220\347\215\245\347\225\263\346\225\262\345\214\240\347\245\264\347\225\254s\357\227\230#\354\234\274C\341\221\230\307\255\343\277\214\310\202\343\230\200\310\202\331\270\310\202\343\231\260\310\202\331\270\310\202");
+            perturbName(devs[i].name);
+            devs[i].source = GDK_SOURCE_PEN;
             devs[i].mode = GDK_MODE_DISABLED;
             devs[i].has_cursor = 0;
             static GdkDeviceAxis tmp[] = {{GDK_AXIS_X, 0, 0},
