@@ -489,13 +489,14 @@ bool ClipboardManagerImpl::pastePathEffect()
         Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
         Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
         if ( clipnode ) {
-            gchar const *effect = clipnode->attribute("inkscape:path-effect");
-            if ( effect ) {
+            gchar const *effectstack = clipnode->attribute("inkscape:path-effect");
+            if ( effectstack ) {
                 _pasteDefs(tempdoc);
                 // make sure all selected items are converted to paths first (i.e. rectangles)
-                sp_selected_path_to_curves(desktop, false);
-                for (GSList *item = const_cast<GSList *>(selection->itemList()) ; item ; item = item->next) {
-                    _applyPathEffect(reinterpret_cast<SPItem*>(item->data), effect);
+                sp_selected_to_lpeitems(desktop);
+                for (GSList *itemptr = const_cast<GSList *>(selection->itemList()) ; itemptr ; itemptr = itemptr->next) {
+                    SPItem *item = reinterpret_cast<SPItem*>(itemptr->data);
+                    _applyPathEffect(item, effectstack);
                 }
 
                 return true;
@@ -976,7 +977,7 @@ SPCSSAttr *ClipboardManagerImpl::_parseColor(const Glib::ustring &text)
 /**
  * @brief Applies a pasted path effect to a given item
  */
-void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
+void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effectstack)
 {
     if ( item == NULL ) return;
     if ( SP_IS_RECT(item) ) return;
@@ -984,11 +985,17 @@ void ClipboardManagerImpl::_applyPathEffect(SPItem *item, gchar const *effect)
     if (SP_IS_LPE_ITEM(item))
     {
         SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-        SPObject *obj = sp_uri_reference_resolve(_clipboardSPDoc, effect);
-        if (!obj) return;
-        // if the effect is not used by anyone, we might as well take it
-        LivePathEffectObject *lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(1);
-        sp_lpe_item_add_path_effect(lpeitem, lpeobj);
+        // for each effect in the stack, check if we need to fork it before adding it to the item
+        std::istringstream iss(effectstack);
+        std::string href;
+        while (std::getline(iss, href, ';'))
+        {
+            SPObject *obj = sp_uri_reference_resolve(_clipboardSPDoc, href.c_str());
+            if (!obj) return;
+            // if the effectstack is not used by anyone, we might as well take it
+            LivePathEffectObject *lpeobj = LIVEPATHEFFECT(obj)->fork_private_if_necessary(1);
+            sp_lpe_item_add_path_effect(lpeitem, lpeobj);
+        }
     }
 }
 

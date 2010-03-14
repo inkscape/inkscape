@@ -323,8 +323,33 @@ sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
     }
 }
 
+/** Converts the selected items to LPEItems if they are not already so; e.g. SPRects) */
+void sp_selected_to_lpeitems(SPDesktop *desktop)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    if (selection->isEmpty()) {
+        return;
+    }
+
+    bool did = false;
+
+    GSList *selected = g_slist_copy((GSList *) selection->itemList());
+    GSList *to_select = NULL;
+    selection->clear();
+    GSList *items = g_slist_copy(selected);
+
+    did = sp_item_list_to_curves(items, &selected, &to_select, true);
+
+    g_slist_free (items);
+    selection->setReprList(to_select);
+    selection->addList(selected);
+    g_slist_free (to_select);
+    g_slist_free (selected);
+}
+
 bool
-sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select)
+sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems)
 {
     bool did = false;
     
@@ -334,6 +359,13 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
 
         SPItem *item = SP_ITEM(items->data);
     	SPDocument *document = item->document;
+
+        if ( skip_all_lpeitems &&
+             SP_IS_LPE_ITEM(item) && 
+             !SP_IS_GROUP(item) ) // also convert objects in an SPGroup when skip_all_lpeitems is set.
+        { 
+            continue;
+        }
 
         if (SP_IS_PATH(item) && !SP_PATH(item)->original_curve) {
             continue; // already a path, and no path effect

@@ -18,9 +18,10 @@
 void sp_selected_path_combine (SPDesktop *desktop);
 void sp_selected_path_break_apart (SPDesktop *desktop);
 void sp_selected_path_to_curves (SPDesktop *desktop, bool interactive = true);
+void sp_selected_to_lpeitems(SPDesktop *desktop);
 Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
 void sp_selected_path_reverse (SPDesktop *desktop);
-bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select);
+bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems = false);
 
 #endif
 
