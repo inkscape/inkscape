@@ -480,6 +480,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
+           -mwindows
            -mthreads
        </flags>
        <fileset dir="${build}">
@@ -535,6 +536,7 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
+           -mwindows
            -mthreads
        </flags>
        <fileset dir="${build}">
