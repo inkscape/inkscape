@@ -48,7 +48,7 @@
 #include <glib.h>
 #include <zlib.h>
 
-#include "jar.h"
+#include "inkjar.h"
 
 #include <fstream>
 #ifdef WORDS_BIGENDIAN

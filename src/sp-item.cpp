@@ -64,7 +64,7 @@
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
 #include "libnr/nr-convert2geom.h"
-#include "algorithms/find-last-if.h"
+#include "util/find-last-if.h"
 #include "util/reverse-list.h"
 #include <2geom/rect.h>
 #include <2geom/matrix.h>

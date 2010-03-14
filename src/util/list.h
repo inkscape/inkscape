@@ -15,7 +15,7 @@
 #include <cstddef>
 #include <iterator>
 #include "gc-managed.h"
-#include "traits/reference.h"
+#include "util/reference.h"
 
 namespace Inkscape {
 

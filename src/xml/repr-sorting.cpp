@@ -1,5 +1,5 @@
 
-#include "algorithms/longest-common-suffix.h"
+#include "util/longest-common-suffix.h"
 #include "xml/repr.h"
 #include "xml/node-iterators.h"
 

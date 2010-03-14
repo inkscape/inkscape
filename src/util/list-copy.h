@@ -13,7 +13,7 @@
 #define SEEN_INKSCAPE_TRAITS_LIST_COPY_H
 
 #include <iterator>
-#include "traits/copy.h"
+#include "util/copy.h"
 #include "util/list.h"
 
 namespace Inkscape {

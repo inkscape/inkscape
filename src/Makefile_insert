@@ -67,6 +67,7 @@ ink_common_sources +=	\
 	gradient-chemistry.cpp gradient-chemistry.h			\
 	gradient-context.cpp gradient-context.h				\
 	gradient-drag.cpp gradient-drag.h				\
+	graphlayout.cpp graphlayout.h					\
 	guide-snapper.cpp guide-snapper.h				\
 	help.cpp help.h							\
 	helper-fns.h							\
@@ -117,6 +118,7 @@ ink_common_sources +=	\
 	print.cpp print.h						\
 	profile-manager.cpp profile-manager.h				\
 	proj_pt.cpp proj_pt.h						\
+	removeoverlap.cpp removeoverlap.h				\
 	rdf.cpp rdf.h							\
 	rect-context.cpp rect-context.h					\
 	require-config.h						\

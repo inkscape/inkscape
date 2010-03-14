@@ -8,7 +8,7 @@
 #include <glib.h> // g_assert()
 
 #include "xml/node-iterators.h"
-#include "algorithms/find-if-before.h"
+#include "util/find-if-before.h"
 
 namespace Inkscape {
 namespace XML {

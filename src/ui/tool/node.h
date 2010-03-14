@@ -234,8 +234,16 @@ public:
     /// @see get_pointer()
     N *ptr() const { return static_cast<N*>(_node); }
 
-    self next() const;
-    self prev() const;
+    self next() const {
+        self r(*this);
+        r.advance();
+        return r;
+    }
+    self prev() const {
+        self r(*this);
+        r.retreat();
+        return r;
+    }
     self &advance();
     self &retreat();
 private:
@@ -256,8 +264,6 @@ public:
     typedef Node value_type;
     typedef NodeIterator<value_type> iterator;
     typedef NodeIterator<value_type const> const_iterator;
-    typedef std::reverse_iterator<iterator> reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
     // TODO Lame. Make this private and make SubpathList a factory
     NodeList(SubpathList &_list);
@@ -268,10 +274,6 @@ public:
     iterator end() { return iterator(this); }
     const_iterator begin() const { return const_iterator(ln_next); }
     const_iterator end() const { return const_iterator(this); }
-    reverse_iterator rbegin() { return reverse_iterator(end()); }
-    reverse_iterator rend() { return reverse_iterator(begin()); }
-    const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
-    const_reverse_iterator rend() const { return const_reverse_iterator(begin()); }
 
     // size
     bool empty();
@@ -376,18 +378,16 @@ NodeIterator<N>::operator bool() const {
     return _node && static_cast<ListNode*>(_node->ln_list) != _node;
 }
 template <typename N>
-NodeIterator<N> NodeIterator<N>::next() const {
-    NodeIterator<N> ret(*this);
-    ++ret;
-    if (G_UNLIKELY(!ret) && _node->ln_list->closed()) ++ret;
-    return ret;
+NodeIterator<N> &NodeIterator<N>::advance() {
+    ++(*this);
+    if (G_UNLIKELY(!*this) && _node->ln_list->closed()) ++(*this);
+    return *this;
 }
 template <typename N>
-NodeIterator<N> NodeIterator<N>::prev() const {
-    NodeIterator<N> ret(*this);
-    --ret;
-    if (G_UNLIKELY(!ret) && _node->ln_list->closed()) --ret;
-    return ret;
+NodeIterator<N> &NodeIterator<N>::retreat() {
+    --(*this);
+    if (G_UNLIKELY(!*this) && _node->ln_list->closed()) --(*this);
+    return *this;
 }
 
 } // namespace UI

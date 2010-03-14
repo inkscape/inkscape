@@ -1,2 +1,0 @@
-SET(traits_SRC
-)

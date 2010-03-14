@@ -960,7 +960,6 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/check-header-compile
-src/algorithms/makefile
 src/application/makefile
 src/bind/makefile
 src/debug/makefile
@@ -973,7 +972,6 @@ src/extension/makefile
 src/extension/script/makefile
 src/filters/makefile
 src/helper/makefile
-src/inkjar/makefile
 src/io/makefile
 src/libcroco/makefile
 src/libgdl/makefile
@@ -985,10 +983,8 @@ src/live_effects/makefile
 src/live_effects/parameter/makefile
 src/pedro/makefile
 src/jabber_whiteboard/makefile
-src/removeoverlap/makefile
 src/svg/makefile
 src/trace/makefile
-src/traits/makefile
 src/ui/cache/makefile
 src/ui/dialog/makefile
 src/ui/makefile

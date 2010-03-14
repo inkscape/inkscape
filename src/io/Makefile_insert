@@ -7,6 +7,8 @@ ink_common_sources += \
 	io/ftos.h \
 	io/gzipstream.cpp \
 	io/gzipstream.h \
+	io/inkjar.cpp \
+	io/inkjar.h \
 	io/inkscapestream.cpp \
 	io/inkscapestream.h \
 	io/resource.cpp \

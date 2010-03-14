@@ -53,8 +53,8 @@
 #include "debug/demangle.h"
 #include "util/share.h"
 #include "util/format.h"
+#include "util/longest-common-suffix.h"
 
-#include "algorithms/longest-common-suffix.h"
 using std::memcpy;
 using std::strchr;
 using std::strcmp;

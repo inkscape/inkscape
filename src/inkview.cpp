@@ -63,7 +63,7 @@
 #include "svg-view-widget.h"
 
 #ifdef WITH_INKJAR
-#include "inkjar/jar.h"
+#include "io/inkjar.h"
 #endif
 
 #include "inkscape-private.h"

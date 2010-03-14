@@ -50,7 +50,7 @@
 #include "../ege-select-one-action.h"
 #include "../flood-context.h"
 #include "gradient-toolbar.h"
-#include "../graphlayout/graphlayout.h"
+#include "../graphlayout.h"
 #include "../helper/unit-menu.h"
 #include "../helper/units.h"
 #include "../helper/unit-tracker.h"

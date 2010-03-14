@@ -2,23 +2,30 @@
 
 ink_common_sources += \
 	util/compose.hpp	\
-	util/ucompose.hpp	\
+	util/copy.h \
 	util/enums.h \
 	util/ege-tags.h \
 	util/ege-tags.cpp \
 	util/filter-list.h \
+	util/find-if-before.h \
+	util/find-last-if.h \
 	util/fixed_point.h \
 	util/format.h	\
 	util/forward-pointer-iterator.h \
+	util/function.h \
 	util/glib-list-iterators.h \
 	util/list.h \
 	util/list-container.h \
+	util/list-copy.h \
+	util/longest-common-suffix.h \
 	util/map-list.h \
 	util/mathfns.h \
+	util/reference.h \
 	util/reverse-list.h \
 	util/share.h \
 	util/share.cpp \
 	util/tuple.h \
+	util/ucompose.hpp \
 	util/units.cpp \
 	util/units.h \
 	util/unordered-containers.h

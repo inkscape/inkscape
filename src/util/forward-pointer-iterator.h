@@ -15,7 +15,7 @@
 #define SEEN_INKSCAPE_UTIL_FORWARD_POINTER_ITERATOR_H
 
 #include <iterator>
-#include "traits/reference.h"
+#include "util/reference.h"
 
 namespace Inkscape {
 

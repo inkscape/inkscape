@@ -13,7 +13,7 @@
 #define SEEN_INKSCAPE_UTIL_FILTER_LIST_H
 
 #include "util/list.h"
-#include "traits/list-copy.h"
+#include "util/list-copy.h"
 
 namespace Inkscape {
 

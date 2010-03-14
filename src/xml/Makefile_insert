@@ -1,7 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
 ink_common_sources +=	\
-	algorithms/find-if-before.h	\
 	xml/comment-node.h \
 	xml/composite-node-observer.cpp xml/composite-node-observer.h \
 	xml/element-node.h \

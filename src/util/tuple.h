@@ -12,7 +12,7 @@
 #ifndef SEEN_INKSCAPE_UTIL_TUPLE_H
 #define SEEN_INKSCAPE_UTIL_TUPLE_H
 
-#include "traits/reference.h"
+#include "util/reference.h"
 
 namespace Inkscape {
 

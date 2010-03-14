@@ -16,7 +16,7 @@
 #include "document.h"
 #include "sp-item-group.h"
 #include "xml/repr.h"
-#include "algorithms/find-last-if.h"
+#include "util/find-last-if.h"
 #include "layer-fns.h"
 
 namespace Inkscape {
