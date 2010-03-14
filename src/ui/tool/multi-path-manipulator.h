@@ -16,6 +16,7 @@
 #include "forward.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
+#include "ui/tool/modifier-tracker.h"
 #include "ui/tool/node.h"
 #include "ui/tool/node-types.h"
 #include "ui/tool/shape-record.h"
@@ -110,6 +111,7 @@ public:
     PathSharedData const &_path_data;
 private:
     sigc::connection &_changed;
+    ModifierTracker _tracker;
     bool _show_handles;
     bool _show_outline;
     bool _show_path_direction;

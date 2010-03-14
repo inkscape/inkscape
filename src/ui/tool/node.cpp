@@ -1149,9 +1149,9 @@ NodeList::NodeList(SubpathList &splist)
     : _list(splist)
     , _closed(false)
 {
-    this->list = this;
-    this->next = this;
-    this->prev = this;
+    this->ln_list = this;
+    this->ln_next = this;
+    this->ln_prev = this;
 }
 
 NodeList::~NodeList()
@@ -1161,13 +1161,13 @@ NodeList::~NodeList()
 
 bool NodeList::empty()
 {
-    return next == this;
+    return ln_next == this;
 }
 
 NodeList::size_type NodeList::size()
 {
     size_type sz = 0;
-    for (ListNode *ln = next; ln != this; ln = ln->next) ++sz;
+    for (ListNode *ln = ln_next; ln != this; ln = ln->ln_next) ++sz;
     return sz;
 }
 
@@ -1198,11 +1198,11 @@ NodeList::iterator NodeList::before(double t, double *fracpart)
 NodeList::iterator NodeList::insert(iterator i, Node *x)
 {
     ListNode *ins = i._node;
-    x->next = ins;
-    x->prev = ins->prev;
-    ins->prev->next = x;
-    ins->prev = x;
-    x->ListNode::list = this;
+    x->ln_next = ins;
+    x->ln_prev = ins->ln_prev;
+    ins->ln_prev->ln_next = x;
+    ins->ln_prev = x;
+    x->ln_list = this;
     return iterator(x);
 }
 
@@ -1221,48 +1221,48 @@ void NodeList::splice(iterator pos, NodeList &list, iterator i)
 void NodeList::splice(iterator pos, NodeList &/*list*/, iterator first, iterator last)
 {
     ListNode *ins_beg = first._node, *ins_end = last._node, *at = pos._node;
-    for (ListNode *ln = ins_beg; ln != ins_end; ln = ln->next) {
-        ln->list = this;
+    for (ListNode *ln = ins_beg; ln != ins_end; ln = ln->ln_next) {
+        ln->ln_list = this;
     }
-    ins_beg->prev->next = ins_end;
-    ins_end->prev->next = at;
-    at->prev->next = ins_beg;
+    ins_beg->ln_prev->ln_next = ins_end;
+    ins_end->ln_prev->ln_next = at;
+    at->ln_prev->ln_next = ins_beg;
 
-    ListNode *atprev = at->prev;
-    at->prev = ins_end->prev;
-    ins_end->prev = ins_beg->prev;
-    ins_beg->prev = atprev;
+    ListNode *atprev = at->ln_prev;
+    at->ln_prev = ins_end->ln_prev;
+    ins_end->ln_prev = ins_beg->ln_prev;
+    ins_beg->ln_prev = atprev;
 }
 
 void NodeList::shift(int n)
 {
     // 1. make the list perfectly cyclic
-    next->prev = prev;
-    prev->next = next;
+    ln_next->ln_prev = ln_prev;
+    ln_prev->ln_next = ln_next;
     // 2. find new begin
-    ListNode *new_begin = next;
+    ListNode *new_begin = ln_next;
     if (n > 0) {
-        for (; n > 0; --n) new_begin = new_begin->next;
+        for (; n > 0; --n) new_begin = new_begin->ln_next;
     } else {
-        for (; n < 0; ++n) new_begin = new_begin->prev;
+        for (; n < 0; ++n) new_begin = new_begin->ln_prev;
     }
     // 3. relink begin to list
-    next = new_begin;
-    prev = new_begin->prev;
-    new_begin->prev->next = this;
-    new_begin->prev = this;
+    ln_next = new_begin;
+    ln_prev = new_begin->ln_prev;
+    new_begin->ln_prev->ln_next = this;
+    new_begin->ln_prev = this;
 }
 
 void NodeList::reverse()
 {
-    for (ListNode *ln = next; ln != this; ln = ln->prev) {
-        std::swap(ln->next, ln->prev);
+    for (ListNode *ln = ln_next; ln != this; ln = ln->ln_prev) {
+        std::swap(ln->ln_next, ln->ln_prev);
         Node *node = static_cast<Node*>(ln);
         Geom::Point save_pos = node->front()->position();
         node->front()->setPosition(node->back()->position());
         node->back()->setPosition(save_pos);
     }
-    std::swap(next, prev);
+    std::swap(ln_next, ln_prev);
 }
 
 void NodeList::clear()
@@ -1275,11 +1275,11 @@ NodeList::iterator NodeList::erase(iterator i)
     // some gymnastics are required to ensure that the node is valid when deleted;
     // otherwise the code that updates handle visibility will break
     Node *rm = static_cast<Node*>(i._node);
-    ListNode *rmnext = rm->next, *rmprev = rm->prev;
+    ListNode *rmnext = rm->ln_next, *rmprev = rm->ln_prev;
     ++i;
     delete rm;
-    rmprev->next = rmnext;
-    rmnext->prev = rmprev;
+    rmprev->ln_next = rmnext;
+    rmnext->ln_prev = rmprev;
     return i;
 }
 
@@ -1296,10 +1296,10 @@ void NodeList::kill()
 }
 
 NodeList &NodeList::get(Node *n) {
-    return *(n->list());
+    return n->nodeList();
 }
 NodeList &NodeList::get(iterator const &i) {
-    return *(i._node->list);
+    return *(i._node->ln_list);
 }
 
 

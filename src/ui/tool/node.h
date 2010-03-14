@@ -66,9 +66,9 @@ struct SubpathListMember : public ListMember<SubpathListMember> {
 */
 
 struct ListNode {
-    ListNode *next;
-    ListNode *prev;
-    NodeList *list;
+    ListNode *ln_next;
+    ListNode *ln_prev;
+    NodeList *ln_list;
 };
 
 struct NodeSharedData {
@@ -139,7 +139,7 @@ public:
     Handle *front() { return &_front; }
     Handle *back()  { return &_back;  }
     static NodeType parse_nodetype(char x);
-    NodeList *list() { return static_cast<ListNode*>(this)->list; }
+    NodeList &nodeList() { return *(static_cast<ListNode*>(this)->ln_list); }
     void sink();
 
     static char const *node_type_to_localized_string(NodeType type);
@@ -182,24 +182,28 @@ private:
 
 /// Iterator for editable nodes
 /** Use this class for all operations that require some knowledge about the node's
- * neighbors. It works like a bidirectional iterator.
+ * neighbors. It is a bidirectional iterator.
  *
  * Because paths can be cyclic, node iterators have two different ways to
- * increment and decrement them. Nodes can be iterated over either in the
- * sequence order, which always has a beginning and an end, or in the path order,
- * which can be cyclic (moving to the next node never yields the end iterator).
+ * increment and decrement them. When using ++/--, the end iterator will eventually
+ * be returned. Whent using advance()/retreat(), the end iterator will only be returned
+ * when the path is open. If it's closed, calling advance() will cycle indefinitely.
+ * This is particularly useful for cases where the adjacency of nodes is more important
+ * than their sequence order.
  *
  * When @a i is a node iterator, then:
  * - <code>++i</code> moves the iterator to the next node in sequence order;
  * - <code>--i</code> moves the iterator to the previous node in sequence order;
- * - <code>i.next()</code> returns the next node with wrap-around if the path is cyclic;
- * - <code>i.prev()</code> returns the previous node with wrap-around if the path is cyclic.
+ * - <code>i.next()</code> returns the next node with wrap-around;
+ * - <code>i.prev()</code> returns the previous node with wrap-around;
+ * - <code>i.advance()</code> moves the iterator to the next node with wrap-around;
+ * - <code>i.retreat()</code> moves the iterator to the previous node with wrap-around.
  *
  * next() and prev() do not change their iterator. They can return the end iterator
  * if the path is open.
  *
- * Unlike most other iterators, you can check whether a node iterator is invalid
- * (is an end iterator) without having access to the iterator's container.
+ * Unlike most other iterators, you can check whether you've reached the end of the list
+ * without having access to the iterator's container.
  * Simply use <code>if (i) { ...</code>
  * */
 template <typename N>
@@ -215,11 +219,11 @@ public:
     // default copy, default assign
 
     self &operator++() {
-        _node = _node->next;
+        _node = _node->ln_next;
         return *this;
     }
     self &operator--() {
-        _node = _node->prev;
+        _node = _node->ln_prev;
         return *this;
     }
     bool operator==(self const &other) const { return _node == other._node; }
@@ -232,13 +236,14 @@ public:
 
     self next() const;
     self prev() const;
+    self &advance();
+    self &retreat();
 private:
     NodeIterator(ListNode const *n)
         : _node(const_cast<ListNode*>(n))
     {}
     ListNode *_node;
     friend class NodeList;
-    friend class std::tr1::hash<self>;
 };
 
 class NodeList : ListNode, boost::noncopyable, public boost::enable_shared_from_this<NodeList> {
@@ -259,9 +264,9 @@ public:
     ~NodeList();
 
     // iterators
-    iterator begin() { return iterator(next); }
+    iterator begin() { return iterator(ln_next); }
     iterator end() { return iterator(this); }
-    const_iterator begin() const { return const_iterator(next); }
+    const_iterator begin() const { return const_iterator(ln_next); }
     const_iterator end() const { return const_iterator(this); }
     reverse_iterator rbegin() { return reverse_iterator(end()); }
     reverse_iterator rend() { return reverse_iterator(begin()); }
@@ -305,11 +310,12 @@ public:
     }
 
     // member access - undefined results when the list is empty
-    Node &front() { return *static_cast<Node*>(next); }
-    Node &back() { return *static_cast<Node*>(prev); }
+    Node &front() { return *static_cast<Node*>(ln_next); }
+    Node &back() { return *static_cast<Node*>(ln_prev); }
 
     // HACK remove this subpath from its path. This will be removed later.
     void kill();
+    SubpathList &subpathList() { return _list; }
 
     static iterator get_iterator(Node *n) { return iterator(n); }
     static const_iterator get_iterator(Node const *n) { return const_iterator(n); }
@@ -335,6 +341,7 @@ public:
     typedef std::list< boost::shared_ptr<NodeList> > list_type;
 
     SubpathList(PathManipulator &pm) : _path_manipulator(pm) {}
+    PathManipulator &pm() { return _path_manipulator; }
 
 private:
     list_type _nodelists;
@@ -360,42 +367,31 @@ inline PathManipulator &Handle::_pm() {
     return _parent->_pm();
 }
 inline PathManipulator &Node::_pm() {
-    return list()->_list._path_manipulator;
+    return nodeList().subpathList().pm();
 }
 
 // definitions for node iterator
 template <typename N>
 NodeIterator<N>::operator bool() const {
-    return _node && static_cast<ListNode*>(_node->list) != _node;
+    return _node && static_cast<ListNode*>(_node->ln_list) != _node;
 }
 template <typename N>
 NodeIterator<N> NodeIterator<N>::next() const {
     NodeIterator<N> ret(*this);
     ++ret;
-    if (G_UNLIKELY(!ret) && _node->list->closed()) ++ret;
+    if (G_UNLIKELY(!ret) && _node->ln_list->closed()) ++ret;
     return ret;
 }
 template <typename N>
 NodeIterator<N> NodeIterator<N>::prev() const {
     NodeIterator<N> ret(*this);
     --ret;
-    if (G_UNLIKELY(!ret) && _node->list->closed()) --ret;
+    if (G_UNLIKELY(!ret) && _node->ln_list->closed()) --ret;
     return ret;
 }
 
 } // namespace UI
 } // namespace Inkscape
-
-namespace std {
-namespace tr1 {
-template <typename N>
-struct hash< Inkscape::UI::NodeIterator<N> > : public unary_function<Inkscape::UI::NodeIterator<N>, size_t> {
-    size_t operator()(Inkscape::UI::NodeIterator<N> const &ni) const {
-        return reinterpret_cast<size_t>(ni._node);
-    }
-};
-}
-}
 
 #endif
 

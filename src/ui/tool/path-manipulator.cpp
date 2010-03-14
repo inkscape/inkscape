@@ -598,10 +598,10 @@ unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::ite
 
     // We can't use nl->erase(start, end), because it would break when the stretch
     // crosses the beginning of a closed subpath
-    NodeList *nl = start->list();
+    NodeList &nl = start->nodeList();
     while (start != end) {
         NodeList::iterator next = start.next();
-        nl->erase(start);
+        nl.erase(start);
         start = next;
     }
 
@@ -725,6 +725,68 @@ void PathManipulator::setSegmentType(SegmentType type)
                 break;
             }
         }
+    }
+}
+
+void PathManipulator::scaleHandle(Node *n, int which, int dir, bool pixel)
+{
+    if (n->type() == NODE_SYMMETRIC || n->type() == NODE_AUTO) {
+        n->setType(NODE_SMOOTH);
+    }
+    Handle *h = _chooseHandle(n, which);
+    double length_change;
+
+    if (pixel) {
+        length_change = 1.0 / _desktop->current_zoom() * dir;
+    } else {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        length_change = prefs->getDoubleLimited("/options/defaultscale/value", 2, 1, 1000);
+        length_change *= dir;
+    }
+
+    Geom::Point relpos = h->relativePos();
+    double rellen = relpos.length();
+    h->setRelativePos(relpos * ((rellen + length_change) / rellen));
+    update();
+
+    gchar const *key = which < 0 ? "handle:scale:left" : "handle:scale:right";
+    _commit(_("Scale handle"), key);
+}
+
+void PathManipulator::rotateHandle(Node *n, int which, int dir, bool pixel)
+{
+    if (n->type() != NODE_CUSP) {
+        n->setType(NODE_CUSP);
+    }
+    Handle *h = _chooseHandle(n, which);
+    double angle;
+
+    if (pixel) {
+        // Rotate by "one pixel"
+        angle = atan2(1.0 / _desktop->current_zoom(), h->length()) * dir;
+    } else {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
+        angle = M_PI * dir / snaps;
+    }
+    h->setRelativePos(h->relativePos() * Geom::Rotate(angle));
+    update();
+    gchar const *key = which < 0 ? "handle:rotate:left" : "handle:rotate:right";
+    _commit(_("Rotate handle"), key);
+}
+
+Handle *PathManipulator::_chooseHandle(Node *n, int which)
+{
+    Geom::Point f = n->front()->position(), b = n->back()->position();
+    if (which < 0) {
+        // pick left handle.
+        // we just swap the handles and pick the right handle below.
+        std::swap(f, b);
+    }
+    if (f[Geom::X] >= b[Geom::X]) {
+        return n->front();
+    } else {
+        return n->back();
     }
 }
 
@@ -1187,11 +1249,11 @@ bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
         // Ctrl+Alt+click: delete nodes
         hideDragPoint();
         NodeList::iterator iter = NodeList::get_iterator(n);
-        NodeList *nl = iter->list();
+        NodeList &nl = iter->nodeList();
 
-        if (nl->size() <= 1 || (nl->size() <= 2 && !nl->closed())) {
+        if (nl.size() <= 1 || (nl.size() <= 2 && !nl.closed())) {
             // Removing last node of closed path - delete it
-            nl->kill();
+            nl.kill();
         } else {
             // In other cases, delete the node under cursor
             _deleteStretch(iter, iter.next(), true);
@@ -1302,6 +1364,13 @@ void PathManipulator::_commit(Glib::ustring const &annotation)
 {
     writeXML();
     sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, annotation.data());
+}
+
+void PathManipulator::_commit(Glib::ustring const &annotation, gchar const *key)
+{
+    writeXML();
+    sp_document_maybe_done(sp_desktop_document(_desktop), key, SP_VERB_CONTEXT_NODE,
+            annotation.data());
 }
 
 /** Update the position of the curve drag point such that it is over the nearest

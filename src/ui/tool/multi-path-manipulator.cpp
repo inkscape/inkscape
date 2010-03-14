@@ -440,9 +440,60 @@ void MultiPathManipulator::updateOutlineColors()
 
 bool MultiPathManipulator::event(GdkEvent *event)
 {
+    _tracker.event(event);
+    guint key = 0;
+    if (event->type == GDK_KEY_PRESS) {
+        key = shortcut_key(event->key);
+    }
+
+    // Single handle adjustments go here.
+    if (_selection.size() == 1 && event->type == GDK_KEY_PRESS) {
+        do {
+            Node *n = dynamic_cast<Node *>(*_selection.begin());
+            if (!n) break;
+
+            PathManipulator &pm = n->nodeList().subpathList().pm();
+
+            int which = 0;
+            if (_tracker.rightAlt() || _tracker.rightControl()) {
+                which = 1;
+            }
+            if (_tracker.leftAlt() || _tracker.leftControl()) {
+                if (which != 0) break; // ambiguous
+                which = -1;
+            }
+            if (which == 0) break; // no handle chosen
+            bool one_pixel = _tracker.leftAlt() || _tracker.rightAlt();
+
+            switch (key) {
+            // single handle functions
+            // rotation
+            case GDK_bracketleft:
+            case GDK_braceleft:
+                pm.rotateHandle(n, which, 1, one_pixel);
+                break;
+            case GDK_bracketright:
+            case GDK_braceright:
+                pm.rotateHandle(n, which, -1, one_pixel);
+                break;
+            // adjust length
+            case GDK_period:
+            case GDK_greater:
+                pm.scaleHandle(n, which, 1, one_pixel);
+                break;
+            case GDK_comma:
+            case GDK_less:
+                pm.scaleHandle(n, which, -1, one_pixel);
+                break;
+            }
+            return true;
+        } while(0);
+    }
+
+
     switch (event->type) {
     case GDK_KEY_PRESS:
-        switch (shortcut_key(event->key)) {
+        switch (key) {
         case GDK_Insert:
         case GDK_KP_Insert:
             // Insert - insert nodes in the middle of selected segments

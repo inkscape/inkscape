@@ -12,6 +12,8 @@ ink_common_sources += \
 	ui/tool/event-utils.h			\
 	ui/tool/manipulator.cpp			\
 	ui/tool/manipulator.h			\
+	ui/tool/modifier-tracker.cpp			\
+	ui/tool/modifier-tracker.h			\
 	ui/tool/multi-path-manipulator.cpp	\
 	ui/tool/multi-path-manipulator.h	\
 	ui/tool/node.cpp			\

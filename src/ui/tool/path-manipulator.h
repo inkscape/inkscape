@@ -36,6 +36,7 @@ class CurveDragPoint;
 class PathCanvasGroups;
 class MultiPathManipulator;
 class Node;
+class Handle;
 
 struct PathSharedData {
     NodeSharedData node_data;
@@ -76,6 +77,9 @@ public:
     void reverseSubpaths(bool selected_only);
     void setSegmentType(SegmentType);
 
+    void scaleHandle(Node *n, int which, int dir, bool pixel);
+    void rotateHandle(Node *n, int which, int dir, bool pixel);
+
     void showOutline(bool show);
     void showHandles(bool show);
     void showPathDirection(bool show);
@@ -83,6 +87,7 @@ public:
     void setLiveObjects(bool set);
     void setControlsTransform(Geom::Matrix const &);
     void hideDragPoint();
+    MultiPathManipulator &mpm() { return _multi_path_manipulator; }
 
     NodeList::iterator subdivideSegment(NodeList::iterator after, double t);
     NodeList::iterator extremeNode(NodeList::iterator origin, bool search_selected,
@@ -113,9 +118,11 @@ private:
     void _externalChange(unsigned type);
     void _removeNodesFromSelection();
     void _commit(Glib::ustring const &annotation);
+    void _commit(Glib::ustring const &annotation, gchar const *key);
     void _updateDragPoint(Geom::Point const &);
     void _updateOutlineOnZoomChange();
     double _getStrokeTolerance();
+    Handle *_chooseHandle(Node *n, int which);
 
     SubpathList _subpaths;
     MultiPathManipulator &_multi_path_manipulator;
