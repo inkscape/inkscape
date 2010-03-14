@@ -235,9 +235,13 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     Geom::Point parent_pos = _parent->position();
     Geom::Point origin = _last_drag_origin();
+    SnapManager &sm = _desktop->namedview->snap_manager;
+    bool snap = sm.someSnapperMightSnap();
+
     // with Alt, preserve length
     if (held_alt(*event)) {
         new_pos = parent_pos + Geom::unit_vector(new_pos - parent_pos) * _saved_length;
+        snap = false;
     }
     // with Ctrl, constrain to M_PI/rotationsnapsperpi increments from vertical
     // and the original position.
@@ -246,7 +250,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         int snaps = 2 * prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
 
         // note: if snapping to the original position is only desired in the original
-        // direction of the handle, change 2nd line below to Ray instead of Line
+        // direction of the handle, change to Ray instead of Line
         Geom::Line original_line(parent_pos, origin);
         Geom::Point snap_pos = parent_pos + Geom::constrain_angle(
             Geom::Point(0,0), new_pos - parent_pos, snaps, Geom::Point(1,0));
@@ -257,7 +261,34 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         } else {
             new_pos = orig_pos;
         }
+        snap = false;
     }
+
+    std::vector<Inkscape::SnapCandidatePoint> unselected;
+    if (snap) {
+        typedef ControlPointSelection::Set Set;
+        Set &nodes = _parent->_selection.allPoints();
+        for (Set::iterator i = nodes.begin(); i != nodes.end(); ++i) {
+            Node *n = static_cast<Node*>(*i);
+            Inkscape::SnapCandidatePoint p(n->position(), n->_snapSourceType(), n->_snapTargetType());
+            unselected.push_back(p);
+        }
+        sm.setupIgnoreSelection(_desktop, true, &unselected);
+
+        Node *node_away = (this == &_parent->_front ? _parent->_prev() : _parent->_next());
+        if (_parent->type() == NODE_SMOOTH && Node::_is_line_segment(_parent, node_away)) {
+            Inkscape::Snapper::ConstraintLine cl(_parent->position(),
+                _parent->position() - node_away->position());
+            Inkscape::SnappedPoint p;
+            p = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, SNAPSOURCE_NODE_HANDLE), cl);
+            if (p.getSnapped()) {
+                p.getPoint(new_pos);
+            }
+        } else {
+            sm.freeSnapReturnByRef(new_pos, SNAPSOURCE_NODE_HANDLE);
+        }
+    }
+
     // with Shift, if the node is cusp, rotate the other handle as well
     if (_parent->type() == NODE_CUSP && !_drag_out) {
         if (held_shift(*event)) {
@@ -269,6 +300,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             other().setPosition(_saved_other_pos);
         }
     }
+    move(new_pos); // needed for correct update, even though it's redundant
     _pm().update();
 }
 
@@ -346,11 +378,11 @@ Glib::ustring Handle::_getTip(unsigned state)
         if (state_held_control(state)) {
             if (state_held_shift(state) && can_shift_rotate) {
                 return format_tip(C_("Path handle tip",
-                    "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"),
+                    "<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both handles"),
                     snap_increment_degrees());
             } else {
                 return format_tip(C_("Path handle tip",
-                    "<b>Shift+Ctrl:</b> snap rotation angle to %g° increments and rotate both handles"),
+                    "<b>Ctrl:</b> snap rotation angle to %g° increments, click to retract"),
                     snap_increment_degrees());
             }
         } else if (state_held_shift(state) && can_shift_rotate) {
@@ -943,7 +975,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                 unselected.push_back(p);
             }
         }
-        sm.setupIgnoreSelection(_desktop, true, &unselected);
+        sm.setupIgnoreSelection(_desktop, false, &unselected);
     }
 
     if (held_control(*event)) {
@@ -984,10 +1016,10 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             }
             if (fp.getSnapped() || bp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
-                    bp.getPoint(new_pos);
-                } else {
-                    fp.getPoint(new_pos);
+                    fp = bp;
                 }
+                fp.getPoint(new_pos);
+                _desktop->snapindicator->set_new_snaptarget(fp);
             } else {
                 boost::optional<Geom::Point> pos;
                 if (line_front) {
@@ -1018,6 +1050,9 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                     fp = bp;
                 }
                 fp.getPoint(new_pos);
+                if (fp.getTarget() != SNAPTARGET_CONSTRAINT) {
+                    _desktop->snapindicator->set_new_snaptarget(fp);
+                }
             } else {
                 Geom::Point origin = _last_drag_origin();
                 Geom::Point delta = new_pos - origin;
@@ -1026,7 +1061,11 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             }
         }
     } else if (snap) {
-        sm.freeSnapReturnByRef(new_pos, _snapSourceType());
+        Inkscape::SnappedPoint p = sm.freeSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()));
+        if (p.getSnapped()) {
+            p.getPoint(new_pos);
+            _desktop->snapindicator->set_new_snaptarget(p);
+        }
     }
 
     SelectableControlPoint::dragged(new_pos, event);

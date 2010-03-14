@@ -1045,6 +1045,7 @@ void PathManipulator::_createControlPointsFromGeometry()
     // we need to set the nodetypes after all the handles are in place,
     // so that pickBestType works correctly
     // TODO maybe migrate to inkscape:node-types?
+    // TODO move this into SPPath - do not manipulate directly
     gchar const *nts_raw = _path ? _path->repr->attribute(_nodetypesKey().data()) : 0;
     std::string nodetype_string = nts_raw ? nts_raw : "";
     /* Calculate the needed length of the nodetype string.
