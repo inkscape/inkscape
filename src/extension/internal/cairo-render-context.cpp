@@ -80,7 +80,7 @@
 #include <pango/pangofc-fontmap.h>
 
 //#define TRACE(_args) g_printf _args
-#define TRACE(_args)
+#define TRACE(_args) g_message _args
 //#define TEST(_args) _args
 #define TEST(_args)
 
@@ -662,7 +662,11 @@ CairoRenderContext::popLayer(void)
                 surface_width *= 1.25;
                 surface_height *= 1.25;
             }
-            mask_ctx->setupSurface( surface_width, surface_height );
+            if (!mask_ctx->setupSurface( surface_width, surface_height )) {
+                TRACE(("mask: setupSurface failed\n"));
+                _renderer->destroyContext(mask_ctx);
+                return;
+            }
             TRACE(("mask surface: %f x %f at %i dpi\n", surface_width, surface_height, _dpi ));
 
             // set rendering mode to normal
@@ -815,6 +819,7 @@ CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector, c
 bool
 CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm)
 {
+g_message("enter");
     if(surface == NULL) {
         return false;
     }
@@ -841,7 +846,7 @@ CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t
     }
 
     _is_valid = TRUE;
-
+g_message("leave");
     return true;
 }
 
