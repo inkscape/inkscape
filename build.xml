@@ -31,7 +31,7 @@
 ## P R O J E C T   :   I N K S C A P E
 ########################################################################
 -->
-<project name="Inkscape" default="dist-inkscape" basedir=".">
+<project name="Inkscape" default="dist-all" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
         was written for GTK-2.10 on Win32, but it should work
