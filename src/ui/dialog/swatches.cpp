@@ -1,3 +1,4 @@
+
 /** @file
  * @brief Color swatches dialog
  */
@@ -48,7 +49,6 @@
 #include "display/nr-plain-stuff.h"
 #include "sp-gradient-reference.h"
 
-#define USE_DOCUMENT_PALETTE 1
 
 namespace Inkscape {
 namespace UI {
@@ -60,8 +60,13 @@ namespace Dialogs {
 void _loadPaletteFile( gchar const *filename );
 
 
+class DocTrack;
 
-std::vector<JustForNow*> possible;
+std::vector<SwatchPage*> possible;
+static std::map<SPDocument*, SwatchPage*> docPalettes;
+static std::vector<DocTrack*> docTrackings;
+static std::map<SwatchesPanel*, SPDocument*> docPerPanel;
+
 
 
 static void handleClick( GtkWidget* /*widget*/, gpointer callback_data ) {
@@ -81,6 +86,7 @@ static void handleSecondaryClick( GtkWidget* /*widget*/, gint /*arg1*/, gpointer
 static GtkWidget* popupMenu = 0;
 static std::vector<GtkWidget*> popupExtras;
 static ColorItem* bounceTarget = 0;
+static SwatchesPanel* bouncePanel = 0;
 
 static void redirClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
 {
@@ -96,7 +102,6 @@ static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
     }
 }
 
-#if USE_DOCUMENT_PALETTE
 static void editGradientImpl( SPGradient* gr )
 {
     if ( gr ) {
@@ -108,7 +113,7 @@ static void editGradientImpl( SPGradient* gr )
 static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
 {
     if ( bounceTarget ) {
-        SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
+        SwatchesPanel* swp = bouncePanel;
         SPDesktop* desktop = swp ? swp->getDesktop() : 0;
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
@@ -128,7 +133,7 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
 static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
 {
     if ( bounceTarget ) {
-        SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
+        SwatchesPanel* swp = bouncePanel;
         SPDesktop* desktop = swp ? swp->getDesktop() : 0;
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
@@ -150,20 +155,35 @@ static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
 
 
             editGradientImpl( gr );
-            // Work-around for timing of gradient addition change. Must follow edit.
-            if ( swp ) {
-                swp->handleGradientsChange();
-            }
         }
     }
 }
-#endif // USE_DOCUMENT_PALETTE
 
-gboolean colorItemHandleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event, gpointer user_data)
+static SwatchesPanel* findContainingPanel( GtkWidget *widget )
+{
+    SwatchesPanel *swp = 0;
+
+    std::map<GtkWidget*, SwatchesPanel*> rawObjects;
+    for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); it != docPerPanel.end(); ++it) {
+        rawObjects[GTK_WIDGET(it->first->gobj())] = it->first;
+    }
+
+    for (GtkWidget* curr = widget; curr && !swp; curr = gtk_widget_get_parent(curr)) {
+        if (rawObjects.find(curr) != rawObjects.end()) {
+            swp = rawObjects[curr];
+        }
+    }
+
+    return swp;
+}
+
+gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, gpointer user_data)
 {
     gboolean handled = FALSE;
 
     if ( (event->button == 3) && (event->type == GDK_BUTTON_PRESS) ) {
+        SwatchesPanel* swp = findContainingPanel( widget );
+
         if ( !popupMenu ) {
             popupMenu = gtk_menu_new();
             GtkWidget* child = 0;
@@ -185,7 +205,6 @@ gboolean colorItemHandleButtonPress( GtkWidget* /*widget*/, GdkEventButton* even
                               user_data);
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
 
-#if USE_DOCUMENT_PALETTE
             child = gtk_separator_menu_item_new();
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             popupExtras.push_back(child);
@@ -219,20 +238,19 @@ gboolean colorItemHandleButtonPress( GtkWidget* /*widget*/, GdkEventButton* even
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             //popupExtras.push_back(child);
             gtk_widget_set_sensitive( child, FALSE );
-#endif // USE_DOCUMENT_PALETTE
 
             gtk_widget_show_all(popupMenu);
         }
 
         ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
         if ( item ) {
-            SwatchesPanel* swp = item->ptr ? reinterpret_cast<SwatchesPanel*>(item->ptr) : 0;
             bool show = swp && (swp->getSelectedIndex() == 0);
             for ( std::vector<GtkWidget*>::iterator it = popupExtras.begin(); it != popupExtras.end(); ++ it) {
                 gtk_widget_set_sensitive(*it, show);
             }
 
             bounceTarget = item;
+            bouncePanel = swp;
             if ( popupMenu ) {
                 gtk_menu_popup(GTK_MENU(popupMenu), NULL, NULL, NULL, NULL, event->button, event->time);
                 handled = TRUE;
@@ -288,7 +306,7 @@ void _loadPaletteFile( gchar const *filename )
                 bool inHeader = true;
                 bool hasErr = false;
 
-                JustForNow *onceMore = new JustForNow();
+                SwatchPage *onceMore = new SwatchPage();
 
                 do {
                     result = fgets( block, sizeof(block), f );
@@ -464,46 +482,45 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     _remove(0),
     _currentIndex(0),
     _currentDesktop(0),
-    _currentDocument(0),
-    _ptr(0)
+    _currentDocument(0)
 {
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
     _clear = new ColorItem( ege::PaintDef::CLEAR );
-    _clear->ptr = this;
     _remove = new ColorItem( ege::PaintDef::NONE );
-    _remove->ptr = this;
-#if USE_DOCUMENT_PALETTE
-    {
-        JustForNow *docPalette = new JustForNow();
+    if (docPalettes.empty()) {
+        SwatchPage *docPalette = new SwatchPage();
 
         docPalette->_name = "Auto";
-        possible.push_back(docPalette);
-
-        _ptr = docPalette;
+        docPalettes[0] = docPalette;
     }
-#endif // USE_DOCUMENT_PALETTE
+
     loadEmUp();
     if ( !possible.empty() ) {
-        JustForNow* first = 0;
+        SwatchPage* first = 0;
         int index = 0;
         Glib::ustring targetName;
         if ( !_prefs_path.empty() ) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             targetName = prefs->getString(_prefs_path + "/palette");
             if (!targetName.empty()) {
-                for ( std::vector<JustForNow*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
-                    if ( (*iter)->_name == targetName ) {
-                        first = *iter;
-                        break;
-                    }
+                if (targetName == "Auto") {
+                    first = docPalettes[0];
+                } else {
                     index++;
+                    for ( std::vector<SwatchPage*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
+                        if ( (*iter)->_name == targetName ) {
+                            first = *iter;
+                            break;
+                        }
+                        index++;
+                    }
                 }
             }
         }
 
         if ( !first ) {
-            first = possible.front();
+            first = docPalettes[0];
             _currentIndex = 0;
         } else {
             _currentIndex = index;
@@ -514,8 +531,9 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
         Gtk::RadioMenuItem::Group groupOne;
 
         int i = 0;
-        for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end(); it++ ) {
-            JustForNow* curr = *it;
+        std::vector<SwatchPage*> swatchSets = _getSwatchSets();
+        for ( std::vector<SwatchPage*>::iterator it = swatchSets.begin(); it != swatchSets.end(); it++ ) {
+            SwatchPage* curr = *it;
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, curr->_name));
             if ( curr == first ) {
                 hotItem = single;
@@ -539,13 +557,10 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
 SwatchesPanel::~SwatchesPanel()
 {
+    _trackDocument( this, 0 );
+
     _documentConnection.disconnect();
-    _resourceConnection.disconnect();
     _selChanged.disconnect();
-    _setModified.disconnect();
-    _subselChanged.disconnect();
-    _defsChanged.disconnect();
-    _defsModified.disconnect();
 
     if ( _clear ) {
         delete _clear;
@@ -575,8 +590,6 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
         if ( _currentDesktop ) {
             _documentConnection.disconnect();
             _selChanged.disconnect();
-            _setModified.disconnect();
-            _subselChanged.disconnect();
         }
 
         _currentDesktop = desktop;
@@ -597,41 +610,112 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
             _documentConnection = desktop->connectDocumentReplaced( slot2 );
 
             _setDocument( desktop->doc() );
+            handleGradientsChange( desktop->doc() );
         } else {
             _setDocument(0);
         }
     }
 }
 
-void SwatchesPanel::_setDocument( SPDocument *document )
+
+class DocTrack
 {
-    if ( document != _currentDocument ) {
-        if ( _currentDocument ) {
-            _resourceConnection.disconnect();
-            _defsChanged.disconnect();
-            _defsModified.disconnect();
-        }
-        _currentDocument = document;
-        if ( _currentDocument ) {
-            _resourceConnection = sp_document_resources_changed_connect(document,
-                                                                        "gradient",
-                                                                        sigc::mem_fun(*this, &SwatchesPanel::handleGradientsChange));
+public:
+    DocTrack(SPDocument *doc, sigc::connection &gradientRsrcChanged, sigc::connection &defsChanged, sigc::connection &defsModified) :
+        doc(doc),
+        gradientRsrcChanged(gradientRsrcChanged),
+        defsChanged(defsChanged),
+        defsModified(defsModified)
+    {
+    }
 
-            // connect to release and modified signals of the defs (i.e. when someone changes gradient)
-            _defsChanged = SP_DOCUMENT_DEFS(document)->connectRelease(sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::handleDefsModified)));
-            _defsModified = SP_DOCUMENT_DEFS(document)->connectModified(sigc::hide(sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::handleDefsModified))));
+    ~DocTrack()
+    {
+        if (doc) {
+            gradientRsrcChanged.disconnect();
+            defsChanged.disconnect();
+            defsModified.disconnect();
+        }
+    }
+
+    SPDocument *doc;
+    sigc::connection gradientRsrcChanged;
+    sigc::connection defsChanged;
+    sigc::connection defsModified;
+
+private:
+    DocTrack(DocTrack const &); // no copy
+    DocTrack &operator=(DocTrack const &); // no assign
+};
+
+void SwatchesPanel::_trackDocument( SwatchesPanel *panel, SPDocument *document )
+{
+    SPDocument *oldDoc = 0;
+    if (docPerPanel.find(panel) != docPerPanel.end()) {
+        oldDoc = docPerPanel[panel];
+        if (!oldDoc) {
+            docPerPanel.erase(panel); // Should not be needed, but clean up just in case.
+        }
+    }
+    if (oldDoc != document) {
+        if (oldDoc) {
+            docPerPanel[panel] = 0;
+            bool found = false;
+            for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); (it != docPerPanel.end()) && !found; ++it) {
+                found = (it->second == document);
+            }
+            if (!found) {
+                for (std::vector<DocTrack*>::iterator it = docTrackings.begin(); it != docTrackings.end(); ++it){
+                    if ((*it)->doc == oldDoc) {
+                        delete *it;
+                        docTrackings.erase(it);
+                        break;
+                    }
+                }
+            }
         }
 
-        handleGradientsChange();
+        if (document) {
+            bool found = false;
+            for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); (it != docPerPanel.end()) && !found; ++it) {
+                found = (it->second == document);
+            }
+            docPerPanel[panel] = document;
+            if (!found) {
+                sigc::connection conn1 = sp_document_resources_changed_connect( document, "gradient", sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleGradientsChange), document) );
+                sigc::connection conn2 = SP_DOCUMENT_DEFS(document)->connectRelease( sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document)) );
+                sigc::connection conn3 = SP_DOCUMENT_DEFS(document)->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&SwatchesPanel::handleDefsModified), document))) );
+
+                DocTrack *dt = new DocTrack(document, conn1, conn2, conn3);
+                docTrackings.push_back(dt);
+
+                if (docPalettes.find(document) == docPalettes.end()) {
+                    SwatchPage *docPalette = new SwatchPage();
+                    docPalette->_name = "Auto";
+                    docPalettes[document] = docPalette;
+                }
+            }
+        }
+    }
+
+    std::set<SPDocument*> docs;
+    for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); it != docPerPanel.end(); ++it) {
+        docs.insert(it->second);
     }
 }
 
-#if USE_DOCUMENT_PALETTE
+void SwatchesPanel::_setDocument( SPDocument *document )
+{
+    if ( document != _currentDocument ) {
+        _trackDocument(this, document);
+        _currentDocument = document;
+    }
+}
+
 static void recalcSwatchContents(SPDocument* doc,
                 std::vector<ColorItem*> &tmpColors,
                 std::map<ColorItem*, guchar*> &previewMappings,
-                std::map<ColorItem*, SPGradient*> &gradMappings,
-                void* ptr)
+                std::map<ColorItem*, SPGradient*> &gradMappings)
 {
     std::vector<SPGradient*> newList;
 
@@ -660,7 +744,6 @@ static void recalcSwatchContents(SPDocument* doc,
             unsigned int g = SP_RGBA32_G_U(together);
             unsigned int b = SP_RGBA32_B_U(together);
             ColorItem* item = new ColorItem( r, g, b, name );
-            item->ptr = ptr;
 
             gint width = PREVIEW_PIXBUF_WIDTH;
             gint height = VBLOCK;
@@ -678,81 +761,90 @@ static void recalcSwatchContents(SPDocument* doc,
         }
     }
 }
-#endif // USE_DOCUMENT_PALETTE
 
-void SwatchesPanel::handleGradientsChange()
+void SwatchesPanel::handleGradientsChange(SPDocument *document)
 {
-// Invoked when the list of gradients itself changes due to additions, removals, etc.
-#if USE_DOCUMENT_PALETTE
-    if ( _ptr ) {
-        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
-        if (docPalette) {
-            std::vector<ColorItem*> tmpColors;
-            std::map<ColorItem*, guchar*> tmpPrevs;
-            std::map<ColorItem*, SPGradient*> tmpGrads;
-            recalcSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
+    SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
+    if (docPalette) {
+        std::vector<ColorItem*> tmpColors;
+        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, SPGradient*> tmpGrads;
+        recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
 
-            for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
-                it->first->setPixData(it->second, PREVIEW_PIXBUF_WIDTH, VBLOCK);
-            }
+        for (std::map<ColorItem*, guchar*>::iterator it = tmpPrevs.begin(); it != tmpPrevs.end(); ++it) {
+            it->first->setPixData(it->second, PREVIEW_PIXBUF_WIDTH, VBLOCK);
+        }
 
-            for (std::map<ColorItem*, SPGradient*>::iterator it = tmpGrads.begin(); it != tmpGrads.end(); ++it) {
-                it->first->setGradient(it->second);
-            }
+        for (std::map<ColorItem*, SPGradient*>::iterator it = tmpGrads.begin(); it != tmpGrads.end(); ++it) {
+            it->first->setGradient(it->second);
+        }
 
-            docPalette->_colors.swap(tmpColors);
-            for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
-                delete *it;
-            }
+        docPalette->_colors.swap(tmpColors);
+        for (std::vector<ColorItem*>::iterator it = tmpColors.begin(); it != tmpColors.end(); ++it) {
+            delete *it;
+        }
 
-            JustForNow* curr = possible[_currentIndex];
-            if (curr == docPalette) {
-                _rebuild();
+
+        // Figure out which SwatchesPanel instances are affected and update them.
+
+        for (std::map<SwatchesPanel*, SPDocument*>::iterator it = docPerPanel.begin(); it != docPerPanel.end(); ++it) {
+            if (it->second == document) {
+                SwatchesPanel* swp = it->first;
+                std::vector<SwatchPage*> pages = swp->_getSwatchSets();
+                SwatchPage* curr = pages[swp->_currentIndex];
+                if (curr == docPalette) {
+                    swp->_rebuild();
+                }
             }
         }
     }
-#endif // USE_DOCUMENT_PALETTE
 }
 
-void SwatchesPanel::handleDefsModified()
+void SwatchesPanel::handleDefsModified(SPDocument *document)
 {
-#if USE_DOCUMENT_PALETTE
-    if ( _ptr ) {
-        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
-        if (docPalette) {
-            std::vector<ColorItem*> tmpColors;
-            std::map<ColorItem*, guchar*> tmpPrevs;
-            std::map<ColorItem*, SPGradient*> tmpGrads;
-            recalcSwatchContents(_currentDocument, tmpColors, tmpPrevs, tmpGrads, this);
+    SwatchPage *docPalette = (docPalettes.find(document) != docPalettes.end()) ? docPalettes[document] : 0;
+    if (docPalette) {
+        std::vector<ColorItem*> tmpColors;
+        std::map<ColorItem*, guchar*> tmpPrevs;
+        std::map<ColorItem*, SPGradient*> tmpGrads;
+        recalcSwatchContents(document, tmpColors, tmpPrevs, tmpGrads);
 
-            int cap = std::min(docPalette->_colors.size(), tmpColors.size());
-            for (int i = 0; i < cap; i++) {
-                ColorItem* newColor = tmpColors[i];
-                ColorItem* oldColor = docPalette->_colors[i];
-                if ( (newColor->def.getType() != oldColor->def.getType()) ||
-                     (newColor->def.getR() != oldColor->def.getR()) ||
-                     (newColor->def.getG() != oldColor->def.getG()) ||
-                     (newColor->def.getB() != oldColor->def.getB()) ) {
-                    oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
-                }
-                if (tmpGrads.find(newColor) != tmpGrads.end()) {
-                    oldColor->setGradient(tmpGrads[newColor]);
-                }
-                if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
-                    oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
-                }
+        int cap = std::min(docPalette->_colors.size(), tmpColors.size());
+        for (int i = 0; i < cap; i++) {
+            ColorItem* newColor = tmpColors[i];
+            ColorItem* oldColor = docPalette->_colors[i];
+            if ( (newColor->def.getType() != oldColor->def.getType()) ||
+                 (newColor->def.getR() != oldColor->def.getR()) ||
+                 (newColor->def.getG() != oldColor->def.getG()) ||
+                 (newColor->def.getB() != oldColor->def.getB()) ) {
+                oldColor->def.setRGB(newColor->def.getR(), newColor->def.getG(), newColor->def.getB());
+            }
+            if (tmpGrads.find(newColor) != tmpGrads.end()) {
+                oldColor->setGradient(tmpGrads[newColor]);
+            }
+            if ( tmpPrevs.find(newColor) != tmpPrevs.end() ) {
+                oldColor->setPixData(tmpPrevs[newColor], PREVIEW_PIXBUF_WIDTH, VBLOCK);
             }
         }
     }
-#endif // USE_DOCUMENT_PALETTE
+}
+
+std::vector<SwatchPage*> SwatchesPanel::_getSwatchSets() const
+{
+    std::vector<SwatchPage*> tmp;
+    if (docPalettes.find(_currentDocument) != docPalettes.end()) {
+        tmp.push_back(docPalettes[_currentDocument]);
+    }
+
+    tmp.insert(tmp.end(), possible.begin(), possible.end());
+
+    return tmp;
 }
 
 void SwatchesPanel::_updateFromSelection()
 {
-#if USE_DOCUMENT_PALETTE
-    if ( _ptr ) {
-        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
-
+    SwatchPage *docPalette = (docPalettes.find(_currentDocument) != docPalettes.end()) ? docPalettes[_currentDocument] : 0;
+    if ( docPalette ) {
         Glib::ustring fillId;
         Glib::ustring strokeId;
 
@@ -827,7 +919,6 @@ void SwatchesPanel::_updateFromSelection()
             item->setState( isFill, isStroke );
         }
     }
-#endif // USE_DOCUMENT_PALETTE
 }
 
 void SwatchesPanel::_handleAction( int setId, int itemId )
@@ -835,12 +926,13 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
     switch( setId ) {
         case 3:
         {
-            if ( itemId >= 0 && itemId < static_cast<int>(possible.size()) ) {
+            std::vector<SwatchPage*> pages = _getSwatchSets();
+            if ( itemId >= 0 && itemId < static_cast<int>(pages.size()) ) {
                 _currentIndex = itemId;
 
                 if ( !_prefs_path.empty() ) {
                     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                    prefs->setString(_prefs_path + "/palette", possible[_currentIndex]->_name);
+                    prefs->setString(_prefs_path + "/palette", pages[_currentIndex]->_name);
                 }
 
                 _rebuild();
@@ -852,7 +944,8 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
 
 void SwatchesPanel::_rebuild()
 {
-    JustForNow* curr = possible[_currentIndex];
+    std::vector<SwatchPage*> pages = _getSwatchSets();
+    SwatchPage* curr = pages[_currentIndex];
     _holder->clear();
 
     if ( curr->_prefWidth > 0 ) {

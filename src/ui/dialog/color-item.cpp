@@ -41,10 +41,13 @@ static std::vector<std::string> mimeStrings;
 static std::map<std::string, guint> mimeToInt;
 
 
+#if ENABLE_MAGIC_COLORS
 // TODO remove this soon:
-extern std::vector<JustForNow*> possible;
+extern std::vector<SwatchPage*> possible;
+#endif // ENABLE_MAGIC_COLORS
 
 
+#if ENABLE_MAGIC_COLORS
 static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::ustring const& match, int r, int g, int b )
 {
     bool changed = false;
@@ -88,6 +91,7 @@ static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::u
 
     return changed;
 }
+#endif // ENABLE_MAGIC_COLORS
 
 static void handleClick( GtkWidget* /*widget*/, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
@@ -246,21 +250,21 @@ static void colorItemDragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpoin
 // }
 
 
-JustForNow::JustForNow() :
+SwatchPage::SwatchPage() :
     _name(),
     _prefWidth(0),
     _colors()
 {
 }
 
-JustForNow::~JustForNow()
+SwatchPage::~SwatchPage()
 {
 }
 
 
 ColorItem::ColorItem(ege::PaintDef::ColorType type) :
+    Previewable(),
     def(type),
-    ptr(0),
     tips(),
     _previews(),
     _isFill(false),
@@ -270,6 +274,7 @@ ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     _linkPercent(0),
     _linkGray(0),
     _linkSrc(0),
+    _grad(0),
     _pixData(0),
     _pixWidth(0),
     _pixHeight(0),
@@ -278,8 +283,8 @@ ColorItem::ColorItem(ege::PaintDef::ColorType type) :
 }
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
+    Previewable(),
     def( r, g, b, name ),
-    ptr(0),
     tips(),
     _previews(),
     _isFill(false),
@@ -289,6 +294,7 @@ ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustr
     _linkPercent(0),
     _linkGray(0),
     _linkSrc(0),
+    _grad(0),
     _pixData(0),
     _pixWidth(0),
     _pixHeight(0),
@@ -445,6 +451,7 @@ void ColorItem::_updatePreviews()
     }
 
 
+#if ENABLE_MAGIC_COLORS
     // Look for objects using this color
     {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -457,8 +464,8 @@ void ColorItem::_updatePreviews()
                 Glib::ustring paletteName;
                 bool found = false;
                 int index = 0;
-                for ( std::vector<JustForNow*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
-                    JustForNow* curr = *it2;
+                for ( std::vector<SwatchPage*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
+                    SwatchPage* curr = *it2;
                     index = 0;
                     for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
                         if ( this == *zz ) {
@@ -485,6 +492,7 @@ void ColorItem::_updatePreviews()
             }
         }
     }
+#endif // ENABLE_MAGIC_COLORS
 
 }
 
@@ -715,7 +723,7 @@ void ColorItem::buttonClicked(bool secondary)
     }
 }
 
-void ColorItem::_wireMagicColors( JustForNow *colorSet )
+void ColorItem::_wireMagicColors( SwatchPage *colorSet )
 {
     if ( colorSet )
     {

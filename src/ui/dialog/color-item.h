@@ -25,11 +25,11 @@ namespace Dialogs {
 
 class ColorItem;
 
-class JustForNow
+class SwatchPage
 {
 public:
-    JustForNow();
-    ~JustForNow();
+    SwatchPage();
+    ~SwatchPage();
 
     Glib::ustring _name;
     int _prefWidth;
@@ -66,9 +66,9 @@ public:
     bool isStroke() { return _isStroke; }
 
     ege::PaintDef def;
-    void* ptr;
 
 private:
+
     static void _dropDataIn( GtkWidget *widget,
                              GdkDragContext *drag_context,
                              gint x, gint y,
@@ -84,7 +84,7 @@ private:
                                    guint time,
                                    gpointer user_data);
 
-    static void _wireMagicColors( JustForNow *colorSet );
+    static void _wireMagicColors( SwatchPage *colorSet );
     static void _colorDefChanged(void* data);
 
     void _updatePreviews();
