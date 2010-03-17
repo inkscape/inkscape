@@ -100,7 +100,13 @@ class WebSlicer_CreateRect(inkex.Effect):
             self.options.name = name+'-'+num_s
 
 
+    def validate_options(self):
+        self.options.format = self.options.ensure_value('format', 'png').lower()
+        if not is_empty( self.options.dimension ):
+            self.options.dimension
+
     def effect(self):
+        self.validate_options()
         layer = self.get_slicer_layer()
         #TODO: get selected elements to define location and size
         rect = inkex.etree.SubElement(layer, 'rect')
@@ -120,7 +126,32 @@ class WebSlicer_CreateRect(inkex.Effect):
             conf_txt += "dpi:"     + str(self.options.dpi) +"\n"
         if not is_empty(self.options.html_id):
             conf_txt += "html-id:" + self.options.html_id
-        desc.text = conf_txt
+        desc.text = "\n".join( self.get_full_conf_list() )
+
+
+
+    def get_conf_from_list(self, conf_atts):
+        conf_list = []
+        for att in conf_atts:
+            if not is_empty(getattr(self.options, att)):
+                conf_list.append( att +':'+ str(getattr(self.options, att)) )
+        return conf_list
+
+
+    def get_full_conf_list(self):
+        conf_list = [ 'format:'+self.options.format ]
+        if self.options.format == 'gif':
+            conf_list.extend( get_conf_from_list([ 'gif_type', 'palette_size' ]) )
+        if self.options.format == 'jpg':
+            conf_list.extend( get_conf_from_list([ 'quality' ]) )
+        conf_general_atts = [
+                'dpi', 'dimension',
+                'bg_color', 'html_id', 'html_class',
+                'layout_disposition', 'layout_position_anchor'
+            ]
+        conf_list.extend( get_conf_from_list(conf_general_atts) )
+        return conf_list
+
 
     def get_slicer_layer(self):
         # Test if webslicer-layer layer existis
@@ -136,6 +167,7 @@ class WebSlicer_CreateRect(inkex.Effect):
         else:
             layer = layer[0]
         return layer
+
 
 if __name__ == '__main__':
     e = WebSlicer_CreateRect()

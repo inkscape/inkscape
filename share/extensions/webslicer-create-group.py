@@ -51,9 +51,14 @@ class WebSlicer_CreateGroup(inkex.Effect):
 
 
     def get_base_elements(self):
-        self.layer = self.document.xpath(
-                     '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
-                     namespaces=inkex.NSS)[0]
+        layerArr = self.document.xpath(
+                   '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
+                   namespaces=inkex.NSS)
+        if len(layerArr) > 0:
+            self.layer = layerArr[0]
+        else:
+            inkex.errormsg(_('You must to create and select some "Slicer rectangles" before try to group.'))
+            exit(3)
         self.layer_descendants = self.get_descendants_in_array(self.layer)
 
 
@@ -74,7 +79,6 @@ class WebSlicer_CreateGroup(inkex.Effect):
                 inkex.errormsg(_('Opss... The element "%s" is not in the Web Slicer layer') % id)
                 exit(2)
         g_parent = self.getParentNode(node)
-        inkex.errormsg( g_parent.get('id') )
         group = inkex.etree.SubElement(g_parent, 'g')
         desc = inkex.etree.SubElement(group, 'desc')
         conf_txt = ''
