@@ -148,7 +148,7 @@ GdkpixbufInput::init(void)
                     "<name>" N_("%s GDK pixbuf Input") "</name>\n"
                     "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
                     "<param name=\"link\" gui-text=\""
-                        N_("Link image (leave unchecked if in doubt)")
+                        N_("Link to image? (Leave unchecked to embed)")
                         "\" type=\"boolean\">false</param>"
                     "<input>\n"
                         "<extension>.%s</extension>\n"
