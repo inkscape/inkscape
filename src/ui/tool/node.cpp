@@ -1006,11 +1006,11 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             // TODO: combine the snap and non-snap branches by modifying snap.h / snap.cpp
             if (snap) {
                 if (line_front) {
-                    fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(),
+                    fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos,
                         _snapSourceType()), *line_front);
                 }
                 if (line_back) {
-                    bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(),
+                    bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos,
                         _snapSourceType()), *line_back);
                 }
             }
@@ -1042,8 +1042,8 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             if (snap) {
                 Inkscape::Snapper::ConstraintLine line_x(origin, Geom::Point(1, 0));
                 Inkscape::Snapper::ConstraintLine line_y(origin, Geom::Point(0, 1));
-                fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_x);
-                bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(position(), _snapSourceType()), line_y);
+                fp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), line_x);
+                bp = sm.constrainedSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()), line_y);
             }
             if (fp.getSnapped() || bp.getSnapped()) {
                 if (fp.isOtherSnapBetter(bp, false)) {
