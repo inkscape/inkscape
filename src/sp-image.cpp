@@ -460,18 +460,15 @@ static GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, g
             youme.offset = 0;
             youme.loader = loader;
 
-            bool dropOut = false;
-            while ( !feof(fp) && !dropOut )
+            while ( !feof(fp) )
             {
                 if ( youme.readMore() ) {
                     if ( youme.first ) {
                         //g_message( "First data chunk" );
                         youme.first = FALSE;
-                        if (!readPngAndHeaders(youme, dpiX, dpiY))
+                        if (readPngAndHeaders(youme, dpiX, dpiY))
                         {
-                            // We failed to read the PNG headers and info.
-                            // The GDK pixbuf loader may still get something.
-                            dropOut = true;
+                            // TODO set the dpi to be read elsewhere
                         }
                     } else if ( !latter ) {
                         latter = TRUE;
