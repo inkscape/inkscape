@@ -485,6 +485,10 @@ sp_star_finish (SPStarContext * sc)
             return;
         }
 
+        // Set transform center, so that odd stars rotate correctly
+        // LP #462157
+        sc->item->setCenter(sc->center);
+
         SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
         SPObject *object = SP_OBJECT(sc->item);
 
