@@ -747,6 +747,7 @@ void PathManipulator::scaleHandle(Node *n, int which, int dir, bool pixel)
 
     Geom::Point relpos;
     if (h->isDegenerate()) {
+        if (dir < 0) return;
         Node *nh = n->nodeToward(h);
         if (!nh) return;
         relpos = Geom::unit_vector(nh->position() - n->position()) * length_change;
@@ -788,20 +789,24 @@ void PathManipulator::rotateHandle(Node *n, int which, int dir, bool pixel)
 
 Handle *PathManipulator::_chooseHandle(Node *n, int which)
 {
-    // Rationale for this choice:
-    // Imagine you have two handles pointing right, where one of them is only slighty higher
-    // than the other. Extending one of the handles could make its X coord larger than
-    // the second one, and keeping the shortcut pressed would result in two handles being
-    // extended alternately. This appears like extending both handles at once and is confusing.
-    // Using the unit vector avoids this problem and remains fairly intuitive.
-    Geom::Point f = Geom::unit_vector(n->front()->position());
-    Geom::Point b = Geom::unit_vector(n->back()->position());
+    NodeList::iterator i = NodeList::get_iterator(n);
+    Node *prev = i.prev().ptr();
+    Node *next = i.next().ptr();
+
+    // on an endnode, the remaining handle automatically wins
+    if (!next) return n->back();
+    if (!prev) return n->front();
+
+    // compare X coord ofline segments
+    Geom::Point npos = next->position();
+    Geom::Point ppos = prev->position();
     if (which < 0) {
         // pick left handle.
         // we just swap the handles and pick the right handle below.
-        std::swap(f, b);
+        std::swap(npos, ppos);
     }
-    if (f[Geom::X] >= b[Geom::X]) {
+
+    if (npos[Geom::X] >= ppos[Geom::X]) {
         return n->front();
     } else {
         return n->back();

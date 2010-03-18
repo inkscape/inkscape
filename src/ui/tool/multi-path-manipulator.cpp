@@ -464,6 +464,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
             }
             if (which == 0) break; // no handle chosen
             bool one_pixel = _tracker.leftAlt() || _tracker.rightAlt();
+            bool handled = true;
 
             switch (key) {
             // single handle functions
@@ -485,8 +486,12 @@ bool MultiPathManipulator::event(GdkEvent *event)
             case GDK_less:
                 pm.scaleHandle(n, which, -1, one_pixel);
                 break;
+            default:
+                handled = false;
+                break;
             }
-            return true;
+
+            if (handled) return true;
         } while(0);
     }
 
