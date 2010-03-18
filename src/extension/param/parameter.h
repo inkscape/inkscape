@@ -98,9 +98,13 @@ public:
     const gchar * get_enum   (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
 
+    gchar const * get_optiongroup( SPDocument const * doc,
+                                   Inkscape::XML::Node const * node);
+
     bool          set_bool   (bool in,          SPDocument * doc, Inkscape::XML::Node * node);
     int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
     float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
+    gchar const * set_optiongroup(gchar const *in, SPDocument * doc, Inkscape::XML::Node *node);
     const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
     guint32       set_color  (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
 

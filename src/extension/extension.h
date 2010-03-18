@@ -139,8 +139,8 @@ public:
                                               g_slist_length(parameters); };
     /** \brief  A function to get the the number of parameters that
                 are visible to the user that the extension has.
-        \return The number of visible parameters. 
-        
+        \return The number of visible parameters.
+
         \note Currently this just calls param_count as visible isn't implemented
               but in the future it'll do something different.  Please call
               the appropriate function in code so that it'll work in the
@@ -153,16 +153,17 @@ public:
     class param_wrong_type {};
     class param_not_color_param {};
     class param_not_enum_param {};
+    class param_not_optiongroup_param {};
     class param_not_string_param {};
     class param_not_float_param {};
     class param_not_int_param {};
     class param_not_bool_param {};
-    
-    /** An error class for when a parameter is looked for that just 
+
+    /** An error class for when a parameter is looked for that just
      * simply doesn't exist */
     class param_not_exist {};
-    
-    /** An error class for when a filename already exists, but the user 
+
+    /** An error class for when a filename already exists, but the user
      * doesn't want to overwrite it */
     class no_overwrite {};
 
@@ -176,37 +177,56 @@ public:
     bool             get_param_bool   (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
     int              get_param_int    (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
     float            get_param_float  (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
     const gchar *    get_param_string (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
     guint32          get_param_color  (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
     const gchar *    get_param_enum   (const gchar * name,
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
+
+    gchar const *get_param_optiongroup( gchar const * name,
+                                        SPDocument const *   doc = 0,
+                                        Inkscape::XML::Node const * node = 0);
+
     bool             set_param_bool   (const gchar * name,
                                        bool          value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
+
     int              set_param_int    (const gchar * name,
                                        int           value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
+
     float            set_param_float  (const gchar * name,
                                        float         value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
+
     const gchar *    set_param_string (const gchar * name,
                                        const gchar * value,
                                        SPDocument *   doc = NULL,
                                        Inkscape::XML::Node *       node = NULL);
+
+    gchar const * set_param_optiongroup(gchar const * name,
+                                        gchar const * value,
+                                        SPDocument * doc = 0,
+                                        Inkscape::XML::Node * node = 0);
+
     guint32          set_param_color  (const gchar * name,
                                        guint32 color,
                                        SPDocument *   doc = NULL,

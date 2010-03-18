@@ -204,6 +204,16 @@ Parameter::get_enum (const SPDocument * doc, const Inkscape::XML::Node * node)
     return param->get(doc, node);
 }
 
+/** \brief  Wrapper to cast to the object and use it's function.  */
+gchar const *Parameter::get_optiongroup(SPDocument const * doc, Inkscape::XML::Node const * node)
+{
+    ParamRadioButton * param = dynamic_cast<ParamRadioButton *>(this);
+    if (!param) {
+        throw Extension::param_not_optiongroup_param();
+    }
+    return param->get(doc, node);
+}
+
 guint32
 Parameter::get_color(const SPDocument* doc, const Inkscape::XML::Node* node)
 {
@@ -253,6 +263,17 @@ Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node *
         throw Extension::param_not_string_param();
     return stringpntr->set(in, doc, node);
 }
+
+gchar const * Parameter::set_optiongroup( gchar const * in, SPDocument * doc, Inkscape::XML::Node * node )
+{
+    ParamRadioButton *param = dynamic_cast<ParamRadioButton *>(this);
+    if (!param) {
+        throw Extension::param_not_optiongroup_param();
+    }
+    return param->set(in, doc, node);
+}
+
+
 /** \brief  Wrapper to cast to the object and use it's function.  */
 guint32
 Parameter::set_color (guint32 in, SPDocument * doc, Inkscape::XML::Node * node)

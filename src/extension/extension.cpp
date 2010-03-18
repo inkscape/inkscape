@@ -440,6 +440,14 @@ Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Ink
     return param->get_enum(doc, node);
 }
 
+
+gchar const *Extension::get_param_optiongroup( gchar const * name, SPDocument const * doc, Inkscape::XML::Node const * node)
+{
+    Parameter* param = param_shared(name, parameters);
+    return param->get_optiongroup(doc, node);
+}
+
+
 /**
     \return   The value of the parameter identified by the name
     \brief    Gets a parameter identified by name with the bool placed
@@ -596,6 +604,13 @@ Extension::set_param_string (const gchar * name, const gchar * value, SPDocument
     param = param_shared(name, parameters);
     return param->set_string(value, doc, node);
 }
+
+gchar const * Extension::set_param_optiongroup(gchar const * name, gchar const * value, SPDocument * doc, Inkscape::XML::Node * node)
+{
+    Parameter * param = param_shared(name, parameters);
+    return param->set_optiongroup(value, doc, node);
+}
+
 
 /**
     \return   The passed in value
