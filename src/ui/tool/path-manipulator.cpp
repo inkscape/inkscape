@@ -720,6 +720,7 @@ void PathManipulator::setSegmentType(SegmentType type)
             case SEGMENT_CUBIC_BEZIER:
                 if (!j->front()->isDegenerate() || !k->back()->isDegenerate())
                     break;
+                // move both handles to 1/3 of the line
                 j->front()->move(j->position() + (k->position() - j->position()) / 3);
                 k->back()->move(k->position() + (j->position() - k->position()) / 3);
                 break;
@@ -744,9 +745,17 @@ void PathManipulator::scaleHandle(Node *n, int which, int dir, bool pixel)
         length_change *= dir;
     }
 
-    Geom::Point relpos = h->relativePos();
-    double rellen = relpos.length();
-    h->setRelativePos(relpos * ((rellen + length_change) / rellen));
+    Geom::Point relpos;
+    if (h->isDegenerate()) {
+        Node *nh = n->nodeToward(h);
+        if (!nh) return;
+        relpos = Geom::unit_vector(nh->position() - n->position()) * length_change;
+    } else {
+        relpos = h->relativePos();
+        double rellen = relpos.length();
+        relpos *= ((rellen + length_change) / rellen);
+    }
+    h->setRelativePos(relpos);
     update();
 
     gchar const *key = which < 0 ? "handle:scale:left" : "handle:scale:right";
@@ -759,8 +768,9 @@ void PathManipulator::rotateHandle(Node *n, int which, int dir, bool pixel)
         n->setType(NODE_CUSP);
     }
     Handle *h = _chooseHandle(n, which);
-    double angle;
+    if (h->isDegenerate()) return;
 
+    double angle;
     if (pixel) {
         // Rotate by "one pixel"
         angle = atan2(1.0 / _desktop->current_zoom(), h->length()) * dir;
@@ -769,6 +779,7 @@ void PathManipulator::rotateHandle(Node *n, int which, int dir, bool pixel)
         int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
         angle = M_PI * dir / snaps;
     }
+
     h->setRelativePos(h->relativePos() * Geom::Rotate(angle));
     update();
     gchar const *key = which < 0 ? "handle:rotate:left" : "handle:rotate:right";
@@ -777,7 +788,14 @@ void PathManipulator::rotateHandle(Node *n, int which, int dir, bool pixel)
 
 Handle *PathManipulator::_chooseHandle(Node *n, int which)
 {
-    Geom::Point f = n->front()->position(), b = n->back()->position();
+    // Rationale for this choice:
+    // Imagine you have two handles pointing right, where one of them is only slighty higher
+    // than the other. Extending one of the handles could make its X coord larger than
+    // the second one, and keeping the shortcut pressed would result in two handles being
+    // extended alternately. This appears like extending both handles at once and is confusing.
+    // Using the unit vector avoids this problem and remains fairly intuitive.
+    Geom::Point f = Geom::unit_vector(n->front()->position());
+    Geom::Point b = Geom::unit_vector(n->back()->position());
     if (which < 0) {
         // pick left handle.
         // we just swap the handles and pick the right handle below.

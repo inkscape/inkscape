@@ -96,7 +96,7 @@ public:
     void setDirection(Geom::Point const &from, Geom::Point const &to);
     void setDirection(Geom::Point const &dir);
     Node *parent() { return _parent; }
-    Handle &other();
+    Handle *other();
 
     static char const *handle_type_to_localized_string(NodeType type);
 protected:
@@ -138,10 +138,14 @@ public:
     bool isEndNode();
     Handle *front() { return &_front; }
     Handle *back()  { return &_back;  }
-    static NodeType parse_nodetype(char x);
+    Handle *handleToward(Node *to);
+    Node *nodeToward(Handle *h);
+    Handle *handleAwayFrom(Node *to);
+    Node *nodeAwayFrom(Handle *h);
     NodeList &nodeList() { return *(static_cast<ListNode*>(this)->ln_list); }
     void sink();
 
+    static NodeType parse_nodetype(char x);
     static char const *node_type_to_localized_string(NodeType type);
     // temporarily public
     virtual bool _eventHandler(GdkEvent *event);

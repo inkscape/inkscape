@@ -106,22 +106,11 @@ void Handle::setVisible(bool v)
 
 void Handle::move(Geom::Point const &new_pos)
 {
-    Handle *other, *towards, *towards_second;
-    Node *node_towards; // node in direction of this handle
-    Node *node_away; // node in the opposite direction
-    if (this == &_parent->_front) {
-        other = &_parent->_back;
-        node_towards = _parent->_next();
-        node_away = _parent->_prev();
-        towards = node_towards ? &node_towards->_back : 0;
-        towards_second = node_towards ? &node_towards->_front : 0;
-    } else {
-        other = &_parent->_front;
-        node_towards = _parent->_prev();
-        node_away = _parent->_next();
-        towards = node_towards ? &node_towards->_front : 0;
-        towards_second = node_towards ? &node_towards->_back : 0;
-    }
+    Handle *other = this->other();
+    Node *node_towards = _parent->nodeToward(this); // node in direction of this handle
+    Node *node_away = _parent->nodeAwayFrom(this); // node in the opposite direction
+    Handle *towards = node_towards ? node_towards->handleAwayFrom(_parent) : NULL;
+    Handle *towards_second = node_towards ? node_towards->handleToward(_parent) : NULL;
 
     if (Geom::are_near(new_pos, _parent->position())) {
         // The handle becomes degenerate. If the segment between it and the node
@@ -225,7 +214,7 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
 
 bool Handle::grabbed(GdkEventMotion *)
 {
-    _saved_other_pos = other().position();
+    _saved_other_pos = other()->position();
     _saved_length = _drag_out ? 0 : length();
     _pm()._handleGrabbed();
     return false;
@@ -294,10 +283,10 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         if (held_shift(*event)) {
             Geom::Point other_relpos = _saved_other_pos - parent_pos;
             other_relpos *= Geom::Rotate(Geom::angle_between(origin - parent_pos, new_pos - parent_pos));
-            other().setRelativePos(other_relpos);
+            other()->setRelativePos(other_relpos);
         } else {
             // restore the position
-            other().setPosition(_saved_other_pos);
+            other()->setPosition(_saved_other_pos);
         }
     }
     move(new_pos); // needed for correct update, even though it's redundant
@@ -332,10 +321,10 @@ bool Handle::clicked(GdkEventButton *event)
     return true;
 }
 
-Handle &Handle::other()
+Handle *Handle::other()
 {
-    if (this == &_parent->_front) return _parent->_back;
-    return _parent->_front;
+    if (this == &_parent->_front) return &_parent->_back;
+    return &_parent->_front;
 }
 
 static double snap_increment_degrees() {
@@ -347,7 +336,7 @@ static double snap_increment_degrees() {
 Glib::ustring Handle::_getTip(unsigned state)
 {
     char const *more;
-    bool can_shift_rotate = _parent->type() == NODE_CUSP && !other().isDegenerate();
+    bool can_shift_rotate = _parent->type() == NODE_CUSP && !other()->isDegenerate();
     if (can_shift_rotate) {
         more = C_("Path handle tip", "more: Shift, Ctrl, Alt");
     } else {
@@ -1091,6 +1080,58 @@ Inkscape::SnapTargetType Node::_snapTargetType()
     return SNAPTARGET_NODE_CUSP;
 }
 
+/** @brief Gets the handle that faces the given adjacent node.
+ * Will abort with error if the given node is not adjacent. */
+Handle *Node::handleToward(Node *to)
+{
+    if (_next() == to) {
+        return front();
+    }
+    if (_prev() == to) {
+        return back();
+    }
+    g_error("Node::handleToward(): second node is not adjacent!");
+}
+
+/** @brief Gets the node in the direction of the given handle.
+ * Will abort with error if the handle doesn't belong to this node. */
+Node *Node::nodeToward(Handle *dir)
+{
+    if (front() == dir) {
+        return _next();
+    }
+    if (back() == dir) {
+        return _prev();
+    }
+    g_error("Node::nodeToward(): handle is not a child of this node!");
+}
+
+/** @brief Gets the handle that goes in the direction opposite to the given adjacent node.
+ * Will abort with error if the given node is not adjacent. */
+Handle *Node::handleAwayFrom(Node *to)
+{
+    if (_next() == to) {
+        return back();
+    }
+    if (_prev() == to) {
+        return front();
+    }
+    g_error("Node::handleAwayFrom(): second node is not adjacent!");
+}
+
+/** @brief Gets the node in the direction opposite to the given handle.
+ * Will abort with error if the handle doesn't belong to this node. */
+Node *Node::nodeAwayFrom(Handle *h)
+{
+    if (front() == h) {
+        return _prev();
+    }
+    if (back() == h) {
+        return _next();
+    }
+    g_error("Node::nodeAwayFrom(): handle is not a child of this node!");
+}
+
 Glib::ustring Node::_getTip(unsigned state)
 {
     if (state_held_shift(state)) {
@@ -1115,7 +1156,11 @@ Glib::ustring Node::_getTip(unsigned state)
             "<b>Ctrl:</b> move along axes, click to change node type");
     }
 
-    // assemble tip from node name
+    if (state_held_alt(state)) {
+        return C_("Path node tip", "<b>Alt:</b> sculpt nodes");
+    }
+
+    // No modifiers: assemble tip from node type
     char const *nodetype = node_type_to_localized_string(_type);
     if (_selection.transformHandlesEnabled() && selected()) {
         if (_selection.size() == 1) {
