@@ -1465,8 +1465,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 ++i;
             }
             Inkscape::Extension::Extension *ext = *i;
-            bool save = ext->get_param_bool("link");
-            ext->set_param_bool("link", false);
+            bool save = (strcmp(ext->get_param_optiongroup("link"), "embed") == 0);
+            ext->set_param_optiongroup("link", "embed");
             ext->set_gui(false);
 
             gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-dnd-import", NULL );
@@ -1474,7 +1474,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             file_import(doc, filename, ext);
             g_free(filename);
 
-            ext->set_param_bool("link", save);
+            ext->set_param_optiongroup("link", save ? "embed" : "link");
             ext->set_gui(true);
             sp_document_done( doc , SP_VERB_NONE,
                               _("Drop bitmap image"));

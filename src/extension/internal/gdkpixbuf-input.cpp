@@ -30,7 +30,8 @@ static std::set<Glib::ustring> create_lossy_set()
 SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 {
-    bool embed = !mod->get_param_bool("link");
+    bool embed = (strcmp(mod->get_param_optiongroup("link"), "embed") == 0);
+
     SPDocument *doc = NULL;
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
     static std::set<Glib::ustring> lossy = create_lossy_set();
@@ -147,9 +148,11 @@ GdkpixbufInput::init(void)
                 "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
                     "<name>" N_("%s GDK pixbuf Input") "</name>\n"
                     "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
-                    "<param name=\"link\" gui-text=\""
-                        N_("Link to image? (Leave unchecked to embed)")
-                        "\" type=\"boolean\">false</param>"
+                    "<param name='link' type='optiongroup'  appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
+                        "<_option value='embed'>" N_("embed") "</_option>\n"
+                        "<_option value='link'>" N_("link") "</_option>\n"
+                    "</param>\n"
+                    "<_param name='help' type='description'>" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "</_param>\n"
                     "<input>\n"
                         "<extension>.%s</extension>\n"
                         "<mimetype>%s</mimetype>\n"

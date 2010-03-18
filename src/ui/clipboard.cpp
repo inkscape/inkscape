@@ -874,6 +874,7 @@ bool ClipboardManagerImpl::_pasteImage()
     Glib::RefPtr<Gdk::Pixbuf> img = _clipboard->wait_for_image();
     if (!img) return false;
 
+    // TODO unify with interface.cpp's sp_ui_drag_data_received()
     // AARGH stupid
     Inkscape::Extension::DB::InputList o;
     Inkscape::Extension::db.get_input_list(o);
@@ -882,8 +883,8 @@ bool ClipboardManagerImpl::_pasteImage()
         ++i;
     }
     Inkscape::Extension::Extension *png = *i;
-    bool save = png->get_param_bool("link");
-    png->set_param_bool("link", false);
+    bool save = (strcmp(png->get_param_optiongroup("link"), "embed") == 0);
+    png->set_param_optiongroup("link", "embed");
     png->set_gui(false);
 
     gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
@@ -891,7 +892,7 @@ bool ClipboardManagerImpl::_pasteImage()
     file_import(doc, filename, png);
     g_free(filename);
 
-    png->set_param_bool("link", save);
+    png->set_param_optiongroup("link", save ? "embed" : "link");
     png->set_gui(true);
 
     return true;
