@@ -153,13 +153,13 @@ if [ ! -e "$LIBPREFIX" ]; then
 	exit 1
 fi
 
-if [ ! -e "$LIBPREFIX/share/themes/Clearlooks-Quicksilver" ]; then
-	echo "Missing Clearlooks -- please install gtk2-clearlooks and try again." >&2
+if ! pkg-config --exists gtk-engines-2; then
+	echo "Missing gtk-engines2 -- please install gtk-engines2 and try again." >&2
 	exit 1
 fi
 
-if [ ! -e "$LIBPREFIX/lib/gnome-vfs-2.0" ]; then
-	echo "Missing gnome-vfs -- please install gnome-vfs and try again." >&2
+if ! pkg-config --exists gnome-vfs-2.0; then
+	echo "Missing gnome-vfs2 -- please install gnome-vfs2 and try again." >&2
 	exit 1
 fi
 
