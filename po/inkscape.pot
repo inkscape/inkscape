@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-06 09:04+0100\n"
+"POT-Creation-Date: 2010-03-18 20:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,6 +202,7 @@ msgid "Desaturate"
 msgstr ""
 
 #: ../share/extensions/color_grayscale.inx.h:2
+#: ../share/extensions/webslicer-create-rect.inx.h:14
 msgid "Grayscale"
 msgstr ""
 
@@ -664,7 +665,7 @@ msgid "Shades"
 msgstr ""
 
 #: ../share/extensions/edge3d.inx.h:9 ../src/live_effects/lpe-knot.cpp:331
-#: ../src/widgets/stroke-style.cpp:1099
+#: ../src/widgets/stroke-style.cpp:1100
 msgid "Stroke width"
 msgstr ""
 
@@ -1120,7 +1121,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/inkscape-preferences.cpp:1273 ../src/verbs.cpp:2192
-#: ../src/widgets/stroke-style.cpp:771 ../src/widgets/toolbox.cpp:3991
+#: ../src/widgets/stroke-style.cpp:772 ../src/widgets/toolbox.cpp:3991
 msgid "None"
 msgstr ""
 
@@ -2093,7 +2094,7 @@ msgstr ""
 
 #. Label
 #: ../share/extensions/printing-marks.inx.h:9
-#: ../src/widgets/gradient-vector.cpp:830
+#: ../src/widgets/gradient-vector.cpp:827
 msgid "Offset:"
 msgstr ""
 
@@ -2724,6 +2725,202 @@ msgstr ""
 msgid "Text Input"
 msgstr ""
 
+#: ../share/extensions/webslicer-create-group.inx.h:1
+#: ../share/extensions/webslicer-create-rect.inx.h:15
+msgid "HTML class atribute"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:2
+#: ../share/extensions/webslicer-create-rect.inx.h:16
+msgid "HTML id atribute"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:3
+msgid "Height Unity"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:4
+msgid ""
+"Layout Group is only about to help a better code generation (if you need "
+"it). To use this, first you must to select some \"Slicer rectangles\"."
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:5
+msgid "Percent (relative to parent size)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:6
+msgid "Pixel (fixed)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:7
+msgid "Set a layout group"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:8
+msgid "Undefined (relative to non-floating content size)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:9
+#: ../share/extensions/webslicer-create-rect.inx.h:35
+#: ../share/extensions/webslicer-export.inx.h:4
+#: ../share/extensions/web-set-att.inx.h:16
+#: ../share/extensions/web-transmit-att.inx.h:14
+msgid "Web"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-group.inx.h:10
+msgid "Width Unity"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:1
+msgid ""
+"0 is the lowest image quality and highest compression, and 100 is the best "
+"quality but least effective compression"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:2
+#: ../src/ui/dialog/document-properties.cpp:93
+msgid "Background color"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:3
+msgid "Background — no repeat (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:4
+msgid "Background — repeat horizontally (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:5
+msgid "Background — repeat vertically (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:6
+msgid "Bottom and Left"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:7
+msgid "Bottom and Right"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:8
+msgid "Create a slicer rectangle"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:9 ../src/main.cpp:298
+#: ../src/ui/widget/rendering-options.cpp:43
+msgid "DPI"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:10
+msgid "Force Dimension"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:11
+msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:12 ../src/rdf.cpp:235
+msgid "Format"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:13
+msgid "GIF specific options"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:17
+msgid "If had set, this will replace DPI."
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:18
+msgid "JPG specific options"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:19
+msgid "Layout disposition"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:20
+msgid "Left Floated Image"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:21
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
+msgid "Name"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:22
+msgid "Non Positioned Image"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:23
+msgid "Options for HTML export"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:24
+msgid "Palette"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:25
+msgid "Palette size"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:26
+msgid "Position anchor"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:27
+msgid "Positioned &lt;div&gt; width the image as Background"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:28
+msgid "Positioned Image"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:29
+msgid "Quality"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:30
+msgid "Right Floated Image"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:31
+msgid "Tiled Background (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:32
+msgid "Top and Left"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:33
+msgid "Top and right"
+msgstr ""
+
+#: ../share/extensions/webslicer-create-rect.inx.h:34
+#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
+msgid "Type"
+msgstr ""
+
+#: ../share/extensions/webslicer-export.inx.h:1
+msgid ""
+"All sliced images, and optionaly code, will be generated as you had "
+"configured and saved to one directory."
+msgstr ""
+
+#: ../share/extensions/webslicer-export.inx.h:2
+msgid "Directory path to export"
+msgstr ""
+
+#: ../share/extensions/webslicer-export.inx.h:3
+msgid "Export layout pieces and HTML+CSS code"
+msgstr ""
+
+#: ../share/extensions/webslicer-export.inx.h:5
+msgid "With HTML and CSS"
+msgstr ""
+
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "All selected ones set an attribute in the last one"
 msgstr ""
@@ -2794,11 +2991,6 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
-msgstr ""
-
-#: ../share/extensions/web-set-att.inx.h:16
-#: ../share/extensions/web-transmit-att.inx.h:14
-msgid "Web"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:17
@@ -5370,20 +5562,20 @@ msgstr ""
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 
-#: ../src/desktop-events.cpp:185
+#: ../src/desktop-events.cpp:189
 msgid "Create guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:391
+#: ../src/desktop-events.cpp:402
 msgid "Move guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:444
+#: ../src/desktop-events.cpp:409 ../src/desktop-events.cpp:455
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:435
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr ""
@@ -7140,11 +7332,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:169 ../src/ui/tool/node.cpp:1109
+#: ../src/display/snap-indicator.cpp:169 ../src/ui/tool/node.cpp:1193
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:172 ../src/ui/tool/node.cpp:1108
+#: ../src/display/snap-indicator.cpp:172 ../src/ui/tool/node.cpp:1192
 msgid "Cusp node"
 msgstr ""
 
@@ -7406,36 +7598,36 @@ msgstr ""
 msgid "\" failed to load because "
 msgstr ""
 
-#: ../src/extension/extension.cpp:627
+#: ../src/extension/extension.cpp:642
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr ""
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:740
 msgid "Name:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:726
+#: ../src/extension/extension.cpp:741
 msgid "ID:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "State:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Loaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Unloaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Deactivated"
 msgstr ""
 
-#: ../src/extension/extension.cpp:758
+#: ../src/extension/extension.cpp:773
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
@@ -7514,10 +7706,6 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
 msgid "Add Noise"
-msgstr ""
-
-#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-msgid "Type"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
@@ -8142,13 +8330,27 @@ msgstr ""
 msgid "Snow has fallen on object"
 msgstr ""
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:148
+#: ../src/extension/internal/gdkpixbuf-input.cpp:149
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:151
-msgid "Link image (leave unchecked if in doubt)"
+msgid "Link or embed image:"
+msgstr ""
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:152
+msgid "embed"
+msgstr ""
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:153
+msgid "link"
+msgstr ""
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:155
+msgid ""
+"Embed results in stand-alone, larger SVG files. Link references a file "
+"outside this SVG document and all files must be moved together."
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
@@ -8744,7 +8946,7 @@ msgid "Gamma"
 msgstr ""
 
 #: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:424
-#: ../src/widgets/gradient-selector.cpp:139
+#: ../src/widgets/gradient-selector.cpp:141
 msgid "Duplicate"
 msgstr ""
 
@@ -8942,7 +9144,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
-#: ../src/widgets/gradient-vector.cpp:744
+#: ../src/widgets/gradient-vector.cpp:743
 msgid "Add gradient stop"
 msgstr ""
 
@@ -8989,7 +9191,7 @@ msgstr ""
 msgid "Move gradient handle"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:944 ../src/widgets/gradient-vector.cpp:776
+#: ../src/gradient-drag.cpp:944 ../src/widgets/gradient-vector.cpp:774
 msgid "Delete gradient stop"
 msgstr ""
 
@@ -9583,10 +9785,6 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-notebook.c:135
 msgid "The index of the current page"
-msgstr ""
-
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
-msgid "Name"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:121
@@ -10789,10 +10987,6 @@ msgid ""
 "EPS/PDF (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:298 ../src/ui/widget/rendering-options.cpp:43
-msgid "DPI"
-msgstr ""
-
 #: ../src/main.cpp:302
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -11209,19 +11403,19 @@ msgstr ""
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:556
+#: ../src/path-chemistry.cpp:588
 msgid "Select <b>path(s)</b> to reverse."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:565
+#: ../src/path-chemistry.cpp:597
 msgid "Reversing paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:599
+#: ../src/path-chemistry.cpp:631
 msgid "Reverse path"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:601
+#: ../src/path-chemistry.cpp:633
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
@@ -11449,10 +11643,6 @@ msgstr ""
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
 msgstr ""
 
-#: ../src/rdf.cpp:235
-msgid "Format"
-msgstr ""
-
 #: ../src/rdf.cpp:236
 msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr ""
@@ -11672,7 +11862,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:329 ../src/text-context.cpp:1002
-#: ../src/ui/dialog/swatches.cpp:472 ../src/widgets/toolbox.cpp:1318
+#: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1318
 #: ../src/widgets/toolbox.cpp:6076
 msgid "Delete"
 msgstr ""
@@ -12139,8 +12329,8 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:212 ../src/spray-context.cpp:242
-#: ../src/tweak-context.cpp:202
+#: ../src/selection-describer.cpp:212 ../src/spray-context.cpp:241
+#: ../src/tweak-context.cpp:201
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -12326,16 +12516,16 @@ msgstr ""
 msgid "at %d degrees, through (%s,%s)"
 msgstr ""
 
-#: ../src/sp-image.cpp:1145
+#: ../src/sp-image.cpp:1134
 msgid "embedded"
 msgstr ""
 
-#: ../src/sp-image.cpp:1153
+#: ../src/sp-image.cpp:1142
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr ""
 
-#: ../src/sp-image.cpp:1154
+#: ../src/sp-image.cpp:1143
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
@@ -12602,43 +12792,43 @@ msgstr ""
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:244 ../src/tweak-context.cpp:204
+#: ../src/spray-context.cpp:243 ../src/tweak-context.cpp:203
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr ""
 
-#: ../src/spray-context.cpp:250
+#: ../src/spray-context.cpp:249
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:253
+#: ../src/spray-context.cpp:252
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:256
+#: ../src/spray-context.cpp:255
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:774
+#: ../src/spray-context.cpp:773
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
 
-#: ../src/spray-context.cpp:882 ../src/widgets/toolbox.cpp:4590
+#: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4590
 msgid "Spray with copies"
 msgstr ""
 
-#: ../src/spray-context.cpp:886 ../src/widgets/toolbox.cpp:4597
+#: ../src/spray-context.cpp:885 ../src/widgets/toolbox.cpp:4597
 msgid "Spray with clones"
 msgstr ""
 
-#: ../src/spray-context.cpp:890
+#: ../src/spray-context.cpp:889
 msgid "Spray in single path"
 msgstr ""
 
@@ -12657,7 +12847,7 @@ msgstr ""
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:499
+#: ../src/star-context.cpp:503
 msgid "Create star"
 msgstr ""
 
@@ -13024,127 +13214,127 @@ msgstr ""
 msgid "Trace: Done. %ld nodes created"
 msgstr ""
 
-#: ../src/tweak-context.cpp:210
+#: ../src/tweak-context.cpp:209
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:214
+#: ../src/tweak-context.cpp:213
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:218
+#: ../src/tweak-context.cpp:217
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:222
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:226
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:230
+#: ../src/tweak-context.cpp:229
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:234
+#: ../src/tweak-context.cpp:233
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:238
+#: ../src/tweak-context.cpp:237
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:246
+#: ../src/tweak-context.cpp:245
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:254
+#: ../src/tweak-context.cpp:253
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:258
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr ""
 
-#: ../src/tweak-context.cpp:262
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:266
+#: ../src/tweak-context.cpp:265
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1223
+#: ../src/tweak-context.cpp:1222
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1259
+#: ../src/tweak-context.cpp:1258
 msgid "Move tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1263
+#: ../src/tweak-context.cpp:1262
 msgid "Move in/out tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1267
+#: ../src/tweak-context.cpp:1266
 msgid "Move jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1271
+#: ../src/tweak-context.cpp:1270
 msgid "Scale tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1275
+#: ../src/tweak-context.cpp:1274
 msgid "Rotate tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1279
+#: ../src/tweak-context.cpp:1278
 msgid "Duplicate/delete tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1283
+#: ../src/tweak-context.cpp:1282
 msgid "Push path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1287
+#: ../src/tweak-context.cpp:1286
 msgid "Shrink/grow path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1291
+#: ../src/tweak-context.cpp:1290
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1295
+#: ../src/tweak-context.cpp:1294
 msgid "Roughen path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1299
+#: ../src/tweak-context.cpp:1298
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1303
+#: ../src/tweak-context.cpp:1302
 msgid "Color jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1307
+#: ../src/tweak-context.cpp:1306
 msgid "Blur tweak"
 msgstr ""
 
@@ -13153,8 +13343,8 @@ msgstr ""
 msgid "Nothing was copied."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
-#: ../src/ui/clipboard.cpp:544
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:521
+#: ../src/ui/clipboard.cpp:545
 msgid "Nothing on the clipboard."
 msgstr ""
 
@@ -13179,11 +13369,11 @@ msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:507
+#: ../src/ui/clipboard.cpp:508
 msgid "No effect on the clipboard."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
+#: ../src/ui/clipboard.cpp:528 ../src/ui/clipboard.cpp:555
 msgid "Clipboard does not contain a path."
 msgstr ""
 
@@ -13604,10 +13794,6 @@ msgid "Back_ground:"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:93
-msgid "Background color"
-msgstr ""
-
-#: ../src/ui/dialog/document-properties.cpp:93
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
@@ -13860,7 +14046,7 @@ msgid "<b>External script files:</b>"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:608
-#: ../src/ui/dialog/swatches.cpp:464
+#: ../src/ui/dialog/swatches.cpp:212
 msgid "Add"
 msgstr ""
 
@@ -17177,60 +17363,26 @@ msgstr ""
 msgid "Preview Text:"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:332
-#, c-format
-msgid ""
-"Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr ""
-
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:443
+#: ../src/ui/dialog/swatches.cpp:192
 msgid "Set fill"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:451
+#: ../src/ui/dialog/swatches.cpp:200
 msgid "Set stroke"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:477 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:225 ../src/widgets/gradient-selector.cpp:146
 #: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Edit..."
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:489
+#: ../src/ui/dialog/swatches.cpp:237
 msgid "Convert"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:652
-msgid "Change color definition"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:853
-msgid "Remove stroke color"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:853
-msgid "Remove fill color"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:858
-msgid "Set stroke color to none"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:858
-msgid "Set fill color to none"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:875
-msgid "Set stroke color from swatch"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:875
-msgid "Set fill color from swatch"
-msgstr ""
-
-#: ../src/ui/dialog/swatches.cpp:1199
+#: ../src/ui/dialog/swatches.cpp:435
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
@@ -17707,86 +17859,94 @@ msgstr ""
 msgid "Delete nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:562
+#: ../src/ui/tool/multi-path-manipulator.cpp:618
 msgid "Move nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:565
+#: ../src/ui/tool/multi-path-manipulator.cpp:621
 msgid "Move nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:569
+#: ../src/ui/tool/multi-path-manipulator.cpp:625
 msgid "Move nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:573
-#: ../src/ui/tool/multi-path-manipulator.cpp:576
+#: ../src/ui/tool/multi-path-manipulator.cpp:629
+#: ../src/ui/tool/multi-path-manipulator.cpp:632
 msgid "Rotate nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:580
-#: ../src/ui/tool/multi-path-manipulator.cpp:586
+#: ../src/ui/tool/multi-path-manipulator.cpp:636
+#: ../src/ui/tool/multi-path-manipulator.cpp:642
 msgid "Scale nodes uniformly"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:583
+#: ../src/ui/tool/multi-path-manipulator.cpp:639
 msgid "Scale nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:590
+#: ../src/ui/tool/multi-path-manipulator.cpp:646
 msgid "Scale nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:594
+#: ../src/ui/tool/multi-path-manipulator.cpp:650
 msgid "Scale nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:598
+#: ../src/ui/tool/multi-path-manipulator.cpp:654
 msgid "Flip nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:601
+#: ../src/ui/tool/multi-path-manipulator.cpp:657
 msgid "Flip nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:218
+#: ../src/ui/tool/node.cpp:207
 msgid "Cusp node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:219
+#: ../src/ui/tool/node.cpp:208
 msgid "Smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:220
+#: ../src/ui/tool/node.cpp:209
 msgid "Symmetric node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:221
+#: ../src/ui/tool/node.cpp:210
 msgid "Auto-smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1110
+#: ../src/ui/tool/node.cpp:1194
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1111
+#: ../src/ui/tool/node.cpp:1195
 msgid "Auto-smooth node"
 msgstr ""
 
+#: ../src/ui/tool/path-manipulator.cpp:763
+msgid "Scale handle"
+msgstr ""
+
+#: ../src/ui/tool/path-manipulator.cpp:787
+msgid "Rotate handle"
+msgstr ""
+
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1204 ../src/widgets/toolbox.cpp:1314
+#: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1314
 msgid "Delete node"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1219
+#: ../src/ui/tool/path-manipulator.cpp:1305
 msgid "Cycle node type"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1233
+#: ../src/ui/tool/path-manipulator.cpp:1319
 msgid "Drag handle"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1242
+#: ../src/ui/tool/path-manipulator.cpp:1328
 msgid "Retract handle"
 msgstr ""
 
@@ -18118,13 +18278,13 @@ msgid "No stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:166
-#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:193
+#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:227
 msgid "Pattern"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:169
 #: ../src/ui/widget/style-swatch.cpp:279
-#: ../src/widgets/paint-selector.cpp:1015
+#: ../src/widgets/paint-selector.cpp:1052
 msgid "Pattern fill"
 msgstr ""
 
@@ -18182,14 +18342,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:499
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:534
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:532
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:515
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:468
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:469
 msgid "Unset stroke"
 msgstr ""
 
@@ -18271,12 +18431,12 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:387
+#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:388
 msgid "Remove fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:338
+#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:339
 msgid "Remove stroke"
 msgstr ""
 
@@ -20429,7 +20589,7 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
-#: ../src/widgets/gradient-selector.cpp:167
+#: ../src/widgets/gradient-selector.cpp:169
 msgid "none"
 msgstr ""
 
@@ -20437,19 +20597,19 @@ msgstr ""
 msgid "remove"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:285
+#: ../src/widgets/fill-style.cpp:286
 msgid "Change fill rule"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:325 ../src/widgets/fill-style.cpp:399
+#: ../src/widgets/fill-style.cpp:326 ../src/widgets/fill-style.cpp:400
 msgid "Set fill color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:468
+#: ../src/widgets/fill-style.cpp:470
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:515
+#: ../src/widgets/fill-style.cpp:517
 msgid "Set pattern on fill"
 msgstr ""
 
@@ -20478,7 +20638,7 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
-#: ../src/widgets/gradient-selector.cpp:161
+#: ../src/widgets/gradient-selector.cpp:163
 msgid ""
 "Whether to fill with flat color beyond the ends of the gradient vector "
 "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
@@ -20486,15 +20646,15 @@ msgid ""
 "directions (spreadMethod=\"reflect\")"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:171
+#: ../src/widgets/gradient-selector.cpp:173
 msgid "reflected"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:175
+#: ../src/widgets/gradient-selector.cpp:177
 msgid "direct"
 msgstr ""
 
-#: ../src/widgets/gradient-selector.cpp:183
+#: ../src/widgets/gradient-selector.cpp:185
 msgid "Repeat:"
 msgstr ""
 
@@ -20560,20 +20720,20 @@ msgstr ""
 msgid "<b>Change:</b>"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:270
-#: ../src/widgets/paint-selector.cpp:903 ../src/widgets/stroke-style.cpp:826
+#: ../src/widgets/gradient-vector.cpp:267
+#: ../src/widgets/paint-selector.cpp:940 ../src/widgets/stroke-style.cpp:827
 msgid "No document selected"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:276
+#: ../src/widgets/gradient-vector.cpp:273
 msgid "No gradients in document"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:282
+#: ../src/widgets/gradient-vector.cpp:279
 msgid "No gradient selected"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:547
+#: ../src/widgets/gradient-vector.cpp:546
 msgid "No stops in gradient"
 msgstr ""
 
@@ -20582,96 +20742,93 @@ msgid "Change gradient stop offset"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:811
+#: ../src/widgets/gradient-vector.cpp:808
 msgid "Add stop"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:814
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add another control stop to gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:816
+#: ../src/widgets/gradient-vector.cpp:813
 msgid "Delete stop"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:819
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete current control stop from gradient"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:875
+#: ../src/widgets/gradient-vector.cpp:872
 msgid "Stop Color"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:905
+#: ../src/widgets/gradient-vector.cpp:902
 msgid "Gradient editor"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:1192
+#: ../src/widgets/gradient-vector.cpp:1201
 msgid "Change gradient stop color"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:185 ../src/widgets/paint-selector.cpp:581
+#: ../src/widgets/paint-selector.cpp:219 ../src/widgets/paint-selector.cpp:617
 msgid "No paint"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:187 ../src/widgets/paint-selector.cpp:653
+#: ../src/widgets/paint-selector.cpp:221 ../src/widgets/paint-selector.cpp:689
 msgid "Flat color"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:189 ../src/widgets/paint-selector.cpp:724
+#. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
+#: ../src/widgets/paint-selector.cpp:223 ../src/widgets/paint-selector.cpp:761
 msgid "Linear gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:191 ../src/widgets/paint-selector.cpp:727
+#: ../src/widgets/paint-selector.cpp:225 ../src/widgets/paint-selector.cpp:764
 msgid "Radial gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:195
+#: ../src/widgets/paint-selector.cpp:229
 msgid "Swatch"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:197
+#: ../src/widgets/paint-selector.cpp:231
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:209
+#: ../src/widgets/paint-selector.cpp:243
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:220
+#: ../src/widgets/paint-selector.cpp:254
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:548
+#: ../src/widgets/paint-selector.cpp:584
 msgid "No objects"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:559
+#: ../src/widgets/paint-selector.cpp:595
 msgid "Multiple styles"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:570
+#: ../src/widgets/paint-selector.cpp:606
 msgid "Paint is undefined"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1002
+#: ../src/widgets/paint-selector.cpp:1039
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1083
-msgid "Represents a swatch fill."
-msgstr ""
-
-#: ../src/widgets/paint-selector.cpp:1096
+#: ../src/widgets/paint-selector.cpp:1125
 msgid "Swatch fill"
 msgstr ""
 
@@ -20957,54 +21114,54 @@ msgstr ""
 msgid "Type text in a text node"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:288 ../src/widgets/stroke-style.cpp:347
+#: ../src/widgets/stroke-style.cpp:289 ../src/widgets/stroke-style.cpp:348
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:399
+#: ../src/widgets/stroke-style.cpp:400
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:443
+#: ../src/widgets/stroke-style.cpp:444
 msgid "Set pattern on stroke"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:910
+#: ../src/widgets/stroke-style.cpp:911
 msgid "Set markers"
 msgstr ""
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. Stroke width
-#: ../src/widgets/stroke-style.cpp:1085
+#: ../src/widgets/stroke-style.cpp:1086
 msgid "StrokeWidth|Width:"
 msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:1123
+#: ../src/widgets/stroke-style.cpp:1124
 msgid "Join:"
 msgstr ""
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1136
 msgid "Miter join"
 msgstr ""
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1145
+#: ../src/widgets/stroke-style.cpp:1146
 msgid "Round join"
 msgstr ""
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1155
+#: ../src/widgets/stroke-style.cpp:1156
 msgid "Bevel join"
 msgstr ""
 
@@ -21015,72 +21172,72 @@ msgstr ""
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1167
+#: ../src/widgets/stroke-style.cpp:1168
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1175
+#: ../src/widgets/stroke-style.cpp:1176
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1187
+#: ../src/widgets/stroke-style.cpp:1188
 msgid "Cap:"
 msgstr ""
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1200
 msgid "Butt cap"
 msgstr ""
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1207
+#: ../src/widgets/stroke-style.cpp:1208
 msgid "Round cap"
 msgstr ""
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1215
+#: ../src/widgets/stroke-style.cpp:1216
 msgid "Square cap"
 msgstr ""
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1221
+#: ../src/widgets/stroke-style.cpp:1222
 msgid "Dashes:"
 msgstr ""
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1238
+#: ../src/widgets/stroke-style.cpp:1239
 msgid "Start Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1240
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1249
+#: ../src/widgets/stroke-style.cpp:1250
 msgid "Mid Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1251
+#: ../src/widgets/stroke-style.cpp:1252
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1260
+#: ../src/widgets/stroke-style.cpp:1261
 msgid "End Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1262
+#: ../src/widgets/stroke-style.cpp:1263
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1611 ../src/widgets/stroke-style.cpp:1707
+#: ../src/widgets/stroke-style.cpp:1612 ../src/widgets/stroke-style.cpp:1708
 msgid "Set stroke style"
 msgstr ""
 
