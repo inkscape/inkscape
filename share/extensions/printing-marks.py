@@ -147,7 +147,7 @@ class Printing_Marks (inkex.Effect):
 
     def draw_star_target(self, cx, cy, name, parent):
         r = (self.mark_size/2)
-        style = {'fill':'#000', 'fill-opacity':'1', 'stroke':'none'}
+        style = {'fill':'#000 device-cmyk(1,1,1,1)', 'fill-opacity':'1', 'stroke':'none'}
         d = ' M 0,0'
         i = 0
         while i < ( 2 * math.pi ):
