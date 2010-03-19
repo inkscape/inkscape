@@ -610,7 +610,6 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
             _documentConnection = desktop->connectDocumentReplaced( slot2 );
 
             _setDocument( desktop->doc() );
-            handleGradientsChange( desktop->doc() );
         } else {
             _setDocument(0);
         }
@@ -709,6 +708,7 @@ void SwatchesPanel::_setDocument( SPDocument *document )
     if ( document != _currentDocument ) {
         _trackDocument(this, document);
         _currentDocument = document;
+        handleGradientsChange( document );
     }
 }
 
