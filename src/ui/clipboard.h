@@ -6,8 +6,10 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk@o2.pl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2008 authors
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,16 +41,16 @@ namespace UI {
 
 class ClipboardManager {
 public:
-    virtual void copy() = 0;
+    virtual void copy(SPDesktop *desktop) = 0;
     virtual void copyPathParameter(Inkscape::LivePathEffect::PathParam *) = 0;
-    virtual bool paste(bool in_place = false) = 0;
-    virtual bool pasteStyle() = 0;
-    virtual bool pasteSize(bool separately, bool apply_x, bool apply_y) = 0;
-    virtual bool pastePathEffect() = 0;
-    virtual Glib::ustring getPathParameter() = 0;
-    virtual Glib::ustring getShapeOrTextObjectId() = 0;
+    virtual bool paste(SPDesktop *desktop, bool in_place = false) = 0;
+    virtual bool pasteStyle(SPDesktop *desktop) = 0;
+    virtual bool pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y) = 0;
+    virtual bool pastePathEffect(SPDesktop *desktop) = 0;
+    virtual Glib::ustring getPathParameter(SPDesktop* desktop) = 0;
+    virtual Glib::ustring getShapeOrTextObjectId(SPDesktop *desktop) = 0;
     virtual const gchar *getFirstObjectID() = 0;
-    
+
     static ClipboardManager *get();
 protected:
     ClipboardManager(); // singleton
@@ -56,7 +58,7 @@ protected:
 private:
     ClipboardManager(const ClipboardManager &); ///< no copy
     ClipboardManager &operator=(const ClipboardManager &); ///< no assign
-    
+
     static ClipboardManager *_instance;
 };
 

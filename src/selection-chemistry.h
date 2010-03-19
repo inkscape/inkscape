@@ -75,7 +75,7 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop);
 SPCSSAttr *take_style_from_item (SPItem *item);
 
 void sp_selection_cut(SPDesktop *desktop);
-void sp_selection_copy();
+void sp_selection_copy(SPDesktop *desktop);
 void sp_selection_paste(SPDesktop *desktop, bool in_place);
 void sp_selection_paste_style(SPDesktop *desktop);
 void sp_selection_paste_livepatheffect(SPDesktop *desktop);

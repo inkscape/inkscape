@@ -106,14 +106,14 @@ namespace UI {
  */
 class ClipboardManagerImpl : public ClipboardManager {
 public:
-    virtual void copy();
+    virtual void copy(SPDesktop *desktop);
     virtual void copyPathParameter(Inkscape::LivePathEffect::PathParam *);
-    virtual bool paste(bool in_place);
-    virtual bool pasteStyle();
-    virtual bool pasteSize(bool, bool, bool);
-    virtual bool pastePathEffect();
-    virtual Glib::ustring getPathParameter();
-    virtual Glib::ustring getShapeOrTextObjectId();
+    virtual bool paste(SPDesktop *desktop, bool in_place);
+    virtual bool pasteStyle(SPDesktop *desktop);
+    virtual bool pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y);
+    virtual bool pastePathEffect(SPDesktop *desktop);
+    virtual Glib::ustring getPathParameter(SPDesktop* desktop);
+    virtual Glib::ustring getShapeOrTextObjectId(SPDesktop *desktop);
     virtual const gchar *getFirstObjectID();
 
     ClipboardManagerImpl();
@@ -127,10 +127,10 @@ private:
     void _copyTextPath(SPTextPath *);
     Inkscape::XML::Node *_copyNode(Inkscape::XML::Node *, Inkscape::XML::Document *, Inkscape::XML::Node *);
 
-    void _pasteDocument(SPDocument *, bool in_place);
-    void _pasteDefs(SPDocument *);
-    bool _pasteImage();
-    bool _pasteText();
+    void _pasteDocument(SPDesktop *desktop, SPDocument *clipdoc, bool in_place);
+    void _pasteDefs(SPDesktop *desktop, SPDocument *clipdoc);
+    bool _pasteImage(SPDocument *doc);
+    bool _pasteText(SPDesktop *desktop);
     SPCSSAttr *_parseColor(const Glib::ustring &);
     void _applyPathEffect(SPItem *, gchar const *);
     SPDocument *_retrieveClipboard(Glib::ustring = "");
@@ -143,7 +143,7 @@ private:
     void _createInternalClipboard();
     void _discardInternalClipboard();
     Inkscape::XML::Node *_createClipNode();
-    Geom::Scale _getScale(Geom::Point const &, Geom::Point const &, Geom::Rect const &, bool, bool);
+    Geom::Scale _getScale(SPDesktop *desktop, Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y);
     Glib::ustring _getBestTarget();
     void _setClipboardTargets();
     void _setClipboardColor(guint32);
@@ -194,9 +194,8 @@ ClipboardManagerImpl::~ClipboardManagerImpl() {}
 /**
  * @brief Copy selection contents to the clipboard
  */
-void ClipboardManagerImpl::copy()
+void ClipboardManagerImpl::copy(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop == NULL ) {
         return;
     }
@@ -303,10 +302,9 @@ void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam
  * @brief Paste from the system clipboard into the active desktop
  * @param in_place Whether to put the contents where they were when copied
  */
-bool ClipboardManagerImpl::paste(bool in_place)
+bool ClipboardManagerImpl::paste(SPDesktop *desktop, bool in_place)
 {
     // do any checking whether we really are able to paste before requesting the contents
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop == NULL ) {
         return false;
     }
@@ -322,11 +320,11 @@ bool ClipboardManagerImpl::paste(bool in_place)
 
     // if there is an image on the clipboard, paste it
     if ( target == CLIPBOARD_GDK_PIXBUF_TARGET ) {
-        return _pasteImage();
+        return _pasteImage(desktop->doc());
     }
     // if there's only text, paste it into a selected text object or create a new one
     if ( target == CLIPBOARD_TEXT_TARGET ) {
-        return _pasteText();
+        return _pasteText(desktop);
     }
 
     // otherwise, use the import extensions
@@ -336,7 +334,7 @@ bool ClipboardManagerImpl::paste(bool in_place)
         return false;
     }
 
-    _pasteDocument(tempdoc, in_place);
+    _pasteDocument(desktop, tempdoc, in_place);
     sp_document_unref(tempdoc);
 
     return true;
@@ -382,9 +380,8 @@ const gchar *ClipboardManagerImpl::getFirstObjectID()
 /**
  * @brief Implements the Paste Style action
  */
-bool ClipboardManagerImpl::pasteStyle()
+bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
         return false;
     }
@@ -415,7 +412,7 @@ bool ClipboardManagerImpl::pasteStyle()
     bool pasted = false;
 
     if (clipnode) {
-        _pasteDefs(tempdoc);
+        _pasteDefs(desktop, tempdoc);
         SPCSSAttr *style = sp_repr_css_attr(clipnode, "style");
         sp_desktop_set_style(desktop, style);
         pasted = true;
@@ -435,13 +432,12 @@ bool ClipboardManagerImpl::pasteStyle()
  * @param apply_x Whether to scale the width of objects / selection
  * @param apply_y Whether to scale the height of objects / selection
  */
-bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y)
+bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y)
 {
     if (!apply_x && !apply_y) {
         return false; // pointless parameters
     }
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop == NULL ) {
         return false;
     }
@@ -475,7 +471,7 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
                 if ( !obj_size ) {
                     continue;
                 }
-                sp_item_scale_rel(item, _getScale(min, max, *obj_size, apply_x, apply_y));
+                sp_item_scale_rel(item, _getScale(desktop, min, max, *obj_size, apply_x, apply_y));
             }
         }
         // resize the selection as a whole
@@ -483,7 +479,7 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
             Geom::OptRect sel_size = selection->bounds();
             if ( sel_size ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
-                    _getScale(min, max, *sel_size, apply_x, apply_y));
+                                            _getScale(desktop, min, max, *sel_size, apply_x, apply_y));
             }
         }
         pasted = true;
@@ -496,12 +492,11 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
 /**
  * @brief Applies a path effect from the clipboard to the selected path
  */
-bool ClipboardManagerImpl::pastePathEffect()
+bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
 {
     /** @todo FIXME: pastePathEffect crashes when moving the path with the applied effect,
         segfaulting in fork_private_if_necessary(). */
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop == NULL ) {
         return false;
     }
@@ -519,7 +514,7 @@ bool ClipboardManagerImpl::pastePathEffect()
         if ( clipnode ) {
             gchar const *effectstack = clipnode->attribute("inkscape:path-effect");
             if ( effectstack ) {
-                _pasteDefs(tempdoc);
+                _pasteDefs(desktop, tempdoc);
                 // make sure all selected items are converted to paths first (i.e. rectangles)
                 sp_selected_to_lpeitems(desktop);
                 for (GSList *itemptr = const_cast<GSList *>(selection->itemList()) ; itemptr ; itemptr = itemptr->next) {
@@ -542,18 +537,18 @@ bool ClipboardManagerImpl::pastePathEffect()
  * @brief Get LPE path data from the clipboard
  * @return The retrieved path data (contents of the d attribute), or "" if no path was found
  */
-Glib::ustring ClipboardManagerImpl::getPathParameter()
+Glib::ustring ClipboardManagerImpl::getPathParameter(SPDesktop* desktop)
 {
     SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
-        _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
+        _userWarn(desktop, _("Nothing on the clipboard."));
         return "";
     }
     Inkscape::XML::Node
         *root = sp_document_repr_root(tempdoc),
         *path = sp_repr_lookup_name(root, "svg:path", -1); // unlimited search depth
     if ( path == NULL ) {
-        _userWarn(SP_ACTIVE_DESKTOP, _("Clipboard does not contain a path."));
+        _userWarn(desktop, _("Clipboard does not contain a path."));
         sp_document_unref(tempdoc);
         return "";
     }
@@ -566,11 +561,11 @@ Glib::ustring ClipboardManagerImpl::getPathParameter()
  * @brief Get object id of a shape or text item from the clipboard
  * @return The retrieved id string (contents of the id attribute), or "" if no shape or text item was found
  */
-Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId()
+Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
 {
     SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
-        _userWarn(SP_ACTIVE_DESKTOP, _("Nothing on the clipboard."));
+        _userWarn(desktop, _("Nothing on the clipboard."));
         return "";
     }
     Inkscape::XML::Node *root = sp_document_repr_root(tempdoc);
@@ -581,7 +576,7 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId()
     }
 
     if ( repr == NULL ) {
-        _userWarn(SP_ACTIVE_DESKTOP, _("Clipboard does not contain a path."));
+        _userWarn(desktop, _("Clipboard does not contain a path."));
         sp_document_unref(tempdoc);
         return "";
     }
@@ -816,9 +811,8 @@ Inkscape::XML::Node *ClipboardManagerImpl::_copyNode(Inkscape::XML::Node *node, 
  * @param in_place Whether to paste the selection where it was when copied
  * @pre @c clipdoc is not empty and items can be added to the current layer
  */
-void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
+void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPDocument *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node
         *root = sp_document_repr_root(clipdoc),
@@ -826,7 +820,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     Inkscape::XML::Document *target_xmldoc = sp_document_repr_doc(target_document);
 
     // copy definitions
-    _pasteDefs(clipdoc);
+    _pasteDefs(desktop, clipdoc);
 
     // copy objects
     GSList *pasted_objects = NULL;
@@ -895,10 +889,9 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
  * @param clipdoc The document to paste
  * @pre @c clipdoc != NULL and pasting into the active document is possible
  */
-void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
+void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
 {
     // boilerplate vars copied from _pasteDocument
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPDocument *target_document = sp_desktop_document(desktop);
     Inkscape::XML::Node
         *root = sp_document_repr_root(clipdoc),
@@ -917,9 +910,8 @@ void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
 /**
  * @brief Retrieve a bitmap image from the clipboard and paste it into the active document
  */
-bool ClipboardManagerImpl::_pasteImage()
+bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
     if ( doc == NULL ) {
         return false;
     }
@@ -957,9 +949,8 @@ bool ClipboardManagerImpl::_pasteImage()
 /**
  * @brief Paste text into the selected text object or create a new one to hold it
  */
-bool ClipboardManagerImpl::_pasteText()
+bool ClipboardManagerImpl::_pasteText(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if ( desktop == NULL ) {
         return false;
     }
@@ -1300,9 +1291,8 @@ void ClipboardManagerImpl::_discardInternalClipboard()
 /**
  * @brief Get the scale to resize an item, based on the command and desktop state
  */
-Geom::Scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
+Geom::Scale ClipboardManagerImpl::_getScale(SPDesktop *desktop, Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     double scale_x = 1.0;
     double scale_y = 1.0;
 

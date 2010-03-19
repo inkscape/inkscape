@@ -233,6 +233,9 @@ static void shape_event_attr_changed(Inkscape::XML::Node *repr, gchar const *nam
         gpointer data);
 
 
+static char* cc_knot_tips[] = { _("<b>Connection point</b>: click or drag to create a new connector"),
+                           _("<b>Connection point</b>: click to select, drag to move") };
+
 /*static Geom::Point connector_drag_origin_w(0, 0);
 static bool connector_within_tolerance = false;*/
 static SPEventContextClass *parent_class;

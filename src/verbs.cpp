@@ -845,7 +845,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_selection_cut(dt);
             break;
         case SP_VERB_EDIT_COPY:
-            sp_selection_copy();
+            sp_selection_copy(dt);
             break;
         case SP_VERB_EDIT_PASTE:
             sp_selection_paste(dt, false);

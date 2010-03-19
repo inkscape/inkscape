@@ -559,13 +559,13 @@ void sp_edit_invert_in_all_layers(SPDesktop *desktop)
 
 void sp_selection_group_impl(GSList const *reprs_to_group, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc) {
     GSList *p = g_slist_copy((GSList *) reprs_to_group);
-    
+
     p = g_slist_sort(p, (GCompareFunc) sp_repr_compare_position);
-    
+
     // Remember the position and parent of the topmost object.
     gint topmost = ((Inkscape::XML::Node *) g_slist_last(p)->data)->position();
     Inkscape::XML::Node *topmost_parent = ((Inkscape::XML::Node *) g_slist_last(p)->data)->parent();
-    
+
     while (p) {
         Inkscape::XML::Node *current = (Inkscape::XML::Node *) p->data;
 
@@ -639,10 +639,10 @@ void sp_selection_group(SPDesktop *desktop)
 
     GSList const *l = (GSList *) selection->reprList();
 
-    
+
     Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
-    
-    sp_selection_group_impl(l, group, xml_doc, doc);    
+
+    sp_selection_group_impl(l, group, xml_doc, doc);
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_GROUP,
                      _("Group"));
@@ -1009,7 +1009,7 @@ sp_redo(SPDesktop *desktop, SPDocument *)
 
 void sp_selection_cut(SPDesktop *desktop)
 {
-    sp_selection_copy();
+    sp_selection_copy(desktop);
     sp_selection_delete(desktop);
 }
 
@@ -1054,33 +1054,36 @@ take_style_from_item(SPItem *item)
 }
 
 
-void sp_selection_copy()
+void sp_selection_copy(SPDesktop *desktop)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    cm->copy();
+    cm->copy(desktop);
 }
 
 void sp_selection_paste(SPDesktop *desktop, bool in_place)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    if (cm->paste(in_place))
+    if (cm->paste(desktop, in_place)) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE, _("Paste"));
+    }
 }
 
 void sp_selection_paste_style(SPDesktop *desktop)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    if (cm->pasteStyle())
+    if (cm->pasteStyle(desktop)) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_STYLE, _("Paste style"));
+    }
 }
 
 
 void sp_selection_paste_livepatheffect(SPDesktop *desktop)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    if (cm->pastePathEffect())
+    if (cm->pastePathEffect(desktop)) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
                          _("Paste live path effect"));
+    }
 }
 
 
@@ -1140,17 +1143,19 @@ void sp_selection_remove_filter(SPDesktop *desktop)
 void sp_selection_paste_size(SPDesktop *desktop, bool apply_x, bool apply_y)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    if (cm->pasteSize(false, apply_x, apply_y))
+    if (cm->pasteSize(desktop, false, apply_x, apply_y)) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_SIZE,
                          _("Paste size"));
+    }
 }
 
 void sp_selection_paste_size_separately(SPDesktop *desktop, bool apply_x, bool apply_y)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    if (cm->pasteSize(true, apply_x, apply_y))
+    if (cm->pasteSize(desktop, true, apply_x, apply_y)) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
                          _("Paste size separately"));
+    }
 }
 
 void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
@@ -2907,34 +2912,34 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
 
     g_slist_free(items);
     items = NULL;
-    
+
     if (apply_to_items && grouping == PREFS_MASKOBJECT_GROUPING_ALL) {
         // group all those objects into one group
         // and apply mask to that
         Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
-        
+
         // make a note we should ungroup this when unsetting mask
         group->setAttribute("inkscape:groupmode", "maskhelper");
-        
+
         GSList *reprs_to_group = NULL;
-        
+
         for (GSList *i = apply_to_items ; NULL != i ; i = i->next) {
                 reprs_to_group = g_slist_prepend(reprs_to_group, SP_OBJECT_REPR(i->data));
                 selection->remove(SP_OBJECT(i->data));
         }
         reprs_to_group = g_slist_reverse(reprs_to_group);
-        
+
         sp_selection_group_impl(reprs_to_group, group, xml_doc, doc);
-        
+
         g_slist_free(reprs_to_group);
-        
+
         // apply clip/mask only to newly created group
         g_slist_free(apply_to_items);
         apply_to_items = NULL;
         apply_to_items = g_slist_prepend(apply_to_items, doc->getObjectByRepr(group));
-        
+
         selection->add(group);
-        
+
         Inkscape::GC::release(group);
     }
 
@@ -2964,13 +2969,13 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
         Inkscape::XML::Node *current = SP_OBJECT_REPR(i->data);
         // Node to apply mask to
         Inkscape::XML::Node *apply_mask_to = current;
-        
+
         if (grouping == PREFS_MASKOBJECT_GROUPING_SEPARATE) {
             // enclose current node in group, and apply crop/mask on that
             Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
             // make a note we should ungroup this when unsetting mask
             group->setAttribute("inkscape:groupmode", "maskhelper");
-            
+
             Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
             gint position = current->position();
             selection->remove(current);
@@ -2978,17 +2983,17 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
             sp_repr_unparent(current);
             group->appendChild(spnew);
             group->setPosition(position);
-            
+
             // Apply clip/mask to group instead
             apply_mask_to = group;
-            
+
             selection->add(group);
-            Inkscape::GC::release(spnew); 
+            Inkscape::GC::release(spnew);
             Inkscape::GC::release(group);
         }
-        
+
         apply_mask_to->setAttribute(attributeName, g_strdup_printf("url(#%s)", mask_id));
-        
+
     }
 
     g_slist_free(mask_items);
@@ -3027,9 +3032,9 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     std::map<SPObject*,SPItem*> referenced_objects;
-    
+
     GSList *items_to_ungroup = NULL;
-    
+
     // SPObject* refers to a group containing the clipped path or mask itself,
     // whereas SPItem* refers to the item being clipped or masked
     for (GSList const *i = selection->itemList(); NULL != i; i = i->next) {
@@ -3051,17 +3056,17 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
         }
 
         SP_OBJECT_REPR(i->data)->setAttribute(attributeName, "none");
-        
+
         if (ungroup_masked && SP_IS_GROUP(i->data)) {
                 // if we had previously enclosed masked object in group,
                 // add it to list so we can ungroup it later
                 SPGroup *item = SP_GROUP(i->data);
-                
+
                 // ungroup only groups we created when setting clip/mask
                 if (item->layerMode() == SPGroup::MASK_HELPER) {
                     items_to_ungroup = g_slist_prepend(items_to_ungroup, item);
                 }
-                
+
         }
     }
 
@@ -3103,7 +3108,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
         g_slist_free(items_to_move);
     }
-    
+
     // ungroup marked groups added when setting mask
     for (GSList *i = items_to_ungroup ; NULL != i ; i = i->next) {
         selection->remove(SP_GROUP(i->data));
@@ -3112,7 +3117,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
         selection->addList(children);
         g_slist_free(children);
     }
-    
+
     g_slist_free(items_to_ungroup);
 
     if (apply_clip_path)

@@ -412,7 +412,7 @@ void
 PathParam::on_paste_button_click()
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    Glib::ustring svgd = cm->getPathParameter();
+    Glib::ustring svgd = cm->getPathParameter(SP_ACTIVE_DESKTOP);
     paste_param_path(svgd.data());
     sp_document_done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                      _("Paste path parameter"));
@@ -429,7 +429,7 @@ void
 PathParam::on_link_button_click()
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-    Glib::ustring pathid = cm->getShapeOrTextObjectId();
+    Glib::ustring pathid = cm->getShapeOrTextObjectId(SP_ACTIVE_DESKTOP);
 
     if (pathid == "") {
         return;

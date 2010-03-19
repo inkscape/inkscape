@@ -47,8 +47,6 @@ enum {
     SP_CONNECTOR_CONTEXT_DRAWING_MODE,
     SP_CONNECTOR_CONTEXT_EDITING_MODE
 };
-static char* cc_knot_tips[] = { _("<b>Connection point</b>: click or drag to create a new connector"),
-                           _("<b>Connection point</b>: click to select, drag to move") };
 
 typedef std::map<SPKnot *, ConnectionPoint>  ConnectionPointMap;
 
@@ -70,16 +68,16 @@ struct SPConnectorContext : public SPEventContext {
     SPCanvasItem *red_bpath;
     SPCurve *red_curve;
     guint32 red_color;
-    
+
     // Green curve
     SPCurve *green_curve;
-    
+
     // The new connector
     SPItem *newconn;
     Avoid::ConnRef *newConnRef;
     gdouble curvature;
     bool isOrthogonal;
-    
+
     // The active shape
     SPItem *active_shape;
     Inkscape::XML::Node *active_shape_repr;
@@ -90,7 +88,7 @@ struct SPConnectorContext : public SPEventContext {
     Inkscape::XML::Node *active_conn_repr;
     sigc::connection sel_changed_connection;
 
-    
+
     // The activehandle
     SPKnot *active_handle;
 
@@ -99,7 +97,7 @@ struct SPConnectorContext : public SPEventContext {
 
     SPItem *clickeditem;
     SPKnot *clickedhandle;
-    
+
     ConnectionPointMap connpthandles;
     SPKnot *endpt_handle[2];
     guint  endpt_handler_id[2];
