@@ -17,6 +17,7 @@
     <page name="tab" _gui-text="Positioning">
       <param name="where" type="enum" _gui-text="Set crop marks to">
 	    <_item value="canvas">Canvas</_item>
+	    <_item value="selection">Selection</_item>
       </param>
       <param name="unit" _gui-text="Unit" type="optiongroup" appearance="minimal">
 	    <option value="px">px</option>
@@ -34,7 +35,7 @@
     </page>
   </param>
 
-  <effect>
+  <effect needs-live-preview="false">
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Render"/>
