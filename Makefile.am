@@ -39,8 +39,7 @@ EXTRA_DIST = \
 	Info.plist.in	\
 	Info.plist		\
 	buildtool.cpp build.xml	\
-	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt	\
-	HACKING.txt HACKING.de.txt HACKING.fr.txt HACKING.it.txt	\
+	README README.ca.txt README.de.txt README.es.txt README.fr.txt README.it.txt README.osx.txt README.pt_BR.txt README.sk.txt README.sr.txt	\
 	TRANSLATORS \
 	inkscape.png \
 	inkscape.ico \
