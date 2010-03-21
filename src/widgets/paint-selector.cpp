@@ -125,9 +125,15 @@ static bool isPaintModeGradient( SPPaintSelectorMode mode )
 
 static SPGradientSelector *getGradientFromData(SPPaintSelector *psel)
 {
-    // TODO g_message("FIXME FIXME");
-    gchar const* key = (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH) ? "swatch-selector" : "gradient-selector";
-    SPGradientSelector *grad = reinterpret_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), key));
+    SPGradientSelector *grad = 0;
+    if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH) {
+        SwatchSelector *swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(psel->selector), "swatch-selector"));
+        if (swatchsel) {
+            grad = swatchsel->getGradientSelector();
+        }
+    } else {
+        grad = reinterpret_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector"));
+    }
     return grad;
 }
 

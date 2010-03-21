@@ -57,6 +57,11 @@ SwatchSelector::~SwatchSelector()
     _gsel = 0;
 }
 
+SPGradientSelector *SwatchSelector::getGradientSelector()
+{
+    return _gsel;
+}
+
 void SwatchSelector::_grabbedCb(SPColorSelector * /*csel*/, void * /*data*/)
 {
 }

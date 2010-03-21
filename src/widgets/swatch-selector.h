@@ -28,6 +28,8 @@ public:
 
     void setVector(SPDocument *doc, SPGradient *vector);
 
+    SPGradientSelector *getGradientSelector();
+
 private:
     static void _grabbedCb(SPColorSelector *csel, void *data);
     static void _draggedCb(SPColorSelector *csel, void *data);
