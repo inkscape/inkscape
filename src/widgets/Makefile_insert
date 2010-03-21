@@ -67,6 +67,8 @@ ink_common_sources +=	\
 	widgets/sp-xmlview-tree.h	\
 	widgets/stroke-style.cpp	\
 	widgets/stroke-style.h		\
+	widgets/swatch-selector.cpp	\
+	widgets/swatch-selector.h	\
 	widgets/toolbox.cpp		\
 	widgets/toolbox.h		\
 	widgets/widget-sizes.h

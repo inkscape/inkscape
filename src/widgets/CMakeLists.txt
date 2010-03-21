@@ -29,6 +29,7 @@ spw-utilities.cpp
 sp-xmlview-attr-list.cpp
 sp-xmlview-content.cpp
 sp-xmlview-tree.cpp
+swatch-selector.cpp
 toolbox.cpp
 )
 ADD_LIBRARY(widgets STATIC ${widgets_SRC})

@@ -52,12 +52,16 @@
 #include "io/sys.h"
 #include "helper/stock-items.h"
 #include "ui/icon-names.h"
+#include "widgets/swatch-selector.h"
 
 #include "paint-selector.h"
 
 #ifdef SP_PS_VERBOSE
 #include "svg/svg-icc-color.h"
 #endif // SP_PS_VERBOSE
+
+
+using Inkscape::Widgets::SwatchSelector;
 
 enum {
     MODE_CHANGED,
@@ -121,6 +125,7 @@ static bool isPaintModeGradient( SPPaintSelectorMode mode )
 
 static SPGradientSelector *getGradientFromData(SPPaintSelector *psel)
 {
+    // TODO g_message("FIXME FIXME");
     gchar const* key = (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH) ? "swatch-selector" : "gradient-selector";
     SPGradientSelector *grad = reinterpret_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), key));
     return grad;
@@ -448,9 +453,10 @@ void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPGradient *vector )
 #endif
     sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_SWATCH);
 
-    SPGradientSelector *gsel = static_cast<SPGradientSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector"));
-
-    gsel->setVector((vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector);
+    SwatchSelector *swatchsel = static_cast<SwatchSelector*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector"));
+    if (swatchsel) {
+        swatchsel->setVector( (vector) ? SP_OBJECT_DOCUMENT(vector) : 0, vector );
+    }
 }
 
 void
@@ -1102,25 +1108,26 @@ static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSele
 
     gtk_widget_set_sensitive(psel->style, TRUE);
 
-    GtkWidget *tbl = 0;
+    SwatchSelector *swatchsel = 0;
 
     if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH){
         /* Already have pattern menu */
-        tbl = static_cast<GtkWidget*>(gtk_object_get_data(GTK_OBJECT(psel->selector), "swatch-selector"));
+        swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(psel->selector), "swatch-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
         /* Create new gradient selector */
-        GtkWidget *gsel = sp_gradient_selector_new();
-        SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_SWATCH);
-        gtk_widget_show(gsel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "grabbed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_grabbed), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "dragged", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_dragged), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "released", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_released), psel);
-        gtk_signal_connect(GTK_OBJECT(gsel), "changed", GTK_SIGNAL_FUNC(sp_paint_selector_gradient_changed), psel);
+        SwatchSelector *swatchsel = new SwatchSelector();
+        swatchsel->show();
+
+        swatchsel->connectGrabbedHandler( G_CALLBACK(sp_paint_selector_gradient_grabbed), psel );
+        swatchsel->connectDraggedHandler( G_CALLBACK(sp_paint_selector_gradient_dragged), psel );
+        swatchsel->connectReleasedHandler( G_CALLBACK(sp_paint_selector_gradient_released), psel );
+        swatchsel->connectchangedHandler( G_CALLBACK(sp_paint_selector_gradient_changed), psel );
+
         // Pack everything to frame
-        gtk_container_add(GTK_CONTAINER(psel->frame), gsel);
-        psel->selector = gsel;
-        gtk_object_set_data(GTK_OBJECT(psel->selector), "swatch-selector", gsel);
+        gtk_container_add(GTK_CONTAINER(psel->frame), GTK_WIDGET(swatchsel->gobj()));
+        psel->selector = GTK_WIDGET(swatchsel->gobj());
+        gtk_object_set_data(GTK_OBJECT(psel->selector), "swatch-selector", swatchsel);
 
         gtk_frame_set_label(GTK_FRAME(psel->frame), _("Swatch fill"));
     }
