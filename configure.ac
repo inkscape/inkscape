@@ -570,7 +570,6 @@ PKG_CHECK_MODULES(POPPLER, poppler >= 0.5.9, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
-	POPPLER_LIBS="-lpoppler "
 	dnl Have to test libpoppler-glib presence
 	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.5.9, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
@@ -578,7 +577,7 @@ if test "x$poppler" = "xyes"; then
 		dnl Check whether the Cairo SVG backend is available
 		PKG_CHECK_MODULES(CAIRO_SVG, cairo-svg, cairo_svg=yes, cairo_svg=no)
 		if test "x$cairo_svg" = "xyes"; then
-			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
+			POPPLER_LIBS="$POPPLER_LIBS $POPPLER_GLIB_LIBS "
 		fi
 	fi
 	if test "x$enable_poppler_cairo" = "xyes"; then
@@ -588,7 +587,7 @@ if test "x$poppler" = "xyes"; then
 		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
 			"x$cairo_svg" = "xno"
 		then
-			POPPLER_LIBS="$POPPLER_LIBS -lpoppler-glib "
+			POPPLER_LIBS="$POPPLER_LIBS $POPPLER_CAIRO_LIBS "
 		fi
 	fi
 fi
@@ -606,9 +605,13 @@ fi
 AC_SUBST(POPPLER_CFLAGS)
 AC_SUBST(POPPLER_LIBS)
 
-PKG_CHECK_MODULES(POPPLERNEW, poppler >= 0.8.3, popplernew=yes, popplernew=no)
+PKG_CHECK_MODULES(POPPLER_GFXFONT, poppler >= 0.8.3, popplernew=yes, popplernew=no)
 if test "x$popplernew" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Poppler version of GfxFont to use (0.8.3 or higher versions of Poppler)])
+	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Use GfxFont from Poppler >= 0.8.3])
+fi
+PKG_CHECK_MODULES(POPPLER_COLORSPACE, poppler >= 0.12.2, popplercolor=yes, popplercolor=no)
+if test "x$popplercolor" = "xyes"; then
+	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
 fi
 
 dnl ******************************
