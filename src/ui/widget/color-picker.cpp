@@ -116,12 +116,15 @@ ColorPicker::on_changed (guint32)
 void
 sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
 {
-    if (_in_use) return;
-    else _in_use = true;
+    if (_in_use) {
+        return;
+    } else {
+        _in_use = true;
+    }
 
     SPColor color;
-    float alpha;
-    csel->base->getColorAlpha(color, &alpha);
+    float alpha = 0;
+    csel->base->getColorAlpha(color, alpha);
     guint32 rgba = color.toRGBA32( alpha );
 
     ColorPicker *ptr = (ColorPicker *)(cp);

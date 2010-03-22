@@ -318,15 +318,12 @@ void ColorSelector::_colorChanged()
 {
 }
 
-void ColorSelector::getColorAlpha( SPColor& color, gfloat* alpha ) const
+void ColorSelector::getColorAlpha( SPColor &color, gfloat &alpha ) const
 {
     gint i = 0;
 
     color = _color;
-    if ( alpha )
-    {
-        *alpha = _alpha;
-    }
+    alpha = _alpha;
 
     // Try to catch uninitialized value usage
     if ( color.v.c[0] )
@@ -345,7 +342,7 @@ void ColorSelector::getColorAlpha( SPColor& color, gfloat* alpha ) const
     {
         i++;
     }
-    if ( alpha && *alpha )
+    if ( alpha )
     {
         i++;
     }

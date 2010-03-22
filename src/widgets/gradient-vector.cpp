@@ -1146,7 +1146,7 @@ static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *o
     SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
 
 
-    csel->base->getColorAlpha(stop->specified_color, &stop->opacity);
+    csel->base->getColorAlpha(stop->specified_color, stop->opacity);
     stop->currentColor = false;
 
     blocked = FALSE;
@@ -1185,7 +1185,7 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *o
     SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
 
     csel = static_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(object), "cselector"));
-    csel->base->getColorAlpha( color, &alpha );
+    csel->base->getColorAlpha( color, alpha );
     rgb = color.toRGBA32( 0x00 );
 
     sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", stop->offset);

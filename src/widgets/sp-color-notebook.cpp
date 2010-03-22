@@ -126,7 +126,7 @@ void ColorNotebook::switchPage(GtkNotebook*,
     if ( gtk_notebook_get_current_page (GTK_NOTEBOOK (_book)) >= 0 )
     {
         csel = getCurrentSelector();
-        csel->base->getColorAlpha(_color, &_alpha);
+        csel->base->getColorAlpha(_color, _alpha);
     }
     widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (_book), page_num);
     if ( widget && SP_IS_COLOR_SELECTOR (widget) )
@@ -625,7 +625,7 @@ void ColorNotebook::_entryModified (SPColorSelector *csel, SPColorNotebook *colo
     SPColor color;
     gfloat alpha = 1.0;
 
-    csel->base->getColorAlpha( color, &alpha );
+    csel->base->getColorAlpha( color, alpha );
     nb->_updateRgbaEntry( color, alpha );
     nb->_updateInternals( color, alpha, nb->_dragging );
 }

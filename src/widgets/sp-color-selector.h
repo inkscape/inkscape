@@ -26,7 +26,7 @@ public:
     gfloat getAlpha() const;
 
     void setColorAlpha( const SPColor& color, gfloat alpha, bool emit = false );
-    void getColorAlpha( SPColor& color, gfloat* alpha ) const;
+    void getColorAlpha( SPColor &color, gfloat &alpha ) const;
 
     virtual void setSubmode( guint submode );
     virtual guint getSubmode() const;

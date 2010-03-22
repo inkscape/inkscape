@@ -73,6 +73,28 @@ struct SPPaintSelector {
 
     SPColor color;
     float alpha;
+
+
+    void setMode( SPPaintSelectorMode mode );
+    void setFillrule( SPPaintSelectorFillRule fillrule );
+
+    void setColorAlpha( SPColor const &color, float alpha );
+    void getColorAlpha( SPColor &color, gfloat &alpha ) const;
+
+    void setGradientLinear( SPGradient *vector );
+    void setGradientRadial( SPGradient *vector );
+    void setSwatch( SPGradient *vector );
+
+    void setGradientProperties( SPGradientUnits units, SPGradientSpread spread );
+    void getGradientProperties( SPGradientUnits &units, SPGradientSpread &spread ) const;
+
+    void pushAttrsToGradient( SPGradient *gr ) const;
+    SPGradient *getGradientVector();
+    SPPattern * getPattern();
+    void updatePatternList( SPPattern *pat );
+
+    // TODO move this elsewhere:
+    void setFlatColor( SPDesktop *desktop, const gchar *color_property, const gchar *opacity_property );
 };
 
 /// The SPPaintSelector vtable
@@ -92,33 +114,7 @@ GtkType sp_paint_selector_get_type (void);
 
 GtkWidget *sp_paint_selector_new (bool is_fill);
 
-void sp_paint_selector_set_mode (SPPaintSelector *psel, SPPaintSelectorMode mode);
-void sp_paint_selector_set_fillrule (SPPaintSelector *psel, SPPaintSelectorFillRule fillrule);
 
-void sp_paint_selector_set_color_alpha (SPPaintSelector *psel, const SPColor *color, float alpha);
-
-void sp_paint_selector_set_gradient_linear (SPPaintSelector *psel, SPGradient *vector);
-
-void sp_paint_selector_set_gradient_radial (SPPaintSelector *psel, SPGradient *vector);
-
-void sp_paint_selector_set_swatch(SPPaintSelector *psel, SPGradient *vector );
-
-void sp_paint_selector_set_gradient_properties (SPPaintSelector *psel, SPGradientUnits units, SPGradientSpread spread);
-void sp_paint_selector_get_gradient_properties (SPPaintSelector *psel, SPGradientUnits *units, SPGradientSpread *spread);
-
-void sp_gradient_selector_attrs_to_gradient (SPGradient *gr, SPPaintSelector *psel);
-
-void sp_paint_selector_get_color_alpha (SPPaintSelector *psel, SPColor *color, gfloat *alpha);
-
-SPGradient *sp_paint_selector_get_gradient_vector (SPPaintSelector *psel);
-
-void sp_paint_selector_system_color_set (SPPaintSelector *psel, const SPColor *color, float opacity);
-
-SPPattern * sp_paint_selector_get_pattern (SPPaintSelector *psel);
-
-void sp_update_pattern_list ( SPPaintSelector *psel, SPPattern *pat);
-
-void sp_paint_selector_set_flat_color (SPPaintSelector *psel, SPDesktop *desktop, const gchar *color_property, const gchar *opacity_property);
 
 SPPaintSelectorMode sp_style_determine_paint_selector_mode (SPStyle *style, bool isfill);
 

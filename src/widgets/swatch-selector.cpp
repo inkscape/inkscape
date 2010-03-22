@@ -125,7 +125,7 @@ void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
                 float alpha = 0;
                 guint32 rgb = 0;
 
-                swsel->_csel->base->getColorAlpha( color, &alpha );
+                swsel->_csel->base->getColorAlpha( color, alpha );
                 rgb = color.toRGBA32( 0x00 );
 
                 // TODO replace with generic shared code that also handles icc-color

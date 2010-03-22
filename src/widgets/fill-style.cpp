@@ -190,7 +190,7 @@ sp_fill_style_widget_update (SPWidget *spw)
         case QUERY_STYLE_NOTHING:
         {
             /* No paint at all */
-            sp_paint_selector_set_mode (psel, SP_PAINT_SELECTOR_MODE_EMPTY);
+            psel->setMode(SP_PAINT_SELECTOR_MODE_EMPTY);
             break;
         }
 
@@ -199,39 +199,37 @@ sp_fill_style_widget_update (SPWidget *spw)
         case QUERY_STYLE_MULTIPLE_SAME:
         {
             SPPaintSelectorMode pselmode = sp_style_determine_paint_selector_mode (query, true);
-            sp_paint_selector_set_mode (psel, pselmode);
+            psel->setMode(pselmode);
 
-            sp_paint_selector_set_fillrule (psel, query->fill_rule.computed == ART_WIND_RULE_NONZERO?
-                                     SP_PAINT_SELECTOR_FILLRULE_NONZERO : SP_PAINT_SELECTOR_FILLRULE_EVENODD);
+            psel->setFillrule(query->fill_rule.computed == ART_WIND_RULE_NONZERO?
+                              SP_PAINT_SELECTOR_FILLRULE_NONZERO : SP_PAINT_SELECTOR_FILLRULE_EVENODD);
 
             if (query->fill.set && query->fill.isColor()) {
-                sp_paint_selector_set_color_alpha (psel, &query->fill.value.color, SP_SCALE24_TO_FLOAT (query->fill_opacity.value));
+                psel->setColorAlpha(query->fill.value.color, SP_SCALE24_TO_FLOAT(query->fill_opacity.value));
             } else if (query->fill.set && query->fill.isPaintserver()) {
 
                 SPPaintServer *server = SP_STYLE_FILL_SERVER (query);
 
                 if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    sp_paint_selector_set_swatch( psel, vector );
+                    psel->setSwatch( vector );
                 } else if (SP_IS_LINEARGRADIENT (server)) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    sp_paint_selector_set_gradient_linear (psel, vector);
+                    psel->setGradientLinear( vector );
 
                     SPLinearGradient *lg = SP_LINEARGRADIENT (server);
-                    sp_paint_selector_set_gradient_properties (psel,
-                                                       SP_GRADIENT_UNITS (lg),
-                                                       SP_GRADIENT_SPREAD (lg));
+                    psel->setGradientProperties( SP_GRADIENT_UNITS(lg),
+                                                 SP_GRADIENT_SPREAD(lg) );
                 } else if (SP_IS_RADIALGRADIENT (server)) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    sp_paint_selector_set_gradient_radial (psel, vector);
+                    psel->setGradientRadial( vector );
 
                     SPRadialGradient *rg = SP_RADIALGRADIENT (server);
-                    sp_paint_selector_set_gradient_properties (psel,
-                                                       SP_GRADIENT_UNITS (rg),
-                                                       SP_GRADIENT_SPREAD (rg));
+                    psel->setGradientProperties( SP_GRADIENT_UNITS (rg),
+                                                 SP_GRADIENT_SPREAD (rg) );
                 } else if (SP_IS_PATTERN (server)) {
                     SPPattern *pat = pattern_getroot (SP_PATTERN (server));
-                    sp_update_pattern_list (psel, pat);
+                    psel->updatePatternList( pat );
                 }
             }
             break;
@@ -239,7 +237,7 @@ sp_fill_style_widget_update (SPWidget *spw)
 
         case QUERY_STYLE_MULTIPLE_DIFFERENT:
         {
-            sp_paint_selector_set_mode (psel, SP_PAINT_SELECTOR_MODE_MULTIPLE);
+            psel->setMode(SP_PAINT_SELECTOR_MODE_MULTIPLE);
             break;
         }
     }
@@ -321,7 +319,7 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_RGB:
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
-            sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "fill", "fill-opacity");
+            psel->setFlatColor( SP_ACTIVE_DESKTOP, "fill", "fill-opacity" );
             sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set fill color"));
             g_object_set_data (G_OBJECT (spw), "local", GINT_TO_POINTER (TRUE)); // local change, do not update from selection
@@ -395,7 +393,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
             // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in losing release events
             sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
-            sp_paint_selector_set_flat_color (psel, desktop, "fill", "fill-opacity");
+            psel->setFlatColor( desktop, "fill", "fill-opacity" );
             sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set fill color"));
             // resume interruptibility
@@ -422,7 +420,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                 SPCSSAttr *css = sp_repr_css_attr_new();
                 sp_repr_css_set_property(css, "fill-opacity", "1.0");
 
-                SPGradient *vector = sp_paint_selector_get_gradient_vector(psel);
+                SPGradient *vector = psel->getGradientVector();
                 if (!vector) {
                     /* No vector in paint selector should mean that we just changed mode */
 
@@ -460,7 +458,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                         sp_repr_css_change_recursive (SP_OBJECT_REPR (i->data), css, "style");
 
                         SPGradient *gr = sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, true);
-                        sp_gradient_selector_attrs_to_gradient (gr, psel);
+                        psel->pushAttrsToGradient( gr );
                     }
                 }
 
@@ -475,7 +473,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
             if (items) {
 
-                SPPattern *pattern = sp_paint_selector_get_pattern (psel);
+                SPPattern *pattern = psel->getPattern();
                 if (!pattern) {
 
                     /* No Pattern in paint selector should mean that we just
