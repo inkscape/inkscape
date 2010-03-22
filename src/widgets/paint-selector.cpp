@@ -77,17 +77,17 @@ static void sp_paint_selector_class_init(SPPaintSelectorClass *klass);
 static void sp_paint_selector_init(SPPaintSelector *slider);
 static void sp_paint_selector_destroy(GtkObject *object);
 
-static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel, gchar const *px, SPPaintSelectorMode mode, GtkTooltips *tt, gchar const *tip);
+static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel, gchar const *px, SPPaintSelector::Mode mode, GtkTooltips *tt, gchar const *tip);
 static void sp_paint_selector_style_button_toggled(GtkToggleButton *tb, SPPaintSelector *psel);
 static void sp_paint_selector_fillrule_toggled(GtkToggleButton *tb, SPPaintSelector *psel);
 
 static void sp_paint_selector_set_mode_empty(SPPaintSelector *psel);
 static void sp_paint_selector_set_mode_multiple(SPPaintSelector *psel);
 static void sp_paint_selector_set_mode_none(SPPaintSelector *psel);
-static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode);
-static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelectorMode mode);
-static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mode);
-static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelectorMode mode);
+static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelector::Mode mode);
+static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelector::Mode mode);
+static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelector::Mode mode);
+static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelector::Mode mode);
 static void sp_paint_selector_set_mode_unset(SPPaintSelector *psel);
 
 
@@ -114,11 +114,12 @@ static gchar const* modeStrings[] = {
 };
 #endif
 
-static bool isPaintModeGradient( SPPaintSelectorMode mode )
+
+static bool isPaintModeGradient( SPPaintSelector::Mode mode )
 {
-    bool isGrad = (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) ||
-        (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL) ||
-        (mode == SP_PAINT_SELECTOR_MODE_SWATCH);
+    bool isGrad = (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) ||
+        (mode == SPPaintSelector::MODE_GRADIENT_RADIAL) ||
+        (mode == SPPaintSelector::MODE_SWATCH);
 
     return isGrad;
 }
@@ -126,7 +127,7 @@ static bool isPaintModeGradient( SPPaintSelectorMode mode )
 static SPGradientSelector *getGradientFromData(SPPaintSelector const *psel)
 {
     SPGradientSelector *grad = 0;
-    if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH) {
+    if (psel->mode == SPPaintSelector::MODE_SWATCH) {
         SwatchSelector *swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(psel->selector), "swatch-selector"));
         if (swatchsel) {
             grad = swatchsel->getGradientSelector();
@@ -217,7 +218,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
 {
     GtkTooltips *tt = gtk_tooltips_new();
 
-    psel->mode = (SPPaintSelectorMode)-1; // huh?  do you mean 0xff?  --  I think this means "not in the enum"
+    psel->mode = static_cast<SPPaintSelector::Mode>(-1); // huh?  do you mean 0xff?  --  I think this means "not in the enum"
 
     /* Paint style button box */
     psel->style = gtk_hbox_new(FALSE, 0);
@@ -227,19 +228,19 @@ sp_paint_selector_init(SPPaintSelector *psel)
 
     /* Buttons */
     psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_NONE,
-                                                    SP_PAINT_SELECTOR_MODE_NONE, tt, _("No paint"));
+                                                    SPPaintSelector::MODE_NONE, tt, _("No paint"));
     psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SOLID,
-                                                     SP_PAINT_SELECTOR_MODE_COLOR_RGB, tt, _("Flat color"));
+                                                     SPPaintSelector::MODE_COLOR_RGB, tt, _("Flat color"));
     psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
-                                                        SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR, tt, _("Linear gradient"));
+                                                        SPPaintSelector::MODE_GRADIENT_LINEAR, tt, _("Linear gradient"));
     psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
-                                                      SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL, tt, _("Radial gradient"));
+                                                      SPPaintSelector::MODE_GRADIENT_RADIAL, tt, _("Radial gradient"));
     psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_PATTERN,
-                                                       SP_PAINT_SELECTOR_MODE_PATTERN, tt, _("Pattern"));
+                                                       SPPaintSelector::MODE_PATTERN, tt, _("Pattern"));
     psel->swatch = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SWATCH,
-                                                       SP_PAINT_SELECTOR_MODE_SWATCH, tt, _("Swatch"));
+                                                       SPPaintSelector::MODE_SWATCH, tt, _("Swatch"));
     psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_UNKNOWN,
-                                                     SP_PAINT_SELECTOR_MODE_UNSET, tt, _("Unset paint (make it undefined so it can be inherited)"));
+                                                     SPPaintSelector::MODE_UNSET, tt, _("Unset paint (make it undefined so it can be inherited)"));
 
     /* Fillrule */
     {
@@ -252,7 +253,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(psel->evenodd), FALSE);
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"), NULL);
-        gtk_object_set_data(GTK_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_EVENODD));
+        gtk_object_set_data(GTK_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_EVENODD));
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_EVEN_ODD);
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->evenodd, FALSE, FALSE, 0);
@@ -263,7 +264,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(psel->nonzero), FALSE);
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"), NULL);
-        gtk_object_set_data(GTK_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_NONZERO));
+        gtk_object_set_data(GTK_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SPPaintSelector::FILLRULE_NONZERO));
         w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_NONZERO);
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->nonzero, FALSE, FALSE, 0);
@@ -293,10 +294,9 @@ sp_paint_selector_destroy(GtkObject *object)
         (* ((GtkObjectClass *) parent_class)->destroy)(object);
 }
 
-static GtkWidget *
-sp_paint_selector_style_button_add(SPPaintSelector *psel,
-                                   gchar const *pixmap, SPPaintSelectorMode mode,
-                                   GtkTooltips *tt, gchar const *tip)
+static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel,
+                                                     gchar const *pixmap, SPPaintSelector::Mode mode,
+                                                     GtkTooltips *tt, gchar const *tip)
 {
     GtkWidget *b, *w;
 
@@ -325,7 +325,7 @@ static void
 sp_paint_selector_style_button_toggled(GtkToggleButton *tb, SPPaintSelector *psel)
 {
     if (!psel->update && gtk_toggle_button_get_active(tb)) {
-        psel->setMode(static_cast<SPPaintSelectorMode>(GPOINTER_TO_UINT(gtk_object_get_data(GTK_OBJECT(tb), "mode"))));
+        psel->setMode(static_cast<SPPaintSelector::Mode>(GPOINTER_TO_UINT(gtk_object_get_data(GTK_OBJECT(tb), "mode"))));
     }
 }
 
@@ -333,7 +333,7 @@ static void
 sp_paint_selector_fillrule_toggled(GtkToggleButton *tb, SPPaintSelector *psel)
 {
     if (!psel->update && gtk_toggle_button_get_active(tb)) {
-        SPPaintSelectorFillRule fr = (SPPaintSelectorFillRule)GPOINTER_TO_UINT(gtk_object_get_data(GTK_OBJECT(tb), "mode"));
+        SPPaintSelector::FillRule fr = static_cast<SPPaintSelector::FillRule>(GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(tb), "mode")));
         gtk_signal_emit(GTK_OBJECT(psel), psel_signals[FILLRULE_CHANGED], fr);
     }
 }
@@ -357,7 +357,7 @@ sp_paint_selector_new(bool is_fill)
 {
     SPPaintSelector *psel = static_cast<SPPaintSelector*>(gtk_type_new(SP_TYPE_PAINT_SELECTOR));
 
-    psel->setMode(SP_PAINT_SELECTOR_MODE_MULTIPLE);
+    psel->setMode(SPPaintSelector::MODE_MULTIPLE);
 
     // This silliness is here because I don't know how to pass a parameter to the
     // GtkObject "constructor" (sp_paint_selector_init). Remove it when paint_selector
@@ -367,7 +367,7 @@ sp_paint_selector_new(bool is_fill)
     return GTK_WIDGET(psel);
 }
 
-void SPPaintSelector::setMode(SPPaintSelectorMode mode)
+void SPPaintSelector::setMode(Mode mode)
 {
     if (this->mode != mode) {
         update = TRUE;
@@ -375,30 +375,30 @@ void SPPaintSelector::setMode(SPPaintSelectorMode mode)
         g_print("Mode change %d -> %d   %s -> %s\n", this->mode, mode, modeStrings[this->mode], modeStrings[mode]);
 #endif
         switch (mode) {
-            case SP_PAINT_SELECTOR_MODE_EMPTY:
+            case MODE_EMPTY:
                 sp_paint_selector_set_mode_empty(this);
                 break;
-            case SP_PAINT_SELECTOR_MODE_MULTIPLE:
+            case MODE_MULTIPLE:
                 sp_paint_selector_set_mode_multiple(this);
                 break;
-            case SP_PAINT_SELECTOR_MODE_NONE:
+            case MODE_NONE:
                 sp_paint_selector_set_mode_none(this);
                 break;
-            case SP_PAINT_SELECTOR_MODE_COLOR_RGB:
-            case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
+            case MODE_COLOR_RGB:
+            case MODE_COLOR_CMYK:
                 sp_paint_selector_set_mode_color(this, mode);
                 break;
-            case SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR:
-            case SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL:
+            case MODE_GRADIENT_LINEAR:
+            case MODE_GRADIENT_RADIAL:
                 sp_paint_selector_set_mode_gradient(this, mode);
                 break;
-            case SP_PAINT_SELECTOR_MODE_PATTERN:
+            case MODE_PATTERN:
                 sp_paint_selector_set_mode_pattern(this, mode);
                 break;
-            case SP_PAINT_SELECTOR_MODE_SWATCH:
+            case MODE_SWATCH:
                 sp_paint_selector_set_mode_swatch(this, mode);
                 break;
-            case SP_PAINT_SELECTOR_MODE_UNSET:
+            case MODE_UNSET:
                 sp_paint_selector_set_mode_unset(this);
                 break;
             default:
@@ -411,12 +411,12 @@ void SPPaintSelector::setMode(SPPaintSelectorMode mode)
     }
 }
 
-void SPPaintSelector::setFillrule(SPPaintSelectorFillRule fillrule)
+void SPPaintSelector::setFillrule(FillRule fillrule)
 {
     if (fillrulebox) {
         // TODO this flips widgets but does not use a member to store state. Revisit
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(evenodd), (fillrule == SP_PAINT_SELECTOR_FILLRULE_EVENODD));
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(nonzero), (fillrule == SP_PAINT_SELECTOR_FILLRULE_NONZERO));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(evenodd), (fillrule == FILLRULE_EVENODD));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(nonzero), (fillrule == FILLRULE_NONZERO));
     }
 }
 
@@ -432,7 +432,7 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
 #ifdef SP_PS_VERBOSE
         g_print("PaintSelector set CMYKA\n");
 #endif
-        sp_paint_selector_set_mode(psel, SP_PAINT_SELECTOR_MODE_COLOR_CMYK);
+        sp_paint_selector_set_mode(psel, MODE_COLOR_CMYK);
     }
     else
 */
@@ -440,7 +440,7 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
 #ifdef SP_PS_VERBOSE
         g_print("PaintSelector set RGBA\n");
 #endif
-        setMode(SP_PAINT_SELECTOR_MODE_COLOR_RGB);
+        setMode(MODE_COLOR_RGB);
     }
 
     csel = reinterpret_cast<SPColorSelector*>(gtk_object_get_data(GTK_OBJECT(selector), "color-selector"));
@@ -453,7 +453,7 @@ void SPPaintSelector::setSwatch(SPGradient *vector )
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set SWATCH\n");
 #endif
-    setMode(SP_PAINT_SELECTOR_MODE_SWATCH);
+    setMode(MODE_SWATCH);
 
     SwatchSelector *swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(selector), "swatch-selector"));
     if (swatchsel) {
@@ -466,7 +466,7 @@ void SPPaintSelector::setGradientLinear(SPGradient *vector)
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set GRADIENT LINEAR\n");
 #endif
-    setMode(SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR);
+    setMode(MODE_GRADIENT_LINEAR);
 
     SPGradientSelector *gsel = getGradientFromData(this);
 
@@ -479,7 +479,7 @@ void SPPaintSelector::setGradientRadial(SPGradient *vector)
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set GRADIENT RADIAL\n");
 #endif
-    setMode(SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL);
+    setMode(MODE_GRADIENT_RADIAL);
 
     SPGradientSelector *gsel = getGradientFromData(this);
 
@@ -617,24 +617,18 @@ sp_paint_selector_set_mode_none(SPPaintSelector *psel)
 
 /* Color paint */
 
-static void
-sp_paint_selector_color_grabbed(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_color_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
 }
 
-static void
-sp_paint_selector_color_dragged(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_color_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
 }
 
-static void
-sp_paint_selector_color_released(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_color_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
 }
 
@@ -646,16 +640,14 @@ sp_paint_selector_color_changed(SPColorSelector *csel, SPPaintSelector *psel)
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
-static void
-sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode)
+static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelector::Mode /*mode*/)
 {
-    (void)mode;
     GtkWidget *csel;
 
     sp_paint_selector_set_style_buttons(psel, psel->solid);
     gtk_widget_set_sensitive(psel->style, TRUE);
 
-    if ((psel->mode == SP_PAINT_SELECTOR_MODE_COLOR_RGB) || (psel->mode == SP_PAINT_SELECTOR_MODE_COLOR_CMYK)) {
+    if ((psel->mode == SPPaintSelector::MODE_COLOR_RGB) || (psel->mode == SPPaintSelector::MODE_COLOR_CMYK)) {
         /* Already have color selector */
         csel = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "color-selector");
     } else {
@@ -692,49 +684,40 @@ sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelectorMode mode
 
 /* Gradient */
 
-static void
-sp_paint_selector_gradient_grabbed(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[GRABBED]);
 }
 
-static void
-sp_paint_selector_gradient_dragged(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[DRAGGED]);
 }
 
-static void
-sp_paint_selector_gradient_released(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[RELEASED]);
 }
 
-static void
-sp_paint_selector_gradient_changed(SPColorSelector *csel, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_changed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
 {
-    (void)csel;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
-static void
-sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelectorMode mode)
+static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelector::Mode mode)
 {
     GtkWidget *gsel;
 
     /* fixme: We do not need function-wide gsel at all */
 
-    if (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) {
+    if (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) {
         sp_paint_selector_set_style_buttons(psel, psel->gradient);
     } else {
         sp_paint_selector_set_style_buttons(psel, psel->radial);
     }
     gtk_widget_set_sensitive(psel->style, TRUE);
 
-    if ((psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) || (psel->mode == SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL)) {
+    if ((psel->mode == SPPaintSelector::MODE_GRADIENT_LINEAR) || (psel->mode == SPPaintSelector::MODE_GRADIENT_RADIAL)) {
         /* Already have gradient selector */
         gsel = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "gradient-selector");
     } else {
@@ -753,7 +736,7 @@ sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSelectorMode m
     }
 
     /* Actually we have to set option menu history here */
-    if (mode == SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR) {
+    if (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) {
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_LINEAR);
         //sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
         gtk_frame_set_label(GTK_FRAME(psel->frame), _("Linear gradient"));
@@ -778,18 +761,14 @@ sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget *active)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(psel->unset), (active == psel->unset));
 }
 
-static void
-sp_psel_pattern_destroy(GtkWidget *widget,  SPPaintSelector *psel)
+static void sp_psel_pattern_destroy(GtkWidget *widget, SPPaintSelector * /*psel*/)
 {
-    (void)psel;
     // drop our reference to the pattern menu widget
     g_object_unref( G_OBJECT(widget) );
 }
 
-static void
-sp_psel_pattern_change(GtkWidget *widget,  SPPaintSelector *psel)
+static void sp_psel_pattern_change(GtkWidget * /*widget*/, SPPaintSelector *psel)
 {
-    (void)widget;
     gtk_signal_emit(GTK_OBJECT(psel), psel_signals[CHANGED]);
 }
 
@@ -865,17 +844,15 @@ sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*
  * current_doc (if non-NULL), and add items to the pattern menu
  *
  */
-static void
-sp_pattern_list_from_doc (GtkWidget *m, SPDocument *current_doc, SPDocument *source, SPDocument *pattern_doc)
+static void sp_pattern_list_from_doc (GtkWidget *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*pattern_doc*/)
 {
-    (void)current_doc;
-    (void)pattern_doc;
     GSList *pl = ink_pattern_list_get(source);
     GSList *clean_pl = NULL;
 
     for (; pl != NULL; pl = pl->next) {
-        if (!SP_IS_PATTERN(pl->data))
+        if (!SP_IS_PATTERN(pl->data)) {
             continue;
+        }
 
         // Add to the list of patterns we really do wish to show
         clean_pl = g_slist_prepend (clean_pl, pl->data);
@@ -998,17 +975,17 @@ void SPPaintSelector::updatePatternList( SPPattern *pattern )
     //gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
 }
 
-static void
-sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mode)
+static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelector::Mode mode)
 {
-    if (mode == SP_PAINT_SELECTOR_MODE_PATTERN)
+    if (mode == SPPaintSelector::MODE_PATTERN) {
         sp_paint_selector_set_style_buttons(psel, psel->pattern);
+    }
 
     gtk_widget_set_sensitive(psel->style, TRUE);
 
     GtkWidget *tbl = NULL;
 
-    if (psel->mode == SP_PAINT_SELECTOR_MODE_PATTERN){
+    if (psel->mode == SPPaintSelector::MODE_PATTERN) {
         /* Already have pattern menu */
         tbl = (GtkWidget*)gtk_object_get_data(GTK_OBJECT(psel->selector), "pattern-selector");
     } else {
@@ -1058,7 +1035,7 @@ sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mo
 SPPattern *SPPaintSelector::getPattern()
 {
     SPPattern *pat = 0;
-    g_return_val_if_fail((mode == SP_PAINT_SELECTOR_MODE_PATTERN) , NULL);
+    g_return_val_if_fail((mode == MODE_PATTERN) , NULL);
 
     GtkWidget *patmnu = (GtkWidget *) g_object_get_data(G_OBJECT(this), "patternmenu");
     /* no pattern menu if we were just selected */
@@ -1095,9 +1072,9 @@ SPPattern *SPPaintSelector::getPattern()
     return pat;
 }
 
-static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelectorMode mode)
+static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSelector::Mode mode)
 {
-    if (mode == SP_PAINT_SELECTOR_MODE_SWATCH) {
+    if (mode == SPPaintSelector::MODE_SWATCH) {
         sp_paint_selector_set_style_buttons(psel, psel->swatch);
     }
 
@@ -1105,7 +1082,7 @@ static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSele
 
     SwatchSelector *swatchsel = 0;
 
-    if (psel->mode == SP_PAINT_SELECTOR_MODE_SWATCH){
+    if (psel->mode == SPPaintSelector::MODE_SWATCH){
         /* Already have pattern menu */
         swatchsel = static_cast<SwatchSelector*>(g_object_get_data(G_OBJECT(psel->selector), "swatch-selector"));
     } else {
@@ -1160,13 +1137,13 @@ void SPPaintSelector::setFlatColor( SPDesktop *desktop, gchar const *color_prope
     sp_repr_css_attr_unref(css);
 }
 
-SPPaintSelectorMode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
+SPPaintSelector::Mode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
 {
-    SPPaintSelectorMode mode = SP_PAINT_SELECTOR_MODE_UNSET;
+    SPPaintSelector::Mode mode = SPPaintSelector::MODE_UNSET;
     SPIPaint& target = isfill ? style->fill : style->stroke;
 
     if ( !target.set ) {
-        mode = SP_PAINT_SELECTOR_MODE_UNSET;
+        mode = SPPaintSelector::MODE_UNSET;
     } else if ( target.isPaintserver() ) {
         SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
 
@@ -1177,24 +1154,25 @@ SPPaintSelectorMode sp_style_determine_paint_selector_mode(SPStyle *style, bool 
 
 
         if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
-            mode = SP_PAINT_SELECTOR_MODE_SWATCH;
+            mode = SPPaintSelector::MODE_SWATCH;
         } else if (SP_IS_LINEARGRADIENT(server)) {
-            mode = SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;
+            mode = SPPaintSelector::MODE_GRADIENT_LINEAR;
         } else if (SP_IS_RADIALGRADIENT(server)) {
-            mode = SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL;
+            mode = SPPaintSelector::MODE_GRADIENT_RADIAL;
         } else if (SP_IS_PATTERN(server)) {
-            mode = SP_PAINT_SELECTOR_MODE_PATTERN;
+            mode = SPPaintSelector::MODE_PATTERN;
         } else {
             g_warning( "file %s: line %d: Unknown paintserver", __FILE__, __LINE__ );
-            mode = SP_PAINT_SELECTOR_MODE_NONE;
+            mode = SPPaintSelector::MODE_NONE;
         }
     } else if ( target.isColor() ) {
-        mode = SP_PAINT_SELECTOR_MODE_COLOR_RGB; // so far only rgb can be read from svg
+        // TODO this is no longer a valid assertion:
+        mode = SPPaintSelector::MODE_COLOR_RGB; // so far only rgb can be read from svg
     } else if ( target.isNone() ) {
-        mode = SP_PAINT_SELECTOR_MODE_NONE;
+        mode = SPPaintSelector::MODE_NONE;
     } else {
         g_warning( "file %s: line %d: Unknown paint type", __FILE__, __LINE__ );
-        mode = SP_PAINT_SELECTOR_MODE_NONE;
+        mode = SPPaintSelector::MODE_NONE;
     }
 
     return mode;

@@ -31,31 +31,32 @@ class SPGradient;
 #include <color.h>
 #include <libnr/nr-forward.h>
 
-typedef enum {
-    SP_PAINT_SELECTOR_MODE_EMPTY,
-    SP_PAINT_SELECTOR_MODE_MULTIPLE,
-    SP_PAINT_SELECTOR_MODE_NONE,
-    SP_PAINT_SELECTOR_MODE_COLOR_RGB,
-    SP_PAINT_SELECTOR_MODE_COLOR_CMYK,
-    SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR,
-    SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL,
-    SP_PAINT_SELECTOR_MODE_PATTERN,
-    SP_PAINT_SELECTOR_MODE_SWATCH,
-    SP_PAINT_SELECTOR_MODE_UNSET
-} SPPaintSelectorMode;
-
-typedef enum {
-    SP_PAINT_SELECTOR_FILLRULE_NONZERO,
-    SP_PAINT_SELECTOR_FILLRULE_EVENODD
-} SPPaintSelectorFillRule;
 
 /// Generic paint selector widget
 struct SPPaintSelector {
     GtkVBox vbox;
 
+    enum Mode {
+        MODE_EMPTY,
+        MODE_MULTIPLE,
+        MODE_NONE,
+        MODE_COLOR_RGB,
+        MODE_COLOR_CMYK,
+        MODE_GRADIENT_LINEAR,
+        MODE_GRADIENT_RADIAL,
+        MODE_PATTERN,
+        MODE_SWATCH,
+        MODE_UNSET
+    } ;
+
+    enum FillRule {
+        FILLRULE_NONZERO,
+        FILLRULE_EVENODD
+    } ;
+
     guint update : 1;
 
-    SPPaintSelectorMode mode;
+    Mode mode;
 
     GtkWidget *style;
     GtkWidget *none;
@@ -75,8 +76,8 @@ struct SPPaintSelector {
     float alpha;
 
 
-    void setMode( SPPaintSelectorMode mode );
-    void setFillrule( SPPaintSelectorFillRule fillrule );
+    void setMode( Mode mode );
+    void setFillrule( FillRule fillrule );
 
     void setColorAlpha( SPColor const &color, float alpha );
     void getColorAlpha( SPColor &color, gfloat &alpha ) const;
@@ -101,13 +102,13 @@ struct SPPaintSelector {
 struct SPPaintSelectorClass {
     GtkVBoxClass parent_class;
 
-    void (* mode_changed) (SPPaintSelector *psel, SPPaintSelectorMode mode);
+    void (* mode_changed) (SPPaintSelector *psel, SPPaintSelector::Mode mode);
 
     void (* grabbed) (SPPaintSelector *psel);
     void (* dragged) (SPPaintSelector *psel);
     void (* released) (SPPaintSelector *psel);
     void (* changed) (SPPaintSelector *psel);
-    void (* fillrule_changed) (SPPaintSelector *psel, SPPaintSelectorFillRule fillrule);
+    void (* fillrule_changed) (SPPaintSelector *psel, SPPaintSelector::FillRule fillrule);
 };
 
 GtkType sp_paint_selector_get_type (void);
@@ -116,7 +117,7 @@ GtkWidget *sp_paint_selector_new (bool is_fill);
 
 
 
-SPPaintSelectorMode sp_style_determine_paint_selector_mode (SPStyle *style, bool isfill);
+SPPaintSelector::Mode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill);
 
 #endif // SEEN_SP_PAINT_SELECTOR_H
 
