@@ -108,7 +108,7 @@ void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
 
         // TODO might have to block cycles
 
-        if (swsel->_gsel) {
+        if (swsel->_gsel && swsel->_gsel->getVector()) {
             SPGradient *gradient = swsel->_gsel->getVector();
             SPGradient *ngr = sp_gradient_ensure_vector_normalized(gradient);
             if (ngr != gradient) {
