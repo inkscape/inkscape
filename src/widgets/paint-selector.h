@@ -75,6 +75,7 @@ struct SPPaintSelector {
     SPColor color;
     float alpha;
 
+    static Mode getModeForStyle(SPStyle const & style, bool isfill);
 
     void setMode( Mode mode );
     void setFillrule( FillRule fillrule );
@@ -116,8 +117,6 @@ GtkType sp_paint_selector_get_type (void);
 GtkWidget *sp_paint_selector_new (bool is_fill);
 
 
-
-SPPaintSelector::Mode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill);
 
 #endif // SEEN_SP_PAINT_SELECTOR_H
 

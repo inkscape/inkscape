@@ -1137,42 +1137,42 @@ void SPPaintSelector::setFlatColor( SPDesktop *desktop, gchar const *color_prope
     sp_repr_css_attr_unref(css);
 }
 
-SPPaintSelector::Mode sp_style_determine_paint_selector_mode(SPStyle *style, bool isfill)
+SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, bool isfill)
 {
-    SPPaintSelector::Mode mode = SPPaintSelector::MODE_UNSET;
-    SPIPaint& target = isfill ? style->fill : style->stroke;
+    Mode mode = MODE_UNSET;
+    SPIPaint const & target = isfill ? style.fill : style.stroke;
 
     if ( !target.set ) {
-        mode = SPPaintSelector::MODE_UNSET;
+        mode = MODE_UNSET;
     } else if ( target.isPaintserver() ) {
-        SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
-
+        SPPaintServer const *server = isfill ? style.getFillPaintServer() : style.getStrokePaintServer();
 
 #ifdef SP_PS_VERBOSE
+        g_message("SPPaintSelector::getModeForStyle(%p, %d)", &style, isfill);
         g_message("==== server:%p %s  grad:%s   swatch:%s", server, server->getId(), (SP_IS_GRADIENT(server)?"Y":"n"), (SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()?"Y":"n"));
 #endif // SP_PS_VERBOSE
 
 
         if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
-            mode = SPPaintSelector::MODE_SWATCH;
+            mode = MODE_SWATCH;
         } else if (SP_IS_LINEARGRADIENT(server)) {
-            mode = SPPaintSelector::MODE_GRADIENT_LINEAR;
+            mode = MODE_GRADIENT_LINEAR;
         } else if (SP_IS_RADIALGRADIENT(server)) {
-            mode = SPPaintSelector::MODE_GRADIENT_RADIAL;
+            mode = MODE_GRADIENT_RADIAL;
         } else if (SP_IS_PATTERN(server)) {
-            mode = SPPaintSelector::MODE_PATTERN;
+            mode = MODE_PATTERN;
         } else {
             g_warning( "file %s: line %d: Unknown paintserver", __FILE__, __LINE__ );
-            mode = SPPaintSelector::MODE_NONE;
+            mode = MODE_NONE;
         }
     } else if ( target.isColor() ) {
         // TODO this is no longer a valid assertion:
-        mode = SPPaintSelector::MODE_COLOR_RGB; // so far only rgb can be read from svg
+        mode = MODE_COLOR_RGB; // so far only rgb can be read from svg
     } else if ( target.isNone() ) {
-        mode = SPPaintSelector::MODE_NONE;
+        mode = MODE_NONE;
     } else {
         g_warning( "file %s: line %d: Unknown paint type", __FILE__, __LINE__ );
-        mode = SPPaintSelector::MODE_NONE;
+        mode = MODE_NONE;
     }
 
     return mode;

@@ -124,8 +124,8 @@ static void
 sp_fill_style_widget_construct( SPWidget *spw, SPPaintSelector */*psel*/ )
 {
 #ifdef SP_FS_VERBOSE
-    g_print ( "Fill style widget constructed: inkscape %p repr %p\n",
-              spw->inkscape, spw->repr );
+    g_print ( "Fill style widget constructed: inkscape %p\n",
+              spw->inkscape );
 #endif
     if (spw->inkscape) {
         sp_fill_style_widget_update (spw);
@@ -143,6 +143,9 @@ sp_fill_style_widget_modify_selection( SPWidget *spw,
                   SP_OBJECT_PARENT_MODIFIED_FLAG |
                   SP_OBJECT_STYLE_MODIFIED_FLAG) )
     {
+#ifdef SP_FS_VERBOSE
+        g_message("sp_fill_style_widget_modify_selection()");
+#endif
         sp_fill_style_widget_update (spw);
     }
 }
@@ -198,7 +201,7 @@ sp_fill_style_widget_update (SPWidget *spw)
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently, e.g. display "averaged" somewhere in paint selector
         case QUERY_STYLE_MULTIPLE_SAME:
         {
-            SPPaintSelector::Mode pselmode = sp_style_determine_paint_selector_mode(query, true);
+            SPPaintSelector::Mode pselmode = SPPaintSelector::getModeForStyle(*query, true);
             psel->setMode(pselmode);
 
             psel->setFillrule(query->fill_rule.computed == ART_WIND_RULE_NONZERO?
@@ -208,7 +211,7 @@ sp_fill_style_widget_update (SPWidget *spw)
                 psel->setColorAlpha(query->fill.value.color, SP_SCALE24_TO_FLOAT(query->fill_opacity.value));
             } else if (query->fill.set && query->fill.isPaintserver()) {
 
-                SPPaintServer *server = SP_STYLE_FILL_SERVER (query);
+                SPPaintServer *server = query->getFillPaintServer();
 
                 if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
                     SPGradient *vector = SP_GRADIENT(server)->getVector();
@@ -256,6 +259,10 @@ sp_fill_style_widget_paint_mode_changed( SPPaintSelector *psel,
 {
     if (g_object_get_data (G_OBJECT (spw), "update"))
         return;
+
+#ifdef SP_FS_VERBOSE
+    g_message("sp_fill_style_widget_paint_mode_changed(psel:%p, mode, spw:%p)", psel, spw);
+#endif
 
     /* TODO: Does this work? */
     /* TODO: Not really, here we have to get old color back from object */
@@ -346,6 +353,9 @@ static void
 sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                                      SPWidget *spw )
 {
+#ifdef SP_FS_VERBOSE
+    g_message("sp_fill_style_widget_paint_changed(psel:%p, spw:%p)", psel, spw);
+#endif
     if (g_object_get_data (G_OBJECT (spw), "update")) {
         return;
     }

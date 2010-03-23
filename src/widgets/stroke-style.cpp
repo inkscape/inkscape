@@ -197,7 +197,7 @@ sp_stroke_style_paint_update (SPWidget *spw)
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently, e.g. display "averaged" somewhere in paint selector
         case QUERY_STYLE_MULTIPLE_SAME:
         {
-            SPPaintSelector::Mode pselmode = sp_style_determine_paint_selector_mode (query, false);
+            SPPaintSelector::Mode pselmode = SPPaintSelector::getModeForStyle(*query, false);
             psel->setMode(pselmode);
 
             if (query->stroke.set && query->stroke.isPaintserver()) {

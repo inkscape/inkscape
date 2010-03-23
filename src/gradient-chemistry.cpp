@@ -190,7 +190,7 @@ sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
 
     // Check the number of uses of the gradient within this object;
     // if we are private and there are no other users,
-    if (SP_OBJECT_HREFCOUNT(gr) <= count_gradient_hrefs(user, gr)) {
+    if (!vector->isSwatch() && (SP_OBJECT_HREFCOUNT(gr) <= count_gradient_hrefs(user, gr))) {
         // check vector
         if ( gr != vector && gr->ref->getObject() != vector ) {
             /* our href is not the vector, and vector is different from gr; relink */
@@ -1080,10 +1080,11 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
         /* Current fill style is the gradient of the required type */
         SPGradient *current = SP_GRADIENT(ps);
 
-        //g_print("hrefcount %d   count %d\n", SP_OBJECT_HREFCOUNT(ig), count_gradient_hrefs(SP_OBJECT(item), ig));
+        //g_message("hrefcount %d   count %d\n", SP_OBJECT_HREFCOUNT(current), count_gradient_hrefs(SP_OBJECT(item), current));
 
-        if (SP_OBJECT_HREFCOUNT(current) == 1 ||
-            SP_OBJECT_HREFCOUNT(current) == count_gradient_hrefs(SP_OBJECT(item), current)) {
+        if (!current->isSwatch()
+            && (SP_OBJECT_HREFCOUNT(current) == 1 ||
+            SP_OBJECT_HREFCOUNT(current) == count_gradient_hrefs(SP_OBJECT(item), current))) {
 
             // current is private and it's either used once, or all its uses are by children of item;
             // so just change its href to vector
