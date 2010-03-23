@@ -1,12 +1,14 @@
-#ifndef __SP_STYLE_H__
-#define __SP_STYLE_H__
+#ifndef SEEN_SP_STYLE_H
+#define SEEN_SP_STYLE_H
 
 /** \file
  * SPStyle - a style object for SPItem objects
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Jon A. Cruz
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  *
@@ -357,7 +359,7 @@ struct SPStyle {
     SPIEnum enable_background;
 
     /// style belongs to a cloned object
-    bool cloned; 
+    bool cloned;
 
     sigc::connection release_connection;
 
@@ -365,12 +367,17 @@ struct SPStyle {
     sigc::connection fill_ps_modified_connection;
     sigc::connection stroke_ps_modified_connection;
 
-    SPObject *getFilter() {if (filter.href) return filter.href->getObject(); else return NULL;}
-    const gchar *getFilterURI() {if (filter.href) return filter.href->getURI()->toString(); else return NULL;}
-    SPPaintServer *getFillPaintServer() {if (fill.value.href) return fill.value.href->getObject(); else return NULL;}
-    const gchar *getFillURI() {if (fill.value.href) return fill.value.href->getURI()->toString(); else return NULL;}
-    SPPaintServer *getStrokePaintServer() {if (stroke.value.href) return stroke.value.href->getObject(); else return NULL;}
-    const gchar *getStrokeURI() {if (stroke.value.href) return stroke.value.href->getURI()->toString(); else return NULL;}
+    SPObject *getFilter() { return (filter.href) ? filter.href->getObject() : 0; }
+    SPObject const *getFilter() const { return (filter.href) ? filter.href->getObject() : 0; }
+    gchar const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : 0; }
+
+    SPPaintServer *getFillPaintServer() { return (fill.value.href) ? fill.value.href->getObject() : 0; }
+    SPPaintServer const *getFillPaintServer() const { return (fill.value.href) ? fill.value.href->getObject() : 0; }
+    gchar const *getFillURI() const { return (fill.value.href) ? fill.value.href->getURI()->toString() : 0; }
+
+    SPPaintServer *getStrokePaintServer() { return (stroke.value.href) ? stroke.value.href->getObject() : 0; }
+    SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : 0; }
+    gchar const  *getStrokeURI() const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : 0; }
 };
 
 SPStyle *sp_style_new(SPDocument *document);
@@ -541,7 +548,7 @@ struct SPTextStyle {
 
     /* Full font name, as font_factory::ConstructFontSpecification would give */
     SPIString font_specification;
-    
+
     /** \todo fixme: The 'font' property is ugly, and not working (lauris) */
     SPIString font;
 };
@@ -559,7 +566,7 @@ void sp_style_set_property_url (SPObject *item, gchar const *property, SPObject 
 gchar *attribute_unquote(gchar const *val);
 gchar *css2_escape_quote(gchar const *val);
 
-#endif
+#endif // SEEN_SP_STYLE_H
 
 
 /*
