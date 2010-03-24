@@ -190,7 +190,7 @@
         #define ENABLE_SVG_FONTS              1
 
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
-        #define LPE_ENABLE_TEST_EFFECTS    1
+        //#define LPE_ENABLE_TEST_EFFECTS    1
 
         #define HAVE_ASPELL                   1
 
