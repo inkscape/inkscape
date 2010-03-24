@@ -135,6 +135,7 @@ ink_common_sources +=	\
 	shape-editor.cpp shape-editor.h					\
 	shortcuts.cpp shortcuts.h					\
 	snap.cpp snap.h							\
+	snap-enums.h snap-candidate.h \
 	snapped-curve.cpp snapped-curve.h				\
 	snapped-line.cpp snapped-line.h					\
 	snapped-point.cpp snapped-point.h				\
