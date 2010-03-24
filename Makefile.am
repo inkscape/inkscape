@@ -153,23 +153,23 @@ EXTRA_DIST = \
 	packaging/macosx/ScriptExec/ScriptExec.xcodeproj/project.pbxproj \
 	packaging/win32/inkscape.nsi	\
 	packaging/win32/inkscape.nsi.uninstall	\
-	packaging/win32/breton.nsh	\
-	packaging/win32/catalan.nsh	\
-	packaging/win32/czech.nsh	\
-	packaging/win32/english.nsh	\
-	packaging/win32/finnish.nsh	\
-	packaging/win32/french.nsh	\
-	packaging/win32/galician.nsh	\
-	packaging/win32/german.nsh	\
-	packaging/win32/italian.nsh	\
-	packaging/win32/japanese.nsh	\
-	packaging/win32/polish.nsh	\
-	packaging/win32/russian.nsh	\
-	packaging/win32/slovak.nsh	\
-	packaging/win32/slovenian.nsh	\
-	packaging/win32/spanish.nsh	\
-	packaging/win32/simpchinese.nsh	\
-	packaging/win32/tradchinese.nsh	\
+	packaging/win32/languages/Breton.nsh	\
+	packaging/win32/languages/Catalan.nsh	\
+	packaging/win32/languages/Czech.nsh	\
+	packaging/win32/languages/English.nsh	\
+	packaging/win32/languages/Finnish.nsh	\
+	packaging/win32/languages/French.nsh	\
+	packaging/win32/languages/Galician.nsh	\
+	packaging/win32/languages/German.nsh	\
+	packaging/win32/languages/Italian.nsh	\
+	packaging/win32/languages/Japanese.nsh	\
+	packaging/win32/languages/Polish.nsh	\
+	packaging/win32/languages/Russian.nsh	\
+	packaging/win32/languages/Slovak.nsh	\
+	packaging/win32/languages/Slovenian.nsh	\
+	packaging/win32/languages/Spanish.nsh	\
+	packaging/win32/languages/SimpChinese.nsh	\
+	packaging/win32/languages/TradChinese.nsh	\
 	packaging/win32/header.bmp	\
 	packaging/win32/header.svg	\
 	packaging/win32/AdvUninstLog.nsh	\
