@@ -6,6 +6,7 @@ libavoid/clean:
 	rm -f libavoid/libavoid.a $(libavoid_libavoid_a_OBJECTS)
 
 libavoid_libavoid_a_SOURCES =	\
+	libavoid/assertions.h	\
 	libavoid/connector.cpp	\
 	libavoid/connector.h	\
 	libavoid/debug.h	\
