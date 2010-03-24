@@ -141,7 +141,7 @@ include 2geom/Makefile_insert
 EXTRA_DIST =	\
 	$(top_srcdir)/Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
-	algorithms/makefile.in	\
+	util/makefile.in	\
 	application/makefile.in	\
 	bind/makefile.in	\
 	debug/makefile.in	\

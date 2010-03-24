@@ -1,8 +1,8 @@
 ## Makefile.am fragment, included by src/Makefile.am.
 
 ink_common_sources +=	\
-	algorithms/find-last-if.h					\
-	algorithms/longest-common-suffix.h				\
+	util/find-last-if.h					\
+	util/longest-common-suffix.h				\
 	approx-equal.h remove-last.h					\
 	arc-context.cpp arc-context.h					\
 	attributes.cpp attributes.h					\
