@@ -609,9 +609,31 @@ PKG_CHECK_MODULES(POPPLER_GFXFONT, poppler >= 0.8.3, popplernew=yes, popplernew=
 if test "x$popplernew" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Use GfxFont from Poppler >= 0.8.3])
 fi
-PKG_CHECK_MODULES(POPPLER_COLORSPACE, poppler >= 0.12.2, popplercolor=yes, popplercolor=no)
+
+AC_MSG_CHECKING(for new color space API in Poppler)
+ink_svd_CPPFLAGS=$CPPFLAGS
+ink_svd_LIBS=$LIBS
+CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
+LIBS="$LIBS $POPPLER_LIBS"
+popplercolor="no"
+AC_COMPILE_IFELSE([
+#include <GfxState.h>
+
+int main() {
+  typedef GfxColorSpace *(*parse_p)(Object *, Gfx *);
+  parse_p p;
+  p = &GfxColorSpace::parse;
+  return 0;
+}
+], [popplercolor=yes])
+CPPFLAGS=$ink_svd_CPPFLAGS
+LIBS=$ink_svd_LIBS
+
 if test "x$popplercolor" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
+	AC_MSG_RESULT(yes)
+else
+	AC_MSG_RESULT(no)
 fi
 
 dnl ******************************
