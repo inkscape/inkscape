@@ -1,6 +1,7 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
 ink_common_sources += \
+	util/accumulators.h	\
 	util/compose.hpp	\
 	util/copy.h \
 	util/enums.h \
