@@ -27,5 +27,6 @@ ink_common_sources += \
 	ui/tool/selectable-control-point.h	\
 	ui/tool/selector.cpp			\
 	ui/tool/selector.h			\
+	ui/tool/shape-record.h			\
 	ui/tool/transform-handle-set.cpp	\
 	ui/tool/transform-handle-set.h
