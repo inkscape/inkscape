@@ -45,7 +45,7 @@
 #define SP_OBJECT_WRITE_ALL (1 << 2)
 
 /* Convenience stuff */
-#define SP_OBJECT_ID(o) (((SPObject *) (o))->id)
+#define SP_OBJECT_ID(o) (((SPObject *) (o))->getId())
 #define SP_OBJECT_REPR(o) (((SPObject *) (o))->repr)
 #define SP_OBJECT_DOCUMENT(o) (((SPObject *) (o))->document)
 #define SP_OBJECT_PARENT(o) (((SPObject *) (o))->parent)
