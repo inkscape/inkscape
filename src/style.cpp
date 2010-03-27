@@ -1446,16 +1446,19 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     }
 
     if (!style->line_height.set || style->line_height.inherit) {
+        style->line_height.value = parent->line_height.value;
         style->line_height.computed = parent->line_height.computed;
         style->line_height.normal = parent->line_height.normal;
     }
 
     if (!style->letter_spacing.set || style->letter_spacing.inherit) {
+        style->letter_spacing.value = parent->letter_spacing.value;
         style->letter_spacing.computed = parent->letter_spacing.computed;
         style->letter_spacing.normal = parent->letter_spacing.normal;
     }
 
     if (!style->word_spacing.set || style->word_spacing.inherit) {
+        style->word_spacing.value = parent->word_spacing.value;
         style->word_spacing.computed = parent->word_spacing.computed;
         style->word_spacing.normal = parent->word_spacing.normal;
     }
