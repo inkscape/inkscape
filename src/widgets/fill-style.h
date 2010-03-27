@@ -3,7 +3,9 @@
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2010 Jon A. Cruz
  * Copyright (C) 2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -12,14 +14,11 @@
 #ifndef SEEN_DIALOGS_SP_FILL_STYLE_H
 #define SEEN_DIALOGS_SP_FILL_STYLE_H
 
-#include <glib.h>
-#include <gtk/gtkwidget.h>
-#include "forward.h"
+typedef struct _GtkWidget GtkWidget;
 
+GtkWidget *sp_fill_style_widget_new(void);
 
-GtkWidget *sp_fill_style_widget_new (void);
-
-#endif
+#endif // SEEN_DIALOGS_SP_FILL_STYLE_H
 
 /*
   Local Variables:

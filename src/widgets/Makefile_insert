@@ -13,6 +13,7 @@ ink_common_sources +=	\
 	widgets/ege-paint-def.h		\
 	widgets/fill-style.cpp		\
 	widgets/fill-style.h		\
+	widgets/fill-n-stroke-factory.h	\
 	widgets/font-selector.cpp	\
 	widgets/font-selector.h		\
 	widgets/gradient-image.cpp	\

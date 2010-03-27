@@ -1,27 +1,26 @@
-/** @file
- * @brief  Stroke style dialog
- */
-/* Author:
- *   Lauris Kaplinski <lauris@ximian.com>
+#ifndef SEEN_FILL_N_STROKE_FACTORY_H
+#define SEEN_FILL_N_STROKE_FACTORY_H
+/* Authors:
  *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2010 Jon A. Cruz
- * Copyright (C) 2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef SEEN_DIALOGS_STROKE_STYLE_H
-#define SEEN_DIALOGS_STROKE_STYLE_H
-
-#include <gtkmm/container.h>
+#include "fill-or-stroke.h"
 
 typedef struct _GtkWidget GtkWidget;
 
-GtkWidget *sp_stroke_style_paint_widget_new(void);
-Gtk::Container *sp_stroke_style_line_widget_new(void);
+namespace Inkscape {
+namespace Widgets {
 
-#endif // SEEN_DIALOGS_STROKE_STYLE_H
+GtkWidget *createStyleWidget( FillOrStroke kind );
+
+} // namespace Widgets
+} // namespace Inkscape
+
+#endif // !SEEN_FILL_N_STROKE_FACTORY_H
 
 /*
   Local Variables:
