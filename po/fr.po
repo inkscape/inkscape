@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-25 21:14+0100\n"
-"PO-Revision-Date: 2010-03-25 21:09+0100\n"
+"POT-Creation-Date: 2010-03-18 20:17+0100\n"
+"PO-Revision-Date: 2010-03-27 22:49+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -729,7 +729,7 @@ msgid "Shades"
 msgstr "Ombres"
 
 #: ../share/extensions/edge3d.inx.h:9 ../src/live_effects/lpe-knot.cpp:331
-#: ../src/widgets/stroke-style.cpp:1097
+#: ../src/widgets/stroke-style.cpp:1100
 msgid "Stroke width"
 msgstr "Épaisseur du contour"
 
@@ -872,7 +872,7 @@ msgstr "Proportion de la patte"
 
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:20 ../src/helper/units.cpp:37
+#: ../share/extensions/printing-marks.inx.h:19 ../src/helper/units.cpp:37
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Unit"
 msgstr "Unité"
@@ -1214,7 +1214,7 @@ msgstr "Épaisseur des marques circulaires secondaires (px)"
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/inkscape-preferences.cpp:1273 ../src/verbs.cpp:2192
-#: ../src/widgets/stroke-style.cpp:769 ../src/widgets/toolbox.cpp:3991
+#: ../src/widgets/stroke-style.cpp:772 ../src/widgets/toolbox.cpp:3991
 msgid "None"
 msgstr "Aucun"
 
@@ -1453,7 +1453,7 @@ msgstr "Autre type d'attribut"
 
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1657
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1650
 #: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../src/widgets/toolbox.cpp:4679
 msgid "Scale"
@@ -2251,22 +2251,14 @@ msgid "Right:"
 msgstr "Droite :"
 
 #: ../share/extensions/printing-marks.inx.h:16
-#: ../src/ui/dialog/align-and-distribute.cpp:927
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1651
-msgid "Selection"
-msgstr "Sélection"
-
-#: ../share/extensions/printing-marks.inx.h:17
 msgid "Set crop marks to"
 msgstr "Appliquer les traits de coupe à :"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Star Target"
 msgstr "Cible en étoile"
 
-#: ../share/extensions/printing-marks.inx.h:19
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Top:"
 msgstr "Haut :"
 
@@ -5763,6 +5755,17 @@ msgstr "Déplacer un point de connexion"
 msgid "Remove a connection point"
 msgstr "Supprimer un point de connexion"
 
+#: ../src/connector-context.h:50
+msgid "<b>Connection point</b>: click or drag to create a new connector"
+msgstr ""
+"<b>Point de connnection</b> : cliquer ou déplacer pour créer un nouveau "
+"connecteur"
+
+#: ../src/connector-context.h:51
+msgid "<b>Connection point</b>: click to select, drag to move"
+msgstr ""
+"<b>Point de connexion</b> : cliquer pour sélectionner, glisser pour déplacer"
+
 #: ../src/live_effects/lpe-extrude.cpp:26
 msgid "Direction"
 msgstr "Direction"
@@ -5842,56 +5845,45 @@ msgstr "Créer une boîte 3D"
 msgid "<b>3D Box</b>"
 msgstr "<b>Boîte 3D</b>"
 
-#: ../src/connector-context.cpp:236
-msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
-"<b>Point de connnection</b> : cliquer ou déplacer pour créer un nouveau "
-"connecteur"
-
-#: ../src/connector-context.cpp:237
-msgid "<b>Connection point</b>: click to select, drag to move"
-msgstr ""
-"<b>Point de connexion</b> : cliquer pour sélectionner, glisser pour déplacer"
-
-#: ../src/connector-context.cpp:781
+#: ../src/connector-context.cpp:778
 msgid "Creating new connector"
 msgstr "Création d'un nouveau connecteur"
 
-#: ../src/connector-context.cpp:1159
+#: ../src/connector-context.cpp:1156
 msgid "Connector endpoint drag cancelled."
 msgstr "Déplacement de fin de connecteur annulé."
 
-#: ../src/connector-context.cpp:1189
+#: ../src/connector-context.cpp:1186
 msgid "Connection point drag cancelled."
 msgstr "Déplacement du point de connexion annulé."
 
-#: ../src/connector-context.cpp:1307
+#: ../src/connector-context.cpp:1304
 msgid "Reroute connector"
 msgstr "Rerouter un connecteur"
 
-#: ../src/connector-context.cpp:1480
+#: ../src/connector-context.cpp:1477
 msgid "Create connector"
 msgstr "Créer un connecteur"
 
-#: ../src/connector-context.cpp:1503
+#: ../src/connector-context.cpp:1500
 msgid "Finishing connector"
 msgstr "Tracé du connecteur terminé"
 
-#: ../src/connector-context.cpp:1790
+#: ../src/connector-context.cpp:1787
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Fin de connecteur</b> : déplacer pour rerouter ou connecter à de "
 "nouvelles formes"
 
-#: ../src/connector-context.cpp:1931
+#: ../src/connector-context.cpp:1928
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Sélectionner <b>au moins un objet non connecteur</b>."
 
-#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:7558
+#: ../src/connector-context.cpp:1933 ../src/widgets/toolbox.cpp:7558
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
-#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:7568
+#: ../src/connector-context.cpp:1934 ../src/widgets/toolbox.cpp:7568
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
@@ -5966,7 +5958,7 @@ msgstr "Sélectionner <b>un objet</b> pour en retirer les clones de pavage."
 msgid "Delete tiled clones"
 msgstr "Supprimer les clones de pavage"
 
-#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2023
+#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2016
 msgid "Select an <b>object</b> to clone."
 msgstr "Sélectionner un <b>objet</b> à cloner."
 
@@ -9444,7 +9436,7 @@ msgstr "Linéaire"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:425
+#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:424
 #: ../src/widgets/gradient-selector.cpp:141
 msgid "Duplicate"
 msgstr "Dupliquer"
@@ -12625,25 +12617,25 @@ msgstr ""
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'objet sélectionné n'est pas un groupe. Impossible d'y entrer."
 
-#: ../src/selection-chemistry.cpp:304
+#: ../src/selection-chemistry.cpp:303
 msgid "Delete text"
 msgstr "Supprimer le texte"
 
-#: ../src/selection-chemistry.cpp:312
+#: ../src/selection-chemistry.cpp:311
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Rien</b> n'a été supprimé."
 
-#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1002
+#: ../src/selection-chemistry.cpp:329 ../src/text-context.cpp:1002
 #: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1318
 #: ../src/widgets/toolbox.cpp:6076
 msgid "Delete"
 msgstr "Supprimer"
 
-#: ../src/selection-chemistry.cpp:358
+#: ../src/selection-chemistry.cpp:357
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à dupliquer."
 
-#: ../src/selection-chemistry.cpp:450
+#: ../src/selection-chemistry.cpp:449
 msgid "Delete all"
 msgstr "Supprimer tout"
 
@@ -12651,28 +12643,28 @@ msgstr "Supprimer tout"
 msgid "Select <b>some objects</b> to group."
 msgstr "Sélectionner <b>des objets</b> à grouper."
 
-#: ../src/selection-chemistry.cpp:651 ../src/selection-describer.cpp:53
+#: ../src/selection-chemistry.cpp:648 ../src/selection-describer.cpp:53
 msgid "Group"
 msgstr "Groupe"
 
-#: ../src/selection-chemistry.cpp:665
+#: ../src/selection-chemistry.cpp:663
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Sélectionner un <b>groupe</b> à dégrouper."
 
-#: ../src/selection-chemistry.cpp:706
+#: ../src/selection-chemistry.cpp:704
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Aucun groupe</b> à dégrouper dans la sélection."
 
-#: ../src/selection-chemistry.cpp:712 ../src/sp-item-group.cpp:500
+#: ../src/selection-chemistry.cpp:710 ../src/sp-item-group.cpp:500
 msgid "Ungroup"
 msgstr "Dégrouper"
 
-#: ../src/selection-chemistry.cpp:802
+#: ../src/selection-chemistry.cpp:800
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à monter."
 
-#: ../src/selection-chemistry.cpp:808 ../src/selection-chemistry.cpp:870
-#: ../src/selection-chemistry.cpp:904 ../src/selection-chemistry.cpp:968
+#: ../src/selection-chemistry.cpp:806 ../src/selection-chemistry.cpp:868
+#: ../src/selection-chemistry.cpp:902 ../src/selection-chemistry.cpp:966
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
@@ -12682,189 +12674,189 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:850
+#: ../src/selection-chemistry.cpp:848
 msgid "undo action|Raise"
 msgstr "Monter"
 
-#: ../src/selection-chemistry.cpp:862
+#: ../src/selection-chemistry.cpp:860
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Sélectionner des <b>objets</b> à monter au premier plan."
 
-#: ../src/selection-chemistry.cpp:885
+#: ../src/selection-chemistry.cpp:883
 msgid "Raise to top"
 msgstr "Monter au premier plan"
 
-#: ../src/selection-chemistry.cpp:898
+#: ../src/selection-chemistry.cpp:896
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à descendre."
 
-#: ../src/selection-chemistry.cpp:948
+#: ../src/selection-chemistry.cpp:946
 msgid "Lower"
 msgstr "Descendre"
 
-#: ../src/selection-chemistry.cpp:960
+#: ../src/selection-chemistry.cpp:958
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à descendre à l'arrière-plan."
 
-#: ../src/selection-chemistry.cpp:995
+#: ../src/selection-chemistry.cpp:993
 msgid "Lower to bottom"
 msgstr "Descendre à l'arrière-plan"
 
-#: ../src/selection-chemistry.cpp:1002
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing to undo."
 msgstr "Rien à défaire."
 
-#: ../src/selection-chemistry.cpp:1009
+#: ../src/selection-chemistry.cpp:1007
 msgid "Nothing to redo."
 msgstr "Rien à refaire."
 
-#: ../src/selection-chemistry.cpp:1069
+#: ../src/selection-chemistry.cpp:1067
 msgid "Paste"
 msgstr "Coller"
 
-#: ../src/selection-chemistry.cpp:1077
+#: ../src/selection-chemistry.cpp:1074
 msgid "Paste style"
 msgstr "Coller le style"
 
-#: ../src/selection-chemistry.cpp:1087
+#: ../src/selection-chemistry.cpp:1083
 msgid "Paste live path effect"
 msgstr "Coller l'effet de chemin en direct"
 
-#: ../src/selection-chemistry.cpp:1108
+#: ../src/selection-chemistry.cpp:1103
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> sur lesquels supprimer des effets de "
 "chemin."
 
-#: ../src/selection-chemistry.cpp:1120
+#: ../src/selection-chemistry.cpp:1115
 msgid "Remove live path effect"
 msgstr "Supprimer l'effet de chemin en direct"
 
-#: ../src/selection-chemistry.cpp:1131
+#: ../src/selection-chemistry.cpp:1126
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Sélectionner les <b>objets</b> pour en retirer les filtres."
 
-#: ../src/selection-chemistry.cpp:1141
+#: ../src/selection-chemistry.cpp:1136
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr "Supprimer le filtre"
 
-#: ../src/selection-chemistry.cpp:1150
+#: ../src/selection-chemistry.cpp:1145
 msgid "Paste size"
 msgstr "Coller les dimensions"
 
-#: ../src/selection-chemistry.cpp:1159
+#: ../src/selection-chemistry.cpp:1153
 msgid "Paste size separately"
 msgstr "Coller les dimensions séparément"
 
-#: ../src/selection-chemistry.cpp:1169
+#: ../src/selection-chemistry.cpp:1162
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à déplacer au calque du dessus."
 
-#: ../src/selection-chemistry.cpp:1195
+#: ../src/selection-chemistry.cpp:1188
 msgid "Raise to next layer"
 msgstr "Monter au calque suivant"
 
-#: ../src/selection-chemistry.cpp:1202
+#: ../src/selection-chemistry.cpp:1195
 msgid "No more layers above."
 msgstr "Plus de calque au-dessus."
 
-#: ../src/selection-chemistry.cpp:1214
+#: ../src/selection-chemistry.cpp:1207
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> à déplacer au calque du dessous."
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1233
 msgid "Lower to previous layer"
 msgstr "Descendre au calque précédent."
 
-#: ../src/selection-chemistry.cpp:1247
+#: ../src/selection-chemistry.cpp:1240
 msgid "No more layers below."
 msgstr "Plus de calque en-dessous."
 
-#: ../src/selection-chemistry.cpp:1456
+#: ../src/selection-chemistry.cpp:1449
 msgid "Remove transform"
 msgstr "Retirer les transformations"
 
-#: ../src/selection-chemistry.cpp:1559
+#: ../src/selection-chemistry.cpp:1552
 msgid "Rotate 90&#176; CCW"
 msgstr "Tourner de 90&#176; dans le sens anti-horaire"
 
-#: ../src/selection-chemistry.cpp:1559
+#: ../src/selection-chemistry.cpp:1552
 msgid "Rotate 90&#176; CW"
 msgstr "Tourner de 90&#176; dans le sens horaire"
 
-#: ../src/selection-chemistry.cpp:1580 ../src/seltrans.cpp:534
+#: ../src/selection-chemistry.cpp:1573 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Tourner"
 
-#: ../src/selection-chemistry.cpp:1627
+#: ../src/selection-chemistry.cpp:1620
 msgid "Rotate by pixels"
 msgstr "Tourner par pixels"
 
-#: ../src/selection-chemistry.cpp:1682
+#: ../src/selection-chemistry.cpp:1675
 msgid "Scale by whole factor"
 msgstr "Redimensionner d'un facteur entier"
 
-#: ../src/selection-chemistry.cpp:1697
+#: ../src/selection-chemistry.cpp:1690
 msgid "Move vertically"
 msgstr "Déplacer verticalement"
 
-#: ../src/selection-chemistry.cpp:1700
+#: ../src/selection-chemistry.cpp:1693
 msgid "Move horizontally"
 msgstr "Déplacer horizontalement"
 
-#: ../src/selection-chemistry.cpp:1703 ../src/selection-chemistry.cpp:1729
+#: ../src/selection-chemistry.cpp:1696 ../src/selection-chemistry.cpp:1722
 #: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Déplacer"
 
-#: ../src/selection-chemistry.cpp:1723
+#: ../src/selection-chemistry.cpp:1716
 msgid "Move vertically by pixels"
 msgstr "Déplacer verticalement par pixels"
 
-#: ../src/selection-chemistry.cpp:1726
+#: ../src/selection-chemistry.cpp:1719
 msgid "Move horizontally by pixels"
 msgstr "Déplacer horizontalement par pixels"
 
-#: ../src/selection-chemistry.cpp:1854
+#: ../src/selection-chemistry.cpp:1847
 msgid "The selection has no applied path effect."
 msgstr "Il n'y a pas d'effet de chemin appliqué sur cette sélection."
 
-#: ../src/selection-chemistry.cpp:2059
+#: ../src/selection-chemistry.cpp:2052
 msgid "action|Clone"
 msgstr "Cloner"
 
-#: ../src/selection-chemistry.cpp:2075
+#: ../src/selection-chemistry.cpp:2068
 msgid "Select <b>clones</b> to relink."
 msgstr "Sélectionner les <b>clones</b> à relier."
 
-#: ../src/selection-chemistry.cpp:2082
+#: ../src/selection-chemistry.cpp:2075
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Copier un <b>objet</b> dans le presse-papier pour y relier les clones."
 
-#: ../src/selection-chemistry.cpp:2106
+#: ../src/selection-chemistry.cpp:2099
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "<b>Aucun clone à relier</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2109
+#: ../src/selection-chemistry.cpp:2102
 msgid "Relink clone"
 msgstr "Relier le clone"
 
-#: ../src/selection-chemistry.cpp:2123
+#: ../src/selection-chemistry.cpp:2116
 msgid "Select <b>clones</b> to unlink."
 msgstr "Sélectionner les <b>clones</b> à délier."
 
-#: ../src/selection-chemistry.cpp:2172
+#: ../src/selection-chemistry.cpp:2165
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Aucun clone à délier</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2176
+#: ../src/selection-chemistry.cpp:2169
 msgid "Unlink clone"
 msgstr "Délier le clone"
 
-#: ../src/selection-chemistry.cpp:2189
+#: ../src/selection-chemistry.cpp:2182
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -12875,7 +12867,7 @@ msgstr ""
 "suivant un chemin</b> pour sélectionner son chemin. Sélectionner un <b>texte "
 "encadré</b> pour sélectionner son cadre."
 
-#: ../src/selection-chemistry.cpp:2212
+#: ../src/selection-chemistry.cpp:2205
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -12883,7 +12875,7 @@ msgstr ""
 "<b>Impossible de trouver</b> l'objet à sélectionner (clone orphelin, offset, "
 "chemin de texte, texte encadré ?)"
 
-#: ../src/selection-chemistry.cpp:2218
+#: ../src/selection-chemistry.cpp:2211
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -12891,107 +12883,107 @@ msgstr ""
 "L'objet que vous essayez de sélectionner n'est <b>pas visible</b> (il est "
 "dans &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2264
+#: ../src/selection-chemistry.cpp:2257
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à convertir en marqueur."
 
-#: ../src/selection-chemistry.cpp:2332
+#: ../src/selection-chemistry.cpp:2325
 msgid "Objects to marker"
 msgstr "Objets en marqueur"
 
-#: ../src/selection-chemistry.cpp:2360
+#: ../src/selection-chemistry.cpp:2353
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à convertir en guides."
 
-#: ../src/selection-chemistry.cpp:2372
+#: ../src/selection-chemistry.cpp:2365
 msgid "Objects to guides"
 msgstr "Objets en guides"
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2381
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> à convertir en motif de remplissage."
 
-#: ../src/selection-chemistry.cpp:2476
+#: ../src/selection-chemistry.cpp:2469
 msgid "Objects to pattern"
 msgstr "Objets en motif"
 
-#: ../src/selection-chemistry.cpp:2492
+#: ../src/selection-chemistry.cpp:2485
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Sélectionner un <b>objet rempli avec un motif</b> pour en extraire des "
 "objets."
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2538
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Aucun motif de remplissage</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2548
+#: ../src/selection-chemistry.cpp:2541
 msgid "Pattern to objects"
 msgstr "Motif en objets"
 
-#: ../src/selection-chemistry.cpp:2633
+#: ../src/selection-chemistry.cpp:2626
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Sélectionner un ou des <b>objet(s)</b> pour en faire une copie bitmap."
 
-#: ../src/selection-chemistry.cpp:2637
+#: ../src/selection-chemistry.cpp:2630
 msgid "Rendering bitmap..."
 msgstr "Génération du bitmap..."
 
-#: ../src/selection-chemistry.cpp:2811
+#: ../src/selection-chemistry.cpp:2804
 msgid "Create bitmap"
 msgstr "Créer un bitmap"
 
-#: ../src/selection-chemistry.cpp:2843
+#: ../src/selection-chemistry.cpp:2836
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> à partir desquels un chemin de "
 "découpe ou un masque sera créé."
 
-#: ../src/selection-chemistry.cpp:2846
+#: ../src/selection-chemistry.cpp:2839
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Sélectionner un objet masque et un ou des <b>objet(s)</b> auxquels appliquer "
 "ce chemin de découpe ou masque."
 
-#: ../src/selection-chemistry.cpp:3027
+#: ../src/selection-chemistry.cpp:3004
 msgid "Set clipping path"
 msgstr "Définir un chemin de découpe"
 
-#: ../src/selection-chemistry.cpp:3029
+#: ../src/selection-chemistry.cpp:3006
 msgid "Set mask"
 msgstr "Définir un masque"
 
-#: ../src/selection-chemistry.cpp:3042
+#: ../src/selection-chemistry.cpp:3019
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> pour en retirer le chemin de découpe "
 "ou le masque."
 
-#: ../src/selection-chemistry.cpp:3153
+#: ../src/selection-chemistry.cpp:3119
 msgid "Release clipping path"
 msgstr "Retirer le chemin de découpe"
 
-#: ../src/selection-chemistry.cpp:3155
+#: ../src/selection-chemistry.cpp:3121
 msgid "Release mask"
 msgstr "Retirer le masque"
 
-#: ../src/selection-chemistry.cpp:3173
+#: ../src/selection-chemistry.cpp:3139
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> pour y ajuster la taille de la zone "
 "de travail."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3193 ../src/verbs.cpp:2688
+#: ../src/selection-chemistry.cpp:3159 ../src/verbs.cpp:2688
 msgid "Fit Page to Selection"
 msgstr "Ajuster la page à la sélection"
 
-#: ../src/selection-chemistry.cpp:3222 ../src/verbs.cpp:2690
+#: ../src/selection-chemistry.cpp:3188 ../src/verbs.cpp:2690
 msgid "Fit Page to Drawing"
 msgstr "Ajuster la page au dessin"
 
-#: ../src/selection-chemistry.cpp:3243 ../src/verbs.cpp:2692
+#: ../src/selection-chemistry.cpp:3209 ../src/verbs.cpp:2692
 msgid "Fit Page to Selection or Drawing"
 msgstr "Ajuster la page à la sélection ou au dessin"
 
@@ -14246,44 +14238,44 @@ msgid "Blur tweak"
 msgstr "Ajuster le niveau de flou"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:261
+#: ../src/ui/clipboard.cpp:257
 msgid "Nothing was copied."
 msgstr "Rien n'a été copié."
 
-#: ../src/ui/clipboard.cpp:333 ../src/ui/clipboard.cpp:544
-#: ../src/ui/clipboard.cpp:568
+#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:521
+#: ../src/ui/clipboard.cpp:545
 msgid "Nothing on the clipboard."
 msgstr "Rien dans le presse-papiers."
 
-#: ../src/ui/clipboard.cpp:392
+#: ../src/ui/clipboard.cpp:374
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Sélectionner un ou des <b>objets</b> sur lesquels coller un style."
 
-#: ../src/ui/clipboard.cpp:403 ../src/ui/clipboard.cpp:421
+#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
 msgid "No style on the clipboard."
 msgstr "Pas de style dans le presse-papiers."
 
-#: ../src/ui/clipboard.cpp:446
+#: ../src/ui/clipboard.cpp:425
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr ""
 "Sélectionner un ou des <b>objets</b> sur lesquels coller des dimensions."
 
-#: ../src/ui/clipboard.cpp:453
+#: ../src/ui/clipboard.cpp:432
 msgid "No size on the clipboard."
 msgstr "Pas de dimension dans le presse-papiers."
 
-#: ../src/ui/clipboard.cpp:506
+#: ../src/ui/clipboard.cpp:483
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 "Sélectionner un ou des <b>objet(s)</b> sur lesquels coller un effet de "
 "chemin."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:531
+#: ../src/ui/clipboard.cpp:508
 msgid "No effect on the clipboard."
 msgstr "Pas d'effet dans le presse-papiers."
 
-#: ../src/ui/clipboard.cpp:551 ../src/ui/clipboard.cpp:579
+#: ../src/ui/clipboard.cpp:528 ../src/ui/clipboard.cpp:555
 msgid "Clipboard does not contain a path."
 msgstr "Le presse-papier ne contient pas de chemin."
 
@@ -14637,6 +14629,13 @@ msgstr "Objet le plus grand"
 #: ../src/ui/dialog/align-and-distribute.cpp:924
 msgid "Smallest object"
 msgstr "Objet le plus petit"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:927
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1651
+msgid "Selection"
+msgstr "Sélection"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
@@ -19619,13 +19618,13 @@ msgid "No stroke"
 msgstr "Aucun contour"
 
 #: ../src/ui/widget/selected-style.cpp:166
-#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:239
+#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:227
 msgid "Pattern"
 msgstr "Motif"
 
 #: ../src/ui/widget/selected-style.cpp:169
 #: ../src/ui/widget/style-swatch.cpp:279
-#: ../src/widgets/paint-selector.cpp:1028
+#: ../src/widgets/paint-selector.cpp:1052
 msgid "Pattern fill"
 msgstr "Motif de remplissage"
 
@@ -19683,14 +19682,14 @@ msgstr "<b>Indéfini</b>"
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:499
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:539
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:532
 msgid "Unset fill"
 msgstr "Ne pas définir le remplissage"
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:515
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:466
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:469
 msgid "Unset stroke"
 msgstr "Ne pas définir le contour"
 
@@ -19772,12 +19771,12 @@ msgid "Make stroke opaque"
 msgstr "Rendre le contour opaque"
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:395
+#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:388
 msgid "Remove fill"
 msgstr "Supprimer le remplissage"
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:336
+#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:339
 msgid "Remove stroke"
 msgstr "Supprimer le contour"
 
@@ -22033,19 +22032,19 @@ msgstr "aucune"
 msgid "remove"
 msgstr "supprimer"
 
-#: ../src/widgets/fill-style.cpp:290
+#: ../src/widgets/fill-style.cpp:286
 msgid "Change fill rule"
 msgstr "Modifier la règle de remplissage"
 
-#: ../src/widgets/fill-style.cpp:330 ../src/widgets/fill-style.cpp:407
+#: ../src/widgets/fill-style.cpp:326 ../src/widgets/fill-style.cpp:400
 msgid "Set fill color"
 msgstr "Appliquer une couleur de remplissage"
 
-#: ../src/widgets/fill-style.cpp:477
+#: ../src/widgets/fill-style.cpp:470
 msgid "Set gradient on fill"
 msgstr "Appliquer un dégradé de remplissage"
 
-#: ../src/widgets/fill-style.cpp:524
+#: ../src/widgets/fill-style.cpp:517
 msgid "Set pattern on fill"
 msgstr "Appliquer un motif de remplissage"
 
@@ -22163,7 +22162,7 @@ msgid "<b>Change:</b>"
 msgstr "<b>Modifier :</b>"
 
 #: ../src/widgets/gradient-vector.cpp:267
-#: ../src/widgets/paint-selector.cpp:915 ../src/widgets/stroke-style.cpp:824
+#: ../src/widgets/paint-selector.cpp:940 ../src/widgets/stroke-style.cpp:827
 msgid "No document selected"
 msgstr "Aucun document sélectionné"
 
@@ -22213,33 +22212,33 @@ msgstr "Éditeur de dégradé"
 msgid "Change gradient stop color"
 msgstr "Modifier la couleur d'un stop de dégradé"
 
-#: ../src/widgets/paint-selector.cpp:231 ../src/widgets/paint-selector.cpp:615
+#: ../src/widgets/paint-selector.cpp:219 ../src/widgets/paint-selector.cpp:617
 msgid "No paint"
 msgstr "Pas de remplissage"
 
-#: ../src/widgets/paint-selector.cpp:233 ../src/widgets/paint-selector.cpp:679
+#: ../src/widgets/paint-selector.cpp:221 ../src/widgets/paint-selector.cpp:689
 msgid "Flat color"
 msgstr "Aplat"
 
 #. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
-#: ../src/widgets/paint-selector.cpp:235 ../src/widgets/paint-selector.cpp:742
+#: ../src/widgets/paint-selector.cpp:223 ../src/widgets/paint-selector.cpp:761
 msgid "Linear gradient"
 msgstr "Dégradé linéaire"
 
-#: ../src/widgets/paint-selector.cpp:237 ../src/widgets/paint-selector.cpp:745
+#: ../src/widgets/paint-selector.cpp:225 ../src/widgets/paint-selector.cpp:764
 msgid "Radial gradient"
 msgstr "Dégradé radial"
 
-#: ../src/widgets/paint-selector.cpp:241
+#: ../src/widgets/paint-selector.cpp:229
 msgid "Swatch"
 msgstr "Échantillon"
 
-#: ../src/widgets/paint-selector.cpp:243
+#: ../src/widgets/paint-selector.cpp:231
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr "Remplissage indéfini (permettant ainsi qu'il soit hérité)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:255
+#: ../src/widgets/paint-selector.cpp:243
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
@@ -22248,26 +22247,26 @@ msgstr ""
 "engendrera des lacunes dans le remplissage (fill-rule: evenodd)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:266
+#: ../src/widgets/paint-selector.cpp:254
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Le remplissage est sans lacune, sauf si un sous-chemin est en sens inverse "
 "(fill-rule: nonzero)"
 
-#: ../src/widgets/paint-selector.cpp:582
+#: ../src/widgets/paint-selector.cpp:584
 msgid "No objects"
 msgstr "Aucun objet"
 
-#: ../src/widgets/paint-selector.cpp:593
+#: ../src/widgets/paint-selector.cpp:595
 msgid "Multiple styles"
 msgstr "Styles multiples"
 
-#: ../src/widgets/paint-selector.cpp:604
+#: ../src/widgets/paint-selector.cpp:606
 msgid "Paint is undefined"
 msgstr "Remplissage indéfini"
 
-#: ../src/widgets/paint-selector.cpp:1015
+#: ../src/widgets/paint-selector.cpp:1039
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
@@ -22277,7 +22276,7 @@ msgstr ""
 "du motif sur la zone de travail. Utiliser <b>Objet &gt; Motifs &gt; Objets "
 "en Motif</b> pour créer un nouveau motif à partir de la sélection."
 
-#: ../src/widgets/paint-selector.cpp:1104
+#: ../src/widgets/paint-selector.cpp:1125
 msgid "Swatch fill"
 msgstr "Remplissage de l'échantillon"
 
@@ -22407,7 +22406,7 @@ msgstr "Hauteur"
 
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select toolbar|H"
-msgstr "select_toolbar|H"
+msgstr "select toolbar|H"
 
 #: ../src/widgets/select-toolbar.cpp:499
 msgid "Height of selection"
@@ -22597,54 +22596,54 @@ msgstr "Attribut"
 msgid "Type text in a text node"
 msgstr "Taper du texte dans un nœud texte"
 
-#: ../src/widgets/stroke-style.cpp:286 ../src/widgets/stroke-style.cpp:345
+#: ../src/widgets/stroke-style.cpp:289 ../src/widgets/stroke-style.cpp:348
 msgid "Set stroke color"
 msgstr "Appliquer une couleur de contour"
 
-#: ../src/widgets/stroke-style.cpp:397
+#: ../src/widgets/stroke-style.cpp:400
 msgid "Set gradient on stroke"
 msgstr "Appliquer un dégradé à un contour"
 
-#: ../src/widgets/stroke-style.cpp:441
+#: ../src/widgets/stroke-style.cpp:444
 msgid "Set pattern on stroke"
 msgstr "Appliquer un motif à un contour"
 
-#: ../src/widgets/stroke-style.cpp:908
+#: ../src/widgets/stroke-style.cpp:911
 msgid "Set markers"
 msgstr "Appliquer des marqueurs"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. Stroke width
-#: ../src/widgets/stroke-style.cpp:1083
+#: ../src/widgets/stroke-style.cpp:1086
 msgid "StrokeWidth|Width:"
 msgstr "Épaisseur :"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:1121
+#: ../src/widgets/stroke-style.cpp:1124
 msgid "Join:"
 msgstr "Raccord :"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1133
+#: ../src/widgets/stroke-style.cpp:1136
 msgid "Miter join"
 msgstr "Raccord droit"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1146
 msgid "Round join"
 msgstr "Raccord arrondi"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1153
+#: ../src/widgets/stroke-style.cpp:1156
 msgid "Bevel join"
 msgstr "Raccord biseauté"
 
@@ -22655,59 +22654,59 @@ msgstr "Raccord biseauté"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1165
+#: ../src/widgets/stroke-style.cpp:1168
 msgid "Miter limit:"
 msgstr "Limite du raccord :"
 
-#: ../src/widgets/stroke-style.cpp:1173
+#: ../src/widgets/stroke-style.cpp:1176
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Longueur maximum du raccord (en unités de l'épaisseur du contour)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1188
 msgid "Cap:"
 msgstr "Terminaison :"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1197
+#: ../src/widgets/stroke-style.cpp:1200
 msgid "Butt cap"
 msgstr "Terminaison sur le nœud"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1208
 msgid "Round cap"
 msgstr "Terminaison arrondie"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1213
+#: ../src/widgets/stroke-style.cpp:1216
 msgid "Square cap"
 msgstr "Terminaison carrée"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1219
+#: ../src/widgets/stroke-style.cpp:1222
 msgid "Dashes:"
 msgstr "Pointillés :"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1236
+#: ../src/widgets/stroke-style.cpp:1239
 msgid "Start Markers:"
 msgstr "Marqueurs initiaux :"
 
-#: ../src/widgets/stroke-style.cpp:1238
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 "Les marqueurs de début sont dessinés sur le premier nœud d'un chemin ou objet"
 
-#: ../src/widgets/stroke-style.cpp:1247
+#: ../src/widgets/stroke-style.cpp:1250
 msgid "Mid Markers:"
 msgstr "intermédiaires :"
 
-#: ../src/widgets/stroke-style.cpp:1249
+#: ../src/widgets/stroke-style.cpp:1252
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
@@ -22715,16 +22714,16 @@ msgstr ""
 "Les marqueurs intermédiaires sont dessinés sur chaque nœud d'un chemin ou "
 "objet, à l'exception du premier et du dernier"
 
-#: ../src/widgets/stroke-style.cpp:1258
+#: ../src/widgets/stroke-style.cpp:1261
 msgid "End Markers:"
 msgstr "terminaux :"
 
-#: ../src/widgets/stroke-style.cpp:1260
+#: ../src/widgets/stroke-style.cpp:1263
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 "Les marqueurs de fin sont dessinés sur le dernier nœud d'un chemin ou objet"
 
-#: ../src/widgets/stroke-style.cpp:1609 ../src/widgets/stroke-style.cpp:1705
+#: ../src/widgets/stroke-style.cpp:1612 ../src/widgets/stroke-style.cpp:1708
 msgid "Set stroke style"
 msgstr "Appliquer un style de contour"
 
@@ -24624,2452 +24623,3 @@ msgstr "Inclinaison (deg)"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr "Sphère fil de fer"
-
-#~ msgid "_Write session file:"
-#~ msgstr "_Enregistrer le fichier de session :"
-
-#~ msgid "Shared SVG whiteboard tool."
-#~ msgstr "Tableau partagé SVG."
-
-#~ msgid "Based on the Pedro XMPP client"
-#~ msgstr "Basé sur le client XMPP Pedro"
-
-#~ msgid "Select a location and filename"
-#~ msgstr "Sélectionner un emplacement et un nom de fichier"
-
-#~ msgid "Set filename"
-#~ msgstr "Définir un nom de fichier"
-
-#~ msgid "<b>%1</b> has invited you to a whiteboard session."
-#~ msgstr "<b>%1</b> vous a invité à une session de tableau blanc."
-
-#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-#~ msgstr ""
-#~ "Voulez-vous accepter l'invitation de <b>%1</b> à une session de tableau "
-#~ "blanc ?"
-
-#~ msgid "Accept invitation"
-#~ msgstr "Accepter l'invitation"
-
-#~ msgid "Decline invitation"
-#~ msgstr "Décliner l'invitation"
-
-#~ msgid "Inkboard session (%1 to %2)"
-#~ msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
-
-#~ msgid "Length left"
-#~ msgstr "Longueur vers la gauche"
-
-#~ msgid "Specifies the left end of the bisector"
-#~ msgstr "Définit l'extrémité gauche de la bissectrice"
-
-#~ msgid "Length right"
-#~ msgstr "Longueur vers la droite"
-
-#~ msgid "Specifies the right end of the bisector"
-#~ msgstr "Définit l'extrémité droite de la bissectrice"
-
-#~ msgid "Adjust the \"left\" end of the bisector"
-#~ msgstr "Ajuster l'extrémité gauche de la bissectrice"
-
-#~ msgid "Adjust the \"right\" of the bisector"
-#~ msgstr "Ajuste l'extrémité  droite de la bissectrice"
-
-#~ msgid "Null"
-#~ msgstr "Nul"
-
-#~ msgid "Intersect"
-#~ msgstr "Intersection"
-
-#~ msgid "Subtract A-B"
-#~ msgstr "Retranchement A-B"
-
-#~ msgid "Identity A"
-#~ msgstr "Identité A"
-
-#~ msgid "Subtract B-A"
-#~ msgstr "Retranchement B-A"
-
-#~ msgid "Identity B"
-#~ msgstr "Identité B"
-
-#~ msgid "2nd path"
-#~ msgstr "Second chemin"
-
-#~ msgid "Path to which the original path will be boolop'ed."
-#~ msgstr "Chemin sur lequel le chemin original sera appliqué"
-
-#~ msgid "Boolop type"
-#~ msgstr "Type d'opération booléenne"
-
-#~ msgid "Determines which kind of boolop will be performed."
-#~ msgstr "Détermine quel type d'opération booléenne sera appliquée."
-
-#~ msgid "Starting"
-#~ msgstr "Début"
-
-#~ msgid "Angle of the first copy"
-#~ msgstr "Angle du premier exemplaire"
-
-#~ msgid "Rotation angle"
-#~ msgstr "Angle de rotation"
-
-#~ msgid "Angle between two successive copies"
-#~ msgstr "Angle entre deux exemplaires successifs"
-
-#~ msgid "Number of copies"
-#~ msgstr "Nombre d'exemplaires"
-
-#~ msgid "Number of copies of the original path"
-#~ msgstr "Nombre d'exemplaires du chemin original"
-
-#~ msgid "Origin"
-#~ msgstr "Origine"
-
-#~ msgid "Origin of the rotation"
-#~ msgstr "Origine de la rotation"
-
-#~ msgid "Adjust the starting angle"
-#~ msgstr "Ajuster l'angle de départ"
-
-#~ msgid "Adjust the rotation angle"
-#~ msgstr "Ajuster l'angle de rotation"
-
-#~ msgid "Elliptic Pen"
-#~ msgstr "Stylo elliptique"
-
-#~ msgid "Thick-Thin strokes (fast)"
-#~ msgstr "Traits épais-fins (rapide)"
-
-#~ msgid "Thick-Thin strokes (slow)"
-#~ msgstr "Traits épais-fins (lent)"
-
-#~ msgid "Sharp"
-#~ msgstr "Pointu"
-
-#~ msgid "Round"
-#~ msgstr "Arrondi"
-
-#~ msgid "Method"
-#~ msgstr "Méthode"
-
-#~ msgid "Choose pen type"
-#~ msgstr "Sélectionner un type de stylo"
-
-#~ msgid "Pen width"
-#~ msgstr "Largeur du stylo"
-
-#~ msgid "Maximal stroke width"
-#~ msgstr "Épaisseur de contour maximale"
-
-#~ msgid "Pen roundness"
-#~ msgstr "Rotondité du stylo"
-
-#~ msgid "Min/Max width ratio"
-#~ msgstr "Rapport entre l'épaisseur minimale et l'épaisseur maximale"
-
-#~ msgid "angle"
-#~ msgstr "angle"
-
-#~ msgid "direction of thickest strokes (opposite = thinest)"
-#~ msgstr "Direction des traits les plus épais (à l'opposé, les plus fins)"
-
-#~ msgid "Choose start capping type"
-#~ msgstr "Choisir le type de terminaison initiale"
-
-#~ msgid "Choose end capping type"
-#~ msgstr "Choisir le type de terminaison finale"
-
-#~ msgid "Grow for"
-#~ msgstr "Augmenter de"
-
-#~ msgid "Make the stroke thiner near it's start"
-#~ msgstr "Rend le contour plus étroit au début du chemin"
-
-#~ msgid "Fade for"
-#~ msgstr "Diminuer de"
-
-#~ msgid "Make the stroke thiner near it's end"
-#~ msgstr "Rend le contour plus étroit à la fin du chemin"
-
-#~ msgid "Round ends"
-#~ msgstr "Terminaisons arrondies"
-
-#~ msgid "Strokes end with a round end"
-#~ msgstr "Terminer le trait par un arrondi"
-
-#, fuzzy
-#~ msgid "Capping"
-#~ msgstr "Clapotis"
-
-#~ msgid "left capping"
-#~ msgstr "Terminaison gauche"
-
-#~ msgid "Control handle 0"
-#~ msgstr "Poignée de contrôle 0"
-
-#~ msgid "Control handle 1"
-#~ msgstr "Poignée de contrôle 1"
-
-#~ msgid "Control handle 2"
-#~ msgstr "Poignée de contrôle 2"
-
-#~ msgid "Control handle 3"
-#~ msgstr "Poignée de contrôle 3"
-
-#~ msgid "Control handle 4"
-#~ msgstr "Poignée de contrôle 4"
-
-#~ msgid "Control handle 5"
-#~ msgstr "Poignée de contrôle 5"
-
-#~ msgid "Control handle 6"
-#~ msgstr "Poignée de contrôle 6"
-
-#~ msgid "Control handle 7"
-#~ msgstr "Poignée de contrôle 7"
-
-#~ msgid "Control handle 8"
-#~ msgstr "Poignée de contrôle 8"
-
-#~ msgid "Control handle 9"
-#~ msgstr "Poignée de contrôle 9"
-
-#~ msgid "Control handle 10"
-#~ msgstr "Poignée de contrôle 10"
-
-#~ msgid "Control handle 11"
-#~ msgstr "Poignée de contrôle 11"
-
-#~ msgid "Control handle 12"
-#~ msgstr "Poignée de contrôle 12"
-
-#~ msgid "Control handle 13"
-#~ msgstr "Poignée de contrôle 13"
-
-#~ msgid "Control handle 14"
-#~ msgstr "Poignée de contrôle 14"
-
-#~ msgid "Control handle 15"
-#~ msgstr "Poignée de contrôle 15"
-
-#~ msgid "End type"
-#~ msgstr "Type de fin"
-
-#~ msgid "Determines on which side the line or line segment is infinite."
-#~ msgstr "Définir quel côté de la ligne ou du segment est infini"
-
-#~ msgid "Discard original path?"
-#~ msgstr "Abandonner le chemin original ?"
-
-#~ msgid "Check this to only keep the mirrored part of the path"
-#~ msgstr ""
-#~ "Sélectionner cette option pour ne conserver que la partie du chemin en "
-#~ "miroir"
-
-#~ msgid "Reflection line"
-#~ msgstr "Ligne de réflexion"
-
-#~ msgid "Line which serves as 'mirror' for the reflection"
-#~ msgstr "Ligne utilisée comme miroir pour le reflet"
-
-#~ msgid "Handle to control the distance of the offset from the curve"
-#~ msgstr "Poignée de contrôle de distance entre l'offset et la courbe"
-
-#~ msgid "Adjust the offset"
-#~ msgstr "Ajuster le décalage"
-
-#~ msgid "Specifies the left end of the parallel"
-#~ msgstr "Définit l'extrémité gauche de la parallèle"
-
-#~ msgid "Specifies the right end of the parallel"
-#~ msgstr "Définit l'extrémité droite de la parallèle"
-
-#~ msgid "Adjust the \"left\" end of the parallel"
-#~ msgstr "Ajuster l'extrémité gauche de la parallèle"
-
-#~ msgid "Adjust the \"right\" end of the parallel"
-#~ msgstr "Ajuste l'extrémité droite de la parallèle"
-
-#~ msgid "Display unit"
-#~ msgstr "Afficher l'unité de mesure"
-
-#~ msgid "Print unit after path length"
-#~ msgstr "Imprime l'unité à la suite de la longueur du chemin"
-
-#~ msgid "Adjust the bisector's \"left\" end"
-#~ msgstr "Ajuster l'extrémité gauche de la bissectrice"
-
-#~ msgid "Adjust the bisector's \"right\" end"
-#~ msgstr "Ajuster l'extrémité  droite de la bissectrice"
-
-#~ msgid "Scale x"
-#~ msgstr "Échelle X"
-
-#~ msgid "Scale factor in x direction"
-#~ msgstr "Facteur d'échelle dans la direction X"
-
-#~ msgid "Scale y"
-#~ msgstr "Échelle Y"
-
-#~ msgid "Scale factor in y direction"
-#~ msgstr "Facteur d'échelle dans la direction Y"
-
-#~ msgid "Offset x"
-#~ msgstr "Décalage sur l'axe X"
-
-#~ msgid "Offset in x direction"
-#~ msgstr "Décalage dans la direction X"
-
-#~ msgid "Offset y"
-#~ msgstr "Décalage sur l'axe Y"
-
-#~ msgid "Offset in y direction"
-#~ msgstr "Décalage dans la direction Y"
-
-#~ msgid "Uses XY plane?"
-#~ msgstr "Utiliser le plan XY ?"
-
-#~ msgid ""
-#~ "If true, put the path on the left side of an imaginary box, otherwise on "
-#~ "the right side"
-#~ msgstr ""
-#~ "Si vrai, place le chemin sur le côté gauche d'une boîte imaginaire, sinon "
-#~ "sur son côté droit"
-
-#~ msgid "Adjust the origin"
-#~ msgstr "Ajuster l'origine"
-
-#~ msgid "Iterations"
-#~ msgstr "Itérations"
-
-#~ msgid "recursivity"
-#~ msgstr "Récursivité"
-
-#~ msgid "Float parameter"
-#~ msgstr "Paramètres flottant"
-
-#~ msgid "just a real number like 1.4!"
-#~ msgstr "Juste un nombre réel, comme 1,4 !"
-
-#~ msgid "Additional angle between tangent and curve"
-#~ msgstr "Angle supplémentaire entre la tangente et la courbe"
-
-#~ msgid "Location along curve"
-#~ msgstr "Position le long de la courbe"
-
-#~ msgid ""
-#~ "Location of the point of attachment along the curve (between 0.0 and "
-#~ "number-of-segments)"
-#~ msgstr ""
-#~ "Position du point d'attachement le long de la courbe (entre 0.0 et le "
-#~ "nombre de segments)"
-
-#~ msgid "Specifies the left end of the tangent"
-#~ msgstr "Définit l'extrémité gauche de la tangente"
-
-#~ msgid "Specifies the right end of the tangent"
-#~ msgstr "Définit l'extrémité droite de la tangente"
-
-#~ msgid "Adjust the point of attachment of the tangent"
-#~ msgstr "Ajuste le point d'attachement de la tangente"
-
-#~ msgid "Adjust the \"left\" end of the tangent"
-#~ msgstr "Ajuster l'extrémité gauche de la tangente"
-
-#~ msgid "Adjust the \"right\" end of the tangent"
-#~ msgstr "Ajuste l'extrémité  \"droite\" de la tangente"
-
-#~ msgid "Stack step"
-#~ msgstr "Empiler les passes"
-
-#~ msgid "point param"
-#~ msgstr "Paramètres du point"
-
-#~ msgid "path param"
-#~ msgstr "Paramètres du chemin"
-
-#~ msgid "Label"
-#~ msgstr "Étiquette"
-
-#~ msgid "Text label attached to the path"
-#~ msgstr "Étiquette texte attachée au chemin"
-
-#~ msgid "Choose a construction tool from the toolbar."
-#~ msgstr "Sélectionner un outil de construction dans la barre d'outils"
-
-#~ msgid "Transform Handles:"
-#~ msgstr "Poignées de transformation :"
-
-#~ msgid "Session file"
-#~ msgstr "Fichier de session"
-
-#~ msgid "Playback controls"
-#~ msgstr "Contrôles du rejeu"
-
-#~ msgid "Message information"
-#~ msgstr "Message d'information"
-
-#~ msgid "Active session file:"
-#~ msgstr "Fichier de session en cours :"
-
-#~ msgid "Delay (milliseconds):"
-#~ msgstr "Délai (millisecondes) :"
-
-#~ msgid "Close file"
-#~ msgstr "Fermer le fichier"
-
-#~ msgid "Open new file"
-#~ msgstr "Ouvrir un nouveau fichier"
-
-#~ msgid "Set delay"
-#~ msgstr "Définir une temporisation"
-
-#~ msgid "Rewind"
-#~ msgstr "Rembobiner"
-
-#~ msgid "Go back one change"
-#~ msgstr "Reculer d'une modification"
-
-#~ msgid "Pause"
-#~ msgstr "Pause"
-
-#~ msgid "Go forward one change"
-#~ msgstr "Avancer d'une modification"
-
-#~ msgid "Play"
-#~ msgstr "Lecture"
-
-#~ msgid "Open session file"
-#~ msgstr "_Ouvrir le fichier de session"
-
-#~ msgid ""
-#~ "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
-#~ "stroke"
-#~ msgstr ""
-#~ "Couleur : <b>%s</b> ; <b>Cliquer</b> pour définir le remplissage, <b>Maj"
-#~ "+clic</b> pour définir le contour"
-
-#~ msgid "Change color definition"
-#~ msgstr "Modifier la définition de la couleur"
-
-#~ msgid "Remove stroke color"
-#~ msgstr "Supprimer la couleur du contour"
-
-#~ msgid "Remove fill color"
-#~ msgstr "Supprimer la couleur du remplissage"
-
-#~ msgid "Set stroke color to none"
-#~ msgstr "Appliquer une couleur de contour nulle"
-
-#~ msgid "Set fill color to none"
-#~ msgstr "Appliquer une couleur de remplissage nulle"
-
-#~ msgid "Set stroke color from swatch"
-#~ msgstr "Appliquer une couleur de contour depuis la palette"
-
-#~ msgid "Set fill color from swatch"
-#~ msgstr "Appliquer une couleur de remplissage depuis la palette"
-
-#~ msgid "_Use SSL"
-#~ msgstr "_Utiliser SSL"
-
-#~ msgid "_Register"
-#~ msgstr "Insc_ription"
-
-#~ msgid "_Server:"
-#~ msgstr "_Serveur :"
-
-#~ msgid "_Username:"
-#~ msgstr "Nom d'_utilisateur :"
-
-#~ msgid "_Password:"
-#~ msgstr "Mot de _passe :"
-
-#~ msgid "P_ort:"
-#~ msgstr "P_ort :"
-
-#~ msgid "Connect"
-#~ msgstr "Connection"
-
-#~ msgid "Establishing connection to Jabber server <b>%1</b>"
-#~ msgstr "Établissement de la connexion sur le serveur Jabber <b>%1</b>"
-
-#~ msgid "Failed to establish connection to Jabber server <b>%1</b>"
-#~ msgstr ""
-#~ "Échec lors de l'établissement de la connexion sur le serveur Jabber <b>%"
-#~ "1</b>"
-
-#~ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-#~ msgstr ""
-#~ "Établissement de la connexion de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#~ msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr ""
-#~ "Échec de l'authentification de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#~ msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-#~ msgstr ""
-#~ "Échec de l'initialisation SSL lors de la connexion au serveur Jabber <b>%"
-#~ "1</b>"
-
-#~ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr "Connecté au serveur Jabber <b>%1</b> en tant que <b>%2</b>"
-
-#~ msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-#~ msgstr ""
-#~ "Échec de l'enregistrement de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#~ msgid "Chatroom _name:"
-#~ msgstr "Nom du salon  :"
-
-#~ msgid "Chatroom _server:"
-#~ msgstr "_Serveur du salon :"
-
-#~ msgid "Chatroom _password:"
-#~ msgstr "Mot de _passe du salon :"
-
-#~ msgid "Chatroom _handle:"
-#~ msgstr "Pseudonyme :"
-
-#~ msgid "Connect to chatroom"
-#~ msgstr "Connexion au salon"
-
-#~ msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-#~ msgstr "Synchronisation avec le salon <b>%1@%2</b>, pseudonyme <b>%3</b>"
-
-#~ msgid "_User's Jabber ID:"
-#~ msgstr "Identifiant Jabber de l'_utilisateur"
-
-#~ msgid "_Invite user"
-#~ msgstr "Inviter un utilisateur"
-
-#~ msgid "_Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Buddy List"
-#~ msgstr "Liste de contacts"
-
-#~ msgid "Sending whiteboard invitation to <b>%1</b>"
-#~ msgstr "Envoi d'une invitation à <b>%1</b>"
-
-#~ msgid ""
-#~ "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
-#~ "+Alt</b>: move along handles"
-#~ msgstr ""
-#~ "<b>Ctrl</b> : selon le contexte, modifier le type des nœuds, forcer la "
-#~ "modification des angles de leurs poignées par incréments, forcer le "
-#~ "déplacement horizontal/vertical; <b>Ctrl+Alt</b> : déplacer le long des "
-#~ "poignées"
-
-#~ msgid ""
-#~ "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
-#~ msgstr ""
-#~ "<b>Maj</b> : selon le contexte, sélection multiple des nœuds, désactiver "
-#~ "le magnétisme, forcer la rotation simultanée des deux poignées des noeuds "
-#~ "sélectionnés"
-
-#~ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-#~ msgstr ""
-#~ "<b>Alt</b> : bloquer la longueur des poignées; <b>Ctrl+Alt</b> : déplacer "
-#~ "le long des poignées"
-
-#~ msgid ""
-#~ "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap "
-#~ "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
-#~ "handles"
-#~ msgstr ""
-#~ "<b>Poignée de contrôle de nœud</b> : la déplacer pour modifier la courbe; "
-#~ "<b>Ctrl</b> pour la tourner par incréments; <b>Alt</b> pour préserver sa "
-#~ "longueur; <b>Maj</b> pour tourner les deux poignées"
-
-#~ msgid "Align nodes"
-#~ msgstr "Aligner les nœuds"
-
-#~ msgid "Distribute nodes"
-#~ msgstr "Distribuer les nœuds"
-
-#~ msgid "Break path"
-#~ msgstr "Briser le chemin"
-
-#~ msgid "Close subpath"
-#~ msgstr "Fermer le sous-chemin"
-
-#~ msgid "Close subpath by segment"
-#~ msgstr "Fermer le sous-chemin par un segment"
-
-#~ msgid "Join nodes by segment"
-#~ msgstr "Joindre les nœuds par un segment"
-
-#~ msgid "To join, you must have <b>two endnodes</b> selected."
-#~ msgstr ""
-#~ "Pour joindre, vous devez avoir sélectionné <b>deux nœuds terminaux</b>."
-
-#~ msgid ""
-#~ "Select <b>two non-endpoint nodes</b> on a path between which to delete "
-#~ "segments."
-#~ msgstr ""
-#~ "Vous devez sélectionner <b>deux nœuds non-terminaux</b> d'un chemin pour "
-#~ "supprimer un segment entre eux."
-
-#~ msgid "Cannot find path between nodes."
-#~ msgstr "Impossible de trouver un chemin entre les nœuds."
-
-#~ msgid "Change segment type"
-#~ msgstr "Modifier le type de segment"
-
-#~ msgid ""
-#~ "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to "
-#~ "snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate "
-#~ "both handles"
-#~ msgstr ""
-#~ "<b>Poignée de contrôle de nœud</b>: angle %0.2f&#176;, longueur %s; "
-#~ "<b>Ctrl</b> pour tourner par incréments; <b>Alt</b> pour préserver la "
-#~ "longueur; <b>Maj</b> pour tourner les 2 poignées simultanément"
-
-#~ msgid "Cannot scale nodes when all are at the same location."
-#~ msgstr ""
-#~ "Impossible de redimensionner des nœuds lorsqu'ils sont tous au même "
-#~ "endroit."
-
-#~ msgid "Flip nodes"
-#~ msgstr "Retourner les nœuds"
-
-#~ msgid ""
-#~ "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to "
-#~ "horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-#~ msgstr ""
-#~ "<b>Nœuds</b> : déplacer pour éditer le chemin; <b>Ctrl</b> pour aimanter "
-#~ "à la grille horizontalement/verticalement; <b>Ctrl+Alt</b> déplacer selon "
-#~ "la direction des poignées"
-
-#~ msgid "end node"
-#~ msgstr "nœud terminal"
-
-#~ msgid "cusp"
-#~ msgstr "dur"
-
-#~ msgid "smooth"
-#~ msgstr "doux"
-
-#~ msgid "auto"
-#~ msgstr "automatique"
-
-#~ msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-#~ msgstr ""
-#~ "nœud terminal, poignée de contrôle rétractée (cliquer-déplacer avec "
-#~ "<b>Maj</b> pour la faire ressortir)"
-
-#~ msgid "one handle retracted (drag with <b>Shift</b> to extend)"
-#~ msgstr ""
-#~ "une poignée de contrôle rétractée (cliquer-déplacer avec <b>Maj</b> pour "
-#~ "la faire ressortir)"
-
-#~ msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-#~ msgstr ""
-#~ "deux poignées de contrôle rétractées (cliquer-déplacer avec <b>Maj</b> "
-#~ "pour les faire ressortir)"
-
-#~ msgid ""
-#~ "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
-#~ "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
-#~ "rotate"
-#~ msgstr ""
-#~ "<b>Déplacer</b> les nœuds ou leurs poignées; <b>Alt+déplacer</b> les "
-#~ "nœuds pour sculpter; <b>flèche</b> pour déplacer les nœuds, <b>&lt; &gt;</"
-#~ "b> pour redimensionner, <b>[ ]</b> pour tourner"
-
-#~ msgid ""
-#~ "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-#~ msgstr ""
-#~ "<b>Cliquer-déplacer</b> le nœud ou ses poignées; <b>flèche</b> pour "
-#~ "déplacer le nœud"
-
-#~ msgid "Select a single object to edit its nodes or handles."
-#~ msgstr "Sélectionner un seul objet pour éditer ses nœuds ou poignées."
-
-#~ msgid ""
-#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
-#~ "b>, or <b>drag around</b> nodes to select."
-#~ msgid_plural ""
-#~ "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</"
-#~ "b>, or <b>drag around</b> nodes to select."
-#~ msgstr[0] ""
-#~ "<b>0</b> sur <b>%i</b> nœud sélectionné. Sélectionnez des nœuds par "
-#~ "<b>Clic</b>, <b>Maj+Clic</b> ou <b>cliquer-déplacer</b>."
-#~ msgstr[1] ""
-#~ "<b>0</b> sur <b>%i</b> nœuds sélectionnés. Sélectionnez des nœuds par "
-#~ "<b>Clic</b>, <b>Maj+Clic</b> ou <b>cliquer-déplacer</b>."
-
-#~ msgid "Drag the handles of the object to modify it."
-#~ msgstr "Déplacer les poignées d'un objet pour le modifier."
-
-#~ msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
-#~ msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
-#~ msgstr[0] "<b>%i</b> nœud sélectionné sur <b>%i</b>; %s. %s."
-#~ msgstr[1] "<b>%i</b> nœuds sélectionnés sur <b>%i</b>; %s. %s."
-
-#~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s."
-#~ msgid_plural ""
-#~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
-#~ "%s."
-#~ msgstr[0] ""
-#~ "<b>%i</b> nœud sélectionné sur <b>%i</b> dans <b>%i</b> sous-chemins sur "
-#~ "<b>%i</b>. %s"
-#~ msgstr[1] ""
-#~ "<b>%i</b> nœuds sélectionnés sur <b>%i</b> dans <b>%i</b> sous-chemins "
-#~ "sur <b>%i</b>. %s"
-
-#~ msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-#~ msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
-#~ msgstr[0] "<b>%i</b> nœud sélectionné sur <b>%i</b>. %s."
-#~ msgstr[1] "<b>%i</b> nœuds sélectionnés sur <b>%i</b>. %s."
-
-#~ msgid "The selection has no applied clip path."
-#~ msgstr "Aucune découpe n'est appliquée à cette sélection."
-
-#~ msgid "The selection has no applied mask."
-#~ msgstr "Aucun masque n'est appliqué à cette sélection."
-
-#~ msgid "<b>Path</b> (%i node, path effect: %s)"
-#~ msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-#~ msgstr[0] "<b>Chemin</b> (%i nœud, effet de chemin %s)"
-#~ msgstr[1] "<b>Chemin</b> (%i nœuds, effet de chemin %s)"
-
-#~ msgid "<b>Path</b> (%i node)"
-#~ msgid_plural "<b>Path</b> (%i nodes)"
-#~ msgstr[0] "<b>Chemin</b> (%i nœud)"
-#~ msgstr[1] "<b>Chemin</b> (%i nœuds)"
-
-#~ msgid "<b>Star</b> with %d vertex"
-#~ msgid_plural "<b>Star</b> with %d vertices"
-#~ msgstr[0] "<b>Étoile</b> à %d branche"
-#~ msgstr[1] "<b>Étoile</b> à %d branches"
-
-#~ msgid "<b>Polygon</b> with %d vertex"
-#~ msgid_plural "<b>Polygon</b> with %d vertices"
-#~ msgstr[0] "<b>Polygone</b> à %d sommet"
-#~ msgstr[1] "<b>Polygone</b> à %d sommets"
-
-#~ msgid "<b>Conditional group</b> of <b>%d</b> object"
-#~ msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-#~ msgstr[0] "<b>Groupe conditionnel</b> de <b>%d</b> objet"
-#~ msgstr[1] "<b>Groupe conditionnel</b> de <b>%d</b> objets"
-
-#~ msgid ""
-#~ "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
-#~ "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on "
-#~ "an object to select."
-#~ msgstr ""
-#~ "Pour éditer un chemin, sélectionnez des nœuds par <b>cliquer</b>, <b>Maj"
-#~ "+clic</b> ou <b>cliquer-déplacer</b>, puis déplacez les nœuds et/ou les "
-#~ "poignées. <b>Cliquer</b> sur un objet pour le sélectionner."
-
-#~ msgid "Path outline flash on mouse-over"
-#~ msgstr "Faire clignoter le contour d'un chemin lorsque la souris le survole"
-
-#~ msgid "Suppress path outline flash when one path selected"
-#~ msgstr ""
-#~ "Supprime le clignotement du contour de chemin lorsqu'un chemin est "
-#~ "sélectionné"
-
-#~ msgid "If a path is selected, do not continue flashing path outlines."
-#~ msgstr ""
-#~ "Si un chemin est sélectionné, ne pas faire clignoter les contours du "
-#~ "chemin en continu."
-
-#~ msgid "Join endnodes"
-#~ msgstr "Joindre les extrémités"
-
-#~ msgid "Edit mask path"
-#~ msgstr "Modifier le chemin du masque"
-
-#~ msgid "Edit the mask of the object"
-#~ msgstr "Modifier le chemin du masque de l'objet"
-
-#~ msgid "<b>Format</b>"
-#~ msgstr "<b>Format</b>"
-
-#~ msgid "P_age size:"
-#~ msgstr "Dimensions de la p_age :"
-
-#~ msgid "Page orientation:"
-#~ msgstr "Orientation de la page :"
-
-#~ msgid "Min"
-#~ msgstr "Min"
-
-#~ msgid "Max:"
-#~ msgstr "Max :"
-
-#~ msgid "sprayOptions|Distribution"
-#~ msgstr "Distribution"
-
-#~ msgid "sprayOptions|Cursor Options"
-#~ msgstr "Options du curseur"
-
-#~ msgid "sprayOptions|Random Options"
-#~ msgstr "Options aléatoires"
-
-#~ msgid "sprayOptions|Distribution:"
-#~ msgstr "Distribution :"
-
-#~ msgid "sprayOptions|Uniform"
-#~ msgstr "Uniforme"
-
-#~ msgid "sprayOptions|Gaussian"
-#~ msgstr "Gaussienne"
-
-#~ msgid "sprayOptions|Scale:"
-#~ msgstr "Échelle :"
-
-#~ msgid "Apply a scale factor"
-#~ msgstr "Appliquer un facteur d'échelle"
-
-#~ msgid "sprayOptions|Rotation:"
-#~ msgstr "Rotation :"
-
-#~ msgid "Apply rotation"
-#~ msgstr "Appliquer une totation"
-
-#~ msgid "sprayOptions|Ratio:"
-#~ msgstr "Rapport :"
-
-#~ msgid "Eccentricity of the ellipse"
-#~ msgstr "Excentricité de l'ellipse"
-
-#~ msgid "sprayOptions|Angle:"
-#~ msgstr "Angle :"
-
-#~ msgid "Angle of the ellipse"
-#~ msgstr "Angle de l'ellipse"
-
-#~ msgid "sprayOptions|Width:"
-#~ msgstr "Largeur :"
-
-#~ msgid "Size of the ellipse"
-#~ msgstr "Taille de l'ellipse"
-
-#~ msgid "bounding box"
-#~ msgstr "boîte englobante"
-
-#~ msgid "%s. Modify <b>spray</b> options"
-#~ msgstr "%s. Modifier les options du  <b>pulvérisateur</b>"
-
-#~ msgid "Mean:"
-#~ msgstr "Moyenne :"
-
-#~ msgid "The mean of the spray action"
-#~ msgstr "La moyenne de la pulvérisation"
-
-#~ msgid "(minimum standard_deviation)"
-#~ msgstr "(écart type minimum)"
-
-#~ msgid "(maximum standard_deviation)"
-#~ msgstr "(écart type maximum)"
-
-# Saturation (in HSL)
-#~ msgid "SD"
-#~ msgstr "Écart type"
-
-#~ msgid "SD:"
-#~ msgstr "Écart type :"
-
-#~ msgid "The standard deviation of the spray action"
-#~ msgstr "L'écart type de la pulvérisation"
-
-#~ msgid "Population"
-#~ msgstr "Population"
-
-#~ msgid "Population:"
-#~ msgstr "Population :"
-
-#, fuzzy
-#~ msgid "Exchange Positions"
-#~ msgstr "Position aléatoire"
-
-#, fuzzy
-#~ msgid "Exchange positions of selected objects"
-#~ msgstr "Perturber la couleur des objets sélectionnés"
-
-#~ msgid "Uniform"
-#~ msgstr "Uniforme"
-
-#~ msgid "Gaussian   "
-#~ msgstr "Gaussienne"
-
-#~ msgid "Uniforme"
-#~ msgstr "Uniforme"
-
-#~ msgid "Gaussienne"
-#~ msgstr "Gaussienne"
-
-#~ msgid "Scale : "
-#~ msgstr "Échelle :"
-
-#~ msgid "Applique un facteur d'échelle"
-#~ msgstr "Applique un facteur d'échelle"
-
-#~ msgid "Fait tourner"
-#~ msgstr "Fait tourner"
-
-#~ msgid "Ratio : "
-#~ msgstr "Rapport :"
-
-#~ msgid "Angle : "
-#~ msgstr "Angle :"
-
-#~ msgid "Taille de l'ellipse"
-#~ msgstr "Taille de l'ellipse"
-
-#~ msgid "(pinch spray)"
-#~ msgstr "(pulvérisation serrée)"
-
-#~ msgid "Center objects horizontally"
-#~ msgstr "Centrer selon un axe vertical"
-
-#~ msgid "_Instant Messaging..."
-#~ msgstr "Messagerie _Instantanée"
-
-#~ msgid "Jabber Instant Messaging Client"
-#~ msgstr "Client de messagerie instantanée Jabber"
-
-#~ msgid ""
-#~ "The \"Save As ...\" dialog uses the current working directory for saving "
-#~ "(if the file was previously saved). If not previously saved, the most "
-#~ "recent \"Save As ...\" directory is used."
-#~ msgstr ""
-#~ "La boîte de dialogue « Enregistrer sous... » utilise le dossier en cours "
-#~ "d'utilisation pour effectuer l'enregistrement si le fichier a été "
-#~ "précédemment enregistré. Dans le cas inverse, le dossier le plus "
-#~ "récemment utilisé pour cette commande est utilisé."
-
-#~ msgid "Autosave"
-#~ msgstr "Enregistrement automatique"
-
-#~ msgid "Error saving a temporary copy"
-#~ msgstr "La sauvegarde de la copie temporaire a échoué"
-
-#~ msgid "Open Clip Art Login"
-#~ msgstr "Utilisateur Open Clip Art"
-
-#~ msgid ""
-#~ "Error exporting the document. Verify if the server name, username and "
-#~ "password are correct, if the server has support for webdav and verify if "
-#~ "you didn't forget to choose a license."
-#~ msgstr ""
-#~ "Erreur lors de l'exportation du document. Vérifiez que le nom du serveur, "
-#~ "le nom d'utilisateur et le mot de passe soient corrects, que le serveur "
-#~ "ait des fonctionnalités webdav et que vous n'ayez pas oublié de choisir "
-#~ "une licence."
-
-#~ msgid "Document exported..."
-#~ msgstr "Document exporté..."
-
-#~ msgid "File"
-#~ msgstr "Fichier"
-
-#~ msgid "Username:"
-#~ msgstr "Nom d'utilisateur :"
-
-#~ msgid "Password:"
-#~ msgstr "Mot de passe :"
-
-#~ msgid "Export To Open Clip Art Library"
-#~ msgstr "Exporter vers la bibliothèque Open Clip Art"
-
-#~ msgid "Export this document to Open Clip Art Library"
-#~ msgstr "Exporter ce document vers la bibliothèque Open Clip Art"
-
-#~ msgid "Light x-Position"
-#~ msgstr "Position de la lumière sur l'axe X"
-
-#~ msgid "Light y-Position"
-#~ msgstr "Position de la lumière sur l'axe Y"
-
-#~ msgid "Light z-Position"
-#~ msgstr "Position de la lumière sur l'axe Z"
-
-#~ msgid "Line Thickness / px"
-#~ msgstr "Épaisseur de la ligne (px)"
-
-#~ msgid "Scaling Factor"
-#~ msgstr "Facteur d'échelle"
-
-#~ msgid "polyhedron|Show:"
-#~ msgstr "Montrer :"
-
-#~ msgid "restack|Bottom"
-#~ msgstr "Bas"
-
-#~ msgid "restack|Left"
-#~ msgstr "Gauche"
-
-#~ msgid "restack|Middle"
-#~ msgstr "Milieu"
-
-#~ msgid "restack|Right"
-#~ msgstr "Droite"
-
-#~ msgid "restack|Top"
-#~ msgstr "Haut"
-
-#, fuzzy
-#~ msgid "objectAttributes|Show:"
-#~ msgstr "Montrer :"
-
-#~ msgid "The second path must be exactly four nodes long."
-#~ msgstr "Le second chemin doit contenir exactement quatre nœuds."
-
-#~ msgid "Gelatine"
-#~ msgstr "Gélatine"
-
-#~ msgid "Colorizable filling with gelatine like turbulence and transparency"
-#~ msgstr ""
-#~ "Remplissage qu'il est possible de colorer,  avec de la turbulence "
-#~ "semblable à de la gélatine et de la transparence"
-
-#~ msgid "Monochrome positive"
-#~ msgstr "Positif monochrome"
-
-#~ msgid "Convert to a Colorizable transparent positive"
-#~ msgstr "Convertit en un positif transparent qu'il est possible de colorer"
-
-#~ msgid "Monochrome negative"
-#~ msgstr "Négatif monochrome"
-
-#~ msgid ""
-#~ "Invert and make the lightest parts of the object progressively transparent"
-#~ msgstr ""
-#~ "Inverse et rend les parties les plus claires de l'objet progressivement "
-#~ "transparentes"
-
-#~ msgid "Repaint"
-#~ msgstr "Repeindre"
-
-#~ msgid "Punch hole"
-#~ msgstr "Emporte-pièce "
-
-#~ msgid "Punch object out of a colorizable opaque area"
-#~ msgstr "Emboutit un objet avec un zone opaque que l'on peut colorer"
-
-#~ msgid "Burnt edges"
-#~ msgstr "Pourtour brûlé"
-
-#~ msgid "Torn edges with a dark inner blur"
-#~ msgstr "Pourtour déchiré avec un flou intérieur foncé"
-
-#~ msgid ""
-#~ "Combine a HSL edges detection bump with a wavy reflective surface effect"
-#~ msgstr ""
-#~ "Combine un bosselage de type détection de contours TSL avec un effet de "
-#~ "surface ondulé"
-
-#~ msgid "Interruption width"
-#~ msgstr "Largeur de l'interruption"
-
-#~ msgid "add stroke width to interruption size"
-#~ msgstr "Ajoute l'épaisseur du trait à la taille de l'interruption"
-
-#~ msgid "add other's stroke width to interruption size"
-#~ msgstr "Ajoute l'épaisseur de l'autre trait à la taille de l'interruption"
-
-#~ msgid "AI 8.0 Output"
-#~ msgstr "Sortie AI 8.0"
-
-#~ msgid "Adobe Illustrator 8.0 (*.ai)"
-#~ msgstr "Adobe Illustrator 8.0 (*.ai)"
-
-#~ msgid "Write Adobe Illustrator 8.0 (Postscript-based)"
-#~ msgstr "Enregistrer au format Adobe Illustrator (type postscript)"
-
-#~ msgid "EPSI Output"
-#~ msgstr "Sortie EPSI"
-
-#~ msgid "Encapsulated Postscript Interchange (*.epsi)"
-#~ msgstr "PostScript encapsulé d'interéchange (*.epsi)"
-
-#~ msgid "Encapsulated Postscript with a thumbnail"
-#~ msgstr "PostScript encapsulé avec une vignette"
-
-#~ msgid "Highly flexible specular bump"
-#~ msgstr "Bosselage spéculaire hautement flexible"
-
-#~ msgid "Glossy jelly"
-#~ msgstr "Gel brillant"
-
-#~ msgid "Bulging, glossy jelly covering"
-#~ msgstr "Couche de gel brillant et bombé"
-
-#~ msgid "Glossy jelly, backlit"
-#~ msgstr "Gel brillant profond"
-
-#~ msgid "Bulging, glossy jelly covering; two light sources"
-#~ msgstr "Couche de gel brillant et bombé ; deux sources d'éclairage"
-
-#~ msgid "Air Spray; adjust the Displacement Map amount"
-#~ msgstr "Vaporisateur ; ajuster avec la primitive Displacement Map"
-
-#~ msgid "Export area is whole canvas"
-#~ msgstr "Exporter toute la zone de travail"
-
-#~ msgid "Export drawing, not page"
-#~ msgstr "Exporter le dessin, pas la page"
-
-#~ msgid "Export canvas"
-#~ msgstr "Exporter la zone de travail"
-
-#~ msgid "AutoCAD DXF (*.dxf)"
-#~ msgstr "DXF AutoCAD (*.dxf)"
-
-#~ msgid "AutoCAD Plot drawing files (*.plt)"
-#~ msgstr "Fichier dessin AutoCAD Plot (*.plt)"
-
-#~ msgid "Open files saved for plotters"
-#~ msgstr "Ouvrir des fichiers enregistrés pour tables traçantes"
-
-#~ msgid "Gives the flood color to the dark parts of the image"
-#~ msgstr "Applique un remplissage aux zones sombres de l'image"
-
-#~ msgid "HSL bubbles"
-#~ msgstr "Bulles TSL"
-
-#~ msgid ""
-#~ "Highly flexible bubbles effect depending on color hue saturation and "
-#~ "luminance"
-#~ msgstr ""
-#~ "Effet de bulles extrêmement flexible basé sur la saturation de teinte et "
-#~ "la luminance"
-
-#~ msgid "Bright and glowing metal texture"
-#~ msgstr "Texture métallisée brillante et lumineuse"
-
-#~ msgid "HSL bubbles, alpha"
-#~ msgstr "Masque de bulles TSL"
-
-#~ msgid "HSL Bumps, diffuse"
-#~ msgstr "Bosselage TSL mat"
-
-#~ msgid "HSL bubbles, diffuse"
-#~ msgstr "Bulles TSL mates"
-
-#~ msgid "HSL bubbles, transparent"
-#~ msgstr "Bulles TSL transparentes"
-
-#~ msgid "Highly flexible specular bubbles with transparency"
-#~ msgstr "Bulles spéculaire extrêmement flexible avec transparence"
-
-#~ msgid "Thick paint, glossy"
-#~ msgstr "Peinture épaisse vernie"
-
-#~ msgid "Thick painting effect with turbulence and a glossy varnish"
-#~ msgstr ""
-#~ "Effet de peinture épaisse avec de la turbulence et un vernis grillant"
-
-#~ msgid "Burst, glossy"
-#~ msgstr "Éclaté brillant"
-
-#~ msgid "Burst balloon texture crumpled with holes and glossy"
-#~ msgstr ""
-#~ "Texture de ballon de baudruche éclaté et chiffonné, avec des trous des de "
-#~ "la brillance"
-
-#~ msgid "Marbled transparency effect"
-#~ msgstr "Effet de transparence marbré"
-
-#~ msgid "Mask and transparency effects"
-#~ msgstr "Masques et transparences"
-
-#~ msgid "draw-geometry-inactive"
-#~ msgstr "dessin-géométrie-inactif"
-
-#~ msgid ""
-#~ "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
-#~ "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10"
-#~ "(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,"
-#~ "y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh"
-#~ "(x). The constants pi and e are also available."
-#~ msgstr ""
-#~ "Les fonctions mathématiques standard de python sont disponibles: ceil(x); "
-#~ "fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log"
-#~ "(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); "
-#~ "atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); "
-#~ "cosh(x); sinh(x); tanh(x). Les constantes « pi » et « e » sont aussi "
-#~ "disponibles."
-
-#~ msgid "Target"
-#~ msgstr "Cible"
-
-#~ msgid "Seed"
-#~ msgstr "Germe"
-
-#~ msgid "Pixel smear, glossy"
-#~ msgstr "Barbouillage de pixels, brillant"
-
-#~ msgid "Glossy painting effect for bitmaps"
-#~ msgstr "Effet de peinture brillante pour bitmap"
-
-#~ msgid "Adds a film grain noise to images and objects"
-#~ msgstr "Ajoute un bruit de type grain photographique aux images et objets"
-
-#~ msgid "Soft bump"
-#~ msgstr "Bosselage doux"
-
-#~ msgid "Convolution bump; with a blur, it can give nice embossing effects"
-#~ msgstr ""
-#~ "Bosselage de convolution ; avec un flou, peut donner un effet de "
-#~ "bosselage sympa"
-
-#~ msgid "Previous Effect"
-#~ msgstr "Effet précédent"
-
-#~ msgid "All Image Files"
-#~ msgstr "Tous les formats d'image"
-
-#~ msgid "Organization"
-#~ msgstr "Organisation"
-
-#~ msgid "Melt and glow"
-#~ msgstr "Métal fondu"
-
-#~ msgid "Badge"
-#~ msgstr "Tôle emboutie"
-
-#~ msgid "Metal or plastic badge bevel"
-#~ msgstr "Biseau de type badge en métal ou en plastique"
-
-#~ msgid "Ghost outline"
-#~ msgstr "Contour, externe"
-
-#~ msgid "Masking tools"
-#~ msgstr "Masques et transparences"
-
-#~ msgid "Color inline"
-#~ msgstr "Soulignement du contour, interne"
-
-#~ msgid "Flow inside"
-#~ msgstr "Liquide agité"
-
-#~ msgid "Lead pencil"
-#~ msgstr "Dessin au crayon"
-
-#~ msgid "Cross blotches"
-#~ msgstr "Chewing-gum"
-
-#~ msgid "Rough contour"
-#~ msgstr "Agitation dilatée"
-
-#~ msgid "Path:"
-#~ msgstr "Chemin :"
-
-#~ msgid "Burnt paper edges texture"
-#~ msgstr "Texture avec des bords de papier brûlé"
-
-#~ msgid "Enhance outline and glows inside and outside"
-#~ msgstr ""
-#~ "Augmente le contour et le rayonnement à l'intérieur et à l'extérieur"
-
-#~ msgid "Rainbow melt"
-#~ msgstr "Coulée d'arc-en-ciel"
-
-#~ msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-#~ msgstr "Bandes d'arc-en-ciel verticales, séparées par des taches en relief"
-
-#~ msgid "Specular bump"
-#~ msgstr "Embossage spéculaire"
-
-#~ msgid "HSL-sensitive bubbles effect for bitmaps"
-#~ msgstr "Effet de bulles sensibles aux valeurs TSL, pour bitmaps"
-
-#~ msgid "Soft metal"
-#~ msgstr "Métal doux"
-
-#~ msgid "Draws a smooth hole inside"
-#~ msgstr "Dessine un trou lisse à l'intérieur de la forme"
-
-#~ msgid "Glow and draw"
-#~ msgstr "Lueur et tracé"
-
-#~ msgid "Glowing content, posterized edges"
-#~ msgstr "Contenu lumineux et contour postérisé"
-
-#~ msgid "Bump for bitmaps"
-#~ msgstr "Embossage pour les bitmaps"
-
-#~ msgid "Diffuse light bump"
-#~ msgstr "Embossage de lumière diffus"
-
-#~ msgid "Draft comics"
-#~ msgstr "Ébauche bande dessinée"
-
-#~ msgid "Comics shaders"
-#~ msgstr "Ombrage de bande dessinée"
-
-#~ msgid "Fading comics"
-#~ msgstr "Bande dessinée atténuée"
-
-#~ msgid "Smooth comics"
-#~ msgstr "Bande dessinée lissée"
-
-#~ msgid "Emboss comics"
-#~ msgstr "Bande dessinée embossée"
-
-#~ msgid "Smooth comics B"
-#~ msgstr "Bande dessinée lissée B"
-
-#~ msgid "Simple comics"
-#~ msgstr "Bande dessinée simple"
-
-#~ msgid "Silk comics"
-#~ msgstr "Bande dessinée sur soie"
-
-#~ msgid "Glass comics"
-#~ msgstr "Bande dessinée sur verre"
-
-#~ msgid "Soft comics"
-#~ msgstr "Bande dessinée douce"
-
-#~ msgid "Round comics"
-#~ msgstr "Bande dessinée arrondie"
-
-#~ msgid "Pewter comics"
-#~ msgstr "Bande dessinée sur étain"
-
-#~ msgid "Alu comics"
-#~ msgstr "Bande dessinée aluminée"
-
-#~ msgid "Fluid comics"
-#~ msgstr "Bande dessinée fluide"
-
-#~ msgid "Chrome comics"
-#~ msgstr "Bande dessinée chromée"
-
-#~ msgid "Chrome comics B"
-#~ msgstr "Bande dessinée chromée B"
-
-#~ msgid "Plied tartan"
-#~ msgstr "Écossais assemblés"
-
-#~ msgid "Comics rounded"
-#~ msgstr "Arrondi bande dessinée"
-
-#~ msgid "Imitation of black and white cartoon shading more rounded version"
-#~ msgstr ""
-#~ "Imitation d'ombrage de bande dessinée en noir et blanc, en plus arrondi"
-
-#~ msgid "Pewter NR"
-#~ msgstr "Étain"
-
-#~ msgid "Mid grey satin like shader close to pewter"
-#~ msgstr "Ombrage satin gris moyen, proche d'Étain"
-
-#~ msgid "Comics flow"
-#~ msgstr "Écoulement bande dessinée"
-
-#~ msgid "Comics shader with a flow inside transparency"
-#~ msgstr ""
-#~ "Ombrage de bande dessinée avec une transparence s'écoulant à l'intérieur"
-
-#~ msgid "Preferred resolution (DPI) of bitmaps"
-#~ msgstr "Résolution préférée (Point Par Pouce) du bitmap"
-
-#~ msgid "Deactivate knotholder?"
-#~ msgstr "Désactiver le « knotholder » ?"
-
-#~ msgid ""
-#~ "Check this to deactivate knotholder handles (useful if they interfere "
-#~ "with node handles during editing)"
-#~ msgstr ""
-#~ "Sélectionner pour désactiver les poignées de « knotholder » (utile "
-#~ "lorsqu'elles interfèrent avec les poignées de nœud lors de l'édition)"
-
-#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
-#~ msgstr "La résolution utilisée pour exporter un SVG en bitmap (défaut 90)"
-
-#~ msgid "Unicode"
-#~ msgstr "Unicode"
-
-#~ msgid ""
-#~ "Same than HSL bubbles but with an alpha added for combination with "
-#~ "transparency depending filters"
-#~ msgstr ""
-#~ "Identique à Bulles TSL, mais avec ajout d'alpha pour la combinaison avec "
-#~ "les filtres nécessitant de la transparence"
-
-#~ msgid "all_inactive"
-#~ msgstr "tout_inactif"
-
-#, fuzzy
-#~ msgid "Ghosten"
-#~ msgstr "Contour fantômatique"
-
-#~ msgid "Turns light or dark areas to transparency"
-#~ msgstr "Transforme les zones claires ou foncées en zones transparentes"
-
-#~ msgid "gradient level"
-#~ msgstr "Niveau de dégradé"
-
-#~ msgid "Path Effects"
-#~ msgstr "Effets de chemin..."
-
-#~ msgid "Biggest item"
-#~ msgstr "Élément le plus gros"
-
-#~ msgid "Smallest item"
-#~ msgstr "Élément le plus petit"
-
-#~ msgid "Render object in black and white"
-#~ msgstr "Colore l'objet en noir et blanc"
-
-#, fuzzy
-#~ msgid "Under glass effect for bitmaps"
-#~ msgstr "Convertir les effets de fondu en bitmaps"
-
-#~ msgid "Melting texture with a glow"
-#~ msgstr "Texture fondante, avec un éclat"
-
-#~ msgid "Cubes for playing with the Morphology primitive"
-#~ msgstr "Cubes pour jouer avec la primitive Morphologie"
-
-#~ msgid "Kilt"
-#~ msgstr "Kilt"
-
-#~ msgid "3D warped shell texture based on blur and displacement map"
-#~ msgstr ""
-#~ "Texture de coquillage tordu en 3D, basé sur les primitives flou et "
-#~ "displacement map"
-
-#~ msgid "Simple blur alternative of using Fill and outline panel blur slider"
-#~ msgstr ""
-#~ "Flou simple, en alternative à celui proposé par la boîte de dialogue "
-#~ "Remplissage et contour"
-
-#, fuzzy
-#~ msgid "Bright flexible and colorizable metal material"
-#~ msgstr "Texture métalique brillante et éclatante"
-
-#, fuzzy
-#~ msgid "Darken outline"
-#~ msgstr "Contour du chemin :"
-
-#~ msgid "Basic Roughen"
-#~ msgstr "Rugosité de base"
-
-#~ msgid "Basics"
-#~ msgstr "Élémentaires"
-
-#~ msgid "Poster glow"
-#~ msgstr "Poster éclatant"
-
-#~ msgid "Basic specular"
-#~ msgstr "Spéculaire de base"
-
-#~ msgid "Basic noise fill"
-#~ msgstr "Remplissage bruité de base"
-
-#~ msgid "Basic diffuse"
-#~ msgstr "Diffusion de base"
-
-#~ msgid "HSL diffuse bump"
-#~ msgstr "Embossage TSL diffus"
-
-#~ msgid "A_dd"
-#~ msgstr "A_jouter"
-
-#~ msgid "Freehand Shape"
-#~ msgstr "Forme à main levée"
-
-#~ msgid "ca@valencia Valencian Catalan"
-#~ msgstr "ca@valencia Catalan ; valencien"
-
-#~ msgid "cs Czech"
-#~ msgstr "cs Tchèque"
-
-#~ msgid "el Greek"
-#~ msgstr "el Grec"
-
-#~ msgid "en_AU English, as spoken in Australia"
-#~ msgstr "en_AU Anglais, parlé en Australie"
-
-#~ msgid "en_CA English, as spoken in Canada"
-#~ msgstr "en_CA Anglais, parlé au Canada"
-
-#~ msgid "en_GB English, as spoken in Great Britain"
-#~ msgstr "en_GB Anglais, parlé en Angleterre"
-
-#~ msgid "en_US@piglatin Pig Latin"
-#~ msgstr "en_US@piglatin Pig latin"
-
-#~ msgid "es_MX Spanish, as spoken in Mexico"
-#~ msgstr "es_MX Espagnol, parlé au Mexique"
-
-#~ msgid "ga Irish"
-#~ msgstr "ga Irlandais"
-
-#~ msgid "km Khmer"
-#~ msgstr "km Khmer"
-
-#~ msgid "ne Nepali"
-#~ msgstr "ne Népalais"
-
-#~ msgid "nl Dutch"
-#~ msgstr "nl Néerlandais"
-
-#~ msgid "pt_BR Portuguese, as spoken in Brazil"
-#~ msgstr "pt_BR Portugais, parlé au Brésil"
-
-#~ msgid "ru Russian"
-#~ msgstr "ru Russe"
-
-#~ msgid "th Thai"
-#~ msgstr "th Thaï"
-
-#~ msgid "zh_CN Chinese, as spoken in China"
-#~ msgstr "zh_CN Chinois, parlé en Chine"
-
-#~ msgid "zh_TW Chinese, as spoken in Taiwan"
-#~ msgstr "zh_TW Chinois, parlé à Taiwan"
-
-#~ msgid "Commands bar icon size"
-#~ msgstr "Taille des icône de la barre de commande"
-
-#~ msgid "Snap nodes"
-#~ msgstr "Aimanter aux nœuds"
-
-#~ msgid "Scale objects, with Shift scale up"
-#~ msgstr "Réduit la taille de l'objet ; avec Maj, l'objet est agrandi"
-
-#~ msgid "Paper Spessure"
-#~ msgstr "Épaisseur du papier"
-
-#~ msgid "Shadows"
-#~ msgstr "Ombres"
-
-#~ msgid "Effe_cts"
-#~ msgstr "Effet_s"
-
-#~ msgid "Blur and Sharpen"
-#~ msgstr "Flou et netteté"
-
-#~ msgid "Edges are feathered out"
-#~ msgstr "Les bords sont amincis"
-
-#~ msgid "Distort Edges"
-#~ msgstr "Déformer les bords"
-
-#~ msgid "Texture overlays"
-#~ msgstr "Superpositions de texture"
-
-#~ msgid "Emphasize Edges"
-#~ msgstr "Accentuer les bords"
-
-#~ msgid "Wetworks"
-#~ msgstr "Meurtre"
-
-#~ msgid "Random paint streaks and splotches with 3D relief"
-#~ msgstr ""
-#~ "Traînées et taches de peintures aléatoires avec des reliefs en trois "
-#~ "dimension"
-
-#~ msgid "Manage path effects"
-#~ msgstr "Gestion des effets de chemin"
-
-#~ msgid "Enhance intensity differences in selected bitmap(s)."
-#~ msgstr ""
-#~ "Augmenter les différences d'intensité dans les bitmaps sélectionnés."
-
-#~ msgid "Median Filter"
-#~ msgstr "Filtre médian"
-
-#~ msgid "Spread"
-#~ msgstr "Disperser"
-
-#~ msgid "Embed All Images"
-#~ msgstr "Incorporer toutes les images"
-
-#~ msgid "Modulate"
-#~ msgstr "Moduler"
-
-#~ msgid "Gap width"
-#~ msgstr "Largeur du trou"
-
-#, fuzzy
-#~ msgid "The amount of random jitter to move the hatches start"
-#~ msgstr ""
-#~ "La quantité de perturbation aléatoire dans la position des points de "
-#~ "départ des liaisons, à l'intérieur et à l'extérieur du guide"
-
-#, fuzzy
-#~ msgid "The amount of random jitter to move the hatches end"
-#~ msgstr ""
-#~ "La quantité de perturbation aléatoire dans la position des points de "
-#~ "départ des liaisons, à l'intérieur et à l'extérieur du guide"
-
-#, fuzzy
-#~ msgid "Start tangential variance"
-#~ msgstr "Variance du bord de départ"
-
-#, fuzzy
-#~ msgid ""
-#~ "The amount of random jitter to move the hatches start along the boundary"
-#~ msgstr ""
-#~ "La quantité de perturbation aléatoire dans la position des extrémités de "
-#~ "chaque point de fin, le long du guide"
-
-#, fuzzy
-#~ msgid "End tangential variance"
-#~ msgstr "Variance du bord de fin"
-
-#, fuzzy
-#~ msgid ""
-#~ "The amount of random jitter to move the hatches end along the boundary"
-#~ msgstr ""
-#~ "La quantité de perturbation aléatoire dans la position des points de "
-#~ "départ des liaisons, à l'intérieur et à l'extérieur du guide"
-
-#, fuzzy
-#~ msgid "Width at hatches 'start'"
-#~ msgstr "Épaisseur du chemin"
-
-#, fuzzy
-#~ msgid "Width at hatches 'end'"
-#~ msgstr "Largeur du motif"
-
-#~ msgid "_Enable snapping"
-#~ msgstr "Activer le magnétism_e"
-
-#~ msgid "_Bounding box corners"
-#~ msgstr "Coins des _boîtes englobantes"
-
-#~ msgid ""
-#~ "Only available in the selector tool: snap bounding box corners to guides, "
-#~ "to grids, and to other bounding boxes (but not to nodes or paths)"
-#~ msgstr ""
-#~ "Disponible seulement avec l'outil de sélection : aimante les coins des "
-#~ "boîtes englobantes aux guides, aux grilles, et aux autres boîtes "
-#~ "englobantes (mais pas aux nœuds ou aux chemins)"
-
-#~ msgid "_Nodes"
-#~ msgstr "_Nœuds"
-
-#~ msgid ""
-#~ "Snap nodes (e.g. path nodes, special points in shapes, gradient handles, "
-#~ "text base points, transformation origins, etc.) to guides, to grids, to "
-#~ "paths and to other nodes"
-#~ msgstr ""
-#~ "Aimanter les nœuds (par exemple les nœuds de chemins, les points spéciaux "
-#~ "des formes, les poignées de dégradés, les ancres de texte, les origines "
-#~ "de transformations, etc...) aux guides, aux grilles, aux chemins et aux "
-#~ "autres nœuds"
-
-#~ msgid "Snap to path_s"
-#~ msgstr "Aimanter aux _chemins"
-
-#~ msgid "Snap nodes to object paths"
-#~ msgstr "Aimanter les nœuds aux chemins des objets"
-
-#~ msgid "Snap to n_odes"
-#~ msgstr "Aimanter aux _nœuds"
-
-#~ msgid "Snap nodes and guides to object nodes"
-#~ msgstr "Aimanter les nœuds et les guides aux nœuds des objets"
-
-#~ msgid "Snap to bounding bo_x edges"
-#~ msgstr "Aimanter aux bords des _boîtes englobantes"
-
-#~ msgid "Snap bounding box corners and guides to bounding box edges"
-#~ msgstr ""
-#~ "Aimanter les coins des boîtes englobantes et les guides aux bords des "
-#~ "boîtes englobantes"
-
-#~ msgid "Snap to bounding box co_rners"
-#~ msgstr "Aimanter aux coins des boîtes de contou_r"
-
-#~ msgid "Snap bounding box corners to other bounding box corners"
-#~ msgstr ""
-#~ "Aimanter les coins des boîtes englobantes aux coins des autres boîtes "
-#~ "englobantes"
-
-#~ msgid "Snap to page border"
-#~ msgstr "Aimanter aux bords de la page"
-
-#~ msgid "Snap bounding box corners and nodes to the page border"
-#~ msgstr ""
-#~ "Aimanter les coins et les nœuds des boîtes englobantes aux bords de la "
-#~ "page"
-
-#~ msgid "Consider the rotation center of an object when snapping"
-#~ msgstr "Tenir compte des centres de rotations pour le magnétisme"
-
-#~ msgid "_Smooth nodes"
-#~ msgstr "Nœud_s doux"
-
-#~ msgid "Snap to smooth nodes too, instead of only snapping to cusp nodes"
-#~ msgstr "Aimanter aux nœuds doux, plutôt qu'aux nœuds durs seulement."
-
-#~ msgid "_Midpoints"
-#~ msgstr "_Milieux de segments"
-
-#~ msgid "Snap midpoints of straight line segments"
-#~ msgstr "Aimanter au milieu des segments de droites"
-
-#~ msgid "_Grid with guides"
-#~ msgstr "_Grille aux guides"
-
-#~ msgid "Snap to grid-guide intersections"
-#~ msgstr "Aimanter aux intersections de la grille avec les guides"
-
-#~ msgid "_Paths"
-#~ msgstr "C_hemins"
-
-#~ msgid ""
-#~ "Snap to intersections of paths ('snap to paths' must be enabled, see the "
-#~ "previous tab)"
-#~ msgstr ""
-#~ "Aimanter aux intersections des chemins (l'option 'Aimanter aux chemins' "
-#~ "doit être activée, voir l'onglet précédent)"
-
-#~ msgid "Snap points"
-#~ msgstr "Aimanter les points"
-
-#~ msgid "<b>Snapping</b>"
-#~ msgstr "<b>Magnétisme</b>"
-
-#~ msgid "<b>What snaps</b>"
-#~ msgstr "<b>Ce qui est aimanté</b>"
-
-#~ msgid "<b>Snapping intersections of</b>"
-#~ msgstr "<b>Aimanter aux intersections de</b>"
-
-#~ msgid "<b>Special points to consider</b>"
-#~ msgstr "<b>Aimanter aux nœuds spéciaux</b>"
-
-#~ msgid "Snap to intersections of a grid with a guide"
-#~ msgstr "Aimanter aux intersections de la grille avec les guides"
-
-#, fuzzy
-#~ msgid "Major Y Division Spacing"
-#~ msgstr "Espacement horizontal"
-
-#~ msgid "Generate Template"
-#~ msgstr "Générer un modèle"
-
-#, fuzzy
-#~ msgid "Printing"
-#~ msgstr "Imprimer"
-
-#, fuzzy
-#~ msgid "Convolve"
-#~ msgstr "Convolution"
-
-#, fuzzy
-#~ msgid "Kernel Array"
-#~ msgstr "Kernel"
-
-#, fuzzy
-#~ msgid "Apply Convolve Effect"
-#~ msgstr "Appliquer un effet de convolution"
-
-#~ msgid "Cairo PDF Output"
-#~ msgstr "Sortie PDF Cairo"
-
-#~ msgid "PDF via Cairo (*.pdf)"
-#~ msgstr "PDF avec la librairie Cairo (*.pdf)"
-
-#~ msgid "PDF File"
-#~ msgstr "Fichier PDF"
-
-#~ msgid "Cairo PS Output"
-#~ msgstr "Sortie PS avec la librairie Cairo"
-
-#~ msgid "PostScript via Cairo (*.ps)"
-#~ msgstr "PostScript avec la librairie Cairo (*.ps)"
-
-#~ msgid "Encapsulated Postscript Output"
-#~ msgstr "Sortie PostScript Encapsulé"
-
-#~ msgid "Make bounding box around full page"
-#~ msgstr "Créer une boîte englobante autour de la page"
-
-#~ msgid "Embed fonts (Type 1 only)"
-#~ msgstr "Incorporer les polices (de Type 1 uniquement)"
-
-#~ msgid "I'm not sure what this word means"
-#~ msgstr "Je ne suis pas certain de ce que ces mots signifient"
-
-#, fuzzy
-#~ msgid "Yes, more descriptions"
-#~ msgstr "Définir la description d'un objet"
-
-#~ msgid "Crystal"
-#~ msgstr "Cristal"
-
-#, fuzzy
-#~ msgid "Artist text"
-#~ msgstr "Texte vertical"
-
-#~ msgid "Amount of Blur"
-#~ msgstr "Quantité de flou"
-
-#, fuzzy
-#~ msgid "I hate text"
-#~ msgstr "Je n'aime pas le texte"
-
-#, fuzzy
-#~ msgid "Emboss effect"
-#~ msgstr "Pas d'effet"
-
-#~ msgid "Artist on fire"
-#~ msgstr "Artiste en feu"
-
-#~ msgid "Jelly Bean"
-#~ msgstr "Dragée"
-
-#~ msgid "Mmmm, yummy."
-#~ msgstr "Mmmm délicieux."
-
-#~ msgid "It's a puzzle, no hints"
-#~ msgstr "C'est une énigme, pas d'astuce"
-
-#~ msgid "Purrrr, quiet the kitty is sleeping"
-#~ msgstr "Doucement, le petit chat est en train de dormir !"
-
-#, fuzzy
-#~ msgid "Melt"
-#~ msgstr "Fondre"
-
-#~ msgid "Melt effect"
-#~ msgstr "Effet de fondu"
-
-#~ msgid "Metal"
-#~ msgstr "Métal"
-
-#, fuzzy
-#~ msgid "Iron Man vector objects"
-#~ msgstr "Organiser les objets sélectionnés"
-
-#~ msgid "Hmm, fast vectors"
-#~ msgstr "Vecteurs rapides !"
-
-#~ msgid "Ooops!  Slippery!"
-#~ msgstr "Attention, ça glisse !"
-
-#, fuzzy
-#~ msgid "PatternedGlass"
-#~ msgstr "Verre à motif"
-
-#~ msgid "Doesn't work, bug"
-#~ msgstr "Marche pas, buggé"
-
-#~ msgid "You're 80% water"
-#~ msgstr "Le corps est composé de 80 % d'eau"
-
-#~ msgid "Like Brad Pitt's stubble"
-#~ msgstr "Comme la barbe de Brad Pitt"
-
-#~ msgid "Use this to forge your passport"
-#~ msgstr "Pratique pour fabriquer un passeport !"
-
-#~ msgid "Turn all the colors to be sepia tones"
-#~ msgstr "Donne un ton sépia aux couleurs"
-
-#~ msgid "Snow"
-#~ msgstr "Neige"
-
-#~ msgid "When the weather outside is frightening..."
-#~ msgstr "Lorsque le temps est épouvantable..."
-
-#~ msgid "You look cute with speckles"
-#~ msgstr "Vous n'êtes pas mal, tout moucheté !"
-
-#~ msgid "Zebra Stripes"
-#~ msgstr "Zébrures"
-
-#~ msgid "Paint your object with zebra stripes"
-#~ msgstr "Peint votre objet avec des zébrures"
-
-#~ msgid "Print Destination"
-#~ msgstr "Destination d'impression"
-
-#~ msgid "Print properties"
-#~ msgstr "Propriétés d'impression"
-
-#~ msgid "Print using PDF operators"
-#~ msgstr "Imprimer en utilisant les opérateurs PDF"
-
-#~ msgid ""
-#~ "Use PDF vector operators. The resulting image is usually smaller in file "
-#~ "size and can be arbitrarily scaled, but patterns will be lost."
-#~ msgstr ""
-#~ "Utiliser les opérateurs vectoriels PDF. Le fichier image résultant est en "
-#~ "général moins volumineux et reste redimensionnable; cependant les motifs "
-#~ "de remplissage seront perdus."
-
-#~ msgid ""
-#~ "Print everything as bitmap. The resulting image is usually larger in file "
-#~ "size and cannot be arbitrarily scaled without quality loss, but all "
-#~ "objects will be rendered exactly as displayed."
-#~ msgstr ""
-#~ "Tout imprimer en tant que bitmap. Le fichier image résultant sera en "
-#~ "général plus volumineux et n'est plus redimenssionnable sans perte de "
-#~ "qualité, cependant tous les objets seront rendus tels qu'affichés."
-
-#~ msgid "Preferred resolution (dots per inch) of bitmap"
-#~ msgstr "Résolution préférée (point par pouce) du bitmap"
-
-#~ msgid "Print destination"
-#~ msgstr "Destination de l'impression"
-
-#~ msgid ""
-#~ "Printer name (as given by lpstat -p);\n"
-#~ "leave empty to use the system default printer.\n"
-#~ "Use '> filename' to print to file.\n"
-#~ "Use '| prog arg...' to pipe to a program."
-#~ msgstr ""
-#~ "Nom de l'imprimante (donné par lpstat -p);\n"
-#~ "laisser ce champ vide pour utiliser l'imprimante par défaut du système.\n"
-#~ "Utiliser « > nomdefichier » pour imprimer dans un fichier.\n"
-#~ "Utiliser « | prog... »  pour relier à un programme."
-
-#~ msgid "PDF Print"
-#~ msgstr "Impression PDF"
-
-#~ msgid "Print using PostScript operators"
-#~ msgstr "Imprimer en utilisant les opérateurs PostScript"
-
-#~ msgid ""
-#~ "Use PostScript vector operators. The resulting image is usually smaller "
-#~ "in file size and can be arbitrarily scaled, but alpha transparency and "
-#~ "patterns will be lost."
-#~ msgstr ""
-#~ "Utiliser les opérateurs vectoriels PostScript. Le fichier image résultant "
-#~ "est en général moins volumineux et reste redimensionnable; cependant, "
-#~ "l'opacité (alpha) et les motifs de remplissage seront perdus."
-
-#~ msgid "Postscript Print"
-#~ msgstr "Impression PostScript"
-
-#~ msgid "Postscript Output"
-#~ msgstr "Sortie PostScript"
-
-#~ msgid ""
-#~ "Cannot create file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible de créer le fichier %s.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Cannot write file %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible d'écrire le fichier %s.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Although Inkscape will run, it will use default settings,\n"
-#~ "and any changes made in preferences will not be saved."
-#~ msgstr ""
-#~ "Inkscape va démarrer, cependant, il utilisera les préférences par "
-#~ "défaut,\n"
-#~ "et aucune modification de ces préférences ne sera enregistrée."
-
-#~ msgid ""
-#~ "%s not a valid XML file, or\n"
-#~ "you don't have read permissions on it.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s n'est pas un fichier XML valide, ou\n"
-#~ "vous n'avez pas les droits pour le lire.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "%s is not a valid menus file.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s n'est pas un fichier de menus valide.\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Inkscape will run with default menus.\n"
-#~ "New menus will not be saved."
-#~ msgstr ""
-#~ "Inkscape va démarrer avec les menus par défaut.\n"
-#~ "Les nouveaux menus ne seront pas enregistrés."
-
-#~ msgid "Mirror reflection"
-#~ msgstr "Reflet en miroir"
-
-#, fuzzy
-#~ msgid "Lala"
-#~ msgstr "É_tiquette"
-
-#, fuzzy
-#~ msgid "Lolo"
-#~ msgstr "Couleur"
-
-#, fuzzy
-#~ msgid "Last gen. segment"
-#~ msgstr "Supprimer le segment"
-
-#, fuzzy
-#~ msgid "Reference"
-#~ msgstr "Différence"
-
-#, fuzzy
-#~ msgid "Change LPE point parameter"
-#~ msgstr "Modifier le point paramètre"
-
-#~ msgid "Embed fonts on export (Type 1 only) (EPS)"
-#~ msgstr ""
-#~ "Incorposer les polices (de Type 1 uniquement) lors de l'export (EPS)"
-
-#~ msgid "Export files with the bounding box set to the page size (EPS)"
-#~ msgstr "Exporter les fichiers avec pour boîte englobante la page (EPS)"
-
-#~ msgid "Select <b>at least two objects</b> to combine."
-#~ msgstr "Sélectionner <b>au moins 2 objets</b> pour les combiner."
-
-#~ msgid "Fit page to selection"
-#~ msgstr "Ajuster la page à la sélection"
-
-#~ msgid "<b>Pushing %d</b> selected object"
-#~ msgid_plural "<b>Pushing %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>poussé</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>poussés</b>."
-
-#~ msgid "<b>Shrinking %d</b> selected object"
-#~ msgid_plural "<b>Shrinking %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>contracté</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>contractés</b>."
-
-#~ msgid "<b>Growing %d</b> selected object"
-#~ msgid_plural "<b>Growing %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>dilaté</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>dilatés</b>."
-
-#~ msgid "<b>Attracting %d</b> selected object"
-#~ msgid_plural "<b>Attracting %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>attiré</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>attirés</b>."
-
-#~ msgid "<b>Repelling %d</b> selected object"
-#~ msgid_plural "<b>Repelling %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>repoussé</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>repoussés</b>."
-
-#~ msgid "<b>Roughening %d</b> selected object"
-#~ msgid_plural "<b>Roughening %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>rendu rugueux</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>rendus rugueux</b>."
-
-#~ msgid "<b>Painting %d</b> selected object"
-#~ msgid_plural "<b>Painting %d</b> selected objects"
-#~ msgstr[0] "<b>%d</b> objet sélectionné <b>peint</b>."
-#~ msgstr[1] "<b>%d</b> objets sélectionnés <b>peints</b>."
-
-#~ msgid "<b>Jittering colors in %d</b> selected object"
-#~ msgid_plural "<b>Jittering colors in %d</b> selected objects"
-#~ msgstr[0] "<b>Variation de couleurs dans %d</b> objet sélectionné."
-#~ msgstr[1] "<b>Variation de couleurs dans %d</b> objets sélectionnés."
-
-#~ msgid "Repel tweak"
-#~ msgstr "Ajuster en repoussant"
-
-#~ msgid "Export"
-#~ msgstr "Exporter"
-
-#~ msgid ""
-#~ "This value affects the amount of smoothing applied to freehand lines; "
-#~ "lower values produce more uneven paths with more nodes"
-#~ msgstr ""
-#~ "Cette valeur affecte le lissage appliqué aux lignes à main levés; les "
-#~ "valeurs faibles produisent des chemins irréguliers avec plus de nœuds"
-
-#~ msgid "Grid units"
-#~ msgstr "Unités de la grille"
-
-#~ msgid "Origin Y"
-#~ msgstr "Origine Y"
-
-#~ msgid "Spacing X"
-#~ msgstr "Espacement X"
-
-#~ msgid "Spacing Y"
-#~ msgstr "Espacement Y"
-
-#~ msgid "Selects the color used for major (highlighted) grid lines."
-#~ msgstr ""
-#~ "Sélectionner la couleur utilisée pour les lignes de la grille majeure "
-#~ "(mise en valeur)."
-
-#~ msgid "Major grid line every"
-#~ msgstr "Ligne de grille majeure toutes les"
-
-#~ msgid "Angle X"
-#~ msgstr "Angle X"
-
-#~ msgid "Angle Z"
-#~ msgstr "Angle Z"
-
-#~ msgid "Inline the XML attributes"
-#~ msgstr "Place les attributs XML en ligne"
-
-#~ msgid "The number of digits to use behind the comma."
-#~ msgstr "Le nombre de décimales derrière la virgule."
-
-#~ msgid "Enable auto-save of document"
-#~ msgstr "Active l'enregistrement automatique du document"
-
-#~ msgid ""
-#~ "Allows for limiting the space used by autosaves, by setting a maximum "
-#~ "number of allowed files"
-#~ msgstr ""
-#~ "Limite l'espace utilisé par les enregistrements automatique en en "
-#~ "limitant le nombre"
-
-#~ msgid "<b>Mode:</b>"
-#~ msgstr "<b>Mode :</b>"
-
-#~ msgid "Spiro splines mode"
-#~ msgstr "Mode splines spirographiques"
-
-#~ msgid "Grow (outset) parts of paths"
-#~ msgstr "Élargit les chemin (dilatation)"
-
-#~ msgid "Repel mode"
-#~ msgstr "Mode répulsion"
-
-#~ msgid "Repel parts of paths from cursor"
-#~ msgstr "Repousse les chemins loin du curseur"
-
-#~ msgid "Change calligraphic profile"
-#~ msgstr "Modifier le profil calligraphique"
-
-#~ msgid "Save current settings as new profile"
-#~ msgstr "Enregistrer les paramètres dans un nouveau profil"
-
-#~ msgid ""
-#~ "dxf2svg may come with Inkscape, but is also at http://dxf-svg-convert."
-#~ "sourceforge.net/"
-#~ msgstr ""
-#~ "dxf2svg peut être distribué avec Inkscape, mais est aussi disponible sur "
-#~ "http://dxf-svg-convert.sourceforge.net/"
-
-#, fuzzy
-#~ msgid "Report Normal Vector Information"
-#~ msgstr "Information sur l'utilisation de la mémoire"
-
-#~ msgid "Postscript"
-#~ msgstr "PostScript"
-
-#~ msgid "Postscript (*.ps)"
-#~ msgstr "PostScript (*.ps)"
-
-#~ msgid ""
-#~ "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
-#~ msgstr ""
-#~ "Impossible de définir <b>%s</b> : un autre élément avec la valeur <b>%s</"
-#~ "b> existe déjà !"
-
-#~ msgid "Bend Path"
-#~ msgstr "Courber le chemin"
-
-#~ msgid "Stroke path"
-#~ msgstr "Chemin de contour"
-
-#~ msgid "Space between copies of the pattern"
-#~ msgstr "Espacement entre les copies du motif"
-
-#~ msgid "y = y + x*(slant factor)"
-#~ msgstr "y = y + x*(facteur d'inclinaison)"
-
-#~ msgid "The x-coord of this point is around which the slant will happen"
-#~ msgstr "La coordonnée x autour de laquelle l'inclinaison se fera"
-
-#~ msgid "This effect does not support arcs yet, try to convert to path."
-#~ msgstr ""
-#~ "Cet effet n'est pas disponible pour les arcs, conversion en un chemin "
-#~ "nécessaire."
-
-#~ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-#~ msgstr ""
-#~ "Au moins un des objets n'est <b>pas un chemin</b>, impossible de les "
-#~ "combiner."
-
-#~ msgid ""
-#~ "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-#~ msgstr ""
-#~ "Vous ne pouvez pas combiner des objets de <b>différents groupes</b> ou "
-#~ "<b>calques</b>."
-
-#~ msgid "Nothing in the clipboard."
-#~ msgstr "Rien dans le presse-papiers."
-
-#~ msgid "Nothing on the style clipboard."
-#~ msgstr "Rien dans le presse-papiers de style."
-
-#~ msgid "Clipboard does not contain a live path effect."
-#~ msgstr "Le presse-papier ne contient pas d'effet de chemin."
-
-#~ msgid "<b>Snapping to special nodes</b>"
-#~ msgstr "<b>Aimanter aux nœuds spéciaux</b>"
-
-#~ msgid "Dialogs stay on top (experimental!)"
-#~ msgstr ""
-#~ "Les dialogues restent au-dessus de la fenêtre document (en "
-#~ "expérimentation !)"
-
-#~ msgid ""
-#~ "Whether dialogs should stay on top of document windows. Read the "
-#~ "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
-#~ "'Restore' to bring back a minimized document window)"
-#~ msgstr ""
-#~ "Si coché, les boîtes de dialogue restent au-dessus des fenêtres de "
-#~ "document. Lire les ReleaseNotes à propos de ce réglage ! (Cliquer avec le "
-#~ "bouton droit sur le bouton de la barre des tâches pour rétablir une "
-#~ "fenêtre document minimisée)"
-
-#~ msgid "Make the commands toolbar icons smaller"
-#~ msgstr "Rendre les icônes de la barre de commandes plus petites"
-
-#~ msgid ""
-#~ "Make the commands toolbar use the 'secondary' toolbar size (requires "
-#~ "restart)"
-#~ msgstr ""
-#~ "Forcer la barre de commandes à utiliser la taille 'secondaire' de barre "
-#~ "(nécessite un redémarrage)"
-
-#~ msgid "_Apply"
-#~ msgstr "_Appliquer"
-
-#~ msgid "Tall"
-#~ msgstr "Haut"
-
-#~ msgid "Square"
-#~ msgstr "Carré"
-
-#~ msgid "Delete Segment"
-#~ msgstr "Supprimer le segment"
-
-#~ msgid "Node Break"
-#~ msgstr "Casser un nœud"
-
-#~ msgid "Reset all parameters to defaults"
-#~ msgstr "Rétablir les valeurs par défaut"
-
-#~ msgid "Interpolate style (experimental)"
-#~ msgstr "Style d'interpolation (expérimental)"
-
-#~ msgid "Developer Examples"
-#~ msgstr "Exemples développeurs"
-
-#~ msgid "RadioButton example"
-#~ msgstr "Exemple de RadioButton"
-
-#~ msgid "Select option: "
-#~ msgstr "Sélectionner l'option :"
-
-#~ msgid "Select second option: "
-#~ msgstr "Sélectionner une deuxième option :"
-
-#~ msgid "Random Point"
-#~ msgstr "Point aléatoire"
-
-#~ msgid "medium"
-#~ msgstr "moyen"
-
-#~ msgid "%s selected out of %d gradient handles on %d selected object"
-#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
-#~ msgstr[0] ""
-#~ "%s poignées de dégradé sélectionnées sur %d dans l'objet sélectionné"
-#~ msgstr[1] ""
-#~ "%s poignées de dégradé sélectionnées sur %d dans les %d objets "
-#~ "sélectionnés"
-
-#~ msgid "X Channel"
-#~ msgstr "Composante X"
-
-#~ msgid "Y Channel"
-#~ msgstr "Composante Y"
-
-#~ msgid "Search Tag"
-#~ msgstr "Rechercher un mot-clé"
-
-#~ msgid "Measure unit:"
-#~ msgstr "Unité de mesure :"
-
-#, fuzzy
-#~ msgid "Degrees:"
-#~ msgstr "degrés"
-
-#~ msgid "Gri_d Arrange..."
-#~ msgstr "D_isposer sur une grille..."
-
-#, fuzzy
-#~ msgid "Start point jitter"
-#~ msgstr "Saturation"
-
-#, fuzzy
-#~ msgid "Slope"
-#~ msgstr "Enveloppe"
-
-#, fuzzy
-#~ msgid "Snap at specified d_istance"
-#~ msgstr "Inkscape : _avancé"
-
-#, fuzzy
-#~ msgid "Snap at specified dis_tance"
-#~ msgstr "Inkscape : _avancé"
-
-#, fuzzy
-#~ msgid "Snap at specified distan_ce"
-#~ msgstr "Inkscape : _avancé"
-
-#, fuzzy
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "Divers trucs et astuces"
-
-#, fuzzy
-#~ msgid "Date:"
-#~ msgstr "Date"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "Format"
-
-#, fuzzy
-#~ msgid "Creator:"
-#~ msgstr "Créateur"
-
-#, fuzzy
-#~ msgid "Publisher:"
-#~ msgstr "Éditeur"
-
-#, fuzzy
-#~ msgid "Identifier:"
-#~ msgstr "Identifiant"
-
-#, fuzzy
-#~ msgid "Source:"
-#~ msgstr "Source"
-
-#, fuzzy
-#~ msgid "Subject:"
-#~ msgstr "Objet"
-
-#, fuzzy
-#~ msgid "Coverage:"
-#~ msgstr "Portée"
-
-#, fuzzy
-#~ msgid "Contributor:"
-#~ msgstr "Collaborateurs"
-
-#, fuzzy
-#~ msgid "Default Metadata"
-#~ msgstr "Métadonnées"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution"
-#~ msgstr "CC Paternité"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-ShareAlike"
-#~ msgstr "CC Paternité - Partage des conditions initiales à l'identique"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NoDerivatives"
-#~ msgstr "CC Paternité - Pas de modification"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial"
-#~ msgstr "CC Paternité - Pas d'utilisation commerciale"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
-#~ msgstr ""
-#~ "CC Paternité - Pas d'utilisation commerciale - Partage des conditions "
-#~ "initiales à l'identique"
-
-#, fuzzy
-#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
-#~ msgstr "CC Paternité - Pas d'utilisation commerciale - Pas de modification"
-
-#, fuzzy
-#~ msgid "Free Art License"
-#~ msgstr "Ouvrir un nouveau fichier"
-
-#, fuzzy
-#~ msgid "Angle Y"
-#~ msgstr "Angle X :"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s à %s"
-
-#~ msgid "Move by:"
-#~ msgstr "Déplacer de :"
-
-#~ msgid "Move to:"
-#~ msgstr "Déplacer vers :"
-
-#~ msgid "Moving %s %s"
-#~ msgstr "Déplacement %s %s"
-
-#~ msgid "Change layer opacity"
-#~ msgstr "Modifier l'opacité du calque"
-
-#, fuzzy
-#~ msgid "Opacity, %:"
-#~ msgstr "Opacité :"
-
-#, fuzzy
-#~ msgid "Pattern along path"
-#~ msgstr "Mettre _suivant un chemin"
-
-#, fuzzy
-#~ msgid "unknown error"
-#~ msgstr "Inconnu"
-
-#, fuzzy
-#~ msgid "Print Preview not available"
-#~ msgstr "A_perçu avant impression"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Faire adhérer aux _chemins d'objets"
-
-#, fuzzy
-#~ msgid ""
-#~ "If set, objects snap to the nearest grid line, regardless of distance"
-#~ msgstr ""
-#~ "Si coché, l'objet adhère à la ligne de grille la plus proche quand il est "
-#~ "déplacé, quelle que soit la distance"
-
-#, fuzzy
-#~ msgid "Gridtype"
-#~ msgstr " Type de grille : "
-
-#~ msgid "Print _Direct"
-#~ msgstr "Imprimer _directement"
-
-#~ msgid "Print directly without prompting to a file or pipe"
-#~ msgstr "Imprimer directement sans passer par un fichier ou un tube"
-
-#, fuzzy
-#~ msgid "Gradients"
-#~ msgstr "Dégradé"
-
-#~ msgid "Spacing between letters"
-#~ msgstr "Espacement entre les lettres"
-
-#~ msgid "Spacing between lines"
-#~ msgstr "Espacement entre les lignes"
-
-#~ msgid "Horizontal kerning"
-#~ msgstr "Crénage horizontal"
-
-#~ msgid "Vertical kerning"
-#~ msgstr "Crénage vertical"
