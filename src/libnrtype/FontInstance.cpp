@@ -493,15 +493,15 @@ void font_instance::LoadGlyph(int glyph_id)
             // character has no visual representation, but is valid (eg whitespace)
             doAdd=true;
         } else {
-            std::auto_ptr<char> buffer(new char[bufferSize]);
-            if ( GetGlyphOutline (daddy->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, bufferSize, buffer.get(), &identity) <= 0 ) {
+            char *buffer = new char[bufferSize];
+            if ( GetGlyphOutline (daddy->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, bufferSize, buffer, &identity) <= 0 ) {
                 // shit happened
             } else {
                 // Platform SDK is rubbish, read KB87115 instead
                 n_g.outline=new Path;
                 DWORD polyOffset=0;
                 while ( polyOffset < bufferSize ) {
-                    TTPOLYGONHEADER const *polyHeader=(TTPOLYGONHEADER const *)(buffer.get()+polyOffset);
+                    TTPOLYGONHEADER const *polyHeader=(TTPOLYGONHEADER const *)(buffer+polyOffset);
                     if (polyOffset+polyHeader->cb > bufferSize) break;
 
                     if (polyHeader->dwType == TT_POLYGON_TYPE) {
@@ -509,7 +509,7 @@ void font_instance::LoadGlyph(int glyph_id)
                         DWORD curveOffset=polyOffset+sizeof(TTPOLYGONHEADER);
 
                         while ( curveOffset < polyOffset+polyHeader->cb ) {
-                            TTPOLYCURVE const *polyCurve=(TTPOLYCURVE const *)(buffer.get()+curveOffset);
+                            TTPOLYCURVE const *polyCurve=(TTPOLYCURVE const *)(buffer+curveOffset);
                             POINTFX const *p=polyCurve->apfx;
                             POINTFX const *endp=p+polyCurve->cpfx;
 
@@ -554,6 +554,7 @@ void font_instance::LoadGlyph(int glyph_id)
                 }
                 doAdd=true;
             }
+            delete [] buffer;
         }
 #else
 		if (FT_Load_Glyph (theFace, glyph_id, FT_LOAD_NO_SCALE | FT_LOAD_NO_HINTING | FT_LOAD_NO_BITMAP)) {
