@@ -19,6 +19,7 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <gtk/gtkvbox.h>
 
 #include "desktop-handles.h"
 #include "desktop-style.h"
@@ -32,7 +33,6 @@
 #include "sp-radial-gradient.h"
 #include "style.h"
 #include "widgets/paint-selector.h"
-#include "widgets/sp-widget.h"
 #include "xml/repr.h"
 
 #include "fill-style.h"
@@ -45,20 +45,17 @@
 
 /* Fill */
 
-static void fillnstroke_constructed(SPWidget *spw, SPPaintSelector *psel);
-static void fillnstroke_fillrule_changed(SPPaintSelector *psel, SPPaintSelector::FillRule mode, SPWidget *spw);
+static void fillnstroke_fillrule_changed(SPPaintSelector *psel, SPPaintSelector::FillRule mode, GtkWidget *spw);
 
-static void fillnstroke_selection_modified(SPWidget *spw, Inkscape::Selection *selection, guint flags, SPPaintSelector *psel);
-static void fillnstroke_selection_changed(SPWidget *spw, Inkscape::Selection *selection, SPPaintSelector *psel);
-static void fillnstroke_subselection_changed(Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw);
+static void fillnstroke_selection_modified(Inkscape::Application *inkscape, Inkscape::Selection *selection, guint flags, GtkWidget *spw);
+static void fillnstroke_selection_changed(Inkscape::Application *inkscape, Inkscape::Selection *selection, GtkWidget *spw);
+static void fillnstroke_subselection_changed(Inkscape::Application *inkscape, SPDesktop *desktop, GtkWidget *spw);
 
-static void fillnstroke_paint_mode_changed(SPPaintSelector *psel, SPPaintSelector::Mode mode, SPWidget *spw);
-static void fillnstroke_paint_dragged(SPPaintSelector *psel, SPWidget *spw);
-static void fillnstroke_paint_changed(SPPaintSelector *psel, SPWidget *spw);
+static void fillnstroke_paint_mode_changed(SPPaintSelector *psel, SPPaintSelector::Mode mode, GtkWidget *spw);
+static void fillnstroke_paint_dragged(SPPaintSelector *psel, GtkWidget *spw);
+static void fillnstroke_paint_changed(SPPaintSelector *psel, GtkWidget *spw);
 
-static void fillnstroke_transientize_called(Inkscape::Application *inkscape, SPDesktop *desktop, SPWidget *spw);
-
-static void fillnstroke_performUpdate(SPWidget *spw);
+static void fillnstroke_performUpdate(GtkWidget *spw);
 
 GtkWidget *sp_fill_style_widget_new(void)
 {
@@ -70,7 +67,8 @@ GtkWidget *sp_fill_style_widget_new(void)
  */
 GtkWidget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
 {
-    GtkWidget *spw = sp_widget_new_global(INKSCAPE);
+    Inkscape::Application *appInstance = INKSCAPE;
+    GtkWidget *spw = gtk_vbox_new(FALSE, 0);
 
     // with or without fillrule selector
     GtkWidget *psel = sp_paint_selector_new(kind == FILL);
@@ -79,31 +77,17 @@ GtkWidget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
     g_object_set_data(G_OBJECT(spw), "paint-selector", psel);
     g_object_set_data(G_OBJECT(spw), "kind", GINT_TO_POINTER(kind));
 
-    if (kind == FILL) {
-        g_signal_connect( G_OBJECT(spw), "construct",
-                          G_CALLBACK(fillnstroke_constructed),
-                          psel );
-    }
-
-//FIXME: switch these from spw signals to global inkscape object signals; spw just retranslates
-//those anyway; then eliminate spw
-    g_signal_connect( G_OBJECT(spw), "modify_selection",
+    g_signal_connect( G_OBJECT(appInstance), "modify_selection",
                       G_CALLBACK(fillnstroke_selection_modified),
-                      psel );
-
-    g_signal_connect( G_OBJECT(spw), "change_selection",
-                      G_CALLBACK(fillnstroke_selection_changed),
-                      psel );
-
-    g_signal_connect( INKSCAPE, "change_subselection",
-                      G_CALLBACK(fillnstroke_subselection_changed),
                       spw );
 
-    if (kind == STROKE) {
-        g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop",
-                          G_CALLBACK(fillnstroke_transientize_called),
-                          spw );
-    }
+    g_signal_connect( G_OBJECT(appInstance), "change_selection",
+                      G_CALLBACK(fillnstroke_selection_changed),
+                      spw );
+
+    g_signal_connect( G_OBJECT(appInstance), "change_subselection",
+                      G_CALLBACK(fillnstroke_subselection_changed),
+                      spw );
 
     g_signal_connect( G_OBJECT(psel), "mode_changed",
                       G_CALLBACK(fillnstroke_paint_mode_changed),
@@ -123,32 +107,18 @@ GtkWidget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
                           spw );
     }
 
-    fillnstroke_performUpdate(SP_WIDGET(spw));
+    fillnstroke_performUpdate(spw);
 
     return spw;
-}
-
-static void fillnstroke_constructed( SPWidget *spw, SPPaintSelector * /*psel*/ )
-{
-#ifdef SP_FS_VERBOSE
-    FillOrStroke kind = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(spw), "kind")) ? FILL : STROKE;
-    g_print( "[%s] style widget constructed: inkscape %p\n",
-             (kind == FILL) ? "fill" : "style",
-              spw->inkscape );
-#endif
-    if (spw->inkscape) {
-        fillnstroke_performUpdate(spw);
-    }
-
 }
 
 /**
  * On signal modified, invokes an update of the fill or stroke style paint object.
  */
-static void fillnstroke_selection_modified( SPWidget *spw,
-                                    Inkscape::Selection * /*selection*/,
-                                    guint flags,
-                                    SPPaintSelector * /*psel*/ )
+void fillnstroke_selection_modified( Inkscape::Application * /*inkscape*/,
+                                     Inkscape::Selection * /*selection*/,
+                                     guint flags,
+                                     GtkWidget *spw )
 {
     if (flags & ( SP_OBJECT_MODIFIED_FLAG |
                   SP_OBJECT_PARENT_MODIFIED_FLAG |
@@ -163,9 +133,9 @@ static void fillnstroke_selection_modified( SPWidget *spw,
 /**
  * On signal selection changed, invokes an update of the fill or stroke style paint object.
  */
-static void fillnstroke_selection_changed( SPWidget *spw,
-                                   Inkscape::Selection * /*selection*/,
-                                   SPPaintSelector * /*psel*/ )
+void fillnstroke_selection_changed( Inkscape::Application * /*inkscape*/,
+                                    Inkscape::Selection */*selection*/,
+                                    GtkWidget *spw )
 {
     fillnstroke_performUpdate(spw);
 }
@@ -173,9 +143,9 @@ static void fillnstroke_selection_changed( SPWidget *spw,
 /**
  * On signal change subselection, invoke an update of the fill or stroke style widget.
  */
-static void fillnstroke_subselection_changed( Inkscape::Application * /*inkscape*/,
-                                      SPDesktop * /*desktop*/,
-                                      SPWidget *spw )
+void fillnstroke_subselection_changed( Inkscape::Application * /*inkscape*/,
+                                       SPDesktop * /*desktop*/,
+                                       GtkWidget *spw )
 {
     fillnstroke_performUpdate(spw);
 }
@@ -186,7 +156,7 @@ static void fillnstroke_subselection_changed( Inkscape::Application * /*inkscape
  *
  * @param sel Selection to use, or NULL.
  */
-static void fillnstroke_performUpdate( SPWidget *spw )
+void fillnstroke_performUpdate( GtkWidget *spw )
 {
     if ( g_object_get_data(G_OBJECT(spw), "update") ) {
         return;
@@ -280,9 +250,9 @@ static void fillnstroke_performUpdate( SPWidget *spw )
 /**
  * When the mode is changed, invoke a regular changed handler.
  */
-static void fillnstroke_paint_mode_changed( SPPaintSelector *psel,
-                                    SPPaintSelector::Mode /*mode*/,
-                                    SPWidget *spw )
+void fillnstroke_paint_mode_changed( SPPaintSelector *psel,
+                                     SPPaintSelector::Mode /*mode*/,
+                                     GtkWidget *spw )
 {
     if (g_object_get_data(G_OBJECT(spw), "update")) {
         return;
@@ -299,9 +269,9 @@ static void fillnstroke_paint_mode_changed( SPPaintSelector *psel,
     fillnstroke_paint_changed(psel, spw);
 }
 
-static void fillnstroke_fillrule_changed( SPPaintSelector * /*psel*/,
-                                  SPPaintSelector::FillRule mode,
-                                  SPWidget *spw )
+void fillnstroke_fillrule_changed( SPPaintSelector * /*psel*/,
+                                   SPPaintSelector::FillRule mode,
+                                   GtkWidget *spw )
 {
     if (g_object_get_data(G_OBJECT(spw), "update")) {
         return;
@@ -336,9 +306,9 @@ static gchar const *undo_S_label = undo_S_label_1;
  * this was flakey and didn't buy us almost anything. So now it does the same as _changed, except
  * lumps all its changes for undo.
  */
-static void fillnstroke_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
+void fillnstroke_paint_dragged(SPPaintSelector *psel, GtkWidget *spw)
 {
-    if (!spw->inkscape) {
+    if (!INKSCAPE) {
         return;
     }
 
@@ -387,7 +357,7 @@ This is called (at least) when:
 3  you changed a gradient selector parameter (e.g. spread)
 Must update repr.
  */
-static void fillnstroke_paint_changed( SPPaintSelector *psel, SPWidget *spw )
+void fillnstroke_paint_changed( SPPaintSelector *psel, GtkWidget *spw )
 {
 #ifdef SP_FS_VERBOSE
     g_message("fillnstroke_paint_changed(psel:%p, spw:%p)", psel, spw);
@@ -635,15 +605,6 @@ static void fillnstroke_paint_changed( SPPaintSelector *psel, SPWidget *spw )
     g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
 
-
-static void fillnstroke_transientize_called(Inkscape::Application * /*inkscape*/,
-                                    SPDesktop * /*desktop*/,
-                                    SPWidget * /*spw*/ )
-{
-// TODO:  Either of these will cause crashes sometimes
-//    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
-//    ink_markers_menu_update(spw);
-}
 
 /*
   Local Variables:
