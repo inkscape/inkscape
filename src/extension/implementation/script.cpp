@@ -136,7 +136,6 @@ std::string Script::resolveInterpreterExecutable(const Glib::ustring &interpName
     if (!Glib::path_is_absolute(interpreter_path)) {
         interpreter_path = Glib::find_program_in_path(interpreter_path);
     }
-    printf("Interpreter name: %s\n", interpreter_path.data());
     return interpreter_path;
 }
 
