@@ -487,7 +487,6 @@ static void _win32_set_inkscape_env(gchar const *exe)
     gchar *perl = g_build_filename(exe, "python", NULL);
     gchar *pythonlib = g_build_filename(exe, "python", "Lib", NULL);
     gchar *pythondll = g_build_filename(exe, "python", "DLLs", NULL);
-    gchar *extdir = g_build_filename(exe, "share", "extensions", NULL);
     
     // Python 2.x needs short paths in PYTHONPATH.
     // Otherwise it doesn't work when Inkscape is installed in Unicode directories.
@@ -496,7 +495,6 @@ static void _win32_set_inkscape_env(gchar const *exe)
     gchar *python_s = g_win32_locale_filename_from_utf8(python);
     gchar *pythonlib_s = g_win32_locale_filename_from_utf8(pythonlib);
     gchar *pythondll_s = g_win32_locale_filename_from_utf8(pythondll);
-    gchar *extdir_s = g_win32_locale_filename_from_utf8(extdir);
 
     gchar *new_path;
     gchar *new_pythonpath;
@@ -506,11 +504,11 @@ static void _win32_set_inkscape_env(gchar const *exe)
         new_path = g_strdup_printf("%s;%s;%s;%s", exe, python, scripts, perl);
     }
     if (pythonpath) {
-        new_pythonpath = g_strdup_printf("%s;%s;%s;%s;%s",
-            extdir_s, python_s, pythonlib_s, pythondll_s, pythonpath);
-    } else {
         new_pythonpath = g_strdup_printf("%s;%s;%s;%s",
-            extdir_s, python_s, pythonlib_s, pythondll_s);
+             python_s, pythonlib_s, pythondll_s, pythonpath);
+    } else {
+        new_pythonpath = g_strdup_printf("%s;%s;%s",
+            python_s, pythonlib_s, pythondll_s);
     }
 
     g_setenv("PATH", new_path, TRUE);
@@ -542,6 +540,24 @@ static void _win32_set_inkscape_env(gchar const *exe)
     g_free(new_pythonpath);
 }
 #endif
+
+static void set_extensions_env()
+{
+    gchar const *pythonpath = g_getenv("PYTHONPATH");
+    gchar *extdir;
+    
+#ifdef WIN32
+    extdir = g_win32_locale_filename_from_utf8(INKSCAPE_EXTENSIONDIR);
+#else
+    extdir = g_strdup(INKSCAPE_EXTENSIONDIR);
+#endif
+
+    gchar *new_pythonpath = g_strdup_printf("%s" G_SEARCHPATH_SEPARATOR_S "%s",
+                                            extdir, pythonpath);
+    g_setenv("PYTHONPATH", new_pythonpath, TRUE);
+    g_free(extdir);
+    g_free(new_pythonpath);
+}
 
 /**
  * This is the classic main() entry point of the program, though on some
@@ -619,6 +635,8 @@ main(int argc, char **argv)
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 #endif
+
+    set_extensions_env();
 
     // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
     Gtk::Main::init_gtkmm_internals();
