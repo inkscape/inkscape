@@ -14,6 +14,8 @@
  */
 
 #include <glib.h>
+
+#include "fill-or-stroke.h"
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 
@@ -75,7 +77,7 @@ struct SPPaintSelector {
     SPColor color;
     float alpha;
 
-    static Mode getModeForStyle(SPStyle const & style, bool isfill);
+    static Mode getModeForStyle(SPStyle const & style, FillOrStroke kind);
 
     void setMode( Mode mode );
     void setFillrule( FillRule fillrule );
@@ -114,7 +116,7 @@ struct SPPaintSelectorClass {
 
 GtkType sp_paint_selector_get_type (void);
 
-GtkWidget *sp_paint_selector_new (bool is_fill);
+SPPaintSelector *sp_paint_selector_new(FillOrStroke kind);
 
 
 

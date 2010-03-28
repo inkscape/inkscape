@@ -352,8 +352,7 @@ sp_paint_selector_show_fillrule(SPPaintSelector *psel, bool is_fill)
 }
 
 
-GtkWidget *
-sp_paint_selector_new(bool is_fill)
+SPPaintSelector *sp_paint_selector_new(FillOrStroke kind)
 {
     SPPaintSelector *psel = static_cast<SPPaintSelector*>(gtk_type_new(SP_TYPE_PAINT_SELECTOR));
 
@@ -362,9 +361,9 @@ sp_paint_selector_new(bool is_fill)
     // This silliness is here because I don't know how to pass a parameter to the
     // GtkObject "constructor" (sp_paint_selector_init). Remove it when paint_selector
     // becomes a normal class.
-    sp_paint_selector_show_fillrule(psel, is_fill);
+    sp_paint_selector_show_fillrule(psel, kind == FILL);
 
-    return GTK_WIDGET(psel);
+    return psel;
 }
 
 void SPPaintSelector::setMode(Mode mode)
@@ -1137,18 +1136,18 @@ void SPPaintSelector::setFlatColor( SPDesktop *desktop, gchar const *color_prope
     sp_repr_css_attr_unref(css);
 }
 
-SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, bool isfill)
+SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, FillOrStroke kind)
 {
     Mode mode = MODE_UNSET;
-    SPIPaint const & target = isfill ? style.fill : style.stroke;
+    SPIPaint const & target = (kind == FILL) ? style.fill : style.stroke;
 
     if ( !target.set ) {
         mode = MODE_UNSET;
     } else if ( target.isPaintserver() ) {
-        SPPaintServer const *server = isfill ? style.getFillPaintServer() : style.getStrokePaintServer();
+        SPPaintServer const *server = (kind == FILL) ? style.getFillPaintServer() : style.getStrokePaintServer();
 
 #ifdef SP_PS_VERBOSE
-        g_message("SPPaintSelector::getModeForStyle(%p, %d)", &style, isfill);
+        g_message("SPPaintSelector::getModeForStyle(%p, %d)", &style, kind);
         g_message("==== server:%p %s  grad:%s   swatch:%s", server, server->getId(), (SP_IS_GRADIENT(server)?"Y":"n"), (SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()?"Y":"n"));
 #endif // SP_PS_VERBOSE
 
