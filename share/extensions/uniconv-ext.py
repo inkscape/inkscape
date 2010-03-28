@@ -28,13 +28,13 @@ cmd = None
 
 try:
     from subprocess import Popen, PIPE
-    p = Popen('uniconv', shell=True, stdout=PIPE, stderr=PIPE).wait()
+    p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
     if p==0 :
-        cmd = 'uniconv'
+        cmd = 'uniconvertor'
     else:
-        p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
+        p = Popen('uniconv', shell=True, stdout=PIPE, stderr=PIPE).wait()
         if p==0 :
-            cmd = 'uniconvertor'
+            cmd = 'uniconv'
 except ImportError:
     from popen2 import Popen3
     p = Popen3('uniconv', True).wait()

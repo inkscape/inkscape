@@ -92,21 +92,21 @@ def run(command_format, prog_name, uniconv_format):
 def get_command():
     cmd = None
 
-    try:
-        from subprocess import Popen, PIPE
+try:
+    from subprocess import Popen, PIPE
+    p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
+    if p==0 :
+        cmd = 'uniconvertor'
+    else:
         p = Popen('uniconv', shell=True, stdout=PIPE, stderr=PIPE).wait()
         if p==0 :
             cmd = 'uniconv'
-        else:
-            p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
-            if p==0 :
-                cmd = 'uniconvertor'
-    except ImportError:
-        from popen2 import Popen3
-        p = Popen3('uniconv', True).wait()
-        if p!=32512 : cmd = 'uniconv'
-        p = Popen3('uniconvertor', True).wait()
-        if p!=32512 : cmd = 'uniconvertor'
+except ImportError:
+    from popen2 import Popen3
+    p = Popen3('uniconv', True).wait()
+    if p!=32512 : cmd = 'uniconv'
+    p = Popen3('uniconvertor', True).wait()
+    if p!=32512 : cmd = 'uniconvertor'
 
     if cmd == None:
         # there's no succeffully-returning uniconv command; try to get the module directly (on Windows)
