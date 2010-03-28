@@ -60,6 +60,7 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
                                   const Glib::ustring &value)
 {
     Glib::ustring keyName = keyNameArg;
+    bool ret = false;
 
     HKEY rootKey = HKEY_LOCAL_MACHINE; //default root
     //Trim out the root key if necessary
@@ -74,28 +75,35 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
     //printf("trimmed string: '%s'\n", keyName.c_str());
 
     //Get or create the key
+    gunichar2 *keyw       = g_utf8_to_utf16(keyName.data(), -1, 0,0,0);
+    gunichar2 *valuenamew = g_utf8_to_utf16(valueName.data(), -1, 0,0,0);
+
     HKEY key;
-    if (RegCreateKeyEx(rootKey, keyName.c_str(),
+    if (RegCreateKeyExW(rootKey, (WCHAR*) keyw,
                        0, NULL, REG_OPTION_NON_VOLATILE,
                        KEY_WRITE, NULL, &key, NULL))
-       {
+    {
        fprintf(stderr, "RegistryTool: Could not create the registry key '%s'\n", keyName.c_str());
-       return false;
-       }
+       goto fail;
+    }
 
-    //Set the value
-    if (RegSetValueEx(key, valueName.c_str(),
-          0,  REG_SZ, (LPBYTE) value.c_str(), (DWORD) value.size()))
-       {
+    // Set the value
+    if (RegSetValueExW(key, (WCHAR*) valuenamew,
+          0,  REG_SZ, (LPBYTE) value.data(), (DWORD) (value.size() + 1)))
+    {
        fprintf(stderr, "RegistryTool: Could not set the value '%s'\n", value.c_str());
-       RegCloseKey(key);
-       return false;
-       }
+       goto failkey;
+    }
 
-
+    ret = true;
+    
+    failkey:
     RegCloseKey(key);
-
-    return true;
+    
+    fail:
+    g_free(keyw);
+    g_free(valuenamew);
+    return ret;
 }
 
 
@@ -107,19 +115,14 @@ bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
                               Glib::ustring &path,
                               Glib::ustring &exeName)
 {
+    const int pathbuf = 2048;
+    gunichar2 pathw[pathbuf];
+    GetModuleFileNameW(NULL, (WCHAR*) pathw, pathbuf);
 
-    char buf[MAX_PATH+1];
-    if (!GetModuleFileName(NULL, buf, MAX_PATH))
-        {
-        fprintf(stderr, "Could not fetch executable file name\n");
-        return false;
-        }
-    else
-        {
-        //printf("Executable file name: '%s'\n", buf);
-        }
+    gchar *utf8path = g_utf16_to_utf8(pathw, -1, 0,0,0);
+    fullPath = utf8path;
+    g_free(utf8path);
 
-    fullPath = buf;
     path     = "";
     exeName  = "";
     Glib::ustring::size_type pos = fullPath.rfind('\\');

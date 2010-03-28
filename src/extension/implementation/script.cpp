@@ -21,6 +21,8 @@
 #include <unistd.h>
 
 #include <errno.h>
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <gtkmm.h>
 
 #include "ui/view/view.h"
@@ -101,14 +103,12 @@ Script::interpreter_t const Script::interpreterTab[] = {
     \param interpNameArg  The name of the interpreter that we're looking
     for, should be an entry in interpreterTab
 */
-Glib::ustring Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
+std::string Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 {
-    Glib::ustring interpName = interpNameArg;
-
     interpreter_t const *interp = 0;
     bool foundInterp = false;
     for (interp =  interpreterTab ; interp->identity ; interp++ ){
-        if (interpName == interp->identity) {
+        if (interpNameArg == interp->identity) {
             foundInterp = true;
             break;
         }
@@ -118,55 +118,26 @@ Glib::ustring Script::resolveInterpreterExecutable(const Glib::ustring &interpNa
     if (!foundInterp) {
         return "";
     }
-    interpName = interp->defaultval;
+    std::string interpreter_path = Glib::filename_from_utf8(interp->defaultval);
 
-    // 1.  Check preferences
+    // 1.  Check preferences for an override.
+    // Note: this must be an absolute path.
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::ustring prefInterp = prefs->getString("/extensions/" + Glib::ustring(interp->prefstring));
 
     if (!prefInterp.empty()) {
-        interpName = prefInterp;
-        return interpName;
+        interpreter_path = Glib::filename_from_utf8(prefInterp);
     }
 
-#ifdef WIN32
-
-    // 2.  Windows.  Try looking relative to inkscape.exe
-    RegistryTool rt;
-    Glib::ustring fullPath;
-    Glib::ustring path;
-    Glib::ustring exeName;
-    if (rt.getExeInfo(fullPath, path, exeName)) {
-// TODO replace with proper glib/glibmm path building routines:
-        Glib::ustring interpPath = path;
-        interpPath.append("\\");
-        interpPath.append(interpNameArg);
-        interpPath.append("\\");
-        interpPath.append(interpName);
-        interpPath.append(".exe");
-        struct stat finfo;
-        if (stat(interpPath .c_str(), &finfo) == 0) {
-            g_message("Found local interpreter, '%s',  Size: %d",
-                      interpPath .c_str(),
-                      (int)finfo.st_size);
-            return interpPath;
-        }
+    // 2. Search the path.
+    // Do this on all systems, for consistency.
+    // PATH is set up to contain the Python and Perl binary directories
+    // on Windows, so no extra code is necessary.
+    if (!Glib::path_is_absolute(interpreter_path)) {
+        interpreter_path = Glib::find_program_in_path(interpreter_path);
     }
-
-    // 3. Try searching the path
-    char szExePath[MAX_PATH] = {0};
-    char szCurrentDir[MAX_PATH] = {0};
-    GetCurrentDirectory(sizeof(szCurrentDir), szCurrentDir);
-    HINSTANCE ret = FindExecutable(interpName.c_str(), szCurrentDir, szExePath);
-    if (ret > reinterpret_cast<HINSTANCE>(32)) {
-        interpName = szExePath;
-        return interpName;
-    }
-
-#endif // win32
-
-
-    return interpName;
+    printf("Interpreter name: %s\n", interpreter_path.data());
+    return interpreter_path;
 }
 
 /** \brief     This function creates a script object and sets up the
@@ -206,38 +177,33 @@ Script::~Script()
     string.  This means that the caller of this function can always
     free what they are given (and should do it too!).
 */
-Glib::ustring
+std::string
 Script::solve_reldir(Inkscape::XML::Node *reprin) {
 
     gchar const *s = reprin->attribute("reldir");
 
-    if (!s) {
+    // right now the only recognized relative directory is "extensions"
+    if (!s || Glib::ustring(s) != "extensions") {
         Glib::ustring str = sp_repr_children(reprin)->content();
         return str;
     }
 
     Glib::ustring reldir = s;
 
-    if (reldir == "extensions") {
+    for (unsigned int i=0;
+        i < Inkscape::Extension::Extension::search_path.size();
+        i++) {
 
-        for (unsigned int i=0;
-            i < Inkscape::Extension::Extension::search_path.size();
-            i++) {
+        gchar * fname = g_build_filename(
+           Inkscape::Extension::Extension::search_path[i],
+           sp_repr_children(reprin)->content(),
+           NULL);
+        Glib::ustring filename = fname;
+        g_free(fname);
 
-            gchar * fname = g_build_filename(
-               Inkscape::Extension::Extension::search_path[i],
-               sp_repr_children(reprin)->content(),
-               NULL);
-            Glib::ustring filename = fname;
-            g_free(fname);
-
-            if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) ) {
-                return filename;
-            }
+        if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) ) {
+            return Glib::filename_from_utf8(filename);
         }
-    } else {
-        Glib::ustring str = sp_repr_children(reprin)->content();
-        return str;
     }
 
     return "";
@@ -261,29 +227,25 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
     then a TRUE is returned.  If we get all the way through the path
     then a FALSE is returned, the command could not be found.
 */
-bool Script::check_existance(const Glib::ustring &command)
+bool Script::check_existence(const std::string &command)
 {
 
     // Check the simple case first
-    if (command.size() == 0) {
+    if (command.empty()) {
         return false;
     }
 
-    //Don't search when it contains a slash. */
-    if (command.find(G_DIR_SEPARATOR) != command.npos) {
-        if (Inkscape::IO::file_test(command.c_str(), G_FILE_TEST_EXISTS)) {
+    //Don't search when it is an absolute path. */
+    if (!Glib::path_is_absolute(command)) {
+        if (Glib::file_test(command, Glib::FILE_TEST_EXISTS)) {
             return true;
         } else {
             return false;
         }
     }
 
-
-    Glib::ustring path;
-    gchar *s = (gchar *) g_getenv("PATH");
-    if (s) {
-        path = s;
-    } else {
+    std::string path = Glib::getenv("PATH");
+    if (path.empty()) {
        /* There is no `PATH' in the environment.
            The default search path is the current directory */
         path = G_SEARCHPATH_SEPARATOR_S;
@@ -293,7 +255,7 @@ bool Script::check_existance(const Glib::ustring &command)
     std::string::size_type pos2 = 0;
     while ( pos < path.size() ) {
 
-        Glib::ustring localPath;
+        std::string localPath;
 
         pos2 = path.find(G_SEARCHPATH_SEPARATOR, pos);
         if (pos2 == path.npos) {
@@ -305,11 +267,11 @@ bool Script::check_existance(const Glib::ustring &command)
         }
 
         //printf("### %s\n", localPath.c_str());
-        Glib::ustring candidatePath =
+        std::string candidatePath =
                       Glib::build_filename(localPath, command);
 
-        if (Inkscape::IO::file_test(candidatePath .c_str(),
-                      G_FILE_TEST_EXISTS)) {
+        if (Glib::file_test(candidatePath,
+                      Glib::FILE_TEST_EXISTS)) {
             return true;
         }
 
@@ -357,16 +319,10 @@ bool Script::load(Inkscape::Extension::Extension *module)
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "command")) {
                     const gchar *interpretstr = child_repr->attribute("interpreter");
                     if (interpretstr != NULL) {
-                        Glib::ustring interpString =
-                            resolveInterpreterExecutable(interpretstr);
-                        //g_message("Found: %s and %s",interpString.c_str(),interpretstr);
-                        command.insert(command.end(), interpretstr);
+                        std::string interpString = resolveInterpreterExecutable(interpretstr);
+                        command.insert(command.end(), interpString);
                     }
-                    Glib::ustring tmp = "\"";
-                    tmp += solve_reldir(child_repr);
-                    tmp += "\"";
-
-                    command.insert(command.end(), tmp);
+                    command.insert(command.end(), solve_reldir(child_repr));
                 }
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
                     helper_extension = sp_repr_children(child_repr)->content();
@@ -419,10 +375,10 @@ Script::check(Inkscape::Extension::Extension *module)
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "check")) {
-                    Glib::ustring command_text = solve_reldir(child_repr);
-                    if (command_text.size() > 0) {
+                    std::string command_text = solve_reldir(child_repr);
+                    if (!command_text.empty()) {
                         /* I've got the command */
-                        bool existance = check_existance(command_text);
+                        bool existance = check_existence(command_text);
                         if (!existance)
                             return false;
                     }
@@ -763,8 +719,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_out);
 
-    // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
-    unlink(tempfilename_out.c_str());
+    g_unlink(tempfilename_out.c_str());
 
     /* Do something with mydoc.... */
     if (mydoc) {
@@ -937,89 +892,61 @@ int Script::execute (const std::list<std::string> &in_command,
                  const Glib::ustring &filein,
                  file_listener &fileout)
 {
-    g_return_val_if_fail(in_command.size() > 0, 0);
+    g_return_val_if_fail(!in_command.empty(), 0);
     // printf("Executing\n");
 
-    std::vector <std::string> argv;
+    std::vector<std::string> argv;
 
-/*
-    for (std::list<std::string>::const_iterator i = in_command.begin();
-            i != in_command.end(); i++) {
-        argv.push_back(*i);
+    bool interpreted = (in_command.size() == 2);
+    std::string program = in_command.front();
+    std::string script = interpreted ? in_command.back() : "";
+    std::string working_directory = "";
+
+    // Use Glib::find_program_in_path instead of the equivalent
+    // Glib::spawn_* functionality, because _wspawnp is broken on Windows:
+    // it doesn't work when PATH contains Unicode directories
+    if (!Glib::path_is_absolute(program)) {
+        program = Glib::find_program_in_path(program);
     }
-*/
-    // according to http://www.gtk.org/api/2.6/glib/glib-Spawning-Processes.html spawn quotes parameter containing spaces
-    // we tokenize so that spwan does not need to quote over all params
-    for (std::list<std::string>::const_iterator i = in_command.begin();
-            i != in_command.end(); i++) {
-        std::string param_str = *i;
-        do {
-            //g_message("param: %s", param_str.c_str());
-            size_t first_space = param_str.find_first_of(' ');
-            size_t first_quote = param_str.find_first_of('"');
-            //std::cout << "first space " << first_space << std::endl;
-            //std::cout << "first quote " << first_quote << std::endl;
+    argv.push_back(program);
 
-            if ((first_quote != std::string::npos) && (first_quote == 0)) {
-                size_t next_quote = param_str.find_first_of('"', first_quote + 1);
-                //std::cout << "next quote " << next_quote << std::endl;
+    if (interpreted) {
+        // On Windows, Python garbles Unicode command line parameters
+        // in an useless way. This means extensions fail when Inkscape
+        // is run from an Unicode directory.
+        // As a workaround, we set the working directory to the one
+        // containing the script.
+        working_directory = Glib::path_get_dirname(script);
+        script = Glib::path_get_basename(script);
+        #ifdef G_OS_WIN32
+        // ANNOYING: glibmm does not wrap g_win32_locale_filename_from_utf8
+        gchar *workdir_s = g_win32_locale_filename_from_utf8(working_directory.data());
+        working_directory = workdir_s;
+        g_free(workdir_s);
+        #endif
 
-                if (next_quote != std::string::npos) {
-                    //std::cout << "now split " << next_quote << std::endl;
-                    //std::cout << "now split " << param_str.substr(1, next_quote - 1) << std::endl;
-                    //std::cout << "now split " << param_str.substr(next_quote + 1) << std::endl;
-                    std::string part_str = param_str.substr(1, next_quote - 1);
-                    if (part_str.size() > 0)
-                        argv.push_back(part_str);
-                    param_str = param_str.substr(next_quote + 1);
-
-                } else {
-                    if (param_str.size() > 0)
-                        argv.push_back(param_str);
-                    param_str = "";
-                }
-
-            } else if (first_space != std::string::npos) {
-                //std::cout << "now split " << first_space << std::endl;
-                //std::cout << "now split " << param_str.substr(0, first_space) << std::endl;
-                //std::cout << "now split " << param_str.substr(first_space + 1) << std::endl;
-                std::string part_str = param_str.substr(0, first_space);
-                if (part_str.size() > 0) {
-                    argv.push_back(part_str);
-                }
-                param_str = param_str.substr(first_space + 1);
-            } else {
-                if (param_str.size() > 0) {
-                    argv.push_back(param_str);
-                }
-                param_str = "";
-            }
-        } while (param_str.size() > 0);
+        argv.push_back(script);
     }
 
-    for (std::list<std::string>::const_iterator i = in_params.begin();
-            i != in_params.end(); i++) {
-        //g_message("Script parameter: %s",(*i)g.c_str());
-        argv.push_back(*i);
-    }
-
-    if (!(filein.empty())) {
+    // assemble the rest of argv
+    std::copy(in_params.begin(), in_params.end(), std::back_inserter(argv));
+    if (!filein.empty()) {
         argv.push_back(filein);
     }
 
     int stdout_pipe, stderr_pipe;
 
     try {
-        Inkscape::IO::spawn_async_with_pipes(Glib::get_current_dir(), // working directory
+        Glib::spawn_async_with_pipes(working_directory, // working directory
                                      argv,  // arg v
-                                     Glib::SPAWN_SEARCH_PATH /*| Glib::SPAWN_DO_NOT_REAP_CHILD*/,
+                                     static_cast<Glib::SpawnFlags>(0), // no flags
                                      sigc::slot<void>(),
                                      &_pid,          // Pid
                                      NULL,           // STDIN
                                      &stdout_pipe,   // STDOUT
                                      &stderr_pipe);  // STDERR
-    } catch (Glib::SpawnError e) {
-        printf("Can't Spawn!!! spawn returns: %d\n", e.code());
+    } catch (Glib::Error e) {
+        printf("Can't Spawn!!! spawn returns: %s\n", e.what().data());
         return 0;
     }
 

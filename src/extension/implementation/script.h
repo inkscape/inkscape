@@ -115,30 +115,13 @@ private:
       */
     Glib::ustring helper_extension;
 
-    /**
-     * Just a quick function to find and resolve relative paths for
-     * the incoming scripts
-     */
-    Glib::ustring solve_reldir (Inkscape::XML::Node *reprin);
-
-    /**
-     *
-     */
-    bool check_existance (const Glib::ustring &command);
-
-    /**
-     *
-     */
+    std::string solve_reldir (Inkscape::XML::Node *reprin);
+    bool check_existence (const std::string &command);
     void copy_doc (Inkscape::XML::Node * olddoc,
                    Inkscape::XML::Node * newdoc);
-
-    /**
-     *
-     */
     void checkStderr (const Glib::ustring &filename,
                       Gtk::MessageType type,
                       const Glib::ustring &message);
-
 
     class file_listener {
         Glib::ustring _string;
@@ -184,7 +167,6 @@ private:
             return true;
         };
 
-        // Note, doing a copy here, on purpose
         Glib::ustring string (void) { return _string; };
 
         bool toFile (const Glib::ustring &name) {
@@ -215,7 +197,7 @@ private:
     };
     static interpreter_t const interpreterTab[];
 
-    Glib::ustring resolveInterpreterExecutable(const Glib::ustring &interpNameArg);
+    std::string resolveInterpreterExecutable(const Glib::ustring &interpNameArg);
 
 }; // class Script
 

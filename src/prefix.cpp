@@ -31,14 +31,7 @@
 #endif
 
 
-/* PLEASE NOTE:  We use GThreads now for portability */
-/* @see http://developer.gnome.org/doc/API/2.0/glib/glib-Threads.html */
-#ifndef BR_THREADS
-    /* Change 1 to 0 if you don't want thread support */
-    #define BR_THREADS 1
-    #include <glib.h> //for GThreads
-#endif /* BR_THREADS */
-
+#include <glib.h>
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
@@ -55,9 +48,9 @@ extern "C" {
 #define NULL ((void *) 0)
 
 #ifdef __GNUC__
-	#define br_return_val_if_fail(expr,val) if (!(expr)) {fprintf (stderr, "** BinReloc (%s): assertion %s failed\n", __PRETTY_FUNCTION__, #expr); return val;}
+    #define br_return_val_if_fail(expr,val) if (!(expr)) {fprintf (stderr, "** BinReloc (%s): assertion %s failed\n", __PRETTY_FUNCTION__, #expr); return val;}
 #else
-	#define br_return_val_if_fail(expr,val) if (!(expr)) return val
+    #define br_return_val_if_fail(expr,val) if (!(expr)) return val
 #endif /* __GNUC__ */
 
 
@@ -72,8 +65,8 @@ extern "C" {
  * br_locate:
  * symbol: A symbol that belongs to the app/library you want to locate.
  * Returns: A newly allocated string containing the full path of the
- *	    app/library that func belongs to, or NULL on error. This
- *	    string should be freed when not when no longer needed.
+ *        app/library that func belongs to, or NULL on error. This
+ *        string should be freed when not when no longer needed.
  *
  * Finds out to which application or library symbol belongs, then locate
  * the full path of that application or library.
@@ -85,70 +78,70 @@ extern "C" {
  * #include "libfoo.h"
  *
  * int main (int argc, char *argv[]) {
- *	printf ("Full path of this app: %s\n", br_locate (&argc));
- *	libfoo_start ();
- *	return 0;
+ *    printf ("Full path of this app: %s\n", br_locate (&argc));
+ *    libfoo_start ();
+ *    return 0;
  * }
  *
  * --> libfoo.c starts here
  * #include "prefix.h"
  *
  * void libfoo_start () {
- *	--> "" is a symbol that belongs to libfoo (because it's called
- *	--> from libfoo_start()); that's why this works.
- *	printf ("libfoo is located in: %s\n", br_locate (""));
+ *    --> "" is a symbol that belongs to libfoo (because it's called
+ *    --> from libfoo_start()); that's why this works.
+ *    printf ("libfoo is located in: %s\n", br_locate (""));
  * }
  */
 char *
 br_locate (void *symbol)
 {
-	char line[5000];
-	FILE *f;
-	char *path;
+    char line[5000];
+    FILE *f;
+    char *path;
 
-	br_return_val_if_fail (symbol != NULL, NULL);
+    br_return_val_if_fail (symbol != NULL, NULL);
 
-	f = fopen ("/proc/self/maps", "r");
-	if (!f)
-		return NULL;
+    f = fopen ("/proc/self/maps", "r");
+    if (!f)
+        return NULL;
 
-	while (!feof (f))
-	{
-		unsigned long start, end;
+    while (!feof (f))
+    {
+        unsigned long start, end;
 
-		if (!fgets (line, sizeof (line), f))
-			continue;
-		if (!strstr (line, " r-xp ") || !strchr (line, '/'))
-			continue;
+        if (!fgets (line, sizeof (line), f))
+            continue;
+        if (!strstr (line, " r-xp ") || !strchr (line, '/'))
+            continue;
 
-		sscanf (line, "%lx-%lx ", &start, &end);
-		if (symbol >= (void *) start && symbol < (void *) end)
-		{
-			char *tmp;
-			size_t len;
+        sscanf (line, "%lx-%lx ", &start, &end);
+        if (symbol >= (void *) start && symbol < (void *) end)
+        {
+            char *tmp;
+            size_t len;
 
-			/* Extract the filename; it is always an absolute path */
-			path = strchr (line, '/');
+            /* Extract the filename; it is always an absolute path */
+            path = strchr (line, '/');
 
-			/* Get rid of the newline */
-			tmp = strrchr (path, '\n');
-			if (tmp) *tmp = 0;
+            /* Get rid of the newline */
+            tmp = strrchr (path, '\n');
+            if (tmp) *tmp = 0;
 
-			/* Get rid of "(deleted)" */
-			len = strlen (path);
-			if (len > 10 && strcmp (path + len - 10, " (deleted)") == 0)
-			{
-				tmp = path + len - 10;
-				*tmp = 0;
-			}
+            /* Get rid of "(deleted)" */
+            len = strlen (path);
+            if (len > 10 && strcmp (path + len - 10, " (deleted)") == 0)
+            {
+                tmp = path + len - 10;
+                *tmp = 0;
+            }
 
-			fclose(f);
-			return strdup (path);
-		}
-	}
+            fclose(f);
+            return strdup (path);
+        }
+    }
 
-	fclose (f);
-	return NULL;
+    fclose (f);
+    return NULL;
 }
 
 
@@ -168,16 +161,16 @@ br_locate (void *symbol)
 char *
 br_locate_prefix (void *symbol)
 {
-	char *path, *prefix;
+    char *path, *prefix;
 
-	br_return_val_if_fail (symbol != NULL, NULL);
+    br_return_val_if_fail (symbol != NULL, NULL);
 
-	path = br_locate (symbol);
-	if (!path) return NULL;
+    path = br_locate (symbol);
+    if (!path) return NULL;
 
-	prefix = br_extract_prefix (path);
-	free (path);
-	return prefix;
+    prefix = br_extract_prefix (path);
+    free (path);
+    return prefix;
 }
 
 
@@ -186,7 +179,7 @@ br_locate_prefix (void *symbol)
  * symbol: A symbol that belongs to the app/library you want to locate.
  * path: The path that you want to prepend the prefix to.
  * Returns: The new path, or NULL on error. This string should be freed when no
- *	    longer needed.
+ *        longer needed.
  *
  * Gets the prefix of the app/library that symbol belongs to. Prepend that prefix to path.
  * Note that symbol cannot be a pointer to a function. That will not work.
@@ -198,24 +191,24 @@ br_locate_prefix (void *symbol)
 char *
 br_prepend_prefix (void *symbol, char *path)
 {
-	char *tmp, *newpath;
+    char *tmp, *newpath;
 
-	br_return_val_if_fail (symbol != NULL, NULL);
-	br_return_val_if_fail (path != NULL, NULL);
+    br_return_val_if_fail (symbol != NULL, NULL);
+    br_return_val_if_fail (path != NULL, NULL);
 
-	tmp = br_locate_prefix (symbol);
-	if (!tmp) return NULL;
+    tmp = br_locate_prefix (symbol);
+    if (!tmp) return NULL;
 
-	if (strcmp (tmp, "/") == 0)
-		newpath = strdup (path);
-	else
-		newpath = br_strcat (tmp, path);
+    if (strcmp (tmp, "/") == 0)
+        newpath = strdup (path);
+    else
+        newpath = br_strcat (tmp, path);
 
-	/* Get rid of compiler warning ("br_prepend_prefix never used") */
-	if (0) br_prepend_prefix (NULL, NULL);
+    /* Get rid of compiler warning ("br_prepend_prefix never used") */
+    if (0) br_prepend_prefix (NULL, NULL);
 
-	free (tmp);
-	return newpath;
+    free (tmp);
+    return newpath;
 }
 
 #endif /* ENABLE_BINRELOC */
@@ -264,33 +257,33 @@ br_free_last_value ()
 const char *
 br_thread_local_store (char *str)
 {
-	#if BR_THREADS
+    #if BR_THREADS
                 if (!g_thread_supported ())
                     {
                     g_thread_init ((GThreadFunctions *)NULL);
                     br_thread_key = g_private_new (g_free);
                     }
 
-		char *specific = (char *) g_private_get (br_thread_key);
-		if (specific)
+        char *specific = (char *) g_private_get (br_thread_key);
+        if (specific)
                     free (specific);
                 g_private_set (br_thread_key, str);
 
-	#else /* !BR_THREADS */
-		static int initialized = 0;
+    #else /* !BR_THREADS */
+        static int initialized = 0;
 
-		if (!initialized)
-		{
-			atexit (br_free_last_value);
-			initialized = 1;
-		}
+        if (!initialized)
+        {
+            atexit (br_free_last_value);
+            initialized = 1;
+        }
 
-		if (br_last_value)
-			free (br_last_value);
-		br_last_value = str;
-	#endif /* BR_THREADS */
+        if (br_last_value)
+            free (br_last_value);
+        br_last_value = str;
+    #endif /* BR_THREADS */
 
-	return (const char *) str;
+    return (const char *) str;
 }
 
 
@@ -305,21 +298,21 @@ br_thread_local_store (char *str)
 char *
 br_strcat (const char *str1, const char *str2)
 {
-	char *result;
-	size_t len1, len2;
+    char *result;
+    size_t len1, len2;
 
-	if (!str1) str1 = "";
-	if (!str2) str2 = "";
+    if (!str1) str1 = "";
+    if (!str2) str2 = "";
 
-	len1 = strlen (str1);
-	len2 = strlen (str2);
+    len1 = strlen (str1);
+    len2 = strlen (str2);
 
-	result = (char *) malloc (len1 + len2 + 1);
-	memcpy (result, str1, len1);
-	memcpy (result + len1, str2, len2);
-	result[len1 + len2] = '\0';
+    result = (char *) malloc (len1 + len2 + 1);
+    memcpy (result, str1, len1);
+    memcpy (result + len1, str2, len2);
+    result[len1 + len2] = '\0';
 
-	return result;
+    return result;
 }
 
 
@@ -327,18 +320,18 @@ br_strcat (const char *str1, const char *str2)
 static char *
 br_strndup (char *str, size_t size)
 {
-	char *result = (char*)NULL;
-	size_t len;
+    char *result = (char*)NULL;
+    size_t len;
 
-	br_return_val_if_fail (str != (char*)NULL, (char*)NULL);
+    br_return_val_if_fail (str != (char*)NULL, (char*)NULL);
 
-	len = strlen (str);
-	if (!len) return strdup ("");
-	if (size > len) size = len;
+    len = strlen (str);
+    if (!len) return strdup ("");
+    if (size > len) size = len;
 
-	result = (char *) calloc (sizeof (char), len + 1);
-	memcpy (result, str, size);
-	return result;
+    result = (char *) calloc (sizeof (char), len + 1);
+    memcpy (result, str, size);
+    return result;
 }
 
 
@@ -356,23 +349,23 @@ br_strndup (char *str, size_t size)
 char *
 br_extract_dir (const char *path)
 {
-	const char *end;
-	char *result;
+    const char *end;
+    char *result;
 
-	br_return_val_if_fail (path != (char*)NULL, (char*)NULL);
+    br_return_val_if_fail (path != (char*)NULL, (char*)NULL);
 
-	end = strrchr (path, '/');
-	if (!end) return strdup (".");
+    end = strrchr (path, '/');
+    if (!end) return strdup (".");
 
-	while (end > path && *end == '/')
-		end--;
-	result = br_strndup ((char *) path, end - path + 1);
-	if (!*result)
-	{
-		free (result);
-		return strdup ("/");
-	} else
-		return result;
+    while (end > path && *end == '/')
+        end--;
+    result = br_strndup ((char *) path, end - path + 1);
+    if (!*result)
+    {
+        free (result);
+        return strdup ("/");
+    } else
+        return result;
 }
 
 
@@ -392,34 +385,34 @@ br_extract_dir (const char *path)
 char *
 br_extract_prefix (const char *path)
 {
-	const char *end;
-	char *tmp, *result;
+    const char *end;
+    char *tmp, *result;
 
-	br_return_val_if_fail (path != (char*)NULL, (char*)NULL);
+    br_return_val_if_fail (path != (char*)NULL, (char*)NULL);
 
-	if (!*path) return strdup ("/");
-	end = strrchr (path, '/');
-	if (!end) return strdup (path);
+    if (!*path) return strdup ("/");
+    end = strrchr (path, '/');
+    if (!end) return strdup (path);
 
-	tmp = br_strndup ((char *) path, end - path);
-	if (!*tmp)
-	{
-		free (tmp);
-		return strdup ("/");
-	}
-	end = strrchr (tmp, '/');
-	if (!end) return tmp;
+    tmp = br_strndup ((char *) path, end - path);
+    if (!*tmp)
+    {
+        free (tmp);
+        return strdup ("/");
+    }
+    end = strrchr (tmp, '/');
+    if (!end) return tmp;
 
-	result = br_strndup (tmp, end - tmp);
-	free (tmp);
+    result = br_strndup (tmp, end - tmp);
+    free (tmp);
 
-	if (!*result)
-	{
-		free (result);
-		result = strdup ("/");
-	}
+    if (!*result)
+    {
+        free (result);
+        result = strdup ("/");
+    }
 
-	return result;
+    return result;
 }
 
 
@@ -444,13 +437,14 @@ br_extract_prefix (const char *path)
  */
 static Glib::ustring win32_getExePath()
 {
-    char exeName[MAX_PATH+1];
-    GetModuleFileName(NULL, exeName, MAX_PATH);
-    char *slashPos = strrchr(exeName, '\\');
-    if (slashPos)
-        *slashPos = '\0';
-    Glib::ustring s = exeName;
-    return s;
+    gunichar2 path[2048];
+    GetModuleFileNameW(NULL, (WCHAR*) path, 2048);
+    gchar *exe = g_utf16_to_utf8(path, -1, NULL, NULL, NULL);
+    gchar *dir = g_path_get_dirname(exe);
+    Glib::ustring ret = dir;
+    g_free(dir);
+    g_free(exe);
+    return ret;
 }
 
 
@@ -461,8 +455,8 @@ static Glib::ustring win32_getExePath()
 static Glib::ustring win32_getDataDir()
 {
     Glib::ustring dir = win32_getExePath();
-    if (INKSCAPE_DATADIR  && *INKSCAPE_DATADIR &&
-	    strcmp(INKSCAPE_DATADIR, ".") != 0)
+    if (INKSCAPE_DATADIR && *INKSCAPE_DATADIR &&
+        strcmp(INKSCAPE_DATADIR, ".") != 0)
         {
         dir += "\\";
         dir += INKSCAPE_DATADIR;
