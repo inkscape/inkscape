@@ -474,8 +474,7 @@ gchar * blankParam = g_strdup("");
 #ifdef WIN32
 
 /**
- * Set up the PATH and PYTHONPATH environment variables on
- * win32
+ * Set up the PATH and PYTHONPATH environment variables on Windows
  * @param exe Inkscape executable directory in UTF-8
  */
 static void _win32_set_inkscape_env(gchar const *exe)
@@ -488,15 +487,16 @@ static void _win32_set_inkscape_env(gchar const *exe)
     gchar *perl = g_build_filename(exe, "python", NULL);
     gchar *pythonlib = g_build_filename(exe, "python", "Lib", NULL);
     gchar *pythondll = g_build_filename(exe, "python", "DLLs", NULL);
+    gchar *extdir = g_build_filename(exe, "share", "extensions", NULL);
     
     // Python 2.x needs short paths in PYTHONPATH.
     // Otherwise it doesn't work when Inkscape is installed in Unicode directories.
-    // g_win32_locale_filename_from_utf8 is the Glib equivalent
-    // of GetShortPathName.
+    // g_win32_locale_filename_from_utf8 is the GLib wrapper for GetShortPathName.
     // Remove this once we move to Python 3.0.
     gchar *python_s = g_win32_locale_filename_from_utf8(python);
     gchar *pythonlib_s = g_win32_locale_filename_from_utf8(pythonlib);
     gchar *pythondll_s = g_win32_locale_filename_from_utf8(pythondll);
+    gchar *extdir_s = g_win32_locale_filename_from_utf8(extdir);
 
     gchar *new_path;
     gchar *new_pythonpath;
@@ -506,9 +506,11 @@ static void _win32_set_inkscape_env(gchar const *exe)
         new_path = g_strdup_printf("%s;%s;%s;%s", exe, python, scripts, perl);
     }
     if (pythonpath) {
-        new_pythonpath = g_strdup_printf("%s;%s;%s;%s", python_s, pythonlib_s, pythondll_s, pythonpath);
+        new_pythonpath = g_strdup_printf("%s;%s;%s;%s;%s",
+            extdir_s, python_s, pythonlib_s, pythondll_s, pythonpath);
     } else {
-        new_pythonpath = g_strdup_printf("%s;%s;%s", python_s, pythonlib_s, pythondll_s);
+        new_pythonpath = g_strdup_printf("%s;%s;%s;%s",
+            extdir_s, python_s, pythonlib_s, pythondll_s);
     }
 
     g_setenv("PATH", new_path, TRUE);
@@ -540,24 +542,6 @@ static void _win32_set_inkscape_env(gchar const *exe)
     g_free(new_pythonpath);
 }
 #endif
-
-/**
- * Add INKSCAPE_EXTENSIONDIR to PYTHONPATH so that extensions in users home
- * can find inkex.py et al. (Bug #197475)
- */
-static int set_extensions_env()
-{
-    char *oldenv = getenv("PYTHONPATH");
-    Glib::ustring tmp = INKSCAPE_EXTENSIONDIR;
-    if (oldenv != NULL) {
-        tmp += G_SEARCHPATH_SEPARATOR;
-        tmp += oldenv;
-    }
-    g_setenv("PYTHONPATH", tmp.c_str(), TRUE);
-
-    return 0;
-}
-
 
 /**
  * This is the classic main() entry point of the program, though on some
@@ -638,9 +622,6 @@ main(int argc, char **argv)
 
     // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
     Gtk::Main::init_gtkmm_internals();
-
-    // Bug #197475
-    set_extensions_env();
 
     LIBXML_TEST_VERSION
 
