@@ -512,9 +512,26 @@
     </link>
   </target>
   
+<!--
+  ########################################################################
+  ## T A R G E T    :    L I N K C O N S O L E
+  ########################################################################
+  -->
+  <target name="linkconsole" depends="compile"
+        description="link console helper">
 
-
-
+    <link command="${arch}g++" out="${build}/inkscape-console.exe"
+              strip="true" stripcommand="${archutil}strip">
+       <flags>
+           -mconsole
+           -mthreads
+       </flags>
+       <fileset dir="${build}">
+           <include name="obj/winconsole.o"/>
+       </fileset>
+       <libs></libs>
+    </link>
+  </target>
 
   <!--
   ########################################################################
@@ -792,12 +809,13 @@
   ## T A R G E T    :    D I S T - I N K S C A P E
   ########################################################################
   -->
-  <target name="dist-inkscape" depends="link,distbase"
+  <target name="dist-inkscape" depends="link,linkconsole,distbase"
       description="copy inkscape to the distribution directory">
 
     <!-- Create the distribution directory -->
     <copy todir="${dist}" file="${build}/inkscape.exe"/>
     <copy todir="${dist}" file="${build}/inkscape.dbg"/>
+    <copy file="${build}/inkscape-console.exe" tofile="${dist}/inkscape.com"/>
   </target>
 
 

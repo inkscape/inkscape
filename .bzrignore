@@ -136,3 +136,12 @@ src/ui/widget/makefile
 src/util/makefile
 src/widgets/makefile
 src/xml/makefile
+src/test-main.cpp
+src/test-src.cpp
+src/display/test-display.cpp
+src/helper/test-helper.cpp
+src/libnr/test-nr.cpp
+src/svg/test-svg.cpp
+src/util/test-util.cpp
+src/xml/test-xml.cpp
+gc.log
