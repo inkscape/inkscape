@@ -186,6 +186,7 @@ EXTRA_DIST =	\
 	extension/internal/emf-win32-print.h	\
 	helper/sp-marshal.list	\
 	show-preview.bmp \
+	winconsole.cpp \
 	$(jabber_whiteboard_SOURCES) \
 	$(CXXTEST_TEMPLATE)
 

@@ -545,18 +545,24 @@ static void set_extensions_env()
 {
     gchar const *pythonpath = g_getenv("PYTHONPATH");
     gchar *extdir;
+    gchar *new_pythonpath;
     
 #ifdef WIN32
     extdir = g_win32_locale_filename_from_utf8(INKSCAPE_EXTENSIONDIR);
 #else
     extdir = g_strdup(INKSCAPE_EXTENSIONDIR);
 #endif
+    if (pythonpath) {
+        new_pythonpath = g_strdup_printf("%s" G_SEARCHPATH_SEPARATOR_S "%s",
+                                         extdir, pythonpath);
+        g_free(extdir);
+    } else {
+        new_pythonpath = extdir;
+    }
 
-    gchar *new_pythonpath = g_strdup_printf("%s" G_SEARCHPATH_SEPARATOR_S "%s",
-                                            extdir, pythonpath);
     g_setenv("PYTHONPATH", new_pythonpath, TRUE);
-    g_free(extdir);
     g_free(new_pythonpath);
+    printf("PYTHONPATH = %s", g_getenv("PYTHONPATH"));
 }
 
 /**
