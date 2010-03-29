@@ -24,6 +24,8 @@
 #include <gtkmm/box.h>
 #include <gtk/gtkvbox.h>
 
+#include "desktop.h"
+#include "selection.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "display/sp-canvas.h"
@@ -49,6 +51,13 @@
 /* Fill */
 
 
+Gtk::Widget *sp_fill_style_widget_new(void)
+{
+    return Inkscape::Widgets::createStyleWidget( FILL );
+}
+
+
+namespace Inkscape {
 
 class FillNStroke : public Gtk::VBox
 {
@@ -58,6 +67,8 @@ public:
 
     void setFillrule( SPPaintSelector::FillRule mode );
 
+    void setDesktop(SPDesktop *desktop);
+
 private:
     static void paintModeChangeCB(SPPaintSelector *psel, SPPaintSelector::Mode mode, FillNStroke *self);
     static void paintChangedCB(SPPaintSelector *psel, FillNStroke *self);
@@ -65,8 +76,7 @@ private:
 
     static void fillruleChangedCB( SPPaintSelector *psel, SPPaintSelector::FillRule mode, FillNStroke *self );
 
-    static void selectionModifiedCB(Inkscape::Application *inkscape, Inkscape::Selection *selection, guint flags, FillNStroke *self);
-    static void selectionChangedCB(Inkscape::Application *inkscape, void * data, FillNStroke *self);
+    void selectionModifiedCB(guint flags);
 
     void dragFromPaint();
     void updateFromPaint();
@@ -74,33 +84,47 @@ private:
     void performUpdate();
 
     FillOrStroke kind;
+    SPDesktop *desktop;
     SPPaintSelector *psel;
     bool update;
     bool local;
+    sigc::connection selectChangedConn;
+    sigc::connection subselChangedConn;
+    sigc::connection selectModifiedConn;
 };
 
+} // namespace Inkscape
 
-GtkWidget *sp_fill_style_widget_new(void)
+void sp_fill_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop)
 {
-    return Inkscape::Widgets::createStyleWidget( FILL );
+    Inkscape::FillNStroke *fs = dynamic_cast<Inkscape::FillNStroke*>(widget);
+    if (fs) {
+        fs->setDesktop(desktop);
+    }
 }
+
+namespace Inkscape {
 
 /**
  * Create the fill or stroke style widget, and hook up all the signals.
  */
-GtkWidget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
+Gtk::Widget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
 {
-    FillNStroke *filler = Gtk::manage(new FillNStroke(kind));
+    FillNStroke *filler = new FillNStroke(kind);
 
-    return GTK_WIDGET(filler->gobj());
+    return filler;
 }
 
 FillNStroke::FillNStroke( FillOrStroke kind ) :
     Gtk::VBox(),
     kind(kind),
+    desktop(0),
     psel(0),
     update(false),
-    local(false)
+    local(false),
+    selectChangedConn(),
+    subselChangedConn(),
+    selectModifiedConn()
 {
     // Add and connect up the paint selector widget:
     psel = sp_paint_selector_new(kind);
@@ -123,58 +147,50 @@ FillNStroke::FillNStroke( FillOrStroke kind ) :
                           this );
     }
 
-    // connect to the app instance to get selection notifications.
-    // TODO FIXME should really get connected to a Desktop instead.
-    Inkscape::Application *appInstance = INKSCAPE;
-    g_signal_connect( G_OBJECT(appInstance), "modify_selection",
-                      G_CALLBACK(selectionModifiedCB),
-                      this );
-
-    g_signal_connect( G_OBJECT(appInstance), "change_selection",
-                      G_CALLBACK(selectionChangedCB),
-                      this );
-
-    g_signal_connect( G_OBJECT(appInstance), "change_subselection",
-                      G_CALLBACK(selectionChangedCB),
-                      this );
-
-
     performUpdate();
 }
 
 FillNStroke::~FillNStroke()
 {
     psel = 0;
+    selectModifiedConn.disconnect();
+    subselChangedConn.disconnect();
+    selectChangedConn.disconnect();
 }
 
 /**
  * On signal modified, invokes an update of the fill or stroke style paint object.
  */
-void FillNStroke::selectionModifiedCB( Inkscape::Application * /*inkscape*/,
-                                       Inkscape::Selection */*selection*/,
-                                       guint flags,
-                                       FillNStroke *self )
+void FillNStroke::selectionModifiedCB( guint flags )
 {
-    if (self &&
-        (flags & ( SP_OBJECT_MODIFIED_FLAG |
+    if (flags & ( SP_OBJECT_MODIFIED_FLAG |
                    SP_OBJECT_PARENT_MODIFIED_FLAG |
-                   SP_OBJECT_STYLE_MODIFIED_FLAG) ) ) {
+                   SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
 #ifdef SP_FS_VERBOSE
-        g_message("selectionModifiedCB(%p)", self);
+        g_message("selectionModifiedCB(%d) on %p", flags, this);
 #endif
-        self->performUpdate();
+        performUpdate();
     }
 }
 
-/**
- * On signal selection changed or subselection changed, invokes an update of the fill or stroke style paint object.
- */
-void FillNStroke::selectionChangedCB( Inkscape::Application * /*inkscape*/,
-                                      void * /*data*/,
-                                      FillNStroke *self )
+void FillNStroke::setDesktop(SPDesktop *desktop)
 {
-    if (self) {
-        self->performUpdate();
+    if (this->desktop != desktop) {
+        if (this->desktop) {
+            selectModifiedConn.disconnect();
+            subselChangedConn.disconnect();
+            selectChangedConn.disconnect();
+        }
+        this->desktop = desktop;
+        if (desktop && desktop->selection) {
+            selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
+            subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
+
+            // Must check flags, so can't call performUpdate() directly.
+            selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FillNStroke::selectionModifiedCB)));
+
+        }
+        performUpdate();
     }
 }
 
@@ -186,7 +202,7 @@ void FillNStroke::selectionChangedCB( Inkscape::Application * /*inkscape*/,
  */
 void FillNStroke::performUpdate()
 {
-    if ( update ) {
+    if ( update || !desktop ) {
         return;
     }
 
@@ -201,10 +217,10 @@ void FillNStroke::performUpdate()
     update = true;
 
     // create temporary style
-    SPStyle *query = sp_style_new(SP_ACTIVE_DOCUMENT);
+    SPStyle *query = sp_style_new(desktop->doc());
 
     // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result = sp_desktop_query_style(SP_ACTIVE_DESKTOP, query, (kind == FILL) ? QUERY_STYLE_PROPERTY_FILL : QUERY_STYLE_PROPERTY_STROKE);
+    int result = sp_desktop_query_style(desktop, query, (kind == FILL) ? QUERY_STYLE_PROPERTY_FILL : QUERY_STYLE_PROPERTY_STROKE);
 
     SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
     SPIScale24 &targOpacity = (kind == FILL) ? query->fill_opacity : query->stroke_opacity;
@@ -298,9 +314,7 @@ void FillNStroke::fillruleChangedCB( SPPaintSelector * /*psel*/,
 
 void FillNStroke::setFillrule( SPPaintSelector::FillRule mode )
 {
-    if (!update) {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
+    if (!update && desktop) {
         SPCSSAttr *css = sp_repr_css_attr_new();
         sp_repr_css_set_property(css, "fill-rule", (mode == SPPaintSelector::FILLRULE_EVENODD) ? "evenodd":"nonzero");
 
@@ -309,7 +323,7 @@ void FillNStroke::setFillrule( SPPaintSelector::FillRule mode )
         sp_repr_css_attr_unref(css);
         css = 0;
 
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILL_STROKE,
+        sp_document_done(desktop->doc(), SP_VERB_DIALOG_FILL_STROKE,
                          _("Change fill rule"));
     }
 }
@@ -342,7 +356,7 @@ void FillNStroke::paintDraggedCB(SPPaintSelector * /*psel*/, FillNStroke *self)
  */
 void FillNStroke::dragFromPaint()
 {
-    if (!INKSCAPE || update) {
+    if (!desktop || update) {
         return;
     }
 
@@ -361,8 +375,8 @@ void FillNStroke::dragFromPaint()
         case SPPaintSelector::MODE_COLOR_RGB:
         case SPPaintSelector::MODE_COLOR_CMYK:
         {
-            psel->setFlatColor( SP_ACTIVE_DESKTOP, (kind == FILL) ? "fill" : "stroke", (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
-            sp_document_maybe_done(sp_desktop_document(SP_ACTIVE_DESKTOP), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
+            psel->setFlatColor( desktop, (kind == FILL) ? "fill" : "stroke", (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
+            sp_document_maybe_done(desktop->doc(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
                                    (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
             if (kind == FILL) {
                 local = true; // local change, do not update from selection
@@ -397,7 +411,6 @@ void FillNStroke::paintChangedCB( SPPaintSelector * /*psel*/, FillNStroke *self 
 
 void FillNStroke::updateFromPaint()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) {
         return;
     }
@@ -484,7 +497,7 @@ void FillNStroke::updateFromPaint()
                 if (!vector) {
                     /* No vector in paint selector should mean that we just changed mode */
 
-                    SPStyle *query = sp_style_new(SP_ACTIVE_DOCUMENT);
+                    SPStyle *query = sp_style_new(desktop->doc());
                     int result = objects_query_fillstroke(const_cast<GSList *>(items), query, kind == FILL);
                     SPIPaint &targPaint = (kind == FILL) ? query->fill : query->stroke;
                     guint32 common_rgb = 0;
@@ -635,6 +648,7 @@ void FillNStroke::updateFromPaint()
     update = false;
 }
 
+} // namespace Inkscape
 
 /*
   Local Variables:

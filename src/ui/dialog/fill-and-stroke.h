@@ -4,8 +4,10 @@
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2004--2007 Authors
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -37,6 +39,12 @@ public:
 
     static FillAndStroke &getInstance() { return *new FillAndStroke(); }
 
+
+    virtual void setDesktop(SPDesktop *desktop);
+
+    // temporary work-around until panel dialog itself tracks 'focus' properly.
+    virtual void setTargetDesktop(SPDesktop *desktop);
+
     void selectionChanged(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection);
 
@@ -54,7 +62,7 @@ protected:
     StyleSubject::Selection _subject;
     ObjectCompositeSettings _composite_settings;
 
-    Gtk::HBox &_createPageTabLabel(const Glib::ustring &label, 
+    Gtk::HBox &_createPageTabLabel(const Glib::ustring &label,
                                    const char *label_image);
 
     void _layoutPageFill();
@@ -64,6 +72,15 @@ protected:
 private:
     FillAndStroke(FillAndStroke const &d);
     FillAndStroke& operator=(FillAndStroke const &d);
+
+    static gboolean activateDesktopCB(Inkscape::Application *inkscape, SPDesktop *desktop, FillAndStroke *self );
+    static bool hierarchyChangeCB(GtkWidget *widget, GtkWidget* prev, FillAndStroke *self);
+
+    gulong hierID;
+    bool trackActive;
+    SPDesktop *targetDesktop;
+    Gtk::Widget *fillWdgt;
+    Gtk::Widget *strokeWdgt;
 };
 
 } // namespace Dialog

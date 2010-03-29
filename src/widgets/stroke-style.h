@@ -14,12 +14,15 @@
 #ifndef SEEN_DIALOGS_STROKE_STYLE_H
 #define SEEN_DIALOGS_STROKE_STYLE_H
 
-#include <gtkmm/container.h>
+namespace Gtk {
+class Widget;
+class Container;
+}
 
-typedef struct _GtkWidget GtkWidget;
-
-GtkWidget *sp_stroke_style_paint_widget_new(void);
+Gtk::Widget *sp_stroke_style_paint_widget_new(void);
 Gtk::Container *sp_stroke_style_line_widget_new(void);
+
+void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop);
 
 #endif // SEEN_DIALOGS_STROKE_STYLE_H
 

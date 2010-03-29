@@ -14,9 +14,15 @@
 #ifndef SEEN_DIALOGS_SP_FILL_STYLE_H
 #define SEEN_DIALOGS_SP_FILL_STYLE_H
 
-typedef struct _GtkWidget GtkWidget;
+namespace Gtk {
+class Widget;
+}
 
-GtkWidget *sp_fill_style_widget_new(void);
+class SPDesktop;
+
+Gtk::Widget *sp_fill_style_widget_new(void);
+
+void sp_fill_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop);
 
 #endif // SEEN_DIALOGS_SP_FILL_STYLE_H
 

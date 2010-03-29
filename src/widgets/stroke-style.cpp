@@ -56,6 +56,7 @@
 #include "xml/repr.h"
 
 #include "stroke-style.h"
+#include "fill-style.h" // to get sp_fill_style_widget_set_desktop
 #include "fill-n-stroke-factory.h"
 
 /** Marker selection option menus */
@@ -72,10 +73,16 @@ static void      ink_markers_menu_update(Gtk::Container* spw, SPMarkerLoc const 
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
-GtkWidget *sp_stroke_style_paint_widget_new(void)
+Gtk::Widget *sp_stroke_style_paint_widget_new(void)
 {
     return Inkscape::Widgets::createStyleWidget( STROKE );
 }
+
+void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop)
+{
+    sp_fill_style_widget_set_desktop(widget, desktop);
+}
+
 
 
 /* Line */

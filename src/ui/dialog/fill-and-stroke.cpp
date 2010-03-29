@@ -6,8 +6,10 @@
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2004--2007 Authors
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -29,6 +31,8 @@
 #include "widgets/stroke-style.h"
 #include "xml/repr.h"
 
+#include "ui/view/view-widget.h"
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -38,7 +42,12 @@ FillAndStroke::FillAndStroke()
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),
-      _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke", SimpleFilterModifier::BLUR)
+      _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke", SimpleFilterModifier::BLUR),
+      hierID(0),
+      trackActive(false),
+      targetDesktop(0),
+      fillWdgt(0),
+      strokeWdgt(0)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
@@ -58,25 +67,75 @@ FillAndStroke::FillAndStroke()
     show_all_children();
 
     _composite_settings.setSubject(&_subject);
+
+    // Use C/gobject callbacks to avoid gtkmm rewrap-during-destruct issues:
+    hierID = g_signal_connect( G_OBJECT(gobj()), "hierarchy-changed", G_CALLBACK(hierarchyChangeCB), this );
+
+    g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK( activateDesktopCB ), this );
 }
 
 FillAndStroke::~FillAndStroke()
 {
     _composite_settings.setSubject(NULL);
+    if (hierID) {
+        g_signal_handler_disconnect(G_OBJECT(gobj()), hierID);
+        hierID = 0;
+    }
+}
+
+gboolean FillAndStroke::activateDesktopCB(Inkscape::Application */*inkscape*/, SPDesktop *desktop, FillAndStroke *self )
+{
+    if (self && self->trackActive) {
+        self->setTargetDesktop(desktop);
+    }
+    return FALSE;
+}
+
+bool FillAndStroke::hierarchyChangeCB(GtkWidget *widget, GtkWidget* /*prev*/, FillAndStroke *self)
+{
+    if (self) {
+        GtkWidget *ww = gtk_widget_get_ancestor(widget, SP_TYPE_VIEW_WIDGET);
+        bool newFlag = (ww == 0);
+        if (newFlag != self->trackActive) {
+            self->trackActive = newFlag;
+            if (self->trackActive) {
+                self->setTargetDesktop(SP_ACTIVE_DESKTOP);
+            } else {
+                self->setTargetDesktop(self->getDesktop());
+            }
+        }
+    }
+    return false;
+}
+
+void FillAndStroke::setDesktop(SPDesktop *desktop)
+{
+    Panel::setDesktop(desktop);
+    setTargetDesktop(desktop);
+}
+
+void FillAndStroke::setTargetDesktop(SPDesktop *desktop)
+{
+    if (fillWdgt) {
+        sp_fill_style_widget_set_desktop(fillWdgt, desktop);
+    }
+    if (strokeWdgt) {
+        sp_stroke_style_widget_set_desktop(strokeWdgt, desktop);
+    }
 }
 
 void
 FillAndStroke::_layoutPageFill()
 {
-    Gtk::Widget *fs = manage(Glib::wrap(sp_fill_style_widget_new()));
-    _page_fill.table().attach(*fs, 0, 1, 0, 1);
+    fillWdgt = manage(sp_fill_style_widget_new());
+    _page_fill.table().attach(*fillWdgt, 0, 1, 0, 1);
 }
 
 void
 FillAndStroke::_layoutPageStrokePaint()
 {
-    Gtk::Widget *ssp = manage(Glib::wrap(sp_stroke_style_paint_widget_new()));
-    _page_stroke_paint.table().attach(*ssp, 0, 1, 0, 1);
+    strokeWdgt = manage(sp_stroke_style_paint_widget_new());
+    _page_stroke_paint.table().attach(*strokeWdgt, 0, 1, 0, 1);
 }
 
 void

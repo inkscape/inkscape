@@ -10,12 +10,14 @@
 
 #include "fill-or-stroke.h"
 
-typedef struct _GtkWidget GtkWidget;
+namespace Gtk {
+class Widget;
+}
 
 namespace Inkscape {
 namespace Widgets {
 
-GtkWidget *createStyleWidget( FillOrStroke kind );
+Gtk::Widget *createStyleWidget( FillOrStroke kind );
 
 } // namespace Widgets
 } // namespace Inkscape
