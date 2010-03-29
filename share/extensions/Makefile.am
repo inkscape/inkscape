@@ -133,9 +133,9 @@ extensions = \
 	uniconv-ext.py \
 	uniconv_output.py \
 	voronoi.py \
-	webslicer-create-group.py \
-	webslicer-create-rect.py \
-	webslicer-export.py \
+	webslicer_create_group.py \
+	webslicer_create_rect.py \
+	webslicer_export.py \
 	web-set-att.py \
 	web-transmit-att.py \
 	whirl.py \
@@ -259,9 +259,9 @@ modules = \
 	text_braille.inx \
 	triangle.inx \
 	txt2svg.inx \
-	webslicer-create-group.inx \
-	webslicer-create-rect.inx \
-	webslicer-export.inx \
+	webslicer_create_group.inx \
+	webslicer_create_rect.inx \
+	webslicer_export.inx \
 	web-set-att.inx \
 	web-transmit-att.inx \
 	whirl.inx \

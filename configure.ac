@@ -922,61 +922,6 @@ dnl
 AC_SUBST(INKSCAPE_CFLAGS)
 AC_SUBST(INKSCAPE_LIBS)
 
-#
-# Checks to see if we should compile in MMX support (there will be
-# a runtime test when the code is actually run to see if it should
-# be used - this just checks if we can compile it.)
-#
-# This code is partially taken from Mesa
-#
-dnl Let people disable the MMX optimization
-AC_ARG_ENABLE(mmx, [  --disable-mmx     Don't use MMX optimization [default=auto]], enable_mmx="$enableval", enable_mmx=auto)
-
-AC_MSG_CHECKING(for x86 platform)
-case $host_cpu in
-  i386|i486|i586|i686|i786|k6|k7)
-    use_x86_asm=yes
-    ;;
-  *)
-    use_x86_asm=no
-esac
-AC_MSG_RESULT($use_x86_asm)
-
-dnl Are we going to use MMX extensions
-use_mmx_asm=no
-
-AC_MSG_CHECKING(compiler support for MMX)
-
-if test x$enable_mmx = xauto ; then
-  if test $use_x86_asm = yes; then
-    save_ac_ext=$ac_ext
-    ac_ext=S
-    
-    cp $srcdir/src/libnr/nr_mmx_R8G8B8A8_P_R8G8B8A8_P_A8_RGBAP.S conftest.S
-    if AC_TRY_EVAL(ac_compile); then
-        use_mmx_asm=yes
-    fi
-    dnl rm -f conftest.[oS]
-
-    ac_ext=$save_ac_ext
-  fi
-
-dnl Enforce usage of MMX extensions
-elif test x$enable_mmx = xyes ; then
-    use_mmx_asm=yes
-else
-    use_mmx_asm=no
-fi
-
-if test $use_mmx_asm = yes; then
-	AC_DEFINE(WITH_MMX, 1, [Use MMX optimizations, if CPU supports it])
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
-fi
-
-AM_CONDITIONAL(USE_MMX, test x$use_mmx_asm = xyes)
-
 dnl Define our data paths for config.h
 AC_DEFINE_DIR([INKSCAPE_DATADIR], [datadir], [Base data directory])
 AC_DEFINE_DIR([PACKAGE_LOCALE_DIR], [localedir], [Locatization directory])
@@ -1076,7 +1021,6 @@ Configuration:
         Use Xft font database:    ${xft_ok}
         Use gnome-vfs:            ${gnome_vfs}
         Use openoffice files:     ${ij}
-        Use MMX optimizations:    ${use_mmx_asm}
         Use relocation support:   ${enable_binreloc}
         Internal Python:          ${with_python}
         Internal Perl:            ${with_perl}
