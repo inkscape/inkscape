@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
+import webslicer_effect
 import inkex
 import gettext
 import os.path
@@ -24,16 +25,10 @@ import commands
 
 _ = gettext.gettext
 
-def is_empty(val):
-    if val is None:
-        return True
-    else:
-        return len(str(val)) == 0
-
-class WebSlicer_Export(inkex.Effect):
+class WebSlicer_Export(webslicer_effect.WebSlicer_Effect):
 
     def __init__(self):
-        inkex.Effect.__init__(self)
+        webslicer_effect.WebSlicer_Effect.__init__(self)
         self.OptionParser.add_option("--with-code",
                                      action="store", type="string",
                                      dest="with_code",
@@ -51,6 +46,8 @@ class WebSlicer_Export(inkex.Effect):
             inkex.errormsg(_('The directory "%s" does not exists.') % self.options.dir)
             return
         (status, output) = commands.getstatusoutput("inkscape -e ...")
+        inkex.errormsg( status )
+        inkex.errormsg( output )
 
 
 if __name__ == '__main__':

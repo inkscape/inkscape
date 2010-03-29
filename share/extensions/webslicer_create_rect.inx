@@ -2,7 +2,8 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
   <_name>Create a slicer rectangle</_name>
   <id>org.inkscape.web.slicer.create-rect</id>
-  <dependency type="executable" location="extensions">webslicer-create-rect.py</dependency>
+  <dependency type="executable" location="extensions">webslicer_effect.py</dependency>
+  <dependency type="executable" location="extensions">webslicer_create_rect.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <param name="name" type="string" _gui-text="Name"></param>
   <param name="format" type="enum" _gui-text="Format">
@@ -61,6 +62,6 @@
     </effects-menu>
   </effect>
   <script>
-    <command reldir="extensions" interpreter="python">webslicer-create-rect.py</command>
+    <command reldir="extensions" interpreter="python">webslicer_create_rect.py</command>
   </script>
 </inkscape-extension>

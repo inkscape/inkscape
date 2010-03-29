@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
+import webslicer_effect
 import inkex
 import gettext
 
@@ -28,10 +29,10 @@ def is_empty(val):
     else:
         return len(str(val)) == 0
 
-class WebSlicer_CreateRect(inkex.Effect):
+class WebSlicer_CreateRect(webslicer_effect.WebSlicer_Effect):
 
     def __init__(self):
-        inkex.Effect.__init__(self)
+        webslicer_effect.WebSlicer_Effect.__init__(self)
         self.OptionParser.add_option("--name",
                                      action="store", type="string",
                                      dest="name",
@@ -107,7 +108,7 @@ class WebSlicer_CreateRect(inkex.Effect):
 
     def effect(self):
         self.validate_options()
-        layer = self.get_slicer_layer()
+        layer = self.get_slicer_layer(True)
         #TODO: get selected elements to define location and size
         rect = inkex.etree.SubElement(layer, 'rect')
         if is_empty(self.options.name):
@@ -141,32 +142,17 @@ class WebSlicer_CreateRect(inkex.Effect):
     def get_full_conf_list(self):
         conf_list = [ 'format:'+self.options.format ]
         if self.options.format == 'gif':
-            conf_list.extend( get_conf_from_list([ 'gif_type', 'palette_size' ]) )
+            conf_list.extend( self.get_conf_from_list([ 'gif_type', 'palette_size' ]) )
         if self.options.format == 'jpg':
-            conf_list.extend( get_conf_from_list([ 'quality' ]) )
+            conf_list.extend( self.get_conf_from_list([ 'quality' ]) )
         conf_general_atts = [
                 'dpi', 'dimension',
                 'bg_color', 'html_id', 'html_class',
                 'layout_disposition', 'layout_position_anchor'
             ]
-        conf_list.extend( get_conf_from_list(conf_general_atts) )
+        conf_list.extend( self.get_conf_from_list(conf_general_atts) )
         return conf_list
 
-
-    def get_slicer_layer(self):
-        # Test if webslicer-layer layer existis
-        layer = self.document.xpath(
-                     '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
-                     namespaces=inkex.NSS)
-        if len(layer) is 0:
-            # Create a new layer
-            layer = inkex.etree.SubElement(self.document.getroot(), 'g')
-            layer.set('id', 'webslicer-layer')
-            layer.set(inkex.addNS('label', 'inkscape'), 'Web Slicer')
-            layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
-        else:
-            layer = layer[0]
-        return layer
 
 
 if __name__ == '__main__':
