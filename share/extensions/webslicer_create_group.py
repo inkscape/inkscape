@@ -17,21 +17,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
+from webslicer_effect import *
 import inkex
 import gettext
 
 _ = gettext.gettext
 
-def is_empty(val):
-    if val is None:
-        return True
-    else:
-        return len(str(val)) == 0
-
-class WebSlicer_CreateGroup(inkex.Effect):
+class WebSlicer_CreateGroup(WebSlicer_Effect):
 
     def __init__(self):
-        inkex.Effect.__init__(self)
+        WebSlicer_Effect.__init__(self)
         self.OptionParser.add_option("--html-id",
                                      action="store", type="string",
                                      dest="html_id",
@@ -51,12 +46,8 @@ class WebSlicer_CreateGroup(inkex.Effect):
 
 
     def get_base_elements(self):
-        layerArr = self.document.xpath(
-                   '//*[@id="webslicer-layer" and @inkscape:groupmode="layer"]',
-                   namespaces=inkex.NSS)
-        if len(layerArr) > 0:
-            self.layer = layerArr[0]
-        else:
+        self.layer = self.get_slicer_layer()
+        if is_empty(self.layer):
             inkex.errormsg(_('You must to create and select some "Slicer rectangles" before try to group.'))
             exit(3)
         self.layer_descendants = self.get_descendants_in_array(self.layer)

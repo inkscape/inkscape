@@ -17,22 +17,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import webslicer_effect
+from webslicer_effect import *
 import inkex
 import gettext
 
 _ = gettext.gettext
 
-def is_empty(val):
-    if val is None:
-        return True
-    else:
-        return len(str(val)) == 0
-
-class WebSlicer_CreateRect(webslicer_effect.WebSlicer_Effect):
+class WebSlicer_CreateRect(WebSlicer_Effect):
 
     def __init__(self):
-        webslicer_effect.WebSlicer_Effect.__init__(self)
+        WebSlicer_Effect.__init__(self)
         self.OptionParser.add_option("--name",
                                      action="store", type="string",
                                      dest="name",
