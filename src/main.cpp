@@ -552,6 +552,19 @@ static void set_extensions_env()
 #else
     extdir = g_strdup(INKSCAPE_EXTENSIONDIR);
 #endif
+
+    // On some platforms, INKSCAPE_EXTENSIONDIR is not absolute,
+    // but relative to the directory that contains the Inkscape executable.
+    // Since we spawn Python chdir'ed into the script's directory,
+    // we need to obtain the absolute path here.
+    if (!g_path_is_absolute(extdir)) {
+        gchar *curdir = g_get_current_dir();
+        gchar *extdir_new = g_build_filename(curdir, extdir, NULL);
+        g_free(extdir);
+        g_free(curdir);
+        extdir = extdir_new;
+    }
+
     if (pythonpath) {
         new_pythonpath = g_strdup_printf("%s" G_SEARCHPATH_SEPARATOR_S "%s",
                                          extdir, pythonpath);
@@ -562,7 +575,7 @@ static void set_extensions_env()
 
     g_setenv("PYTHONPATH", new_pythonpath, TRUE);
     g_free(new_pythonpath);
-    printf("PYTHONPATH = %s", g_getenv("PYTHONPATH"));
+    printf("PYTHONPATH = %s\n", g_getenv("PYTHONPATH"));
 }
 
 /**
@@ -588,7 +601,6 @@ main(int argc, char **argv)
       HKCR\svgfile\shell\open\command is a good example
 
       TODO: this breaks the CLI on Windows, see LP #167455
-      However, the CLI is broken anyway, because we are a GUI app
     */
     const int pathbuf = 2048;
     gunichar2 *path = g_new(gunichar2, pathbuf);
