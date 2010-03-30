@@ -37,18 +37,26 @@ class MyEffect(inkex.Effect):
                         action="store", type="float", 
                         dest="yOrigin", default=0.0,
                         help="Y Origin (pixels)")
+        self.OptionParser.add_option("-r", "--resolution",
+                        action="store", type="int", 
+                        dest="resolution", default=1016,
+                        help="Resolution (dpi)")
+        self.OptionParser.add_option("-n", "--pen",
+                        action="store", type="int",
+                        dest="pen", default=1,
+                        help="Pen number")
         self.OptionParser.add_option("-p", "--plotInvisibleLayers",
                         action="store", type="inkbool", 
                         dest="plotInvisibleLayers", default="FALSE",
                         help="Plot invisible layers")
 
-        self.hpgl = ['IN;SP1;']
     def output(self):
         print ''.join(self.hpgl)
     def effect(self):
+        self.hpgl = ['IN;SP%d;' % self.options.pen]
         x0 = self.options.xOrigin
         y0 = self.options.yOrigin
-        scale = 1016.0/90
+        scale = float(self.options.resolution)/90
         mirror = 1.0
         if self.options.mirror:
             mirror = -1.0
@@ -78,6 +86,7 @@ class MyEffect(inkex.Effect):
                                 cmd = 'PU'
                             first = False
                             self.hpgl.append('%s%d,%d;' % (cmd,(csp[1][0] - x0)*scale,(csp[1][1]*mirror - y0)*scale))
+        self.hpgl.append('PU;')
 
 if __name__ == '__main__':   #pragma: no cover
     e = MyEffect()

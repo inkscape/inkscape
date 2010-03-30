@@ -9,6 +9,8 @@
 	<param name="mirror" type="boolean" _gui-text="Mirror Y-axis">FALSE</param>
 	<param name="xOrigin" type="float" min="-100000" max="100000" _gui-text="X-origin (px)">0.0</param>
 	<param name="yOrigin" type="float" min="-100000" max="100000" _gui-text="Y-origin (px)">0.0</param>
+	<param name="resolution" type="int" min="90" max="2048" _gui-text="Resolution (dpi)">1016</param>
+	<param name="pen" type="int" min="1" max="10" _gui-text="Pen number">1</param>
 	<param name="plotInvisibleLayers" type="boolean" _gui-text="Plot invisible layers">FALSE</param>
 	<output>
 		<extension>.hpgl</extension>
