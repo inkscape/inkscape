@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-29 12:15-0300\n"
+"POT-Creation-Date: 2010-03-30 17:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,7 +202,7 @@ msgid "Desaturate"
 msgstr ""
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer-create-rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Grayscale"
 msgstr ""
 
@@ -2733,199 +2733,203 @@ msgstr ""
 msgid "Text Input"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:1
-#: ../share/extensions/webslicer-create-rect.inx.h:15
+#: ../share/extensions/webslicer_create_group.inx.h:1
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "HTML class atribute"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:2
-#: ../share/extensions/webslicer-create-rect.inx.h:16
+#: ../share/extensions/webslicer_create_group.inx.h:2
+#: ../share/extensions/webslicer_create_rect.inx.h:16
 msgid "HTML id atribute"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:3
+#: ../share/extensions/webslicer_create_group.inx.h:3
 msgid "Height Unity"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:4
+#: ../share/extensions/webslicer_create_group.inx.h:4
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, first you must to select some \"Slicer rectangles\"."
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:5
+#: ../share/extensions/webslicer_create_group.inx.h:5
 msgid "Percent (relative to parent size)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:6
+#: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Pixel (fixed)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:7
+#: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Set a layout group"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:8
+#: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:9
-#: ../share/extensions/webslicer-create-rect.inx.h:35
-#: ../share/extensions/webslicer-export.inx.h:4
+#: ../share/extensions/webslicer_create_group.inx.h:9
+#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-group.inx.h:10
+#: ../share/extensions/webslicer_create_group.inx.h:10
 msgid "Width Unity"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:1
+#: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:2
+#: ../share/extensions/webslicer_create_rect.inx.h:2
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Background color"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:3
+#: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:4
+#: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "Background — repeat horizontally (on parent group)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:5
+#: ../share/extensions/webslicer_create_rect.inx.h:5
 msgid "Background — repeat vertically (on parent group)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:6
+#: ../share/extensions/webslicer_create_rect.inx.h:6
 msgid "Bottom and Left"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:7
+#: ../share/extensions/webslicer_create_rect.inx.h:7
 msgid "Bottom and Right"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:8
+#: ../share/extensions/webslicer_create_rect.inx.h:8
 msgid "Create a slicer rectangle"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:9 ../src/main.cpp:300
+#: ../share/extensions/webslicer_create_rect.inx.h:9 ../src/main.cpp:300
 #: ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:10
+#: ../share/extensions/webslicer_create_rect.inx.h:10
 msgid "Force Dimension"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:11
+#: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:12 ../src/rdf.cpp:235
+#: ../share/extensions/webslicer_create_rect.inx.h:12 ../src/rdf.cpp:235
 msgid "Format"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:13
+#: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "GIF specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:17
+#: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "If had set, this will replace DPI."
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:18
+#: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "JPG specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:19
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "Layout disposition"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:20
+#: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Left Floated Image"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:21
+#: ../share/extensions/webslicer_create_rect.inx.h:21
 #: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
 msgid "Name"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:22
+#: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Non Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:23
+#: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Options for HTML export"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:24
 msgid "Palette"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 msgid "Palette size"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 msgid "Position anchor"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:27
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Positioned &lt;div&gt; width the image as Background"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:29
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 msgid "Quality"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:30
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 msgid "Right Floated Image"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:31
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Tiled Background (on parent group)"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:32
+#: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Top and Left"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:33
+#: ../share/extensions/webslicer_create_rect.inx.h:33
 msgid "Top and right"
 msgstr ""
 
-#: ../share/extensions/webslicer-create-rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
 msgid "Type"
 msgstr ""
 
-#: ../share/extensions/webslicer-export.inx.h:1
+#: ../share/extensions/webslicer_export.inx.h:1
 msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
 
-#: ../share/extensions/webslicer-export.inx.h:2
+#: ../share/extensions/webslicer_export.inx.h:2
+msgid "Create directory, if it does not exists"
+msgstr ""
+
+#: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export"
 msgstr ""
 
-#: ../share/extensions/webslicer-export.inx.h:3
+#: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
 msgstr ""
 
-#: ../share/extensions/webslicer-export.inx.h:5
+#: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
 msgstr ""
 
@@ -11131,7 +11135,7 @@ msgstr ""
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:797 ../src/main.cpp:1123
+#: ../src/main.cpp:803 ../src/main.cpp:1129
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -18298,14 +18302,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:499
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:636
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:674
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:515
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:636
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:674
 msgid "Unset stroke"
 msgstr ""
 
@@ -18387,12 +18391,12 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:446
+#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:484
 msgid "Remove fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/fill-style.cpp:446
+#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/fill-style.cpp:484
 msgid "Remove stroke"
 msgstr ""
 
@@ -20553,31 +20557,31 @@ msgstr ""
 msgid "remove"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:327
+#: ../src/widgets/fill-style.cpp:336
 msgid "Change fill rule"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:380 ../src/widgets/fill-style.cpp:462
+#: ../src/widgets/fill-style.cpp:421 ../src/widgets/fill-style.cpp:500
 msgid "Set fill color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:380 ../src/widgets/fill-style.cpp:462
+#: ../src/widgets/fill-style.cpp:421 ../src/widgets/fill-style.cpp:500
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:549
+#: ../src/widgets/fill-style.cpp:587
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:549
+#: ../src/widgets/fill-style.cpp:587
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:609
+#: ../src/widgets/fill-style.cpp:647
 msgid "Set pattern on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:610
+#: ../src/widgets/fill-style.cpp:648
 msgid "Set pattern on stroke"
 msgstr ""
 

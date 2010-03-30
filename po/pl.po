@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-06 09:04+0100\n"
+"POT-Creation-Date: 2010-03-30 17:45+0200\n"
 "PO-Revision-Date: 2010-03-14 23:00+0100\n"
 "Last-Translator: Marcin Floryan <mfloryan@mm.waw.pl>\n"
 "Language-Team: \n"
@@ -211,6 +211,7 @@ msgid "Desaturate"
 msgstr "Mniejsze nasycenie"
 
 #: ../share/extensions/color_grayscale.inx.h:2
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Grayscale"
 msgstr "Skala szarości"
 
@@ -725,7 +726,7 @@ msgid "Shades"
 msgstr "Cienie"
 
 #: ../share/extensions/edge3d.inx.h:9 ../src/live_effects/lpe-knot.cpp:331
-#: ../src/widgets/stroke-style.cpp:1099
+#: ../src/widgets/stroke-style.cpp:691
 msgid "Stroke width"
 msgstr "Szerokość konturu"
 
@@ -868,7 +869,7 @@ msgstr "Proporcje zakładek"
 
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
-#: ../share/extensions/printing-marks.inx.h:19 ../src/helper/units.cpp:37
+#: ../share/extensions/printing-marks.inx.h:20 ../src/helper/units.cpp:37
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Unit"
 msgstr "Jednostka"
@@ -1210,7 +1211,7 @@ msgstr "Grubość linii drugorzędnego podziału kołowego (px)"
 #: ../src/ui/dialog/inkscape-preferences.cpp:578
 #: ../src/ui/dialog/inkscape-preferences.cpp:1208
 #: ../src/ui/dialog/inkscape-preferences.cpp:1273 ../src/verbs.cpp:2192
-#: ../src/widgets/stroke-style.cpp:771 ../src/widgets/toolbox.cpp:3991
+#: ../src/widgets/stroke-style.cpp:362 ../src/widgets/toolbox.cpp:3991
 msgid "None"
 msgstr "Brak"
 
@@ -1399,7 +1400,7 @@ msgid "End Value"
 msgstr "Wartość końcowa"
 
 #: ../share/extensions/interp_att_g.inx.h:4
-#: ../src/ui/dialog/fill-and-stroke.cpp:48
+#: ../src/ui/dialog/fill-and-stroke.cpp:57
 msgid "Fill"
 msgstr "Wypełnienie"
 
@@ -1449,7 +1450,7 @@ msgstr "Inny typ atrybutu"
 
 #: ../share/extensions/interp_att_g.inx.h:16
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1650
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1657
 #: ../src/seltrans.cpp:531 ../src/ui/dialog/transformation.cpp:738
 #: ../src/widgets/toolbox.cpp:4679
 msgid "Scale"
@@ -2231,7 +2232,7 @@ msgstr "Znaczniki"
 
 #. Label
 #: ../share/extensions/printing-marks.inx.h:9
-#: ../src/widgets/gradient-vector.cpp:830
+#: ../src/widgets/gradient-vector.cpp:827
 msgid "Offset:"
 msgstr "Przesunięcie:"
 
@@ -2256,14 +2257,22 @@ msgid "Right:"
 msgstr "Prawa:"
 
 #: ../share/extensions/printing-marks.inx.h:16
+#: ../src/ui/dialog/align-and-distribute.cpp:927
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1651
+msgid "Selection"
+msgstr "Zaznaczenie"
+
+#: ../share/extensions/printing-marks.inx.h:17
 msgid "Set crop marks to"
 msgstr "Ustaw znaczniki przycięcia na"
 
-#: ../share/extensions/printing-marks.inx.h:17
+#: ../share/extensions/printing-marks.inx.h:18
 msgid "Star Target"
 msgstr "Pasery"
 
-#: ../share/extensions/printing-marks.inx.h:18
+#: ../share/extensions/printing-marks.inx.h:19
 msgid "Top:"
 msgstr "Góra:"
 
@@ -2871,6 +2880,224 @@ msgstr "Plik tekstowy (*.txt)"
 msgid "Text Input"
 msgstr "Źródło tekstowe"
 
+#: ../share/extensions/webslicer_create_group.inx.h:1
+#: ../share/extensions/webslicer_create_rect.inx.h:15
+msgid "HTML class atribute"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:2
+#: ../share/extensions/webslicer_create_rect.inx.h:16
+#, fuzzy
+msgid "HTML id atribute"
+msgstr "Ustaw atrybut"
+
+#: ../share/extensions/webslicer_create_group.inx.h:3
+#, fuzzy
+msgid "Height Unity"
+msgstr "Wysokość"
+
+#: ../share/extensions/webslicer_create_group.inx.h:4
+msgid ""
+"Layout Group is only about to help a better code generation (if you need "
+"it). To use this, first you must to select some \"Slicer rectangles\"."
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:5
+#, fuzzy
+msgid "Percent (relative to parent size)"
+msgstr "Skaluj szerokość relatywnie do długości"
+
+#: ../share/extensions/webslicer_create_group.inx.h:6
+msgid "Pixel (fixed)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:7
+msgid "Set a layout group"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:8
+msgid "Undefined (relative to non-floating content size)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:9
+#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_export.inx.h:5
+#: ../share/extensions/web-set-att.inx.h:16
+#: ../share/extensions/web-transmit-att.inx.h:14
+msgid "Web"
+msgstr "Internet"
+
+#: ../share/extensions/webslicer_create_group.inx.h:10
+#, fuzzy
+msgid "Width Unity"
+msgstr "Szerokość"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:1
+msgid ""
+"0 is the lowest image quality and highest compression, and 100 is the best "
+"quality but least effective compression"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:2
+#: ../src/ui/dialog/document-properties.cpp:93
+msgid "Background color"
+msgstr "Kolor tła"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:3
+msgid "Background — no repeat (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:4
+msgid "Background — repeat horizontally (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:5
+msgid "Background — repeat vertically (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:6
+#, fuzzy
+msgid "Bottom and Left"
+msgstr "Dolna ścieżka zagięcia"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:7
+#, fuzzy
+msgid "Bottom and Right"
+msgstr "Dolna ścieżka zagięcia"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:8
+#, fuzzy
+msgid "Create a slicer rectangle"
+msgstr "Utwórz prostokąt"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:9 ../src/main.cpp:300
+#: ../src/ui/widget/rendering-options.cpp:43
+msgid "DPI"
+msgstr "DPI"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:10
+#, fuzzy
+msgid "Force Dimension"
+msgstr "Wymiary"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:11
+msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:12 ../src/rdf.cpp:235
+msgid "Format"
+msgstr "Format"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:13
+#, fuzzy
+msgid "GIF specific options"
+msgstr "Specyfikacja SVG 1.1"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:17
+msgid "If had set, this will replace DPI."
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:18
+#, fuzzy
+msgid "JPG specific options"
+msgstr "Specyfikacja SVG 1.1"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:19
+msgid "Layout disposition"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:20
+msgid "Left Floated Image"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:21
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
+msgid "Name"
+msgstr "Nazwa"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:22
+msgid "Non Positioned Image"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:23
+msgid "Options for HTML export"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:24
+#, fuzzy
+msgid "Palette"
+msgstr "Paleta _kolorów"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:25
+#, fuzzy
+msgid "Palette size"
+msgstr "Wklej rozmiar"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:26
+#, fuzzy
+msgid "Position anchor"
+msgstr "Lokalizacja"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:27
+msgid "Positioned &lt;div&gt; width the image as Background"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:28
+#, fuzzy
+msgid "Positioned Image"
+msgstr "Pozycjonowanie"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:29
+#, fuzzy
+msgid "Quality"
+msgstr "Zakoń_cz"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:30
+#, fuzzy
+msgid "Right Floated Image"
+msgstr "Prawy kąt"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:31
+msgid "Tiled Background (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:32
+#, fuzzy
+msgid "Top and Left"
+msgstr "Górna ścieżka zagięcia"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:33
+#, fuzzy
+msgid "Top and right"
+msgstr "P_orady i sztuczki"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
+msgid "Type"
+msgstr "Typ:"
+
+#: ../share/extensions/webslicer_export.inx.h:1
+msgid ""
+"All sliced images, and optionaly code, will be generated as you had "
+"configured and saved to one directory."
+msgstr ""
+
+#: ../share/extensions/webslicer_export.inx.h:2
+msgid "Create directory, if it does not exists"
+msgstr ""
+
+#: ../share/extensions/webslicer_export.inx.h:3
+msgid "Directory path to export"
+msgstr ""
+
+#: ../share/extensions/webslicer_export.inx.h:4
+msgid "Export layout pieces and HTML+CSS code"
+msgstr ""
+
+#: ../share/extensions/webslicer_export.inx.h:6
+msgid "With HTML and CSS"
+msgstr ""
+
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "All selected ones set an attribute in the last one"
 msgstr "Wszystkie zaznaczone określają atrybut w ostatnim"
@@ -2948,11 +3175,6 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
 msgstr "Wartość do ustawienia"
-
-#: ../share/extensions/web-set-att.inx.h:16
-#: ../share/extensions/web-transmit-att.inx.h:14
-msgid "Web"
-msgstr "Internet"
 
 #: ../share/extensions/web-set-att.inx.h:17
 msgid "When should the set be done?"
@@ -5512,17 +5734,6 @@ msgstr ""
 msgid "Remove a connection point"
 msgstr ""
 
-#: ../src/connector-context.h:50
-msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
-"<b>Punkt połączenia</b> – kliknij lub przeciągnij, aby utworzyć nowy łącznik"
-
-#: ../src/connector-context.h:51
-#, fuzzy
-msgid "<b>Connection point</b>: click to select, drag to move"
-msgstr ""
-"<b>Punkt połączenia</b> – kliknij lub przeciągnij, aby utworzyć nowy łącznik"
-
 #: ../src/live_effects/lpe-extrude.cpp:26
 msgid "Direction"
 msgstr "Kierunek"
@@ -5604,46 +5815,57 @@ msgstr "Utwórz obiekt 3D"
 msgid "<b>3D Box</b>"
 msgstr "<b>Obiekt 3D</b>"
 
-#: ../src/connector-context.cpp:778
+#: ../src/connector-context.cpp:236
+msgid "<b>Connection point</b>: click or drag to create a new connector"
+msgstr ""
+"<b>Punkt połączenia</b> – kliknij lub przeciągnij, aby utworzyć nowy łącznik"
+
+#: ../src/connector-context.cpp:237
+#, fuzzy
+msgid "<b>Connection point</b>: click to select, drag to move"
+msgstr ""
+"<b>Punkt połączenia</b> – kliknij lub przeciągnij, aby utworzyć nowy łącznik"
+
+#: ../src/connector-context.cpp:781
 msgid "Creating new connector"
 msgstr "Tworzenie nowego łącznika"
 
-#: ../src/connector-context.cpp:1156
+#: ../src/connector-context.cpp:1159
 msgid "Connector endpoint drag cancelled."
 msgstr "Anulowano przeciąganie punktu końcowego łącznika"
 
-#: ../src/connector-context.cpp:1186
+#: ../src/connector-context.cpp:1189
 #, fuzzy
 msgid "Connection point drag cancelled."
 msgstr "Anulowano przeciąganie punktu końcowego łącznika"
 
-#: ../src/connector-context.cpp:1304
+#: ../src/connector-context.cpp:1307
 msgid "Reroute connector"
 msgstr "Przekieruj łącznik"
 
-#: ../src/connector-context.cpp:1477
+#: ../src/connector-context.cpp:1480
 msgid "Create connector"
 msgstr "Utwórz łącznik"
 
-#: ../src/connector-context.cpp:1500
+#: ../src/connector-context.cpp:1503
 msgid "Finishing connector"
 msgstr "Zakończono tworzenie łącznika"
 
-#: ../src/connector-context.cpp:1787
+#: ../src/connector-context.cpp:1790
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Punkt końcowy łącznika</b> – przeciągnij, aby przestawić lub połączyć z "
 "nowym kształtem"
 
-#: ../src/connector-context.cpp:1928
+#: ../src/connector-context.cpp:1931
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Zaznacz <b>przynajmniej jeden obiekt nie będący łącznikiem</b>"
 
-#: ../src/connector-context.cpp:1933 ../src/widgets/toolbox.cpp:7558
+#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:7558
 msgid "Make connectors avoid selected objects"
 msgstr "Tworzenie łączników omijających zaznaczone obiekty"
 
-#: ../src/connector-context.cpp:1934 ../src/widgets/toolbox.cpp:7568
+#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:7568
 msgid "Make connectors ignore selected objects"
 msgstr "Tworzenie łączników przechodzących przez zaznaczone obiekty"
 
@@ -5658,20 +5880,20 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>Aktywna warstwa jest zablokowana</b>. Aby móc na niej rysować odblokuj ją."
 
-#: ../src/desktop-events.cpp:185
+#: ../src/desktop-events.cpp:189
 msgid "Create guide"
 msgstr "Utwórz prowadnicę"
 
-#: ../src/desktop-events.cpp:391
+#: ../src/desktop-events.cpp:402
 msgid "Move guide"
 msgstr "Przenieś prowadnicę"
 
-#: ../src/desktop-events.cpp:398 ../src/desktop-events.cpp:444
+#: ../src/desktop-events.cpp:409 ../src/desktop-events.cpp:455
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Usuń prowadnicę"
 
-#: ../src/desktop-events.cpp:424
+#: ../src/desktop-events.cpp:435
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Prowadnica</b>: %s"
@@ -5720,7 +5942,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr "Usuń sąsiadujące klony"
 
-#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2016
+#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:2023
 msgid "Select an <b>object</b> to clone."
 msgstr "Wybierz <b>obiekt</b> do klonowania"
 
@@ -7529,11 +7751,11 @@ msgstr "Środek obwiedni"
 msgid "Bounding box side midpoint"
 msgstr "Środek krawędzi obwiedni"
 
-#: ../src/display/snap-indicator.cpp:169 ../src/ui/tool/node.cpp:1109
+#: ../src/display/snap-indicator.cpp:169 ../src/ui/tool/node.cpp:1193
 msgid "Smooth node"
 msgstr "Gładki węzeł"
 
-#: ../src/display/snap-indicator.cpp:172 ../src/ui/tool/node.cpp:1108
+#: ../src/display/snap-indicator.cpp:172 ../src/ui/tool/node.cpp:1192
 msgid "Cusp node"
 msgstr "Ostry węzeł"
 
@@ -7809,36 +8031,36 @@ msgstr "Rozszerzenie „"
 msgid "\" failed to load because "
 msgstr "” nie zostało wczytane, ponieważ "
 
-#: ../src/extension/extension.cpp:627
+#: ../src/extension/extension.cpp:642
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr "Nie udało się utworzyć pliku dziennika zdarzeń dla rozszerzenia „%s”"
 
-#: ../src/extension/extension.cpp:725
+#: ../src/extension/extension.cpp:740
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: ../src/extension/extension.cpp:726
+#: ../src/extension/extension.cpp:741
 msgid "ID:"
 msgstr "ID:"
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "State:"
 msgstr "Stan:"
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Loaded"
 msgstr "Wczytane"
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Unloaded"
 msgstr "Niewczytane"
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:742
 msgid "Deactivated"
 msgstr "Wyłączono"
 
-#: ../src/extension/extension.cpp:758
+#: ../src/extension/extension.cpp:773
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
@@ -7848,7 +8070,7 @@ msgstr ""
 "dotyczące tego efektu poszukaj odpowiedzi na witrynie Inkscape'a lub zadaj "
 "pytanie na liście mailingowej."
 
-#: ../src/extension/implementation/script.cpp:1053
+#: ../src/extension/implementation/script.cpp:979
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -7926,10 +8148,6 @@ msgstr "Stosuje inteligentne progowanie do zaznaczonych bitmap"
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
 msgid "Add Noise"
 msgstr "Dodaj szum"
-
-#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-msgid "Type"
-msgstr "Typ:"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
 msgid "Uniform Noise"
@@ -8569,13 +8787,30 @@ msgstr "Rozmiar zaspy"
 msgid "Snow has fallen on object"
 msgstr "Obiekt pokryty śniegiem"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:148
+#: ../src/extension/internal/gdkpixbuf-input.cpp:149
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "Źródło %s GDK pixbuf"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:151
-msgid "Link image (leave unchecked if in doubt)"
+#, fuzzy
+msgid "Link or embed image:"
+msgstr "Osadź obrazy"
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:152
+#, fuzzy
+msgid "embed"
+msgstr "osadzony"
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:153
+#, fuzzy
+msgid "link"
+msgstr "linii"
+
+#: ../src/extension/internal/gdkpixbuf-input.cpp:155
+msgid ""
+"Embed results in stand-alone, larger SVG files. Link references a file "
+"outside this SVG document and all files must be moved together."
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
@@ -9181,8 +9416,8 @@ msgstr "Liniowy"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:424
-#: ../src/widgets/gradient-selector.cpp:139
+#: ../src/filter-enums.cpp:94 ../src/selection-chemistry.cpp:425
+#: ../src/widgets/gradient-selector.cpp:141
 msgid "Duplicate"
 msgstr "Powiel"
 
@@ -9410,7 +9645,7 @@ msgstr[2] ""
 "zaznaczonych obiektach"
 
 #: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
-#: ../src/widgets/gradient-vector.cpp:744
+#: ../src/widgets/gradient-vector.cpp:743
 msgid "Add gradient stop"
 msgstr "Dodaj punkt kontrolny"
 
@@ -9458,7 +9693,7 @@ msgstr "Połącz uchwyty gradientu"
 msgid "Move gradient handle"
 msgstr "Przesuń uchwyt gradientu"
 
-#: ../src/gradient-drag.cpp:944 ../src/widgets/gradient-vector.cpp:776
+#: ../src/gradient-drag.cpp:944 ../src/widgets/gradient-vector.cpp:774
 msgid "Delete gradient stop"
 msgstr "Usuń punkt kontrolny"
 
@@ -9816,51 +10051,6 @@ msgstr ""
 "W „%s” istnieje już plik o takiej nazwie. Zamiana spowoduje nadpisanie jego "
 "zawartości."
 
-#: ../src/io/sys.cpp:448 ../src/io/sys.cpp:456
-#, c-format
-msgid "Failed to read from child pipe (%s)"
-msgstr "Nie udało się odczytać ciągu pokrewnego (%s)"
-
-#: ../src/io/sys.cpp:480
-#, c-format
-msgid "Failed to change to directory '%s' (%s)"
-msgstr "Nie można zmienić katalogu „%s” (%s)"
-
-#: ../src/io/sys.cpp:486 ../src/io/sys.cpp:712
-#, c-format
-msgid "Failed to execute child process (%s)"
-msgstr "Nie udało się wykonać pokrewnego procesu %s"
-
-#: ../src/io/sys.cpp:659
-#, c-format
-msgid "Invalid program name: %s"
-msgstr "Nieprawidłowa nazwa programu: %s"
-
-#: ../src/io/sys.cpp:669 ../src/io/sys.cpp:958
-#, c-format
-msgid "Invalid string in argument vector at %d: %s"
-msgstr "Nieprawidłowy ciąg znaków w argumencie wektora dla %d: %s"
-
-#: ../src/io/sys.cpp:680 ../src/io/sys.cpp:973
-#, c-format
-msgid "Invalid string in environment: %s"
-msgstr "Nieprawidłowy ciąg znaków w środowisku: %s"
-
-#: ../src/io/sys.cpp:741
-#, c-format
-msgid "Failed to create pipe for communicating with child process (%s)"
-msgstr "Nie udało się utworzyć ciągu komunikacyjnego z procesem pokrewnym (%s)"
-
-#: ../src/io/sys.cpp:954
-#, c-format
-msgid "Invalid working directory: %s"
-msgstr "Niewłaściwy katalog roboczy: %s"
-
-#: ../src/io/sys.cpp:1022
-#, c-format
-msgid "Failed to execute helper program (%s)"
-msgstr "Nie udało się otworzyć programu pomocniczego (%s)"
-
 #: ../src/knot.cpp:431
 msgid "Node or handle drag canceled."
 msgstr "Anulowano przeciąganie węzła lub uchwytu"
@@ -10087,10 +10277,6 @@ msgstr "Strona"
 #: ../src/libgdl/gdl-dock-notebook.c:135
 msgid "The index of the current page"
 msgstr "Indeks bieżącej strony"
-
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
-msgid "Name"
-msgstr "Nazwa"
 
 #: ../src/libgdl/gdl-dock-object.c:121
 msgid "Unique name for identifying the dock object"
@@ -11325,39 +11511,39 @@ msgstr "Nie można znaleźć polecenia o ID „%s” określonego w wierszu pole
 msgid "Unable to find node ID: '%s'\n"
 msgstr "Nie można znaleźć węzła o ID: „%s”\n"
 
-#: ../src/main.cpp:267
+#: ../src/main.cpp:269
 msgid "Print the Inkscape version number"
 msgstr "Wypisz numer wersji programu Inkscape"
 
-#: ../src/main.cpp:272
+#: ../src/main.cpp:274
 msgid "Do not use X server (only process files from console)"
 msgstr "Nie używaj X serwera (przetwarzaj jedynie pliki z poziomu konsoli)"
 
-#: ../src/main.cpp:277
+#: ../src/main.cpp:279
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Spróbuj używać X serwera (nawet, gdy nie ustawiono zmiennej $DISPLAY)"
 
-#: ../src/main.cpp:282
+#: ../src/main.cpp:284
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Otwiera podane dokumenty (tekst opcji może zostać wyłączony)"
 
-#: ../src/main.cpp:283 ../src/main.cpp:288 ../src/main.cpp:293
-#: ../src/main.cpp:360 ../src/main.cpp:365 ../src/main.cpp:370
-#: ../src/main.cpp:375 ../src/main.cpp:386
+#: ../src/main.cpp:285 ../src/main.cpp:290 ../src/main.cpp:295
+#: ../src/main.cpp:362 ../src/main.cpp:367 ../src/main.cpp:372
+#: ../src/main.cpp:377 ../src/main.cpp:388
 msgid "FILENAME"
 msgstr "NAZWA_PLIKU"
 
-#: ../src/main.cpp:287
+#: ../src/main.cpp:289
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "Drukuje dokumenty do podanego pliku wyjściowego (zapis do potoku - „| "
 "program”)"
 
-#: ../src/main.cpp:292
+#: ../src/main.cpp:294
 msgid "Export document to a PNG file"
 msgstr "Eksportuje dokument jako plik PNG"
 
-#: ../src/main.cpp:297
+#: ../src/main.cpp:299
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
@@ -11365,11 +11551,7 @@ msgstr ""
 "Rozdzielczość używana do eksportu do bitmap i do rasteryzacji filtrów w PS/"
 "EPS/PDF (domyślnie 90)"
 
-#: ../src/main.cpp:298 ../src/ui/widget/rendering-options.cpp:43
-msgid "DPI"
-msgstr "DPI"
-
-#: ../src/main.cpp:302
+#: ../src/main.cpp:304
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
@@ -11377,19 +11559,19 @@ msgstr ""
 "Eksportowany obszar w jednostkach SVG użytkownika - domyślnie jest to "
 "strona; (0,0 oznacza lewy dolny narożnik)"
 
-#: ../src/main.cpp:303
+#: ../src/main.cpp:305
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:307
+#: ../src/main.cpp:309
 msgid "Exported area is the entire drawing (not page)"
 msgstr "Obszarem eksportu jest cały rysunek, nie strona"
 
-#: ../src/main.cpp:312
+#: ../src/main.cpp:314
 msgid "Exported area is the entire page"
 msgstr "Obszarem eksportu jest cała strona"
 
-#: ../src/main.cpp:317
+#: ../src/main.cpp:319
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -11397,101 +11579,101 @@ msgstr ""
 "Wyrównaj obszar eksportu bitmapy na zewnątrz do najbliższej całkowitej "
 "wartości (w jednostkach SVG użytkownika)"
 
-#: ../src/main.cpp:322
+#: ../src/main.cpp:324
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Szerokość eksportowanej bitmapy w pikselach (zastępuje dpi określone w "
 "ustawieniach eksportu)"
 
-#: ../src/main.cpp:323
+#: ../src/main.cpp:325
 msgid "WIDTH"
 msgstr "SZEROKOŚĆ"
 
-#: ../src/main.cpp:327
+#: ../src/main.cpp:329
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Wysokość generowanej bitmapy w pikselach (zastępuje dpi określone w "
 "ustawieniach eksportu)"
 
-#: ../src/main.cpp:328
+#: ../src/main.cpp:330
 msgid "HEIGHT"
 msgstr "WYSOKOŚĆ"
 
-#: ../src/main.cpp:332
+#: ../src/main.cpp:334
 msgid "The ID of the object to export"
 msgstr "Identyfikator ID eksportowanego obiektu"
 
-#: ../src/main.cpp:333 ../src/main.cpp:431
+#: ../src/main.cpp:335 ../src/main.cpp:433
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:339
+#: ../src/main.cpp:341
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Eksportuj tylko obiekty oznaczone identyfikatorem eksportu, ukryj pozostałe "
 "(tylko z „export-id”)"
 
-#: ../src/main.cpp:344
+#: ../src/main.cpp:346
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Podczas eksportu zastosuj zapisaną nazwę pliku i DPI (tylko z „export-id”)"
 
-#: ../src/main.cpp:349
+#: ../src/main.cpp:351
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 "Kolor tła eksportowanej bitmapy (dowolne określenie koloru obsługiwane przez "
 "SVG)"
 
-#: ../src/main.cpp:350
+#: ../src/main.cpp:352
 msgid "COLOR"
 msgstr "KOLOR"
 
-#: ../src/main.cpp:354
+#: ../src/main.cpp:356
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "Krycie tła eksportowanej bitmapy (w formacie 0.0 do 1.0, lub 1 do 255)"
 
-#: ../src/main.cpp:355
+#: ../src/main.cpp:357
 msgid "VALUE"
 msgstr "WARTOŚĆ"
 
-#: ../src/main.cpp:359
+#: ../src/main.cpp:361
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Eksportuj dokument do czystego formatu SVG (bez przestrzeni nazw używanych "
 "przez programy Sodipodi i Inkscape)"
 
-#: ../src/main.cpp:364
+#: ../src/main.cpp:366
 msgid "Export document to a PS file"
 msgstr "Eksportuje dokument do pliku PS"
 
-#: ../src/main.cpp:369
+#: ../src/main.cpp:371
 msgid "Export document to an EPS file"
 msgstr "Eksportuje dokument do pliku EPS"
 
-#: ../src/main.cpp:374
+#: ../src/main.cpp:376
 msgid "Export document to a PDF file"
 msgstr "Eksportuje dokument do pliku PDF"
 
-#: ../src/main.cpp:379
+#: ../src/main.cpp:381
 msgid ""
 "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is "
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
 
-#: ../src/main.cpp:385
+#: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Eksportuje dokument do pliku Enhanced Metafile (EMF)"
 
-#: ../src/main.cpp:391
+#: ../src/main.cpp:393
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
 msgstr ""
 "Podczas eksportu do pliku PS, EPS, PDF konwertuj obiekt tekstowy na ścieżki"
 
-#: ../src/main.cpp:396
+#: ../src/main.cpp:398
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
@@ -11500,7 +11682,7 @@ msgstr ""
 "(PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:402
+#: ../src/main.cpp:404
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -11509,7 +11691,7 @@ msgstr ""
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:408
+#: ../src/main.cpp:410
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -11518,7 +11700,7 @@ msgstr ""
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:414
+#: ../src/main.cpp:416
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -11526,55 +11708,55 @@ msgstr ""
 "Pytaj o szerokość rysunku, lub obiektu jeśli jest podany za pomocą —query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:420
+#: ../src/main.cpp:422
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 "Pytaj o wysokość rysunku, lub obiektu jeśli jest podany za pomocą —query-id"
 
-#: ../src/main.cpp:425
+#: ../src/main.cpp:427
 msgid "List id,x,y,w,h for all objects"
 msgstr "Pokaż id,x,y,w,h dla wszystkich obiektów"
 
-#: ../src/main.cpp:430
+#: ../src/main.cpp:432
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Identyfikator ID obiektu, o którego wymiary zapytano"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:436
+#: ../src/main.cpp:438
 msgid "Print out the extension directory and exit"
 msgstr "Wyświetl katalog rozszerzeń i zakończ"
 
-#: ../src/main.cpp:441
+#: ../src/main.cpp:443
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Usuń nieużywane definicje z sekcji &lt;defs&gt; dokumentu"
 
-#: ../src/main.cpp:446
+#: ../src/main.cpp:448
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr "Lista identyfikatorów wszystkich poleceń w Inkscape'ie"
 
-#: ../src/main.cpp:451
+#: ../src/main.cpp:453
 msgid "Verb to call when Inkscape opens."
 msgstr "Polecenie wywoływane podczas uruchamiania Inkscape'a"
 
-#: ../src/main.cpp:452
+#: ../src/main.cpp:454
 msgid "VERB-ID"
 msgstr "ID polecenia"
 
-#: ../src/main.cpp:456
+#: ../src/main.cpp:458
 msgid "Object ID to select when Inkscape opens."
 msgstr "ID obiektu do zaznaczenia podczas uruchamiania Inkscape'a"
 
-#: ../src/main.cpp:457
+#: ../src/main.cpp:459
 msgid "OBJECT-ID"
 msgstr "ID obiektu"
 
-#: ../src/main.cpp:461
+#: ../src/main.cpp:463
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Uruchamiaj Inkscape'a w trybie interaktywnej powłoki"
 
-#: ../src/main.cpp:774 ../src/main.cpp:1100
+#: ../src/main.cpp:803 ../src/main.cpp:1129
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -11837,20 +12019,20 @@ msgstr "Obiekt w ścieżkę"
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "W zaznaczeniu <b>brak obiektów</b> do konwersji w ścieżki"
 
-#: ../src/path-chemistry.cpp:556
+#: ../src/path-chemistry.cpp:588
 msgid "Select <b>path(s)</b> to reverse."
 msgstr ""
 "Zaznacz jedną lub więcej <b>ścieżek</b>, których kierunek zostanie odwrócony"
 
-#: ../src/path-chemistry.cpp:565
+#: ../src/path-chemistry.cpp:597
 msgid "Reversing paths..."
 msgstr "Odwracanie ścieżek…"
 
-#: ../src/path-chemistry.cpp:599
+#: ../src/path-chemistry.cpp:631
 msgid "Reverse path"
 msgstr "Odwróć kierunek ścieżki"
 
-#: ../src/path-chemistry.cpp:601
+#: ../src/path-chemistry.cpp:633
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "W zaznaczeniu <b>brak ścieżek</b>, którym można odwrócić kierunek"
 
@@ -12095,10 +12277,6 @@ msgstr "Data"
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
 msgstr "Data utworzenia skojarzona z tym dokumentem w formacie (RRRR-MM-DD)"
 
-#: ../src/rdf.cpp:235
-msgid "Format"
-msgstr "Format"
-
 #: ../src/rdf.cpp:236
 msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr "Fizyczny lub cyfrowy wyróżnik tego dokumentu (typ MIME)"
@@ -12336,25 +12514,25 @@ msgstr ""
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Zaznaczony obiekt nie jest grupą. Nie można do niego wejść."
 
-#: ../src/selection-chemistry.cpp:303
+#: ../src/selection-chemistry.cpp:304
 msgid "Delete text"
 msgstr "Usuń tekst"
 
-#: ../src/selection-chemistry.cpp:311
+#: ../src/selection-chemistry.cpp:312
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Nic</b> nie usunięto"
 
-#: ../src/selection-chemistry.cpp:329 ../src/text-context.cpp:1002
-#: ../src/ui/dialog/swatches.cpp:472 ../src/widgets/toolbox.cpp:1318
+#: ../src/selection-chemistry.cpp:330 ../src/text-context.cpp:1002
+#: ../src/ui/dialog/swatches.cpp:220 ../src/widgets/toolbox.cpp:1318
 #: ../src/widgets/toolbox.cpp:6076
 msgid "Delete"
 msgstr "Usuń"
 
-#: ../src/selection-chemistry.cpp:357
+#: ../src/selection-chemistry.cpp:358
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Zaznacz <b>obiekty</b> do powielenia"
 
-#: ../src/selection-chemistry.cpp:449
+#: ../src/selection-chemistry.cpp:450
 msgid "Delete all"
 msgstr "Usuń wszystko"
 
@@ -12362,28 +12540,28 @@ msgstr "Usuń wszystko"
 msgid "Select <b>some objects</b> to group."
 msgstr "Zaznacz <b>kilka obiektów</b>, aby połączyć je w grupę"
 
-#: ../src/selection-chemistry.cpp:648 ../src/selection-describer.cpp:53
+#: ../src/selection-chemistry.cpp:651 ../src/selection-describer.cpp:53
 msgid "Group"
 msgstr "Grupa"
 
-#: ../src/selection-chemistry.cpp:663
+#: ../src/selection-chemistry.cpp:665
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Zaznacz <b>grupę</b> do rozdzielenia"
 
-#: ../src/selection-chemistry.cpp:704
+#: ../src/selection-chemistry.cpp:706
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "W zaznaczeniu <b>brak grup</b> do rozdzielenia"
 
-#: ../src/selection-chemistry.cpp:710 ../src/sp-item-group.cpp:500
+#: ../src/selection-chemistry.cpp:712 ../src/sp-item-group.cpp:500
 msgid "Ungroup"
 msgstr "Rozdziel grupę"
 
-#: ../src/selection-chemistry.cpp:800
+#: ../src/selection-chemistry.cpp:802
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Zaznacz <b>obiekty</b> do przeniesienia wyżej"
 
-#: ../src/selection-chemistry.cpp:806 ../src/selection-chemistry.cpp:868
-#: ../src/selection-chemistry.cpp:902 ../src/selection-chemistry.cpp:966
+#: ../src/selection-chemistry.cpp:808 ../src/selection-chemistry.cpp:870
+#: ../src/selection-chemistry.cpp:904 ../src/selection-chemistry.cpp:968
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
@@ -12393,186 +12571,186 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:848
+#: ../src/selection-chemistry.cpp:850
 msgid "undo action|Raise"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:860
+#: ../src/selection-chemistry.cpp:862
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Zaznacz <b>obiekty</b> do przeniesienia na wierzch"
 
-#: ../src/selection-chemistry.cpp:883
+#: ../src/selection-chemistry.cpp:885
 msgid "Raise to top"
 msgstr "Przenieś na wierzch"
 
-#: ../src/selection-chemistry.cpp:896
+#: ../src/selection-chemistry.cpp:898
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Zaznacz <b>obiekty</b> do przeniesienia niżej"
 
-#: ../src/selection-chemistry.cpp:946
+#: ../src/selection-chemistry.cpp:948
 msgid "Lower"
 msgstr "Przesuń niżej"
 
-#: ../src/selection-chemistry.cpp:958
+#: ../src/selection-chemistry.cpp:960
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Zaznacz <b>obiekty</b> do przeniesienia na spód"
 
-#: ../src/selection-chemistry.cpp:993
+#: ../src/selection-chemistry.cpp:995
 msgid "Lower to bottom"
 msgstr "Przenieś na spód"
 
-#: ../src/selection-chemistry.cpp:1000
+#: ../src/selection-chemistry.cpp:1002
 msgid "Nothing to undo."
 msgstr "Brak zmian do cofnięcia"
 
-#: ../src/selection-chemistry.cpp:1007
+#: ../src/selection-chemistry.cpp:1009
 msgid "Nothing to redo."
 msgstr "Brak zmian do przywrócenia"
 
-#: ../src/selection-chemistry.cpp:1067
+#: ../src/selection-chemistry.cpp:1069
 msgid "Paste"
 msgstr "Wklej"
 
-#: ../src/selection-chemistry.cpp:1074
+#: ../src/selection-chemistry.cpp:1077
 msgid "Paste style"
 msgstr "Wklej styl"
 
-#: ../src/selection-chemistry.cpp:1083
+#: ../src/selection-chemistry.cpp:1087
 msgid "Paste live path effect"
 msgstr "Wklej efekt żywej ścieżki"
 
-#: ../src/selection-chemistry.cpp:1103
+#: ../src/selection-chemistry.cpp:1108
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr "Zaznacz <b>obiekty</b> z których usunąć efekt żywej ścieżki"
 
-#: ../src/selection-chemistry.cpp:1115
+#: ../src/selection-chemistry.cpp:1120
 msgid "Remove live path effect"
 msgstr "Usuń efekt żywej ścieżki"
 
-#: ../src/selection-chemistry.cpp:1126
+#: ../src/selection-chemistry.cpp:1131
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Zaznacz <b>obiekty</b> do usunięcia filtrów"
 
-#: ../src/selection-chemistry.cpp:1136
+#: ../src/selection-chemistry.cpp:1141
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1336
 msgid "Remove filter"
 msgstr "Usuń filtr"
 
-#: ../src/selection-chemistry.cpp:1145
+#: ../src/selection-chemistry.cpp:1150
 msgid "Paste size"
 msgstr "Wklej rozmiar"
 
-#: ../src/selection-chemistry.cpp:1153
+#: ../src/selection-chemistry.cpp:1159
 msgid "Paste size separately"
 msgstr "Wklej rozmiar oddzielnie"
 
-#: ../src/selection-chemistry.cpp:1162
+#: ../src/selection-chemistry.cpp:1169
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Wybierz <b>obiekty</b> do przeniesienia na wyższą warstwę"
 
-#: ../src/selection-chemistry.cpp:1188
+#: ../src/selection-chemistry.cpp:1195
 msgid "Raise to next layer"
 msgstr "Przenieś na wyższą warstwę"
 
-#: ../src/selection-chemistry.cpp:1195
+#: ../src/selection-chemistry.cpp:1202
 msgid "No more layers above."
 msgstr "Brak wyższych warstw"
 
-#: ../src/selection-chemistry.cpp:1207
+#: ../src/selection-chemistry.cpp:1214
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Wybierz <b>obiekty</b> do przeniesienia na niższą warstwę"
 
-#: ../src/selection-chemistry.cpp:1233
+#: ../src/selection-chemistry.cpp:1240
 msgid "Lower to previous layer"
 msgstr "Przenieś na niższą warstwę"
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1247
 msgid "No more layers below."
 msgstr "Brak niższych warstw"
 
-#: ../src/selection-chemistry.cpp:1449
+#: ../src/selection-chemistry.cpp:1456
 msgid "Remove transform"
 msgstr "Usuń przekształcenie"
 
-#: ../src/selection-chemistry.cpp:1552
+#: ../src/selection-chemistry.cpp:1559
 msgid "Rotate 90&#176; CCW"
 msgstr "Obróć o 90&#176; w lewo"
 
-#: ../src/selection-chemistry.cpp:1552
+#: ../src/selection-chemistry.cpp:1559
 msgid "Rotate 90&#176; CW"
 msgstr "Obróć o 90&#176; w prawo"
 
-#: ../src/selection-chemistry.cpp:1573 ../src/seltrans.cpp:534
+#: ../src/selection-chemistry.cpp:1580 ../src/seltrans.cpp:534
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Obróć"
 
-#: ../src/selection-chemistry.cpp:1620
+#: ../src/selection-chemistry.cpp:1627
 msgid "Rotate by pixels"
 msgstr "Obróć wg pikseli"
 
-#: ../src/selection-chemistry.cpp:1675
+#: ../src/selection-chemistry.cpp:1682
 msgid "Scale by whole factor"
 msgstr "Skaluj przez cały faktor"
 
-#: ../src/selection-chemistry.cpp:1690
+#: ../src/selection-chemistry.cpp:1697
 msgid "Move vertically"
 msgstr "Przesuń w pionie"
 
-#: ../src/selection-chemistry.cpp:1693
+#: ../src/selection-chemistry.cpp:1700
 msgid "Move horizontally"
 msgstr "Przesuń w poziomie"
 
-#: ../src/selection-chemistry.cpp:1696 ../src/selection-chemistry.cpp:1722
+#: ../src/selection-chemistry.cpp:1703 ../src/selection-chemistry.cpp:1729
 #: ../src/seltrans.cpp:528 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Przesuń"
 
-#: ../src/selection-chemistry.cpp:1716
+#: ../src/selection-chemistry.cpp:1723
 msgid "Move vertically by pixels"
 msgstr "Przesuwa w pionie o zadaną wartość podaną w pikselach"
 
-#: ../src/selection-chemistry.cpp:1719
+#: ../src/selection-chemistry.cpp:1726
 msgid "Move horizontally by pixels"
 msgstr "Przesuwa w poziomie o zadaną wartość podaną w pikselach"
 
-#: ../src/selection-chemistry.cpp:1847
+#: ../src/selection-chemistry.cpp:1854
 msgid "The selection has no applied path effect."
 msgstr "Zaznaczenie nie zaakceptowało efektu ścieżki"
 
-#: ../src/selection-chemistry.cpp:2052
+#: ../src/selection-chemistry.cpp:2059
 msgid "action|Clone"
 msgstr "Klonuj"
 
-#: ../src/selection-chemistry.cpp:2068
+#: ../src/selection-chemistry.cpp:2075
 msgid "Select <b>clones</b> to relink."
 msgstr "Wybierz <b>klony</b> do zmiany połączenia"
 
-#: ../src/selection-chemistry.cpp:2075
+#: ../src/selection-chemistry.cpp:2082
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Kopiuj  <b>obiekt</b> do do schowka, aby zmienić połączenie klonów."
 
-#: ../src/selection-chemistry.cpp:2099
+#: ../src/selection-chemistry.cpp:2106
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "W zaznaczeniu <b>brak klonów do zmiany połączenia</b>"
 
-#: ../src/selection-chemistry.cpp:2102
+#: ../src/selection-chemistry.cpp:2109
 msgid "Relink clone"
 msgstr "Zmień połączenie klonu"
 
-#: ../src/selection-chemistry.cpp:2116
+#: ../src/selection-chemistry.cpp:2123
 msgid "Select <b>clones</b> to unlink."
 msgstr "Wybierz <b>klony</b> do odłączenia."
 
-#: ../src/selection-chemistry.cpp:2165
+#: ../src/selection-chemistry.cpp:2172
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "W zaznaczeniu <b>brak klonów do odłączenia</b>"
 
-#: ../src/selection-chemistry.cpp:2169
+#: ../src/selection-chemistry.cpp:2176
 msgid "Unlink clone"
 msgstr "Odłącz klon"
 
-#: ../src/selection-chemistry.cpp:2182
+#: ../src/selection-chemistry.cpp:2189
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -12583,7 +12761,7 @@ msgstr ""
 "aby przejść do ścieżki. Zaznacz <b>dopasowany tekst</b>, aby przejść do jego "
 "ramki."
 
-#: ../src/selection-chemistry.cpp:2205
+#: ../src/selection-chemistry.cpp:2212
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -12591,7 +12769,7 @@ msgstr ""
 "<b>Nie można odnaleźć</b> obiektu do zaznaczenia (osierocony klon, "
 "odsunięcie, tekst na ścieżce, tekst opływający?)"
 
-#: ../src/selection-chemistry.cpp:2211
+#: ../src/selection-chemistry.cpp:2218
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -12599,100 +12777,100 @@ msgstr ""
 "Obiekt, który próbujesz zaznaczyć jest <b>niewidoczny</b> (jest on w &lt;"
 "defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2257
+#: ../src/selection-chemistry.cpp:2264
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Zaznacz <b>obiekty</b> do konwersji na znacznik"
 
-#: ../src/selection-chemistry.cpp:2325
+#: ../src/selection-chemistry.cpp:2332
 msgid "Objects to marker"
 msgstr "Obiekty na znacznik"
 
-#: ../src/selection-chemistry.cpp:2353
+#: ../src/selection-chemistry.cpp:2360
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Zaznacz <b>obiekty</b> do konwersji na prowadnice"
 
-#: ../src/selection-chemistry.cpp:2365
+#: ../src/selection-chemistry.cpp:2372
 msgid "Objects to guides"
 msgstr "Obiekty na prowadnice"
 
-#: ../src/selection-chemistry.cpp:2381
+#: ../src/selection-chemistry.cpp:2388
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Zaznacz <b>obiekty</b> do konwersji na deseń"
 
-#: ../src/selection-chemistry.cpp:2469
+#: ../src/selection-chemistry.cpp:2476
 msgid "Objects to pattern"
 msgstr "Obiekty na deseń"
 
-#: ../src/selection-chemistry.cpp:2485
+#: ../src/selection-chemistry.cpp:2492
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Zaznacz <b>obiekt z wypełnieniem deseniem</b>, z którego wyodrębnione "
 "zostaną obiekty"
 
-#: ../src/selection-chemistry.cpp:2538
+#: ../src/selection-chemistry.cpp:2545
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "W zaznaczeniu <b>brak deseni wypełnienia</b>"
 
-#: ../src/selection-chemistry.cpp:2541
+#: ../src/selection-chemistry.cpp:2548
 msgid "Pattern to objects"
 msgstr "Deseń na obiekty"
 
-#: ../src/selection-chemistry.cpp:2626
+#: ../src/selection-chemistry.cpp:2633
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Zaznacz <b>obiekty</b> do skopiowania jako bitmapa"
 
-#: ../src/selection-chemistry.cpp:2630
+#: ../src/selection-chemistry.cpp:2637
 msgid "Rendering bitmap..."
 msgstr "Rendeowanie bitmapy…"
 
-#: ../src/selection-chemistry.cpp:2804
+#: ../src/selection-chemistry.cpp:2811
 msgid "Create bitmap"
 msgstr "Utwórz bitmapę"
 
-#: ../src/selection-chemistry.cpp:2836
+#: ../src/selection-chemistry.cpp:2843
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Zaznacz <b>obiekty</b> do utworzenia ścieżki przycinania lub maski"
 
-#: ../src/selection-chemistry.cpp:2839
+#: ../src/selection-chemistry.cpp:2846
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Zaznacz obiekt maskujący i <b>obiekty</b>, dla których zastosować ścieżkę "
 "przycinania lub maskę"
 
-#: ../src/selection-chemistry.cpp:3004
+#: ../src/selection-chemistry.cpp:3027
 msgid "Set clipping path"
 msgstr "Ustaw ścieżkę przycinania"
 
-#: ../src/selection-chemistry.cpp:3006
+#: ../src/selection-chemistry.cpp:3029
 msgid "Set mask"
 msgstr "Ustaw maskę"
 
-#: ../src/selection-chemistry.cpp:3019
+#: ../src/selection-chemistry.cpp:3042
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Zaznacz <b>obiekty</b> do usunięcia ścieżki przycinania lub maski"
 
-#: ../src/selection-chemistry.cpp:3119
+#: ../src/selection-chemistry.cpp:3153
 msgid "Release clipping path"
 msgstr "Zdejmij ścieżkę przycinania"
 
-#: ../src/selection-chemistry.cpp:3121
+#: ../src/selection-chemistry.cpp:3155
 msgid "Release mask"
 msgstr "Zdejmij maskę"
 
-#: ../src/selection-chemistry.cpp:3139
+#: ../src/selection-chemistry.cpp:3173
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Zaznacz <b>obiekty</b> do wypełnienia obszaru roboczego"
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3159 ../src/verbs.cpp:2688
+#: ../src/selection-chemistry.cpp:3193 ../src/verbs.cpp:2688
 msgid "Fit Page to Selection"
 msgstr "Dopasuj stronę do ramki zaznaczenia"
 
-#: ../src/selection-chemistry.cpp:3188 ../src/verbs.cpp:2690
+#: ../src/selection-chemistry.cpp:3222 ../src/verbs.cpp:2690
 msgid "Fit Page to Drawing"
 msgstr "Dopasuj stronę do rysunku"
 
-#: ../src/selection-chemistry.cpp:3209 ../src/verbs.cpp:2692
+#: ../src/selection-chemistry.cpp:3243 ../src/verbs.cpp:2692
 msgid "Fit Page to Selection or Drawing"
 msgstr "Dopasuj stronę do zaznaczenia lub rysunku"
 
@@ -12828,8 +13006,8 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr "Naciśnij <b>Shift+D</b>, aby odszukać ramkę"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:212 ../src/spray-context.cpp:242
-#: ../src/tweak-context.cpp:202
+#: ../src/selection-describer.cpp:212 ../src/spray-context.cpp:241
+#: ../src/tweak-context.cpp:201
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -13035,16 +13213,16 @@ msgstr "pozioma, na %s"
 msgid "at %d degrees, through (%s,%s)"
 msgstr "o %d stopni, przez (%s,%s)"
 
-#: ../src/sp-image.cpp:1145
+#: ../src/sp-image.cpp:1134
 msgid "embedded"
 msgstr "osadzony"
 
-#: ../src/sp-image.cpp:1153
+#: ../src/sp-image.cpp:1142
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Obrazek z niepoprawnym odwołaniem</b>: %s"
 
-#: ../src/sp-image.cpp:1154
+#: ../src/sp-image.cpp:1143
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Obrazek</b> %d &#215; %d: %s"
@@ -13322,45 +13500,45 @@ msgstr "Uprość"
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "W zaznaczeniu <b>brak ścieżek</b> do uproszczenia"
 
-#: ../src/spray-context.cpp:244 ../src/tweak-context.cpp:204
+#: ../src/spray-context.cpp:243 ../src/tweak-context.cpp:203
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "<b>Nic</b> nie zaznaczono"
 
-#: ../src/spray-context.cpp:250
+#: ../src/spray-context.cpp:249
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>copies</b> of the initial selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:253
+#: ../src/spray-context.cpp:252
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray <b>clones</b> of the initial selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:256
+#: ../src/spray-context.cpp:255
 #, c-format
 msgid ""
 "%s. Drag, click or scroll to spray in a <b>single path</b> of the initial "
 "selection"
 msgstr ""
 
-#: ../src/spray-context.cpp:774
+#: ../src/spray-context.cpp:773
 #, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
 "<b>Nie zaznaczono żadnego obiektu!</b> Zaznacz obiekty do usprawnienia."
 
-#: ../src/spray-context.cpp:882 ../src/widgets/toolbox.cpp:4590
+#: ../src/spray-context.cpp:881 ../src/widgets/toolbox.cpp:4590
 msgid "Spray with copies"
 msgstr ""
 
-#: ../src/spray-context.cpp:886 ../src/widgets/toolbox.cpp:4597
+#: ../src/spray-context.cpp:885 ../src/widgets/toolbox.cpp:4597
 msgid "Spray with clones"
 msgstr ""
 
-#: ../src/spray-context.cpp:890
+#: ../src/spray-context.cpp:889
 msgid "Spray in single path"
 msgstr ""
 
@@ -13382,7 +13560,7 @@ msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Gwiazda</b>: promień %s, kąt %5g&#176;; z <b>Ctrl</b> przyciąganie do kąta"
 
-#: ../src/star-context.cpp:499
+#: ../src/star-context.cpp:503
 msgid "Create star"
 msgstr "Utwórz gwiazdę"
 
@@ -13799,30 +13977,30 @@ msgstr "Wektoryzuj bitmapę"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Wektoryzacja: Zakończono. Utworzono %ld węzłów."
 
-#: ../src/tweak-context.cpp:210
+#: ../src/tweak-context.cpp:209
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Przeciągnij, aby <b>przesunąć</b>."
 
-#: ../src/tweak-context.cpp:214
+#: ../src/tweak-context.cpp:213
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>podążać za</b>; z Shift to <b>w przeciwną "
 "stronę</b>."
 
-#: ../src/tweak-context.cpp:218
+#: ../src/tweak-context.cpp:217
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "%s. Przeciągnij lub kliknij, aby <b>przesunąć losowo</b>."
 
-#: ../src/tweak-context.cpp:222
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>pomniejszyć</b>; z Shift  <b>powiększyć</b>."
 
-#: ../src/tweak-context.cpp:226
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
@@ -13830,47 +14008,47 @@ msgid ""
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>obrócić w prawo</b>; z Shift, <b>w lewo</b>."
 
-#: ../src/tweak-context.cpp:230
+#: ../src/tweak-context.cpp:229
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>duplikować</b>; z Shift, <b>usunąć</b>."
 
-#: ../src/tweak-context.cpp:234
+#: ../src/tweak-context.cpp:233
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr "%s. Ciągnij, aby <b>nacisnąć ścieżki</b>."
 
-#: ../src/tweak-context.cpp:238
+#: ../src/tweak-context.cpp:237
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>wklęsnąć ścieżki</b>; z Shift <b>uwypuklić</"
 "b>."
 
-#: ../src/tweak-context.cpp:246
+#: ../src/tweak-context.cpp:245
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>przyciągnąć ścieżki</b>; z Shift "
 "<b>odepchnąć</b>."
 
-#: ../src/tweak-context.cpp:254
+#: ../src/tweak-context.cpp:253
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr "%s. Ciągnij lub kliknij, aby <b>wprowadzić chropowatość ścieżek</b>."
 
-#: ../src/tweak-context.cpp:258
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s. Ciągnij lub kliknij, aby <b>kolorować obiekty</b>."
 
-#: ../src/tweak-context.cpp:262
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s. Ciągnij lub kliknij, aby <b>dobierać losowo kolory</b>."
 
-#: ../src/tweak-context.cpp:266
+#: ../src/tweak-context.cpp:265
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
@@ -13878,99 +14056,99 @@ msgstr ""
 "%s. Ciągnij lub kliknij, aby <b>zwiększyć rozmycie</b>; z Shift "
 "<b>zmniejszyć</b>."
 
-#: ../src/tweak-context.cpp:1223
+#: ../src/tweak-context.cpp:1222
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 "<b>Nie zaznaczono żadnego obiektu!</b> Zaznacz obiekty do usprawnienia."
 
-#: ../src/tweak-context.cpp:1259
+#: ../src/tweak-context.cpp:1258
 msgid "Move tweak"
 msgstr "Udoskonalanie ruchu"
 
-#: ../src/tweak-context.cpp:1263
+#: ../src/tweak-context.cpp:1262
 msgid "Move in/out tweak"
 msgstr "Udoskonalanie ruchu do/z"
 
-#: ../src/tweak-context.cpp:1267
+#: ../src/tweak-context.cpp:1266
 msgid "Move jitter tweak"
 msgstr "Udoskonalanie desynchronizacji ruchu"
 
-#: ../src/tweak-context.cpp:1271
+#: ../src/tweak-context.cpp:1270
 msgid "Scale tweak"
 msgstr "Udoskonalanie skalowania"
 
-#: ../src/tweak-context.cpp:1275
+#: ../src/tweak-context.cpp:1274
 msgid "Rotate tweak"
 msgstr "Udoskonalanie obrotu"
 
-#: ../src/tweak-context.cpp:1279
+#: ../src/tweak-context.cpp:1278
 msgid "Duplicate/delete tweak"
 msgstr "Udoskonalanie duplikowania/usuwania"
 
-#: ../src/tweak-context.cpp:1283
+#: ../src/tweak-context.cpp:1282
 msgid "Push path tweak"
 msgstr "Udoskonalanie naciskania ścieżki"
 
-#: ../src/tweak-context.cpp:1287
+#: ../src/tweak-context.cpp:1286
 msgid "Shrink/grow path tweak"
 msgstr "Udoskonalanie zmniejszania/powiększania ścieżki"
 
-#: ../src/tweak-context.cpp:1291
+#: ../src/tweak-context.cpp:1290
 msgid "Attract/repel path tweak"
 msgstr "Udoskonalanie przyciągania/odpychania ścieżki"
 
-#: ../src/tweak-context.cpp:1295
+#: ../src/tweak-context.cpp:1294
 msgid "Roughen path tweak"
 msgstr "Udoskonalanie chropowatości ścieżki"
 
-#: ../src/tweak-context.cpp:1299
+#: ../src/tweak-context.cpp:1298
 msgid "Color paint tweak"
 msgstr "Udoskonalanie malowania kolorem"
 
-#: ../src/tweak-context.cpp:1303
+#: ../src/tweak-context.cpp:1302
 msgid "Color jitter tweak"
 msgstr "Udoskonalanie desynchronizacji koloru"
 
-#: ../src/tweak-context.cpp:1307
+#: ../src/tweak-context.cpp:1306
 msgid "Blur tweak"
 msgstr "Udoskonalanie rozmycia ścieżki"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:257
+#: ../src/ui/clipboard.cpp:261
 msgid "Nothing was copied."
 msgstr "Nic nie skopiowano"
 
-#: ../src/ui/clipboard.cpp:318 ../src/ui/clipboard.cpp:520
-#: ../src/ui/clipboard.cpp:544
+#: ../src/ui/clipboard.cpp:333 ../src/ui/clipboard.cpp:544
+#: ../src/ui/clipboard.cpp:568
 msgid "Nothing on the clipboard."
 msgstr "Schowek jest pusty"
 
-#: ../src/ui/clipboard.cpp:374
+#: ../src/ui/clipboard.cpp:392
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Zaznacz <b>obiekty</b>, do których wkleić styl"
 
-#: ../src/ui/clipboard.cpp:385 ../src/ui/clipboard.cpp:403
+#: ../src/ui/clipboard.cpp:403 ../src/ui/clipboard.cpp:421
 msgid "No style on the clipboard."
 msgstr "Schowek jest pusty"
 
-#: ../src/ui/clipboard.cpp:425
+#: ../src/ui/clipboard.cpp:446
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Zaznacz <b>obiekty</b>, do których wkleić rozmiar"
 
-#: ../src/ui/clipboard.cpp:432
+#: ../src/ui/clipboard.cpp:453
 msgid "No size on the clipboard."
 msgstr "Schowek jest pusty"
 
-#: ../src/ui/clipboard.cpp:483
+#: ../src/ui/clipboard.cpp:506
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Zaznacz <b>obiekty</b>, do których wkleić efekt ścieżki"
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:507
+#: ../src/ui/clipboard.cpp:531
 msgid "No effect on the clipboard."
 msgstr "Schowek jest pusty"
 
-#: ../src/ui/clipboard.cpp:527 ../src/ui/clipboard.cpp:554
+#: ../src/ui/clipboard.cpp:551 ../src/ui/clipboard.cpp:579
 msgid "Clipboard does not contain a path."
 msgstr "Schowek nie zawiera ścieżki"
 
@@ -14316,13 +14494,6 @@ msgstr "Największy obiekt"
 msgid "Smallest object"
 msgstr "Najmniejszy obiekt"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:927
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1651
-msgid "Selection"
-msgstr "Zaznaczenie"
-
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:38
 msgid "Profile name:"
 msgstr "Nazwa profilu:"
@@ -14400,10 +14571,6 @@ msgstr "Będzie wyświetlany cień po prawej stronie i na dole konturu"
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
 msgstr "_Tło:"
-
-#: ../src/ui/dialog/document-properties.cpp:93
-msgid "Background color"
-msgstr "Kolor tła"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid ""
@@ -14675,7 +14842,7 @@ msgid "<b>External script files:</b>"
 msgstr "<b>Pliki zewnętrznych skryptów:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:608
-#: ../src/ui/dialog/swatches.cpp:464
+#: ../src/ui/dialog/swatches.cpp:212
 msgid "Add"
 msgstr "_Dodaj"
 
@@ -14834,11 +15001,11 @@ msgstr "Podgląd"
 msgid "No file selected"
 msgstr "Nie wybrano pliku"
 
-#: ../src/ui/dialog/fill-and-stroke.cpp:49
+#: ../src/ui/dialog/fill-and-stroke.cpp:58
 msgid "Stroke _paint"
 msgstr "_Kontur"
 
-#: ../src/ui/dialog/fill-and-stroke.cpp:50
+#: ../src/ui/dialog/fill-and-stroke.cpp:59
 msgid "Stroke st_yle"
 msgstr "_Styl konturu"
 
@@ -18290,62 +18457,26 @@ msgstr "Przykładowy tekst"
 msgid "Preview Text:"
 msgstr "Podgląd tekstu:"
 
-#: ../src/ui/dialog/swatches.cpp:332
-#, c-format
-msgid ""
-"Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr ""
-"Kolor: <b>%s</b>. <b>Kliknij</b>, aby określić parametry wypełnienia, "
-"<b>Shift+kliknięcie</b>, aby określić parametry konturu."
-
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:443
+#: ../src/ui/dialog/swatches.cpp:192
 msgid "Set fill"
 msgstr "Ustaw wypełnienie"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:451
+#: ../src/ui/dialog/swatches.cpp:200
 msgid "Set stroke"
 msgstr "Ustaw kontur"
 
-#: ../src/ui/dialog/swatches.cpp:477 ../src/widgets/gradient-selector.cpp:144
+#: ../src/ui/dialog/swatches.cpp:225 ../src/widgets/gradient-selector.cpp:146
 #: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Edit..."
 msgstr "Modyfikuj…"
 
-#: ../src/ui/dialog/swatches.cpp:489
+#: ../src/ui/dialog/swatches.cpp:237
 msgid "Convert"
 msgstr "Konwertuj"
 
-#: ../src/ui/dialog/swatches.cpp:652
-msgid "Change color definition"
-msgstr "Zmień definicję koloru"
-
-#: ../src/ui/dialog/swatches.cpp:853
-msgid "Remove stroke color"
-msgstr "Usuń kolor konturu"
-
-#: ../src/ui/dialog/swatches.cpp:853
-msgid "Remove fill color"
-msgstr "Usuń kolor wypełnienia"
-
-#: ../src/ui/dialog/swatches.cpp:858
-msgid "Set stroke color to none"
-msgstr "Ustaw kolor konturu na (brak)"
-
-#: ../src/ui/dialog/swatches.cpp:858
-msgid "Set fill color to none"
-msgstr "Ustaw kolor wypełnienia na (brak)"
-
-#: ../src/ui/dialog/swatches.cpp:875
-msgid "Set stroke color from swatch"
-msgstr "Określ kolor konturu wybierając próbkę z palety"
-
-#: ../src/ui/dialog/swatches.cpp:875
-msgid "Set fill color from swatch"
-msgstr "Określ kolor wypełnienia wybierając próbkę z palety"
-
-#: ../src/ui/dialog/swatches.cpp:1199
+#: ../src/ui/dialog/swatches.cpp:435
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Katalog palet (%s) jest niedostępny"
@@ -18855,99 +18986,109 @@ msgstr "Rozdziel węzły"
 msgid "Delete nodes"
 msgstr "Usuń węzły"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:562
+#: ../src/ui/tool/multi-path-manipulator.cpp:618
 msgid "Move nodes"
 msgstr "Przesuń węzły"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:565
+#: ../src/ui/tool/multi-path-manipulator.cpp:621
 msgid "Move nodes horizontally"
 msgstr "Przesuń węzły w poziomie"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:569
+#: ../src/ui/tool/multi-path-manipulator.cpp:625
 msgid "Move nodes vertically"
 msgstr "Przesuń węzły w pionie"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:573
-#: ../src/ui/tool/multi-path-manipulator.cpp:576
+#: ../src/ui/tool/multi-path-manipulator.cpp:629
+#: ../src/ui/tool/multi-path-manipulator.cpp:632
 msgid "Rotate nodes"
 msgstr "Obróć węzły"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:580
-#: ../src/ui/tool/multi-path-manipulator.cpp:586
+#: ../src/ui/tool/multi-path-manipulator.cpp:636
+#: ../src/ui/tool/multi-path-manipulator.cpp:642
 #, fuzzy
 msgid "Scale nodes uniformly"
 msgstr "Skaluj węzły"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:583
+#: ../src/ui/tool/multi-path-manipulator.cpp:639
 msgid "Scale nodes"
 msgstr "Skaluj węzły"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:590
+#: ../src/ui/tool/multi-path-manipulator.cpp:646
 #, fuzzy
 msgid "Scale nodes horizontally"
 msgstr "Przesuń węzły w poziomie"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:594
+#: ../src/ui/tool/multi-path-manipulator.cpp:650
 #, fuzzy
 msgid "Scale nodes vertically"
 msgstr "Przesuń węzły w pionie"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:598
+#: ../src/ui/tool/multi-path-manipulator.cpp:654
 #, fuzzy
 msgid "Flip nodes horizontally"
 msgstr "Odbij poziomo"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:601
+#: ../src/ui/tool/multi-path-manipulator.cpp:657
 #, fuzzy
 msgid "Flip nodes vertically"
 msgstr "Odbij pionowo"
 
-#: ../src/ui/tool/node.cpp:218
+#: ../src/ui/tool/node.cpp:207
 #, fuzzy
 msgid "Cusp node handle"
 msgstr "Przesuń uchwyt węzła"
 
-#: ../src/ui/tool/node.cpp:219
+#: ../src/ui/tool/node.cpp:208
 #, fuzzy
 msgid "Smooth node handle"
 msgstr "Przesuń uchwyty węzłów"
 
-#: ../src/ui/tool/node.cpp:220
+#: ../src/ui/tool/node.cpp:209
 #, fuzzy
 msgid "Symmetric node handle"
 msgstr "Przesuń uchwyty węzłów"
 
-#: ../src/ui/tool/node.cpp:221
+#: ../src/ui/tool/node.cpp:210
 #, fuzzy
 msgid "Auto-smooth node handle"
 msgstr "Przesuń uchwyt węzła"
 
-#: ../src/ui/tool/node.cpp:1110
+#: ../src/ui/tool/node.cpp:1194
 #, fuzzy
 msgid "Symmetric node"
 msgstr "symetryczny"
 
-#: ../src/ui/tool/node.cpp:1111
+#: ../src/ui/tool/node.cpp:1195
 #, fuzzy
 msgid "Auto-smooth node"
 msgstr "gładki węzeł"
 
+#: ../src/ui/tool/path-manipulator.cpp:763
+#, fuzzy
+msgid "Scale handle"
+msgstr "Skaluj węzły"
+
+#: ../src/ui/tool/path-manipulator.cpp:787
+#, fuzzy
+msgid "Rotate handle"
+msgstr "Cofnij uchwyt"
+
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1204 ../src/widgets/toolbox.cpp:1314
+#: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1314
 msgid "Delete node"
 msgstr "Usuń węzeł"
 
-#: ../src/ui/tool/path-manipulator.cpp:1219
+#: ../src/ui/tool/path-manipulator.cpp:1305
 #, fuzzy
 msgid "Cycle node type"
 msgstr "Zmień typ węzła"
 
-#: ../src/ui/tool/path-manipulator.cpp:1233
+#: ../src/ui/tool/path-manipulator.cpp:1319
 #, fuzzy
 msgid "Drag handle"
 msgstr "Rysuj uchwyty"
 
-#: ../src/ui/tool/path-manipulator.cpp:1242
+#: ../src/ui/tool/path-manipulator.cpp:1328
 msgid "Retract handle"
 msgstr "Cofnij uchwyt"
 
@@ -19309,13 +19450,13 @@ msgid "No stroke"
 msgstr "Brak konturu"
 
 #: ../src/ui/widget/selected-style.cpp:166
-#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:193
+#: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:239
 msgid "Pattern"
 msgstr "Deseń"
 
 #: ../src/ui/widget/selected-style.cpp:169
 #: ../src/ui/widget/style-swatch.cpp:279
-#: ../src/widgets/paint-selector.cpp:1015
+#: ../src/widgets/paint-selector.cpp:1027
 msgid "Pattern fill"
 msgstr "Wypełnienie deseniem"
 
@@ -19373,14 +19514,14 @@ msgstr "<b>Nie określono</b>"
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:499
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:534
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:674
 msgid "Unset fill"
 msgstr "Nie określono wypełnienia"
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/ui/widget/selected-style.cpp:257
 #: ../src/ui/widget/selected-style.cpp:515
-#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:468
+#: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/fill-style.cpp:674
 msgid "Unset stroke"
 msgstr "Nie określono konturu"
 
@@ -19462,12 +19603,12 @@ msgid "Make stroke opaque"
 msgstr "Wyzeruj przezroczystość konturu"
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:387
+#: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:484
 msgid "Remove fill"
 msgstr "Usuń wypełnienie"
 
 #: ../src/ui/widget/selected-style.cpp:261
-#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:338
+#: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/fill-style.cpp:484
 msgid "Remove stroke"
 msgstr "Usuń kontur"
 
@@ -21706,7 +21847,7 @@ msgstr ""
 "Czy chcesz zapisać ten plik w formacie SVG Inkscape'a?"
 
 #: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
-#: ../src/widgets/gradient-selector.cpp:167
+#: ../src/widgets/gradient-selector.cpp:169
 msgid "none"
 msgstr "brak"
 
@@ -21714,21 +21855,33 @@ msgstr "brak"
 msgid "remove"
 msgstr "usuń"
 
-#: ../src/widgets/fill-style.cpp:285
+#: ../src/widgets/fill-style.cpp:336
 msgid "Change fill rule"
 msgstr "Zmień regułę wypełnienia"
 
-#: ../src/widgets/fill-style.cpp:325 ../src/widgets/fill-style.cpp:399
+#: ../src/widgets/fill-style.cpp:421 ../src/widgets/fill-style.cpp:500
 msgid "Set fill color"
 msgstr "Ustaw kolor wypełnienia"
 
-#: ../src/widgets/fill-style.cpp:468
+#: ../src/widgets/fill-style.cpp:421 ../src/widgets/fill-style.cpp:500
+msgid "Set stroke color"
+msgstr "Ustaw kolor konturu"
+
+#: ../src/widgets/fill-style.cpp:587
 msgid "Set gradient on fill"
 msgstr "Ustaw gradient wypełnienia"
 
-#: ../src/widgets/fill-style.cpp:515
+#: ../src/widgets/fill-style.cpp:587
+msgid "Set gradient on stroke"
+msgstr "Ustaw gradient konturu"
+
+#: ../src/widgets/fill-style.cpp:647
 msgid "Set pattern on fill"
 msgstr "Ustaw deseń wypełnienia"
+
+#: ../src/widgets/fill-style.cpp:648
+msgid "Set pattern on stroke"
+msgstr "Ustaw deseń konturu"
 
 #. Family frame
 #: ../src/widgets/font-selector.cpp:157
@@ -21755,7 +21908,7 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaĄąBbCćĘęKkŁłSśŹź0123:/()"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
-#: ../src/widgets/gradient-selector.cpp:161
+#: ../src/widgets/gradient-selector.cpp:163
 msgid ""
 "Whether to fill with flat color beyond the ends of the gradient vector "
 "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
@@ -21767,15 +21920,15 @@ msgstr ""
 "„kierunek” = zostanie powtórzony gradient w tym samym kierunku\n"
 "„odbicie” = zostanie powtórzony gradient w odwrotnym kierunku"
 
-#: ../src/widgets/gradient-selector.cpp:171
+#: ../src/widgets/gradient-selector.cpp:173
 msgid "reflected"
 msgstr "odbicie"
 
-#: ../src/widgets/gradient-selector.cpp:175
+#: ../src/widgets/gradient-selector.cpp:177
 msgid "direct"
 msgstr "kierunek"
 
-#: ../src/widgets/gradient-selector.cpp:183
+#: ../src/widgets/gradient-selector.cpp:185
 msgid "Repeat:"
 msgstr "Powtarzanie:"
 
@@ -21841,20 +21994,20 @@ msgstr "konturze"
 msgid "<b>Change:</b>"
 msgstr "<b>Zmień:</b>"
 
-#: ../src/widgets/gradient-vector.cpp:270
-#: ../src/widgets/paint-selector.cpp:903 ../src/widgets/stroke-style.cpp:826
+#: ../src/widgets/gradient-vector.cpp:267
+#: ../src/widgets/paint-selector.cpp:914 ../src/widgets/stroke-style.cpp:417
 msgid "No document selected"
 msgstr "Nie wybrano dokumentu"
 
-#: ../src/widgets/gradient-vector.cpp:276
+#: ../src/widgets/gradient-vector.cpp:273
 msgid "No gradients in document"
 msgstr "Brak gradientów w dokumencie"
 
-#: ../src/widgets/gradient-vector.cpp:282
+#: ../src/widgets/gradient-vector.cpp:279
 msgid "No gradient selected"
 msgstr "Nie zaznaczono gradientu"
 
-#: ../src/widgets/gradient-vector.cpp:547
+#: ../src/widgets/gradient-vector.cpp:546
 msgid "No stops in gradient"
 msgstr "Brak punktów sterujących w gradiencie"
 
@@ -21863,62 +22016,63 @@ msgid "Change gradient stop offset"
 msgstr "Zmień przesunięcie punktu sterującego"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:811
+#: ../src/widgets/gradient-vector.cpp:808
 msgid "Add stop"
 msgstr "Dodaj punkt"
 
-#: ../src/widgets/gradient-vector.cpp:814
+#: ../src/widgets/gradient-vector.cpp:811
 msgid "Add another control stop to gradient"
 msgstr "Dodaj kolejny punkt sterujący do gradientu"
 
-#: ../src/widgets/gradient-vector.cpp:816
+#: ../src/widgets/gradient-vector.cpp:813
 msgid "Delete stop"
 msgstr "Usuń punkt"
 
-#: ../src/widgets/gradient-vector.cpp:819
+#: ../src/widgets/gradient-vector.cpp:816
 msgid "Delete current control stop from gradient"
 msgstr "Usuń z gradientu wyświetlony powyżej punkt sterujący"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:875
+#: ../src/widgets/gradient-vector.cpp:872
 msgid "Stop Color"
 msgstr "Kolor w punkcie"
 
-#: ../src/widgets/gradient-vector.cpp:905
+#: ../src/widgets/gradient-vector.cpp:902
 msgid "Gradient editor"
 msgstr "Modyfikowanie gradientu"
 
-#: ../src/widgets/gradient-vector.cpp:1192
+#: ../src/widgets/gradient-vector.cpp:1201
 msgid "Change gradient stop color"
 msgstr "Zmień kolor w punkcie sterującym"
 
-#: ../src/widgets/paint-selector.cpp:185 ../src/widgets/paint-selector.cpp:581
+#: ../src/widgets/paint-selector.cpp:231 ../src/widgets/paint-selector.cpp:614
 msgid "No paint"
 msgstr "Brak koloru"
 
-#: ../src/widgets/paint-selector.cpp:187 ../src/widgets/paint-selector.cpp:653
+#: ../src/widgets/paint-selector.cpp:233 ../src/widgets/paint-selector.cpp:678
 msgid "Flat color"
 msgstr "Jednolity kolor"
 
-#: ../src/widgets/paint-selector.cpp:189 ../src/widgets/paint-selector.cpp:724
+#. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
+#: ../src/widgets/paint-selector.cpp:235 ../src/widgets/paint-selector.cpp:741
 msgid "Linear gradient"
 msgstr "Gradient liniowy"
 
-#: ../src/widgets/paint-selector.cpp:191 ../src/widgets/paint-selector.cpp:727
+#: ../src/widgets/paint-selector.cpp:237 ../src/widgets/paint-selector.cpp:744
 msgid "Radial gradient"
 msgstr "Gradient radialny"
 
-#: ../src/widgets/paint-selector.cpp:195
+#: ../src/widgets/paint-selector.cpp:241
 msgid "Swatch"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:197
+#: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
 "Wyzeruj wypełnienie (ustaw jako niezdefiniowane, co umożliwia dziedziczenie)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:209
+#: ../src/widgets/paint-selector.cpp:255
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
@@ -21927,26 +22081,26 @@ msgstr ""
 "nieparzystości)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:220
+#: ../src/widgets/paint-selector.cpp:266
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Wypełnienie przenika całą figurę, chyba że ścieżka składowa ma odwrócony "
 "kierunek (zasada przenikania)"
 
-#: ../src/widgets/paint-selector.cpp:548
+#: ../src/widgets/paint-selector.cpp:581
 msgid "No objects"
 msgstr "Brak obiektów"
 
-#: ../src/widgets/paint-selector.cpp:559
+#: ../src/widgets/paint-selector.cpp:592
 msgid "Multiple styles"
 msgstr "Wiele stylów"
 
-#: ../src/widgets/paint-selector.cpp:570
+#: ../src/widgets/paint-selector.cpp:603
 msgid "Paint is undefined"
 msgstr "Wypełnienie niezdefiniowane"
 
-#: ../src/widgets/paint-selector.cpp:1002
+#: ../src/widgets/paint-selector.cpp:1014
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
@@ -21957,11 +22111,7 @@ msgstr ""
 "Obiekty na deseń</b>, aby utworzyć nowy wzór wypełnienia z zaznaczonych "
 "obiektów."
 
-#: ../src/widgets/paint-selector.cpp:1083
-msgid "Represents a swatch fill."
-msgstr ""
-
-#: ../src/widgets/paint-selector.cpp:1096
+#: ../src/widgets/paint-selector.cpp:1103
 msgid "Swatch fill"
 msgstr ""
 
@@ -22270,54 +22420,42 @@ msgstr "Atrybut"
 msgid "Type text in a text node"
 msgstr "Wprowadź tekst w węźle tekstowym"
 
-#: ../src/widgets/stroke-style.cpp:288 ../src/widgets/stroke-style.cpp:347
-msgid "Set stroke color"
-msgstr "Ustaw kolor konturu"
-
-#: ../src/widgets/stroke-style.cpp:399
-msgid "Set gradient on stroke"
-msgstr "Ustaw gradient konturu"
-
-#: ../src/widgets/stroke-style.cpp:443
-msgid "Set pattern on stroke"
-msgstr "Ustaw deseń konturu"
-
-#: ../src/widgets/stroke-style.cpp:910
+#: ../src/widgets/stroke-style.cpp:502
 msgid "Set markers"
 msgstr "Ustaw zakończenia"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. Stroke width
-#: ../src/widgets/stroke-style.cpp:1085
+#: ../src/widgets/stroke-style.cpp:677
 msgid "StrokeWidth|Width:"
 msgstr "Szerokość:"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/widgets/stroke-style.cpp:1123
+#: ../src/widgets/stroke-style.cpp:715
 msgid "Join:"
 msgstr "Połączenie:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:727
 msgid "Miter join"
 msgstr "Ostre"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1145
+#: ../src/widgets/stroke-style.cpp:737
 msgid "Round join"
 msgstr "Zaokrąglone"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1155
+#: ../src/widgets/stroke-style.cpp:747
 msgid "Bevel join"
 msgstr "Ścięte"
 
@@ -22328,60 +22466,60 @@ msgstr "Ścięte"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1167
+#: ../src/widgets/stroke-style.cpp:759
 msgid "Miter limit:"
 msgstr "Limit ostrych narożników:"
 
-#: ../src/widgets/stroke-style.cpp:1175
+#: ../src/widgets/stroke-style.cpp:767
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 "Maksymalna długość ostrych narożników (w jednostkach szerokości konturu)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1187
+#: ../src/widgets/stroke-style.cpp:779
 msgid "Cap:"
 msgstr "Zakończenie:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:791
 msgid "Butt cap"
 msgstr "Ostre"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1207
+#: ../src/widgets/stroke-style.cpp:799
 msgid "Round cap"
 msgstr "Zaokrąglone"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1215
+#: ../src/widgets/stroke-style.cpp:807
 msgid "Square cap"
 msgstr "Kwadratowe"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1221
+#: ../src/widgets/stroke-style.cpp:813
 msgid "Dashes:"
 msgstr "Styl kresek:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1238
+#: ../src/widgets/stroke-style.cpp:830
 msgid "Start Markers:"
 msgstr "Znaczniki początkowe:"
 
-#: ../src/widgets/stroke-style.cpp:1240
+#: ../src/widgets/stroke-style.cpp:832
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 "Znaczniki początkowe są rysowane na pierwszym węźle ścieżki lub kształtu"
 
-#: ../src/widgets/stroke-style.cpp:1249
+#: ../src/widgets/stroke-style.cpp:841
 msgid "Mid Markers:"
 msgstr "Znaczniki środkowe:"
 
-#: ../src/widgets/stroke-style.cpp:1251
+#: ../src/widgets/stroke-style.cpp:843
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
@@ -22389,15 +22527,15 @@ msgstr ""
 "Znaczniki środkowe są rysowane na każdym węźle ścieżki z wyjątkiem "
 "pierwszego i ostatniego węzła"
 
-#: ../src/widgets/stroke-style.cpp:1260
+#: ../src/widgets/stroke-style.cpp:852
 msgid "End Markers:"
 msgstr "Znaczniki końcowe:"
 
-#: ../src/widgets/stroke-style.cpp:1262
+#: ../src/widgets/stroke-style.cpp:854
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr "Znaczniki końcowe są rysowane na ostatnim węźle ścieżki lub kształtu"
 
-#: ../src/widgets/stroke-style.cpp:1611 ../src/widgets/stroke-style.cpp:1707
+#: ../src/widgets/stroke-style.cpp:1207 ../src/widgets/stroke-style.cpp:1304
 msgid "Set stroke style"
 msgstr "Określ styl konturu"
 
@@ -24304,6 +24442,62 @@ msgstr ""
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr ""
+
+#~ msgid "Failed to read from child pipe (%s)"
+#~ msgstr "Nie udało się odczytać ciągu pokrewnego (%s)"
+
+#~ msgid "Failed to change to directory '%s' (%s)"
+#~ msgstr "Nie można zmienić katalogu „%s” (%s)"
+
+#~ msgid "Failed to execute child process (%s)"
+#~ msgstr "Nie udało się wykonać pokrewnego procesu %s"
+
+#~ msgid "Invalid program name: %s"
+#~ msgstr "Nieprawidłowa nazwa programu: %s"
+
+#~ msgid "Invalid string in argument vector at %d: %s"
+#~ msgstr "Nieprawidłowy ciąg znaków w argumencie wektora dla %d: %s"
+
+#~ msgid "Invalid string in environment: %s"
+#~ msgstr "Nieprawidłowy ciąg znaków w środowisku: %s"
+
+#~ msgid "Failed to create pipe for communicating with child process (%s)"
+#~ msgstr ""
+#~ "Nie udało się utworzyć ciągu komunikacyjnego z procesem pokrewnym (%s)"
+
+#~ msgid "Invalid working directory: %s"
+#~ msgstr "Niewłaściwy katalog roboczy: %s"
+
+#~ msgid "Failed to execute helper program (%s)"
+#~ msgstr "Nie udało się otworzyć programu pomocniczego (%s)"
+
+#~ msgid ""
+#~ "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
+#~ "stroke"
+#~ msgstr ""
+#~ "Kolor: <b>%s</b>. <b>Kliknij</b>, aby określić parametry wypełnienia, "
+#~ "<b>Shift+kliknięcie</b>, aby określić parametry konturu."
+
+#~ msgid "Change color definition"
+#~ msgstr "Zmień definicję koloru"
+
+#~ msgid "Remove stroke color"
+#~ msgstr "Usuń kolor konturu"
+
+#~ msgid "Remove fill color"
+#~ msgstr "Usuń kolor wypełnienia"
+
+#~ msgid "Set stroke color to none"
+#~ msgstr "Ustaw kolor konturu na (brak)"
+
+#~ msgid "Set fill color to none"
+#~ msgstr "Ustaw kolor wypełnienia na (brak)"
+
+#~ msgid "Set stroke color from swatch"
+#~ msgstr "Określ kolor konturu wybierając próbkę z palety"
+
+#~ msgid "Set fill color from swatch"
+#~ msgstr "Określ kolor wypełnienia wybierając próbkę z palety"
 
 #~ msgid "bounding box"
 #~ msgstr "obwiednia"
