@@ -73,6 +73,7 @@ private:
     static void paintModeChangeCB(SPPaintSelector *psel, SPPaintSelector::Mode mode, FillNStroke *self);
     static void paintChangedCB(SPPaintSelector *psel, FillNStroke *self);
     static void paintDraggedCB(SPPaintSelector *psel, FillNStroke *self);
+    static gboolean dragDelayCB(gpointer data);
 
     static void fillruleChangedCB( SPPaintSelector *psel, SPPaintSelector::FillRule mode, FillNStroke *self );
 
@@ -86,8 +87,9 @@ private:
     FillOrStroke kind;
     SPDesktop *desktop;
     SPPaintSelector *psel;
+    guint32 lastDrag;
+    guint dragId;
     bool update;
-    bool local;
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
@@ -120,8 +122,9 @@ FillNStroke::FillNStroke( FillOrStroke kind ) :
     kind(kind),
     desktop(0),
     psel(0),
+    lastDrag(0),
+    dragId(0),
     update(false),
-    local(false),
     selectChangedConn(),
     subselChangedConn(),
     selectModifiedConn()
@@ -152,6 +155,10 @@ FillNStroke::FillNStroke( FillOrStroke kind ) :
 
 FillNStroke::~FillNStroke()
 {
+    if (dragId) {
+        g_source_remove(dragId);
+        dragId = 0;
+    }
     psel = 0;
     selectModifiedConn.disconnect();
     subselChangedConn.disconnect();
@@ -176,6 +183,10 @@ void FillNStroke::selectionModifiedCB( guint flags )
 void FillNStroke::setDesktop(SPDesktop *desktop)
 {
     if (this->desktop != desktop) {
+        if (dragId) {
+            g_source_remove(dragId);
+            dragId = 0;
+        }
         if (this->desktop) {
             selectModifiedConn.disconnect();
             subselChangedConn.disconnect();
@@ -188,7 +199,6 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
 
             // Must check flags, so can't call performUpdate() directly.
             selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FillNStroke::selectionModifiedCB)));
-
         }
         performUpdate();
     }
@@ -206,12 +216,11 @@ void FillNStroke::performUpdate()
         return;
     }
 
-    if (kind == FILL) {
-        // TODO check. This probably should happen for stroke as well as fill.
-        if ( local ) {
-            local = false; // local change; do nothing, but reset the flag
-            return;
-        }
+    if ( dragId ) {
+        // local change; do nothing, but reset the flag
+        g_source_remove(dragId);
+        dragId = 0;
+        return;
     }
 
     update = true;
@@ -348,6 +357,28 @@ void FillNStroke::paintDraggedCB(SPPaintSelector * /*psel*/, FillNStroke *self)
     }
 }
 
+
+gboolean FillNStroke::dragDelayCB(gpointer data)
+{
+    gboolean keepGoing = TRUE;
+    if (data) {
+        FillNStroke *self = reinterpret_cast<FillNStroke*>(data);
+        if (!self->update) {
+            if (self->dragId) {
+                g_source_remove(self->dragId);
+                self->dragId = 0;
+
+                self->dragFromPaint();
+                self->performUpdate();
+            }
+            keepGoing = FALSE;
+        }
+    } else {
+        keepGoing = FALSE;
+    }
+    return keepGoing;
+}
+
 /**
  * This is called repeatedly while you are dragging a color slider, only for flat color
  * modes. Previously it set the color in style but did not update the repr for efficiency, however
@@ -360,14 +391,22 @@ void FillNStroke::dragFromPaint()
         return;
     }
 
-    if (kind == FILL) {
-        if (local) {
-            // previous local flag not cleared yet;
-            // this means dragged events come too fast, so we better skip this one to speed up display
-            // (it's safe to do this in any case)
-            return;
-        }
+    guint32 when = gtk_get_current_event_time();
+
+    // Don't attempt too many updates per second.
+    // Assume a base 15.625ms resolution on the timer.
+    if (!dragId && lastDrag && when && ((when - lastDrag) < 32)) {
+        // local change, do not update from selection
+        dragId = g_timeout_add_full(G_PRIORITY_DEFAULT, 33, dragDelayCB, this, 0);
     }
+
+    if (dragId) {
+        // previous local flag not cleared yet;
+        // this means dragged events come too fast, so we better skip this one to speed up display
+        // (it's safe to do this in any case)
+        return;
+    }
+    lastDrag = when;
 
     update = true;
 
@@ -375,12 +414,11 @@ void FillNStroke::dragFromPaint()
         case SPPaintSelector::MODE_COLOR_RGB:
         case SPPaintSelector::MODE_COLOR_CMYK:
         {
+            // local change, do not update from selection
+            dragId = g_timeout_add_full(G_PRIORITY_DEFAULT, 100, dragDelayCB, this, 0);
             psel->setFlatColor( desktop, (kind == FILL) ? "fill" : "stroke", (kind == FILL) ? "fill-opacity" : "stroke-opacity" );
             sp_document_maybe_done(desktop->doc(), (kind == FILL) ? undo_F_label : undo_S_label, SP_VERB_DIALOG_FILL_STROKE,
                                    (kind == FILL) ? _("Set fill color") : _("Set stroke color"));
-            if (kind == FILL) {
-                local = true; // local change, do not update from selection
-            }
             break;
         }
 
