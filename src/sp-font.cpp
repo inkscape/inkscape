@@ -21,7 +21,6 @@
 #include "sp-glyph.h"
 #include "sp-missing-glyph.h"
 #include "document.h"
-#include "helper-fns.h"
 
 #include "display/nr-svgfonts.h"
 
@@ -79,15 +78,21 @@ static void sp_font_class_init(SPFontClass *fc)
     sp_object_class->update = sp_font_update;
 }
 
+//I think we should have extra stuff here and in the set method in order to set default value as specified at http://www.w3.org/TR/SVG/fonts.html
+
+// TODO determine better values and/or make these dynamic:
+double FNT_DEFAULT_ADV = 90; // TODO determine proper default
+double FNT_DEFAULT_ASCENT = 90; // TODO determine proper default
+double FNT_UNITS_PER_EM = 90; // TODO determine proper default
+
 static void sp_font_init(SPFont *font)
 {
     font->horiz_origin_x = 0;
     font->horiz_origin_y = 0;
-    font->horiz_adv_x = 0;
-//I think we should have extra stuff here and in the set method in order to set default value as specified at http://www.w3.org/TR/SVG/fonts.html
-    font->vert_origin_x = 0;
-    font->vert_origin_y = 0;
-    font->vert_adv_y = 0;
+    font->horiz_adv_x = FNT_DEFAULT_ADV;
+    font->vert_origin_x = FNT_DEFAULT_ADV / 2.0;
+    font->vert_origin_y = FNT_DEFAULT_ASCENT;
+    font->vert_adv_y = FNT_UNITS_PER_EM;
 }
 
 static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
@@ -155,51 +160,63 @@ static void sp_font_release(SPObject *object)
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPFont *font = SP_FONT(object);
-    double number;
 
+    // TODO these are floating point, so some epsilon comparison would be good
     switch (key) {
         case SP_ATTR_HORIZ_ORIGIN_X:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != font->horiz_origin_x){
                 font->horiz_origin_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_HORIZ_ORIGIN_Y:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != font->horiz_origin_y){
                 font->horiz_origin_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_HORIZ_ADV_X:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ADV;
             if (number != font->horiz_adv_x){
                 font->horiz_adv_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_VERT_ORIGIN_X:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ADV / 2.0;
             if (number != font->vert_origin_x){
                 font->vert_origin_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_VERT_ORIGIN_Y:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : FNT_DEFAULT_ASCENT;
             if (number != font->vert_origin_y){
                 font->vert_origin_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_VERT_ADV_Y:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : FNT_UNITS_PER_EM;
             if (number != font->vert_adv_y){
                 font->vert_adv_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);

@@ -20,7 +20,6 @@
 #include "attributes.h"
 #include "sp-glyph.h"
 #include "document.h"
-#include "helper-fns.h"
 
 static void sp_glyph_class_init(SPGlyphClass *gc);
 static void sp_glyph_init(SPGlyph *glyph);
@@ -146,78 +145,97 @@ static glyphOrientation sp_glyph_read_orientation(gchar const *value){
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPGlyph *glyph = SP_GLYPH(object);
-    double number;
-    glyphOrientation orient;
-    glyphArabicForm form;
 
     switch (key) {
         case SP_ATTR_UNICODE:
+        {
             glyph->unicode.clear();
             if (value) glyph->unicode.append(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_GLYPH_NAME:
+        {
             glyph->glyph_name.clear();
             if (value) glyph->glyph_name.append(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_D:
+        {
             if (glyph->d) g_free(glyph->d);
             glyph->d = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_ORIENTATION:
-            orient = sp_glyph_read_orientation(value);
+        {
+            glyphOrientation orient = sp_glyph_read_orientation(value);
             if (glyph->orientation != orient){
                 glyph->orientation = orient;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_ARABIC_FORM:
-            form = sp_glyph_read_arabic_form(value);
+        {
+            glyphArabicForm form = sp_glyph_read_arabic_form(value);
             if (glyph->arabic_form != form){
                 glyph->arabic_form = form;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_LANG:
+        {
             if (glyph->lang) g_free(glyph->lang);
             glyph->lang = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_HORIZ_ADV_X:
-            number = helperfns_read_number(value);
+        }
+        case SP_ATTR_HORIZ_ADV_X:
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != glyph->horiz_adv_x){
                 glyph->horiz_adv_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ORIGIN_X:
-            number = helperfns_read_number(value);
+        }
+        case SP_ATTR_VERT_ORIGIN_X:
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != glyph->vert_origin_x){
                 glyph->vert_origin_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ORIGIN_Y:
-            number = helperfns_read_number(value);
+        }
+        case SP_ATTR_VERT_ORIGIN_Y:
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != glyph->vert_origin_y){
                 glyph->vert_origin_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ADV_Y:
-            number = helperfns_read_number(value);
+        }
+        case SP_ATTR_VERT_ADV_Y:
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != glyph->vert_adv_y){
                 glyph->vert_adv_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	default:
+        }
+        default:
+        {
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
+        }
     }
 }
 

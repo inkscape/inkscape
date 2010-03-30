@@ -24,7 +24,6 @@
 #include "attributes.h"
 #include "sp-font-face.h"
 #include "document.h"
-#include "helper-fns.h"
 
 //TODO: apparently unused. Maybe should be removed.
 class ObjectContainer
@@ -486,7 +485,6 @@ static void sp_fontface_release(SPObject *object)
 static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPFontFace *face = SP_FONTFACE(object);
-    double number;
     std::vector<FontFaceStyleType> style;
     std::vector<FontFaceVariantType> variant;
     std::vector<FontFaceWeightType> weight;
@@ -494,7 +492,9 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
 
     switch (key) {
         case SP_PROP_FONT_FAMILY:
-            if (face->font_family) g_free(face->font_family);
+            if (face->font_family) {
+                g_free(face->font_family);
+            }
             face->font_family = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -505,7 +505,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<style.size();i++){
-                    if(style[i] != face->font_style[i]){
+                    if (style[i] != face->font_style[i]){
                         face->font_style = style;
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
@@ -520,7 +520,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<variant.size();i++){
-                    if(variant[i] != face->font_variant[i]){
+                    if (variant[i] != face->font_variant[i]){
                         face->font_variant = variant;
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
@@ -535,7 +535,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<weight.size();i++){
-                    if(weight[i] != face->font_weight[i]){
+                    if (weight[i] != face->font_weight[i]){
                         face->font_weight = weight;
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
@@ -550,7 +550,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 for (unsigned int i=0;i<stretch.size();i++){
-                    if(stretch[i] != face->font_stretch[i]){
+                    if (stretch[i] != face->font_stretch[i]){
                         face->font_stretch = stretch;
                         object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                         break;
@@ -559,166 +559,212 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             }
             break;
         case SP_ATTR_UNITS_PER_EM:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->units_per_em){
                 face->units_per_em = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_STEMV:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->stemv){
                 face->stemv = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_STEMH:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->stemh){
                 face->stemh = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_SLOPE:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->slope){
                 face->slope = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_CAP_HEIGHT:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->cap_height){
                 face->cap_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_X_HEIGHT:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->x_height){
                 face->x_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_ACCENT_HEIGHT:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->accent_height){
                 face->accent_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_ASCENT:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->ascent){
                 face->ascent = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_DESCENT:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->descent){
                 face->descent = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_IDEOGRAPHIC:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->ideographic){
                 face->ideographic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_ALPHABETIC:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->alphabetic){
                 face->alphabetic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_MATHEMATICAL:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->mathematical){
                 face->mathematical = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_HANGING:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->hanging){
                 face->hanging = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_V_IDEOGRAPHIC:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->v_ideographic){
                 face->v_ideographic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_V_ALPHABETIC:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->v_alphabetic){
                 face->v_alphabetic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_V_MATHEMATICAL:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->v_mathematical){
                 face->v_mathematical = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_V_HANGING:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->v_hanging){
                 face->v_hanging = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_UNDERLINE_POSITION:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->underline_position){
                 face->underline_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_UNDERLINE_THICKNESS:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->underline_thickness){
                 face->underline_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_STRIKETHROUGH_POSITION:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->strikethrough_position){
                 face->strikethrough_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_STRIKETHROUGH_THICKNESS:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->strikethrough_thickness){
                 face->strikethrough_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_OVERLINE_POSITION:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->overline_position){
                 face->overline_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         case SP_ATTR_OVERLINE_THICKNESS:
-            number = helperfns_read_number(value);
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != face->overline_thickness){
                 face->overline_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
+        }
         default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);

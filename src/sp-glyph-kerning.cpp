@@ -22,7 +22,6 @@
 #include "sp-glyph-kerning.h"
 
 #include "document.h"
-#include "helper-fns.h"
 #include <string>
 
 static void sp_glyph_kerning_class_init(SPGlyphKerningClass *gc);
@@ -149,41 +148,60 @@ bool GlyphNames::contains(const char* name){
 static void sp_glyph_kerning_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPGlyphKerning * glyphkern = (SPGlyphKerning*) object; //even if it is a VKern this will work. I did it this way just to avoind warnings.
-    double number;
 
     switch (key) {
         case SP_ATTR_U1:
-            if (glyphkern->u1) delete glyphkern->u1;
+        {
+            if (glyphkern->u1) {
+                delete glyphkern->u1;
+            }
             glyphkern->u1 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_U2:
-            if (glyphkern->u2) delete glyphkern->u2;
+        {
+            if (glyphkern->u2) {
+                delete glyphkern->u2;
+            }
             glyphkern->u2 = new UnicodeRange(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_G1:
-            if (glyphkern->g1) delete glyphkern->g1;
+        {
+            if (glyphkern->g1) {
+                delete glyphkern->g1;
+            }
             glyphkern->g1 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+        }
         case SP_ATTR_G2:
-            if (glyphkern->g2) delete glyphkern->g2;
+        {
+            if (glyphkern->g2) {
+                delete glyphkern->g2;
+            }
             glyphkern->g2 = new GlyphNames(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
              break;
-	case SP_ATTR_K:
-            number = helperfns_read_number(value);
+        }
+        case SP_ATTR_K:
+        {
+            double number = value ? g_ascii_strtod(value, 0) : 0;
             if (number != glyphkern->k){
                 glyphkern->k = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	default:
+        }
+        default:
+        {
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
             break;
+        }
     }
 }
 
