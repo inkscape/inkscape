@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-30 17:45+0200\n"
-"PO-Revision-Date: 2010-01-29 23:12+0900\n"
+"PO-Revision-Date: 2010-03-30 16:06+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -641,7 +641,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "A4 サイズに自動調整する"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 format.\n"
 "- assume svg drawing is in pixels, at 90 dpi.\n"
@@ -652,12 +651,14 @@ msgid ""
 "- LWPOLYLINE output is a multiply-connected polyline, disable it to use a "
 "legacy version of the LINE output."
 msgstr ""
-"- AutoCAD Release 13 形式。\n"
-"- SVG 描画を 90 dpi とみなします。\n"
+"- AutoCAD Release 13 形式になります。\n"
+"- SVG 描画をピクセルで 90 dpi とみなします。\n"
 "- DXF 描画の単位を mm とみなします。\n"
-"- LWPOLYLINE および SPLINE 要素のみサポートしています。\n"
-"- ROBO-Master オプションは ROBO-Master および AutoDesk ビューアでのみ読み込み"
-"可能なスプラインに特化し、Inkscape では読み込めません。"
+"- 線 および スプライン 要素のみサポートしています。\n"
+"- ROBO-Master スプライン出力は ROBO-Master および AutoDesk ビューアでのみ読み"
+"込み可能なスプラインに特化し、Inkscape では読み込めません。\n"
+"- LWPOLYLINE 出力は多重接続スプラインになります。LINE 出力の古いバージョンを"
+"使用する場合は無効にしてください。"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
 msgid "Desktop Cutting Plotter"
@@ -669,12 +670,11 @@ msgstr "デスクトップ カッティングプロッタ (R13) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:11
 msgid "use LWPOLYLINE type of line output"
-msgstr ""
+msgstr "線出力の LWPOLYLINE タイプを使用する"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
-#, fuzzy
 msgid "use ROBO-Master type of spline output"
-msgstr "ROBO-Master 出力を有効にする"
+msgstr "スプライン出力の ROBO-Master タイプを使用する"
 
 #: ../share/extensions/dxf_output.inx.h:1
 msgid "AutoCAD DXF R12 (*.dxf)"
@@ -947,7 +947,7 @@ msgstr "範囲とサンプリング"
 #: ../share/extensions/funcplot.inx.h:12
 #: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
-msgstr "境界線を削除する"
+msgstr "矩形を削除する"
 
 #: ../share/extensions/funcplot.inx.h:14
 msgid ""
@@ -2873,41 +2873,40 @@ msgstr "Text 入力"
 #: ../share/extensions/webslicer_create_group.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "HTML class atribute"
-msgstr ""
+msgstr "HTML class 属性"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:16
-#, fuzzy
 msgid "HTML id atribute"
-msgstr "属性を設定"
+msgstr "HTML id 属性"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-#, fuzzy
 msgid "Height Unity"
-msgstr "高さ"
+msgstr "高さの統一"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, first you must to select some \"Slicer rectangles\"."
 msgstr ""
+"レイアウトグループの機能はよりよいコード生成を行うだけです (それが必要なら"
+"ば)。これを使用するには、いくつかの \"スライス矩形\" を選択してください。"
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
-#, fuzzy
 msgid "Percent (relative to parent size)"
-msgstr "幅の基準を長さと相対的にする"
+msgstr "パーセント (親サイズとの相対値)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Pixel (fixed)"
-msgstr ""
+msgstr "ピクセル (固定値)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Set a layout group"
-msgstr ""
+msgstr "レイアウトグループの設定"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
-msgstr ""
+msgstr "定義なし (非フロートコンテンツサイズとの相対値)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 #: ../share/extensions/webslicer_create_rect.inx.h:35
@@ -2918,15 +2917,16 @@ msgid "Web"
 msgstr "ウェブ"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
-#, fuzzy
 msgid "Width Unity"
-msgstr "幅"
+msgstr "幅の統一"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
 msgstr ""
+"0 は最低画質ですが最高圧縮率になり、100 は最高画質ですが最低圧縮率になりま"
+"す。"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:2
 #: ../src/ui/dialog/document-properties.cpp:93
@@ -2935,30 +2935,27 @@ msgstr "背景色"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
-msgstr ""
+msgstr "背景 — 繰り返しなし (親グループ上)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "Background — repeat horizontally (on parent group)"
-msgstr ""
+msgstr "背景 — 横方向に繰り返し (親グループ上)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
 msgid "Background — repeat vertically (on parent group)"
-msgstr ""
+msgstr "背景 — 縦方向に繰り返し (親グループ上)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
-#, fuzzy
 msgid "Bottom and Left"
-msgstr "下ベンドパス"
+msgstr "左下"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-#, fuzzy
 msgid "Bottom and Right"
-msgstr "下ベンドパス"
+msgstr "右下"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-#, fuzzy
 msgid "Create a slicer rectangle"
-msgstr "矩形を作成"
+msgstr "スライス矩形の作成"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9 ../src/main.cpp:300
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -2966,39 +2963,38 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
-#, fuzzy
 msgid "Force Dimension"
-msgstr "寸法線"
+msgstr "サイズ強制"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
+"サイズ強制は \"&lt;width&gt;x&lt;height&gt;\" のように設定しなければなりませ"
+"ん。"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:12 ../src/rdf.cpp:235
 msgid "Format"
 msgstr "フォーマット"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
-#, fuzzy
 msgid "GIF specific options"
-msgstr "SVG 1.1 仕様書 (英語)"
+msgstr "GIF 固有オプション"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "If had set, this will replace DPI."
-msgstr ""
+msgstr "設定すると DPI は変更されます。"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:18
-#, fuzzy
 msgid "JPG specific options"
-msgstr "SVG 1.1 仕様書 (英語)"
+msgstr "JPG 固有オプション"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "Layout disposition"
-msgstr ""
+msgstr "レイアウト"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Left Floated Image"
-msgstr ""
+msgstr "左フロートイメージ"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 #: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
@@ -3006,61 +3002,53 @@ msgid "Name"
 msgstr "名前"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
-#, fuzzy
 msgid "Non Positioned Image"
-msgstr "拘束角度"
+msgstr "位置未指定イメージ"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Options for HTML export"
-msgstr ""
+msgstr "HTML エクスポートオプション"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:24
-#, fuzzy
 msgid "Palette"
-msgstr "パレット(_P)"
+msgstr "パレット"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:25
-#, fuzzy
 msgid "Palette size"
-msgstr "サイズを貼り付け"
+msgstr "パレットサイズ"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
-#, fuzzy
 msgid "Position anchor"
-msgstr "位置"
+msgstr "位置アンカー"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:27
+#, fuzzy
 msgid "Positioned &lt;div&gt; width the image as Background"
-msgstr ""
+msgstr "位置固定 &lt;div&gt; width the image as Background"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
-#, fuzzy
 msgid "Positioned Image"
-msgstr "位置調整"
+msgstr "位置固定イメージ"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:29
-#, fuzzy
 msgid "Quality"
-msgstr "終了(_Q)"
+msgstr "画質"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
-#, fuzzy
 msgid "Right Floated Image"
-msgstr "右角度"
+msgstr "右フロートイメージ"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Tiled Background (on parent group)"
-msgstr ""
+msgstr "タイル配置の背景 (親グループ上)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
-#, fuzzy
 msgid "Top and Left"
-msgstr "上ベンドパス"
+msgstr "左上"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:33
-#, fuzzy
 msgid "Top and right"
-msgstr "ヒントやコツ (_T)"
+msgstr "右上"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
@@ -3072,6 +3060,8 @@ msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
+"全てのスライスされたイメージとオプションコードは、一つのディレクトリに保存さ"
+"れます。"
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
@@ -3079,15 +3069,15 @@ msgstr ""
 
 #: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export"
-msgstr ""
+msgstr "エクスポート先ディレクトリパス"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "レイアウトピースと HTML+CSS コードのエクスポート"
 
 #: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
-msgstr ""
+msgstr "HTML と CSS も作成する"
 
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "All selected ones set an attribute in the last one"
@@ -5664,28 +5654,24 @@ msgid "Old paint (bitmap)"
 msgstr "古絵画 (ビットマップ)"
 
 #: ../src/conn-avoid-ref.cpp:237
-#, fuzzy
 msgid "Add a new connection point"
-msgstr "新規接続点"
+msgstr "接続点を追加"
 
 #: ../src/conn-avoid-ref.cpp:262
-#, fuzzy
 msgid "Move a connection point"
-msgstr "接続点を削除"
+msgstr "接続点を移動"
 
 #: ../src/conn-avoid-ref.cpp:282
-#, fuzzy
 msgid "Remove a connection point"
 msgstr "接続点を削除"
 
 #: ../src/live_effects/lpe-extrude.cpp:26
-#, fuzzy
 msgid "Direction"
-msgstr "詳細"
+msgstr "方向"
 
 #: ../src/live_effects/lpe-extrude.cpp:26
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "押し出す量と方向を設定してください。"
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
@@ -5764,9 +5750,8 @@ msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成します。"
 
 #: ../src/connector-context.cpp:237
-#, fuzzy
 msgid "<b>Connection point</b>: click to select, drag to move"
-msgstr "<b>接続点</b>: クリックまたはドラッグで新しいコネクタを作成します。"
+msgstr "<b>接続点</b>: クリックで選択、ドラッグで移動します。"
 
 #: ../src/connector-context.cpp:781
 msgid "Creating new connector"
@@ -7618,9 +7603,8 @@ msgid "constrained angle"
 msgstr "拘束角度"
 
 #: ../src/display/snap-indicator.cpp:147
-#, fuzzy
 msgid "constraint"
-msgstr "定数:"
+msgstr "拘束"
 
 #: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box corner"
@@ -7692,7 +7676,7 @@ msgstr "テキストベースライン"
 
 #: ../src/display/snap-indicator.cpp:212
 msgid "Multiple of grid spacing"
-msgstr ""
+msgstr "複数のグリッド間隔"
 
 #: ../src/display/snap-indicator.cpp:255
 msgid " to "
@@ -8501,7 +8485,7 @@ msgstr "テキストをパスに変換"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-msgstr ""
+msgstr "PS+LaTeX: PS のテキストを除外して LaTeX ファイルを生成"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:373
@@ -8539,7 +8523,7 @@ msgstr "PostScript ファイル"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:372
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-msgstr ""
+msgstr "EPS+LaTeX: EPS のテキストを除外して LaTeX ファイルを生成"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:382
 msgid "Encapsulated PostScript File"
@@ -8555,7 +8539,7 @@ msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
-msgstr ""
+msgstr "PDF+LaTeX: PDF のテキストを除外して LaTeX ファイルを生成"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2401
 msgid "EMF Input"
@@ -8672,25 +8656,25 @@ msgid "%s GDK pixbuf Input"
 msgstr "%s GDK pixbuf 入力"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:151
-#, fuzzy
 msgid "Link or embed image:"
-msgstr "画像を埋め込む"
+msgstr "画像のリンクまたは埋め込み:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:152
-#, fuzzy
 msgid "embed"
 msgstr "埋め込み"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-#, fuzzy
 msgid "link"
-msgstr "本に1本"
+msgstr "リンク"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
 msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
+"画像を埋め込むと SVG ファイルサイズが大きくなります。外部のファイルをリンク参"
+"照するとこの SVG ドキュメントと一緒に全てのファイルを移動しなければなりませ"
+"ん。"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -10451,7 +10435,7 @@ msgstr "コッホ曲線"
 
 #: ../src/live_effects/effect.cpp:115
 msgid "Knot"
-msgstr "ノット"
+msgstr "結び目"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Construct grid"
@@ -10782,7 +10766,7 @@ msgstr "ドラッグで交点を選択、クリックで切り替えます。"
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:638
 msgid "Change knot crossing"
-msgstr "ノット交点の変更"
+msgstr "結び目交差の変更"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:61
 msgid "Pattern source"
@@ -11342,9 +11326,8 @@ msgid "Change unit parameter"
 msgstr "単位パラメータの変更"
 
 #: ../src/live_effects/parameter/vector.cpp:96
-#, fuzzy
 msgid "Change vector parameter"
-msgstr "テキストパラメータの変更"
+msgstr "ベクターパラメータの変更"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -11494,12 +11477,16 @@ msgstr "ドキュメントを EPS ファイルにエクスポート"
 msgid "Export document to a PDF file"
 msgstr "ドキュメントを PDF ファイルにエクスポート"
 
+# --help
 #: ../src/main.cpp:381
 msgid ""
 "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is "
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
+"テキストを除き PDF/PS/EPS へエクスポートする。PDF/PS/EPS に加え LaTeX ファイ"
+"ルをエクスポートすると、テキストは PDF/PS/EPS の先頭に置かれる。LaTeX には "
+"\\input{latexfile.tex} のような出力が含まれる。"
 
 #: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -12390,37 +12377,40 @@ msgstr ""
 "<b>異なるグループ</b>または<b>レイヤー</b>のオブジェクトは前面/背面へ移動でき"
 "ません。"
 
+# undo history
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:850
-#, fuzzy
 msgid "undo action|Raise"
-msgstr "前面へ"
+msgstr "前面へ移動"
 
 #: ../src/selection-chemistry.cpp:862
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "最前面に移動させる<b>オブェクト</b>を選択してください。"
 
+# undo history
 #: ../src/selection-chemistry.cpp:885
 msgid "Raise to top"
-msgstr "最前面へ"
+msgstr "最前面へ移動"
 
 #: ../src/selection-chemistry.cpp:898
 msgid "Select <b>object(s)</b> to lower."
 msgstr "背面へ移動する<b>オブェクト</b>を選択して下さい。"
 
+# undo history
 #: ../src/selection-chemistry.cpp:948
 msgid "Lower"
-msgstr "背面へ"
+msgstr "背面へ移動"
 
 #: ../src/selection-chemistry.cpp:960
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "最背面に移動させる<b>オブェクト</b>を選択してください。"
 
+# undo history
 #: ../src/selection-chemistry.cpp:995
 msgid "Lower to bottom"
-msgstr "最背面へ"
+msgstr "最背面へ移動"
 
 #: ../src/selection-chemistry.cpp:1002
 msgid "Nothing to undo."
@@ -14093,7 +14083,7 @@ msgstr ""
 "KATSURAGAWA Naoki, 2006.\n"
 "Yukihiro Nakai, 2006.\n"
 "Kenji Inoue, 2006-2007.\n"
-"Masato Hashimoto, 2009."
+"Masato Hashimoto, 2009, 2010."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:238
 #: ../src/ui/dialog/align-and-distribute.cpp:793
@@ -16054,9 +16044,8 @@ msgid "Node"
 msgstr "ノード"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
-#, fuzzy
 msgid "Path outline"
-msgstr "パスアウトライン:"
+msgstr "パスアウトライン"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Path outline color"
@@ -16076,23 +16065,27 @@ msgstr "見えないパスだけでなく、すべてのパスのアウトライ
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Update outline when dragging nodes"
-msgstr ""
+msgstr "ノードのドラッグ時にアウトラインを更新する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid ""
 "Update the outline when dragging or transforming nodes. If this is off, the "
 "outline will only update when completing a drag."
 msgstr ""
+"ノードのドラッグまたは変形時にアウトラインを更新します。このオプションをオフ"
+"にすると、アウトラインはドラッグ完了時にのみ更新されます。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Update paths when dragging nodes"
-msgstr ""
+msgstr "ノードのドラッグ時にパスを更新する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid ""
 "Update paths when dragging or transforming nodes. If this is off, paths will "
 "only be updated when completing a drag."
 msgstr ""
+"ノードのドラッグまたは変形時にパスを更新します。このオプションをオフにする"
+"と、パスはドラッグ完了時にのみ更新されます。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Show path direction on outlines"
@@ -16135,9 +16128,8 @@ msgstr ""
 "い。0 を指定するとマウスがパス上から移動されるまで表示されます。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
-#, fuzzy
 msgid "Editing preferences"
-msgstr "グラデーションの設定"
+msgstr "編集設定"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Show transform handles for single nodes"
@@ -16148,15 +16140,16 @@ msgid "Show transform handles even when only a single node is selected."
 msgstr "単一ノードのみが選択されている時も変形ハンドルを表示します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:456
-#, fuzzy
 msgid "Deleting nodes preserves shape"
-msgstr "シェイプを維持したノードの削除"
+msgstr "ノードの削除時にシェイプを維持する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid ""
 "Move handles next to deleted nodes to resemble original shape. Hold Ctrl to "
 "get the other behavior."
 msgstr ""
+"オリジナルのシェイプに近づくようハンドルを削除したノードへ移動します。Ctrlを"
+"押したままでその他の振る舞いを行います。"
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2457
@@ -16502,44 +16495,43 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:674
 msgid "Before applying clippath/mask:"
-msgstr ""
+msgstr "クリックパス/マスクの適用前:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:676
 msgid "Do not group clipped/masked objects"
-msgstr ""
+msgstr "クリップ/マスクオブジェクトをグループ化しない"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
 msgid "Enclose every clipped/masked object in its own group"
-msgstr ""
+msgstr "グループ内の各クリップ/マスクオブジェクトを含める"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:678
 msgid "Put all clipped/masked objects into one group"
-msgstr ""
+msgstr "全てのクリップ/マスクオブジェクトを一つのグループに収める"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
 msgid "Apply clippath/mask to every object"
-msgstr ""
+msgstr "オブジェクトごとにクリップ/マスクを適用します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:684
 msgid "Apply clippath/mask to groups containing single object"
-msgstr ""
+msgstr "一つのオブジェクトが含まれるグループにクリップ/マスクを適用します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:687
 msgid "Apply clippath/mask to group containing all objects"
-msgstr ""
+msgstr "全てのオブジェクトが含まれるグループにクリップ/マスクを適用します。"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:689
 msgid "After releasing clippath/mask:"
-msgstr ""
+msgstr "クリップパス/マスク解除後:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:691
-#, fuzzy
 msgid "Ungroup automatically created groups"
-msgstr "選択したグループのグループ解除"
+msgstr "生成されたグループを自動的解除する"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:693
 msgid "Ungroup groups created when setting clip/mask"
-msgstr ""
+msgstr "クリップ/マスクの指定時に生成されたグループを解除します"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:695
 msgid "Clippaths and masks"
@@ -18221,12 +18213,12 @@ msgstr "プレビューテキスト:"
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:192
 msgid "Set fill"
-msgstr "フィルのセット"
+msgstr "フィルに設定"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:200
 msgid "Set stroke"
-msgstr "ストロークのセット"
+msgstr "ストロークに設定"
 
 #: ../src/ui/dialog/swatches.cpp:225 ../src/widgets/gradient-selector.cpp:146
 #: ../src/widgets/gradient-toolbar.cpp:486
@@ -18802,14 +18794,12 @@ msgid "Auto-smooth node"
 msgstr "自動スムーズノード"
 
 #: ../src/ui/tool/path-manipulator.cpp:763
-#, fuzzy
 msgid "Scale handle"
-msgstr "ノードを拡大縮小"
+msgstr "拡大縮小ハンドル"
 
 #: ../src/ui/tool/path-manipulator.cpp:787
-#, fuzzy
 msgid "Rotate handle"
-msgstr "ハンドルを引っ込める"
+msgstr "回転ハンドル"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1314
@@ -21765,9 +21755,8 @@ msgid "Radial gradient"
 msgstr "放射グラデーション"
 
 #: ../src/widgets/paint-selector.cpp:241
-#, fuzzy
 msgid "Swatch"
-msgstr "スケッチ"
+msgstr "スウォッチ"
 
 #: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -21810,9 +21799,8 @@ msgstr ""
 "ト &gt; パターン &gt; オブジェクトをパターンへ</b>を使用します。"
 
 #: ../src/widgets/paint-selector.cpp:1103
-#, fuzzy
 msgid "Swatch fill"
-msgstr "フィルのセット"
+msgstr "スウォッチのフィル"
 
 #: ../src/widgets/select-toolbar.cpp:247
 msgid "Transform by toolbar"
@@ -21882,12 +21870,10 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X position"
 msgstr "X 位置"
 
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X"
 msgstr "X"
 
@@ -21898,12 +21884,10 @@ msgstr "選択オブジェクトの水平位置"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y position"
 msgstr "Y 位置"
 
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y"
 msgstr "Y"
 
@@ -21914,12 +21898,10 @@ msgstr "選択オブジェクトの垂直位置"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|Width"
 msgstr "幅"
 
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|W"
 msgstr "幅"
 
@@ -21938,12 +21920,10 @@ msgstr "ロックすると幅と高さの比率を維持して拡大縮小"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|Height"
 msgstr "高さ"
 
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|H"
 msgstr "高さ"
 
@@ -22288,11 +22268,11 @@ msgstr "バケツの塗りつぶしオブジェクトのスタイル"
 
 #: ../src/widgets/toolbox.cpp:856
 msgid "Default interface setup"
-msgstr "インターフェイスセットアップのデフォルト"
+msgstr "デフォルトのインターフェイスセットアップです"
 
 #: ../src/widgets/toolbox.cpp:862
 msgid "Set the custom task"
-msgstr "カスタムタスクを設定"
+msgstr "カスタムタスクを設定します"
 
 #: ../src/widgets/toolbox.cpp:867
 msgid "Wide"
@@ -22300,7 +22280,7 @@ msgstr "ワイド"
 
 #: ../src/widgets/toolbox.cpp:868
 msgid "Setup for widescreen work"
-msgstr "ワイドスクリーン用セットアップ"
+msgstr "ワイドスクリーン用セットアップです"
 
 #: ../src/widgets/toolbox.cpp:871
 msgid "Task"
@@ -24091,6 +24071,45 @@ msgstr "傾斜 [度]"
 msgid "Wireframe Sphere"
 msgstr "ワイヤーフレーム球体"
 
+#, fuzzy
+#~ msgid "Pen number"
+#~ msgstr "ペンの角度"
+
+#, fuzzy
+#~ msgid "Resolution (dpi)"
+#~ msgstr "解像度 (インチあたりのドット数)"
+
+#~ msgid ""
+#~ "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
+#~ "stroke"
+#~ msgstr ""
+#~ "色: <b>%s</b>; <b>クリック</b>でフィルをセット、<b>Shift+クリック</b>でス"
+#~ "トロークをセットします。"
+
+#~ msgid "Change color definition"
+#~ msgstr "色定義の変更"
+
+#~ msgid "Remove stroke color"
+#~ msgstr "ストローク色を削除"
+
+#~ msgid "Remove fill color"
+#~ msgstr "フィル色を削除"
+
+#~ msgid "Set stroke color to none"
+#~ msgstr "ストロークの色を塗りなしへ"
+
+#~ msgid "Set fill color to none"
+#~ msgstr "フィルの色を塗りなしへ"
+
+#~ msgid "Set stroke color from swatch"
+#~ msgstr "スウォッチからストローク色を設定"
+
+#~ msgid "Set fill color from swatch"
+#~ msgstr "スウォッチからフィル色を設定"
+
+#~ msgid "Change swatch color"
+#~ msgstr "スウォッチ色の変更"
+
 #~ msgid "Failed to read from child pipe (%s)"
 #~ msgstr "子プロセスとのパイプからの読み込みに失敗しました (%s)"
 
@@ -24120,34 +24139,6 @@ msgstr "ワイヤーフレーム球体"
 
 #~ msgid "Transform Handles:"
 #~ msgstr "変形ハンドル:"
-
-#~ msgid ""
-#~ "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
-#~ "stroke"
-#~ msgstr ""
-#~ "色: <b>%s</b>; <b>クリック</b>でフィルをセット、<b>Shift+クリック</b>でス"
-#~ "トロークをセットします。"
-
-#~ msgid "Change color definition"
-#~ msgstr "色定義の変更"
-
-#~ msgid "Remove stroke color"
-#~ msgstr "ストローク色を削除"
-
-#~ msgid "Remove fill color"
-#~ msgstr "フィル色を削除"
-
-#~ msgid "Set stroke color to none"
-#~ msgstr "ストロークの色を塗りなしへ"
-
-#~ msgid "Set fill color to none"
-#~ msgstr "フィルの色を塗りなしへ"
-
-#~ msgid "Set stroke color from swatch"
-#~ msgstr "スウォッチからストローク色を設定"
-
-#~ msgid "Set fill color from swatch"
-#~ msgstr "スウォッチからフィル色を設定"
 
 #~ msgid ""
 #~ "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
