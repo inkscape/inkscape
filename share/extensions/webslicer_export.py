@@ -70,6 +70,8 @@ class WebSlicer_Export(WebSlicer_Effect):
             try:
                 self.html = open(os.path.join(self.options.dir,'layout.html'), 'w')
                 self.css  = open(os.path.join(self.options.dir,'style.css'), 'w')
+                self.html.write('Only a test yet\n\n')
+                self.css.write('Only a test yet\n\n')
             except Exception as e:
                 inkex.errormsg( _('Can\'t create code files.') )
                 inkex.errormsg( _('Error: %s') % e )
@@ -82,33 +84,51 @@ class WebSlicer_Export(WebSlicer_Effect):
             self.css.close()
 
 
+    def get_el_conf(self, el):
+        desc = el.find('{http://www.w3.org/2000/svg}desc')
+        conf = {}
+        if desc is not None:
+            #desc = desc.text.split("\n")
+            for line in desc.text.split("\n"):
+                if line.find(':') > 0:
+                    line = line.split(':')
+                    conf[line[0].strip()] = line[1].strip()
+        return conf
+
+
     def export_chids_of(self, parent):
         nmspc = '{http://www.w3.org/2000/svg}'
         for el in parent.getchildren():
+            el_conf = self.get_el_conf( el )
             if el.tag == nmspc+'g':
                 if self.options.with_code:
-                    self.register_group_code( el )
+                    self.register_group_code( el, el_conf )
                 else:
                     self.export_chids_of( el )
             if el.tag in [ nmspc+'rect', nmspc+'path', nmspc+'circle' ]:
                 if self.options.with_code:
-                    self.register_unity_code( el )
-                self.export_img( el )
+                    self.register_unity_code( el, el_conf )
+                self.export_img( el, el_conf )
 
 
-    def register_group_code(self, group):
+    def register_group_code(self, group, conf):
         #inkex.errormsg( 'group CSS and HTML' )
         self.html.write( '<div id="G">\n' )
+        for att in conf:
+            self.html.write( '  <!-- {att} : {val} -->\n'.format(att=att, val=conf[att]) )
         self.export_chids_of( group )
         self.html.write( '</div><!-- end id="G" -->\n' )
 
 
-    def register_unity_code(self, el):
+    def register_unity_code(self, el, conf):
         #inkex.errormsg( 'unity CSS and HTML' )
-        self.html.write( el.tag + '\n' )
+        self.html.write( '<div id="image">\n' )
+        for att in conf:
+            self.html.write( '  <!-- {att} : {val} -->\n'.format(att=att, val=conf[att]) )
+        self.html.write( '</div><!-- end id="image" -->\n' )
 
 
-    def export_img(self, el):
+    def export_img(self, el, conf):
         (status, output) = commands.getstatusoutput("inkscape -e ...")
         #inkex.errormsg( status )
         #inkex.errormsg( output )
