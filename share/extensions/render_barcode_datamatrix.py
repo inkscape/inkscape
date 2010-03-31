@@ -579,7 +579,7 @@ def add_finder_pattern( array, data_nrow, data_ncol, reg_row, reg_col ):
 def draw_SVG_square((w,h), (x,y), parent):
 
     style = {   'stroke'        : 'none',
-                'width'         : '1',
+                'stroke-width'  : '1',
                 'fill'          : '#000000'
             }
                 
