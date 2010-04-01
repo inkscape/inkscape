@@ -749,7 +749,7 @@ set_to_accumulated(SPEraserContext *dc)
                 if ( eraserMode ) {
                     toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
                 } else {
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
+                    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     toWorkOn = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
                 }
                 toWorkOn = g_slist_remove( toWorkOn, acid );

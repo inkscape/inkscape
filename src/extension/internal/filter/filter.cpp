@@ -219,7 +219,7 @@ Filter::filter_init (gchar const * id, gchar const * name, gchar const * submenu
                 "<menu-tip>%s</menu-tip>\n"
             "</effect>\n"
         "</inkscape-extension>\n", name, id, submenu, tip);
-    Inkscape::Extension::build_from_mem(xml_str, new Filter::Filter(filter));
+    Inkscape::Extension::build_from_mem(xml_str, new Filter(filter));
 	g_free(xml_str);
     return;
 }

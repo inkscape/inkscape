@@ -900,7 +900,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     if (is_point_fill) {
         fill_points.push_back(Geom::Point(event->button.x, event->button.y));
     } else {
-        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
+        Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
         fill_points = r->getPoints();
     }
 
@@ -1206,7 +1206,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
 
     case GDK_BUTTON_RELEASE:
         if (event->button.button == 1 && !event_context->space_panning) {
-            Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
+            Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
             if (r->is_started()) {
                 // set "busy" cursor
                 desktop->setWaitingCursor();

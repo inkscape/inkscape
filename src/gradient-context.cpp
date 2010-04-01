@@ -650,7 +650,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!event_context->within_tolerance) {
                     // we've been dragging, either do nothing (grdrag handles that),
                     // or rubberband-select if we have rubberband
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
+                    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     if (r->is_started() && !event_context->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {

@@ -608,7 +608,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     sc->item = NULL;
                 } else {
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
+                    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
                         GSList *items = NULL;

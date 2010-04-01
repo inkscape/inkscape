@@ -161,7 +161,7 @@ Filter::filters_load_node (Inkscape::XML::Node * node, gchar * menuname)
 	mywriter writer;
 	sp_repr_write_stream(node, writer, 0, FALSE, g_quark_from_static_string("svg"), 0, 0);
 
-    Inkscape::Extension::build_from_mem(xml_str, new Filter::Filter(g_strdup(writer.c_str())));
+    Inkscape::Extension::build_from_mem(xml_str, new Filter(g_strdup(writer.c_str())));
 	g_free(xml_str);
     return;
 }
