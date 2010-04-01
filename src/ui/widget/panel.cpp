@@ -133,9 +133,9 @@ void Panel::_init()
     {
         //TRANSLATORS: only translate "string" in "context|string".
         // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-    	Glib::ustring heightItemLabel(Q_("swatches|Size"));
+        Glib::ustring heightItemLabel(Q_("swatches|Size"));
 
-    	//TRANSLATORS: Indicates size of colour swatches
+        //TRANSLATORS: Indicates size of colour swatches
         const gchar *heightLabels[] = {
             N_("tiny"),
             N_("small"),
@@ -157,7 +157,7 @@ void Panel::_init()
             Gtk::RadioMenuItem* _item = manage(new Gtk::RadioMenuItem(heightGroup, _label));
             sizeMenu->append(*_item);
             if (i == panel_size) {
-            	_item->set_active(true);
+                _item->set_active(true);
             }
             _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SIZE, i));
        }
@@ -198,11 +198,11 @@ void Panel::_init()
             }
         }
         for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
-        	Glib::ustring _label(Q_(widthLabels[i]));
+            Glib::ustring _label(Q_(widthLabels[i]));
             Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
             type_menu->append(*_item);
             if ( i <= hot_index ) {
-            	_item->set_active(true);
+                _item->set_active(true);
             }
             _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SHAPE, values[i]));
         }
@@ -212,7 +212,7 @@ void Panel::_init()
         //TRANSLATORS: only translate "string" in "context|string".
         // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         // "Wrap" indicates how colour swatches are displayed
-    	Glib::ustring wrap_label(Q_("swatches|Wrap"));
+        Glib::ustring wrap_label(Q_("swatches|Wrap"));
         Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
         check->set_active(panel_wrap);
         _menu->append(*check);

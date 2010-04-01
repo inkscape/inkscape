@@ -73,6 +73,7 @@
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/document-properties.h"
 #include "ui/dialog/extensions.h"
+#include "ui/dialog/glyphs.h"
 #include "ui/dialog/icon-preview.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/layer-properties.h"
@@ -1731,6 +1732,9 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_DIALOG_FILL_STROKE:
             dt->_dlg_mgr->showDialog("FillAndStroke");
             break;
+        case SP_VERB_DIALOG_GLYPHS:
+            dt->_dlg_mgr->showDialog("Glyphs");
+            break;
         case SP_VERB_DIALOG_SWATCHES:
             dt->_dlg_mgr->showDialog("Swatches");
             break;
@@ -2597,6 +2601,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit document metadata (to be saved with the document)"), INKSCAPE_ICON_DOCUMENT_METADATA ),
     new DialogVerb(SP_VERB_DIALOG_FILL_STROKE, "DialogFillStroke", N_("_Fill and Stroke..."),
                    N_("Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."), INKSCAPE_ICON_DIALOG_FILL_AND_STROKE),
+    new DialogVerb(SP_VERB_DIALOG_GLYPHS, "DialogGlyphs", N_("Glyphs..."),
+                   N_("Select characters from a glyphs palette"), GTK_STOCK_SELECT_FONT),
     // TRANSLATORS: "Swatches" means: color samples
     new DialogVerb(SP_VERB_DIALOG_SWATCHES, "DialogSwatches", N_("S_watches..."),
                    N_("Select colors from a swatches palette"), GTK_STOCK_SELECT_COLOR),

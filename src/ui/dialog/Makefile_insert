@@ -50,6 +50,8 @@ ink_common_sources +=		\
 	ui/dialog/find.h			\
 	ui/dialog/floating-behavior.cpp		\
 	ui/dialog/floating-behavior.h		\
+	ui/dialog/glyphs.cpp			\
+	ui/dialog/glyphs.h			\
 	ui/dialog/guides.cpp			\
 	ui/dialog/guides.h			\
 	ui/dialog/icon-preview.cpp		\

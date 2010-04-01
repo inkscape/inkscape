@@ -228,6 +228,7 @@ static char const menus_skeleton[] =
 #ifdef ENABLE_SVG_FONTS
 "       <verb verb-id=\"DialogSVGFonts\" />\n"
 #endif // ENABLE_SVG_FONTS
+"       <verb verb-id=\"DialogGlyphs\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionTextToPath\" />\n"
 "       <verb verb-id=\"SelectionTextFromPath\" />\n"

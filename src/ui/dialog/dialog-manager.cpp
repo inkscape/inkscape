@@ -25,6 +25,7 @@
 #include "ui/dialog/fill-and-stroke.h"
 #include "ui/dialog/filter-effects-dialog.h"
 #include "ui/dialog/find.h"
+#include "ui/dialog/glyphs.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/input.h"
 #include "ui/dialog/livepatheffect-editor.h"
@@ -96,6 +97,7 @@ DialogManager::DialogManager() {
         registerFactory("FillAndStroke",       &create<FillAndStroke,        FloatingBehavior>);
         registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  FloatingBehavior>);
         registerFactory("Find",                &create<Find,                 FloatingBehavior>);
+        registerFactory("Glyphs",              &create<GlyphsPanel,          FloatingBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     FloatingBehavior>);
         registerFactory("InkscapePreferences", &create<InkscapePreferences,  FloatingBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          FloatingBehavior>);
@@ -123,6 +125,7 @@ DialogManager::DialogManager() {
         registerFactory("FillAndStroke",       &create<FillAndStroke,        DockBehavior>);
         registerFactory("FilterEffectsDialog", &create<FilterEffectsDialog,  DockBehavior>);
         registerFactory("Find",                &create<Find,                 DockBehavior>);
+        registerFactory("Glyphs",              &create<GlyphsPanel,          DockBehavior>);
         registerFactory("IconPreviewPanel",    &create<IconPreviewPanel,     DockBehavior>);
         registerFactory("InkscapePreferences", &create<InkscapePreferences,  DockBehavior>);
         registerFactory("LayersPanel",         &create<LayersPanel,          DockBehavior>);
@@ -159,11 +162,11 @@ DialogManager &DialogManager::getInstance()
     /* Use singleton behavior for floating dialogs */
     if (dialogs_type == FLOATING) {
         static DialogManager *instance = 0;
-        
+
         if (!instance)
             instance = new DialogManager();
         return *instance;
-    } 
+    }
 
     return *new DialogManager();
 }
