@@ -575,7 +575,7 @@ static void set_extensions_env()
 
     g_setenv("PYTHONPATH", new_pythonpath, TRUE);
     g_free(new_pythonpath);
-    printf("PYTHONPATH = %s\n", g_getenv("PYTHONPATH"));
+    //printf("PYTHONPATH = %s\n", g_getenv("PYTHONPATH"));
 }
 
 /**
