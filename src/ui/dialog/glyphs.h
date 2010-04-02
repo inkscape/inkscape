@@ -16,6 +16,7 @@
 
 
 namespace Gtk {
+class ComboBoxText;
 class Entry;
 class IconView;
 class Label;
@@ -57,7 +58,8 @@ private:
 
     static void fontChangeCB(SPFontSelector *fontsel, font_instance *font, GlyphsPanel *self);
 
-    void handleFontChange(SPFontSelector *fontsel, font_instance *font);
+    void rebuild();
+
     void glyphActivated(Gtk::TreeModel::Path const & path);
     void glyphSelectionChanged();
 
@@ -66,6 +68,13 @@ private:
     Gtk::IconView *iconView;
     Gtk::Entry *entry;
     Gtk::Label *label;
+#if GLIB_CHECK_VERSION(2,14,0)
+    Gtk::ComboBoxText *scriptCombo;
+#endif //GLIB_CHECK_VERSION(2,14,0)
+    SPFontSelector *fsel;
+    sigc::connection iconActiveConn;
+    sigc::connection iconSelectConn;
+    sigc::connection scriptSelectConn;
 };
 
 

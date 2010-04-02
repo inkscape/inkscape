@@ -41,7 +41,6 @@ GlyphsPanel &GlyphsPanel::getInstance()
 }
 
 
-//enum GUnicodeScript
 #if GLIB_CHECK_VERSION(2,14,0)
 static std::map<GUnicodeScript, Glib::ustring> &getScriptToName()
 {
@@ -165,7 +164,14 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     store(Gtk::ListStore::create(*getColumns())),
     iconView(0),
     entry(0),
-    label(0)
+    label(0),
+#if GLIB_CHECK_VERSION(2,14,0)
+    scriptCombo(0),
+#endif // GLIB_CHECK_VERSION(2,14,0)
+    fsel(0),
+    iconActiveConn(),
+    iconSelectConn(),
+    scriptSelectConn()
 {
     Gtk::Table *table = new Gtk::Table(3, 1, false);
     _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
@@ -174,13 +180,49 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 // -------------------------------
 
     GtkWidget *fontsel = sp_font_selector_new();
+    fsel = SP_FONT_SELECTOR(fontsel);
+    sp_font_selector_set_font(fsel, sp_font_selector_get_font(fsel), 12.0);
+
     g_signal_connect( G_OBJECT(fontsel), "font_set", G_CALLBACK(fontChangeCB), this );
 
     table->attach(*Gtk::manage(Glib::wrap(fontsel)),
-                  0, 1, row, row + 1,
+                  0, 3, row, row + 1,
                   Gtk::SHRINK|Gtk::FILL, Gtk::SHRINK|Gtk::FILL);
     row++;
 
+
+// -------------------------------
+
+#if GLIB_CHECK_VERSION(2,14,0)
+    {
+        Gtk::Label *label = new Gtk::Label(_("Script: "));
+        table->attach( *Gtk::manage(label),
+                       0, 1, row, row + 1,
+                       Gtk::SHRINK, Gtk::SHRINK);
+
+        scriptCombo = new Gtk::ComboBoxText();
+
+        std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
+        for (std::map<GUnicodeScript, Glib::ustring>::iterator it = items.begin(); it != items.end(); ++it)
+        {
+            scriptCombo->append_text(it->second);
+        }
+
+        scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
+        scriptSelectConn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+
+        table->attach( *Gtk::manage(scriptCombo),
+                       1, 2, row, row + 1,
+                       Gtk::SHRINK, Gtk::SHRINK);
+
+        label = new Gtk::Label("");
+        table->attach( *Gtk::manage(label),
+                       2, 3, row, row + 1,
+                       Gtk::EXPAND|Gtk::FILL, Gtk::SHRINK);
+    }
+
+    row++;
+#endif // GLIB_CHECK_VERSION(2,14,0)
 
 // -------------------------------
 
@@ -190,15 +232,15 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     iconView->set_text_column(columns->name);
     //iconView->set_columns(16);
 
-    iconView->signal_item_activated().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphActivated));
-    iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphSelectionChanged));
+    iconActiveConn = iconView->signal_item_activated().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphActivated));
+    iconSelectConn = iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphSelectionChanged));
 
 
     Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
     scroller->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
     scroller->add(*Gtk::manage(iconView));
     table->attach(*Gtk::manage(scroller),
-                  0, 1, row, row + 1,
+                  0, 3, row, row + 1,
                   Gtk::EXPAND|Gtk::FILL, Gtk::EXPAND|Gtk::FILL);
     row++;
 
@@ -207,11 +249,18 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     Gtk::HBox *box = new Gtk::HBox();
 
     entry = new Gtk::Entry();
-    entry->set_width_chars(12);
+    entry->set_width_chars(18);
     box->pack_start(*Gtk::manage(entry), Gtk::PACK_SHRINK);
 
+    Gtk::Label *pad = new Gtk::Label("    ");
+    box->pack_start(*Gtk::manage(pad), Gtk::PACK_SHRINK);
+
     label = new Gtk::Label("      ");
-    box->pack_start(*Gtk::manage(label), Gtk::PACK_EXPAND_PADDING);
+    box->pack_start(*Gtk::manage(label), Gtk::PACK_SHRINK);
+
+    pad = new Gtk::Label("");
+    box->pack_start(*Gtk::manage(pad), Gtk::PACK_EXPAND_WIDGET);
+
 
     GtkWidget *applyBtn = gtk_button_new_from_stock(GTK_STOCK_APPLY);
     GTK_WIDGET_SET_FLAGS(applyBtn, GTK_CAN_DEFAULT | GTK_HAS_DEFAULT);
@@ -220,7 +269,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     box->pack_end(*Gtk::manage(Glib::wrap(applyBtn)), Gtk::PACK_SHRINK);
 
     table->attach( *Gtk::manage(box),
-                  0, 1, row, row + 1,
+                   0, 3, row, row + 1,
                    Gtk::EXPAND|Gtk::FILL, Gtk::SHRINK);
     row++;
 
@@ -234,6 +283,9 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 
 GlyphsPanel::~GlyphsPanel()
 {
+    iconActiveConn.disconnect();
+    iconSelectConn.disconnect();
+    scriptSelectConn.disconnect();
 }
 
 
@@ -279,24 +331,43 @@ void GlyphsPanel::glyphSelectionChanged()
     }
 }
 
-void GlyphsPanel::fontChangeCB(SPFontSelector *fontsel, font_instance *font, GlyphsPanel *self)
+void GlyphsPanel::fontChangeCB(SPFontSelector * /*fontsel*/, font_instance * /*font*/, GlyphsPanel *self)
 {
     if (self) {
-        self->handleFontChange(fontsel, font);
+        self->rebuild();
     }
 }
 
 
-void GlyphsPanel::handleFontChange(SPFontSelector * /*fontsel*/, font_instance *font)
+void GlyphsPanel::rebuild()
 {
+    font_instance *font = fsel ? sp_font_selector_get_font(fsel) : 0;
     if (font) {
-        gunichar maxUni = 0;
+        //double  sp_font_selector_get_size (SPFontSelector *fsel);
+
+#if GLIB_CHECK_VERSION(2,14,0)
+        GUnicodeScript script = G_UNICODE_SCRIPT_INVALID_CODE;
+        Glib::ustring scriptName = scriptCombo->get_active_text();
+        std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
+        for (std::map<GUnicodeScript, Glib::ustring>::iterator it = items.begin(); it != items.end(); ++it) {
+            if (scriptName == it->second) {
+                script = it->first;
+                break;
+            }
+        }
+#endif // GLIB_CHECK_VERSION(2,14,0)
+
         std::vector<gunichar> present;
-        for (gunichar ch = 0; ch < 65536; ch++) {
+        for (gunichar ch = 1; ch < 65535; ch++) {
             int glyphId = font->MapUnicodeChar(ch);
             if (glyphId > 0) {
-                maxUni = std::max(maxUni, ch);
+#if GLIB_CHECK_VERSION(2,14,0)
+                if ((script == G_UNICODE_SCRIPT_INVALID_CODE) || (script == g_unichar_get_script(ch))) {
+                    present.push_back(ch);
+                }
+#else
                 present.push_back(ch);
+#endif
             }
         }
 
