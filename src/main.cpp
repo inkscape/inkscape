@@ -593,22 +593,7 @@ main(int argc, char **argv)
 #endif
 
 #ifdef WIN32
-    /*
-      Set the current directory to the directory of the
-      executable.  This seems redundant, but is needed for
-      when inkscape.exe is executed from another directory.
-      We use relative paths on win32.
-      HKCR\svgfile\shell\open\command is a good example
-
-      TODO: this breaks the CLI on Windows, see LP #167455
-    */
-    const int pathbuf = 2048;
-    gunichar2 *path = g_new(gunichar2, pathbuf);
-    GetModuleFileNameW(NULL, (WCHAR*) path, pathbuf);
-    gchar *inkscape = g_utf16_to_utf8(path, -1, NULL, NULL, NULL);
-    gchar *exedir = g_path_get_dirname(inkscape);
-    gunichar2 *dirw = g_utf8_to_utf16(exedir, -1, NULL, NULL, NULL);
-    SetCurrentDirectoryW((WCHAR*) dirw);
+    gchar *exedir = g_strdup(win32_getExePath().data());
     _win32_set_inkscape_env(exedir);
 
 # ifdef ENABLE_NLS
@@ -620,11 +605,7 @@ main(int argc, char **argv)
     g_free(shortexedir);
     g_free(localepath);
 # endif
-    
-    g_free(path);
-    g_free(inkscape);
     g_free(exedir);
-    g_free(dirw);
 
     // Don't touch the registry (works fine without it) for Inkscape Portable
     gchar const *val = g_getenv("INKSCAPE_PORTABLE_PROFILE_DIR");

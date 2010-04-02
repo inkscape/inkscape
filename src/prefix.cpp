@@ -435,11 +435,11 @@ br_extract_prefix (const char *path)
 /**
  * Return the directory of the .exe that is currently running
  */
-static Glib::ustring win32_getExePath()
+Glib::ustring win32_getExePath()
 {
     gunichar2 path[2048];
-    GetModuleFileNameW(NULL, (WCHAR*) path, 2048);
-    gchar *exe = g_utf16_to_utf8(path, -1, NULL, NULL, NULL);
+    GetModuleFileNameW(0, (WCHAR*) path, 2048);
+    gchar *exe = g_utf16_to_utf8(path, -1, 0,0,0);
     gchar *dir = g_path_get_dirname(exe);
     Glib::ustring ret = dir;
     g_free(dir);
@@ -481,7 +481,7 @@ static Glib::ustring win32_getResourcePath(const Glib::ustring &childPath)
  */ 
 char *win32_relative_path(const char *childPath)
 {
-    static char *returnPath = NULL;
+    static char *returnPath = 0;
     if (!childPath)
         childPath = "";
     Glib::ustring resourcePath = win32_getResourcePath(childPath);

@@ -114,20 +114,19 @@ char *br_strcat	(const char *str1, const char *str2);
 char *br_extract_dir	(const char *path);
 char *br_extract_prefix(const char *path);
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #ifdef __WIN32__
 
-/**
- * Win32 version of a relocatable function
- */ 
+#include <glibmm/ustring.h>
+
+Glib::ustring win32_getExePath();
 char *win32_relative_path(const char *childPath);
 
 #define WIN32_DATADIR(suffix) (win32_relative_path(suffix))
 
 #endif
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* _PREFIX_H_ */
