@@ -11,6 +11,7 @@
 
 #include <vector>
 
+#include <glibmm/i18n.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/iconview.h>
 #include <gtkmm/label.h>
@@ -38,6 +39,102 @@ GlyphsPanel &GlyphsPanel::getInstance()
 {
     return *new GlyphsPanel();
 }
+
+
+//enum GUnicodeScript
+#if GLIB_CHECK_VERSION(2,14,0)
+static std::map<GUnicodeScript, Glib::ustring> &getScriptToName()
+{
+    static bool init = false;
+    static std::map<GUnicodeScript, Glib::ustring> mappings;
+    if (!init) {
+        init = true;
+        mappings[G_UNICODE_SCRIPT_INVALID_CODE]         = _("all");
+        mappings[G_UNICODE_SCRIPT_COMMON]               = _("common");
+        mappings[G_UNICODE_SCRIPT_INHERITED]            = _("inherited");
+        mappings[G_UNICODE_SCRIPT_ARABIC]               = _("Arabic");
+        mappings[G_UNICODE_SCRIPT_ARMENIAN]             = _("Armenian");
+        mappings[G_UNICODE_SCRIPT_BENGALI]              = _("Bengali");
+        mappings[G_UNICODE_SCRIPT_BOPOMOFO]             = _("Bopomofo");
+        mappings[G_UNICODE_SCRIPT_CHEROKEE]             = _("Cherokee");
+        mappings[G_UNICODE_SCRIPT_COPTIC]               = _("Coptic");
+        mappings[G_UNICODE_SCRIPT_CYRILLIC]             = _("Cyrillic");
+        mappings[G_UNICODE_SCRIPT_DESERET]              = _("Deseret");
+        mappings[G_UNICODE_SCRIPT_DEVANAGARI]           = _("Devanagari");
+        mappings[G_UNICODE_SCRIPT_ETHIOPIC]             = _("Ethiopic");
+        mappings[G_UNICODE_SCRIPT_GEORGIAN]             = _("Georgian");
+        mappings[G_UNICODE_SCRIPT_GOTHIC]               = _("Gothic");
+        mappings[G_UNICODE_SCRIPT_GREEK]                = _("Greek");
+        mappings[G_UNICODE_SCRIPT_GUJARATI]             = _("Gujarati");
+        mappings[G_UNICODE_SCRIPT_GURMUKHI]             = _("Gurmukhi");
+        mappings[G_UNICODE_SCRIPT_HAN]                  = _("Han");
+        mappings[G_UNICODE_SCRIPT_HANGUL]               = _("Hangul");
+        mappings[G_UNICODE_SCRIPT_HEBREW]               = _("Hebrew");
+        mappings[G_UNICODE_SCRIPT_HIRAGANA]             = _("Hiragana");
+        mappings[G_UNICODE_SCRIPT_KANNADA]              = _("Kannada");
+        mappings[G_UNICODE_SCRIPT_KATAKANA]             = _("Katakana");
+        mappings[G_UNICODE_SCRIPT_KHMER]                = _("Khmer");
+        mappings[G_UNICODE_SCRIPT_LAO]                  = _("Lao");
+        mappings[G_UNICODE_SCRIPT_LATIN]                = _("Latin");
+        mappings[G_UNICODE_SCRIPT_MALAYALAM]            = _("Malayalam");
+        mappings[G_UNICODE_SCRIPT_MONGOLIAN]            = _("Mongolian");
+        mappings[G_UNICODE_SCRIPT_MYANMAR]              = _("Myanmar");
+        mappings[G_UNICODE_SCRIPT_OGHAM]                = _("Ogham");
+        mappings[G_UNICODE_SCRIPT_OLD_ITALIC]           = _("Old Italic");
+        mappings[G_UNICODE_SCRIPT_ORIYA]                = _("Oriya");
+        mappings[G_UNICODE_SCRIPT_RUNIC]                = _("Runic");
+        mappings[G_UNICODE_SCRIPT_SINHALA]              = _("Sinhala");
+        mappings[G_UNICODE_SCRIPT_SYRIAC]               = _("Syriac");
+        mappings[G_UNICODE_SCRIPT_TAMIL]                = _("Tamil");
+        mappings[G_UNICODE_SCRIPT_TELUGU]               = _("Telugu");
+        mappings[G_UNICODE_SCRIPT_THAANA]               = _("Thaana");
+        mappings[G_UNICODE_SCRIPT_THAI]                 = _("Thai");
+        mappings[G_UNICODE_SCRIPT_TIBETAN]              = _("Tibetan");
+        mappings[G_UNICODE_SCRIPT_CANADIAN_ABORIGINAL]  = _("Canadian Aboriginal");
+        mappings[G_UNICODE_SCRIPT_YI]                   = _("Yi");
+        mappings[G_UNICODE_SCRIPT_TAGALOG]              = _("Tagalog");
+        mappings[G_UNICODE_SCRIPT_HANUNOO]              = _("Hanunoo");
+        mappings[G_UNICODE_SCRIPT_BUHID]                = _("Buhid");
+        mappings[G_UNICODE_SCRIPT_TAGBANWA]             = _("Tagbanwa");
+        mappings[G_UNICODE_SCRIPT_BRAILLE]              = _("Braille");
+        mappings[G_UNICODE_SCRIPT_CYPRIOT]              = _("Cypriot");
+        mappings[G_UNICODE_SCRIPT_LIMBU]                = _("Limbu");
+        mappings[G_UNICODE_SCRIPT_OSMANYA]              = _("Osmanya");
+        mappings[G_UNICODE_SCRIPT_SHAVIAN]              = _("Shavian");
+        mappings[G_UNICODE_SCRIPT_LINEAR_B]             = _("Linear B");
+        mappings[G_UNICODE_SCRIPT_TAI_LE]               = _("Tai Le");
+        mappings[G_UNICODE_SCRIPT_UGARITIC]             = _("Ugaritic");
+        mappings[G_UNICODE_SCRIPT_NEW_TAI_LUE]          = _("New Tai Lue");
+        mappings[G_UNICODE_SCRIPT_BUGINESE]             = _("Buginese");
+        mappings[G_UNICODE_SCRIPT_GLAGOLITIC]           = _("Glagolitic");
+        mappings[G_UNICODE_SCRIPT_TIFINAGH]             = _("Tifinagh");
+        mappings[G_UNICODE_SCRIPT_SYLOTI_NAGRI]         = _("Syloti Nagri");
+        mappings[G_UNICODE_SCRIPT_OLD_PERSIAN]          = _("Old Persian");
+        mappings[G_UNICODE_SCRIPT_KHAROSHTHI]           = _("Kharoshthi");
+        mappings[G_UNICODE_SCRIPT_UNKNOWN]              = _("unassigned");
+        mappings[G_UNICODE_SCRIPT_BALINESE]             = _("Balinese");
+        mappings[G_UNICODE_SCRIPT_CUNEIFORM]            = _("Cuneiform");
+        mappings[G_UNICODE_SCRIPT_PHOENICIAN]           = _("Phoenician");
+        mappings[G_UNICODE_SCRIPT_PHAGS_PA]             = _("Phags-pa");
+        mappings[G_UNICODE_SCRIPT_NKO]                  = _("N'Ko");
+
+#if GLIB_CHECK_VERSION(2,14,0)
+        mappings[G_UNICODE_SCRIPT_KAYAH_LI]             = _("Kayah Li");
+        mappings[G_UNICODE_SCRIPT_LEPCHA]               = _("Lepcha");
+        mappings[G_UNICODE_SCRIPT_REJANG]               = _("Rejang");
+        mappings[G_UNICODE_SCRIPT_SUNDANESE]            = _("Sundanese");
+        mappings[G_UNICODE_SCRIPT_SAURASHTRA]           = _("Saurashtra");
+        mappings[G_UNICODE_SCRIPT_CHAM]                 = _("Cham");
+        mappings[G_UNICODE_SCRIPT_OL_CHIKI]             = _("Ol Chiki");
+        mappings[G_UNICODE_SCRIPT_VAI]                  = _("Vai");
+        mappings[G_UNICODE_SCRIPT_CARIAN]               = _("Carian");
+        mappings[G_UNICODE_SCRIPT_LYCIAN]               = _("Lycian");
+        mappings[G_UNICODE_SCRIPT_LYDIAN]               = _("Lydian");
+#endif // GLIB_CHECK_VERSION(2,14,0)
+    }
+    return mappings;
+}
+#endif // GLIB_CHECK_VERSION(2,14,0)
 
 
 class GlyphColumns : public Gtk::TreeModel::ColumnRecord
@@ -110,7 +207,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     Gtk::HBox *box = new Gtk::HBox();
 
     entry = new Gtk::Entry();
-    box->pack_start(*Gtk::manage(entry));
+    entry->set_width_chars(12);
+    box->pack_start(*Gtk::manage(entry), Gtk::PACK_SHRINK);
 
     label = new Gtk::Label("      ");
     box->pack_start(*Gtk::manage(label), Gtk::PACK_EXPAND_PADDING);
@@ -167,7 +265,16 @@ void GlyphsPanel::glyphSelectionChanged()
         Gtk::ListStore::iterator row = store->get_iter(path);
         gunichar ch = (*row)[getColumns()->code];
 
-        gchar * tmp = g_strdup_printf("U+%04X", ch);
+
+        Glib::ustring scriptName;
+#if GLIB_CHECK_VERSION(2,14,0)
+        GUnicodeScript script = g_unichar_get_script(ch);
+        std::map<GUnicodeScript, Glib::ustring> mappings = getScriptToName();
+        if (mappings.find(script) != mappings.end()) {
+            scriptName = mappings[script];
+        }
+#endif
+        gchar * tmp = g_strdup_printf("U+%04X %s", ch, scriptName.c_str());
         label->set_text(tmp);
     }
 }
