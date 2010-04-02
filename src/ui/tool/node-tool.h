@@ -58,6 +58,7 @@ struct InkNodeTool : public SPEventContext
     SPItem *_last_over;
 
     unsigned cursor_drag : 1;
+    unsigned show_handles : 1;
     unsigned show_outline : 1;
     unsigned live_outline : 1;
     unsigned live_objects : 1;

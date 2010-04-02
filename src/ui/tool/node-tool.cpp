@@ -316,7 +316,8 @@ void ink_node_tool_set(SPEventContext *ec, Inkscape::Preferences::Entry *value)
     Glib::ustring entry_name = value->getEntryName();
 
     if (entry_name == "show_handles") {
-        nt->_multipath->showHandles(value->getBool(true));
+        nt->show_handles = value->getBool(true);
+        nt->_multipath->showHandles(nt->show_handles);
     } else if (entry_name == "show_outline") {
         nt->show_outline = value->getBool();
         nt->_multipath->showOutline(nt->show_outline);
@@ -491,10 +492,19 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
             ink_node_tool_update_tip(nt, event);
             return TRUE;
         case GDK_a:
+        case GDK_A:
             if (held_control(event->key) && held_alt(event->key)) {
                 nt->_selected_nodes->selectAll();
                 // Ctrl+A is handled in selection-chemistry.cpp via verb
                 ink_node_tool_update_tip(nt, event);
+                return TRUE;
+            }
+            break;
+        case GDK_h:
+        case GDK_H:
+            if (held_only_control(event->key)) {
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                prefs->setBool("/tools/nodes/show_handles", !nt->show_handles);
                 return TRUE;
             }
             break;
