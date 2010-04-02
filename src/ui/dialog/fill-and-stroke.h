@@ -26,8 +26,6 @@
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/object-composite-settings.h"
 
-using namespace Inkscape::UI::Widget;
-
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -55,12 +53,12 @@ public:
 protected:
     Gtk::Notebook   _notebook;
 
-    NotebookPage    _page_fill;
-    NotebookPage    _page_stroke_paint;
-    NotebookPage    _page_stroke_style;
+    UI::Widget::NotebookPage    _page_fill;
+    UI::Widget::NotebookPage    _page_stroke_paint;
+    UI::Widget::NotebookPage    _page_stroke_style;
 
-    StyleSubject::Selection _subject;
-    ObjectCompositeSettings _composite_settings;
+    UI::Widget::StyleSubject::Selection _subject;
+    UI::Widget::ObjectCompositeSettings _composite_settings;
 
     Gtk::HBox &_createPageTabLabel(const Glib::ustring &label,
                                    const char *label_image);
@@ -86,6 +84,7 @@ private:
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
+
 
 #endif // INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 

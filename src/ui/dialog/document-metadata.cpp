@@ -148,6 +148,8 @@ attach_all (Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int star
 void
 DocumentMetadata::build_metadata()
 {
+    using Inkscape::UI::Widget::EntityEntry;
+
     _page_metadata1.show();
 
     Gtk::Label *label = manage (new Gtk::Label);

@@ -23,8 +23,6 @@
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/registry.h"
 
-using namespace Inkscape::UI::Widget;
-
 namespace Inkscape {
     namespace XML {
         class Node;
@@ -35,7 +33,7 @@ namespace Inkscape {
         }
         namespace Dialog {
 
-typedef std::list<EntityEntry*> RDElist;
+typedef std::list<UI::Widget::EntityEntry*> RDElist;
 
 class DocumentMetadata : public Inkscape::UI::Widget::Panel {
 public:
@@ -56,13 +54,14 @@ protected:
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
-    NotebookPage   _page_metadata1, _page_metadata2;
+    UI::Widget::NotebookPage _page_metadata1;
+    UI::Widget::NotebookPage _page_metadata2;
 
     //---------------------------------------------------------------
     RDElist _rdflist;
-    Licensor _licensor;
+    UI::Widget::Licensor _licensor;
 
-    Registry _wr;
+    UI::Widget::Registry _wr;
 
 private:
     virtual ~DocumentMetadata();

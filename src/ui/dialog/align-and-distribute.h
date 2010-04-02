@@ -32,8 +32,6 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 
-using namespace Inkscape::UI::Widget;
-
 
 class SPItem;
 

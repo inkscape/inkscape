@@ -56,6 +56,13 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+using Inkscape::UI::Widget::DialogPage;
+using Inkscape::UI::Widget::PrefCheckButton;
+using Inkscape::UI::Widget::PrefRadioButton;
+using Inkscape::UI::Widget::PrefSpinButton;
+using Inkscape::UI::Widget::StyleSwatch;
+
+
 InkscapePreferences::InkscapePreferences()
     : UI::Widget::Panel ("", "/dialogs/preferences", SP_VERB_DIALOG_DISPLAY),
       _max_dialog_width(0),

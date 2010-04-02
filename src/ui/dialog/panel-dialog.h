@@ -30,14 +30,14 @@ namespace Dialog {
 
 class PanelDialogBase {
 public:
-    PanelDialogBase(Panel &panel, char const */*prefs_path*/, int const /*verb_num*/,
+    PanelDialogBase(UI::Widget::Panel &panel, char const */*prefs_path*/, int const /*verb_num*/,
                     Glib::ustring const &/*apply_label*/) :
       _panel (panel) { }
 
     virtual void present() = 0;
     virtual ~PanelDialogBase() {}
 
-    virtual Panel &getPanel() { return _panel; }
+    virtual UI::Widget::Panel &getPanel() { return _panel; }
 
 protected:
     static void handle_deactivate_desktop(Inkscape::Application *application, SPDesktop *desktop, void *data) {
@@ -54,7 +54,7 @@ protected:
     inline virtual void _propagateDesktopActivated(Inkscape::Application *, SPDesktop *);
     inline virtual void _propagateDesktopDeactivated(Inkscape::Application *, SPDesktop *);
 
-    Panel &_panel;
+    UI::Widget::Panel &_panel;
     sigc::connection _document_replaced_connection;
 };
 
@@ -62,7 +62,7 @@ template <typename Behavior>
 class PanelDialog : public PanelDialogBase, public Inkscape::UI::Dialog::Dialog {
 
 public:
-    PanelDialog(Panel &contents, char const *prefs_path, int const verb_num,
+    PanelDialog(UI::Widget::Panel &contents, char const *prefs_path, int const verb_num,
                 Glib::ustring const &apply_label);
 
     virtual ~PanelDialog() {}
@@ -86,7 +86,7 @@ class PanelDialog<Behavior::FloatingBehavior> :
         public PanelDialogBase, public Inkscape::UI::Dialog::Dialog {
 
 public:
-    inline PanelDialog(Panel &contents, char const *prefs_path, int const verb_num,
+    inline PanelDialog(UI::Widget::Panel &contents, char const *prefs_path, int const verb_num,
                        Glib::ustring const &apply_label);
 
     virtual ~PanelDialog() {}
@@ -128,7 +128,7 @@ PanelDialogBase::_propagateDesktopDeactivated(Inkscape::Application *application
 
 
 template <typename B>
-PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb_num,
+PanelDialog<B>::PanelDialog(Widget::Panel &panel, char const *prefs_path, int const verb_num,
                             Glib::ustring const &apply_label) :
     PanelDialogBase(panel, prefs_path, verb_num, apply_label),
     Dialog(&B::create, prefs_path, verb_num, apply_label)
@@ -163,7 +163,7 @@ template <typename B> template <typename P>
 PanelDialog<B> *
 PanelDialog<B>::create()
 {
-    Panel &panel = P::getInstance();
+    UI::Widget::Panel &panel = P::getInstance();
     return new PanelDialog<B>(panel, panel.getPrefsPath(), panel.getVerb(), panel.getApplyLabel());
 }
 
@@ -171,17 +171,17 @@ template <typename B>
 void
 PanelDialog<B>::present()
 {
-    _panel.present(); 
+    _panel.present();
 }
 
 template <typename B>
 void
 PanelDialog<B>::_presentDialog()
 {
-    Dialog::present(); 
+    Dialog::present();
 }
 
-PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *prefs_path,
+PanelDialog<Behavior::FloatingBehavior>::PanelDialog(UI::Widget::Panel &panel, char const *prefs_path,
                                                      int const verb_num, Glib::ustring const &apply_label) :
     PanelDialogBase(panel, prefs_path, verb_num, apply_label),
     Dialog(&Behavior::FloatingBehavior::create, prefs_path, verb_num, apply_label)
@@ -213,7 +213,7 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *p
 
 void
 PanelDialog<Behavior::FloatingBehavior>::present()
-{ 
+{
     Dialog::present();
     _panel.present();
 }
@@ -226,7 +226,7 @@ template <typename P>
 PanelDialog<Behavior::FloatingBehavior> *
 PanelDialog<Behavior::FloatingBehavior>::create()
 {
-    Panel &panel = P::getInstance();
+    UI::Widget::Panel &panel = P::getInstance();
     PanelDialog<Behavior::FloatingBehavior> *instance =
         new PanelDialog<Behavior::FloatingBehavior>(panel, panel.getPrefsPath(),
                                                     panel.getVerb(), panel.getApplyLabel());

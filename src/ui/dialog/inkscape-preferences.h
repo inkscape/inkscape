@@ -82,8 +82,6 @@ enum {
     PREFS_PAGE_MISC
 };
 
-using namespace Inkscape::UI::Widget;
-
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -108,188 +106,272 @@ protected:
         { Gtk::TreeModelColumnRecord::add(_col_name); Gtk::TreeModelColumnRecord::add(_col_page); Gtk::TreeModelColumnRecord::add(_col_id); }
         Gtk::TreeModelColumn<Glib::ustring> _col_name;
         Gtk::TreeModelColumn<int> _col_id;
-        Gtk::TreeModelColumn<DialogPage*> _col_page;
+        Gtk::TreeModelColumn<UI::Widget::DialogPage*> _col_page;
     };
     PageListModelColumns _page_list_columns;
 
     Gtk::TreeModel::Path _path_tools;
     Gtk::TreeModel::Path _path_shapes;
 
-    DialogPage _page_mouse, _page_scrolling, _page_snapping, _page_steps, _page_tools, _page_windows,
-        _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
-        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
-        _page_ui, _page_save, _page_bitmaps, _page_spellcheck;
-    DialogPage _page_selector, _page_node, _page_tweak, _page_spray, _page_zoom, _page_shapes, _page_pencil, _page_pen,
-               _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
-    DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
+    UI::Widget::DialogPage _page_mouse;
+    UI::Widget::DialogPage _page_scrolling;
+    UI::Widget::DialogPage _page_snapping;
+    UI::Widget::DialogPage _page_steps;
+    UI::Widget::DialogPage _page_tools;
+    UI::Widget::DialogPage _page_windows;
+    UI::Widget::DialogPage _page_clones;
+    UI::Widget::DialogPage _page_mask;
+    UI::Widget::DialogPage _page_transforms;
+    UI::Widget::DialogPage _page_filters;
+    UI::Widget::DialogPage _page_select;
+    UI::Widget::DialogPage _page_importexport;
+    UI::Widget::DialogPage _page_cms;
+    UI::Widget::DialogPage _page_grids;
+    UI::Widget::DialogPage _page_svgoutput;
+    UI::Widget::DialogPage _page_misc;
+    UI::Widget::DialogPage _page_ui;
+    UI::Widget::DialogPage _page_save;
+    UI::Widget::DialogPage _page_bitmaps;
+    UI::Widget::DialogPage _page_spellcheck;
 
-    PrefSpinButton _mouse_sens, _mouse_thres;
-    PrefCheckButton _mouse_use_ext_input;
-    PrefCheckButton _mouse_switch_on_ext_input;
+    UI::Widget::DialogPage _page_selector;
+    UI::Widget::DialogPage _page_node;
+    UI::Widget::DialogPage _page_tweak;
+    UI::Widget::DialogPage _page_spray;
+    UI::Widget::DialogPage _page_zoom;
+    UI::Widget::DialogPage _page_shapes;
+    UI::Widget::DialogPage _page_pencil;
+    UI::Widget::DialogPage _page_pen;
+    UI::Widget::DialogPage _page_calligraphy;
+    UI::Widget::DialogPage _page_text;
+    UI::Widget::DialogPage _page_gradient;
+    UI::Widget::DialogPage _page_connector;
+    UI::Widget::DialogPage _page_dropper;
+    UI::Widget::DialogPage _page_lpetool;
 
-    PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
-    PrefCheckButton _scroll_space;
-    PrefCheckButton _wheel_zoom;
+    UI::Widget::DialogPage _page_rectangle;
+    UI::Widget::DialogPage _page_3dbox;
+    UI::Widget::DialogPage _page_ellipse;
+    UI::Widget::DialogPage _page_star;
+    UI::Widget::DialogPage _page_spiral;
+    UI::Widget::DialogPage _page_paintbucket;
+    UI::Widget::DialogPage _page_eraser;
+
+    UI::Widget::PrefSpinButton _mouse_sens;
+    UI::Widget::PrefSpinButton _mouse_thres;
+    UI::Widget::PrefCheckButton _mouse_use_ext_input;
+    UI::Widget::PrefCheckButton _mouse_switch_on_ext_input;
+
+    UI::Widget::PrefSpinButton _scroll_wheel;
+    UI::Widget::PrefSpinButton _scroll_arrow_px;
+    UI::Widget::PrefSpinButton _scroll_arrow_acc;
+    UI::Widget::PrefSpinButton _scroll_auto_speed;
+    UI::Widget::PrefSpinButton _scroll_auto_thres;
+    UI::Widget::PrefCheckButton _scroll_space;
+    UI::Widget::PrefCheckButton _wheel_zoom;
 
     Gtk::HScale     *_slider_snapping_delay;
-    PrefCheckButton _snap_indicator, _snap_closest_only, _snap_mouse_pointer;
+    UI::Widget::PrefCheckButton _snap_indicator;
+    UI::Widget::PrefCheckButton _snap_closest_only;
+    UI::Widget::PrefCheckButton _snap_mouse_pointer;
 
-    PrefCombo       _steps_rot_snap;
-    PrefCheckButton _steps_compass;
-    PrefSpinButton  _steps_arrow, _steps_scale, _steps_inset, _steps_zoom;
+    UI::Widget::PrefCombo       _steps_rot_snap;
+    UI::Widget::PrefCheckButton _steps_compass;
+    UI::Widget::PrefSpinButton _steps_arrow;
+    UI::Widget::PrefSpinButton _steps_scale;
+    UI::Widget::PrefSpinButton _steps_inset;
+    UI::Widget::PrefSpinButton _steps_zoom;
 
-    PrefRadioButton _t_sel_trans_obj, _t_sel_trans_outl, _t_sel_cue_none, _t_sel_cue_mark,
-                    _t_sel_cue_box, _t_bbox_visual, _t_bbox_geometric;
-    PrefCheckButton _t_cvg_keep_objects, _t_cvg_convert_whole_groups;
-    PrefCheckButton _t_node_show_outline;
-    PrefCheckButton _t_node_live_outline;
-    PrefCheckButton _t_node_live_objects;
-    PrefCheckButton _t_node_pathflash_enabled;
-    PrefCheckButton _t_node_pathflash_selected;
-    PrefSpinButton  _t_node_pathflash_timeout;
-    PrefCheckButton _t_node_show_path_direction;
-    PrefCheckButton _t_node_single_node_transform_handles;
-    PrefCheckButton _t_node_delete_preserves_shape;
-    PrefColorPicker _t_node_pathoutline_color;
+    UI::Widget::PrefRadioButton _t_sel_trans_obj;
+    UI::Widget::PrefRadioButton _t_sel_trans_outl;
+    UI::Widget::PrefRadioButton _t_sel_cue_none;
+    UI::Widget::PrefRadioButton _t_sel_cue_mark;
+    UI::Widget::PrefRadioButton _t_sel_cue_box;
+    UI::Widget::PrefRadioButton _t_bbox_visual;
+    UI::Widget::PrefRadioButton _t_bbox_geometric;
 
-    PrefRadioButton _win_dockable, _win_floating;
-    PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
-    PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;
-    PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
-    PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
-    PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
-    PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
+    UI::Widget::PrefCheckButton _t_cvg_keep_objects;
+    UI::Widget::PrefCheckButton _t_cvg_convert_whole_groups;
+    UI::Widget::PrefCheckButton _t_node_show_outline;
+    UI::Widget::PrefCheckButton _t_node_live_outline;
+    UI::Widget::PrefCheckButton _t_node_live_objects;
+    UI::Widget::PrefCheckButton _t_node_pathflash_enabled;
+    UI::Widget::PrefCheckButton _t_node_pathflash_selected;
+    UI::Widget::PrefSpinButton  _t_node_pathflash_timeout;
+    UI::Widget::PrefCheckButton _t_node_show_path_direction;
+    UI::Widget::PrefCheckButton _t_node_single_node_transform_handles;
+    UI::Widget::PrefCheckButton _t_node_delete_preserves_shape;
+    UI::Widget::PrefColorPicker _t_node_pathoutline_color;
 
-    PrefCheckButton _pencil_average_all_sketches;
+    UI::Widget::PrefRadioButton _win_dockable;
+    UI::Widget::PrefRadioButton _win_floating;
+    UI::Widget::PrefRadioButton _win_ontop_none;
+    UI::Widget::PrefRadioButton _win_ontop_normal;
+    UI::Widget::PrefRadioButton _win_ontop_agressive;
+    UI::Widget::PrefRadioButton _win_save_geom_off;
+    UI::Widget::PrefRadioButton _win_save_geom;
+    UI::Widget::PrefRadioButton _win_save_geom_prefs;
+    UI::Widget::PrefCheckButton _win_hide_task;
+    UI::Widget::PrefCheckButton _win_zoom_resize;
+    UI::Widget::PrefCheckButton _win_show_close;
+    UI::Widget::PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
+    UI::Widget::PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
+    UI::Widget::PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
 
-    PrefCheckButton _calligrapy_use_abs_size;
-    PrefCheckButton _calligrapy_keep_selected;
+    UI::Widget::PrefCheckButton _pencil_average_all_sketches;
 
-    PrefCheckButton _connector_ignore_text;
+    UI::Widget::PrefCheckButton _calligrapy_use_abs_size;
+    UI::Widget::PrefCheckButton _calligrapy_keep_selected;
 
-    PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
-                    _clone_option_unlink, _clone_option_delete;
-    PrefCheckButton _clone_relink_on_duplicate;
+    UI::Widget::PrefCheckButton _connector_ignore_text;
 
-    PrefCheckButton _mask_mask_on_top;
-    PrefCheckButton _mask_mask_remove;
-    PrefRadioButton _mask_grouping_none, _mask_grouping_separate, _mask_grouping_all;
-    PrefCheckButton _mask_ungrouping;
+    UI::Widget::PrefRadioButton _clone_option_parallel;
+    UI::Widget::PrefRadioButton _clone_option_stay;
+    UI::Widget::PrefRadioButton _clone_option_transform;
+    UI::Widget::PrefRadioButton _clone_option_unlink;
+    UI::Widget::PrefRadioButton _clone_option_delete;
+    UI::Widget::PrefCheckButton _clone_relink_on_duplicate;
 
-    PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
-    PrefRadioButton _filter_quality_best, _filter_quality_better, _filter_quality_normal, _filter_quality_worse, _filter_quality_worst;
-    PrefCheckButton _show_filters_info_box;
-    PrefSpinButton  _filter_multi_threaded;
+    UI::Widget::PrefCheckButton _mask_mask_on_top;
+    UI::Widget::PrefCheckButton _mask_mask_remove;
+    UI::Widget::PrefRadioButton _mask_grouping_none;
+    UI::Widget::PrefRadioButton _mask_grouping_separate;
+    UI::Widget::PrefRadioButton _mask_grouping_all;
+    UI::Widget::PrefCheckButton _mask_ungrouping;
 
-    PrefCheckButton _trans_scale_stroke, _trans_scale_corner, _trans_gradient,_trans_pattern;
-    PrefRadioButton _trans_optimized, _trans_preserved;
+    UI::Widget::PrefRadioButton _blur_quality_best;
+    UI::Widget::PrefRadioButton _blur_quality_better;
+    UI::Widget::PrefRadioButton _blur_quality_normal;
+    UI::Widget::PrefRadioButton _blur_quality_worse;
+    UI::Widget::PrefRadioButton _blur_quality_worst;
+    UI::Widget::PrefRadioButton _filter_quality_best;
+    UI::Widget::PrefRadioButton _filter_quality_better;
+    UI::Widget::PrefRadioButton _filter_quality_normal;
+    UI::Widget::PrefRadioButton _filter_quality_worse;
+    UI::Widget::PrefRadioButton _filter_quality_worst;
+    UI::Widget::PrefCheckButton _show_filters_info_box;
+    UI::Widget::PrefSpinButton  _filter_multi_threaded;
 
-    PrefRadioButton _sel_all;
-    PrefRadioButton _sel_current;
-    PrefRadioButton _sel_recursive;
-    PrefCheckButton _sel_hidden, _sel_locked;
-    PrefCheckButton _sel_layer_deselects;
+    UI::Widget::PrefCheckButton _trans_scale_stroke;
+    UI::Widget::PrefCheckButton _trans_scale_corner;
+    UI::Widget::PrefCheckButton _trans_gradient;
+    UI::Widget::PrefCheckButton _trans_pattern;
+    UI::Widget::PrefRadioButton _trans_optimized;
+    UI::Widget::PrefRadioButton _trans_preserved;
 
-    PrefSpinButton  _importexport_export, _misc_simpl;
-    PrefSlider      _snap_delay, _snap_weight;
-    PrefSpinButton  _misc_latency_skew;
-    PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
+    UI::Widget::PrefRadioButton _sel_all;
+    UI::Widget::PrefRadioButton _sel_current;
+    UI::Widget::PrefRadioButton _sel_recursive;
+    UI::Widget::PrefCheckButton _sel_hidden;
+    UI::Widget::PrefCheckButton _sel_locked;
+    UI::Widget::PrefCheckButton _sel_layer_deselects;
+
+    UI::Widget::PrefSpinButton  _importexport_export;
+    UI::Widget::PrefSpinButton  _misc_simpl;
+    UI::Widget::PrefSlider      _snap_delay;
+    UI::Widget::PrefSlider      _snap_weight;
+    UI::Widget::PrefSpinButton  _misc_latency_skew;
+    UI::Widget::PrefCheckButton _misc_comment;
+    UI::Widget::PrefCheckButton _misc_forkvectors;
+    UI::Widget::PrefCheckButton _misc_scripts;
+    UI::Widget::PrefCheckButton _misc_namedicon_delay;
     Gtk::TextView   _misc_info;
     Gtk::ScrolledWindow _misc_info_scroll;
 
 
     // UI page
-    PrefCombo       _ui_languages;
-    PrefCombo       _misc_small_toolbar;
-    PrefCombo       _misc_small_secondary;
-    PrefCombo       _misc_small_tools;
-    PrefCheckButton _ui_colorsliders_top;
-    PrefSpinButton  _misc_recent;
-    PrefCheckButton _ui_partialdynamic;
-    ZoomCorrRulerSlider _ui_zoom_correction;
+    UI::Widget::PrefCombo       _ui_languages;
+    UI::Widget::PrefCombo       _misc_small_toolbar;
+    UI::Widget::PrefCombo       _misc_small_secondary;
+    UI::Widget::PrefCombo       _misc_small_tools;
+    UI::Widget::PrefCheckButton _ui_colorsliders_top;
+    UI::Widget::PrefSpinButton  _misc_recent;
+    UI::Widget::PrefCheckButton _ui_partialdynamic;
+    UI::Widget::ZoomCorrRulerSlider _ui_zoom_correction;
 
     //Spellcheck
-    PrefCombo       _spell_language;
-    PrefCombo       _spell_language2;
-    PrefCombo       _spell_language3;
-    PrefCheckButton _spell_ignorenumbers;
-    PrefCheckButton _spell_ignoreallcaps;
+    UI::Widget::PrefCombo       _spell_language;
+    UI::Widget::PrefCombo       _spell_language2;
+    UI::Widget::PrefCombo       _spell_language3;
+    UI::Widget::PrefCheckButton _spell_ignorenumbers;
+    UI::Widget::PrefCheckButton _spell_ignoreallcaps;
 
-    PrefCombo       _misc_overs_bitmap;
-    PrefCombo       _misc_bitmap_editor;
-    PrefCheckButton _misc_bitmap_autoreload;
-    PrefSpinButton  _bitmap_copy_res;
+    UI::Widget::PrefCombo       _misc_overs_bitmap;
+    UI::Widget::PrefCombo       _misc_bitmap_editor;
+    UI::Widget::PrefCheckButton _misc_bitmap_autoreload;
+    UI::Widget::PrefSpinButton  _bitmap_copy_res;
 
-    PrefCheckButton _save_use_current_dir;
-    PrefCheckButton _save_autosave_enable;
-    PrefSpinButton  _save_autosave_interval;
-    PrefEntry       _save_autosave_path;
-    PrefSpinButton  _save_autosave_max;
+    UI::Widget::PrefCheckButton _save_use_current_dir;
+    UI::Widget::PrefCheckButton _save_autosave_enable;
+    UI::Widget::PrefSpinButton  _save_autosave_interval;
+    UI::Widget::PrefEntry       _save_autosave_path;
+    UI::Widget::PrefSpinButton  _save_autosave_max;
 
     Gtk::ComboBoxText   _cms_display_profile;
-    PrefCheckButton     _cms_from_display;
-    PrefCombo           _cms_intent;
+    UI::Widget::PrefCheckButton     _cms_from_display;
+    UI::Widget::PrefCombo           _cms_intent;
 
-    PrefCheckButton     _cms_softproof;
-    PrefCheckButton     _cms_gamutwarn;
+    UI::Widget::PrefCheckButton     _cms_softproof;
+    UI::Widget::PrefCheckButton     _cms_gamutwarn;
     Gtk::ColorButton    _cms_gamutcolor;
     Gtk::ComboBoxText   _cms_proof_profile;
-    PrefCombo           _cms_proof_intent;
-    PrefCheckButton     _cms_proof_blackpoint;
-    PrefCheckButton     _cms_proof_preserveblack;
+    UI::Widget::PrefCombo           _cms_proof_intent;
+    UI::Widget::PrefCheckButton     _cms_proof_blackpoint;
+    UI::Widget::PrefCheckButton     _cms_proof_preserveblack;
 
     Gtk::Notebook       _grids_notebook;
-    PrefCheckButton     _grids_no_emphasize_on_zoom;
-    DialogPage          _grids_xy, _grids_axonom;
+    UI::Widget::PrefCheckButton     _grids_no_emphasize_on_zoom;
+    UI::Widget::DialogPage          _grids_xy;
+    UI::Widget::DialogPage          _grids_axonom;
     // CanvasXYGrid properties:
-        PrefUnit            _grids_xy_units;
-        PrefSpinButton      _grids_xy_origin_x;
-        PrefSpinButton      _grids_xy_origin_y;
-        PrefSpinButton      _grids_xy_spacing_x;
-        PrefSpinButton      _grids_xy_spacing_y;
-        PrefColorPicker     _grids_xy_color;
-        PrefColorPicker     _grids_xy_empcolor;
-        PrefSpinButton      _grids_xy_empspacing;
-        PrefCheckButton     _grids_xy_dotted;
+        UI::Widget::PrefUnit            _grids_xy_units;
+        UI::Widget::PrefSpinButton      _grids_xy_origin_x;
+        UI::Widget::PrefSpinButton      _grids_xy_origin_y;
+        UI::Widget::PrefSpinButton      _grids_xy_spacing_x;
+        UI::Widget::PrefSpinButton      _grids_xy_spacing_y;
+        UI::Widget::PrefColorPicker     _grids_xy_color;
+        UI::Widget::PrefColorPicker     _grids_xy_empcolor;
+        UI::Widget::PrefSpinButton      _grids_xy_empspacing;
+        UI::Widget::PrefCheckButton     _grids_xy_dotted;
     // CanvasAxonomGrid properties:
-        PrefUnit            _grids_axonom_units;
-        PrefSpinButton      _grids_axonom_origin_x;
-        PrefSpinButton      _grids_axonom_origin_y;
-        PrefSpinButton      _grids_axonom_spacing_y;
-        PrefSpinButton      _grids_axonom_angle_x;
-        PrefSpinButton      _grids_axonom_angle_z;
-        PrefColorPicker     _grids_axonom_color;
-        PrefColorPicker     _grids_axonom_empcolor;
-        PrefSpinButton      _grids_axonom_empspacing;
+        UI::Widget::PrefUnit            _grids_axonom_units;
+        UI::Widget::PrefSpinButton      _grids_axonom_origin_x;
+        UI::Widget::PrefSpinButton      _grids_axonom_origin_y;
+        UI::Widget::PrefSpinButton      _grids_axonom_spacing_y;
+        UI::Widget::PrefSpinButton      _grids_axonom_angle_x;
+        UI::Widget::PrefSpinButton      _grids_axonom_angle_z;
+        UI::Widget::PrefColorPicker     _grids_axonom_color;
+        UI::Widget::PrefColorPicker     _grids_axonom_empcolor;
+        UI::Widget::PrefSpinButton      _grids_axonom_empspacing;
 
     // SVG Output page:
-    PrefCheckButton   _svgoutput_usenamedcolors;
-    PrefSpinButton    _svgoutput_numericprecision;
-    PrefSpinButton    _svgoutput_minimumexponent;
-    PrefCheckButton   _svgoutput_inlineattrs;
-    PrefSpinButton    _svgoutput_indent;
-    PrefCheckButton   _svgoutput_allowrelativecoordinates;
-    PrefCheckButton   _svgoutput_forcerepeatcommands;
+    UI::Widget::PrefCheckButton   _svgoutput_usenamedcolors;
+    UI::Widget::PrefSpinButton    _svgoutput_numericprecision;
+    UI::Widget::PrefSpinButton    _svgoutput_minimumexponent;
+    UI::Widget::PrefCheckButton   _svgoutput_inlineattrs;
+    UI::Widget::PrefSpinButton    _svgoutput_indent;
+    UI::Widget::PrefCheckButton   _svgoutput_allowrelativecoordinates;
+    UI::Widget::PrefCheckButton   _svgoutput_forcerepeatcommands;
 
-    PrefEntryButtonHBox _importexport_ocal_url;
-    PrefEntry       _importexport_ocal_username;
-    PrefEntry       _importexport_ocal_password;
+    UI::Widget::PrefEntryButtonHBox _importexport_ocal_url;
+    UI::Widget::PrefEntry       _importexport_ocal_username;
+    UI::Widget::PrefEntry       _importexport_ocal_password;
 
     int _max_dialog_width;
     int _max_dialog_height;
     int _sb_width;
-    DialogPage* _current_page;
+    UI::Widget::DialogPage* _current_page;
 
-    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title, int id);
-    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent, int id);
+    Gtk::TreeModel::iterator AddPage(UI::Widget::DialogPage& p, Glib::ustring title, int id);
+    Gtk::TreeModel::iterator AddPage(UI::Widget::DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent, int id);
     bool SetMaxDialogSize(const Gtk::TreeModel::iterator& iter);
     bool PresentPage(const Gtk::TreeModel::iterator& iter);
 
-    static void AddSelcueCheckbox(DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
-    static void AddGradientCheckbox(DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
-    static void AddConvertGuidesCheckbox(DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
-    static void AddDotSizeSpinbutton(DialogPage& p, Glib::ustring const &prefs_path, double def_value);
-    static void AddNewObjectsStyle(DialogPage& p, Glib::ustring const &prefs_path, const gchar* banner = NULL);
+    static void AddSelcueCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
+    static void AddGradientCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
+    static void AddConvertGuidesCheckbox(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, bool def_value);
+    static void AddDotSizeSpinbutton(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, double def_value);
+    static void AddNewObjectsStyle(UI::Widget::DialogPage& p, Glib::ustring const &prefs_path, const gchar* banner = NULL);
 
     void on_pagelist_selection_changed();
     void on_reset_open_recent_clicked();

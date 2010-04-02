@@ -74,6 +74,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+using Inkscape::UI::Widget::AttrWidget;
+using Inkscape::UI::Widget::ComboBoxEnum;
+using Inkscape::UI::Widget::DualSpinSlider;
+using Inkscape::UI::Widget::SpinSlider;
+
+
 // Returns the number of inputs available for the filter primitive type
 int input_count(const SPFilterPrimitive* prim)
 {

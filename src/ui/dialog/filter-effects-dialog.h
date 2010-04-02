@@ -35,8 +35,6 @@
 #include "ui/widget/spin-slider.h"
 #include "xml/helper-observer.h"
 
-using namespace Inkscape::UI::Widget;
-
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -214,9 +212,9 @@ private:
     void duplicate_primitive();
     void convolve_order_changed();
 
-    void set_attr_direct(const AttrWidget*);
-    void set_child_attr_direct(const AttrWidget*);
-    void set_filternode_attr(const AttrWidget*);
+    void set_attr_direct(const UI::Widget::AttrWidget*);
+    void set_child_attr_direct(const UI::Widget::AttrWidget*);
+    void set_filternode_attr(const UI::Widget::AttrWidget*);
     void set_attr(SPObject*, const SPAttributeEnum, const gchar* val);
     void update_settings_view();
     void update_filter_general_settings_view();

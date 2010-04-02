@@ -26,8 +26,6 @@
 #include "ui/widget/button.h"
 
 
-using namespace Inkscape::UI::Widget;
-
 
 
 namespace Inkscape {
@@ -105,36 +103,36 @@ protected:
 
     Gtk::Notebook     _notebook;
 
-    NotebookPage      _page_move;
-    NotebookPage      _page_scale;
-    NotebookPage      _page_rotate;
-    NotebookPage      _page_skew;
-    NotebookPage      _page_transform;
+    UI::Widget::NotebookPage      _page_move;
+    UI::Widget::NotebookPage      _page_scale;
+    UI::Widget::NotebookPage      _page_rotate;
+    UI::Widget::NotebookPage      _page_skew;
+    UI::Widget::NotebookPage      _page_transform;
 
-    UnitMenu          _units_move;
-    UnitMenu          _units_scale;
-    UnitMenu          _units_rotate;
-    UnitMenu          _units_skew;
+    UI::Widget::UnitMenu          _units_move;
+    UI::Widget::UnitMenu          _units_scale;
+    UI::Widget::UnitMenu          _units_rotate;
+    UI::Widget::UnitMenu          _units_skew;
 
-    ScalarUnit        _scalar_move_horizontal;
-    ScalarUnit        _scalar_move_vertical;
-    ScalarUnit        _scalar_scale_horizontal;
-    ScalarUnit        _scalar_scale_vertical;
-    ScalarUnit        _scalar_rotate;
-    ScalarUnit        _scalar_skew_horizontal;
-    ScalarUnit        _scalar_skew_vertical;
+    UI::Widget::ScalarUnit        _scalar_move_horizontal;
+    UI::Widget::ScalarUnit        _scalar_move_vertical;
+    UI::Widget::ScalarUnit        _scalar_scale_horizontal;
+    UI::Widget::ScalarUnit        _scalar_scale_vertical;
+    UI::Widget::ScalarUnit        _scalar_rotate;
+    UI::Widget::ScalarUnit        _scalar_skew_horizontal;
+    UI::Widget::ScalarUnit        _scalar_skew_vertical;
 
-    Scalar            _scalar_transform_a;
-    Scalar            _scalar_transform_b;
-    Scalar            _scalar_transform_c;
-    Scalar            _scalar_transform_d;
-    Scalar            _scalar_transform_e;
-    Scalar            _scalar_transform_f;
+    UI::Widget::Scalar            _scalar_transform_a;
+    UI::Widget::Scalar            _scalar_transform_b;
+    UI::Widget::Scalar            _scalar_transform_c;
+    UI::Widget::Scalar            _scalar_transform_d;
+    UI::Widget::Scalar            _scalar_transform_e;
+    UI::Widget::Scalar            _scalar_transform_f;
 
-    CheckButton  _check_move_relative;
-    CheckButton  _check_scale_proportional;
-    CheckButton  _check_apply_separately;
-    CheckButton  _check_replace_matrix;
+    UI::Widget::CheckButton  _check_move_relative;
+    UI::Widget::CheckButton  _check_scale_proportional;
+    UI::Widget::CheckButton  _check_apply_separately;
+    UI::Widget::CheckButton  _check_replace_matrix;
 
     /**
      * Layout the GUI components, and prepare for use

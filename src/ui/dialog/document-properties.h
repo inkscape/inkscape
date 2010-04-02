@@ -28,8 +28,6 @@
 
 #include "xml/helper-observer.h"
 
-using namespace Inkscape::UI::Widget;
-
 namespace Inkscape {
     namespace UI {
         namespace Dialog {
@@ -78,21 +76,31 @@ protected:
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
-    NotebookPage   _page_page, _page_guides;
-    NotebookPage   _page_snap, _page_cms, _page_scripting;
+    UI::Widget::NotebookPage   _page_page;
+    UI::Widget::NotebookPage   _page_guides;
+    UI::Widget::NotebookPage   _page_snap;
+    UI::Widget::NotebookPage   _page_cms;
+    UI::Widget::NotebookPage   _page_scripting;
     Gtk::VBox      _grids_vbox;
 
-    Registry _wr;
+    UI::Widget::Registry _wr;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_canb, _rcb_bord, _rcb_shad;
-    RegisteredColorPicker _rcp_bg, _rcp_bord;
-    RegisteredUnitMenu    _rum_deflt;
-    PageSizer             _page_sizer;
+    UI::Widget::RegisteredCheckButton _rcb_canb;
+    UI::Widget::RegisteredCheckButton _rcb_bord;
+    UI::Widget::RegisteredCheckButton _rcb_shad;
+    UI::Widget::RegisteredColorPicker _rcp_bg;
+    UI::Widget::RegisteredColorPicker _rcp_bord;
+    UI::Widget::RegisteredUnitMenu    _rum_deflt;
+    UI::Widget::PageSizer             _page_sizer;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcb_sgui, _rcbsng;
-    RegisteredColorPicker _rcp_gui, _rcp_hgui;
+    UI::Widget::RegisteredCheckButton _rcb_sgui;
+    UI::Widget::RegisteredCheckButton _rcbsng;
+    UI::Widget::RegisteredColorPicker _rcp_gui;
+    UI::Widget::RegisteredColorPicker _rcp_hgui;
     //---------------------------------------------------------------
-    ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
+    UI::Widget::ToleranceSlider       _rsu_sno;
+    UI::Widget::ToleranceSlider       _rsu_sn;
+    UI::Widget::ToleranceSlider       _rsu_gusn;
     //---------------------------------------------------------------
     Gtk::Menu   _menu;
     Gtk::OptionMenu   _combo_avail;
