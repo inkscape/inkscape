@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-02 14:44+0200\n"
-"PO-Revision-Date: 2010-04-02 21:09+0100\n"
+"PO-Revision-Date: 2010-04-03 01:10+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2871,7 +2871,7 @@ msgstr "Höheneinheit"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid "Layout Group is only about to help a better code generation (if you need it). To use this, first you must to select some \"Slicer rectangles\"."
-msgstr ""
+msgstr "Die Layout-Gruppe dient nur zum Erstellen einer besseren Codegeneration (falls benötigt). Um sie zu benutzen müssen Sie zuerst ein paar \"Schnitt-Rechtecke\" markieren."
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
 msgid "Percent (relative to parent size)"
@@ -2883,7 +2883,7 @@ msgstr "Pixel (fest)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Set a layout group"
-msgstr ""
+msgstr "Layout-gruppe festlegen"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
@@ -2903,7 +2903,7 @@ msgstr "Breiteneinheit"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid "0 is the lowest image quality and highest compression, and 100 is the best quality but least effective compression"
-msgstr ""
+msgstr "0 ist die niedrigste Bildqualität mit der höchsten Kompresoin und 100 ist die beste Qualität mit der uneffektivsten Kompression."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:2
 #: ../src/ui/dialog/document-properties.cpp:93
@@ -2942,13 +2942,12 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
-#, fuzzy
 msgid "Force Dimension"
-msgstr "Dimensionen"
+msgstr "Erzwungene Dimension"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
-msgstr ""
+msgstr "Die erzwungene Dimension muss als  \"&lt;Breite&gt;x&lt;Höhe&gt;\" gesetzt werden."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:12
 #: ../src/rdf.cpp:235
@@ -2961,19 +2960,19 @@ msgstr "GIF-spezifische Optionen"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "If had set, this will replace DPI."
-msgstr "Wenn aktiviert, wird DPI zurückgesetzt."
+msgstr "Wenn es aktiviert ist, wird der DPI-Wert zurückgesetzt."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "JPG specific options"
-msgstr "JPG-spezifische Optinen"
+msgstr "JPG-spezifische Optionen"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "Layout disposition"
-msgstr ""
+msgstr "Layout-Anordnung"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Left Floated Image"
-msgstr ""
+msgstr "Links schwebendes Bild"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 #: ../src/libgdl/gdl-dock-object.c:120
@@ -3003,7 +3002,7 @@ msgstr "Positionspunkt"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Positioned &lt;div&gt; width the image as Background"
-msgstr ""
+msgstr "Positioniert &lt;div&gt; mit dem Bild als Hintergrund"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Positioned Image"
@@ -3014,9 +3013,8 @@ msgid "Quality"
 msgstr "Qualität"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
-#, fuzzy
 msgid "Right Floated Image"
-msgstr "Rechter Winkel"
+msgstr "Rechts schwebendes Bild"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Tiled Background (on parent group)"
@@ -3024,7 +3022,7 @@ msgstr "gekachelter Hintergrund (an Vorgängergruppe)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Top and Left"
-msgstr "Opeb und Links"
+msgstr "Oben und Links"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:33
 msgid "Top and right"
@@ -14880,7 +14878,7 @@ msgstr "allgemein"
 
 #: ../src/ui/dialog/glyphs.cpp:53
 msgid "inherited"
-msgstr ""
+msgstr "geerbt"
 
 #: ../src/ui/dialog/glyphs.cpp:54
 msgid "Arabic"
@@ -14895,104 +14893,92 @@ msgid "Bengali"
 msgstr "Bengalesisch (bn)"
 
 #: ../src/ui/dialog/glyphs.cpp:57
-#, fuzzy
 msgid "Bopomofo"
-msgstr "Überstrahlung"
+msgstr "Bopomofo"
 
 #: ../src/ui/dialog/glyphs.cpp:58
-#, fuzzy
 msgid "Cherokee"
-msgstr "Chrome HR"
+msgstr "Cherokee"
 
 #: ../src/ui/dialog/glyphs.cpp:59
-#, fuzzy
 msgid "Coptic"
-msgstr "Kopiert"
+msgstr "Koptisch"
 
 #: ../src/ui/dialog/glyphs.cpp:60
 msgid "Cyrillic"
 msgstr "Kyrillisch"
 
 #: ../src/ui/dialog/glyphs.cpp:61
-#, fuzzy
 msgid "Deseret"
-msgstr "Auswahl auf_heben"
+msgstr "Deseret"
 
 #: ../src/ui/dialog/glyphs.cpp:62
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: ../src/ui/dialog/glyphs.cpp:63
 msgid "Ethiopic"
 msgstr "Äthiopisch"
 
 #: ../src/ui/dialog/glyphs.cpp:64
-#, fuzzy
 msgid "Georgian"
-msgstr "Führungslinienursprung"
+msgstr "Georgisch"
 
 #: ../src/ui/dialog/glyphs.cpp:65
-#, fuzzy
 msgid "Gothic"
-msgstr "Wachstum"
+msgstr "Gotisch"
 
 #: ../src/ui/dialog/glyphs.cpp:66
-#, fuzzy
 msgid "Greek"
-msgstr "Grün"
+msgstr "Griechisch"
 
 #: ../src/ui/dialog/glyphs.cpp:67
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: ../src/ui/dialog/glyphs.cpp:68
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../src/ui/dialog/glyphs.cpp:69
-#, fuzzy
 msgid "Han"
-msgstr "Anfasser"
+msgstr "Han"
 
 #: ../src/ui/dialog/glyphs.cpp:70
-#, fuzzy
 msgid "Hangul"
-msgstr "Winkel"
+msgstr "Hangul"
 
 #: ../src/ui/dialog/glyphs.cpp:71
-#, fuzzy
 msgid "Hebrew"
 msgstr "Hebräisch (he)"
 
 #: ../src/ui/dialog/glyphs.cpp:72
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: ../src/ui/dialog/glyphs.cpp:73
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: ../src/ui/dialog/glyphs.cpp:74
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: ../src/ui/dialog/glyphs.cpp:75
 msgid "Khmer"
 msgstr "Khmer (km)"
 
 #: ../src/ui/dialog/glyphs.cpp:76
-#, fuzzy
 msgid "Lao"
-msgstr "Ausrichtung"
+msgstr "Lao"
 
 #: ../src/ui/dialog/glyphs.cpp:77
-#, fuzzy
 msgid "Latin"
-msgstr "Satin"
+msgstr "Latein"
 
 #: ../src/ui/dialog/glyphs.cpp:78
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: ../src/ui/dialog/glyphs.cpp:79
 msgid "Mongolian"
@@ -15000,11 +14986,11 @@ msgstr "Mongolisch (mn)"
 
 #: ../src/ui/dialog/glyphs.cpp:80
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: ../src/ui/dialog/glyphs.cpp:81
 msgid "Ogham"
-msgstr ""
+msgstr "Oghamschrift"
 
 #: ../src/ui/dialog/glyphs.cpp:82
 msgid "Old Italic"
@@ -15012,34 +14998,31 @@ msgstr "Kursiv"
 
 #: ../src/ui/dialog/glyphs.cpp:83
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: ../src/ui/dialog/glyphs.cpp:84
 msgid "Runic"
-msgstr ""
+msgstr "Runic"
 
 #: ../src/ui/dialog/glyphs.cpp:85
-#, fuzzy
 msgid "Sinhala"
-msgstr "Einzeln"
+msgstr "Singhalesisch"
 
 #: ../src/ui/dialog/glyphs.cpp:86
 msgid "Syriac"
-msgstr ""
+msgstr "Syriac"
 
 #: ../src/ui/dialog/glyphs.cpp:87
-#, fuzzy
 msgid "Tamil"
-msgstr "Kachelfüllung"
+msgstr "Tamilisch"
 
 #: ../src/ui/dialog/glyphs.cpp:88
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: ../src/ui/dialog/glyphs.cpp:89
-#, fuzzy
 msgid "Thaana"
-msgstr "Tartan"
+msgstr "Thaana"
 
 #: ../src/ui/dialog/glyphs.cpp:90
 msgid "Thai"
@@ -15051,27 +15034,27 @@ msgstr "Tibetisch"
 
 #: ../src/ui/dialog/glyphs.cpp:92
 msgid "Canadian Aboriginal"
-msgstr ""
+msgstr "Kanadisch Aborigini"
 
 #: ../src/ui/dialog/glyphs.cpp:93
 msgid "Yi"
-msgstr ""
+msgstr "Yi"
 
 #: ../src/ui/dialog/glyphs.cpp:94
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: ../src/ui/dialog/glyphs.cpp:95
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: ../src/ui/dialog/glyphs.cpp:96
 msgid "Buhid"
-msgstr ""
+msgstr "Buhid"
 
 #: ../src/ui/dialog/glyphs.cpp:97
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanwa"
 
 #: ../src/ui/dialog/glyphs.cpp:98
 msgid "Braille"
@@ -15079,55 +15062,51 @@ msgstr "Braille (Blindenschrift)"
 
 #: ../src/ui/dialog/glyphs.cpp:99
 msgid "Cypriot"
-msgstr ""
+msgstr "Zypriotisch"
 
 #: ../src/ui/dialog/glyphs.cpp:100
 msgid "Limbu"
-msgstr ""
+msgstr "Limbu"
 
 #: ../src/ui/dialog/glyphs.cpp:101
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmaniya"
 
 #: ../src/ui/dialog/glyphs.cpp:102
-#, fuzzy
 msgid "Shavian"
-msgstr "Schattierung"
+msgstr "Schaw"
 
 #: ../src/ui/dialog/glyphs.cpp:103
-#, fuzzy
 msgid "Linear B"
-msgstr "Linie"
+msgstr "Linearschrift B"
 
 #: ../src/ui/dialog/glyphs.cpp:104
 msgid "Tai Le"
-msgstr ""
+msgstr "Tai Le"
 
 #: ../src/ui/dialog/glyphs.cpp:105
 msgid "Ugaritic"
-msgstr ""
+msgstr "Ugaritisch"
 
 #: ../src/ui/dialog/glyphs.cpp:106
-#, fuzzy
 msgid "New Tai Lue"
-msgstr "Neue Zeile"
+msgstr "Neu Tai-Lue"
 
 #: ../src/ui/dialog/glyphs.cpp:107
-#, fuzzy
 msgid "Buginese"
-msgstr "Linien"
+msgstr "Buginesisch"
 
 #: ../src/ui/dialog/glyphs.cpp:108
 msgid "Glagolitic"
-msgstr ""
+msgstr "Glagolitisch"
 
 #: ../src/ui/dialog/glyphs.cpp:109
 msgid "Tifinagh"
-msgstr ""
+msgstr "Tifinagh"
 
 #: ../src/ui/dialog/glyphs.cpp:110
 msgid "Syloti Nagri"
-msgstr ""
+msgstr "Sylheti Nagari"
 
 #: ../src/ui/dialog/glyphs.cpp:111
 msgid "Old Persian"
@@ -15135,83 +15114,75 @@ msgstr "Alt Persisch"
 
 #: ../src/ui/dialog/glyphs.cpp:112
 msgid "Kharoshthi"
-msgstr ""
+msgstr "Kharoshthi"
 
 #: ../src/ui/dialog/glyphs.cpp:113
-#, fuzzy
 msgid "unassigned"
-msgstr "Zuweisen"
+msgstr "nicht zugeordnet"
 
 #: ../src/ui/dialog/glyphs.cpp:114
-#, fuzzy
 msgid "Balinese"
-msgstr "Linien"
+msgstr "Balinesisch"
 
 #: ../src/ui/dialog/glyphs.cpp:115
 msgid "Cuneiform"
-msgstr ""
+msgstr "Keilschrift"
 
 #: ../src/ui/dialog/glyphs.cpp:116
-#, fuzzy
 msgid "Phoenician"
-msgstr "Malwerkzeug (Freihand)"
+msgstr "Phönizisch"
 
 #: ../src/ui/dialog/glyphs.cpp:117
 msgid "Phags-pa"
-msgstr ""
+msgstr "Phagpa"
 
 #: ../src/ui/dialog/glyphs.cpp:118
 msgid "N'Ko"
-msgstr ""
+msgstr "N'Ko"
 
 #: ../src/ui/dialog/glyphs.cpp:121
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: ../src/ui/dialog/glyphs.cpp:122
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepcha"
 
 #: ../src/ui/dialog/glyphs.cpp:123
-#, fuzzy
 msgid "Rejang"
-msgstr "Rechteck"
+msgstr "Rejang"
 
 #: ../src/ui/dialog/glyphs.cpp:124
-#, fuzzy
 msgid "Sundanese"
-msgstr "Sonntag"
+msgstr "Sundanesisch"
 
 #: ../src/ui/dialog/glyphs.cpp:125
-#, fuzzy
 msgid "Saurashtra"
-msgstr "Sättigung"
+msgstr "Saurashtra"
 
 #: ../src/ui/dialog/glyphs.cpp:126
 msgid "Cham"
-msgstr ""
+msgstr "Cham"
 
 #: ../src/ui/dialog/glyphs.cpp:127
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Ol Chiki"
 
 #: ../src/ui/dialog/glyphs.cpp:128
 msgid "Vai"
-msgstr ""
+msgstr "Vai"
 
 #: ../src/ui/dialog/glyphs.cpp:129
-#, fuzzy
 msgid "Carian"
-msgstr "Tartan"
+msgstr "Karisch"
 
 #: ../src/ui/dialog/glyphs.cpp:130
 msgid "Lycian"
-msgstr ""
+msgstr "Lykisch"
 
 #: ../src/ui/dialog/glyphs.cpp:131
-#, fuzzy
 msgid "Lydian"
-msgstr "Zentralwert"
+msgstr "Lydisch"
 
 #: ../src/ui/dialog/glyphs.cpp:198
 msgid "Script: "
@@ -15752,7 +15723,6 @@ msgid "Show transform handles even when only a single node is selected."
 msgstr "Anfasser anzeigen, wenn nur ein einzelner Knoten ausgewählt ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
-#, fuzzy
 msgid "Deleting nodes preserves shape"
 msgstr "Knoten löschen, Form beibehalten"
 
@@ -16090,9 +16060,8 @@ msgid "After releasing clippath/mask:"
 msgstr "Nach dem Lösen von Ausschneidungspfad/Maske:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
-#, fuzzy
 msgid "Ungroup automatically created groups"
-msgstr "Gruppierung markierter Gruppen aufheben"
+msgstr "Gruppierung automatisch erstellter Gruppen aufheben"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:700
 msgid "Ungroup groups created when setting clip/mask"
@@ -18161,7 +18130,6 @@ msgstr "Knoten rotieren"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:636
 #: ../src/ui/tool/multi-path-manipulator.cpp:642
-#, fuzzy
 msgid "Scale nodes uniformly"
 msgstr "Knoten skalieren"
 
@@ -18224,7 +18192,6 @@ msgid "Delete node"
 msgstr "Knoten löschen"
 
 #: ../src/ui/tool/path-manipulator.cpp:1305
-#, fuzzy
 msgid "Cycle node type"
 msgstr "Knotentyp ändern"
 
@@ -20471,9 +20438,8 @@ msgid "Glyphs..."
 msgstr "Glyphen..."
 
 #: ../src/verbs.cpp:2605
-#, fuzzy
 msgid "Select characters from a glyphs palette"
-msgstr "Farben aus einer Farbfelder-Palette auswählen"
+msgstr "Zeichen aus einer Bildzeichen-Palette auswählen"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2607
@@ -21206,12 +21172,10 @@ msgstr "<b>Muster</b> bleiben nun <b>unverändert</b>, wenn Objekte transformier
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X position"
 msgstr "X Position"
 
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X"
 msgstr "X"
 
@@ -21222,12 +21186,10 @@ msgstr "Horizontale Koordinate der Auswahl"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y position"
 msgstr "Y Position"
 
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y"
 msgstr "Y"
 
@@ -21238,12 +21200,10 @@ msgstr "Vertikale Koordinate der Auswahl"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|Width"
 msgstr "Breite"
 
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|W"
 msgstr "B"
 
@@ -21262,12 +21222,10 @@ msgstr "Wenn gesperrt, dann wird das Höhen- und Breitenverhältnis beibehalten"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|Height"
 msgstr "Höhe"
 
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|H"
 msgstr "H"
 
