@@ -66,7 +66,7 @@ from math import *
 def draw_SVG_ellipse((rx, ry), (cx, cy), parent, start_end=(0,2*pi),transform='' ):
 
     style = {   'stroke'        : '#000000',
-                'width'         : '1',
+                'stroke-width'  : '1',
                 'fill'          : 'none'            }
     circ_attribs = {'style':simplestyle.formatStyle(style),
         inkex.addNS('cx','sodipodi')        :str(cx),
