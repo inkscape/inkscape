@@ -357,6 +357,7 @@ src/ui/dialog/filedialogimpl-win32.cpp
 src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/filter-effects-dialog.cpp
 src/ui/dialog/find.cpp
+src/ui/dialog/glyphs.cpp 
 src/ui/dialog/guides.cpp
 src/ui/dialog/icon-preview.cpp
 src/ui/dialog/inkscape-preferences.cpp
