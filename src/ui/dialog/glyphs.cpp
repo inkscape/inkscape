@@ -377,6 +377,10 @@ void GlyphsPanel::rebuild()
         }
 #endif // GLIB_CHECK_VERSION(2,14,0)
 
+        // Disconnect the model while we update it. Simple work-around for 5x+ performance boost.
+        Glib::RefPtr<Gtk::ListStore> tmp = Gtk::ListStore::create(*getColumns());
+        iconView->set_model(tmp);
+
         std::vector<gunichar> present;
         for (gunichar ch = 1; ch < 65535; ch++) {
             int glyphId = font->MapUnicodeChar(ch);
@@ -401,6 +405,9 @@ void GlyphsPanel::rebuild()
             (*row)[columns->code] = *it;
             (*row)[columns->name] = tmp;
         }
+
+        // Reconnect the model once it has been updated:
+        iconView->set_model(store);
     }
 }
 
