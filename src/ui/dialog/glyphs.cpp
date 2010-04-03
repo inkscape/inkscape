@@ -159,8 +159,8 @@ GlyphColumns *GlyphsPanel::getColumns()
 /**
  * Constructor
  */
-GlyphsPanel::GlyphsPanel() :
-    Inkscape::UI::Widget::Panel("", "/dialogs/glyphs", SP_VERB_DIALOG_GLYPHS, "", false),
+GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
+    Inkscape::UI::Widget::Panel("", prefsPath, SP_VERB_DIALOG_GLYPHS, "", false),
     store(Gtk::ListStore::create(*getColumns())),
     iconView(0),
     entry(0),
