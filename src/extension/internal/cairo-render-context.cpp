@@ -80,7 +80,8 @@
 #include <pango/pangofc-fontmap.h>
 
 //#define TRACE(_args) g_printf _args
-#define TRACE(_args) g_message _args
+//#define TRACE(_args) g_message _args
+#define TRACE(_args)
 //#define TEST(_args) _args
 #define TEST(_args)
 
@@ -819,7 +820,6 @@ CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector, c
 bool
 CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm)
 {
-g_message("enter");
     if(surface == NULL) {
         return false;
     }
@@ -846,7 +846,7 @@ g_message("enter");
     }
 
     _is_valid = TRUE;
-g_message("leave");
+
     return true;
 }
 
