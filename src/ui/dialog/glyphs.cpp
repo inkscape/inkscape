@@ -210,7 +210,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
             scriptCombo->append_text(it->second);
         }
 
-        scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
+        scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_COMMON]); // default to a smaller set
         scriptSelectConn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
 
         table->attach( *Gtk::manage(scriptCombo),
@@ -366,7 +366,7 @@ void GlyphsPanel::rebuild()
         //double  sp_font_selector_get_size (SPFontSelector *fsel);
 
 #if GLIB_CHECK_VERSION(2,14,0)
-        GUnicodeScript script = G_UNICODE_SCRIPT_INVALID_CODE;
+        GUnicodeScript script = G_UNICODE_SCRIPT_COMMON;
         Glib::ustring scriptName = scriptCombo->get_active_text();
         std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
         for (std::map<GUnicodeScript, Glib::ustring>::iterator it = items.begin(); it != items.end(); ++it) {
