@@ -991,6 +991,8 @@ Section Uninstall ; do the uninstalling {{{
   Delete $INSTDIR\uninstall.log
   Delete $INSTDIR\uninstall.exe
   ; remove empty directories
+  RMDir $INSTDIR\lib\locale
+  RMDir $INSTDIR\lib
   RMDir $INSTDIR\data
   RMDir $INSTDIR\doc
   RMDir $INSTDIR\modules
