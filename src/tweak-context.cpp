@@ -448,7 +448,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * vector;
-                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], move[Geom::Y]));
                     did = true;
                 }
             }
@@ -462,7 +462,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 if (x < 1) {
                     Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * 
                         (reverse? (a->midpoint() - p) : (p - a->midpoint()));
-                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], move[Geom::Y]));
                     did = true;
                 }
             }
@@ -477,7 +477,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * Geom::Point(cos(dp)*dr, sin(dp)*dr);
-                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], move[Geom::Y]));
                     did = true;
                 }
             }
@@ -502,7 +502,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
-                    double angle = (reverse? force : -force) * 0.05 * (cos(M_PI * x) + 1) * M_PI;
+                    double angle = (reverse? -force : force) * 0.05 * (cos(M_PI * x) + 1) * M_PI;
                     sp_item_rotate_rel(item, Geom::Rotate(angle));
                     did = true;
                 }

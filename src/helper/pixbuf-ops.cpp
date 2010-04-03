@@ -113,7 +113,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      double padding = 1.0;
 
      Geom::Point origin(screen.min()[Geom::X],
-                      sp_document_height(doc) - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
+                        screen.min()[Geom::Y]);
 
      origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
      origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));

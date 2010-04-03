@@ -1193,7 +1193,7 @@ void PathManipulator::_updateOutline()
                 Geom::Point at = j->pointAt(0.5);
                 Geom::Point ut = j->unitTangentAt(0.5);
                 // rotate the point 
-                ut *= Geom::Rotate(150.0 / 180.0 * M_PI);
+                ut *= Geom::Rotate(210.0 / 180.0 * M_PI);
                 Geom::Point arrow_end = _desktop->w2d(
                     _desktop->d2w(at) + Geom::unit_vector(_desktop->d2w(ut)) * 10.0);
 

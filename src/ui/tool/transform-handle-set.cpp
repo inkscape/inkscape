@@ -34,17 +34,17 @@ namespace UI {
 namespace {
 Gtk::AnchorType corner_to_anchor(unsigned c) {
     switch (c % 4) {
-    case 0: return Gtk::ANCHOR_NE;
-    case 1: return Gtk::ANCHOR_NW;
-    case 2: return Gtk::ANCHOR_SW;
-    default: return Gtk::ANCHOR_SE;
+    case 0: return Gtk::ANCHOR_SE;
+    case 1: return Gtk::ANCHOR_SW;
+    case 2: return Gtk::ANCHOR_NW;
+    default: return Gtk::ANCHOR_NE;
     }
 }
 Gtk::AnchorType side_to_anchor(unsigned s) {
     switch (s % 4) {
-    case 0: return Gtk::ANCHOR_N;
+    case 0: return Gtk::ANCHOR_S;
     case 1: return Gtk::ANCHOR_W;
-    case 2: return Gtk::ANCHOR_S;
+    case 2: return Gtk::ANCHOR_N;
     default: return Gtk::ANCHOR_E;
     }
 }
@@ -208,8 +208,8 @@ private:
     static Glib::RefPtr<Gdk::Pixbuf> _corner_to_pixbuf(unsigned c) {
         sp_select_context_get_type();
         switch (c % 2) {
-        case 0: return Glib::wrap(handles[1], true);
-        default: return Glib::wrap(handles[0], true);
+        case 0: return Glib::wrap(handles[0], true);
+        default: return Glib::wrap(handles[1], true);
         }
     }
     Geom::Point _sc_center;
@@ -332,10 +332,10 @@ private:
     static Glib::RefPtr<Gdk::Pixbuf> _corner_to_pixbuf(unsigned c) {
         sp_select_context_get_type();
         switch (c % 4) {
-        case 0: return Glib::wrap(handles[10], true);
-        case 1: return Glib::wrap(handles[8], true);
-        case 2: return Glib::wrap(handles[6], true);
-        default: return Glib::wrap(handles[4], true);
+        case 0: return Glib::wrap(handles[4], true);
+        case 1: return Glib::wrap(handles[6], true);
+        case 2: return Glib::wrap(handles[8], true);
+        default: return Glib::wrap(handles[10], true);
         }
     }
     Geom::Point _rot_center;
