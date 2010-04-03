@@ -32,7 +32,7 @@
 
 namespace Inkscape {
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 
 GlyphsPanel &GlyphsPanel::getInstance()
@@ -169,6 +169,8 @@ GlyphsPanel::GlyphsPanel() :
     scriptCombo(0),
 #endif // GLIB_CHECK_VERSION(2,14,0)
     fsel(0),
+    targetDesktop(0),
+    deskTrack(),
     iconActiveConn(),
     iconSelectConn(),
     scriptSelectConn()
@@ -279,6 +281,10 @@ GlyphsPanel::GlyphsPanel() :
     show_all_children();
 
     restorePanelPrefs();
+
+    // Connect this up last
+    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &GlyphsPanel::setTargetDesktop) );
+    deskTrack.connect(GTK_WIDGET(gobj()));
 }
 
 GlyphsPanel::~GlyphsPanel()
@@ -286,8 +292,22 @@ GlyphsPanel::~GlyphsPanel()
     iconActiveConn.disconnect();
     iconSelectConn.disconnect();
     scriptSelectConn.disconnect();
+    desktopChangeConn.disconnect();
 }
 
+
+void GlyphsPanel::setDesktop(SPDesktop *desktop)
+{
+    Panel::setDesktop(desktop);
+    deskTrack.setBase(desktop);
+}
+
+void GlyphsPanel::setTargetDesktop(SPDesktop *desktop)
+{
+    if (targetDesktop != desktop) {
+        targetDesktop = desktop;
+    }
+}
 
 void GlyphsPanel::glyphActivated(Gtk::TreeModel::Path const & path)
 {

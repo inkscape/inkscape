@@ -13,6 +13,7 @@
 
 #include <gtkmm/treemodel.h>
 #include "ui/widget/panel.h"
+#include "ui/dialog/desktop-tracker.h"
 
 
 namespace Gtk {
@@ -32,7 +33,7 @@ namespace UI {
 
 class PreviewHolder;
 
-namespace Dialogs {
+namespace Dialog {
 
 class GlyphColumns;
 
@@ -48,6 +49,8 @@ public:
 
     static GlyphsPanel& getInstance();
 
+    virtual void setDesktop(SPDesktop *desktop);
+
 protected:
 
 private:
@@ -62,6 +65,7 @@ private:
 
     void glyphActivated(Gtk::TreeModel::Path const & path);
     void glyphSelectionChanged();
+    void setTargetDesktop(SPDesktop *desktop);
 
 
     Glib::RefPtr<Gtk::ListStore> store;
@@ -72,9 +76,12 @@ private:
     Gtk::ComboBoxText *scriptCombo;
 #endif //GLIB_CHECK_VERSION(2,14,0)
     SPFontSelector *fsel;
+    SPDesktop *targetDesktop;
+    DesktopTracker deskTrack;
     sigc::connection iconActiveConn;
     sigc::connection iconSelectConn;
     sigc::connection scriptSelectConn;
+    sigc::connection desktopChangeConn;
 };
 
 

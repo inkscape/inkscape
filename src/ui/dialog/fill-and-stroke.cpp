@@ -43,11 +43,11 @@ FillAndStroke::FillAndStroke()
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),
       _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke", UI::Widget::SimpleFilterModifier::BLUR),
-      hierID(0),
-      trackActive(false),
+      deskTrack(),
       targetDesktop(0),
       fillWdgt(0),
-      strokeWdgt(0)
+      strokeWdgt(0),
+      desktopChangeConn()
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
@@ -68,59 +68,35 @@ FillAndStroke::FillAndStroke()
 
     _composite_settings.setSubject(&_subject);
 
-    // Use C/gobject callbacks to avoid gtkmm rewrap-during-destruct issues:
-    hierID = g_signal_connect( G_OBJECT(gobj()), "hierarchy-changed", G_CALLBACK(hierarchyChangeCB), this );
-
-    g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK( activateDesktopCB ), this );
+    // Connect this up last
+    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &FillAndStroke::setTargetDesktop) );
+    deskTrack.connect(GTK_WIDGET(gobj()));
 }
 
 FillAndStroke::~FillAndStroke()
 {
     _composite_settings.setSubject(NULL);
-    if (hierID) {
-        g_signal_handler_disconnect(G_OBJECT(gobj()), hierID);
-        hierID = 0;
-    }
-}
 
-gboolean FillAndStroke::activateDesktopCB(Inkscape::Application */*inkscape*/, SPDesktop *desktop, FillAndStroke *self )
-{
-    if (self && self->trackActive) {
-        self->setTargetDesktop(desktop);
-    }
-    return FALSE;
-}
-
-bool FillAndStroke::hierarchyChangeCB(GtkWidget *widget, GtkWidget* /*prev*/, FillAndStroke *self)
-{
-    if (self) {
-        GtkWidget *ww = gtk_widget_get_ancestor(widget, SP_TYPE_VIEW_WIDGET);
-        bool newFlag = (ww == 0);
-        if (newFlag != self->trackActive) {
-            self->trackActive = newFlag;
-            if (self->trackActive) {
-                self->setTargetDesktop(SP_ACTIVE_DESKTOP);
-            } else {
-                self->setTargetDesktop(self->getDesktop());
-            }
-        }
-    }
-    return false;
+    desktopChangeConn.disconnect();
+    deskTrack.disconnect();
 }
 
 void FillAndStroke::setDesktop(SPDesktop *desktop)
 {
     Panel::setDesktop(desktop);
-    setTargetDesktop(desktop);
+    deskTrack.setBase(desktop);
 }
 
 void FillAndStroke::setTargetDesktop(SPDesktop *desktop)
 {
-    if (fillWdgt) {
-        sp_fill_style_widget_set_desktop(fillWdgt, desktop);
-    }
-    if (strokeWdgt) {
-        sp_stroke_style_widget_set_desktop(strokeWdgt, desktop);
+    if (targetDesktop != desktop) {
+        targetDesktop = desktop;
+        if (fillWdgt) {
+            sp_fill_style_widget_set_desktop(fillWdgt, desktop);
+        }
+        if (strokeWdgt) {
+            sp_stroke_style_widget_set_desktop(strokeWdgt, desktop);
+        }
     }
 }
 

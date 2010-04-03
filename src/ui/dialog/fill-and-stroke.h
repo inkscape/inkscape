@@ -25,6 +25,7 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/object-composite-settings.h"
+#include "ui/dialog/desktop-tracker.h"
 
 namespace Inkscape {
 namespace UI {
@@ -39,9 +40,6 @@ public:
 
 
     virtual void setDesktop(SPDesktop *desktop);
-
-    // temporary work-around until panel dialog itself tracks 'focus' properly.
-    virtual void setTargetDesktop(SPDesktop *desktop);
 
     void selectionChanged(Inkscape::Application *inkscape,
                           Inkscape::Selection *selection);
@@ -71,14 +69,13 @@ private:
     FillAndStroke(FillAndStroke const &d);
     FillAndStroke& operator=(FillAndStroke const &d);
 
-    static gboolean activateDesktopCB(Inkscape::Application *inkscape, SPDesktop *desktop, FillAndStroke *self );
-    static bool hierarchyChangeCB(GtkWidget *widget, GtkWidget* prev, FillAndStroke *self);
+    void setTargetDesktop(SPDesktop *desktop);
 
-    gulong hierID;
-    bool trackActive;
+    DesktopTracker deskTrack;
     SPDesktop *targetDesktop;
     Gtk::Widget *fillWdgt;
     Gtk::Widget *strokeWdgt;
+    sigc::connection desktopChangeConn;
 };
 
 } // namespace Dialog

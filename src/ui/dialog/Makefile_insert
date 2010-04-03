@@ -22,6 +22,8 @@ ink_common_sources +=		\
 	ui/dialog/color-item.h			\
 	ui/dialog/debug.cpp			\
 	ui/dialog/debug.h			\
+	ui/dialog/desktop-tracker.cpp		\
+	ui/dialog/desktop-tracker.h		\
 	ui/dialog/dialog.cpp			\
 	ui/dialog/dialog.h			\
 	ui/dialog/dialog-manager.cpp		\
