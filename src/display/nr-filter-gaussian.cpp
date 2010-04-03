@@ -345,7 +345,7 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
 
 // Filters over 1st dimension
 // Assumes kernel is symmetric
-// scr_len should be size of kernel - 1
+// Kernel should have scr_len+1 elements
 template<typename PT, unsigned int PC>
 static void
 filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
@@ -377,7 +377,7 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
         for ( int c1 = 0 ; c1 < n1 ; c1++ ) {
 
             int const src_disp = src_line + c1 * sstr1;
-            int const dst_disp = dst_line + c1 * sstr1;
+            int const dst_disp = dst_line + c1 * dstr1;
 
             // update history
             for(int i=scr_len; i>0; i--) copy_n(history[i-1], PC, history[i]);
@@ -433,7 +433,7 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
                 // optimization: if there was no variation within this point's neighborhood,
                 // skip ahead while we keep seeing the same last_in byte:
                 // blurring flat color would not change it anyway
-                if (different_count <= 1) {
+                if (different_count <= 1) { // note that different_count is at least 1, because last_in is initialized to -1
                     int pos = c1 + 1;
                     int nb_src_disp = src_disp + (1+scr_len)*sstr1 + byte; // src_line + (pos+scr_len) * sstr1 + byte
                     int nb_dst_disp = dst_disp + (1)        *dstr1 + byte; // dst_line + (pos) * sstr1 + byte
@@ -441,7 +441,7 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
                         dst[nb_dst_disp] = last_in;
                         pos++;
                         nb_src_disp += sstr1;
-                        nb_dst_disp += sstr1;
+                        nb_dst_disp += dstr1;
                     }
                     skipbuf[byte] = pos;
                 }
@@ -645,6 +645,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
             }
         }
     }
+
+    // Resampling (if necessary), goes from in -> out (setting ssin to out if used)
     NRPixBlock *ssin = in;
     if ( resampling ) {
         ssin = out;
@@ -667,6 +669,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         };
     }
 
+    // Horizontal filtering, goes from ssin -> out (ssin might be equal to out, but these algorithms can be used in-place)
     if (use_IIR_x) {
         // Filter variables
         IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
@@ -702,9 +705,9 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         default:
             assert(false);
         };
-    } else if ( scr_len_x > 1 ) { // !use_IIR_x
+    } else if ( scr_len_x > 0 ) { // !use_IIR_x
         // Filter kernel for x direction
-        FIRValue kernel[scr_len_x];
+        FIRValue kernel[scr_len_x+1];
         _make_kernel(kernel, deviation_x);
 
         // Filter (x)
@@ -728,6 +731,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         nr_blit_pixblock_pixblock(out, ssin);
     }
 
+    // Vertical filtering, goes from out -> out
     if (use_IIR_y) {
         // Filter variables
         IIRValue b[N+1];  // scaling coefficient + filter coefficients (can be 10.21 fixed point)
@@ -763,9 +767,9 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         default:
             assert(false);
         };
-    } else if ( scr_len_y > 1 ) { // !use_IIR_y
+    } else if ( scr_len_y > 0 ) { // !use_IIR_y
         // Filter kernel for y direction
-        FIRValue kernel[scr_len_y];
+        FIRValue kernel[scr_len_y+1];
         _make_kernel(kernel, deviation_y);
 
         // Filter (y)
@@ -791,6 +795,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         delete[] tmpdata[i]; // deleting a nullptr has no effect, so this is safe
     }
 
+    // Upsampling, stores (the upsampled) out using slot.set(_output, ...)
     if ( !resampling ) {
         // No upsampling needed
         out->empty = FALSE;
@@ -835,6 +840,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         slot.set(_output, finalout);
     }
 
+    // If we downsampled the input, clean up the downsampled data
     if (in != original_in) nr_pixblock_free(in);
 
     return 0;
