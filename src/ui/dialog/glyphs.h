@@ -75,12 +75,14 @@ private:
 #if GLIB_CHECK_VERSION(2,14,0)
     Gtk::ComboBoxText *scriptCombo;
 #endif //GLIB_CHECK_VERSION(2,14,0)
+    Gtk::ComboBoxText *rangeCombo;
     SPFontSelector *fsel;
     SPDesktop *targetDesktop;
     DesktopTracker deskTrack;
     sigc::connection iconActiveConn;
     sigc::connection iconSelectConn;
     sigc::connection scriptSelectConn;
+    sigc::connection rangeSelectConn;
     sigc::connection desktopChangeConn;
 };
 

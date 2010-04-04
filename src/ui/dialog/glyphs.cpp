@@ -42,7 +42,7 @@ GlyphsPanel &GlyphsPanel::getInstance()
 
 
 #if GLIB_CHECK_VERSION(2,14,0)
-static std::map<GUnicodeScript, Glib::ustring> &getScriptToName()
+static std::map<GUnicodeScript, Glib::ustring> & getScriptToName()
 {
     static bool init = false;
     static std::map<GUnicodeScript, Glib::ustring> mappings;
@@ -135,6 +135,170 @@ static std::map<GUnicodeScript, Glib::ustring> &getScriptToName()
 }
 #endif // GLIB_CHECK_VERSION(2,14,0)
 
+typedef std::pair<gunichar, gunichar> Range;
+typedef std::pair<Range, Glib::ustring> NamedRange;
+
+static std::vector<NamedRange> & getRanges()
+{
+    static bool init = false;
+    static std::vector<NamedRange> ranges;
+    if (!init) {
+        init = true;
+        ranges.push_back(std::make_pair(std::make_pair(0x0000, 0xFFFD), _("all")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0000, 0x007F), _("Basic Latin")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0080, 0x00FF), _("Latin-1 Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0100, 0x017F), _("Latin Extended-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0180, 0x024F), _("Latin Extended-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0250, 0x02AF), _("IPA Extensions")));
+        ranges.push_back(std::make_pair(std::make_pair(0x02B0, 0x02FF), _("Spacing Modifier Letters")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0300, 0x036F), _("Combining Diacritical Marks")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0370, 0x03FF), _("Greek and Coptic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0400, 0x04FF), _("Cyrillic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0500, 0x052F), _("Cyrillic Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0530, 0x058F), _("Armenian")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0590, 0x05FF), _("Hebrew")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0600, 0x06FF), _("Arabic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0700, 0x074F), _("Syriac")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0750, 0x077F), _("Arabic Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0780, 0x07BF), _("Thaana")));
+        ranges.push_back(std::make_pair(std::make_pair(0x07C0, 0x07FF), _("NKo")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0800, 0x083F), _("Samaritan")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0900, 0x097F), _("Devanagari")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0980, 0x09FF), _("Bengali")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0A00, 0x0A7F), _("Gurmukhi")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0A80, 0x0AFF), _("Gujarati")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0B00, 0x0B7F), _("Oriya")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0B80, 0x0BFF), _("Tamil")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0C00, 0x0C7F), _("Telugu")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0C80, 0x0CFF), _("Kannada")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0D00, 0x0D7F), _("Malayalam")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0D80, 0x0DFF), _("Sinhala")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0E00, 0x0E7F), _("Thai")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0E80, 0x0EFF), _("Lao")));
+        ranges.push_back(std::make_pair(std::make_pair(0x0F00, 0x0FFF), _("Tibetan")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1000, 0x109F), _("Myanmar")));
+        ranges.push_back(std::make_pair(std::make_pair(0x10A0, 0x10FF), _("Georgian")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1100, 0x11FF), _("Hangul Jamo")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1200, 0x137F), _("Ethiopic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1380, 0x139F), _("Ethiopic Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x13A0, 0x13FF), _("Cherokee")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1400, 0x167F), _("Unified Canadian Aboriginal Syllabics")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1680, 0x169F), _("Ogham")));
+        ranges.push_back(std::make_pair(std::make_pair(0x16A0, 0x16FF), _("Runic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1700, 0x171F), _("Tagalog")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1720, 0x173F), _("Hanunoo")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1740, 0x175F), _("Buhid")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1760, 0x177F), _("Tagbanwa")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1780, 0x17FF), _("Khmer")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1800, 0x18AF), _("Mongolian")));
+        ranges.push_back(std::make_pair(std::make_pair(0x18B0, 0x18FF), _("Unified Canadian Aboriginal Syllabics Extended")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1900, 0x194F), _("Limbu")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1950, 0x197F), _("Tai Le")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1980, 0x19DF), _("New Tai Lue")));
+        ranges.push_back(std::make_pair(std::make_pair(0x19E0, 0x19FF), _("Khmer Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1A00, 0x1A1F), _("Buginese")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1A20, 0x1AAF), _("Tai Tham")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1B00, 0x1B7F), _("Balinese")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1B80, 0x1BBF), _("Sundanese")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1C00, 0x1C4F), _("Lepcha")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1C50, 0x1C7F), _("Ol Chiki")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1CD0, 0x1CFF), _("Vedic Extensions")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1D00, 0x1D7F), _("Phonetic Extensions")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1D80, 0x1DBF), _("Phonetic Extensions Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1DC0, 0x1DFF), _("Combining Diacritical Marks Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1E00, 0x1EFF), _("Latin Extended Additional")));
+        ranges.push_back(std::make_pair(std::make_pair(0x1F00, 0x1FFF), _("Greek Extended")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2000, 0x206F), _("General Punctuation")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2070, 0x209F), _("Superscripts and Subscripts")));
+        ranges.push_back(std::make_pair(std::make_pair(0x20A0, 0x20CF), _("Currency Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x20D0, 0x20FF), _("Combining Diacritical Marks for Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2100, 0x214F), _("Letterlike Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2150, 0x218F), _("Number Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2190, 0x21FF), _("Arrows")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2200, 0x22FF), _("Mathematical Operators")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2300, 0x23FF), _("Miscellaneous Technical")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2400, 0x243F), _("Control Pictures")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2440, 0x245F), _("Optical Character Recognition")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2460, 0x24FF), _("Enclosed Alphanumerics")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2500, 0x257F), _("Box Drawing")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2580, 0x259F), _("Block Elements")));
+        ranges.push_back(std::make_pair(std::make_pair(0x25A0, 0x25FF), _("Geometric Shapes")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2600, 0x26FF), _("Miscellaneous Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2700, 0x27BF), _("Dingbats")));
+        ranges.push_back(std::make_pair(std::make_pair(0x27C0, 0x27EF), _("Miscellaneous Mathematical Symbols-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0x27F0, 0x27FF), _("Supplemental Arrows-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2800, 0x28FF), _("Braille Patterns")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2900, 0x297F), _("Supplemental Arrows-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2980, 0x29FF), _("Miscellaneous Mathematical Symbols-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2A00, 0x2AFF), _("Supplemental Mathematical Operators")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2B00, 0x2BFF), _("Miscellaneous Symbols and Arrows")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2C00, 0x2C5F), _("Glagolitic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2C60, 0x2C7F), _("Latin Extended-C")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2C80, 0x2CFF), _("Coptic")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2D00, 0x2D2F), _("Georgian Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2D30, 0x2D7F), _("Tifinagh")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2D80, 0x2DDF), _("Ethiopic Extended")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2DE0, 0x2DFF), _("Cyrillic Extended-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2E00, 0x2E7F), _("Supplemental Punctuation")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2E80, 0x2EFF), _("CJK Radicals Supplement")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2F00, 0x2FDF), _("Kangxi Radicals")));
+        ranges.push_back(std::make_pair(std::make_pair(0x2FF0, 0x2FFF), _("Ideographic Description Characters")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3000, 0x303F), _("CJK Symbols and Punctuation")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3040, 0x309F), _("Hiragana")));
+        ranges.push_back(std::make_pair(std::make_pair(0x30A0, 0x30FF), _("Katakana")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3100, 0x312F), _("Bopomofo")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3130, 0x318F), _("Hangul Compatibility Jamo")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3190, 0x319F), _("Kanbun")));
+        ranges.push_back(std::make_pair(std::make_pair(0x31A0, 0x31BF), _("Bopomofo Extended")));
+        ranges.push_back(std::make_pair(std::make_pair(0x31C0, 0x31EF), _("CJK Strokes")));
+        ranges.push_back(std::make_pair(std::make_pair(0x31F0, 0x31FF), _("Katakana Phonetic Extensions")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3200, 0x32FF), _("Enclosed CJK Letters and Months")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3300, 0x33FF), _("CJK Compatibility")));
+        ranges.push_back(std::make_pair(std::make_pair(0x3400, 0x4DBF), _("CJK Unified Ideographs Extension A")));
+        ranges.push_back(std::make_pair(std::make_pair(0x4DC0, 0x4DFF), _("Yijing Hexagram Symbols")));
+        ranges.push_back(std::make_pair(std::make_pair(0x4E00, 0x9FFF), _("CJK Unified Ideographs")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA000, 0xA48F), _("Yi Syllables")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA490, 0xA4CF), _("Yi Radicals")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA4D0, 0xA4FF), _("Lisu")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA500, 0xA63F), _("Vai")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA640, 0xA69F), _("Cyrillic Extended-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA6A0, 0xA6FF), _("Bamum")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA700, 0xA71F), _("Modifier Tone Letters")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA720, 0xA7FF), _("Latin Extended-D")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA800, 0xA82F), _("Syloti Nagri")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA830, 0xA83F), _("Common Indic Number Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA840, 0xA87F), _("Phags-pa")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA880, 0xA8DF), _("Saurashtra")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA8E0, 0xA8FF), _("Devanagari Extended")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA900, 0xA92F), _("Kayah Li")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA930, 0xA95F), _("Rejang")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA960, 0xA97F), _("Hangul Jamo Extended-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0xA980, 0xA9DF), _("Javanese")));
+        ranges.push_back(std::make_pair(std::make_pair(0xAA00, 0xAA5F), _("Cham")));
+        ranges.push_back(std::make_pair(std::make_pair(0xAA60, 0xAA7F), _("Myanmar Extended-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0xAA80, 0xAADF), _("Tai Viet")));
+        ranges.push_back(std::make_pair(std::make_pair(0xABC0, 0xABFF), _("Meetei Mayek")));
+        ranges.push_back(std::make_pair(std::make_pair(0xAC00, 0xD7AF), _("Hangul Syllables")));
+        ranges.push_back(std::make_pair(std::make_pair(0xD7B0, 0xD7FF), _("Hangul Jamo Extended-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0xD800, 0xDB7F), _("High Surrogates")));
+        ranges.push_back(std::make_pair(std::make_pair(0xDB80, 0xDBFF), _("High Private Use Surrogates")));
+        ranges.push_back(std::make_pair(std::make_pair(0xDC00, 0xDFFF), _("Low Surrogates")));
+        ranges.push_back(std::make_pair(std::make_pair(0xE000, 0xF8FF), _("Private Use Area")));
+        ranges.push_back(std::make_pair(std::make_pair(0xF900, 0xFAFF), _("CJK Compatibility Ideographs")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFB00, 0xFB4F), _("Alphabetic Presentation Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFB50, 0xFDFF), _("Arabic Presentation Forms-A")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE00, 0xFE0F), _("Variation Selectors")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE10, 0xFE1F), _("Vertical Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE20, 0xFE2F), _("Combining Half Marks")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE30, 0xFE4F), _("CJK Compatibility Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE50, 0xFE6F), _("Small Form Variants")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFE70, 0xFEFF), _("Arabic Presentation Forms-B")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFF00, 0xFFEF), _("Halfwidth and Fullwidth Forms")));
+        ranges.push_back(std::make_pair(std::make_pair(0xFFF0, 0xFFFF), _("Specials")));
+    }
+
+    return ranges;
+}
 
 class GlyphColumns : public Gtk::TreeModel::ColumnRecord
 {
@@ -173,7 +337,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     deskTrack(),
     iconActiveConn(),
     iconSelectConn(),
-    scriptSelectConn()
+    scriptSelectConn(),
+    rangeSelectConn()
 {
     Gtk::Table *table = new Gtk::Table(3, 1, false);
     _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
@@ -203,28 +368,48 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
                        Gtk::SHRINK, Gtk::SHRINK);
 
         scriptCombo = new Gtk::ComboBoxText();
-
-        std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
-        for (std::map<GUnicodeScript, Glib::ustring>::iterator it = items.begin(); it != items.end(); ++it)
+        for (std::map<GUnicodeScript, Glib::ustring>::iterator it = getScriptToName().begin(); it != getScriptToName().end(); ++it)
         {
             scriptCombo->append_text(it->second);
         }
 
-        scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_COMMON]); // default to a smaller set
+        scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
         scriptSelectConn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
 
-        table->attach( *Gtk::manage(scriptCombo),
+        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
+        align->add(*Gtk::manage(scriptCombo));
+        table->attach( *Gtk::manage(align),
                        1, 2, row, row + 1,
-                       Gtk::SHRINK, Gtk::SHRINK);
-
-        label = new Gtk::Label("");
-        table->attach( *Gtk::manage(label),
-                       2, 3, row, row + 1,
-                       Gtk::EXPAND|Gtk::FILL, Gtk::SHRINK);
+                       Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK);
     }
 
     row++;
 #endif // GLIB_CHECK_VERSION(2,14,0)
+
+// -------------------------------
+
+    {
+        Gtk::Label *label = new Gtk::Label(_("Range: "));
+        table->attach( *Gtk::manage(label),
+                       0, 1, row, row + 1,
+                       Gtk::SHRINK, Gtk::SHRINK);
+
+        rangeCombo = new Gtk::ComboBoxText();
+        for ( std::vector<NamedRange>::iterator it = getRanges().begin(); it != getRanges().end(); ++it ) {
+            rangeCombo->append_text(it->second);
+        }
+
+        rangeCombo->set_active_text(getRanges()[1].second);
+        rangeSelectConn = rangeCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+
+        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
+        align->add(*Gtk::manage(rangeCombo));
+        table->attach( *Gtk::manage(align),
+                       1, 2, row, row + 1,
+                       Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK);
+    }
+
+    row++;
 
 // -------------------------------
 
@@ -291,6 +476,7 @@ GlyphsPanel::~GlyphsPanel()
 {
     iconActiveConn.disconnect();
     iconSelectConn.disconnect();
+    rangeSelectConn.disconnect();
     scriptSelectConn.disconnect();
     desktopChangeConn.disconnect();
 }
@@ -366,7 +552,7 @@ void GlyphsPanel::rebuild()
         //double  sp_font_selector_get_size (SPFontSelector *fsel);
 
 #if GLIB_CHECK_VERSION(2,14,0)
-        GUnicodeScript script = G_UNICODE_SCRIPT_COMMON;
+        GUnicodeScript script = G_UNICODE_SCRIPT_INVALID_CODE;
         Glib::ustring scriptName = scriptCombo->get_active_text();
         std::map<GUnicodeScript, Glib::ustring> items = getScriptToName();
         for (std::map<GUnicodeScript, Glib::ustring>::iterator it = items.begin(); it != items.end(); ++it) {
@@ -381,8 +567,15 @@ void GlyphsPanel::rebuild()
         Glib::RefPtr<Gtk::ListStore> tmp = Gtk::ListStore::create(*getColumns());
         iconView->set_model(tmp);
 
+        gunichar lower = 0x0001;
+        gunichar upper = 0xFFFD;
+        int active = rangeCombo->get_active_row_number();
+        if (active >= 0) {
+            lower = getRanges()[active].first.first;
+            upper = getRanges()[active].first.second;
+        }
         std::vector<gunichar> present;
-        for (gunichar ch = 1; ch < 65535; ch++) {
+        for (gunichar ch = lower; ch <= upper; ch++) {
             int glyphId = font->MapUnicodeChar(ch);
             if (glyphId > 0) {
 #if GLIB_CHECK_VERSION(2,14,0)
