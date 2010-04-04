@@ -139,6 +139,7 @@ Dialog::~Dialog()
 
     save_geometry();
     delete _behavior;
+    _behavior = 0;
 }
 
 

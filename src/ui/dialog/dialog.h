@@ -21,9 +21,9 @@
 
 class SPDesktop;
 
-namespace Inkscape { 
-class Selection; 
-class Application; 
+namespace Inkscape {
+class Selection;
+class Application;
 }
 
 namespace Inkscape {
@@ -36,7 +36,7 @@ void sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpoi
 gboolean sp_retransientize_again(gpointer dlgPtr);
 void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
 
-/** 
+/**
  * @brief Base class for Inkscape dialogs
  * This class provides certain common behaviors and styles wanted of all dialogs
  * in the application.  Fundamental parts of the dialog's behavior are controlled by
@@ -46,7 +46,7 @@ class Dialog {
 
 public:
 
-    Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL, 
+    Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL,
            int verb_num = 0, Glib::ustring const &apply_label = "");
 
     virtual ~Dialog();

@@ -33,11 +33,11 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
     Behavior(dialog),
     _d (new Gtk::Dialog(_dialog._title))
 #if GTK_VERSION_GE(2, 12)
-	,_dialog_active(_d->property_is_active())
-	,_steps(0)
-	,_trans_focus(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-focus", 0.95, 0.0, 1.0))
-	,_trans_blur(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-blur", 0.50, 0.0, 1.0))
-	,_trans_time(Inkscape::Preferences::get()->getIntLimited("/dialogs/transparency/animate-time", 100, 0, 5000))
+    ,_dialog_active(_d->property_is_active())
+    ,_steps(0)
+    ,_trans_focus(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-focus", 0.95, 0.0, 1.0))
+    ,_trans_blur(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-blur", 0.50, 0.0, 1.0))
+    ,_trans_time(Inkscape::Preferences::get()->getIntLimited("/dialogs/transparency/animate-time", 100, 0, 5000))
 #endif
 {
     hide();
@@ -49,8 +49,8 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
     _dialog.retransientize_suppress = false;
 
 #if GTK_VERSION_GE(2, 12)
-	_focus_event();
-	_dialog_active.signal_changed().connect(sigc::mem_fun(this, &FloatingBehavior::_focus_event));
+    _focus_event();
+    _dialog_active.signal_changed().connect(sigc::mem_fun(this, &FloatingBehavior::_focus_event));
 #endif
 
 }
@@ -58,12 +58,12 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
 #if GTK_VERSION_GE(2, 12)
 /** \brief  A function called when the window gets focus
 
-	This function gets called on a focus event.  It figures out how much
-	time is required for a transition, and the number of steps that'll take,
-	and sets up the _trans_timer function to do the work.  If the transition
-	time is set to 0 ms it just calls _trans_timer once with _steps equal to
-	zero so that the transition happens instantaneously.  This occurs on
-	windows as opacity changes cause flicker there.
+    This function gets called on a focus event.  It figures out how much
+    time is required for a transition, and the number of steps that'll take,
+    and sets up the _trans_timer function to do the work.  If the transition
+    time is set to 0 ms it just calls _trans_timer once with _steps equal to
+    zero so that the transition happens instantaneously.  This occurs on
+    windows as opacity changes cause flicker there.
 */
 void FloatingBehavior::_focus_event (void)
 {
@@ -93,42 +93,43 @@ void FloatingBehavior::_focus_event (void)
 
 /** \brief  Move the opacity of a window towards our goal
 
-	This is a timer function that is set up by _focus_event to slightly
-	move the opacity of the window along in an animated fashion.  It moves
-	the opacity half way to the goal until it runs out of steps, and then
-	it just forces the goal.
+    This is a timer function that is set up by _focus_event to slightly
+    move the opacity of the window along in an animated fashion.  It moves
+    the opacity half way to the goal until it runs out of steps, and then
+    it just forces the goal.
 */
 bool FloatingBehavior::_trans_timer (void) {
-	// printf("Go go gadget timer: %d\n", _steps);
-	if (_steps == 0) {
-		if (_dialog_active.get_value()) {
-			_d->set_opacity(_trans_focus);
-		} else {
-			_d->set_opacity(_trans_blur);
-		}
+    // printf("Go go gadget timer: %d\n", _steps);
+    if (_steps == 0) {
+        if (_dialog_active.get_value()) {
+            _d->set_opacity(_trans_focus);
+        } else {
+            _d->set_opacity(_trans_blur);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	float goal, current;
-	goal = current = _d->get_opacity();
+    float goal, current;
+    goal = current = _d->get_opacity();
 
-	if (_dialog_active.get_value()) {
-		goal = _trans_focus;
-	} else {
-		goal = _trans_blur;
-	}
-	
-	_d->set_opacity(current - ((current - goal) / 2));
-	_steps--;
-	return true;
+    if (_dialog_active.get_value()) {
+        goal = _trans_focus;
+    } else {
+        goal = _trans_blur;
+    }
+
+    _d->set_opacity(current - ((current - goal) / 2));
+    _steps--;
+    return true;
 }
 
 #endif
 
-FloatingBehavior::~FloatingBehavior() 
-{ 
+FloatingBehavior::~FloatingBehavior()
+{
     delete _d;
+    _d = 0;
 }
 
 Behavior *
@@ -184,9 +185,9 @@ FloatingBehavior::onDesktopActivated (SPDesktop *desktop)
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
     transient_policy = 2;
-#endif        
+#endif
 
-    if (!transient_policy) 
+    if (!transient_policy)
         return;
 
     GtkWindow *dialog_win = GTK_WINDOW(_d->gobj());

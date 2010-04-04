@@ -64,14 +64,14 @@ private:
     Gtk::Dialog *_d;   //< the actual dialog
 
 #if GTK_VERSION_GE(2, 12)
-	void _focus_event (void);
-	bool _trans_timer (void);
+    void _focus_event (void);
+    bool _trans_timer (void);
 
-	Glib::PropertyProxy_ReadOnly<bool> _dialog_active;  //< Variable proxy to track whether the dialog is the active window
-	int _steps;          //< Number of steps for the timer to animate the transparent dialog
-	float _trans_focus;  //< The percentage opacity when the dialog is focused
-	float _trans_blur;   //< The percentage opactiy when the dialog is not focused
-	int _trans_time;     //< The amount of time (in ms) for the dialog to change it's transparency
+    Glib::PropertyProxy_ReadOnly<bool> _dialog_active;  //< Variable proxy to track whether the dialog is the active window
+    int _steps;          //< Number of steps for the timer to animate the transparent dialog
+    float _trans_focus;  //< The percentage opacity when the dialog is focused
+    float _trans_blur;   //< The percentage opactiy when the dialog is not focused
+    int _trans_time;     //< The amount of time (in ms) for the dialog to change it's transparency
 #endif
 
 };
