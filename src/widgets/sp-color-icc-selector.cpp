@@ -17,7 +17,7 @@
 #include "inkscape.h"
 #include "profile-manager.h"
 
-#define DEBUG_LCMS
+#define noDEBUG_LCMS
 
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
