@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-02 14:44+0200\n"
+"POT-Creation-Date: 2010-04-04 22:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -488,7 +488,7 @@ msgstr ""
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:22
 #: ../share/extensions/triangle.inx.h:10
-#: ../src/extension/internal/grid.cpp:202
+#: ../src/extension/internal/grid.cpp:196
 #: ../share/extensions/render_barcode_datamatrix.inx.h:3
 #: ../share/extensions/wireframe_sphere.inx.h:5
 msgid "Render"
@@ -5600,11 +5600,11 @@ msgstr ""
 msgid "<b>Guideline</b>: %s"
 msgstr ""
 
-#: ../src/desktop.cpp:843
+#: ../src/desktop.cpp:841
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:868
+#: ../src/desktop.cpp:866
 msgid "No next zoom."
 msgstr ""
 
@@ -7426,7 +7426,7 @@ msgstr ""
 msgid "Memory document %d"
 msgstr ""
 
-#: ../src/document.cpp:740
+#: ../src/document.cpp:737
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -7661,11 +7661,11 @@ msgid ""
 "expected."
 msgstr ""
 
-#: ../src/extension/init.cpp:274
+#: ../src/extension/init.cpp:276
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 
-#: ../src/extension/init.cpp:288
+#: ../src/extension/init.cpp:290
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -8385,31 +8385,31 @@ msgstr ""
 msgid "Gradients used in GIMP"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:192 ../src/ui/widget/panel.cpp:112
+#: ../src/extension/internal/grid.cpp:186 ../src/ui/widget/panel.cpp:112
 msgid "Grid"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:194
+#: ../src/extension/internal/grid.cpp:188
 msgid "Line Width"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:195
+#: ../src/extension/internal/grid.cpp:189
 msgid "Horizontal Spacing"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:196
+#: ../src/extension/internal/grid.cpp:190
 msgid "Vertical Spacing"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:197
+#: ../src/extension/internal/grid.cpp:191
 msgid "Horizontal Offset"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:198
+#: ../src/extension/internal/grid.cpp:192
 msgid "Vertical Offset"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:204
+#: ../src/extension/internal/grid.cpp:198
 msgid "Draw a path which is a grid"
 msgstr ""
 
@@ -11143,7 +11143,7 @@ msgstr ""
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:815 ../src/main.cpp:1141
+#: ../src/main.cpp:796 ../src/main.cpp:1122
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -12085,92 +12085,92 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2332
+#: ../src/selection-chemistry.cpp:2331
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2360
+#: ../src/selection-chemistry.cpp:2359
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2372
+#: ../src/selection-chemistry.cpp:2371
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2388
+#: ../src/selection-chemistry.cpp:2387
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2476
+#: ../src/selection-chemistry.cpp:2474
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2492
+#: ../src/selection-chemistry.cpp:2490
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2543
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2548
+#: ../src/selection-chemistry.cpp:2546
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2633
+#: ../src/selection-chemistry.cpp:2631
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2637
+#: ../src/selection-chemistry.cpp:2635
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2811
+#: ../src/selection-chemistry.cpp:2809
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2843
+#: ../src/selection-chemistry.cpp:2841
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2846
+#: ../src/selection-chemistry.cpp:2844
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3027
+#: ../src/selection-chemistry.cpp:3025
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3029
+#: ../src/selection-chemistry.cpp:3027
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3042
+#: ../src/selection-chemistry.cpp:3040
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3153
+#: ../src/selection-chemistry.cpp:3151
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3155
+#: ../src/selection-chemistry.cpp:3153
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3173
+#: ../src/selection-chemistry.cpp:3171
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3193 ../src/verbs.cpp:2694
+#: ../src/selection-chemistry.cpp:3191 ../src/verbs.cpp:2694
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3222 ../src/verbs.cpp:2696
+#: ../src/selection-chemistry.cpp:3220 ../src/verbs.cpp:2696
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3243 ../src/verbs.cpp:2698
+#: ../src/selection-chemistry.cpp:3241 ../src/verbs.cpp:2698
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -14777,7 +14777,7 @@ msgstr ""
 msgid "Set filter primitive attribute"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:51
+#: ../src/ui/dialog/glyphs.cpp:51 ../src/ui/dialog/glyphs.cpp:147
 msgid "all"
 msgstr ""
 
@@ -14789,31 +14789,31 @@ msgstr ""
 msgid "inherited"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:54
+#: ../src/ui/dialog/glyphs.cpp:54 ../src/ui/dialog/glyphs.cpp:160
 msgid "Arabic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:55
+#: ../src/ui/dialog/glyphs.cpp:55 ../src/ui/dialog/glyphs.cpp:158
 msgid "Armenian"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:56
+#: ../src/ui/dialog/glyphs.cpp:56 ../src/ui/dialog/glyphs.cpp:167
 msgid "Bengali"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:57
+#: ../src/ui/dialog/glyphs.cpp:57 ../src/ui/dialog/glyphs.cpp:249
 msgid "Bopomofo"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:58
+#: ../src/ui/dialog/glyphs.cpp:58 ../src/ui/dialog/glyphs.cpp:184
 msgid "Cherokee"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:59
+#: ../src/ui/dialog/glyphs.cpp:59 ../src/ui/dialog/glyphs.cpp:237
 msgid "Coptic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:60
+#: ../src/ui/dialog/glyphs.cpp:60 ../src/ui/dialog/glyphs.cpp:156
 msgid "Cyrillic"
 msgstr ""
 
@@ -14821,15 +14821,15 @@ msgstr ""
 msgid "Deseret"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:62
+#: ../src/ui/dialog/glyphs.cpp:62 ../src/ui/dialog/glyphs.cpp:166
 msgid "Devanagari"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:63
+#: ../src/ui/dialog/glyphs.cpp:63 ../src/ui/dialog/glyphs.cpp:182
 msgid "Ethiopic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:64
+#: ../src/ui/dialog/glyphs.cpp:64 ../src/ui/dialog/glyphs.cpp:180
 msgid "Georgian"
 msgstr ""
 
@@ -14841,11 +14841,11 @@ msgstr ""
 msgid "Greek"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:67
+#: ../src/ui/dialog/glyphs.cpp:67 ../src/ui/dialog/glyphs.cpp:169
 msgid "Gujarati"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:68
+#: ../src/ui/dialog/glyphs.cpp:68 ../src/ui/dialog/glyphs.cpp:168
 msgid "Gurmukhi"
 msgstr ""
 
@@ -14857,27 +14857,27 @@ msgstr ""
 msgid "Hangul"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:71
+#: ../src/ui/dialog/glyphs.cpp:71 ../src/ui/dialog/glyphs.cpp:159
 msgid "Hebrew"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:72
+#: ../src/ui/dialog/glyphs.cpp:72 ../src/ui/dialog/glyphs.cpp:247
 msgid "Hiragana"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:73
+#: ../src/ui/dialog/glyphs.cpp:73 ../src/ui/dialog/glyphs.cpp:173
 msgid "Kannada"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:74
+#: ../src/ui/dialog/glyphs.cpp:74 ../src/ui/dialog/glyphs.cpp:248
 msgid "Katakana"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:75
+#: ../src/ui/dialog/glyphs.cpp:75 ../src/ui/dialog/glyphs.cpp:192
 msgid "Khmer"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:76
+#: ../src/ui/dialog/glyphs.cpp:76 ../src/ui/dialog/glyphs.cpp:177
 msgid "Lao"
 msgstr ""
 
@@ -14885,19 +14885,19 @@ msgstr ""
 msgid "Latin"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:78
+#: ../src/ui/dialog/glyphs.cpp:78 ../src/ui/dialog/glyphs.cpp:174
 msgid "Malayalam"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:79
+#: ../src/ui/dialog/glyphs.cpp:79 ../src/ui/dialog/glyphs.cpp:193
 msgid "Mongolian"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:80
+#: ../src/ui/dialog/glyphs.cpp:80 ../src/ui/dialog/glyphs.cpp:179
 msgid "Myanmar"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:81
+#: ../src/ui/dialog/glyphs.cpp:81 ../src/ui/dialog/glyphs.cpp:186
 msgid "Ogham"
 msgstr ""
 
@@ -14905,39 +14905,39 @@ msgstr ""
 msgid "Old Italic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:83
+#: ../src/ui/dialog/glyphs.cpp:83 ../src/ui/dialog/glyphs.cpp:170
 msgid "Oriya"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:84
+#: ../src/ui/dialog/glyphs.cpp:84 ../src/ui/dialog/glyphs.cpp:187
 msgid "Runic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:85
+#: ../src/ui/dialog/glyphs.cpp:85 ../src/ui/dialog/glyphs.cpp:175
 msgid "Sinhala"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:86
+#: ../src/ui/dialog/glyphs.cpp:86 ../src/ui/dialog/glyphs.cpp:161
 msgid "Syriac"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:87
+#: ../src/ui/dialog/glyphs.cpp:87 ../src/ui/dialog/glyphs.cpp:171
 msgid "Tamil"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:88
+#: ../src/ui/dialog/glyphs.cpp:88 ../src/ui/dialog/glyphs.cpp:172
 msgid "Telugu"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:89
+#: ../src/ui/dialog/glyphs.cpp:89 ../src/ui/dialog/glyphs.cpp:163
 msgid "Thaana"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:90
+#: ../src/ui/dialog/glyphs.cpp:90 ../src/ui/dialog/glyphs.cpp:176
 msgid "Thai"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:91
+#: ../src/ui/dialog/glyphs.cpp:91 ../src/ui/dialog/glyphs.cpp:178
 msgid "Tibetan"
 msgstr ""
 
@@ -14949,19 +14949,19 @@ msgstr ""
 msgid "Yi"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:94
+#: ../src/ui/dialog/glyphs.cpp:94 ../src/ui/dialog/glyphs.cpp:188
 msgid "Tagalog"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:95
+#: ../src/ui/dialog/glyphs.cpp:95 ../src/ui/dialog/glyphs.cpp:189
 msgid "Hanunoo"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:96
+#: ../src/ui/dialog/glyphs.cpp:96 ../src/ui/dialog/glyphs.cpp:190
 msgid "Buhid"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:97
+#: ../src/ui/dialog/glyphs.cpp:97 ../src/ui/dialog/glyphs.cpp:191
 msgid "Tagbanwa"
 msgstr ""
 
@@ -14973,7 +14973,7 @@ msgstr ""
 msgid "Cypriot"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:100
+#: ../src/ui/dialog/glyphs.cpp:100 ../src/ui/dialog/glyphs.cpp:195
 msgid "Limbu"
 msgstr ""
 
@@ -14989,7 +14989,7 @@ msgstr ""
 msgid "Linear B"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:104
+#: ../src/ui/dialog/glyphs.cpp:104 ../src/ui/dialog/glyphs.cpp:196
 msgid "Tai Le"
 msgstr ""
 
@@ -14997,23 +14997,23 @@ msgstr ""
 msgid "Ugaritic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:106
+#: ../src/ui/dialog/glyphs.cpp:106 ../src/ui/dialog/glyphs.cpp:197
 msgid "New Tai Lue"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:107
+#: ../src/ui/dialog/glyphs.cpp:107 ../src/ui/dialog/glyphs.cpp:199
 msgid "Buginese"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:108
+#: ../src/ui/dialog/glyphs.cpp:108 ../src/ui/dialog/glyphs.cpp:235
 msgid "Glagolitic"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:109
+#: ../src/ui/dialog/glyphs.cpp:109 ../src/ui/dialog/glyphs.cpp:239
 msgid "Tifinagh"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:110
+#: ../src/ui/dialog/glyphs.cpp:110 ../src/ui/dialog/glyphs.cpp:268
 msgid "Syloti Nagri"
 msgstr ""
 
@@ -15029,7 +15029,7 @@ msgstr ""
 msgid "unassigned"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:114
+#: ../src/ui/dialog/glyphs.cpp:114 ../src/ui/dialog/glyphs.cpp:201
 msgid "Balinese"
 msgstr ""
 
@@ -15041,7 +15041,7 @@ msgstr ""
 msgid "Phoenician"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:117
+#: ../src/ui/dialog/glyphs.cpp:117 ../src/ui/dialog/glyphs.cpp:270
 msgid "Phags-pa"
 msgstr ""
 
@@ -15049,35 +15049,35 @@ msgstr ""
 msgid "N'Ko"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:121
+#: ../src/ui/dialog/glyphs.cpp:121 ../src/ui/dialog/glyphs.cpp:273
 msgid "Kayah Li"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:122
+#: ../src/ui/dialog/glyphs.cpp:122 ../src/ui/dialog/glyphs.cpp:203
 msgid "Lepcha"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:123
+#: ../src/ui/dialog/glyphs.cpp:123 ../src/ui/dialog/glyphs.cpp:274
 msgid "Rejang"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:124
+#: ../src/ui/dialog/glyphs.cpp:124 ../src/ui/dialog/glyphs.cpp:202
 msgid "Sundanese"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:125
+#: ../src/ui/dialog/glyphs.cpp:125 ../src/ui/dialog/glyphs.cpp:271
 msgid "Saurashtra"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:126
+#: ../src/ui/dialog/glyphs.cpp:126 ../src/ui/dialog/glyphs.cpp:277
 msgid "Cham"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:127
+#: ../src/ui/dialog/glyphs.cpp:127 ../src/ui/dialog/glyphs.cpp:204
 msgid "Ol Chiki"
 msgstr ""
 
-#: ../src/ui/dialog/glyphs.cpp:128
+#: ../src/ui/dialog/glyphs.cpp:128 ../src/ui/dialog/glyphs.cpp:263
 msgid "Vai"
 msgstr ""
 
@@ -15093,8 +15093,404 @@ msgstr ""
 msgid "Lydian"
 msgstr ""
 
+#: ../src/ui/dialog/glyphs.cpp:148
+msgid "Basic Latin"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:149
+msgid "Latin-1 Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:150
+msgid "Latin Extended-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:151
+msgid "Latin Extended-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:152
+msgid "IPA Extensions"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:153
+msgid "Spacing Modifier Letters"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:154
+msgid "Combining Diacritical Marks"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:155
+msgid "Greek and Coptic"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:157
+msgid "Cyrillic Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:162
+msgid "Arabic Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:164
+msgid "NKo"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:165
+msgid "Samaritan"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:181
+msgid "Hangul Jamo"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:183
+msgid "Ethiopic Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:185
+msgid "Unified Canadian Aboriginal Syllabics"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:194
+msgid "Unified Canadian Aboriginal Syllabics Extended"
+msgstr ""
+
 #: ../src/ui/dialog/glyphs.cpp:198
+msgid "Khmer Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:200
+msgid "Tai Tham"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:205
+msgid "Vedic Extensions"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:206
+msgid "Phonetic Extensions"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:207
+msgid "Phonetic Extensions Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:208
+msgid "Combining Diacritical Marks Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:209
+msgid "Latin Extended Additional"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:210
+msgid "Greek Extended"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:211
+msgid "General Punctuation"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:212
+msgid "Superscripts and Subscripts"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:213
+msgid "Currency Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:214
+msgid "Combining Diacritical Marks for Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:215
+msgid "Letterlike Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:216
+msgid "Number Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:217
+msgid "Arrows"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:218
+msgid "Mathematical Operators"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:219
+msgid "Miscellaneous Technical"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:220
+msgid "Control Pictures"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:221
+msgid "Optical Character Recognition"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:222
+msgid "Enclosed Alphanumerics"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:223
+msgid "Box Drawing"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:224
+msgid "Block Elements"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:225
+msgid "Geometric Shapes"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:226
+msgid "Miscellaneous Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:227
+msgid "Dingbats"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:228
+msgid "Miscellaneous Mathematical Symbols-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:229
+msgid "Supplemental Arrows-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:230
+msgid "Braille Patterns"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:231
+msgid "Supplemental Arrows-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:232
+msgid "Miscellaneous Mathematical Symbols-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:233
+msgid "Supplemental Mathematical Operators"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:234
+msgid "Miscellaneous Symbols and Arrows"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:236
+msgid "Latin Extended-C"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:238
+msgid "Georgian Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:240
+msgid "Ethiopic Extended"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:241
+msgid "Cyrillic Extended-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:242
+msgid "Supplemental Punctuation"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:243
+msgid "CJK Radicals Supplement"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:244
+msgid "Kangxi Radicals"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:245
+msgid "Ideographic Description Characters"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:246
+msgid "CJK Symbols and Punctuation"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:250
+msgid "Hangul Compatibility Jamo"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:251
+msgid "Kanbun"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:252
+msgid "Bopomofo Extended"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:253
+msgid "CJK Strokes"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:254
+msgid "Katakana Phonetic Extensions"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:255
+msgid "Enclosed CJK Letters and Months"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:256
+msgid "CJK Compatibility"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:257
+msgid "CJK Unified Ideographs Extension A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:258
+msgid "Yijing Hexagram Symbols"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:259
+msgid "CJK Unified Ideographs"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:260
+msgid "Yi Syllables"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:261
+msgid "Yi Radicals"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:262
+msgid "Lisu"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:264
+msgid "Cyrillic Extended-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:265
+msgid "Bamum"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:266
+msgid "Modifier Tone Letters"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:267
+msgid "Latin Extended-D"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:269
+msgid "Common Indic Number Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:272
+msgid "Devanagari Extended"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:275
+msgid "Hangul Jamo Extended-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:276
+msgid "Javanese"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:278
+msgid "Myanmar Extended-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:279
+msgid "Tai Viet"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:280
+msgid "Meetei Mayek"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:281
+msgid "Hangul Syllables"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:282
+msgid "Hangul Jamo Extended-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:283
+msgid "High Surrogates"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:284
+msgid "High Private Use Surrogates"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:285
+msgid "Low Surrogates"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:286
+msgid "Private Use Area"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:287
+msgid "CJK Compatibility Ideographs"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:288
+msgid "Alphabetic Presentation Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:289
+msgid "Arabic Presentation Forms-A"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:290
+msgid "Variation Selectors"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:291
+msgid "Vertical Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:292
+msgid "Combining Half Marks"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:293
+msgid "CJK Compatibility Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:294
+msgid "Small Form Variants"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:295
+msgid "Arabic Presentation Forms-B"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:296
+msgid "Halfwidth and Fullwidth Forms"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:297
+msgid "Specials"
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:365
 msgid "Script: "
+msgstr ""
+
+#: ../src/ui/dialog/glyphs.cpp:392
+msgid "Range: "
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:42
@@ -18147,45 +18543,45 @@ msgstr ""
 msgid "Delete nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:618
+#: ../src/ui/tool/multi-path-manipulator.cpp:616
 msgid "Move nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:621
+#: ../src/ui/tool/multi-path-manipulator.cpp:619
 msgid "Move nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:625
+#: ../src/ui/tool/multi-path-manipulator.cpp:623
 msgid "Move nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:629
-#: ../src/ui/tool/multi-path-manipulator.cpp:632
+#: ../src/ui/tool/multi-path-manipulator.cpp:627
+#: ../src/ui/tool/multi-path-manipulator.cpp:630
 msgid "Rotate nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:636
-#: ../src/ui/tool/multi-path-manipulator.cpp:642
+#: ../src/ui/tool/multi-path-manipulator.cpp:634
+#: ../src/ui/tool/multi-path-manipulator.cpp:640
 msgid "Scale nodes uniformly"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:639
+#: ../src/ui/tool/multi-path-manipulator.cpp:637
 msgid "Scale nodes"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:646
+#: ../src/ui/tool/multi-path-manipulator.cpp:644
 msgid "Scale nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:650
+#: ../src/ui/tool/multi-path-manipulator.cpp:648
 msgid "Scale nodes vertically"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:654
+#: ../src/ui/tool/multi-path-manipulator.cpp:652
 msgid "Flip nodes horizontally"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:657
+#: ../src/ui/tool/multi-path-manipulator.cpp:655
 msgid "Flip nodes vertically"
 msgstr ""
 
