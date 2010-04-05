@@ -327,7 +327,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         document->base = NULL;
     document->name = g_strdup(name);
 
-    document->root = sp_object_repr_build_tree(document, rroot);
+    sp_object_repr_build_tree(document, rroot);
 
     /* fixme: Not sure about this, but lets assume ::build updates */
     rroot->setAttribute("inkscape:version", Inkscape::version_string);

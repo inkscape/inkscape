@@ -91,9 +91,9 @@ static unsigned const N_NAME_TYPES = SODIPODI_TYPE + 1;
 static GType name_to_gtype(NameType name_type, gchar const *name);
 
 /**
- * Construct an SPRoot and all its descendents from the given repr.
+ * Construct an SPRoot and all its descendents from the given XML representation.
  */
-SPObject *
+void
 sp_object_repr_build_tree(SPDocument *document, Inkscape::XML::Node *repr)
 {
     g_assert(document != NULL);
@@ -103,13 +103,14 @@ sp_object_repr_build_tree(SPDocument *document, Inkscape::XML::Node *repr)
     g_assert(name != NULL);
     GType const type = name_to_gtype(REPR_NAME, name);
     g_assert(g_type_is_a(type, SP_TYPE_ROOT));
-    gpointer newobj = g_object_new(type, 0);
-    g_assert(newobj != NULL);
-    SPObject *const object = SP_OBJECT(newobj);
-    g_assert(object != NULL);
-    sp_object_invoke_build(object, document, repr, FALSE);
 
-    return object;
+    // create and assign root
+    SPObject *root = SP_OBJECT(g_object_new(type, 0));
+    g_assert(root != NULL);
+    document->root = root;
+
+    // recursively create SP tree elements
+    sp_object_invoke_build(root, document, repr, FALSE);
 }
 
 GType

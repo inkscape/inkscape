@@ -217,12 +217,14 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
             success += sp_svg_number_read_d(strarray[1], &newy);
             g_strfreev (strarray);
             if (success == 2) {
-                guide->point_on_line = Geom::Point(newx, newy);
+                // Desktop coords fix
+                guide->point_on_line = Geom::Point(newx, sp_document_height(guide->document) - newy);
             } else if (success == 1) {
                 // before 0.46 style guideline definition.
                 const gchar *attr = SP_OBJECT_REPR(object)->attribute("orientation");
                 if (attr && !strcmp(attr, "horizontal")) {
-                    guide->point_on_line = Geom::Point(0, newx);
+                    // Desktop coords fix
+                    guide->point_on_line = Geom::Point(0, sp_document_height(guide->document) - newx);
                 } else {
                     guide->point_on_line = Geom::Point(newx, 0);
                 }

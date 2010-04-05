@@ -724,8 +724,8 @@ SPDesktop::point() const
 
     if (p[Geom::X] >= r0[Geom::X] &&
         p[Geom::X] <= r1[Geom::X] &&
-        p[Geom::Y] >= r1[Geom::Y] &&
-        p[Geom::Y] <= r0[Geom::Y])
+        p[Geom::Y] >= r0[Geom::Y] &&
+        p[Geom::Y] <= r1[Geom::Y])
     {
         return p;
     } else {
