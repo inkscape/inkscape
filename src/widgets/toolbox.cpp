@@ -1289,6 +1289,31 @@ sp_node_toolbox_sel_modified (Inkscape::Selection *selection, guint /*flags*/, G
 //##    Node Editing Toolbox    ##
 //################################
 
+class ShowHandlesObserver
+    : public Inkscape::Preferences::Observer
+{
+public:
+    ShowHandlesObserver(InkToggleAction *act)
+        : Inkscape::Preferences::Observer("/tools/nodes/show_handles")
+        , _act(act)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->addObserver(*this);
+    }
+    ~ShowHandlesObserver() {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->removeObserver(*this);
+    }
+    virtual void notify(Inkscape::Preferences::Entry const &v) {
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(_act), v.getBool());
+    }
+    static void destroy(ShowHandlesObserver *s, InkToggleAction *) {
+        delete s;
+    }
+private:
+    InkToggleAction *_act;
+};
+
 static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1442,6 +1467,8 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/nodes/show_handles", true) );
+        ShowHandlesObserver *s = new ShowHandlesObserver(act);
+        g_object_weak_ref(G_OBJECT(act), (GWeakNotify) ShowHandlesObserver::destroy, (gpointer) s);
     }
 
     {
