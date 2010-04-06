@@ -23,12 +23,18 @@
 
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtkversion.h>
 
 #include "glyphs.h"
 
+#include "desktop.h"
+#include "document.h" // for sp_document_done()
+#include "libnrtype/font-instance.h"
+#include "sp-flowtext.h"
+#include "sp-text.h"
 #include "verbs.h"
 #include "widgets/font-selector.h"
-#include "libnrtype/font-instance.h"
+#include "text-editing.h"
 
 namespace Inkscape {
 namespace UI {
@@ -329,16 +335,15 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     iconView(0),
     entry(0),
     label(0),
+    insertBtn(0),
 #if GLIB_CHECK_VERSION(2,14,0)
     scriptCombo(0),
 #endif // GLIB_CHECK_VERSION(2,14,0)
     fsel(0),
     targetDesktop(0),
     deskTrack(),
-    iconActiveConn(),
-    iconSelectConn(),
-    scriptSelectConn(),
-    rangeSelectConn()
+    instanceConns(),
+    desktopConns()
 {
     Gtk::Table *table = new Gtk::Table(3, 1, false);
     _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
@@ -374,7 +379,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         }
 
         scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
-        scriptSelectConn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+        sigc::connection conn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+        instanceConns.push_back(conn);
 
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
         align->add(*Gtk::manage(scriptCombo));
@@ -400,7 +406,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         }
 
         rangeCombo->set_active_text(getRanges()[1].second);
-        rangeSelectConn = rangeCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+        sigc::connection conn = rangeCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
+        instanceConns.push_back(conn);
 
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
         align->add(*Gtk::manage(rangeCombo));
@@ -419,8 +426,11 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     iconView->set_text_column(columns->name);
     //iconView->set_columns(16);
 
-    iconActiveConn = iconView->signal_item_activated().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphActivated));
-    iconSelectConn = iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphSelectionChanged));
+    sigc::connection conn;
+    conn = iconView->signal_item_activated().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphActivated));
+    instanceConns.push_back(conn);
+    conn = iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::glyphSelectionChanged));
+    instanceConns.push_back(conn);
 
 
     Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
@@ -436,6 +446,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     Gtk::HBox *box = new Gtk::HBox();
 
     entry = new Gtk::Entry();
+    conn = entry->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::calcCanInsert));
+    instanceConns.push_back(conn);
     entry->set_width_chars(18);
     box->pack_start(*Gtk::manage(entry), Gtk::PACK_SHRINK);
 
@@ -448,12 +460,16 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     pad = new Gtk::Label("");
     box->pack_start(*Gtk::manage(pad), Gtk::PACK_EXPAND_WIDGET);
 
+    insertBtn = new Gtk::Button(_("Append"));
+    conn = insertBtn->signal_clicked().connect(sigc::mem_fun(*this, &GlyphsPanel::insertText));
+    instanceConns.push_back(conn);
+#if GTK_CHECK_VERSION(2,18,0)
+    //gtkmm 2.18
+    insertBtn->set_can_default();
+#endif
+    insertBtn->set_sensitive(false);
 
-    GtkWidget *applyBtn = gtk_button_new_from_stock(GTK_STOCK_APPLY);
-    GTK_WIDGET_SET_FLAGS(applyBtn, GTK_CAN_DEFAULT | GTK_HAS_DEFAULT);
-    gtk_widget_set_sensitive(applyBtn, FALSE);
-
-    box->pack_end(*Gtk::manage(Glib::wrap(applyBtn)), Gtk::PACK_SHRINK);
+    box->pack_end(*Gtk::manage(insertBtn), Gtk::PACK_SHRINK);
 
     table->attach( *Gtk::manage(box),
                    0, 3, row, row + 1,
@@ -468,17 +484,21 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     restorePanelPrefs();
 
     // Connect this up last
-    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &GlyphsPanel::setTargetDesktop) );
+    conn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &GlyphsPanel::setTargetDesktop) );
+    instanceConns.push_back(conn);
     deskTrack.connect(GTK_WIDGET(gobj()));
 }
 
 GlyphsPanel::~GlyphsPanel()
 {
-    iconActiveConn.disconnect();
-    iconSelectConn.disconnect();
-    rangeSelectConn.disconnect();
-    scriptSelectConn.disconnect();
-    desktopChangeConn.disconnect();
+    for (std::vector<sigc::connection>::iterator it =  instanceConns.begin(); it != instanceConns.end(); ++it) {
+        it->disconnect();
+    }
+    instanceConns.clear();
+    for (std::vector<sigc::connection>::iterator it = desktopConns.begin(); it != desktopConns.end(); ++it) {
+        it->disconnect();
+    }
+    desktopConns.clear();
 }
 
 
@@ -491,7 +511,68 @@ void GlyphsPanel::setDesktop(SPDesktop *desktop)
 void GlyphsPanel::setTargetDesktop(SPDesktop *desktop)
 {
     if (targetDesktop != desktop) {
+        if (targetDesktop) {
+            for (std::vector<sigc::connection>::iterator it = desktopConns.begin(); it != desktopConns.end(); ++it) {
+                it->disconnect();
+            }
+            desktopConns.clear();
+        }
+
         targetDesktop = desktop;
+
+        if (targetDesktop && targetDesktop->selection) {
+            sigc::connection conn = desktop->selection->connectChanged(sigc::hide(sigc::bind(sigc::mem_fun(*this, &GlyphsPanel::readSelection), true, true)));
+            desktopConns.push_back(conn);
+
+            // Text selection within selected items has changed:
+            conn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::bind(sigc::mem_fun(*this, &GlyphsPanel::readSelection), true, false)));
+            desktopConns.push_back(conn);
+
+            // Must check flags, so can't call performUpdate() directly.
+            conn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &GlyphsPanel::selectionModifiedCB)));
+            desktopConns.push_back(conn);
+
+            readSelection(true, true);
+        }
+    }
+}
+
+void GlyphsPanel::insertText()
+{
+    SPItem *textItem = 0;
+    for (const GSList *item = targetDesktop->selection->itemList(); item; item = item->next ) {
+        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data)) {
+            textItem = SP_ITEM(item->data);
+            break;
+        }
+    }
+
+    if (textItem) {
+        Glib::ustring glyphs;
+        if (entry->get_text_length() > 0) {
+            glyphs = entry->get_text();
+        } else {
+            Gtk::IconView::ArrayHandle_TreePaths itemArray = iconView->get_selected_items();
+            if (!itemArray.empty()) {
+                Gtk::TreeModel::Path const & path = *itemArray.begin();
+                Gtk::ListStore::iterator row = store->get_iter(path);
+                gunichar ch = (*row)[getColumns()->code];
+                glyphs = ch;
+            }
+        }
+
+        if (!glyphs.empty()) {
+            Glib::ustring combined;
+            gchar *str = sp_te_get_string_multiline(textItem);
+            if (str) {
+                combined = str;
+                g_free(str);
+                str = 0;
+            }
+            combined += glyphs;
+            sp_te_set_repr_text_multiline(textItem, combined.c_str());
+            sp_document_done(targetDesktop->doc(), SP_VERB_CONTEXT_TEXT, _("Append text"));
+        }
     }
 }
 
@@ -535,12 +616,59 @@ void GlyphsPanel::glyphSelectionChanged()
         gchar * tmp = g_strdup_printf("U+%04X %s", ch, scriptName.c_str());
         label->set_text(tmp);
     }
+    calcCanInsert();
 }
 
 void GlyphsPanel::fontChangeCB(SPFontSelector * /*fontsel*/, font_instance * /*font*/, GlyphsPanel *self)
 {
     if (self) {
         self->rebuild();
+    }
+}
+
+void GlyphsPanel::selectionModifiedCB(guint flags)
+{
+    bool style = ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG |
+                             SP_OBJECT_STYLE_MODIFIED_FLAG  )) != 0 );
+
+    bool content = ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG |
+                               SP_TEXT_CONTENT_MODIFIED_FLAG  )) != 0 );
+
+    readSelection(style, content);
+}
+
+void GlyphsPanel::calcCanInsert()
+{
+    int items = 0;
+    for (const GSList *item = targetDesktop->selection->itemList(); item; item = item->next ) {
+        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data)) {
+            ++items;
+        }
+    }
+
+    bool enable = (items == 1);
+    if (enable) {
+        enable &= (!iconView->get_selected_items().empty()
+                   || (entry->get_text_length() > 0));
+    }
+
+    if (enable != insertBtn->is_sensitive()) {
+        insertBtn->set_sensitive(enable);
+    }
+}
+
+void GlyphsPanel::readSelection( bool updateStyle, bool /*updateContent*/ )
+{
+    calcCanInsert();
+
+    if (targetDesktop && updateStyle) {
+        //SPStyle *query = sp_style_new(SP_ACTIVE_DOCUMENT);
+
+        //int result_family = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        //int result_style = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        //int result_numbers = sp_desktop_query_style(targetDesktop, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+
+        //sp_style_unref(query);
     }
 }
 

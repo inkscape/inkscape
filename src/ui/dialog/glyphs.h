@@ -66,12 +66,17 @@ private:
     void glyphActivated(Gtk::TreeModel::Path const & path);
     void glyphSelectionChanged();
     void setTargetDesktop(SPDesktop *desktop);
+    void selectionModifiedCB(guint flags);
+    void readSelection( bool updateStyle, bool updateContent );
+    void calcCanInsert();
+    void insertText();
 
 
     Glib::RefPtr<Gtk::ListStore> store;
     Gtk::IconView *iconView;
     Gtk::Entry *entry;
     Gtk::Label *label;
+    Gtk::Button *insertBtn;
 #if GLIB_CHECK_VERSION(2,14,0)
     Gtk::ComboBoxText *scriptCombo;
 #endif //GLIB_CHECK_VERSION(2,14,0)
@@ -79,11 +84,9 @@ private:
     SPFontSelector *fsel;
     SPDesktop *targetDesktop;
     DesktopTracker deskTrack;
-    sigc::connection iconActiveConn;
-    sigc::connection iconSelectConn;
-    sigc::connection scriptSelectConn;
-    sigc::connection rangeSelectConn;
-    sigc::connection desktopChangeConn;
+
+    std::vector<sigc::connection> instanceConns;
+    std::vector<sigc::connection> desktopConns;
 };
 
 
