@@ -545,11 +545,11 @@ bool ControlPointSelection::event(GdkEvent *event)
         case GDK_Up:
         case GDK_KP_Up:
         case GDK_KP_8:
-            return _keyboardMove(event->key, Geom::Point(0, -1));
+            return _keyboardMove(event->key, Geom::Point(0, 1));
         case GDK_Down:
         case GDK_KP_Down:
         case GDK_KP_2:
-            return _keyboardMove(event->key, Geom::Point(0, 1));
+            return _keyboardMove(event->key, Geom::Point(0, -1));
         case GDK_Right:
         case GDK_KP_Right:
         case GDK_KP_6:
@@ -561,9 +561,9 @@ bool ControlPointSelection::event(GdkEvent *event)
 
         // rotates
         case GDK_bracketleft:
-            return _keyboardRotate(event->key, -1);
-        case GDK_bracketright:
             return _keyboardRotate(event->key, 1);
+        case GDK_bracketright:
+            return _keyboardRotate(event->key, -1);
 
         // scaling
         case GDK_less:

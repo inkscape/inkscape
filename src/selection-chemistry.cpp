@@ -2273,8 +2273,9 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = -*c;
-    Geom::Matrix move = Geom::Translate(move_p);
+    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - *c;
+    move_p[Geom::Y] = -move_p[Geom::Y];
+    Geom::Matrix move = Geom::Matrix(Geom::Translate(move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2395,7 +2396,8 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = -(r->min() + Geom::Point(0, r->dimensions()[Geom::Y]));
+    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - (r->min() + Geom::Point(0, r->dimensions()[Geom::Y]));
+    move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Matrix move = Geom::Matrix(Geom::Translate(move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
@@ -2746,12 +2748,12 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     Geom::Matrix t;
 
     double shift_x = bbox.x0;
-    double shift_y = bbox.y0;
+    double shift_y = bbox.y1;
     if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
         shift_x = round(shift_x);
-        shift_y = round(shift_y);
+        shift_y = -round(-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = Geom::Translate(shift_x, shift_y) * eek.inverse();
+    t = Geom::Scale(1, -1) * Geom::Translate(shift_x, shift_y) * eek.inverse();
 
     // Do the export
     sp_export_png_file(document, filepath,

@@ -1574,7 +1574,8 @@ Geom::Matrix sp_item_i2d_affine(SPItem const *item)
     g_assert(SP_IS_ITEM(item));
 
     Geom::Matrix const ret( sp_item_i2doc_affine(item)
-                          );
+                          * Geom::Scale(1, -1)
+                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
     return ret;
 }
 
@@ -1587,7 +1588,8 @@ void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
     if (SP_OBJECT_PARENT(item)) {
         dt2p = sp_item_i2d_affine((SPItem *) SP_OBJECT_PARENT(item)).inverse();
     } else {
-        dt2p = ( Geom::identity() );
+        dt2p = ( Geom::Translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
+                 * Geom::Scale(1, -1) );
     }
 
     Geom::Matrix const i2p( i2dt * dt2p );

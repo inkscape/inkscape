@@ -1493,8 +1493,8 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
     NR::IRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
-    double s = viewbox.min()[Geom::Y] / scale - dtw->ruler_origin[Geom::Y];
-    double e = viewbox.max()[Geom::Y] / scale - dtw->ruler_origin[Geom::Y];
+    double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
+    double e = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
     gtk_ruler_set_range(GTK_RULER(dtw->vruler), s, e, GTK_RULER(dtw->vruler)->position, (e - s));
 }
 
@@ -1809,8 +1809,8 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
     Geom::OptRect deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
 
     /* Canvas region we always show unconditionally */
-    Geom::Rect carea( Geom::Point(deskarea->left() * scale - 64, deskarea->top() * scale - 64),
-                    Geom::Point(deskarea->right() * scale + 64, deskarea->bottom() * scale + 64)  );
+    Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),
+                    Geom::Point(deskarea->max()[Geom::X] * scale + 64, deskarea->min()[Geom::Y] * -scale + 64)  );
 
     Geom::Rect viewbox = dtw->canvas->getViewbox();
 

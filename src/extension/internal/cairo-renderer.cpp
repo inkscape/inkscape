@@ -631,8 +631,12 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 
     if (ret && !pageBoundingBox)
     {
+        double high = sp_document_height(doc);
+        if (ctx->_vector_based_target)
+            high *= PT_PER_PX;
+
         Geom::Matrix tp(Geom::Translate(-d.x0 * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
-                                        -d.y0 * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
+                                    (d.y1 - high) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
         ctx->transform(&tp);
     }
     

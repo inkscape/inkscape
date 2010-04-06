@@ -470,10 +470,12 @@ bool MultiPathManipulator::event(GdkEvent *event)
             // single handle functions
             // rotation
             case GDK_bracketleft:
-                pm.rotateHandle(n, which, -1, one_pixel);
+            case GDK_braceleft:
+                pm.rotateHandle(n, which, 1, one_pixel);
                 break;
             case GDK_bracketright:
-                pm.rotateHandle(n, which, 1, one_pixel);
+            case GDK_braceright:
+                pm.rotateHandle(n, which, -1, one_pixel);
                 break;
             // adjust length
             case GDK_period:

@@ -501,8 +501,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
 
     if (!pageBoundingBox)
     {
-        Geom::Translate t(-d->min()[Geom::X], d->max()[Geom::Y] - sp_document_height(doc));
-        push_transform( t );
+        push_transform( Geom::Translate( - d->min() ) );
     }
 
     // flip y-axis

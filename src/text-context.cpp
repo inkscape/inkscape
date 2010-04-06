@@ -684,7 +684,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     // Cursor height is defined by the new text object's font size; it needs to be set
                     // articifically here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp - Geom::Point(0, cursor_height));
+                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp + Geom::Point(0, cursor_height));
                     event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
                     event_context->within_tolerance = false;

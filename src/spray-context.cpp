@@ -501,7 +501,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
                 sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                 //Move the cursor p
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
-                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], move[Geom::Y]));
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
                 did = true;
             }
         }
@@ -556,7 +556,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
                 sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(_scale,_scale));
                 sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
                 sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
-                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], move[Geom::Y]));
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
                 // union and duplication
                 selection->clear();
@@ -593,7 +593,7 @@ bool sp_spray_recursive(SPDesktop *desktop,
                 sp_spray_scale_rel(center,desktop,item_copied, Geom::Scale(scale,scale));
                 sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio),-sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
-                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], move[Geom::Y]));
+                sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
 
                 Inkscape::GC::release(clone);
 

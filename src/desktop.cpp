@@ -158,7 +158,7 @@ SPDesktop::SPDesktop() :
     _active( false ),
     _w2d(),
     _d2w(),
-    _doc2dt( Geom::identity() ),
+    _doc2dt( Geom::Scale(1, -1) ),
     grids_visible( false )
 {
     _d2w.setIdentity();
@@ -272,6 +272,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
 
     /* Connect event for page resize */
+    _doc2dt[5] = sp_document_height (document);
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
 
     _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
@@ -724,8 +725,8 @@ SPDesktop::point() const
 
     if (p[Geom::X] >= r0[Geom::X] &&
         p[Geom::X] <= r1[Geom::X] &&
-        p[Geom::Y] >= r0[Geom::Y] &&
-        p[Geom::Y] <= r1[Geom::Y])
+        p[Geom::Y] >= r1[Geom::Y] &&
+        p[Geom::Y] <= r0[Geom::Y])
     {
         return p;
     } else {
@@ -792,8 +793,8 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     int clear = FALSE;
     if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
         // zoom changed - set new zoom factors
-        _d2w = Geom::Scale(newscale);
-        _w2d = Geom::Scale(1/newscale);
+        _d2w = Geom::Scale(newscale, -newscale);
+        _w2d = Geom::Scale(1/newscale, 1/-newscale);
         sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
         clear = TRUE;
         signal_zoom_changed.emit(_d2w.descrim());
@@ -801,10 +802,10 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
 
     /* Calculate top left corner (in document pixels) */
     x0 = cx - 0.5 * viewbox.dimensions()[Geom::X] / newscale;
-    y0 = cy - 0.5 * viewbox.dimensions()[Geom::Y] / newscale;
+    y1 = cy + 0.5 * viewbox.dimensions()[Geom::Y] / newscale;
 
     /* Scroll */
-    sp_canvas_scroll_to (canvas, x0 * newscale - border, y0 * newscale - border, clear);
+    sp_canvas_scroll_to (canvas, x0 * newscale - border, y1 * -newscale - border, clear);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
     sp_box3d_context_update_lines(event_context);
@@ -828,7 +829,8 @@ Geom::Rect SPDesktop::get_display_area() const
 
     double const scale = _d2w[0];
 
-    return viewbox * (1./scale);
+    return Geom::Rect(Geom::Point(viewbox.min()[Geom::X] / scale, viewbox.max()[Geom::Y] / -scale),
+                      Geom::Point(viewbox.max()[Geom::X] / scale, viewbox.min()[Geom::Y] / -scale));
 }
 
 /**
@@ -1543,6 +1545,7 @@ SPDesktop::onDocumentURISet (gchar const* uri)
 void
 SPDesktop::onDocumentResized (gdouble width, gdouble height)
 {
+    _doc2dt[5] = height;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
     Geom::Rect const a(Geom::Point(0, 0), Geom::Point(width, height));
     SP_CTRLRECT(page)->setRectangle(a);

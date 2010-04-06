@@ -327,7 +327,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         document->base = NULL;
     document->name = g_strdup(name);
 
-    sp_object_repr_build_tree(document, rroot);
+    document->root = sp_object_repr_build_tree(document, rroot);
 
     /* fixme: Not sure about this, but lets assume ::build updates */
     rroot->setAttribute("inkscape:version", Inkscape::version_string);
@@ -662,6 +662,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double const w = rect.width();
     double const h = rect.height();
 
+    double const old_height = sp_document_height(this);
     SPUnit const &px(sp_unit_get_by_id(SP_UNIT_PX));
     
     /* in px */
@@ -695,14 +696,16 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     }
     
     Geom::Rect const rect_with_margins(
-            rect.min() - Geom::Point(margin_left, margin_top),
-            rect.max() + Geom::Point(margin_right, margin_bottom));
+            rect.min() - Geom::Point(margin_left, margin_bottom),
+            rect.max() + Geom::Point(margin_right, margin_top));
     
     
     sp_document_set_width(this, rect_with_margins.width(), &px);
     sp_document_set_height(this, rect_with_margins.height(), &px);
 
-    Geom::Translate const tr(-to_2geom(rect_with_margins.min()));
+    Geom::Translate const tr(
+            Geom::Point(0, old_height - rect_with_margins.height())
+            - to_2geom(rect_with_margins.min()));
     SP_GROUP(root)->translateChildItems(tr);
 
     if(nv) {
@@ -710,7 +713,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
         nv->translateGuides(tr2);
 
         // update the viewport so the drawing appears to stay where it was
-        nv->scrollAllDesktops(-tr2[0], -tr2[1], false);
+        nv->scrollAllDesktops(-tr2[0], tr2[1], false);
     }
 }
 

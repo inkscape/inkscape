@@ -46,12 +46,13 @@ Grid::load (Inkscape::Extension::Extension */*module*/)
 
 namespace {
 
-void build_lines(int axis, Geom::Rect bounding_area, float offset,
-                 float spacing, SVG::PathString &path_data)
+Glib::ustring build_lines(int axis, Geom::Rect bounding_area,
+                          float offset, float spacing)
 {
     Geom::Point point_offset(0.0, 0.0);
     point_offset[axis] = offset;
 
+    SVG::PathString path_data;
     for (Geom::Point start_point = bounding_area.min();
             start_point[axis] + offset <= (bounding_area.max())[axis];
             start_point[axis] += spacing) {
@@ -61,6 +62,8 @@ void build_lines(int axis, Geom::Rect bounding_area, float offset,
         path_data.moveTo(start_point + point_offset)
                  .lineTo(end_point + point_offset);
     }
+
+    return path_data;
 }
 
 }
@@ -86,8 +89,10 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         if (bounds) {
             bounding_area = *bounds;
         }
-        Geom::Rect temprec = Geom::Rect(Geom::Point(bounding_area.min()[Geom::X], bounding_area.min()[Geom::Y]),
-                                    Geom::Point(bounding_area.max()[Geom::X], bounding_area.max()[Geom::Y]));
+
+        gdouble doc_height  =  sp_document_height(document->doc());
+        Geom::Rect temprec = Geom::Rect(Geom::Point(bounding_area.min()[Geom::X], doc_height - bounding_area.min()[Geom::Y]),
+                                    Geom::Point(bounding_area.max()[Geom::X], doc_height - bounding_area.max()[Geom::Y]));
 
         bounding_area = temprec;
     }
@@ -98,9 +103,10 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     float offsets[2] = { module->get_param_float("xoffset"),
                          module->get_param_float("yoffset") };
 
-    SVG::PathString path_data;
+    Glib::ustring path_data("");
     for ( int axis = 0 ; axis < 2 ; ++axis ) {
-        build_lines(axis, bounding_area, offsets[axis], spacings[axis], path_data);
+        path_data += build_lines(axis, bounding_area,
+                                 offsets[axis], spacings[axis]);
     }
 
     Inkscape::XML::Document * xml_doc = sp_document_repr_doc(document->doc());

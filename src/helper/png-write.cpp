@@ -424,9 +424,24 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     sp_document_ensure_up_to_date(doc);
 
-    /* Calculate translation */
-    Geom::Point translation = Geom::Point(-area[Geom::X][0], -area[Geom::Y][0]);
+    /* Calculate translation by transforming to document coordinates (flipping Y)*/
+    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - sp_document_height(doc));
 
+    /*  This calculation is only valid when assumed that (x0,y0)= area.corner(0) and (x1,y1) = area.corner(2)
+     * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0
+     * 2) a[1] * x0 + a[3] * y1 + a[5] = 0.0
+     * 3) a[0] * x1 + a[2] * y1 + a[4] = width
+     * 4) a[1] * x0 + a[3] * y0 + a[5] = height
+     * 5) a[1] = 0.0;
+     * 6) a[2] = 0.0;
+     *
+     * (1,3) a[0] * x1 - a[0] * x0 = width
+     * a[0] = width / (x1 - x0)
+     * (2,4) a[3] * y0 - a[3] * y1 = height
+     * a[3] = height / (y0 - y1)
+     * (1) a[4] = -a[0] * x0
+     * (2) a[5] = -a[3] * y1
+     */
 
     Geom::Matrix const affine(Geom::Translate(translation)
                             * Geom::Scale(width / area.width(),

@@ -252,11 +252,11 @@ ActionAlign::Coeffs const ActionAlign::_allCoeffs[10] = {
     {.5, .5, 0., 0., .5, .5, 0., 0.},
     {0., 1., 0., 0., 0., 1., 0., 0.},
     {0., 1., 0., 0., 1., 0., 0., 0.},
-    {0., 0., 1., 0., 0., 0., 0., 1.},
-    {0., 0., 1., 0., 0., 0., 1., 0.},
-    {0., 0., .5, .5, 0., 0., .5, .5},
+    {0., 0., 0., 1., 0., 0., 1., 0.},
     {0., 0., 0., 1., 0., 0., 0., 1.},
-    {0., 0., 0., 1., 0., 0., 1., 0.}
+    {0., 0., .5, .5, 0., 0., .5, .5},
+    {0., 0., 1., 0., 0., 0., 1., 0.},
+    {0., 0., 1., 0., 0., 0., 0., 1.}
 };
 
 BBoxSort::BBoxSort(SPItem *pItem, Geom::Rect bounds, Geom::Dim2 orientation, double kBegin, double kEnd) :
@@ -866,13 +866,13 @@ AlignAndDistribute::AlignAndDistribute()
 
     addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_TOP,
                         _("Distribute top edges equidistantly"),
-                        1, 1, false, Geom::Y, 1., 0.);
+                        1, 1, false, Geom::Y, 0, 1);
     addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_CENTER,
                         _("Distribute centers equidistantly vertically"),
                         1, 2, false, Geom::Y, .5, .5);
     addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_BOTTOM,
                         _("Distribute bottom edges equidistantly"),
-                        1, 3, false, Geom::Y, 0., 1.);
+                        1, 3, false, Geom::Y, 1., 0.);
 
     //Baseline distribs
     addBaselineButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_BASELINE,

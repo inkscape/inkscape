@@ -21,7 +21,7 @@ class Node;
 }
 
 
-void sp_object_repr_build_tree (SPDocument *document, Inkscape::XML::Node *repr);
+SPObject *sp_object_repr_build_tree (SPDocument *document, Inkscape::XML::Node *repr);
 
 GType sp_repr_type_lookup (Inkscape::XML::Node *repr);
 
