@@ -45,14 +45,13 @@ namespace UI {
 namespace Dialogs {
 
 
-IconPreviewPanel&
-IconPreviewPanel::getInstance()
+IconPreviewPanel &IconPreviewPanel::getInstance()
 {
-    static IconPreviewPanel &instance = *new IconPreviewPanel();
+    IconPreviewPanel *instance = new IconPreviewPanel();
 
-    instance.refreshPreview();
+    instance->refreshPreview();
 
-    return instance;
+    return *instance;
 }
 
 //#########################################################################

@@ -66,10 +66,7 @@ public:
     void VertAlign_changed();
     void HorizAlign_changed();
 
-    static TileDialog& getInstance() {
-        static TileDialog instance;
-        return instance;
-    }
+    static TileDialog& getInstance() { return *new TileDialog(); }
 
 private:
     TileDialog(TileDialog const &d); // no copy

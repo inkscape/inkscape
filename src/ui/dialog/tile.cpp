@@ -31,6 +31,7 @@
 #include "sp-item.h"
 #include "widgets/icon.h"
 #include "tile.h"
+#include "desktop.h"
 
 /*
  *    Sort items by their x co-ordinates, taking account of y (keeps rows intact)
@@ -161,7 +162,7 @@ void TileDialog::Grid_Arrange ()
     sp_document_ensure_up_to_date(sp_desktop_document(desktop));
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    const GSList *items = selection->itemList();
+    const GSList *items = selection ? selection->itemList() : 0;
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
@@ -193,6 +194,7 @@ void TileDialog::Grid_Arrange ()
 
     // require the sorting done before we can calculate row heights etc.
 
+    g_return_if_fail(selection);
     const GSList *items2 = selection->itemList();
     GSList *rev = g_slist_copy((GSList *) items2);
     GSList *sorted = NULL;
@@ -373,7 +375,8 @@ void TileDialog::on_row_spinbutton_changed()
     updating = true;
     SPDesktop *desktop = getDesktop();
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop ? desktop->selection : 0;
+    g_return_if_fail( selection );
 
     GSList const *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
@@ -398,7 +401,8 @@ void TileDialog::on_col_spinbutton_changed()
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = getDesktop();
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop ? desktop->selection : 0;
+    g_return_if_fail(selection);
 
     GSList const *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
@@ -560,32 +564,33 @@ void TileDialog::updateSelection()
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = getDesktop();
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    const GSList *items = selection->itemList();
-    int selcount = g_slist_length((GSList *)items);
+    Inkscape::Selection *selection = desktop ? desktop->selection : 0;
+    GSList const *items = selection ? selection->itemList() : 0;
 
-    if (NoOfColsSpinner.get_value()>1 && NoOfRowsSpinner.get_value()>1){
-        // Update the number of rows assuming number of columns wanted remains same.
-        double NoOfRows = ceil(selcount / NoOfColsSpinner.get_value());
-        NoOfRowsSpinner.set_value(NoOfRows);
+    if (items) {
+        int selcount = g_slist_length((GSList *)items);
 
-        // if the selection has less than the number set for one row, reduce it appropriately
-        if (selcount<NoOfColsSpinner.get_value()) {
-            double NoOfCols = ceil(selcount / NoOfRowsSpinner.get_value());
-            NoOfColsSpinner.set_value(NoOfCols);
-            prefs->setInt("/dialogs/gridtiler/NoOfCols", NoOfCols);
+        if (NoOfColsSpinner.get_value() > 1 && NoOfRowsSpinner.get_value() > 1){
+            // Update the number of rows assuming number of columns wanted remains same.
+            double NoOfRows = ceil(selcount / NoOfColsSpinner.get_value());
+            NoOfRowsSpinner.set_value(NoOfRows);
+
+            // if the selection has less than the number set for one row, reduce it appropriately
+            if (selcount < NoOfColsSpinner.get_value()) {
+                double NoOfCols = ceil(selcount / NoOfRowsSpinner.get_value());
+                NoOfColsSpinner.set_value(NoOfCols);
+                prefs->setInt("/dialogs/gridtiler/NoOfCols", NoOfCols);
+            }
+        } else {
+            double PerRow = ceil(sqrt(selcount));
+            double PerCol = ceil(sqrt(selcount));
+            NoOfRowsSpinner.set_value(PerRow);
+            NoOfColsSpinner.set_value(PerCol);
+            prefs->setInt("/dialogs/gridtiler/NoOfCols", static_cast<int>(PerCol));
         }
-    } else {
-        double PerRow = ceil(sqrt(selcount));
-        double PerCol = ceil(sqrt(selcount));
-        NoOfRowsSpinner.set_value(PerRow);
-        NoOfColsSpinner.set_value(PerCol);
-        prefs->setInt("/dialogs/gridtiler/NoOfCols", static_cast<int>(PerCol));
-
     }
 
-    updating=false;
-
+    updating = false;
 }
 
 
@@ -632,7 +637,8 @@ TileDialog::TileDialog()
 
     SPDesktop *desktop = getDesktop();
 
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Selection *selection = desktop ? desktop->selection : 0;
+    g_return_if_fail( selection );
     int selcount = 1;
     if (!selection->isEmpty()) {
         GSList const *items = selection->itemList();
