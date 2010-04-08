@@ -350,13 +350,13 @@ Flowing in rectangle is possible, not in arb shape.
     g_free(strtext);
     g_strfreev(splitstr);
 
-    if (!flowtext->has_internal_frame()) {
-        // has_internal_frame includes a check that frame is a SPRect
+    SPItem *frame_item = flowtext->get_frame(NULL);
+    if (!frame_item || !SP_IS_RECT(frame_item)) {
         g_warning("LaTeX export: non-rectangular flowed text shapes are not supported, skipping text.");
         return; // don't know how to handle non-rect frames yet. is quite uncommon for latex users i think
     }
 
-    SPRect *frame = SP_RECT(flowtext->get_frame(NULL));
+    SPRect *frame = SP_RECT(frame_item);
     Geom::Rect framebox = sp_rect_get_rect(frame) * transform();
 
     // get position and alignment
@@ -365,13 +365,13 @@ Flowing in rectangle is possible, not in arb shape.
     gchar const *justification = "";
     switch (flowtext->layout.paragraphAlignment(flowtext->layout.begin())) {
     case Inkscape::Text::Layout::LEFT:
-        justification = "\\raggedright";
+        justification = "\\raggedright ";
         break;
     case Inkscape::Text::Layout::RIGHT:
-        justification = "\\raggedleft";
+        justification = "\\raggedleft ";
         break;
     case Inkscape::Text::Layout::CENTER:
-        justification = "\\centering";
+        justification = "\\centering ";
     case Inkscape::Text::Layout::FULL:
     default:
         // no need to add LaTeX code for standard justified output :)
