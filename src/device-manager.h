@@ -1,7 +1,7 @@
 /*
  * Inkscape::DeviceManager - a view of input devices available.
  *
- * Copyright 2006  Jon A. Cruz  <jon@joncruz.org>
+ * Copyright 2010  Jon A. Cruz  <jon@joncruz.org>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -42,7 +42,11 @@ class DeviceManager : public Glib::Object {
 public:
     static DeviceManager& getManager();
 
-    virtual std::list<InputDevice const *> getDevices() = 0;
+    virtual void loadConfig() = 0;
+    virtual void saveConfig() = 0;
+
+    virtual std::list<Glib::RefPtr<InputDevice const> > getDevices() = 0;
+
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged() = 0;
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChanged() = 0;
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged() = 0;
@@ -51,6 +55,10 @@ public:
     virtual void addAxis(Glib::ustring const & id, gint axis) = 0;
     virtual void addButton(Glib::ustring const & id, gint button) = 0;
     virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link) = 0;
+
+    virtual void setMode( Glib::ustring const & id, Gdk::InputMode mode ) = 0;
+    virtual void setAxisUse( Glib::ustring const & id, guint index, Gdk::AxisUse use ) = 0;
+    virtual void setKey( Glib::ustring const & id, guint index, guint keyval, Gdk::ModifierType mods ) = 0;
 
 protected:
     DeviceManager();

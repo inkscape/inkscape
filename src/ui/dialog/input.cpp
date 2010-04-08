@@ -329,7 +329,7 @@ public:
     Gtk::TreeModelColumn<Glib::ustring>                filename;
     Gtk::TreeModelColumn<Glib::ustring>                description;
     Gtk::TreeModelColumn< Glib::RefPtr<Gdk::Pixbuf> >  thumbnail;
-    Gtk::TreeModelColumn<InputDevice const *>          device;
+    Gtk::TreeModelColumn<Glib::RefPtr<InputDevice const> > device;
 
     MyModelColumns() { add(filename); add(description); add(thumbnail); add(device); }
 };
@@ -640,7 +640,7 @@ InputDialogImpl::InputDialogImpl() :
 
 
 
-    std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
+    std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
     if ( !devList.empty() ) {
         row = *(store->append());
         row[cols.description] = "Hardware";
@@ -650,8 +650,8 @@ InputDialogImpl::InputDialogImpl() :
         childrow[cols.description] = "Tablet";
         childrow[cols.thumbnail] = tabletPix;
 
-        for ( std::list<InputDevice const *>::iterator it = devList.begin(); it != devList.end(); ++it ) {
-            InputDevice const* dev = *it;
+        for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it = devList.begin(); it != devList.end(); ++it ) {
+            Glib::RefPtr<InputDevice const> dev = *it;
             if ( dev ) {
 //                 g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->getName().c_str(), dev->getSource(), dev->getMode(),
 //                           dev->hasCursor() ? "Yes":"no", dev->getNumAxes(), dev->getNumKeys());
@@ -741,7 +741,7 @@ bool InputDialogImpl::findDevice(const Gtk::TreeModel::iterator& iter,
                                  Gtk::TreeModel::iterator* result)
 {
     bool stop = false;
-    const InputDevice* dev = (*iter)[cols.device];
+    Glib::RefPtr<InputDevice const> dev = (*iter)[cols.device];
     if ( dev && (dev->getId() == id) ) {
         if ( result ) {
             *result = iter;
@@ -756,7 +756,7 @@ bool InputDialogImpl::findDeviceByLink(const Gtk::TreeModel::iterator& iter,
                                        Gtk::TreeModel::iterator* result)
 {
     bool stop = false;
-    const InputDevice* dev = (*iter)[cols.device];
+    Glib::RefPtr<InputDevice const> dev = (*iter)[cols.device];
     if ( dev && (dev->getLink() == link) ) {
         if ( result ) {
             *result = iter;
@@ -783,8 +783,8 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
 //             g_message("Item %s is unlinked", device->getId().c_str());
             if ( deviceIter->parent() != tabletIter ) {
                 // Not the child of the tablet. move on up
-                
-                InputDevice const *dev = (*deviceIter)[cols.device];
+
+                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[cols.device];
                 Glib::ustring descr = (*deviceIter)[cols.description];
                 Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
 
@@ -808,7 +808,7 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
                 (*newGroup)[cols.description] = "Pen";
                 (*newGroup)[cols.thumbnail] = penPix;
 
-                InputDevice const *dev = (*deviceIter)[cols.device];
+                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[cols.device];
                 Glib::ustring descr = (*deviceIter)[cols.description];
                 Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
 
@@ -817,7 +817,7 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
                 deviceRow[cols.thumbnail] = thumb;
                 deviceRow[cols.device] = dev;
 
-                
+
                 Gtk::TreeModel::iterator linkIter;
                 store->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
                                          sigc::mem_fun(*this, &InputDialogImpl::findDeviceByLink),
@@ -856,15 +856,15 @@ void InputDialogImpl::linkComboChanged() {
     if (iter) {
         Gtk::TreeModel::Row row = *iter;
         Glib::ustring val = row[cols.description];
-        InputDevice const * dev = row[cols.device];
+        Glib::RefPtr<InputDevice const> dev = row[cols.device];
         if ( dev ) {
             if ( linkCombo.get_active_row_number() == 0 ) {
                 // It is the "None" entry
                 DeviceManager::getManager().setLinkedTo(dev->getId(), "");
             } else {
                 Glib::ustring linkName = linkCombo.get_active_text();
-                std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
-                for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
+                std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
+                for ( std::list<Glib::RefPtr<InputDevice const> >::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
                     if ( linkName == (*it)->getName() ) {
                         DeviceManager::getManager().setLinkedTo(dev->getId(), (*it)->getId());
                         break;
@@ -882,7 +882,7 @@ void InputDialogImpl::resyncToSelection() {
     if (iter) {
         Gtk::TreeModel::Row row = *iter;
         Glib::ustring val = row[cols.description];
-        InputDevice const * dev = row[cols.device];
+        Glib::RefPtr<InputDevice const> dev = row[cols.device];
         if ( dev ) {
             devDetails.set_sensitive(true);
 
@@ -892,8 +892,8 @@ void InputDialogImpl::resyncToSelection() {
             linkCombo.set_active(0);
             if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                 Glib::ustring linked = dev->getLink();
-                std::list<InputDevice const *> devList = Inkscape::DeviceManager::getManager().getDevices();
-                for ( std::list<InputDevice const *>::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
+                std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
+                for ( std::list<Glib::RefPtr<InputDevice const> >::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
                     if ( ((*it)->getSource() != Gdk::SOURCE_MOUSE) && ((*it) != dev) ) {
                         linkCombo.append_text((*it)->getName().c_str());
                         if ( (linked.length() > 0) && (linked == (*it)->getId()) ) {
@@ -964,7 +964,7 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
         if (iter) {
             Gtk::TreeModel::Row row = *iter;
             Glib::ustring val = row[cols.description];
-            InputDevice const * idev = row[cols.device];
+            Glib::RefPtr<InputDevice const> idev = row[cols.device];
             if ( !idev || (idev->getId() != key) ) {
                 dev = 0;
             }

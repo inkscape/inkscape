@@ -2,21 +2,33 @@
 /*
  * Inkscape::DeviceManager - a view of input devices available.
  *
- * Copyright 2006  Jon A. Cruz  <jon@joncruz.org>
+ * Copyright 2010  Jon A. Cruz  <jon@joncruz.org>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include <glib.h>
 #include <map>
+#include <set>
+#include <gtk/gtkaccelgroup.h>
 
 #include "device-manager.h"
+#include "preferences.h"
 
+#define noDEBUG_VERBOSE 1
 
 static void createFakeList();
 GdkDevice fakeout[5];
 static GList* fakeList = 0;
 
+static bool isValidDevice(GdkDevice *device)
+{
+    bool valid = true;
+    for (size_t i = 0; (i < G_N_ELEMENTS(fakeout)) && valid; i++) {
+        valid = (device != &fakeout[i]);
+    }
+    return valid;
+}
 
 namespace Inkscape {
 
@@ -33,6 +45,88 @@ static pair<gint, gint> vals[] = {
 static std::map<gint, gint> bitVals(vals, &vals[G_N_ELEMENTS(vals)]);
 
 
+static const int RUNAWAY_MAX = 1000;
+
+static Glib::ustring getBaseDeviceName(Gdk::InputSource source)
+{
+    Glib::ustring name;
+    switch (source) {
+        case GDK_SOURCE_MOUSE:
+            name ="pointer";
+            break;
+        case GDK_SOURCE_PEN:
+            name ="pen";
+            break;
+        case GDK_SOURCE_ERASER:
+            name ="eraser";
+            break;
+        case GDK_SOURCE_CURSOR:
+            name ="cursor";
+            break;
+        default:
+            name = "tablet";
+    }
+    return name;
+}
+
+static std::map<Glib::ustring, Gdk::AxisUse> &getStringToAxis()
+{
+    static bool init = false;
+    static std::map<Glib::ustring, Gdk::AxisUse> mapping;
+    if (!init) {
+        init = true;
+        mapping["ignore"]   = Gdk::AXIS_IGNORE;
+        mapping["x"]        = Gdk::AXIS_X;
+        mapping["y"]        = Gdk::AXIS_Y;
+        mapping["pressure"] = Gdk::AXIS_PRESSURE;
+        mapping["xtilt"]    = Gdk::AXIS_XTILT;
+        mapping["ytilt"]    = Gdk::AXIS_YTILT;
+        mapping["wheel"]    = Gdk::AXIS_WHEEL;
+    }
+    return mapping;
+}
+
+std::map<Gdk::AxisUse, Glib::ustring> &getAxisToString()
+{
+    static bool init = false;
+    static std::map<Gdk::AxisUse, Glib::ustring> mapping;
+    if (!init) {
+        init = true;
+        for (std::map<Glib::ustring, Gdk::AxisUse>::iterator it = getStringToAxis().begin(); it != getStringToAxis().end(); ++it) {
+            mapping.insert(std::make_pair(it->second, it->first));
+        }
+    }
+    return mapping;
+}
+
+static std::map<Glib::ustring, Gdk::InputMode> &getStringToMode()
+{
+    static bool init = false;
+    static std::map<Glib::ustring, Gdk::InputMode> mapping;
+    if (!init) {
+        init = true;
+        mapping["disabled"] = Gdk::MODE_DISABLED;
+        mapping["screen"]   = Gdk::MODE_SCREEN;
+        mapping["window"]   = Gdk::MODE_WINDOW;
+    }
+    return mapping;
+}
+
+std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
+{
+    static bool init = false;
+    static std::map<Gdk::InputMode, Glib::ustring> mapping;
+    if (!init) {
+        init = true;
+        for (std::map<Glib::ustring, Gdk::InputMode>::iterator it = getStringToMode().begin(); it != getStringToMode().end(); ++it) {
+            mapping.insert(std::make_pair(it->second, it->first));
+        }
+    }
+    return mapping;
+}
+
+
+
 InputDevice::InputDevice()
     : Glib::Object()
 {}
@@ -41,6 +135,9 @@ InputDevice::~InputDevice() {}
 
 class InputDeviceImpl : public InputDevice {
 public:
+    InputDeviceImpl(GdkDevice* device, std::set<Glib::ustring> &knownIDs);
+    virtual ~InputDeviceImpl() {}
+
     virtual Glib::ustring getId() const {return id;}
     virtual Glib::ustring getName() const {return name;}
     virtual Gdk::InputSource getSource() const {return source;}
@@ -55,13 +152,14 @@ public:
     virtual gint getLiveButtons() const {return liveButtons;}
     virtual void setLiveButtons(gint buttons) {liveButtons = buttons;}
 
-
-    InputDeviceImpl(GdkDevice* device);
-    virtual ~InputDeviceImpl() {}
+    // internal methods not on public superclass:
+    virtual GdkDevice *getDevice() { return device; }
 
 private:
     InputDeviceImpl(InputDeviceImpl const &); // no copy
     void operator=(InputDeviceImpl const &); // no assign
+
+    static Glib::ustring createId(Glib::ustring const &id, Gdk::InputSource source, std::set<Glib::ustring> &knownIDs);
 
     GdkDevice* device;
     Glib::ustring id;
@@ -72,25 +170,25 @@ private:
     guint liveButtons;
 };
 
-class IdMatcher : public std::unary_function<InputDeviceImpl*, bool> {
+class IdMatcher : public std::unary_function<Glib::RefPtr<InputDeviceImpl>&, bool> {
 public:
     IdMatcher(Glib::ustring const& target):target(target) {}
-    bool operator ()(InputDeviceImpl* dev) {return dev && (target == dev->getId());}
+    bool operator ()(Glib::RefPtr<InputDeviceImpl>& dev) {return dev && (target == dev->getId());}
 
 private:
     Glib::ustring const& target;
 };
 
-class LinkMatcher : public std::unary_function<InputDeviceImpl*, bool> {
+class LinkMatcher : public std::unary_function<Glib::RefPtr<InputDeviceImpl>&, bool> {
 public:
     LinkMatcher(Glib::ustring const& target):target(target) {}
-    bool operator ()(InputDeviceImpl* dev) {return dev && (target == dev->getLink());}
+    bool operator ()(Glib::RefPtr<InputDeviceImpl>& dev) {return dev && (target == dev->getLink());}
 
 private:
     Glib::ustring const& target;
 };
 
-InputDeviceImpl::InputDeviceImpl(GdkDevice* device)
+InputDeviceImpl::InputDeviceImpl(GdkDevice* device, std::set<Glib::ustring> &knownIDs)
     : InputDevice(),
       device(device),
       id(),
@@ -100,27 +198,54 @@ InputDeviceImpl::InputDeviceImpl(GdkDevice* device)
       liveAxes(0),
       liveButtons(0)
 {
-    switch ( source ) {
-        case Gdk::SOURCE_MOUSE:
-            id = "M:";
-            break;
-        case Gdk::SOURCE_CURSOR:
-            id = "C:";
-            break;
-        case Gdk::SOURCE_PEN:
-            id = "P:";
-            break;
-        case Gdk::SOURCE_ERASER:
-            id = "E:";
-            break;
-        default:
-            id = "?:";
-    }
-    id += name;
+    id = createId(name, source, knownIDs);
 }
 
 
+Glib::ustring InputDeviceImpl::createId(Glib::ustring const &id,
+                                        Gdk::InputSource source,
+                                        std::set<Glib::ustring> &knownIDs)
+{
+    // Start with only allowing printable ASCII. Check later for more refinements.
+    bool badName = id.empty() || !id.is_ascii();
+    for (Glib::ustring::const_iterator it = id.begin(); (it != id.end()) && !badName; ++it) {
+        badName = *it < 0x20;
+    }
 
+    Glib::ustring base;
+    switch ( source ) {
+        case Gdk::SOURCE_MOUSE:
+            base = "M:";
+            break;
+        case Gdk::SOURCE_CURSOR:
+            base = "C:";
+            break;
+        case Gdk::SOURCE_PEN:
+            base = "P:";
+            break;
+        case Gdk::SOURCE_ERASER:
+            base = "E:";
+            break;
+        default:
+            base = "?:";
+    }
+
+    if (badName) {
+        base += getBaseDeviceName(source);
+    } else {
+        base += id;
+    }
+
+    // now ensure that all IDs become unique in a session.
+    int num = 1;
+    Glib::ustring result = base;
+    while ((knownIDs.find(result) != knownIDs.end()) && (num < RUNAWAY_MAX)) {
+        result = Glib::ustring::compose("%1%2", base, ++num);
+    }
+
+    knownIDs.insert(result);
+    return result;
+}
 
 
 
@@ -129,7 +254,12 @@ InputDeviceImpl::InputDeviceImpl(GdkDevice* device)
 class DeviceManagerImpl : public DeviceManager {
 public:
     DeviceManagerImpl();
-    virtual std::list<InputDevice const *> getDevices();
+
+    virtual void loadConfig();
+    virtual void saveConfig();
+
+    virtual std::list<Glib::RefPtr<InputDevice const> > getDevices();
+
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged();
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChanged();
     virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged();
@@ -139,8 +269,13 @@ public:
     virtual void addButton(Glib::ustring const & id, gint button);
     virtual void setLinkedTo(Glib::ustring const & id, Glib::ustring const& link);
 
+    virtual void setMode( Glib::ustring const & id, Gdk::InputMode mode );
+    virtual void setAxisUse( Glib::ustring const & id, guint index, Gdk::AxisUse use );
+    virtual void setKey( Glib::ustring const & id, guint index, guint keyval, Gdk::ModifierType mods );
+
 protected:
-    std::list<InputDeviceImpl*> devices;
+    std::list<Glib::RefPtr<InputDeviceImpl> > devices;
+
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChangedPriv;
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChangedPriv;
     sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChangedPriv;
@@ -157,29 +292,153 @@ DeviceManagerImpl::DeviceManagerImpl() :
     if ( !fakeList ) {
         createFakeList();
     }
-//     devList = fakeList;
+    //devList = fakeList;
+
+    std::set<Glib::ustring> knownIDs;
 
     for ( GList* curr = devList; curr; curr = g_list_next(curr) ) {
         GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
         if ( dev ) {
-//             g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->name, dev->source, dev->mode,
-//                       dev->has_cursor?"Yes":"no", dev->num_axes, dev->num_keys);
+#if DEBUG_VERBOSE
+            g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->name, dev->source, dev->mode,
+                      dev->has_cursor?"Yes":"no", dev->num_axes, dev->num_keys);
+#endif
 
-            InputDeviceImpl* device = new InputDeviceImpl(dev);
-            devices.push_back(device);
+            InputDeviceImpl* device = new InputDeviceImpl(dev, knownIDs);
+            device->reference();
+            devices.push_back(Glib::RefPtr<InputDeviceImpl>(device));
         }
     }
 }
 
-std::list<InputDevice const *> DeviceManagerImpl::getDevices()
+void DeviceManagerImpl::loadConfig()
 {
-    std::list<InputDevice const *> tmp;
-    for ( std::list<InputDeviceImpl*>::const_iterator it = devices.begin(); it != devices.end(); ++it ) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    for (std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = devices.begin(); it != devices.end(); ++it) {
+        if ((*it)->getSource() != Gdk::SOURCE_MOUSE) {
+            Glib::ustring path = "/devices/" + (*it)->getId();
+
+            Gdk::InputMode mode = Gdk::MODE_DISABLED;
+            Glib::ustring val = prefs->getString(path + "/mode");
+            if (getStringToMode().find(val) != getStringToMode().end()) {
+                mode = getStringToMode()[val];
+            }
+            if ((*it)->getMode() != mode) {
+                setMode( (*it)->getId(), mode );
+            }
+
+            //
+
+            val = prefs->getString(path + "/axes");
+            if (!val.empty()) {
+                std::vector<Glib::ustring> parts = Glib::Regex::split_simple(";", val);
+                for (size_t i = 0; i < parts.size(); ++i) {
+                    Glib::ustring name = parts[i];
+                    if (getStringToAxis().find(name) != getStringToAxis().end()) {
+                        Gdk::AxisUse use = getStringToAxis()[name];
+                        setAxisUse( (*it)->getId(), i, use );
+                    }
+                }
+            }
+
+            val = prefs->getString(path + "/keys");
+            if (!val.empty()) {
+                std::vector<Glib::ustring> parts = Glib::Regex::split_simple(";", val);
+                for (size_t i = 0; i < parts.size(); ++i) {
+                    Glib::ustring keyStr = parts[i];
+                    if (!keyStr.empty()) {
+                        guint key = 0;
+                        GdkModifierType mods = static_cast<GdkModifierType>(0);
+                        gtk_accelerator_parse( keyStr.c_str(), &key, &mods );
+                        setKey( (*it)->getId(), i, key, static_cast<Gdk::ModifierType>(mods) );
+                    }
+                }
+            }
+        }
+    }
+}
+
+void DeviceManagerImpl::saveConfig()
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    for (std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = devices.begin(); it != devices.end(); ++it) {
+        if ((*it)->getSource() != Gdk::SOURCE_MOUSE) {
+            Glib::ustring path = "/devices/" + (*it)->getId();
+
+            prefs->setString( path + "/mode", getModeToString()[(*it)->getMode()].c_str() );
+
+            Glib::ustring tmp;
+            for (gint i = 0; i < (*it)->getNumAxes(); ++i) {
+                if (i > 0) {
+                    tmp += ";";
+                }
+                tmp += getAxisToString()[static_cast<Gdk::AxisUse>((*it)->getDevice()->axes[i].use)];
+            }
+            prefs->setString( path + "/axes", tmp );
+
+            tmp = "";
+            for (gint i = 0; i < (*it)->getNumKeys(); ++i) {
+                if (i > 0) {
+                    tmp += ";";
+                }
+                tmp += gtk_accelerator_name((*it)->getDevice()->keys[i].keyval, (*it)->getDevice()->keys[i].modifiers);
+            }
+            prefs->setString( path + "/keys", tmp );
+        }
+    }
+}
+
+std::list<Glib::RefPtr<InputDevice const> > DeviceManagerImpl::getDevices()
+{
+    std::list<Glib::RefPtr<InputDevice const> > tmp;
+    for ( std::list<Glib::RefPtr<InputDeviceImpl> >::const_iterator it = devices.begin(); it != devices.end(); ++it ) {
         tmp.push_back(*it);
     }
     return tmp;
 }
 
+void DeviceManagerImpl::setMode( Glib::ustring const & id, Gdk::InputMode mode )
+{
+    std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+    if ( it != devices.end() ) {
+        if (isValidDevice((*it)->getDevice())) {
+            bool success = gdk_device_set_mode((*it)->getDevice(), static_cast<GdkInputMode>(mode));
+            if (success) {
+                //(*it)->setMode(mode);
+                signalDeviceChangedPriv.emit(*it);
+            } else {
+                g_warning("Unable to set mode on extended input device [%s]", (*it)->getId().c_str());
+            }
+        }
+    }
+}
+
+void DeviceManagerImpl::setAxisUse( Glib::ustring const & id, guint index, Gdk::AxisUse use )
+{
+    std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+    if ( it != devices.end() ) {
+        if (isValidDevice((*it)->getDevice())) {
+            gdk_device_set_axis_use((*it)->getDevice(), index, static_cast<GdkAxisUse>(use));
+            signalDeviceChangedPriv.emit(*it);
+        }
+    }
+}
+
+void DeviceManagerImpl::setKey( Glib::ustring const & id, guint index, guint keyval, Gdk::ModifierType mods )
+{
+    //static void setDeviceKey( GdkDevice* device, guint index, guint keyval, GdkModifierType modifiers )
+    //
+
+    std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+    if ( it != devices.end() ) {
+        if (isValidDevice((*it)->getDevice())) {
+            gdk_device_set_key((*it)->getDevice(), index, keyval, static_cast<GdkModifierType>(mods));
+            signalDeviceChangedPriv.emit(*it);
+        }
+    }
+}
 
 sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalDeviceChanged()
 {
@@ -204,7 +463,7 @@ sigc::signal<void, const Glib::RefPtr<InputDevice>& > DeviceManagerImpl::signalL
 void DeviceManagerImpl::addAxis(Glib::ustring const & id, gint axis)
 {
     if ( axis >= 0 && axis < static_cast<gint>(bitVals.size()) ) {
-        std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+        std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
         if ( it != devices.end() ) {
             gint mask = bitVals[axis];
             if ( (mask & (*it)->getLiveAxes()) == 0 ) {
@@ -212,7 +471,7 @@ void DeviceManagerImpl::addAxis(Glib::ustring const & id, gint axis)
 
                 // Only signal if a new axis was added
                 (*it)->reference();
-                signalAxesChangedPriv.emit(Glib::RefPtr<InputDevice>(*it));
+                signalAxesChangedPriv.emit(*it);
             }
         }
     }
@@ -221,7 +480,7 @@ void DeviceManagerImpl::addAxis(Glib::ustring const & id, gint axis)
 void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
 {
     if ( button >= 0 && button < static_cast<gint>(bitVals.size()) ) {
-        std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+        std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
         if ( it != devices.end() ) {
             gint mask = bitVals[button];
             if ( (mask & (*it)->getLiveButtons()) == 0 ) {
@@ -229,7 +488,7 @@ void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
 
                 // Only signal if a new button was added
                 (*it)->reference();
-                signalButtonsChangedPriv.emit(Glib::RefPtr<InputDevice>(*it));
+                signalButtonsChangedPriv.emit(*it);
             }
         }
     }
@@ -237,12 +496,11 @@ void DeviceManagerImpl::addButton(Glib::ustring const & id, gint button)
 
 void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring const& link)
 {
-    std::list<InputDeviceImpl*>::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
+    std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
     if ( it != devices.end() ) {
-        InputDeviceImpl* dev = *it;
+        Glib::RefPtr<InputDeviceImpl> dev = *it;
 
-
-        InputDeviceImpl* targetDev = 0;
+        Glib::RefPtr<InputDeviceImpl> targetDev;
         if ( !link.empty() ) {
             // Need to be sure the target of the link exists
             it = std::find_if(devices.begin(), devices.end(), IdMatcher(link));
@@ -255,7 +513,7 @@ void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring cons
         if ( (link.empty() && !dev->getLink().empty())
              || (targetDev && (targetDev->getLink() != id)) ) {
             // only muck about if they aren't already linked
-            std::list<InputDeviceImpl*> changedItems;
+            std::list<Glib::RefPtr<InputDeviceImpl> > changedItems;
 
             if ( targetDev ) {
             // Is something else already using that link?
@@ -277,9 +535,9 @@ void DeviceManagerImpl::setLinkedTo(Glib::ustring const & id, Glib::ustring cons
             dev->setLink(link);
             changedItems.push_back(dev);
 
-            for ( std::list<InputDeviceImpl*>::const_iterator iter = changedItems.begin(); iter != changedItems.end(); ++iter ) {
+            for ( std::list<Glib::RefPtr<InputDeviceImpl> >::const_iterator iter = changedItems.begin(); iter != changedItems.end(); ++iter ) {
                 (*iter)->reference();
-                signalLinkChangedPriv.emit(Glib::RefPtr<InputDevice>(*iter));
+                signalLinkChangedPriv.emit(*iter);
             }
         }
     }
