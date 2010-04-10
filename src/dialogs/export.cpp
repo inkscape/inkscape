@@ -780,7 +780,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
                 if (bbox) {
                     sp_export_set_area (base, bbox->min()[Geom::X],
                                               bbox->min()[Geom::Y],
@@ -792,7 +792,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
         case SELECTION_SELECTION:
             if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
                 NRRect bbox;
-                (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(&bbox);
+                (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(&bbox, SPItem::RENDERING_BBOX);
                 sp_export_set_area (base, bbox.x0, bbox.y0, bbox.x1, bbox.y1);
             }
             break;
@@ -849,7 +849,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false)
                 {
-                    bbox = sp_desktop_selection (SP_ACTIVE_DESKTOP)->bounds();
+                    bbox = sp_desktop_selection (SP_ACTIVE_DESKTOP)->bounds(SPItem::RENDERING_BBOX);
                     /* Only if there is a selection that we can set
                        do we break, otherwise we fall through to the
                        drawing */
@@ -861,7 +861,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -1487,7 +1487,7 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
+                    Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(SPItem::RENDERING_BBOX);
 
                     //std::cout << "Selection " << bbox;
                     if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
@@ -1498,7 +1498,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), SPItem::RENDERING_BBOX);
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {
