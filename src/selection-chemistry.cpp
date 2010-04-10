@@ -2266,7 +2266,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    Geom::OptRect r = selection->bounds();
+    Geom::OptRect r = selection->bounds(SPItem::RENDERING_BBOX);
     boost::optional<Geom::Point> c = selection->center();
     if ( !r || !c ) {
         return;
@@ -2390,7 +2390,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    Geom::OptRect r = selection->bounds();
+    Geom::OptRect r = selection->bounds(SPItem::RENDERING_BBOX);
     if ( !r ) {
         return;
     }
@@ -3173,7 +3173,7 @@ fit_canvas_to_selection(SPDesktop *desktop, bool with_margins)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    Geom::OptRect const bbox(desktop->selection->bounds());
+    Geom::OptRect const bbox(desktop->selection->bounds(SPItem::RENDERING_BBOX));
     if (bbox) {
         doc->fitToRect(*bbox, with_margins);
         return true;

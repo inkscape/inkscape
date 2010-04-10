@@ -50,6 +50,8 @@
 
 #include "util/mathfns.h" // for triangle_area()
 
+#include "splivarot.h" // for bounding box calculation
+
 #define noSHAPE_VERBOSE
 
 static void sp_shape_class_init (SPShapeClass *klass);
@@ -541,166 +543,193 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
             cbbox.x1 = (*geombbox)[0][1];
             cbbox.y1 = (*geombbox)[1][1];
 
-            if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
-
-                SPStyle* style=SP_OBJECT_STYLE (item);
-                if (!style->stroke.isNone()) {
-                    double const scale = transform.descrim();
-                    if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-                        double const width = MAX(0.125, style->stroke_width.computed * scale);
-                        if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
-                            cbbox.x0-=0.5*width;
-                            cbbox.x1+=0.5*width;
-                            cbbox.y0-=0.5*width;
-                            cbbox.y1+=0.5*width;
-                        }
-                    }
+            switch ((SPItem::BBoxType) flags) {
+                case SPItem::GEOMETRIC_BBOX: {
+                    // do nothing
+                    break;
                 }
-
-                // Union with bboxes of the markers, if any
-                if (sp_shape_has_markers (shape)) {
-                    /** \todo make code prettier! */
-                    Geom::PathVector const & pathv = shape->curve->get_pathvector();
-                    // START marker
-                    for (unsigned i = 0; i < 2; i++) { // SP_MARKER_LOC and SP_MARKER_LOC_START
-                        if ( shape->marker[i] ) {
-                            SPMarker* marker = SP_MARKER (shape->marker[i]);
-                            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
-
-                            if (marker_item) {
-                                Geom::Matrix tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
-                                if (!marker->orient_auto) {
-                                    Geom::Point transl = tr.translation();
-                                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
-                                }
-                                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                    tr = Geom::Scale(style->stroke_width.computed) * tr;
-                                }
-
-                                // total marker transform
-                                tr = marker_item->transform * marker->c2p * tr * transform;
-
-                                // get bbox of the marker with that transform
-                                NRRect marker_bbox;
-                                sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
-                                // union it with the shape bbox
-                                nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
+                case SPItem::RENDERING_BBOX: {
+                    // convert the stroke to a path and calculate that path's geometric bbox
+                    SPStyle* style=SP_OBJECT_STYLE (item);
+                    if (!style->stroke.isNone()) {
+                        Geom::PathVector *pathv = item_outline(item);
+                        if (pathv) {
+                            Geom::OptRect geomstrokebbox = bounds_exact_transformed(*pathv, transform);
+                            if (geomstrokebbox) {
+                                NRRect  strokebbox;
+                                strokebbox.x0 = (*geomstrokebbox)[0][0];
+                                strokebbox.y0 = (*geomstrokebbox)[1][0];
+                                strokebbox.x1 = (*geomstrokebbox)[0][1];
+                                strokebbox.y1 = (*geomstrokebbox)[1][1];
+                                nr_rect_d_union (&cbbox, &cbbox, &strokebbox);
+                            }
+                            delete pathv;
+                        }
+                    }
+                    break;
+                }
+                default:
+                case SPItem::APPROXIMATE_BBOX: {
+                    SPStyle* style=SP_OBJECT_STYLE (item);
+                    if (!style->stroke.isNone()) {
+                        double const scale = transform.descrim();
+                        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
+                            double const width = MAX(0.125, style->stroke_width.computed * scale);
+                            if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
+                                cbbox.x0-=0.5*width;
+                                cbbox.x1+=0.5*width;
+                                cbbox.y0-=0.5*width;
+                                cbbox.y1+=0.5*width;
                             }
                         }
                     }
-                    // MID marker
-                    for (unsigned i = 0; i < 3; i += 2) { // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                        SPMarker* marker = SP_MARKER (shape->marker[i]);
-                        if ( !shape->marker[i] ) continue;
-                        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
-                        if ( !marker_item ) continue;
 
-                        for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-                            // START position
-                            if ( path_it != pathv.begin() 
-                                 && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
-                            {
-                                Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
-                                if (!marker->orient_auto) {
-                                    Geom::Point transl = tr.translation();
-                                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
-                                }
-                                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                    tr = Geom::Scale(style->stroke_width.computed) * tr;
-                                }
-                                tr = marker_item->transform * marker->c2p * tr * transform;
-                                NRRect marker_bbox;
-                                sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
-                                nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
-                            }
-                            // MID position
-                            if ( path_it->size_default() > 1) {
-                                Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
-                                Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
-                                while (curve_it2 != path_it->end_default())
-                                {
-                                    /* Put marker between curve_it1 and curve_it2.
-                                     * Loop to end_default (so including closing segment), because when a path is closed,
-                                     * there should be a midpoint marker between last segment and closing straight line segment */
+                    // Union with bboxes of the markers, if any
+                    if (sp_shape_has_markers (shape)) {
+                        /** \todo make code prettier! */
+                        Geom::PathVector const & pathv = shape->curve->get_pathvector();
+                        // START marker
+                        for (unsigned i = 0; i < 2; i++) { // SP_MARKER_LOC and SP_MARKER_LOC_START
+                            if ( shape->marker[i] ) {
+                                SPMarker* marker = SP_MARKER (shape->marker[i]);
+                                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
 
-                                    SPMarker* marker = SP_MARKER (shape->marker[i]);
-                                    SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
-
-                                    if (marker_item) {
-                                        Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
-                                        if (!marker->orient_auto) {
-                                            Geom::Point transl = tr.translation();
-                                            tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
-                                        }
-                                        if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                            tr = Geom::Scale(style->stroke_width.computed) * tr;
-                                        }
-                                        tr = marker_item->transform * marker->c2p * tr * transform;
-                                        NRRect marker_bbox;
-                                        sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
-                                        nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
+                                if (marker_item) {
+                                    Geom::Matrix tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
+                                    if (!marker->orient_auto) {
+                                        Geom::Point transl = tr.translation();
+                                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                    }
+                                    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                        tr = Geom::Scale(style->stroke_width.computed) * tr;
                                     }
 
-                                    ++curve_it1;
-                                    ++curve_it2;
+                                    // total marker transform
+                                    tr = marker_item->transform * marker->c2p * tr * transform;
+
+                                    // get bbox of the marker with that transform
+                                    NRRect marker_bbox;
+                                    sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                    // union it with the shape bbox
+                                    nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
-                            }
-                            // END position
-                            if ( path_it != (pathv.end()-1) && !path_it->empty()) {
-                                Geom::Curve const &lastcurve = path_it->back_default();
-                                Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
-                                if (!marker->orient_auto) {
-                                    Geom::Point transl = tr.translation();
-                                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
-                                }
-                                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                    tr = Geom::Scale(style->stroke_width.computed) * tr;
-                                }
-                                tr = marker_item->transform * marker->c2p * tr * transform;
-                                NRRect marker_bbox;
-                                sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
-                                nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                             }
                         }
-                    }
-                    // END marker
-                    for (unsigned i = 0; i < 4; i += 3) { // SP_MARKER_LOC and SP_MARKER_LOC_END
-                        if ( shape->marker[i] ) {
+                        // MID marker
+                        for (unsigned i = 0; i < 3; i += 2) { // SP_MARKER_LOC and SP_MARKER_LOC_MID
                             SPMarker* marker = SP_MARKER (shape->marker[i]);
+                            if ( !shape->marker[i] ) continue;
                             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+                            if ( !marker_item ) continue;
 
-                            if (marker_item) {
-                                /* Get reference to last curve in the path.
-                                 * For moveto-only path, this returns the "closing line segment". */
-                                Geom::Path const &path_last = pathv.back();
-                                unsigned int index = path_last.size_default();
-                                if (index > 0) {
-                                    index--;
+                            for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                                // START position
+                                if ( path_it != pathv.begin() 
+                                     && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
+                                {
+                                    Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+                                    if (!marker->orient_auto) {
+                                        Geom::Point transl = tr.translation();
+                                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                    }
+                                    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                        tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                    }
+                                    tr = marker_item->transform * marker->c2p * tr * transform;
+                                    NRRect marker_bbox;
+                                    sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                    nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
-                                Geom::Curve const &lastcurve = path_last[index];
+                                // MID position
+                                if ( path_it->size_default() > 1) {
+                                    Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+                                    Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+                                    while (curve_it2 != path_it->end_default())
+                                    {
+                                        /* Put marker between curve_it1 and curve_it2.
+                                         * Loop to end_default (so including closing segment), because when a path is closed,
+                                         * there should be a midpoint marker between last segment and closing straight line segment */
 
-                                Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
-                                if (!marker->orient_auto) {
-                                    Geom::Point transl = tr.translation();
-                                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                        SPMarker* marker = SP_MARKER (shape->marker[i]);
+                                        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+
+                                        if (marker_item) {
+                                            Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                                            if (!marker->orient_auto) {
+                                                Geom::Point transl = tr.translation();
+                                                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                            }
+                                            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                                tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                            }
+                                            tr = marker_item->transform * marker->c2p * tr * transform;
+                                            NRRect marker_bbox;
+                                            sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
+                                            nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
+                                        }
+
+                                        ++curve_it1;
+                                        ++curve_it2;
+                                    }
                                 }
-                                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                // END position
+                                if ( path_it != (pathv.end()-1) && !path_it->empty()) {
+                                    Geom::Curve const &lastcurve = path_it->back_default();
+                                    Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                                    if (!marker->orient_auto) {
+                                        Geom::Point transl = tr.translation();
+                                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                    }
+                                    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                        tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                    }
+                                    tr = marker_item->transform * marker->c2p * tr * transform;
+                                    NRRect marker_bbox;
+                                    sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                                    nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                                 }
+                            }
+                        }
+                        // END marker
+                        for (unsigned i = 0; i < 4; i += 3) { // SP_MARKER_LOC and SP_MARKER_LOC_END
+                            if ( shape->marker[i] ) {
+                                SPMarker* marker = SP_MARKER (shape->marker[i]);
+                                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
 
-                                // total marker transform
-                                tr = marker_item->transform * marker->c2p * tr * transform;
+                                if (marker_item) {
+                                    /* Get reference to last curve in the path.
+                                     * For moveto-only path, this returns the "closing line segment". */
+                                    Geom::Path const &path_last = pathv.back();
+                                    unsigned int index = path_last.size_default();
+                                    if (index > 0) {
+                                        index--;
+                                    }
+                                    Geom::Curve const &lastcurve = path_last[index];
 
-                                // get bbox of the marker with that transform
-                                NRRect marker_bbox;
-                                sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
-                                // union it with the shape bbox
-                                nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
+                                    Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                                    if (!marker->orient_auto) {
+                                        Geom::Point transl = tr.translation();
+                                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(transl);
+                                    }
+                                    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                        tr = Geom::Scale(style->stroke_width.computed) * tr;
+                                    }
+
+                                    // total marker transform
+                                    tr = marker_item->transform * marker->c2p * tr * transform;
+
+                                    // get bbox of the marker with that transform
+                                    NRRect marker_bbox;
+                                    sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                                    // union it with the shape bbox
+                                    nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
+                                }
                             }
                         }
                     }
-                }
-            }
+                    break;
+                } // end case approximate bbox type 
+            }  // end switch bboxtype
 
             // copy our bbox to the variable we're given
             *bbox = cbbox;

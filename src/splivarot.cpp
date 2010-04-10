@@ -624,6 +624,250 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix 
     }
 }
 
+static
+void item_outline_add_marker( SPObject const *marker_object, Geom::Matrix marker_transform,
+                              Geom::Scale stroke_scale, Geom::Matrix transform,
+                              Geom::PathVector* pathv_in )
+{
+    SPMarker* marker = SP_MARKER (marker_object);
+    SPItem* marker_item = sp_item_first_item_child(SP_OBJECT(marker_object));
+
+    Geom::Matrix tr(marker_transform);
+    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+        tr = stroke_scale * tr;
+    }
+    // total marker transform
+    tr = marker_item->transform * marker->c2p * tr * transform;
+
+    Geom::PathVector* marker_pathv = item_outline(marker_item);
+    
+    if (marker_pathv) {
+        for (unsigned int j=0; j < marker_pathv->size(); j++) {
+            pathv_in->push_back((*marker_pathv)[j] * tr);
+        }
+        delete marker_pathv;
+    }
+}
+
+/**
+ *  Returns a pathvector that is the outline of the stroked item, with markers.
+ *  item must be SPShape of SPText.
+ */
+Geom::PathVector* item_outline(SPItem const *item)
+{
+    Geom::PathVector *ret_pathv = NULL;
+
+    if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
+        return ret_pathv;
+
+    // no stroke: no outline
+    if (!SP_OBJECT_STYLE(item) || SP_OBJECT_STYLE(item)->stroke.noneSet) {
+        return ret_pathv;
+    }
+
+    SPCurve *curve = NULL;
+    if (SP_IS_SHAPE(item)) {
+        curve = sp_shape_get_curve(SP_SHAPE(item));
+    } else if (SP_IS_TEXT(item)) {
+        curve = SP_TEXT(item)->getNormalizedBpath();
+    }
+    if (curve == NULL) {
+        return ret_pathv;
+    }
+
+    // remember old stroke style, to be set on fill
+    SPStyle *i_style = SP_OBJECT_STYLE(item);
+
+    Geom::Matrix const transform(item->transform);
+    float const scale = transform.descrim();
+
+    float o_width, o_miter;
+    JoinType o_join;
+    ButtType o_butt;
+    {
+        o_width = i_style->stroke_width.computed;
+        if (o_width < 0.1) {
+            o_width = 0.1;
+        }
+        o_miter = i_style->stroke_miterlimit.value * o_width;
+
+        switch (i_style->stroke_linejoin.computed) {
+            case SP_STROKE_LINEJOIN_MITER:
+                o_join = join_pointy;
+                break;
+            case SP_STROKE_LINEJOIN_ROUND:
+                o_join = join_round;
+                break;
+            default:
+                o_join = join_straight;
+                break;
+        }
+
+        switch (i_style->stroke_linecap.computed) {
+            case SP_STROKE_LINECAP_SQUARE:
+                o_butt = butt_square;
+                break;
+            case SP_STROKE_LINECAP_ROUND:
+                o_butt = butt_round;
+                break;
+            default:
+                o_butt = butt_straight;
+                break;
+        }
+    }
+
+    // Livarots outline of arcs is broken. So convert the path to linear and cubics only, for which the outline is created correctly.
+    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() );
+
+    Path *orig = new Path;
+    orig->LoadPathVector(pathv);
+
+    Path *res = new Path;
+    res->SetBackData(false);
+
+    if (i_style->stroke_dash.n_dash) {
+        // For dashed strokes, use Stroke method, because Outline can't do dashes
+        // However Stroke adds lots of extra nodes _or_ makes the path crooked, so consider this a temporary workaround
+
+        orig->ConvertWithBackData(0.1);
+
+        orig->DashPolylineFromStyle(i_style, scale, 0);
+
+        Shape* theShape = new Shape;
+        orig->Stroke(theShape, false, 0.5*o_width, o_join, o_butt,
+                     0.5 * o_miter);
+        orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
+
+        Shape *theRes = new Shape;
+
+        theRes->ConvertToShape(theShape, fill_positive);
+
+        Path *originaux[1];
+        originaux[0] = res;
+        theRes->ConvertToForme(orig, 1, originaux);
+
+        res->Coalesce(5.0);
+
+        delete theShape;
+        delete theRes;
+    } else {
+        orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
+
+        orig->Coalesce(0.5 * o_width);
+
+        Shape *theShape = new Shape;
+        Shape *theRes = new Shape;
+
+        res->ConvertWithBackData(1.0);
+        res->Fill(theShape, 0);
+        theRes->ConvertToShape(theShape, fill_positive);
+
+        Path *originaux[1];
+        originaux[0] = res;
+        theRes->ConvertToForme(orig, 1, originaux);
+
+        delete theShape;
+        delete theRes;
+    }
+
+    if (orig->descr_cmd.size() <= 1) {
+        // ca a merd, ou bien le resultat est vide
+        delete res;
+        delete orig;
+        curve->unref();
+        return ret_pathv;
+    }
+
+
+    if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
+        ret_pathv = orig->MakePathVector();
+
+        if (SP_IS_SHAPE(item) && sp_shape_has_markers (SP_SHAPE(item))) {
+            SPShape *shape = SP_SHAPE(item);
+
+            Geom::PathVector const & pathv = curve->get_pathvector();
+
+            // START marker
+            for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
+                if ( SPObject *marker_obj = shape->marker[i] ) {
+                    Geom::Matrix const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
+                    item_outline_add_marker( marker_obj, m,
+                                             Geom::Scale(i_style->stroke_width.computed), transform,
+                                             ret_pathv );
+                }
+            }
+            // MID marker
+            for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
+                SPObject *midmarker_obj = shape->marker[i];
+                if (!midmarker_obj) continue;
+                for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
+                    // START position
+                    if ( path_it != pathv.begin() 
+                         && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
+                    {
+                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                        item_outline_add_marker( midmarker_obj, m,
+                                                 Geom::Scale(i_style->stroke_width.computed), transform,
+                                                 ret_pathv );
+                    }
+                    // MID position
+                   if (path_it->size_default() > 1) {
+                        Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+                        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+                        while (curve_it2 != path_it->end_default())
+                        {
+                            /* Put marker between curve_it1 and curve_it2.
+                             * Loop to end_default (so including closing segment), because when a path is closed,
+                             * there should be a midpoint marker between last segment and closing straight line segment
+                             */
+                            Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                            item_outline_add_marker( midmarker_obj, m,
+                                                     Geom::Scale(i_style->stroke_width.computed), transform,
+                                                     ret_pathv);
+
+                            ++curve_it1;
+                            ++curve_it2;
+                        }
+                    }
+                    // END position
+                    if ( path_it != (pathv.end()-1) && !path_it->empty()) {
+                        Geom::Curve const &lastcurve = path_it->back_default();
+                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                        item_outline_add_marker( midmarker_obj, m,
+                                                 Geom::Scale(i_style->stroke_width.computed), transform,
+                                                 ret_pathv );
+                    }
+                }
+            }
+            // END marker
+            for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
+                if ( SPObject *marker_obj = shape->marker[i] ) {
+                    /* Get reference to last curve in the path.
+                     * For moveto-only path, this returns the "closing line segment". */
+                    Geom::Path const &path_last = pathv.back();
+                    unsigned int index = path_last.size_default();
+                    if (index > 0) {
+                        index--;
+                    }
+                    Geom::Curve const &lastcurve = path_last[index];
+
+                    Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                    item_outline_add_marker( marker_obj, m,
+                                             Geom::Scale(i_style->stroke_width.computed), transform,
+                                             ret_pathv );
+                }
+            }
+        }
+
+        curve->unref();
+    }
+
+    delete res;
+    delete orig;
+
+    return ret_pathv;
+}
+
 void
 sp_selected_path_outline(SPDesktop *desktop)
 {
