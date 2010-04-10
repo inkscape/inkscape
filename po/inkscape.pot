@@ -705,6 +705,14 @@ msgstr ""
 msgid "LaTeX formula: "
 msgstr ""
 
+#: ../share/extensions/eqtexsvg.inx.h:3
+msgid "Additional packages"
+msgstr ""
+
+#: ../share/extensions/eqtexsvg.inx.h:4
+msgid "Additional packages (comma-separated): "
+msgstr ""
+
 #: ../share/extensions/export_gimp_palette.inx.h:1
 msgid "Export as GIMP Palette"
 msgstr ""

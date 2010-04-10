@@ -9,6 +9,9 @@ This extension need, to work properly:
 
 Copyright (C) 2006 Julien Vitard <julienvitard@gmail.com>
 
+2010-04-04: Added support for custom packages
+            Christoph Schmidt-Hieber <christsc@gmx.de>
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -27,15 +30,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 import inkex, os, tempfile, sys, xml.dom.minidom
 
-def create_equation_tex(filename, equation):
+def parse_pkgs(pkgstring):
+    pkglist = pkgstring.replace(" ","").split(",")
+    header = ""
+    for pkg in pkglist:
+        header += "\\usepackage{%s}\n" % pkg
+
+    return header
+
+def create_equation_tex(filename, equation, add_header=""):
     tex = open(filename, 'w')
     tex.write("""%% processed with eqtexsvg.py
 \\documentclass{article}
 \\usepackage{amsmath}
 \\usepackage{amssymb}
 \\usepackage{amsfonts}
-
-\\thispagestyle{empty}
+""")
+    tex.write(add_header)
+    tex.write("""\\thispagestyle{empty}
 \\begin{document}
 """)
     tex.write(equation)
@@ -76,8 +88,12 @@ class EQTEXSVG(inkex.Effect):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-f", "--formule",
                         action="store", type="string",
-                        dest="formula", default=10.0,
+                        dest="formula", default="",
                         help="LaTeX formula")
+        self.OptionParser.add_option("-p", "--packages",
+                        action="store", type="string",
+                        dest="packages", default="",
+                        help="Additional packages")
     def effect(self):
 
         base_dir = tempfile.mkdtemp("", "inkscape-");
@@ -102,7 +118,8 @@ class EQTEXSVG(inkex.Effect):
                 os.remove(err_file)
             os.rmdir(base_dir)
 
-        create_equation_tex(latex_file, self.options.formula)
+        add_header = parse_pkgs(self.options.packages)
+        create_equation_tex(latex_file, self.options.formula, add_header)
         os.system('latex "-output-directory=%s" -halt-on-error "%s" > "%s"' \
                   % (base_dir, latex_file, out_file))
         try:
