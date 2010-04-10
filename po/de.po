@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-09 09:07+0200\n"
-"PO-Revision-Date: 2010-04-09 19:09+0100\n"
+"PO-Revision-Date: 2010-04-10 13:02+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2887,7 +2887,7 @@ msgstr "Layout-gruppe festlegen"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
-msgstr ""
+msgstr "Unbestimmt (relativ zur nicht-schwimmenden Inhaktsgröße)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 #: ../share/extensions/webslicer_create_rect.inx.h:35
@@ -2931,9 +2931,8 @@ msgid "Bottom and Right"
 msgstr "Unten und Rechts"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-#, fuzzy
 msgid "Create a slicer rectangle"
-msgstr "Rechteck erzeugen"
+msgstr "Geschnittenes Rechteck erzeugen"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
 #: ../src/main.cpp:300
@@ -3036,7 +3035,7 @@ msgstr "Typ"
 
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid "All sliced images, and optionaly code, will be generated as you had configured and saved to one directory."
-msgstr ""
+msgstr "Alle geschnittenen Bilder und optionaler Code wird so erstellt, wie Sie ihn konfiguriert haben und in einem Verzeichnis gespeichert."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
@@ -5629,7 +5628,7 @@ msgstr "Richtung"
 
 #: ../src/live_effects/lpe-extrude.cpp:26
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "Definiert Richtung und Ausmaß der Extrusion"
 
 #: ../src/sp-flowtext.cpp:378
 #: ../src/sp-text.cpp:427
@@ -7594,9 +7593,8 @@ msgid "constrained angle"
 msgstr "abhöängiger Winkel"
 
 #: ../src/display/snap-indicator.cpp:147
-#, fuzzy
 msgid "constraint"
-msgstr "Konstante:"
+msgstr "erzwungen"
 
 #: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box corner"
@@ -15242,9 +15240,8 @@ msgid "Basic Latin"
 msgstr "Latein"
 
 #: ../src/ui/dialog/glyphs.cpp:155
-#, fuzzy
 msgid "Latin-1 Supplement"
-msgstr "Liniensegment"
+msgstr "Latein-1 Ergänzung"
 
 #: ../src/ui/dialog/glyphs.cpp:156
 msgid "Latin Extended-A"
@@ -15255,9 +15252,8 @@ msgid "Latin Extended-B"
 msgstr "Latein Erweitert-B"
 
 #: ../src/ui/dialog/glyphs.cpp:158
-#, fuzzy
 msgid "IPA Extensions"
-msgstr "E_rweiterungen"
+msgstr "IPA Erweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:159
 msgid "Spacing Modifier Letters"
@@ -15269,38 +15265,35 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:161
 msgid "Greek and Coptic"
-msgstr ""
+msgstr "Griechisch und Koptisch"
 
 #: ../src/ui/dialog/glyphs.cpp:163
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Kyrillisch Ergänzend"
 
 #: ../src/ui/dialog/glyphs.cpp:168
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Arabisch  Ergänzend"
 
 #: ../src/ui/dialog/glyphs.cpp:170
 msgid "NKo"
 msgstr "N'Ko"
 
 #: ../src/ui/dialog/glyphs.cpp:171
-#, fuzzy
 msgid "Samaritan"
-msgstr "Tartan"
+msgstr "Samaritanisch"
 
 #: ../src/ui/dialog/glyphs.cpp:187
-#, fuzzy
 msgid "Hangul Jamo"
-msgstr "Hangul"
+msgstr "Hangul Jamo"
 
 #: ../src/ui/dialog/glyphs.cpp:189
 msgid "Ethiopic Supplement"
-msgstr ""
+msgstr "Äthiopisch Ergänzend"
 
 #: ../src/ui/dialog/glyphs.cpp:191
-#, fuzzy
 msgid "Unified Canadian Aboriginal Syllabics"
-msgstr "Kanadisch Aborigini"
+msgstr "Einheitliches Kanadisch Aborigini Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:200
 msgid "Unified Canadian Aboriginal Syllabics Extended"
@@ -15312,17 +15305,15 @@ msgstr "Khmer (km) Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:206
 msgid "Tai Tham"
-msgstr ""
+msgstr "Tai Tham"
 
 #: ../src/ui/dialog/glyphs.cpp:211
-#, fuzzy
 msgid "Vedic Extensions"
-msgstr "E_rweiterungen"
+msgstr "Verdic Erweiterung"
 
 #: ../src/ui/dialog/glyphs.cpp:212
-#, fuzzy
 msgid "Phonetic Extensions"
-msgstr "Über _Erweiterungen"
+msgstr "Phonetische Erweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:213
 msgid "Phonetic Extensions Supplement"
@@ -15334,24 +15325,23 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:215
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "Latein Erweitert Zusatz"
 
 #: ../src/ui/dialog/glyphs.cpp:216
 msgid "Greek Extended"
-msgstr ""
+msgstr "Griechisch Erweitert"
 
 #: ../src/ui/dialog/glyphs.cpp:217
-#, fuzzy
 msgid "General Punctuation"
-msgstr "Grün-Funktion"
+msgstr "Generelle Punktierung"
 
 #: ../src/ui/dialog/glyphs.cpp:218
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "Hoch- und Tiefgestellt"
 
 #: ../src/ui/dialog/glyphs.cpp:219
 msgid "Currency Symbols"
-msgstr ""
+msgstr "Währungssymbole"
 
 #: ../src/ui/dialog/glyphs.cpp:220
 msgid "Combining Diacritical Marks for Symbols"
@@ -15359,12 +15349,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Buchstabenartige Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:222
-#, fuzzy
 msgid "Number Forms"
-msgstr "Anzahl der Zeilen"
+msgstr "Zahlenformen"
 
 #: ../src/ui/dialog/glyphs.cpp:223
 msgid "Arrows"
@@ -15372,21 +15361,19 @@ msgstr "Pfeile"
 
 #: ../src/ui/dialog/glyphs.cpp:224
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Mathematische Operatoren"
 
 #: ../src/ui/dialog/glyphs.cpp:225
-#, fuzzy
 msgid "Miscellaneous Technical"
-msgstr "Verschiedenes:"
+msgstr "Verschiedenes Technisches"
 
 #: ../src/ui/dialog/glyphs.cpp:226
-#, fuzzy
 msgid "Control Pictures"
-msgstr "Mitwirkende"
+msgstr "Bildkontrolle"
 
 #: ../src/ui/dialog/glyphs.cpp:227
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Optische Zeichenerkennung"
 
 #: ../src/ui/dialog/glyphs.cpp:228
 msgid "Enclosed Alphanumerics"
@@ -15394,35 +15381,32 @@ msgstr ""
 
 # not sure here -cm-
 #: ../src/ui/dialog/glyphs.cpp:229
-#, fuzzy
 msgid "Box Drawing"
-msgstr "Zeichnung"
+msgstr "Box Zeichnung"
 
 #: ../src/ui/dialog/glyphs.cpp:230
 msgid "Block Elements"
-msgstr ""
+msgstr "Blockelemente"
 
 #: ../src/ui/dialog/glyphs.cpp:231
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Geometrische Formen"
 
 #: ../src/ui/dialog/glyphs.cpp:232
-#, fuzzy
 msgid "Miscellaneous Symbols"
-msgstr "Verschiedenes:"
+msgstr "Verschiedene Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:233
 msgid "Dingbats"
 msgstr "Dingbats"
 
 #: ../src/ui/dialog/glyphs.cpp:234
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-A"
-msgstr "Verschiedene Tipps und Tricks"
+msgstr "Verschiedene mathematische Symbole-A"
 
 #: ../src/ui/dialog/glyphs.cpp:235
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Ergänzende Pfeile-A"
 
 #: ../src/ui/dialog/glyphs.cpp:236
 msgid "Braille Patterns"
@@ -15430,21 +15414,19 @@ msgstr "Braille Muster"
 
 #: ../src/ui/dialog/glyphs.cpp:237
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Ergänzende Pfeile-B"
 
 #: ../src/ui/dialog/glyphs.cpp:238
-#, fuzzy
 msgid "Miscellaneous Mathematical Symbols-B"
-msgstr "Verschiedene Tipps und Tricks"
+msgstr "Verschiedene mathematische Symbole-B"
 
 #: ../src/ui/dialog/glyphs.cpp:239
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "ergänzende mathematische Operatoren"
 
 #: ../src/ui/dialog/glyphs.cpp:240
-#, fuzzy
 msgid "Miscellaneous Symbols and Arrows"
-msgstr "Verschiedene Tipps und Tricks"
+msgstr "Verschiedene Symbole und Pfeile"
 
 #: ../src/ui/dialog/glyphs.cpp:242
 msgid "Latin Extended-C"
@@ -15452,9 +15434,8 @@ msgstr "Latein Erweitert-C"
 
 # !!!
 #: ../src/ui/dialog/glyphs.cpp:244
-#, fuzzy
 msgid "Georgian Supplement"
-msgstr "Platzierung der Zähne"
+msgstr "Georgisch Ergänzend"
 
 #: ../src/ui/dialog/glyphs.cpp:246
 msgid "Ethiopic Extended"
@@ -15466,15 +15447,15 @@ msgstr "Kyrillisch Erweitert-A"
 
 #: ../src/ui/dialog/glyphs.cpp:248
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Ergänzende Punktierung"
 
 #: ../src/ui/dialog/glyphs.cpp:249
 msgid "CJK Radicals Supplement"
-msgstr ""
+msgstr "CJK Radikal Ergänzend"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kangxi Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
@@ -15482,30 +15463,27 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
-msgstr ""
+msgstr "CJK Symbole und Punktierungen"
 
 #: ../src/ui/dialog/glyphs.cpp:256
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul Kompatibel Jamo"
 
 #: ../src/ui/dialog/glyphs.cpp:257
-#, fuzzy
 msgid "Kanbun"
-msgstr "Kannada"
+msgstr "Kanbun"
 
 #: ../src/ui/dialog/glyphs.cpp:258
-#, fuzzy
 msgid "Bopomofo Extended"
-msgstr "Bopomofo"
+msgstr "Bopomofo Erweitert"
 
 #: ../src/ui/dialog/glyphs.cpp:259
-#, fuzzy
 msgid "CJK Strokes"
-msgstr "Kontur:"
+msgstr "CJK Konturen"
 
 #: ../src/ui/dialog/glyphs.cpp:260
 msgid "Katakana Phonetic Extensions"
-msgstr ""
+msgstr "Katakana Phonetische Erweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "Enclosed CJK Letters and Months"
@@ -15513,7 +15491,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "CJK Kompatibilität"
 
 #: ../src/ui/dialog/glyphs.cpp:263
 msgid "CJK Unified Ideographs Extension A"
@@ -15521,33 +15499,31 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Yijing Hexagram Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "CJK einheitliche Schriftzeichen"
 
 #: ../src/ui/dialog/glyphs.cpp:266
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi Silben"
 
 #: ../src/ui/dialog/glyphs.cpp:267
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:268
-#, fuzzy
 msgid "Lisu"
-msgstr "Liste"
+msgstr "Lisu"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Kyrillisch Erweitert-B"
 
 #: ../src/ui/dialog/glyphs.cpp:271
-#, fuzzy
 msgid "Bamum"
-msgstr "Maximum"
+msgstr "Bamum"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Modifier Tone Letters"
@@ -15555,51 +15531,47 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:273
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Latein Erweitert-D"
 
 #: ../src/ui/dialog/glyphs.cpp:275
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "grbäuchliche indische Zahlformen"
 
 #: ../src/ui/dialog/glyphs.cpp:278
-#, fuzzy
 msgid "Devanagari Extended"
-msgstr "Devanagari"
+msgstr "Devanagari Erweitert"
 
 #: ../src/ui/dialog/glyphs.cpp:281
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangul Jamo Erweitert-A"
 
 #: ../src/ui/dialog/glyphs.cpp:282
-#, fuzzy
 msgid "Javanese"
-msgstr "Schwindend"
+msgstr "Javanesisch"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Myanmar-Erweitert-A"
 
 #: ../src/ui/dialog/glyphs.cpp:285
-#, fuzzy
 msgid "Tai Viet"
-msgstr "Tai Le"
+msgstr "Tai Viet"
 
 #: ../src/ui/dialog/glyphs.cpp:286
-#, fuzzy
 msgid "Meetei Mayek"
-msgstr "Ebene löschen"
+msgstr "Meitei-Mayek"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Syllables"
-msgstr ""
+msgstr "Hangul Silben"
 
 #: ../src/ui/dialog/glyphs.cpp:288
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Hangul Jamo Erweitert-B"
 
 #: ../src/ui/dialog/glyphs.cpp:289
 msgid "High Surrogates"
-msgstr ""
+msgstr "Oberer Ersatz"
 
 #: ../src/ui/dialog/glyphs.cpp:290
 msgid "High Private Use Surrogates"
@@ -15607,7 +15579,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Low Surrogates"
-msgstr ""
+msgstr "Unterer Ersatz"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "Private Use Area"
@@ -15619,20 +15591,19 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Alphabetische Präsentationsformen"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Arabische Präsentationsformen-A"
 
 #: ../src/ui/dialog/glyphs.cpp:296
 msgid "Variation Selectors"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:297
-#, fuzzy
 msgid "Vertical Forms"
-msgstr "Vertikaler Radius"
+msgstr "Vertikale Formen"
 
 #: ../src/ui/dialog/glyphs.cpp:298
 #, fuzzy
@@ -15641,24 +15612,23 @@ msgstr "Druck-Markierungen"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "CJK Kompatible Formen"
 
 #: ../src/ui/dialog/glyphs.cpp:300
 msgid "Small Form Variants"
-msgstr ""
+msgstr "Kleine Formvarianten"
 
 #: ../src/ui/dialog/glyphs.cpp:301
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Arabische Präsentationsformen-B"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Halfwidth and Fullwidth Forms"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:303
-#, fuzzy
 msgid "Specials"
-msgstr "Spiralen"
+msgstr "Besonderes"
 
 #: ../src/ui/dialog/glyphs.cpp:370
 msgid "Script: "
@@ -15670,14 +15640,12 @@ msgstr "Bereich:"
 
 # not sure here -cm-
 #: ../src/ui/dialog/glyphs.cpp:463
-#, fuzzy
 msgid "Append"
-msgstr "Tuschstift"
+msgstr "Hinzufügen"
 
 #: ../src/ui/dialog/glyphs.cpp:574
-#, fuzzy
 msgid "Append text"
-msgstr "Text eingeben"
+msgstr "Text hinzufügen"
 
 #: ../src/ui/dialog/guides.cpp:42
 msgid "Unit:"
@@ -16528,7 +16496,7 @@ msgstr "Kein Gruppieren ausgeschnittener/maskierter Objekte"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:684
 msgid "Enclose every clipped/masked object in its own group"
-msgstr ""
+msgstr "Jedes ausgeschnittene/maskierte Objekt in seiner eigenen Gruppe anlegen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:685
 msgid "Put all clipped/masked objects into one group"
@@ -21334,15 +21302,13 @@ msgstr "%s - Inkscape"
 
 # ???
 #: ../src/widgets/desktop-widget.cpp:801
-#, fuzzy
 msgid "Color-managed display is <b>enabled</b> in this window"
-msgstr "Ansicht mit Farbverwaltung ein-/ausschalten"
+msgstr "Farbverwaltungsansicht ist in diesem Fenster <b>eingeschaltet</b>"
 
 # ???
 #: ../src/widgets/desktop-widget.cpp:803
-#, fuzzy
 msgid "Color-managed display is <b>disabled</b> in this window"
-msgstr "Ansicht mit Farbverwaltung ein-/ausschalten"
+msgstr "Farbverwaltungsansicht ist in diesem Fenster <b>ausgeschaltet</b>"
 
 #: ../src/widgets/desktop-widget.cpp:914
 #, c-format
@@ -21584,9 +21550,8 @@ msgid "Radial gradient"
 msgstr "Radialer Farbverlauf"
 
 #: ../src/widgets/paint-selector.cpp:241
-#, fuzzy
 msgid "Swatch"
-msgstr "Skizze"
+msgstr "Farbmuster"
 
 #: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -21619,9 +21584,8 @@ msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the p
 msgstr "Benutzen Sie das <b>Knotenwerkzeug</b> um Position Winkel und Größe des Musters anzupassen. Mit <b>Objekt » Füllmuster » Objekte in Füllmuster umwandeln</b> lassen sich neue Füllmuster von ausgewählten Objekten erzeugen."
 
 #: ../src/widgets/paint-selector.cpp:1103
-#, fuzzy
 msgid "Swatch fill"
-msgstr "Füllung festlegen"
+msgstr "Farbmusterfüllung"
 
 #: ../src/widgets/select-toolbar.cpp:247
 msgid "Transform by toolbar"
@@ -21854,9 +21818,8 @@ msgid "Out of gamut!"
 msgstr "Farbbereichswarnung:"
 
 #: ../src/widgets/sp-color-notebook.cpp:355
-#, fuzzy
 msgid "Too much ink!"
-msgstr "Ansicht vergrößern"
+msgstr "Zu viel Farbe!"
 
 #. Create RGBA entry and color preview
 #: ../src/widgets/sp-color-notebook.cpp:362
@@ -22065,7 +22028,7 @@ msgstr "Vorgegebener Titel"
 
 #: ../src/widgets/toolbox.cpp:862
 msgid "Set the custom task"
-msgstr ""
+msgstr "Benutzerdefinierte Funktion setzen"
 
 #: ../src/widgets/toolbox.cpp:867
 msgid "Wide"
@@ -23069,14 +23032,12 @@ msgstr "Breite des Sprühbereichs (relativ zum sichtbaren Dokumentausschnitt)"
 
 #. Mean
 #: ../src/widgets/toolbox.cpp:4580
-#, fuzzy
 msgid "(minimum mean)"
-msgstr "(minimale Stärke)"
+msgstr "(minimales Mittel)"
 
 #: ../src/widgets/toolbox.cpp:4580
-#, fuzzy
 msgid "(maximum mean)"
-msgstr "(maximale Trägheit)"
+msgstr "(maximales Mittel)"
 
 #: ../src/widgets/toolbox.cpp:4583
 msgid "Focus"
@@ -23126,12 +23087,11 @@ msgstr "Sprüht Objekte in einen einzelnen Pfad"
 #. Population
 #: ../src/widgets/toolbox.cpp:4656
 msgid "(low population)"
-msgstr ""
+msgstr "(niedrige Population)"
 
 #: ../src/widgets/toolbox.cpp:4656
-#, fuzzy
 msgid "(high population)"
-msgstr "(leichte Abweichung)"
+msgstr "(hoher Zuwachs)"
 
 #: ../src/widgets/toolbox.cpp:4659
 msgid "Amount:"
