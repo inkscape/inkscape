@@ -403,10 +403,9 @@ void DeviceManagerImpl::setMode( Glib::ustring const & id, Gdk::InputMode mode )
 {
     std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
     if ( it != devices.end() ) {
-        if (isValidDevice((*it)->getDevice())) {
+        if (isValidDevice((*it)->getDevice()) && ((*it)->getMode() != mode) ) {
             bool success = gdk_device_set_mode((*it)->getDevice(), static_cast<GdkInputMode>(mode));
             if (success) {
-                //(*it)->setMode(mode);
                 signalDeviceChangedPriv.emit(*it);
             } else {
                 g_warning("Unable to set mode on extended input device [%s]", (*it)->getId().c_str());
@@ -420,8 +419,14 @@ void DeviceManagerImpl::setAxisUse( Glib::ustring const & id, guint index, Gdk::
     std::list<Glib::RefPtr<InputDeviceImpl> >::iterator it = std::find_if(devices.begin(), devices.end(), IdMatcher(id));
     if ( it != devices.end() ) {
         if (isValidDevice((*it)->getDevice())) {
-            gdk_device_set_axis_use((*it)->getDevice(), index, static_cast<GdkAxisUse>(use));
-            signalDeviceChangedPriv.emit(*it);
+            if (static_cast<gint>(index) <= (*it)->getNumAxes()) {
+                if ((*it)->getDevice()->axes[index].use != static_cast<GdkAxisUse>(use)) {
+                    gdk_device_set_axis_use((*it)->getDevice(), index, static_cast<GdkAxisUse>(use));
+                    signalDeviceChangedPriv.emit(*it);
+                }
+            } else {
+                g_warning("Invalid device axis number %d on extended input device [%s]", index, (*it)->getId().c_str());
+            }
         }
     }
 }
