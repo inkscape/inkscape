@@ -670,9 +670,8 @@ static void delete_connection(GObject */*obj*/, sigc::connection *connection) {
     delete connection;
 }
 
-static void purge_repr_listener( GObject* obj, GObject* tbl )
+static void purge_repr_listener( GObject* /*obj*/, GObject* tbl )
 {
-    (void)obj;
     Inkscape::XML::Node* oldrepr = reinterpret_cast<Inkscape::XML::Node *>( g_object_get_data( tbl, "repr" ) );
     if (oldrepr) { // remove old listener
         sp_repr_remove_listener_by_data(oldrepr, tbl);
@@ -681,6 +680,84 @@ static void purge_repr_listener( GObject* obj, GObject* tbl )
         g_object_set_data( tbl, "repr", NULL );
     }
 }
+
+// ------------------------------------------------------
+
+class PrefPusher : public Inkscape::Preferences::Observer
+{
+public:
+    PrefPusher( GtkToggleAction *act, Glib::ustring const &path, void (*callback)(GObject*) = 0, GObject *cbData = 0 );
+    virtual ~PrefPusher();
+
+    virtual void notify(Inkscape::Preferences::Entry const &new_val);
+
+private:
+    static void toggleCB( GtkToggleAction *act, PrefPusher *self );
+
+    void handleToggled();
+
+    GtkToggleAction *act;
+    void (*callback)(GObject*);
+    GObject *cbData;
+    bool hold;
+};
+
+PrefPusher::PrefPusher( GtkToggleAction *act, Glib::ustring const &path, void (*callback)(GObject*), GObject *cbData ) :
+    Observer(path),
+    act(act),
+    callback(callback),
+    cbData(cbData),
+    hold(false)
+{
+    g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggleCB), this);
+    hold = true;
+    gtk_toggle_action_set_active( act, Inkscape::Preferences::get()->getBool(observed_path, true) );
+    hold = false;
+
+    Inkscape::Preferences::get()->addObserver(*this);
+}
+
+PrefPusher::~PrefPusher()
+{
+    Inkscape::Preferences::get()->removeObserver(*this);
+}
+
+void PrefPusher::toggleCB( GtkToggleAction * /*act*/, PrefPusher *self )
+{
+    if (self) {
+        self->handleToggled();
+    }
+}
+
+void PrefPusher::handleToggled()
+{
+    if (!hold) {
+        hold = true;
+        Inkscape::Preferences::get()->setBool(observed_path, gtk_toggle_action_get_active( act ));
+        if (callback) {
+            (*callback)(cbData);
+        }
+        hold = false;
+    }
+}
+
+void PrefPusher::notify(Inkscape::Preferences::Entry const &newVal)
+{
+    bool newBool = newVal.getBool();
+    bool oldBool = gtk_toggle_action_get_active(act);
+
+    if (!hold && (newBool != oldBool)) {
+        gtk_toggle_action_set_active( act, newBool );
+    }
+}
+
+static void delete_prefspusher(GtkObject * /*obj*/, PrefPusher *watcher )
+{
+    delete watcher;
+}
+
+// ------------------------------------------------------
+
 
 GtkWidget *
 sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inkscape::IconSize size, SPButtonType type,
@@ -4840,28 +4917,13 @@ static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl 
     update_presets_list(tbl);
 }
 
-static void sp_ddc_pressure_state_changed( GtkToggleAction *act, GObject*  tbl )
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool("/tools/calligraphic/usepressure", gtk_toggle_action_get_active( act ));
-    update_presets_list(tbl);
-}
-
-static void sp_ddc_trace_background_changed( GtkToggleAction *act, GObject*  tbl )
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool("/tools/calligraphic/tracebackground", gtk_toggle_action_get_active( act ));
-    update_presets_list(tbl);
-}
-
 static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    // TODO merge into PrefPusher
     GtkAction * calligraphy_angle = static_cast<GtkAction *> (g_object_get_data(tbl,"angle_action"));
-    prefs->setBool("/tools/calligraphic/usetilt", gtk_toggle_action_get_active( act ));
-    update_presets_list(tbl);
-    if (calligraphy_angle )
+    if (calligraphy_angle ) {
         gtk_action_set_sensitive( calligraphy_angle, !gtk_toggle_action_get_active( act ) );
+    }
 }
 
 
@@ -5049,7 +5111,6 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
     }
 }
 
-
 static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -5203,8 +5264,8 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           INKSCAPE_ICON_DRAW_TRACE_BACKGROUND,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_trace_background_changed), holder);
-            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/calligraphic/tracebackground", false) );
+            PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/calligraphic/tracebackground", update_presets_list, holder);
+            g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
             g_object_set_data( holder, "tracebackground", act );
         }
 
@@ -5216,8 +5277,8 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           INKSCAPE_ICON_DRAW_USE_PRESSURE,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_pressure_state_changed), holder);
-            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/calligraphic/usepressure", true) );
+            PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/calligraphic/usepressure", update_presets_list, holder);
+            g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
             g_object_set_data( holder, "usepressure", act );
         }
 
@@ -5229,6 +5290,8 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
                                                           INKSCAPE_ICON_DRAW_USE_TILT,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+            PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/calligraphic/usetilt", update_presets_list, holder);
+            g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
             g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_tilt_state_changed), holder );
             gtk_action_set_sensitive( GTK_ACTION(calligraphy_angle), !prefs->getBool("/tools/calligraphic/usetilt", true) );
             gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/calligraphic/usetilt", true) );
