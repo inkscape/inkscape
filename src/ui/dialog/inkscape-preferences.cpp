@@ -1131,19 +1131,19 @@ void InkscapePreferences::initPageUI()
     int sizeValues[] = {0, 1, 2};
 
     _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Toolbox icon size"), _misc_small_tools, "",
+    _page_ui.add_line( false, _("Toolbox icon size:"), _misc_small_tools, "",
                               _("Set the size for the tool icons (requires restart)"), false);
 
     _misc_small_toolbar.init( "/toolbox/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Control bar icon size"), _misc_small_toolbar, "",
+    _page_ui.add_line( false, _("Control bar icon size:"), _misc_small_toolbar, "",
                               _("Set the size for the icons in tools' control bars to use (requires restart)"), false);
 
     _misc_small_secondary.init( "/toolbox/secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
-    _page_ui.add_line( false, _("Secondary toolbar icon size"), _misc_small_secondary, "",
+    _page_ui.add_line( false, _("Secondary toolbar icon size:"), _misc_small_secondary, "",
                               _("Set the size for the icons in secondary toolbars to use (requires restart)"), false);
 
 
-    _ui_colorsliders_top.init( _("Work-around color sliders not drawing."), "/options/workarounds/colorsontop", false);
+    _ui_colorsliders_top.init( _("Work-around color sliders not drawing"), "/options/workarounds/colorsontop", false);
     _page_ui.add_line( false, "", _ui_colorsliders_top, "",
                        _("When on, will attempt to work around bugs in certain GTK themes drawing color sliders."), true);
 
@@ -1164,7 +1164,7 @@ void InkscapePreferences::initPageUI()
                               _("Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"), true);
 
 
-    _ui_partialdynamic.init( _("Enable dynamic relayout for incomplete sections."), "/options/workarounds/dynamicnotdone", false);
+    _ui_partialdynamic.init( _("Enable dynamic relayout for incomplete sections"), "/options/workarounds/dynamicnotdone", false);
     _page_ui.add_line( false, "", _ui_partialdynamic, "",
                        _("When on, will allow dynamic layout of components that are not completely finished being refactored."), true);
 
