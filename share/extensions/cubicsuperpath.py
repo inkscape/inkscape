@@ -123,17 +123,17 @@ def CubicSuperPath(simplepath):
             lastctrl = params[2:4]
         elif cmd == 'Q':
             q0=last[:]
-            q1=params[0:1]
-            q2=params[2:3]
-            x0=    q0[0]
-            x1=1/3*q0[0]+2/3*q1[0]
-            x2=          2/3*q1[0]+1/3*q2[0]
-            x3=                        q2[0]
-            y0=    q0[1]
-            y1=1/3*q0[1]+2/3*q1[1]
-            y2=          2/3*q1[1]+1/3*q2[1]
-            y3=                        q2[1]
-            csp[subpath].append([lastctrl[:][x0,y0][x1,y1]])
+            q1=params[0:2]
+            q2=params[2:4]
+            x0=     q0[0]
+            x1=1./3*q0[0]+2./3*q1[0]
+            x2=           2./3*q1[0]+1./3*q2[0]
+            x3=                           q2[0]
+            y0=     q0[1]
+            y1=1./3*q0[1]+2./3*q1[1]
+            y2=           2./3*q1[1]+1./3*q2[1]
+            y3=                           q2[1]
+            csp[subpath].append([lastctrl[:],[x0,y0],[x1,y1]])
             last = [x3,y3]
             lastctrl = [x2,y2]
         elif cmd == 'A':
