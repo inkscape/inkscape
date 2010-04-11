@@ -40,7 +40,6 @@
 #include "desktop-handles.h"
 #include "dialogs/clonetiler.h"
 #include "dialogs/find.h"
-#include "dialogs/input.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/spellcheck.h"
 #include "dialogs/text-edit.h"
@@ -1791,9 +1790,6 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
         }
 #endif*/
         case SP_VERB_DIALOG_INPUT:
-            sp_input_dialog();
-            break;
-        case SP_VERB_DIALOG_INPUT2:
             dt->_dlg_mgr->showDialog("InputDevices");
             break;
         case SP_VERB_DIALOG_EXTENSIONEDITOR:
@@ -2639,8 +2635,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
 #endif*/
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
-                   N_("Configure extended input devices, such as a graphics tablet"), INKSCAPE_ICON_DIALOG_INPUT_DEVICES),
-    new DialogVerb(SP_VERB_DIALOG_INPUT2, "DialogInput2", N_("_Input Devices (new)..."),
                    N_("Configure extended input devices, such as a graphics tablet"), INKSCAPE_ICON_DIALOG_INPUT_DEVICES),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
                    N_("Query information about extensions"), NULL),

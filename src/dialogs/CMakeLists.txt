@@ -8,7 +8,6 @@ find.cpp
 guidelinedialog.cpp
 iconpreview.cpp
 in-dt-coordsys.cpp
-input.cpp
 item-properties.cpp
 layer-properties.cpp
 layers-panel.cpp

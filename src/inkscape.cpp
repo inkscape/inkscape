@@ -49,7 +49,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "application/editor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialogs/input.h"
+#include "device-manager.h"
 #include "document.h"
 #include "event-context.h"
 #include "extension/db.h"
@@ -807,7 +807,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     if (use_gui) {
         inkscape_load_menus(inkscape);
-        sp_input_load_from_preferences();
+        Inkscape::DeviceManager::getManager().loadConfig();
     }
 
     /* set language for user interface according setting in preferences */

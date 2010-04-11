@@ -12,11 +12,15 @@
 #include <set>
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/alignment.h>
+#include <gtkmm/cellrenderercombo.h>
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/enums.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/image.h>
+#include <gtkmm/liststore.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/paned.h>
@@ -28,8 +32,9 @@
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeview.h>
 
-#include "ui/widget/panel.h"
 #include "device-manager.h"
+#include "preferences.h"
+#include "ui/widget/panel.h"
 
 #include "input.h"
 
@@ -323,16 +328,42 @@ namespace Dialog {
 
 
 
-class MyModelColumns : public Gtk::TreeModel::ColumnRecord
+class DeviceModelColumns : public Gtk::TreeModel::ColumnRecord
 {
 public:
-    Gtk::TreeModelColumn<Glib::ustring>                filename;
     Gtk::TreeModelColumn<Glib::ustring>                description;
     Gtk::TreeModelColumn< Glib::RefPtr<Gdk::Pixbuf> >  thumbnail;
     Gtk::TreeModelColumn<Glib::RefPtr<InputDevice const> > device;
+    Gtk::TreeModelColumn<Gdk::InputMode>               mode;
 
-    MyModelColumns() { add(filename); add(description); add(thumbnail); add(device); }
+    DeviceModelColumns() { add(description); add(thumbnail); add(device); add(mode); }
 };
+
+static std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
+{
+    static std::map<Gdk::InputMode, Glib::ustring> mapping;
+    if (mapping.empty()) {
+        mapping[Gdk::MODE_DISABLED] = _("Disabled");
+        mapping[Gdk::MODE_SCREEN]   = _("Screen");
+        mapping[Gdk::MODE_WINDOW]   = _("Window");
+    }
+
+    return mapping;
+}
+
+static std::map<Glib::ustring, Gdk::InputMode> &getStringToMode()
+{
+    static std::map<Glib::ustring, Gdk::InputMode> mapping;
+    if (mapping.empty()) {
+        mapping[_("Disabled")] = Gdk::MODE_DISABLED;
+        mapping[_("Screen")]   = Gdk::MODE_SCREEN;
+        mapping[_("Window")]   = Gdk::MODE_WINDOW;
+    }
+
+    return mapping;
+}
+
+
 
 class InputDialogImpl : public InputDialog {
 public:
@@ -340,21 +371,44 @@ public:
     virtual ~InputDialogImpl() {}
 
 private:
-    Glib::RefPtr<Gdk::Pixbuf> corePix;
-    Glib::RefPtr<Gdk::Pixbuf> penPix;
-    Glib::RefPtr<Gdk::Pixbuf> mousePix;
-    Glib::RefPtr<Gdk::Pixbuf> tipPix;
-    Glib::RefPtr<Gdk::Pixbuf> tabletPix;
-    Glib::RefPtr<Gdk::Pixbuf> eraserPix;
-    Glib::RefPtr<Gdk::Pixbuf> sidebuttonsPix;
+    class ConfPanel : public Gtk::VBox
+    {
+    public:
+        ConfPanel();
+        ~ConfPanel();
 
-    Glib::RefPtr<Gdk::Pixbuf> buttonsNonePix;
-    Glib::RefPtr<Gdk::Pixbuf> buttonsOnPix;
-    Glib::RefPtr<Gdk::Pixbuf> buttonsOffPix;
+        class Blink : public Preferences::Observer
+        {
+        public:
+            Blink(ConfPanel &parent);
+            virtual ~Blink();
+            virtual void notify(Preferences::Entry const &new_val);
 
-    Glib::RefPtr<Gdk::Pixbuf> axisNonePix;
-    Glib::RefPtr<Gdk::Pixbuf> axisOnPix;
-    Glib::RefPtr<Gdk::Pixbuf> axisOffPix;
+            ConfPanel &parent;
+        };
+
+        static void commitCellModeChange(Glib::ustring const &path, Glib::ustring const &newText, Glib::RefPtr<Gtk::TreeStore> store);
+        static void setModeCellString(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter);
+
+        void saveSettings();
+        void useExtToggled();
+
+        Glib::RefPtr<Gtk::TreeStore> store;
+        Gtk::TreeIter tabletIter;
+        Gtk::TreeView tree;
+        Gtk::ScrolledWindow treeScroller;
+        Blink watcher;
+        Gtk::CheckButton useExt;
+        Gtk::Button save;
+    };
+
+    static DeviceModelColumns &getCols();
+
+    enum PixId {PIX_CORE, PIX_PEN, PIX_MOUSE, PIX_TIP, PIX_TABLET, PIX_ERASER, PIX_SIDEBUTTONS,
+                PIX_BUTTONS_NONE, PIX_BUTTONS_ON, PIX_BUTTONS_OFF,
+                PIX_AXIS_NONE, PIX_AXIS_ON, PIX_AXIS_OFF};
+
+    static Glib::RefPtr<Gdk::Pixbuf> getPix(PixId id);
 
     std::map<Glib::ustring, std::set<guint> > buttonMap;
     std::map<Glib::ustring, std::map<guint, std::pair<guint, gdouble> > > axesMap;
@@ -362,7 +416,6 @@ private:
     GdkInputSource lastSourceSeen;
     Glib::ustring lastDevnameSeen;
 
-    MyModelColumns cols;
     Glib::RefPtr<Gtk::TreeStore> store;
     Gtk::TreeIter tabletIter;
     Gtk::TreeView tree;
@@ -383,7 +436,6 @@ private:
     Gtk::Label keyVal;
     Gtk::Entry keyEntry;
     Gtk::Table devDetails;
-    Gtk::HPaned confSplitter;
     Gtk::Notebook topHolder;
     Gtk::Image testThumb;
     Gtk::Image testButtons[24];
@@ -391,6 +443,9 @@ private:
     Gtk::Table imageTable;
     Gtk::EventBox testDetector;
 
+    ConfPanel cfgPanel;
+
+    static void setupTree( Glib::RefPtr<Gtk::TreeStore> store, Gtk::TreeIter &tablet );
     void setupValueAndCombo( gint reported, gint actual, Gtk::Label& label, Gtk::ComboBoxText& combo );
     void updateTestButtons( Glib::ustring const& key, gint hotButton );
     void updateTestAxes( Glib::ustring const& key, GdkDevice* dev );
@@ -402,15 +457,51 @@ private:
     void handleDeviceChange(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceAxes(const Glib::RefPtr<InputDevice>& device);
     void updateDeviceButtons(const Glib::RefPtr<InputDevice>& device);
-    void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device);
+    static void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device, Gtk::TreeIter &tabletIter, Gtk::TreeView &tree);
 
-    bool findDevice(const Gtk::TreeModel::iterator& iter,
-                    Glib::ustring id,
-                    Gtk::TreeModel::iterator* result);
-    bool findDeviceByLink(const Gtk::TreeModel::iterator& iter,
-                          Glib::ustring link,
-                          Gtk::TreeModel::iterator* result);
-};
+    static bool findDevice(const Gtk::TreeModel::iterator& iter,
+                           Glib::ustring id,
+                           Gtk::TreeModel::iterator* result);
+    static bool findDeviceByLink(const Gtk::TreeModel::iterator& iter,
+                                 Glib::ustring link,
+                                 Gtk::TreeModel::iterator* result);
+
+}; // class InputDialogImpl
+
+
+DeviceModelColumns &InputDialogImpl::getCols()
+{
+    static DeviceModelColumns cols;
+    return cols;
+}
+
+Glib::RefPtr<Gdk::Pixbuf> InputDialogImpl::getPix(PixId id)
+{
+    static std::map<PixId, Glib::RefPtr<Gdk::Pixbuf> > mappings;
+
+    mappings[PIX_CORE]          = Gdk::Pixbuf::create_from_xpm_data(core_xpm);
+    mappings[PIX_PEN]           = Gdk::Pixbuf::create_from_xpm_data(pen);
+    mappings[PIX_MOUSE]         = Gdk::Pixbuf::create_from_xpm_data(mouse);
+    mappings[PIX_TIP]           = Gdk::Pixbuf::create_from_xpm_data(tip);
+    mappings[PIX_TABLET]        = Gdk::Pixbuf::create_from_xpm_data(tablet);
+    mappings[PIX_ERASER]        = Gdk::Pixbuf::create_from_xpm_data(eraser);
+    mappings[PIX_SIDEBUTTONS]   = Gdk::Pixbuf::create_from_xpm_data(sidebuttons);
+
+    mappings[PIX_BUTTONS_NONE]  = Gdk::Pixbuf::create_from_xpm_data(button_none);
+    mappings[PIX_BUTTONS_ON]    = Gdk::Pixbuf::create_from_xpm_data(button_on);
+    mappings[PIX_BUTTONS_OFF]   = Gdk::Pixbuf::create_from_xpm_data(button_off);
+
+    mappings[PIX_AXIS_NONE]     = Gdk::Pixbuf::create_from_xpm_data(axis_none_xpm);
+    mappings[PIX_AXIS_ON]       = Gdk::Pixbuf::create_from_xpm_data(axis_on_xpm);
+    mappings[PIX_AXIS_OFF]      = Gdk::Pixbuf::create_from_xpm_data(axis_off_xpm);
+
+    Glib::RefPtr<Gdk::Pixbuf> pix;
+    if (mappings.find(id) != mappings.end()) {
+        pix = mappings[id];
+    }
+
+    return pix;
+}
 
 
 // Now that we've defined the *Impl class, we can do the method to aquire one.
@@ -424,38 +515,23 @@ InputDialog &InputDialog::getInstance()
 InputDialogImpl::InputDialogImpl() :
     InputDialog(),
 
-    corePix(Gdk::Pixbuf::create_from_xpm_data(core_xpm)),
-    penPix(Gdk::Pixbuf::create_from_xpm_data(pen)),
-    mousePix(Gdk::Pixbuf::create_from_xpm_data(mouse)),
-    tipPix(Gdk::Pixbuf::create_from_xpm_data(tip)),
-    tabletPix(Gdk::Pixbuf::create_from_xpm_data(tablet)),
-    eraserPix(Gdk::Pixbuf::create_from_xpm_data(eraser)),
-    sidebuttonsPix(Gdk::Pixbuf::create_from_xpm_data(sidebuttons)),
-
-    buttonsNonePix(Gdk::Pixbuf::create_from_xpm_data(button_none)),
-    buttonsOnPix(Gdk::Pixbuf::create_from_xpm_data(button_on)),
-    buttonsOffPix(Gdk::Pixbuf::create_from_xpm_data(button_off)),
-
-    axisNonePix(Gdk::Pixbuf::create_from_xpm_data(axis_none_xpm)),
-    axisOnPix(Gdk::Pixbuf::create_from_xpm_data(axis_on_xpm)),
-    axisOffPix(Gdk::Pixbuf::create_from_xpm_data(axis_off_xpm)),
-
     lastSourceSeen((GdkInputSource)-1),
     lastDevnameSeen(""),
-    cols(),
-    store(Gtk::TreeStore::create(cols)),
+    store(Gtk::TreeStore::create(getCols())),
+    tabletIter(),
     tree(store),
     frame2(),
-    testFrame("Test Area"),
+    testFrame(_("Test Area")),
     treeScroller(),
     detailScroller(),
     splitter(),
     split2(),
     linkCombo(),
     devDetails(12, 2),
-    confSplitter(),
     topHolder(),
-    imageTable(8, 7)
+    imageTable(8, 7),
+    testDetector(),
+    cfgPanel()
 {
     Gtk::Box *contents = _getContents();
 
@@ -469,14 +545,14 @@ InputDialogImpl::InputDialogImpl() :
 
     testDetector.add(imageTable);
     testFrame.add(testDetector);
-    testThumb.set(tabletPix);
+    testThumb.set(getPix(PIX_TABLET));
     testThumb.set_padding(24, 24);
     imageTable.attach(testThumb, 0, 8, 0, 1, ::Gtk::EXPAND, ::Gtk::EXPAND);
     {
         guint col = 0;
         guint row = 1;
         for ( guint num = 0; num < G_N_ELEMENTS(testButtons); num++ ) {
-            testButtons[num].set(buttonsNonePix);
+            testButtons[num].set(getPix(PIX_BUTTONS_NONE));
             imageTable.attach(testButtons[num], col, col + 1, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
             col++;
             if (col > 7) {
@@ -487,7 +563,7 @@ InputDialogImpl::InputDialogImpl() :
 
         col = 0;
         for ( guint num = 0; num < G_N_ELEMENTS(testAxes); num++ ) {
-            testAxes[num].set(axisNonePix);
+            testAxes[num].set(getPix(PIX_AXIS_NONE));
             imageTable.attach(testAxes[num], col * 2, (col + 1) * 2, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
             col++;
             if (col > 3) {
@@ -498,18 +574,16 @@ InputDialogImpl::InputDialogImpl() :
     }
 
 
-    topHolder.append_page(confSplitter, "Configuration");
-    topHolder.append_page(splitter, "Hardware");
-//     confSplitter.show_all();
-//     splitter.show_all();
+    topHolder.append_page(cfgPanel, _("Configuration"));
+    topHolder.append_page(splitter, _("Hardware"));
     topHolder.show_all();
-    topHolder.set_current_page(1);
+    topHolder.set_current_page(0);
 
     contents->pack_start(topHolder);
 
     int rowNum = 0;
 
-    Gtk::Label* lbl = Gtk::manage(new Gtk::Label("Name:"));
+    Gtk::Label* lbl = Gtk::manage(new Gtk::Label(_("Name:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -519,13 +593,13 @@ InputDialogImpl::InputDialogImpl() :
 
     rowNum++;
 
-    lbl = Gtk::manage(new Gtk::Label("Link:"));
+    lbl = Gtk::manage(new Gtk::Label(_("Link:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
 
-    linkCombo.append_text("None");
-    linkCombo.set_active_text("None");
+    linkCombo.append_text(_("None"));
+    linkCombo.set_active_text(_("None"));
     linkCombo.set_sensitive(false);
     linkConnection = linkCombo.signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::linkComboChanged));
 
@@ -534,7 +608,7 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK);
     rowNum++;
 
-    lbl = Gtk::manage(new Gtk::Label("Axes count:"));
+    lbl = Gtk::manage(new Gtk::Label(_("Axes count:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -545,7 +619,7 @@ InputDialogImpl::InputDialogImpl() :
     rowNum++;
 
 /*
-    lbl = Gtk::manage(new Gtk::Label("Actual axes count:"));
+    lbl = Gtk::manage(new Gtk::Label(_("Actual axes count:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -557,7 +631,7 @@ InputDialogImpl::InputDialogImpl() :
 */
 
     for ( guint barNum = 0; barNum < static_cast<guint>(G_N_ELEMENTS(axesValues)); barNum++ ) {
-        lbl = Gtk::manage(new Gtk::Label("axis:"));
+        lbl = Gtk::manage(new Gtk::Label(_("axis:")));
         devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                           ::Gtk::FILL,
                           ::Gtk::SHRINK);
@@ -569,7 +643,7 @@ InputDialogImpl::InputDialogImpl() :
         rowNum++;
     }
 
-    lbl = Gtk::manage(new Gtk::Label("Button count:"));
+    lbl = Gtk::manage(new Gtk::Label(_("Button count:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -580,7 +654,7 @@ InputDialogImpl::InputDialogImpl() :
     rowNum++;
 
 /*
-    lbl = Gtk::manage(new Gtk::Label("Actual button count:"));
+    lbl = Gtk::manage(new Gtk::Label(_("Actual button count:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -625,30 +699,37 @@ InputDialogImpl::InputDialogImpl() :
 
 
 
-    Gtk::TreeModel::Row row;
-    Gtk::TreeModel::Row childrow;
-    Gtk::TreeModel::Row deviceRow;
-
-
     //Add the TreeView's view columns:
-    tree.append_column("I", cols.thumbnail);
-    tree.append_column("Bar", cols.description);
+    tree.append_column("I", getCols().thumbnail);
+    tree.append_column("Bar", getCols().description);
 
     tree.set_enable_tree_lines();
     tree.set_headers_visible(false);
     tree.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::resyncToSelection));
 
 
+    setupTree( store, tabletIter );
 
+    Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
+    Inkscape::DeviceManager::getManager().signalAxesChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceAxes));
+    Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
+    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind<Gtk::TreeIter &, Gtk::TreeView &>(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, tree));
+
+    tree.expand_all();
+    show_all_children();
+}
+
+void InputDialogImpl::setupTree( Glib::RefPtr<Gtk::TreeStore> store, Gtk::TreeIter &tablet )
+{
     std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
     if ( !devList.empty() ) {
-        row = *(store->append());
-        row[cols.description] = "Hardware";
+        Gtk::TreeModel::Row row = *(store->append());
+        row[getCols().description] = _("Hardware");
 
-        tabletIter = store->append(row.children());
-        childrow = *tabletIter;
-        childrow[cols.description] = "Tablet";
-        childrow[cols.thumbnail] = tabletPix;
+        tablet = store->append(row.children());
+        Gtk::TreeModel::Row childrow = *tablet;
+        childrow[getCols().description] = _("Tablet");
+        childrow[getCols().thumbnail] = getPix(PIX_TABLET);
 
         for ( std::list<Glib::RefPtr<InputDevice const> >::iterator it = devList.begin(); it != devList.end(); ++it ) {
             Glib::RefPtr<InputDevice const> dev = *it;
@@ -658,25 +739,26 @@ InputDialogImpl::InputDialogImpl() :
 
 //                 if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                 if ( dev ) {
-                    deviceRow = *(store->append(childrow.children()));
-                    deviceRow[cols.description] = dev->getName();
-                    deviceRow[cols.device] = dev;
+                    Gtk::TreeModel::Row deviceRow = *(store->append(childrow.children()));
+                    deviceRow[getCols().description] = dev->getName();
+                    deviceRow[getCols().device] = dev;
+                    deviceRow[getCols().mode] = dev->getMode();
                     switch ( dev->getSource() ) {
                         case GDK_SOURCE_MOUSE:
-                            deviceRow[cols.thumbnail] = corePix;
+                            deviceRow[getCols().thumbnail] = getPix(PIX_CORE);
                             break;
                         case GDK_SOURCE_PEN:
-                            if (deviceRow[cols.description] == "pad") {
-                                deviceRow[cols.thumbnail] = sidebuttonsPix;
+                            if (deviceRow[getCols().description] == _("pad")) {
+                                deviceRow[getCols().thumbnail] = getPix(PIX_SIDEBUTTONS);
                             } else {
-                                deviceRow[cols.thumbnail] = tipPix;
+                                deviceRow[getCols().thumbnail] = getPix(PIX_TIP);
                             }
                             break;
                         case GDK_SOURCE_CURSOR:
-                            deviceRow[cols.thumbnail] = mousePix;
+                            deviceRow[getCols().thumbnail] = getPix(PIX_MOUSE);
                             break;
                         case GDK_SOURCE_ERASER:
-                            deviceRow[cols.thumbnail] = eraserPix;
+                            deviceRow[getCols().thumbnail] = getPix(PIX_ERASER);
                             break;
                         default:
                             ; // nothing
@@ -689,18 +771,165 @@ InputDialogImpl::InputDialogImpl() :
     } else {
         g_warning("No devices found");
     }
-    Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
-    Inkscape::DeviceManager::getManager().signalAxesChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceAxes));
-    Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
-    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceLinks));
-
-    tree.expand_all();
-    show_all_children();
 }
 
-void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& /*device*/)
+
+InputDialogImpl::ConfPanel::ConfPanel() :
+    Gtk::VBox(),
+    store(Gtk::TreeStore::create(getCols())),
+    tabletIter(),
+    tree(store),
+    treeScroller(),
+    watcher(*this),
+    useExt(_("Use pressure-sensitive tablet (requires restart)")),
+    save(_("Save"))
+{
+    pack_start(treeScroller);
+
+    treeScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    treeScroller.add(tree);
+
+    class Foo : public Gtk::TreeModel::ColumnRecord {
+    public :
+        Gtk::TreeModelColumn<Glib::ustring> one;
+        Foo() {add(one);}
+    };
+    static Foo foo;
+    Glib::RefPtr<Gtk::ListStore> poppers = Gtk::ListStore::create(foo);
+    poppers->reference();
+
+    Gtk::TreeModel::Row row = *(poppers->append());
+    row[foo.one] = getModeToString()[Gdk::MODE_DISABLED];
+    row = *(poppers->append());
+    row[foo.one] = getModeToString()[Gdk::MODE_SCREEN];
+    row = *(poppers->append());
+    row[foo.one] = getModeToString()[Gdk::MODE_WINDOW];
+
+    Gtk::CellRendererCombo *rendr = new Gtk::CellRendererCombo();
+    rendr->property_model().set_value(poppers);
+    rendr->property_text_column().set_value(0);
+    rendr->property_has_entry() = false;
+
+    //Add the TreeView's view columns:
+    tree.append_column("I", getCols().thumbnail);
+    tree.append_column("Bar", getCols().description);
+    Gtk::TreeViewColumn *col = new Gtk::TreeViewColumn("X", *rendr);
+    if (col) {
+        tree.append_column(*col);
+        col->set_cell_data_func(*rendr, sigc::ptr_fun(setModeCellString));
+        rendr->signal_edited().connect(sigc::bind(sigc::ptr_fun(commitCellModeChange), store));
+        rendr->property_editable() = true;
+    }
+
+    tree.set_enable_tree_lines();
+    tree.set_headers_visible(false);
+
+    setupTree( store, tabletIter );
+
+    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind<Gtk::TreeIter &, Gtk::TreeView &>(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, tree));
+
+    tree.expand_all();
+
+    useExt.set_active(Preferences::get()->getBool("/options/useextinput/value"));
+    useExt.signal_toggled().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::useExtToggled));
+    pack_start(useExt, Gtk::PACK_SHRINK);
+
+    save.signal_clicked().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::saveSettings));
+    Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_TOP, 0, 0);
+    align->add(save);
+    pack_start(*Gtk::manage(align), Gtk::PACK_SHRINK);
+}
+
+InputDialogImpl::ConfPanel::~ConfPanel()
+{
+}
+
+void InputDialogImpl::ConfPanel::setModeCellString(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter)
+{
+    if (iter) {
+        Gtk::CellRendererCombo *combo = dynamic_cast<Gtk::CellRendererCombo *>(rndr);
+        if (combo) {
+            Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
+            Gdk::InputMode mode = (*iter)[getCols().mode];
+            if (dev && (getModeToString().find(mode) != getModeToString().end())) {
+                combo->property_text() = getModeToString()[mode];
+            } else {
+                combo->property_text() = "";
+            }
+        }
+    }
+}
+
+void InputDialogImpl::ConfPanel::commitCellModeChange(Glib::ustring const &path, Glib::ustring const &newText, Glib::RefPtr<Gtk::TreeStore> store)
+{
+    Gtk::TreeIter iter = store->get_iter(path);
+    if (iter) {
+        Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
+        if (dev && (getStringToMode().find(newText) != getStringToMode().end())) {
+            Gdk::InputMode mode = getStringToMode()[newText];
+            Inkscape::DeviceManager::getManager().setMode( dev->getId(), mode );
+        }
+    }
+}
+
+void InputDialogImpl::ConfPanel::saveSettings()
+{
+    Inkscape::DeviceManager::getManager().saveConfig();
+}
+
+void InputDialogImpl::ConfPanel::useExtToggled()
+{
+    bool active = useExt.get_active();
+    if (active != Preferences::get()->getBool("/options/useextinput/value")) {
+        Preferences::get()->setBool("/options/useextinput/value", active);
+        if (active) {
+            // As a work-around for a common problem, enable tablet toggles on the calligraphic tool.
+            // Covered in Launchpad bug #196195.
+            Preferences::get()->setBool("/tools/tweak/usepressure", true);
+            Preferences::get()->setBool("/tools/calligraphic/usepressure", true);
+            Preferences::get()->setBool("/tools/calligraphic/usetilt", true);
+        }
+    }
+}
+
+InputDialogImpl::ConfPanel::Blink::Blink(ConfPanel &parent) :
+    Preferences::Observer("/options/useextinput/value"),
+    parent(parent)
+{
+    Preferences::get()->addObserver(*this);
+}
+
+InputDialogImpl::ConfPanel::Blink::~Blink()
+{
+    Preferences::get()->removeObserver(*this);
+}
+
+void InputDialogImpl::ConfPanel::Blink::notify(Preferences::Entry const &new_val)
+{
+    parent.useExt.set_active(new_val.getBool());
+}
+
+void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& device)
 {
 //     g_message("OUCH!!!! for %p  hits %s", &device, device->getId().c_str());
+    std::vector<Glib::RefPtr<Gtk::TreeStore> > stores;
+    stores.push_back(store);
+    stores.push_back(cfgPanel.store);
+
+    for (std::vector<Glib::RefPtr<Gtk::TreeStore> >::iterator it = stores.begin(); it != stores.end(); ++it) {
+        Gtk::TreeModel::iterator deviceIter;
+        (*it)->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
+                                 sigc::ptr_fun(&InputDialogImpl::findDevice),
+                                 device->getId(),
+                                 &deviceIter) );
+        if ( deviceIter ) {
+            Gdk::InputMode mode = device->getMode();
+            Gtk::TreeModel::Row row = *deviceIter;
+            if (row[getCols().mode] != mode) {
+                row[getCols().mode] = mode;
+            }
+        }
+    }
 }
 
 void InputDialogImpl::updateDeviceAxes(const Glib::RefPtr<InputDevice>& device)
@@ -741,7 +970,7 @@ bool InputDialogImpl::findDevice(const Gtk::TreeModel::iterator& iter,
                                  Gtk::TreeModel::iterator* result)
 {
     bool stop = false;
-    Glib::RefPtr<InputDevice const> dev = (*iter)[cols.device];
+    Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
     if ( dev && (dev->getId() == id) ) {
         if ( result ) {
             *result = iter;
@@ -756,7 +985,7 @@ bool InputDialogImpl::findDeviceByLink(const Gtk::TreeModel::iterator& iter,
                                        Gtk::TreeModel::iterator* result)
 {
     bool stop = false;
-    Glib::RefPtr<InputDevice const> dev = (*iter)[cols.device];
+    Glib::RefPtr<InputDevice const> dev = (*iter)[getCols().device];
     if ( dev && (dev->getLink() == link) ) {
         if ( result ) {
             *result = iter;
@@ -766,12 +995,14 @@ bool InputDialogImpl::findDeviceByLink(const Gtk::TreeModel::iterator& iter,
     return stop;
 }
 
-void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
+void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device, Gtk::TreeIter &tabletIter, Gtk::TreeView &tree)
 {
+    Glib::RefPtr<Gtk::TreeStore> store = Glib::RefPtr<Gtk::TreeStore>::cast_dynamic(tree.get_model());
+
 //     g_message("Links!!!! for %p  hits [%s]  with link of [%s]", &device, device->getId().c_str(), device->getLink().c_str());
     Gtk::TreeModel::iterator deviceIter;
     store->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
-                             sigc::mem_fun(*this, &InputDialogImpl::findDevice),
+                             sigc::ptr_fun(&InputDialogImpl::findDevice),
                              device->getId(),
                              &deviceIter) );
 
@@ -784,14 +1015,15 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
             if ( deviceIter->parent() != tabletIter ) {
                 // Not the child of the tablet. move on up
 
-                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[cols.device];
-                Glib::ustring descr = (*deviceIter)[cols.description];
-                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
+                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[getCols().device];
+                Glib::ustring descr = (*deviceIter)[getCols().description];
+                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[getCols().thumbnail];
 
                 Gtk::TreeModel::Row deviceRow = *store->append(tabletIter->children());
-                deviceRow[cols.description] = descr;
-                deviceRow[cols.thumbnail] = thumb;
-                deviceRow[cols.device] = dev;
+                deviceRow[getCols().description] = descr;
+                deviceRow[getCols().thumbnail] = thumb;
+                deviceRow[getCols().device] = dev;
+                deviceRow[getCols().mode] = dev->getMode();
 
                 Gtk::TreeModel::iterator oldParent = deviceIter->parent();
                 store->erase(deviceIter);
@@ -805,33 +1037,35 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device)
                 // Simple case. Not already linked
 
                 Gtk::TreeIter newGroup = store->append(tabletIter->children());
-                (*newGroup)[cols.description] = "Pen";
-                (*newGroup)[cols.thumbnail] = penPix;
+                (*newGroup)[getCols().description] = _("Pen");
+                (*newGroup)[getCols().thumbnail] = getPix(PIX_PEN);
 
-                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[cols.device];
-                Glib::ustring descr = (*deviceIter)[cols.description];
-                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[cols.thumbnail];
+                Glib::RefPtr<InputDevice const> dev = (*deviceIter)[getCols().device];
+                Glib::ustring descr = (*deviceIter)[getCols().description];
+                Glib::RefPtr<Gdk::Pixbuf> thumb = (*deviceIter)[getCols().thumbnail];
 
                 Gtk::TreeModel::Row deviceRow = *store->append(newGroup->children());
-                deviceRow[cols.description] = descr;
-                deviceRow[cols.thumbnail] = thumb;
-                deviceRow[cols.device] = dev;
+                deviceRow[getCols().description] = descr;
+                deviceRow[getCols().thumbnail] = thumb;
+                deviceRow[getCols().device] = dev;
+                deviceRow[getCols().mode] = dev->getMode();
 
 
                 Gtk::TreeModel::iterator linkIter;
                 store->foreach_iter( sigc::bind<Glib::ustring, Gtk::TreeModel::iterator*>(
-                                         sigc::mem_fun(*this, &InputDialogImpl::findDeviceByLink),
+                                         sigc::ptr_fun(&InputDialogImpl::findDeviceByLink),
                                          device->getId(),
                                          &linkIter) );
                 if ( linkIter ) {
-                    dev = (*linkIter)[cols.device];
-                    descr = (*linkIter)[cols.description];
-                    thumb = (*linkIter)[cols.thumbnail];
+                    dev = (*linkIter)[getCols().device];
+                    descr = (*linkIter)[getCols().description];
+                    thumb = (*linkIter)[getCols().thumbnail];
 
                     deviceRow = *store->append(newGroup->children());
-                    deviceRow[cols.description] = descr;
-                    deviceRow[cols.thumbnail] = thumb;
-                    deviceRow[cols.device] = dev;
+                    deviceRow[getCols().description] = descr;
+                    deviceRow[getCols().thumbnail] = thumb;
+                    deviceRow[getCols().device] = dev;
+                    deviceRow[getCols().mode] = dev->getMode();
                     Gtk::TreeModel::iterator oldParent = linkIter->parent();
                     store->erase(linkIter);
                     if ( oldParent->children().empty() ) {
@@ -855,8 +1089,8 @@ void InputDialogImpl::linkComboChanged() {
     Gtk::TreeModel::iterator iter = treeSel->get_selected();
     if (iter) {
         Gtk::TreeModel::Row row = *iter;
-        Glib::ustring val = row[cols.description];
-        Glib::RefPtr<InputDevice const> dev = row[cols.device];
+        Glib::ustring val = row[getCols().description];
+        Glib::RefPtr<InputDevice const> dev = row[getCols().device];
         if ( dev ) {
             if ( linkCombo.get_active_row_number() == 0 ) {
                 // It is the "None" entry
@@ -881,14 +1115,14 @@ void InputDialogImpl::resyncToSelection() {
     Gtk::TreeModel::iterator iter = treeSel->get_selected();
     if (iter) {
         Gtk::TreeModel::Row row = *iter;
-        Glib::ustring val = row[cols.description];
-        Glib::RefPtr<InputDevice const> dev = row[cols.device];
+        Glib::ustring val = row[getCols().description];
+        Glib::RefPtr<InputDevice const> dev = row[getCols().device];
         if ( dev ) {
             devDetails.set_sensitive(true);
 
             linkConnection.block();
             linkCombo.clear_items();
-            linkCombo.append_text("None");
+            linkCombo.append_text(_("None"));
             linkCombo.set_active(0);
             if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                 Glib::ustring linked = dev->getLink();
@@ -908,7 +1142,7 @@ void InputDialogImpl::resyncToSelection() {
             linkConnection.unblock();
 
             clear = false;
-            devName.set_label(row[cols.description]);
+            devName.set_label(row[getCols().description]);
             setupValueAndCombo( dev->getNumAxes(), dev->getNumAxes(), devAxesCount, axesCombo);
             setupValueAndCombo( dev->getNumKeys(), dev->getNumKeys(), devKeyCount, buttonCombo);
         }
@@ -945,12 +1179,12 @@ void InputDialogImpl::updateTestButtons( Glib::ustring const& key, gint hotButto
     for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(testButtons)); i++ ) {
         if ( buttonMap[key].find(i) != buttonMap[key].end() ) {
             if ( i == hotButton ) {
-                testButtons[i].set(buttonsOnPix);
+                testButtons[i].set(getPix(PIX_BUTTONS_ON));
             } else {
-                testButtons[i].set(buttonsOffPix);
+                testButtons[i].set(getPix(PIX_BUTTONS_OFF));
             }
         } else {
-            testButtons[i].set(buttonsNonePix);
+            testButtons[i].set(getPix(PIX_BUTTONS_NONE));
         }
     }
 }
@@ -963,8 +1197,8 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
         Gtk::TreeModel::iterator iter = treeSel->get_selected();
         if (iter) {
             Gtk::TreeModel::Row row = *iter;
-            Glib::ustring val = row[cols.description];
-            Glib::RefPtr<InputDevice const> idev = row[cols.device];
+            Glib::ustring val = row[getCols().description];
+            Glib::RefPtr<InputDevice const> idev = row[getCols().device];
             if ( !idev || (idev->getId() != key) ) {
                 dev = 0;
             }
@@ -977,13 +1211,13 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
             switch ( axesMap[key][i].first ) {
                 case 0:
                 case 1:
-                    testAxes[i].set(axisNonePix);
+                    testAxes[i].set(getPix(PIX_AXIS_NONE));
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
                         axesValues[i].set_sensitive(false);
                     }
                     break;
                 case 2:
-                    testAxes[i].set(axisOffPix);
+                    testAxes[i].set(getPix(PIX_AXIS_OFF));
                     axesValues[i].set_sensitive(true);
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
                         if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
@@ -996,7 +1230,7 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                     }
                     break;
                 case 3:
-                    testAxes[i].set(axisOnPix);
+                    testAxes[i].set(getPix(PIX_AXIS_ON));
                     axesValues[i].set_sensitive(true);
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
                         if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
@@ -1010,7 +1244,7 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
             }
 
         } else {
-            testAxes[i].set(axisNonePix);
+            testAxes[i].set(getPix(PIX_AXIS_NONE));
         }
     }
     if ( !dev ) {
@@ -1180,30 +1414,30 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
         switch (source) {
             case GDK_SOURCE_MOUSE:
             {
-                testThumb.set(corePix);
+                testThumb.set(getPix(PIX_CORE));
             }
             break;
             case GDK_SOURCE_CURSOR:
             {
 //                 g_message("flip to cursor");
-                testThumb.set(mousePix);
+                testThumb.set(getPix(PIX_MOUSE));
             }
             break;
             case GDK_SOURCE_PEN:
             {
-                if (devName == "pad") {
+                if (devName == _("pad")) {
 //                     g_message("flip to pad");
-                    testThumb.set(sidebuttonsPix);
+                    testThumb.set(getPix(PIX_SIDEBUTTONS));
                 } else {
 //                     g_message("flip to pen");
-                    testThumb.set(tipPix);
+                    testThumb.set(getPix(PIX_TIP));
                 }
             }
             break;
             case GDK_SOURCE_ERASER:
             {
 //                 g_message("flip to eraser");
-                testThumb.set(eraserPix);
+                testThumb.set(getPix(PIX_ERASER));
             }
             break;
 //             default:

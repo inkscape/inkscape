@@ -9,8 +9,6 @@ ink_common_sources +=	\
 	dialogs/export.h		\
 	dialogs/find.cpp		\
 	dialogs/find.h			\
-	dialogs/input.cpp		\
-	dialogs/input.h			\
 	dialogs/item-properties.cpp	\
 	dialogs/item-properties.h	\
 	dialogs/object-attributes.cpp	\
