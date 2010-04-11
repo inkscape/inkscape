@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-09 09:07+0200\n"
-"PO-Revision-Date: 2010-04-10 13:02+0100\n"
+"PO-Revision-Date: 2010-04-11 20:20+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -645,7 +645,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Automatische Skalierung für die Größe A4 nutzen"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 format.\n"
 "- assume svg drawing is in pixels, at 90 dpi.\n"
@@ -673,7 +672,6 @@ msgid "use LWPOLYLINE type of line output"
 msgstr "Benutzen des LWPOLYLINE Typs der Zeilenausgabe"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
-#, fuzzy
 msgid "use ROBO-Master type of spline output"
 msgstr "ermöglicht ROBO-Master-Ausgabe"
 
@@ -763,6 +761,14 @@ msgstr "LaTeX-Formel"
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
 msgstr "LaTeX-Formel: "
+
+#: ../share/extensions/eqtexsvg.inx.h:3
+msgid "Additional packages"
+msgstr "Zusätzliche Pakete"
+
+#: ../share/extensions/eqtexsvg.inx.h:4
+msgid "Additional packages (comma-separated): "
+msgstr "Zusätzliche Pakete (Komma getrennt):"
 
 #: ../share/extensions/export_gimp_palette.inx.h:1
 msgid "Export as GIMP Palette"
@@ -2887,7 +2893,7 @@ msgstr "Layout-gruppe festlegen"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
-msgstr "Unbestimmt (relativ zur nicht-schwimmenden Inhaktsgröße)"
+msgstr "Unbestimmt (relativ zur nicht-schwimmenden Inhaltsgröße)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 #: ../share/extensions/webslicer_create_rect.inx.h:35
@@ -15321,7 +15327,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:214
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "Kombiation diakritischer Zeichen Ergänzung"
 
 #: ../src/ui/dialog/glyphs.cpp:215
 msgid "Latin Extended Additional"
@@ -15345,7 +15351,7 @@ msgstr "Währungssymbole"
 
 #: ../src/ui/dialog/glyphs.cpp:220
 msgid "Combining Diacritical Marks for Symbols"
-msgstr ""
+msgstr "Kombiation diakritischer Zeichen für Symbole"
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Letterlike Symbols"
@@ -15606,9 +15612,8 @@ msgid "Vertical Forms"
 msgstr "Vertikale Formen"
 
 #: ../src/ui/dialog/glyphs.cpp:298
-#, fuzzy
 msgid "Combining Half Marks"
-msgstr "Druck-Markierungen"
+msgstr "Halbzeichen kombinieren"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "CJK Compatibility Forms"
@@ -15624,7 +15629,7 @@ msgstr "Arabische Präsentationsformen-B"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Halbbreite und Vollbreite Formen"
 
 #: ../src/ui/dialog/glyphs.cpp:303
 msgid "Specials"
@@ -22022,9 +22027,8 @@ msgid "Style of Paint Bucket fill objects"
 msgstr "Stil von neuen Farbeimer-Objekten"
 
 #: ../src/widgets/toolbox.cpp:856
-#, fuzzy
 msgid "Default interface setup"
-msgstr "Vorgegebener Titel"
+msgstr "Standard Schnittstellen-Setup"
 
 #: ../src/widgets/toolbox.cpp:862
 msgid "Set the custom task"
@@ -23108,12 +23112,11 @@ msgstr "Druckempfindlichkeit des Eingabegeräts benutzen, um die Anzahl der zu s
 #. Rotation
 #: ../src/widgets/toolbox.cpp:4685
 msgid "(low rotation variation)"
-msgstr ""
+msgstr "(geringe Abweichung)"
 
 #: ../src/widgets/toolbox.cpp:4685
-#, fuzzy
 msgid "(high rotation variation)"
-msgstr "(leichte Abweichung)"
+msgstr "(starke Abweichung)"
 
 #: ../src/widgets/toolbox.cpp:4688
 msgid "Rotation"
