@@ -9,7 +9,7 @@
 #define N_(x) x
 
 /* The root's "version" attribute describes the preferences file format version.
- * It should only increase when a backwards-incompatible change is made, 
+ * It should only increase when a backwards-incompatible change is made,
  * and special handling has to be added to the preferences class to update
  * obsolete versions the user might have. */
 static char const preferences_skeleton[] =
@@ -101,7 +101,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"cp3\" name=\"" N_("Wiggly") "\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"1\" cap_rounding=\"0.1\" flatness=\"16\" tremor=\"18\" thinning=\"-30\" angle=\"30\" wiggle=\"50\" mass=\"0\" />\n"
 "    <group id=\"cp4\" name=\"" N_("Splotchy") "\" width=\"100\" usetilt=\"1\" tracebackground=\"0\" usepressure=\"0\" cap_rounding=\"1\" flatness=\"0\" tremor=\"10\" thinning=\"30\" angle=\"30\" wiggle=\"0\" mass=\"0\" />\n"
 "    <group id=\"cp5\" name=\"" N_("Tracing") "\" width=\"50\" mass=\"0\" wiggle=\"0.0\" angle=\"0.0\" thinning=\"0.0\" tremor=\"0.0\" flatness=\"0\" cap_rounding=\"0.0\" tracebackground=\"1\" usepressure=\"1\" usetilt=\"1\"/>\n"
-"    </group>\n" 
+"    </group>\n"
 "    </eventcontext>\n"
 "    <eventcontext id=\"eraser\" mode=\"0\" style=\"fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;\"\n"
 "                       mass=\"0.02\" drag=\"1\" angle=\"30\" width=\"0.15\" thinning=\"0.1\" flatness=\"0.0\" cap_rounding=\"1.4\" usecurrent=\"0\"\n"
@@ -113,7 +113,7 @@ static char const preferences_skeleton[] =
 "                       font_sample=\"AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()\"\n"
 "                       show_sample_in_list=\"1\"\n"
 "                  style=\"fill:black;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;font-style:normal;font-weight:normal;font-size:40px;\" selcue=\"1\"/>\n"
-"    <eventcontext id=\"nodes\" selcue=\"1\" gradientdrag=\"1\" highlight_color=\"4278190335\" pathflash_enabled=\"1\" pathflash_unselected=\"0\" pathflash_timeout=\"500\" show_handles=\"1\" show_outline=\"0\" sculpting_profile=\"1\" single_node_transform_handles=\"0\" show_transform_handles=\"0\" live_outline=\"1\" live_objects=\"1\" />\n"
+"    <eventcontext id=\"nodes\" selcue=\"1\" gradientdrag=\"1\" highlight_color=\"4278190335\" pathflash_enabled=\"1\" pathflash_unselected=\"0\" pathflash_timeout=\"500\" show_handles=\"1\" show_outline=\"0\" sculpting_profile=\"1\" single_node_transform_handles=\"0\" show_transform_handles=\"0\" live_outline=\"1\" live_objects=\"1\" show_helperpath=\"0\" x=\"0\" y=\"0\" edit_clipping_paths=\"0\" edit_masks=\"0\" />\n"
 "    <eventcontext id=\"tweak\" selcue=\"0\" gradientdrag=\"0\" show_handles=\"0\" width=\"0.2\" force=\"0.2\" fidelity=\"0.5\" usepressure=\"1\" style=\"fill:red;stroke:none;\" usecurrent=\"0\"/>\n"
 "    <eventcontext id=\"spray\" selcue=\"0\" gradientdrag=\"0\" show_handles=\"0\" width=\"0.2\" force=\"0.2\" fidelity=\"0.5\" usepressure=\"1\" style=\"fill:red;stroke:none;\" usecurrent=\"0\"/>\n"
 "    <eventcontext id=\"gradient\" selcue=\"1\"/>\n"
