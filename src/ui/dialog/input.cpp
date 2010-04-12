@@ -454,10 +454,10 @@ private:
     bool eventSnoop(GdkEvent* event);
     void linkComboChanged();
     void resyncToSelection();
-    void handleDeviceChange(const Glib::RefPtr<InputDevice>& device);
-    void updateDeviceAxes(const Glib::RefPtr<InputDevice>& device);
-    void updateDeviceButtons(const Glib::RefPtr<InputDevice>& device);
-    static void updateDeviceLinks(const Glib::RefPtr<InputDevice>& device, Gtk::TreeIter &tabletIter, Gtk::TreeView &tree);
+    void handleDeviceChange(Glib::RefPtr<InputDevice const> device);
+    void updateDeviceAxes(Glib::RefPtr<InputDevice const> device);
+    void updateDeviceButtons(Glib::RefPtr<InputDevice const> device);
+    static void updateDeviceLinks(Glib::RefPtr<InputDevice const> device, Gtk::TreeIter tabletIter, Glib::RefPtr<Gtk::TreeView> tree);
 
     static bool findDevice(const Gtk::TreeModel::iterator& iter,
                            Glib::ustring id,
@@ -713,7 +713,8 @@ InputDialogImpl::InputDialogImpl() :
     Inkscape::DeviceManager::getManager().signalDeviceChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::handleDeviceChange));
     Inkscape::DeviceManager::getManager().signalAxesChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceAxes));
     Inkscape::DeviceManager::getManager().signalButtonsChanged().connect(sigc::mem_fun(*this, &InputDialogImpl::updateDeviceButtons));
-    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind<Gtk::TreeIter &, Gtk::TreeView &>(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, tree));
+    Glib::RefPtr<Gtk::TreeView> treePtr(&tree);
+    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, treePtr));
 
     tree.expand_all();
     show_all_children();
@@ -826,7 +827,8 @@ InputDialogImpl::ConfPanel::ConfPanel() :
 
     setupTree( store, tabletIter );
 
-    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind<Gtk::TreeIter &, Gtk::TreeView &>(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, tree));
+    Glib::RefPtr<Gtk::TreeView> treePtr(&tree);
+    Inkscape::DeviceManager::getManager().signalLinkChanged().connect(sigc::bind(sigc::ptr_fun(&InputDialogImpl::updateDeviceLinks), tabletIter, treePtr));
 
     tree.expand_all();
 
@@ -909,7 +911,7 @@ void InputDialogImpl::ConfPanel::Blink::notify(Preferences::Entry const &new_val
     parent.useExt.set_active(new_val.getBool());
 }
 
-void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& device)
+void InputDialogImpl::handleDeviceChange(Glib::RefPtr<InputDevice const> device)
 {
 //     g_message("OUCH!!!! for %p  hits %s", &device, device->getId().c_str());
     std::vector<Glib::RefPtr<Gtk::TreeStore> > stores;
@@ -932,7 +934,7 @@ void InputDialogImpl::handleDeviceChange(const Glib::RefPtr<InputDevice>& device
     }
 }
 
-void InputDialogImpl::updateDeviceAxes(const Glib::RefPtr<InputDevice>& device)
+void InputDialogImpl::updateDeviceAxes(Glib::RefPtr<InputDevice const> device)
 {
     gint live = device->getLiveAxes();
 
@@ -949,7 +951,7 @@ void InputDialogImpl::updateDeviceAxes(const Glib::RefPtr<InputDevice>& device)
     updateTestAxes( device->getId(), 0 );
 }
 
-void InputDialogImpl::updateDeviceButtons(const Glib::RefPtr<InputDevice>& device)
+void InputDialogImpl::updateDeviceButtons(Glib::RefPtr<InputDevice const> device)
 {
     gint live = device->getLiveButtons();
     std::set<guint> existing = buttonMap[device->getId()];
@@ -995,9 +997,9 @@ bool InputDialogImpl::findDeviceByLink(const Gtk::TreeModel::iterator& iter,
     return stop;
 }
 
-void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device, Gtk::TreeIter &tabletIter, Gtk::TreeView &tree)
+void InputDialogImpl::updateDeviceLinks(Glib::RefPtr<InputDevice const> device, Gtk::TreeIter tabletIter, Glib::RefPtr<Gtk::TreeView> tree)
 {
-    Glib::RefPtr<Gtk::TreeStore> store = Glib::RefPtr<Gtk::TreeStore>::cast_dynamic(tree.get_model());
+    Glib::RefPtr<Gtk::TreeStore> store = Glib::RefPtr<Gtk::TreeStore>::cast_dynamic(tree->get_model());
 
 //     g_message("Links!!!! for %p  hits [%s]  with link of [%s]", &device, device->getId().c_str(), device->getLink().c_str());
     Gtk::TreeModel::iterator deviceIter;
@@ -1078,7 +1080,7 @@ void InputDialogImpl::updateDeviceLinks(const Glib::RefPtr<InputDevice>& device,
                 if ( oldParent->children().empty() ) {
                     store->erase(oldParent);
                 }
-                tree.expand_row(Gtk::TreePath(newGroup), true);
+                tree->expand_row(Gtk::TreePath(newGroup), true);
             }
         }
     }

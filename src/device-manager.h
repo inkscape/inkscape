@@ -47,10 +47,10 @@ public:
 
     virtual std::list<Glib::RefPtr<InputDevice const> > getDevices() = 0;
 
-    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalDeviceChanged() = 0;
-    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalAxesChanged() = 0;
-    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalButtonsChanged() = 0;
-    virtual sigc::signal<void, const Glib::RefPtr<InputDevice>& > signalLinkChanged() = 0;
+    virtual sigc::signal<void, Glib::RefPtr<InputDevice const> > signalDeviceChanged() = 0;
+    virtual sigc::signal<void, Glib::RefPtr<InputDevice const> > signalAxesChanged() = 0;
+    virtual sigc::signal<void, Glib::RefPtr<InputDevice const> > signalButtonsChanged() = 0;
+    virtual sigc::signal<void, Glib::RefPtr<InputDevice const> > signalLinkChanged() = 0;
 
     virtual void addAxis(Glib::ustring const & id, gint axis) = 0;
     virtual void addButton(Glib::ustring const & id, gint button) = 0;
