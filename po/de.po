@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-04-09 09:07+0200\n"
-"PO-Revision-Date: 2010-04-11 20:20+0100\n"
+"PO-Revision-Date: 2010-04-12 08:59+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -205,7 +205,7 @@ msgstr "Blau-Funktion"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1418
 #: ../src/widgets/toolbox.cpp:861
 msgid "Custom"
-msgstr "_Benutzerdefiniert"
+msgstr "Benutzerdefiniert"
 
 #: ../share/extensions/color_custom.inx.h:4
 msgid "Green Function"
@@ -279,7 +279,7 @@ msgstr "Helligkeit"
 
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Randomize"
-msgstr "Zufallsänderung:"
+msgstr "Zufallsänderung"
 
 #: ../share/extensions/color_randomize.inx.h:5
 #: ../src/extension/internal/bitmap/modulate.cpp:42
@@ -8614,7 +8614,7 @@ msgstr "verknüpfen"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
 msgid "Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together."
-msgstr ""
+msgstr "Einbetten des Ergebnisses in eine eigenständige, größere SVG-Datei.Die Verknüpfung referenziert auf eine Datei außerhalb des SVG-Dokuments und alle Dateien müssen an einer Stelle liegen. "
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -15267,7 +15267,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:160
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Kombination diaktritischer Zeichen"
 
 #: ../src/ui/dialog/glyphs.cpp:161
 msgid "Greek and Coptic"
@@ -15323,7 +15323,7 @@ msgstr "Phonetische Erweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:213
 msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgstr "Phonetische Zusatz -rweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:214
 msgid "Combining Diacritical Marks Supplement"
@@ -15383,7 +15383,7 @@ msgstr "Optische Zeichenerkennung"
 
 #: ../src/ui/dialog/glyphs.cpp:228
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Eingeschlossene Alphanumerik"
 
 # not sure here -cm-
 #: ../src/ui/dialog/glyphs.cpp:229
@@ -15465,7 +15465,7 @@ msgstr "Kangxi Radikal"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Sinnbildliche Beschreibungsbuchstaben"
 
 #: ../src/ui/dialog/glyphs.cpp:252
 msgid "CJK Symbols and Punctuation"
@@ -15493,7 +15493,7 @@ msgstr "Katakana Phonetische Erweiterungen"
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "Enclosed CJK Letters and Months"
-msgstr ""
+msgstr "Eingeschlossene CJK Buchstaben und Monate"
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Compatibility"
@@ -15501,7 +15501,7 @@ msgstr "CJK Kompatibilität"
 
 #: ../src/ui/dialog/glyphs.cpp:263
 msgid "CJK Unified Ideographs Extension A"
-msgstr ""
+msgstr "CJK einheitliche Sinnbilder Erweiterung A"
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "Yijing Hexagram Symbols"
@@ -15593,7 +15593,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "CJK Kombatibilitätssinnbilder"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Alphabetic Presentation Forms"
@@ -16132,7 +16132,7 @@ msgstr "Umriss beim Ziehen von Knoten aktualisieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Update the outline when dragging or transforming nodes. If this is off, the outline will only update when completing a drag."
-msgstr ""
+msgstr "Aktualisiert die Umrandung beim Ziehen oder transformieren der Knoten. Wenn es deaktiviert ist, wird die Umrandung erst wieder aktualisiert, wenn die Aktion abgeschlossen ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Update paths when dragging nodes"
@@ -16140,7 +16140,7 @@ msgstr "Pfad beim Ziehen von Knoten aktualisieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Update paths when dragging or transforming nodes. If this is off, paths will only be updated when completing a drag."
-msgstr ""
+msgstr "Aktualisiert Pfade beim Ziehen oder Transformieren der Knoten. Wenn es deaktiviert ist, wird der Pfad erst aktualisiert, wenn die Aktion abgeschlossen ist."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Show path direction on outlines"
