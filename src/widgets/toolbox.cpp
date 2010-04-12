@@ -741,7 +741,7 @@ PrefPusher::PrefPusher( GtkToggleAction *act, Glib::ustring const &path, void (*
 {
     g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggleCB), this);
     freeze = true;
-    gtk_toggle_action_set_active( act, Inkscape::Preferences::get()->getBool(observed_path, true) );
+    gtk_toggle_action_set_active( act, Inkscape::Preferences::get()->getBool(observed_path) );
     freeze = false;
 
     Inkscape::Preferences::get()->addObserver(*this);
