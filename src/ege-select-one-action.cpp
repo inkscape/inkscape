@@ -575,7 +575,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                         g_object_set( G_OBJECT(obj), act->private_data->iconProperty, iconId, NULL );
                     }
 
-                    if ( act->private_data->iconProperty >= 0 ) {
+                    if ( act->private_data->iconProperty ) {
                         /* TODO get this string to be set instead of hardcoded */
                         if ( act->private_data->iconSize >= 0 ) {
                             g_object_set( G_OBJECT(obj), "iconSize", act->private_data->iconSize, NULL );
