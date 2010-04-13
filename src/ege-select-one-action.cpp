@@ -278,6 +278,21 @@ gint ege_select_one_action_get_active( EgeSelectOneAction* action )
     return action->private_data->active;
 }
 
+gchar *ege_select_one_action_get_active_text( EgeSelectOneAction* action )
+{
+    GtkTreeIter iter;
+    gchar *str = 0;
+    g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
+
+    if ( gtk_tree_model_iter_nth_child( action->private_data->model, &iter, NULL, action->private_data->active ) ) {
+        gtk_tree_model_get( action->private_data->model, &iter,
+                            action->private_data->labelColumn, &str,
+                            -1 );
+    }
+
+    return str;
+}
+
 void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val )
 {
     g_object_set( G_OBJECT(action), "active", val, NULL );

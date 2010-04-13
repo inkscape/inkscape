@@ -122,6 +122,14 @@ GtkTreeModel *ege_select_one_action_get_model(EgeSelectOneAction* action );
 gint ege_select_one_action_get_active( EgeSelectOneAction* action );
 
 /**
+ * Returns the text of the currently selected item.
+ *
+ * @param action The action to fetch the text for.
+ * @return the selected text. The caller is responsible to call g_free() on it when done.
+ */
+gchar *ege_select_one_action_get_active_text( EgeSelectOneAction* action );
+
+/**
  * Sets the  currently selected item.
  *
  * @param action The action to fetch the selected index for.
