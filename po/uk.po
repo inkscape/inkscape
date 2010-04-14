@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-30 17:45+0200\n"
-"PO-Revision-Date: 2010-02-10 17:13+0200\n"
+"PO-Revision-Date: 2010-04-01 20:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 1.0\n"
 
 #: ../share/extensions/addnodes.inx.h:1
@@ -1057,13 +1057,11 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -1616,7 +1614,7 @@ msgid ""
 msgstr ""
 "Цей ефект створює стандартний шаблон тексту \"Lorem Ipsum\". Якщо "
 "застосувати ефект до блоку із текстом вздовж контуру, цей текст заливається "
-"до блоку, якщо ні — до нового об’єкту тексту вздовж контуру, розміром у "
+"до блоку, якщо ні — до нового об’єкта тексту вздовж контуру, розміром у "
 "сторінку, у новому шарі."
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
@@ -2890,41 +2888,41 @@ msgstr "Імпорт тексту"
 #: ../share/extensions/webslicer_create_group.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "HTML class atribute"
-msgstr ""
+msgstr "Атрибут class HTML"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:16
-#, fuzzy
 msgid "HTML id atribute"
-msgstr "Встановити атрибут"
+msgstr "Атрибут id HTML"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-#, fuzzy
 msgid "Height Unity"
-msgstr "Висота"
+msgstr "Вимірювання висоти"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, first you must to select some \"Slicer rectangles\"."
 msgstr ""
+"Групи компонування призначено лише для покращення вигляду коду (якщо таке "
+"покращення вам потрібне). Щоб скористатися ним, вам спершу слід позначити "
+"певні «Прямокутники розрізання»."
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
-#, fuzzy
 msgid "Percent (relative to parent size)"
-msgstr "Масштаб відносно довжини"
+msgstr "Масштабоване (у відсотках від батьківського розміру)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Pixel (fixed)"
-msgstr ""
+msgstr "У пікселях (фіксоване)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Set a layout group"
-msgstr ""
+msgstr "Створити групу компонування"
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Undefined (relative to non-floating content size)"
-msgstr ""
+msgstr "Не визначено (відносно розміру нерухомих частин)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 #: ../share/extensions/webslicer_create_rect.inx.h:35
@@ -2935,15 +2933,16 @@ msgid "Web"
 msgstr "Тенета"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
-#, fuzzy
 msgid "Width Unity"
-msgstr "Ширина"
+msgstr "Вимірювання ширини"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
 msgstr ""
+"0 відповідає найнижчій якості зображення і найвищому рівню стискання, 100 — "
+"найвищій якості і незначному рівню стискання"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:2
 #: ../src/ui/dialog/document-properties.cpp:93
@@ -2952,30 +2951,27 @@ msgstr "Колір тла"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
-msgstr ""
+msgstr "Тло — без повторювання (у батьківській групі)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "Background — repeat horizontally (on parent group)"
-msgstr ""
+msgstr "Тло — горизонтальне повторювання (у батьківській групі)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
 msgid "Background — repeat vertically (on parent group)"
-msgstr ""
+msgstr "Тло — вертикальне повторювання (у батьківській групі)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
-#, fuzzy
 msgid "Bottom and Left"
-msgstr "Нижній контур вигину"
+msgstr "Внизу ліворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-#, fuzzy
 msgid "Bottom and Right"
-msgstr "Нижній контур вигину"
+msgstr "Внизу праворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-#, fuzzy
 msgid "Create a slicer rectangle"
-msgstr "Створити прямокутник"
+msgstr "Створити прямокутник розрізання"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9 ../src/main.cpp:300
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -2983,39 +2979,37 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
-#, fuzzy
 msgid "Force Dimension"
-msgstr "Виміри"
+msgstr "Примусові розміри"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
+"Примусові розміри слід вказувати у форматі «&lt;ширина&gt;x&lt;висота&gt;»"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:12 ../src/rdf.cpp:235
 msgid "Format"
 msgstr "Формат"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
-#, fuzzy
 msgid "GIF specific options"
-msgstr "Специфікація SVG 1.1"
+msgstr "Специфічні для GIF параметри"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "If had set, this will replace DPI."
-msgstr ""
+msgstr "Якщо встановлено, замінить значення роздільності у точках на дюйм."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:18
-#, fuzzy
 msgid "JPG specific options"
-msgstr "Специфікація SVG 1.1"
+msgstr "Специфічні для JPG параметри"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "Layout disposition"
-msgstr ""
+msgstr "Розташування компонування"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Left Floated Image"
-msgstr ""
+msgstr "Зображення, зсунуте ліворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 #: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
@@ -3023,61 +3017,52 @@ msgid "Name"
 msgstr "Назва"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
-#, fuzzy
 msgid "Non Positioned Image"
-msgstr "фіксований кут"
+msgstr "Непозиційоване зображення"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Options for HTML export"
-msgstr ""
+msgstr "Параметри експортування до HTML"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:24
-#, fuzzy
 msgid "Palette"
-msgstr "_Палітру"
+msgstr "Палітра"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:25
-#, fuzzy
 msgid "Palette size"
-msgstr "Вставити розмір"
+msgstr "Розмір палітри"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
-#, fuzzy
 msgid "Position anchor"
-msgstr "Розташування"
+msgstr "Фіксатор позиції"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Positioned &lt;div&gt; width the image as Background"
-msgstr ""
+msgstr "Позиційована ширина &lt;div&gt; зображення як тла"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
-#, fuzzy
 msgid "Positioned Image"
-msgstr "Позиціонування"
+msgstr "Позиційоване зображення"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:29
-#, fuzzy
 msgid "Quality"
-msgstr "Ви_йти"
+msgstr "Якість"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
-#, fuzzy
 msgid "Right Floated Image"
-msgstr "Правий кут"
+msgstr "Зображення, зсунуте праворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Tiled Background (on parent group)"
-msgstr ""
+msgstr "Тло з мозаїки (у батьківській групі)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:32
-#, fuzzy
 msgid "Top and Left"
-msgstr "Верхній контур вигину"
+msgstr "Вгорі ліворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:33
-#, fuzzy
 msgid "Top and right"
-msgstr "_Поради та прийоми"
+msgstr "Вгорі праворуч"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:34
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
@@ -3089,22 +3074,24 @@ msgid ""
 "All sliced images, and optionaly code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
+"Всі розрізані зображення та, за бажання, код буде створено відповідно до "
+"налаштувань і збережено до одного каталогу."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
-msgstr ""
+msgstr "Створити каталог, якщо його ще не існує"
 
 #: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export"
-msgstr ""
+msgstr "Адреса каталогу для експортування"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "Експортувати частини компонування і код HTML+CSS"
 
 #: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
-msgstr ""
+msgstr "З HTML і CSS"
 
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "All selected ones set an attribute in the last one"
@@ -3604,8 +3591,7 @@ msgstr "Фаски"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Same as Matte jelly but with more controls"
-msgstr ""
-"Те саме, що і Матове покриття, але з додатковими можливостями керування"
+msgstr "Те саме, що і Матове покриття, але з додатковими можливостями керування"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Metal casting"
@@ -4077,7 +4063,7 @@ msgstr "Розтоплений метал"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr "Сплавлення частин об’єкту у одне ціле з глянсуватою фаскою і німбом"
+msgstr "Сплавлення частин об’єкта у одне ціле з глянсуватою фаскою і німбом"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Pressed steel"
@@ -4224,8 +4210,7 @@ msgstr "Металізована фарба"
 #: ../share/filters/filters.svg.h:67
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
-"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Dragee"
@@ -4421,8 +4406,7 @@ msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
 #: ../share/filters/filters.svg.h:89
-msgid ""
-"Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
@@ -4700,8 +4684,7 @@ msgstr "Контурне сяйво"
 
 #: ../share/filters/filters.svg.h:119
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
-"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
 #: ../share/filters/filters.svg.h:120
 msgid "HSL Bumps, matte"
@@ -4809,8 +4792,7 @@ msgid "Felt"
 msgstr "Фетр"
 
 #: ../share/filters/filters.svg.h:132
-msgid ""
-"Felt like texture with color turbulence and slightly darker at the edges"
+msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
 #: ../share/filters/filters.svg.h:133
@@ -4843,8 +4825,7 @@ msgstr "Вигнутий метал"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
-"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Comics draft"
@@ -5112,8 +5093,7 @@ msgstr "Жувачка"
 msgid ""
 "Creates colorizable blotches which smoothly flow over the edges of the lines "
 "at their crossings"
-msgstr ""
-"Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
+msgstr "Створює однотонні брижі, які плавно обтікають краї ліній та їх перетини"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Black outline"
@@ -5357,8 +5337,7 @@ msgid "Alpha engraving B"
 msgstr "Альфа-гравірування B"
 
 #: ../share/filters/filters.svg.h:193
-msgid ""
-"Gives a controllable roughness engraving effect to bitmaps and materials"
+msgid "Gives a controllable roughness engraving effect to bitmaps and materials"
 msgstr ""
 "Надає ефекту гравірування з керованим рівнем нерівності растровим "
 "зображенням і матеріалам"
@@ -5752,28 +5731,24 @@ msgid "Old paint (bitmap)"
 msgstr "Стара картина (растр)"
 
 #: ../src/conn-avoid-ref.cpp:237
-#, fuzzy
 msgid "Add a new connection point"
-msgstr "Створити точку з’єднання"
+msgstr "Додати нову точку з’єднання"
 
 #: ../src/conn-avoid-ref.cpp:262
-#, fuzzy
 msgid "Move a connection point"
-msgstr "Вилучити точку з’єднання"
+msgstr "Пересунути точку з’єднання"
 
 #: ../src/conn-avoid-ref.cpp:282
-#, fuzzy
 msgid "Remove a connection point"
 msgstr "Вилучити точку з’єднання"
 
 #: ../src/live_effects/lpe-extrude.cpp:26
-#, fuzzy
 msgid "Direction"
-msgstr "Опис"
+msgstr "Напрямок"
 
 #: ../src/live_effects/lpe-extrude.cpp:26
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "Визначає напрямок і потужність витискання"
 
 #: ../src/sp-flowtext.cpp:378 ../src/sp-text.cpp:427
 #: ../src/text-context.cpp:1604
@@ -5800,7 +5775,7 @@ msgstr[2] "<b>Зв'язаний контурний текст</b> (%d літер
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
-"<b>Ctrl</b>: робить коло або еліпс з цілим відношенням сторін, обмежує кут "
+"<b>Ctrl</b>: створює коло або еліпс з цілим відношенням сторін, обмежує кут "
 "дуги/сегмента"
 
 #: ../src/arc-context.cpp:325 ../src/rect-context.cpp:369
@@ -5857,11 +5832,9 @@ msgstr ""
 "лінії"
 
 #: ../src/connector-context.cpp:237
-#, fuzzy
 msgid "<b>Connection point</b>: click to select, drag to move"
 msgstr ""
-"<b>Точка з'єднання</b>: клацніть мишею або перетягніть для створення нової "
-"лінії"
+"<b>Точка з'єднання</b>: клацніть, щоб позначити, перетягніть, щоб пересунути"
 
 #: ../src/connector-context.cpp:781
 msgid "Creating new connector"
@@ -6582,8 +6555,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr ""
-"Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -6658,8 +6630,8 @@ msgstr " В_илучити "
 #: ../src/dialogs/clonetiler.cpp:2963
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
-"Вилучити існуючі мозаїчні клони позначеного об'єкту (лише нащадків одного "
-"об'єкту)"
+"Вилучити існуючі мозаїчні клони позначеного об'єкта (лише нащадків одного "
+"об'єкта)"
 
 #: ../src/dialogs/clonetiler.cpp:2979
 msgid " R_eset "
@@ -6932,7 +6904,7 @@ msgstr "Групи"
 
 #: ../src/dialogs/find.cpp:608 ../src/ui/dialog/find.cpp:82
 msgid "Search clones"
-msgstr "Шукати серед клонах"
+msgstr "Шукати серед клонів"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -7051,8 +7023,7 @@ msgstr "_Id"
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
-"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2439
@@ -7134,7 +7105,7 @@ msgstr "Такий ідентифікатор вже є!"
 
 #: ../src/dialogs/item-properties.cpp:454
 msgid "Set object ID"
-msgstr "Встановити ідентифікатор об'єкту"
+msgstr "Встановити ідентифікатор об'єкта"
 
 #: ../src/dialogs/item-properties.cpp:469
 msgid "Set object label"
@@ -7360,7 +7331,7 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:263
 msgid "Drag to reorder nodes"
-msgstr "Використовуйте мишу для перетягування вузлів"
+msgstr "Перевпорядкуйте вузли перетягуванням"
 
 #: ../src/dialogs/xml-tree.cpp:283
 msgid "New element node"
@@ -7719,9 +7690,8 @@ msgid "constrained angle"
 msgstr "фіксований кут"
 
 #: ../src/display/snap-indicator.cpp:147
-#, fuzzy
 msgid "constraint"
-msgstr "Константа:"
+msgstr "обмеження"
 
 #: ../src/display/snap-indicator.cpp:160
 msgid "Bounding box corner"
@@ -7793,7 +7763,7 @@ msgstr "Базова лінія тексту"
 
 #: ../src/display/snap-indicator.cpp:212
 msgid "Multiple of grid spacing"
-msgstr ""
+msgstr "Кратність проміжку між лініями сітки"
 
 #: ../src/display/snap-indicator.cpp:255
 msgid " to "
@@ -8624,7 +8594,7 @@ msgstr "Перетворити текст на контури"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-msgstr ""
+msgstr "PS+LaTeX: пропустити текст у PS і створити файл LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:373
@@ -8662,7 +8632,7 @@ msgstr "Файл Postscript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:372
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-msgstr ""
+msgstr "EPS+LaTeX: пропустити текст у EPS і створити файл LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:382
 msgid "Encapsulated PostScript File"
@@ -8678,7 +8648,7 @@ msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "PDF+LaTeX: Omit text in PDF, and create LaTeX file"
-msgstr ""
+msgstr "PDF+LaTeX: пропустити текст у PDF і створити файл LaTeX"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2401
 msgid "EMF Input"
@@ -8796,25 +8766,24 @@ msgid "%s GDK pixbuf Input"
 msgstr "Імпорт %s через GDK pixbuf"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:151
-#, fuzzy
 msgid "Link or embed image:"
-msgstr "Вбудовувати зображення"
+msgstr "Пов’язати або вбудувати зображення:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:152
-#, fuzzy
 msgid "embed"
-msgstr "включене"
+msgstr "вбудувати"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-#, fuzzy
 msgid "link"
-msgstr "ліній"
+msgstr "пов’язати"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:155
 msgid ""
 "Embed results in stand-alone, larger SVG files. Link references a file "
 "outside this SVG document and all files must be moved together."
 msgstr ""
+"Вбудувати результати у окремі, більші файли SVG. Посилання на файли поза цим "
+"документом SVG і всі файли буде об’єднано у єдиному документі."
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -9538,7 +9507,7 @@ msgstr "Заповнення замкненої області"
 
 #: ../src/flood-context.cpp:1142
 msgid "Set style on object"
-msgstr "Встановити стиль об'єкту"
+msgstr "Встановити стиль об'єкта"
 
 #: ../src/flood-context.cpp:1201
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
@@ -9606,8 +9575,7 @@ msgstr[2] " у %d позначених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:174
 #, c-format
-msgid ""
-"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural ""
 "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
@@ -10061,7 +10029,7 @@ msgstr "Перемістити вус"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:250
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b>Переміщувати</b> заповнення візерунком всередині об'єкту"
+msgstr "<b>Переміщувати</b> заповнення візерунком всередині об'єкта"
 
 #: ../src/knotholder.cpp:253
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
@@ -11367,8 +11335,7 @@ msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
-msgstr ""
-"0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
+msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "k_min"
@@ -11495,9 +11462,8 @@ msgid "Change unit parameter"
 msgstr "Змінити параметр одиниць"
 
 #: ../src/live_effects/parameter/vector.cpp:96
-#, fuzzy
 msgid "Change vector parameter"
-msgstr "Змінити параметр тексту"
+msgstr "Змінити параметр вектора"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -11599,7 +11565,7 @@ msgstr "ВИСОТА"
 
 #: ../src/main.cpp:334
 msgid "The ID of the object to export"
-msgstr "Ідентифікатор об'єкту, що експортується"
+msgstr "Ідентифікатор об'єкта, що експортується"
 
 #: ../src/main.cpp:335 ../src/main.cpp:433
 msgid "ID"
@@ -11662,6 +11628,10 @@ msgid ""
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
+"Експортувати дані до PDF/PS/EPS без тексту. Окрім PDF/PS/EPS, буде "
+"експортовано файл LaTeX, у якому міститимуться текстові дані, які слід буде "
+"накласти на дані з файла PDF/PS/EPS. Вставити результат до вашого файла "
+"LaTeX можна буде командою: \\input{файл_latex.tex}"
 
 #: ../src/main.cpp:387
 msgid "Export document to an Enhanced Metafile (EMF) File"
@@ -11684,28 +11654,28 @@ msgstr ""
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "Запитати X-координату рисунка чи, якщо вказано, об'єкту з --query-id"
+msgstr "Запитати X-координату рисунка чи, якщо вказано, об'єкта з --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:410
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "Запитати Y-координату рисунка чи, якщо вказано, об'єкту з --query-id"
+msgstr "Запитати Y-координату рисунка чи, якщо вказано, об'єкта з --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:416
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "Запитати ширину рисунка чи, якщо вказано, об'єкту з --query-id"
+msgstr "Запитати ширину рисунка чи, якщо вказано, об'єкта з --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:422
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "Запитати висоту рисунка чи, якщо вказано, об'єкту з --query-id"
+msgstr "Запитати висоту рисунка чи, якщо вказано, об'єкта з --query-id"
 
 #: ../src/main.cpp:427
 msgid "List id,x,y,w,h for all objects"
@@ -11713,7 +11683,7 @@ msgstr "Список ід,x,y,ш,в всіх об’єктів"
 
 #: ../src/main.cpp:432
 msgid "The ID of the object whose dimensions are queried"
-msgstr "Ідентифікатор об'єкту, розміри якого опитуються"
+msgstr "Ідентифікатор об'єкта, розміри якого опитуються"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:438
@@ -11738,7 +11708,7 @@ msgstr "ІД-ДІЄСЛОВА"
 
 #: ../src/main.cpp:458
 msgid "Object ID to select when Inkscape opens."
-msgstr "Ідентифікатор об'єкту, який визначається при відкриванні Inkscape."
+msgstr "Ідентифікатор об'єкта, який визначається при відкриванні Inkscape."
 
 #: ../src/main.cpp:459
 msgid "OBJECT-ID"
@@ -11895,11 +11865,11 @@ msgstr "Переміщення об’єкта у перспективі"
 
 #: ../src/object-edit.cpp:927
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr "Змінити <b>велику вісь</b> еліпса. <b>Ctrl</b> робить коло"
+msgstr "Змінити <b>велику вісь</b> еліпса. <b>Ctrl</b> створює коло"
 
 #: ../src/object-edit.cpp:930
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr "Змінити <b>малу вісь</b> еліпса. <b>Ctrl</b> робить коло"
+msgstr "Змінити <b>малу вісь</b> еліпса. <b>Ctrl</b> створює коло"
 
 #: ../src/object-edit.cpp:933
 msgid ""
@@ -12047,8 +12017,7 @@ msgstr "<b>Клацання</b> або <b>перетягування</b> зак�
 #: ../src/pen-context.cpp:676
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
-"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1285
 #, c-format
@@ -12445,8 +12414,8 @@ msgstr "Клацання на об'єкті перемикає стрілки з
 msgid ""
 "No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr ""
-"Немає позначених об'єктів. Використовуйте клацання, Shift+клацання, або "
-"обведіть навколо об'єктів, які треба позначити."
+"Немає позначених об'єктів. Щоб позначити об’єкт, скористайтеся клацанням, "
+"Shift+клацанням або обведіть об'єкт."
 
 #: ../src/select-context.cpp:237
 msgid "Move canceled."
@@ -12552,7 +12521,6 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #. "Raise" means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:850
-#, fuzzy
 msgid "undo action|Raise"
 msgstr "Підняти"
 
@@ -13214,7 +13182,7 @@ msgstr "<b>Зображення</b> %d &#215; %d: %s"
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Група</b> з <b>%d</b> об'єкту"
+msgstr[0] "<b>Група</b> з <b>%d</b> об'єкта"
 msgstr[1] "<b>Група</b> з <b>%d</b> об'єктів"
 msgstr[2] "<b>Група</b> з <b>%d</b> об'єктів"
 
@@ -13569,8 +13537,8 @@ msgstr ""
 #: ../src/text-chemistry.cpp:125
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
-"Контурний текст(и) слід зробити <b>видимим</b> з метою накласти його на "
-"контур."
+"Щоб розташувати текст за контуром, контурний текст слід зробити <b>видимим</"
+"b>."
 
 #: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2317
 msgid "Put text on path"
@@ -13821,8 +13789,8 @@ msgid ""
 "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or "
 "segment. <b>Click</b> to select."
 msgstr ""
-"<b>Перетягування</b> малює еліпс. <b>Перетягування ручок</b> робить дугу або "
-"сегмент. <b>Клацання</b> позначає об'єкт."
+"<b>Перетягування</b> малює еліпс. <b>Перетягування ручок</b> створює дугу "
+"або сегмент. <b>Клацання</b> позначає об'єкт."
 
 #: ../src/tools-switch.cpp:167
 msgid ""
@@ -13885,8 +13853,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:221
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
-"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:227
 msgid ""
@@ -13896,7 +13863,7 @@ msgid ""
 msgstr ""
 "<b>Клацніть</b> для фарбування обмеженої області, <b>Shift+click</b> для "
 "поєднання нового заповнення з поточною позначеною областю, <b>Ctrl+click</b> "
-"- змінити на поточне значення заповнення та штрих об'єкту, на якому клацнули."
+"- змінити на поточне значення заповнення та штрих об'єкта, на якому клацнули."
 
 #: ../src/tools-switch.cpp:233
 msgid "<b>Drag</b> to erase."
@@ -14188,7 +14155,7 @@ msgstr "_Перейти за посиланням"
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:357
 msgid "_Remove Link"
-msgstr "П_омістити в рамку"
+msgstr "Ви_лучити посилання"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:405
@@ -14494,11 +14461,11 @@ msgstr "Повідомлення"
 
 #: ../src/ui/dialog/debug.cpp:77 ../src/ui/dialog/messages.cpp:55
 msgid "Capture log messages"
-msgstr "Зберігати налагоджувальні повідомлення"
+msgstr "Перехоплювати повідомлення журналу"
 
 #: ../src/ui/dialog/debug.cpp:79 ../src/ui/dialog/messages.cpp:57
 msgid "Release log messages"
-msgstr "Відключити збереження налагоджувальних повідомлень"
+msgstr "Вимкнути повідомлення журналу"
 
 #: ../src/ui/dialog/document-metadata.cpp:73
 msgid "Metadata"
@@ -15647,8 +15614,7 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2334
-msgid ""
-"The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у вигляді вхідного "
 "графічного зображення"
@@ -15739,7 +15705,7 @@ msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
 msgstr ""
-"Як близько (у точках) потрібно підвести курсор миші до об'єкту, щоб захопити "
+"Як близько (у точках) потрібно підвести курсор миші до об'єкта, щоб захопити "
 "його"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:174
@@ -15905,8 +15871,7 @@ msgid "Only snap the node closest to the pointer"
 msgstr "Прилипання лише до вузла, найближчого до вказівника"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
-msgid ""
-"Only try to snap the node that is initially closest to the mouse pointer"
+msgid "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "Виконувати прилипання лише до вузла, найближчого до вказівника миші"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
@@ -16110,7 +16075,7 @@ msgstr "Стиль цього інструмента нових об'єктів"
 #: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr ""
-"Запам'ятати стиль (першого) позначеного об'єкту як стиль даного інструмента"
+"Запам'ятати стиль (першого) позначеного об'єкта як стиль даного інструмента"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:386
 msgid "Tools"
@@ -16235,9 +16200,8 @@ msgid "Node"
 msgstr "Вузол"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
-#, fuzzy
 msgid "Path outline"
-msgstr "Обрис контуру:"
+msgstr "Обрис контуру"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Path outline color"
@@ -16325,9 +16289,8 @@ msgstr ""
 "вказівник не буде відведено від рамки."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
-#, fuzzy
 msgid "Editing preferences"
-msgstr "Параметри градієнта"
+msgstr "Параметри редагування"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Show transform handles for single nodes"
@@ -16340,15 +16303,16 @@ msgstr ""
 "вузол."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:456
-#, fuzzy
 msgid "Deleting nodes preserves shape"
-msgstr "Вилучити вузли зберігаючи форму"
+msgstr "Вилучення вузлів зберігає форму"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid ""
 "Move handles next to deleted nodes to resemble original shape. Hold Ctrl to "
 "get the other behavior."
 msgstr ""
+"Пересунути елементи керування формою так, щоб зберігалася початкова форма. "
+"Натисніть Ctrl, щоб скасувати таку поведінку."
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:460 ../src/verbs.cpp:2457
@@ -16436,8 +16400,7 @@ msgid "Show font samples in the drop-down list"
 msgstr "Показувати зразки шрифтів у спадному списку"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
-msgid ""
-"Show font samples alongside font names in the drop-down list in Text bar"
+msgid "Show font samples alongside font names in the drop-down list in Text bar"
 msgstr ""
 "Показувати зразки шрифтів поряд з назвами шрифтів у спадному списку панелі "
 "тексту."
@@ -16464,8 +16427,7 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:568
 msgid "Save and restore window geometry for each document"
-msgstr ""
-"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:569
 msgid "Remember and use last window's geometry"
@@ -18485,7 +18447,7 @@ msgstr "Однакова ширина"
 msgid "If not set, each column has the width of the widest object in it"
 msgstr ""
 "Якщо не відмічено, ширина кожного стовпчика дорівнює ширині найширшого "
-"об'єкту в ньому"
+"об'єкта в ньому"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/tile.cpp:789
@@ -18542,8 +18504,7 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr ""
-"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -18847,7 +18808,7 @@ msgstr "Зберегти співвідношення ширина/висота 
 
 #: ../src/ui/dialog/transformation.cpp:106
 msgid "Apply to each _object separately"
-msgstr "Застосувати до кожного о_б'єкту окремо"
+msgstr "Застосувати до кожного о_б'єкта окремо"
 
 #: ../src/ui/dialog/transformation.cpp:106
 msgid ""
@@ -18855,8 +18816,8 @@ msgid ""
 "transform the selection as a whole"
 msgstr ""
 "Застосувати процедуру зміни масштабу/повороту/нахилу до кожного окремо "
-"позначеного об'єкту; інакше перетворення буде застосовано до позначеного "
-"об'єкту цілком"
+"позначеного об'єкта; інакше перетворення буде застосовано до позначеного "
+"об'єкта цілком"
 
 #: ../src/ui/dialog/transformation.cpp:107
 msgid "Edit c_urrent matrix"
@@ -19007,14 +18968,12 @@ msgid "Auto-smooth node"
 msgstr "Автоматично згладжений вузол"
 
 #: ../src/ui/tool/path-manipulator.cpp:763
-#, fuzzy
 msgid "Scale handle"
-msgstr "Масштабувати вузли"
+msgstr "Масштабувати вус"
 
 #: ../src/ui/tool/path-manipulator.cpp:787
-#, fuzzy
 msgid "Rotate handle"
-msgstr "Вилучити вус"
+msgstr "Обертати вус"
 
 #. We need to call MPM's method because it could have been our last node
 #: ../src/ui/tool/path-manipulator.cpp:1290 ../src/widgets/toolbox.cpp:1314
@@ -19062,8 +19021,8 @@ msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
-"<b>Ласкаво просимо до Inkscape!</b> Використовуйте інструменти фігур чи "
-"малювання для створення об'єктів; для їх переміщенням чи трансформації "
+"<b>Ласкаво просимо до Inkscape!</b> Скористайтеся інструментами фігур чи "
+"малювання для створення об'єктів; для їх переміщення чи трансформації "
 "використовуйте селектор (стрілку)."
 
 #: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:858
@@ -19493,7 +19452,7 @@ msgstr "Множина позначених об'єктів має однако�
 
 #: ../src/ui/widget/selected-style.cpp:216
 msgid "Edit fill..."
-msgstr "Редагування заповнення..."
+msgstr "Редагувати заповнення..."
 
 #: ../src/ui/widget/selected-style.cpp:216
 msgid "Edit stroke..."
@@ -19537,7 +19496,7 @@ msgstr "Зробити штрихи непрозорими"
 #: ../src/ui/widget/selected-style.cpp:261
 #: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:484
 msgid "Remove fill"
-msgstr "В_илучити заповнення"
+msgstr "Вилучити заповнення"
 
 #: ../src/ui/widget/selected-style.cpp:261
 #: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/fill-style.cpp:484
@@ -19632,7 +19591,7 @@ msgid ""
 "<b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
 msgstr ""
 "Корекція <b>насиченості</b>: було %.3g, стало <b>%.3g</b> (різн %.3g); "
-"використовуйте <b>Ctrl</b> для корекції освітленості, без модифікаторів – "
+"скористайтеся <b>Ctrl</b> для корекції освітленості, без модифікаторів – "
 "корекція відтінку"
 
 #: ../src/ui/widget/selected-style.cpp:1284
@@ -19646,7 +19605,7 @@ msgid ""
 "<b>Shift</b> to adjust saturation, without modifiers to adjust hue"
 msgstr ""
 "Корекція <b>освітленості</b>: було %.3g, стало <b>%.3g</b> (різн %.3g); "
-"використовуйте <b>Shift</b> для зміни насиченості, без модифікаторів – "
+"скористайтеся <b>Shift</b> для зміни насиченості, без модифікаторів — "
 "корекція відтінку"
 
 #: ../src/ui/widget/selected-style.cpp:1290
@@ -19660,7 +19619,7 @@ msgid ""
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
 "Корекція <b>відтінку</b>: було %.3g, стало <b>%.3g</b> (різн %.3g); "
-"використовуйте <b>Shift</b> для зміни насиченості, а <b>Ctrl</b> для зміни "
+"скористайтеся <b>Shift</b> для зміни насиченості, а <b>Ctrl</b> для зміни "
 "освітленості"
 
 #: ../src/ui/widget/selected-style.cpp:1401
@@ -20096,7 +20055,7 @@ msgstr "Застосувати стиль скопійованого об'єкт
 msgid "Scale selection to match the size of the copied object"
 msgstr ""
 "Зміна масштабу позначених об'єктів з метою задовольнити розміру копійованого "
-"об'єкту"
+"об'єкта"
 
 #: ../src/verbs.cpp:2243
 msgid "Paste _Width"
@@ -20106,7 +20065,7 @@ msgstr "Вставити _ширину"
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 "Змінити масштаб позначених об'єктів за горизонтальним розміром з метою "
-"відповідності ширині копійованого об'єкту"
+"відповідності ширині копійованого об'єкта"
 
 #: ../src/verbs.cpp:2245
 msgid "Paste _Height"
@@ -20116,7 +20075,7 @@ msgstr "Вставити _висоту"
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 "Змінити масштаб позначених об'єктів за вертикальним розміром з метою "
-"відповідності висоті копійованого об'єкту"
+"відповідності висоті копійованого об'єкта"
 
 #: ../src/verbs.cpp:2247
 msgid "Paste Size Separately"
@@ -20125,8 +20084,8 @@ msgstr "Вставити розмір окремо"
 #: ../src/verbs.cpp:2248
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
-"Змінити кожного позначеного об'єкту з метою відповідності розміру "
-"копійованого об'єкту"
+"Змінити кожного позначеного об'єкта з метою відповідності розміру "
+"копійованого об'єкта"
 
 #: ../src/verbs.cpp:2249
 msgid "Paste Width Separately"
@@ -20137,8 +20096,8 @@ msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
-"Змінити масштаб кожного позначеного об'єкту за горизонтальним розміром з "
-"метою відповідності ширині копійованого об'єкту"
+"Змінити масштаб кожного позначеного об'єкта за горизонтальним розміром з "
+"метою відповідності ширині копійованого об'єкта"
 
 #: ../src/verbs.cpp:2251
 msgid "Paste Height Separately"
@@ -20149,8 +20108,8 @@ msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr ""
-"Змінити масштаб кожного позначеного об'єкту за вертикальним розміром з метою "
-"відповідності висоті копійованого об'єкту"
+"Змінити масштаб кожного позначеного об'єкта за вертикальним розміром з метою "
+"відповідності висоті копійованого об'єкта"
 
 #: ../src/verbs.cpp:2253
 msgid "Paste _In Place"
@@ -20206,7 +20165,7 @@ msgstr "Створити к_лон"
 
 #: ../src/verbs.cpp:2266
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr "Створити клон (копію, пов'язану з оригіналом) позначеного об'єкту"
+msgstr "Створити клон (копію, пов'язану з оригіналом) позначеного об'єкта"
 
 #: ../src/verbs.cpp:2267
 msgid "Unlin_k Clone"
@@ -20552,7 +20511,7 @@ msgstr "_Штрих у контур"
 
 #: ../src/verbs.cpp:2368
 msgid "Convert selected object's stroke to paths"
-msgstr "Перетворити штрих позначеного об'єкту на контури"
+msgstr "Перетворити штрих позначеного об'єкта на контури"
 
 #: ../src/verbs.cpp:2369
 msgid "Si_mplify"
@@ -20748,7 +20707,7 @@ msgstr "Прибрати _трансформацію"
 
 #: ../src/verbs.cpp:2424
 msgid "Remove transformations from object"
-msgstr "Прибрати трансформації з об'єкту"
+msgstr "Прибрати трансформації з об'єкта"
 
 #: ../src/verbs.cpp:2425
 msgid "_Object to Path"
@@ -20768,7 +20727,7 @@ msgid ""
 "frame object"
 msgstr ""
 "Вкласти текст у рамку (контур чи форму), створивши контурний текст "
-"прив'язаний до об'єкту рамки"
+"прив'язаний до об'єкта рамки"
 
 #: ../src/verbs.cpp:2429
 msgid "_Unflow"
@@ -21332,7 +21291,7 @@ msgstr "_Заповнення та штрих"
 msgid ""
 "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr ""
-"Редагування кольорів об'єкту, градієнтів, ширина пунктиру, стрілки, шаблони "
+"Редагування кольорів об'єкта, градієнтів, ширина пунктиру, стрілки, шаблони "
 "рисок..."
 
 #. TRANSLATORS: "Swatches" means: color samples
@@ -21423,7 +21382,7 @@ msgstr "По_відомлення..."
 
 #: ../src/verbs.cpp:2622
 msgid "View debug messages"
-msgstr "Переглянути налагоджувальні повідомлення"
+msgstr "Переглянути діагностичні повідомлення"
 
 #: ../src/verbs.cpp:2623
 msgid "S_cripts..."
@@ -21450,7 +21409,7 @@ msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
-"Створити множину клонів позначеного об'єкту, з розташуванням їх у вигляді "
+"Створити множину клонів позначеного об'єкта, з розташуванням їх у вигляді "
 "візерунку або покриття"
 
 #: ../src/verbs.cpp:2629
@@ -21461,7 +21420,7 @@ msgstr "В_ластивості об'єкта..."
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 "Редагування ідентифікатора, стану фіксованості та видимості та інших "
-"властивостей об'єкту"
+"властивостей об'єкта"
 
 #. #ifdef WITH_INKBOARD
 #. new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
@@ -21705,8 +21664,8 @@ msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
-"<b>Ласкаво просимо до Inkscape!</b> Використовуйте інструменти фігур чи "
-"малювання для створення об'єктів; для їх переміщенням чи трансформації "
+"<b>Ласкаво просимо до Inkscape!</b> Скористайтеся інструментами фігур чи "
+"малювання для створення об'єктів; для їх переміщення чи трансформації "
 "використовуйте селектор (стрілку)."
 
 #: ../src/widgets/desktop-widget.cpp:623
@@ -21986,9 +21945,8 @@ msgid "Radial gradient"
 msgstr "Радіальний градієнт"
 
 #: ../src/widgets/paint-selector.cpp:241
-#, fuzzy
 msgid "Swatch"
-msgstr "Ескіз"
+msgstr "Зразок"
 
 #: ../src/widgets/paint-selector.cpp:243
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -22031,15 +21989,14 @@ msgid ""
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
-"Використовуйте <b>Інструмент вузлів</b> для зміни розташування, розміру, та "
-"повороту візерунків на полотнах. Використовуйте <b>Об'єкт &gt; Візерунок "
-"&gt; Об'єкти у візерунок</b>, щоб створити новий візерунок з позначеної "
-"області."
+"Скористайтеся <b>Інструментом вузлів</b> для зміни розташування, розміру, та "
+"повороту візерунків на полотнах. Скористайтеся пунктом <b>Об'єкт &gt; "
+"Візерунок &gt; Об'єкти у візерунок</b>, щоб створити новий візерунок з "
+"позначеної області."
 
 #: ../src/widgets/paint-selector.cpp:1103
-#, fuzzy
 msgid "Swatch fill"
-msgstr "Встановлення заливання"
+msgstr "Заливання за зразком"
 
 #: ../src/widgets/select-toolbar.cpp:247
 msgid "Transform by toolbar"
@@ -22112,12 +22069,10 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X position"
 msgstr "X-координата"
 
 #: ../src/widgets/select-toolbar.cpp:460
-#, fuzzy
 msgid "select toolbar|X"
 msgstr "X"
 
@@ -22128,12 +22083,10 @@ msgstr "Горизонтальна координата позначення"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y position"
 msgstr "Y-координата"
 
 #: ../src/widgets/select-toolbar.cpp:468
-#, fuzzy
 msgid "select toolbar|Y"
 msgstr "Y"
 
@@ -22144,12 +22097,10 @@ msgstr "Вертикальна координата позначення"
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|Width"
 msgstr "Ширина"
 
 #: ../src/widgets/select-toolbar.cpp:476
-#, fuzzy
 msgid "select toolbar|W"
 msgstr "Ш"
 
@@ -22168,12 +22119,10 @@ msgstr "Коли зафіксовано, пропорційно змінюват
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|Height"
 msgstr "Висота"
 
 #: ../src/widgets/select-toolbar.cpp:497
-#, fuzzy
 msgid "select toolbar|H"
 msgstr "В"
 
@@ -24214,8 +24163,7 @@ msgstr "Довжина:"
 
 #: ../src/widgets/toolbox.cpp:7627
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
-"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
 #: ../src/widgets/toolbox.cpp:7639
 msgid "Downwards"
@@ -24274,8 +24222,7 @@ msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
 #: ../src/widgets/toolbox.cpp:7824
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
+msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
@@ -24350,6 +24297,9 @@ msgstr "Нахил (у градусах)"
 msgid "Wireframe Sphere"
 msgstr "Каркас сфери"
 
+#~ msgid "Link image (leave unchecked if in doubt)"
+#~ msgstr "Пов’язати зображення (не позначайте, якщо непевні)"
+
 #~ msgid "Failed to read from child pipe (%s)"
 #~ msgstr "Спроба читання з дочірнього потоку зазнала невдачі (%s)"
 
@@ -24378,9 +24328,6 @@ msgstr "Каркас сфери"
 #~ msgid "Failed to execute helper program (%s)"
 #~ msgstr "Не вдалося виконати допоміжну програму (%s)"
 
-#~ msgid "Transform Handles:"
-#~ msgstr "Елементи керування перетворенням:"
-
 #~ msgid ""
 #~ "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set "
 #~ "stroke"
@@ -24408,6 +24355,12 @@ msgstr "Каркас сфери"
 
 #~ msgid "Set fill color from swatch"
 #~ msgstr "Встановити колір заповнення зі зразків"
+
+#~ msgid "Represents a swatch fill."
+#~ msgstr "Заливання за зразком."
+
+#~ msgid "Transform Handles:"
+#~ msgstr "Елементи керування перетворенням:"
 
 #~ msgid "_Write session file:"
 #~ msgstr "_Записати файл сеансу:"
