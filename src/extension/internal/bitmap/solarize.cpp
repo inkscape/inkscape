@@ -18,7 +18,9 @@ namespace Bitmap {
 	
 void
 Solarize::applyEffect(Magick::Image* image) {
-	image->solarize(_factor);
+    // Image Magick Quantum depth = 16
+    // 655.35 = (2^16 - 1) / 100
+	image->solarize(_factor * 655.35);
 }
 
 void
