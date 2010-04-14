@@ -295,7 +295,7 @@ void ImageIcon::showBrokenImage(const Glib::ustring &errorMessage)
         "  <text"
         "     xml:space='preserve'"
         "     id='text1644'"
-        "     style='font-size:12.000000;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans'"
+        "     style='font-size:12.000000;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Sans'"
         "     y='59.288345'"
         "     x='12.760736'><tspan"
         "       id='tspan1646'"

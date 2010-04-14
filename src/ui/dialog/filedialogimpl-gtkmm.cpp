@@ -271,7 +271,7 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
           "<text\n"
           "  style=\"font-size:24.000000;font-style:normal;font-weight:normal;"
           "    fill:#000000;fill-opacity:1.0000000;stroke:none;"
-          "    font-family:Bitstream Vera Sans\"\n"
+          "    font-family:Sans\"\n"
           "  x=\"10\" y=\"26\">%d x %d</text>\n" //# VALUES HERE
           "</svg>\n\n";
 
@@ -374,7 +374,7 @@ void SVGPreview::showNoPreview()
           "style=\"font-size:32.000000;font-style:normal;font-variant:normal;font-weight:bold;"
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
-          "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
+          "font-family:Sans;text-anchor:middle;writing-mode:lr\"\n"
           "x=\"190\" y=\"240\">%s</text></g>\n"  //# VALUE HERE
           "</svg>\n\n";
 
@@ -471,13 +471,13 @@ void SVGPreview::showTooLarge(long fileLength)
           "style=\"font-size:32.000000;font-style:normal;font-variant:normal;font-weight:bold;"
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
-          "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
+          "font-family:Sans;text-anchor:middle;writing-mode:lr\"\n"
           "x=\"170\" y=\"215\">%5.1f MB</text>\n" //# VALUE HERE
           "<text xml:space=\"preserve\"\n"
           "style=\"font-size:24.000000;font-style:normal;font-variant:normal;font-weight:bold;"
           "font-stretch:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;"
           "stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;"
-          "font-family:Bitstream Vera Sans;text-anchor:middle;writing-mode:lr\"\n"
+          "font-family:Sans;text-anchor:middle;writing-mode:lr\"\n"
           "x=\"180\" y=\"245\">%s</text>\n" //# VALUE HERE
           "</svg>\n\n";
 
