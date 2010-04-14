@@ -23,14 +23,14 @@
             </param>
         </page>
         <page name="Help" _gui-text="Help">
-            <_param name="instructions" type="description" xml:space="preserve">This extension optimize the SVG file according to the following options:
+            <_param name="instructions" type="description" xml:space="preserve">This extension optimizes the SVG file according to the following options:
     * Simplify colors: convert all colors to #RRGGBB format.
     * Style to xml: convert styles into XML attributes.
     * Group collapsing: collapse &lt;g&gt; elements.
     * Enable id stripping: remove all un-referenced ID attributes.
     * Embed rasters: embed rasters as base64-encoded data.
     * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.
-    * Enable viewboxing: size image to 100%/100% and introduce a viewBox
+    * Enable viewboxing: size image to 100%/100% and introduce a viewBox.
     * Strip xml prolog: don't output the xml prolog.
     * Set precision: set number of significant digits (default: 5).
     * Indent: indentation of the output: none, space, tab (default: space).</_param>
