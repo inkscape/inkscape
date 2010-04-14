@@ -20,7 +20,7 @@
  *
  * The Initial Developer of the Original Code is
  * Jon A. Cruz.
- * Portions created by the Initial Developer are Copyright (C) 2007
+ * Portions created by the Initial Developer are Copyright (C) 2010
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -199,6 +199,15 @@ void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint 
  */
 void ege_select_one_action_set_appearance( EgeSelectOneAction* action, gchar const* val );
 
+/**
+ * Sets to allow or disallow free entry additions to the list.
+ * The default is "closed" selections that do not allow additions/edits.
+ * This is the XForms functional 'selection' attribute: "open", "closed".
+ *
+ * @param action The action to set the tooltip column for.
+ * @param val The value of the selection attribute.
+ */
+void ege_select_one_action_set_selection( EgeSelectOneAction *action, gchar const* val );
 
 /* bit of a work-around */
 void ege_select_one_action_set_radio_action_type( EgeSelectOneAction* action, GType radioActionType );
