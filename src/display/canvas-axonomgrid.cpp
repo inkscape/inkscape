@@ -518,6 +518,9 @@ CanvasAxonomGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = Geom::Point(fabs(affine[0]),fabs(affine[3]));
+    sw *= lengthy;
+
+    scaled = false;
 
     for(int dim = 0; dim < 2; dim++) {
         gint scaling_factor = empspacing;
@@ -525,10 +528,9 @@ CanvasAxonomGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
         if (scaling_factor <= 1)
             scaling_factor = 5;
 
-        scaled = FALSE;
         int watchdog = 0;
         while (  (sw[dim] < 8.0) & (watchdog < 100) ) {
-            scaled = TRUE;
+            scaled = true;
             sw[dim] *= scaling_factor;
             // First pass, go up to the major line spacing, then
             // keep increasing by two.
@@ -538,13 +540,13 @@ CanvasAxonomGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
 
     }
 
-    spacing_ylines = sw[Geom::X] * lengthy  /(tan_angle[X] + tan_angle[Z]);
-    lyw            = sw[Geom::Y] * lengthy;
-    lxw_x          = (lengthy / tan_angle[X]) * sw[Geom::X];
-    lxw_z          = (lengthy / tan_angle[Z]) * sw[Geom::X];
+    spacing_ylines = sw[Geom::X] /(tan_angle[X] + tan_angle[Z]);
+    lyw            = sw[Geom::Y];
+    lxw_x          = sw[Geom::X] / tan_angle[X];
+    lxw_z          = sw[Geom::X] / tan_angle[Z];
 
     if (empspacing == 0) {
-        scaled = TRUE;
+        scaled = true;
     }
 
 }
