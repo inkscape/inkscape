@@ -461,7 +461,7 @@ void InkscapePreferences::initPageTools()
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
     _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected"));
     _t_node_delete_preserves_shape.init(_("Deleting nodes preserves shape"), "/tools/nodes/delete_preserves_shape", true);
-    _page_node.add_line( true, "", _t_node_delete_preserves_shape, "", _("Move handles next to deleted nodes to resemble original shape. Hold Ctrl to get the other behavior"));
+    _page_node.add_line( true, "", _t_node_delete_preserves_shape, "", _("Move handles next to deleted nodes to resemble original shape; hold Ctrl to get the other behavior"));
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);
@@ -652,7 +652,7 @@ void InkscapePreferences::initPageClones()
     _page_clones.add_line( true, "", _clone_option_stay, "",
                            _("Clones preserve their positions when their original is moved"));
     _page_clones.add_line( true, "", _clone_option_transform, "",
-                           _("Each clone moves according to the value of its transform= attribute. For example, a rotated clone will move in a different direction than its original"));
+                           _("Each clone moves according to the value of its transform= attribute; for example, a rotated clone will move in a different direction than its original"));
     _page_clones.add_group_header( _("When the original is deleted, its clones:"));
     _page_clones.add_line( true, "", _clone_option_unlink, "",
                            _("Orphaned clones are converted to regular objects"));
