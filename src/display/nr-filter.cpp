@@ -223,6 +223,14 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     return 0;
 }
 
+void Filter::set_filter_units(SPFilterUnits unit) {
+    _filter_units = unit;
+}
+
+void Filter::set_primitive_units(SPFilterUnits unit) {
+    _primitive_units = unit;
+}
+
 void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
     for (int i = 0 ; i < _primitive_count ; i++) {
         if (_primitive[i]) _primitive[i]->area_enlarge(bbox, item->ctm);

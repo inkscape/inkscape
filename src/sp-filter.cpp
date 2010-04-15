@@ -108,7 +108,7 @@ sp_filter_init(SPFilter *filter)
     filter->height = 0;
 
     filter->filterUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
-    filter->primitiveUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
+    filter->primitiveUnits = SP_FILTER_UNITS_USERSPACEONUSE;
     filter->filterUnits_set = FALSE;
     filter->primitiveUnits_set = FALSE;
 
@@ -204,14 +204,14 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         case SP_ATTR_PRIMITIVEUNITS:
             if (value) {
-                if (!strcmp(value, "userSpaceOnUse")) {
-                    filter->primitiveUnits = SP_FILTER_UNITS_USERSPACEONUSE;
-                } else {
+                if (!strcmp(value, "objectBoundingBox")) {
                     filter->primitiveUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
+                } else {
+                    filter->primitiveUnits = SP_FILTER_UNITS_USERSPACEONUSE;
                 }
                 filter->primitiveUnits_set = TRUE;
             } else {
-                filter->primitiveUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
+                filter->primitiveUnits = SP_FILTER_UNITS_USERSPACEONUSE;
                 filter->primitiveUnits_set = FALSE;
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -322,11 +322,11 @@ sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
 
     if ((flags & SP_OBJECT_WRITE_ALL) || filter->primitiveUnits_set) {
         switch (filter->primitiveUnits) {
-            case SP_FILTER_UNITS_USERSPACEONUSE:
-                repr->setAttribute("primitiveUnits", "userSpaceOnUse");
+            case SP_FILTER_UNITS_OBJECTBOUNDINGBOX:
+                repr->setAttribute("primitiveUnits", "objectBoundingBox");
                 break;
             default:
-                repr->setAttribute("primitiveUnits", "objectBoundingBox");
+                repr->setAttribute("primitiveUnits", "userSpaceOnUse");
                 break;
         }
     }
@@ -446,6 +446,8 @@ void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr
 
     sp_filter->_renderer = nr_filter;
 
+    nr_filter->set_filter_units(sp_filter->filterUnits);
+    nr_filter->set_primitive_units(sp_filter->primitiveUnits);
     nr_filter->set_x(sp_filter->x);
     nr_filter->set_y(sp_filter->y);
     nr_filter->set_width(sp_filter->width);
