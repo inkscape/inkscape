@@ -307,17 +307,25 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
 		free_res=false;
 	} else if ( strcmp(key,"weight") == 0 ) {
 		PangoWeight v=pango_font_description_get_weight(descr);
-		if ( v <= PANGO_WEIGHT_ULTRALIGHT ) {
+		if ( v <= PANGO_WEIGHT_THIN ) {
+			res=(char*)"100";
+		} else if ( v <= PANGO_WEIGHT_ULTRALIGHT ) {
 			res=(char*)"200";
 		} else if ( v <= PANGO_WEIGHT_LIGHT ) {
 			res=(char*)"300";
+		} else if ( v <= PANGO_WEIGHT_BOOK ) {
+			res=(char*)"380";
 		} else if ( v <= PANGO_WEIGHT_NORMAL ) {
 			res=(char*)"normal";
+		} else if ( v <= PANGO_WEIGHT_MEDIUM ) {
+			res=(char*)"500";
+		} else if ( v <= PANGO_WEIGHT_SEMIBOLD ) {
+			res=(char*)"600";
 		} else if ( v <= PANGO_WEIGHT_BOLD ) {
 			res=(char*)"bold";
 		} else if ( v <= PANGO_WEIGHT_ULTRABOLD ) {
-		    res=(char*)"800";
-		} else { // HEAVY
+		        res=(char*)"800";
+		} else { // HEAVY   NB: Pango defines ULTRAHEAVY = 1000 but not CSS2
 			res=(char*)"900";
 		}
 		free_res=false;
