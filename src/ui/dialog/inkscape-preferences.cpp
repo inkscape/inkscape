@@ -212,10 +212,10 @@ void InkscapePreferences::initPageScrolling()
                            _("How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"), false);
     _scroll_space.init ( _("Left mouse button pans when Space is pressed"), "/options/spacepans/value", false);
     _page_scrolling.add_line( false, "", _scroll_space, "",
-                            _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator). When off, Space temporarily switches to Selector tool (default)."));
+                            _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
     _wheel_zoom.init ( _("Mouse wheel zooms by default"), "/options/wheelzooms/value", false);
     _page_scrolling.add_line( false, "", _wheel_zoom, "",
-                            _("When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl."));
+                            _("When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"));
 }
 
 void InkscapePreferences::initPageSnapping()
@@ -291,7 +291,7 @@ void InkscapePreferences::AddGradientCheckbox(DialogPage &p, Glib::ustring const
 void InkscapePreferences::AddConvertGuidesCheckbox(DialogPage &p, Glib::ustring const &prefs_path, bool def_value) {
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Conversion to guides uses edges instead of bounding box"), prefs_path + "/convertguides", def_value);
-    p.add_line( false, "", *cb, "", _("Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."));
+    p.add_line( false, "", *cb, "", _("Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box"));
 }
 
 void InkscapePreferences::AddDotSizeSpinbutton(DialogPage &p, Glib::ustring const &prefs_path, double def_value)
@@ -404,10 +404,10 @@ void InkscapePreferences::initPageTools()
     _page_tools.add_group_header( _("Conversion to guides:"));
     _t_cvg_keep_objects.init ( _("Keep objects after conversion to guides"), "/tools/cvg_keep_objects", false);
     _page_tools.add_line( true, "", _t_cvg_keep_objects, "",
-                            _("When converting an object to guides, don't delete the object after the conversion."));
+                            _("When converting an object to guides, don't delete the object after the conversion"));
     _t_cvg_convert_whole_groups.init ( _("Treat groups as a single object"), "/tools/cvg_convert_whole_groups", false);
     _page_tools.add_line( true, "", _t_cvg_convert_whole_groups, "",
-                            _("Treat groups as a single object during conversion to guides rather than converting each child separately."));
+                            _("Treat groups as a single object during conversion to guides rather than converting each child separately"));
 
     _pencil_average_all_sketches.init ( _("Average all sketches"), "/tools/freehand/pencil/average_all_sketches", false);
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "/tools/calligraphic/abs_width", false);
@@ -442,26 +442,26 @@ void InkscapePreferences::initPageTools()
     AddGradientCheckbox(_page_node, "/tools/nodes", true);
     _page_node.add_group_header( _("Path outline"));
     _t_node_pathoutline_color.init(_("Path outline color"), "/tools/nodes/highlight_color", 0xff0000ff);
-    _page_node.add_line( false, "", _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
+    _page_node.add_line( false, "", _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline"), false);
     _t_node_show_outline.init(_("Always show outline"), "/tools/nodes/show_outline", false);
     _page_node.add_line( true, "", _t_node_show_outline, "", _("Show outlines for all paths, not only invisible paths"));
     _t_node_live_outline.init(_("Update outline when dragging nodes"), "/tools/nodes/live_outline", false);
-    _page_node.add_line( true, "", _t_node_live_outline, "", _("Update the outline when dragging or transforming nodes. If this is off, the outline will only update when completing a drag."));
+    _page_node.add_line( true, "", _t_node_live_outline, "", _("Update the outline when dragging or transforming nodes; if this is off, the outline will only update when completing a drag"));
     _t_node_live_objects.init(_("Update paths when dragging nodes"), "/tools/nodes/live_objects", false);
-    _page_node.add_line( true, "", _t_node_live_objects, "", _("Update paths when dragging or transforming nodes. If this is off, paths will only be updated when completing a drag."));
+    _page_node.add_line( true, "", _t_node_live_objects, "", _("Update paths when dragging or transforming nodes; if this is off, paths will only be updated when completing a drag"));
     _t_node_show_path_direction.init(_("Show path direction on outlines"), "/tools/nodes/show_path_direction", false);
     _page_node.add_line( true, "", _t_node_show_path_direction, "", _("Visualize the direction of selected paths by drawing small arrows in the middle of each outline segment"));
     _t_node_pathflash_enabled.init ( _("Show temporary path outline"), "/tools/nodes/pathflash_enabled", false);
-    _page_node.add_line( true, "", _t_node_pathflash_enabled, "", _("When hovering over a path, briefly flash its outline."));
+    _page_node.add_line( true, "", _t_node_pathflash_enabled, "", _("When hovering over a path, briefly flash its outline"));
     _t_node_pathflash_selected.init ( _("Show temporary outline for selected paths"), "/tools/nodes/pathflash_selected", false);
     _page_node.add_line( true, "", _t_node_pathflash_selected, "", _("Show temporary outline even when a path is selected for editing"));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
-    _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
+    _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"), false);
     _page_node.add_group_header(_("Editing preferences"));
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
-    _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected."));
+    _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected"));
     _t_node_delete_preserves_shape.init(_("Deleting nodes preserves shape"), "/tools/nodes/delete_preserves_shape", true);
-    _page_node.add_line( true, "", _t_node_delete_preserves_shape, "", _("Move handles next to deleted nodes to resemble original shape. Hold Ctrl to get the other behavior."));
+    _page_node.add_line( true, "", _t_node_delete_preserves_shape, "", _("Move handles next to deleted nodes to resemble original shape. Hold Ctrl to get the other behavior"));
 
     //Tweak
     this->AddPage(_page_tweak, _("Tweak"), iter_tools, PREFS_PAGE_TOOLS_TWEAK);
@@ -515,7 +515,7 @@ void InkscapePreferences::initPageTools()
     this->AddDotSizeSpinbutton(_page_pencil, "/tools/freehand/pencil", 3.0);
     _page_pencil.add_group_header( _("Sketch mode"));
     _page_pencil.add_line( true, "", _pencil_average_all_sketches, "",
-                            _("If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."));
+                            _("If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch"));
 
     //Pen
     this->AddPage(_page_pen, _("Pen"), iter_tools, PREFS_PAGE_TOOLS_PEN);
@@ -648,16 +648,16 @@ void InkscapePreferences::initPageClones()
 
     _page_clones.add_group_header( _("When the original moves, its clones and linked offsets:"));
     _page_clones.add_line( true, "", _clone_option_parallel, "",
-                           _("Clones are translated by the same vector as their original."));
+                           _("Clones are translated by the same vector as their original"));
     _page_clones.add_line( true, "", _clone_option_stay, "",
-                           _("Clones preserve their positions when their original is moved."));
+                           _("Clones preserve their positions when their original is moved"));
     _page_clones.add_line( true, "", _clone_option_transform, "",
-                           _("Each clone moves according to the value of its transform= attribute. For example, a rotated clone will move in a different direction than its original."));
+                           _("Each clone moves according to the value of its transform= attribute. For example, a rotated clone will move in a different direction than its original"));
     _page_clones.add_group_header( _("When the original is deleted, its clones:"));
     _page_clones.add_line( true, "", _clone_option_unlink, "",
-                           _("Orphaned clones are converted to regular objects."));
+                           _("Orphaned clones are converted to regular objects"));
     _page_clones.add_line( true, "", _clone_option_delete, "",
-                           _("Orphaned clones are deleted along with their original."));
+                           _("Orphaned clones are deleted along with their original"));
 
     _page_clones.add_group_header( _("When duplicating original+clones:"));
 
@@ -781,12 +781,12 @@ void InkscapePreferences::initPageFilters()
     /* show infobox */
     _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
     _page_filters.add_line(true, "", _show_filters_info_box, "",
-                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog."));
+                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
 
     /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
     _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
     _page_filters.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
-                           _("Configure number of processors/threads to use with rendering of gaussian blur."), false);
+                           _("Configure number of processors/threads to use with rendering of gaussian blur"), false);
 
     this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
 }
@@ -827,13 +827,13 @@ void InkscapePreferences::initPageImportExport()
                             _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
     _importexport_ocal_url.init("/options/ocalurl/str", true, g_strdup_printf("openclipart.org"));
     _page_importexport.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "",
-        _("The server name of the Open Clip Art Library webdav server. It's used by the Import and Export to OCAL function."), true);
+        _("The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"), true);
     _importexport_ocal_username.init("/options/ocalusername/str", true);
     _page_importexport.add_line( false, _("Open Clip Art Library Username:"), _importexport_ocal_username, "",
-            _("The username used to log into Open Clip Art Library."), true);
+            _("The username used to log into Open Clip Art Library"), true);
     _importexport_ocal_password.init("/options/ocalpassword/str", false);
     _page_importexport.add_line( false, _("Open Clip Art Library Password:"), _importexport_ocal_password, "",
-            _("The password used to log into Open Clip Art Library."), true);
+            _("The password used to log into Open Clip Art Library"), true);
 
     this->AddPage(_page_importexport, _("Import/Export"), PREFS_PAGE_IMPORTEXPORT);
 }
@@ -912,42 +912,42 @@ void InkscapePreferences::initPageCMS()
     _cms_from_display.init( _("Retrieve profile from display"), "/options/displayprofile/from_display", false);
     _page_cms.add_line( false, "", _cms_from_display, "",
 #ifdef GDK_WINDOWING_X11
-                        _("Retrieve profiles from those attached to displays via XICC."), false);
+                        _("Retrieve profiles from those attached to displays via XICC"), false);
 #else
-                        _("Retrieve profiles from those attached to displays."), false);
+                        _("Retrieve profiles from those attached to displays"), false);
 #endif // GDK_WINDOWING_X11
 
 
     _cms_intent.init("/options/displayprofile/intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Display rendering intent:"), _cms_intent, "",
-                        _("The rendering intent to use to calibrate display output."), false);
+                        _("The rendering intent to use to calibrate display output"), false);
 
     _page_cms.add_group_header( _("Proofing"));
 
     _cms_softproof.init( _("Simulate output on screen"), "/options/softproof/enable", false);
     _page_cms.add_line( false, "", _cms_softproof, "",
-                        _("Simulates output of target device."), false);
+                        _("Simulates output of target device"), false);
 
     _cms_gamutwarn.init( _("Mark out of gamut colors"), "/options/softproof/gamutwarn", false);
     _page_cms.add_line( false, "", _cms_gamutwarn, "",
-                        _("Highlights colors that are out of gamut for the target device."), false);
+                        _("Highlights colors that are out of gamut for the target device"), false);
 
     Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
     Gdk::Color tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
     _cms_gamutcolor.set_color( tmpColor );
     _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
-                        _("Selects the color used for out of gamut warning."), false);
+                        _("Selects the color used for out of gamut warning"), false);
 
     _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
-                        _("The ICC profile to use to simulate device output."), false);
+                        _("The ICC profile to use to simulate device output"), false);
 
     _cms_proof_intent.init("/options/softproof/intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Device rendering intent:"), _cms_proof_intent, "",
-                        _("The rendering intent to use to calibrate display output."), false);
+                        _("The rendering intent to use to calibrate display output"), false);
 
     _cms_proof_blackpoint.init( _("Black point compensation"), "/options/softproof/bpc", false);
     _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
-                        _("Enables black point compensation."), false);
+                        _("Enables black point compensation"), false);
 
     _cms_proof_preserveblack.init( _("Preserve black"), "/options/softproof/preserveblack", false);
     _page_cms.add_line( false, "", _cms_proof_preserveblack,
@@ -1022,7 +1022,7 @@ void InkscapePreferences::initPageGrids()
     _page_grids.add_group_header( _("Major grid line emphasizing"));
 
     _grids_no_emphasize_on_zoom.init( _("Don't emphasize gridlines when zoomed out"), "/options/grids/no_emphasize_when_zoomedout", false);
-    _page_grids.add_line( false, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color."), false);
+    _page_grids.add_line( false, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"), false);
 
     _page_grids.add_group_header( _("Default grid settings"));
 
@@ -1099,7 +1099,7 @@ void InkscapePreferences::initPageSVGOutput()
     _page_svgoutput.add_line( false, _("Numeric precision:"), _svgoutput_numericprecision, "", _("How many digits to write after the decimal dot"), false);
 
     _svgoutput_minimumexponent.init("/options/svgoutput/minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
-    _page_svgoutput.add_line( false, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."), false);
+    _page_svgoutput.add_line( false, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"), false);
 
     this->AddPage(_page_svgoutput, _("SVG output"), PREFS_PAGE_SVGOUTPUT);
 }
@@ -1145,7 +1145,7 @@ void InkscapePreferences::initPageUI()
 
     _ui_colorsliders_top.init( _("Work-around color sliders not drawing"), "/options/workarounds/colorsontop", false);
     _page_ui.add_line( false, "", _ui_colorsliders_top, "",
-                       _("When on, will attempt to work around bugs in certain GTK themes drawing color sliders."), true);
+                       _("When on, will attempt to work around bugs in certain GTK themes drawing color sliders"), true);
 
 
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
@@ -1166,7 +1166,7 @@ void InkscapePreferences::initPageUI()
 
     _ui_partialdynamic.init( _("Enable dynamic relayout for incomplete sections"), "/options/workarounds/dynamicnotdone", false);
     _page_ui.add_line( false, "", _ui_partialdynamic, "",
-                       _("When on, will allow dynamic layout of components that are not completely finished being refactored."), true);
+                       _("When on, will allow dynamic layout of components that are not completely finished being refactored"), true);
 
 
     this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
@@ -1177,7 +1177,7 @@ void InkscapePreferences::initPageSave()
 {
     _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
     _page_save.add_line( false, "", _save_use_current_dir, "",
-                         _("When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is. When it's off, it will open in the directory where you last saved a file using that dialog."), true);
+                         _("When this option is on, the \"Save as...\" dialog will always open in the directory where the currently open document is; when it's off, it will open in the directory where you last saved a file using that dialog"), true);
 
 
     // Autosave options
@@ -1348,7 +1348,7 @@ void InkscapePreferences::initPageMisc()
 
     _misc_latency_skew.init("/debug/latency/skew", 0.5, 2.0, 0.01, 0.10, 1.0, false, false);
     _page_misc.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
-                           _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)."), false);
+                           _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"), false);
 
     _misc_namedicon_delay.init( _("Pre-render named icons"), "/options/iconrender/named_nodelay", false);
     _page_misc.add_line( false, "", _misc_namedicon_delay, "",
