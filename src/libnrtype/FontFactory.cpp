@@ -421,6 +421,14 @@ Glib::ustring font_factory::GetUIStyleString(PangoFontDescription const *fontDes
     return style;
 }
 
+/**
+    Replace font family leaving style alone (if possible).
+    @param fontSpec the given font
+    @param newFamily
+    @return the changed fontspec, if the property can not be set return an empty string
+    The routine first searches for an exact match.
+    If no exact match found, calls FontSpecificationBestMatch().
+*/
 Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring & fontSpec, const Glib::ustring & newFamily)
 {
     Glib::ustring newFontSpec;
@@ -431,10 +439,14 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
     // what constitutes a "family" in our own UI may be different from how Pango
     // sees it.
 
-    // Find the PangoFontDescription associated to this fontSpec
+    // Find the PangoFontDescription associated with the font specification string.
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
 
+
     if (it != fontInstanceMap.end()) {
+        // Description found!
+
+        // Make copy
         PangoFontDescription *descr = pango_font_description_copy((*it).second);
 
         // Grab the UI Family string from the descr
@@ -452,46 +464,9 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
             it = fontInstanceMap.find(newFontSpec);
             if (it == fontInstanceMap.end()) {
 
-                PangoFontDescription *newFontDescr = pango_font_description_from_string(newFontSpec.c_str());
+                // Search for best match, empty string returned if not found.
+                newFontSpec = FontSpecificationBestMatch( newFontSpec );
 
-                PangoFontDescription *bestMatchForNewDescr = NULL;
-                Glib::ustring bestMatchFontDescription;
-
-                bool setFirstFamilyMatch = false;
-                for (it = fontInstanceMap.begin(); it != fontInstanceMap.end(); it++) {
-
-                    Glib::ustring currentFontSpec = (*it).first;
-
-                    // Save some time by only looking at the right family
-                    if (currentFontSpec.find(newFamily) != Glib::ustring::npos) {
-                        if (!setFirstFamilyMatch) {
-	                        // This ensures that the closest match is at least within the correct
-	                        // family rather than the first font in the list
-                            bestMatchForNewDescr = pango_font_description_copy((*it).second);
-                            bestMatchFontDescription = currentFontSpec;
-                            setFirstFamilyMatch = true;
-                        } else {
-                            // Get the font description that corresponds, and
-                            // then see if we've found a better match
-                            PangoFontDescription *possibleMatch = pango_font_description_copy((*it).second);
-
-                            if (pango_font_description_better_match(
-                                    newFontDescr, bestMatchForNewDescr, possibleMatch)) {
-
-                                pango_font_description_free(bestMatchForNewDescr);
-                                bestMatchForNewDescr = possibleMatch;
-                                bestMatchFontDescription = currentFontSpec;
-                            } else {
-                                pango_font_description_free(possibleMatch);
-                            }
-                        }
-                    }
-                }
-
-                newFontSpec = bestMatchFontDescription;
-
-                pango_font_description_free(newFontDescr);
-                pango_font_description_free(bestMatchForNewDescr);
             }
         }
 
@@ -502,73 +477,87 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
 }
 
 /**
-    apply style property to the given font
+    Apply style property to the given font
     @param fontSpec the given font
     @param turnOn true to set italic style
     @return the changed fontspec, if the property can not be set return an empty string
+    The routine first searches for an exact match to "FontFamily Italic" or
+    "Font Family Oblique" (turnOn is true) or "FontFamily" (turnOn is false).
+    If no exact match found, calls FontSpecificationBestMatch().
 */
 Glib::ustring font_factory::FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn)
 {
     Glib::ustring newFontSpec;
 
-    // Find the PangoFontDesecription that goes with this font specification string
+    // Find the PangoFontDescription associated with the font specification string.
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
 
     if (it != fontInstanceMap.end()) {
-        // If we did find one, make a copy and set/unset the italic as needed
+        // Description found!
+
+        // Make copy.
         PangoFontDescription *descr = pango_font_description_copy((*it).second);
 
         PangoStyle style;
         if (turnOn) {
-            style = PANGO_STYLE_ITALIC;
+            // First try Oblique, we'll try Italic later
+            style = PANGO_STYLE_OBLIQUE;
         } else {
             style = PANGO_STYLE_NORMAL;
         }
+
         pango_font_description_set_style(descr, style);
 
         newFontSpec = ConstructFontSpecification(descr);
+
+        bool exactMatchFound = true;
         if (fontInstanceMap.find(newFontSpec) == fontInstanceMap.end()) {
-            if(turnOn) {
-                // there is no PANGO_STYLE_ITALIC let's test for PANGO_STYLE_OBLIQUE
-                style = PANGO_STYLE_OBLIQUE;
+
+            exactMatchFound = false;
+            if (turnOn) {
+                // Next try Italic
+                style = PANGO_STYLE_ITALIC;
                 pango_font_description_set_style(descr, style);
 
-                newFontSpec = ConstructFontSpecification(descr);
+                exactMatchFound = true;
                 if (fontInstanceMap.find(newFontSpec) == fontInstanceMap.end()) {
-                    // If the new font does not have even an oblique face, don't
-                    // allow italics to be set!
-                    newFontSpec = Glib::ustring("");
+                    exactMatchFound = false;
                 }
-
-            } else {
-                // If the new font does not have an italic face, don't
-                // allow italics to be set!
-                newFontSpec = Glib::ustring("");
             }
+        }
+
+        // Search for best match, empty string returned if not found.
+        if( !exactMatchFound ) {
+           newFontSpec = FontSpecificationBestMatch( newFontSpec );
         }
 
         pango_font_description_free(descr);
     }
 
-    return newFontSpec;
+    return newFontSpec; // Empty if not found.
 }
 
 /**
-    apply width property to the given font
+    Apply weight property to the given font
     @param fontSpec the given font
     @param turnOn true to set bold
     @return the changed fontspec, if the property can not be set return an empty string
+    This routine first searches for an exact match, if none found
+    it calls FontSpecificationBestMatch().
 */
 Glib::ustring font_factory::FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn)
 {
     Glib::ustring newFontSpec;
 
-    // Find the PangoFontDesecription that goes with this font specification string
+    // Find the PangoFontDescription associated with the font specification string.
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
 
     if (it != fontInstanceMap.end()) {
-        // If we did find one, make a copy and set/unset the bold as needed
+        // Description found!
+
+        // Make copy.
         PangoFontDescription *descr = pango_font_description_copy((*it).second);
+
 
         PangoWeight weight;
         if (turnOn) {
@@ -576,16 +565,92 @@ Glib::ustring font_factory::FontSpecificationSetBold(const Glib::ustring & fontS
         } else {
             weight = PANGO_WEIGHT_NORMAL;
         }
+
         pango_font_description_set_weight(descr, weight);
 
         newFontSpec = ConstructFontSpecification(descr);
+
         if (fontInstanceMap.find(newFontSpec) == fontInstanceMap.end()) {
-            // If the new font does not have a bold face, don't
-            // allow bold to be set!
-            newFontSpec = Glib::ustring("");
+            // Search for best match, empty string returned if not found.
+            newFontSpec = FontSpecificationBestMatch( newFontSpec );
         }
 
         pango_font_description_free(descr);
+    }
+
+    return newFontSpec; // Empty if not found.
+}
+
+/**
+    Use pango_font_description_better_match() to find best font match.
+    This handles cases like Century Schoolbook L where the "normal"
+    font is Century Schoolbook L Medium so just removing Italic
+    from the font name doesn't yield the correct name.
+    @param fontSpec the given font
+    @return the changed fontspec, if the property can not be set return an empty string
+*/
+// http://library.gnome.org/devel/pango/1.28/pango-Fonts.html#pango-font-description-better-match
+Glib::ustring font_factory::FontSpecificationBestMatch(const Glib::ustring & fontSpec )
+{
+
+    Glib::ustring newFontSpec;
+
+    // Look for exact match
+    PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
+
+    // If there is no exact match, look for the best match.
+    if (it != fontInstanceMap.end()) {
+
+        newFontSpec = fontSpec;
+
+    } else {
+
+        PangoFontDescription *fontDescr = pango_font_description_from_string(fontSpec.c_str());
+        PangoFontDescription *bestMatchDescr = NULL;
+
+        // Grab the UI Family string from the descr
+        Glib::ustring family = GetUIFamilyString(fontDescr);
+        Glib::ustring bestMatchDescription;
+
+        bool setFirstFamilyMatch = false;
+        for (it = fontInstanceMap.begin(); it != fontInstanceMap.end(); it++) {
+
+            Glib::ustring currentFontSpec = (*it).first;
+            Glib::ustring currentFamily = GetUIFamilyString((*it).second);
+
+            // Save some time by only looking at the right family.
+            // Must use family name rather than fontSpec
+            //   (otherwise DejaVu Sans matches DejaVu Sans Mono).
+            if (currentFamily == family) {
+                if (!setFirstFamilyMatch) {
+                    // This ensures that the closest match is at least within the correct
+                    // family rather than the first font in the list
+                    bestMatchDescr = pango_font_description_copy((*it).second);
+                    bestMatchDescription = currentFontSpec;
+                    setFirstFamilyMatch = true;
+                } else {
+                    // Get the font description that corresponds, and
+                    // then see if we've found a better match
+                    PangoFontDescription *possibleMatch = pango_font_description_copy((*it).second);
+
+                    if (pango_font_description_better_match(
+                            fontDescr, bestMatchDescr, possibleMatch)) {
+
+                        pango_font_description_free(bestMatchDescr);
+                        bestMatchDescr = possibleMatch;
+                        bestMatchDescription = currentFontSpec;
+                    } else {
+                        pango_font_description_free(possibleMatch);
+                    }
+                }
+            }
+        } // for
+
+        newFontSpec = bestMatchDescription; // If NULL, then no match found
+
+        pango_font_description_free(fontDescr);
+        pango_font_description_free(bestMatchDescr);
+
     }
 
     return newFontSpec;
@@ -689,6 +754,7 @@ font_instance* font_factory::FaceFromStyle(SPStyle const *style)
     g_assert(style);
 
     if (style) {
+
         //  First try to use the font specification if it is set
         if (style->text->font_specification.set
             && style->text->font_specification.value
@@ -699,7 +765,16 @@ font_instance* font_factory::FaceFromStyle(SPStyle const *style)
 
         // If that failed, try using the CSS information in the style
         if (!font) {
+
             font = Face(style->text->font_family.value, font_style_to_pos(*style));
+
+            // That was a hatchet job... so we need to check if this font exists!!
+            Glib::ustring fontSpec = font_factory::Default()->ConstructFontSpecification(font);
+            Glib::ustring newFontSpec = FontSpecificationBestMatch( fontSpec );
+            if( fontSpec != newFontSpec ) {
+                font->Unref();
+                font = FaceFromFontSpecification( newFontSpec.c_str() );
+            }
         }
     }
 
@@ -899,12 +974,20 @@ font_instance *font_factory::Face(char const *family, NRTypePosDef apos)
         pango_font_description_set_style(temp_descr, PANGO_STYLE_NORMAL);
     }
 
-    if ( apos.weight <= NR_POS_WEIGHT_ULTRA_LIGHT ) {
+    if ( apos.weight <= NR_POS_WEIGHT_THIN ) {
+        pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_THIN);
+    } else if ( apos.weight <= NR_POS_WEIGHT_ULTRA_LIGHT ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_ULTRALIGHT);
     } else if ( apos.weight <= NR_POS_WEIGHT_LIGHT ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_LIGHT);
+    } else if ( apos.weight <= NR_POS_WEIGHT_BOOK ) {
+        pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_BOOK);
     } else if ( apos.weight <= NR_POS_WEIGHT_NORMAL ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_NORMAL);
+    } else if ( apos.weight <= NR_POS_WEIGHT_MEDIUM ) {
+        pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_MEDIUM);
+    } else if ( apos.weight <= NR_POS_WEIGHT_SEMIBOLD ) {
+        pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_SEMIBOLD);
     } else if ( apos.weight <= NR_POS_WEIGHT_BOLD ) {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_BOLD);
     } else if ( apos.weight <= NR_POS_WEIGHT_ULTRA_BOLD ) {
@@ -912,6 +995,7 @@ font_instance *font_factory::Face(char const *family, NRTypePosDef apos)
     } else {
         pango_font_description_set_weight(temp_descr, PANGO_WEIGHT_HEAVY);
     }
+    // PANGO_WIEGHT_ULTRAHEAVY not used (not CSS2)
 
     if ( apos.stretch <= NR_POS_STRETCH_ULTRA_CONDENSED ) {
         pango_font_description_set_stretch(temp_descr, PANGO_STRETCH_EXTRA_CONDENSED);
@@ -919,7 +1003,7 @@ font_instance *font_factory::Face(char const *family, NRTypePosDef apos)
         pango_font_description_set_stretch(temp_descr, PANGO_STRETCH_CONDENSED);
     } else if ( apos.stretch <= NR_POS_STRETCH_SEMI_CONDENSED ) {
         pango_font_description_set_stretch(temp_descr, PANGO_STRETCH_SEMI_CONDENSED);
-    } else if ( apos.stretch <= NR_POS_WEIGHT_NORMAL ) {
+    } else if ( apos.stretch <= NR_POS_STRETCH_NORMAL ) {
         pango_font_description_set_stretch(temp_descr, PANGO_STRETCH_NORMAL);
     } else if ( apos.stretch <= NR_POS_STRETCH_SEMI_EXPANDED ) {
         pango_font_description_set_stretch(temp_descr, PANGO_STRETCH_SEMI_EXPANDED);
@@ -984,6 +1068,23 @@ void font_factory::AddInCache(font_instance *who)
     nbEnt++;
 }
 
+/*
+        {
+            std::cout << " Printing out fontInstanceMap: " << std::endl;
+            PangoStringToDescrMap::iterator it = fontInstanceMap.begin();
+            while (it != fontInstanceMap.end()) {
+
+                PangoFontDescription *descr = pango_font_description_copy((*it).second);
+
+                // Grab the UI Family string from the descr
+                Glib::ustring uiFamily = GetUIFamilyString(descr);
+                Glib::ustring uiStyle  = GetUIStyleString(descr);
+                std::cout << "     " << uiFamily << "  " << uiStyle << std::endl;
+
+                it++;
+            }
+        }
+*/
 
 /*
   Local Variables:

@@ -102,6 +102,8 @@ public:
     Glib::ustring         FontSpecificationSetItalic(const Glib::ustring & fontSpec, bool turnOn);
     Glib::ustring         FontSpecificationSetBold(const Glib::ustring & fontSpec, bool turnOn);
 
+    Glib::ustring         FontSpecificationBestMatch(const Glib::ustring& fontSpec );
+
     // Gathers all strings needed for UI while storing pango information in
     // fontInstanceMap and fontStringMap
     void                  GetUIFamiliesAndStyles(FamilyToStylesMap *map);
