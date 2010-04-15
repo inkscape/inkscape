@@ -891,15 +891,16 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
 
     double size = 0;
     double letterspacing = 0;
+    double wordspacing = 0;
     double linespacing = 0;
-    bool linespacing_normal = false;
     bool letterspacing_normal = false;
+    bool wordspacing_normal = false;
+    bool linespacing_normal = false;
 
     double size_prev = 0;
     double letterspacing_prev = 0;
+    double wordspacing_prev = 0;
     double linespacing_prev = 0;
-
-    /// \todo FIXME: add word spacing, kerns? rotates?
 
     int texts = 0;
 
@@ -925,6 +926,14 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
             letterspacing_normal = false;
         }
 
+        if (style->word_spacing.normal) {
+            if (!different && (wordspacing_prev == 0 || wordspacing_prev == wordspacing))
+                wordspacing_normal = true;
+        } else {
+            wordspacing += style->word_spacing.computed; /// \todo FIXME: we assume non-% units here
+            wordspacing_normal = false;
+        }
+
         double linespacing_current;
         if (style->line_height.normal) {
             linespacing_current = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
@@ -941,12 +950,14 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
 
         if ((size_prev != 0 && style->font_size.computed != size_prev) ||
             (letterspacing_prev != 0 && style->letter_spacing.computed != letterspacing_prev) ||
+            (wordspacing_prev != 0 && style->word_spacing.computed != wordspacing_prev) ||
             (linespacing_prev != 0 && linespacing_current != linespacing_prev)) {
             different = true;
         }
 
         size_prev = style->font_size.computed;
         letterspacing_prev = style->letter_spacing.computed;
+        wordspacing_prev = style->word_spacing.computed;
         linespacing_prev = linespacing_current;
 
         // FIXME: we must detect MULTIPLE_DIFFERENT for these too
@@ -960,6 +971,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
     if (texts > 1) {
         size /= texts;
         letterspacing /= texts;
+        wordspacing /= texts;
         linespacing /= texts;
     }
 
@@ -968,6 +980,9 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
 
     style_res->letter_spacing.normal = letterspacing_normal;
     style_res->letter_spacing.computed = letterspacing;
+
+    style_res->word_spacing.normal = wordspacing_normal;
+    style_res->word_spacing.computed = wordspacing;
 
     style_res->line_height.normal = linespacing_normal;
     style_res->line_height.computed = linespacing;
@@ -1054,6 +1069,7 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
 
+        // std::cout << "  " << SP_OBJECT_ID (i->data) << std::endl;
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
             && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
             && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
@@ -1107,6 +1123,7 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
 
+        // std::cout << "  " << SP_OBJECT_ID (i->data) << std::endl;
         if (!SP_IS_TEXT(obj) && !SP_IS_FLOWTEXT(obj)
             && !SP_IS_TSPAN(obj) && !SP_IS_TREF(obj) && !SP_IS_TEXTPATH(obj)
             && !SP_IS_FLOWDIV(obj) && !SP_IS_FLOWPARA(obj) && !SP_IS_FLOWTSPAN(obj))
