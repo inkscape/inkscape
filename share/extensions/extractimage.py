@@ -54,10 +54,16 @@ class MyEffect(inkex.Effect):
                                 semicolon = xlink.find(';')
                                 if semicolon>0:
                                     for sub in mimesubext.keys():
-                                        if sub in xlink[5:semicolon]:
+                                        if sub in xlink[5:semicolon].lower():
                                             fileext=mimesubext[sub]
                                             path=path+fileext;
-                                            break
+                                            if (not os.path.isabs(path)):
+                                                if os.name == 'nt':
+                                                    path = os.path.join(os.environ['USERPROFILE'],path)
+                                                else:
+                                                    path = os.path.join(os.path.expanduser("~"),path)
+                                            inkex.errormsg(_('Image extracted to: %s') % path)
+                                            break 
                                 #save
                                 data = base64.decodestring(xlink[comma:])
                                 open(path,'wb').write(data)

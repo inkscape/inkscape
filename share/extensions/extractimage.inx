@@ -4,8 +4,9 @@
     <id>org.ekips.filter.extractimage</id>
 	<dependency type="executable" location="extensions">extractimage.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="filepath" type="string" _gui-text="Path to save image">none</param>
-	<_param name="desc" type="description">Note: The file extension is appended automatically.</_param>
+	<param name="filepath" type="string" _gui-text="Path to save image:">none</param>
+	<_param name="desc" type="description" xml:space="preserve">* Don't type the file extension, it is appended automatically.
+* A relative path (or a filename without path) is relative to the user's home directory.</_param>
     <effect needs-live-preview="false">
 		<object-type>all</object-type>
                 <effects-menu>
