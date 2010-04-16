@@ -6189,6 +6189,12 @@ static void sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
 namespace {
 
+/*
+ * This function sets up the text-tool tool-controls, setting the entry boxes
+ * etc. to the values from the current selection or the default if no selection.
+ * It is called whenever a text selection is changed, including stepping cursor
+ * through text.
+ */
 static void sp_text_toolbox_selection_changed(Inkscape::Selection * /*selection*/, GObject *tbl)
 {
     // quit if run by the _changed callbacks
@@ -6198,28 +6204,36 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection * /*selection*
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
+    gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
+
+    /*
+     * Query from current selection:
+     *   Font family (font-family)
+     *   Style (font-weight, font-style, font-stretch, font-variant, font-align)
+     *   Numbers (font-size, letter-spacing, word-spacing, line-height, text-anchor, writing-mode)
+     *   Font specification (Inkscape private attribute)
+     */
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
 
-    int result_family =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+    int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+    int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+    int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    // Used later:
+    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    int result_style =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-
-    int result_numbers =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-
-    gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
-
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+    /*
+     * If no text in selection (querying returned nothing), read the style from
+     * the /tools/text preferencess (default style for new texts). Return if
+     * tool bar already set to these preferences.
+     */
     if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
-        // there are no texts in selection, read from prefs
+        // There are no texts in selection, read from preferences.
 
         sp_style_read_from_prefs(query, "/tools/text");
 
         if (g_object_get_data(tbl, "text_style_from_prefs")) {
-            // do not reset the toolbar style from prefs if we already did it last time
+            // Do not reset the toolbar style from prefs if we already did it last time.
             sp_style_unref(query);
             g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
             return;
@@ -6229,20 +6243,28 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection * /*selection*
         g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(FALSE));
     }
 
+    /*
+     * If we have valid query data for text (font-family, font-specification) set toolbar accordingly.
+     */
     if (query->text)
     {
         if (result_family == QUERY_STYLE_MULTIPLE_DIFFERENT) {
+
+            // Don't set a font family if multiple styles are selected.
             GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
             gtk_entry_set_text (GTK_ENTRY (entry), "");
 
         } else if (query->text->font_specification.value || query->text->font_family.value) {
 
+            // At the moment (April 2010), font-specification isn't set unless actually
+            // set on current tspan (parent look up is disabled).
             Gtk::ComboBoxEntry *combo = (Gtk::ComboBoxEntry *) (g_object_get_data (G_OBJECT (tbl), "family-entry-combo"));
             GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
 
             // Get the font that corresponds
             Glib::ustring familyName;
 
+            // This tries to use font-specification first and then font-family.
             font_instance * font = font_factory::Default()->FaceFromStyle(query);
             if (font) {
                 familyName = font_factory::Default()->GetUIFamilyString(font->descr);
@@ -6267,7 +6289,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection * /*selection*
             combo->set_active (iter);
         }
 
-        //Size
+        //Size (average of text selected)
         {
             GtkWidget *cbox = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "combo-box-size"));
             gchar *const str = g_strdup_printf("%.5g", query->font_size.computed);
@@ -6391,6 +6413,12 @@ static void sp_text_toolbox_family_changed(GtkComboBoxEntry    *,
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
 
     if (fontSpec.empty()) {
+
+        // Must query all to fill font-family, font-style, font-weight, font-specification
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
         fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
@@ -6399,6 +6427,7 @@ static void sp_text_toolbox_family_changed(GtkComboBoxEntry    *,
 
     if (!fontSpec.empty()) {
 
+        // Now we have existing font specification, replace family.
         Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
 
         if (!newFontSpec.empty()) {
@@ -6630,17 +6659,20 @@ static void sp_text_toolbox_style_toggled(GtkToggleButton  *button,
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
 
-    int result_fontspec =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    //int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-    //int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-    //int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-
+    // font_specification will not be set unless defined explicitely on a tspan.
+    // This needs to be fixed.
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
     Glib::ustring newFontSpec = "";
 
     if (fontSpec.empty()) {
+
+        // Must query all to fill font-family, font-style, font-weight, font-specification
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
         fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
@@ -6652,12 +6684,20 @@ static void sp_text_toolbox_style_toggled(GtkToggleButton  *button,
     {
         case 0:
         {
+            // Bold
             if (!fontSpec.empty()) {
                 newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
                 if (!newFontSpec.empty()) {
-                    // Don't even set the bold if the font didn't exist on the system
-                    sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" );
-                    nochange = false;
+
+                    font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
+                    if (font) {
+                        gchar c[256];
+                        font->Attribute( "weight", c, 256);
+                        sp_repr_css_set_property (css, "font-weight", c);
+                        font->Unref();
+                        font = NULL;
+                        nochange = false;
+                    }
                 }
             }
             // set or reset the button according
@@ -6677,11 +6717,20 @@ static void sp_text_toolbox_style_toggled(GtkToggleButton  *button,
 
         case 1:
         {
+            // Italic/Oblique
             if (!fontSpec.empty()) {
                 newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
                 if (!newFontSpec.empty()) {
-                    // Don't even set the italic if the font didn't exist on the system
-                    sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal");
+                    // Don't even set the italic/oblique if the font didn't exist on the system
+                    if( active ) {
+                        if( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
+                            sp_repr_css_set_property (css, "font-style", "italic");
+                        } else {
+                            sp_repr_css_set_property (css, "font-style", "oblique");
+                        }
+                    } else {
+                        sp_repr_css_set_property (css, "font-style", "normal");
+                    }
                     nochange = false;
                 }
             }
