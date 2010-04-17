@@ -13,6 +13,7 @@
 [type: gettext/xml] share/extensions/cdt_input.inx
 [type: gettext/xml] share/extensions/cgm_input.inx
 [type: gettext/xml] share/extensions/cmx_input.inx
+[type: gettext/xml] share/extensions/color_blackandwhite.inx
 [type: gettext/xml] share/extensions/color_brighter.inx
 [type: gettext/xml] share/extensions/color_custom.inx
 [type: gettext/xml] share/extensions/color_darker.inx
@@ -448,6 +449,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/cdt_input.inx
 [type: gettext/xml] share/extensions/cgm_input.inx
 [type: gettext/xml] share/extensions/cmx_input.inx
+[type: gettext/xml] share/extensions/color_blackandwhite.inx
 [type: gettext/xml] share/extensions/color_brighter.inx
 [type: gettext/xml] share/extensions/color_custom.inx
 [type: gettext/xml] share/extensions/color_darker.inx

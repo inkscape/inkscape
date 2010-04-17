@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-15 22:39+0200\n"
+"POT-Creation-Date: 2010-04-17 22:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,10 +139,11 @@ msgstr ""
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../share/extensions/color_brighter.inx.h:1
-msgid "Brighter"
+#: ../share/extensions/color_blackandwhite.inx.h:1
+msgid "Black and White"
 msgstr ""
 
+#: ../share/extensions/color_blackandwhite.inx.h:2
 #: ../share/extensions/color_brighter.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
 #: ../share/extensions/color_darker.inx.h:1
@@ -172,6 +173,10 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 msgid "Color"
+msgstr ""
+
+#: ../share/extensions/color_brighter.inx.h:1
+msgid "Brighter"
 msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:1
@@ -2750,22 +2755,22 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:15
-msgid "HTML class atribute"
+msgid "HTML class atribute:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:16
-msgid "HTML id atribute"
+msgid "HTML id atribute:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-msgid "Height Unity"
+msgid "Height unit:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
-"it). To use this, first you must to select some \"Slicer rectangles\"."
+"it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
@@ -2793,7 +2798,7 @@ msgid "Web"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
-msgid "Width Unity"
+msgid "Width unit:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
@@ -2803,8 +2808,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:2
-#: ../src/ui/dialog/document-properties.cpp:93
-msgid "Background color"
+msgid "Background color:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
@@ -2831,21 +2835,20 @@ msgstr ""
 msgid "Create a slicer rectangle"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:9 ../src/main.cpp:300
-#: ../src/ui/widget/rendering-options.cpp:43
-msgid "DPI"
+#: ../share/extensions/webslicer_create_rect.inx.h:9
+msgid "DPI:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
-msgid "Force Dimension"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:12 ../src/rdf.cpp:235
-msgid "Format"
+#: ../share/extensions/webslicer_create_rect.inx.h:11
+msgid "Force Dimension:"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:12
+msgid "Format:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
@@ -2853,7 +2856,7 @@ msgid "GIF specific options"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:17
-msgid "If had set, this will replace DPI."
+msgid "If set, this will replace DPI."
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:18
@@ -2861,7 +2864,7 @@ msgid "JPG specific options"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:19
-msgid "Layout disposition"
+msgid "Layout disposition:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
@@ -2869,8 +2872,8 @@ msgid "Left Floated Image"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
-msgid "Name"
+#: ../src/extension/extension.cpp:740
+msgid "Name:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
@@ -2886,15 +2889,15 @@ msgid "Palette"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:25
-msgid "Palette size"
+msgid "Palette size:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:26
-msgid "Position anchor"
+msgid "Position anchor:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:27
-msgid "Positioned &lt;div&gt; width the image as Background"
+msgid "Positioned &lt;div&gt; with the image as Background"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:28
@@ -2902,7 +2905,7 @@ msgid "Positioned Image"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:29
-msgid "Quality"
+msgid "Quality:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
@@ -2921,9 +2924,12 @@ msgstr ""
 msgid "Top and right"
 msgstr ""
 
+#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../share/extensions/webslicer_create_rect.inx.h:34
-#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-msgid "Type"
+#: ../src/dialogs/object-attributes.cpp:34
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
+msgid "Type:"
 msgstr ""
 
 #: ../share/extensions/webslicer_export.inx.h:1
@@ -2937,7 +2943,7 @@ msgid "Create directory, if it does not exists"
 msgstr ""
 
 #: ../share/extensions/webslicer_export.inx.h:3
-msgid "Directory path to export"
+msgid "Directory path to export:"
 msgstr ""
 
 #: ../share/extensions/webslicer_export.inx.h:4
@@ -5578,11 +5584,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:7595
+#: ../src/connector-context.cpp:1936 ../src/widgets/toolbox.cpp:7644
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:7605
+#: ../src/connector-context.cpp:1937 ../src/widgets/toolbox.cpp:7654
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -6799,13 +6805,6 @@ msgstr ""
 msgid "Target:"
 msgstr ""
 
-#. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../src/dialogs/object-attributes.cpp:34
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2174
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2252
-msgid "Type:"
-msgstr ""
-
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:37
@@ -6959,11 +6958,11 @@ msgstr ""
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7250
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:7299
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7262
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:7311
 msgid "Vertical text"
 msgstr ""
 
@@ -7408,7 +7407,7 @@ msgstr ""
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:203 ../src/widgets/toolbox.cpp:7180
+#: ../src/display/snap-indicator.cpp:203 ../src/widgets/toolbox.cpp:7229
 msgid "Center"
 msgstr ""
 
@@ -7635,10 +7634,6 @@ msgstr ""
 msgid "Could not create extension error log file '%s'"
 msgstr ""
 
-#: ../src/extension/extension.cpp:740
-msgid "Name:"
-msgstr ""
-
 #: ../src/extension/extension.cpp:741
 msgid "ID:"
 msgstr ""
@@ -7738,6 +7733,10 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
 msgid "Add Noise"
+msgstr ""
+
+#: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
+msgid "Type"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
@@ -9278,7 +9277,7 @@ msgstr ""
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1595 ../src/widgets/toolbox.cpp:3320
-#: ../src/widgets/toolbox.cpp:6038 ../src/widgets/toolbox.cpp:7853
+#: ../src/widgets/toolbox.cpp:6038 ../src/widgets/toolbox.cpp:7902
 msgid "Units"
 msgstr ""
 
@@ -9772,6 +9771,10 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-notebook.c:135
 msgid "The index of the current page"
+msgstr ""
+
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:242
+msgid "Name"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:121
@@ -10974,6 +10977,10 @@ msgid ""
 "EPS/PDF (default 90)"
 msgstr ""
 
+#: ../src/main.cpp:300 ../src/ui/widget/rendering-options.cpp:43
+msgid "DPI"
+msgstr ""
+
 #: ../src/main.cpp:304
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
@@ -11628,6 +11635,10 @@ msgstr ""
 
 #: ../src/rdf.cpp:233
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
+msgstr ""
+
+#: ../src/rdf.cpp:235
+msgid "Format"
 msgstr ""
 
 #: ../src/rdf.cpp:236
@@ -13513,12 +13524,12 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:510
 #: ../src/ui/dialog/align-and-distribute.cpp:795
-#: ../src/widgets/toolbox.cpp:7692
+#: ../src/widgets/toolbox.cpp:7741
 msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:541
-#: ../src/widgets/toolbox.cpp:7481
+#: ../src/widgets/toolbox.cpp:7530
 msgid "Arrange connector network"
 msgstr ""
 
@@ -13658,7 +13669,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#: ../src/widgets/toolbox.cpp:7654
+#: ../src/widgets/toolbox.cpp:7703
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
@@ -13771,6 +13782,10 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:93
+msgid "Background color"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:93
@@ -15663,7 +15678,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:211
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7834
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7883
 msgid "Threshold:"
 msgstr ""
 
@@ -22466,7 +22481,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2999 ../src/widgets/toolbox.cpp:3932
-#: ../src/widgets/toolbox.cpp:4187 ../src/widgets/toolbox.cpp:7899
+#: ../src/widgets/toolbox.cpp:4187 ../src/widgets/toolbox.cpp:7948
 msgid "Defaults"
 msgstr ""
 
@@ -23517,204 +23532,204 @@ msgstr ""
 msgid "Cut out from objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6461
+#: ../src/widgets/toolbox.cpp:6490
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6612
+#: ../src/widgets/toolbox.cpp:6641
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6717
+#: ../src/widgets/toolbox.cpp:6766
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6763
+#: ../src/widgets/toolbox.cpp:6812
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6878
+#: ../src/widgets/toolbox.cpp:6927
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7096
+#: ../src/widgets/toolbox.cpp:7145
 msgid "Select font family (Alt+X to access)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7133
+#: ../src/widgets/toolbox.cpp:7182
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7169
+#: ../src/widgets/toolbox.cpp:7218
 msgid "Align left"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7191
+#: ../src/widgets/toolbox.cpp:7240
 msgid "Align right"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7202
+#: ../src/widgets/toolbox.cpp:7251
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7217
+#: ../src/widgets/toolbox.cpp:7266
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7228
+#: ../src/widgets/toolbox.cpp:7277
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7365
+#: ../src/widgets/toolbox.cpp:7414
 msgid "Set connector type: orthogonal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7365
+#: ../src/widgets/toolbox.cpp:7414
 msgid "Set connector type: polyline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7413
+#: ../src/widgets/toolbox.cpp:7462
 msgid "Change connector curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7461
+#: ../src/widgets/toolbox.cpp:7510
 msgid "Change connector spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7579
+#: ../src/widgets/toolbox.cpp:7628
 msgid "EditMode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7580
+#: ../src/widgets/toolbox.cpp:7629
 msgid "Switch between connection point editing and connector drawing mode"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7594
+#: ../src/widgets/toolbox.cpp:7643
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7604
+#: ../src/widgets/toolbox.cpp:7653
 msgid "Ignore"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7615
+#: ../src/widgets/toolbox.cpp:7664
 msgid "Orthogonal"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7616
+#: ../src/widgets/toolbox.cpp:7665
 msgid "Make connector orthogonal or polyline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7630
+#: ../src/widgets/toolbox.cpp:7679
 msgid "Connector Curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7630
+#: ../src/widgets/toolbox.cpp:7679
 msgid "Curvature:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7631
+#: ../src/widgets/toolbox.cpp:7680
 msgid "The amount of connectors curvature"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7641
+#: ../src/widgets/toolbox.cpp:7690
 msgid "Connector Spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7641
+#: ../src/widgets/toolbox.cpp:7690
 msgid "Spacing:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7642
+#: ../src/widgets/toolbox.cpp:7691
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7653
+#: ../src/widgets/toolbox.cpp:7702
 msgid "Graph"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7663
+#: ../src/widgets/toolbox.cpp:7712
 msgid "Connector Length"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7663
+#: ../src/widgets/toolbox.cpp:7712
 msgid "Length:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7664
+#: ../src/widgets/toolbox.cpp:7713
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7676
+#: ../src/widgets/toolbox.cpp:7725
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7677
+#: ../src/widgets/toolbox.cpp:7726
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7693
+#: ../src/widgets/toolbox.cpp:7742
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7708
+#: ../src/widgets/toolbox.cpp:7757
 msgid "New connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7709
+#: ../src/widgets/toolbox.cpp:7758
 msgid "Add a new connection point to the currently selected item"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7720
+#: ../src/widgets/toolbox.cpp:7769
 msgid "Remove connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7721
+#: ../src/widgets/toolbox.cpp:7770
 msgid "Remove the currently selected connection point"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7821
+#: ../src/widgets/toolbox.cpp:7870
 msgid "Fill by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7822
+#: ../src/widgets/toolbox.cpp:7871
 msgid "Fill by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7834
+#: ../src/widgets/toolbox.cpp:7883
 msgid "Fill Threshold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7835
+#: ../src/widgets/toolbox.cpp:7884
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7861
+#: ../src/widgets/toolbox.cpp:7910
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7861
+#: ../src/widgets/toolbox.cpp:7910
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7862
+#: ../src/widgets/toolbox.cpp:7911
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7887
+#: ../src/widgets/toolbox.cpp:7936
 msgid "Close gaps"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7888
+#: ../src/widgets/toolbox.cpp:7937
 msgid "Close gaps:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7900
+#: ../src/widgets/toolbox.cpp:7949
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
