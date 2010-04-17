@@ -6,7 +6,7 @@
   <dependency type="executable" location="extensions">webslicer_export.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="about" type="description">All sliced images, and optionally code, will be generated as you had configured and saved to one directory.</_param>
-  <param name="dir" type="string" _gui-text="Directory path to export"></param>
+  <param name="dir" type="string" _gui-text="Directory path to export:"></param>
   <param name="create-dir" type="boolean" _gui-text="Create directory, if it does not exists">false</param>
   <param name="with-code" type="boolean" _gui-text="With HTML and CSS">true</param>
   <effect needs-live-preview="false">
