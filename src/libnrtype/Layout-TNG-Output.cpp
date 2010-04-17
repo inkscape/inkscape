@@ -117,10 +117,10 @@ void Layout::getBoundingBox(NRRect *bounding_box, Geom::Matrix const &transform,
         Geom::Matrix total_transform = glyph_matrix;
         total_transform *= transform;
         if(_glyphs[glyph_index].span(this).font) {
-	    Geom::OptRect glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
+            Geom::OptRect glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
             if (glyph_rect) {
-	        Geom::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
-	        Geom::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
+                Geom::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
+                Geom::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
                 tlp *= total_transform;
                 trp *= total_transform;
                 blp *= total_transform;
@@ -133,7 +133,7 @@ void Layout::getBoundingBox(NRRect *bounding_box, Geom::Matrix const &transform,
                 if ( (glyph_rect->min())[1] < bounding_box->y0 ) bounding_box->y0=(glyph_rect->min())[1];
                 if ( (glyph_rect->max())[1] > bounding_box->y1 ) bounding_box->y1=(glyph_rect->max())[1];
             }
-	}
+        }
     }
 }
 

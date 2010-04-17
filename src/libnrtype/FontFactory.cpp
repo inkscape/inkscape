@@ -1030,7 +1030,7 @@ void font_factory::UnrefFace(font_instance *who)
             g_free(tc);
         } else {
             loadedFaces.erase(loadedFaces.find(who->descr));
-            //			printf("unrefFace %p: success\n",who);
+            //            printf("unrefFace %p: success\n",who);
         }
     }
 }
@@ -1041,7 +1041,7 @@ void font_factory::AddInCache(font_instance *who)
     for (int i = 0;i < nbEnt;i++) ents[i].age *= 0.9;
     for (int i = 0;i < nbEnt;i++) {
         if ( ents[i].f == who ) {
-            //			printf("present\n");
+            //            printf("present\n");
             ents[i].age += 1.0;
             return;
         }
