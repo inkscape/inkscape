@@ -135,6 +135,7 @@ extensions = \
 	voronoi.py \
 	webslicer_create_group.py \
 	webslicer_create_rect.py \
+	webslicer_effect.py \
 	webslicer_export.py \
 	web-set-att.py \
 	web-transmit-att.py \
