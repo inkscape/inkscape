@@ -28,6 +28,13 @@
 #include "livarot/Path.h"
 #include "util/unordered-containers.h"
 
+#if !PANGO_VERSION_CHECK(1,24,0)
+#define PANGO_WEIGHT_THIN       static_cast<PangoWeight>(100)
+#define PANGO_WEIGHT_BOOK       static_cast<PangoWeight>(380)
+#define PANGO_WEIGHT_MEDIUM     static_cast<PangoWeight>(500)
+#define PANGO_WEIGHT_ULTRAHEAVY static_cast<PangoWeight>(1000)
+#endif
+
 
 struct font_style_hash : public std::unary_function<font_style, size_t> {
     size_t operator()(font_style const &x) const;
