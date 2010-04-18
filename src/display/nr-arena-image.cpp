@@ -151,10 +151,10 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
 
         nr_rect_d_matrix_transform (&bbox, &bbox, gc->transform);
 
-        item->bbox.x0 = (int) floor (bbox.x0);
-        item->bbox.y0 = (int) floor (bbox.y0);
-        item->bbox.x1 = (int) ceil (bbox.x1);
-        item->bbox.y1 = (int) ceil (bbox.y1);
+        item->bbox.x0 = static_cast<NR::ICoord>(floor(bbox.x0)); // Floor gives the coordinate in which the point resides
+        item->bbox.y0 = static_cast<NR::ICoord>(floor(bbox.y0));
+        item->bbox.x1 = static_cast<NR::ICoord>(ceil (bbox.x1)); // Ceil gives the first coordinate beyond the point
+        item->bbox.y1 = static_cast<NR::ICoord>(ceil (bbox.y1));
     } else {
         item->bbox.x0 = (int) gc->transform[4];
         item->bbox.y0 = (int) gc->transform[5];
@@ -211,13 +211,7 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
         } else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
             nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
         } else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
-
-            //FIXME: The _N_N_N_ version gives a gray border around images, see bug 906376
-            // This mode is only used when exporting, screen rendering always has _P_P_P_, so I decided to simply replace it for now
-            // Feel free to propose a better fix
-
-            //nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
-            nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
+            nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
         }
 
         pb->empty = FALSE;

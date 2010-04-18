@@ -254,12 +254,11 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
                 boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
-                /// \todo  just write item->bbox = boundingbox
                 if (boundingbox) {
-                    item->bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
-                    item->bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
-                    item->bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
-                    item->bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
+                    item->bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0])); // Floor gives the coordinate in which the point resides
+                    item->bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
+                    item->bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1])); // Ceil gives the first coordinate beyond the point
+                    item->bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
                 } else {
                     item->bbox = NR_RECT_L_EMPTY;
                 }
@@ -300,10 +299,10 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     /// \todo  just write item->bbox = boundingbox
     if (boundingbox) {
-        shape->approx_bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
-        shape->approx_bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
-        shape->approx_bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
-        shape->approx_bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
+        shape->approx_bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0]));
+        shape->approx_bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
+        shape->approx_bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1]));
+        shape->approx_bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
     } else {
         shape->approx_bbox = NR_RECT_L_EMPTY;
     }
@@ -349,10 +348,10 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
         /// \todo  just write shape->approx_bbox = boundingbox
         if (boundingbox) {
-            shape->approx_bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
-            shape->approx_bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
-            shape->approx_bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
-            shape->approx_bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
+            shape->approx_bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0]));
+            shape->approx_bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
+            shape->approx_bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1]));
+            shape->approx_bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
         } else {
             shape->approx_bbox = NR_RECT_L_EMPTY;
         }
@@ -362,10 +361,10 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         return NR_ARENA_ITEM_STATE_ALL;
 
     /// \todo  just write item->bbox = boundingbox
-    item->bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
-    item->bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
-    item->bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.0F);
-    item->bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.0F);
+    item->bbox.x0 = static_cast<NR::ICoord>(floor((*boundingbox)[0][0]));
+    item->bbox.y0 = static_cast<NR::ICoord>(floor((*boundingbox)[1][0]));
+    item->bbox.x1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[0][1]));
+    item->bbox.y1 = static_cast<NR::ICoord>(ceil ((*boundingbox)[1][1]));
 
     item->render_opacity = TRUE;
     if ( shape->_fill.paint.type() == NRArenaShape::Paint::SERVER ) {

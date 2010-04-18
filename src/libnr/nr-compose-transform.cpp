@@ -66,18 +66,25 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 
 	if (alpha == 0) return;
 
+    // Both alpha and color components are stored temporarily with a range of [0,255^2], so more supersampling and we get an overflow
+    if (xd+yd>16) {
+        xd = 8;
+        yd = 8;
+    }
+
 	xsize = (1 << xd);
 	ysize = (1 << yd);
 	size = xsize * ysize;
 	dbits = xd + yd;
+    unsigned int rounding_fix = size/2;
 
 	/* Set up fixed point matrix */
-	FFs_x_x = (long) (d2s[0] * (1 << FBITS) + 0.5);
-	FFs_x_y = (long) (d2s[1] * (1 << FBITS) + 0.5);
-	FFs_y_x = (long) (d2s[2] * (1 << FBITS) + 0.5);
-	FFs_y_y = (long) (d2s[3] * (1 << FBITS) + 0.5);
-	FFs__x = (long) (d2s[4] * (1 << FBITS) + 0.5);
-	FFs__y = (long) (d2s[5] * (1 << FBITS) + 0.5);
+	FFs_x_x = (long) floor(d2s[0] * (1 << FBITS) + 0.5);
+	FFs_x_y = (long) floor(d2s[1] * (1 << FBITS) + 0.5);
+	FFs_y_x = (long) floor(d2s[2] * (1 << FBITS) + 0.5);
+	FFs_y_y = (long) floor(d2s[3] * (1 << FBITS) + 0.5);
+	FFs__x = (long) floor(d2s[4] * (1 << FBITS) + 0.5);
+	FFs__y = (long) floor(d2s[5] * (1 << FBITS) + 0.5);
 
 	FFs_x_x_S = FFs_x_x >> xd;
 	FFs_x_y_S = FFs_x_y >> xd;
@@ -114,35 +121,40 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 					sy = (FFsy + FF_sy_S[i]) >> FBITS;
 					if ((sy >= 0) && (sy < sh)) {
 						const unsigned char *s;
-						unsigned int ca;
 						s = spx + sy * srs + sx * 4;
-						ca = NR_PREMUL_112 (s[3], alpha);
-						r += NR_PREMUL_121 (s[0], ca);
-						g += NR_PREMUL_121 (s[1], ca);
-						b += NR_PREMUL_121 (s[2], ca);
-						a += NR_NORMALIZE_21(ca);
+						r += NR_PREMUL_112 (s[0], s[3]);
+						g += NR_PREMUL_112 (s[1], s[3]);
+						b += NR_PREMUL_112 (s[2], s[3]);
+						a += s[3];
 					}
 				}
 			}
-			a >>= dbits;
+			a = (a*alpha + rounding_fix) >> dbits;
+            // Compare to nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P
 			if (a != 0) {
-				r = r >> dbits;
-				g = g >> dbits;
-				b = b >> dbits;
-				if (a == 255) {
-					/* Transparent BG, premul src */
-					d[0] = r;
-					d[1] = g;
-					d[2] = b;
-					d[3] = a;
+				r = (r + rounding_fix) >> dbits;
+				g = (g + rounding_fix) >> dbits;
+				b = (b + rounding_fix) >> dbits;
+                if (a == 255) {
+					/* Full coverage, demul src */
+					d[0] = NR_NORMALIZE_21(r);
+					d[1] = NR_NORMALIZE_21(g);
+					d[2] = NR_NORMALIZE_21(b);
+					d[3] = NR_NORMALIZE_21(a);
+                } else if (d[3] == 0) {
+                    /* Only foreground, demul src */
+                    d[0] = NR_DEMUL_221(r,a);
+                    d[1] = NR_DEMUL_221(g,a);
+                    d[2] = NR_DEMUL_221(b,a);
+                    d[3] = NR_NORMALIZE_21(a);
 				} else {
 					unsigned int ca;
 					/* Full composition */
-					ca = NR_COMPOSEA_112(a, d[3]);
-					d[0] = NR_COMPOSENNN_111121 (r, a, d[0], d[3], ca);
-					d[1] = NR_COMPOSENNN_111121 (g, a, d[1], d[3], ca);
-					d[2] = NR_COMPOSENNN_111121 (b, a, d[2], d[3], ca);
-					d[3] = NR_NORMALIZE_21(ca);
+					ca = NR_COMPOSEA_213(a, d[3]);
+					d[0] = NR_COMPOSEPNN_221131 (r, a, d[0], d[3], ca);
+					d[1] = NR_COMPOSEPNN_221131 (g, a, d[1], d[3], ca);
+					d[2] = NR_COMPOSEPNN_221131 (b, a, d[2], d[3], ca);
+					d[3] = NR_NORMALIZE_31(ca);
 				}
 			}
 			/* Advance pointers */
@@ -227,9 +239,7 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 	int x, y;
 
 	size = (1 << dbits);
-    unsigned alpha_rounding_fix = size * 255;
-    unsigned rgb_rounding_fix = size * (255 * 256);
-    if (alpha > 127) ++alpha;
+    unsigned int rounding_fix = size/2;
 
 	d0 = px;
 	FFsx0 = FFd2s[4];
@@ -252,32 +262,30 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 					sy = (long (FFsy >> (FBITS_HP - FBITS)) + FF_S[2 * i + 1]) >> FBITS;
 					if ((sy >= 0) && (sy < sh)) {
 						const unsigned char *s;
-						unsigned int ca;
 						s = spx + sy * srs + sx * 4;
-						ca = NR_PREMUL_112(s[3], alpha);
-						r += NR_PREMUL_123(s[0], ca);
-						g += NR_PREMUL_123(s[1], ca);
-						b += NR_PREMUL_123(s[2], ca);
-						a += ca;
+						r += NR_PREMUL_112(s[0], s[3]);
+						g += NR_PREMUL_112(s[1], s[3]);
+						b += NR_PREMUL_112(s[2], s[3]);
+						a += s[3];
 					}
 				}
 			}
-			a = (a + alpha_rounding_fix) >> (8 + dbits);
+			a = (a*alpha + rounding_fix) >> dbits;
 			if (a != 0) {
-				r = (r + rgb_rounding_fix) >> (16 + dbits);
-				g = (g + rgb_rounding_fix) >> (16 + dbits);
-				b = (b + rgb_rounding_fix) >> (16 + dbits);
+				r = (r + rounding_fix) >> dbits;
+				g = (g + rounding_fix) >> dbits;
+				b = (b + rounding_fix) >> dbits;
 				if ((a == 255) || (d[3] == 0)) {
 					/* Transparent BG, premul src */
-					d[0] = r;
-					d[1] = g;
-					d[2] = b;
-					d[3] = a;
+					d[0] = NR_NORMALIZE_21(r);
+					d[1] = NR_NORMALIZE_21(g);
+					d[2] = NR_NORMALIZE_21(b);
+					d[3] = NR_NORMALIZE_21(a);
 				} else {
-					d[0] = NR_COMPOSEPPP_1111 (r, a, d[0]);
-					d[1] = NR_COMPOSEPPP_1111 (g, a, d[1]);
-					d[2] = NR_COMPOSEPPP_1111 (b, a, d[2]);
-					d[3] = NR_COMPOSEA_111(a, d[3]);
+					d[0] = NR_COMPOSEPPP_2211 (r, a, d[0]);
+					d[1] = NR_COMPOSEPPP_2211 (g, a, d[1]);
+					d[2] = NR_COMPOSEPPP_2211 (b, a, d[2]);
+					d[3] = NR_COMPOSEA_211(a, d[3]);
 				}
 			}
 			/* Advance pointers */
@@ -302,11 +310,17 @@ void nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, in
 
 	if (alpha == 0) return;
 
-	dbits = xd + yd;
+    // Both alpha and color components are stored temporarily with a range of [0,255^2], so more supersampling and we get an overflow
+    if (xd+yd>16) {
+        xd = 8;
+        yd = 8;
+    }
+
+    dbits = xd + yd;
 
 	for (i = 0; i < 6; i++) {
-		FFd2s[i] = (long) (d2s[i] * (1 << FBITS) + 0.5);
-		FFd2s_HP[i] = (long long) (d2s[i] * (1 << FBITS_HP) + 0.5);;
+		FFd2s[i] = (long) floor(d2s[i] * (1 << FBITS) + 0.5);
+		FFd2s_HP[i] = (long long) floor(d2s[i] * (1 << FBITS_HP) + 0.5);;
 	}
 
 	if (dbits == 0) {

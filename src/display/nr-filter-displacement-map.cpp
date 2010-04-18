@@ -43,9 +43,8 @@ struct pixel_t {
 
 static inline pixel_t pixelValue(NRPixBlock const* pb, int x, int y) {
     if ( x < pb->area.x0 || x >= pb->area.x1 || y < pb->area.y0 || y >= pb->area.y1 ) return pixel_t::blank(); // This assumes anything outside the defined range is (0,0,0,0)
-    pixel_t const* data = reinterpret_cast<pixel_t const*>(NR_PIXBLOCK_PX(pb));
-    int offset = (x-pb->area.x0) + (pb->area.x1-pb->area.x0)*(y-pb->area.y0);
-    return data[offset];
+    pixel_t const* rowData = reinterpret_cast<pixel_t const*>(NR_PIXBLOCK_PX(pb) + (y-pb->area.y0)*pb->rs);
+    return rowData[x-pb->area.x0];
 }
 
 template<bool PREMULTIPLIED>
@@ -74,18 +73,9 @@ static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
      * We might as well avoid premultiplication in this case, which still gives us a fully
      * transparent result, but with interpolated RGB parts. */
 
-    /* First calculate interpolated alpha value. */
-    unsigned ra = 0;
-    if (!PREMULTIPLIED) {
-        unsigned const y0 = sf*p00[3] + xf*(p01[3]-p00[3]); // range [0,a*sf]
-        unsigned const y1 = sf*p10[3] + xf*(p11[3]-p10[3]);
-        ra = sf*y0 + yf*(y1-y0); // range [0,a*sf*sf]
-    }
-
     pixel_t r;
-    if (ra == 0) {
-        /* Either premultiplied or the interpolated alpha value is zero,
-         * so do simple interpolation. */
+    if (PREMULTIPLIED) {
+        /* Premultiplied, so do simple interpolation. */
         for (unsigned i = 0; i != 4; ++i) {
             // y0,y1 have range [0,a*sf]
             unsigned const y0 = sf*p00[i] + xf*((unsigned int)p01[i]-(unsigned int)p00[i]);
@@ -95,21 +85,39 @@ static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
             r[i] = (ri + sf2h)>>(2*sfl); // range [0,a]
         }
     } else {
-        /* Do premultiplication ourselves. */
-        for (unsigned i = 0; i != 3; ++i) {
-            // Premultiplied versions.  Range [0,255*a].
-            unsigned const c00 = p00[i]*p00[3];
-            unsigned const c01 = p01[i]*p01[3];
-            unsigned const c10 = p10[i]*p10[3];
-            unsigned const c11 = p11[i]*p11[3];
+        /* First calculate interpolated alpha value. */
+        unsigned const y0 = sf*p00[3] + xf*((unsigned int)p01[3]-(unsigned int)p00[3]); // range [0,a*sf]
+        unsigned const y1 = sf*p10[3] + xf*((unsigned int)p11[3]-(unsigned int)p10[3]);
+        unsigned const ra = sf*y0 + yf*(y1-y0); // range [0,a*sf*sf]
 
-            // Interpolation.
-            unsigned const y0 = sf*c00 + xf*(c01-c00); // range [0,255*a*sf]
-            unsigned const y1 = sf*c10 + xf*(c11-c10); // range [0,255*a*sf]
-            unsigned const ri = sf*y0 + yf*(y1-y0); // range [0,255*a*sf*sf]
-            r[i] = (ri + ra/2) / ra;  // range [0,255]
+        if (ra==0) {
+            /* Fully transparent, so do simple interpolation. */
+            for (unsigned i = 0; i != 3; ++i) {
+                // y0,y1 have range [0,255*sf]
+                unsigned const y0 = sf*p00[i] + xf*((unsigned int)p01[i]-(unsigned int)p00[i]);
+                unsigned const y1 = sf*p10[i] + xf*((unsigned int)p11[i]-(unsigned int)p10[i]);
+
+                unsigned const ri = sf*y0 + yf*(y1-y0); // range [0,255*sf*sf]
+                r[i] = (ri + sf2h)>>(2*sfl); // range [0,255]
+            }
+            r[3] = 0;
+        } else {
+            /* Do premultiplication ourselves. */
+            for (unsigned i = 0; i != 3; ++i) {
+                // Premultiplied versions.  Range [0,255*a].
+                unsigned const c00 = p00[i]*p00[3];
+                unsigned const c01 = p01[i]*p01[3];
+                unsigned const c10 = p10[i]*p10[3];
+                unsigned const c11 = p11[i]*p11[3];
+
+                // Interpolation.
+                unsigned const y0 = sf*c00 + xf*(c01-c00); // range [0,255*a*sf]
+                unsigned const y1 = sf*c10 + xf*(c11-c10); // range [0,255*a*sf]
+                unsigned const ri = sf*y0 + yf*(y1-y0); // range [0,255*a*sf*sf]
+                r[i] = (ri + ra/2) / ra;  // range [0,255]
+            }
+            r[3] = (ra + sf2h)>>(2*sfl); // range [0,a]
         }
-        r[3] = (ra + sf2h)>>(2*sfl); // range [0,a]
     }
 
     return r;
@@ -117,19 +125,17 @@ static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
 
 template<bool MAP_PREMULTIPLIED, bool DATA_PREMULTIPLIED>
 static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map, int Xchannel, int Ychannel, NRPixBlock* out, double scalex, double scaley) {
-    pixel_t *out_data = reinterpret_cast<pixel_t*>(NR_PIXBLOCK_PX(out));
-
     bool Xneedsdemul = MAP_PREMULTIPLIED && Xchannel<3;
     bool Yneedsdemul = MAP_PREMULTIPLIED && Ychannel<3;
     if (!Xneedsdemul) scalex /= 255.0;
     if (!Yneedsdemul) scaley /= 255.0;
 
     for (int yout=out->area.y0; yout < out->area.y1; yout++){
+        pixel_t const* mapRowData = reinterpret_cast<pixel_t const*>(NR_PIXBLOCK_PX(map) + (yout-map->area.y0)*map->rs);
+        pixel_t* outRowData = reinterpret_cast<pixel_t*>(NR_PIXBLOCK_PX(out) + (yout-out->area.y0)*out->rs);
         for (int xout=out->area.x0; xout < out->area.x1; xout++){
-            int xmap = xout;
-            int ymap = yout;
+            pixel_t const mapValue = mapRowData[xout-map->area.x0];
 
-            pixel_t mapValue = pixelValue(map, xmap, ymap);
             double xtex = xout + (Xneedsdemul ? // Although the value of the pixel corresponds to the MIDDLE of the pixel, no +0.5 is needed because we're interpolating pixels anyway (so to get the actual pixel locations 0.5 would have to be subtracted again).
                 (mapValue[3]==0?0:(scalex * (mapValue[Xchannel] - mapValue[3]*0.5) / mapValue[3])) :
                 (scalex * (mapValue[Xchannel] - 127.5)));
@@ -137,7 +143,7 @@ static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map
                 (mapValue[3]==0?0:(scaley * (mapValue[Ychannel] - mapValue[3]*0.5) / mapValue[3])) :
                 (scaley * (mapValue[Ychannel] - 127.5)));
 
-            out_data[(xout-out->area.x0) + (out->area.x1-out->area.x0)*(yout-out->area.y0)] = interpolatePixels<DATA_PREMULTIPLIED>(texture, xtex, ytex);
+            outRowData[xout-out->area.x0] = interpolatePixels<DATA_PREMULTIPLIED>(texture, xtex, ytex);
         }
     }
 }
@@ -152,8 +158,14 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
         return 1;
     }
 
-    //TODO: check whether do we really need this check:
-    if (map->area.x1 <= map->area.x0 || map->area.y1 <=  map->area.y0) return 0; //nothing to do!
+    NR::IRect area = units.get_pixblock_filterarea_paraller();
+    int x0 = std::max(map->area.x0,area.min()[NR::X]);
+    int y0 = std::max(map->area.y0,area.min()[NR::Y]);
+    int x1 = std::min(map->area.x1,area.max()[NR::X]);
+    int y1 = std::min(map->area.y1,area.max()[NR::Y]);
+
+    //TODO: check whether we really need this check:
+    if (x1 <= x0 || y1 <= y0) return 0; //nothing to do!
 
     if (texture->mode != NR_PIXBLOCK_MODE_R8G8B8A8N && texture->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
         g_warning("Source images without an alpha channel are not supported by feDisplacementMap at the moment.");
@@ -161,13 +173,7 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     }
 
     NRPixBlock *out = new NRPixBlock;
-    
-    out->area.x0 = map->area.x0;
-    out->area.y0 = map->area.y0;
-    out->area.x1 = map->area.x1;
-    out->area.y1 = map->area.y1;
-
-    nr_pixblock_setup_fast(out, texture->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
+    nr_pixblock_setup_fast(out, texture->mode, x0, y0, x1, y1, true);
 
     // convert to a suitable format
     bool free_map_on_exit = false;

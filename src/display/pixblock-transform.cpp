@@ -148,6 +148,11 @@ void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &tra
         nr_blit_pixblock_pixblock(from, o_from);
         free_from_on_exit = true;
     }
+
+    if (from->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
+        // TODO: Fix this... (The problem is that for interpolation non-premultiplied colors should be premultiplied...)
+        g_warning("transform_bicubic does not properly support non-premultiplied images");
+    }
     
     // Precalculate sizes of source and destination pixblocks
     int from_width = from->area.x1 - from->area.x0;

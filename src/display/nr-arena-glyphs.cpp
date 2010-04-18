@@ -211,10 +211,10 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     }
     if (nr_rect_d_test_empty(bbox)) return NR_ARENA_ITEM_STATE_ALL;
 
-    item->bbox.x0 = (gint32)(bbox.x0 - 1.0);
-    item->bbox.y0 = (gint32)(bbox.y0 - 1.0);
-    item->bbox.x1 = (gint32)(bbox.x1 + 1.0);
-    item->bbox.y1 = (gint32)(bbox.y1 + 1.0);
+    item->bbox.x0 = static_cast<NR::ICoord>(floor(bbox.x0));
+    item->bbox.y0 = static_cast<NR::ICoord>(floor(bbox.y0));
+    item->bbox.x1 = static_cast<NR::ICoord>(ceil (bbox.x1));
+    item->bbox.y1 = static_cast<NR::ICoord>(ceil (bbox.y1));
 
     return NR_ARENA_ITEM_STATE_ALL;
 }
