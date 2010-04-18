@@ -521,7 +521,7 @@ gdl_switcher_expose (GtkWidget *widget, GdkEventExpose *event)
                                             button, event);
         }
     }
-    GDL_CALL_PARENT_WITH_DEFAULT (GTK_WIDGET_CLASS, expose_event,
+    return GDL_CALL_PARENT_WITH_DEFAULT (GTK_WIDGET_CLASS, expose_event,
                                   (widget, event), FALSE);
 }
 
