@@ -473,8 +473,8 @@ int font_instance::MapUnicodeChar(gunichar c)
         } else {
             res = FT_Get_Char_Index(theFace, c);
         }
-    }
 #endif
+    }
     return res;
 }
 
