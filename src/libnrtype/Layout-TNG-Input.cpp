@@ -19,6 +19,13 @@
 #include "sp-string.h"
 #include "FontFactory.h"
 
+#if !PANGO_VERSION_CHECK(1,24,0)
+#define PANGO_WEIGHT_THIN       static_cast<PangoWeight>(100)
+#define PANGO_WEIGHT_BOOK       static_cast<PangoWeight>(380)
+#define PANGO_WEIGHT_MEDIUM     static_cast<PangoWeight>(500)
+#define PANGO_WEIGHT_ULTRAHEAVY static_cast<PangoWeight>(1000)
+#endif
+
 namespace Inkscape {
 namespace Text {
 
@@ -237,18 +244,16 @@ static const Layout::EnumConversionItem enum_convert_spstyle_style_to_pango_styl
     {SP_CSS_FONT_STYLE_OBLIQUE, PANGO_STYLE_OBLIQUE}};
 
 static const Layout::EnumConversionItem enum_convert_spstyle_weight_to_pango_weight[] = {
+  // NB: The Pango web page calls 500 "the normal font" but both CSS2 and the Pango
+  // enumeration define 400 as normal.
     {SP_CSS_FONT_WEIGHT_NORMAL, PANGO_WEIGHT_NORMAL},
-    {SP_CSS_FONT_WEIGHT_100, PANGO_WEIGHT_ULTRALIGHT},
+    {SP_CSS_FONT_WEIGHT_BOLD,PANGO_WEIGHT_BOLD},
+    {SP_CSS_FONT_WEIGHT_100, PANGO_WEIGHT_THIN},
     {SP_CSS_FONT_WEIGHT_200, PANGO_WEIGHT_ULTRALIGHT},
     {SP_CSS_FONT_WEIGHT_300, PANGO_WEIGHT_LIGHT},
     {SP_CSS_FONT_WEIGHT_400, PANGO_WEIGHT_NORMAL},
-#if GTK_CHECK_VERSION(2,6,0)
-    {SP_CSS_FONT_WEIGHT_500, PANGO_WEIGHT_SEMIBOLD},
-#else 
-    {SP_CSS_FONT_WEIGHT_500, PANGO_WEIGHT_NORMAL},
-#endif
-    {SP_CSS_FONT_WEIGHT_600, PANGO_WEIGHT_BOLD},
-    {SP_CSS_FONT_WEIGHT_BOLD,PANGO_WEIGHT_BOLD},
+    {SP_CSS_FONT_WEIGHT_500, PANGO_WEIGHT_MEDIUM},
+    {SP_CSS_FONT_WEIGHT_600, PANGO_WEIGHT_SEMIBOLD},
     {SP_CSS_FONT_WEIGHT_700, PANGO_WEIGHT_BOLD},
     {SP_CSS_FONT_WEIGHT_800, PANGO_WEIGHT_ULTRABOLD},
     {SP_CSS_FONT_WEIGHT_900, PANGO_WEIGHT_HEAVY}};
