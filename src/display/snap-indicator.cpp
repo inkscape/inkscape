@@ -55,6 +55,14 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         return; // If we haven't snapped, then it is of no use to draw a snapindicator
     }
 
+    if (p.getTarget() == SNAPTARGET_CONSTRAINT) {
+        // This is not a real snap, although moving along the constraint did affect the mouse pointer's position.
+        // Maybe we should only show a snap indicator when the user explicitly asked for a constraint by pressing ctrl?
+        // We should not show a snap indicator when stretching a selection box, which is also constrained. That would be
+        // too much information.
+        return;
+    }
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool("/options/snapindicator/value", true);
 

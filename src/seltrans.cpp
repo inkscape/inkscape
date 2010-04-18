@@ -999,8 +999,6 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
         m.setup(_desktop, false, _items_const);
 
         Inkscape::SnappedPoint bb, sn;
-        Geom::Coord bd(NR_HUGE);
-        Geom::Coord sd(NR_HUGE);
 
         if ((state & GDK_CONTROL_MASK) || _desktop->isToolboxButtonActive ("lock")) {
             // Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
@@ -1017,27 +1015,17 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             // Snap along a suitable constraint vector from the origin.
             bb = m.constrainedSnapScale(_bbox_points, _point, default_scale, _origin_for_bboxpoints);
             sn = m.constrainedSnapScale(_snap_points, _point, geom_scale, _origin_for_specpoints);
-
-            /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
-            ** just compare difference in s[X].
-            */
-            bd = bb.getSnapped() ? fabs(bb.getTransformation()[Geom::X] - default_scale[Geom::X]) : NR_HUGE;
-            sd = sn.getSnapped() ? fabs(sn.getTransformation()[Geom::X] - geom_scale[Geom::X]) : NR_HUGE;
         } else {
             /* Scale aspect ratio is unlocked */
             bb = m.freeSnapScale(_bbox_points, _point, default_scale, _origin_for_bboxpoints);
             sn = m.freeSnapScale(_snap_points, _point, geom_scale, _origin_for_specpoints);
-
-            /* Pick the snap that puts us closest to the original scale */
-            bd = bb.getSnapped() ? fabs(Geom::L2(bb.getTransformation()) - Geom::L2(Geom::Point(default_scale[Geom::X], default_scale[Geom::Y]))) : NR_HUGE;
-            sd = sn.getSnapped() ? fabs(Geom::L2(sn.getTransformation()) - Geom::L2(Geom::Point(geom_scale[Geom::X], geom_scale[Geom::Y]))) : NR_HUGE;
         }
 
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
             _desktop->snapindicator->remove_snaptarget();
-        } else if (bd < sd) {
+        } else if (bb.getSnapped() && !bb.isOtherSnapBetter(sn, false)) {
             // We snapped the bbox (which is either visual or geometric)
             _desktop->snapindicator->set_new_snaptarget(bb);
             default_scale = Geom::Scale(bb.getTransformation());
@@ -1109,8 +1097,6 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
 
         Inkscape::SnappedPoint bb, sn;
         g_assert(bb.getSnapped() == false); // Check initialization to catch any regression
-        Geom::Coord bd(NR_HUGE);
-        Geom::Coord sd(NR_HUGE);
 
         bool symmetrical = state & GDK_CONTROL_MASK;
 
@@ -1119,12 +1105,10 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
 
         if (bb.getSnapped()) {
             // We snapped the bbox (which is either visual or geometric)
-            bd = fabs(bb.getTransformation()[axis] - default_scale[axis]);
             default_scale[axis] = bb.getTransformation()[axis];
         }
 
         if (sn.getSnapped()) {
-            sd = fabs(sn.getTransformation()[axis] - geom_scale[axis]);
             geom_scale[axis] = sn.getTransformation()[axis];
         }
 
@@ -1139,7 +1123,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
             _desktop->snapindicator->remove_snaptarget();
-        } else if (bd < sd) {
+        } else if (bb.getSnapped() && !bb.isOtherSnapBetter(sn, false)) {
             _desktop->snapindicator->set_new_snaptarget(bb);
             // Calculate the new transformation and update the handle position
             pt = _calcAbsAffineDefault(default_scale);

@@ -55,6 +55,7 @@ public:
     inline Inkscape::SnapSourceType getSourceType() const {return _source_type;}
     inline Inkscape::SnapTargetType getTargetType() const {return _target_type;}
     inline long getSourceNum() const {return _source_num;}
+    void setSourceNum(long num) {_source_num = num;}
     inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
 
 private:

@@ -524,7 +524,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     /* Quick check to see if we have any snappers that are enabled
     ** Also used to globally disable all snapping
     */
-    if (someSnapperMightSnap() == false) {
+    if (someSnapperMightSnap() == false || points.size() == 0) {
         return Inkscape::SnappedPoint(pointer);
     }
 
@@ -559,10 +559,11 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     g_assert(best_snapped_point.getAlwaysSnap() == false); // Check initialization of snapped point
     g_assert(best_snapped_point.getAtIntersection() == false);
 
-    std::vector<Inkscape::SnapCandidatePoint>::const_iterator j = transformed_points.begin();
+    std::vector<Inkscape::SnapCandidatePoint>::iterator j = transformed_points.begin();
 
 
     // std::cout << std::endl;
+    bool first_free_snap = true;
     for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
 
         /* Snap it */
@@ -599,6 +600,17 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
                 snapped_point = constrainedSnap(*j, dedicated_constraint, bbox);
             } else {
+                // If we have a collection of SnapCandidatePoints, with mixed constrained snapping and free snapping
+                // requirements, then freeSnap might never see the SnapCandidatePoint with source_num == 0. The freeSnap()
+                // method in the object snapper depends on this, because only for source-num == 0 the target nodes will
+                // be collected. Therefore we enforce that the first SnapCandidatePoint that is to be freeSnapped always
+                // has source_num == 0;
+                // TODO: This is a bit ugly so fix this; do we need sourcenum for anything else? if we don't then get rid
+                // of it and explicitely communicate to the object snapper that this is a first point
+                if (first_free_snap) {
+                    (*j).setSourceNum(0);
+                    first_free_snap = false;
+                }
                 snapped_point = freeSnap(*j, bbox);
             }
         }
@@ -901,6 +913,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
                                                  bool noCurves,
                                                  bool allowOffScreen) const
 {
+
 
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
