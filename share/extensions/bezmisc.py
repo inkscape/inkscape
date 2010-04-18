@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 '''
+Copyright (C) 2010 Nick Drobchenko, nick@cnc-club.ru
 Copyright (C) 2005 Aaron Spike, aaron@ekips.org
 
 This program is free software; you can redistribute it and/or modify
@@ -21,9 +22,29 @@ import math, cmath
 
 def rootWrapper(a,b,c,d):
     if a:
-        #TODO: find a new cubic solver and put it here
-        #return solveCubicMonic(b/a,c/a,d/a)
-        return ()
+        # Monics formula see http://en.wikipedia.org/wiki/Cubic_function#Monic_formula_of_roots
+        a,b,c = (b/a, c/a, d/a)
+        m = 2.0*a**3 - 9.0*a*b + 27.0*c
+        k = a**2 - 3.0*b
+        n = m**2 - 4.0*k**3
+        w1 = -.5 + .5*cmath.sqrt(-3.0)
+        w2 = -.5 - .5*cmath.sqrt(-3.0)
+        if n < 0:
+            m1 = pow(complex((m+cmath.sqrt(n))/2),1./3)
+            n1 = pow(complex((m-cmath.sqrt(n))/2),1./3)
+        else:
+            if m+math.sqrt(n) < 0:
+                m1 = -pow(-(m+math.sqrt(n))/2,1./3)
+            else:
+                m1 = pow((m+math.sqrt(n))/2,1./3)
+            if m-math.sqrt(n) < 0:
+                n1 = -pow(-(m-math.sqrt(n))/2,1./3)
+            else:
+                n1 = pow((m-math.sqrt(n))/2,1./3)
+        x1 = -1./3 * (a + m1 + n1)
+        x2 = -1./3 * (a + w1*m1 + w2*n1)
+        x3 = -1./3 * (a + w2*m1 + w1*n1)
+        return (x1,x2,x3)
     elif b:
         det=c**2.0-4.0*b*d
         if det:
@@ -75,7 +96,7 @@ def linebezierintersect(((lx1,ly1),(lx2,ly2)),((bx0,by0),(bx1,by1),(bx2,by2),(bx
         if type(i) is complex and i.imag==0:
             i = i.real
         if type(i) is not complex and 0<=i<=1:
-            retval.append(i)
+            retval.append(bezierpointatt(((bx0,by0),(bx1,by1),(bx2,by2),(bx3,by3)),i))
     return retval
 
 def bezierpointatt(((bx0,by0),(bx1,by1),(bx2,by2),(bx3,by3)),t):
