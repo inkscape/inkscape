@@ -130,6 +130,14 @@ gint ege_select_one_action_get_active( EgeSelectOneAction* action );
 gchar *ege_select_one_action_get_active_text( EgeSelectOneAction* action );
 
 /**
+ * Sets the text of the currently selected item.
+ *
+ * @param action The action to fetch the text for.
+ * @param text the text to set.
+ */
+void ege_select_one_action_set_active_text( EgeSelectOneAction* action, gchar const *text );
+
+/**
  * Sets the  currently selected item.
  *
  * @param action The action to fetch the selected index for.

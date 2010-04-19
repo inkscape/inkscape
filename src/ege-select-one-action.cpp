@@ -324,6 +324,22 @@ gchar *ege_select_one_action_get_active_text( EgeSelectOneAction* action )
     return str;
 }
 
+void ege_select_one_action_set_active_text( EgeSelectOneAction* action, gchar const *text )
+{
+    g_return_if_fail( IS_EGE_SELECT_ONE_ACTION(action) );
+
+    if (action->private_data->activeText) {
+        g_free( action->private_data->activeText );
+    }
+    action->private_data->activeText = g_strdup(text);
+
+    if (action->private_data->active != -1) {
+        g_object_set( G_OBJECT(action), "active", -1, NULL );
+    } else {
+        resync_active( action, -1, TRUE );
+    }
+}
+
 void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val )
 {
     g_object_set( G_OBJECT(action), "active", val, NULL );
@@ -688,14 +704,16 @@ GtkWidget* create_tool_item( GtkAction* action )
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {
             GtkCellRenderer * renderer = 0;
-            GtkWidget* holder = gtk_hbox_new( FALSE, 4 );
-            GtkWidget* normal = (act->private_data->selectionMode == SELECTION_OPEN) ?
+            GtkWidget *holder = gtk_hbox_new( FALSE, 4 );
+            GtkEntry *entry = 0;
+            GtkWidget *normal = (act->private_data->selectionMode == SELECTION_OPEN) ?
                 gtk_combo_box_entry_new_with_model( act->private_data->model, act->private_data->labelColumn ) :
                 gtk_combo_box_new_with_model( act->private_data->model );
             if ((act->private_data->selectionMode == SELECTION_OPEN)) {
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
-                    gtk_entry_set_width_chars(GTK_ENTRY(child), 4);
+                    entry = GTK_ENTRY(child);
+                    gtk_entry_set_width_chars(entry, 4);
                     g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(combo_entry_changed_cb), act );
                     g_signal_connect( G_OBJECT(child), "focus-out-event", G_CALLBACK(combo_entry_focus_lost_cb), act );
                 }
@@ -714,6 +732,9 @@ GtkWidget* create_tool_item( GtkAction* action )
             }
 
             gtk_combo_box_set_active( GTK_COMBO_BOX(normal), act->private_data->active );
+            if ( entry && (act->private_data->active == -1) ) {
+                gtk_entry_set_text( entry, act->private_data->activeText );
+            }
 
             g_signal_connect( G_OBJECT(normal), "changed", G_CALLBACK(combo_changed_cb), action );
 
