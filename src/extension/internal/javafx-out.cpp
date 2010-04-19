@@ -791,7 +791,8 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
             SPShape *shape = SP_SHAPE(item);
             SPCurve *curve = shape->curve;
             if (!curve->is_empty()) {
-                out("               %s(),\n", id.c_str());
+                String jfxid = sanatize(id);
+                out("               %s(),\n", jfxid.c_str());
             }
         }
     }
