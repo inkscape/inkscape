@@ -115,6 +115,7 @@ extensions = \
 	sk2svg.sh \
 	SpSVG.pm \
 	spirograph.py\
+	split.py \
 	straightseg.py \
 	summersnight.py \
 	svgcalendar.py \
@@ -245,6 +246,7 @@ modules = \
 	sk1_input.inx \
 	sk1_output.inx \
 	spirograph.inx \
+	split.inx \
 	straightseg.inx \
 	summersnight.inx \
 	svg2xaml.inx \

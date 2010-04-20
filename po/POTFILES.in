@@ -96,6 +96,7 @@
 [type: gettext/xml] share/extensions/sk1_output.inx
 [type: gettext/xml] share/extensions/sk_input.inx
 [type: gettext/xml] share/extensions/spirograph.inx
+[type: gettext/xml] share/extensions/split.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
 [type: gettext/xml] share/extensions/svg2xaml.inx
@@ -533,6 +534,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/sk1_output.inx
 [type: gettext/xml] share/extensions/sk_input.inx
 [type: gettext/xml] share/extensions/spirograph.inx
+[type: gettext/xml] share/extensions/split.inx
 [type: gettext/xml] share/extensions/straightseg.inx
 [type: gettext/xml] share/extensions/summersnight.inx
 [type: gettext/xml] share/extensions/svg2xaml.inx
