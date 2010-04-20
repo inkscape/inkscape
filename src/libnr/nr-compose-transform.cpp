@@ -135,7 +135,7 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 				r = (r + rounding_fix) >> dbits;
 				g = (g + rounding_fix) >> dbits;
 				b = (b + rounding_fix) >> dbits;
-                if (a == 255) {
+                if (a == 255*255) {
 					/* Full coverage, demul src */
 					d[0] = NR_NORMALIZE_21(r);
 					d[1] = NR_NORMALIZE_21(g);
@@ -275,7 +275,7 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 				r = (r + rounding_fix) >> dbits;
 				g = (g + rounding_fix) >> dbits;
 				b = (b + rounding_fix) >> dbits;
-				if ((a == 255) || (d[3] == 0)) {
+				if ((a == 255*255) || (d[3] == 0)) {
 					/* Transparent BG, premul src */
 					d[0] = NR_NORMALIZE_21(r);
 					d[1] = NR_NORMALIZE_21(g);
