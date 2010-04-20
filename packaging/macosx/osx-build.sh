@@ -356,7 +356,7 @@ then
 Build system information:
 	OS X Version  $OSXVERSION
 	Architecture  $ARCH
-	DarwinPorts   `port version | cut -f2 -d \ `
+	MacPorts Ver  `port version | cut -f2 -d \ `
 	GCC           `$CXX --version | grep GCC`
 Included dependency versions:
 	GTK           `checkversion gtk+-2.0`
