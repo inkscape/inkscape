@@ -78,6 +78,8 @@ static GtkWidget* create_tool_item( GtkAction* action );
 static void connect_proxy( GtkAction *action, GtkWidget *proxy );
 static void disconnect_proxy( GtkAction *action, GtkWidget *proxy );
 
+static int scan_max_width( GtkTreeModel *model, gint labelColumn );
+
 static GtkActionClass* gParentClass = 0;
 static guint signals[LAST_SIGNAL] = {0};
 static GQuark gDataName = 0;
@@ -86,9 +88,9 @@ static GQuark gDataName = 0;
 enum {
     APPEARANCE_UNKNOWN = -1,
     APPEARANCE_NONE = 0,
-    APPEARANCE_FULL,    // label, then all choices represented by separate buttons
-    APPEARANCE_COMPACT, // label, then choices in a drop-down menu
-    APPEARANCE_MINIMAL, // no label, just choices in a drop-down menu
+    APPEARANCE_FULL,    /* label, then all choices represented by separate buttons */
+    APPEARANCE_COMPACT, /* label, then choices in a drop-down menu */
+    APPEARANCE_MINIMAL, /* no label, just choices in a drop-down menu */
 };
 
 enum {
@@ -712,8 +714,20 @@ GtkWidget* create_tool_item( GtkAction* action )
             if ((act->private_data->selectionMode == SELECTION_OPEN)) {
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
+                    int maxUsed = scan_max_width( act->private_data->model, act->private_data->labelColumn );
+                    GtkEntryCompletion *complete = 0;
                     entry = GTK_ENTRY(child);
-                    gtk_entry_set_width_chars(entry, 4);
+                    gtk_entry_set_width_chars(entry, maxUsed); /* replace with property */
+
+                    complete = gtk_entry_completion_new();
+                    gtk_entry_completion_set_model( complete, act->private_data->model );
+                    gtk_entry_completion_set_text_column( complete, act->private_data->labelColumn );
+                    gtk_entry_completion_set_inline_completion( complete, FALSE );
+                    gtk_entry_completion_set_inline_selection( complete, FALSE );
+                    gtk_entry_completion_set_popup_completion( complete, TRUE );
+                    gtk_entry_completion_set_popup_set_width( complete, FALSE );
+                    gtk_entry_set_completion( entry, complete );
+
                     g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(combo_entry_changed_cb), act );
                     g_signal_connect( G_OBJECT(child), "focus-out-event", G_CALLBACK(combo_entry_focus_lost_cb), act );
                 }
@@ -722,7 +736,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                     renderer = gtk_cell_renderer_pixbuf_new();
                     gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
 
-                    // "icon-name"
+                    /* "icon-name" */
                     gtk_cell_layout_add_attribute( GTK_CELL_LAYOUT(normal), renderer, "stock-id", act->private_data->iconColumn );
                 }
 
@@ -968,4 +982,26 @@ void proxy_action_chagned_cb( GtkRadioAction* action, GtkRadioAction* current, g
             g_object_set( G_OBJECT(act), "active", newActive, NULL );
         }
     }
+}
+
+int scan_max_width( GtkTreeModel *model, gint labelColumn )
+{
+    int maxUsed = 0;
+    GtkTreeIter iter;
+    gboolean valid = gtk_tree_model_get_iter_first( model, &iter );
+    while ( valid ) {
+        gchar* str = 0;
+        int count = 0;
+        gtk_tree_model_get( model, &iter,
+                            labelColumn, &str,
+                            -1 );
+        count = strlen(str);
+        if (count > maxUsed) {
+            maxUsed = count;
+        }
+        g_free( str );
+
+        valid = gtk_tree_model_iter_next( model, &iter );
+    }
+    return maxUsed;
 }
