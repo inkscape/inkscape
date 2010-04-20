@@ -186,7 +186,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                          g_param_spec_int( "active",
                                                            "Active Selection",
                                                            "The index of the selected item",
-                                                           -1, 20, 0,
+                                                           -1, G_MAXINT, 0,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
@@ -194,7 +194,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                          g_param_spec_int( "label-column",
                                                            "Display Column",
                                                            "The column of the model that holds display strings",
-                                                           0, 20, 0,
+                                                           0, G_MAXINT, 0,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
@@ -202,7 +202,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                          g_param_spec_int( "icon-column",
                                                            "Icon Column",
                                                            "The column of the model that holds display icon name",
-                                                           -1, 20, -1,
+                                                           -1, G_MAXINT, -1,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
@@ -210,7 +210,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                          g_param_spec_int( "tooltip-column",
                                                            "Tooltip Column",
                                                           "The column of the model that holds tooltip strings",
-                                                           -1, 20, -1,
+                                                           -1, G_MAXINT, -1,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
@@ -226,7 +226,7 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                          g_param_spec_int( "icon-size",
                                                            "Icon Size",
                                                           "Target icon size",
-                                                           -1, 20, -1,
+                                                           -1, G_MAXINT, -1,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
