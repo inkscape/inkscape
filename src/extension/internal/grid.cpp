@@ -46,25 +46,29 @@ Grid::load (Inkscape::Extension::Extension */*module*/)
 
 namespace {
 
-Glib::ustring build_lines(int axis, Geom::Rect bounding_area,
-                          float offset, float spacing)
+Glib::ustring build_lines(Geom::Rect bounding_area,
+                          float offset[], float spacing[])
 {
     Geom::Point point_offset(0.0, 0.0);
-    point_offset[axis] = offset;
 
     SVG::PathString path_data;
-    for (Geom::Point start_point = bounding_area.min();
-            start_point[axis] + offset <= (bounding_area.max())[axis];
-            start_point[axis] += spacing) {
-        Geom::Point end_point = start_point;
-        end_point[1-axis] = (bounding_area.max())[1-axis];
 
-        path_data.moveTo(start_point + point_offset)
-                 .lineTo(end_point + point_offset);
+    for ( int axis = 0 ; axis < 2 ; ++axis ) {
+        point_offset[axis] = offset[axis];
+
+        for (Geom::Point start_point = bounding_area.min();
+                start_point[axis] + offset[axis] <= (bounding_area.max())[axis];
+                start_point[axis] += spacing[axis]) {
+            Geom::Point end_point = start_point;
+            end_point[1-axis] = (bounding_area.max())[1-axis];
+
+            path_data.moveTo(start_point + point_offset)
+                     .lineTo(end_point + point_offset);
+        }
     }
-
-    return path_data;
-}
+        // std::cout << "Path data:" << path_data.c_str() << std::endl;
+        return path_data;
+    }
 
 }
 
@@ -104,11 +108,9 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
                          module->get_param_float("yoffset") };
 
     Glib::ustring path_data("");
-    for ( int axis = 0 ; axis < 2 ; ++axis ) {
-        path_data += build_lines(axis, bounding_area,
-                                 offsets[axis], spacings[axis]);
-    }
 
+    path_data = build_lines(bounding_area,
+                                 offsets, spacings);
     Inkscape::XML::Document * xml_doc = sp_document_repr_doc(document->doc());
     Inkscape::XML::Node * current_layer = static_cast<SPDesktop *>(document)->currentLayer()->repr;
     Inkscape::XML::Node * path = xml_doc->createElement("svg:path");
