@@ -733,7 +733,7 @@ Geom::PathVector* Inkscape::ObjectSnapper::_getBorderPathv() const
 
 Geom::PathVector* Inkscape::ObjectSnapper::_getPathvFromRect(Geom::Rect const rect) const
 {
-    SPCurve const *border_curve = SPCurve::new_from_rect(rect);
+    SPCurve const *border_curve = SPCurve::new_from_rect(rect, true);
     if (border_curve) {
         Geom::PathVector *dummy = new Geom::PathVector(border_curve->get_pathvector());
         return dummy;

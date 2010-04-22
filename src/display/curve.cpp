@@ -44,7 +44,7 @@ SPCurve::SPCurve(Geom::PathVector const& pathv)
 }
 
 SPCurve *
-SPCurve::new_from_rect(Geom::Rect const &rect)
+SPCurve::new_from_rect(Geom::Rect const &rect, bool all_four_sides)
 {
     SPCurve *c =  new SPCurve();
 
@@ -54,7 +54,16 @@ SPCurve::new_from_rect(Geom::Rect const &rect)
     for (int i=3; i>=1; i--) {
         c->lineto(rect.corner(i));
     }
-    c->closepath();
+
+    if (all_four_sides) {
+        // When _constrained_ snapping to a path, the 2geom::SimpleCrosser will be invoked which doesn't consider the closing segment.
+        // of a path. Consequently, in case we want to snap to for example the page border, we must provide all four sides of the
+        // rectangle explicitly
+        c->lineto(rect.corner(0));
+    } else {
+        // ... instead of just three plus a closing segment
+        c->closepath();
+    }
 
     return c;
 }

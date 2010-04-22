@@ -1552,7 +1552,7 @@ sp_image_set_curve(SPImage *image)
         NRRect rect;
         sp_image_bbox(image, &rect, Geom::identity(), 0);
         Geom::Rect rect2 = to_2geom(*rect.upgrade());
-        SPCurve *c = SPCurve::new_from_rect(rect2);
+        SPCurve *c = SPCurve::new_from_rect(rect2, true);
 
         if (image->curve) {
             image->curve = image->curve->unref();
