@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-17 22:02+0200\n"
-"PO-Revision-Date: 2010-04-17 22:05+0100\n"
+"POT-Creation-Date: 2010-04-22 14:08+0200\n"
+"PO-Revision-Date: 2010-04-22 14:12+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -521,7 +521,7 @@ msgstr "Rayon (px)"
 #: ../share/extensions/spirograph.inx.h:6
 #: ../share/extensions/svgcalendar.inx.h:22
 #: ../share/extensions/triangle.inx.h:10
-#: ../src/extension/internal/grid.cpp:202
+#: ../src/extension/internal/grid.cpp:204
 #: ../share/extensions/render_barcode_datamatrix.inx.h:3
 #: ../share/extensions/wireframe_sphere.inx.h:5
 msgid "Render"
@@ -1602,6 +1602,7 @@ msgstr "Phrases par paragrahe"
 #. Text
 #: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/render_alphabetsoup.inx.h:5
+#: ../share/extensions/split.inx.h:4
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -2561,6 +2562,18 @@ msgstr "d - Rayon du stylo (px)"
 #: ../share/extensions/spirograph.inx.h:10
 msgid "r - Gear Radius (px)"
 msgstr "r - Rayon de l'engrenage (px)"
+
+#: ../share/extensions/split.inx.h:1
+msgid "Preserve original text?"
+msgstr "Conserver le texte original ?"
+
+#: ../share/extensions/split.inx.h:2
+msgid "Split text"
+msgstr "Diviser du texte"
+
+#: ../share/extensions/split.inx.h:3
+msgid "Split:"
+msgstr "Diviser :"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
@@ -7454,197 +7467,197 @@ msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr "Cocher pour afficher des points sur les points entiers de la grille au lieu de lignes"
 
 #. TRANSLATORS: undefined target for snapping
-#: ../src/display/snap-indicator.cpp:63
-#: ../src/display/snap-indicator.cpp:66
-#: ../src/display/snap-indicator.cpp:154
-#: ../src/display/snap-indicator.cpp:157
+#: ../src/display/snap-indicator.cpp:71
+#: ../src/display/snap-indicator.cpp:74
+#: ../src/display/snap-indicator.cpp:162
+#: ../src/display/snap-indicator.cpp:165
 msgid "UNDEFINED"
 msgstr "INDÉFINI"
 
-#: ../src/display/snap-indicator.cpp:69
+#: ../src/display/snap-indicator.cpp:77
 msgid "grid line"
 msgstr "ligne de grille"
 
-#: ../src/display/snap-indicator.cpp:72
+#: ../src/display/snap-indicator.cpp:80
 msgid "grid intersection"
 msgstr "intersections de grille"
 
-#: ../src/display/snap-indicator.cpp:75
+#: ../src/display/snap-indicator.cpp:83
 msgid "guide"
 msgstr "guide"
 
-#: ../src/display/snap-indicator.cpp:78
+#: ../src/display/snap-indicator.cpp:86
 msgid "guide intersection"
 msgstr "intersections de guide"
 
-#: ../src/display/snap-indicator.cpp:81
+#: ../src/display/snap-indicator.cpp:89
 msgid "guide origin"
 msgstr "origine du guide"
 
-#: ../src/display/snap-indicator.cpp:84
+#: ../src/display/snap-indicator.cpp:92
 msgid "grid-guide intersection"
 msgstr "intersections grille-guides"
 
-#: ../src/display/snap-indicator.cpp:87
+#: ../src/display/snap-indicator.cpp:95
 msgid "cusp node"
 msgstr "Point de rebroussement"
 
-#: ../src/display/snap-indicator.cpp:90
+#: ../src/display/snap-indicator.cpp:98
 msgid "smooth node"
 msgstr "nœud doux"
 
-#: ../src/display/snap-indicator.cpp:93
+#: ../src/display/snap-indicator.cpp:101
 msgid "path"
 msgstr "chemin"
 
-#: ../src/display/snap-indicator.cpp:96
+#: ../src/display/snap-indicator.cpp:104
 msgid "path intersection"
 msgstr "Intersection de chemin"
 
-#: ../src/display/snap-indicator.cpp:99
+#: ../src/display/snap-indicator.cpp:107
 msgid "bounding box corner"
 msgstr "coins de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:102
+#: ../src/display/snap-indicator.cpp:110
 msgid "bounding box side"
 msgstr "bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:105
+#: ../src/display/snap-indicator.cpp:113
 msgid "page border"
 msgstr "bord de page"
 
-#: ../src/display/snap-indicator.cpp:108
+#: ../src/display/snap-indicator.cpp:116
 msgid "line midpoint"
 msgstr "milieu de ligne"
 
-#: ../src/display/snap-indicator.cpp:111
+#: ../src/display/snap-indicator.cpp:119
 msgid "object midpoint"
 msgstr "centre d'objet"
 
-#: ../src/display/snap-indicator.cpp:114
+#: ../src/display/snap-indicator.cpp:122
 msgid "object rotation center"
 msgstr "centre de rotation d'objet"
 
-#: ../src/display/snap-indicator.cpp:117
+#: ../src/display/snap-indicator.cpp:125
 msgid "handle"
 msgstr "poignée"
 
-#: ../src/display/snap-indicator.cpp:120
+#: ../src/display/snap-indicator.cpp:128
 msgid "bounding box side midpoint"
 msgstr "milieu de bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:123
+#: ../src/display/snap-indicator.cpp:131
 msgid "bounding box midpoint"
 msgstr "centre de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:126
+#: ../src/display/snap-indicator.cpp:134
 msgid "page corner"
 msgstr "coin de page"
 
-#: ../src/display/snap-indicator.cpp:129
+#: ../src/display/snap-indicator.cpp:137
 msgid "convex hull corner"
 msgstr "coin de l'enveloppe convexe"
 
-#: ../src/display/snap-indicator.cpp:132
+#: ../src/display/snap-indicator.cpp:140
 msgid "quadrant point"
 msgstr "point de quadrant"
 
-#: ../src/display/snap-indicator.cpp:135
+#: ../src/display/snap-indicator.cpp:143
 msgid "center"
 msgstr "centre"
 
-#: ../src/display/snap-indicator.cpp:138
+#: ../src/display/snap-indicator.cpp:146
 msgid "corner"
 msgstr "coin"
 
-#: ../src/display/snap-indicator.cpp:141
+#: ../src/display/snap-indicator.cpp:149
 msgid "text baseline"
 msgstr "ligne de base de texte"
 
-#: ../src/display/snap-indicator.cpp:144
+#: ../src/display/snap-indicator.cpp:152
 msgid "constrained angle"
 msgstr "angle contraint"
 
-#: ../src/display/snap-indicator.cpp:147
+#: ../src/display/snap-indicator.cpp:155
 msgid "constraint"
 msgstr "Contrainte"
 
-#: ../src/display/snap-indicator.cpp:160
+#: ../src/display/snap-indicator.cpp:168
 msgid "Bounding box corner"
 msgstr "Coin de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:163
+#: ../src/display/snap-indicator.cpp:171
 msgid "Bounding box midpoint"
 msgstr "Centre de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:166
+#: ../src/display/snap-indicator.cpp:174
 msgid "Bounding box side midpoint"
 msgstr "Milieu de bord de boîte englobante"
 
-#: ../src/display/snap-indicator.cpp:169
+#: ../src/display/snap-indicator.cpp:177
 #: ../src/ui/tool/node.cpp:1193
 msgid "Smooth node"
 msgstr "Nœuds doux"
 
-#: ../src/display/snap-indicator.cpp:172
+#: ../src/display/snap-indicator.cpp:180
 #: ../src/ui/tool/node.cpp:1192
 msgid "Cusp node"
 msgstr "Point de rebroussement"
 
-#: ../src/display/snap-indicator.cpp:175
+#: ../src/display/snap-indicator.cpp:183
 msgid "Line midpoint"
 msgstr "Milieu de ligne"
 
-#: ../src/display/snap-indicator.cpp:178
+#: ../src/display/snap-indicator.cpp:186
 msgid "Object midpoint"
 msgstr "Centre d'objet"
 
-#: ../src/display/snap-indicator.cpp:181
+#: ../src/display/snap-indicator.cpp:189
 msgid "Object rotation center"
 msgstr "Centre de rotation d'objet"
 
-#: ../src/display/snap-indicator.cpp:185
+#: ../src/display/snap-indicator.cpp:193
 msgid "Handle"
 msgstr "Poignée"
 
-#: ../src/display/snap-indicator.cpp:188
+#: ../src/display/snap-indicator.cpp:196
 msgid "Path intersection"
 msgstr "Intersections de chemin"
 
-#: ../src/display/snap-indicator.cpp:191
+#: ../src/display/snap-indicator.cpp:199
 msgid "Guide"
 msgstr "Guide"
 
-#: ../src/display/snap-indicator.cpp:194
+#: ../src/display/snap-indicator.cpp:202
 msgid "Guide origin"
 msgstr "Origine du guide"
 
-#: ../src/display/snap-indicator.cpp:197
+#: ../src/display/snap-indicator.cpp:205
 msgid "Convex hull corner"
 msgstr "Coin de l'enveloppe convexe"
 
-#: ../src/display/snap-indicator.cpp:200
+#: ../src/display/snap-indicator.cpp:208
 msgid "Quadrant point"
 msgstr "Point de quadrant"
 
-#: ../src/display/snap-indicator.cpp:203
+#: ../src/display/snap-indicator.cpp:211
 #: ../src/widgets/toolbox.cpp:7229
 msgid "Center"
 msgstr "Centre"
 
-#: ../src/display/snap-indicator.cpp:206
+#: ../src/display/snap-indicator.cpp:214
 msgid "Corner"
 msgstr "Coin"
 
-#: ../src/display/snap-indicator.cpp:209
+#: ../src/display/snap-indicator.cpp:217
 msgid "Text baseline"
 msgstr "Ligne de base de texte"
 
-#: ../src/display/snap-indicator.cpp:212
+#: ../src/display/snap-indicator.cpp:220
 msgid "Multiple of grid spacing"
 msgstr "Multiple d'espacement de grille"
 
-#: ../src/display/snap-indicator.cpp:255
+#: ../src/display/snap-indicator.cpp:263
 msgid " to "
 msgstr " à "
 
@@ -8593,44 +8606,44 @@ msgstr "Dégradé GIMP (*.ggr)"
 msgid "Gradients used in GIMP"
 msgstr "Dégradés utilisés dans GIMP"
 
-#: ../src/extension/internal/grid.cpp:192
+#: ../src/extension/internal/grid.cpp:194
 #: ../src/ui/widget/panel.cpp:112
 msgid "Grid"
 msgstr "Grille"
 
-#: ../src/extension/internal/grid.cpp:194
+#: ../src/extension/internal/grid.cpp:196
 msgid "Line Width"
 msgstr "Largeur de ligne"
 
-#: ../src/extension/internal/grid.cpp:195
+#: ../src/extension/internal/grid.cpp:197
 msgid "Horizontal Spacing"
 msgstr "Espacement horizontal"
 
-#: ../src/extension/internal/grid.cpp:196
+#: ../src/extension/internal/grid.cpp:198
 msgid "Vertical Spacing"
 msgstr "Espacement vertical"
 
-#: ../src/extension/internal/grid.cpp:197
+#: ../src/extension/internal/grid.cpp:199
 msgid "Horizontal Offset"
 msgstr "Décalage horizontal"
 
-#: ../src/extension/internal/grid.cpp:198
+#: ../src/extension/internal/grid.cpp:200
 msgid "Vertical Offset"
 msgstr "Décalage vertical"
 
-#: ../src/extension/internal/grid.cpp:204
+#: ../src/extension/internal/grid.cpp:206
 msgid "Draw a path which is a grid"
 msgstr "Tracer un chemin en forme de grille"
 
-#: ../src/extension/internal/javafx-out.cpp:965
+#: ../src/extension/internal/javafx-out.cpp:966
 msgid "JavaFX Output"
 msgstr "Sortie JavaFX"
 
-#: ../src/extension/internal/javafx-out.cpp:970
+#: ../src/extension/internal/javafx-out.cpp:971
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
-#: ../src/extension/internal/javafx-out.cpp:971
+#: ../src/extension/internal/javafx-out.cpp:972
 msgid "JavaFX Raytracer File"
 msgstr "Fichier JavaFX Raytracer"
 
@@ -10171,7 +10184,7 @@ msgstr "Coordonnée Y pour un point d'attache flottant"
 msgid "Dock #%d"
 msgstr "Point d'attache #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:890
+#: ../src/libnrtype/FontFactory.cpp:897
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignorer les polices sans famille qui font planter Pango"
 
@@ -12534,32 +12547,32 @@ msgstr "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; 
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:1058
-#: ../src/seltrans.cpp:1157
+#: ../src/seltrans.cpp:1046
+#: ../src/seltrans.cpp:1141
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%%; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1269
+#: ../src/seltrans.cpp:1253
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinaison</b> : %0.2f&#176;; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1329
+#: ../src/seltrans.cpp:1313
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1371
+#: ../src/seltrans.cpp:1355
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1544
+#: ../src/seltrans.cpp:1528
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -16136,7 +16149,7 @@ msgstr "Peindre les objets avec :"
 #: ../src/ui/dialog/inkscape-preferences.cpp:473
 #: ../src/verbs.cpp:2459
 msgid "Spray"
-msgstr "Pulvérisateur"
+msgstr "Aérographe"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:479
@@ -20439,11 +20452,11 @@ msgstr "Ouvrir les préférences de l'outil d'ajustement"
 
 #: ../src/verbs.cpp:2502
 msgid "Spray Tool Preferences"
-msgstr "Préférences de l'outil pulvérisateur"
+msgstr "Préférences de l'outil aérographe"
 
 #: ../src/verbs.cpp:2503
 msgid "Open Preferences for the Spray tool"
-msgstr "Ouvrir les préférences de l'outil pulvérisateur"
+msgstr "Ouvrir les préférences de l'outil aérographe"
 
 #: ../src/verbs.cpp:2504
 msgid "Rectangle Preferences"
@@ -20847,7 +20860,7 @@ msgstr "Options du pulvéri_sateur..."
 
 #: ../src/verbs.cpp:2610
 msgid "Some options for the spray"
-msgstr "Options pour le pulvérisateur"
+msgstr "Options pour l'aérographe"
 
 #: ../src/verbs.cpp:2611
 msgid "Undo _History..."
