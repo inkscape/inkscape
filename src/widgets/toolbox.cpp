@@ -12,10 +12,11 @@
  *   Josh Andler <scislac@scislac.com>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2008 authors
+ * Copyright (C) 1999-2010 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -56,6 +57,7 @@
 #include "../helper/unit-tracker.h"
 #include "icon.h"
 #include "../ink-action.h"
+#include "../ink-comboboxentry-action.h"
 #include "../inkscape.h"
 #include "../interface.h"
 #include "../libnrtype/font-instance.h"
@@ -105,6 +107,7 @@
 #include "toolbox.h"
 
 #define ENABLE_TASK_SUPPORT 1
+//#define DEBUG_TEXT
 
 using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
@@ -139,10 +142,8 @@ static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static void       sp_connector_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
-
-namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
-
 
 #if ENABLE_TASK_SUPPORT
 static void fireTaskChange( EgeSelectOneAction *act, SPDesktop *dt )
@@ -235,7 +236,7 @@ static struct {
       SP_VERB_CONTEXT_ERASER_PREFS, "/tools/eraser", _("TBD")},
     { "SPLPEToolContext", "lpetool_toolbox", 0, sp_lpetool_toolbox_prep, "LPEToolToolbar",
       SP_VERB_CONTEXT_LPETOOL_PREFS, "/tools/lpetool", _("TBD")},
-    { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new, 0,               0,
+    { "SPTextContext",   "text_toolbox",   0, sp_text_toolbox_prep, "TextToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
       SP_VERB_INVALID, 0, 0},
@@ -476,6 +477,21 @@ static gchar const * ui_descr =
         "    <toolitem action='EraserWidthAction' />"
         "    <separator />"
         "    <toolitem action='EraserModeAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='TextToolbar'>"
+        "    <toolitem action='TextFontFamilyAction' />"
+        "    <toolitem action='TextFontSizeAction' />"
+        "    <toolitem action='TextBoldAction' />"
+        "    <toolitem action='TextItalicAction' />"
+        "    <separator />"
+        "    <toolitem action='TextAlignAction' />"
+        "    <separator />"
+        "    <toolitem action='TextLineHeightAction' />"
+        "    <toolitem action='TextWordSpacingAction' />"
+        "    <toolitem action='TextLetterSpacingAction' />"
+        "    <separator />"
+        "    <toolitem action='TextOrientationAction' />"
         "  </toolbar>"
 
         "  <toolbar name='LPEToolToolbar'>"
@@ -6161,257 +6177,109 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 //########################
 //##    Text Toolbox    ##
 //########################
-/*
-static void sp_text_letter_changed(GtkAdjustment *adj, GtkWidget *tbl)
-{
-    //Call back for letter sizing spinbutton
+
+// Functions for debugging:
+#ifdef DEBUG_TEXT
+
+static void       sp_print_font( SPStyle *query ) {
+
+    bool family_set   = query->text->font_family.set;
+    bool style_set    = query->font_style.set;
+    bool fontspec_set = query->text->font_specification.set;
+
+    std::cout << "    Family set? " << family_set
+              << "    Style set? "  << style_set
+              << "    FontSpec set? " << fontspec_set
+              << std::endl;
+    std::cout << "    Family: "
+              << (query->text->font_family.value ? query->text->font_family.value : "No value")
+              << "    Style: "    <<  query->font_style.computed
+              << "    Weight: "   <<  query->font_weight.computed
+              << "    FontSpec: "
+              << (query->text->font_specification.value ? query->text->font_specification.value : "No value")
+              << std::endl;
+}
+        
+static void       sp_print_fontweight( SPStyle *query ) {
+    const gchar* names[] = {"100", "200", "300", "400", "500", "600", "700", "800", "900",
+                            "NORMAL", "BOLD", "LIGHTER", "BOLDER", "Out of range"};
+    // Missing book = 380
+    int index = query->font_weight.computed;
+    if( index < 0 || index > 13 ) index = 13;
+    std::cout << "    Weight: " << names[ index ]
+              << " (" << query->font_weight.computed << ")" << std::endl;
+
 }
 
-static void sp_text_line_changed(GtkAdjustment *adj, GtkWidget *tbl)
+static void       sp_print_fontstyle( SPStyle *query ) {
+
+    const gchar* names[] = {"NORMAL", "ITALIC", "OBLIQUE", "Out of range"};
+    int index = query->font_style.computed;
+    if( index < 0 || index > 3 ) index = 3;
+    std::cout << "    Style:  " << names[ index ] << std::endl;
+
+}
+#endif
+
+// Format family drop-down menu.
+static void cell_data_func(GtkCellLayout * /*cell_layout*/,
+                           GtkCellRenderer   *cell,
+                           GtkTreeModel      *tree_model,
+                           GtkTreeIter       *iter,
+                           gpointer           /*data*/)
 {
-    //Call back for line height spinbutton
+    gchar *family;
+    gtk_tree_model_get(tree_model, iter, 0, &family, -1);
+    gchar *const family_escaped = g_markup_escape_text(family, -1);
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int show_sample = prefs->getInt("/tools/text/show_sample_in_list", 1);
+    if (show_sample) {
+
+        Glib::ustring sample = prefs->getString("/tools/text/font_sample");
+        gchar *const sample_escaped = g_markup_escape_text(sample.data(), -1);
+
+    std::stringstream markup;
+    markup << family_escaped << "  <span foreground='gray' font_family='"
+           << family_escaped << "'>" << sample_escaped << "</span>";
+    g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
+
+        g_free(sample_escaped);
+    } else {
+        g_object_set (G_OBJECT (cell), "markup", family_escaped, NULL);
+    }
+
+    g_free(family);
+    g_free(family_escaped);
 }
 
-static void sp_text_horiz_kern_changed(GtkAdjustment *adj, GtkWidget *tbl)
+// Font family
+static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
-    //Call back for horizontal kerning spinbutton
-}
+#ifdef DEBUG_TEXT
+    std::cout << std::endl;
+    std::cout << "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" << std::endl;
+    std::cout << "sp_text_fontfamily_value_changed: " << std::endl;
+#endif
 
-static void sp_text_vert_kern_changed(GtkAdjustment *adj, GtkWidget *tbl)
-{
-    //Call back for vertical kerning spinbutton
-}
-
-static void sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
-{
-    //Call back for letter rotation spinbutton
-}*/
-
-namespace {
-
-/*
- * This function sets up the text-tool tool-controls, setting the entry boxes
- * etc. to the values from the current selection or the default if no selection.
- * It is called whenever a text selection is changed, including stepping cursor
- * through text.
- */
-static void sp_text_toolbox_selection_changed(Inkscape::Selection * /*selection*/, GObject *tbl)
-{
-    // quit if run by the _changed callbacks
+     // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
         return;
     }
-
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
+    gchar *family = ink_comboboxentry_action_get_active_text( act );
+#ifdef DEBUG_TEXT
+    std::cout << "  New family: " << family << std::endl;
+#endif
 
-    /*
-     * Query from current selection:
-     *   Font family (font-family)
-     *   Style (font-weight, font-style, font-stretch, font-variant, font-align)
-     *   Numbers (font-size, letter-spacing, word-spacing, line-height, text-anchor, writing-mode)
-     *   Font specification (Inkscape private attribute)
-     */
-    SPStyle *query =
-        sp_style_new (SP_ACTIVE_DOCUMENT);
-
-    int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-    int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-    int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-    // Used later:
+    // First try to get the old font spec from the stored value
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    /*
-     * If no text in selection (querying returned nothing), read the style from
-     * the /tools/text preferencess (default style for new texts). Return if
-     * tool bar already set to these preferences.
-     */
-    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
-        // There are no texts in selection, read from preferences.
-
-        sp_style_read_from_prefs(query, "/tools/text");
-
-        if (g_object_get_data(tbl, "text_style_from_prefs")) {
-            // Do not reset the toolbar style from prefs if we already did it last time.
-            sp_style_unref(query);
-            g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-            return;
-        }
-        g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(TRUE));
-    } else {
-        g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(FALSE));
-    }
-
-    /*
-     * If we have valid query data for text (font-family, font-specification) set toolbar accordingly.
-     */
-    if (query->text)
-    {
-        if (result_family == QUERY_STYLE_MULTIPLE_DIFFERENT) {
-
-            // Don't set a font family if multiple styles are selected.
-            GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-            gtk_entry_set_text (GTK_ENTRY (entry), "");
-
-        } else if (query->text->font_specification.value || query->text->font_family.value) {
-
-            // At the moment (April 2010), font-specification isn't set unless actually
-            // set on current tspan (parent look up is disabled).
-            Gtk::ComboBoxEntry *combo = (Gtk::ComboBoxEntry *) (g_object_get_data (G_OBJECT (tbl), "family-entry-combo"));
-            GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-
-            // Get the font that corresponds
-            Glib::ustring familyName;
-
-            // This tries to use font-specification first and then font-family.
-            font_instance * font = font_factory::Default()->FaceFromStyle(query);
-            if (font) {
-                familyName = font_factory::Default()->GetUIFamilyString(font->descr);
-                font->Unref();
-                font = NULL;
-            }
-
-            gtk_entry_set_text (GTK_ENTRY (entry), familyName.c_str());
-
-            Gtk::TreeIter iter;
-            try {
-                Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (familyName);
-                Glib::RefPtr<Gtk::TreeModel> model = combo->get_model();
-                iter = model->get_iter(path);
-            } catch (...) {
-                g_warning("Family name %s does not have an entry in the font lister.", familyName.c_str());
-                sp_style_unref(query);
-                g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-                return;
-            }
-
-            combo->set_active (iter);
-        }
-
-        //Size (average of text selected)
-        {
-            GtkWidget *cbox = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "combo-box-size"));
-            gchar *const str = g_strdup_printf("%.5g", query->font_size.computed);
-            gtk_entry_set_text(GTK_ENTRY(GTK_BIN(cbox)->child), str);
-            g_free(str);
-        }
-
-        //Anchor
-        if (query->text_align.computed == SP_CSS_TEXT_ALIGN_JUSTIFY)
-        {
-            GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-fill"));
-            g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-            g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-        } else {
-            if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_START)
-            {
-                GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-start"));
-                g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-                g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-            } else if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE) {
-                GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-middle"));
-                g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-                g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-            } else if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_END) {
-                GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-end"));
-                g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-                g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-            }
-        }
-
-        //Style
-        {
-            GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-bold"));
-
-            gboolean active = gtk_toggle_button_get_active (button);
-            gboolean check  = ((query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700) && (query->font_weight.computed != SP_CSS_FONT_WEIGHT_NORMAL) && (query->font_weight.computed != SP_CSS_FONT_WEIGHT_LIGHTER));
-
-            if (active != check)
-            {
-                g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), check);
-                g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-            }
-        }
-
-        {
-            GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-italic"));
-
-            gboolean active = gtk_toggle_button_get_active (button);
-            gboolean check  = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL);
-
-            if (active != check)
-            {
-                g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), check);
-                g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-            }
-        }
-
-        //Orientation
-        //locking both buttons, changing one affect all group (both)
-        GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-horizontal"));
-        g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-
-        GtkWidget *button1 = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-vertical"));
-        g_object_set_data (G_OBJECT (button1), "block", gpointer(1));
-
-        if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB) {
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-        } else {
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button1), TRUE);
-        }
-        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-        g_object_set_data (G_OBJECT (button1), "block", gpointer(0));
-    }
-
-    sp_style_unref(query);
-
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-}
-
-static void sp_text_toolbox_selection_modified(Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
-{
-    sp_text_toolbox_selection_changed (selection, tbl);
-}
-
-static void sp_text_toolbox_subselection_changed(gpointer /*tc*/, GObject *tbl)
-{
-    sp_text_toolbox_selection_changed (NULL, tbl);
-}
-
-static void sp_text_toolbox_family_changed(GtkComboBoxEntry    *,
-                                           GObject             *tbl)
-{
-    // quit if run by the _changed callbacks
-    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
-        return;
-    }
-
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-
-    SPDesktop    *desktop = SP_ACTIVE_DESKTOP;
-    GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
-    const gchar* family = gtk_entry_get_text (GTK_ENTRY (entry));
-
-    //g_print ("family changed to: %s\n", family);
-
-    SPStyle *query =
-        sp_style_new (SP_ACTIVE_DOCUMENT);
-
-    int result_fontspec =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
-
-    SPCSSAttr *css = sp_repr_css_attr_new ();
-
-    // First try to get the font spec from the stored value
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
 
+    // If that didn't work, try to get font spec from style
     if (fontSpec.empty()) {
 
         // Must query all to fill font-family, font-style, font-weight, font-specification
@@ -6421,14 +6289,44 @@ static void sp_text_toolbox_family_changed(GtkComboBoxEntry    *,
 
         // Construct a new font specification if it does not yet exist
         font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
-        fontFromStyle->Unref();
+        if( fontFromStyle ) {
+            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
+            fontFromStyle->Unref();
+        }
+#ifdef DEBUG_TEXT
+        std::cout << "  Fontspec not defined, reconstructed from style :" << fontSpec << ":" << std::endl;
+        sp_print_font( query );
+#endif
     }
 
+    // And if that didn't work use default
+    if( fontSpec.empty() ) {
+        sp_style_read_from_prefs(query, "/tools/text");
+#ifdef DEBUG_TEXT
+        std::cout << "    read style from prefs:" << std::endl;
+        sp_print_font( query );
+#endif
+        // Construct a new font specification if it does not yet exist
+        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+        if( fontFromStyle ) {
+            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
+            fontFromStyle->Unref();
+        }
+#ifdef DEBUG_TEXT
+        std::cout << "  Fontspec not defined, reconstructed from style :" << fontSpec << ":" << std::endl;
+        sp_print_font( query );
+#endif
+    }
+
+    SPCSSAttr *css = sp_repr_css_attr_new ();
     if (!fontSpec.empty()) {
 
-        // Now we have existing font specification, replace family.
-        Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
+        // Now we have a font specification, replace family.
+        Glib::ustring  newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
+
+#ifdef DEBUG_TEXT
+        std::cout << "  New FontSpec from ReplaceFontSpecificationFamily :" << newFontSpec << ":" << std::endl;
+#endif
 
         if (!newFontSpec.empty()) {
 
@@ -6465,51 +6363,250 @@ static void sp_text_toolbox_family_changed(GtkComboBoxEntry    *,
             }
 
         } else {
-            // If the old font on selection (or default) was not existing on the system,
+
+            // newFontSpec empty
+            // If the old font on selection (or default) does not exist on the system,
+            // or the new font family does not exist,
             // ReplaceFontSpecificationFamily does not work. In that case we fall back to blindly
             // setting the family reported by the family chooser.
 
-            //g_print ("fallback setting family: %s\n", family);
+            // g_print ("fallback setting family: %s\n", family);
             sp_repr_css_set_property (css, "-inkscape-font-specification", family);
             sp_repr_css_set_property (css, "font-family", family);
+            // Shoud we set other css font attributes?
         }
-    }
 
-    // If querying returned nothing, set the default style of the tool (for new texts)
-    if (result_fontspec == QUERY_STYLE_NOTHING) {
+    }  // fontSpec not empty or not
+
+    // If querying returned nothing, update default style.
+    if (result_fontspec == QUERY_STYLE_NOTHING)
+    {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
-        sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace trough a verb
-    } else {
-        sp_desktop_set_style (desktop, css, true, true);
+        sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace through a verb
+    }
+    else
+    {
+        sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
     }
 
     sp_style_unref(query);
 
+    g_free (family);
+
+    // Save for undo
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change font family"));
     sp_repr_css_attr_unref (css);
-
-    gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
 
     // unfreeze
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 
     // focus to canvas
-    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+    gtk_widget_grab_focus (GTK_WIDGET((SP_ACTIVE_DESKTOP)->canvas));
+
+#ifdef DEBUG_TEXT
+    std::cout << "sp_text_toolbox_fontfamily_changes: exit"  << std::endl;
+    std::cout << "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" << std::endl;
+    std::cout << std::endl;
+#endif
 }
 
-
-static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
-                                              gpointer          data)
+// Font size
+static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
-    if (g_object_get_data (G_OBJECT (button), "block")) {
+     // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
         return;
     }
-    if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    gchar *text = ink_comboboxentry_action_get_active_text( act );
+    gchar *endptr;
+    gdouble size = g_strtod( text, &endptr );
+    if (endptr == text) {  // Conversion failed, non-numeric input.
+        g_warning( "Conversion of size text to double failed, input: %s\n", text );
+        g_free( text );
         return;
     }
-    int prop = GPOINTER_TO_INT(data);
+    g_free( text );
+
+    // Set css font size.
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    Inkscape::CSSOStringStream osfs;
+    osfs << size << "px"; // For now always use px
+    sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
+
+    // Apply font size to selected objects.
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
+
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
+                                   _("Text: Change font size"));
+
+    // If no selected objects, set default.
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if (result_numbers == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+    sp_style_unref(query);
+
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+// Handles both Bold and Italic/Oblique
+static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    // Called by Bold or Italics button?
+    const gchar* name = gtk_action_get_name( GTK_ACTION( act ) );
+    gint prop = (strcmp(name, "TextBoldAction") == 0) ? 0 : 1;
+
+    // First query font-specification, this is the most complete font face description.
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+
+    // font_specification will not be set unless defined explicitely on a tspan.
+    // This should be fixed!
+    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
+
+    if (fontSpec.empty()) {
+        // Construct a new font specification if it does not yet exist
+        // Must query font-family, font-style, font-weight, to find correct font face.
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+
+        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
+        if( fontFromStyle ) {
+            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
+            fontFromStyle->Unref();
+        }
+    }
+
+    // Now that we have the old face, find the new face.
+    Glib::ustring newFontSpec = "";
+    SPCSSAttr   *css        = sp_repr_css_attr_new ();
+    gboolean nochange = true;
+    gboolean active = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(act) );
+
+    switch (prop)
+    {
+        case 0:
+        {
+            // Bold
+            if (!fontSpec.empty()) {
+
+                newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
+
+                if (!newFontSpec.empty()) {
+
+                    // Set weight if we found font.
+                    font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
+                    if (font) {
+                        gchar c[256];
+                        font->Attribute( "weight", c, 256);
+                        sp_repr_css_set_property (css, "font-weight", c);
+                        font->Unref();
+                        font = NULL;
+                    }
+                    nochange = false;
+                }
+            }
+            // Reset button if no change.
+            // The reset code didn't work in 0.47 and doesn't here... one must prevent an infinite loop
+            /*
+            if(nochange) {
+                gtk_action_block_activate( GTK_ACTION(act) );
+                gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), !active );
+                gtk_action_unblock_activate( GTK_ACTION(act) );
+            }
+            */
+            break;
+        }
+
+        case 1:
+        {
+            // Italic/Oblique
+            if (!fontSpec.empty()) {
+
+                newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
+
+                if (!newFontSpec.empty()) {
+
+                    // Don't even set the italic/oblique if the font didn't exist on the system
+                    if( active ) {
+                        if( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
+                            sp_repr_css_set_property (css, "font-style", "italic");
+                        } else {
+                            sp_repr_css_set_property (css, "font-style", "oblique");
+                        }
+                    } else {
+                        sp_repr_css_set_property (css, "font-style", "normal");
+                    }
+                    nochange = false;
+                }
+            }
+            // Reset button if no change.
+            // The reset code didn't work in 0.47... one must prevent an infinite loop
+            /*
+            if(nochange) {
+                gtk_action_block_activate( GTK_ACTION(act) );
+                gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), !active );
+                gtk_action_unblock_activate( GTK_ACTION(act) );
+            }
+            */
+            break;
+        }
+    }
+
+    if (!newFontSpec.empty()) {
+        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
+    }
+
+    // If querying returned nothing, update default style.
+    if (result_fontspec == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+
+    sp_style_unref(query);
+
+    // Do we need to update other CSS values?
+    SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
+    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+                                   _("Text: Change font style"));
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    int mode = ege_select_one_action_get_active( act );
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/tools/text/align_mode", mode);
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -6531,9 +6628,8 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
 
             Geom::OptRect bbox
                   = item->getBounds(Geom::identity(), SPItem::GEOMETRIC_BBOX);
-            if (!bbox) {
+            if (!bbox)
                 continue;
-            }
             double width = bbox->dimensions()[axis];
             // If you want to align within some frame, other than the text's own bbox, calculate
             // the left and right (or top and bottom for tb text) slacks of the text inside that
@@ -6543,7 +6639,7 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
             unsigned old_align = SP_OBJECT_STYLE(item)->text_align.value;
             double move = 0;
             if (old_align == SP_CSS_TEXT_ALIGN_START || old_align == SP_CSS_TEXT_ALIGN_LEFT) {
-                switch (prop) {
+                switch (mode) {
                     case 0:
                         move = -left_slack;
                         break;
@@ -6555,7 +6651,7 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
                         break;
                 }
             } else if (old_align == SP_CSS_TEXT_ALIGN_CENTER) {
-                switch (prop) {
+                switch (mode) {
                     case 0:
                         move = -width/2 - left_slack;
                         break;
@@ -6567,7 +6663,7 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
                         break;
                 }
             } else if (old_align == SP_CSS_TEXT_ALIGN_END || old_align == SP_CSS_TEXT_ALIGN_RIGHT) {
-                switch (prop) {
+                switch (mode) {
                     case 0:
                         move = -width - left_slack;
                         break;
@@ -6592,7 +6688,7 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
     }
 
     SPCSSAttr *css = sp_repr_css_attr_new ();
-    switch (prop)
+    switch (mode)
     {
         case 0:
         {
@@ -6627,7 +6723,7 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+    // If querying returned nothing, update default style.
     if (result_numbers == QUERY_STYLE_NOTHING)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -6642,145 +6738,139 @@ static void sp_text_toolbox_anchoring_toggled(GtkRadioButton   *button,
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
-static void sp_text_toolbox_style_toggled(GtkToggleButton  *button,
-                                          gpointer          data)
+static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
-    if (g_object_get_data (G_OBJECT (button), "block")) {
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
         return;
     }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
-    SPCSSAttr   *css        = sp_repr_css_attr_new ();
-    int          prop       = GPOINTER_TO_INT(data);
-    bool         active     = gtk_toggle_button_get_active (button);
+    // At the moment this handles only numerical values (i.e. no percent).
+    // Set css line height.
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    Inkscape::CSSOStringStream osfs;
+    osfs << adj->value*100 << "%";
+    sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
 
-    SPStyle *query =
-        sp_style_new (SP_ACTIVE_DOCUMENT);
+    // Apply line-height to selected objects.
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
 
-    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:line-height", SP_VERB_NONE,
+                                   _("Text: Change line-height"));
 
-    // font_specification will not be set unless defined explicitely on a tspan.
-    // This needs to be fixed.
-    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
-    Glib::ustring newFontSpec = "";
-
-    if (fontSpec.empty()) {
-
-        // Must query all to fill font-family, font-style, font-weight, font-specification
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+    // If no selected objects, set default.
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
-
-        // Construct a new font specification if it does not yet exist
-        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
-        fontFromStyle->Unref();
-    }
-
-    bool nochange = true;
-    switch (prop)
-    {
-        case 0:
-        {
-            // Bold
-            if (!fontSpec.empty()) {
-                newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
-                if (!newFontSpec.empty()) {
-
-                    font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
-                    if (font) {
-                        gchar c[256];
-                        font->Attribute( "weight", c, 256);
-                        sp_repr_css_set_property (css, "font-weight", c);
-                        font->Unref();
-                        font = NULL;
-                        nochange = false;
-                    }
-                }
-            }
-            // set or reset the button according
-            if(nochange) {
-                gboolean check = gtk_toggle_button_get_active (button);
-
-                if (active != check)
-                {
-                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
-                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-                }
-            }
-
-            break;
-        }
-
-        case 1:
-        {
-            // Italic/Oblique
-            if (!fontSpec.empty()) {
-                newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
-                if (!newFontSpec.empty()) {
-                    // Don't even set the italic/oblique if the font didn't exist on the system
-                    if( active ) {
-                        if( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
-                            sp_repr_css_set_property (css, "font-style", "italic");
-                        } else {
-                            sp_repr_css_set_property (css, "font-style", "oblique");
-                        }
-                    } else {
-                        sp_repr_css_set_property (css, "font-style", "normal");
-                    }
-                    nochange = false;
-                }
-            }
-            if(nochange) {
-                gboolean check = gtk_toggle_button_get_active (button);
-
-                if (active != check)
-                {
-                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
-                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
-                }
-            }
-            break;
-        }
-    }
-
-    if (!newFontSpec.empty()) {
-        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
-    }
-
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_fontspec == QUERY_STYLE_NOTHING)
+    if (result_numbers == QUERY_STYLE_NOTHING)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
     }
-
     sp_style_unref(query);
 
-    sp_desktop_set_style (desktop, css, true, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                                   _("Text: Change font style"));
     sp_repr_css_attr_unref (css);
 
-    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
-static void sp_text_toolbox_orientation_toggled(GtkRadioButton  *button,
-                                                gpointer         data)
+static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
-    if (g_object_get_data (G_OBJECT (button), "block")) {
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
         return;
     }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+    // At the moment this handles only numerical values (i.e. no em unit).
+    // Set css word-spacing
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    Inkscape::CSSOStringStream osfs;
+    osfs << adj->value;
+    sp_repr_css_set_property (css, "word-spacing", osfs.str().c_str());
+
+    // Apply word-spacing to selected objects.
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
+
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:word-spacing", SP_VERB_NONE,
+                                   _("Text: Change word-spacing"));
+
+    // If no selected objects, set default.
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if (result_numbers == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+    sp_style_unref(query);
+
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    // At the moment this handles only numerical values (i.e. no em unit).
+    // Set css letter-spacing
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    Inkscape::CSSOStringStream osfs;
+    osfs << adj->value;
+    sp_repr_css_set_property (css, "letter-spacing", osfs.str().c_str());
+
+    // Apply letter-spacing to selected objects.
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css, true, true);
+
+    // Save for undo
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:letter-spacing", SP_VERB_NONE,
+                                   _("Text: Change letter-spacing"));
+
+    // If no selected objects, set default.
+    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if (result_numbers == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+    sp_style_unref(query);
+
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    int mode = ege_select_one_action_get_active( act );
+
     SPCSSAttr   *css        = sp_repr_css_attr_new ();
-    int          prop       = GPOINTER_TO_INT(data);
-
-    switch (prop)
+    switch (mode)
     {
         case 0:
         {
@@ -6800,549 +6890,565 @@ static void sp_text_toolbox_orientation_toggled(GtkRadioButton  *button,
     int result_numbers =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
 
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+    // If querying returned nothing, update default style.
     if (result_numbers == QUERY_STYLE_NOTHING)
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
     }
 
-    sp_desktop_set_style (desktop, css, true, true);
+    sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change orientation"));
     sp_repr_css_attr_unref (css);
 
-    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
-static gboolean sp_text_toolbox_family_keypress(GtkWidget * /*w*/, GdkEventKey *event, GObject *tbl)
+/*
+ * This function sets up the text-tool tool-controls, setting the entry boxes
+ * etc. to the values from the current selection or the default if no selection.
+ * It is called whenever a text selection is changed, including stepping cursor
+ * through text.
+ */
+static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) {
-        return FALSE;
+#ifdef DEBUG_TEXT
+    static int count = 0;
+    ++count;
+    std::cout << std::endl;
+    std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
+    std::cout << "sp_text_toolbox_selection_changed: start " << count << std::endl;
+
+    std::cout << "  Selected items:" << std::endl;
+    for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+         items != NULL;
+         items = items->next)
+    {
+        const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+        std::cout << "    " << id << std::endl;
     }
+#endif
 
-    switch (get_group0_keyval (event)) {
-        case GDK_KP_Enter: // chosen
-        case GDK_Return:
-            // unfreeze and update, which will defocus
-            g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-            sp_text_toolbox_family_changed (NULL, tbl);
-            return TRUE; // I consumed the event
-            break;
-        case GDK_Escape:
-            // defocus
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            return TRUE; // I consumed the event
-            break;
-    }
-    return FALSE;
-}
-
-static gboolean sp_text_toolbox_family_list_keypress(GtkWidget * /*w*/, GdkEventKey *event, GObject * /*tbl*/)
-{
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) {
-        return FALSE;
-    }
-
-    switch (get_group0_keyval (event)) {
-        case GDK_KP_Enter:
-        case GDK_Return:
-        case GDK_Escape: // defocus
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            return TRUE; // I consumed the event
-            break;
-        case GDK_w:
-        case GDK_W:
-            if (event->state & GDK_CONTROL_MASK) {
-                gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-                return TRUE; // I consumed the event
-            }
-            break;
-    }
-    return FALSE;
-}
-
-
-static void sp_text_toolbox_size_changed(GtkComboBox *cbox,
-                                         GObject     *tbl)
-{
-     // quit if run by the _changed callbacks
+    // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+#ifdef DEBUG_TEXT
+        std::cout << "    Frozen, returning" << std::endl;
+        std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
+        std::cout << std::endl;
+#endif
         return;
     }
-
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-   SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-    // If this is not from selecting a size in the list (in which case get_active will give the
-    // index of the selected item, otherwise -1) and not from user pressing Enter/Return, do not
-    // process this event. This fixes GTK's stupid insistence on sending an activate change every
-    // time any character gets typed or deleted, which made this control nearly unusable in 0.45.
-   if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed")) {
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-        return;
-   }
-
-    gdouble value = -1;
-    {
-        gchar *endptr;
-        gchar *const text = gtk_combo_box_get_active_text(cbox);
-        if (text) {
-            value = g_strtod(text, &endptr);
-            if (endptr == text) {  // Conversion failed, non-numeric input.
-                value = -1;
-            }
-            g_free(text);
-        }
-    }
-    if (value <= 0) {
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-        return; // could not parse value
-    }
-
-    SPCSSAttr *css = sp_repr_css_attr_new ();
-    Inkscape::CSSOStringStream osfs;
-    osfs << value;
-    sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
-
+    /*
+     * Query from current selection:
+     *   Font family (font-family)
+     *   Style (font-weight, font-style, font-stretch, font-variant, font-align)
+     *   Numbers (font-size, letter-spacing, word-spacing, line-height, text-anchor, writing-mode)
+     *   Font specification (Inkscape private attribute)
+     */
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
-    int result_numbers =
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
+    int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+    int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    // Used later:
+    sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_numbers == QUERY_STYLE_NOTHING)
-    {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->mergeStyle("/tools/text/style", css);
+    /*
+     * If no text in selection (querying returned nothing), read the style from
+     * the /tools/text preferencess (default style for new texts). Return if
+     * tool bar already set to these preferences.
+     */
+    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
+        // There are no texts in selection, read from preferences.
+        sp_style_read_from_prefs(query, "/tools/text");
+#ifdef DEBUG_TEXT
+        std::cout << "    read style from prefs:" << std::endl;
+        sp_print_font( query );
+#endif
+        if (g_object_get_data(tbl, "text_style_from_prefs")) {
+            // Do not reset the toolbar style from prefs if we already did it last time
+            sp_style_unref(query);
+            g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+#ifdef DEBUG_TEXT
+            std::cout << "    text_style_from_prefs: toolbar already set" << std:: endl;
+            std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
+            std::cout << std::endl;
+#endif
+            return;
+        }
+
+        g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(TRUE));
+    } else {
+        g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(FALSE));
     }
+
+    // If we have valid query data for text (font-family, font-specification) set toolbar accordingly.
+    if (query->text)
+    {
+        // Font family
+        if( query->text->font_family.value ) {
+            gchar *fontFamily = query->text->font_family.value;
+
+            Ink_ComboBoxEntry_Action* fontFamilyAction =
+                INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
+            ink_comboboxentry_action_set_active_text( fontFamilyAction, fontFamily );
+        }
+
+        // Size (average of text selected)
+        double size = query->font_size.computed;
+        gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
+        g_ascii_dtostr (size_text, sizeof (size_text), size);
+
+        Ink_ComboBoxEntry_Action* fontSizeAction =
+            INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
+        ink_comboboxentry_action_set_active_text( fontSizeAction, size_text );
+
+        // Weight (Bold)
+        // Note: in the enumeration, normal and lighter come at the end so we must explicitly test for them.
+        gboolean boldSet = ((query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700) &&
+                            (query->font_weight.computed != SP_CSS_FONT_WEIGHT_NORMAL) &&
+                            (query->font_weight.computed != SP_CSS_FONT_WEIGHT_LIGHTER));
+
+        InkToggleAction* textBoldAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextBoldAction" ) );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textBoldAction), boldSet );
+
+
+        // Style (Italic/Oblique)
+        gboolean italicSet = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL);
+
+        InkToggleAction* textItalicAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextItalicAction" ) );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textItalicAction), italicSet );
+
+
+        // Alignment
+        // Note: SVG 1.1 doesn't include text-align, SVG 1.2 Tiny doesn't include text-align="justify"
+        // text-align="justify" was a draft SVG 1.2 item (along with flowed text).
+        // Only flowed text can be left and right justified at the same time.
+        // Check if we have flowed text and disable botton.
+        // NEED: ege_select_one_action_set_sensitve( )
+        /*
+        gboolean isFlow = false;
+        for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+             items != NULL;
+             items = items->next) {
+            const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+            std::cout << "    " << id << std::endl;
+            if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
+                isFlow = true;
+                std::cout << "   Found flowed text" << std::endl;
+                break;
+            }
+        }
+        if( isFlow ) {
+            // enable justify button
+        } else {
+            // disable justify button
+        }
+        */
+
+        int activeButton = 0;
+        if (query->text_align.computed  == SP_CSS_TEXT_ALIGN_JUSTIFY)
+        {
+            activeButton = 3;
+        } else {
+            if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_START)  activeButton = 0;
+            if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE) activeButton = 1;
+            if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_END)    activeButton = 2;
+        }
+        EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
+        ege_select_one_action_set_active( textAlignAction, activeButton );
+
+
+        // Line height (spacing)
+        double height;
+        if (query->line_height.normal) {
+            height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+        } else {
+            if (query->line_height.unit == SP_CSS_UNIT_PERCENT) {
+                height = query->line_height.value;
+            } else {
+                height = query->line_height.computed;
+            }
+        }
+
+        GtkAction* lineHeightAction = GTK_ACTION( g_object_get_data( tbl, "TextLineHeightAction" ) );
+        GtkAdjustment *lineHeightAdjustment =
+            ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( lineHeightAction ));
+        gtk_adjustment_set_value( lineHeightAdjustment, height );
+
+
+        // Word spacing
+        double wordSpacing;
+        if (query->word_spacing.normal) wordSpacing = 0.0;
+        else wordSpacing = query->word_spacing.computed; // Assume no units (change in desktop-style.cpp)
+
+        GtkAction* wordSpacingAction = GTK_ACTION( g_object_get_data( tbl, "TextWordSpacingAction" ) );
+        GtkAdjustment *wordSpacingAdjustment =
+            ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( wordSpacingAction ));
+        gtk_adjustment_set_value( wordSpacingAdjustment, wordSpacing );
+ 
+
+        // Letter spacing
+        double letterSpacing;
+        if (query->letter_spacing.normal) letterSpacing = 0.0;
+        else letterSpacing = query->letter_spacing.computed; // Assume no units (change in desktop-style.cpp)
+ 
+        GtkAction* letterSpacingAction = GTK_ACTION( g_object_get_data( tbl, "TextLetterSpacingAction" ) );
+        GtkAdjustment *letterSpacingAdjustment =
+            ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( letterSpacingAction ));
+        gtk_adjustment_set_value( letterSpacingAdjustment, letterSpacing );
+
+
+        // Orientation
+        int activeButton2 = (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB ? 0 : 1);
+
+        EgeSelectOneAction* textOrientationAction =
+            EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextOrientationAction" ) );
+        ege_select_one_action_set_active( textOrientationAction, activeButton2 );
+
+
+    } // if( query->text )
+
+#ifdef DEBUG_TEXT
+    std::cout << "    GUI: fontfamily.value: "
+              << (query->text->font_family.value ? query->text->font_family.value : "No value")
+              << std::endl;
+    std::cout << "    GUI: font_size.computed: "   << query->font_size.computed   << std::endl;
+    std::cout << "    GUI: font_weight.computed: " << query->font_weight.computed << std::endl;
+    std::cout << "    GUI: font_style.computed: "  << query->font_style.computed  << std::endl;
+    std::cout << "    GUI: text_anchor.computed: " << query->text_anchor.computed << std::endl;
+    std::cout << "    GUI: text_align.computed:  " << query->text_align.computed  << std::endl;
+    std::cout << "    GUI: line_height.computed: " << query->line_height.computed
+              << "  line_height.value: "    << query->line_height.value
+              << "  line_height.unit: "     << query->line_height.unit  << std::endl;
+    std::cout << "    GUI: word_spacing.computed: " << query->word_spacing.computed
+              << "  word_spacing.value: "    << query->word_spacing.value
+              << "  word_spacing.unit: "     << query->word_spacing.unit  << std::endl;
+    std::cout << "    GUI: letter_spacing.computed: " << query->letter_spacing.computed
+              << "  letter_spacing.value: "    << query->letter_spacing.value
+              << "  letter_spacing.unit: "     << query->letter_spacing.unit  << std::endl;
+    std::cout << "    GUI: writing_mode.computed: " << query->writing_mode.computed << std::endl;
+    std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
+    std::cout << std::endl;
+#endif
 
     sp_style_unref(query);
 
-    sp_desktop_set_style (desktop, css, true, true);
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE,
-                                   _("Text: Change font size"));
-    sp_repr_css_attr_unref (css);
-
-    gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+
 }
 
-static gboolean sp_text_toolbox_size_focusout(GtkWidget * /*w*/, GdkEventFocus * /*event*/, GObject *tbl)
+static void sp_text_toolbox_selection_modified(Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) {
-        return FALSE;
-    }
-
-    if (!g_object_get_data (tbl, "esc-pressed")) {
-        g_object_set_data (tbl, "enter-pressed", gpointer(1));
-        GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
-        sp_text_toolbox_size_changed (cbox, tbl);
-        g_object_set_data (tbl, "enter-pressed", gpointer(0));
-    }
-    return FALSE; // I consumed the event
+    sp_text_toolbox_selection_changed (selection, tbl);
 }
 
-
-static gboolean sp_text_toolbox_size_keypress(GtkWidget * /*w*/, GdkEventKey *event, GObject *tbl)
+void
+sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) {
-        return FALSE;
-    }
-
-    switch (get_group0_keyval (event)) {
-        case GDK_Escape: // defocus
-            g_object_set_data (tbl, "esc-pressed", gpointer(1));
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            g_object_set_data (tbl, "esc-pressed", gpointer(0));
-            return TRUE; // I consumed the event
-            break;
-        case GDK_Return: // defocus
-        case GDK_KP_Enter:
-            g_object_set_data (tbl, "enter-pressed", gpointer(1));
-            GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
-            sp_text_toolbox_size_changed (cbox, tbl);
-            gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            g_object_set_data (tbl, "enter-pressed", gpointer(0));
-            return TRUE; // I consumed the event
-            break;
-    }
-    return FALSE;
+    sp_text_toolbox_selection_changed (NULL, tbl);
 }
 
-// While editing font name in the entry, disable family_changed by freezing, otherwise completion
-// does not work!
-static gboolean sp_text_toolbox_entry_focus_in(GtkWidget        *entry,
-                                               GdkEventFocus    * /*event*/,
-                                               GObject          *tbl)
+// Define all the "widgets" in the toolbar.
+static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-    gtk_entry_select_region (GTK_ENTRY (entry), 0, -1); // select all
-    return FALSE;
-}
-
-static gboolean sp_text_toolbox_entry_focus_out(GtkWidget        *entry,
-                                                GdkEventFocus    * /*event*/,
-                                                GObject          *tbl)
-{
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-    gtk_entry_select_region (GTK_ENTRY (entry), 0, 0); // deselect
-    return FALSE;
-}
-
-static void cell_data_func(GtkCellLayout * /*cell_layout*/,
-                           GtkCellRenderer   *cell,
-                           GtkTreeModel      *tree_model,
-                           GtkTreeIter       *iter,
-                           gpointer           /*data*/)
-{
-    gchar *family;
-    gtk_tree_model_get(tree_model, iter, 0, &family, -1);
-    gchar *const family_escaped = g_markup_escape_text(family, -1);
-
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int show_sample = prefs->getInt("/tools/text/show_sample_in_list", 1);
-    if (show_sample) {
+    Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
-        Glib::ustring sample = prefs->getString("/tools/text/font_sample");
-        gchar *const sample_escaped = g_markup_escape_text(sample.data(), -1);
+    // Is this used?
+    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
+    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    g_object_set_data( holder, "tracker", tracker );
 
-    std::stringstream markup;
-    markup << family_escaped << "  <span foreground='darkgray' font_family='"
-           << family_escaped << "'>" << sample_escaped << "</span>";
-    g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
+    /* Font family */
+    {
+        // Font list
+        Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+        GtkListStore* model = store->gobj();
 
-        g_free(sample_escaped);
-    } else {
-        g_object_set (G_OBJECT (cell), "markup", family_escaped, NULL);
+        Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontFamilyAction",
+                                                                      _("Font Family"),
+                                                                      _("Select Font Family"),
+                                                                      NULL,
+                                                                      GTK_TREE_MODEL(model),
+                                                                      -1,                // Set width
+                                                                      (gpointer)cell_data_func ); // Cell layout
+        ink_comboboxentry_action_popup_enable( act ); // Enable entry completion
+        gchar *const warning = _("Font not found on system");
+        ink_comboboxentry_action_set_warning( act, warning ); // Show icon with tooltip if missing font
+        g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontfamily_value_changed), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextFontFamilyAction", act );
     }
 
-    g_free(family);
-    g_free(family_escaped);
-}
+    /* Font size */
+    {
+        // List of font sizes for drop-down menu
+        GtkListStore* model_size = gtk_list_store_new( 1, G_TYPE_STRING );
+        gchar const *const sizes[] = {
+            "4",  "6",  "8",  "9", "10", "11", "12", "13", "14", "16",
+            "18", "20", "22", "24", "28", "32", "36", "40", "48", "56",
+            "64", "72", "144"
+        };
+        for( unsigned int i = 0; i < G_N_ELEMENTS(sizes); ++i ) {
+            GtkTreeIter iter;
+            gtk_list_store_append( model_size, &iter );
+            gtk_list_store_set( model_size, &iter, 0, sizes[i], -1 );
+        }
 
-static gboolean text_toolbox_completion_match_selected(GtkEntryCompletion * /*widget*/,
-                                                       GtkTreeModel       *model,
-                                                       GtkTreeIter        *iter,
-                                                       GObject            *tbl)
-{
-    // We intercept this signal so as to fire family_changed at once (without it, you'd have to
-    // press Enter again after choosing a completion)
-    gchar *family = 0;
-    gtk_tree_model_get(model, iter, 0, &family, -1);
-
-    GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-    gtk_entry_set_text (GTK_ENTRY (entry), family);
-
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-    sp_text_toolbox_family_changed (NULL, tbl);
-    return TRUE;
-}
-
-
-static void cbe_add_completion(GtkComboBoxEntry *cbe, GObject *tbl)
-{
-    GtkEntry *entry;
-    GtkEntryCompletion *completion;
-    GtkTreeModel *model;
-
-    entry = GTK_ENTRY(gtk_bin_get_child(GTK_BIN(cbe)));
-    completion = gtk_entry_completion_new();
-    model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbe));
-    gtk_entry_completion_set_model(completion, model);
-    gtk_entry_completion_set_text_column(completion, 0);
-    gtk_entry_completion_set_inline_completion(completion, FALSE);
-    gtk_entry_completion_set_inline_selection(completion, FALSE);
-    gtk_entry_completion_set_popup_completion(completion, TRUE);
-    gtk_entry_set_completion(entry, completion);
-
-    g_signal_connect (G_OBJECT (completion),  "match-selected", G_CALLBACK (text_toolbox_completion_match_selected), tbl);
-
-    g_object_unref(completion);
-}
-
-static void sp_text_toolbox_family_popnotify(GtkComboBox *widget,
-                                             void * /*property*/,
-                                             GObject *tbl)
-{
-  // while the drop-down is open, we disable font family changing, reenabling it only when it closes
-
-  gboolean shown;
-  g_object_get (G_OBJECT(widget), "popup-shown", &shown, NULL);
-  if (shown) {
-         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-         //g_print("POP: notify: SHOWN\n");
-  } else {
-         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-
-         // stupid GTK doesn't let us attach to events in the drop-down window, so we peek here to
-         // find out if the drop down was closed by Enter and if so, manually update (only
-         // necessary on Windows, on Linux it updates itself - what a mess, but we'll manage)
-         GdkEvent *ev = gtk_get_current_event();
-         if (ev) {
-             //g_print ("ev type: %d\n", ev->type);
-             if (ev->type == GDK_KEY_PRESS) {
-                 switch (get_group0_keyval ((GdkEventKey *) ev)) {
-                     case GDK_KP_Enter: // chosen
-                     case GDK_Return:
-                     {
-                         // make sure the chosen one is inserted into the entry
-                         GtkComboBox  *combo = GTK_COMBO_BOX (((Gtk::ComboBox *) (g_object_get_data (tbl, "family-entry-combo")))->gobj());
-                         GtkTreeModel *model = gtk_combo_box_get_model(combo);
-                         GtkTreeIter iter;
-                         gboolean has_active = gtk_combo_box_get_active_iter (combo, &iter);
-                         if (has_active) {
-                             gchar *family;
-                             gtk_tree_model_get(model, &iter, 0, &family, -1);
-                             GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
-                             gtk_entry_set_text (GTK_ENTRY (entry), family);
-                         }
-
-                         // update
-                         sp_text_toolbox_family_changed (NULL, tbl);
-                         break;
-                     }
-                 }
-             }
-         }
-
-         // regardless of whether we updated, defocus the widget
-         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-         if (desktop) {
-             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-         }
-         //g_print("POP: notify: HIDDEN\n");
-  }
-}
-
-GtkWidget *sp_text_toolbox_new(SPDesktop *desktop)
-{
-    GtkToolbar   *tbl = GTK_TOOLBAR(gtk_toolbar_new());
-    GtkIconSize secondarySize = static_cast<GtkIconSize>(ToolboxFactory::prefToSize("/toolbox/secondary", 1));
-
-    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
-    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
-
-    GtkTooltips *tt = gtk_tooltips_new();
-
-    ////////////Family
-    Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
-    Gtk::ComboBoxEntry *font_sel = Gtk::manage(new Gtk::ComboBoxEntry(store));
-
-    gtk_rc_parse_string (
-       "style \"dropdown-as-list-style\"\n"
-       "{\n"
-       "    GtkComboBox::appears-as-list = 1\n"
-       "}\n"
-       "widget \"*.toolbox-fontfamily-list\" style \"dropdown-as-list-style\"");
-    gtk_widget_set_name(GTK_WIDGET (font_sel->gobj()), "toolbox-fontfamily-list");
-    gtk_tooltips_set_tip (tt, GTK_WIDGET (font_sel->gobj()), _("Select font family (Alt+X to access)"), "");
-
-    g_signal_connect (G_OBJECT (font_sel->gobj()), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
-
-    cbe_add_completion(font_sel->gobj(), G_OBJECT(tbl));
-
-    gtk_toolbar_append_widget( tbl, (GtkWidget*) font_sel->gobj(), "", "");
-    g_object_set_data (G_OBJECT (tbl), "family-entry-combo", font_sel);
-
-    // expand the field a bit so as to view more of the previews in the drop-down
-    GtkRequisition req;
-    gtk_widget_size_request (GTK_WIDGET (font_sel->gobj()), &req);
-    gtk_widget_set_size_request  (GTK_WIDGET (font_sel->gobj()), MIN(req.width + 50, 500), -1);
-
-    GtkWidget* entry = (GtkWidget*) font_sel->get_entry()->gobj();
-    g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-
-    g_signal_connect (G_OBJECT (font_sel->gobj()), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown",
-             G_CALLBACK (sp_text_toolbox_family_popnotify), tbl);
-    g_signal_connect (G_OBJECT (entry), "key-press-event", G_CALLBACK(sp_text_toolbox_family_keypress), tbl);
-    g_signal_connect (G_OBJECT (entry),  "focus-in-event", G_CALLBACK (sp_text_toolbox_entry_focus_in), tbl);
-    g_signal_connect (G_OBJECT (entry),  "focus-out-event", G_CALLBACK (sp_text_toolbox_entry_focus_out), tbl);
-
-    gtk_object_set_data(GTK_OBJECT(entry), "altx-text", entry);
-    g_object_set_data (G_OBJECT (tbl), "family-entry", entry);
-
-    GtkCellRenderer     *cell = gtk_cell_renderer_text_new ();
-    gtk_cell_layout_clear( GTK_CELL_LAYOUT(font_sel->gobj()) );
-    gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(font_sel->gobj()) , cell , TRUE );
-    gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(font_sel->gobj()), cell, GtkCellLayoutDataFunc (cell_data_func), NULL, NULL);
-
-    GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, secondarySize);
-    GtkWidget *box = gtk_event_box_new ();
-    gtk_container_add (GTK_CONTAINER (box), image);
-    gtk_toolbar_append_widget( tbl, box, "", "");
-    g_object_set_data (G_OBJECT (tbl), "warning-image", box);
-    gtk_tooltips_set_tip (tt, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
-    gtk_widget_hide (GTK_WIDGET (box));
-    g_signal_connect_swapped (G_OBJECT (tbl), "show", G_CALLBACK (gtk_widget_hide), box);
-
-    ////////////Size
-    gchar const *const sizes[] = {
-        "4", "6", "8", "9", "10", "11", "12", "13", "14",
-        "16", "18", "20", "22", "24", "28",
-        "32", "36", "40", "48", "56", "64", "72", "144"
-    };
-
-    GtkWidget *cbox = gtk_combo_box_entry_new_text ();
-    for (unsigned int i = 0; i < G_N_ELEMENTS(sizes); ++i) {
-        gtk_combo_box_append_text(GTK_COMBO_BOX(cbox), sizes[i]);
+        Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontSizeAction",
+                                                                      _("Font Size"),
+                                                                      _("Select Font Size"),
+                                                                      NULL,
+                                                                      GTK_TREE_MODEL(model_size),
+                                                                      4 ); // Width in characters
+        g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontsize_value_changed), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextFontSizeAction", act );
     }
-    gtk_widget_set_size_request (cbox, 80, -1);
-    gtk_toolbar_append_widget( tbl, cbox, "", "");
-    g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
-    g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
-    gtk_signal_connect(GTK_OBJECT(gtk_bin_get_child(GTK_BIN(cbox))), "key-press-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_keypress), tbl);
-    gtk_signal_connect(GTK_OBJECT(gtk_bin_get_child(GTK_BIN(cbox))), "focus-out-event", GTK_SIGNAL_FUNC(sp_text_toolbox_size_focusout), tbl);
 
-    ////////////Text anchor
-    GtkWidget *group   = gtk_radio_button_new (NULL);
-    GtkWidget *row     = gtk_hbox_new (FALSE, 4);
-    g_object_set_data (G_OBJECT (tbl), "anchor-group", group);
+    /* Style - Bold */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextBoldAction",               // Name
+                                                      _("Toggle Bold"),               // Label
+                                                      _("Toggle On/Off Bold Style"),  // Tooltip
+                                                      GTK_STOCK_BOLD,                 // Icon (inkId)
+                                                      secondarySize );                // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_style_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/bold", false) );
+        g_object_set_data( holder, "TextBoldAction", act );
+    }
 
-    // left
-    GtkWidget *rbutton = group;
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+    /* Style - Italic/Oblique */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextItalicAction",                     // Name
+                                                      _("Toggle Italic/Oblique"),             // Label
+                                                      _("Toggle On/Off Italic/Oblique Style"),// Tooltip
+                                                      GTK_STOCK_ITALIC,                       // Icon (inkId)
+                                                      secondarySize );                        // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_style_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/italic", false) );
+        g_object_set_data( holder, "TextItalicAction", act );
+    }
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "text-start", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(0));
-    gtk_tooltips_set_tip(tt, rbutton, _("Align left"), NULL);
+    /* Alignment */
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
-    // center
-    rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        GtkTreeIter iter;
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "text-middle", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer (1));
-    gtk_tooltips_set_tip(tt, rbutton, _("Center"), NULL);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Align left"),
+                            1, _("Align left"),
+                            2, GTK_STOCK_JUSTIFY_LEFT,
+                            -1 );
 
-    // right
-    rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Align center"),
+                            1, _("Align center"),
+                            2, GTK_STOCK_JUSTIFY_CENTER,
+                            -1 );
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "text-end", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(2));
-    gtk_tooltips_set_tip(tt, rbutton, _("Align right"), NULL);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Align right"),
+                            1, _("Align right"),
+                            2, GTK_STOCK_JUSTIFY_RIGHT,
+                            -1 );
 
-    // fill
-    rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Justify"),
+                            1, _("Justify - Only flowed text"),
+                            2, GTK_STOCK_JUSTIFY_FILL,
+                            -1 );
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "text-fill", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(3));
-    gtk_tooltips_set_tip(tt, rbutton, _("Justify"), NULL);
+        EgeSelectOneAction* act = ege_select_one_action_new( "TextAlignAction",       // Name
+                                                             _("Alignment"),          // Label
+                                                             _("Text Alignment"),     // Tooltip
+                                                             NULL,                    // StockID
+                                                             GTK_TREE_MODEL(model) ); // Model
+        g_object_set( act, "short_label", _("Align"), NULL );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextAlignAction", act );
 
-    gtk_toolbar_append_widget( tbl, row, "", "");
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1  );
 
-    //spacer
-    gtk_toolbar_append_widget( tbl, gtk_vseparator_new(), "", "" );
+        gint mode = prefs->getInt("/tools/text/align_mode", 0);
+        ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_align_mode_changed), holder );
+    }
 
-    ////////////Text style
-    row = gtk_hbox_new (FALSE, 4);
+    /* Orientation (Left to Right, Top to Bottom */
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
-    // bold
-    rbutton = gtk_toggle_button_new ();
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_BOLD, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
-    gtk_tooltips_set_tip(tt, rbutton, _("Bold"), NULL);
+        GtkTreeIter iter;
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "style-bold", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_style_toggled), gpointer(0));
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Horizontal"),
+                            1, _("Horizontal Text"),
+                            2, INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL,
+                            -1 );
 
-    // italic
-    rbutton = gtk_toggle_button_new ();
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_ITALIC, secondarySize));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
-    gtk_tooltips_set_tip(tt, rbutton, _("Italic"), NULL);
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Vertical"),
+                            1, _("Vertical Text"),
+                            2, INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL,
+                            -1 );
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "style-italic", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_style_toggled), gpointer (1));
+        EgeSelectOneAction* act = ege_select_one_action_new( "TextOrientationAction", // Name
+                                                             _("Orientation"),        // Label
+                                                             _("Text Orientation"),   // Tooltip
+                                                             NULL,                    // StockID
+                                                             GTK_TREE_MODEL(model) ); // Model
 
-    gtk_toolbar_append_widget( tbl, row, "", "");
+        g_object_set( act, "short_label", _("O:"), NULL );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextOrientationAction", act );
 
-    //spacer
-    gtk_toolbar_append_widget( tbl, gtk_vseparator_new(), "", "" );
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1  );
 
-    // Text orientation
-    group   = gtk_radio_button_new (NULL);
-    row     = gtk_hbox_new (FALSE, 4);
-    g_object_set_data (G_OBJECT (tbl), "orientation-group", group);
+        gint mode = prefs->getInt("/tools/text/orientation", 0);
+        ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_orientation_mode_changed), holder );
+    }
 
-    // horizontal
-    rbutton = group;
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton),
-                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
-    gtk_tooltips_set_tip(tt, rbutton, _("Horizontal text"), NULL);
+    /* Line height */
+    {
+        // Drop down menu
+        gchar const* labels[] = {_("Smaller spacing"), 0, 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, _("Larger spacing")};
+        gdouble values[] = { 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1,2, 1.3, 1.4, 1.5, 2.0};
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "orientation-horizontal", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_orientation_toggled), gpointer(0));
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextLineHeightAction",               /* name */
+            _("Line Height"),                     /* label */
+            _("Line:"),                           /* short label */
+            _("Spacing between lines."),          /* tooltip */
+            "/tools/text/lineheight",             /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* altx? */
+            NULL,                                 /* altx_mark? */
+            0.0, 10.0, 0.1, 1.0,                  /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_lineheight_value_changed,     /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextLineHeightAction", eact );
+    }
 
-    // vertical
-    rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-    gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
-    gtk_container_add           (GTK_CONTAINER (rbutton),
-                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL));
-    gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
-    gtk_tooltips_set_tip(tt, rbutton, _("Vertical text"), NULL);
+    /* Word spacing */
+    {
+        // Drop down menu
+        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
+        gdouble values[] = {-2.0, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0};
 
-    gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
-    g_object_set_data   (G_OBJECT (tbl), "orientation-vertical", rbutton);
-    g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_orientation_toggled), gpointer (1));
-    gtk_toolbar_append_widget( tbl, row, "", "" );
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextWordSpacingAction",              /* name */
+            _("Word spacing"),                    /* label */
+            _("Word:"),                           /* short label */
+            _("Spacing between words."),          /* tooltip */
+            "/tools/text/wordspacing",            /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* altx? */
+            NULL,                                 /* altx_mark? */
+            -100.0, 100.0, 1.0, 10.0,             /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_wordspacing_value_changed,    /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextWordSpacingAction", eact );
+    }
 
+    /* Letter spacing */
+    {
+        // Drop down menu
+        gchar const* labels[] = {_("Negative spacing"), 0, 0, 0, _("Normal"), 0, 0, 0, 0, 0, 0, 0, _("Positive spacing")};
+        gdouble values[] = {-2.0, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0};
 
-    //watch selection
-    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolbox");
+        EgeAdjustmentAction *eact = create_adjustment_action(
+            "TextLetterSpacingAction",            /* name */
+            _("Letter spacing"),                  /* label */
+            _("Letter:"),                         /* short label */
+            _("Spacing between letters."),        /* tooltip */
+            "/tools/text/letterspacing",          /* path? */
+            0.0,                                  /* default */
+            GTK_WIDGET(desktop->canvas),          /* focusTarget */
+            NULL,                                 /* unit selector */
+            holder,                               /* dataKludge */
+            FALSE,                                /* altx? */
+            NULL,                                 /* altx_mark? */
+            -100.0, 100.0, 1.0, 10.0,             /* lower, upper, step (arrow up/down), page up/down */
+            labels, values, G_N_ELEMENTS(labels), /* drop down menu */
+            sp_text_letterspacing_value_changed,  /* callback */
+            0.1,                                  /* step (used?) */
+            2,                                    /* digits to show */
+            1.0                                   /* factor (multiplies default) */
+            );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        g_object_set_data( holder, "TextLetterSpacingAction", eact );
+    }
+
+    // Is this necessary to call? Shouldn't hurt.
+    sp_text_toolbox_selection_changed(sp_desktop_selection(desktop), holder);
+
+    // Watch selection
+    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolboxGTK");
 
     sigc::connection *c_selection_changed =
         new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)holder)));
     pool->add_connection ("selection-changed", c_selection_changed);
 
     sigc::connection *c_selection_modified =
         new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), (GObject*)tbl)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), (GObject*)holder)));
     pool->add_connection ("selection-modified", c_selection_modified);
 
     sigc::connection *c_subselection_changed =
         new sigc::connection (desktop->connectToolSubselectionChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), (GObject*)tbl)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), (GObject*)holder)));
     pool->add_connection ("tool-subselection-changed", c_subselection_changed);
 
-    Inkscape::ConnectionPool::connect_destroy (G_OBJECT (tbl), pool);
+    Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);
 
+    g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
 
-    gtk_widget_show_all( GTK_WIDGET(tbl) );
-
-    return GTK_WIDGET(tbl);
-} // end of sp_text_toolbox_new()
-
-}//<unnamed> namespace
+}
 
 
 //#########################
