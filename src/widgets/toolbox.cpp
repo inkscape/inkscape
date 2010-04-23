@@ -488,8 +488,8 @@ static gchar const * ui_descr =
         "    <toolitem action='TextAlignAction' />"
         "    <separator />"
         "    <toolitem action='TextLineHeightAction' />"
-        "    <toolitem action='TextWordSpacingAction' />"
         "    <toolitem action='TextLetterSpacingAction' />"
+        "    <toolitem action='TextWordSpacingAction' />"
         "    <separator />"
         "    <toolitem action='TextOrientationAction' />"
         "  </toolbar>"
@@ -7351,7 +7351,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             holder,                               /* dataKludge */
             FALSE,                                /* altx? */
             NULL,                                 /* altx_mark? */
-            0.0, 10.0, 0.1, 1.0,                  /* lower, upper, step (arrow up/down), page up/down */
+            0.0, 10.0, 0.01, 0.10,                /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_lineheight_value_changed,     /* callback */
             0.1,                                  /* step (used?) */
@@ -7381,7 +7381,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             holder,                               /* dataKludge */
             FALSE,                                /* altx? */
             NULL,                                 /* altx_mark? */
-            -100.0, 100.0, 1.0, 10.0,             /* lower, upper, step (arrow up/down), page up/down */
+            -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_wordspacing_value_changed,    /* callback */
             0.1,                                  /* step (used?) */
@@ -7411,7 +7411,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             holder,                               /* dataKludge */
             FALSE,                                /* altx? */
             NULL,                                 /* altx_mark? */
-            -100.0, 100.0, 1.0, 10.0,             /* lower, upper, step (arrow up/down), page up/down */
+            -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_letterspacing_value_changed,  /* callback */
             0.1,                                  /* step (used?) */
