@@ -49,11 +49,12 @@ struct _Ink_ComboBoxEntry_Action {
 
   gpointer            cell_data_func; // drop-down menu format
 
-  gint                active;  // Index of active menu item (-1 if not in list). 
-  gchar              *text;    // Text of active menu item or entry box.
-  gint                width;   // Width of GtkComboBoxEntry in characters.
-  gboolean            popup;   // Do we pop-up an entry-completion dialog?
-  gchar              *warning; // Text for warning that entry isn't in list.
+  gint                active;     // Index of active menu item (-1 if not in list). 
+  gchar              *text;       // Text of active menu item or entry box.
+  gint                width;      // Width of GtkComboBoxEntry in characters.
+  gboolean            popup;      // Do we pop-up an entry-completion dialog?
+  gchar              *warning;    // Text for warning that entry isn't in list.
+  gchar              *altx_name;  // Target for Alt-X keyboard shortcut.
 };
 
 
@@ -74,13 +75,15 @@ GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* 
 GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );
 
 gchar*   ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* action );
-gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, gchar* text );
+gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text );
 
 void     ink_comboboxentry_action_set_width( Ink_ComboBoxEntry_Action* action, gint width );
 
 void     ink_comboboxentry_action_popup_enable(  Ink_ComboBoxEntry_Action* action );
 void     ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action );
 
-void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, gchar* warning );
+void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning );
+
+void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* action, const gchar* altx_name );
 
 #endif /* SEEN_INK_COMBOBOXENTRY_ACTION */

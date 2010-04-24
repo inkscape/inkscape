@@ -34,7 +34,7 @@ static GtkWidget* create_tool_item( GtkAction* action );
 static GtkWidget* create_menu_item( GtkAction* action );
 
 // Internal
-static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, gchar* target_text );
+static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text );
 
 // Callbacks
 static void combo_box_changed_cb( GtkComboBoxEntry* widget, gpointer data );
@@ -247,6 +247,7 @@ static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
   action->entry_completion = NULL;
   action->popup = false;
   action->warning = NULL;
+  action->altx_name = NULL;
 }
 
 GType ink_comboboxentry_action_get_type ()
@@ -344,6 +345,11 @@ GtkWidget* create_tool_item( GtkAction* action )
           ink_comboboxentry_action_popup_enable( ink_comboboxentry_action );
       }
 
+      // Add altx_name if required
+      if( ink_comboboxentry_action->altx_name ) {
+	g_object_set_data( G_OBJECT( child ), ink_comboboxentry_action->altx_name, ink_comboboxentry_action->entry );
+      }
+
       // Add signal for GtkEntry to check if finished typing.
       g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(entry_activate_cb), action );
 
@@ -391,7 +397,7 @@ gchar* ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* actio
   return text;
 }
 
-gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink_comboboxentry_action, gchar* text ) {
+gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink_comboboxentry_action, const gchar* text ) {
 
   g_free( ink_comboboxentry_action->text );
   ink_comboboxentry_action->text = g_strdup( text );
@@ -479,7 +485,7 @@ void ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action ) 
   }
 }
 
-void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, gchar* warning ) {
+void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning ) {
 
   g_free( action->warning );
   action->warning = g_strdup( warning );
@@ -494,10 +500,21 @@ void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action,
   }
 }
 
+void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* action, const gchar* altx_name ) {
+
+  g_free( action->altx_name );
+  action->altx_name = g_strdup( altx_name );
+
+  // Widget may not have been created....
+  if( action->entry ) {
+    g_object_set_data( G_OBJECT(action->entry), action->altx_name, action->entry );
+  }
+}
+
 // Internal ---------------------------------------------------
 
 // Return row of active text or -1 if not found.
-gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, gchar* target_text ) {
+gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text ) {
 
   // Check if text in list
   gint row = 0;

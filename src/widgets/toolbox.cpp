@@ -7179,6 +7179,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         ink_comboboxentry_action_popup_enable( act ); // Enable entry completion
         gchar *const warning = _("Font not found on system");
         ink_comboboxentry_action_set_warning( act, warning ); // Show icon with tooltip if missing font
+        ink_comboboxentry_action_set_altx_name( act, "altx-text" ); // Set Alt-X keyboard shortcut
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontfamily_value_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "TextFontFamilyAction", act );
@@ -7349,8 +7350,8 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
-            FALSE,                                /* altx? */
-            NULL,                                 /* altx_mark? */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
             0.0, 10.0, 0.01, 0.10,                /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_lineheight_value_changed,     /* callback */
@@ -7379,8 +7380,8 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
-            FALSE,                                /* altx? */
-            NULL,                                 /* altx_mark? */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
             -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_wordspacing_value_changed,    /* callback */
@@ -7409,8 +7410,8 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
-            FALSE,                                /* altx? */
-            NULL,                                 /* altx_mark? */
+            FALSE,                                /* set alt-x keyboard shortcut? */
+            NULL,                                 /* altx_mark */
             -100.0, 100.0, 0.01, 0.10,            /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_letterspacing_value_changed,  /* callback */
