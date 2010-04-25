@@ -312,7 +312,11 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     GtkWidget* comboBoxEntry = gtk_combo_box_entry_new_with_model( ink_comboboxentry_action->model, 0 );
 
-    gtk_container_add( GTK_CONTAINER(item), comboBoxEntry );
+    {
+        GtkWidget *align = gtk_alignment_new(0, 0.5, 0, 0);
+        gtk_container_add( GTK_CONTAINER(align), comboBoxEntry );
+        gtk_container_add( GTK_CONTAINER(item), align );
+    }
 
     ink_comboboxentry_action->combobox = GTK_COMBO_BOX_ENTRY(comboBoxEntry);
 
@@ -347,7 +351,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
       // Add altx_name if required
       if( ink_comboboxentry_action->altx_name ) {
-	g_object_set_data( G_OBJECT( child ), ink_comboboxentry_action->altx_name, ink_comboboxentry_action->entry );
+          g_object_set_data( G_OBJECT( child ), ink_comboboxentry_action->altx_name, ink_comboboxentry_action->entry );
       }
 
       // Add signal for GtkEntry to check if finished typing.
