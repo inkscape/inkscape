@@ -943,7 +943,7 @@ void InkscapePreferences::initPageCMS()
 
     _cms_proof_intent.init("/options/softproof/intent", intentLabels, intentValues, numIntents, 0);
     _page_cms.add_line( false, _("Device rendering intent:"), _cms_proof_intent, "",
-                        _("The rendering intent to use to calibrate display output"), false);
+                        _("The rendering intent to use to calibrate device output"), false);
 
     _cms_proof_blackpoint.init( _("Black point compensation"), "/options/softproof/bpc", false);
     _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
