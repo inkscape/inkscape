@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-25 18:48+0200\n"
+"POT-Creation-Date: 2010-04-26 18:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,7 +207,7 @@ msgid "Desaturate"
 msgstr ""
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "Grayscale"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgid "Dimensions"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
-#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
+#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:18
 msgid "Visualize Path"
 msgstr ""
 
@@ -1554,25 +1554,36 @@ msgid "Measure Path"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:7
-msgid "Offset [px]"
+msgid "Measurement Type: "
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:8
-msgid "Precision"
+msgid "Offset [px]"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:9
-msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgid "Precision"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:10
+msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:12
+#, no-c-format
 msgid ""
-"This effect measures the length of the selected path and adds it as a text-"
-"on-path object with the selected unit. The number of significant digits can "
-"be controlled by the Precision field. The Offset field controls the distance "
-"from the text to the path. The Scale factor can be used to make measurements "
-"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
-"real world, Scale must be set to 250."
+"This effect measures the length, or area, of the selected path and adds it "
+"as a text-on-path object with the selected unit.\n"
+"            \n"
+"  * The number of significant digits can be controlled by the Precision "
+"field.\n"
+"  * The Offset field controls the distance from the text to the path.\n"
+"  * The Scale factor can be used to make measurements in scaled drawings. "
+"For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale "
+"must be set to 250.\n"
+"  * When calculating area, the result should be precise for polygons and "
+"Bezier curves. If a circle is used, the area may be too high by as much as "
+"0.03%."
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -2766,50 +2777,55 @@ msgid "Text Input"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:1
-#: ../share/extensions/webslicer_create_rect.inx.h:15
-msgid "HTML class atribute:"
+#: ../share/extensions/webslicer_create_rect.inx.h:2
+msgid "Background color:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:16
-msgid "HTML id atribute:"
+msgid "HTML class atribute:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-msgid "Height unit:"
+#: ../share/extensions/webslicer_create_rect.inx.h:17
+msgid "HTML id atribute:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
+msgid "Height unit:"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_group.inx.h:5
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:5
+#: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Percent (relative to parent size)"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:6
+#: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Pixel (fixed)"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:7
+#: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Set a layout group"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:8
+#: ../share/extensions/webslicer_create_group.inx.h:9
 msgid "Undefined (relative to non-floating content size)"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:9
-#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_create_group.inx.h:10
+#: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.inx.h:10
+#: ../share/extensions/webslicer_create_group.inx.h:11
 msgid "Width unit:"
 msgstr ""
 
@@ -2817,10 +2833,6 @@ msgstr ""
 msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:2
-msgid "Background color:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
@@ -2836,108 +2848,128 @@ msgid "Background — repeat vertically (on parent group)"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
-msgid "Bottom and Left"
+msgid "Bottom and Center"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-msgid "Bottom and Right"
+msgid "Bottom and Left"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-msgid "Create a slicer rectangle"
+msgid "Bottom and Right"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
-msgid "DPI:"
+msgid "Create a slicer rectangle"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
-msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
+msgid "DPI:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:11
-msgid "Force Dimension:"
+msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:12
-msgid "Format:"
+msgid "Force Dimension:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
+msgid "Format:"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "GIF specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:17
+#: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "If set, this will replace DPI."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:18
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "JPG specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:19
+#: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Layout disposition:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:20
+#: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Left Floated Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:21
+#: ../share/extensions/webslicer_create_rect.inx.h:22
+msgid "Middle and Center"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:23
+msgid "Middle and Left"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:24
+msgid "Middle and Right"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 #: ../src/extension/extension.cpp:740
 msgid "Name:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:22
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 msgid "Non Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:23
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Options for HTML export"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Palette"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 msgid "Palette size:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 msgid "Position anchor:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:27
-msgid "Positioned &lt;div&gt; with the image as Background"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:29
-msgid "Quality:"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:30
-msgid "Right Floated Image"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:31
-msgid "Tiled Background (on parent group)"
-msgstr ""
-
 #: ../share/extensions/webslicer_create_rect.inx.h:32
-msgid "Top and Left"
+msgid "Positioned html block element with the image as Background"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:33
+msgid "Quality:"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:34
+msgid "Right Floated Image"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:35
+msgid "Tiled Background (on parent group)"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:36
+msgid "Top and Center"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:37
+msgid "Top and Left"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:38
 msgid "Top and right"
 msgstr ""
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:39
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
