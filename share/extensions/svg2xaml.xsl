@@ -42,21 +42,21 @@ exclude-result-prefixes="rdf xlink msxsl">
   <xsl:choose>
     <xsl:when test="starts-with($colorspec, 'rgb(') and not(contains($colorspec , '%'))">
       <xsl:value-of select="'#'" />
-      <xsl:if test="$opacityspec != '' and number($opacityspec) != 1"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number($opacityspec) * 255" /></xsl:with-param></xsl:call-template></xsl:if>
+      <xsl:if test="$opacityspec != '' and number($opacityspec) != 1"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="round(number($opacityspec) * 255)" /></xsl:with-param></xsl:call-template></xsl:if>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="substring-before(substring-after($colorspec, 'rgb('), ',')" /></xsl:with-param></xsl:call-template>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="substring-before(substring-after(substring-after($colorspec, 'rgb('), ','), ',')" /></xsl:with-param></xsl:call-template>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="substring-before(substring-after(substring-after(substring-after($colorspec, 'rgb('), ','), ','), ')')" /></xsl:with-param></xsl:call-template>
     </xsl:when>
     <xsl:when test="starts-with($colorspec, 'rgb(') and contains($colorspec , '%')">
       <xsl:value-of select="'#'" />
-      <xsl:if test="$opacityspec != '' and number($opacityspec) != 1"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number($opacityspec) * 255" /></xsl:with-param></xsl:call-template></xsl:if>
+      <xsl:if test="$opacityspec != '' and number($opacityspec) != 1"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="round(number($opacityspec) * 255)" /></xsl:with-param></xsl:call-template></xsl:if>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number(substring-before(substring-after($colorspec, 'rgb('), '%,')) * 255 div 100" /></xsl:with-param></xsl:call-template>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number(substring-before(substring-after(substring-after($colorspec, 'rgb('), ','), '%,')) * 255 div 100" /></xsl:with-param></xsl:call-template>
       <xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number(substring-before(substring-after(substring-after(substring-after($colorspec, 'rgb('), ','), ','), '%)')) * 255 div 100" /></xsl:with-param></xsl:call-template>
     </xsl:when>
     <xsl:when test="starts-with($colorspec, '#')">
       <xsl:value-of select="'#'" />
-      <xsl:if test="$opacityspec != ''"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number($opacityspec) * 255" /></xsl:with-param></xsl:call-template></xsl:if>
+      <xsl:if test="$opacityspec != ''"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="round(number($opacityspec) * 255)" /></xsl:with-param></xsl:call-template></xsl:if>
       <xsl:choose>
         <xsl:when test="string-length(substring-after($colorspec, '#')) = 3">
           <xsl:variable name="colorspec3"><xsl:value-of select="translate(substring-after($colorspec, '#'), 'abcdefgh', 'ABCDEFGH')" /></xsl:variable>
@@ -65,7 +65,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:value-of select="concat(substring($colorspec3, 3, 1), substring($colorspec3, 3, 1))" />
         </xsl:when>
         <xsl:otherwise><xsl:value-of select="translate(substring-after($colorspec, '#'), 'abcdefgh', 'ABCDEFGH')" /></xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
       <xsl:variable name="named_color_hex" select="document('colors.xml')/colors/color[@name = translate($colorspec, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/@hex" />
@@ -76,7 +76,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:value-of select="substring-after($named_color_hex, '#')" />
         </xsl:when>
         <xsl:otherwise><xsl:value-of select="$colorspec" /></xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -91,9 +91,9 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="contains($Fill, ';')">
           <xsl:value-of select="substring-before($Fill, ';')" />
-        </xsl:when>  
+        </xsl:when>
         <xsl:otherwise><xsl:value-of select="$Fill" /></xsl:otherwise>
-      </xsl:choose> 
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="fill" select="parent::*"/></xsl:when>
   </xsl:choose>
@@ -107,12 +107,11 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="contains($Opacity, ';')"><xsl:value-of select="substring-before($Opacity, ';')" /></xsl:when>
         <xsl:otherwise><xsl:value-of select="$Opacity" /></xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="fill_opacity" select="parent::*" /></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
-
 
 <xsl:template mode="fill_rule" match="*">
   <xsl:choose>
@@ -124,11 +123,11 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:if test="substring-before($FillRule, ';') = 'nonzero' or substring-before($FillRule, ';') = 'evenodd'"><xsl:attribute name="FillRule"><xsl:value-of select="substring-before($FillRule, ';')" /></xsl:attribute></xsl:if>
         </xsl:when>
         <xsl:when test="$FillRule = 'nonzero' or $FillRule = 'evenodd'"><xsl:attribute name="FillRule"><xsl:value-of select="$FillRule" /></xsl:attribute></xsl:when>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="fill_rule" select="parent::*"/></xsl:when>
     <xsl:otherwise><xsl:attribute name="FillRule">NonZero</xsl:attribute></xsl:otherwise>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="template_fill" match="*">
@@ -148,27 +147,26 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:otherwise>#000000</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
-  </xsl:if>   
+  </xsl:if>
 </xsl:template>
 
 <xsl:template mode="stroke" match="*">
   <xsl:choose>
     <xsl:when test="@stroke and starts-with(@stroke, 'url(#')"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@stroke, 'url(#'), ')'), '}')" /></xsl:when>
     <xsl:when test="@stroke and @stroke != 'none'"><xsl:value-of select="@stroke" /></xsl:when>
-    <xsl:when test="@style and contains(@style, 'stroke:') and starts-with(substring-after(@style, 'stroke:'), 'url(#')"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:when>    
+    <xsl:when test="@style and contains(@style, 'stroke:') and starts-with(substring-after(@style, 'stroke:'), 'url(#')"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:when>
     <xsl:when test="@style and contains(@style, 'stroke:')">
       <xsl:variable name="Stroke" select="substring-after(@style, 'stroke:')" />
       <xsl:choose>
         <xsl:when test="contains($Stroke, ';')">
           <xsl:if test="substring-before($Stroke, ';') != 'none'"><xsl:value-of select="substring-before($Stroke, ';')" /></xsl:if>
-        </xsl:when>  
+        </xsl:when>
         <xsl:when test="$Stroke != 'none'"><xsl:value-of select="$Stroke" /></xsl:when>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke" select="parent::*"/></xsl:when>
   </xsl:choose>
 </xsl:template>
-
 
 <xsl:template mode="stroke_opacity" match="*">
   <xsl:choose>
@@ -178,10 +176,10 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="contains($Opacity, ';')"><xsl:value-of select="substring-before($Opacity, ';')" /></xsl:when>
         <xsl:otherwise><xsl:value-of select="$Opacity" /></xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_opacity" select="parent::*" /></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="template_stroke" match="*">
@@ -192,7 +190,7 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:call-template name="template_color">
         <xsl:with-param name="colorspec"><xsl:value-of select="$stroke" /></xsl:with-param>
         <xsl:with-param name="opacityspec"><xsl:value-of select="$stroke_opacity" /></xsl:with-param>
-      </xsl:call-template>  
+      </xsl:call-template>
     </xsl:attribute>
   </xsl:if>
 </xsl:template>
@@ -206,11 +204,11 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains($StrokeThickness, ';')"><xsl:value-of select="substring-before($StrokeThickness, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$StrokeThickness" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_width" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="stroke_miterlimit" match="*">
@@ -222,11 +220,11 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains($StrokeMiterLimit, ';')"><xsl:value-of select="substring-before($StrokeMiterLimit, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$StrokeMiterLimit" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_miterlimit" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="stroke_dasharray" match="*">
@@ -240,10 +238,10 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:if test="substring-before($StrokeDashArray, ';') != 'none'"><xsl:attribute name="StrokeDashArray"><xsl:value-of select="substring-before($StrokeDashArray, ';')" /></xsl:attribute></xsl:if>
         </xsl:when>
         <xsl:when test="$StrokeDashArray != 'none'"><xsl:attribute name="StrokeDashArray"><xsl:value-of select="$StrokeDashArray" /></xsl:attribute></xsl:when>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_dasharray" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="stroke_dashoffset" match="*">
@@ -255,11 +253,11 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains($StrokeDashOffset, ';')"><xsl:value-of select="substring-before($StrokeDashOffset, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$StrokeDashOffset" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_dashoffset" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="linejoin_svg_to_xaml">
@@ -287,11 +285,11 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:otherwise>
             <xsl:call-template name="linejoin_svg_to_xaml"><xsl:with-param name="linejoin"><xsl:value-of select="$StrokeLineJoin" /></xsl:with-param></xsl:call-template>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_linejoin" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="linecap_svg_to_xaml">
@@ -323,7 +321,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:otherwise>
             <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="$StrokeStartLineCap" /></xsl:with-param></xsl:call-template>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
       <xsl:attribute name="StrokeEndLineCap">
         <xsl:choose>
@@ -333,17 +331,17 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:otherwise>
             <xsl:call-template name="linecap_svg_to_xaml"><xsl:with-param name="linecap"><xsl:value-of select="$StrokeEndLineCap" /></xsl:with-param></xsl:call-template>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_linecap" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="resources" match="*">
   <!-- should be in-depth -->
   <xsl:if test="ancestor::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-</xsl:template>  
+</xsl:template>
 
 <xsl:template name="to_hex">
   <xsl:param name="convert" />
@@ -359,36 +357,36 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains($temp_opacity, ';')"><xsl:value-of select="substring-before($temp_opacity, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$temp_opacity" /></xsl:otherwise>
-        </xsl:choose>          
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="''" /></xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
   <xsl:variable name="hex_opacity">
     <xsl:choose>
-      <xsl:when test="$Opacity != ''"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number($Opacity) * 255" /></xsl:with-param></xsl:call-template>  </xsl:when>  
+      <xsl:when test="$Opacity != ''"><xsl:call-template name="to_hex"><xsl:with-param name="convert"><xsl:value-of select="number($Opacity) * 255" /></xsl:with-param></xsl:call-template>  </xsl:when>
       <xsl:otherwise><xsl:value-of select="$Opacity" /></xsl:otherwise>
-    </xsl:choose>  
+    </xsl:choose>
   </xsl:variable>
   <xsl:variable name="stopcolor">
     <xsl:choose>
       <xsl:when test="@stop-color">
-        <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="@stop-color" /></xsl:with-param></xsl:call-template>  
+        <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="@stop-color" /></xsl:with-param></xsl:call-template>
       </xsl:when>
       <xsl:when test="@style and contains(@style, 'stop-color:')">
         <xsl:variable name="Color" select="substring-after(@style, 'stop-color:')" />
         <xsl:choose>
           <xsl:when test="contains($Color, ';')">
-            <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="substring-before($Color, ';')" /></xsl:with-param></xsl:call-template>  
+            <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="substring-before($Color, ';')" /></xsl:with-param></xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="$Color" /></xsl:with-param></xsl:call-template>  
+            <xsl:call-template name="template_color"><xsl:with-param name="colorspec"><xsl:value-of select="$Color" /></xsl:with-param></xsl:call-template>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stop_color" select="parent::*"/></xsl:when>
       <xsl:otherwise>#000</xsl:otherwise>
-    </xsl:choose>  
+    </xsl:choose>
   </xsl:variable>
   <xsl:attribute name="Color">
     <xsl:choose>
@@ -407,11 +405,11 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains($Opacity, ';')"><xsl:value-of select="substring-before($Opacity, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$Opacity" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stop_opacity" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="offset" match="*">
@@ -421,7 +419,7 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains(@offset, '%')"><xsl:value-of select="number(substring-before(@offset, '%')) div 100" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="@offset" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'offset:')">
@@ -431,11 +429,11 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:when test="contains($Offset, '%')"><xsl:value-of select="number(substring-before($Offset, '%')) div 100" /></xsl:when>        
           <xsl:when test="contains($Offset, ';')"><xsl:value-of select="substring-before($Offset, ';')" /></xsl:when>
           <xsl:otherwise><xsl:value-of select="$Offset" /></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stop_offset" select="parent::*"/></xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="parse_transform">
@@ -457,7 +455,7 @@ exclude-result-prefixes="rdf xlink msxsl">
             <xsl:attribute name="ScaleX"><xsl:value-of select="$scale" /></xsl:attribute>
             <xsl:attribute name="ScaleY"><xsl:value-of select="$scale" /></xsl:attribute>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </ScaleTransform>
       <xsl:call-template name="parse_transform"><xsl:with-param name="input" select="substring-after($input, ') ')" /></xsl:call-template>
     </xsl:when>
@@ -494,10 +492,10 @@ exclude-result-prefixes="rdf xlink msxsl">
             <xsl:attribute name="Y"><xsl:value-of select="substring-after($translate, ' ')" /></xsl:attribute>
           </xsl:when>
           <xsl:otherwise><xsl:attribute name="X"><xsl:value-of select="$translate" /></xsl:attribute></xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
       </TranslateTransform>
       <xsl:call-template name="parse_transform"><xsl:with-param name="input" select="substring-after($input, ') ')" /></xsl:call-template>
-    </xsl:when>  
+    </xsl:when>
   </xsl:choose>
 </xsl:template>
 
@@ -525,7 +523,7 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="count(msxsl:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></xsl:when>
           <xsl:when test="count(msxsl:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></TransformGroup></xsl:when>
-        </xsl:choose>  
+        </xsl:choose>
       </xsl:element>
     </xsl:when>
     <xsl:when test="system-property('xsl:vendor') = 'Microsoft'">
@@ -533,17 +531,17 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="count(msxsl:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></xsl:when>
         <xsl:when test="count(msxsl:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></TransformGroup></xsl:when>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:when>
-  </xsl:choose>  
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="clip" match="*">
   <xsl:choose>
-    <xsl:when test="@clip-path and defs/clipPath/path/@d"><xsl:attribute name="Clip"><xsl:value-of select="defs/clipPath/path/@d" /></xsl:attribute></xsl:when>  
-    <xsl:when test="@clip-path and starts-with(@clip-path, 'url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@clip-path, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>  
-    <xsl:when test="@style and contains(@style, 'clip-path:url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>  
-    <xsl:when test="clipPath"><xsl:apply-templates mode="forward" /></xsl:when>  
+    <xsl:when test="@clip-path and defs/clipPath/path/@d"><xsl:attribute name="Clip"><xsl:value-of select="defs/clipPath/path/@d" /></xsl:attribute></xsl:when>
+    <xsl:when test="@clip-path and starts-with(@clip-path, 'url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@clip-path, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
+    <xsl:when test="@style and contains(@style, 'clip-path:url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
+    <xsl:when test="clipPath"><xsl:apply-templates mode="forward" /></xsl:when>
   </xsl:choose>
 </xsl:template>
 
@@ -566,7 +564,7 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:apply-templates mode="forward" />
       </Viewbox>
     </xsl:otherwise>   
-  </xsl:choose>   
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="forward" match="defs">
@@ -582,9 +580,9 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:apply-templates mode="clip" select="." />
         -->
         <xsl:if test="@width and not(contains(@width, '%'))"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-        <xsl:if test="@height and not(contains(@height, '%'))"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>    
+        <xsl:if test="@height and not(contains(@height, '%'))"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
         <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-        <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>    
+        <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
         <xsl:if test="@viewBox">
           <xsl:variable name="viewBox"><xsl:value-of select="normalize-space(translate(@viewBox, ',', ' '))" /></xsl:variable>
           <xsl:attribute name="Width"><xsl:value-of select="substring-before(substring-after(substring-after($viewBox, ' '), ' '), ' ')" /></xsl:attribute>
@@ -661,7 +659,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:value-of select="$font_size" /></xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>  
+      </xsl:attribute>
     </xsl:if>
     <xsl:if test="@font-weight"><xsl:attribute name="FontWeight"><xsl:value-of select="@font-weight" /></xsl:attribute></xsl:if>
     <xsl:if test="@style and contains(@style, 'font-weight:')">
@@ -673,7 +671,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:value-of select="$font_weight" /></xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>  
+      </xsl:attribute>
     </xsl:if>
     <xsl:if test="@font-family"><xsl:attribute name="FontFamily"><xsl:value-of select="@font-family" /></xsl:attribute></xsl:if>
     <xsl:if test="@style and contains(@style, 'font-family:')">
@@ -685,7 +683,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:value-of select="$font_family" /></xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>  
+      </xsl:attribute>
     </xsl:if>
     <xsl:if test="@font-style"><xsl:attribute name="FontStyle"><xsl:value-of select="@font-style" /></xsl:attribute></xsl:if>
     <xsl:if test="@style and contains(@style, 'font-style:')">
@@ -697,7 +695,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:value-of select="$font_style" /></xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>  
+      </xsl:attribute>
     </xsl:if>
     <xsl:if test="@fill"><xsl:attribute name="Foreground"><xsl:value-of select="@fill" /></xsl:attribute></xsl:if>
     <xsl:if test="@style and contains(@style, 'fill')">
@@ -709,7 +707,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           </xsl:when>
           <xsl:otherwise><xsl:value-of select="$fill" /></xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>  
+      </xsl:attribute>
     </xsl:if>
     <xsl:if test="@text-anchor">
       <xsl:attribute name="HorizontalAlignment">
@@ -795,7 +793,7 @@ exclude-result-prefixes="rdf xlink msxsl">
           <xsl:otherwise>
             <xsl:attribute name="StartPoint"><xsl:value-of select="concat(@x1, ',', @y1)" /></xsl:attribute>
           </xsl:otherwise>
-        </xsl:choose>  
+        </xsl:choose>
         <xsl:choose>
           <xsl:when test="contains(@x2, '%') and contains(@y2, '%')">
             <xsl:attribute name="EndPoint"><xsl:value-of select="concat(substring-before(@x2, '%') div 100, ',', substring-before(@y2,'%') div 100)" /></xsl:attribute>
@@ -817,15 +815,15 @@ exclude-result-prefixes="rdf xlink msxsl">
             <xsl:variable name="reference_id" select="@xlink:href" />
             <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
           </xsl:when>
-          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>  
-        </xsl:choose>  
+          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
+        </xsl:choose>
       </GradientStopCollection>
     </LinearGradientBrush.GradientStops>
     <xsl:if test="@gradientTransform">
     <LinearGradientBrush.Transform>
       <xsl:apply-templates mode="transform" select="." />
     </LinearGradientBrush.Transform>
-  </xsl:if>  
+  </xsl:if>
   </LinearGradientBrush>
 </xsl:template>
 
@@ -852,10 +850,10 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains(@cx, '%') and contains(@cy, '%')">
             <xsl:value-of select="concat(number(substring-before(@cx, '%')) div 100, ',', number(substring-before(@cy, '%')) div 100)" />
-          </xsl:when>  
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="concat(@cx, ',', @cy)" />
-          </xsl:otherwise>  
+          </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
     </xsl:if>  
@@ -864,25 +862,25 @@ exclude-result-prefixes="rdf xlink msxsl">
         <xsl:choose>
           <xsl:when test="contains(@fx, '%') and contains(@fy, '%')">
             <xsl:value-of select="concat(number(substring-before(@fx, '%')) div 100, ',', number(substring-before(@fy, '%')) div 100)" />
-          </xsl:when>  
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="concat(@fx, ',', @fy)" />
-          </xsl:otherwise>  
+          </xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
-    </xsl:if>  
+    </xsl:if>
     <xsl:if test="@r">
       <xsl:choose>
         <xsl:when test="contains(@r, '%')">
           <xsl:attribute name="RadiusX"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
           <xsl:attribute name="RadiusY"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
-        </xsl:when>  
+        </xsl:when>
         <xsl:otherwise>
           <xsl:attribute name="RadiusX"><xsl:value-of select="@r" /></xsl:attribute>
           <xsl:attribute name="RadiusY"><xsl:value-of select="@r" /></xsl:attribute>
-        </xsl:otherwise>  
+        </xsl:otherwise>
       </xsl:choose>
-    </xsl:if>  
+    </xsl:if>
     <RadialGradientBrush.GradientStops>
       <GradientStopCollection>
         <xsl:choose>
@@ -898,7 +896,7 @@ exclude-result-prefixes="rdf xlink msxsl">
     <RadialGradientBrush.Transform>
       <xsl:apply-templates mode="transform" select="." />
     </RadialGradientBrush.Transform>
-    </xsl:if>  
+    </xsl:if>
   </RadialGradientBrush>
 </xsl:template>
 
@@ -932,18 +930,18 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Line'" />
     </xsl:apply-templates>    
-    
+
     <xsl:apply-templates mode="forward" />
   </Line>
 </xsl:template>
 
 <xsl:template mode="forward" match="*[name(.) = 'rect']">
   <Rectangle>
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>  
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
+    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+    <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
     <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
     <xsl:if test="@rx and not(@ry)"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
     <xsl:if test="@ry and not(@rx)"><xsl:attribute name="RadiusX"><xsl:value-of select="@ry" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
@@ -956,15 +954,15 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
     <xsl:apply-templates mode="resources" select="." />
-    
+
     <xsl:apply-templates mode="clip" select="." />
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Rectangle'" />
-    </xsl:apply-templates>    
-    
+    </xsl:apply-templates>
+
     <xsl:apply-templates mode="forward" />
   </Rectangle>
 </xsl:template>
@@ -982,11 +980,11 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Polygon'" />
-    </xsl:apply-templates>    
-    
+    </xsl:apply-templates>
+
     <xsl:apply-templates mode="forward" />
   </Polygon>
 </xsl:template>
@@ -1004,11 +1002,11 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Polyline'" />
-    </xsl:apply-templates>    
-    
+    </xsl:apply-templates>
+
     <xsl:apply-templates mode="forward" />
   </Polyline>
 </xsl:template>
@@ -1038,16 +1036,16 @@ exclude-result-prefixes="rdf xlink msxsl">
                 <xsl:value-of select="translate(@d , ',', ' ')" />
               </xsl:attribute>
               <xsl:apply-templates mode="fill_rule" select="." />
-            </PathGeometry>  
+            </PathGeometry>
           </Path.Data>
-         </xsl:otherwise>   
-      </xsl:choose>   
+         </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Path'" />
     </xsl:apply-templates>
-    
+
     <xsl:apply-templates mode="forward" />
   </Path>
 </xsl:template>
@@ -1058,13 +1056,13 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="@cx"><xsl:value-of select="@cx" /></xsl:when>
         <xsl:otherwise>0</xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:variable>
     <xsl:variable name="cy">
       <xsl:choose>
         <xsl:when test="@cy"><xsl:value-of select="@cy" /></xsl:when>
         <xsl:otherwise>0</xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:variable>
     <xsl:if test="@rx">
       <xsl:attribute name="Canvas.Left"><xsl:value-of select='format-number($cx - @rx, "#.#")' /></xsl:attribute>
@@ -1083,13 +1081,13 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
     <xsl:apply-templates mode="clip" select="." />
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Ellipse'" />
     </xsl:apply-templates>
-    
+
     <xsl:apply-templates mode="forward" />
   </Ellipse>
 </xsl:template>
@@ -1100,19 +1098,19 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:choose>
         <xsl:when test="@cx"><xsl:value-of select="@cx" /></xsl:when>
         <xsl:otherwise>0</xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:variable>
     <xsl:variable name="cy">
       <xsl:choose>
         <xsl:when test="@cy"><xsl:value-of select="@cy" /></xsl:when>
         <xsl:otherwise>0</xsl:otherwise>
-      </xsl:choose>  
+      </xsl:choose>
     </xsl:variable>
     <xsl:if test="@r">
        <xsl:attribute name="Canvas.Left"><xsl:value-of select='format-number($cx - @r, "#.#")' /></xsl:attribute>
        <xsl:attribute name="Canvas.Top"><xsl:value-of select='format-number($cy - @r, "#.#")' /></xsl:attribute>
        <xsl:attribute name="Width"><xsl:value-of select='format-number(2 * @r, "#.#")' /></xsl:attribute>
-       <xsl:attribute name="Height"><xsl:value-of select='format-number(2 * @r, "#.#")' /></xsl:attribute>       
+       <xsl:attribute name="Height"><xsl:value-of select='format-number(2 * @r, "#.#")' /></xsl:attribute>
     </xsl:if>
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
@@ -1123,13 +1121,13 @@ exclude-result-prefixes="rdf xlink msxsl">
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
     <xsl:apply-templates mode="clip" select="." />
-    
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Ellipse'" />
     </xsl:apply-templates>
-    
+
     <xsl:apply-templates mode="forward" />
   </Ellipse>
 </xsl:template>
@@ -1140,7 +1138,7 @@ exclude-result-prefixes="rdf xlink msxsl">
 
 <xsl:template mode="geometry" match="*[name(.) = 'circle']">
   <EllipseGeometry>
-    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>  
+    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
     <xsl:if test="@cx and @cy"><xsl:attribute name="Center"><xsl:value-of select="concat(@cx, ',', @cy)" /></xsl:attribute></xsl:if>
     <xsl:if test="@r">
       <xsl:attribute name="RadiusX"><xsl:value-of select="@r" /></xsl:attribute>
@@ -1151,14 +1149,14 @@ exclude-result-prefixes="rdf xlink msxsl">
 
 <xsl:template mode="geometry" match="*[name(.) = 'rect']">
   <RectangleGeometry>
-    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>  
+    <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
     <!--
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>  
-    <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>  
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
+    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+    <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
+    <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
     -->
     <xsl:attribute name="Rect"><xsl:value-of select="concat('0, 0, ', @width, ', ', @height)" /></xsl:attribute>
   </RectangleGeometry>
