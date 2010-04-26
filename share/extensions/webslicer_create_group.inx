@@ -18,6 +18,7 @@
     <_item value="percent">Percent (relative to parent size)</_item>
     <_item value="undefined">Undefined (relative to non-floating content size)</_item>
   </param>
+  <param name="bg-color" type="string" _gui-text="Background color:"></param>
   <effect needs-live-preview="false">
     <object-type>all</object-type>
     <effects-menu>

@@ -121,30 +121,20 @@ class WebSlicer_CreateRect(WebSlicer_Effect):
             conf_txt += "dpi:"     + str(self.options.dpi) +"\n"
         if not is_empty(self.options.html_id):
             conf_txt += "html-id:" + self.options.html_id
-        desc.text = "\n".join( self.get_full_conf_list() )
+        desc.text = self.get_conf_text_from_list( self.get_conf_list() )
 
 
-
-    def get_conf_from_list(self, conf_atts):
-        conf_list = []
-        for att in conf_atts:
-            if not is_empty(getattr(self.options, att)):
-                conf_list.append( att +':'+ str(getattr(self.options, att)) )
-        return conf_list
-
-
-    def get_full_conf_list(self):
-        conf_list = [ 'format:'+self.options.format ]
+    def get_conf_list(self):
+        conf_list = [ 'format' ]
         if self.options.format == 'gif':
-            conf_list.extend( self.get_conf_from_list([ 'gif_type', 'palette_size' ]) )
+            conf_list.extend( [ 'gif_type', 'palette_size' ] )
         if self.options.format == 'jpg':
-            conf_list.extend( self.get_conf_from_list([ 'quality' ]) )
-        conf_general_atts = [
+            conf_list.extend( [ 'quality' ] )
+        conf_list.extend( [
                 'dpi', 'dimension',
                 'bg_color', 'html_id', 'html_class',
                 'layout_disposition', 'layout_position_anchor'
-            ]
-        conf_list.extend( self.get_conf_from_list(conf_general_atts) )
+            ] )
         return conf_list
 
 

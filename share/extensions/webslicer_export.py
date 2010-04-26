@@ -21,6 +21,7 @@ from webslicer_effect import *
 import inkex
 import gettext
 import os.path
+import tempfile
 import commands
 
 _ = gettext.gettext
@@ -76,13 +77,27 @@ class WebSlicer_Export(WebSlicer_Effect):
                 inkex.errormsg( _('Can\'t create code files.') )
                 inkex.errormsg( _('Error: %s') % e )
                 return {'error':'Can\'t create code files.'}
+        # Create the temporary SVG with invisible Slicer layer to export image pieces
+        self.create_the_temporary_svg()
         # Start what we really want!
         self.export_chids_of( self.get_slicer_layer() )
         # Close the HTML and CSS files:
         if self.options.with_code:
             self.html.close()
             self.css.close()
+        # Delete the temporary SVG with invisible Slicer layer
+        self.delete_the_temporary_svg()
 
+    def create_the_temporary_svg(self):
+        (ref, self.tmp_svg) = tempfile.mkstemp('.svg')
+        layer = self.get_slicer_layer()
+        current_style = layer.attrib['style']
+        layer.attrib['style'] = 'display:none'
+        self.document.write( self.tmp_svg );
+        layer.attrib['style'] = current_style
+
+    def delete_the_temporary_svg(self):
+        os.remove( self.tmp_svg )
 
     def get_el_conf(self, el):
         desc = el.find('{http://www.w3.org/2000/svg}desc')
@@ -129,7 +144,13 @@ class WebSlicer_Export(WebSlicer_Effect):
 
 
     def export_img(self, el, conf):
-        (status, output) = commands.getstatusoutput("inkscape -e ...")
+        (status, output) = commands.getstatusoutput(
+            "inkscape -i '%s' -e '%s' '%s'" % (
+                el.attrib['id'],
+                os.path.join( self.options.dir, el.attrib['id']+'.png' ),
+                self.tmp_svg
+            )
+        )
         #inkex.errormsg( status )
         #inkex.errormsg( output )
 

@@ -43,6 +43,10 @@ class WebSlicer_CreateGroup(WebSlicer_Effect):
                                      action="store", type="string",
                                      dest="height_unity",
                                      help="")
+        self.OptionParser.add_option("--bg-color",
+                                     action="store", type="string",
+                                     dest="bg_color",
+                                     help="")
 
 
     def get_base_elements(self):
@@ -72,14 +76,11 @@ class WebSlicer_CreateGroup(WebSlicer_Effect):
         g_parent = self.getParentNode(node)
         group = inkex.etree.SubElement(g_parent, 'g')
         desc = inkex.etree.SubElement(group, 'desc')
-        conf_txt = ''
-        if not is_empty(self.options.html_id):
-            conf_txt += 'html-id:'    + self.options.html_id +'\n'
-        if not is_empty(self.options.html_class):
-            conf_txt += 'html-class:' + self.options.html_class +'\n'
-        conf_txt += 'width-unity:' + self.options.width_unity +'\n'
-        conf_txt += 'height-unity:' + self.options.height_unity
-        desc.text = conf_txt
+        desc.text = self.get_conf_text_from_list(
+            [ 'html_id', 'html_class',
+              'width_unity', 'height_unity',
+              'bg_color' ] )
+
         for id,node in self.selected.iteritems():
             group.insert( 1, node )
 

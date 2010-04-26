@@ -35,11 +35,11 @@
       <param name="html-class" type="string" _gui-text="HTML class atribute:"></param>
       <_param name="help-gif" type="description">Options for HTML export</_param>
       <param name="layout-disposition" type="enum" _gui-text="Layout disposition:">
+        <_item value="bg-el-norepeat">Positioned html block element with the image as Background</_item>
         <_item value="bg-parent-repeat">Tiled Background (on parent group)</_item>
         <_item value="bg-parent-repeat-x">Background — repeat horizontally (on parent group)</_item>
         <_item value="bg-parent-repeat-y">Background — repeat vertically (on parent group)</_item>
         <_item value="bg-parent-norepeat">Background — no repeat (on parent group)</_item>
-        <_item value="bg-div-norepeat">Positioned &lt;div&gt; with the image as Background</_item>
         <_item value="img-pos">Positioned Image</_item>
         <_item value="img-nonpos">Non Positioned Image</_item>
         <_item value="img-float-left">Left Floated Image</_item>
@@ -47,8 +47,13 @@
       </param>
       <param name="layout-position-anchor" type="enum" _gui-text="Position anchor:">
         <_item value="tl">Top and Left</_item>
+        <_item value="tc">Top and Center</_item>
         <_item value="tr">Top and right</_item>
+        <_item value="ml">Middle and Left</_item>
+        <_item value="mc">Middle and Center</_item>
+        <_item value="mr">Middle and Right</_item>
         <_item value="bl">Bottom and Left</_item>
+        <_item value="bc">Bottom and Center</_item>
         <_item value="br">Bottom and Right</_item>
       </param>
     </page>

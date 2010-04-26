@@ -50,3 +50,12 @@ class WebSlicer_Effect(inkex.Effect):
             layer = layer[0]
         return layer
 
+    def get_conf_text_from_list(self, conf_atts):
+        conf_list = []
+        for att in conf_atts:
+            if not is_empty(getattr(self.options, att)):
+                conf_list.append(
+                    att.replace('_','-') +': '+ str(getattr(self.options, att))
+                )
+        return "\n".join( conf_list )
+
