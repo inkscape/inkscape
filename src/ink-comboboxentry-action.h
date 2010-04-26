@@ -7,6 +7,7 @@
  *
  * Author(s):
  *   Tavmjong Bah
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2010 Authors
  *
@@ -46,10 +47,13 @@ struct _Ink_ComboBoxEntry_Action {
   GtkComboBoxEntry   *combobox;
   GtkEntry           *entry;
   GtkEntryCompletion *entry_completion;
+#if !GTK_CHECK_VERSION(2,16,0)
+  GtkWidget          *indicator;
+#endif
 
   gpointer            cell_data_func; // drop-down menu format
 
-  gint                active;     // Index of active menu item (-1 if not in list). 
+  gint                active;     // Index of active menu item (-1 if not in list).
   gchar              *text;       // Text of active menu item or entry box.
   gint                width;      // Width of GtkComboBoxEntry in characters.
   gboolean            popup;      // Do we pop-up an entry-completion dialog?
@@ -62,14 +66,14 @@ GType ink_comboboxentry_action_get_type (void);
 
 /**
  * Creates a GtkAction subclass that wraps a GtkComboBoxEntry object.
- */ 
+ */
 Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new ( const gchar  *name,
-							 const gchar  *label,
-							 const gchar  *tooltip,
-							 const gchar  *stock_id,
-							 GtkTreeModel *model,
-							 gint          width = -1,
-							 gpointer cell_data_func = NULL );
+                                                         const gchar  *label,
+                                                         const gchar  *tooltip,
+                                                         const gchar  *stock_id,
+                                                         GtkTreeModel *model,
+                                                         gint          width = -1,
+                                                         gpointer cell_data_func = NULL );
 
 GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* action );
 GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );

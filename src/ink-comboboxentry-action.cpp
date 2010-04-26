@@ -7,6 +7,7 @@
  *
  * Author(s):
  *   Tavmjong Bah
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2010 Authors
  *
@@ -245,6 +246,9 @@ static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
   action->active = -1;
   action->text = NULL;
   action->entry_completion = NULL;
+#if !GTK_CHECK_VERSION(2,16,0)
+  action->indicator = NULL;
+#endif
   action->popup = false;
   action->warning = NULL;
   action->altx_name = NULL;
@@ -314,7 +318,15 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     {
         GtkWidget *align = gtk_alignment_new(0, 0.5, 0, 0);
+#if GTK_CHECK_VERSION(2,16,0)
         gtk_container_add( GTK_CONTAINER(align), comboBoxEntry );
+#else // GTK_CHECK_VERSION(2,16,0)
+        GtkWidget *hbox = gtk_hbox_new( FALSE, 0 );
+        ink_comboboxentry_action->indicator = gtk_image_new_from_stock(GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_box_pack_start( GTK_BOX(hbox), comboBoxEntry, TRUE, TRUE, 0 );
+        gtk_box_pack_start( GTK_BOX(hbox), ink_comboboxentry_action->indicator, FALSE, FALSE, 0 );
+        gtk_container_add( GTK_CONTAINER(align), hbox );
+#endif // GTK_CHECK_VERSION(2,16,0)
         gtk_container_add( GTK_CONTAINER(item), align );
     }
 
@@ -359,7 +371,9 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     }
 
+#if GTK_CHECK_VERSION(2,16,0)
     gtk_action_connect_proxy( GTK_ACTION( action ), item );
+#endif
 
     gtk_widget_show_all( item );
 
@@ -430,13 +444,18 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
       gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
                                        GTK_ENTRY_ICON_SECONDARY,
                                        ink_comboboxentry_action->warning );
-
+#else // GTK_CHECK_VERSION(2,16,0)
+      gtk_image_set_from_stock( GTK_IMAGE(ink_comboboxentry_action->indicator), GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_widget_set_tooltip_text( ink_comboboxentry_action->indicator, ink_comboboxentry_action->warning );
 #endif // GTK_CHECK_VERSION(2,16,0)
     } else {
 #if GTK_CHECK_VERSION(2,16,0)
       gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
                                          GTK_ENTRY_ICON_SECONDARY,
                                          NULL );
+#else // GTK_CHECK_VERSION(2,16,0)
+      gtk_image_set_from_stock( GTK_IMAGE(ink_comboboxentry_action->indicator), NULL, GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_widget_set_tooltip_text( ink_comboboxentry_action->indicator, NULL );
 #endif // GTK_CHECK_VERSION(2,16,0)
     }
   }
@@ -486,6 +505,7 @@ void ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action ) 
 
   if( action->entry_completion ) {
     gtk_object_destroy( GTK_OBJECT( action->entry_completion ) );
+    action->entry_completion = 0;
   }
 }
 
@@ -500,6 +520,8 @@ void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action,
     gtk_entry_set_icon_tooltip_text( GTK_ENTRY(action->entry),
                                      GTK_ENTRY_ICON_SECONDARY,
                                      action->warning );
+#else // GTK_CHECK_VERSION(2,16,0)
+    gtk_image_set_from_stock( GTK_IMAGE(action->indicator), action->warning ? GTK_STOCK_DIALOG_WARNING : 0, GTK_ICON_SIZE_SMALL_TOOLBAR );
 #endif // GTK_CHECK_VERSION(2,16,0)
   }
 }
