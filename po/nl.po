@@ -16,9 +16,10 @@
 # Gebruikte woordenschat
 # ======================
 # alpha  -  alfa  (doorzichtigheidsfactor)
-# bounding box  -  omhullende
+# bounding box  -  omvattend vak
 # brightness  -  helderheid
 # bump  -  zie emboss: reliëf
+# clippath - afsnijpad
 # Commands Bar - Opdrachtenbalk
 # connector  -  verbinding
 # directory  -  map
@@ -35,6 +36,7 @@
 # minor/major division  -  hoofdmarkering/hulpmarkering
 # node  -  knooppunt  (soms kortweg: knoop)
 # opacity  -  ondoorzichtigheid
+# path outline - padindicator
 # ruler  -  liniaal
 # saturation  -  verzadiging
 # stroke  -  lijn, omlijning
@@ -46,8 +48,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-25 18:48+0200\n"
-"PO-Revision-Date: 2010-04-01 07:29+0100\n"
+"POT-Creation-Date: 2010-04-27 18:15+0200\n"
+"PO-Revision-Date: 2010-04-18 16:37+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -248,7 +250,7 @@ msgid "Desaturate"
 msgstr "Onverzadigd maken"
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "Grayscale"
 msgstr "Grijstinten"
 
@@ -377,7 +379,7 @@ msgid "Dimensions"
 msgstr "Dimensies"
 
 #: ../share/extensions/dimension.inx.h:2 ../share/extensions/dots.inx.h:4
-#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:11
+#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:18
 msgid "Visualize Path"
 msgstr "Pad visualiseren"
 
@@ -1701,25 +1703,36 @@ msgid "Measure Path"
 msgstr "Pad opmeten"
 
 #: ../share/extensions/measure.inx.h:7
+msgid "Measurement Type: "
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:8
 msgid "Offset [px]"
 msgstr "Afstand (px)"
 
-#: ../share/extensions/measure.inx.h:8
+#: ../share/extensions/measure.inx.h:9
 msgid "Precision"
 msgstr "Precisie"
 
-#: ../share/extensions/measure.inx.h:9
+#: ../share/extensions/measure.inx.h:10
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Schaalfactor (tekening:werkelijkheid) =   1 :"
 
-#: ../share/extensions/measure.inx.h:10
+#: ../share/extensions/measure.inx.h:12
+#, fuzzy, no-c-format
 msgid ""
-"This effect measures the length of the selected path and adds it as a text-"
-"on-path object with the selected unit. The number of significant digits can "
-"be controlled by the Precision field. The Offset field controls the distance "
-"from the text to the path. The Scale factor can be used to make measurements "
-"in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the "
-"real world, Scale must be set to 250."
+"This effect measures the length, or area, of the selected path and adds it "
+"as a text-on-path object with the selected unit.\n"
+"            \n"
+"  * The number of significant digits can be controlled by the Precision "
+"field.\n"
+"  * The Offset field controls the distance from the text to the path.\n"
+"  * The Scale factor can be used to make measurements in scaled drawings. "
+"For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale "
+"must be set to 250.\n"
+"  * When calculating area, the result should be precise for polygons and "
+"Bezier curves. If a circle is used, the area may be too high by as much as "
+"0.03%."
 msgstr ""
 "Dit effect meet de lengte van het geselecteerde pad en voegt het met de "
 "gekozen eenheid als een tekst-op-pad-object toe.  Het aantal significante "
@@ -2494,7 +2507,7 @@ msgstr "Rasters invoegen"
 
 #: ../share/extensions/scour.inx.h:2
 msgid "Enable id stripping"
-msgstr ""
+msgstr "Id strippen inschakelen"
 
 #: ../share/extensions/scour.inx.h:3
 msgid "Enable viewboxing"
@@ -2502,15 +2515,15 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:4
 msgid "Group collapsing"
-msgstr ""
+msgstr "Groepen samenvouwen"
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Indent"
-msgstr "Vergroten"
+msgstr "Inspringen"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Keep editor data"
-msgstr ""
+msgstr "Programmadata behouden"
 
 #: ../share/extensions/scour.inx.h:9
 msgid "Optimized SVG (*.svg)"
@@ -2534,22 +2547,22 @@ msgstr "Kleuren vereenvoudigen"
 
 #: ../share/extensions/scour.inx.h:15
 msgid "Space"
-msgstr ""
+msgstr "Spatie"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Strip xml prolog"
-msgstr ""
+msgstr "Xml hoofding strippen"
 
 #: ../share/extensions/scour.inx.h:17
 msgid "Style to xml"
-msgstr ""
+msgstr "Stijl in xml"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: ../share/extensions/scour.inx.h:20
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "This extension optimizes the SVG file according to the following options:\n"
 "    * Simplify colors: convert all colors to #RRGGBB format.\n"
@@ -2564,6 +2577,21 @@ msgid ""
 "    * Set precision: set number of significant digits (default: 5).\n"
 "    * Indent: indentation of the output: none, space, tab (default: space)."
 msgstr ""
+"Deze uitbreiding optimaliseert het SVG-bestand met de volgende opties:\n"
+"    * Kleuren vereenvoudigen: alle kleuren naar #RRGGBB formaat "
+"converteren.\n"
+"    * Stijl in xml: stijlen naar XML-attributen omzetten.\n"
+"    * Groepen samenvouwen: &lt;g&gt; elementen samenvoegen.\n"
+"    * Id strippen inschakelen: alle niet-gerefereerde ID-attributen "
+"verwijderen.\n"
+"    * Rasters invoegen: rasters als base64-geëncodeerde data invoegen.\n"
+"    * Programmadata behouden: Inkscape, Sodipodi of Adobe Illustrator "
+"elementen en attributen niet verwijderen.\n"
+"    * Enable viewboxing: size image to 100%/100% and introduce a viewBox\n"
+"    * Xml hoofding strippen: XML-hoofding niet toevoegen.\n"
+"    * Precisie instellen: het aantal beduidende cijfers (standaard: 5).\n"
+"    * Inspringen: inspringen van de uitvoer: geen, spatie, tab (standaard: "
+"spatie)."
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -2846,7 +2874,7 @@ msgstr "Hoofd- en kleine letters omwisselen"
 
 #: ../share/extensions/text_lowercase.inx.h:2
 msgid "lowercase"
-msgstr "alles in kleine letters"
+msgstr "kleine letters"
 
 #: ../share/extensions/text_randomcase.inx.h:2
 msgid "rANdOm CasE"
@@ -2874,7 +2902,7 @@ msgstr "Elk Woord Met Hoofdletter"
 
 #: ../share/extensions/text_uppercase.inx.h:2
 msgid "UPPERCASE"
-msgstr "alles in HOOFDLETTERS"
+msgstr "HOOFDLETTERS"
 
 #: ../share/extensions/triangle.inx.h:1
 msgid "Angle a / deg"
@@ -2944,189 +2972,225 @@ msgid "Text Input"
 msgstr "Tekstinvoer"
 
 #: ../share/extensions/webslicer_create_group.inx.h:1
-#: ../share/extensions/webslicer_create_rect.inx.h:15
+#: ../share/extensions/webslicer_create_rect.inx.h:2
 #, fuzzy
-msgid "HTML class atribute:"
-msgstr "HTML-id-attribuut"
+msgid "Background color:"
+msgstr "Achtergrondkleur"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_create_rect.inx.h:16
 #, fuzzy
+msgid "HTML class atribute:"
+msgstr "HTML-class-attribuut"
+
+#: ../share/extensions/webslicer_create_group.inx.h:3
+#: ../share/extensions/webslicer_create_rect.inx.h:17
+#, fuzzy
 msgid "HTML id atribute:"
 msgstr "HTML-id-attribuut"
 
-#: ../share/extensions/webslicer_create_group.inx.h:3
+#: ../share/extensions/webslicer_create_group.inx.h:4
 #, fuzzy
 msgid "Height unit:"
-msgstr "Hoogte:"
+msgstr "Eenheid hoogte"
 
-#: ../share/extensions/webslicer_create_group.inx.h:4
+#: ../share/extensions/webslicer_create_group.inx.h:5
+#, fuzzy
 msgid ""
 "Layout Group is only about to help a better code generation (if you need "
 "it). To use this, you must to select some \"Slicer rectangles\" first."
 msgstr ""
+"Een layoutgroep dient enkel voor het genereren van betere code (indien "
+"nodig). Voor gebruik moet je eerst enkele \"Slicerrechthoeken\" selecteren."
 
-#: ../share/extensions/webslicer_create_group.inx.h:5
+#: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Percent (relative to parent size)"
 msgstr "Percentage (relatief ten opzichte van grootte ouder)"
 
-#: ../share/extensions/webslicer_create_group.inx.h:6
+#: ../share/extensions/webslicer_create_group.inx.h:7
 msgid "Pixel (fixed)"
 msgstr "Pixel (vast)"
 
-#: ../share/extensions/webslicer_create_group.inx.h:7
-msgid "Set a layout group"
-msgstr ""
-
 #: ../share/extensions/webslicer_create_group.inx.h:8
-msgid "Undefined (relative to non-floating content size)"
-msgstr ""
+msgid "Set a layout group"
+msgstr "Layoutgroep instellen"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
-#: ../share/extensions/webslicer_create_rect.inx.h:35
+msgid "Undefined (relative to non-floating content size)"
+msgstr ""
+"Onbepaald (relatief ten opzichte van de grootte van niet-vlottende inhoud)"
+
+#: ../share/extensions/webslicer_create_group.inx.h:10
+#: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
 msgstr "Web"
 
-#: ../share/extensions/webslicer_create_group.inx.h:10
+#: ../share/extensions/webslicer_create_group.inx.h:11
 #, fuzzy
 msgid "Width unit:"
-msgstr "Rastereenheid:"
+msgstr "Eenheid breedte"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid ""
 "0 is the lowest image quality and highest compression, and 100 is the best "
 "quality but least effective compression"
 msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:2
-#, fuzzy
-msgid "Background color:"
-msgstr "Achtergrondkleur"
+"0 voor de laagste beeldkwaliteit en hoogste compressie. 100 voor de beste "
+"kwaliteit, maar laagste compressie."
 
 #: ../share/extensions/webslicer_create_rect.inx.h:3
 msgid "Background — no repeat (on parent group)"
-msgstr ""
+msgstr "Achtergrond — zonder herhaling (op oudergroep)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "Background — repeat horizontally (on parent group)"
-msgstr ""
+msgstr "Achtergrond — horizontale herhaling (op oudergroep)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:5
 msgid "Background — repeat vertically (on parent group)"
-msgstr ""
+msgstr "Achtergrond — verticale herhaling (op oudergroep)"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:6
-msgid "Bottom and Left"
-msgstr ""
+#, fuzzy
+msgid "Bottom and Center"
+msgstr "Linksonder"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:7
-msgid "Bottom and Right"
-msgstr ""
+msgid "Bottom and Left"
+msgstr "Linksonder"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:8
-msgid "Create a slicer rectangle"
-msgstr ""
+msgid "Bottom and Right"
+msgstr "Rechtsonder"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
+msgid "Create a slicer rectangle"
+msgstr "Slicerrechthoek maken"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:10
 #, fuzzy
 msgid "DPI:"
 msgstr "DPI"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:10
+#: ../share/extensions/webslicer_create_rect.inx.h:11
 msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
 msgstr ""
+"Dimensies forceren moet ingesteld worden als \"&lt;breedte&gt;x&lt;hoogte&gt;"
+"\""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:11
+#: ../share/extensions/webslicer_create_rect.inx.h:12
 #, fuzzy
 msgid "Force Dimension:"
 msgstr "Dimensies forceren"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:12
+#: ../share/extensions/webslicer_create_rect.inx.h:13
 #, fuzzy
 msgid "Format:"
 msgstr "Formaat"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:13
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "GIF specific options"
 msgstr "GIF specifieke opties"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:17
-msgid "If set, this will replace DPI."
-msgstr ""
-
 #: ../share/extensions/webslicer_create_rect.inx.h:18
+#, fuzzy
+msgid "If set, this will replace DPI."
+msgstr "Indien ingesteld, zal dit de DPI vervangen."
+
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "JPG specific options"
 msgstr "JPG specifieke opties"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:19
-msgid "Layout disposition:"
-msgstr ""
-
 #: ../share/extensions/webslicer_create_rect.inx.h:20
-msgid "Left Floated Image"
-msgstr ""
+#, fuzzy
+msgid "Layout disposition:"
+msgstr "Layoutplaatsing"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
+msgid "Left Floated Image"
+msgstr "Linksvlottende afbeelding"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:22
+msgid "Middle and Center"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:23
+#, fuzzy
+msgid "Middle and Left"
+msgstr "Linksboven"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:24
+#, fuzzy
+msgid "Middle and Right"
+msgstr "Rechtsonder"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 #: ../src/extension/extension.cpp:740
 msgid "Name:"
 msgstr "Naam:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:22
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 msgid "Non Positioned Image"
-msgstr ""
+msgstr "Niet gepositioneerde afbeelding"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:23
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Options for HTML export"
-msgstr ""
+msgstr "Opties voor HTML-export"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Palette"
 msgstr "Palet"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 #, fuzzy
 msgid "Palette size:"
-msgstr "Grootte palet"
+msgstr "Paletgrootte"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 #, fuzzy
 msgid "Position anchor:"
-msgstr "Positie anker"
+msgstr "Ankerpositie"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:27
-msgid "Positioned &lt;div&gt; with the image as Background"
-msgstr ""
-
-#: ../share/extensions/webslicer_create_rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Positioned Image"
-msgstr ""
+msgstr "Gepositioneerde afbeelding"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:29
+#: ../share/extensions/webslicer_create_rect.inx.h:32
+#, fuzzy
+msgid "Positioned html block element with the image as Background"
+msgstr "Gepositioneerde &lt;div&gt; met de afbeelding als achtergrond"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:33
 #, fuzzy
 msgid "Quality:"
 msgstr "Kwaliteit"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:30
+#: ../share/extensions/webslicer_create_rect.inx.h:34
 msgid "Right Floated Image"
-msgstr ""
+msgstr "Rechtsvlottende afbeelding"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:31
+#: ../share/extensions/webslicer_create_rect.inx.h:35
 msgid "Tiled Background (on parent group)"
-msgstr ""
+msgstr "Achtergrond — mozaïek (op oudergroep)"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:32
+#: ../share/extensions/webslicer_create_rect.inx.h:36
+#, fuzzy
+msgid "Top and Center"
+msgstr "Linksboven"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:37
 msgid "Top and Left"
-msgstr ""
+msgstr "Linksboven"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:33
+#: ../share/extensions/webslicer_create_rect.inx.h:38
 msgid "Top and right"
-msgstr ""
+msgstr "Rechtsboven"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:39
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
@@ -3134,26 +3198,30 @@ msgid "Type:"
 msgstr "type:"
 
 #: ../share/extensions/webslicer_export.inx.h:1
+#, fuzzy
 msgid ""
 "All sliced images, and optionally code, will be generated as you had "
 "configured and saved to one directory."
 msgstr ""
+"Alle deelafbeeldingen en optionele code worde gegenereerd volgens de "
+"opgegeven voorkeuren en bewaard in één directory."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
 msgstr ""
 
 #: ../share/extensions/webslicer_export.inx.h:3
+#, fuzzy
 msgid "Directory path to export:"
-msgstr ""
+msgstr "Directory voor exporteren"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "Layout en HMTL+CSS-code exporteren"
 
 #: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
-msgstr ""
+msgstr "Met HTML en CSS"
 
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "All selected ones set an attribute in the last one"
@@ -4370,7 +4438,7 @@ msgstr "Gladde rand"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Outlining the lines and smoothing their crossings"
-msgstr "Randen van lijnen overhouden en de knooppunten glad maken"
+msgstr "Randen schetsen en de kruisingen glad maken"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Cubes"
@@ -4508,7 +4576,7 @@ msgstr "Binnenrand"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Draws an outline around"
-msgstr "Een omhullende tekenen"
+msgstr "Een contour tekenen"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Outline, double"
@@ -4517,7 +4585,7 @@ msgstr "Rand, dubbel"
 #: ../share/filters/filters.svg.h:93
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
-"Een afgeronde lijn, in de kleur die overtrokken wordt, tekenen binnenin"
+"Een gladde lijn aan de binnenzijde tekenen in de kleur die overtrokken wordt"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Fancy blur"
@@ -4537,7 +4605,7 @@ msgstr "De kleur van het object uitstralen aan de randen"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Outline"
-msgstr "Rand"
+msgstr "Contour"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Adds a glowing blur and removes the shape"
@@ -4658,7 +4726,7 @@ msgstr "Inhoud vervagen"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "De inhoud van objecten vervagen met behoud van de randen"
+msgstr "De inhoud van objecten vervagen met behoud van de contouren"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Specular light"
@@ -4685,8 +4753,8 @@ msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
-"De inhoud van objecten vervaging met behoud van de rand en toevoeging van "
-"toenemende transparantie aan de randen"
+"De inhoud van objecten vervagen met behoud van de contouren en toevoeging "
+"van toenemende transparantie aan de randen"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Chalk and sponge"
@@ -5170,7 +5238,7 @@ msgstr "Zwart buitenrand"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Draws a black outline around"
-msgstr "Een zwarte omhullende tekenen"
+msgstr "Een zwarte rand tekenen"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Color outline"
@@ -5178,7 +5246,7 @@ msgstr "Gekleurde rand"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Draws a colored outline around"
-msgstr "Een gekleurde omhullende tekenen"
+msgstr "Een gekleurde rand tekenen"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Inner Shadow"
@@ -7558,7 +7626,7 @@ msgstr "Kleur van hoofdrasterlijnen"
 
 #: ../src/display/canvas-axonomgrid.cpp:416 ../src/display/canvas-grid.cpp:688
 msgid "Color of the major (highlighted) grid lines"
-msgstr "De kleur van de geselecteerde hoofdrasterlijnen"
+msgstr "Kleur van de (geselecteerde) hoofdrasterlijnen"
 
 #: ../src/display/canvas-axonomgrid.cpp:420 ../src/display/canvas-grid.cpp:692
 msgid "_Major grid line every:"
@@ -7637,7 +7705,7 @@ msgstr "_Punten weergeven in plaats van lijnen"
 #: ../src/display/canvas-grid.cpp:712
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
-"Indien ingeschakeld worden punten op de rasterkruispunten weergegeven in "
+"Indien aangevinkt, worden punten op de rasterkruispunten weergegeven in "
 "plaats van rasterlijnen."
 
 #. TRANSLATORS: undefined target for snapping
@@ -7688,11 +7756,11 @@ msgstr "kruispunt met pad"
 
 #: ../src/display/snap-indicator.cpp:107
 msgid "bounding box corner"
-msgstr "hoek omhullende"
+msgstr "hoek omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:110
 msgid "bounding box side"
-msgstr "rand omhullende"
+msgstr "rand omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:113
 msgid "page border"
@@ -7716,11 +7784,11 @@ msgstr "handvat"
 
 #: ../src/display/snap-indicator.cpp:128
 msgid "bounding box side midpoint"
-msgstr "midden rand omhullende"
+msgstr "midden rand omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:131
 msgid "bounding box midpoint"
-msgstr "middelpunt omhullende"
+msgstr "middelpunt omvatted vak"
 
 #: ../src/display/snap-indicator.cpp:134
 msgid "page corner"
@@ -7756,15 +7824,15 @@ msgstr ""
 
 #: ../src/display/snap-indicator.cpp:168
 msgid "Bounding box corner"
-msgstr "Hoek omhullende"
+msgstr "Hoek omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:171
 msgid "Bounding box midpoint"
-msgstr "Middelpunt omhullende"
+msgstr "Middelpunt omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:174
 msgid "Bounding box side midpoint"
-msgstr "Midden rand omhullende"
+msgstr "Midden rand omvattend vak"
 
 #: ../src/display/snap-indicator.cpp:177 ../src/ui/tool/node.cpp:1193
 msgid "Smooth node"
@@ -10160,7 +10228,7 @@ msgstr "Herschaalbaar"
 #: ../src/libgdl/gdl-dock-item.c:304
 msgid "If set, the dock item can be resized when docked in a panel"
 msgstr ""
-"Indien ingeschakeld kan het dockitem herschalen wanneer het in een paneel "
+"Indien aangevinkt, kan het dockitem herschalen wanneer het in een paneel "
 "gezet is"
 
 #: ../src/libgdl/gdl-dock-item.c:311
@@ -10183,7 +10251,7 @@ msgstr "Vergrendeld"
 msgid ""
 "If set, the dock item cannot be dragged around and it doesn't show a grip"
 msgstr ""
-"Indien ingeschakeld kan het paneelitem niet rondgesleept worden en toont het "
+"Indien aangevinkt, kan het paneelitem niet rondgesleept worden en toont het "
 "geen grijppunt"
 
 #: ../src/libgdl/gdl-dock-item.c:329
@@ -11476,8 +11544,8 @@ msgstr "Referentiesegment"
 #: ../src/live_effects/lpe-vonkoch.cpp:51
 msgid "The reference segment. Defaults to the horizontal midline of the bbox."
 msgstr ""
-"Het referentiesegment. Standaard is dit de horizontale middellijn van de "
-"omhullende."
+"Het referentiesegment. Standaard is dit de horizontale middellijn van het "
+"omvattend vak."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -12895,17 +12963,17 @@ msgstr "Bitmap maken"
 
 #: ../src/selection-chemistry.cpp:2843
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Selecteer eerst de <b>objecten</b> om een masker(pad) van te maken."
+msgstr "Selecteer de <b>objecten</b> om een afsnijpad/masker van te maken."
 
 #: ../src/selection-chemistry.cpp:2846
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
-"Selecteer een maskerobject en <b>object(en)</b> om het masker(pad) op toe te "
-"passen."
+"Selecteer het maskerobject en de <b>object(en)</b> om het afsnijpad/masker "
+"op toe te passen."
 
 #: ../src/selection-chemistry.cpp:3027
 msgid "Set clipping path"
-msgstr "Maskerpad inschakelen"
+msgstr "Afsnijpad inschakelen"
 
 #: ../src/selection-chemistry.cpp:3029
 msgid "Set mask"
@@ -12913,11 +12981,12 @@ msgstr "Masker inschakelen"
 
 #: ../src/selection-chemistry.cpp:3042
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Selecteer <b>object(en)</b> om het masker(pad) van uit te schakelen."
+msgstr ""
+"Selecteer <b>object(en)</b> om het afsnijpad/masker van uit te schakelen."
 
 #: ../src/selection-chemistry.cpp:3153
 msgid "Release clipping path"
-msgstr "Maskerpad uitschakelen"
+msgstr "Afsnijpad uitschakelen"
 
 #: ../src/selection-chemistry.cpp:3155
 msgid "Release mask"
@@ -12925,20 +12994,20 @@ msgstr "Masker uitschakelen"
 
 #: ../src/selection-chemistry.cpp:3173
 msgid "Select <b>object(s)</b> to fit canvas to."
-msgstr "Selecteer <b>object(en)</b> om het canvas op aan te passen"
+msgstr "Selecteer <b>object(en)</b> voor aanpassing van het canvas"
 
 #. Fit Page
 #: ../src/selection-chemistry.cpp:3193 ../src/verbs.cpp:2688
 msgid "Fit Page to Selection"
-msgstr "Schaal pagina naar selectie"
+msgstr "Pagina naar selectie schalen"
 
 #: ../src/selection-chemistry.cpp:3222 ../src/verbs.cpp:2690
 msgid "Fit Page to Drawing"
-msgstr "Schaal pagina naar tekening"
+msgstr "Pagina naar tekening schalen"
 
 #: ../src/selection-chemistry.cpp:3243 ../src/verbs.cpp:2692
 msgid "Fit Page to Selection or Drawing"
-msgstr "Schaal pagina naar selectie of tekening"
+msgstr "Pagina naar selectie of tekening schalen"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -14013,7 +14082,7 @@ msgstr "Selecteer een <b>afbeelding</b> om over te trekken"
 
 #: ../src/trace/trace.cpp:106
 msgid "Select only one <b>image</b> to trace"
-msgstr "Selecteer een enkele <b>afbeelding</b> om over te trekken"
+msgstr "Selecteer slechts één <b>afbeelding</b> om over te trekken"
 
 #: ../src/trace/trace.cpp:124
 msgid "Select one image and one or more shapes above it"
@@ -14536,7 +14605,8 @@ msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
 msgstr ""
-"Objecten zo min mogelijk verplaatsen opdat hun omhullenden niet overlappen"
+"Objecten zo min mogelijk verplaatsen opdat hun omvattende vakken niet "
+"overlappen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
 #: ../src/widgets/toolbox.cpp:7810
@@ -14597,7 +14667,7 @@ msgstr "Profielnaam:"
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:52
 #: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "Save"
-msgstr "Op_slaan"
+msgstr "Opslaan"
 
 #: ../src/ui/dialog/debug.cpp:68
 msgid "Messages"
@@ -14634,7 +14704,7 @@ msgstr "Pagina_rand weergeven"
 
 #: ../src/ui/dialog/document-properties.cpp:90
 msgid "If set, rectangular page border is shown"
-msgstr "Indien aangevinkt wordt de rechthoekige paginarand getoond"
+msgstr "Indien aangevinkt, wordt de rechthoekige paginarand getoond"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "Border on _top of drawing"
@@ -14642,7 +14712,7 @@ msgstr "Rand altijd _boven de tekening"
 
 #: ../src/ui/dialog/document-properties.cpp:91
 msgid "If set, border is always on top of the drawing"
-msgstr "Indien aangevinkt wordt de rand altijd boven de tekening getoond"
+msgstr "Indien aangevinkt, wordt de rand altijd boven de tekening getoond"
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "_Show border shadow"
@@ -14650,7 +14720,7 @@ msgstr "Pagina_schaduw weergeven"
 
 #: ../src/ui/dialog/document-properties.cpp:92
 msgid "If set, page border shows a shadow on its right and lower side"
-msgstr "Indien aangevinkt heeft de paginarand onder en rechts een schaduw"
+msgstr "Indien aangevinkt, heeft de paginarand onder en rechts een schaduw"
 
 #: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
@@ -14703,10 +14773,10 @@ msgid ""
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
 "part of the guide near the cursor will snap)"
 msgstr ""
-"Aan knooppunten of hoekpunten van omhullenden kleven tijdens het verslepen "
-"van een hulplijn ('Aan knooppunten kleven' of 'Aan hoeken van omhullende "
-"kleven' moet actief zijn; enkel een klein deel van de hulplijn rond de "
-"cursor zal kleven)"
+"Aan knooppunten of hoekpunten van omvattende vakken kleven tijdens het "
+"verslepen van een hulplijn ('Aan knooppunten kleven' of 'Aan hoeken van "
+"omvattend vak kleven' moet actief zijn; enkel een klein deel van de hulplijn "
+"rond de cursor zal kleven)"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -14818,7 +14888,7 @@ msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
-"Indien ingeschakeld kleven objecten alleen aan andere objecten als deze zich "
+"Indien aangevinkt, kleven objecten alleen aan andere objecten als deze zich "
 "binnen de hier aangegeven afstand bevindt"
 
 #. Options for snapping to grids
@@ -14843,7 +14913,7 @@ msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
-"Indien ingeschakeld kleven objecten alleen aan een rasterlijn als deze zich "
+"Indien aangevinkt, kleven objecten alleen aan een rasterlijn als deze zich "
 "binnen de hier aangegeven afstand bevindt"
 
 #. Options for snapping to guides
@@ -14868,7 +14938,7 @@ msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
-"Indien ingeschakeld kleven objecten alleen aan een hulplijn als deze zich "
+"Indien aangevinkt, kleven objecten alleen aan een hulplijn als deze zich "
 "binnen de hier aangegeven afstand bevindt"
 
 #: ../src/ui/dialog/document-properties.cpp:290
@@ -15446,7 +15516,7 @@ msgstr "Alfa behouden"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2204
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr ""
-"Indien ingeschakeld wordt het alfakanaal door dit filter niet aangepast."
+"Indien aangevinkt, wordt het alfakanaal door dit filter niet aangepast."
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
@@ -15721,7 +15791,7 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 "Het <b>feMerge</b>-filtereffect verenigt verschillende tijdelijke beelden in "
-"het filter tot een enkele afbeelding.  Hiervoor wordt normale alfamenging "
+"het filter tot één afbeelding.  Hiervoor wordt normale alfamenging "
 "gebruikt.  Dit is equivalent aan het gebruik van verschillende <i>feBlend</"
 "i>-filtereffecten in 'normale' modus of verschillende <i>feComposite</i>-"
 "filtereffecten in 'over'-modus."
@@ -16530,7 +16600,7 @@ msgstr ""
 #: ../src/ui/dialog/glyphs.cpp:296
 #, fuzzy
 msgid "Variation Selectors"
-msgstr "Schaal pagina naar selectie"
+msgstr "Pagina naar selectie schalen"
 
 #: ../src/ui/dialog/glyphs.cpp:297
 #, fuzzy
@@ -16774,10 +16844,9 @@ msgid ""
 "canvas (as in Adobe Illustrator); when off, Space temporarily switches to "
 "Selector tool (default)"
 msgstr ""
-"Indien ingeschakeld, zal slepen met de muis met linkerknop en spatie "
-"ingedrukt het canvas verschuiven (zoals in Adobe Illustrator).  Indien "
-"uitgeschakeld, zal spatie tijdelijk het selectie-gereedschap activeren "
-"(standaard)."
+"Indien aangevinkt, zal slepen met de muis met linkerknop en spatie ingedrukt "
+"het canvas verschuiven (zoals in Adobe Illustrator).  Indien uitgeschakeld, "
+"zal spatie tijdelijk het selectie-gereedschap activeren (standaard)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:216
 msgid "Mouse wheel zooms by default"
@@ -16789,7 +16858,7 @@ msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
 msgstr ""
-"Indien ingeschakeld, zal de muis zoomen zonder Ctrl en het canvas scrollen  "
+"Indien aangevinkt, zal de muis zoomen zonder Ctrl en het canvas scrollen  "
 "met Ctrl; indien uitgeschakeld, zal de muis zoomen met Ctrl en scrollen "
 "zonder Ctrl."
 
@@ -16904,7 +16973,7 @@ msgid ""
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
 "counterclockwise"
 msgstr ""
-"Indien ingeschakeld, dan wijst 0 naar het noorden, en lopen de hoeken van 0 "
+"Indien aangevinkt, dan wijst 0 naar het noorden, en lopen de hoeken van 0 "
 "tot 360 graden met de klok mee; indien uit, dan wijst 0 naar het oosten, en "
 "lopen de hoeken van -180 tot 180 graden, tegen de klok in"
 
@@ -16944,8 +17013,8 @@ msgstr "Selectie-aanduiding tonen"
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
-"Of voor geselecteerde objecten een selectie-aanduiding getoond wordt "
-"(dezelfde als bij 'Selecteren')"
+"Bij geselecteerde objecten wordt een selectie-aanduiding getoond (dezelfde "
+"als bij 'Selecteren')"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:287
 msgid "Enable gradient editing"
@@ -16954,11 +17023,12 @@ msgstr "Aanpassen van kleurverlopen toestaan"
 #: ../src/ui/dialog/inkscape-preferences.cpp:288
 msgid "Whether selected objects display gradient editing controls"
 msgstr ""
-"Of voor geselecteerde objecten kleurverloop-gereedschappen getoond worden"
+"Bij geselecteerde objecten worden handvatten voor het bewerken van het "
+"kleurverloop getoond"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:293
 msgid "Conversion to guides uses edges instead of bounding box"
-msgstr "Omzetting naar hulplijnen gebruikt randen in plaats van omhullende"
+msgstr "Omzetting naar hulplijnen gebruikt randen in plaats van omvatted vak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:294
 #, fuzzy
@@ -16966,8 +17036,8 @@ msgid ""
 "Converting an object to guides places these along the object's true edges "
 "(imitating the object's shape), not along the bounding box"
 msgstr ""
-"Het omzetten van een object naar hulplijnen plaats het langs de randen van "
-"het object (imitatie van de vorm van het object), niet langs de omhullende."
+"Het omzetten van een object naar hulplijnen plaatst deze langs de randen van "
+"het object (imitatie van de objectvorm), niet langs de omvattend vak."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:301
 msgid "Ctrl+click dot size:"
@@ -17041,24 +17111,24 @@ msgstr "Gereedschappen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:396
 msgid "Bounding box to use:"
-msgstr "Te gebruiken omhullende:"
+msgstr "Te gebruiken omvattend vak:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:397
 msgid "Visual bounding box"
-msgstr "Visuele omhullende"
+msgstr "Visueel omvattend vak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:399
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
 msgstr ""
-"Deze omhullende omvat lijndiktes, markeringen, filtermarges, enzovoort."
+"Dit omvattend vak omvat lijndiktes, markeringen, filtermarges, enzovoort."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid "Geometric bounding box"
-msgstr "Geometrische omhullende"
+msgstr "Geometrisch omvattend vak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "This bounding box includes only the bare path"
-msgstr "Deze omhullende omvat alleen het pad zelf"
+msgstr "Dit omvattend vak omvat alleen het pad zelf"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Conversion to guides:"
@@ -17074,12 +17144,12 @@ msgid ""
 "When converting an object to guides, don't delete the object after the "
 "conversion"
 msgstr ""
-"Wanneer een object naar hulplijnen omgezet worden, het object zelf na de "
+"Wanneer een object naar hulplijnen omgezet wordt, het object zelf na "
 "omzetting niet verwijderen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Treat groups as a single object"
-msgstr "Groepen als een enkel object behandelen"
+msgstr "Groepen als één object behandelen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:410
 #, fuzzy
@@ -17087,8 +17157,8 @@ msgid ""
 "Treat groups as a single object during conversion to guides rather than "
 "converting each child separately"
 msgstr ""
-"Groepen als een enkel object behandelen bij omzetting naar hulplijnen, in "
-"plaats van elk onderdeel apart"
+"Groepen als één object behandelen bij omzetting naar hulplijnen, in plaats "
+"van elk onderdeel apart"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:412
 msgid "Average all sketches"
@@ -17126,13 +17196,11 @@ msgstr "De werkelijke objecten weergeven bij verplaatsten en transformeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Box outline"
-msgstr "Omhullende tonen"
+msgstr "Omvattend vak tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Show only a box outline of the objects when moving or transforming"
-msgstr ""
-"Alleen een rechthoekige omhullende weergeven bij verplaatsten en "
-"transformeren"
+msgstr "Alleen een omvattend vak weergeven bij verplaatsen en transformeren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Per-object selection cue:"
@@ -17157,7 +17225,7 @@ msgstr "Omhullende"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Each selected object displays its bounding box"
-msgstr "Elk geselecteerd object toont zijn omhullende"
+msgstr "Elk geselecteerd object toont zijn omvattend vak"
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
@@ -17166,71 +17234,83 @@ msgstr "Knooppunten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Path outline"
-msgstr "Pad omhullende"
+msgstr "Padindicator"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Path outline color"
-msgstr "Kleur pad omhullende"
+msgstr "Kleur padindicator"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
 #, fuzzy
 msgid "Selects the color used for showing the path outline"
-msgstr "Selecteert de kleur om het pad van de omhullende te tonen."
+msgstr "Selecteer de kleur voor het tonen van de padindicator."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
 msgid "Always show outline"
-msgstr "Omhullende altijd tonen"
+msgstr "Padindicator altijd tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Show outlines for all paths, not only invisible paths"
-msgstr ""
+msgstr "Padindicator voor alle paden tonen, niet alleen onzichtbare paden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Update outline when dragging nodes"
-msgstr ""
+msgstr "Padindicator updaten bij het slepen van knooppunten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
+#, fuzzy
 msgid ""
 "Update the outline when dragging or transforming nodes; if this is off, the "
 "outline will only update when completing a drag"
 msgstr ""
+"Padindicator updaten bij het slepen of transformeren van knooppunten. Indien "
+"uitgeschakeld wordt de padindicator alleen geupdated bij het beëindigen van "
+"het slepen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Update paths when dragging nodes"
-msgstr ""
+msgstr "Paden updaten bij het slepen van knooppunten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:451
+#, fuzzy
 msgid ""
 "Update paths when dragging or transforming nodes; if this is off, paths will "
 "only be updated when completing a drag"
 msgstr ""
+"Paden updaten bij het slepen of transformeren van knooppunten. Indien "
+"uitgeschakeld worden paden alleen geupdated bij het beëindigen van het "
+"slepen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Show path direction on outlines"
-msgstr ""
+msgstr "Padrichting tonen bij de indicator"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid ""
 "Visualize the direction of selected paths by drawing small arrows in the "
 "middle of each outline segment"
 msgstr ""
+"De richting van geselecteerde paden tonen door het tekenen van kleine peilen "
+"in het midden van elk segment van de indicator"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Show temporary path outline"
-msgstr "Omhullende tijdelijk tonen"
+msgstr "Padindicator tijdelijk tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:455
 #, fuzzy
 msgid "When hovering over a path, briefly flash its outline"
-msgstr "De omhullende kort tonen wanneer de muis over een pad beweegt."
+msgstr "Padindicator kort tonen wanneer de muis over een pad beweegt."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "Show temporary outline for selected paths"
-msgstr "Omhullende voor geselecteerde paden tijdelijk tonen"
+msgstr "Padindicator voor geselecteerde paden tijdelijk tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid "Show temporary outline even when a path is selected for editing"
 msgstr ""
+"Padindicator tijdelijk tonen, zelfs wanneer een pad geselecteerd is voor "
+"bewerking"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
 msgid "Flash time"
@@ -17243,8 +17323,8 @@ msgid ""
 "milliseconds); specify 0 to have the outline shown until mouse leaves the "
 "path"
 msgstr ""
-"Geeft aan hoelang de omhullende zichtbaar zal zijn na een mouse-over (in "
-"milliseconden). Geef 0 op om de omhullende weer te geven tot de muis het pad "
+"Geef aan hoelang de padindicator zichtbaar zal zijn na een mouse-over (in "
+"milliseconden). Geef 0 op om de indicator weer te geven tot de muis het pad "
 "verlaat."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
@@ -17253,21 +17333,27 @@ msgstr "Bewerkvoorkeuren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:461
 msgid "Show transform handles for single nodes"
-msgstr ""
+msgstr "Transformatiehandvatten tonen voor afzonderlijke knooppunten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:462
+#, fuzzy
 msgid "Show transform handles even when only a single node is selected"
 msgstr ""
+"Transformatiehandvatten tonen zelfs wanneer er slecht een enkel knooppunt is "
+"geselecteerd."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Deleting nodes preserves shape"
-msgstr "Knooppunten verwijderen behoudt vorm"
+msgstr "Knooppuntverwijdering behoudt vorm"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:464
+#, fuzzy
 msgid ""
 "Move handles next to deleted nodes to resemble original shape; hold Ctrl to "
 "get the other behavior"
 msgstr ""
+"Handvatten naast verwijderde knooppunten verplaatsen om de originele vorm te "
+"behouden. Druk Ctrl in om het tegenovergestelde gedrag te verkrijgen."
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:467 ../src/verbs.cpp:2457
@@ -17306,7 +17392,7 @@ msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch"
 msgstr ""
-"Indien aangevinkt wordt het resultaat het gemiddelde van alle gemaakte "
+"Indien aangevinkt, wordt het resultaat het gemiddelde van alle gemaakte "
 "schetsen, in plaats van het het oude resultaat met de nieuwe schets uit te "
 "middelen."
 
@@ -17374,7 +17460,7 @@ msgstr "Verbinding"
 #: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
-"Indien ingeschakeld, worden verbindingspunten aan tekstobjecten niet getoond"
+"Indien aangevinkt, worden verbindingspunten aan tekstobjecten niet getoond"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:568 ../src/verbs.cpp:2483
@@ -17567,11 +17653,11 @@ msgstr "Verweesde klonen worden verwijderd samen met hun origineel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:662
 msgid "When duplicating original+clones:"
-msgstr "Dupliceren van origineel+klonen:"
+msgstr "Dupliceren van origineel en klonen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
 msgid "Relink duplicated clones"
-msgstr "Herlink gedupliceerde klonen"
+msgstr "Gedupliceerde klonen herlinken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:666
 msgid ""
@@ -17590,58 +17676,55 @@ msgstr "Klonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:674
 msgid "When applying, use the topmost selected object as clippath/mask"
-msgstr "Bij het toepassen het bovenste object als masker/maskerpad gebruiken"
+msgstr "Het bovenste object als afsnijpad/masker gebruiken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:676
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
-msgstr ""
-"Haal het vinkje weg om het onderste object als masker of maskerpad te "
-"gebruiken"
+msgstr "Vink uit om het onderste object als masker of maskerpad te gebruiken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:677
 msgid "Remove clippath/mask object after applying"
-msgstr "Na toepassing het masker-/maskerpadobject verwijderen"
+msgstr "Het afsnijpad/masker verwijderen na gebruik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:679
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
-"Na het toepassen het object verwijderen dat als masker of maskerpad gebruikt "
-"is"
+"Het object dat als afsnijpad of masker gebruikt is, verwijderen na gebruik"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:681
 msgid "Before applying clippath/mask:"
-msgstr ""
+msgstr "Voor toepassen afsnijpad/masker:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:683
 msgid "Do not group clipped/masked objects"
-msgstr ""
+msgstr "Afgescneden/gemaskerde objecten niet groeperen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:684
 msgid "Enclose every clipped/masked object in its own group"
-msgstr ""
+msgstr "Elk afgesneden/gemaskerd object in zijn eigen groep plaatsen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:685
 msgid "Put all clipped/masked objects into one group"
-msgstr ""
+msgstr "Alle afgesneden/gemaskerde objecte in één groep plaatsen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:688
 msgid "Apply clippath/mask to every object"
-msgstr ""
+msgstr "Afsnijding/masker op elk object toepassen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:691
 msgid "Apply clippath/mask to groups containing single object"
-msgstr ""
+msgstr "Afsnijding/masker toepassen op één-object-groepen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:694
 msgid "Apply clippath/mask to group containing all objects"
-msgstr ""
+msgstr "Afsnijding/masker toepassen op groep met alle objecten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:696
 msgid "After releasing clippath/mask:"
-msgstr ""
+msgstr "Na toepassen afsnijpad/masker:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
 msgid "Ungroup automatically created groups"
@@ -17649,7 +17732,7 @@ msgstr "Automatisch aangemaakte groepen degroeperen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:700
 msgid "Ungroup groups created when setting clip/mask"
-msgstr ""
+msgstr "Groepen gemaakt tijdens maskeren/afsnijden, degroeperen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:702
 msgid "Clippaths and masks"
@@ -17873,24 +17956,24 @@ msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
 msgstr ""
-"Deselecteer dit om objecten te kunnen selecteren die verborgen zijn (door "
-"zichzelf of doordat ze in een verborgen groep of laag zitten)"
+"Deselecteer om objecten te kunnen selecteren die verborgen zijn (zelf "
+"verborgen of doordat ze in een verborgen laag zitten)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:814
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
 msgstr ""
-"Deselecteer dit om objecten te kunnen selecteren die vergrendeld zijn (door "
-"zichzelf of doordat ze in een vergrendelde groep of laag zitten)"
+"Deselecteer om objecten te kunnen selecteren die vergrendeld zijn (zelf "
+"vergrendeld of doordat ze in een vergrendelde laag zitten)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:817
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr ""
-"Deselecteer dit om de huidig geselecteerde objecten geselecteerd te houden "
-"als de huidige laag veranderd"
+"Deselecteer om geselecteerde objecten geselecteerd te houden als de huidige "
+"laag verandert"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:819
 msgid "Selecting"
@@ -18097,8 +18180,8 @@ msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color"
 msgstr ""
-"Indien ingeschakeld en er is uitgezoomd, dan worden rasterlijnen in de "
-"normale kleur getoond in plaats van in de hoofdrasterlijnkleur."
+"Indien aangevinkt en er is uitgezoomd, dan worden rasterlijnen in de normale "
+"kleur getoond in plaats van in de hoofdrasterlijnkleur."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1027
 msgid "Default grid settings"
@@ -18164,7 +18247,7 @@ msgstr "Punten tonen in plaats van lijnen"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr ""
-"Indien aangevinkt worden punten getoond op rasterpunten in plaats van "
+"Indien aangevinkt, worden punten getoond op rasterpunten in plaats van "
 "rasterlijnen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
@@ -18176,7 +18259,7 @@ msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
 msgstr ""
-"Indien aangevinkt wordt de CSS-naam van een kleur, indien beschikbaar, "
+"Indien aangevinkt, wordt de CSS-naam van een kleur, indien beschikbaar, "
 "weggeschreven (vb. 'rood' of 'magenta') in plaats van de numerieke waarde"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
@@ -18214,7 +18297,7 @@ msgstr "Relatieve coördinaten toestaan"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 msgid "If set, relative coordinates may be used in path data"
 msgstr ""
-"Indien aangevinkt kunnen relatieve coördinaten gebruikt worden in paddata"
+"Indien aangevinkt, kunnen relatieve coördinaten gebruikt worden in paddata"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1093
 msgid "Force repeat commands"
@@ -18563,7 +18646,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1146
 #, fuzzy
 msgid "Work-around color sliders not drawing"
-msgstr "Fix voor het niet tonen van schuifbalken voor kleuren"
+msgstr "Fix voor het niet tonen van kleurschuifbalken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1148
 #, fuzzy
@@ -18571,8 +18654,8 @@ msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders"
 msgstr ""
-"Indien aangevinkt zal er getracht worden om bugs bij het tonen van "
-"schuifbalken voor kleuren in bepaalde GTK thema's te omzeilen."
+"Indien aangevinkt, zal er getracht worden om bugs bij het tonen van "
+"kleurschuifbalken in bepaalde GTK thema's te omzeilen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1154
 msgid "Clear list"
@@ -18592,7 +18675,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "Zoom correction factor (in %):"
-msgstr "Correctiefactor zoomen (in %):"
+msgstr "Correctiefactor zoomen (%):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1164
 msgid ""
@@ -18605,14 +18688,18 @@ msgstr ""
 "etc. zoomen om objecten op ware grootte te tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1167
+#, fuzzy
 msgid "Enable dynamic relayout for incomplete sections"
-msgstr ""
+msgstr "Dynamische layout voor onvolledige secties inschakelen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#, fuzzy
 msgid ""
 "When on, will allow dynamic layout of components that are not completely "
 "finished being refactored"
 msgstr ""
+"Indien aangevinkt, wordt dynamische layout geactiveerd van niet volledig "
+"voltooide componenten."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1172
 msgid "Interface"
@@ -18629,10 +18716,10 @@ msgid ""
 "directory where the currently open document is; when it's off, it will open "
 "in the directory where you last saved a file using that dialog"
 msgstr ""
-"Indien deze optie geselecteerd is, zal het dialoogvenster \"Opslaan als\" "
-"altijd openen in de directory waar het huidig geopende document zich bevind. "
-"Indien niet geselecteerd zal het dialoogvenster openen in de directory waar "
-"je laatst een bestand bewaarde met dat venster."
+"Indien aangevinkt, zal het dialoogvenster \"Opslaan als\" altijd openen in "
+"de directory waar het huidig geopende document zich bevind. Indien niet "
+"geselecteerd zal het dialoogvenster openen in de directory waar je laatst "
+"een bestand bewaarde met dat venster."
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1184
@@ -18796,10 +18883,9 @@ msgid ""
 "uncheck to allow sharing of gradient definitions so that editing one object "
 "may affect other objects using the same gradient"
 msgstr ""
-"Indien ingeschakeld, worden gedeelde kleurverloopdefinities bij "
-"veranderingen automatisch opgesplitst; schakel dit uit als het bewerken van "
-"een object andere objecten die dezelfde kleurverloopdefinitie gebruiken mag "
-"beïnvloeden"
+"Indien aangevinkt, worden gedeelde kleurverloopdefinities bij veranderingen "
+"automatisch opgesplitst; schakel dit uit als het bewerken van een object "
+"andere objecten die dezelfde kleurverloopdefinitie gebruiken mag beïnvloeden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1346
 msgid "Simplification threshold:"
@@ -18837,7 +18923,7 @@ msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
-"Indien aangevinkt worden pictogrammen met een naam gerenderd voor het tonen "
+"Indien aangevinkt, worden pictogrammen met een naam gerenderd voor het tonen "
 "van de interface. Dit wordt gebruikt om bugs op te vangen bij GTK+ benoemde "
 "pictogrammeldingen"
 
@@ -18943,45 +19029,45 @@ msgstr "_Toevoegen"
 msgid "New layer created."
 msgstr "De nieuwe laag is gemaakt."
 
-#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:472 ../src/ui/widget/layer-selector.cpp:595
 msgid "Unhide layer"
 msgstr "Laag weergeven"
 
-#: ../src/ui/dialog/layers.cpp:495 ../src/ui/widget/layer-selector.cpp:595
+#: ../src/ui/dialog/layers.cpp:472 ../src/ui/widget/layer-selector.cpp:595
 msgid "Hide layer"
 msgstr "Laag verbergen"
 
-#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:483 ../src/ui/widget/layer-selector.cpp:587
 msgid "Lock layer"
 msgstr "Laag vergrendelen"
 
-#: ../src/ui/dialog/layers.cpp:506 ../src/ui/widget/layer-selector.cpp:587
+#: ../src/ui/dialog/layers.cpp:483 ../src/ui/widget/layer-selector.cpp:587
 msgid "Unlock layer"
 msgstr "Laag ontgrendelen"
 
-#: ../src/ui/dialog/layers.cpp:656
+#: ../src/ui/dialog/layers.cpp:634
 msgid "New"
 msgstr "Nieuw"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/ui/dialog/layers.cpp:663
+#: ../src/ui/dialog/layers.cpp:641
 msgid "layers|Top"
 msgstr "Bov"
 
-#: ../src/ui/dialog/layers.cpp:669
+#: ../src/ui/dialog/layers.cpp:647
 msgid "Up"
 msgstr "Ho"
 
-#: ../src/ui/dialog/layers.cpp:675
+#: ../src/ui/dialog/layers.cpp:653
 msgid "Dn"
 msgstr "La"
 
-#: ../src/ui/dialog/layers.cpp:681
+#: ../src/ui/dialog/layers.cpp:659
 msgid "Bot"
 msgstr "Ond"
 
-#: ../src/ui/dialog/layers.cpp:691
+#: ../src/ui/dialog/layers.cpp:669
 msgid "X"
 msgstr "X"
 
@@ -19446,7 +19532,7 @@ msgstr ""
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/ui/dialog/tile.cpp:795
 msgid "Fit into selection box"
-msgstr "In selectiebox laten passen"
+msgstr "Aan selectievak aanpassen"
 
 #: ../src/ui/dialog/tile.cpp:801
 msgid "Set spacing:"
@@ -22191,11 +22277,11 @@ msgstr "Omschakelen naar normale weergavemodus zonder filters"
 
 #: ../src/verbs.cpp:2570
 msgid "_Outline"
-msgstr "_Omlijning"
+msgstr "_Silhouet"
 
 #: ../src/verbs.cpp:2571
 msgid "Switch to outline (wireframe) display mode"
-msgstr "Omschakelen naar omlijningsweergavemodus (draadmodel)"
+msgstr "Omschakelen naar silhouetmodus voor weergave (draadmodel)"
 
 #: ../src/verbs.cpp:2572
 msgid "_Print Colors Preview"
@@ -22211,7 +22297,7 @@ msgstr "Om_schakelen"
 
 #: ../src/verbs.cpp:2575
 msgid "Toggle between normal and outline display modes"
-msgstr "Omschakelen tussen normale en omlijningsweergavemodus"
+msgstr "Omschakelen tussen normale en silhouetweergavemodus"
 
 #: ../src/verbs.cpp:2577
 msgid "Color-managed view"
@@ -22559,11 +22645,11 @@ msgstr "Het gebruik van het kalligrafie-gereedschap"
 
 #: ../src/verbs.cpp:2674
 msgid "Inkscape: _Interpolate"
-msgstr ""
+msgstr "Inkscape: _Interpoleren"
 
 #: ../src/verbs.cpp:2675
 msgid "Using the interpolate extension"
-msgstr ""
+msgstr "Het gebruik van de extensie interpoleren"
 
 #. "tutorial_interpolate"
 #: ../src/verbs.cpp:2676
@@ -23648,43 +23734,43 @@ msgstr "Kleven activeren"
 
 #: ../src/widgets/toolbox.cpp:2216
 msgid "Bounding box"
-msgstr "Omhullende"
+msgstr "Omvattend vak"
 
 #: ../src/widgets/toolbox.cpp:2216
 msgid "Snap bounding box corners"
-msgstr "Aan hoeken van omhullende kleven"
+msgstr "Aan hoeken van omvattend vak kleven"
 
 #: ../src/widgets/toolbox.cpp:2225
 msgid "Bounding box edges"
-msgstr "Randen van omhullende"
+msgstr "Randen van omvattend vak"
 
 #: ../src/widgets/toolbox.cpp:2225
 msgid "Snap to edges of a bounding box"
-msgstr "Aan randen van omhullende kleven"
+msgstr "Aan randen van omvattend vak kleven"
 
 #: ../src/widgets/toolbox.cpp:2234
 msgid "Bounding box corners"
-msgstr "_Hoeken van omhullende"
+msgstr "_Hoeken van omvattend vak"
 
 #: ../src/widgets/toolbox.cpp:2234
 msgid "Snap to bounding box corners"
-msgstr "Aan hoeken van omhullende kleven"
+msgstr "Aan hoeken van omvattend vak kleven"
 
 #: ../src/widgets/toolbox.cpp:2243
 msgid "BBox Edge Midpoints"
-msgstr "Midden randen omhullende"
+msgstr "Midden randen omvattend vak"
 
 #: ../src/widgets/toolbox.cpp:2243
 msgid "Snap from and to midpoints of bounding box edges"
-msgstr "Aan het midden van de randen van de omhullende kleven"
+msgstr "Aan het midden van de randen van het omvattend vak kleven"
 
 #: ../src/widgets/toolbox.cpp:2253
 msgid "BBox Centers"
-msgstr "Middelpunt omhullende"
+msgstr "Middelpunt omvattend vak"
 
 #: ../src/widgets/toolbox.cpp:2253
 msgid "Snapping from and to centers of bounding boxes"
-msgstr "Aan het middelpunt van omhullenden kleven"
+msgstr "Aan het middelpunt van omvattende vakken kleven"
 
 #: ../src/widgets/toolbox.cpp:2262
 msgid "Snap nodes or handles"
@@ -24981,23 +25067,23 @@ msgstr "Geen enkel geometrisch gereedschap is actief"
 
 #: ../src/widgets/toolbox.cpp:6002
 msgid "Show limiting bounding box"
-msgstr "Toon beperkende omhullende"
+msgstr "Het beperkend omvattend vak tonen"
 
 #: ../src/widgets/toolbox.cpp:6003
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr "Toon omhullende (wordt gebruikt om oneindige lijnen af te snijden)"
+msgstr "Het omvattend vak tonen (om oneindige lijnen af te snijden)"
 
 #: ../src/widgets/toolbox.cpp:6014
 msgid "Get limiting bounding box from selection"
-msgstr "Beperkende omhullende verkrijgen van selectie"
+msgstr "Het beperkend omvattend vak verkrijgen van selectie"
 
 #: ../src/widgets/toolbox.cpp:6015
 msgid ""
 "Set limiting bounding box (used to cut infinite lines) to the bounding box "
 "of current selection"
 msgstr ""
-"Beperkende omhullende (wordt gebruikt om oneindige lijnen af te snijden) "
-"instellen op de omhullende van de huidige selectie"
+"Het beperkend omvattend vak (om oneindige lijnen af te snijden) instellen op "
+"het omvattend vak van de huidige selectie"
 
 #: ../src/widgets/toolbox.cpp:6027
 msgid "Choose a line segment type"
@@ -25726,24 +25812,6 @@ msgstr ""
 #~ "op een pad te selecteren, en <b>versleep</b> ze daarna. <b>Klik</b> op "
 #~ "een object om het te selecteren."
 
-#~ msgid "<b>Format</b>"
-#~ msgstr "<b>Formaat</b>"
-
-#~ msgid "Path outline flash on mouse-over"
-#~ msgstr "Omhullende van pad tonen bij een mouse-over"
-
-#~ msgid "Suppress path outline flash when one path selected"
-#~ msgstr "Tonen van de omhullende onderdrukken indien het pad geselecteerd is"
-
-#~ msgid "If a path is selected, do not continue flashing path outlines."
-#~ msgstr "Als een pad geselecteerd is, de padomhullende niet continu tonen."
-
-#~ msgid "Min"
-#~ msgstr "Min"
-
-#~ msgid "Max:"
-#~ msgstr "Max:"
-
 #~ msgid "Apply a scale factor"
 #~ msgstr "Een schalingsfactor toepassen"
 
@@ -25802,9 +25870,6 @@ msgstr ""
 
 #~ msgid "Edit the mask of the object"
 #~ msgstr "Het masker van het object aanpassen"
-
-#~ msgid "bounding box"
-#~ msgstr "omhullende"
 
 #~ msgid "Center objects horizontally"
 #~ msgstr "Objecten horizontaal centreren"
@@ -26502,9 +26567,6 @@ msgstr ""
 
 #~ msgid "Preferred resolution (DPI) of bitmaps"
 #~ msgstr "Gewenste resolutie (DPI) van bitmaps"
-
-#~ msgid "Deactivate knotholder?"
-#~ msgstr "Knoophouder deactiveren?"
 
 #~ msgid ""
 #~ "Check this to deactivate knotholder handles (useful if they interfere "
