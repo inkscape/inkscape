@@ -288,7 +288,14 @@ sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, uns
                              * Geom::Translate(use->x.computed,
                                                use->y.computed)
                              * transform );
-        sp_item_invoke_bbox_full(child, bbox, ct, flags, FALSE);
+        Geom::OptRect optbbox;
+        sp_item_invoke_bbox_full(child, optbbox, ct, flags, FALSE);
+        if (optbbox) {
+            bbox->x0 = (*optbbox)[0][0];
+            bbox->y0 = (*optbbox)[1][0];
+            bbox->x1 = (*optbbox)[0][1];
+            bbox->y1 = (*optbbox)[1][1];
+        }
     }
 }
 
