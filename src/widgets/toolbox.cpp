@@ -1507,7 +1507,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* act = ink_toggle_action_new( "NodesShowTransformHandlesAction",
                                                       _("Show Transform Handles"),
-                                                      _("Show node transformation handles"),
+                                                      _("Show transformation handles for selected nodes"),
                                                       "node-transform",
                                                       secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -1518,7 +1518,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* act = ink_toggle_action_new( "NodesShowHandlesAction",
                                                       _("Show Handles"),
-                                                      _("Show the Bezier handles of selected nodes"),
+                                                      _("Show Bezier handles of selected nodes"),
                                                       INKSCAPE_ICON_SHOW_NODE_HANDLES,
                                                       secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -1529,7 +1529,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* act = ink_toggle_action_new( "NodesShowHelperpath",
                                                       _("Show Outline"),
-                                                      _("Show the outline of the path"),
+                                                      _("Show path outline (without path effects)"),
                                                       INKSCAPE_ICON_SHOW_PATH_OUTLINE,
                                                       secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
@@ -1540,7 +1540,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkAction* inky = ink_action_new( "EditNextLPEParameterAction",
                                           _("Next path effect parameter"),
-                                          _("Show next path effect parameter for editing"),
+                                          _("Show next editable path effect parameter"),
                                           INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
@@ -1551,7 +1551,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* inky = ink_toggle_action_new( "ObjectEditClipPathAction",
                                           _("Edit clipping paths"),
-                                          _("Show editing controls for clipping paths of selected objects"),
+                                          _("Show clipping path(s) of selected object(s)"),
                                           INKSCAPE_ICON_PATH_CLIP_EDIT,
                                           secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1562,7 +1562,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         InkToggleAction* inky = ink_toggle_action_new( "ObjectEditMaskPathAction",
                                           _("Edit masks"),
-                                          _("Show editing controls for masks of selected objects"),
+                                          _("Show mask(s) of selected object(s)"),
                                           INKSCAPE_ICON_PATH_MASK_EDIT,
                                           secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
