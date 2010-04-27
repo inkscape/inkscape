@@ -4,6 +4,8 @@
  *   Setting GtkEntryBox width in characters.
  *   Passing a function for formatting cells.
  *   Displaying a warning if text isn't in list.
+ *   Setting names for GtkComboBoxEntry and GtkEntry (actionName_combobox, actionName_entry)
+ *     to allow setting resources.
  *
  * Author(s):
  *   Tavmjong Bah
@@ -46,7 +48,8 @@ enum {
   PROP_MODEL = 1,
   PROP_COMBOBOX,
   PROP_ENTRY,
-  PROP_WIDTH,
+  PROP_ENTRY_WIDTH,
+  PROP_EXTRA_WIDTH,
   PROP_CELL_DATA_FUNC,
   PROP_POPUP
 };
@@ -87,8 +90,12 @@ static void ink_comboboxentry_action_set_property (GObject *object, guint proper
     action->entry = GTK_ENTRY( g_value_get_object( value ));
     break;
 
-  case PROP_WIDTH:
-    action->width = g_value_get_int( value );
+  case PROP_ENTRY_WIDTH:
+    action->entry_width = g_value_get_int( value );
+    break;
+
+  case PROP_EXTRA_WIDTH:
+    action->extra_width = g_value_get_int( value );
     break;
 
   case PROP_CELL_DATA_FUNC:
@@ -123,8 +130,12 @@ static void ink_comboboxentry_action_get_property (GObject *object, guint proper
     g_value_set_object (value, action->entry);
     break;
 
-  case PROP_WIDTH:
-    g_value_set_int (value, action->width);
+  case PROP_ENTRY_WIDTH:
+    g_value_set_int (value, action->entry_width);
+    break;
+
+  case PROP_EXTRA_WIDTH:
+    g_value_set_int (value, action->extra_width);
     break;
 
   case PROP_CELL_DATA_FUNC:
@@ -197,11 +208,20 @@ static void ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *
                                                         (GParamFlags)G_PARAM_READABLE));
   g_object_class_install_property (
                                    gobject_class,
-                                   PROP_WIDTH,
-                                   g_param_spec_int ("width",
+                                   PROP_ENTRY_WIDTH,
+                                   g_param_spec_int ("entry_width",
                                                      "EntryBox width",
                                                      "EntryBox width (characters)",
                                                      -1.0, 100, -1.0,
+                                                     (GParamFlags)G_PARAM_READWRITE));
+
+  g_object_class_install_property (
+                                   gobject_class,
+                                   PROP_EXTRA_WIDTH,
+                                   g_param_spec_int ("extra_width",
+                                                     "Extra width",
+                                                     "Extra width (px)",
+                                                     -1.0, 500, -1.0,
                                                      (GParamFlags)G_PARAM_READWRITE));
 
   g_object_class_install_property (
@@ -287,7 +307,8 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new (const gchar   *name,
                                                         const gchar   *tooltip,
                                                         const gchar   *stock_id,
                                                         GtkTreeModel  *model,
-                                                        gint           width,
+                                                        gint           entry_width,
+                                                        gint           extra_width,
                                                         void          *cell_data_func )
 {
   g_return_val_if_fail (name != NULL, NULL);
@@ -298,7 +319,8 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new (const gchar   *name,
                                                   "tooltip",        tooltip,
                                                   "stock-id",       stock_id,
                                                   "model",          model,
-                                                  "width",          width,
+                                                  "entry_width",    entry_width,
+                                                  "extra_width",    extra_width,
                                                   "cell_data_func", cell_data_func,
                                                   NULL);
 }
@@ -312,9 +334,17 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     Ink_ComboBoxEntry_Action* ink_comboboxentry_action = INK_COMBOBOXENTRY_ACTION( action );
 
+    gchar *action_name = g_strdup( gtk_action_get_name( action ) );
+    gchar *combobox_name = g_strjoin( NULL, action_name, "_combobox", NULL );
+    gchar *entry_name =    g_strjoin( NULL, action_name, "_entry", NULL );
+    g_free( action_name );
+
     item = GTK_WIDGET( gtk_tool_item_new() );
 
     GtkWidget* comboBoxEntry = gtk_combo_box_entry_new_with_model( ink_comboboxentry_action->model, 0 );
+    // Name it so we can muck with it using an RC file
+    gtk_widget_set_name( comboBoxEntry, combobox_name );
+    g_free( combobox_name );
 
     {
         GtkWidget *align = gtk_alignment_new(0, 0.5, 0, 0);
@@ -346,14 +376,28 @@ GtkWidget* create_tool_item( GtkAction* action )
                                           NULL, NULL );
     }
 
+    // Optionally widen the combobox width... which widens the drop-down list in list mode.
+    if( ink_comboboxentry_action->extra_width > 0 ) {
+      GtkRequisition req;
+      gtk_widget_size_request( GTK_WIDGET( ink_comboboxentry_action->combobox ), &req );
+      gtk_widget_set_size_request( GTK_WIDGET( ink_comboboxentry_action->combobox ),
+				   req.width + ink_comboboxentry_action->extra_width, -1 );
+    }
+
     // Get reference to GtkEntry and fiddle a bit with it.
     GtkWidget *child = gtk_bin_get_child( GTK_BIN(comboBoxEntry) );
+
+    // Name it so we can muck with it using an RC file
+    gtk_widget_set_name( child, entry_name );
+    g_free( entry_name );
+
     if( child && GTK_IS_ENTRY( child ) ) {
+
       ink_comboboxentry_action->entry = GTK_ENTRY(child);
 
       // Change width
-      if( ink_comboboxentry_action->width > 0 ) {
-          gtk_entry_set_width_chars (GTK_ENTRY (child), ink_comboboxentry_action->width );
+      if( ink_comboboxentry_action->entry_width > 0 ) {
+          gtk_entry_set_width_chars (GTK_ENTRY (child), ink_comboboxentry_action->entry_width );
       }
 
       // Add pop-up entry completion if required
@@ -465,13 +509,25 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
   return found;
 }
 
-void ink_comboboxentry_action_set_width( Ink_ComboBoxEntry_Action* action, gint width ) {
+void ink_comboboxentry_action_set_entry_width( Ink_ComboBoxEntry_Action* action, gint entry_width ) {
 
-  action->width = width;
+  action->entry_width = entry_width;
 
   // Widget may not have been created....
   if( action->entry ) {
-    gtk_entry_set_width_chars( GTK_ENTRY(action->entry), width );
+    gtk_entry_set_width_chars( GTK_ENTRY(action->entry), entry_width );
+  }
+}
+
+void ink_comboboxentry_action_set_extra_width( Ink_ComboBoxEntry_Action* action, gint extra_width ) {
+
+  action->extra_width = extra_width;
+
+  // Widget may not have been created....
+  if( action->combobox ) {
+    GtkRequisition req;
+    gtk_widget_size_request( GTK_WIDGET( action->combobox ), &req );
+    gtk_widget_set_size_request( GTK_WIDGET( action->combobox ), req.width + action->extra_width, -1 );
   }
 }
 

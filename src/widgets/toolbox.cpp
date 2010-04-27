@@ -6239,15 +6239,19 @@ static void cell_data_func(GtkCellLayout * /*cell_layout*/,
         Glib::ustring sample = prefs->getString("/tools/text/font_sample");
         gchar *const sample_escaped = g_markup_escape_text(sample.data(), -1);
 
-    std::stringstream markup;
-    markup << family_escaped << "  <span foreground='gray' font_family='"
-           << family_escaped << "'>" << sample_escaped << "</span>";
-    g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
+        std::stringstream markup;
+        markup << family_escaped << "  <span foreground='gray' font_family='"
+               << family_escaped << "'>" << sample_escaped << "</span>";
+        g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
 
         g_free(sample_escaped);
     } else {
         g_object_set (G_OBJECT (cell), "markup", family_escaped, NULL);
     }
+    // This doesn't work for two reasons... it set both selected and not selected backgrounds
+    // to white.. which means that white foreground text is invisible. It also only effects
+    // the text region, leaving the padding untouched.
+    // g_object_set (G_OBJECT (cell), "cell-background", "white", "cell-background-set", true, NULL);
 
     g_free(family);
     g_free(family_escaped);
@@ -7171,10 +7175,11 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontFamilyAction",
                                                                       _("Font Family"),
-                                                                      _("Select Font Family"),
+                                                                      _("Select Font Family (Alt-X to access)"),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model),
-                                                                      -1,                // Set width
+                                                                      -1,                // Entry width
+                                                                      50,                // Extra list width
                                                                       (gpointer)cell_data_func ); // Cell layout
         ink_comboboxentry_action_popup_enable( act ); // Enable entry completion
         gchar *const warning = _("Font not found on system");
@@ -7183,6 +7188,14 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontfamily_value_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "TextFontFamilyAction", act );
+
+        // Change style of drop-down from menu to list
+        gtk_rc_parse_string (
+            "style \"dropdown-as-list-style\"\n"
+            "{\n"
+            "    GtkComboBox::appears-as-list = 1\n"
+            "}\n"
+            "widget \"*.TextFontFamilyAction_combobox\" style \"dropdown-as-list-style\"");
     }
 
     /* Font size */

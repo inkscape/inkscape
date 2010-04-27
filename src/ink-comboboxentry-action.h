@@ -4,6 +4,8 @@
  *   Setting GtkEntryBox width in characters.
  *   Passing a function for formatting cells.
  *   Displaying a warning if text isn't in list.
+ *   Setting names for GtkComboBoxEntry and GtkEntry (actionName_combobox, actionName_entry)
+ *     to allow setting resources.
  *
  * Author(s):
  *   Tavmjong Bah
@@ -55,7 +57,8 @@ struct _Ink_ComboBoxEntry_Action {
 
   gint                active;     // Index of active menu item (-1 if not in list).
   gchar              *text;       // Text of active menu item or entry box.
-  gint                width;      // Width of GtkComboBoxEntry in characters.
+  gint                entry_width;// Width of GtkEntry in characters.
+  gint                extra_width;// Extra Width of GtkComboBox.. to widen drop-down list in list mode.
   gboolean            popup;      // Do we pop-up an entry-completion dialog?
   gchar              *warning;    // Text for warning that entry isn't in list.
   gchar              *altx_name;  // Target for Alt-X keyboard shortcut.
@@ -68,12 +71,13 @@ GType ink_comboboxentry_action_get_type (void);
  * Creates a GtkAction subclass that wraps a GtkComboBoxEntry object.
  */
 Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new ( const gchar  *name,
-                                                         const gchar  *label,
-                                                         const gchar  *tooltip,
-                                                         const gchar  *stock_id,
-                                                         GtkTreeModel *model,
-                                                         gint          width = -1,
-                                                         gpointer cell_data_func = NULL );
+							 const gchar  *label,
+							 const gchar  *tooltip,
+							 const gchar  *stock_id,
+							 GtkTreeModel *model,
+							 gint          entry_width = -1,
+							 gint          extra_width = -1,
+							 gpointer cell_data_func = NULL );
 
 GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* action );
 GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );
@@ -81,7 +85,8 @@ GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_
 gchar*   ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* action );
 gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text );
 
-void     ink_comboboxentry_action_set_width( Ink_ComboBoxEntry_Action* action, gint width );
+void     ink_comboboxentry_action_set_entry_width( Ink_ComboBoxEntry_Action* action, gint entry_width );
+void     ink_comboboxentry_action_set_extra_width( Ink_ComboBoxEntry_Action* action, gint extra_width );
 
 void     ink_comboboxentry_action_popup_enable(  Ink_ComboBoxEntry_Action* action );
 void     ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action );
