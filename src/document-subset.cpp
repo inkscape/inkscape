@@ -301,7 +301,7 @@ void DocumentSubset::Relations::remove(SPObject *obj, bool subtree) {
         /* remove obj's record */
         _doRemove(obj);
     }
-    
+
     changed_signal.emit();
 }
 

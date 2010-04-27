@@ -142,6 +142,7 @@ LayerManager::~LayerManager()
     _layer_connection.disconnect();
     _document_connection.disconnect();
     _resource_connection.disconnect();
+    _document = 0;
 }
 
 void LayerManager::setCurrentLayer( SPObject* obj )
@@ -315,7 +316,7 @@ void LayerManager::_rebuild() {
                 LayerWatcher *eye = new LayerWatcher(this, layer, connection);
                 _watchers.push_back( eye );
                 SP_OBJECT_REPR(layer)->addObserver(*eye);
-                
+
                 _addOne(layer);
             }
         }

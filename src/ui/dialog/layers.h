@@ -4,7 +4,7 @@
  * Authors:
  *   Jon A. Cruz
  *
- * Copyright (C) 2006 Jon A. Cruz
+ * Copyright (C) 2006,2010 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -25,6 +25,7 @@
 //#include "ui/previewholder.h"
 #include "ui/widget/panel.h"
 #include "ui/widget/object-composite-settings.h"
+#include "desktop-tracker.h"
 
 class SPObject;
 
@@ -33,7 +34,7 @@ namespace Inkscape {
 class LayerManager;
 
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 
 /**
@@ -46,7 +47,7 @@ public:
     virtual ~LayersPanel();
 
     //virtual void setOrientation( Gtk::AnchorType how );
-    
+
     static LayersPanel& getInstance();
 
     void setDesktop( SPDesktop* desktop );
@@ -100,8 +101,8 @@ private:
     // Internal
     sigc::connection _selectedConnection;
 
+    DesktopTracker deskTrack;
     int _maxNestDepth;
-    Inkscape::LayerManager* _mgr;
     SPDesktop* _desktop;
     ModelColumns* _model;
     InternalUIBounce* _pending;
@@ -121,6 +122,7 @@ private:
 
     UI::Widget::StyleSubject::CurrentLayer _subject;
     UI::Widget::ObjectCompositeSettings _compositeSettings;
+    sigc::connection desktopChangeConn;
 };
 
 

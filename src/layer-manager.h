@@ -32,11 +32,11 @@ public:
     void renameLayer( SPObject* obj, gchar const *label, bool uniquify );
 
     sigc::connection connectCurrentLayerChanged(const sigc::slot<void, SPObject *> & slot) {
-	return _layer_changed_signal.connect(slot);
+        return _layer_changed_signal.connect(slot);
     }
 
     sigc::connection connectLayerDetailsChanged(const sigc::slot<void, SPObject *> & slot) {
-	return _details_changed_signal.connect(slot);
+        return _details_changed_signal.connect(slot);
     }
 
 private:
