@@ -55,6 +55,7 @@ encoding = '100010100 101001000 101000100 101000010 100101000 100100100 10010001
 
 class Object(Barcode):
 	def encode(self, text):
+		# start marker  
 		bits = self.encode93('MARKER')
 
 		# Extend to ASCII charset ( return Array )
@@ -68,6 +69,12 @@ class Object(Barcode):
 		for char in text:
 			bits = bits + self.encode93(char)
 
+		# end marker  
+		bits = bits + self.encode93('MARKER')
+
+		# termination bar
+		bits = bits + '1'
+    
 		self.inclabel = text
 		return bits
 
