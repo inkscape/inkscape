@@ -213,7 +213,7 @@ static struct {
     { "SPTweakContext",   "tweak_toolbox",   0, sp_tweak_toolbox_prep,              "TweakToolbar",
       SP_VERB_CONTEXT_TWEAK_PREFS, "/tools/tweak", N_("Color/opacity used for color tweaking")},
     { "SPSprayContext",   "spray_toolbox",   0, sp_spray_toolbox_prep,              "SprayToolbar",
-      SP_VERB_CONTEXT_SPRAY_PREFS, "/tools/spray", N_("Color/opacity used for color spraying")},
+      SP_VERB_INVALID, 0, 0},
     { "SPZoomContext",   "zoom_toolbox",   0, sp_zoom_toolbox_prep,              "ZoomToolbar",
       SP_VERB_INVALID, 0, 0},
     { "SPStarContext",   "star_toolbox",   0, sp_star_toolbox_prep,              "StarToolbar",
@@ -4639,8 +4639,11 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         /* Standard_deviation */
         gchar const* labels[] = {_("(minimum scatter)"), 0, 0, _("(default)"), 0, 0, 0, _("(maximum scatter)")};
         gdouble values[] = {1, 5, 10, 20, 30, 50, 70, 100};
+
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayStandard_deviationAction",
-                                                              _("Scatter"), _("Scatter:"), _("Increase to scatter sprayed objects."),
+                                                              Q_("Toolbox|Scatter"), Q_("Toolbox|Scatter:"), _("Increase to scatter sprayed objects."),
                                                               "/tools/spray/standard_deviation", 70,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-standard_deviation",
                                                               1, 100, 1.0, 10.0,
@@ -4746,8 +4749,11 @@ static void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
     {   /* Scale */
         gchar const* labels[] = {_("(low scale variation)"), 0, 0, _("(default)"), 0, 0, _("(high scale variation)")};
         gdouble values[] = {10, 25, 35, 50, 60, 80, 100};
+
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayScaleAction",
-                                                              _("Scale"), _("Scale:"),
+                                                              Q_("Toolbox|Scale"), Q_("Toolbox|Scale:"),
                                                               // xgettext:no-c-format
                                                               _("Variation in the scale of the sprayed objects. 0% for the same scale than the original object."),
                                                               "/tools/spray/scale_variation", 0,
