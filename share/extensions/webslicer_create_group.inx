@@ -23,7 +23,7 @@
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Web">
-        <submenu name="Slicer"/>
+        <submenu _name="Slicer"/>
       </submenu>
     </effects-menu>
   </effect>

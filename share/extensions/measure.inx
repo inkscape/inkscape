@@ -7,8 +7,8 @@
 	<param name="tab" type="notebook">
 		<page name="measure" _gui-text="Measure">
 			<param name="type" type="enum" _gui-text="Measurement Type: ">
-				<item value="length">Length</item>
-				<item value="area">Area</item>
+				<_item value="length">Length</_item>
+				<_item value="area">Area</_item>
 			</param>
 			<param name="fontsize" type="int" min="1" max="1000" _gui-text="Font size [px]">12</param>
 			<param name="offset" type="float" min="-10000" max="10000" _gui-text="Offset [px]">-6</param>

@@ -53,6 +53,7 @@
 [type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
 [type: gettext/xml] share/extensions/gears.inx
+[type: gettext/xml] share/extensions/generate_voronoi.inx
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_polar.inx
@@ -80,6 +81,7 @@
 [type: gettext/xml] share/extensions/pathscatter.inx
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
+[type: gettext/xml] share/extensions/pixelsnap.inx
 [type: gettext/xml] share/extensions/plt_input.inx
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
@@ -350,6 +352,7 @@ src/ui/context-menu.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
 src/ui/dialog/calligraphic-profile-rename.cpp
+src/ui/dialog/color-item.cpp
 src/ui/dialog/debug.cpp
 src/ui/dialog/document-metadata.cpp
 src/ui/dialog/document-properties.cpp
@@ -363,6 +366,7 @@ src/ui/dialog/glyphs.cpp
 src/ui/dialog/guides.cpp
 src/ui/dialog/icon-preview.cpp
 src/ui/dialog/inkscape-preferences.cpp
+src/ui/dialog/input.cpp
 src/ui/dialog/layer-properties.cpp
 src/ui/dialog/layers.cpp
 src/ui/dialog/livepatheffect-editor.cpp
@@ -422,6 +426,7 @@ src/widgets/sp-color-wheel-selector.cpp
 src/widgets/sp-xmlview-attr-list.cpp
 src/widgets/sp-xmlview-content.cpp
 src/widgets/stroke-style.cpp
+src/widgets/swatch-selector.cpp
 src/widgets/toolbox.cpp
 share/extensions/dimension.py
 share/extensions/draw_from_triangle.py
