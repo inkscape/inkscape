@@ -115,7 +115,7 @@ sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 			G_SIGNAL_RUN_FIRST,
 			G_STRUCT_OFFSET (SPXMLViewAttrListClass, row_changed),
 			NULL, NULL,
-			sp_marshal_NONE__UINT,
+			g_cclosure_marshal_VOID__UINT,
 			G_TYPE_NONE, 1,
 			G_TYPE_UINT);
 }

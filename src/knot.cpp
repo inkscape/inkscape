@@ -116,7 +116,7 @@ static void sp_knot_class_init(SPKnotClass *klass)
                                          G_SIGNAL_RUN_FIRST,
                                          G_STRUCT_OFFSET(SPKnotClass, clicked),
                                          NULL, NULL,
-                                         sp_marshal_NONE__UINT,
+                                         g_cclosure_marshal_VOID__UINT,
                                          G_TYPE_NONE, 1,
                                          G_TYPE_UINT);
 
@@ -125,7 +125,7 @@ static void sp_knot_class_init(SPKnotClass *klass)
                                                G_SIGNAL_RUN_FIRST,
                                                G_STRUCT_OFFSET(SPKnotClass, doubleclicked),
                                                NULL, NULL,
-                                               sp_marshal_NONE__UINT,
+                                               g_cclosure_marshal_VOID__UINT,
                                                G_TYPE_NONE, 1,
                                                G_TYPE_UINT);
 
@@ -134,7 +134,7 @@ static void sp_knot_class_init(SPKnotClass *klass)
                                           G_SIGNAL_RUN_FIRST,
                                           G_STRUCT_OFFSET(SPKnotClass, grabbed),
                                           NULL, NULL,
-                                          sp_marshal_NONE__UINT,
+                                          g_cclosure_marshal_VOID__UINT,
                                           G_TYPE_NONE, 1,
                                           G_TYPE_UINT);
 
@@ -143,7 +143,7 @@ static void sp_knot_class_init(SPKnotClass *klass)
 					    G_SIGNAL_RUN_FIRST,
 					    G_STRUCT_OFFSET(SPKnotClass, ungrabbed),
 					    NULL, NULL,
-					    sp_marshal_NONE__UINT,
+					    g_cclosure_marshal_VOID__UINT,
 					    G_TYPE_NONE, 1,
 					    G_TYPE_UINT);
 

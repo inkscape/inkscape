@@ -56,7 +56,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "extension/init.h"
 #include "extension/output.h"
 #include "extension/system.h"
-#include "helper/sp-marshal.h"
+//#include "helper/sp-marshal.h"
 #include "inkscape-private.h"
 #include "io/sys.h"
 #include "message-stack.h"
@@ -193,7 +193,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, modify_selection),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER_UINT,
+                               g_cclosure_marshal_VOID__UINT_POINTER,
                                G_TYPE_NONE, 2,
                                G_TYPE_POINTER, G_TYPE_UINT);
     inkscape_signals[CHANGE_SELECTION] = g_signal_new ("change_selection",
@@ -201,7 +201,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, change_selection),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[CHANGE_SUBSELECTION] = g_signal_new ("change_subselection",
@@ -209,7 +209,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, change_subselection),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[SET_SELECTION] =    g_signal_new ("set_selection",
@@ -217,7 +217,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, set_selection),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[SET_EVENTCONTEXT] = g_signal_new ("set_eventcontext",
@@ -225,7 +225,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, set_eventcontext),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[ACTIVATE_DESKTOP] = g_signal_new ("activate_desktop",
@@ -233,7 +233,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, activate_desktop),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[DEACTIVATE_DESKTOP] = g_signal_new ("deactivate_desktop",
@@ -241,7 +241,7 @@ inkscape_class_init (Inkscape::ApplicationClass * klass)
                                G_SIGNAL_RUN_FIRST,
                                G_STRUCT_OFFSET (Inkscape::ApplicationClass, deactivate_desktop),
                                NULL, NULL,
-                               sp_marshal_NONE__POINTER,
+                               g_cclosure_marshal_VOID__POINTER,
                                G_TYPE_NONE, 1,
                                G_TYPE_POINTER);
     inkscape_signals[SHUTDOWN_SIGNAL] =        g_signal_new ("shut_down",
