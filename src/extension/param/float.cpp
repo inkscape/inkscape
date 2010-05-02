@@ -26,11 +26,11 @@ namespace Extension {
 ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
         Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext), _value(0.0), _min(0.0), _max(10.0)
 {
-    const char * defaultval = NULL;
+    const gchar * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
         defaultval = sp_repr_children(xml)->content();
     if (defaultval != NULL) {
-        _value = atof(defaultval);
+        _value = g_ascii_strtod (defaultval,NULL);
     }
 
     const char * maxval = xml->attribute("max");
