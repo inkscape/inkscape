@@ -7,7 +7,7 @@
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004 Bob Jamison
- * Copyright (C) 2005 Jon A. Cruz
+ * Copyright (C) 2005,2010 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -42,7 +42,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
 
 namespace Inkscape {
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 
 IconPreviewPanel &IconPreviewPanel::getInstance()
@@ -80,9 +80,17 @@ void IconPreviewPanel::on_button_clicked(int which)
  */
 IconPreviewPanel::IconPreviewPanel() :
     UI::Widget::Panel("", "/dialogs/iconpreview", SP_VERB_VIEW_ICON_PREVIEW),
+    deskTrack(),
+    desktop(0),
+    document(0),
+    timer(0),
+    pending(false),
     hot(1),
     refreshButton(0),
-    selectionButton(0)
+    selectionButton(0),
+    desktopChangeConn(),
+    docReplacedConn(),
+    docModConn()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     numEntries = 0;
@@ -191,6 +199,25 @@ IconPreviewPanel::IconPreviewPanel() :
     _getContents()->pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
 
     show_all_children();
+
+    // Connect this up last
+    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &IconPreviewPanel::setDesktop) );
+    deskTrack.connect(GTK_WIDGET(gobj()));
+}
+
+IconPreviewPanel::~IconPreviewPanel()
+{
+    setDesktop(0);
+    if (timer) {
+        timer->stop();
+        delete timer;
+        timer = 0;
+    }
+
+    docModConn.disconnect();
+    docReplacedConn.disconnect();
+    desktopChangeConn.disconnect();
+    deskTrack.disconnect();
 }
 
 //#########################################################################
@@ -198,10 +225,47 @@ IconPreviewPanel::IconPreviewPanel() :
 //#########################################################################
 
 
+void IconPreviewPanel::setDesktop( SPDesktop* desktop )
+{
+    Panel::setDesktop(desktop);
+
+    SPDocument *newDoc = (desktop) ? desktop->doc() : 0;
+
+    if ( desktop != this->desktop ) {
+        docReplacedConn.disconnect();
+
+        this->desktop = Panel::getDesktop();
+        if ( this->desktop ) {
+            docReplacedConn = this->desktop->connectDocumentReplaced(sigc::hide<0>(sigc::mem_fun(this, &IconPreviewPanel::setDocument)));
+        }
+    }
+    setDocument(newDoc);
+    deskTrack.setBase(desktop);
+}
+
+void IconPreviewPanel::setDocument( SPDocument *document )
+{
+    if (this->document != document) {
+        docModConn.disconnect();
+
+        this->document = document;
+        if (this->document) {
+            docModConn = this->document->connectModified(sigc::hide(sigc::mem_fun(this, &IconPreviewPanel::queueRefresh)));
+            queueRefresh();
+        }
+    }
+}
+
 void IconPreviewPanel::refreshPreview()
 {
     SPDesktop *desktop = getDesktop();
-    if ( desktop ) {
+    if (!timer) {
+        timer = new Glib::Timer();
+    }
+    if (timer->elapsed() < 0.1) {
+        // Do not refresh too quickly
+        queueRefresh();
+    } else if ( desktop ) {
 
         if ( selectionButton && selectionButton->get_active() )
         {
@@ -233,6 +297,32 @@ void IconPreviewPanel::refreshPreview()
                 renderPreview(target);
             }
         }
+        timer->reset();
+    }
+}
+
+bool IconPreviewPanel::refreshCB()
+{
+    bool callAgain = true;
+    if (!timer) {
+        timer = new Glib::Timer();
+    }
+    if ( timer->elapsed() > 0.1 ) {
+        callAgain = false;
+        refreshPreview();
+        pending = false;
+    }
+    return callAgain;
+}
+
+void IconPreviewPanel::queueRefresh()
+{
+    if (!pending) {
+        pending = true;
+        if (!timer) {
+            timer = new Glib::Timer();
+        }
+        Glib::signal_idle().connect( sigc::mem_fun(this, &IconPreviewPanel::refreshCB), Glib::PRIORITY_DEFAULT_IDLE );
     }
 }
 
@@ -288,7 +378,6 @@ void IconPreviewPanel::updateMagnify()
     magnified.queue_draw();
     magnified.get_parent()->queue_draw();
 }
-
 
 } //namespace Dialogs
 } //namespace UI

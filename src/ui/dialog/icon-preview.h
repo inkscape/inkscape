@@ -7,6 +7,7 @@
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004,2005 The Inkscape Organization
+ * Copyright (C) 2010 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -23,12 +24,16 @@
 #include <gtkmm/toggletoolbutton.h>
 
 #include "ui/widget/panel.h"
+#include "desktop-tracker.h"
 
 struct SPObject;
+namespace Glib {
+class Timer;
+}
 
 namespace Inkscape {
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 
 /**
@@ -39,9 +44,11 @@ class IconPreviewPanel : public UI::Widget::Panel
 public:
     IconPreviewPanel();
     //IconPreviewPanel(Glib::ustring const &label);
+    ~IconPreviewPanel();
 
     static IconPreviewPanel& getInstance();
 
+    void setDesktop( SPDesktop* desktop );
     void refreshPreview();
     void modeToggled();
 
@@ -50,9 +57,11 @@ private:
     IconPreviewPanel &operator=(IconPreviewPanel const &); // no assign
 
 
-    void on_button_clicked(int which);
-    void renderPreview( SPObject* obj );
-    void updateMagnify();
+    DesktopTracker deskTrack;
+    SPDesktop *desktop;
+    SPDocument *document;
+    Glib::Timer *timer;
+    bool pending;
 
     Gtk::Tooltips   tips;
 
@@ -73,6 +82,17 @@ private:
     Gtk::Image** images;
     Glib::ustring** labels;
     Gtk::ToggleToolButton** buttons;
+    sigc::connection desktopChangeConn;
+    sigc::connection docReplacedConn;
+    sigc::connection docModConn;
+
+
+    void setDocument( SPDocument *document );
+    void on_button_clicked(int which);
+    void renderPreview( SPObject* obj );
+    void updateMagnify();
+    void queueRefresh();
+    bool refreshCB();
 };
 
 } //namespace Dialogs
