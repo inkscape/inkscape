@@ -28,8 +28,9 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-exclude-result-prefixes="rdf xlink msxsl">
+xmlns:exsl="http://exslt.org/common"
+xmlns:libxslt="http://xmlsoft.org/XSLT/namespace"
+exclude-result-prefixes="rdf xlink exsl libxslt">
 
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8"/>
@@ -512,27 +513,27 @@ exclude-result-prefixes="rdf xlink msxsl">
       <xsl:with-param name="input" select="$transform" />
     </xsl:call-template>
   </xsl:variable>
-  
+
   <xsl:comment>
     <xsl:value-of select="name(.)" />
   </xsl:comment>
 
   <xsl:choose>
-    <xsl:when test="system-property('xsl:vendor') = 'Microsoft' and $mapped_type and $mapped_type != ''">
+    <xsl:when test="$mapped_type and $mapped_type != ''">
       <xsl:element name="{$mapped_type}.RenderTransform">
         <xsl:choose>
-          <xsl:when test="count(msxsl:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></xsl:when>
-          <xsl:when test="count(msxsl:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></TransformGroup></xsl:when>
+          <xsl:when test="count(libxslt:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="libxslt:node-set($transform_nodes)" /></xsl:when>
+          <xsl:when test="count(libxslt:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="libxslt:node-set($transform_nodes)" /></TransformGroup></xsl:when>
         </xsl:choose>
       </xsl:element>
     </xsl:when>
-    <xsl:when test="system-property('xsl:vendor') = 'Microsoft'">
+    <xsl:otherwise>
       <!-- For instance LinearGradient.Transform -->
       <xsl:choose>
-        <xsl:when test="count(msxsl:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></xsl:when>
-        <xsl:when test="count(msxsl:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="msxsl:node-set($transform_nodes)" /></TransformGroup></xsl:when>
+          <xsl:when test="count(libxslt:node-set($transform_nodes)/*) = 1"><xsl:copy-of select="libxslt:node-set($transform_nodes)" /></xsl:when>
+          <xsl:when test="count(libxslt:node-set($transform_nodes)/*) &gt; 1"><TransformGroup><xsl:copy-of select="libxslt:node-set($transform_nodes)" /></TransformGroup></xsl:when>
       </xsl:choose>
-    </xsl:when>
+    </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
