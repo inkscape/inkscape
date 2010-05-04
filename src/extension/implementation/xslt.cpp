@@ -132,7 +132,7 @@ XSLT::unload(Inkscape::Extension::Extension *module)
 {
     if (!module->loaded()) { return; }
     xsltFreeStylesheet(_stylesheet);
-    xmlFreeDoc(_parsedDoc);
+    // No need to use xmlfreedoc(_parsedDoc), it's handled by xsltFreeStylesheet(_stylesheet);
     return;
 }
 
