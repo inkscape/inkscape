@@ -25,17 +25,52 @@ THE SOFTWARE.
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:exsl="http://exslt.org/common"
 xmlns:libxslt="http://xmlsoft.org/XSLT/namespace"
-exclude-result-prefixes="rdf xlink exsl libxslt">
+exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <xsl:strip-space elements="*" />
 <xsl:output method="xml" encoding="UTF-8"/>
 
 <xsl:param name="silverlight_compatible" select="1" />
+
+<!--
+Values with units (except %) are converted to pixels.
+Unknown units are kept.
+-->
+<xsl:template name="convert_unit">
+  <xsl:param name="convert_value" />
+      <xsl:choose>
+        <xsl:when test="contains($convert_value, 'px')">
+            <xsl:value-of select="round(translate($convert_value, 'px', ''))" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'pt')">
+            <xsl:value-of select="round(translate($convert_value, 'pt', '') * 1.25)" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'pc')">
+            <xsl:value-of select="round(translate($convert_value, 'pc', '') * 15)" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'mm')">
+            <xsl:value-of select="round(translate($convert_value, 'mm', '') * 3.543307)" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'cm')">
+            <xsl:value-of select="round(translate($convert_value, 'cm', '') * 35.43307)" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'in')">
+            <xsl:value-of select="round(translate($convert_value, 'in', '') * 90)" />
+        </xsl:when>
+        <xsl:when test="contains($convert_value, 'ft')">
+            <xsl:value-of select="round(translate($convert_value, 'ft', '') * 1080)" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$convert_value" />
+        </xsl:otherwise>
+      </xsl:choose>
+</xsl:template>
 
 <xsl:template name="template_color">
   <xsl:param name="colorspec" />
@@ -198,14 +233,19 @@ exclude-result-prefixes="rdf xlink exsl libxslt">
 
 <xsl:template mode="stroke_width" match="*">
   <xsl:choose>
-    <xsl:when test="@stroke-width"><xsl:attribute name="StrokeThickness"><xsl:value-of select="@stroke-width" /></xsl:attribute></xsl:when>
+    <xsl:when test="@stroke-width">
+        <xsl:attribute name="StrokeThickness"><xsl:value-of select="@stroke-width" /></xsl:attribute>
+    </xsl:when>
     <xsl:when test="@style and contains(@style, 'stroke-width:')">
-      <xsl:variable name="StrokeThickness" select="substring-after(@style, 'stroke-width:')" />
       <xsl:attribute name="StrokeThickness">
-        <xsl:choose>
-          <xsl:when test="contains($StrokeThickness, ';')"><xsl:value-of select="substring-before($StrokeThickness, ';')" /></xsl:when>
-          <xsl:otherwise><xsl:value-of select="$StrokeThickness" /></xsl:otherwise>
-        </xsl:choose>
+          <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value">
+            <xsl:choose>
+              <xsl:when test="contains(substring-after(@style, 'stroke-width:'), ';')"><xsl:value-of select="substring-before(substring-after(@style, 'stroke-width:'), ';')" /></xsl:when>
+              <xsl:otherwise><xsl:value-of select="substring-after(@style, 'stroke-width:')" /></xsl:otherwise>
+            </xsl:choose>
+            </xsl:with-param>
+        </xsl:call-template> 
       </xsl:attribute>
     </xsl:when>
     <xsl:when test="name(..) = 'g' or name(..) = 'svg'"><xsl:apply-templates mode="stroke_width" select="parent::*"/></xsl:when>
@@ -580,8 +620,18 @@ exclude-result-prefixes="rdf xlink exsl libxslt">
         <!--
         <xsl:apply-templates mode="clip" select="." />
         -->
-        <xsl:if test="@width and not(contains(@width, '%'))"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-        <xsl:if test="@height and not(contains(@height, '%'))"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+        <xsl:if test="@width and not(contains(@width, '%'))">
+        <xsl:attribute name="Width">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@width" />
+            </xsl:call-template>
+        </xsl:attribute></xsl:if>
+        <xsl:if test="@height and not(contains(@height, '%'))">
+        <xsl:attribute name="Height">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@height" />
+            </xsl:call-template>
+        </xsl:attribute></xsl:if>
         <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
         <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
         <xsl:if test="@viewBox">
@@ -641,8 +691,16 @@ exclude-result-prefixes="rdf xlink exsl libxslt">
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="clip" select="." />
     <xsl:if test="@xlink:href"><xsl:attribute name="Source"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+    <xsl:if test="@width"><xsl:attribute name="Width">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@width" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@height"><xsl:attribute name="Height">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@height" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
     <!--xsl:apply-templates mode="transform" /-->
     <xsl:apply-templates mode="forward" />
   </Image>
@@ -719,8 +777,16 @@ exclude-result-prefixes="rdf xlink exsl libxslt">
         </xsl:choose>
       </xsl:attribute>
     </xsl:if>
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+    <xsl:if test="@width"><xsl:attribute name="Width">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@width" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@height"><xsl:attribute name="Height">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@height" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
     <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
     <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
@@ -940,8 +1006,16 @@ exclude-result-prefixes="rdf xlink exsl libxslt">
   <Rectangle>
     <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
     <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
-    <xsl:if test="@width"><xsl:attribute name="Width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
-    <xsl:if test="@height"><xsl:attribute name="Height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+    <xsl:if test="@width"><xsl:attribute name="Width">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@width" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@height"><xsl:attribute name="Height">
+        <xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@height" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
     <xsl:if test="@rx"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
     <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
     <xsl:if test="@rx and not(@ry)"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
