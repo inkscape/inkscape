@@ -75,7 +75,6 @@ private:
     Gtk::Image      magnified;
     Gtk::Label      magLabel;
 
-    Gtk::Button           *refreshButton;
     Gtk::ToggleButton     *selectionButton;
 
     guchar** pixMem;
@@ -102,3 +101,14 @@ private:
 
 
 #endif // SEEN_ICON_PREVIEW_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -87,7 +87,6 @@ IconPreviewPanel::IconPreviewPanel() :
     timer(0),
     pending(false),
     hot(1),
-    refreshButton(0),
     selectionButton(0),
     desktopChangeConn(),
     docReplacedConn(),
@@ -147,7 +146,10 @@ IconPreviewPanel::IconPreviewPanel() :
 
     Gtk::VBox* magBox = new Gtk::VBox();
 
-    magBox->pack_start( magnified );
+    Gtk::Frame *magFrame = Gtk::manage(new Gtk::Frame(_("Magnified:")));
+    magFrame->add( magnified );
+
+    magBox->pack_start( *magFrame, Gtk::PACK_EXPAND_WIDGET );
     magBox->pack_start( magLabel, Gtk::PACK_SHRINK );
 
 
@@ -208,30 +210,21 @@ IconPreviewPanel::IconPreviewPanel() :
 
     iconBox.pack_start(splitter);
     splitter.pack1( *magBox, true, true );
-    splitter.pack2( *verts, false, false );
+    Gtk::Frame *actuals = Gtk::manage(new Gtk::Frame(_("Actual Size:")));
+    actuals->add(*verts);
+    splitter.pack2( *actuals, false, false );
 
 
-    //## The Refresh button
-
-
-    Gtk::HButtonBox* holder = new Gtk::HButtonBox( Gtk::BUTTONBOX_END );
-    _getContents()->pack_end(*holder, false, false);
-
-    selectionButton = new Gtk::ToggleButton(_("Selection")); // , GTK_RESPONSE_APPLY
-    holder->pack_start( *selectionButton, false, false );
+    selectionButton = new Gtk::CheckButton(_("Selection")); // , GTK_RESPONSE_APPLY
+    magBox->pack_start( *selectionButton, Gtk::PACK_SHRINK );
     tips.set_tip((*selectionButton), _("Selection only or whole document"));
     selectionButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::modeToggled) );
 
     gint val = prefs->getBool("/iconpreview/selectionOnly");
     selectionButton->set_active( val != 0 );
 
-    refreshButton = new Gtk::Button(Gtk::Stock::REFRESH); // , GTK_RESPONSE_APPLY
-    holder->pack_end( *refreshButton, false, false );
-    tips.set_tip((*refreshButton), _("Refresh the icons"));
-    refreshButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::refreshPreview) );
 
-
-    _getContents()->pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
+    _getContents()->pack_start(iconBox, Gtk::PACK_SHRINK);
 
     show_all_children();
 
@@ -301,7 +294,6 @@ void IconPreviewPanel::refreshPreview()
         // Do not refresh too quickly
         queueRefresh();
     } else if ( desktop ) {
-
         if ( selectionButton && selectionButton->get_active() )
         {
             Inkscape::Selection * sel = sp_desktop_selection(desktop);
@@ -324,9 +316,7 @@ void IconPreviewPanel::refreshPreview()
                     renderPreview(target);
                 }
             }
-        }
-        else
-        {
+        } else {
             SPObject *target = desktop->currentRoot();
             if ( target ) {
                 renderPreview(target);
