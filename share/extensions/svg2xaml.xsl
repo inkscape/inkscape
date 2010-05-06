@@ -384,6 +384,10 @@ Unknown units are kept.
   <xsl:if test="ancestor::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
 </xsl:template>
 
+<xsl:template mode="desc" match="*">
+  <xsl:if test="*[name(.) = 'desc']/text()"><xsl:attribute name="Tag"><xsl:value-of select="*[name(.) = 'desc']/text()" /></xsl:attribute></xsl:if>
+</xsl:template>
+
 <xsl:template name="to_hex">
   <xsl:param name="convert" />
   <xsl:value-of select="concat(substring('0123456789ABCDEF', 1 + floor(round($convert) div 16), 1), substring('0123456789ABCDEF', 1 + round($convert) mod 16, 1))" />
@@ -540,8 +544,9 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
-<xsl:template mode="transform" match="*[@transform or @gradientTransform]">
+<xsl:template mode="transform" match="*">
   <xsl:param name="mapped_type" />
+  <xsl:if test="@transform or @gradientTransform">
   <xsl:variable name="transform">
     <xsl:choose>
        <xsl:when test="@transform"><xsl:value-of select="@transform" /></xsl:when>
@@ -575,6 +580,7 @@ Unknown units are kept.
       </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
+  </xsl:if>  
 </xsl:template>
 
 <xsl:template mode="clip" match="*">
@@ -620,6 +626,15 @@ Unknown units are kept.
         <!--
         <xsl:apply-templates mode="clip" select="." />
         -->
+        <xsl:if test="@style and contains(@style, 'display:none')"><xsl:attribute name="Visibility">Collapsed</xsl:attribute></xsl:if>
+        <xsl:if test="@style and contains(@style, 'opacity:')">
+        <xsl:attribute name="Opacity">
+            <xsl:choose>
+                <xsl:when test="contains(substring-after(@style, 'opacity:'), ';')"><xsl:value-of select="substring-before(substring-after(@style, 'opacity:'), ';')" /></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="substring-after(@style, 'opacity:')" /></xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+        </xsl:if>
         <xsl:if test="@width and not(contains(@width, '%'))">
         <xsl:attribute name="Width">
             <xsl:call-template name="convert_unit">
@@ -689,6 +704,10 @@ Unknown units are kept.
 <xsl:template mode="forward" match="*[name(.) = 'image']">
   <Image>
     <xsl:apply-templates mode="id" select="." />
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="clip" select="." />
     <xsl:if test="@xlink:href"><xsl:attribute name="Source"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
     <xsl:if test="@width"><xsl:attribute name="Width">
@@ -701,6 +720,9 @@ Unknown units are kept.
             <xsl:with-param name="convert_value" select="@height" />
         </xsl:call-template>
     </xsl:attribute></xsl:if>
+    <xsl:apply-templates mode="transform" select=".">
+      <xsl:with-param name="mapped_type" select="'Image'" />
+    </xsl:apply-templates>
     <!--xsl:apply-templates mode="transform" /-->
     <xsl:apply-templates mode="forward" />
   </Image>
@@ -790,6 +812,9 @@ Unknown units are kept.
     <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
     <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
+
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="clip" select="." />
     <!--xsl:apply-templates mode="transform" select="." /-->
     <!--xsl:apply-templates mode="forward" /-->
@@ -993,7 +1018,9 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-    
+
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Line'" />
     </xsl:apply-templates>    
@@ -1020,6 +1047,7 @@ Unknown units are kept.
     <xsl:if test="@ry"><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
     <xsl:if test="@rx and not(@ry)"><xsl:attribute name="RadiusX"><xsl:value-of select="@rx" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@rx" /></xsl:attribute></xsl:if>
     <xsl:if test="@ry and not(@rx)"><xsl:attribute name="RadiusX"><xsl:value-of select="@ry" /></xsl:attribute><xsl:attribute name="RadiusY"><xsl:value-of select="@ry" /></xsl:attribute></xsl:if>
+
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
     <xsl:apply-templates mode="template_stroke" select="." />
@@ -1031,6 +1059,8 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
     <xsl:apply-templates mode="resources" select="." />
+
+    <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="clip" select="." />
 
@@ -1056,6 +1086,8 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Polygon'" />
     </xsl:apply-templates>
@@ -1078,6 +1110,8 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="transform" select=".">
       <xsl:with-param name="mapped_type" select="'Polyline'" />
     </xsl:apply-templates>
@@ -1097,6 +1131,9 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
+
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:if test="@d">
       <xsl:choose>
         <xsl:when test="$silverlight_compatible = 1">
@@ -1157,6 +1194,8 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
+    <xsl:apply-templates mode="desc" select="." />
+
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1196,6 +1235,8 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
+
+    <xsl:apply-templates mode="desc" select="." />
 
     <xsl:apply-templates mode="clip" select="." />
 
