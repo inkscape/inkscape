@@ -90,7 +90,8 @@ IconPreviewPanel::IconPreviewPanel() :
     selectionButton(0),
     desktopChangeConn(),
     docReplacedConn(),
-    docModConn()
+    docModConn(),
+    selChangedConn()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     numEntries = 0;
@@ -242,6 +243,7 @@ IconPreviewPanel::~IconPreviewPanel()
         timer = 0;
     }
 
+    selChangedConn.disconnect();
     docModConn.disconnect();
     docReplacedConn.disconnect();
     desktopChangeConn.disconnect();
@@ -261,10 +263,14 @@ void IconPreviewPanel::setDesktop( SPDesktop* desktop )
 
     if ( desktop != this->desktop ) {
         docReplacedConn.disconnect();
+        selChangedConn.disconnect();
 
         this->desktop = Panel::getDesktop();
         if ( this->desktop ) {
             docReplacedConn = this->desktop->connectDocumentReplaced(sigc::hide<0>(sigc::mem_fun(this, &IconPreviewPanel::setDocument)));
+            if (this->desktop->selection) {
+                selChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(this, &IconPreviewPanel::queueRefresh)));
+            }
         }
     }
     setDocument(newDoc);

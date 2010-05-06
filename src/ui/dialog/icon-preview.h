@@ -84,6 +84,7 @@ private:
     sigc::connection desktopChangeConn;
     sigc::connection docReplacedConn;
     sigc::connection docModConn;
+    sigc::connection selChangedConn;
 
 
     void setDocument( SPDocument *document );
