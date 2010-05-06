@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>
 #include <glib/gmem.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/alignment.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/stock.h>
 
@@ -150,8 +151,11 @@ IconPreviewPanel::IconPreviewPanel() :
     magBox->pack_start( magLabel, Gtk::PACK_SHRINK );
 
 
-    Gtk::VBox * verts = new Gtk::VBox();
-    for ( int i = 0; i < numEntries; i++ ) {
+    Gtk::VBox *verts = new Gtk::VBox();
+    Gtk::HBox *horiz = 0;
+    int previous = 0;
+    int avail = 0;
+    for ( int i = numEntries - 1; i >= 0; --i ) {
         pixMem[i] = new guchar[4 * sizes[i] * sizes[i]];
         memset( pixMem[i], 0x00, 4 *  sizes[i] * sizes[i] );
 
@@ -161,14 +165,45 @@ IconPreviewPanel::IconPreviewPanel() :
         Glib::ustring label(*labels[i]);
         buttons[i] = new Gtk::ToggleToolButton(label);
         buttons[i]->set_active( i == hot );
-        buttons[i]->set_icon_widget(*images[i]);
+        Gtk::Frame *frame = new Gtk::Frame();
+        frame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
+        frame->add(*images[i]);
+        buttons[i]->set_icon_widget(*Gtk::manage(frame));
 
         tips.set_tip((*buttons[i]), label);
 
         buttons[i]->signal_clicked().connect( sigc::bind<int>( sigc::mem_fun(*this, &IconPreviewPanel::on_button_clicked), i) );
 
 
-        verts->add(*buttons[i]);
+        Gtk::Alignment *align = Gtk::manage(new Gtk::Alignment(0.5, 0.5, 0, 0));
+        align->add(*buttons[i]);
+
+        int pad = 12;
+        if ((avail == 0) && (previous == 0)) {
+            verts->pack_end(*align, Gtk::PACK_SHRINK);
+            previous = sizes[i];
+            avail = sizes[i];
+        } else {
+            if ((avail < pad) || ((sizes[i] > avail) && (sizes[i] < previous))) {
+                horiz = 0;
+            }
+            if ((horiz == 0) && (sizes[i] <= previous)) {
+                avail = previous;
+            }
+            if (sizes[i] <= avail) {
+                if (!horiz) {
+                    horiz = Gtk::manage(new Gtk::HBox());
+                    avail = previous;
+                    verts->pack_end(*horiz, Gtk::PACK_SHRINK);
+                }
+                horiz->pack_start(*align, Gtk::PACK_EXPAND_WIDGET);
+                avail -= sizes[i];
+                avail -= pad; // a little extra for padding
+            } else {
+                horiz = 0;
+                verts->pack_end(*align, Gtk::PACK_SHRINK);
+            }
+        }
     }
 
     iconBox.pack_start(splitter);
