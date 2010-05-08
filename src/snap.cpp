@@ -201,7 +201,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
                                              Geom::OptRect const &bbox_to_snap) const
 {
     if (!someSnapperMightSnap()) {
-        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
+        return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false);
     }
 
     SnappedConstraints sc;
@@ -365,7 +365,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
     // First project the mouse pointer onto the constraint
     Geom::Point pp = constraint.projection(p.getPoint());
 
-    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, Geom::L2(pp - p.getPoint()), 0, false, false);
+    Inkscape::SnappedPoint no_snap = Inkscape::SnappedPoint(pp, p.getSourceType(), p.getSourceNum(), Inkscape::SNAPTARGET_CONSTRAINT, Geom::L2(pp - p.getPoint()), 0, false, true, false);
 
     if (!someSnapperMightSnap()) {
         // Always return point on constraint
@@ -648,7 +648,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     // the origin of the scaling, then it will scale purely in X or Y
                     // We can therefore only calculate the scaling in this direction
                     // and the scaling factor for the other direction should remain
-                    // untouched (unless scaling is uniform ofcourse)
+                    // untouched (unless scaling is uniform of course)
                     for (int index = 0; index < 2; index++) {
                         if (fabs(b[index]) > 1e-6) { // if SCALING CAN occur in this direction
                             if (fabs(fabs(a[index]/b[index]) - fabs(transformation[index])) > 1e-12) { // if SNAPPING DID occur in this direction
@@ -697,9 +697,6 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     g_assert_not_reached();
             }
 
-            // When scaling, we're considering the best transformation in each direction separately. We will have a metric in each
-            // direction, whereas for all other transformation we only a single one-dimensional metric. That's why we need to handle
-            // the scaling metric differently
             if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
                 best_transformation = result;
                 best_snapped_point = snapped_point;

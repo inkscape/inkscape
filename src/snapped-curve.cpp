@@ -87,12 +87,12 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // TODO: Investigate whether it is possible to use document coordinates everywhere
         // in the snapper code. Only the mouse position should be in desktop coordinates, I guess.
         // All paths are already in document coords and we are certainly not going to change THAT.
-        return SnappedPoint(best_p, Inkscape::SNAPSOURCE_UNDEFINED, primaryC->getSourceNum(), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
+        return SnappedPoint(best_p, Inkscape::SNAPSOURCE_UNDEFINED, primaryC->getSourceNum(), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, false, true,
                 secondaryDist, secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line

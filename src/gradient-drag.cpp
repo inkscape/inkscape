@@ -665,7 +665,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                         s.setTransformation(s.getPoint() - p);
                         sc.points.push_back(s);
                     } else {
-                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, false);
+                        Inkscape::SnappedPoint dummy(p + *snap_vector, Inkscape::SNAPSOURCE_OTHER_HANDLE, 0, Inkscape::SNAPTARGET_CONSTRAINED_ANGLE, Geom::L2(*snap_vector), 10000, true, true, false);
                         dummy.setTransformation(*snap_vector);
                         sc.points.push_back(dummy);
                     }

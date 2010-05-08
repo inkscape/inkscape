@@ -265,7 +265,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<SnapCandidatePoint>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         Geom::Coord dist = Geom::L2((*k).getPoint() - p.getPoint());
         if (dist < getSnapperTolerance() && dist < s.getSnapDistance()) {
-            s = SnappedPoint((*k).getPoint(), p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true, (*k).getTargetBBox());
+            s = SnappedPoint((*k).getPoint(), p.getSourceType(), p.getSourceNum(), (*k).getTargetType(), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
             success = true;
         }
     }
@@ -299,7 +299,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         Geom::Coord dist = Geom::L2((*k).getPoint() - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
-            s = SnappedPoint((*k).getPoint(), SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), true, (*k).getTargetBBox());
+            s = SnappedPoint((*k).getPoint(), SNAPSOURCE_GUIDE, 0, (*k).getTargetType(), dist, tol, getSnapperAlwaysSnap(), false, true, (*k).getTargetBBox());
             sc.points.push_back(s);
         }
     }

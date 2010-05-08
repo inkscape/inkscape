@@ -28,9 +28,9 @@ class SnappedPoint
 public:
     SnappedPoint();
     SnappedPoint(Geom::Point const &p);
-    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
-    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained, Geom::OptRect target_bbox = Geom::OptRect());
-    SnappedPoint(SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &constrained_snap, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained, Geom::OptRect target_bbox = Geom::OptRect());
+    SnappedPoint(SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained);
     ~SnappedPoint();
 
     Geom::Coord getSnapDistance() const {return _distance;}
@@ -61,6 +61,7 @@ public:
 
     bool getAtIntersection() const {return _at_intersection;}
     bool getFullyConstrained() const {return _fully_constrained;}
+    bool getConstrainedSnap() const {return _constrained_snap;}
     bool getSnapped() const {return _distance < NR_HUGE;}
     Geom::Point getTransformation() const {return _transformation;}
     void setTransformation(Geom::Point const t) {_transformation = t;}
@@ -97,6 +98,7 @@ protected:
     long _source_num; // Sequence number of the source point that snapped, if that point is part of a set of points. (starting at zero)
     SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection
+    bool _constrained_snap; // If true, then the snapped point was found when looking for a constrained snap
     bool _fully_constrained; // When snapping for example to a node, then the snap will be "fully constrained".
                             // When snapping to a line however, the snap is only partly constrained (i.e. only in one dimension)
 

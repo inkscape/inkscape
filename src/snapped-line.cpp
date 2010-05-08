@@ -80,12 +80,12 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
         Inkscape::SnappedLineSegment const *secondarySLS = use_this_as_primary ? &line : this;
         Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(inters_pt - this->getPoint()) : Geom::L2(inters_pt - line.getPoint());
         Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(inters_pt - line.getPoint()) : Geom::L2(inters_pt - this->getPoint());
-        return SnappedPoint(inters_pt, SNAPSOURCE_UNDEFINED, primarySLS->getSourceNum(), SNAPTARGET_PATH_INTERSECTION, primaryDist, primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, true,
+        return SnappedPoint(inters_pt, SNAPSOURCE_UNDEFINED, primarySLS->getSourceNum(), SNAPTARGET_PATH_INTERSECTION, primaryDist, primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, false, true,
                                           secondaryDist, secondarySLS->getTolerance(), secondarySLS->getAlwaysSnap());
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, false, NR_HUGE, 0, false);
 };
 
 
@@ -161,14 +161,14 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
         Inkscape::SnappedLine const *secondarySL = use_this_as_primary ? &line : this;
         Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(inters_pt - this->getPoint()) : Geom::L2(inters_pt - line.getPoint());
         Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(inters_pt - line.getPoint()) : Geom::L2(inters_pt - this->getPoint());
-        return SnappedPoint(inters_pt, Inkscape::SNAPSOURCE_UNDEFINED, primarySL->getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, primaryDist, primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, true,
+        return SnappedPoint(inters_pt, Inkscape::SNAPSOURCE_UNDEFINED, primarySL->getSourceNum(), Inkscape::SNAPTARGET_UNDEFINED, primaryDist, primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, false, true,
                                           secondaryDist, secondarySL->getTolerance(), secondarySL->getAlwaysSnap());
         // The type of the snap target is yet undefined, as we cannot tell whether
         // we're snapping to grid or the guide lines; must be set by on a higher level
     }
 
     // No intersection
-    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED, 0, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line segment
