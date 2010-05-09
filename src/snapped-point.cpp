@@ -170,10 +170,10 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     // When snapping to a constraint line only, which is not really a snap but merely a projection
     // to the constraint line, then give this snap a very low priority. Basically, any other snap will do
     if (other_one.getTarget() == SNAPTARGET_CONSTRAINT) {
-        dist_other += NR_HUGE/2;
+        dist_other += 1e6;
     }
     if (getTarget() == SNAPTARGET_CONSTRAINT) {
-        dist_this += NR_HUGE/2;
+        dist_this += 1e6;
     }
 
     // If it's closer

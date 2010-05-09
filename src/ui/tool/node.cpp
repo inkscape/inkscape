@@ -1039,9 +1039,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
                     fp = bp;
                 }
                 fp.getPoint(new_pos);
-                if (fp.getTarget() != SNAPTARGET_CONSTRAINT) {
-                    _desktop->snapindicator->set_new_snaptarget(fp);
-                }
+                _desktop->snapindicator->set_new_snaptarget(fp);
             } else {
                 Geom::Point origin = _last_drag_origin();
                 Geom::Point delta = new_pos - origin;
