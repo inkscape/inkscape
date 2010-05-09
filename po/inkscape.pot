@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-28 20:44+0200\n"
+"POT-Creation-Date: 2010-05-09 09:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2198,7 +2198,7 @@ msgstr ""
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:927
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:177
+#: ../src/ui/dialog/icon-preview.cpp:219
 #: ../src/widgets/desktop-widget.cpp:1651
 msgid "Selection"
 msgstr ""
@@ -15710,17 +15710,21 @@ msgstr ""
 msgid "Current: %s"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:129
+#: ../src/ui/dialog/icon-preview.cpp:138
 #, c-format
 msgid "%d x %d"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:179
-msgid "Selection only or whole document"
+#: ../src/ui/dialog/icon-preview.cpp:150
+msgid "Magnified:"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:187
-msgid "Refresh the icons"
+#: ../src/ui/dialog/icon-preview.cpp:214
+msgid "Actual Size:"
+msgstr ""
+
+#: ../src/ui/dialog/icon-preview.cpp:221
+msgid "Selection only or whole document"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
@@ -17151,7 +17155,7 @@ msgid "Numeric precision:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-msgid "How many digits to write after the decimal dot"
+msgid "Significant figures of the values written to the SVG file"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
