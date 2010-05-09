@@ -138,7 +138,6 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     // there's more than one). It is not useful when trying to find the best snapped target point.
     // (both the snap distance and the pointer distance are measured in document pixels, not in screen pixels)
     if (weighted) {
-
         Geom::Coord const dist_pointer_other = other_one.getPointerDistance();
         Geom::Coord const dist_pointer_this = getPointerDistance();
         // Weight factor: controls which node should be preferred for snapping, which is either
@@ -194,13 +193,21 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     // But don't fall back...
     bool c4n = d && other_one.getAtIntersection() && !getAtIntersection();
 
-    // or, if it's just as close then consider the second distance
+    // or, if it's just as close then consider the second distance ...
     bool c5a = (dist_other == dist_this);
     bool c5b = (other_one.getSecondSnapDistance() < getSecondSnapDistance()) && (getSecondSnapDistance() < NR_HUGE);
+    // ... or prefer free snaps over constrained snaps
+    bool c5c = !other_one.getConstrainedSnap() && getConstrainedSnap();
 
-    // std::cout << other_one.getPoint() << " (Other one, dist = " << dist_other << ") vs. " << getPoint() << " (this one, dist = " << dist_this << ") ---> ";
-    // std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4 = " << c4 << " | c4n = " << c4n << " | c5a = " << c5a << " | c5b = " << c5b << std::endl;
-    return (c1 || c2 || c3 || c4 || (c5a && c5b)) && !c2n && (!c3n || c2) && !c4n;
+    bool other_is_better = (c1 || c2 || c3 || c4 || (c5a && (c5b || c5c))) && !c2n && (!c3n || c2) && !c4n;
+
+    /*
+    std::cout << other_one.getPoint() << " (Other one, dist = " << dist_other << ") vs. " << getPoint() << " (this one, dist = " << dist_this << ") ---> ";
+    std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4 = " << c4 << " | c4n = " << c4n << " | c5a = " << c5a << " | c5b = " << c5b << " | c5c = " << c5c << std::endl;
+    std::cout << "Other one provides a better snap: " << other_is_better << std::endl;
+    */
+
+    return other_is_better;
 }
 
 /*
