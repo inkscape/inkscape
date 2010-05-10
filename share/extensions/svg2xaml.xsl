@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2005-2007 Toine de Greef (a.degreef@chello.nl)
+Copyright (c) 2005-2007 authors:
+Original version: Toine de Greef (a.degreef@chello.nl)
+Modified (2010) by Nicolas Dufour (nicoduf@yahoo.fr) (blur support, units
+convertion, comments, and some other fixes)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,10 +41,353 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
 
 <xsl:param name="silverlight_compatible" select="1" />
 
+<!-- Root template.
+Everything starts here! -->
+<xsl:template match="/">
+  <xsl:choose>
+    <xsl:when test="$silverlight_compatible = 1">
+      <xsl:apply-templates mode="forward" />
+    </xsl:when>
+    <xsl:otherwise>
+      <Viewbox Stretch="Uniform">
+        <xsl:apply-templates mode="forward" />
+      </Viewbox>
+    </xsl:otherwise>   
+  </xsl:choose>
+</xsl:template>
+
+<!-- SVG and groups
+(including layers) -->
+<xsl:template mode="forward" match="*[name(.) = 'svg' or name(.) = 'g']">
+  <xsl:choose>
+    <xsl:when test="name(.) = 'svg' or @transform or @viewBox or @id or @clip-path or (@style and contains(@style, 'clip-path:url(#')) or (@width and not(contains(@width, '%'))) or @x or @y or (@height and not(contains(@height, '%'))) or *[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
+      <Canvas>
+        <xsl:apply-templates mode="id" select="." />
+        <!--
+        <xsl:apply-templates mode="clip" select="." />
+        -->
+        <xsl:if test="@style and contains(@style, 'display:none')"><xsl:attribute name="Visibility">Collapsed</xsl:attribute></xsl:if>
+        <xsl:if test="@style and contains(@style, 'opacity:')">
+        <xsl:attribute name="Opacity">
+            <xsl:choose>
+                <xsl:when test="contains(substring-after(@style, 'opacity:'), ';')"><xsl:value-of select="substring-before(substring-after(@style, 'opacity:'), ';')" /></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="substring-after(@style, 'opacity:')" /></xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@width and not(contains(@width, '%'))">
+        <xsl:attribute name="Width">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@width" />
+            </xsl:call-template>
+        </xsl:attribute></xsl:if>
+        <xsl:if test="@height and not(contains(@height, '%'))">
+        <xsl:attribute name="Height">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@height" />
+            </xsl:call-template>
+        </xsl:attribute></xsl:if>
+        <xsl:if test="@x">
+	<xsl:attribute name="Canvas.Left">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@x" />
+            </xsl:call-template>
+	</xsl:attribute></xsl:if>
+        <xsl:if test="@y">
+	<xsl:attribute name="Canvas.Top">
+            <xsl:call-template name="convert_unit">
+                <xsl:with-param name="convert_value" select="@y" />
+            </xsl:call-template>
+	</xsl:attribute></xsl:if>
+        <xsl:if test="@viewBox">
+          <xsl:variable name="viewBox"><xsl:value-of select="normalize-space(translate(@viewBox, ',', ' '))" /></xsl:variable>
+          <xsl:attribute name="Width"><xsl:value-of select="substring-before(substring-after(substring-after($viewBox, ' '), ' '), ' ')" /></xsl:attribute>
+          <xsl:attribute name="Height"><xsl:value-of select="substring-after(substring-after(substring-after($viewBox, ' '), ' '), ' ')" /></xsl:attribute>
+          <Canvas.RenderTransform>
+            <TranslateTransform>
+              <xsl:attribute name="X"><xsl:value-of select="-number(substring-before($viewBox, ' '))" /></xsl:attribute>
+              <xsl:attribute name="Y"><xsl:value-of select="-number(substring-before(substring-after($viewBox, ' '), ' '))" /></xsl:attribute>
+            </TranslateTransform>
+          </Canvas.RenderTransform>
+        </xsl:if>
+    <xsl:if test="@transform">
+      <Canvas>
+        <Canvas.RenderTransform>
+          <TransformGroup><xsl:apply-templates mode="transform" select="." /></TransformGroup>
+        </Canvas.RenderTransform>
+        <xsl:apply-templates mode="forward" select="*" />
+      </Canvas>
+    </xsl:if>
+
+        <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
+          <Canvas.Resources>
+            <xsl:apply-templates mode="forward" select="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']" />
+          </Canvas.Resources>
+        </xsl:if>
+        <xsl:if test="not(@transform)">
+          <xsl:apply-templates mode="forward" select="*[name(.) != 'linearGradient' and name(.) != 'radialGradient' and name(.) != 'defs' and name(.) != 'clipPath']" />
+        </xsl:if>  
+      </Canvas>
+    </xsl:when>
+    <xsl:when test="not(@transform)">
+      <xsl:apply-templates mode="forward" select="*" />
+    </xsl:when>
+  </xsl:choose>
+</xsl:template>
+
 <!--
-Values with units (except %) are converted to pixels.
-Unknown units are kept.
+// Resources (defs) //
+
+* Resources ids
+* Generic defs template
+* Generic filters template
+* Filter effects
+* Linked filter effects
+* Linear gradients
+* Radial gradients
+* Generic gradient stops
+* Clipping
 -->
+
+<!-- Resources ids -->
+<xsl:template mode="resources" match="*">
+  <!-- should be in-depth -->
+  <xsl:if test="ancestor::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
+</xsl:template>
+
+<!-- Generic defs template -->
+<xsl:template mode="forward" match="defs">
+  <xsl:apply-templates mode="forward" />
+</xsl:template>
+
+<!-- Generic filters template
+Limited to one filter (can be improved) -->
+<xsl:template mode="forward" match="*[name(.) = 'filter']">
+    <xsl:if test="count(*) = 1">
+      <xsl:apply-templates mode="forward" />
+    </xsl:if> 
+</xsl:template>
+
+<!-- Filter effects -->
+<xsl:template mode="forward" match="*[name(.) = 'feGaussianBlur']">
+        <BlurEffect>
+            <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
+            <xsl:if test="@stdDeviation"><xsl:attribute name="Radius"><xsl:value-of select="round(@stdDeviation * 3)" /></xsl:attribute></xsl:if>
+            <xsl:attribute name="KernelType">Gaussian</xsl:attribute>
+        </BlurEffect>  
+</xsl:template>
+
+<!-- Linked filter effect -->
+<xsl:template mode="filter_effect" match="*">
+<xsl:choose>
+    <xsl:when test="@filter and starts-with(@filter, 'url(#')">
+        <xsl:attribute name="Effect">
+            <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@filter, 'url(#'), ')'), '}')" />
+        </xsl:attribute>
+    </xsl:when>
+    <xsl:when test="@style and contains(@style, 'filter:url(#')">
+        <xsl:attribute name="Effect">
+            <xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'filter:url(#'), ')'), '}')" />
+        </xsl:attribute>
+    </xsl:when>
+</xsl:choose>
+</xsl:template>
+
+<!-- Linear gradient -->
+<xsl:template mode="forward" match="*[name(.) = 'linearGradient']">
+  <LinearGradientBrush>
+    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
+    <xsl:attribute name="MappingMode">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">Absolute</xsl:when>
+        <xsl:otherwise>RelativeToBoundingBox</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:if test="@spreadMethod">
+      <xsl:attribute name="SpreadMethod">
+        <xsl:choose>
+          <xsl:when test="@spreadMethod = 'pad'">Pad</xsl:when>
+          <xsl:when test="@spreadMethod = 'reflect'">Reflect</xsl:when>
+          <xsl:when test="@spreadMethod = 'repeat'">Repeat</xsl:when>
+        </xsl:choose>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="@x1 and @y1 and @x2 and @y2">
+        <xsl:choose>
+          <xsl:when test="contains(@x1, '%') and contains(@y1, '%')">
+            <xsl:attribute name="StartPoint"><xsl:value-of select="concat(substring-before(@x1, '%') div 100, ',', substring-before(@y1,'%') div 100)" /></xsl:attribute>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="StartPoint"><xsl:value-of select="concat(@x1, ',', @y1)" /></xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+          <xsl:when test="contains(@x2, '%') and contains(@y2, '%')">
+            <xsl:attribute name="EndPoint"><xsl:value-of select="concat(substring-before(@x2, '%') div 100, ',', substring-before(@y2,'%') div 100)" /></xsl:attribute>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="EndPoint"><xsl:value-of select="concat(@x2, ',', @y2)" /></xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>  
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="StartPoint"><xsl:value-of select="'0,0'" /></xsl:attribute>
+        <xsl:attribute name="EndPoint"><xsl:value-of select="'1,1'" /></xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+    <LinearGradientBrush.GradientStops>
+      <GradientStopCollection>
+        <xsl:choose>
+          <xsl:when test="@xlink:href">
+            <xsl:variable name="reference_id" select="@xlink:href" />
+            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
+          </xsl:when>
+          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
+        </xsl:choose>
+      </GradientStopCollection>
+    </LinearGradientBrush.GradientStops>
+    <xsl:if test="@gradientTransform">
+    <LinearGradientBrush.Transform>
+      <xsl:apply-templates mode="transform" select="." />
+    </LinearGradientBrush.Transform>
+  </xsl:if>
+  </LinearGradientBrush>
+</xsl:template>
+
+<!-- Radial gradient -->
+<xsl:template mode="forward" match="*[name(.) = 'radialGradient']">
+  <RadialGradientBrush>
+    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
+    <xsl:attribute name="MappingMode">
+      <xsl:choose>
+        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">Absolute</xsl:when>
+        <xsl:otherwise>RelativeToBoundingBox</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:if test="@spreadMethod">
+      <xsl:attribute name="SpreadMethod">
+        <xsl:choose>
+          <xsl:when test="@spreadMethod = 'pad'">Pad</xsl:when>
+          <xsl:when test="@spreadMethod = 'reflect'">Reflect</xsl:when>
+          <xsl:when test="@spreadMethod = 'repeat'">Repeat</xsl:when>
+        </xsl:choose>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@cx and @cy">
+      <xsl:attribute name="Center">
+        <xsl:choose>
+          <xsl:when test="contains(@cx, '%') and contains(@cy, '%')">
+            <xsl:value-of select="concat(number(substring-before(@cx, '%')) div 100, ',', number(substring-before(@cy, '%')) div 100)" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="concat(@cx, ',', @cy)" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+    </xsl:if>  
+    <xsl:if test="@fx and @fy">
+      <xsl:attribute name="GradientOrigin">
+        <xsl:choose>
+          <xsl:when test="contains(@fx, '%') and contains(@fy, '%')">
+            <xsl:value-of select="concat(number(substring-before(@fx, '%')) div 100, ',', number(substring-before(@fy, '%')) div 100)" />
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="concat(@fx, ',', @fy)" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@r">
+      <xsl:choose>
+        <xsl:when test="contains(@r, '%')">
+          <xsl:attribute name="RadiusX"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
+          <xsl:attribute name="RadiusY"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="RadiusX"><xsl:value-of select="@r" /></xsl:attribute>
+          <xsl:attribute name="RadiusY"><xsl:value-of select="@r" /></xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+    <RadialGradientBrush.GradientStops>
+      <GradientStopCollection>
+        <xsl:choose>
+          <xsl:when test="@xlink:href">
+            <xsl:variable name="reference_id" select="@xlink:href" />
+            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
+          </xsl:when>
+          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
+        </xsl:choose>
+      </GradientStopCollection>
+    </RadialGradientBrush.GradientStops>
+    <xsl:if test="@gradientTransform">
+    <RadialGradientBrush.Transform>
+      <xsl:apply-templates mode="transform" select="." />
+    </RadialGradientBrush.Transform>
+    </xsl:if>
+  </RadialGradientBrush>
+</xsl:template>
+
+<!-- Generic gradient stops -->
+<xsl:template mode="forward" match="*[name(.) = 'stop']">
+  <GradientStop>
+    <!--xsl:apply-templates mode="stop_opacity" select="." /-->
+    <xsl:apply-templates mode="stop_color" select="." />
+    <xsl:apply-templates mode="offset" select="." />
+    <xsl:apply-templates mode="forward" />
+  </GradientStop>
+</xsl:template>
+
+<!-- Clipping -->
+<xsl:template mode="clip" match="*">
+  <xsl:choose>
+    <xsl:when test="@clip-path and defs/clipPath/path/@d"><xsl:attribute name="Clip"><xsl:value-of select="defs/clipPath/path/@d" /></xsl:attribute></xsl:when>
+    <xsl:when test="@clip-path and starts-with(@clip-path, 'url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@clip-path, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
+    <xsl:when test="@style and contains(@style, 'clip-path:url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
+    <xsl:when test="clipPath"><xsl:apply-templates mode="forward" /></xsl:when>
+  </xsl:choose>
+</xsl:template>
+
+<!--
+// Misc templates //
+
+* Object description
+* Id converter
+* Decimal to hexadecimal converter
+* Unit to pixel converter
+* Title and description
+* Misc ignored stuff (markers, patterns, styles)
+* Symbols
+* Use
+* RDF and foreign objects
+* Unknows tags
+-->
+
+<!-- Object description -->
+<xsl:template mode="desc" match="*">
+  <xsl:if test="*[name(.) = 'desc']/text()"><xsl:attribute name="Tag"><xsl:value-of select="*[name(.) = 'desc']/text()" /></xsl:attribute></xsl:if>
+</xsl:template>
+
+<!-- Id converter. Removes "-" from the original id. -->
+<xsl:template mode="id" match="*">
+<xsl:if test="@id">
+  <xsl:attribute name="Name"><xsl:value-of select="translate(@id, '- ', '')" /></xsl:attribute>
+  <!--
+    <xsl:attribute name="x:Key"><xsl:value-of select="translate(@id, '- ', '')" /></xsl:attribute>
+  -->
+</xsl:if>
+</xsl:template>
+
+<!-- Decimal to hexadecimal converter -->
+<xsl:template name="to_hex">
+  <xsl:param name="convert" />
+  <xsl:value-of select="concat(substring('0123456789ABCDEF', 1 + floor(round($convert) div 16), 1), substring('0123456789ABCDEF', 1 + round($convert) mod 16, 1))" />
+</xsl:template>
+
+<!-- Unit to pixel converter
+Values with units (except %) are converted to pixels and rounded.
+Unknown units are kept. -->
 <xsl:template name="convert_unit">
   <xsl:param name="convert_value" />
       <xsl:choose>
@@ -66,12 +412,82 @@ Unknown units are kept.
         <xsl:when test="contains($convert_value, 'ft')">
             <xsl:value-of select="round(translate($convert_value, 'ft', '') * 1080)" />
         </xsl:when>
+        <xsl:when test="not(string(number($convert_value))='NaN')">
+            <xsl:value-of select="round($convert_value)" />
+        </xsl:when>
         <xsl:otherwise>
             <xsl:value-of select="$convert_value" />
         </xsl:otherwise>
       </xsl:choose>
 </xsl:template>
 
+<!-- Title and description
+Blank template. Title is ignored and desc is converted to Tag in the mode="desc" template
+-->
+<xsl:template mode="forward" match="*[name(.) = 'title' or name(.) = 'desc']">
+  <!-- -->
+</xsl:template>
+
+<!-- Misc ignored stuff (markers, patterns, styles) -->
+<xsl:template mode="forward" match="*[name(.) = 'marker' or name(.) = 'pattern' or name(.) = 'style']">
+  <!-- -->
+</xsl:template>
+
+<!-- Symbols -->
+<xsl:template mode="forward" match="*[name(.) = 'symbol']">
+  <Style>
+    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
+    <Canvas>
+      <xsl:apply-templates mode="forward" />
+    </Canvas>
+  </Style>
+</xsl:template>
+
+<!-- Use -->
+<xsl:template mode="forward" match="*[name(.) = 'use']">
+  <Canvas>
+    <xsl:if test="@xlink:href"><xsl:attribute name="Style"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
+    <!--xsl:apply-templates mode="transform" select="." /-->
+    <xsl:apply-templates mode="forward" />
+  </Canvas>
+</xsl:template>
+
+<!-- RDF and foreign objects -->
+<xsl:template mode="forward" match="rdf:RDF | *[name(.) = 'foreignObject']">
+  <!-- -->
+</xsl:template>
+
+<!-- Unknown tags -->
+<xsl:template match="*">
+<xsl:comment><xsl:value-of select="concat('Unknown tag: ', name(.))" /></xsl:comment>
+</xsl:template>
+
+
+<!--
+// Colors and patterns //
+
+* Generic color template
+* Fill
+* Fill opacity
+* Fill rule
+* Generic fill template
+* Stroke
+* Stroke opacity
+* Generic stroke template
+* Stroke width
+* Stroke mitterlimit
+* Stroke dasharray
+* Stroke dashoffset
+* Linejoin SVG to XAML converter
+* Stroke linejoin
+* Linecap SVG to XAML converter
+* Stroke linecap
+* Gradient stop
+* Gradient stop opacity
+* Gradient stop offset
+-->
+
+<!-- Generic color template -->
 <xsl:template name="template_color">
   <xsl:param name="colorspec" />
   <xsl:param name="opacityspec" />
@@ -117,6 +533,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Fill -->
 <xsl:template mode="fill" match="*">
   <xsl:choose>
     <xsl:when test="@fill and starts-with(@fill, 'url(#')"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@fill, 'url(#'), ')'), '}')" /></xsl:when>
@@ -135,6 +552,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Fill opacity -->
 <xsl:template mode="fill_opacity" match="*">
   <xsl:choose>
     <xsl:when test="@fill-opacity"><xsl:value-of select="@fill-opacity" /></xsl:when>
@@ -149,6 +567,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Fill rule -->
 <xsl:template mode="fill_rule" match="*">
   <xsl:choose>
     <xsl:when test="@fill-rule and (@fill-rule = 'nonzero' or @fill-rule = 'evenodd')"><xsl:attribute name="FillRule"><xsl:value-of select="@fill-rule" /></xsl:attribute></xsl:when>
@@ -166,6 +585,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Generic fill template -->
 <xsl:template mode="template_fill" match="*">
   <xsl:variable name="fill"><xsl:apply-templates mode="fill" select="." /></xsl:variable>
   <xsl:variable name="fill_opacity"><xsl:apply-templates mode="fill_opacity" select="." /></xsl:variable>
@@ -186,6 +606,7 @@ Unknown units are kept.
   </xsl:if>
 </xsl:template>
 
+<!-- Stroke -->
 <xsl:template mode="stroke" match="*">
   <xsl:choose>
     <xsl:when test="@stroke and starts-with(@stroke, 'url(#')"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@stroke, 'url(#'), ')'), '}')" /></xsl:when>
@@ -204,6 +625,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke opacity -->
 <xsl:template mode="stroke_opacity" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-opacity"><xsl:value-of select="@stroke-opacity" /></xsl:when>
@@ -218,6 +640,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Generic stroke template -->
 <xsl:template mode="template_stroke" match="*">
   <xsl:variable name="stroke"><xsl:apply-templates mode="stroke" select="." /></xsl:variable>
   <xsl:variable name="stroke_opacity"><xsl:apply-templates mode="stroke_opacity" select="." /></xsl:variable>
@@ -231,6 +654,7 @@ Unknown units are kept.
   </xsl:if>
 </xsl:template>
 
+<!-- Stroke width -->
 <xsl:template mode="stroke_width" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-width">
@@ -252,6 +676,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke miterlimit -->
 <xsl:template mode="stroke_miterlimit" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-miterlimit"><xsl:attribute name="StrokeMiterLimit"><xsl:value-of select="@stroke-miterlimit" /></xsl:attribute></xsl:when>
@@ -268,6 +693,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke dasharray -->
 <xsl:template mode="stroke_dasharray" match="*">
   <!-- stroke-dasharray="10,30,20,30" becomes StrokeDashArray="1 3 2 3" ?? -->
   <xsl:choose>
@@ -285,6 +711,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke dashoffset -->
 <xsl:template mode="stroke_dashoffset" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-dashoffset"><xsl:attribute name="StrokeDashOffset"><xsl:value-of select="@stroke-dashoffset" /></xsl:attribute></xsl:when>
@@ -301,6 +728,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Linejoin SVG to XAML converter -->
 <xsl:template name="linejoin_svg_to_xaml">
   <xsl:param name="linejoin" />
   <xsl:choose>
@@ -310,6 +738,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke linejoin -->
 <xsl:template mode="stroke_linejoin" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-miterlimit">
@@ -333,6 +762,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Linecap SVG to XAML converter -->
 <xsl:template name="linecap_svg_to_xaml">
   <xsl:param name="linecap" />
   <xsl:choose>
@@ -342,6 +772,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Stroke linecap -->
 <xsl:template mode="stroke_linecap" match="*">
   <xsl:choose>
     <xsl:when test="@stroke-linecap">
@@ -379,20 +810,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
-<xsl:template mode="resources" match="*">
-  <!-- should be in-depth -->
-  <xsl:if test="ancestor::*[name(.) = 'defs']"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-</xsl:template>
-
-<xsl:template mode="desc" match="*">
-  <xsl:if test="*[name(.) = 'desc']/text()"><xsl:attribute name="Tag"><xsl:value-of select="*[name(.) = 'desc']/text()" /></xsl:attribute></xsl:if>
-</xsl:template>
-
-<xsl:template name="to_hex">
-  <xsl:param name="convert" />
-  <xsl:value-of select="concat(substring('0123456789ABCDEF', 1 + floor(round($convert) div 16), 1), substring('0123456789ABCDEF', 1 + round($convert) mod 16, 1))" />
-</xsl:template>
-
+<!-- Gradient stops -->
 <xsl:template mode="stop_color" match="*">
   <xsl:variable name="Opacity">
     <xsl:choose>
@@ -441,6 +859,7 @@ Unknown units are kept.
   </xsl:attribute>
 </xsl:template>
 
+<!-- Gradient stop opacity -->
 <xsl:template mode="stop_opacity" match="*">
   <xsl:choose>
     <xsl:when test="@stop-opacity"><xsl:attribute name="Opacity"><xsl:value-of select="@stop-opacity" /></xsl:attribute></xsl:when>
@@ -457,6 +876,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Gradient stop offset -->
 <xsl:template mode="offset" match="*">
   <xsl:choose>
     <xsl:when test="@offset">
@@ -481,6 +901,17 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- 
+// Transforms //
+All the matrix, translate, rotate... stuff.
+Fixme: XAML transforms don't show the same result as SVG ones with the same values.
+
+* Parse transform
+* Apply transform
+* Apply transform v2
+-->
+
+<!-- Parse transform -->
 <xsl:template name="parse_transform">
   <xsl:param name="input" />
   <xsl:choose>
@@ -544,6 +975,7 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- Apply transform -->
 <xsl:template mode="transform" match="*">
   <xsl:param name="mapped_type" />
   <xsl:if test="@transform or @gradientTransform">
@@ -583,108 +1015,8 @@ Unknown units are kept.
   </xsl:if>  
 </xsl:template>
 
-<xsl:template mode="clip" match="*">
-  <xsl:choose>
-    <xsl:when test="@clip-path and defs/clipPath/path/@d"><xsl:attribute name="Clip"><xsl:value-of select="defs/clipPath/path/@d" /></xsl:attribute></xsl:when>
-    <xsl:when test="@clip-path and starts-with(@clip-path, 'url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@clip-path, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
-    <xsl:when test="@style and contains(@style, 'clip-path:url(#')"><xsl:attribute name="Clip"><xsl:value-of select="concat('{StaticResource ', substring-before(substring-after(@style, 'url(#'), ')'), '}')" /></xsl:attribute></xsl:when>
-    <xsl:when test="clipPath"><xsl:apply-templates mode="forward" /></xsl:when>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template mode="id" match="*">
-<xsl:if test="@id">
-  <xsl:attribute name="Name"><xsl:value-of select="translate(@id, '- ', '')" /></xsl:attribute>
-  <!--
-    <xsl:attribute name="x:Key"><xsl:value-of select="translate(@id, '- ', '')" /></xsl:attribute>
-  -->
-</xsl:if>
-</xsl:template>
-
-<xsl:template match="/">
-  <xsl:choose>
-    <xsl:when test="$silverlight_compatible = 1">
-      <xsl:apply-templates mode="forward" />
-    </xsl:when>
-    <xsl:otherwise>
-      <Viewbox Stretch="Uniform">
-        <xsl:apply-templates mode="forward" />
-      </Viewbox>
-    </xsl:otherwise>   
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template mode="forward" match="defs">
-  <xsl:apply-templates mode="forward" />
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'svg' or name(.) = 'g']">
-  <xsl:choose>
-    <xsl:when test="name(.) = 'svg' or @transform or @viewBox or @id or @clip-path or (@style and contains(@style, 'clip-path:url(#')) or (@width and not(contains(@width, '%'))) or @x or @y or (@height and not(contains(@height, '%'))) or *[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
-      <Canvas>
-        <xsl:apply-templates mode="id" select="." />
-        <!--
-        <xsl:apply-templates mode="clip" select="." />
-        -->
-        <xsl:if test="@style and contains(@style, 'display:none')"><xsl:attribute name="Visibility">Collapsed</xsl:attribute></xsl:if>
-        <xsl:if test="@style and contains(@style, 'opacity:')">
-        <xsl:attribute name="Opacity">
-            <xsl:choose>
-                <xsl:when test="contains(substring-after(@style, 'opacity:'), ';')"><xsl:value-of select="substring-before(substring-after(@style, 'opacity:'), ';')" /></xsl:when>
-                  <xsl:otherwise><xsl:value-of select="substring-after(@style, 'opacity:')" /></xsl:otherwise>
-            </xsl:choose>
-        </xsl:attribute>
-        </xsl:if>
-        <xsl:if test="@width and not(contains(@width, '%'))">
-        <xsl:attribute name="Width">
-            <xsl:call-template name="convert_unit">
-                <xsl:with-param name="convert_value" select="@width" />
-            </xsl:call-template>
-        </xsl:attribute></xsl:if>
-        <xsl:if test="@height and not(contains(@height, '%'))">
-        <xsl:attribute name="Height">
-            <xsl:call-template name="convert_unit">
-                <xsl:with-param name="convert_value" select="@height" />
-            </xsl:call-template>
-        </xsl:attribute></xsl:if>
-        <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-        <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
-        <xsl:if test="@viewBox">
-          <xsl:variable name="viewBox"><xsl:value-of select="normalize-space(translate(@viewBox, ',', ' '))" /></xsl:variable>
-          <xsl:attribute name="Width"><xsl:value-of select="substring-before(substring-after(substring-after($viewBox, ' '), ' '), ' ')" /></xsl:attribute>
-          <xsl:attribute name="Height"><xsl:value-of select="substring-after(substring-after(substring-after($viewBox, ' '), ' '), ' ')" /></xsl:attribute>
-          <Canvas.RenderTransform>
-            <TranslateTransform>
-              <xsl:attribute name="X"><xsl:value-of select="-number(substring-before($viewBox, ' '))" /></xsl:attribute>
-              <xsl:attribute name="Y"><xsl:value-of select="-number(substring-before(substring-after($viewBox, ' '), ' '))" /></xsl:attribute>
-            </TranslateTransform>
-          </Canvas.RenderTransform>
-        </xsl:if>
-    <xsl:if test="@transform">
-      <Canvas>
-        <Canvas.RenderTransform>
-          <TransformGroup><xsl:apply-templates mode="transform" select="." /></TransformGroup>
-        </Canvas.RenderTransform>
-        <xsl:apply-templates mode="forward" select="*" />
-      </Canvas>
-    </xsl:if>
-
-        <xsl:if test="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']">
-          <Canvas.Resources>
-            <xsl:apply-templates mode="forward" select="*[name(.) = 'linearGradient' or name(.) = 'radialGradient' or name(.) = 'defs' or name(.) = 'clipPath']" />
-          </Canvas.Resources>
-        </xsl:if>
-        <xsl:if test="not(@transform)">
-          <xsl:apply-templates mode="forward" select="*[name(.) != 'linearGradient' and name(.) != 'radialGradient' and name(.) != 'defs' and name(.) != 'clipPath']" />
-        </xsl:if>  
-      </Canvas>
-    </xsl:when>
-    <xsl:when test="not(@transform)">
-      <xsl:apply-templates mode="forward" select="*" />
-    </xsl:when>
-  </xsl:choose>
-</xsl:template>
-
+<!-- Apply transform v2
+Fixme: is this template still in use? -->
 <xsl:template mode="transform2" match="*">
   <xsl:choose>
     <xsl:when test="@transform">
@@ -701,13 +1033,35 @@ Unknown units are kept.
   </xsl:choose>
 </xsl:template>
 
+<!-- 
+// Objects //
+
+* Image
+* Text
+* Lines
+* Rectangle
+* Polygon
+* Polyline
+* Path
+* Ellipse
+* Circle
+-->
+
+<!-- Image -->
 <xsl:template mode="forward" match="*[name(.) = 'image']">
   <Image>
     <xsl:apply-templates mode="id" select="." />
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left">
+	<xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@x" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top">
+	<xsl:call-template name="convert_unit">
+	    <xsl:with-param name="convert_value" select="@y" />
+	</xsl:call-template>
+    </xsl:attribute></xsl:if>
     <xsl:apply-templates mode="desc" select="." />
-
     <xsl:apply-templates mode="clip" select="." />
     <xsl:if test="@xlink:href"><xsl:attribute name="Source"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
     <xsl:if test="@width"><xsl:attribute name="Width">
@@ -728,6 +1082,7 @@ Unknown units are kept.
   </Image>
 </xsl:template>
 
+<!-- Text -->
 <xsl:template mode="forward" match="*[name(.) = 'text']">
   <TextBlock>
     <xsl:if test="@font-size"><xsl:attribute name="FontSize"><xsl:value-of select="@font-size" /></xsl:attribute></xsl:if>
@@ -809,12 +1164,18 @@ Unknown units are kept.
             <xsl:with-param name="convert_value" select="@height" />
         </xsl:call-template>
     </xsl:attribute></xsl:if>
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left">
+	<xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@x" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top">
+	<xsl:call-template name="convert_unit">
+	    <xsl:with-param name="convert_value" select="@y" />
+	</xsl:call-template>
+    </xsl:attribute></xsl:if>
     <xsl:apply-templates mode="id" select="." />
-
     <xsl:apply-templates mode="desc" select="." />
-
     <xsl:apply-templates mode="clip" select="." />
     <!--xsl:apply-templates mode="transform" select="." /-->
     <!--xsl:apply-templates mode="forward" /-->
@@ -822,187 +1183,8 @@ Unknown units are kept.
     <xsl:if test="*[name(.) = 'tspan']/text()"><xsl:value-of select="*[name(.) = 'tspan']/text()" /></xsl:if>
   </TextBlock>
 </xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'title' or name(.) = 'desc']">
-  <!-- -->
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'marker' or name(.) = 'pattern' or name(.) = 'style']">
-  <!-- -->
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'symbol']">
-  <Style>
-    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-    <Canvas>
-      <xsl:apply-templates mode="forward" />
-    </Canvas>
-  </Style>
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'use']">
-  <Canvas>
-    <xsl:if test="@xlink:href"><xsl:attribute name="Style"><xsl:value-of select="@xlink:href" /></xsl:attribute></xsl:if>
-    <!--xsl:apply-templates mode="transform" select="." /-->
-    <xsl:apply-templates mode="forward" />
-  </Canvas>
-</xsl:template>
-
-<xsl:template mode="forward" match="rdf:RDF | *[name(.) = 'foreignObject']">
-  <!-- -->
-</xsl:template>
-
-<xsl:template match="*">
-<xsl:comment><xsl:value-of select="concat('Unknown tag: ', name(.))" /></xsl:comment>
-</xsl:template>
-
-<!-- BRUSHES -->
-
-<xsl:template mode="forward" match="*[name(.) = 'linearGradient']">
-  <LinearGradientBrush>
-    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-    <xsl:attribute name="MappingMode">
-      <xsl:choose>
-        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">Absolute</xsl:when>
-        <xsl:otherwise>RelativeToBoundingBox</xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-    <xsl:if test="@spreadMethod">
-      <xsl:attribute name="SpreadMethod">
-        <xsl:choose>
-          <xsl:when test="@spreadMethod = 'pad'">Pad</xsl:when>
-          <xsl:when test="@spreadMethod = 'reflect'">Reflect</xsl:when>
-          <xsl:when test="@spreadMethod = 'repeat'">Repeat</xsl:when>
-        </xsl:choose>
-      </xsl:attribute>
-    </xsl:if>
-    <xsl:choose>
-      <xsl:when test="@x1 and @y1 and @x2 and @y2">
-        <xsl:choose>
-          <xsl:when test="contains(@x1, '%') and contains(@y1, '%')">
-            <xsl:attribute name="StartPoint"><xsl:value-of select="concat(substring-before(@x1, '%') div 100, ',', substring-before(@y1,'%') div 100)" /></xsl:attribute>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:attribute name="StartPoint"><xsl:value-of select="concat(@x1, ',', @y1)" /></xsl:attribute>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:choose>
-          <xsl:when test="contains(@x2, '%') and contains(@y2, '%')">
-            <xsl:attribute name="EndPoint"><xsl:value-of select="concat(substring-before(@x2, '%') div 100, ',', substring-before(@y2,'%') div 100)" /></xsl:attribute>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:attribute name="EndPoint"><xsl:value-of select="concat(@x2, ',', @y2)" /></xsl:attribute>
-          </xsl:otherwise>
-        </xsl:choose>  
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:attribute name="StartPoint"><xsl:value-of select="'0,0'" /></xsl:attribute>
-        <xsl:attribute name="EndPoint"><xsl:value-of select="'1,1'" /></xsl:attribute>
-      </xsl:otherwise>
-    </xsl:choose>
-    <LinearGradientBrush.GradientStops>
-      <GradientStopCollection>
-        <xsl:choose>
-          <xsl:when test="@xlink:href">
-            <xsl:variable name="reference_id" select="@xlink:href" />
-            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
-          </xsl:when>
-          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
-        </xsl:choose>
-      </GradientStopCollection>
-    </LinearGradientBrush.GradientStops>
-    <xsl:if test="@gradientTransform">
-    <LinearGradientBrush.Transform>
-      <xsl:apply-templates mode="transform" select="." />
-    </LinearGradientBrush.Transform>
-  </xsl:if>
-  </LinearGradientBrush>
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'radialGradient']">
-  <RadialGradientBrush>
-    <xsl:if test="@id"><xsl:attribute name="x:Key"><xsl:value-of select="@id" /></xsl:attribute></xsl:if>
-    <xsl:attribute name="MappingMode">
-      <xsl:choose>
-        <xsl:when test="@gradientUnits = 'userSpaceOnUse' ">Absolute</xsl:when>
-        <xsl:otherwise>RelativeToBoundingBox</xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-    <xsl:if test="@spreadMethod">
-      <xsl:attribute name="SpreadMethod">
-        <xsl:choose>
-          <xsl:when test="@spreadMethod = 'pad'">Pad</xsl:when>
-          <xsl:when test="@spreadMethod = 'reflect'">Reflect</xsl:when>
-          <xsl:when test="@spreadMethod = 'repeat'">Repeat</xsl:when>
-        </xsl:choose>
-      </xsl:attribute>
-    </xsl:if>
-    <xsl:if test="@cx and @cy">
-      <xsl:attribute name="Center">
-        <xsl:choose>
-          <xsl:when test="contains(@cx, '%') and contains(@cy, '%')">
-            <xsl:value-of select="concat(number(substring-before(@cx, '%')) div 100, ',', number(substring-before(@cy, '%')) div 100)" />
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="concat(@cx, ',', @cy)" />
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-    </xsl:if>  
-    <xsl:if test="@fx and @fy">
-      <xsl:attribute name="GradientOrigin">
-        <xsl:choose>
-          <xsl:when test="contains(@fx, '%') and contains(@fy, '%')">
-            <xsl:value-of select="concat(number(substring-before(@fx, '%')) div 100, ',', number(substring-before(@fy, '%')) div 100)" />
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="concat(@fx, ',', @fy)" />
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-    </xsl:if>
-    <xsl:if test="@r">
-      <xsl:choose>
-        <xsl:when test="contains(@r, '%')">
-          <xsl:attribute name="RadiusX"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
-          <xsl:attribute name="RadiusY"><xsl:value-of select="number(substring-before(@r, '%')) div 100" /></xsl:attribute>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:attribute name="RadiusX"><xsl:value-of select="@r" /></xsl:attribute>
-          <xsl:attribute name="RadiusY"><xsl:value-of select="@r" /></xsl:attribute>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
-    <RadialGradientBrush.GradientStops>
-      <GradientStopCollection>
-        <xsl:choose>
-          <xsl:when test="@xlink:href">
-            <xsl:variable name="reference_id" select="@xlink:href" />
-            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
-          </xsl:when>
-          <xsl:otherwise><xsl:apply-templates mode="forward" /></xsl:otherwise>
-        </xsl:choose>
-      </GradientStopCollection>
-    </RadialGradientBrush.GradientStops>
-    <xsl:if test="@gradientTransform">
-    <RadialGradientBrush.Transform>
-      <xsl:apply-templates mode="transform" select="." />
-    </RadialGradientBrush.Transform>
-    </xsl:if>
-  </RadialGradientBrush>
-</xsl:template>
-
-<xsl:template mode="forward" match="*[name(.) = 'stop']">
-  <GradientStop>
-    <!--xsl:apply-templates mode="stop_opacity" select="." /-->
-    <xsl:apply-templates mode="stop_color" select="." />
-    <xsl:apply-templates mode="offset" select="." />
-    <xsl:apply-templates mode="forward" />
-  </GradientStop>
-</xsl:template>
-
-<!-- SHAPES -->
-
+ 
+<!-- Lines -->
 <xsl:template mode="forward" match="*[name(.) = 'line']">
   <Line>
     <xsl:if test="@x1"><xsl:attribute name="X1"><xsl:value-of select="@x1" /></xsl:attribute></xsl:if> 
@@ -1029,10 +1211,19 @@ Unknown units are kept.
   </Line>
 </xsl:template>
 
+<!-- Rectangle -->
 <xsl:template mode="forward" match="*[name(.) = 'rect']">
   <Rectangle>
-    <xsl:if test="@x"><xsl:attribute name="Canvas.Left"><xsl:value-of select="@x" /></xsl:attribute></xsl:if>
-    <xsl:if test="@y"><xsl:attribute name="Canvas.Top"><xsl:value-of select="@y" /></xsl:attribute></xsl:if>
+    <xsl:if test="@x"><xsl:attribute name="Canvas.Left">
+	<xsl:call-template name="convert_unit">
+            <xsl:with-param name="convert_value" select="@x" />
+        </xsl:call-template>
+    </xsl:attribute></xsl:if>
+    <xsl:if test="@y"><xsl:attribute name="Canvas.Top">
+	<xsl:call-template name="convert_unit">
+	    <xsl:with-param name="convert_value" select="@y" />
+	</xsl:call-template>
+    </xsl:attribute></xsl:if>
     <xsl:if test="@width"><xsl:attribute name="Width">
         <xsl:call-template name="convert_unit">
             <xsl:with-param name="convert_value" select="@width" />
@@ -1057,11 +1248,9 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_dashoffset" select="." />
     <xsl:apply-templates mode="stroke_linejoin" select="." />
     <xsl:apply-templates mode="stroke_linecap" select="." />
-
+    <xsl:apply-templates mode="filter_effect" select="." />
     <xsl:apply-templates mode="resources" select="." />
-
     <xsl:apply-templates mode="desc" select="." />
-
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1072,6 +1261,7 @@ Unknown units are kept.
   </Rectangle>
 </xsl:template>
 
+<!-- Polygon -->
 <xsl:template mode="forward" match="*[name(.) = 'polygon']">
   <Polygon>
     <xsl:if test="@points"><xsl:attribute name="Points"><xsl:value-of select="@points" /></xsl:attribute></xsl:if>
@@ -1096,6 +1286,7 @@ Unknown units are kept.
   </Polygon>
 </xsl:template>
 
+<!-- Polyline -->
 <xsl:template mode="forward" match="*[name(.) = 'polyline']">
   <Polyline>
     <xsl:if test="@points"><xsl:attribute name="Points"><xsl:value-of select="@points" /></xsl:attribute></xsl:if>
@@ -1120,6 +1311,7 @@ Unknown units are kept.
   </Polyline>
 </xsl:template>
 
+<!-- Path -->
 <xsl:template mode="forward" match="*[name(.) = 'path']">
   <Path>
     <xsl:apply-templates mode="id" select="." />
@@ -1162,6 +1354,7 @@ Unknown units are kept.
   </Path>
 </xsl:template>
 
+<!-- Ellipse -->
 <xsl:template mode="forward" match="*[name(.) = 'ellipse']">
   <Ellipse>
     <xsl:variable name="cx">
@@ -1195,7 +1388,6 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
     <xsl:apply-templates mode="desc" select="." />
-
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1206,6 +1398,7 @@ Unknown units are kept.
   </Ellipse>
 </xsl:template>
 
+<!-- Circle -->
 <xsl:template mode="forward" match="*[name(.) = 'circle']">
   <Ellipse>
     <xsl:variable name="cx">
@@ -1237,7 +1430,6 @@ Unknown units are kept.
     <xsl:apply-templates mode="stroke_linecap" select="." />
 
     <xsl:apply-templates mode="desc" select="." />
-
     <xsl:apply-templates mode="clip" select="." />
 
     <xsl:apply-templates mode="transform" select=".">
@@ -1248,10 +1440,19 @@ Unknown units are kept.
   </Ellipse>
 </xsl:template>
 
+<!--
+// Geometry //
+* Generic clip path template
+* Geometry for circle
+* Geometry for rectangle
+-->
+
+<!-- Generic clip path template -->
 <xsl:template mode="forward" match="*[name(.) = 'clipPath']">
   <xsl:apply-templates mode="geometry" />
 </xsl:template>
 
+<!-- Geometry for circle -->
 <xsl:template mode="geometry" match="*[name(.) = 'circle']">
   <EllipseGeometry>
     <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
@@ -1263,6 +1464,7 @@ Unknown units are kept.
   </EllipseGeometry>
 </xsl:template>
 
+<!-- Geometry for rectangle -->
 <xsl:template mode="geometry" match="*[name(.) = 'rect']">
   <RectangleGeometry>
     <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
