@@ -13,7 +13,8 @@
   </param>
   <param name="dpi" type="float" min="1" max="9999" _gui-text="DPI:">90</param>
   <param name="dimension" type="string" _gui-text="Force Dimension:"></param>
-  <_param name="help-dimension1" type="description">Force Dimension must be set as "&lt;width&gt;x&lt;height&gt;"</_param>
+<!-- i18n. Description duplicated in a fake value attribute in order to make it translatable -->
+  <param name="help-dimension1" type="description" _value="Force Dimension must be set as &lt;width&gt;x&lt;height&gt;">Force Dimension must be set as &lt;width&gt;x&lt;height&gt;</param>
   <_param name="help-dimension2" type="description">If set, this will replace DPI.</_param>
   <param name="bg-color" type="string" _gui-text="Background color:"></param>
   <param name="tab" type="notebook">

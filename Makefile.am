@@ -237,12 +237,13 @@ install-data-local: inkscape.fr.1
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/fr/man1
 	$(INSTALL_DATA) `if [ -f inkscape.fr.1 ]; then :; else echo $(srcdir)/;fi`inkscape.fr.1 $(DESTDIR)$(mandir)/fr/man1/inkscape.1
 
-.PHONY: warn_markup
-noinst_DATA = warn_markup
-warn_markup:
-	@if perl $(srcdir)/po/check-markup $(srcdir)/po/*.po; [ $$? = 1 ]; then \
-	  echo "WARNING: Bad markup found in translations.  Please consider fixing the above problems." >&2; \
-	fi
+#.PHONY: warn_markup
+#noinst_DATA = warn_markup
+#warn_markup:
+#	@if perl $(srcdir)/po/check-markup $(srcdir)/po/*.po; [ $$? = 1 ]; then \
+#	  echo "WARNING: Bad markup found in translations.  Please consider fixing the above problems." >&2; \
+#	fi
+# Removed to avoid false warnings.
 
 .PHONY: check_markup
 check_DATA = check_markup

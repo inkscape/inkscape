@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-05-09 09:54+0200\n"
+"POT-Creation-Date: 2010-05-12 06:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,7 +208,7 @@ msgid "Desaturate"
 msgstr ""
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:15
+#: ../share/extensions/webslicer_create_rect.inx.h:16
 msgid "Grayscale"
 msgstr ""
 
@@ -2443,7 +2443,7 @@ msgid ""
 "This extension optimizes the SVG file according to the following options:\n"
 "    * Simplify colors: convert all colors to #RRGGBB format.\n"
 "    * Style to xml: convert styles into XML attributes.\n"
-"    * Group collapsing: collapse &lt;g&gt; elements.\n"
+"    * Group collapsing: collapse group elements.\n"
 "    * Enable id stripping: remove all un-referenced ID attributes.\n"
 "    * Embed rasters: embed rasters as base64-encoded data.\n"
 "    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator "
@@ -2842,12 +2842,12 @@ msgid "Background color:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:16
+#: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "HTML class atribute:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-#: ../share/extensions/webslicer_create_rect.inx.h:17
+#: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "HTML id atribute:"
 msgstr ""
 
@@ -2882,7 +2882,7 @@ msgid "Undefined (relative to non-floating content size)"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
-#: ../share/extensions/webslicer_create_rect.inx.h:40
+#: ../share/extensions/webslicer_create_rect.inx.h:41
 #: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
@@ -2931,109 +2931,110 @@ msgstr ""
 msgid "DPI:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:11
-msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
-msgstr ""
-
+#. i18n. Description duplicated in a fake value attribute in order to make it translatable
 #: ../share/extensions/webslicer_create_rect.inx.h:12
-msgid "Force Dimension:"
+msgid "Force Dimension must be set as <width>x<height>"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
-msgid "Format:"
+msgid "Force Dimension:"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:14
+msgid "Format:"
+msgstr ""
+
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "GIF specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:18
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "If set, this will replace DPI."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:19
+#: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "JPG specific options"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:20
+#: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:21
+#: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Left Floated Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:22
+#: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Middle and Center"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:23
+#: ../share/extensions/webslicer_create_rect.inx.h:24
 msgid "Middle and Left"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 msgid "Middle and Right"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 #: ../src/extension/extension.cpp:740 ../src/ui/dialog/input.cpp:586
 msgid "Name:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Non Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:27
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Options for HTML export"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 msgid "Palette"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:29
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 msgid "Palette size:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:30
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Position anchor:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:31
+#: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Positioned Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:32
+#: ../share/extensions/webslicer_create_rect.inx.h:33
 msgid "Positioned html block element with the image as Background"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:33
+#: ../share/extensions/webslicer_create_rect.inx.h:34
 msgid "Quality:"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:35
 msgid "Right Floated Image"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_create_rect.inx.h:36
 msgid "Tiled Background (on parent group)"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:36
+#: ../share/extensions/webslicer_create_rect.inx.h:37
 msgid "Top and Center"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:37
+#: ../share/extensions/webslicer_create_rect.inx.h:38
 msgid "Top and Left"
 msgstr ""
 
-#: ../share/extensions/webslicer_create_rect.inx.h:38
+#: ../share/extensions/webslicer_create_rect.inx.h:39
 msgid "Top and right"
 msgstr ""
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:39
+#: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
@@ -7471,11 +7472,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:177 ../src/ui/tool/node.cpp:1193
+#: ../src/display/snap-indicator.cpp:177 ../src/ui/tool/node.cpp:1191
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:180 ../src/ui/tool/node.cpp:1192
+#: ../src/display/snap-indicator.cpp:180 ../src/ui/tool/node.cpp:1190
 msgid "Cusp node"
 msgstr ""
 
@@ -18832,11 +18833,11 @@ msgstr ""
 msgid "Auto-smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1194
+#: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1195
+#: ../src/ui/tool/node.cpp:1193
 msgid "Auto-smooth node"
 msgstr ""
 
