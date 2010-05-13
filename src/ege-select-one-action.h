@@ -145,6 +145,13 @@ void ege_select_one_action_set_active_text( EgeSelectOneAction* action, gchar co
  */
 void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val );
 
+//void ege_select_one_action_set_sensitive( EgeSelectOneAction *action, gint val, gboolean sensitive );
+
+/**
+ * Update sensitive parameters.
+ * @param action The action to update.
+ */
+void ege_select_one_action_update_sensitive( EgeSelectOneAction *action );
 
 /**
  * Returns the column used for the display label.
@@ -196,6 +203,22 @@ gint ege_select_one_action_get_tooltip_column( EgeSelectOneAction* action );
  * @param col column to use.
  */
 void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint col );
+
+
+/**
+ * Returns the column used for tracking sensitivity.
+ *
+ * @param action The action to fetch the sensitive column for.
+ */
+gint ege_select_one_action_get_sensitive_column( EgeSelectOneAction* action );
+
+/**
+ * Sets the column used for sensitivity (if any).
+ *
+ * @param action The action to set the sensitive column for.
+ * @param col column to use.
+ */
+void ege_select_one_action_set_sensitive_column( EgeSelectOneAction* action, gint col );
 
 
 /**

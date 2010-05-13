@@ -67,6 +67,7 @@ static void ege_select_one_action_set_property( GObject* obj, guint propId, cons
 static gint find_text_index(EgeSelectOneAction *act, gchar const* text);
 static void commit_pending_change(EgeSelectOneAction *act);
 static void resync_active( EgeSelectOneAction* act, gint active, gboolean override );
+static void resync_sensitive( EgeSelectOneAction* act );
 static void combo_entry_changed_cb( GtkEntry* widget, gpointer user_data );
 static gboolean combo_entry_focus_lost_cb( GtkWidget *widget, GdkEventFocus *event, gpointer data );
 static void combo_changed_cb( GtkComboBox* widget, gpointer user_data );
@@ -105,6 +106,7 @@ struct _EgeSelectOneActionPrivate
     gint labelColumn;
     gint iconColumn;
     gint tooltipColumn;
+    gint sensitiveColumn;
     gint appearanceMode;
     gint selectionMode;
     gint iconSize;
@@ -125,6 +127,7 @@ enum {
     PROP_LABEL_COLUMN,
     PROP_ICON_COLUMN,
     PROP_TOOLTIP_COLUMN,
+    PROP_SENSITIVE_COLUMN,
     PROP_ICON_PROP,
     PROP_ICON_SIZE,
     PROP_APPEARANCE,
@@ -214,6 +217,14 @@ void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
+                                         PROP_SENSITIVE_COLUMN,
+                                         g_param_spec_int( "sensitive-column",
+                                                           "Sensitive Column",
+                                                          "The column of the model that holds sensitive state",
+                                                           -1, G_MAXINT, -1,
+                                                           (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
                                          PROP_ICON_PROP,
                                          g_param_spec_string( "icon-property",
                                                               "Icon Property",
@@ -265,6 +276,7 @@ void ege_select_one_action_init( EgeSelectOneAction* action )
     action->private_data->labelColumn = 0;
     action->private_data->iconColumn = -1;
     action->private_data->tooltipColumn = -1;
+    action->private_data->sensitiveColumn = -1;
     action->private_data->appearanceMode = APPEARANCE_NONE;
     action->private_data->selectionMode = SELECTION_CLOSED;
     action->private_data->radioActionType = 0;
@@ -347,6 +359,15 @@ void ege_select_one_action_set_active( EgeSelectOneAction* action, gint val )
     g_object_set( G_OBJECT(action), "active", val, NULL );
 }
 
+void ege_select_one_action_update_sensitive( EgeSelectOneAction* action )
+{
+    if( action->private_data->sensitiveColumn < 0 ) {
+        g_warning( "ege_select_one_action: Attempt to update sensitivity of item without sensitive column\n" );
+        return;
+    }
+    resync_sensitive( action );
+}
+
 gint ege_select_one_action_get_label_column( EgeSelectOneAction* action )
 {
     g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
@@ -391,6 +412,17 @@ void ege_select_one_action_set_tooltip_column( EgeSelectOneAction* action, gint 
     g_object_set( G_OBJECT(action), "tooltip-column", col, NULL );
 }
 
+gint ege_select_one_action_get_sensitive_column( EgeSelectOneAction* action )
+{
+    g_return_val_if_fail( IS_EGE_SELECT_ONE_ACTION(action), 0 );
+    return action->private_data->sensitiveColumn;
+}
+
+void ege_select_one_action_set_sensitive_column( EgeSelectOneAction* action, gint col )
+{
+    g_object_set( G_OBJECT(action), "sensitive-column", col, NULL );
+}
+
 void ege_select_one_action_set_appearance( EgeSelectOneAction* action, gchar const* val )
 {
     g_object_set( G_OBJECT(action), "appearance", val, NULL );
@@ -423,6 +455,10 @@ void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* val
 
         case PROP_TOOLTIP_COLUMN:
             g_value_set_int( value, action->private_data->tooltipColumn );
+            break;
+
+        case PROP_SENSITIVE_COLUMN:
+            g_value_set_int( value, action->private_data->sensitiveColumn );
             break;
 
         case PROP_ICON_PROP:
@@ -477,6 +513,12 @@ void ege_select_one_action_set_property( GObject* obj, guint propId, const GValu
         case PROP_TOOLTIP_COLUMN:
         {
             action->private_data->tooltipColumn = g_value_get_int( value );
+        }
+        break;
+
+        case PROP_SENSITIVE_COLUMN:
+        {
+            action->private_data->sensitiveColumn = g_value_get_int( value );
         }
         break;
 
@@ -634,6 +676,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                 gchar* str = 0;
                 gchar* tip = 0;
                 gchar* iconId = 0;
+                gboolean sens = true;
                 /*
                 gint size = 0;
                 */
@@ -648,6 +691,11 @@ GtkWidget* create_tool_item( GtkAction* action )
                 if ( act->private_data->tooltipColumn >= 0 ) {
                     gtk_tree_model_get( act->private_data->model, &iter,
                                         act->private_data->tooltipColumn, &tip,
+                                        -1 );
+                }
+                if ( act->private_data->sensitiveColumn >= 0 ) {
+                    gtk_tree_model_get( act->private_data->model, &iter,
+                                        act->private_data->sensitiveColumn, &sens,
                                         -1 );
                 }
 
@@ -678,6 +726,10 @@ GtkWidget* create_tool_item( GtkAction* action )
                     ract = gtk_radio_action_new( "Name 1", str, tip, iconId, index );
                 }
 
+                if ( act->private_data->sensitiveColumn >= 0 ) {
+                    gtk_action_set_sensitive( GTK_ACTION(ract), sens );
+                }
+ 
                 gtk_radio_action_set_group( ract, group );
                 group = gtk_radio_action_get_group( ract );
 
@@ -853,6 +905,71 @@ void resync_active( EgeSelectOneAction* act, gint active, gboolean override )
 
         g_signal_emit( G_OBJECT(act), signals[CHANGED], 0);
     }
+}
+
+void resync_sensitive( EgeSelectOneAction* act )
+{
+    GSList* proxies = gtk_action_get_proxies( GTK_ACTION(act) );
+    while ( proxies ) {
+        if ( GTK_IS_TOOL_ITEM(proxies->data) ) {
+            /* Search for the things we built up in create_tool_item() */
+            GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
+            if ( children && children->data ) {
+                gpointer combodata = g_object_get_data( G_OBJECT(children->data), "ege-combo-box" );
+                if (!combodata && GTK_IS_ALIGNMENT(children->data)) {
+                    GList *other = gtk_container_get_children( GTK_CONTAINER(children->data) );
+                    combodata = g_object_get_data( G_OBJECT(other->data), "ege-combo-box" );
+                }
+                if ( GTK_IS_COMBO_BOX(combodata) ) {
+                    /* Not implemented */
+                } else if ( GTK_IS_HBOX(children->data) ) {
+                    gpointer data = g_object_get_data( G_OBJECT(children->data), "ege-proxy_action-group" );
+                    if ( data ) {
+                        GSList* group = (GSList*)data;
+                        // List is backwards in group as compared to GtkTreeModel, we better do matching.
+                        while ( group ) {
+                            GtkRadioAction* ract = GTK_RADIO_ACTION(group->data);
+                            const gchar* label = gtk_action_get_label( GTK_ACTION( ract ) );
+
+                            // Search for matching GtkTreeModel entry
+                            GtkTreeIter iter;
+                            gboolean valid;
+                            valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
+                            gboolean sens = true;
+
+                            while( valid ) {
+
+                                gchar* str = 0;
+                                gtk_tree_model_get( act->private_data->model, &iter,
+                                                    act->private_data->labelColumn, &str,
+                                                    -1 );
+
+                                if( strcmp( label, str ) == 0 ) {
+                                    gtk_tree_model_get( act->private_data->model, &iter,
+                                                        act->private_data->sensitiveColumn, &sens,
+                                                        -1 );
+                                    break;
+                                }
+                                g_free( str );
+
+                                valid = gtk_tree_model_iter_next( act->private_data->model, &iter );
+                            }
+
+                            gtk_action_set_sensitive( GTK_ACTION(ract), sens );
+
+                            group = g_slist_next(group);
+                        }
+                    }
+                }
+            }
+        } else if ( GTK_IS_MENU_ITEM(proxies->data) ) {
+            /* Not implemented */
+        }
+        
+        proxies = g_slist_next( proxies );
+    }
+
+    g_signal_emit( G_OBJECT(act), signals[CHANGED], 0);
 }
 
 void combo_changed_cb( GtkComboBox* widget, gpointer user_data )

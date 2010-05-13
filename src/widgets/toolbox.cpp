@@ -7033,31 +7033,37 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textItalicAction), italicSet );
 
 
+
+        EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
         // Alignment
         // Note: SVG 1.1 doesn't include text-align, SVG 1.2 Tiny doesn't include text-align="justify"
         // text-align="justify" was a draft SVG 1.2 item (along with flowed text).
         // Only flowed text can be left and right justified at the same time.
         // Check if we have flowed text and disable botton.
-        // NEED: ege_select_one_action_set_sensitve( )
-        /*
         gboolean isFlow = false;
         for (GSList const *items = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
              items != NULL;
              items = items->next) {
-            const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
-            std::cout << "    " << id << std::endl;
+            // const gchar* id = SP_OBJECT_ID((SPItem *) items->data);
+            // std::cout << "    " << id << std::endl;
             if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
                 isFlow = true;
-                std::cout << "   Found flowed text" << std::endl;
+                // std::cout << "   Found flowed text" << std::endl;
                 break;
             }
         }
-        if( isFlow ) {
-            // enable justify button
-        } else {
-            // disable justify button
-        }
-        */
+
+        // The GtkTreeModel class doesn't have a set function so we can't
+        // simply add an ege_select_one_action_set_sensitive method!
+        // We must set values directly with the GtkListStore and then
+        // ask that the GtkAction update the sensitive parameters.
+        GtkListStore * model = GTK_LIST_STORE( ege_select_one_action_get_model( textAlignAction ) );
+        GtkTreePath * path = gtk_tree_path_new_from_string("3"); // Justify entry
+        GtkTreeIter iter;
+        gtk_tree_model_get_iter( GTK_TREE_MODEL (model), &iter, path );
+        gtk_list_store_set( model, &iter, /* column */ 3, isFlow, -1 );
+        ege_select_one_action_update_sensitive( textAlignAction );
+        // ege_select_one_action_set_sensitive( textAlignAction, 3, isFlow );
 
         int activeButton = 0;
         if (query->text_align.computed  == SP_CSS_TEXT_ALIGN_JUSTIFY)
@@ -7068,7 +7074,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE) activeButton = 1;
             if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_END)    activeButton = 2;
         }
-        EgeSelectOneAction* textAlignAction = EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextAlignAction" ) );
         ege_select_one_action_set_active( textAlignAction, activeButton );
 
 
@@ -7258,7 +7263,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* Alignment */
     {
-        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+        GtkListStore* model = gtk_list_store_new( 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN );
 
         GtkTreeIter iter;
 
@@ -7267,6 +7272,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                             0, _("Align left"),
                             1, _("Align left"),
                             2, GTK_STOCK_JUSTIFY_LEFT,
+                            3, true,
                             -1 );
 
         gtk_list_store_append( model, &iter );
@@ -7274,6 +7280,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                             0, _("Align center"),
                             1, _("Align center"),
                             2, GTK_STOCK_JUSTIFY_CENTER,
+                            3, true,
                             -1 );
 
         gtk_list_store_append( model, &iter );
@@ -7281,6 +7288,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                             0, _("Align right"),
                             1, _("Align right"),
                             2, GTK_STOCK_JUSTIFY_RIGHT,
+                            3, true,
                             -1 );
 
         gtk_list_store_append( model, &iter );
@@ -7288,6 +7296,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                             0, _("Justify"),
                             1, _("Justify - Only flowed text"),
                             2, GTK_STOCK_JUSTIFY_FILL,
+                            3, false,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "TextAlignAction",       // Name
@@ -7305,7 +7314,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         ege_select_one_action_set_icon_column( act, 2 );
         ege_select_one_action_set_icon_size( act, secondarySize );
         ege_select_one_action_set_tooltip_column( act, 1  );
-
+        ege_select_one_action_set_sensitive_column( act, 3 );
         gint mode = prefs->getInt("/tools/text/align_mode", 0);
         ege_select_one_action_set_active( act, mode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_align_mode_changed), holder );
