@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-28 20:44+0200\n"
-"PO-Revision-Date: 2010-05-04 06:48+0100\n"
+"POT-Creation-Date: 2010-05-12 06:48+0200\n"
+"PO-Revision-Date: 2010-05-13 22:39+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgid "Desaturate"
 msgstr "Entsättigen"
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:15
+#: ../share/extensions/webslicer_create_rect.inx.h:16
 msgid "Grayscale"
 msgstr "Graustufen"
 
@@ -2290,7 +2290,7 @@ msgstr "Rechts:"
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:927
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:177
+#: ../src/ui/dialog/icon-preview.cpp:219
 #: ../src/widgets/desktop-widget.cpp:1651
 msgid "Selection"
 msgstr "Auswahl"
@@ -2530,12 +2530,12 @@ msgid "Tab"
 msgstr "Tab"
 
 #: ../share/extensions/scour.inx.h:20
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "This extension optimizes the SVG file according to the following options:\n"
 "    * Simplify colors: convert all colors to #RRGGBB format.\n"
 "    * Style to xml: convert styles into XML attributes.\n"
-"    * Group collapsing: collapse &lt;g&gt; elements.\n"
+"    * Group collapsing: collapse group elements.\n"
 "    * Enable id stripping: remove all un-referenced ID attributes.\n"
 "    * Embed rasters: embed rasters as base64-encoded data.\n"
 "    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.\n"
@@ -2949,12 +2949,12 @@ msgid "Background color:"
 msgstr "Hintergrundfarbe:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:16
+#: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "HTML class atribute:"
 msgstr "HTML Klassen Attribut:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-#: ../share/extensions/webslicer_create_rect.inx.h:17
+#: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "HTML id atribute:"
 msgstr "HTML id Attribut:"
 
@@ -2979,16 +2979,15 @@ msgid "Set a layout group"
 msgstr "Layout-gruppe festlegen"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
-#, fuzzy
 msgid "Slicer"
-msgstr "Streuung"
+msgstr "Schneider"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
 msgid "Undefined (relative to non-floating content size)"
 msgstr "Unbestimmt (relativ zur nicht-schwimmenden Inhaltsgröße)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
-#: ../share/extensions/webslicer_create_rect.inx.h:40
+#: ../share/extensions/webslicer_create_rect.inx.h:41
 #: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
@@ -3035,111 +3034,113 @@ msgstr "Geschnittenes Rechteck erzeugen"
 msgid "DPI:"
 msgstr "DPI:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:11
-msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
+#. i18n. Description duplicated in a fake value attribute in order to make it translatable
+#: ../share/extensions/webslicer_create_rect.inx.h:12
+#, fuzzy
+msgid "Force Dimension must be set as <width>x<height>"
 msgstr "Die erzwungene Dimension muss als  \"&lt;Breite&gt;x&lt;Höhe&gt;\" gesetzt werden."
 
-#: ../share/extensions/webslicer_create_rect.inx.h:12
+#: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "Force Dimension:"
 msgstr "Erzwungene Dimension:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:13
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Format:"
 msgstr "Format:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "GIF specific options"
 msgstr "GIF-spezifische Optionen"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:18
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "If set, this will replace DPI."
 msgstr "Wenn es aktiviert ist, wird der DPI-Wert zurückgesetzt."
 
-#: ../share/extensions/webslicer_create_rect.inx.h:19
+#: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "JPG specific options"
 msgstr "JPG-spezifische Optionen"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:20
+#: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
 msgstr "Layout-Anordnung:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:21
+#: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Left Floated Image"
 msgstr "Links schwebendes Bild"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:22
-msgid "Middle and Center"
-msgstr ""
-
 #: ../share/extensions/webslicer_create_rect.inx.h:23
+msgid "Middle and Center"
+msgstr "Mitte und Zentrum"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:24
 msgid "Middle and Left"
 msgstr "Mittig und Links"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 msgid "Middle and Right"
 msgstr "Mittig und rechts"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 #: ../src/extension/extension.cpp:740
 #: ../src/ui/dialog/input.cpp:586
 msgid "Name:"
 msgstr "Name:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Non Positioned Image"
 msgstr "Nicht positioniertes Bild"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:27
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Options for HTML export"
 msgstr "Optionen für den HTML-Export"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 msgid "Palette"
 msgstr "Palette"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:29
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 msgid "Palette size:"
 msgstr "Palettengröße:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:30
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Position anchor:"
 msgstr "Positionspunkt:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:31
+#: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Positioned Image"
 msgstr "Positioniertes Bild"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:32
+#: ../share/extensions/webslicer_create_rect.inx.h:33
 #, fuzzy
 msgid "Positioned html block element with the image as Background"
 msgstr "Positioniert &lt;div&gt; mit dem Bild als Hintergrund"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:33
+#: ../share/extensions/webslicer_create_rect.inx.h:34
 msgid "Quality:"
 msgstr "Qualität:"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:35
 msgid "Right Floated Image"
 msgstr "Rechts schwebendes Bild"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_create_rect.inx.h:36
 msgid "Tiled Background (on parent group)"
 msgstr "gekachelter Hintergrund (an Vorgängergruppe)"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:36
+#: ../share/extensions/webslicer_create_rect.inx.h:37
 msgid "Top and Center"
 msgstr "Oben und Zentriert"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:37
+#: ../share/extensions/webslicer_create_rect.inx.h:38
 msgid "Top and Left"
 msgstr "Oben und Links"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:38
+#: ../share/extensions/webslicer_create_rect.inx.h:39
 msgid "Top and right"
 msgstr "Oben und Rechts"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:39
+#: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
@@ -7718,12 +7719,12 @@ msgid "Bounding box side midpoint"
 msgstr "Mitte der Umrandungslinie"
 
 #: ../src/display/snap-indicator.cpp:177
-#: ../src/ui/tool/node.cpp:1193
+#: ../src/ui/tool/node.cpp:1191
 msgid "Smooth node"
 msgstr "glatter Knoten"
 
 #: ../src/display/snap-indicator.cpp:180
-#: ../src/ui/tool/node.cpp:1192
+#: ../src/ui/tool/node.cpp:1190
 msgid "Cusp node"
 msgstr "Spitzer Knoten"
 
@@ -15848,18 +15849,23 @@ msgstr "Führungslinien ID: %s"
 msgid "Current: %s"
 msgstr "Aktuell: %s"
 
-#: ../src/ui/dialog/icon-preview.cpp:129
+#: ../src/ui/dialog/icon-preview.cpp:138
 #, c-format
 msgid "%d x %d"
 msgstr "%d × %d"
 
-#: ../src/ui/dialog/icon-preview.cpp:179
+#: ../src/ui/dialog/icon-preview.cpp:150
+#, fuzzy
+msgid "Magnified:"
+msgstr "Stärke"
+
+#: ../src/ui/dialog/icon-preview.cpp:214
+msgid "Actual Size:"
+msgstr "Aktuelle Größe:"
+
+#: ../src/ui/dialog/icon-preview.cpp:221
 msgid "Selection only or whole document"
 msgstr "Nur Auswahl oder ganzes Dokument"
-
-#: ../src/ui/dialog/icon-preview.cpp:187
-msgid "Refresh the icons"
-msgstr "Icons aktualisieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Mouse"
@@ -17200,8 +17206,8 @@ msgid "Numeric precision:"
 msgstr "Genauigkeit:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-msgid "How many digits to write after the decimal dot"
-msgstr "Wie viele Stellen nach dem Dezimalpunkt geschrieben werden"
+msgid "Significant figures of the values written to the SVG file"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Minimum exponent:"
@@ -17791,23 +17797,20 @@ msgstr "Testgebiet"
 
 #: ../src/ui/dialog/input.cpp:578
 #: ../src/ui/dialog/input.cpp:728
-#, fuzzy
 msgid "Hardware"
-msgstr "Stacheldraht"
+msgstr "Hardware"
 
 #: ../src/ui/dialog/input.cpp:596
 msgid "Link:"
 msgstr "Verknüpfung:"
 
 #: ../src/ui/dialog/input.cpp:611
-#, fuzzy
 msgid "Axes count:"
-msgstr "Menge"
+msgstr "Achsenanzahl:"
 
 #: ../src/ui/dialog/input.cpp:634
-#, fuzzy
 msgid "axis:"
-msgstr "Radius:"
+msgstr "Achse:"
 
 #: ../src/ui/dialog/input.cpp:646
 #, fuzzy
@@ -18851,11 +18854,11 @@ msgstr "Symmetrischer Knotenanfasser"
 msgid "Auto-smooth node handle"
 msgstr "Knotenanfasser automatisch abrunden"
 
-#: ../src/ui/tool/node.cpp:1194
+#: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
 msgstr "symmetrischer Knoten"
 
-#: ../src/ui/tool/node.cpp:1195
+#: ../src/ui/tool/node.cpp:1193
 msgid "Auto-smooth node"
 msgstr "Knoten automatisch glätten"
 
@@ -22365,16 +22368,14 @@ msgid "Show Transform Handles"
 msgstr "Anfasser zeigen"
 
 #: ../src/widgets/toolbox.cpp:1510
-#, fuzzy
 msgid "Show transformation handles for selected nodes"
-msgstr "Zeige Anfasser für einzelne Knoten"
+msgstr "Zeige Anfasser für gewählte Knoten"
 
 #: ../src/widgets/toolbox.cpp:1520
 msgid "Show Handles"
 msgstr "Anfasser zeigen"
 
 #: ../src/widgets/toolbox.cpp:1521
-#, fuzzy
 msgid "Show Bezier handles of selected nodes"
 msgstr "Die Bézier-Anfasser von ausgewählten Knoten anzeigen"
 
@@ -22383,16 +22384,14 @@ msgid "Show Outline"
 msgstr "Umriss zeigen"
 
 #: ../src/widgets/toolbox.cpp:1532
-#, fuzzy
 msgid "Show path outline (without path effects)"
-msgstr "Zeige Entwurfspfad"
+msgstr "Zeige Entwurfspfad (ohne Pfadeffekte)"
 
 #: ../src/widgets/toolbox.cpp:1542
 msgid "Next path effect parameter"
 msgstr "Nächster Pfad-Effekt-Parameter"
 
 #: ../src/widgets/toolbox.cpp:1543
-#, fuzzy
 msgid "Show next editable path effect parameter"
 msgstr "Nächster Pfad-Effekt-Parameter"
 
@@ -22401,7 +22400,6 @@ msgid "Edit clipping paths"
 msgstr "Ausschneidepfad bearbeiten"
 
 #: ../src/widgets/toolbox.cpp:1554
-#, fuzzy
 msgid "Show clipping path(s) of selected object(s)"
 msgstr "Zeige Bézier-Anfasser für Ausschneidungspfade an ausgewählten Objekten"
 
@@ -22410,7 +22408,6 @@ msgid "Edit masks"
 msgstr "Maskierung bearbeiten"
 
 #: ../src/widgets/toolbox.cpp:1565
-#, fuzzy
 msgid "Show mask(s) of selected object(s)"
 msgstr "Zeige Bézier-Anfasser für Maskierungen an ausgewählten Objekten"
 
@@ -24174,6 +24171,12 @@ msgstr "Kippen [Grad]"
 #: ../share/extensions/wireframe_sphere.inx.h:8
 msgid "Wireframe Sphere"
 msgstr "Draht-Sphäre (Kugel)"
+
+#~ msgid "Refresh the icons"
+#~ msgstr "Icons aktualisieren"
+
+#~ msgid "How many digits to write after the decimal dot"
+#~ msgstr "Wie viele Stellen nach dem Dezimalpunkt geschrieben werden"
 
 #~ msgid "Color/opacity used for color spraying"
 #~ msgstr "Farbe/Opazität zum Farbsprühen"
