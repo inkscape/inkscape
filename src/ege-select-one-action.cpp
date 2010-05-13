@@ -665,7 +665,10 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             gchar*  sss = 0;
             g_object_get( G_OBJECT(action), "short_label", &sss, NULL );
-            if (sss) {
+            // If short_label not defined, g_object_get will return label.
+            // This hack allows a label to be used with a drop-down menu when
+            // no label is used with a set of icons that are self-explanatory.
+            if (sss && strcmp( sss, "NotUsed" ) != 0 ) {
                 GtkWidget* lbl;
                 lbl = gtk_label_new(sss);
                 gtk_box_pack_start( GTK_BOX(holder), lbl, FALSE, FALSE, 4 );

@@ -7304,7 +7304,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                              _("Text Alignment"),     // Tooltip
                                                              NULL,                    // StockID
                                                              GTK_TREE_MODEL(model) ); // Model
-        g_object_set( act, "short_label", _("Align"), NULL );
+        g_object_set( act, "short_label", "NotUsed", NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "TextAlignAction", act );
 
@@ -7346,7 +7346,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                              NULL,                    // StockID
                                                              GTK_TREE_MODEL(model) ); // Model
 
-        g_object_set( act, "short_label", _("O:"), NULL );
+        g_object_set( act, "short_label", "NotUsed", NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "TextOrientationAction", act );
 
