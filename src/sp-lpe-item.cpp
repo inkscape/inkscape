@@ -772,6 +772,9 @@ bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathE
     return false;
 }
 
+/**
+ *  Note that this method messes up the item's \c PathEffectList.
+ */
 void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * old_lpeobj,
                                         LivePathEffectObject * new_lpeobj)
 {

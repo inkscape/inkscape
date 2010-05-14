@@ -1377,22 +1377,36 @@ sp_item_adjust_livepatheffect (SPItem *item, Geom::Matrix const &postmul, bool s
 
     SPLPEItem *lpeitem = SP_LPE_ITEM (item);
     if ( sp_lpe_item_has_path_effect(lpeitem) ) {
+        // If one of the path effects is used by 2 or more items, fork it
+        // so that each object has its own independent copy of the effect.
+        // Forking messes up the path effect list, so after each fork,
+        // reload the list and recheck if more forking is required.
+        bool forked = false;
+        do {
+            forked = false;
+            PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+            for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+            {
+                LivePathEffectObject *lpeobj = (*it)->lpeobject;
+                if (lpeobj) {
+                    LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
+                    if (new_lpeobj != lpeobj) {
+                        sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
+                        forked = true;
+                        break;  // forked, so break the for-loop and recheck
+                    }
+                }
+            }
+        } while (forked);
+
+        // now that all LPEs are forked_if_necessary, we can apply the transform
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
         for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
         {
-            // If the path effect is used by 2 or more items, fork it
-            // so that each object has its own independent copy of the effect
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
-            if (lpeobj) {
-                LivePathEffectObject *new_lpeobj = lpeobj->fork_private_if_necessary();
-                if (new_lpeobj != lpeobj) {
-                    sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
-                }
-
-                if (lpeobj->get_lpe()) {
-                    Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
-                    effect->transform_multiply(postmul, set);
-                }
+            if (lpeobj && lpeobj->get_lpe()) {
+                Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
+                effect->transform_multiply(postmul, set);
             }
         }
     }

@@ -252,11 +252,12 @@ LivePathEffectObject::fork_private_if_necessary(unsigned int nr_of_allowed_users
     if (SP_OBJECT_HREFCOUNT(this) > nr_of_allowed_users) {
         SPDocument *doc = SP_OBJECT_DOCUMENT(this);
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+        Inkscape::XML::Node *dup_repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);
 
-        Inkscape::XML::Node *repr = SP_OBJECT_REPR (this)->duplicate(xml_doc);
-        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(repr, NULL);
-        LivePathEffectObject *lpeobj_new = (LivePathEffectObject *) doc->getObjectByRepr(repr);
-        Inkscape::GC::release(repr);
+        SP_OBJECT_REPR (SP_DOCUMENT_DEFS (doc))->addChild(dup_repr, NULL);
+        LivePathEffectObject *lpeobj_new = LIVEPATHEFFECT( doc->getObjectByRepr(dup_repr) );
+
+        Inkscape::GC::release(dup_repr);
         return lpeobj_new;
     }
     return this;
