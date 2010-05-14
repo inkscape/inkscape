@@ -173,7 +173,6 @@ Limited to one filter (can be improved) -->
         <BlurEffect>
             <xsl:if test="../@id"><xsl:attribute name="x:Key"><xsl:value-of select="../@id" /></xsl:attribute></xsl:if>
             <xsl:if test="@stdDeviation"><xsl:attribute name="Radius"><xsl:value-of select="round(@stdDeviation * 3)" /></xsl:attribute></xsl:if>
-            <xsl:attribute name="KernelType">Gaussian</xsl:attribute>
         </BlurEffect>  
 </xsl:template>
 
