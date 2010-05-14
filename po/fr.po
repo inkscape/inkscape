@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-28 20:44+0200\n"
-"PO-Revision-Date: 2010-04-28 20:44+0100\n"
+"POT-Creation-Date: 2010-05-12 06:48+0200\n"
+"PO-Revision-Date: 2010-05-14 08:51+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgid "Desaturate"
 msgstr "Désaturer"
 
 #: ../share/extensions/color_grayscale.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:15
+#: ../share/extensions/webslicer_create_rect.inx.h:16
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
@@ -1694,7 +1694,7 @@ msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr "Facteur d'échelle (Dessin:Longueur rééelle) = 1"
 
 #: ../share/extensions/measure.inx.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This effect measures the length, or area, of the selected path and adds it as a text-on-path object with the selected unit.\n"
 "            \n"
@@ -1702,7 +1702,13 @@ msgid ""
 "  * The Offset field controls the distance from the text to the path.\n"
 "  * The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250.\n"
 "  * When calculating area, the result should be precise for polygons and Bezier curves. If a circle is used, the area may be too high by as much as 0.03%."
-msgstr "Cet effet mesure la longueur du chemin sélectionné et l'ajoute comme un objet « texte le long du chemin » avec l'unité sélectionnée. Le nombre de chiffres affichés peut être contrôlé par le champ « Précision ». Le champ Décalage contrôle la distance entre le texte et le chemin. Le facteur d'échelle peut être utilisé pour réaliser des mesures dans des dessins à l'échelle. Par exemple, si 1 cm dans le dessin est égal à 2,5 m en réalité, le facteur d'échelle doit être réglé à 250."
+msgstr ""
+"Cet effet mesure la longueur ou l'aire du chemin sélectionné et l'ajoute comme un objet « texte le long du chemin » avec l'unité sélectionnée.\n"
+"\n"
+"  * Le nombre de chiffres affichés peut être contrôlé par le champ « Précision ».\n"
+"  * Le champ Décalage contrôle la distance entre le texte et le chemin.\n"
+"  * Le facteur d'échelle peut être utilisé pour réaliser des mesures dans des dessins à l'échelle. Par exemple, si 1 cm dans le dessin est égal à 2,5 m en réalité, le facteur d'échelle doit être réglé à 250.\n"
+"  * Lors du calcul de l'aire, le résultat devrait être précis pour les polygones et les courbes de Bézier. Si un cercle est utilisé, l'aire pourrait être jusqu'à 0,03 % supérieure à la valeur attendue."
 
 #: ../share/extensions/motion.inx.h:1
 #: ../share/extensions/restack.inx.h:1
@@ -1862,7 +1868,7 @@ msgstr "Décalage tangentiel"
 
 #: ../share/extensions/pathalongpath.inx.h:16
 msgid "This effect bends a pattern object along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection. (groups of paths/shapes/clones... allowed)"
-msgstr "Cet effet courbe un objet de motif le long de chemins « squelettes » arbitraire. Le motif est l'objet le plus haut dans la sélection. (les groupes de chemins/formes/clones... sont permis.)"
+msgstr "Cet effet courbe un objet de motif le long de chemins « squelettes » arbitraire. Le motif est l'objet le plus haut dans la sélection (les groupes de chemins, les formes et les clones sont permis)."
 
 #: ../share/extensions/pathscatter.inx.h:1
 msgid "Cloned"
@@ -2279,7 +2285,7 @@ msgstr "Droite :"
 #: ../share/extensions/printing-marks.inx.h:16
 #: ../src/ui/dialog/align-and-distribute.cpp:927
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1414
-#: ../src/ui/dialog/icon-preview.cpp:177
+#: ../src/ui/dialog/icon-preview.cpp:219
 #: ../src/widgets/desktop-widget.cpp:1651
 msgid "Selection"
 msgstr "Sélection"
@@ -2524,7 +2530,7 @@ msgid ""
 "This extension optimizes the SVG file according to the following options:\n"
 "    * Simplify colors: convert all colors to #RRGGBB format.\n"
 "    * Style to xml: convert styles into XML attributes.\n"
-"    * Group collapsing: collapse &lt;g&gt; elements.\n"
+"    * Group collapsing: collapse group elements.\n"
 "    * Enable id stripping: remove all un-referenced ID attributes.\n"
 "    * Embed rasters: embed rasters as base64-encoded data.\n"
 "    * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.\n"
@@ -2536,7 +2542,7 @@ msgstr ""
 "Cette extension optimise le fichier SVG en fonction des options suivantes :\n"
 "    * Simplifier les couleurs : convertit toutes les couleurs au format #RRVVBB.\n"
 "    * Style en XML : convertit les styles en attributs XML.\n"
-"    * Réduire les groupes : réduit les éléments &lt;g&gt;.\n"
+"    * Réduire les groupes : réduit les éléments de type groupe.\n"
 "    * Supprimer les identifiants : supprime tous les attributs ID non référencés.\n"
 "    * Incorporer les images matricielles : incorpore les images matricielles sous la forme de données encodées en base 64.\n"
 "    * Conserver les données d'édition : ne supprime pas les éléments et attributs issus d'Inkcape, Sodipodi ou Adobe Illustrator.\n"
@@ -2932,12 +2938,12 @@ msgid "Background color:"
 msgstr "Couleur de fond :"
 
 #: ../share/extensions/webslicer_create_group.inx.h:2
-#: ../share/extensions/webslicer_create_rect.inx.h:16
+#: ../share/extensions/webslicer_create_rect.inx.h:17
 msgid "HTML class atribute:"
 msgstr "Attribut de classe HTML :"
 
 #: ../share/extensions/webslicer_create_group.inx.h:3
-#: ../share/extensions/webslicer_create_rect.inx.h:17
+#: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "HTML id atribute:"
 msgstr "Attribut HTML id :"
 
@@ -2947,7 +2953,7 @@ msgstr "Unité de hauteur :"
 
 #: ../share/extensions/webslicer_create_group.inx.h:5
 msgid "Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some \"Slicer rectangles\" first."
-msgstr ""
+msgstr "Le but du groupe de composants est d'aider à générer un meilleur code (si nécessaire). Pour l'utiliser, vous devez d'abord sélectionner des « Filtres rectangulaires »."
 
 #: ../share/extensions/webslicer_create_group.inx.h:6
 msgid "Percent (relative to parent size)"
@@ -2962,16 +2968,15 @@ msgid "Set a layout group"
 msgstr "Définir un groupe de composants"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
-#, fuzzy
 msgid "Slicer"
-msgstr "Éparpiller"
+msgstr "Filtre"
 
 #: ../share/extensions/webslicer_create_group.inx.h:10
 msgid "Undefined (relative to non-floating content size)"
 msgstr "Indéfini (relatif à une taille de contenu fixe)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:11
-#: ../share/extensions/webslicer_create_rect.inx.h:40
+#: ../share/extensions/webslicer_create_rect.inx.h:41
 #: ../share/extensions/webslicer_export.inx.h:5
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
@@ -3011,118 +3016,118 @@ msgid "Bottom and Right"
 msgstr "Bas et droite"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:9
-#, fuzzy
 msgid "Create a slicer rectangle"
-msgstr "Créer un rectangle"
+msgstr "Créer un filtre rectangulaire"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:10
 msgid "DPI:"
 msgstr "PPP :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:11
-msgid "Force Dimension must be set as \"&lt;width&gt;x&lt;height&gt;\""
-msgstr "Imposer la dimension doit être défini sous la forme« &lt;width&gt;x&lt;height&gt; »"
-
+#. i18n. Description duplicated in a fake value attribute in order to make it translatable
 #: ../share/extensions/webslicer_create_rect.inx.h:12
+msgid "Force Dimension must be set as <width>x<height>"
+msgstr "Imposer la dimension doit être défini sous la forme « <width>x<height> »"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "Force Dimension:"
 msgstr "Imposer la dimension :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:13
+#: ../share/extensions/webslicer_create_rect.inx.h:14
 msgid "Format:"
 msgstr "Format :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:14
+#: ../share/extensions/webslicer_create_rect.inx.h:15
 msgid "GIF specific options"
 msgstr "Options spécifiques GIF"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:18
+#: ../share/extensions/webslicer_create_rect.inx.h:19
 msgid "If set, this will replace DPI."
 msgstr "Si cette option est sélectionnée, remplace le paramètre PPP."
 
-#: ../share/extensions/webslicer_create_rect.inx.h:19
+#: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "JPG specific options"
 msgstr "Options spécifiques JPG"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:20
+#: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
 msgstr "Disposition de la mise en page :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:21
+#: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Left Floated Image"
 msgstr "Image flottante à gauche"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:22
+#: ../share/extensions/webslicer_create_rect.inx.h:23
 msgid "Middle and Center"
 msgstr "Milieu et centre"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:23
+#: ../share/extensions/webslicer_create_rect.inx.h:24
 msgid "Middle and Left"
 msgstr "Milieu et gauche"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:24
+#: ../share/extensions/webslicer_create_rect.inx.h:25
 msgid "Middle and Right"
 msgstr "Milieu et droite"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:25
+#: ../share/extensions/webslicer_create_rect.inx.h:26
 #: ../src/extension/extension.cpp:740
 #: ../src/ui/dialog/input.cpp:586
 msgid "Name:"
 msgstr "Nom :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:26
+#: ../share/extensions/webslicer_create_rect.inx.h:27
 msgid "Non Positioned Image"
 msgstr "Image non positionnée"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:27
+#: ../share/extensions/webslicer_create_rect.inx.h:28
 msgid "Options for HTML export"
 msgstr "Options pour l'exportation HTML"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:28
+#: ../share/extensions/webslicer_create_rect.inx.h:29
 msgid "Palette"
 msgstr "Palette"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:29
+#: ../share/extensions/webslicer_create_rect.inx.h:30
 msgid "Palette size:"
 msgstr "Taille de la palette :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:30
+#: ../share/extensions/webslicer_create_rect.inx.h:31
 msgid "Position anchor:"
 msgstr "Position de l'ancre :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:31
+#: ../share/extensions/webslicer_create_rect.inx.h:32
 msgid "Positioned Image"
 msgstr "Image positionnée"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:32
-msgid "Positioned html block element with the image as Background"
-msgstr ""
-
 #: ../share/extensions/webslicer_create_rect.inx.h:33
+msgid "Positioned html block element with the image as Background"
+msgstr "Élément bloc HTML positionné avec l'image en fond"
+
+#: ../share/extensions/webslicer_create_rect.inx.h:34
 msgid "Quality:"
 msgstr "Qualité :"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:34
+#: ../share/extensions/webslicer_create_rect.inx.h:35
 msgid "Right Floated Image"
 msgstr "Image flottante à droite"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:35
+#: ../share/extensions/webslicer_create_rect.inx.h:36
 msgid "Tiled Background (on parent group)"
 msgstr "Arrière plan en mosaïque (sur le groupe parent)"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:36
+#: ../share/extensions/webslicer_create_rect.inx.h:37
 msgid "Top and Center"
 msgstr "Haut et centre"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:37
+#: ../share/extensions/webslicer_create_rect.inx.h:38
 msgid "Top and Left"
 msgstr "Haut et gauche"
 
-#: ../share/extensions/webslicer_create_rect.inx.h:38
+#: ../share/extensions/webslicer_create_rect.inx.h:39
 msgid "Top and right"
 msgstr "Haut et droite"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
-#: ../share/extensions/webslicer_create_rect.inx.h:39
+#: ../share/extensions/webslicer_create_rect.inx.h:40
 #: ../src/dialogs/object-attributes.cpp:34
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2174
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2252
@@ -3131,7 +3136,7 @@ msgstr "Type :"
 
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid "All sliced images, and optionally code, will be generated as you had configured and saved to one directory."
-msgstr ""
+msgstr "Les images filtrées, et éventuellement le code, seront générés comme configuré et enregistrés dans un dossier."
 
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Create directory, if it does not exists"
@@ -3143,7 +3148,7 @@ msgstr "Dossier destinataire de l'exportation :"
 
 #: ../share/extensions/webslicer_export.inx.h:4
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "Exporter les composants et le code HTML+CSS"
 
 #: ../share/extensions/webslicer_export.inx.h:6
 msgid "With HTML and CSS"
@@ -7684,12 +7689,12 @@ msgid "Bounding box side midpoint"
 msgstr "Milieu de bord de boîte englobante"
 
 #: ../src/display/snap-indicator.cpp:177
-#: ../src/ui/tool/node.cpp:1193
+#: ../src/ui/tool/node.cpp:1191
 msgid "Smooth node"
 msgstr "Nœuds doux"
 
 #: ../src/display/snap-indicator.cpp:180
-#: ../src/ui/tool/node.cpp:1192
+#: ../src/ui/tool/node.cpp:1190
 msgid "Cusp node"
 msgstr "Point de rebroussement"
 
@@ -13932,12 +13937,11 @@ msgstr "Enregistrement"
 #: ../src/ui/dialog/color-item.cpp:116
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr ""
+msgstr "Couleur : <b>%s</b> ; <b>Clic</b> pour définir le remplissage, <b>Maj + clic</b> pour définir le contour"
 
 #: ../src/ui/dialog/color-item.cpp:490
-#, fuzzy
 msgid "Change color definition"
-msgstr "Texte : modifier l'orientation"
+msgstr "Modifier la définition de la couleur"
 
 #: ../src/ui/dialog/color-item.cpp:695
 msgid "Remove stroke color"
@@ -13948,24 +13952,20 @@ msgid "Remove fill color"
 msgstr "Supprimer la couleur de remplissage"
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set stroke color to none"
-msgstr "Appliquer une couleur de contour"
+msgstr "Appliquer une couleur de contour nulle"
 
 #: ../src/ui/dialog/color-item.cpp:700
-#, fuzzy
 msgid "Set fill color to none"
-msgstr "Appliquer une couleur de remplissage"
+msgstr "Appliquer une couleur de remplissage nulle"
 
 #: ../src/ui/dialog/color-item.cpp:716
-#, fuzzy
 msgid "Set stroke color from swatch"
-msgstr "Appliquer une couleur de contour"
+msgstr "Appliquer une couleur de contour à partir de l'échantillon"
 
 #: ../src/ui/dialog/color-item.cpp:716
-#, fuzzy
 msgid "Set fill color from swatch"
-msgstr "Appliquer une couleur de remplissage"
+msgstr "Appliquer une couleur de remplissage à partir de l'échantillon"
 
 #: ../src/ui/dialog/debug.cpp:68
 msgid "Messages"
@@ -15762,18 +15762,22 @@ msgstr "Id de la ligne de guide : %s"
 msgid "Current: %s"
 msgstr "Courant : %s"
 
-#: ../src/ui/dialog/icon-preview.cpp:129
+#: ../src/ui/dialog/icon-preview.cpp:138
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/ui/dialog/icon-preview.cpp:179
+#: ../src/ui/dialog/icon-preview.cpp:150
+msgid "Magnified:"
+msgstr "Aggrandi :"
+
+#: ../src/ui/dialog/icon-preview.cpp:214
+msgid "Actual Size:"
+msgstr "Taille réelle :"
+
+#: ../src/ui/dialog/icon-preview.cpp:221
 msgid "Selection only or whole document"
 msgstr "Seulement la sélection ou tout le document"
-
-#: ../src/ui/dialog/icon-preview.cpp:187
-msgid "Refresh the icons"
-msgstr "Rafraîchir les icônes"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Mouse"
@@ -16942,9 +16946,8 @@ msgid "Device rendering intent:"
 msgstr "Intention de rendu du périphérique :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:945
-#, fuzzy
 msgid "The rendering intent to use to calibrate device output"
-msgstr "L'intention de rendu à utiliser pour calibrer la sortie de l'affichage"
+msgstr "L'intention de rendu à utiliser pour calibrer le périphérique de sortie"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:947
 msgid "Black point compensation"
@@ -17110,8 +17113,8 @@ msgid "Numeric precision:"
 msgstr "Précision numérique :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-msgid "How many digits to write after the decimal dot"
-msgstr "Combien de chiffres écrire après le point décimal"
+msgid "Significant figures of the values written to the SVG file"
+msgstr "Nombre de chiffres significatifs des valeurs écrites dans le fichier SVG"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Minimum exponent:"
@@ -17705,18 +17708,16 @@ msgid "Link:"
 msgstr "Lien :"
 
 #: ../src/ui/dialog/input.cpp:611
-#, fuzzy
 msgid "Axes count:"
-msgstr "Quantité :"
+msgstr "Nombre d'axes :"
 
 #: ../src/ui/dialog/input.cpp:634
 msgid "axis:"
 msgstr "axe :"
 
 #: ../src/ui/dialog/input.cpp:646
-#, fuzzy
 msgid "Button count:"
-msgstr "Bouton"
+msgstr "Nombre de boutons :"
 
 #: ../src/ui/dialog/input.cpp:732
 msgid "Tablet"
@@ -17725,7 +17726,7 @@ msgstr "Tablette"
 #: ../src/ui/dialog/input.cpp:752
 #: ../src/ui/dialog/input.cpp:1430
 msgid "pad"
-msgstr ""
+msgstr "pad"
 
 #: ../src/ui/dialog/layer-properties.cpp:41
 msgid "Layer name:"
@@ -18751,11 +18752,11 @@ msgstr "Poignée de nœud symétrique"
 msgid "Auto-smooth node handle"
 msgstr "Poignée de nœud automatique"
 
-#: ../src/ui/tool/node.cpp:1194
+#: ../src/ui/tool/node.cpp:1192
 msgid "Symmetric node"
 msgstr "Nœud symétrique"
 
-#: ../src/ui/tool/node.cpp:1195
+#: ../src/ui/tool/node.cpp:1193
 msgid "Auto-smooth node"
 msgstr "Nœud automatique"
 
@@ -22089,9 +22090,8 @@ msgid "Set stroke style"
 msgstr "Appliquer un style de contour"
 
 #: ../src/widgets/swatch-selector.cpp:139
-#, fuzzy
 msgid "Change swatch color"
-msgstr "Modifier la couleur d'un stop de dégradé"
+msgstr "Modifier la couleur de l'échantillon"
 
 #: ../src/widgets/toolbox.cpp:214
 msgid "Color/opacity used for color tweaking"
@@ -22259,16 +22259,14 @@ msgid "Show Transform Handles"
 msgstr "Afficher les poignées de transformation"
 
 #: ../src/widgets/toolbox.cpp:1510
-#, fuzzy
 msgid "Show transformation handles for selected nodes"
-msgstr "Afficher les poignées de transformation pour les nœuds simples"
+msgstr "Afficher les poignées de transformation pour les nœuds sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:1520
 msgid "Show Handles"
 msgstr "Afficher les poignées"
 
 #: ../src/widgets/toolbox.cpp:1521
-#, fuzzy
 msgid "Show Bezier handles of selected nodes"
 msgstr "Afficher les poignées de Bézier des nœuds sélectionnés"
 
@@ -22277,36 +22275,32 @@ msgid "Show Outline"
 msgstr "Afficher le contour"
 
 #: ../src/widgets/toolbox.cpp:1532
-#, fuzzy
 msgid "Show path outline (without path effects)"
-msgstr "Afficher le contour du chemin"
+msgstr "Afficher le contour du chemin (sans les effets de chemin)"
 
 #: ../src/widgets/toolbox.cpp:1542
 msgid "Next path effect parameter"
 msgstr "Paramètre de l'effect de chemin suivant"
 
 #: ../src/widgets/toolbox.cpp:1543
-#, fuzzy
 msgid "Show next editable path effect parameter"
-msgstr "Paramètre de l'effect de chemin suivant"
+msgstr "Afficher le paramètre de l'effet de chemin suivant"
 
 #: ../src/widgets/toolbox.cpp:1553
 msgid "Edit clipping paths"
 msgstr "Modifier les chemins de découpe"
 
 #: ../src/widgets/toolbox.cpp:1554
-#, fuzzy
 msgid "Show clipping path(s) of selected object(s)"
-msgstr "Afficher les contrôles d'édition des chemins de découpe des objets sélectionnés"
+msgstr "Afficher les chemins de découpe des objets sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:1564
 msgid "Edit masks"
 msgstr "Modifier les masques"
 
 #: ../src/widgets/toolbox.cpp:1565
-#, fuzzy
 msgid "Show mask(s) of selected object(s)"
-msgstr "Afficher les contrôles d'édition des masques des objets sélectionnés"
+msgstr "Afficher les masques des objets sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:1579
 msgid "X coordinate:"
@@ -23709,9 +23703,8 @@ msgid "Font Family"
 msgstr "Famille de police"
 
 #: ../src/widgets/toolbox.cpp:7184
-#, fuzzy
 msgid "Select Font Family (Alt-X to access)"
-msgstr "Sélectionner une famille de police (Alt+X)"
+msgstr "Sélectionner une famille de police (Alt+X pour y accéder)"
 
 #. Entry width
 #. Extra list width
@@ -23731,49 +23724,46 @@ msgstr "Définir la taille de la police"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7236
-#, fuzzy
 msgid "Toggle Bold"
-msgstr "Al_terner"
+msgstr "Basculer le style Gras"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7237
 msgid "Toggle On/Off Bold Style"
-msgstr ""
+msgstr "Basculer le style Gras"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7249
 msgid "Toggle Italic/Oblique"
-msgstr ""
+msgstr "Basculer le style Italique ou Oblique"
 
 #. Label
 #: ../src/widgets/toolbox.cpp:7250
 msgid "Toggle On/Off Italic/Oblique Style"
-msgstr ""
+msgstr "Basculer le style Italique ou Oblique"
 
 #: ../src/widgets/toolbox.cpp:7267
 #: ../src/widgets/toolbox.cpp:7268
 msgid "Align left"
-msgstr "Aligné à gauche"
+msgstr "Aligner à gauche"
 
 #: ../src/widgets/toolbox.cpp:7274
 #: ../src/widgets/toolbox.cpp:7275
-#, fuzzy
 msgid "Align center"
-msgstr "Aligné à gauche"
+msgstr "Centrer"
 
 #: ../src/widgets/toolbox.cpp:7281
 #: ../src/widgets/toolbox.cpp:7282
 msgid "Align right"
-msgstr "Aligné à droite"
+msgstr "Aligner à droite"
 
 #: ../src/widgets/toolbox.cpp:7288
 msgid "Justify"
-msgstr "Justifiié"
+msgstr "Justifiier"
 
 #: ../src/widgets/toolbox.cpp:7289
-#, fuzzy
 msgid "Justify - Only flowed text"
-msgstr "Désencadrer un texte encadré"
+msgstr "Justifier (texte encadré seulement)"
 
 #. Name
 #: ../src/widgets/toolbox.cpp:7294
@@ -24073,6 +24063,131 @@ msgstr "Inclinaison (deg)"
 msgid "Wireframe Sphere"
 msgstr "Sphère fil de fer"
 
+#, fuzzy
+#~ msgid "Force Dimension must be set as &lt;width&gt;x&lt;height&gt;"
+#~ msgstr ""
+#~ "Imposer la dimension doit être défini sous la forme « &lt;width&gt;x&lt;"
+#~ "height&gt; »"
+
+#, fuzzy
+#~ msgid "bg-color"
+#~ msgstr "Couleur"
+
+#, fuzzy
+#~ msgid "description"
+#~ msgstr "Description"
+
+#, fuzzy
+#~ msgid "dimension"
+#~ msgstr "Dimensions"
+
+#, fuzzy
+#~ msgid "enum"
+#~ msgstr "em"
+
+#, fuzzy
+#~ msgid "executable"
+#~ msgstr "Rectangle"
+
+#, fuzzy
+#~ msgid "extensions"
+#~ msgstr "Exte_nsions"
+
+#, fuzzy
+#~ msgid "false"
+#~ msgstr "Balinais"
+
+#, fuzzy
+#~ msgid "float"
+#~ msgstr "X flottant"
+
+#, fuzzy
+#~ msgid "format"
+#~ msgstr "Format"
+
+#, fuzzy
+#~ msgid "grayscale"
+#~ msgstr "Niveaux de gris"
+
+#, fuzzy
+#~ msgid "help-dimension1"
+#~ msgstr "Dimensions"
+
+#, fuzzy
+#~ msgid "help-dimension2"
+#~ msgstr "Dimensions"
+
+#, fuzzy
+#~ msgid "help-quality"
+#~ msgstr "Qualité :"
+
+#, fuzzy
+#~ msgid "img-nonpos"
+#~ msgstr "Dimensions"
+
+#, fuzzy
+#~ msgid "int"
+#~ msgstr "in"
+
+#, fuzzy
+#~ msgid "layout-disposition"
+#~ msgstr "Disposition de la mise en page :"
+
+#, fuzzy
+#~ msgid "layout-position-anchor"
+#~ msgstr "Position de l'ancre :"
+
+#, fuzzy
+#~ msgid "mc"
+#~ msgstr "m"
+
+#, fuzzy
+#~ msgid "ml"
+#~ msgstr "m"
+
+#, fuzzy
+#~ msgid "mr"
+#~ msgstr "m"
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr "Nom"
+
+#, fuzzy
+#~ msgid "palette"
+#~ msgstr "Palette"
+
+#, fuzzy
+#~ msgid "palette-size"
+#~ msgstr "Taille de la palette :"
+
+#, fuzzy
+#~ msgid "png"
+#~ msgstr "Clapotis"
+
+#, fuzzy
+#~ msgid "python"
+#~ msgstr "Options"
+
+#, fuzzy
+#~ msgid "quality"
+#~ msgstr "Qualité :"
+
+#, fuzzy
+#~ msgid "string"
+#~ msgstr "  chaîne : "
+
+#, fuzzy
+#~ msgid "tab"
+#~ msgstr "Tabulation"
+
+#, fuzzy
+#~ msgid "tr"
+#~ msgstr "Étoile"
+#~ msgid "Refresh the icons"
+#~ msgstr "Rafraîchir les icônes"
+#~ msgid "How many digits to write after the decimal dot"
+#~ msgstr "Combien de chiffres écrire après le point décimal"
 #~ msgid "Color/opacity used for color spraying"
 #~ msgstr "Couleur et opacités pour la pulvérisation de couleur"
 #~ msgid "Show node transformation handles"
