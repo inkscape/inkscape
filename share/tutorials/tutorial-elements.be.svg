@@ -120,7 +120,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e56"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Плоская фіґура атрымоўваецца, калі існая ці меркаваная лініі сустракаюцца, каб абмежаваць прастору. Зьмена колера ці адценьня можа вызначыць фіґуру. Фіґуры могуць быць падзеленыя на некалькі відаў: ґеамэтрычныя (квадрат, трохкутнік, акружына) і натуральныя (зь няправільным контурам).</flowDiv>
+  <flowDiv xml:space="preserve">Плоская фіґура атрымоўваецца, калі існая ці меркаваная лініі сустракаюцца, каб абмежаваць прастору. Зьмена колеру ці адценьня можа вызначыць фіґуру. Фіґуры могуць быць падзеленыя на некалькі відаў: ґеамэтрычныя (квадрат, трохкутнік, акружына) і натуральныя (зь няправільным контурам).</flowDiv>
  </flowRoot>
  <g id="elements-f03-be.svgg2063" stroke="#000" transform="translate(10, 607.5002672) translate(0.000000,-611.9634)">
   <rect id="elements-f03-be.svgrect1943" height="100.99" width="305.16" y="612.21" x="7.5753" stroke-width="0.49832" fill="none"/>
@@ -136,7 +136,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Гэта спасылаецца на адрозьненьні ў прапорцыях аб&apos;ектаў, ліній ці фіґур. Адрозьненьні памераў аб&apos;ектаў могуць быць сапраўднымі ці ўяўнымі.</flowDiv>
+  <flowDiv xml:space="preserve">Гэта датычыцца адрозьненьняў у прапорцыях аб&apos;ектаў, ліній ці фіґур. Адрозьненьні памераў аб&apos;ектаў могуць быць сапраўднымі ці ўяўнымі.</flowDiv>
  </flowRoot>
  <rect id="elements-f04-be.svgrect1955" transform="translate(10, 785.7606292) " height="100.99" width="305.16" stroke="#000" y="0.24915" x="7.5753" stroke-width="0.49832" fill="none"/>
  <text id="elements-f04-be.svgtext3148" style="writing-mode:lr-tb;text-anchor:start;" font-family="Bitstream Vera Sans" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10, 785.7606292) scale(0.999982,1.000018)" font-style="normal" font-stretch="normal" xml:space="preserve" line-height="100.00000%" font-size="122.30419" font-variant="normal" y="95.748199" x="76.186218" stroke-width="3.0000000pt" fill="#000000"><tspan id="elements-f04-be.svgtspan3149" role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="95.748199" x="76.186218" fill="#000000">ВЯЛІКІ</tspan></text>
@@ -163,7 +163,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e113"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Колер — гэта ўспрымальная характарыстыка паверхні, адпаведная даўжыні хвалі сьвятла, адбітага ёй. Колер мае тры вымеры: адценьне (іншае слова для колера, пазначанае ягонай назвай, такой як чырвоны ці жоўты), яркасьць (ягоная сьветласьць ці цёмнасьць), інтэнсіўнасьць (насычанасьць ці прыглушанасьць).</flowDiv>
+  <flowDiv xml:space="preserve">Колер — гэта ўспрымальная характарыстыка паверхні, адпаведная даўжыні хвалі сьвятла, адбітага ёй. Колер мае тры вымеры: адценьне (іншае слова для колеру, пазначанае ягонай назвай, такой як «чырвоны» ці «жоўты»), яркасьць (ягоная сьветласьць ці цёмнасьць), інтэнсіўнасьць (насычанасьць ці прыглушанасьць).</flowDiv>
  </flowRoot>
  <defs id="elements-f06-be.svgdefs3">
   <linearGradient id="elements-f06-be.svglinearGradient2620" y2="2135.3" gradientUnits="userSpaceOnUse" y1="2135.3" gradientTransform="matrix(1.735401,0.000000,0.000000,0.576236,0.000000,-1179.712)" x2="180.35" x1="4.2216" inkscape:collect="always">
@@ -210,7 +210,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e151"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Яркасьць — гэта як цёмна ці як сьветла нешта выглядае. Мы дасягаем зьменаў яркасьці дадаючы чорнага ці белага да колера. Сьветлацень выкарыстоўвае яркасьць робячы драматычны кантраст сьветлых і цёмных месцаў кампазыцыі.</flowDiv>
+  <flowDiv xml:space="preserve">Яркасьць — гэта як цёмна ці як сьветла нешта выглядае. Мы дасягаем зьменаў яркасьці дадаючы чорнага ці белага да колеру. Сьветлацень выкарыстоўвае яркасьць робячы драматычны кантраст сьветлых і цёмных месцаў кампазыцыі.</flowDiv>
  </flowRoot>
  <defs id="elements-f08-be.svgdefs3">
   <linearGradient id="elements-f08-be.svglinearGradient2224" y2="5730.5" gradientUnits="userSpaceOnUse" y1="5730.5" gradientTransform="matrix(3.700601,0.000000,0.000000,0.270226,0.000000,-1539.931)" x2="81.905" x1="4.2527" inkscape:collect="always">
@@ -391,7 +391,7 @@
   </g>
   <path id="elements-f12-be.svgpath1714" sodipodi:rx="56.143108" sodipodi:ry="56.143108" sodipodi:type="arc" d="M82.055,175.84a56.143,56.143,0,1,1,-112.29,0,56.143,56.143,0,1,1,112.29,0z" fill-opacity="0.75000000" transform="matrix(1.080927,0.000000,0.000000,0.286993,146.7630,3332.854)" sodipodi:cy="175.83524" sodipodi:cx="25.912205" stroke-width="1.0000000pt" fill="url(#elements-f12-be.svgradialGradient2185)"/>
  </g>
- <text id="elements-f12-be.svgtext1232" font-family="helvetica" xml:space="preserve" transform="translate(10, 2309.8124749999997) " font-size="5.1805081" y="109.55157" x="7.0871472" stroke-width="1.0000000pt"><tspan id="elements-f12-be.svgtspan1233">Адвольная мурашка й усюдыход</tspan></text>
+ <text id="elements-f12-be.svgtext1232" font-family="helvetica" xml:space="preserve" transform="translate(10, 2309.8124749999997) " font-size="5.1805081" y="109.55157" x="7.0871472" stroke-width="1.0000000pt"><tspan id="elements-f12-be.svgtspan1233">Адвольны мураш і ўсюдыход</tspan></text>
  <text id="elements-f12-be.svgtext1235" font-family="helvetica" xml:space="preserve" transform="translate(10, 2309.8124749999997) " font-size="1.2781800" y="111.84713" x="7.7085347" stroke-width="1.0000000pt"><tspan id="elements-f12-be.svgtspan1236">Аўтар відарыса SVG —  Andrew Fitzsimon</tspan><tspan id="elements-f12-be.svgtspan2442" y="113.44485" x="7.7085347" role="line">З дазволу Адкрытай бібліятэкі відарысаў</tspan><tspan id="elements-f12-be.svgtspan2444" y="115.04258" x="7.7085347" role="line">http://www.openclipart.org/</tspan><tspan id="elements-f12-be.svgtspan2950" y="116.64030" x="7.7085347" sodipodi:role="line"/></text>
  <g id="elements-f12-be.svgg2864" transform="translate(10, 2309.8124749999997) matrix(1.120145,0.000000,0.000000,1.120145,-199.5482,-2562.726)">
   <path id="elements-f12-be.svgpath924" d="M147.45,91.908l-16.76-7.699,28.54-4.076,2.26,3.17" transform="matrix(0.311908,0.000000,0.000000,0.311908,184.8265,2289.170)" stroke="#000" stroke-width="4.5308385" fill="none"/>
@@ -423,7 +423,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e255"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Узор ствараецца паўтарэньнямі элемэнта (лініі, фіґуры ці колера) зноў і зноў.</flowDiv>
+  <flowDiv xml:space="preserve">Узор ствараецца паўтарэньнямі элемэнта (лініі, фіґуры ці колеру) зноў і зноў.</flowDiv>
  </flowRoot>
  <defs id="elements-f13-be.svgdefs3">
   <pattern id="elements-f13-be.svgpattern2289" inkscape:collect="always" xlink:href="#elements-f13-be.svgpattern3032" patternTransform="matrix(1.180948,0.332239,-0.332239,1.180948,43.37934,31.64300)"/>
@@ -662,7 +662,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e368"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Асаблівая падзяка  Linda Kim (<flowSpan font-weight="bold" font-family="sans serif">http://www.redlucite.org</flowSpan>) за дапамогу мне, (<flowSpan font-weight="bold" font-family="sans serif">http://www.rejon.org/</flowSpan>), з гэтым падручнікам. Таксама дзякуй Адкрытай бібліятэцы відарысаў (<flowSpan font-weight="bold" font-family="sans serif">http://www.openclipart.org/</flowSpan>) і людзям, якія перадалі ґрафіку гэтаму праекту.</flowDiv>
+  <flowDiv xml:space="preserve">Асаблівая падзяка Linda Kim (<flowSpan font-weight="bold" font-family="sans serif">http://www.redlucite.org</flowSpan>) за дапамогу мне, (<flowSpan font-weight="bold" font-family="sans serif">http://www.rejon.org/</flowSpan>), з гэтым падручнікам. Таксама дзякуй Адкрытай бібліятэцы відарысаў (<flowSpan font-weight="bold" font-family="sans serif">http://www.openclipart.org/</flowSpan>) і людзям, якія перадалі ґрафіку гэтаму праекту.</flowDiv>
  </flowRoot>
  <g transform="translate(0, 3214.2409362999997)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">

@@ -58,7 +58,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Гэты падручнік пакажа розныя парады й штукі, якія карыстальнікі вывучылі падчас карыстаньня Inkscape, а таксама некаторыя «схаваныя» магчымасьці, якія могуць паскорыць вашую працу.</flowDiv>
+  <flowDiv xml:space="preserve">Гэты падручнік пакажа розныя парады й штукі, якія карыстальнікі вывучылі падчас выкарыстаньня Inkscape, а таксама некаторыя «схаваныя» магчымасьці, якія могуць паскорыць вашую працу.</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="89.367967" x="10" font-family="sans" font-style="normal" fill="#000000">
   <tspan y="89.367967" x="10">Радыяльнае разьмяшчэньне мазаічных клонаў</tspan>
@@ -82,7 +82,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e31"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Выберыце сымэтрыю P1 (простая перадача), а потым <flowSpan font-style="italic">кампэнсуйце</flowSpan> перадачу, перайшоўшы на ўкладку <flowSpan font-family="sans serif">Зрух</flowSpan> і задаўшы <flowSpan font-family="sans serif">На радок/Зрух Y</flowSpan> і <flowSpan font-family="sans serif">На слупок/Зрух X</flowSpan> у -100%. Цяпер усе клоны будуць разьмешчаныя дакладна наверсе арыґінала. Усё, што застаецца зрабіць, — перайсьці на ўкладку <flowSpan font-family="sans serif">Паварот</flowSpan> і задаць пэўны вугал павароту на слупок, потым стварыце узор з аднаго радка й некалькіх слупкоў. Напрыклад, вось узор, зроблены з гарызантальнай лініі, з 30 слупкоў, кожны слупок павернуты на 6 ґрадусаў:</flowDiv>
+  <flowDiv xml:space="preserve">Выберыце сымэтрыю P1 (просты перанос), а потым <flowSpan font-style="italic">кампэнсуйце</flowSpan> перанос, перайшоўшы на ўкладку <flowSpan font-family="sans serif">Зрух</flowSpan> і задаўшы <flowSpan font-family="sans serif">На радок/Зрух па Y</flowSpan> і <flowSpan font-family="sans serif">На слупок/Зрух па X</flowSpan> у -100%. Цяпер усе клоны будуць разьмешчаныя дакладна наверсе арыґінала. Усё, што застаецца зрабіць, — перайсьці на ўкладку <flowSpan font-family="sans serif">Паварот</flowSpan> і задаць пэўны вугал павароту на слупок, потым стварыце узор з аднаго радка й некалькіх слупкоў. Напрыклад, вось узор, зроблены з гарызантальнай лініі, з 30 слупкоў, кожны слупок павернуты на 6 ґрадусаў:</flowDiv>
  </flowRoot>
  <path id="tips-f01-be.svgpath25" stroke-linejoin="miter" style="marker-end:none;color:#000000;marker-start:none;marker-mid:none;" d="M81.5,58.9h117.5" inkscape:tile-w="117.80000" transform="translate(10, 303.828755) " stroke-dashoffset="0.0000000" stroke="#000" stroke-linecap="butt" inkscape:tile-h="0.30000001" stroke-miterlimit="4.0000000" inkscape:tile-cx="160.25000" inkscape:tile-cy="346.50000" stroke-width="0.30000001" fill="none"/>
  <use id="tips-f01-be.svguse55" xlink:href="#tips-f01-be.svgpath25" transform="translate(10, 303.828755) matrix(0.994522,0.104528,-0.104528,0.994522,6.925170,-14.33743) translate(-10, -303.828755)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
@@ -213,7 +213,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">У прыкладзе ўверсе лініі павернутыя вакол іхнага цэнтру. А калі вам патрэбна, каб цэнтар быў па-за фіґурай? Проста стварыце нябачны (без запаўненьня й контура) прастакутнік, які накрые вашую фіґуру, і чый цэнтар — патрэбны вам пункт, зґрупуйце фіґуру й прастакутнік, а потым зрабіце <flowSpan font-family="sans serif">Мазаічныя клоны</flowSpan> з гэтай ґрупы. Вось як можна рабіць гожыя «выбухі» ці «зоркапады» шляхам адвольных зьменаў памераў, паваротаў і, магчыма, непразрыстасьцяў:</flowDiv>
+  <flowDiv xml:space="preserve">У прыкладзе ўверсе лініі павернутыя вакол іхнага цэнтру. А калі вам патрэбна, каб цэнтар быў па-за фіґурай? Проста стварыце нябачны (без запаўненьня й контуру) прастакутнік, які накрые вашую фіґуру, і чый цэнтар — патрэбны вам пункт, зґрупуйце фіґуру й прастакутнік, а потым зрабіце <flowSpan font-family="sans serif">Мазаічныя клоны</flowSpan> з гэтай ґрупы. Вось як можна рабіць гожыя «выбухі» ці «зоркапады» шляхам адвольных зьменаў памераў, паваротаў і, магчыма, непразрыстасьцяў:</flowDiv>
  </flowRoot>
  <g id="tips-f03-be.svgg1768" inkscape:tile-w="87.999840" transform="translate(10, 796.971417) matrix(0.637680,0.000000,0.000000,0.637680,37.60870,-470.9209)" inkscape:tile-h="7.3333200" inkscape:tile-cx="158.99982" inkscape:tile-cy="859.24904">
   <path id="tips-f03-be.svgpath1592" style="marker-end:none;color:#000000;marker-start:none;marker-mid:none;" fill-rule="evenodd" fill="#000" d="M210.17,859.92c4.54-2.08,15.81-3.8,15.81-0.12,0,3.67-15.81,0.12-15.81,0.12z"/>
@@ -329,7 +329,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e121"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Пачніце з простага двухспынавага ґрадыента. Адкрыйце рэдактар ґрадыентаў (напр., двойчы пстрыкнуўшы па любой ручцы ґрадыента інструмэнтам «Ґрадыент»). Дадайце новы спын ґрадыента ў сярэдзіну, крыху пацягніце яго. Потым дадайце яшчэ спынаў і пацягніце іх таксама, каб ґрадыент стаў згладжаным. Чым болей спынаў дадаяце, тым больш згладжаным можаце зрабіць выніковы ґрадыент. Вось спачатны чорна-белы ґрадыент з двума спынамі:</flowDiv>
+  <flowDiv xml:space="preserve">Пачніце з простага двухспынавага ґрадыенту. Адкрыйце рэдактар ґрадыентаў (напр., двойчы пстрыкнуўшы па любой ручцы ґрадыенту інструмэнтам «Ґрадыент»). Дадайце новы спын ґрадыенту ў сярэдзіну, крыху пацягніце яго. Потым дадайце яшчэ спынаў і пацягніце іх таксама, каб ґрадыент стаў згладжаным. Чым болей спынаў дадаяце, тым больш згладжаным можаце зрабіць выніковы ґрадыент. Вось спачатны чорна-белы ґрадыент з двума спынамі:</flowDiv>
  </flowRoot>
  <defs id="tips-f04-be.svgdefs3">
   <linearGradient id="tips-f04-be.svglinearGradient844" y2="-5.6264" gradientUnits="userSpaceOnUse" x2="-753.98" gradientTransform="matrix(0.237277,0.000000,0.000000,4.214480,178.9029,1.615078e-15)" y1="-71.602" x1="-753.98">
@@ -442,7 +442,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e153"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Радыяльныя ґрадыенты ня мусяць быць сымэтрычнымі. Інструмэнтам «Ґрадыент» пацягніце цэнтральную ручку эліптычнага ґрадыента з <flowSpan font-weight="bold">Shift</flowSpan>. Гэта пасуне крыжыкападобную <flowSpan font-style="italic">фокусную ручку</flowSpan> ґрадыента ад цэнтру. Калі гэта вам не патрэбная, можаце вернуць фокус назад, перацягнуўшы яго блізка да цэнтру.</flowDiv>
+  <flowDiv xml:space="preserve">Радыяльныя ґрадыенты ня мусяць быць сымэтрычнымі. Інструмэнтам «Ґрадыент» пацягніце цэнтральную ручку эліптычнага ґрадыенту з <flowSpan font-weight="bold">Shift</flowSpan>. Гэта пасуне крыжыкападобную <flowSpan font-style="italic">фокусную ручку</flowSpan> ґрадыенту ад цэнтру. Калі гэта вам не патрэбная, можаце вернуць фокус назад, перацягнуўшы яго блізка да цэнтру.</flowDiv>
  </flowRoot>
  <defs id="tips-f06-be.svgdefs3">
   <radialGradient id="tips-f06-be.svgradialGradient4031" gradientUnits="userSpaceOnUse" fx="164.26" fy="495.96" cx="187.87" cy="494.13" r="40.258" gradientTransform="matrix(0.930312,0.000000,0.000000,0.853811,16.07898,-387.2360)" inkscape:collect="always">
@@ -484,7 +484,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e208"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Прадвызначана імпартаваныя растры (напр., фота) зьяўляюцца элемэнтам image, які нельга правіць «Вузлом». Каб абыйсьці гэта, ператварыце відарыс у прастакутнік з запаўненьнем узорам з дапамогай <flowSpan font-family="sans serif">Аб&apos;ект ва ўзор</flowSpan> (<flowSpan font-weight="bold">Alt+I</flowSpan>). Гэта дасьць прастакутнік, <flowSpan font-style="italic">запоўнены</flowSpan> вашым растрам. Цяпер гэты аб&apos;ект можна ператварыць у шлях, правіць ягоныя вузлы, перасякаць яго зь іншымі фіґурамі й г.д. У <flowSpan font-family="sans serif">Настаўленьнях Inkscape</flowSpan> (укладка <flowSpan font-family="sans serif">Рознае</flowSpan>), можна задзейнічаць выбор, які дазволіць заўжды імпартаваць растры як прастакутнікі, запоўненыя ўзорам.</flowDiv>
+  <flowDiv xml:space="preserve">Прадвызначана імпартаваныя растры (напр., фота) зьяўляюцца элемэнтам image, які нельга правіць «Вузлом». Каб абыйсьці гэта, ператварыце відарыс у прастакутнік з запаўненьнем узорам з дапамогай <flowSpan font-family="sans serif">Аб&apos;ект ва ўзор</flowSpan> (<flowSpan font-weight="bold">Alt+I</flowSpan>). Атрымаеце прастакутнік, <flowSpan font-style="italic">запоўнены</flowSpan> вашым растрам. Цяпер гэты аб&apos;ект можна ператварыць у шлях, правіць ягоныя вузлы, перасякаць яго зь іншымі фіґурамі й г.д. У <flowSpan font-family="sans serif">Настаўленьнях Inkscape</flowSpan> (укладка <flowSpan font-family="sans serif">Рознае</flowSpan>), можна задзейнічаць выбор, які дазволіць заўжды імпартаваць растры як прастакутнікі, запоўненыя ўзорам.</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2037.0041372" x="10" font-family="sans" font-style="normal" fill="#000000">
   <tspan y="2037.0041372" x="10">Схаваныя магчымасьці й рэдактар XML</tspan>
@@ -494,7 +494,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e232"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Рэдактар XML дазваляе мяняць амаль усе аспэкты дакумэнта, не выкарыстоўваючы аніякага вонкавага рэдактара. Таксама Inkscape звычайна падтрымлівае больш магчымасьцяў SVG, чым дасяжна з ҐІК. Рэдактар XML — адзіны шлях дабрацца да гэтых магчымасьцяў (калі ведаеце SVG).</flowDiv>
+  <flowDiv xml:space="preserve">Рэдактар XML дазваляе зьмяняць амаль усе аспэкты дакумэнта, не выкарыстоўваючы аніякага вонкавага рэдактару. Таксама Inkscape звычайна падтрымлівае больш магчымасьцяў SVG, чым дасяжна з ҐІК. Рэдактар XML — адзіны шлях дабрацца да гэтых магчымасьцяў (калі ведаеце SVG).</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2115.1735132000003" x="10" font-family="sans" font-style="normal" fill="#000000">
   <tspan y="2115.1735132000003" x="10">Зьмяненьне адзінак вымярэньня лінейкі</tspan>
@@ -504,7 +504,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e241"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">У прадвызначаным шаблёне адзінка вымярэньня лінейкі — піксэль («Карыстальніцкая адзінка SVG», у Inkscape яна роўная 0,8 пункта ці 1/90 цалі). Гэта таксама адзінка, якая выкарыстоўваецца пры паказе каардынат у ніжнім левым куце й прадвыбраная ва ўсіх мэню адзінак. (Вы заўжды можаце падвесьці курсор да лінейкі, каб пабачыць падказку з адзінкамі, якія яна выкарыстоўвае. Каб зьмяніць гэта, адкрыйце <flowSpan font-family="sans serif">Уласьцівасьці дакумэнта</flowSpan> (<flowSpan font-weight="bold">Ctrl+Shift+D</flowSpan>) і памяняйце <flowSpan font-family="sans serif">Прадвызначаныя адзінкі</flowSpan> на ўкладцы <flowSpan font-family="sans serif">Старонка</flowSpan>.</flowDiv>
+  <flowDiv xml:space="preserve">У прадвызначаным шаблёне адзінка вымярэньня лінейкі — піксэль («Карыстальніцкая адзінка SVG», у Inkscape яна роўная 0,8 пункту ці 1/90 цалі). Гэта таксама адзінка, якая выкарыстоўваецца пры паказе каардынат у ніжнім левым куце й прадвыбраная ва ўсіх мэню адзінак. (Вы заўжды можаце падвесьці курсор да лінейкі, каб пабачыць падказку з адзінкамі, якія яна выкарыстоўвае. Каб зьмяніць гэта, адкрыйце <flowSpan font-family="sans serif">Уласьцівасьці дакумэнта</flowSpan> (<flowSpan font-weight="bold">Ctrl+Shift+D</flowSpan>) і памяняйце <flowSpan font-family="sans serif">Прадвызначаныя адзінкі</flowSpan> на ўкладцы <flowSpan font-family="sans serif">Старонка</flowSpan>.</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2225.6615042000003" x="10" font-family="sans" font-style="normal" fill="#000000">
   <tspan y="2225.6615042000003" x="10">Штампаваньне</tspan>
@@ -570,113 +570,113 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e313"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Каб дадаць падшлях да наяўнага шляха вылучыце гэты шлях і пачніце рысаваць з <flowSpan font-weight="bold">Shift</flowSpan> ад адвольнага пункту. Калі, усё ж такі, вы проста жадаеце <flowSpan font-style="italic">працягнуць</flowSpan> наяўны шлях, то Shift непатрэбны, проста пачніце рысаваць ад аднаго з канцавых якараў вылучанага шляха.</flowDiv>
+  <flowDiv xml:space="preserve">Каб дадаць падшлях да наяўнага шляху вылучыце гэты шлях і пачніце рысаваць з <flowSpan font-weight="bold">Shift</flowSpan> ад адвольнага пункту. Калі, усё ж такі, вы проста жадаеце <flowSpan font-style="italic">працягнуць</flowSpan> наяўны шлях, то Shift непатрэбны, проста пачніце рысаваць ад аднаго з канцавых якараў вылучанага шляху.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2541.1425699000006" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="2541.1425699000006" x="10">Уводжаньне значэньняў Unicode</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2542.806631900001" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="2542.806631900001" x="10">Уводжаньне значэньняў Unicode</tspan>
  </text>
- <rect id="d0e328" display="none" height="1000px" width="288" y="2546.3" x="10"/>
+ <rect id="d0e328" display="none" height="1000px" width="288" y="2548" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e328"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Пры працы з тэкстам націсканьне <flowSpan font-weight="bold">Ctrl+U</flowSpan> пераключае між нармальным рэжымам і юнікодавым. У юнікодавым рэжыме кожная ґрупа з уведзеных 4 шаснаццаткавых лічбаў становіцца адным знакам Unicode, што дазваляе ўводзіць адвольныя знакі (калі ведаеце іхны код у Unicode, а шрыфты іх падтрымліваюць). Каб скончыць уводжаньне знакаў Unicode націсьніце <flowSpan font-weight="bold">Enter</flowSpan>. Напрыклад, <flowSpan font-weight="bold">Ctrl+U 2 0 1 4 Enter</flowSpan> устаўляе М-працяжнік (—). Каб выйсьці зь юнікодавага рэжыму, не ўстаўляючы анічога, націсьніце <flowSpan font-weight="bold">Esc</flowSpan>.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2661.5053019000006" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="2661.5053019000006" x="10">Выкарыстаньне сеткі для рысаваньня значак</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2663.169363900001" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="2663.169363900001" x="10">Выкарыстаньне сеткі для рысаваньня значак</tspan>
  </text>
- <rect id="d0e349" display="none" height="1000px" width="288" y="2666.7" x="10"/>
+ <rect id="d0e349" display="none" height="1000px" width="288" y="2668.4" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e349"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Няхай вы хочаце стварыць значку 24×24 піксэлі. Стварыце палатно 24×24 пкс (праз <flowSpan font-family="sans serif">Уласьцівасьці дакумэнта</flowSpan>) і ўсталюйце сетку праз 0,5 пкс (48×48 ліній). Зараз, калі зробіце раўнаваньне запоўненых аб&apos;ектаў па <flowSpan font-style="italic">цотных</flowSpan> лініях, а контурных аб&apos;ектаў — па <flowSpan font-style="italic">няцотных</flowSpan>, з таўшчынёй контураў, роўнай няцотнаму ліку, і экспартуеце яго пры прадвызначаных 90 п/ц (1 пкс стане 1 пунктам растра), атрымаеце выразны растравы відарыс безь непатрэбнага згладжваньня.</flowDiv>
+  <flowDiv xml:space="preserve">Няхай вы хочаце стварыць значку 24×24 піксэлі. Стварыце палатно 24×24 пкс (праз <flowSpan font-family="sans serif">Уласьцівасьці дакумэнту</flowSpan>) і ўсталюйце сетку праз 0,5 пкс (48×48 ліній). Зараз, калі зробіце раўнаваньне запоўненых аб&apos;ектаў па <flowSpan font-style="italic">цотных</flowSpan> лініях, а контурных аб&apos;ектаў — па <flowSpan font-style="italic">няцотных</flowSpan>, з таўшчынёй контураў, роўнай няцотнаму ліку, і экспартуеце яго пры прадвызначаных 90 п/ц (1 пкс стане 1 пунктам растра), атрымаеце выразны растравы відарыс безь непатрэбнага згладжваньня.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2771.6181179000005" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="2771.6181179000005" x="10">Паварочваньне аб&apos;ектаў</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2773.2821799000008" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="2773.2821799000008" x="10">Паварочваньне аб&apos;ектаў</tspan>
  </text>
- <rect id="d0e367" display="none" height="1000px" width="288" y="2776.8" x="10"/>
+ <rect id="d0e367" display="none" height="1000px" width="288" y="2778.5" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e367"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Калі працуце з «Вылучальнікам», <flowSpan font-weight="bold">пстрыкніце</flowSpan> па аб&apos;екце каб пабачыць ягоныя стрэлкі зьмяненьня памеру, потым <flowSpan font-weight="bold">пстрыкніце ізноў</flowSpan> па ім, каб пабачыць стрэлкі паварочваньня й нахіленьня. Калі вы пстрыкнеце й пацягнеце стрэлкі ў кутах, то аб&apos;ект будзе паварочвацца вакол цэнтру (паказаны крыжыкам). Калі пад час гэтага націсьніце й будзеце трымаць <flowSpan font-weight="bold">Shift</flowSpan>, паварот будзе адбывацца вакол супрацьлеглага кута. Вы таксама можаце перацягнуць цэнтар павароту куды заўгодна.</flowDiv>
+  <flowDiv xml:space="preserve">Калі працуце з «Вылучальнікам», <flowSpan font-weight="bold">пстрыкніце</flowSpan> па аб&apos;екце каб пабачыць ягоныя стрэлкі зьмяненьня памеру, потым <flowSpan font-weight="bold">пстрыкніце ізноў</flowSpan> па ім, каб пабачыць стрэлкі паварочваньня й нахіленьня. Калі вы пстрыкнеце й пацягнеце стрэлкі ў кутах, то аб&apos;ект будзе паварочвацца вакол цэнтру (паказаны крыжыкам). Калі падчас гэтага націсьніце й будзеце трымаць <flowSpan font-weight="bold">Shift</flowSpan>, паварочваньне будзе адбывацца вакол супрацьлеглага кута. Вы таксама можаце перацягнуць цэнтар павароту куды заўгодна.</flowDiv>
  </flowRoot>
- <rect id="d0e379" display="none" height="1000px" width="288" y="2869.3" x="10"/>
+ <rect id="d0e379" display="none" height="1000px" width="288" y="2871" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e379"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Альбо можаце паварочваць з клявіятуры, націскаючы <flowSpan font-weight="bold">[</flowSpan> і <flowSpan font-weight="bold">]</flowSpan> (на 15 ґрадусаў) ці <flowSpan font-weight="bold">Ctrl+[</flowSpan> і <flowSpan font-weight="bold">Ctrl+]</flowSpan> (на 90 ґрадусаў). Тыя ж клявішы <flowSpan font-weight="bold">[]</flowSpan> з <flowSpan font-weight="bold">Alt</flowSpan> зьдзяйсьняюць павольны папіксэльны паварот.</flowDiv>
+  <flowDiv xml:space="preserve">Альбо можаце паварочваць з клявіятуры, націскаючы <flowSpan font-weight="bold">[</flowSpan> і <flowSpan font-weight="bold">]</flowSpan> (на 15 ґрадусаў) ці <flowSpan font-weight="bold">Ctrl+[</flowSpan> і <flowSpan font-weight="bold">Ctrl+]</flowSpan> (на 90 ґрадусаў). Тыя ж клявішы <flowSpan font-weight="bold">[]</flowSpan> з <flowSpan font-weight="bold">Alt</flowSpan> зьдзяйсьняюць павольнае папіксэльнае паварочваньне.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2921.3399579" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="2921.3399579" x="10">Дыялёґ адкрыцьця ў якасьці палітры</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2923.0040199000005" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="2923.0040199000005" x="10">Дыялёґ адкрыцьця ў якасьці палітры</tspan>
  </text>
- <rect id="d0e406" display="none" height="1000px" width="288" y="2926.5" x="10"/>
+ <rect id="d0e406" display="none" height="1000px" width="288" y="2928.2" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e406"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Як маеце колькі малых файлаў SVG, чыё зьмесьціва часта выкарыстоўваеце ў іншых дакумэнтах, можна выкарыстатаць дыялёґ адкрыцьця як палітру. Дайце каталёґ са сваімі крыніцамі SVG у закладкі, каб хутка яго адкрываць. Пасьля праглядзіце гэты каталёґ, уключыўшы агляд. Як адшукаеце патрэбны файл, проста перацягніце яго на палатно, і ён будзе імпартаваны ў бягучы дакумэнт.</flowDiv>
+  <flowDiv xml:space="preserve">Як маеце колькі малых файлаў SVG, чыё зьмесьціва часта выкарыстоўваеце ў іншых дакумэнтах, можна выкарыстатаць дыялёґ адкрыцьця ў якасьці палітры. Дайце каталёґ са сваімі крыніцамі SVG у закладкі, каб хутка яго адкрываць. Пасьля праглядзіце гэты каталёґ, уключыўшы агляд. Як адшукаеце патрэбны файл, проста перацягніце яго на палатно, і ён будзе імпартаваны ў бягучы дакумэнт.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3021.0862079000003" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="3021.0862079000003" x="10">Падаючыя цені</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3022.7502699000006" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="3022.7502699000006" x="10">Падаючыя цені</tspan>
  </text>
- <rect id="d0e415" display="none" height="1000px" width="288" y="3026.3" x="10"/>
+ <rect id="d0e415" display="none" height="1000px" width="288" y="3028" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e415"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Inkscape падтрымлівае фільтар SVG ґаўсаўскай размытасьці, таму можна лёгка ствараць размытыя падаючыя цені аб&apos;ектаў. Вылучыце аб&apos;ект, падвойце яго з дапамогай <flowSpan font-weight="bold">Ctrl+D</flowSpan>, націсьніце <flowSpan font-weight="bold">PgDown</flowSpan>, каб падкласьці копію пад спачатным аб&apos;ектам, ссуньце яе крыху ўправа й ніжэй за спачатны аб&apos;ект. Пасьля адкрыйце дыялёґ «Запаўненьне й контур» й памяняйце значэньне размытасьці, скажам, у 5,0. І ўсё!</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3120.8211019000005" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="3120.8211019000005" x="10">Разьмяшчэньне тэксту на шляху</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3122.4851639000008" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="3122.4851639000008" x="10">Разьмяшчэньне тэксту на шляху</tspan>
  </text>
- <rect id="d0e430" display="none" height="1000px" width="288" y="3126" x="10"/>
+ <rect id="d0e430" display="none" height="1000px" width="288" y="3127.7" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e430"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Каб разьмесьціць тэкст уздоўж крывой вылучыце разам тэкст і крывую й выберыце <flowSpan font-family="sans serif">Разьмесьціць на шляху</flowSpan>  з мэню «Тэкст». Тэкст пачнецца ад пачатку шляха. Звычайна налепей бывае, калі яўна ствараюць тэкст, па якім будзе разьмешчаны тэкст, чым дастасоўваць яго да нейкага іншага элемэнта рысунка — гэта дазволіць лепш кантраляваць працэс бязь лішніх праблем.</flowDiv>
+  <flowDiv xml:space="preserve">Каб разьмесьціць тэкст уздоўж крывой вылучыце разам тэкст і крывую й выберыце <flowSpan font-family="sans serif">Разьмесьціць на шляху</flowSpan>  з мэню «Тэкст». Тэкст пачнецца ад пачатку шляху. Звычайна налепей бывае, калі яўна ствараюць тэкст, па якім будзе разьмешчаны тэкст, чым дастасоўваць яго да нейкага іншага элемэнту рысунку — гэта дазволіць лепш кантраляваць працэс бязь лішніх праблем.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3209.8961029000006" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="3209.8961029000006" x="10">Вылучэньне арыґіналу</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3211.560164900001" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="3211.560164900001" x="10">Вылучэньне арыґіналу</tspan>
  </text>
- <rect id="d0e442" display="none" height="1000px" width="288" y="3215.1" x="10"/>
+ <rect id="d0e442" display="none" height="1000px" width="288" y="3216.8" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e442"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Калі маеце тэкст на шляху, злучаны зрух ці клон, іхны выточны аб&apos;ект/шлях часам цяжка вылучыць, бо ён можа быць проста пад нізам, ці зроблены нябачным і/ці замкнутым. Дапаможа чароўная клявіша <flowSpan font-weight="bold">Shift+D</flowSpan>, вылучыце тэкст, зрух ці клон і націсніце <flowSpan font-weight="bold">Shift+D</flowSpan> каб вылучыць адпаведны шлях, крыніцу зруха ці арыґінал клона.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3288.1398769000007" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="3288.1398769000007" x="10">Аднаўленьне вакна, якое апынулася па-за экранам</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3289.803938900001" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="3289.803938900001" x="10">Аднаўленьне вакна, якое апынулася па-за экранам</tspan>
  </text>
- <rect id="d0e457" display="none" height="1000px" width="288" y="3293.3" x="10"/>
+ <rect id="d0e457" display="none" height="1000px" width="288" y="3295" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e457"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Калі перамяшчаеце дакумэнты між рознымі сыстэмамі з рознымі разрозьненьнямі ці колькасьцю манітораў, можаце заўважыць, што Inkscape захоўвае становішча вакна, якое можа разьмесьціць вакно за межы экрана. Проста разгарніце вакно (гэта зробіць яго бачным, карыстайцеся панэльлю задач), запішыце файл і загрузіце яго наноў. Гэтага можна пазьбегнуць, калі адключыць агульны выбор захоўваньня ґеамэрыі вакна (<flowSpan font-family="sans serif">Настаўленьні Inkscape </flowSpan>, укладка <flowSpan font-family="sans serif">Вокны</flowSpan>).</flowDiv>
+  <flowDiv xml:space="preserve">Калі перамяшчаеце дакумэнты між рознымі сыстэмамі з рознымі разрозьненьнямі ці колькасьцю манітораў, можаце заўважыць, што Inkscape захоўвае становішча вакна, з-за чаго вакно можа апынуцца за межамі экрану. Проста разгарніце вакно (гэта зробіць яго бачным, карыстайцеся панэльлю задач), запішыце файл і загрузіце яго наноў. Гэтага можна пазьбегнуць, калі адключыць агульны выбор захоўваньня ґеамэрыі вакна (<flowSpan font-family="sans serif">Настаўленьні Inkscape </flowSpan>, укладка <flowSpan font-family="sans serif">Вокны</flowSpan>).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3398.2839429000005" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="3398.2839429000005" x="10">Празрыстасьць, ґрадыенты й экспартаваньне ў PostScript</tspan>
+ <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="3399.948004900001" x="10" font-family="sans" font-style="normal" fill="#000000">
+  <tspan y="3399.948004900001" x="10">Празрыстасьць, ґрадыенты й экспартаваньне ў PostScript</tspan>
  </text>
- <rect id="d0e472" display="none" height="1000px" width="288" y="3403.5" x="10"/>
+ <rect id="d0e472" display="none" height="1000px" width="288" y="3405.1" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e472"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Фарматы PostScript ці EPS не падтрымліваюць <flowSpan font-style="italic">празрыстасьць</flowSpan>, таму ніколі не выкарыстоўвайце яе, калі зьбіраецеся экспартаваць у PS/EPS. У выпадку суцэльнай празрыстасьці, якая знаходзіцца паверх суцэльнага колера, гэта лёгка паправіць: вылучыце адзін з празрыстых аб&apos;ектаў, пераключыцеся на «Піпетку» (<flowSpan font-weight="bold">F7</flowSpan>); упэўніцеся, што яна ў рэжыме «браць бачны колер без празрыстасьці», пстрыкніце па тым жа аб&apos;екце. Будзе ўзяты бачны колер і прызначаны назад аб&apos;екту, але гэтым разам без празрыстасьці. Паўтарыце для ўсіх празрыстых аб&apos;ектаў. Калі вашыя празрыстыя аб&apos;екты перакрываюць розныя абсягі суцэльнага колеру, то вы мусіце разьбіць яго на кавалкі й паўтарыць гэтую працэдуру з кожным кавалкам.</flowDiv>
  </flowRoot>
- <rect id="d0e481" display="none" height="1000px" width="288" y="3538.3" x="10"/>
+ <rect id="d0e481" display="none" height="1000px" width="288" y="3539.9" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e481"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Экспартаваньне <flowSpan font-style="italic">ґрадыентаў</flowSpan> у PS ці EPS не працуе для тэкстаў (пакуль тэкст не ператвораны ў шлях) ці контураў. Таксама, паколькі празрыстасьць губляецца пры экспарце ў PS ці EPS, вы ня можаце выкарыстоўваць, напрыклад, ґрадыент з <flowSpan font-style="italic">непразрыстага</flowSpan> сіняга ў <flowSpan font-style="italic">празрысты</flowSpan> сіні, як спосаб абыйсьці гэта, замяніце яго на ґрадыент зь <flowSpan font-style="italic">непразрыстага</flowSpan> сіняга ў <flowSpan font-style="italic">непразрысты</flowSpan> колер асноведзі.</flowDiv>
  </flowRoot>
- <g transform="translate(0, 3619.8406809000003)">
+ <g transform="translate(0, 3621.5047429000006)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.149642,0.000000,0.000000,0.465194,-0.130153,3495.428)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <radialGradient id="radialGradient2456" xlink:href="#linearGradient666" gradientUnits="userSpaceOnUse" cy="1036.5" cx="233.92" gradientTransform="scale(1.825742,0.547723)" r="98.26" inkscape:collect="always"/>

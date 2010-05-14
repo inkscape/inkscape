@@ -58,21 +58,21 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Адна з асаблівасьцяў Inkscape — гэта інструмэнт абводжаньня растравых відарысаў у элемэнт рысунка SVG &lt;path&gt; (шлях). Гэтыя сьціслыя зацемкі мусяць дапамагчы вам пазнаёміцца як ён працуе.</flowDiv>
+  <flowDiv xml:space="preserve">Адна з асаблівасьцяў Inkscape — гэта інструмэнт абводжаньня растравых відарысаў у элемэнт рысунку SVG &lt;path&gt; (шлях). Гэтыя сьціслыя зацемкі мусяць дапамагчы вам пазнаёміцца як ён працуе.</flowDiv>
  </flowRoot>
  <rect id="d0e16" display="none" height="1000px" width="288" y="76.691" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e16"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Сёньня Inkscape карыстаецца рухавіком абводжаньня Potrace (<flowSpan font-weight="bold" font-family="sans serif">potrace.sourceforge.net</flowSpan>), напісаным Peter Selinger. У будучыні мы, напэўна, дазволім іншыя праґрамы абводжаньня, сёньня ж, аднак, гэты выдатны інструмэнт цалкам дастатковы для нашых патрэб.</flowDiv>
+  <flowDiv xml:space="preserve">Сёньня Inkscape карыстаецца рухавіком абводжаньня Potrace (<flowSpan font-weight="bold" font-family="sans serif">potrace.sourceforge.net</flowSpan>), напісаным Peter Selinger. У будучыні мы, напэўна, дазволім іншыя праґрамы абводжаньня, сёньня ж, аднак, гэты выдатны інструмэнт цалкам задавальняе нашыя патрэбы.</flowDiv>
  </flowRoot>
  <rect id="d0e22" display="none" height="1000px" width="288" y="137.13" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e22"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Майце на ўвазе, што прызначэньне адводжаньніка ня ў тым, каб ствараць дакладную копію спачатнага відарыса, і ня ў тым, каб ствараць канчатковы прадукт. Ніякі аўтаабводжаньнік ня можа гэтага зрабіць. Што ён можа — стварыць набор крывых, якія можна выкарыстоўваць як рэсурс для рысунку.</flowDiv>
+  <flowDiv xml:space="preserve">Майце на ўвазе, што прызначэньне абводжаньніка ня ў тым, каб ствараць дакладную копію спачатнага відарыса, і ня ў тым, каб ствараць канчатковы прадукт. Ніякі аўтаабводжаньнік ня можа гэтага зрабіць. Што ён можа — стварыць набор крывых, якія можна выкарыстоўваць як рэсурс для рысунку.</flowDiv>
  </flowRoot>
  <rect id="d0e25" display="none" height="1000px" width="288" y="197.67" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">

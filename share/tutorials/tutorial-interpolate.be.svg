@@ -141,7 +141,7 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e92"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Калі інтэрпалююцца два розныя шляхі, праґрама інтэрпалюе фіґуру шляха з адной у другую. У выніку маем між шляхамі зьменную пасьлядоўнасьць, чыя рэґулярнасьць таксама вызначаецца значэньнем колькасьці крокаў інтэрпаляцыі.</flowDiv>
+  <flowDiv xml:space="preserve">Калі інтэрпалююцца два розныя шляхі, праґрама інтэрпалюе фіґуру шляху з адной у другую. У выніку маем між шляхамі зьменную пасьлядоўнасьць, чыя рэґулярнасьць таксама вызначаецца значэньнем колькасьці крокаў інтэрпаляцыі.</flowDiv>
  </flowRoot>
  <rect id="d0e95" display="none" height="1000px" width="288" y="632.32" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
@@ -179,21 +179,21 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e121"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Як можаце бачыць з выніку ўверсе, прастора між круглым шляхам і трохкутнікам таксама запоўненая 6 шляхамі, якія мяняюць фіґуру ад аднаго шляха да другога.</flowDiv>
+  <flowDiv xml:space="preserve">Як можаце бачыць з выніку ўверсе, прастора між круглым шляхам і трохкутнікам таксама запоўненая 6 шляхамі, якія зьмяняюць фіґуру ад аднаго шляху да другога.</flowDiv>
  </flowRoot>
  <rect id="d0e124" display="none" height="1000px" width="288" y="884.99" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e124"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Калі інтэрпалюеце два розныя шлхі важнае <flowSpan font-style="italic">становішча</flowSpan> пачатковага вузла кожнага шляха. Каб адшукаць пачатковы вузел шляха вылучыце шлях, потым выберыце «Вузел», каб зьявіліся вузлы й націсьніце <flowSpan font-weight="bold">TAB</flowSpan>. Першы вылучаны вузел і ёсьць пачатковым.</flowDiv>
+  <flowDiv xml:space="preserve">Калі інтэрпалюеце два розныя шляхі важнае <flowSpan font-style="italic">становішча</flowSpan> пачатковага вузла кожнага шляху. Каб адшукаць пачатковы вузел шляху вылучыце шлях, потым выберыце «Вузел», каб зьявіліся вузлы й націсьніце <flowSpan font-weight="bold">TAB</flowSpan>. Першы вылучаны вузел і ёсьць пачатковым.</flowDiv>
  </flowRoot>
  <rect id="d0e133" display="none" height="1000px" width="288" y="943.57" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e133"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Паглядзіце на відарыс унізе, які ідэнтычны папярэдняму прыкладу, за выключэньнем таго, як паказаныя вузлы. Зялёны вузел на кожным шляху — пачатковы  вузел.</flowDiv>
+  <flowDiv xml:space="preserve">Паглядзіце на відарыс унізе, які ідэнтычны папярэдняму прыкладу, за выключэньнем таго, як паказаныя вузлы. Зялёны вузел на кожным шляху — пачатковы.</flowDiv>
  </flowRoot>
  <g id="interpolate-f05-be.svgg2898" transform="translate(10, 990.516213) translate(9.4344012e-2,0)">
   <path id="interpolate-f05-be.svgpath4455" stroke-linejoin="round" d="M20.262,2.0739c10.119,0,18.265,8.1461,18.265,18.265,0,10.12-8.146,18.266-18.265,18.266s-18.266-8.146-18.266-18.266c0-10.119,8.1469-18.265,18.266-18.265z" inkscape:export-ydpi="88.379997" inkscape:export-filename="C:\Documents and Settings\ryan\Desktop\interpolate1.png" stroke="#2e75ac" inkscape:export-xdpi="88.379997" stroke-miterlimit="4" stroke-width="4.04815769" fill="#0CF"/>
@@ -266,7 +266,7 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e188"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Адзін з парамэтраў інтэрпаляцыі — мэтад інтэрпаляцыі. Рэалізаваныя два мэтады інтэрпаляцыі, яны адрозьніваюцца тым, як яны разьлічваюць крывыя новых фіґур. Можна выбраць мэтад інтэрпаляцыі або 1, або 2.</flowDiv>
+  <flowDiv xml:space="preserve">Адзін з парамэтраў інтэрпаляцыі — мэтад інтэрпаляцыі. Рэалізаваныя два мэтады інтэрпаляцыі, яны адрозьніваюцца тым, як яны разьлічваюць крывыя новых фіґур. Можна выбраць мэтад інтэрпаляцыі 1 або 2.</flowDiv>
  </flowRoot>
  <rect id="d0e191" display="none" height="1000px" width="288" y="1407.3" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
@@ -434,7 +434,7 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e309"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Гэты парамэтар вызначае ці будзе ґрупа шляхоў, створаных эфэктам, <flowSpan font-style="italic">уключаць копію</flowSpan> спачатнага шляха, да якога ўжылі інтэрпаляцыю.</flowDiv>
+  <flowDiv xml:space="preserve">Гэты парамэтар вызначае ці будзе ґрупа шляхоў, створаных эфэктам, <flowSpan font-style="italic">уключаць копію</flowSpan> спачатнага шляху, да якога ўжылі інтэрпаляцыю.</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2174.6234737" x="10" font-family="sans" font-style="normal" fill="#000000">
   <tspan y="2174.6234737" x="10">Інтэрпаляваць стыль</tspan>
@@ -451,7 +451,7 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e324"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Вось прыклад дзе функцыя інтэрпаляцыі стылю выкарыстоўваецца для запаўненьня шляху:</flowDiv>
+  <flowDiv xml:space="preserve">Вось прыклад, дзе функцыя інтэрпаляцыі стылю выкарыстоўваецца для запаўненьня шляху:</flowDiv>
  </flowRoot>
  <g id="interpolate-f16-be.svgg2861" transform="translate(10, 2276.7344126999997) translate(-21.811549,-16.97341)">
   <path id="interpolate-f16-be.svgpath13980" fill="#FC0" d="M52.663,48.163c-2.997,2.904-3.507-5.427-7.12-3.193-3.685,2.279,1.132,7.941-3.228,8.47-4.276,0.518,1.544-6.96-2.678-7.53-4.305-0.581-3.831,7.272-7.908,5.69-3.998-1.551,4.538-5.716,1.63-8.871-2.966-3.217-6.213,5.723-8.463,1.962-2.206-3.688,5.568-2.554,4.959-6.686-0.622-4.213-8.403-0.204-8.03-4.444,0.365-4.158,8.015,2.747,9.9-1.062,1.923-3.885-6.953-4.673-4.277-7.898,2.625-3.162,4.671,4.579,8.371,2.365,3.773-2.258-2.707-7.438,1.458-8.427,4.085-0.969,0.184,7.803,4.35,8.286,4.249,0.493,2.825-8.477,6.66-6.673,3.761,1.769-3.613,6.481-0.834,9.63,2.834,3.212,5.587-5.828,7.763-2.1,2.132,3.655-5.516,3.234-4.864,7.501,0.665,4.351,8.878,0.224,8.029,4.487-0.834,4.18-8.373-3.756-9.995,0.204-1.653,4.037,7.334,5.326,4.277,8.289z"/>
@@ -470,7 +470,7 @@ Ryan Lerch, ryanlerch на gmail кропка com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e337"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Інтэрпаляцыя стылю таксама ўплывае на контур шляха:</flowDiv>
+  <flowDiv xml:space="preserve">Інтэрпаляцыя стылю таксама ўплывае на контур шляху:</flowDiv>
  </flowRoot>
  <g id="interpolate-f17-be.svgg2850" transform="translate(10, 2350.9723344999998) translate(-20.688595,-14.421848)">
   <path id="interpolate-f17-be.svgpath14293" stroke-linejoin="round" style="stroke-dasharray:none;" d="M52.29,44.87c-2.997,2.905-3.507-5.427-7.12-3.192-3.685,2.278,1.132,7.941-3.228,8.469-4.276,0.518,1.544-6.96-2.678-7.53-4.305-0.58-3.831,7.273-7.907,5.691-3.998-1.552,4.538-5.716,1.629-8.871-2.966-3.218-6.213,5.722-8.463,1.961-2.206-3.687,5.568-2.554,4.959-6.685-0.621-4.213-8.403-0.204-8.03-4.444,0.365-4.158,8.015,2.747,9.9-1.063,1.923-3.885-6.953-4.672-4.276-7.897,2.624-3.163,4.67,4.578,8.37,2.364,3.773-2.258-2.706-7.438,1.459-8.426,4.084-0.97,0.183,7.802,4.35,8.285,4.248,0.493,2.824-8.476,6.659-6.672,3.761,1.769-3.613,6.48-0.834,9.63,2.834,3.211,5.588-5.829,7.763-2.101,2.133,3.656-5.515,3.235-4.864,7.502,0.665,4.351,8.879,0.224,8.029,4.487-0.834,4.18-8.372-3.756-9.994,0.203-1.654,4.038,7.333,5.327,4.276,8.289z" stroke="#000" stroke-miterlimit="4" stroke-width="1.50038075" fill="#FC0"/>
@@ -514,14 +514,14 @@ Ryan Lerch, ryanlerch на gmail кропка com
   </g>
  </g>
  <text style="writing-mode:lr;text-anchor:start;" font-weight="bold" font-size="8" y="2542.4845135" x="10" font-family="sans" font-style="normal" fill="#000000">
-  <tspan y="2542.4845135" x="10">Выкарыстаньне інтэрпаляцыі для ўдаваньня ґрадыентаў няправільнай формы</tspan>
+  <tspan y="2542.4845135" x="10">Выкарыстоўваньне інтэрпаляцыі для ўдаваньня ґрадыентаў няправільнай формы</tspan>
  </text>
  <rect id="d0e369" display="none" height="1000px" width="288" y="2547.7" x="10"/>
  <flowRoot style="writing-mode:lr-tb;text-anchor:start;text-align:start;" font-weight="normal" font-size="8" font-style="normal" font-stretch="normal" font-variant="normal" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e369"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">У Inkscape немагчыма (пакуль што) стварыць ґрадыент, адрозны ад лінейнага (прамой лініі) ці кругавога (круга). Аднак, яго можна ўдаць, выкарыстоўваючы эфэкт інтэрпаляцыі з інтэрпаляцыяй стылю. Вось просты прыклад, нарысуйце дзьве лініі з рознымі контурамі:</flowDiv>
+  <flowDiv xml:space="preserve">У Inkscape немагчыма (пакуль што) стварыць ґрадыент, адрозны ад лінейнага (прамой лініі) ці кругавога (круга). Аднак, яго можна ўдаваць, выкарыстоўваючы эфэкт інтэрпаляцыі з інтэрпаляцыяй стылю. Вось просты прыклад, нарысуйце дзьве лініі з рознымі контурамі:</flowDiv>
  </flowRoot>
  <g id="interpolate-f19-be.svgg2846" transform="translate(10, 2616.0999835) translate(-17.25,-19.612183)">
   <path id="interpolate-f19-be.svgpath2180" stroke-linejoin="miter" style="stroke-dasharray:none;" d="M20,132.36l75-32.855,85.71,33.575,77.15-32.86" stroke="#35b8ff" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="5.5" fill="none"/>
